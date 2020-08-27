@@ -63,6 +63,7 @@ jobs:
             ./output.sh ui CloudFrontEndpointUrl $CIRLCE_BRANCH
 
 workflows:
+  version: 2
   deploy:
     jobs:
       - deploy:
