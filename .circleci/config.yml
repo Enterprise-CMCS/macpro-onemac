@@ -22,7 +22,7 @@ jobs:
           name: deploy
           no_output_timeout: 30m
           command: |
-            ./.circleci/circle-lock --branch $CIRCLE_BRANCH ./deploy.sh $CIRCLE_BRANCH
+            ./.circleci/circle-lock.sh --branch $CIRCLE_BRANCH ./deploy.sh $CIRCLE_BRANCH
       - run:
           name: Print the application endpoint
           command: |
