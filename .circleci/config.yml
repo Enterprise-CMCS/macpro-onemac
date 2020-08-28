@@ -19,68 +19,10 @@ jobs:
             echo "export INFRASTRUCTURE_TYPE=\$${CIRCLE_BRANCH//-/_}_INFRASTRUCTURE_TYPE" >> $BASH_ENV
       - run: sudo npm install -g serverless
       - run:
-          name: deploy database
+          name: deploy
           no_output_timeout: 30m
           command: |
-            cd services/database
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy uploads
-          no_output_timeout: 30m
-          command: |
-            cd services/uploads
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy app-api
-          no_output_timeout: 30m
-          command: |
-            cd services/app-api
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy elasticsearch-auth
-          no_output_timeout: 30m
-          command: |
-            cd services/elasticsearch-auth
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy elasticsearch
-          no_output_timeout: 30m
-          command: |
-            cd services/elasticsearch
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy stream-functions
-          no_output_timeout: 30m
-          command: |
-            cd services/stream-functions
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy ui-auth
-          no_output_timeout: 30m
-          command: |
-            cd services/ui-auth
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy ui
-          no_output_timeout: 30m
-          command: |
-            cd services/ui
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
-      - run:
-          name: deploy ui-src
-          no_output_timeout: 30m
-          command: |
-            cd services/ui-src
-            npm install
-            serverless deploy --stage $CIRCLE_BRANCH
+            ./deploy.sh $CIRCLE_BRANCH
       - run:
           name: Print the application endpoint
           command: |
