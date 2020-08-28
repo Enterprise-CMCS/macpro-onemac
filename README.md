@@ -1,6 +1,14 @@
-# quickstart-serverless
+# macstack-spa-submission-form
 
 A serverless form submission application built and deployed to AWS with the Serverless Application Framework.
+
+Quick Navigation:
+- [Master Build](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn and EUA)
+- [Issues](https://github.com/CMSgov/macstack-spa-submission-form/issues)
+- [Project Board](https://github.com/CMSgov/macstack-spa-submission-form/projects/1)
+- [Wiki](https://github.com/CMSgov/macstack-spa-submission-form/wiki)
+
+This is a private fork of [macpro-serverless-quickstart](https://github.com/CMSgov/macpro-quickstart-serverless).
 
 
 ## Architecture
@@ -9,7 +17,7 @@ A serverless form submission application built and deployed to AWS with the Serv
 
 ## Usage
 
-CircleCI support in the .circleci folder.  See master build [here](https://app.circleci.com/pipelines/github/mdial89f/quickstart-spa?branch=master)  
+CircleCI support in the .circleci folder.  See master build [here](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn and EUA)
 
 Want to deploy from your Mac?
 - Create an AWS account
@@ -43,7 +51,7 @@ Pull request builds
 Documentation.
 Screenshots.
 Wiki.
-See current open [issues](https://github.com/mdial89f/quickstart-serverless/issues) or check out the [project board](https://github.com/mdial89f/quickstart-serverless/projects/1)
+See current open [issues](https://github.com/CMSgov/macstack-spa-submission-form/issues) or check out the [project board](https://github.com/CMSgov/macstack-spa-submission-form/projects/1)
 
 Please feel free to open new issues for defects or enhancements.
 
