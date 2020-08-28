@@ -2,6 +2,12 @@
 
 A serverless form submission application built and deployed to AWS with the Serverless Application Framework.
 
+Quick Navigation:
+- [Master Build](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn and EUA)
+- [Issues](https://github.com/CMSgov/macstack-spa-submission-form/issues)
+- [Project Board](https://github.com/CMSgov/macstack-spa-submission-form/projects/1)
+- [Wiki](https://github.com/CMSgov/macstack-spa-submission-form/wiki)
+
 This is a private fork of [macpro-serverless-quickstart](https://github.com/CMSgov/macpro-quickstart-serverless).
 
 
@@ -11,7 +17,7 @@ This is a private fork of [macpro-serverless-quickstart](https://github.com/CMSg
 
 ## Usage
 
-CircleCI support in the .circleci folder.  See master build [here](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn)
+CircleCI support in the .circleci folder.  See master build [here](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn and EUA)
 
 Want to deploy from your Mac?
 - Create an AWS account
