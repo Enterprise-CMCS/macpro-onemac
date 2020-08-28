@@ -1,10 +1,5 @@
 version: 2.0
 
-executors:
-  executor:
-    docker:
-      - image: circleci/node:12
-
 commands:
   serverless:
     parameters:
@@ -24,7 +19,9 @@ commands:
 
 jobs:
   deploy:
-    executor: executor
+    executor:
+      docker:
+        - image: circleci/node:12
     steps:
       - checkout
       - run:
