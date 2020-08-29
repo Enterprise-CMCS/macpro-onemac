@@ -18,10 +18,14 @@ jobs:
             echo "export INFRASTRUCTURE_TYPE=\$${CIRCLE_BRANCH//-/_}_INFRASTRUCTURE_TYPE" >> $BASH_ENV
       - run: sudo npm install -g serverless
       - run:
+          name: lock this branch to prevent concurrent builds
+          command: |
+            ./.circleci/circle-lock.sh --branch $CIRCLE_BRANCH
+      - run:
           name: deploy
           no_output_timeout: 30m
           command: |
-            ./.circleci/circle-lock.sh --branch $CIRCLE_BRANCH ./deploy.sh $CIRCLE_BRANCH
+            ./deploy.sh $CIRCLE_BRANCH
       - run:
           name: Print the application endpoint
           command: |
