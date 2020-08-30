@@ -1,9 +1,29 @@
 version: 2.0
 
+master_and_cci_only: &master_and_cci_only
+  filters:
+    branches:
+      only:
+        - master
+        - /^cci-[a-zA-Z0-9-]*$/ # Branch begins with cci- and only contains letters, numbers, and hyphens
+
 jobs:
+  lock:
+    docker:
+      - image: circleci/node:12
+        environment:
+          TERM: xterm
+    steps:
+      - checkout
+      - run:
+          name: lock this branch to prevent concurrent builds
+          command: |
+            ./.circleci/circle-lock.sh --branch $CIRCLE_BRANCH
   deploy:
     docker:
       - image: circleci/node:12
+        environment:
+          TERM: xterm
     steps:
       - checkout
       - run:
@@ -18,10 +38,6 @@ jobs:
             echo "export INFRASTRUCTURE_TYPE=\$${CIRCLE_BRANCH//-/_}_INFRASTRUCTURE_TYPE" >> $BASH_ENV
       - run: sudo npm install -g serverless
       - run:
-          name: lock this branch to prevent concurrent builds
-          command: |
-            ./.circleci/circle-lock.sh --branch $CIRCLE_BRANCH
-      - run:
           name: deploy
           no_output_timeout: 30m
           command: |
@@ -33,14 +49,35 @@ jobs:
           command: |
             cd services
             ./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$CIRCLE_BRANCH
+  test:
+    docker:
+      - image: circleci/node:12-browsers
+        environment:
+          TERM: xterm
+    steps:
+      - checkout
+      - run:
+          name: Run TestCafe suite
+          command: |
+            sudo npm install -g testcafe serverless
+            pushd services
+            export APPLICATION_ENDPOINT=`./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$CIRCLE_BRANCH`
+            popd
+            ./test.sh
+      - store_artifacts:
+          path: tests/testcafe/testcafe_results
 
 workflows:
   version: 2
   deploy:
     jobs:
+      - lock:
+          <<: *master_and_cci_only
       - deploy:
-          filters:
-            branches:
-              only:
-                - master
-                - /^cci-[a-zA-Z0-9-]*$/ # Branch begins with cci- and only contains letters, numbers, and hyphens
+          requires:
+            - lock
+          <<: *master_and_cci_only
+      - test:
+          requires:
+            - deploy
+          <<: *master_and_cci_only
