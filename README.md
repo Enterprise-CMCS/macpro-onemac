@@ -46,11 +46,6 @@ None.
 
 ## Contributing / To-Do
 
-Offline dev workflow.
-Pull request builds
-Documentation.
-Screenshots.
-Wiki.
 See current open [issues](https://github.com/CMSgov/macstack-spa-submission-form/issues) or check out the [project board](https://github.com/CMSgov/macstack-spa-submission-form/projects/1)
 
 Please feel free to open new issues for defects or enhancements.
