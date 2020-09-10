@@ -18,6 +18,7 @@ export default function NewAmendment() {
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
+    const [spaID, setSPAID] = useState("");
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
@@ -38,7 +39,8 @@ export default function NewAmendment() {
     populateUserInfo();
 
     function validateForm() {
-        return email.length > 0 && firstName.length > 0 && lastName.length > 0 && territory.length > 0 ;
+        return email.length > 0 && firstName.length > 0 && lastName.length > 0
+          && spaID.length > 0 && territory.length > 0 ;
     }
 
     function handleFileChange(event) {
@@ -61,7 +63,7 @@ export default function NewAmendment() {
 
         try {
             const attachment = file.current ? await s3Upload(file.current) : null;
-            await createAmendment({ email, firstName, lastName, territory, urgent, comments, attachment });
+            await createAmendment({ email, firstName, lastName, territory, spaID, urgent, comments, attachment });
             history.push("/");
         } catch (e) {
             onError(e);
@@ -111,6 +113,13 @@ export default function NewAmendment() {
                         })}
                         onChange={e => setTerritory(e.value)}
                         options={territoryList}
+                    />
+                </FormGroup>
+                <FormGroup controlId="spaID">
+                    <ControlLabel>SPA ID</ControlLabel>
+                    <FormControl
+                        value={spaID}
+                        onChange={e => setSPAID(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup controlId="urgent">
