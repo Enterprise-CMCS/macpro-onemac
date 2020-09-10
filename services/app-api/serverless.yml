@@ -7,13 +7,16 @@ plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
+  - serverless-offline
+  - serverless-dynamodb-local
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName}
-  tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn}
-  atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName}
-  atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn}
+  # Set the table information from CF and if not found then use local tables to enable local development.
+  tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName, database-dev.AmendmentsTableName}
+  tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn, arn:aws:dynamodb:::database-dev.AmendmentsTableName:*}
+  atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName, database-dev.AmendmentsAtomicCounterTableName}
+  atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn, arn:aws:dynamodb:::database-dev.AmendmentsAtomicCounterTableName:*}
   iamPath: ${env:IAM_PATH, "/"}
   warmupEnabled:
     production: true
@@ -27,6 +30,16 @@ custom:
     timeout: 20
     prewarm: true
     concurrency: 5
+  # Mock DynamoDB for local development
+  dynamodb:
+    stages:
+      - dev
+    start:
+      inMemory: true
+      migrate: true
+    migration:
+      dir: offline/migrations
+      
 
 
 provider:
