@@ -2,9 +2,8 @@ import { Storage, Amplify } from "aws-amplify";
 
 Amplify.configure({
   Storage: {
-      region: config.s3.REGION,
-      bucket: config.s3.BUCKET,
-      identityPoolId: config.cognito.IDENTITY_POOL_ID
+      region: process.env.s3UploadBucketRegion,
+      bucket: process.env.s3UploadBucketName,
   }
 });
 
