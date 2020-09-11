@@ -5,14 +5,6 @@ import * as emailTemplates from "./libs/email-templates";
 import aws from "aws-sdk";
 var ses = new aws.SES({ region: "us-east-1" });
 
-Amplify.configure({
-  Storage: {
-      region: config.s3.REGION,
-      bucket: config.s3.BUCKET,
-      identityPoolId: config.cognito.IDENTITY_POOL_ID
-  }
-});
-
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
@@ -52,10 +44,7 @@ export const main = handler(async (event, context) => {
     },
   };
 
-console.log(params);
-console.log("11");
   await dynamoDb.put(params);
-  console.log("22");
   await sendSubmissionEmail(data);
 
   //An error sending the user email is not a failure.

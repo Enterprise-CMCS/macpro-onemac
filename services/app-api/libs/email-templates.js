@@ -1,5 +1,13 @@
 import { Storage } from "aws-amplify";
 
+Amplify.configure({
+  Storage: {
+      region: config.s3.REGION,
+      bucket: config.s3.BUCKET,
+      identityPoolId: config.cognito.IDENTITY_POOL_ID
+  }
+});
+
 /**
  * Generate the email message for the submission acknowledgement to the user.
  * @param {Object} data the form fields
