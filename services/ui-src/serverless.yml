@@ -16,7 +16,7 @@ custom:
   cognito_client_id: ${cf:ui-auth-${self:custom.stage}.UserPoolClientId}
   s3_attachments_bucket_region: ${cf:uploads-${self:custom.stage}.Region}
   s3_attachments_bucket_name: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
-  ui_s3_bucket_name: ${cf:ui-${self:custom.stage}.S3BucketNamem, ui-dev.S3BucketNamem }
+  ui_s3_bucket_name: ${cf:ui-${self:custom.stage}.S3BucketName}
   ui_cloudfront_distribution_id: ${cf:ui-${self:custom.stage}.CloudFrontDistributionId}
 
   s3Sync:
