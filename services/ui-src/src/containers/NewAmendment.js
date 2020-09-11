@@ -40,7 +40,7 @@ export default function NewAmendment() {
 
     function validateForm() {
         return email.length > 0 && firstName.length > 0 && lastName.length > 0
-          && transmittalNumber.value !== "Sample: NY-20-0053-XXXX" && territory.length > 0 ;
+          && transmittalNumber.length > 0 && transmittalNumber.value !== "Sample: NY-20-0053-XXXX" && territory.length > 0 ;
     }
 
     function handleFileChange(event) {
