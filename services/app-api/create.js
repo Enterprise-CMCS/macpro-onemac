@@ -1,7 +1,7 @@
 import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import emailTemplates from "./libs/email-templates";
+import * as emailTemplates from "./libs/email-templates";
 import aws from "aws-sdk";
 var ses = new aws.SES({ region: "us-east-1" });
 
