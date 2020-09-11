@@ -1,4 +1,4 @@
-import { Storage } from "aws-amplify";
+import { Storage, Amplify } from "aws-amplify";
 
 Amplify.configure({
   Storage: {
