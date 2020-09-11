@@ -44,7 +44,10 @@ export const main = handler(async (event, context) => {
     },
   };
 
+console.log(params);
+console.log("11");
   await dynamoDb.put(params);
+  console.log("22");
   await sendSubmissionEmail(data);
 
   //An error sending the user email is not a failure.
@@ -66,6 +69,8 @@ export const main = handler(async (event, context) => {
  */
 function sendUserAckEmail(data) {
   let message = emailTemplates.getUserAckEmailBody(data);
+  console.log(message);
+  console.log("1");
   var emailParams = {
     Destination: {
       ToAddresses: [data.email],
@@ -84,7 +89,7 @@ function sendUserAckEmail(data) {
     },
     Source: process.env.emailSource,
   };
-
+console.log("2");
   return ses.sendEmail(emailParams).promise();
 }
 
@@ -94,6 +99,8 @@ function sendUserAckEmail(data) {
  */
 function sendSubmissionEmail(data) {
   let message = emailTemplates.getSubmissionEmailBody(data);
+  console.log(message);
+  console.log("3");
   var emailParams = {
     Destination: {
       ToAddresses: [process.env.reviewerEmail],
@@ -112,6 +119,6 @@ function sendSubmissionEmail(data) {
     },
     Source: process.env.emailSource,
   };
-
+  console.log("4");
   return ses.sendEmail(emailParams).promise();
 }

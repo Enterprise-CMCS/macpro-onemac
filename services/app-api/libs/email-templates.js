@@ -5,7 +5,7 @@ import { Storage } from "aws-amplify";
  * @param {Object} data the form fields
  * @returns a message object with subject and body
  */
-function getUserAckEmailBody(data) {
+export function getUserAckEmailBody(data) {
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
     message.subject = "Your SPA " + data.spaid + " has been submitted to CMS";
@@ -34,7 +34,7 @@ function getUserAckEmailBody(data) {
  * @param {Object} data the form fields
  * @returns a message object with subject and body
  */
-function getSubmissionEmailBody(data) {
+export function getSubmissionEmailBody(data) {
     let uploads = [data.attachment];  //Make this an array for now, so we can handle multiple attachments later.
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
@@ -73,5 +73,3 @@ function getLinksHtml(uploads) {
   }
   return html;
 }
-
-module.exports = {getSubmissionEmailBody, getUserAckEmailBody};

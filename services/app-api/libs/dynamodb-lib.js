@@ -7,6 +7,7 @@ if(process.env.IS_OFFLINE) {
     region: 'localhost',
     endpoint: 'http://localhost:8000'
   };
+  console.log("Using database in localhost.");
 }
 
 const client = new AWS.DynamoDB.DocumentClient(dbOptions);

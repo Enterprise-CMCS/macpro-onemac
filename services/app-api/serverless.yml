@@ -13,9 +13,9 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   # Set the table information from CF and if not found then use local tables to enable local development.
-  tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName, database-dev.AmendmentsTableName}
+  tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName}
   tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn, arn:aws:dynamodb:::database-dev.AmendmentsTableName:*}
-  atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName, database-dev.AmendmentsAtomicCounterTableName}
+  atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName}
   atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn, arn:aws:dynamodb:::database-dev.AmendmentsAtomicCounterTableName:*}
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
@@ -39,10 +39,7 @@ custom:
     start:
       inMemory: true
       migrate: true
-    migration:
-      dir: offline/migrations
       
-
 
 provider:
   name: aws
@@ -67,6 +64,7 @@ functions:
     environment:
       emailSource: ${self:custom.emailSource}
       reviewerEmail: ${self:custom.reviewerEmail}
+      tableName: ${self:custom.tableName}
 
   get:
     handler: get.main
@@ -77,6 +75,8 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+    environment:
+      tableName: ${self:custom.tableName}
 
   list:
     handler: list.main
@@ -87,6 +87,8 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+    environment:
+      tableName: ${self:custom.tableName}
 
   update:
     handler: update.main
@@ -277,6 +279,38 @@ resources:
           Fn::GetAtt:
             - ApiGwWebAcl
             - Arn
+    AmendmentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: amendmentId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: amendmentId
+            KeyType: RANGE
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
+    AmendmentsAtomicCounterTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}-atomic-counter
+        AttributeDefinitions:
+          - AttributeName: id
+            AttributeType: S
+        KeySchema:
+          - AttributeName: id
+            KeyType: HASH
+        ProvisionedThroughput:
+          ReadCapacityUnits: 1
+          WriteCapacityUnits: 1
   Outputs:
     ApiGatewayRestApiName:
       Value:
