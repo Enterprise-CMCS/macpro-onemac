@@ -18,6 +18,8 @@ custom:
   atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName, database-dev.AmendmentsAtomicCounterTableName}
   atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn, arn:aws:dynamodb:::database-dev.AmendmentsAtomicCounterTableName:*}
   iamPath: ${env:IAM_PATH, "/"}
+  emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
+  reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
   warmupEnabled:
     production: true
     development: false
@@ -62,6 +64,9 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+    environment:
+      emailSource: ${self:custom.emailSource}
+      reviewerEmail: ${self:custom.reviewerEmail}
 
   get:
     handler: get.main
@@ -167,6 +172,11 @@ resources:
                     - "/"
                     -
                       - Fn::Join: [":", ["arn:aws:execute-api", {"Ref": "AWS::Region"}, {"Ref":"AWS::AccountId"}, {"Ref": "ApiGatewayRestApi"}]]
+              - Effect: 'Allow'
+                Action:
+                - ses:SendEmail
+                - ses:SendRawEmail
+                Resource: '*'
     LambdaWarmupRole:
       Type: 'AWS::IAM::Role'
       Properties:
