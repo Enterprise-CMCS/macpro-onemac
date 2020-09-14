@@ -62,7 +62,7 @@ export default function NewAmendment() {
         setIsLoading(true);
 
         try {
-            const attachment = file.current ? await s3Upload(file.current) : null;
+            const attachment = file.current ? await s3Uploader.uploadFile(file.current) : null;
             await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, attachment });
             history.push("/");
         } catch (e) {
