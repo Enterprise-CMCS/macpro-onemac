@@ -45,6 +45,8 @@ export const main = handler(async (event, context) => {
     );
   }
 
+  console.log("Successfully submitted amendment:", data);
+
   return params.Item;
 });
 
