@@ -11,7 +11,7 @@ export function getUserAckEmailBody(data) {
     <p>${data.firstName} ${data.lastName}</p>
     <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
     <p><b>State or territory</b>: ${data.territory}
-    <br><b>ID</b>: ${data.spaid}
+    <br><b>ID</b>: ${data.spaId}
     <br><b>Urgent?</b>: ${isUrgent}</p>
     <p><strong>THIS MAILBOX IS FOR THE SUBMITTAL OF STATE PLAN AMENDMENTS AND SECTION 1915(b) 
       AND 1915(c) NON-WEB BASED WAIVERS AND RESPONSES TO REQUESTS FOR ADDITIONAL INFORMATION ON 
