@@ -1,12 +1,3 @@
-import { Storage, Amplify } from "aws-amplify";
-
-Amplify.configure({
-  Storage: {
-      region: process.env.s3UploadBucketRegion,
-      bucket: process.env.s3UploadBucketName,
-  }
-});
-
 /**
  * Generate the email message for the submission acknowledgement to the user.
  * @param {Object} data the form fields
@@ -71,10 +62,7 @@ function getLinksHtml(uploads) {
   if(Array.isArray(uploads) && uploads.length > 0) {
     html = "<ul>";
     uploads.forEach(async (upload) => {
-      //First get the attachment URL
-      let url= await Storage.vault.get(upload);
-      let filename = url.split('/').pop();
-      html += "<li><a href=\"" + url +"\">" + filename + "</a></li>";
+      html += "<li><a href=\"" + upload.url +"\">" + upload.filename + "</a></li>";
     });
     html += "</ul>";
   }
