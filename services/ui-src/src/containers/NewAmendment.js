@@ -119,7 +119,7 @@ export default function NewAmendment() {
                     <ControlLabel>SPA ID</ControlLabel>
                     <FormControl
                         value={transmittalNumber}
-                        placeholder='Sample: NY-20-0053-'
+                        placeholder='Sample: NY-20-0053'
                         onChange={e => setTransmittalNumber(e.target.value)}
                     />
                 </FormGroup>
