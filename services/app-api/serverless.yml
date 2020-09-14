@@ -8,15 +8,14 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-offline
-  - serverless-dynamodb-local
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   # Set the table information from CF and if not found then use local tables to enable local development.
   tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName}
-  tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn, arn:aws:dynamodb:::database-dev.AmendmentsTableName:*}
+  tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn}
   atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName}
-  atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn, arn:aws:dynamodb:::database-dev.AmendmentsAtomicCounterTableName:*}
+  atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn}
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
   reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
@@ -34,13 +33,6 @@ custom:
     timeout: 20
     prewarm: true
     concurrency: 5
-  # Mock DynamoDB for local development
-  dynamodb:
-    stages:
-      - dev
-    start:
-      inMemory: true
-      migrate: true
       
 
 provider:
@@ -67,7 +59,6 @@ functions:
     environment:
       emailSource: ${self:custom.emailSource}
       reviewerEmail: ${self:custom.reviewerEmail}
-      tableName: ${self:custom.tableName}
       s3UploadBucketName: ${self:custom.s3_attachments_bucket_name}
       s3UploadBucketRegion: ${self:custom.s3_attachments_bucket_region}
 
@@ -80,8 +71,6 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-    environment:
-      tableName: ${self:custom.tableName}
 
   list:
     handler: list.main
@@ -92,8 +81,6 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-    environment:
-      tableName: ${self:custom.tableName}
 
   update:
     handler: update.main
