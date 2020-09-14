@@ -6,7 +6,7 @@ import { onError } from "../libs/errorLib";
 import config from "../config";
 import "./NewAmendment.css";
 import { API } from "aws-amplify";
-import { s3Upload } from "../libs/awsLib";
+import * as s3Uploader from "../libs/s3Uploader";
 import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
@@ -62,7 +62,7 @@ export default function NewAmendment() {
         setIsLoading(true);
 
         try {
-            const attachment = file.current ? await s3Upload(file.current) : null;
+            const attachment = file.current ? await s3Uploader.uploadFile(file.current) : null;
             await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, attachment });
             history.push("/");
         } catch (e) {

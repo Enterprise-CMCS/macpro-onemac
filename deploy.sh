@@ -8,7 +8,6 @@ services=(
   'database'
   'uploads'
   'app-api'
-  'stream-functions'
   'ui-auth'
   'ui'
   'ui-src'
