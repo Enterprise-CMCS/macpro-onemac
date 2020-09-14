@@ -16,7 +16,6 @@ services=(
   'database'
   'uploads'
   'app-api'
-  'stream-functions'
   'ui-auth'
   'ui'
   # Running remove on ui-src would delete the s3 bucket and cause remove on ui to fail.
