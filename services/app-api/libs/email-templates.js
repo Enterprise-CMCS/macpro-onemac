@@ -6,12 +6,12 @@
 export function getUserAckEmailBody(data) {
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
-    message.subject = "Your SPA " + data.spaId + " has been submitted to CMS";
+    message.subject = "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
     message.body = `
     <p>${data.firstName} ${data.lastName}</p>
     <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
     <p><b>State or territory</b>: ${data.territory}
-    <br><b>ID</b>: ${data.spaId}
+    <br><b>ID</b>: ${data.transmittalNumber}
     <br><b>Urgent?</b>: ${isUrgent}</p>
     <p><strong>THIS MAILBOX IS FOR THE SUBMITTAL OF STATE PLAN AMENDMENTS AND SECTION 1915(b) 
       AND 1915(c) NON-WEB BASED WAIVERS AND RESPONSES TO REQUESTS FOR ADDITIONAL INFORMATION ON 
@@ -36,13 +36,13 @@ export function getSubmissionEmailBody(data) {
     let uploads = [data.attachment];  //Make this an array for now, so we can handle multiple attachments later.
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
-    message.subject = "New SPA " + data.spaId + " submitted";
+    message.subject = "New SPA " + data.transmittalNumber + " submitted";
     message.body = `
     <p>The SPA Submission Form received a State Plan Amendment:</p>
     <p><b>State or territory</b>: ${data.territory}
     <br><b>Name</b>: ${data.firstName} ${data.lastName}
     <br><b>Email Address</b>: ${data.email}
-    <br><b>ID</b>: ${data.spaid}
+    <br><b>ID</b>: ${data.transmittalNumber}
     <br><b>Urgent?</b>: ${isUrgent}</p>
     <p>Files:</p>
     <p>${getLinksHtml(uploads)}</p>

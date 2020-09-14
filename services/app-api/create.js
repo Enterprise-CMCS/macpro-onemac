@@ -14,18 +14,6 @@ export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
 
-  var atomicCounter = require("dynamodb-atomic-counter");
-  atomicCounter.config.update({ region: "us-east-1" });
-  const nextValue = await atomicCounter
-    .increment(data.territory, {
-      tableName: process.env.atomicCounterTableName,
-    })
-    .done(function (value) {})
-    .fail(function (error) {
-      console.log(error);
-    });
-
-  data.spaId = data.territory + "-" + ("000" + nextValue).slice(-4);
   const params = {
     TableName: process.env.tableName,
     Item: {
@@ -35,7 +23,7 @@ export const main = handler(async (event, context) => {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
-      transmittalNumber: data.spaId,
+      transmittalNumber: data.transmittalNumber,
       territory: data.territory,
       urgent: data.urgent,
       comments: data.comments,
