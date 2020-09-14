@@ -20,6 +20,5 @@ export async function uploadFile(file) {
         url: url
     };
 
-    console.log(result);
     return result;
 }

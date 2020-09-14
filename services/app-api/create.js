@@ -66,8 +66,7 @@ export const main = handler(async (event, context) => {
  */
 function sendUserAckEmail(data) {
   let message = emailTemplates.getUserAckEmailBody(data);
-  console.log(message);
-  console.log("1");
+
   var emailParams = {
     Destination: {
       ToAddresses: [data.email],
@@ -86,7 +85,7 @@ function sendUserAckEmail(data) {
     },
     Source: process.env.emailSource,
   };
-console.log("2");
+
   return ses.sendEmail(emailParams).promise();
 }
 
@@ -96,8 +95,7 @@ console.log("2");
  */
 function sendSubmissionEmail(data) {
   let message = emailTemplates.getSubmissionEmailBody(data);
-  console.log(message);
-  console.log("3");
+
   var emailParams = {
     Destination: {
       ToAddresses: [process.env.reviewerEmail],
@@ -116,6 +114,6 @@ function sendSubmissionEmail(data) {
     },
     Source: process.env.emailSource,
   };
-  console.log("4");
+
   return ses.sendEmail(emailParams).promise();
 }
