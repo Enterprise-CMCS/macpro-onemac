@@ -6,7 +6,7 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import config from "../config";
 import "./Amendments.css";
-import { s3Upload } from "../libs/awsLib";
+import * as s3Uploader from "../libs/s3Uploader";
 import Select from 'react-select';
 import Switch from "react-ios-switch";
 import { territoryList } from '../libs/territoryLib';
@@ -95,7 +95,7 @@ export default function Amendments() {
 
         try {
             if (file.current) {
-                attachment = await s3Upload(file.current);
+                attachment = await s3Uploader.uploadFile(file.current);
             }
             await saveAmendment({
                 email,
@@ -211,7 +211,7 @@ export default function Amendments() {
                                     rel="noopener noreferrer"
                                     href={amendment.attachmentURL}
                                 >
-                                    {formatFilename(amendment.attachment)}
+                                    {formatFilename(amendment.attachment.filename)}
                                 </a>
                             </FormControl.Static>
                         </FormGroup>
