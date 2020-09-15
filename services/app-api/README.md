@@ -10,5 +10,10 @@ sls dynamodb install
 Run the software locally by running the following command:
 
 ```
-sls offline start
+sls offline start --httpPort 3001
+```
+
+Then change the URL for the API in the UI to 
+```
+ http://localhost:3001
 ```

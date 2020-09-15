@@ -7,6 +7,8 @@ plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
+  - serverless-dynamodb-local
+  # Serverless offline needs to be last
   - serverless-offline
 
 custom:
@@ -15,8 +17,6 @@ custom:
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
   reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
-  s3_attachments_bucket_region: ${cf:uploads-${self:custom.stage}.Region}
-  s3_attachments_bucket_name: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   warmupEnabled:
     production: true
     development: false
@@ -29,6 +29,15 @@ custom:
     timeout: 20
     prewarm: true
     concurrency: 5
+  #Dynamo DB local configuration
+  dynamodb:
+    stages:
+      - dev
+    start:
+      inMemory: true
+      migrate: true
+  serverless-offline:
+    allowCache: true
       
 
 provider:
@@ -54,8 +63,6 @@ functions:
     environment:
       emailSource: ${self:custom.emailSource}
       reviewerEmail: ${self:custom.reviewerEmail}
-      s3UploadBucketName: ${self:custom.s3_attachments_bucket_name}
-      s3UploadBucketRegion: ${self:custom.s3_attachments_bucket_region}
 
   get:
     handler: get.main
@@ -86,7 +93,7 @@ resources:
           - ""
           - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
   Resources:
-  AmendmentsTable:
+    AmendmentsTable:
       Type: AWS::DynamoDB::Table
       Properties:
         TableName: ${self:custom.tableName}
@@ -104,6 +111,7 @@ resources:
             KeyType: RANGE
         # Set the capacity to auto-scale
         BillingMode: PAY_PER_REQUEST
+
     LambdaApiRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
       Type: 'AWS::IAM::Role'
       Properties:
