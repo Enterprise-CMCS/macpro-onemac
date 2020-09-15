@@ -15,7 +15,7 @@ api_region=`sh ../output.sh ../app-api Region $stage`
 if [ -z "$api_region" ]
 then
    echo "ERROR: Unable to obtain CloudFormation data for stage $stage."
-   echo "Are you connect to AWS with the proper credentials?"
+   echo "Do you have the proper AWS credentials set?"
    echo "Is the stage name $stage correct?"
    exit 1
 fi
