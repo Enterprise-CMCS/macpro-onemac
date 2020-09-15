@@ -1,5 +1,10 @@
 ## Running Locally
-Pre-requisites: You need to have configured Node, npm, serverless globaly.
+
+### Pre-requisites
+1. Install the latest Java JDK distribution
+2. Install the latest Node distribution 
+3. Install NPM globaly
+4. Install serverless globally
 
 Install the serverless Dynamo DB offline package by running the following command:
 
