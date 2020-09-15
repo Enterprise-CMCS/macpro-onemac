@@ -4,6 +4,7 @@ Pre-requisites: You need to have configured Node, npm, serverless globaly.
 Install the serverless Dynamo DB offline package by running the following command:
 
 ```
+npm install
 sls dynamodb install
 ```
 
