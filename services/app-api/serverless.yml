@@ -13,7 +13,7 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: ${self:custom.stage}-amendments
+  tableName: cms-spa-form-${self:custom.stage}-amendments
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
   reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
