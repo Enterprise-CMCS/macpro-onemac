@@ -14,8 +14,6 @@ custom:
   # Set the table information from CF and if not found then use local tables to enable local development.
   tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName}
   tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn}
-  atomicCounterTableName: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableName}
-  atomicCounterTableArn: ${cf:database-${self:custom.stage}.AmendmentsAtomicCounterTableArn}
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
   reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
@@ -43,7 +41,6 @@ provider:
 
   environment:
     tableName: ${self:custom.tableName}
-    atomicCounterTableName: ${self:custom.atomicCounterTableName}
 
 
 functions:
@@ -82,25 +79,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  update:
-    handler: update.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: amendments/{id}
-          method: put
-          cors: true
-          authorizer: aws_iam
-
-  delete:
-    handler: delete.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: amendments/{id}
-          method: delete
-          cors: true
-          authorizer: aws_iam
 
 resources:
   Conditions:
@@ -156,7 +134,6 @@ resources:
                   - dynamodb:DeleteItem
                 Resource:
                   - ${self:custom.tableArn}
-                  - ${self:custom.atomicCounterTableArn}
               - Effect: 'Allow'
                 Action:
                   - logs:CreateLogStream

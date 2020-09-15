@@ -37,18 +37,6 @@ resources:
             KeyType: RANGE
         # Set the capacity to auto-scale
         BillingMode: PAY_PER_REQUEST
-    AmendmentsAtomicCounterTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.tableName}-atomic-counter
-        AttributeDefinitions:
-          - AttributeName: id
-            AttributeType: S
-        KeySchema:
-          - AttributeName: id
-            KeyType: HASH
-        # Set the capacity to auto-scale
-        BillingMode: PAY_PER_REQUEST
   Outputs:
     AmendmentsTableName:
       Value:
@@ -57,11 +45,6 @@ resources:
       Value: !GetAtt AmendmentsTable.Arn
     AmendmentsTableStreamArn:
       Value: !GetAtt AmendmentsTable.StreamArn
-    AmendmentsAtomicCounterTableName:
-      Value:
-        Ref: AmendmentsAtomicCounterTable
-    AmendmentsAtomicCounterTableArn:
-      Value: !GetAtt AmendmentsAtomicCounterTable.Arn
     Region:
       Value:
         Ref: AWS::Region
