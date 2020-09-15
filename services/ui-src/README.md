@@ -38,7 +38,7 @@ Instead, it will copy all the configuration files and the transitive dependencie
 You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
 
 ## Running Offline for Development
-Run the configureLocal.sh script to configure the UI to connect to the AWS resources to run the UI.  The configuration is written to public/env-config.js.  To run the UI with a local API, simply change the API_URL parameter in public/env-config.js to point to the local API URL (e.g. ```http://localhost:3001/<stage>```).  Run the UI by running
+Run the configureLocal.sh script to configure the UI to connect to the AWS resources to run the UI.  The configuration is written to public/env-config.js.  To run the UI with a local API, simply change the API_URL parameter in public/env-config.js to point to the local API URL (e.g. ```http://localhost:3001/dev```).  Run the UI by running
 ```
 npm install
 npm run start
