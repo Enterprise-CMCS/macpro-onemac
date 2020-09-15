@@ -11,9 +11,7 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  # Set the table information from CF and if not found then use local tables to enable local development.
-  tableName: ${cf:database-${self:custom.stage}.AmendmentsTableName}
-  tableArn: ${cf:database-${self:custom.stage}.AmendmentsTableArn}
+  tableName: ${self:custom.stage}-amendments
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
   reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
@@ -88,6 +86,24 @@ resources:
           - ""
           - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
   Resources:
+  AmendmentsTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.tableName}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: userId
+            AttributeType: S
+          - AttributeName: amendmentId
+            AttributeType: S
+        KeySchema:
+          - AttributeName: userId
+            KeyType: HASH
+          - AttributeName: amendmentId
+            KeyType: RANGE
+        # Set the capacity to auto-scale
+        BillingMode: PAY_PER_REQUEST
     LambdaApiRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
       Type: 'AWS::IAM::Role'
       Properties:
@@ -130,10 +146,8 @@ resources:
                   - dynamodb:Scan
                   - dynamodb:GetItem
                   - dynamodb:PutItem
-                  - dynamodb:UpdateItem
-                  - dynamodb:DeleteItem
                 Resource:
-                  - ${self:custom.tableArn}
+                  - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
               - Effect: 'Allow'
                 Action:
                   - logs:CreateLogStream
