@@ -26,7 +26,11 @@ export default function NewAmendment() {
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const [areUploadsComplete, setAreUploadsComplete] = useState(false);
+
+    // True when the required uploads have been set.
+    const [areUploadsComplete, setAreUploadsReady] = useState(false);
+
+    //Reference to the File Uploader.
     const uploader = useRef(null);
 
     const capitalize = (s) => {
@@ -85,11 +89,13 @@ export default function NewAmendment() {
         });
     }
 
-    function completedCallbackFunction(state) {
-        setAreUploadsComplete(state);
-    }
-
-    
+    /**
+     * Callback for the uploader to set if the upload requirements are met.
+     * @param {Boolean} state true if the required uploads have been specified
+     */
+    function uploadsReadyCallbackFunction(state) {
+        setAreUploadsReady(state);
+    }  
 
     return (
         <div className="NewAmendment">
@@ -145,7 +151,8 @@ export default function NewAmendment() {
                         onChange={e => setUrgent(!urgent)}
                     />
                 </FormGroup>
-                <FileUploader ref={uploader} required={requiredUploads} optional={optionalUploads} completedCallback={completedCallbackFunction}></FileUploader>
+                <FileUploader ref={uploader} requiredUploads={requiredUploads} optionalUploads={optionalUploads} 
+                    completedCallback={uploadsReadyCallbackFunction}></FileUploader>
                 <FormGroup controlId="file">
                     <ControlLabel>Attachment</ControlLabel>
                     <FormControl onChange={handleFileChange} type="file" />
