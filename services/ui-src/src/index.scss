@@ -1,0 +1,57 @@
+$font-path: '~@cmsgov/design-system/dist/fonts';
+$image-path: '~@cmsgov/design-system/dist/images';
+@import '@cmsgov/design-system/dist/scss/index';
+
+body {
+  @extend .ds-base;
+}
+
+h1 {
+  @extend .ds-h1;
+}
+
+h2 {
+  @extend .ds-h2;
+}
+
+h3 {
+  @extend .ds-h3;
+}
+
+h4 {
+  @extend .ds-h4;
+}
+
+.file-uploader {
+  .file-uploader-title {
+    @extend .ds-h3;
+  }
+}
+
+.uploader {
+  .uploader-title {
+    font-weight: bold;
+
+    .uploader-title-required {
+      color: red;
+    }
+  }
+
+  .uploader-control-container {
+    border-style: solid;
+    border-width: 2px;
+    border-color: gray;
+    padding: 1rem;
+    margin: 1rem;
+
+  }
+}
+
+select.form-control,
+textarea.form-control,
+input.form-control {
+  font-size: 16px;
+}
+input[type=file] {
+  width: 100%;
+}

@@ -11,8 +11,11 @@ import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
 import { territoryList } from '../libs/territoryLib';
+import FileUploader from '../components/FileUploader';
 
 export default function NewAmendment() {
+    const requiredUploads = ['One type', 'Another type'];
+    const optionalUploads = ['some other type', 'And another type'];
     const file = useRef(null);
     const history = useHistory();
     const [email, setEmail] = useState("");
@@ -80,6 +83,7 @@ export default function NewAmendment() {
     return (
         <div className="NewAmendment">
             <form onSubmit={handleSubmit}>
+                <h3>SPA Details</h3>
                 <FormGroup controlId="email">
                     <ControlLabel>Contact Email</ControlLabel>
                     <FormControl
@@ -130,10 +134,12 @@ export default function NewAmendment() {
                         onChange={e => setUrgent(!urgent)}
                     />
                 </FormGroup>
+                <FileUploader required={requiredUploads} optional={optionalUploads}></FileUploader>
                 <FormGroup controlId="file">
                     <ControlLabel>Attachment</ControlLabel>
                     <FormControl onChange={handleFileChange} type="file" />
                 </FormGroup>
+                <h3>Summary</h3>
                 <FormGroup controlId="comments">
                     <FormControl
                         componentClass="textarea"
