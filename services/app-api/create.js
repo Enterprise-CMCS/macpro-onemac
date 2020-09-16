@@ -76,7 +76,7 @@ function sendUserAckEmail(data) {
     Source: process.env.emailSource,
   };
 
-  return ses.sendEmail(emailParams).promise();
+  return sendEmail(emailParams);
 }
 
 /**
@@ -105,5 +105,24 @@ function sendSubmissionEmail(data) {
     Source: process.env.emailSource,
   };
 
-  return ses.sendEmail(emailParams).promise();
+  return sendEmail(emailParams);
+}
+
+/**
+ * Send the email.  If we are in OFFLINE mode then the email contents is logged.
+ * @param {Object} emailParams the email parameters as required by the SES sendEmail function
+ */
+function sendEmail(emailParams) {
+  let retPromise;
+  // If we are in offline mode just log the email message.
+  if(!process.env.IS_OFFLINE) {
+    retPromise = ses.sendEmail(emailParams).promise();
+  } else {
+    console.log("IN OFFLINE MODE: Will not send email.");
+    console.log(emailParams);
+    console.log(emailParams.Message.Body);
+    retPromise = Promise.resolve("ok");
+  }
+
+  return retPromise;
 }
