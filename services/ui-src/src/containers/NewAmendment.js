@@ -26,6 +26,9 @@ export default function NewAmendment() {
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+    const [areUploadsComplete, setAreUploadsComplete] = useState(false);
+    const uploader = useRef(null);
+
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
@@ -43,7 +46,7 @@ export default function NewAmendment() {
 
     function validateForm() {
         return email.length > 0 && firstName.length > 0 && lastName.length > 0
-          && transmittalNumber.length > 0 && territory.length > 0 ;
+          && transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
     }
 
     function handleFileChange(event) {
@@ -64,6 +67,8 @@ export default function NewAmendment() {
 
         setIsLoading(true);
 
+        uploader.current.uploadFiles();
+
         try {
             const attachment = file.current ? await s3Uploader.uploadFile(file.current) : null;
             await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, attachment });
@@ -79,6 +84,12 @@ export default function NewAmendment() {
             body: amendment
         });
     }
+
+    function completedCallbackFunction(state) {
+        setAreUploadsComplete(state);
+    }
+
+    
 
     return (
         <div className="NewAmendment">
@@ -134,7 +145,7 @@ export default function NewAmendment() {
                         onChange={e => setUrgent(!urgent)}
                     />
                 </FormGroup>
-                <FileUploader required={requiredUploads} optional={optionalUploads}></FileUploader>
+                <FileUploader ref={uploader} required={requiredUploads} optional={optionalUploads} completedCallback={completedCallbackFunction}></FileUploader>
                 <FormGroup controlId="file">
                     <ControlLabel>Attachment</ControlLabel>
                     <FormControl onChange={handleFileChange} type="file" />
