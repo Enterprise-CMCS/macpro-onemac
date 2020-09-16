@@ -13,7 +13,6 @@ aws s3 rm s3://$uploads_bucket_name --recursive
 popd
 
 services=(
-  'database'
   'uploads'
   'app-api'
   'ui-auth'
