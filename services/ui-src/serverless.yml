@@ -5,7 +5,6 @@ plugins:
   - serverless-plugin-scripts
   - serverless-s3-sync
   - serverless-cloudfront-invalidate
-  - serverless-s3-local
   - serverless-offline
 
 custom:
@@ -18,13 +17,9 @@ custom:
   cognito_user_pool_id: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
   cognito_client_id: ${cf:ui-auth-${self:custom.stage}.UserPoolClientId}
   s3_attachments_bucket_region: ${self:custom.region}
-  s3_attachments_bucket_name: cms-spa-form-${self:custom.stage}-uploads
+  s3_attachments_bucket_name: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   ui_s3_bucket_name: ${cf:ui-${self:custom.stage}.S3BucketName}
   ui_cloudfront_distribution_id: ${cf:ui-${self:custom.stage}.CloudFrontDistributionId}
-  # S3 offline configuration
-  s3:
-    host: localhost
-    directory: /tmp
 
   s3Sync:
     - bucketName: ${self:custom.ui_s3_bucket_name}
@@ -59,7 +54,3 @@ provider:
   runtime: nodejs12.x
   region: ${self:custom.region}
   stage: dev
-
-resources:
-  # Uploads S3 bucket
-  - ${file(resources/uploads-s3-bucket.yml)}
