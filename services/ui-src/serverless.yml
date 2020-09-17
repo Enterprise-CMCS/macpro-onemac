@@ -18,7 +18,7 @@ custom:
   cognito_user_pool_id: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
   cognito_client_id: ${cf:ui-auth-${self:custom.stage}.UserPoolClientId}
   s3_attachments_bucket_region: ${self:custom.region}
-  s3_attachments_bucket_name: cms-spa-form-${self:custom.stage}-uploads}
+  s3_attachments_bucket_name: cms-spa-form-${self:custom.stage}-uploads
   ui_s3_bucket_name: ${cf:ui-${self:custom.stage}.S3BucketName}
   ui_cloudfront_distribution_id: ${cf:ui-${self:custom.stage}.CloudFrontDistributionId}
   # S3 offline configuration
