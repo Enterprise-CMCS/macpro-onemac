@@ -54,6 +54,7 @@ export default class FileUploader extends Component {
 
   /**
    * Generate the required upload controls.
+   * @returns the upload controls
    */
   generateRequiredControls() {
     let retval = [];
@@ -84,6 +85,7 @@ export default class FileUploader extends Component {
 
   /**
    * Generate the optional upload controls.
+   * @returns the upload controls
    */
   generateOptionalControls() {
     //TODO Implement
@@ -148,6 +150,7 @@ export default class FileUploader extends Component {
 
   /**
    * Renderer
+   * @returns the component view
    */
   render() {
     return (
