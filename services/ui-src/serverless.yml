@@ -8,14 +8,13 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  region: us-east-1
   api_region: ${cf:app-api-${self:custom.stage}.Region}
   api_url: ${cf:app-api-${self:custom.stage}.ApiGatewayRestApiUrl}
   cognito_region: ${cf:ui-auth-${self:custom.stage}.Region}
   cognito_identity_pool_id: ${cf:ui-auth-${self:custom.stage}.IdentityPoolId}
   cognito_user_pool_id: ${cf:ui-auth-${self:custom.stage}.UserPoolId}
   cognito_client_id: ${cf:ui-auth-${self:custom.stage}.UserPoolClientId}
-  s3_attachments_bucket_region: ${self:custom.region}
+  s3_attachments_bucket_region: ${cf:uploads-${self:custom.stage}.Region}
   s3_attachments_bucket_name: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   ui_s3_bucket_name: ${cf:ui-${self:custom.stage}.S3BucketName}
   ui_cloudfront_distribution_id: ${cf:ui-${self:custom.stage}.CloudFrontDistributionId}
@@ -51,5 +50,5 @@ custom:
 provider:
   name: aws
   runtime: nodejs12.x
-  region: ${self:custom.region}
+  region: us-east-1
   stage: dev

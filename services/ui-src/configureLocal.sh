@@ -41,7 +41,7 @@ cognito_client_id=`sh ../output.sh ../ui-auth UserPoolClientId $stage`
 echo "Using cognito_client_id as $cognito_client_id"
 s3_attachments_bucket_region=`sh ../output.sh ../ui-src Region $stage`
 echo "Using s3_attachments_bucket_region as $s3_attachments_bucket_region"
-s3_attachemnts_bucket_name=`sh ../output.sh ../ui-src AttachmentsBucketName $stage`
+s3_attachemnts_bucket_name=`sh ../output.sh ../uploads AttachmentsBucketName $stage`
 echo "Using s3_attachements_bucket_name as $s3_attachements_bucket_name"
 
 export API_REGION=$api_region

@@ -99,7 +99,7 @@ export default function Amendments() {
                             <div>
                             {amendment.uploads.map((upload, index) => (
                                 <div key={index}>
-                                    {upload.title}: <a href={upload.url}>{upload.filename}</a> 
+                                    {upload.title}: <a href={upload.url} target="_blank">{upload.filename}</a> 
                                 </div>
                             ))}
                             </div>
