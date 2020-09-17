@@ -5,7 +5,6 @@ set -e
 stage=${1:-dev}
 
 services=(
-  'uploads'
   'app-api'
   'ui-auth'
   'ui'

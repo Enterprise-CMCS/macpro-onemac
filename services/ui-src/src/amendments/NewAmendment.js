@@ -3,20 +3,16 @@ import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
-import config from "../config";
-import "./NewAmendment.css";
 import { API } from "aws-amplify";
-import * as s3Uploader from "../libs/s3Uploader";
 import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
 import { territoryList } from '../libs/territoryLib';
-import FileUploader from '../components/FileUploader';
+import FileUploader from '../common/FileUploader';
 
 export default function NewAmendment() {
-    const requiredUploads = ['One type', 'Another type'];
-    const optionalUploads = ['some other type', 'And another type'];
-    const file = useRef(null);
+    const requiredUploads = ['CMS Form 179', 'SPA Pages'];
+    const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Notice', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -53,29 +49,15 @@ export default function NewAmendment() {
           && transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
     }
 
-    function handleFileChange(event) {
-        file.current = event.target.files[0];
-    }
-
     async function handleSubmit(event) {
         event.preventDefault();
 
-        if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
-            alert(
-                `Please pick a file smaller than ${
-                    config.MAX_ATTACHMENT_SIZE / 1000000
-                } MB.`
-            );
-            return;
-        }
-
         setIsLoading(true);
 
-        uploader.current.uploadFiles();
+        let uploads = await uploader.current.uploadFiles();
 
         try {
-            const attachment = file.current ? await s3Uploader.uploadFile(file.current) : null;
-            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, attachment });
+            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
             history.push("/");
         } catch (e) {
             onError(e);
@@ -126,7 +108,7 @@ export default function NewAmendment() {
                     />
                 </FormGroup>
                 <FormGroup controlId="territory">
-                    <ControlLabel>State/Territory</ControlLabel>
+                    <ControlLabel>State/Territory<span className="required-mark">*</span></ControlLabel>
                     <Select
                         name="form-field-name"
                         value={territoryList.filter(function(option) {
@@ -137,7 +119,7 @@ export default function NewAmendment() {
                     />
                 </FormGroup>
                 <FormGroup controlId="transmittalNumber">
-                    <ControlLabel>SPA ID</ControlLabel>
+                    <ControlLabel>SPA ID<span className="required-mark">*</span></ControlLabel>
                     <FormControl
                         value={transmittalNumber}
                         placeholder='Sample: NY-20-0053'
@@ -151,14 +133,12 @@ export default function NewAmendment() {
                         onChange={e => setUrgent(!urgent)}
                     />
                 </FormGroup>
+                <h3>Attachments</h3>
                 <FileUploader ref={uploader} requiredUploads={requiredUploads} optionalUploads={optionalUploads} 
-                    completedCallback={uploadsReadyCallbackFunction}></FileUploader>
-                <FormGroup controlId="file">
-                    <ControlLabel>Attachment</ControlLabel>
-                    <FormControl onChange={handleFileChange} type="file" />
-                </FormGroup>
-                <h3>Summary</h3>
+                    readyCallback={uploadsReadyCallbackFunction}></FileUploader>
+                <br/>
                 <FormGroup controlId="comments">
+                    <ControlLabel>Summary</ControlLabel>
                     <FormControl
                         componentClass="textarea"
                         placeholder="Additional comments here"

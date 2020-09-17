@@ -8,12 +8,11 @@ stage=${1:-dev}
 pushd services
 ui_bucket_name=`./output.sh ui S3BucketName $stage`
 aws s3 rm s3://$ui_bucket_name --recursive
-uploads_bucket_name=`./output.sh uploads AttachmentsBucketName $stage`
+uploads_bucket_name=`./output.sh ui-src AttachmentsBucketName $stage`
 aws s3 rm s3://$uploads_bucket_name --recursive
 popd
 
 services=(
-  'uploads'
   'app-api'
   'ui-auth'
   'ui'

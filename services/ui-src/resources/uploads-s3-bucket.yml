@@ -1,0 +1,31 @@
+Resources:
+  AttachmentsBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      BucketName: ${self:custom.s3_attachments_bucket_name}
+      # Set the CORS policy
+      CorsConfiguration:
+        CorsRules:
+          -
+            AllowedOrigins:
+              - '*'
+            AllowedHeaders:
+              - '*'
+            AllowedMethods:
+              - GET
+              - PUT
+              - POST
+              - DELETE
+              - HEAD
+            MaxAge: 3000
+
+# Print out the name of the bucket that is created
+Outputs:
+  AttachmentsBucketName:
+    Value:
+      Ref: AttachmentsBucket
+  AttachmentsBucketArn:
+    Value: !GetAtt AttachmentsBucket.Arn
+  Region:
+    Value:
+      Ref: AWS::Region
