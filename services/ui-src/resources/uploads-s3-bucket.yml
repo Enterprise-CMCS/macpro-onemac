@@ -2,7 +2,14 @@ Resources:
   AttachmentsBucket:
     Type: AWS::S3::Bucket
     Properties:
-      BucketName: ${self:custom.s3_attachments_bucket_name}
+      BucketName:
+        - Key: Lower
+          Value:
+            'Fn::Transform':
+             - Name: 'String'
+               Parameters:
+                 InputString: ${self:custom.s3_attachments_bucket_name}
+                 Operation: Lower
       # Set the CORS policy
       CorsConfiguration:
         CorsRules:
