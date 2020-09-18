@@ -52,7 +52,7 @@ resources:
                     - 'arn:aws:ses:us-east-1:'
                     - Ref: AWS::AccountId
                     - ':identity/'
-                    - '${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "SPA-REPLY@cms.hhs.gov"}
+                    - '${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "SPA-REPLY@cms.hhs.gov"}'
             - Ref: AWS::NoValue
         Schema:
           - Name: given_name
