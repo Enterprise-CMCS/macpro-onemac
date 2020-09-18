@@ -1,6 +1,5 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
-import { FormControl } from "react-bootstrap";
 import * as s3Uploader from "../utils/s3Uploader";
 
 /**
@@ -27,6 +26,7 @@ export default class FileUploader extends Component {
     //Generate an array to keep track of the state of the file uploaders.
     //This method allows for duplicate titles.
     this.uploaders = [];
+    let uploaderHasFile = [];
     let id = 0;
     if (props.requiredUploads) {
       props.requiredUploads.forEach((title) => {
@@ -36,6 +36,7 @@ export default class FileUploader extends Component {
           isRequired: true,
           isComplete: false,
         };
+        uploaderHasFile.push(false);
         id++;
       });
     }
@@ -47,63 +48,12 @@ export default class FileUploader extends Component {
           isRequired: false,
           isComplete: false,
         };
+        uploaderHasFile.push(false);
         id++;
       });
     }
-  }
 
-  /**
-   * Generate the required upload controls.
-   * @returns the upload controls
-   */
-  generateRequiredControls() {
-    let retval = [];
-    this.uploaders.forEach((uploader) => {
-      if (uploader.isRequired) {
-        let body = (
-          <div key={uploader.id} className="uploader">
-            <div className="uploader-title">
-              {uploader.title}
-              <span className="required-mark">*</span>
-            </div>
-            <div className="uploader-control-container">
-              <FormControl
-                className="uploader-control"
-                type="file"
-                onChange={(e) =>
-                  this.handleFileChange(uploader.id, e.target.files)
-                }
-              />
-            </div>
-          </div>
-        );
-        retval.push(body);
-      }
-    });
-    return retval;
-  }
-
-  /**
-   * Generate the optional upload controls.
-   * @returns the upload controls
-   */
-  generateOptionalControls() {
-    //TODO Implement
-    return null;
-  }
-
-  /**
-   * Handle when a file input changes.
-   * @param {number} id the ID of the uploader
-   * @param {Object} fileList the list of files provided by the file input
-   */
-  async handleFileChange(id, fileList) {
-    if (fileList && fileList.length === 1) {
-      // We will only allow one file per file input.
-      this.setUploader(id, fileList[0]);
-    } else {
-      this.setUploader(id);
-    }
+    this.state = { uploaderHasFile };
   }
 
   /**
@@ -111,14 +61,25 @@ export default class FileUploader extends Component {
    * @param {number} id the ID of the uploader
    * @param {Object} file the file information to be uploaded, or null to remove a previous file
    */
-  setUploader(id, file = null) {
-    this.uploaders[id].file = file;
-    // If there is no file speficified then the state is false.
-    if (!file) {
-      this.uploaders[id].isComplete = false;
-    } else {
-      this.uploaders[id].isComplete = true;
+  setUploader(event, id, files = null) {
+    // The state change here will result in kickin off a second empty event, so ignore it.
+    if (event === 0) {
+      return;
     }
+
+    let uploader = this.uploaders[id];
+
+    // If there is no file speficified then the state is false.
+    if (files && files.length === 1) {
+      uploader.isComplete = true;
+      uploader.file = files[0];
+    } else {
+      uploader.isComplete = false;
+      uploader.file = null;
+    }
+    let newState = this.state.uploaderHasFile;
+    newState[id] = uploader.isComplete;
+    this.setState({ uploaderHasFile: newState });
 
     let areAllComplete = true;
     this.uploaders.forEach((uploader) => {
@@ -137,7 +98,7 @@ export default class FileUploader extends Component {
    */
   uploadFiles = () => {
     let files = [];
-    this.uploaders.forEach((uploader) => {
+    this.state.uploaders.forEach((uploader) => {
       if (uploader.file) {
         let file = uploader.file;
         file.title = uploader.title;
@@ -148,16 +109,49 @@ export default class FileUploader extends Component {
     return s3Uploader.uploadFiles(files);
   };
 
+  handleFileClear(event, id) {
+    document.getElementById("uploader-input-" + id).value="";
+    this.setUploader(event, id);
+
+  }
   /**
    * Renderer
    * @returns the component view
    */
   render() {
-    return (
-      <div>
-        {this.generateRequiredControls()}
-        {this.generateOptionalControls()}
-      </div>
-    );
+    let reqControls = [];
+    let optControls = [];
+    this.uploaders.forEach((uploader) => {
+      let controls = (
+        <div key={uploader.id} className="uploader">
+          <div className="uploader-label">
+            {uploader.title}
+            {uploader.isRequired && <span className="required-mark">*</span>}
+          </div>
+          <div className="uploader-input">
+            <input
+              className="uploader-input"
+              type="file"
+              id={"uploader-input-" + uploader.id}
+              onChange={(event) => this.setUploader(event, uploader.id, event.target.files)}
+            />
+          </div>
+          <div className="uploader-controls">
+            {this.state.uploaderHasFile[uploader.id] && (
+              <button onClick={(event) => this.handleFileClear(event, uploader.id)}>CLEAR</button>
+            )}
+          </div>
+        </div>
+      );
+      if (uploader.isRequired) {
+        reqControls.push(controls);
+      } else {
+        optControls.push(controls);
+      }
+    });
+
+    let allControls = reqControls.concat(optControls);
+
+    return <div>{allControls}</div>;
   }
 }
