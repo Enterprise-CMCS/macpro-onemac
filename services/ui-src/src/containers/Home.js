@@ -8,6 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 export default function Home() {
     const [amendments, setAmendments] = useState([]);
+    const [waivers, setWaivers] = useState([]);
     const { isAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -19,6 +20,8 @@ export default function Home() {
             try {
                 const amendments = await loadAmendments();
                 setAmendments(amendments);
+                const waivers = await loadWaivers();
+                setWaivers(waivers);
             } catch (e) {
                 onError(e);
             }
@@ -31,6 +34,10 @@ export default function Home() {
 
     function loadAmendments() {
         return API.get("amendments", "/amendments");
+    }
+
+    function loadWaivers() {
+        return API.getWaiver("waiver", "/waiver");
     }
 
     function renderAmendmentsList(amendments) {
@@ -46,6 +53,25 @@ export default function Home() {
                     <ListGroupItem>
                         <h4>
                             <b>{"\uFF0B"}</b> Submit New APS
+                        </h4>
+                    </ListGroupItem>
+                </LinkContainer>
+            )
+        );
+    }
+    function renderWaiverList(waivers) {
+        return [{}].concat(waivers).map((waiver, i) =>
+            i !== 0 ? (
+                <LinkContainer key={waiver.waiverId} to={`/waiver/${waiver.waiverId}`}>
+                    <ListGroupItem header={waiver.waiverNumber.trim().split("\n")[0]}>
+                        {"Created: " + new Date(waiver.createdAt).toLocaleString()}
+                    </ListGroupItem>
+                </LinkContainer>
+            ) : (
+                <LinkContainer key="new" to="/waiver/new">
+                    <ListGroupItem>
+                        <h4>
+                            <b>{"\uFF0B"}</b> Submit New SPA Waiver
                         </h4>
                     </ListGroupItem>
                 </LinkContainer>
@@ -73,9 +99,20 @@ export default function Home() {
         );
     }
 
+    function renderWaivers() {
+        return (
+            <div className="waivers">
+                <PageHeader>Your Waiver Submissions</PageHeader>
+                <ListGroup>
+                    {!isLoading && renderWaiverList(waivers)}
+                </ListGroup>
+            </div>
+        );
+    }
+
     return (
         <div className="Home">
-            {isAuthenticated ? renderAmendments() : renderLander()}
+            {isAuthenticated ? renderAmendments()+renderWaivers() : renderLander()}
         </div>
     );
 }
