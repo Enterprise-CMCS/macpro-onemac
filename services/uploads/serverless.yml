@@ -7,10 +7,6 @@
 # The `service` block is the name of the service
 service: uploads
 
-plugins:
-  - serverless-s3-local
-  - serverless-offline
-
 # The `provider` block defines where your service will be deployed
 provider:
   name: aws
@@ -20,10 +16,6 @@ provider:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  # S3 offline configuration
-  s3:
-    host: localhost
-    directory: /tmp
 
 resources:
   Resources:

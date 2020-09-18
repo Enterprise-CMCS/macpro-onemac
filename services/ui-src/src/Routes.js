@@ -4,8 +4,8 @@ import Home from "./containers/Home";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
-import NewAmendment from "./amendments/NewAmendment";
-import Amendments from "./amendments/Amendments";
+import NewAmendment from "./containers/NewAmendment";
+import Amendments from "./containers/Amendments";
 import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";

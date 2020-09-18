@@ -26,9 +26,4 @@ do
   echo "  $varname: \"$value\"," >> ./public/env-config.js
 done < .env
 
-if [ ! -z "$IS_OFFLINE" ]
-then
-  echo "  IS_OFFLINE: \"true\"," >> ./public/env-config.js
-fi
-
 echo "}" >> ./public/env-config.js
