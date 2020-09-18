@@ -3,17 +3,16 @@ import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
-import config from "../config";
-import "./NewAmendment.css";
 import { API } from "aws-amplify";
-import * as s3Uploader from "../libs/s3Uploader";
 import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
 import { territoryList } from '../libs/territoryLib';
+import FileUploader from '../common/FileUploader';
 
 export default function NewAmendment() {
-    const file = useRef(null);
+    const requiredUploads = ['CMS Form 179', 'SPA Pages'];
+    const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Notice', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
     const history = useHistory();
     const [email, setEmail] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -23,6 +22,13 @@ export default function NewAmendment() {
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
     const [isLoading, setIsLoading] = useState(false);
+
+    // True when the required uploads have been set.
+    const [areUploadsComplete, setAreUploadsReady] = useState(false);
+
+    //Reference to the File Uploader.
+    const uploader = useRef(null);
+
     const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
@@ -40,30 +46,18 @@ export default function NewAmendment() {
 
     function validateForm() {
         return email.length > 0 && firstName.length > 0 && lastName.length > 0
-          && transmittalNumber.length > 0 && territory.length > 0 ;
-    }
-
-    function handleFileChange(event) {
-        file.current = event.target.files[0];
+          && transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
     }
 
     async function handleSubmit(event) {
         event.preventDefault();
 
-        if (file.current && file.current.size > config.MAX_ATTACHMENT_SIZE) {
-            alert(
-                `Please pick a file smaller than ${
-                    config.MAX_ATTACHMENT_SIZE / 1000000
-                } MB.`
-            );
-            return;
-        }
-
         setIsLoading(true);
 
+        let uploads = await uploader.current.uploadFiles();
+
         try {
-            const attachment = file.current ? await s3Uploader.uploadFile(file.current) : null;
-            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, attachment });
+            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
             history.push("/");
         } catch (e) {
             onError(e);
@@ -77,9 +71,18 @@ export default function NewAmendment() {
         });
     }
 
+    /**
+     * Callback for the uploader to set if the upload requirements are met.
+     * @param {Boolean} state true if the required uploads have been specified
+     */
+    function uploadsReadyCallbackFunction(state) {
+        setAreUploadsReady(state);
+    }  
+
     return (
         <div className="NewAmendment">
             <form onSubmit={handleSubmit}>
+                <h3>SPA Details</h3>
                 <FormGroup controlId="email">
                     <ControlLabel>Contact Email</ControlLabel>
                     <FormControl
@@ -105,7 +108,7 @@ export default function NewAmendment() {
                     />
                 </FormGroup>
                 <FormGroup controlId="territory">
-                    <ControlLabel>State/Territory</ControlLabel>
+                    <ControlLabel>State/Territory<span className="required-mark">*</span></ControlLabel>
                     <Select
                         name="form-field-name"
                         value={territoryList.filter(function(option) {
@@ -116,7 +119,7 @@ export default function NewAmendment() {
                     />
                 </FormGroup>
                 <FormGroup controlId="transmittalNumber">
-                    <ControlLabel>SPA ID</ControlLabel>
+                    <ControlLabel>SPA ID<span className="required-mark">*</span></ControlLabel>
                     <FormControl
                         value={transmittalNumber}
                         placeholder='Sample: NY-20-0053'
@@ -130,11 +133,12 @@ export default function NewAmendment() {
                         onChange={e => setUrgent(!urgent)}
                     />
                 </FormGroup>
-                <FormGroup controlId="file">
-                    <ControlLabel>Attachment</ControlLabel>
-                    <FormControl onChange={handleFileChange} type="file" />
-                </FormGroup>
+                <h3>Attachments</h3>
+                <FileUploader ref={uploader} requiredUploads={requiredUploads} optionalUploads={optionalUploads} 
+                    readyCallback={uploadsReadyCallbackFunction}></FileUploader>
+                <br/>
                 <FormGroup controlId="comments">
+                    <ControlLabel>Summary</ControlLabel>
                     <FormControl
                         componentClass="textarea"
                         placeholder="Additional comments here"
