@@ -1,9 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API, Storage } from "aws-amplify";
+import { API } from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import "./Amendments.css";
 import Select from 'react-select';
 import Switch from "react-ios-switch";
 import { territoryList } from '../libs/territoryLib';
@@ -32,10 +31,7 @@ export default function Amendments() {
         async function onLoad() {
             try {
                 const amendment = await loadAmendment();
-                const { email, firstName, lastName, territory, transmittalNumber, urgent, comments, attachment } = amendment;
-                if (attachment) {
-                    amendment.attachmentURL = await Storage.vault.get(attachment);
-                }
+                const { email, firstName, lastName, territory, transmittalNumber, urgent, comments } = amendment;
                 setEmail(email);
                 setFirstName(capitalize(firstName));
                 setLastName(capitalize(lastName));
@@ -52,14 +48,11 @@ export default function Amendments() {
         onLoad();
     }, [id]);
 
-    function formatFilename(str) {
-        return str.replace(/^\w+-/, "");
-    }
-
     return (
         <div className="Amendments">
             {amendment && (
                 <form>
+                    <h3>SPA Details</h3>
                     <FormGroup controlId="transmittalNumber">
                         <ControlLabel>APS ID &nbsp;(Transmittal Number)</ControlLabel>
                         <FormControl
@@ -100,23 +93,21 @@ export default function Amendments() {
                                 disabled={true}
                         />
                     </FormGroup>
-                    {amendment.attachment && (
-                        <FormGroup>
-                            <ControlLabel>Attachment</ControlLabel>
-                            <FormControl.Static>
-                                <a
-                                    target="_blank"
-                                    rel="noopener noreferrer"
-                                    href={amendment.attachmentURL}
-                                >
-                                    {formatFilename(amendment.attachment.filename)}
-                                </a>
-                            </FormControl.Static>
-                        </FormGroup>
-                    )}
-
+                    <h3>Attachments</h3>
+                    <div>
+                        {amendment.uploads && (
+                            <div>
+                            {amendment.uploads.map((upload, index) => (
+                                <div key={index}>
+                                    {upload.title}: <a href={upload.url} target="_blank" rel="noopener noreferrer">{upload.filename}</a> 
+                                </div>
+                            ))}
+                            </div>
+                        )}
+                    </div>
+                    <br/>
                     <FormGroup controlId="comments">
-                        <ControlLabel>Additional Comments</ControlLabel>
+                        <ControlLabel>Summary</ControlLabel>
                         <FormControl
                             componentClass="textarea"
                             value={comments}

@@ -27,7 +27,7 @@ export const main = handler(async (event, context) => {
       territory: data.territory,
       urgent: data.urgent,
       comments: data.comments,
-      attachment: data.attachment,
+      uploads: data.uploads,
       createdAt: Date.now(),
     },
   };

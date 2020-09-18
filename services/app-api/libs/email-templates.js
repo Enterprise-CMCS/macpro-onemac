@@ -33,7 +33,6 @@ export function getUserAckEmailBody(data) {
  * @returns a message object with subject and body
  */
 export function getSubmissionEmailBody(data) {
-    let uploads = [data.attachment];  //Make this an array for now, so we can handle multiple attachments later.
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
     message.subject = "New SPA " + data.transmittalNumber + " submitted";
@@ -45,7 +44,7 @@ export function getSubmissionEmailBody(data) {
     <br><b>ID</b>: ${data.transmittalNumber}
     <br><b>Urgent?</b>: ${isUrgent}</p>
     <p>Files:</p>
-    <p>${getLinksHtml(uploads)}</p>
+    <p>${getLinksHtml(data.uploads)}</p>
     <p>If these files seem suspicious, do not open them, and instead forward this email to <a href="mailto:CMS_IT_Service_Desk@cms.hhs.gov">CMS_IT_Service_Desk@cms.hhs.gov</a>.</p>
     <p>Thank you!</p>`;
 
