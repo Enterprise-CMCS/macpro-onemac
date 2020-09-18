@@ -26,7 +26,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
           - ""
-          - ${env:SES_SOURCE_EMAIL_ADDRESS, ""}
+          - ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "SPA-REPLY@cms.hhs.gov"}
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
@@ -52,7 +52,7 @@ resources:
                     - 'arn:aws:ses:us-east-1:'
                     - Ref: AWS::AccountId
                     - ':identity/'
-                    - '${env:SES_SOURCE_EMAIL_ADDRESS, ""}'
+                    - '${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "SPA-REPLY@cms.hhs.gov"}
             - Ref: AWS::NoValue
         Schema:
           - Name: given_name
