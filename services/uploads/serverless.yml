@@ -24,6 +24,7 @@ custom:
   s3:
     host: localhost
     directory: /tmp
+    cors: resource/local-cors-policy.xml
 
 resources:
   Resources:

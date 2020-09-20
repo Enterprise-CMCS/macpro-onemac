@@ -1,0 +1,10 @@
+<CORSConfiguration>
+ <CORSRule>
+   <AllowedOrigin>*</AllowedOrigin>
+   <AllowedMethod>PUT</AllowedMethod>
+   <AllowedMethod>POST</AllowedMethod>
+   <AllowedMethod>GET</AllowedMethod>
+   <AllowedHeader>*</AllowedHeader>
+   <ExposeHeader>Access-Control-Allow-Origin</ExposeHeader>
+ </CORSRule>
+</CORSConfiguration>

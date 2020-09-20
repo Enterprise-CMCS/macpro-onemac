@@ -13,5 +13,6 @@ export default {
         USER_POOL_ID: window._env_.COGNITO_USER_POOL_ID,
         APP_CLIENT_ID: window._env_.COGNITO_CLIENT_ID,
         IDENTITY_POOL_ID: window._env_.COGNITO_IDENTITY_POOL_ID
-    }
+    },
+    IS_OFFLINE: window._env_.IS_OFFLINE
 };

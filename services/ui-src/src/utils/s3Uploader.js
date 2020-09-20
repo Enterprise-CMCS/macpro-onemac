@@ -19,7 +19,6 @@ export async function uploadFiles(fileArray) {
     resultPromise = new Promise((resolve, reject) => {
       Promise.all(uploadPromises)
         .then((results) => {
-          console.log("Finish ALL uploads: ", results);
           resolve(results);
         })
         .catch((error) => {
