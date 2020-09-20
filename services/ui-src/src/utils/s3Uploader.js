@@ -56,7 +56,6 @@ export async function uploadFile(file) {
       title: file.title
     };
     retPromise = Promise.resolve(result);
-    console.log("UPLOADED", result);
   } catch (error) {
     console.log("ERROR while uploading file: ", file, error);
     retPromise = Promise.reject(error);

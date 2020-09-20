@@ -54,13 +54,12 @@ export default function NewAmendment() {
 
         setIsLoading(true);
 
-        let uploads = await uploader.current.uploadFiles();
-
         try {
+            let uploads = await uploader.current.uploadFiles();
             await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
             history.push("/");
-        } catch (e) {
-            onError(e);
+        } catch (error) {
+            onError("There was an error submitting your request.  Please try again.");
             setIsLoading(false);
         }
     }

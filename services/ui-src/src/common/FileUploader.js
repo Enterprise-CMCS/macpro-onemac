@@ -166,7 +166,6 @@ export default class FileUploader extends Component {
               />
             </label>
             <span
-              id={"uploader-input-text-" + uploader.id}
               className="uploader-input-text"
             >
               {this.state.uploaderHasFile[uploader.id]
