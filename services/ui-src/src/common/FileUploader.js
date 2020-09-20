@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as s3Uploader from "../utils/s3Uploader";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Provides a file uploader with a set of required and optional uploads.
@@ -53,15 +55,17 @@ export default class FileUploader extends Component {
       });
     }
 
+    // This state is used to be able to update the form when a change occurs.
     this.state = { uploaderHasFile };
   }
 
   /**
    * Set the provided uploader information.
+   * @param {Object} event the event that triggered this action.
    * @param {number} id the ID of the uploader
-   * @param {Object} file the file information to be uploaded, or null to remove a previous file
+   * @param {Object} files the list of files provided by the input field
    */
-  setUploader(event, id, files = null) {
+  handleFileChange(event, id, files = null) {
     // The state change here will result in kickin off a second empty event, so ignore it.
     if (event === 0) {
       return;
@@ -77,10 +81,13 @@ export default class FileUploader extends Component {
       uploader.isComplete = false;
       uploader.file = null;
     }
+
+    //Update the state, so the form is updated.
     let newState = this.state.uploaderHasFile;
     newState[id] = uploader.isComplete;
     this.setState({ uploaderHasFile: newState });
 
+    // Set the overall completeness of the input, so the overall form knows the required files are selected.
     let areAllComplete = true;
     this.uploaders.forEach((uploader) => {
       if (uploader.isRequired && !uploader.isComplete) {
@@ -94,11 +101,21 @@ export default class FileUploader extends Component {
   }
 
   /**
+   * Clear the file selection for the provided uploader.
+   * @param {Object} event the event that triggered this action.
+   * @param {number} id the ID of the uploader
+   */
+  handleFileClear(event, id) {
+    document.getElementById("uploader-input-" + id).value = "";
+    this.handleFileChange(event, id);
+  }
+
+  /**
    * Upload all the files.
    */
   uploadFiles = () => {
     let files = [];
-    this.state.uploaders.forEach((uploader) => {
+    this.uploaders.forEach((uploader) => {
       if (uploader.file) {
         let file = uploader.file;
         file.title = uploader.title;
@@ -109,39 +126,66 @@ export default class FileUploader extends Component {
     return s3Uploader.uploadFiles(files);
   };
 
-  handleFileClear(event, id) {
-    document.getElementById("uploader-input-" + id).value="";
-    this.setUploader(event, id);
-
-  }
   /**
    * Renderer
    * @returns the component view
    */
   render() {
+    // Generate each file input control first.
     let reqControls = [];
     let optControls = [];
     this.uploaders.forEach((uploader) => {
+
+      //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
-        <div key={uploader.id} className="uploader">
-          <div className="uploader-label">
-            {uploader.title}
-            {uploader.isRequired && <span className="required-mark">*</span>}
-          </div>
-          <div className="uploader-input">
-            <input
-              className="uploader-input"
-              type="file"
-              id={"uploader-input-" + uploader.id}
-              onChange={(event) => this.setUploader(event, uploader.id, event.target.files)}
-            />
-          </div>
-          <div className="uploader-controls">
+        <tr key={uploader.id}>
+          <td className="uploader-type-cell">
+            <div className="uploader-type-label">
+              {uploader.title}
+              {uploader.isRequired && <span className="required-mark">*</span>}
+            </div>
+          </td>
+          <td className="uploader-input-cell">
+            <label className="uploader-input-label">
+              Choose File
+              <input
+                type="file"
+                id={"uploader-input-" + uploader.id}
+                name={"uploader-input-" + uploader.id}
+                style={{
+                  width: "0.1px",
+                  height: "0.1px",
+                  opacity: "0",
+                  overflow: "hidden",
+                  position: "absolute",
+                  zIndex: "-1",
+                }}
+                onChange={(event) =>
+                  this.handleFileChange(event, uploader.id, event.target.files)
+                }
+              />
+            </label>
+            <span
+              id={"uploader-input-text-" + uploader.id}
+              className="uploader-input-text"
+            >
+              {this.state.uploaderHasFile[uploader.id]
+                ? uploader.file.name
+                : "No file chosen"}
+            </span>
+          </td>
+          <td className="uploader-controls-cell">
             {this.state.uploaderHasFile[uploader.id] && (
-              <button onClick={(event) => this.handleFileClear(event, uploader.id)}>CLEAR</button>
+              <button
+                className="uploader-clear-button"
+                title="Remove file"
+                onClick={(event) => this.handleFileClear(event, uploader.id)}
+              >
+                <FontAwesomeIcon icon={faTimes} />
+              </button>
             )}
-          </div>
-        </div>
+          </td>
+        </tr>
       );
       if (uploader.isRequired) {
         reqControls.push(controls);
@@ -150,8 +194,15 @@ export default class FileUploader extends Component {
       }
     });
 
+    //This results in an array with all the required fields first, in the order specified in the property array.
     let allControls = reqControls.concat(optControls);
 
-    return <div>{allControls}</div>;
+    return (
+      <div className="uploader">
+        <table>
+          <tbody>{allControls}</tbody>
+        </table>
+      </div>
+    );
   }
 }
