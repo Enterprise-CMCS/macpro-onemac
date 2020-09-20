@@ -6,6 +6,8 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Select from 'react-select';
 import Switch from "react-ios-switch";
 import { territoryList } from '../libs/territoryLib';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 
 
 export default function Amendments() {
@@ -99,7 +101,7 @@ export default function Amendments() {
                             <div>
                             {amendment.uploads.map((upload, index) => (
                                 <div key={index}>
-                                    {upload.title}: <a href={upload.url} target="_blank" rel="noopener noreferrer">{upload.filename}</a> 
+                                    {upload.title}: <a href={upload.url} target="_blank" rel="noopener noreferrer">{upload.filename}</a> <FontAwesomeIcon icon={faExternalLinkAlt} />
                                 </div>
                             ))}
                             </div>
