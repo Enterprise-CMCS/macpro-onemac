@@ -42,12 +42,14 @@ export default function Amendments() {
                 setTransmittalNumber(transmittalNumber);
                 setUrgent(urgent);
                 setComments(comments);
-                
-                //Get a temporary S3 URL to display on the form
+
+                // Get temporary URLs to the S3 bucket
                 if(amendment.uploads) {
-                    amendment.uploads.forEach(async (upload) => {
-                        upload.url = await Storage.vault.get(upload.s3Key);
-                    });
+                    let i;
+                    // Use a for loop instead of forEach to stay in the context of this async function.
+                    for (i = 0; i < amendment.uploads.length; i++) {
+                        amendment.uploads[i].url = await Storage.vault.get(amendment.uploads[i].s3Key);
+                    }
                 }
                 setAmendment(amendment);
             } catch (e) {
