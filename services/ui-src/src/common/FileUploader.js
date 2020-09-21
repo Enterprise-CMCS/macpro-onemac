@@ -1,8 +1,11 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import * as s3Uploader from "../utils/s3Uploader";
+import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+
+const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
 
 /**
  * Provides a file uploader component with a set of required and optional uploads.
@@ -10,19 +13,19 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
  *   Define the required and optional upload titles as needed.  Note both properties are optional :
  *     const requiredUploads = ['required title 1', 'required title 2'];
  *     const optionalUploads = ['optional title 1'];
- * 
+ *
  *   Define a callback function if you need to know when the required uploads have been selected:
  *     function uploadsReadyCallbackFunction(state) {
  *       // Do something with the boolean state which is true when required uploads are set.
- *     }  
- * 
+ *     }
+ *
  *   Insert the following in your renderer:
- *    <FileUploader ref={uploader} requiredUploads={requiredUploads} optionalUploads={optionalUploads} 
+ *    <FileUploader ref={uploader} requiredUploads={requiredUploads} optionalUploads={optionalUploads}
  *                   readyCallback={uploadsReadyCallbackFunction}></FileUploader>
  *
  *   Trigger the uploads when you are ready by calling:
  *     uploader.current.uploadFiles()
- * 
+ *
  * @property {Array.string} requiredUploads an array of required upload types or null if no required uploads
  * @property {Array.string} optionalUploads an array of optional upload types or null if no optional uploads
  * @callback readyCallback callback that returns a boolean with true when all required uploads have been set
@@ -92,6 +95,15 @@ export default class FileUploader extends Component {
 
     // If there is no file speficified then the state is false.
     if (files && files.length === 1) {
+      // First check if the upload is larger than what is allowed
+      if (files[0].size > MAX_FILE_SIZE_BYTES) {
+        this.handleFileClear(event, id);
+        alert(
+          `Attachments cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.`
+        );
+        return;
+      }
+
       uploader.isComplete = true;
       uploader.file = files[0];
     } else {
@@ -152,7 +164,6 @@ export default class FileUploader extends Component {
     let reqControls = [];
     let optControls = [];
     this.uploaders.forEach((uploader) => {
-
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
         <tr key={uploader.id}>
@@ -182,9 +193,7 @@ export default class FileUploader extends Component {
                 }
               />
             </label>
-            <span
-              className="uploader-input-text"
-            >
+            <span className="uploader-input-text">
               {this.state.uploaderHasFile[uploader.id]
                 ? uploader.file.name
                 : "No file chosen"}
