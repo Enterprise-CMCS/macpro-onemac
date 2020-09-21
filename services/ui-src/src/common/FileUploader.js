@@ -5,9 +5,26 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
 /**
- * Provides a file uploader with a set of required and optional uploads.
- * @property {Array.string} requiredUploads an optional array of required upload types
- * @property {Array.string} optionalUploads an optional array of optional upload types
+ * Provides a file uploader component with a set of required and optional uploads.
+ * Usage:
+ *   Define the required and optional upload titles as needed.  Note both properties are optional :
+ *     const requiredUploads = ['required title 1', 'required title 2'];
+ *     const optionalUploads = ['optional title 1'];
+ * 
+ *   Define a callback function if you need to know when the required uploads have been selected:
+ *     function uploadsReadyCallbackFunction(state) {
+ *       // Do something with the boolean state which is true when required uploads are set.
+ *     }  
+ * 
+ *   Insert the following in your renderer:
+ *    <FileUploader ref={uploader} requiredUploads={requiredUploads} optionalUploads={optionalUploads} 
+ *                   readyCallback={uploadsReadyCallbackFunction}></FileUploader>
+ *
+ *   Trigger the uploads when you are ready by calling:
+ *     uploader.current.uploadFiles()
+ * 
+ * @property {Array.string} requiredUploads an array of required upload types or null if no required uploads
+ * @property {Array.string} optionalUploads an array of optional upload types or null if no optional uploads
  * @callback readyCallback callback that returns a boolean with true when all required uploads have been set
  */
 export default class FileUploader extends Component {
