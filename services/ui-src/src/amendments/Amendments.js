@@ -8,6 +8,7 @@ import Switch from "react-ios-switch";
 import { territoryList } from '../libs/territoryLib';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { Storage } from "aws-amplify";
 
 
 export default function Amendments() {
@@ -41,6 +42,13 @@ export default function Amendments() {
                 setTransmittalNumber(transmittalNumber);
                 setUrgent(urgent);
                 setComments(comments);
+                
+                //Get a temporary S3 URL to display on the form
+                if(amendment.uploads) {
+                    amendment.uploads.forEach(async (upload) => {
+                        upload.url = await Storage.vault.get(upload.s3Key);
+                    });
+                }
                 setAmendment(amendment);
             } catch (e) {
                 onError(e);
