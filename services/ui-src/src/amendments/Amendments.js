@@ -6,6 +6,9 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Select from 'react-select';
 import Switch from "react-ios-switch";
 import { territoryList } from '../libs/territoryLib';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { Storage } from "aws-amplify";
 
 
 export default function Amendments() {
@@ -39,6 +42,15 @@ export default function Amendments() {
                 setTransmittalNumber(transmittalNumber);
                 setUrgent(urgent);
                 setComments(comments);
+
+                // Get temporary URLs to the S3 bucket
+                if(amendment.uploads) {
+                    let i;
+                    // Use a for loop instead of forEach to stay in the context of this async function.
+                    for (i = 0; i < amendment.uploads.length; i++) {
+                        amendment.uploads[i].url = await Storage.vault.get(amendment.uploads[i].s3Key);
+                    }
+                }
                 setAmendment(amendment);
             } catch (e) {
                 onError(e);
@@ -99,7 +111,7 @@ export default function Amendments() {
                             <div>
                             {amendment.uploads.map((upload, index) => (
                                 <div key={index}>
-                                    {upload.title}: <a href={upload.url} target="_blank" rel="noopener noreferrer">{upload.filename}</a> 
+                                    {upload.title}: <a href={upload.url} target="_blank" rel="noopener noreferrer">{upload.filename}</a> <FontAwesomeIcon icon={faExternalLinkAlt} />
                                 </div>
                             ))}
                             </div>

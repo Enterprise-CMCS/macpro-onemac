@@ -19,7 +19,6 @@ export async function uploadFiles(fileArray) {
     resultPromise = new Promise((resolve, reject) => {
       Promise.all(uploadPromises)
         .then((results) => {
-          console.log("Finish ALL uploads: ", results);
           resolve(results);
         })
         .catch((error) => {
@@ -46,7 +45,8 @@ export async function uploadFile(file) {
     const stored = await Storage.vault.put(targetPathname, file, {
       contentType: file.type,
     });
-    const url = await Storage.vault.get(stored.key);
+    // TODO Need to get a permanent URL here.  API says only allows less than 1 week
+    const url = await Storage.vault.get(stored.key, { expires: 600000 });
 
     let result = {
       s3Key: stored.key,
@@ -56,7 +56,6 @@ export async function uploadFile(file) {
       title: file.title
     };
     retPromise = Promise.resolve(result);
-    console.log("UPLOADED", result);
   } catch (error) {
     console.log("ERROR while uploading file: ", file, error);
     retPromise = Promise.reject(error);
