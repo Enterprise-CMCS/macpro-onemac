@@ -14,7 +14,6 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-amendments
-  tableNameForWaiver: cms-spa-form-${self:custom.stage}-waiver
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:SES_SOURCE_EMAIL_ADDRESS, "admin@example.com"}
   reviewerEmail: ${opt:reviewTeamEmail, env:SES_REVIEW_TEAM_EMAIL_ADDRESS, "reviewteam@example.com"}
@@ -86,11 +85,11 @@ functions:
           authorizer: aws_iam
 
   createWaiver:
-    handler: createWaiver.main
+    handler: create.main
     role: LambdaApiRole
     events:
       - http:
-          path: waiver
+          path: waivers
           method: post
           cors: true
           authorizer: aws_iam
@@ -99,21 +98,21 @@ functions:
       reviewerEmail: ${self:custom.reviewerEmail}
 
   getWaiver:
-    handler: getWaiver.main
+    handler: get.main
     role: LambdaApiRole
     events:
       - http:
-          path: waiver/{id}
+          path: waivers/{id}
           method: get
           cors: true
           authorizer: aws_iam
 
   listWaiver:
-    handler: listWaiver.main
+    handler: list.main
     role: LambdaApiRole
     events:
       - http:
-          path: waiver
+          path: waivers
           method: get
           cors: true
           authorizer: aws_iam

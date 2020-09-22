@@ -57,7 +57,9 @@ export default function NewAmendment() {
         let uploads = await uploader.current.uploadFiles();
 
         try {
-            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
+            let amendmentType="amendments";
+
+            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads, amendmentType });
             history.push("/");
         } catch (e) {
             onError(e);
