@@ -1,52 +1,36 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
-import { API, Storage } from "aws-amplify";
+import { API } from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Select from 'react-select';
 import { territoryList } from '../libs/territoryLib';
-
+import { actionTypeOptions, waiverAuthorityOptions } from '../libs/waiverLib';
 
 export default function Waivers() {
     const { id } = useParams();
-    const [amendment, setAmendment] = useState(null);
-    const [isWaiver, setIsWaiver] = useState("");
+    const [waiver, setWaiver] = useState(null);
     const [territory, setTerritory] = useState("");
     const [actionType, setActionType] = useState("");
-    const actionTypeOptions = [
-      { label: 'test 1', value: '1'},
-      { label: 'test 2', value: '2'},
-      { label: 'test 3', value: '3'},
-    ];
     const [waiverNumber, setWaiverNumber] = useState("");
     const [waiverAuthority, setWaiverAuthority] = useState("");
-    const waiverAuthorityOptions = [
-      { label: 'test 1', value: '1'},
-      { label: 'test 2', value: '2'},
-      { label: 'test 3', value: '3'},
-    ];
-    const [comments, setComments] = useState("");
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
+    const [summary, setSummary] = useState("");
 
     useEffect(() => {
         function loadWaiver() {
-            return API.get("amendments", `/amendments/${id}`);
+            return API.get("waivers", `/waivers/${id}`);
         }
 
         async function onLoad() {
             try {
-                const amendment = await loadWaiver();
-                const { email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads, isWaiver, actionType, waiverAuthority} = amendment;
+                const waiver = await loadWaiver();
+                const { waiverNumber, territory, actionType, waiverAuthority, summary } = waiver;
                 setTerritory(territory);
-                setIsWaiver(isWaiver);
                 setActionType(actionType);
-                setWaiverNumber(transmittalNumber);
+                setWaiverNumber(waiverNumber);
                 setWaiverAuthority(waiverAuthority);
-                setComments(comments);
-                setAmendment(amendment);
+                setSummary(summary);
+                setWaiver(waiver);
             } catch (e) {
                 onError(e);
             }
@@ -57,7 +41,7 @@ export default function Waivers() {
 
     return (
         <div className="Waiver">
-            {amendment && (
+            {waiver && (
                 <form>
                     <FormGroup controlId="territory">
                         <ControlLabel>State/Territory</ControlLabel>
@@ -99,11 +83,11 @@ export default function Waivers() {
                             options={waiverAuthorityOptions}
                         />
                     </FormGroup>
-                    <FormGroup controlId="comments">
+                    <FormGroup controlId="summary">
                         <ControlLabel>Summary</ControlLabel>
                         <FormControl
                             componentClass="textarea"
-                            value={comments}
+                            value={summary}
                             disabled={true}
                         />
                     </FormGroup>

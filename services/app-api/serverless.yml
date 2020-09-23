@@ -85,7 +85,7 @@ functions:
           authorizer: aws_iam
 
   createWaiver:
-    handler: create.main
+    handler: createWaiver.main
     role: LambdaApiRole
     events:
       - http:
@@ -98,7 +98,7 @@ functions:
       reviewerEmail: ${self:custom.reviewerEmail}
 
   getWaiver:
-    handler: get.main
+    handler: getWaiver.main
     role: LambdaApiRole
     events:
       - http:
@@ -108,7 +108,7 @@ functions:
           authorizer: aws_iam
 
   listWaiver:
-    handler: list.main
+    handler: listWaiver.main
     role: LambdaApiRole
     events:
       - http:

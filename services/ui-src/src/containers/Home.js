@@ -8,6 +8,7 @@ import { LinkContainer } from "react-router-bootstrap";
 
 export default function Home() {
     const [amendments, setAmendments] = useState([]);
+    const [waivers, setWaivers] = useState([]);
     const { isAuthenticated } = useAppContext();
     const [isLoading, setIsLoading] = useState(true);
     useEffect(() => {
@@ -19,6 +20,8 @@ export default function Home() {
             try {
                 const amendments = await loadAmendments();
                 setAmendments(amendments);
+                const waivers = await loadWaivers();
+                setWaivers(waivers);
             } catch (e) {
                 onError(e);
             }
@@ -32,11 +35,14 @@ export default function Home() {
     function loadAmendments() {
         return API.get("amendments", "/amendments");
     }
+    function loadWaivers() {
+        return API.get("waivers", "/waivers");
+    }
 
     function renderAmendmentsList(amendments) {
         return [{}].concat(amendments).map((amendment, i) =>
             i !== 0 ? (
-                <LinkContainer key={amendment.amendmentId} to={`/${amendment.amendmentType}/${amendment.amendmentId}`}>
+                <LinkContainer key={amendment.amendmentId} to={`/amendments/${amendment.amendmentId}`}>
                     <ListGroupItem header={amendment.transmittalNumber.trim().split("\n")[0]}>
                         {"Created: " + new Date(amendment.createdAt).toLocaleString()}
                     </ListGroupItem>
@@ -53,6 +59,25 @@ export default function Home() {
         );
     }
 
+    function renderWaiversList(waivers) {
+        return [{}].concat(waivers).map((waiver, i) =>
+            i !== 0 ? (
+                <LinkContainer key={waiver.amendmentId} to={`/waivers/${waiver.amendmentId}`}>
+                    <ListGroupItem header={waiver.waiverNumber.trim().split("\n")[0]}>
+                        {"Created: " + new Date(waiver.createdAt).toLocaleString()}
+                    </ListGroupItem>
+                </LinkContainer>
+            ) : (
+                <LinkContainer key="new" to="/waivers/new">
+                    <ListGroupItem>
+                        <h4>
+                            <b>{"\uFF0B"}</b> Submit New Waiver
+                        </h4>
+                    </ListGroupItem>
+                </LinkContainer>
+            )
+        );
+    }
     function renderLander() {
         return (
             <div className="lander">
@@ -62,27 +87,23 @@ export default function Home() {
         );
     }
 
-    function renderAmendments() {
+    function renderInsides() {
         return (
             <div className="amendments">
                 <PageHeader>Your APS Submissions</PageHeader>
                 <ListGroup>
                     {!isLoading && renderAmendmentsList(amendments)}
                 </ListGroup>
-                <LinkContainer key="new" to="/waivers/new">
-                    <ListGroupItem>
-                        <h4>
-                            <b>{"\uFF0B"}</b> Submit New Waiver
-                        </h4>
-                    </ListGroupItem>
-                </LinkContainer>
+                <ListGroup>
+                    {!isLoading && renderWaiversList(waivers)}
+                </ListGroup>
             </div>
         );
     }
 
     return (
         <div className="Home">
-            {isAuthenticated ? renderAmendments() : renderLander()}
+            {isAuthenticated ? renderInsides() : renderLander()}
         </div>
     );
 }
