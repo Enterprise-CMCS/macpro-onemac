@@ -18,10 +18,9 @@ export const main = handler(async (event, context) => {
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": event.requestContext.identity.cognitoIdentityId,
-      ":notThisType" : 'waiver',
+      ":amendmentType" : "waiver",
     },
-    FilterExpression: 'amendmentType <> :notThisType',
-
+    FilterExpression: 'amendmentType = :amendmentType',
   };
 
   const result = await dynamoDb.query(params);

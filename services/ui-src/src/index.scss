@@ -95,13 +95,17 @@ input[type="file"] {
   width: 100%;
 }
 
-.NewAmendment form,
-.Amendments form {
+.NewAmendment form, 
+.Amendments form, 
+.NewWaiver form, 
+.Waivers form {
   padding-bottom: 15px;
 }
 
-.NewAmendment form textarea,
-.Amendments form textarea {
+.NewAmendment form textarea, 
+.Amendments form textarea, 
+.NewWaiver form textarea, 
+.Waivers form textarea {
   height: 300px;
   font-size: 24px;
 }
