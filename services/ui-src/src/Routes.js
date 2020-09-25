@@ -6,6 +6,8 @@ import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
 import NewAmendment from "./amendments/NewAmendment";
 import Amendments from "./amendments/Amendments";
+import NewWaiver from "./waivers/NewWaiver";
+import Waivers from "./waivers/Waivers";
 import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
@@ -30,6 +32,12 @@ export default function Routes() {
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path="/amendments/:id">
                 <Amendments />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path="/waivers/new">
+                <NewWaiver />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path="/waivers/:id">
+                <Waivers />
             </AuthenticatedRoute>
             <Route>
                 <NotFound />

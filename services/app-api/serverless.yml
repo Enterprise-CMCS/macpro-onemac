@@ -38,7 +38,7 @@ custom:
       migrate: true
   serverless-offline:
     allowCache: true
-      
+
 
 provider:
   name: aws
@@ -84,6 +84,38 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  createWaiver:
+    handler: createWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: waivers
+          method: post
+          cors: true
+          authorizer: aws_iam
+    environment:
+      emailSource: ${self:custom.emailSource}
+      reviewerEmail: ${self:custom.reviewerEmail}
+
+  getWaiver:
+    handler: getWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: waivers/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  listWaiver:
+    handler: listWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: waivers
+          method: get
+          cors: true
+          authorizer: aws_iam
 
 resources:
   - ${file(resources/base.yml)}
