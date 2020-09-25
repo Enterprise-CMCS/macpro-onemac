@@ -14,23 +14,44 @@ export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
 
-  const params = {
-    TableName: process.env.tableName,
-    Item: {
-      userId: event.requestContext.identity.cognitoIdentityId,
-      amendmentId: uuid.v1(),
-      authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
-      email: data.email,
-      firstName: data.firstName,
-      lastName: data.lastName,
-      transmittalNumber: data.transmittalNumber,
-      territory: data.territory,
-      urgent: data.urgent,
-      comments: data.comments,
-      uploads: data.uploads,
-      createdAt: Date.now(),
-    },
-  };
+  if (data.amendmentType=='waiver') {
+    const params = {
+      TableName: process.env.tableName,
+      Item: {
+        userId: event.requestContext.identity.cognitoIdentityId,
+        amendmentId: uuid.v1(),
+        amendmentType: 'waiver',
+        authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        territory: data.territory,
+        waiverNumber: data.waiverNumber,
+        summary: data.summary,
+        actionType: data.actionType,
+        waiverAuthority: data.waiverAuthority,
+        createdAt: Date.now(),
+      },
+    };
+  } else {
+    const params = {
+      TableName: process.env.tableName,
+      Item: {
+       userId: event.requestContext.identity.cognitoIdentityId,
+        amendmentId: uuid.v1(),
+        authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
+        email: data.email,
+        firstName: data.firstName,
+        lastName: data.lastName,
+        transmittalNumber: data.transmittalNumber,
+        territory: data.territory,
+        urgent: data.urgent,
+        comments: data.comments,
+        uploads: data.uploads,
+        createdAt: Date.now(),
+      },
+    };
+  }
 
   await dynamoDb.put(params);
   await sendSubmissionEmail(data);

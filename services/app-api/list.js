@@ -18,9 +18,9 @@ export const main = handler(async (event, context) => {
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": event.requestContext.identity.cognitoIdentityId,
-      ":notThisType" : 'waiver',
+      ":amendmentType" : event.path,
     },
-    FilterExpression: 'amendmentType <> :notThisType',
+    FilterExpression: 'amendmentType = :amendmentType',
 
   };
 

@@ -60,6 +60,11 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+      - http:
+          path: waivers
+          method: post
+          cors: true
+          authorizer: aws_iam
     environment:
       emailSource: ${self:custom.emailSource}
       reviewerEmail: ${self:custom.reviewerEmail}
@@ -73,6 +78,11 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+      - http:
+          path: waivers/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
 
   list:
     handler: list.main
@@ -83,34 +93,6 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-
-  createWaiver:
-    handler: createWaiver.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: waivers
-          method: post
-          cors: true
-          authorizer: aws_iam
-    environment:
-      emailSource: ${self:custom.emailSource}
-      reviewerEmail: ${self:custom.reviewerEmail}
-
-  getWaiver:
-    handler: getWaiver.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: waivers/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  listWaiver:
-    handler: listWaiver.main
-    role: LambdaApiRole
-    events:
       - http:
           path: waivers
           method: get
