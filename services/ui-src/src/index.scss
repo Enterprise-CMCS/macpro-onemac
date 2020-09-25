@@ -1,6 +1,6 @@
-$font-path: '~@cmsgov/design-system/dist/fonts';
-$image-path: '~@cmsgov/design-system/dist/images';
-@import '@cmsgov/design-system/dist/scss/index';
+$font-path: "~@cmsgov/design-system/dist/fonts";
+$image-path: "~@cmsgov/design-system/dist/images";
+@import "@cmsgov/design-system/dist/scss/index";
 
 body {
   @extend .ds-base;
@@ -23,17 +23,62 @@ h4 {
 }
 
 .uploader {
-  .uploader-title {
+  // @extend .ds-u-display--flex;
+  // @extend .ds-u-flex-direction--row;
+  // @extend .ds-u-align-items--center;
+  // @extend .ds-u-padding--3;
+  // height: 4rem;
+  table {
+    border-collapse: collapse;
+    width: 100%;
+
+    th,
+    td {
+      text-align: left;
+      padding: 8px;
+    }
+
+    tr:nth-child(even) {
+      background-color: #f2f2f2;
+    }
+  }
+
+  .uploader-type-cell {
+    // @extend .ds-u-justify-content--start;
+    // @extend .ds-u-padding-left--1;
+    width: 30%;
+  }
+
+  .uploader-type-label {
     font-weight: bold;
   }
 
-  .uploader-control-container {
-    border-style: solid;
-    border-width: 2px;
-    border-color: gray;
-    padding: 1rem;
-    margin: 1rem;
+  .uploader-input-cell {
+    // @extend .ds-u-justify-content--start;
+    width: 52%;
+  }
 
+  .uploader-input-label {
+    // Make the label look like a button
+    @extend .ds-c-button;
+    @extend .ds-c-button--primary;
+    margin-right: 1rem;
+    border-top: 1px solid #cccccc;
+    border-right: 1px solid #333333;
+    border-bottom: 1px solid #333333;
+    border-left: 1px solid #cccccc;
+  }
+
+  .uploader-controls-cell {
+    // @extend .ds-u-justify-content--end;
+    width: 8%;
+
+
+  }
+  .uploader-clear-button {
+    @extend .ds-c-button;
+    @extend .ds-c-button--transparent;
+    color: black;
   }
 }
 
@@ -46,15 +91,21 @@ textarea.form-control,
 input.form-control {
   font-size: 16px;
 }
-input[type=file] {
+input[type="file"] {
   width: 100%;
 }
 
-.NewAmendment form, .Amendments form, .NewWaiver form, .Waivers form {
+.NewAmendment form, 
+.Amendments form, 
+.NewWaiver form, 
+.Waivers form {
   padding-bottom: 15px;
 }
 
-.NewAmendment form textarea, .Amendments form textarea, .NewWaiver form textarea, .Waivers form textarea {
+.NewAmendment form textarea, 
+.Amendments form textarea, 
+.NewWaiver form textarea, 
+.Waivers form textarea {
   height: 300px;
   font-size: 24px;
 }
