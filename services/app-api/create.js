@@ -30,7 +30,6 @@ export const main = handler(async (event, context) => {
     },
   };
 
-  
   if (event.path=='waivers') {
     params.Item.waiverNumber = data.waiverNumber;
     params.Item.summary = data.summary;
