@@ -11,7 +11,7 @@ export const main = handler(async (event, context) => {
     console.log("Warmed up!");
     return null;
   }
-  const amendmentType = 'amendment';
+  var amendmentType = 'amendment';
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
 
