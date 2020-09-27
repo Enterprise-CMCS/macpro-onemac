@@ -11,8 +11,13 @@ export const main = handler(async (event, context) => {
     console.log("Warmed up!");
     return null;
   }
+  const amendmentType = 'amendment';
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
+
+  if (event.path == '/waivers') {
+    amendmentType = 'waiver';
+  }
 
   const params = {
     TableName: process.env.tableName,
@@ -24,20 +29,19 @@ export const main = handler(async (event, context) => {
       firstName: data.firstName,
       lastName: data.lastName,
       territory: data.territory,
-      amendmentType: event.path,
+      amendmentType: amendmentType,
       uploads: data.uploads,
       createdAt: Date.now(),
     },
   };
 
-  if (event.path=='waivers') {
+  if (event.path=='/waivers') {
     params.Item.waiverNumber = data.waiverNumber;
     params.Item.summary = data.summary;
     params.Item.actionType = data.actionType;
     params.Item.waiverAuthority = data.waiverAuthority;
   } else {
     params.Item.transmittalNumber = data.transmittalNumber;
-    params.Item.territory = data.territory;
     params.Item.urgent = data.urgent;
     params.Item.comments = data.comments;
   }
