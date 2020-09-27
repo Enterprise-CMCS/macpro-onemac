@@ -11,7 +11,7 @@ export const main = handler(async (event, context) => {
   var amendmentType = 'amendment';
   if (event.path == '/waivers') {
     amendmentType = 'waiver';
-  }  
+  }
 
   const params = {
     TableName: process.env.tableName,
