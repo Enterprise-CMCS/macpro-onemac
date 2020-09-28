@@ -11,10 +11,10 @@ export const main = handler(async (event, context) => {
     console.log("Warmed up!");
     return null;
   }
-  var amendmentType = 'amendment';
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
 
+  var amendmentType = 'amendment';
   if (event.path == '/waivers') {
     amendmentType = 'waiver';
   }
