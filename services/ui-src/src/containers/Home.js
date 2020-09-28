@@ -38,12 +38,18 @@ export default function Home() {
     function loadWaivers() {
         return API.get("waivers", "/waivers");
     }
+    function getNumber(numberIn) {
+        if (numberIn)
+            return numberIn.trim().split("\n")[0];
+        else 
+            return "Number Undefined";
+    }
 
     function renderAmendmentsList(amendments) {
         return [{}].concat(amendments).map((amendment, i) =>
             i !== 0 ? (
                 <LinkContainer key={amendment.amendmentId} to={`/amendments/${amendment.amendmentId}`}>
-                    <ListGroupItem header={amendment.transmittalNumber.trim().split("\n")[0]}>
+                    <ListGroupItem header={getNumber(amendment.transmittalNumber)}>
                         {"Created: " + new Date(amendment.createdAt).toLocaleString()}
                     </ListGroupItem>
                 </LinkContainer>
@@ -63,7 +69,7 @@ export default function Home() {
         return [{}].concat(waivers).map((waiver, i) =>
             i !== 0 ? (
                 <LinkContainer key={waiver.amendmentId} to={`/waivers/${waiver.amendmentId}`}>
-                    <ListGroupItem header={waiver.waiverNumber.trim().split("\n")[0]}>
+                    <ListGroupItem header={getNumber(waiver.waiverNumber)}>
                         {"Created: " + new Date(waiver.createdAt).toLocaleString()}
                     </ListGroupItem>
                 </LinkContainer>

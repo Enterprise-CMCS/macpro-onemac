@@ -6,6 +6,9 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Select from 'react-select';
 import { territoryList } from '../libs/territoryLib';
 import { actionTypeOptions, waiverAuthorityOptions } from '../libs/waiverLib';
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
+import { Storage } from "aws-amplify";
 
 export default function Waivers() {
     const { id } = useParams();
@@ -30,6 +33,15 @@ export default function Waivers() {
                 setWaiverNumber(waiverNumber);
                 setWaiverAuthority(waiverAuthority);
                 setSummary(summary);
+
+                // Get temporary URLs to the S3 bucket
+                if(waiver.uploads) {
+                    let i;
+                    // Use a for loop instead of forEach to stay in the context of this async function.
+                    for (i = 0; i < waiver.uploads.length; i++) {
+                        waiver.uploads[i].url = await Storage.vault.get(waiver.uploads[i].s3Key);
+                    }
+                }
                 setWaiver(waiver);
             } catch (e) {
                 onError(e);
@@ -83,6 +95,19 @@ export default function Waivers() {
                             options={waiverAuthorityOptions}
                         />
                     </FormGroup>
+                    <h3>Attachments</h3>
+                    <div>
+                        {waiver.uploads && (
+                            <div>
+                            {waiver.uploads.map((upload, index) => (
+                                <div key={index}>
+                                    {upload.title}: <a href={upload.url} target="_blank" rel="noopener noreferrer">{upload.filename}</a> <FontAwesomeIcon icon={faExternalLinkAlt} />
+                                </div>
+                            ))}
+                            </div>
+                        )}
+                    </div>
+                    <br/>
                     <FormGroup controlId="summary">
                         <ControlLabel>Summary</ControlLabel>
                         <FormControl
