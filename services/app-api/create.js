@@ -14,6 +14,11 @@ export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
 
+  var amendmentType = 'amendment';
+  if (event.path == '/waivers') {
+    amendmentType = 'waiver';
+  }
+
   const params = {
     TableName: process.env.tableName,
     Item: {
@@ -23,14 +28,23 @@ export const main = handler(async (event, context) => {
       email: data.email,
       firstName: data.firstName,
       lastName: data.lastName,
-      transmittalNumber: data.transmittalNumber,
       territory: data.territory,
-      urgent: data.urgent,
-      comments: data.comments,
+      amendmentType: amendmentType,
       uploads: data.uploads,
       createdAt: Date.now(),
     },
   };
+
+  if (event.path=='/waivers') {
+    params.Item.waiverNumber = data.waiverNumber;
+    params.Item.summary = data.summary;
+    params.Item.actionType = data.actionType;
+    params.Item.waiverAuthority = data.waiverAuthority;
+  } else {
+    params.Item.transmittalNumber = data.transmittalNumber;
+    params.Item.urgent = data.urgent;
+    params.Item.comments = data.comments;
+  }
 
   await dynamoDb.put(params);
   await sendSubmissionEmail(data);

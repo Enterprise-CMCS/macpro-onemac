@@ -7,6 +7,12 @@ export const main = handler(async (event, context) => {
     console.log("Warmed up!");
     return null;
   }
+
+  var amendmentType = 'amendment';
+  if (event.path == '/waivers') {
+    amendmentType = 'waiver';
+  }
+
   const params = {
     TableName: process.env.tableName,
     // 'KeyConditionExpression' defines the condition for the query
@@ -18,9 +24,9 @@ export const main = handler(async (event, context) => {
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": event.requestContext.identity.cognitoIdentityId,
-      ":notThisType" : 'waiver',
+      ":amendmentType" : amendmentType,
     },
-    FilterExpression: 'amendmentType <> :notThisType',
+    FilterExpression: 'amendmentType = :amendmentType',
 
   };
 
