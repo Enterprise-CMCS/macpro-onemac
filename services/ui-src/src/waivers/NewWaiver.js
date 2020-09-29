@@ -86,7 +86,7 @@ export default function NewWaiver() {
         <div className="NewWaiver">
             <form onSubmit={handleSubmit}>
             <FormGroup controlId="territory">
-                <ControlLabel>State/Territory</ControlLabel>
+                <ControlLabel>State or Territory</ControlLabel>
                 <Select
                     name="form-field-name"
                     value={territoryList.filter(function(option) {
