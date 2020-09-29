@@ -126,7 +126,7 @@ export default function NewAmendment() {
                     />
                 </FormGroup>
                 <FormGroup controlId="urgent">
-                    <ControlLabel>This APS is classified as urgent &nbsp;</ControlLabel>
+                    <ControlLabel>This SPA is classified as urgent &nbsp;</ControlLabel>
                     <Switch controlId="urgent"
                         checked={urgent}
                         onChange={e => setUrgent(!urgent)}
