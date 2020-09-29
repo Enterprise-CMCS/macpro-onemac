@@ -5,7 +5,7 @@
 # The following should be set for any and all installations using this quickstart.
 #   - CIRCLE_TOKEN:  Create a CircleCI project token with full permissions, and set the value to this value.  See https://circleci.com/docs/2.0/managing-api-tokens/
 #   - AWS_DEFAULT_REGION: Default region when interacting with AWS programmatically.  ex:  us-east-1
-#   - SES_SOURCE_EMAIL_ADDRESS: Email that has been verified in SES for sending notifications..  If you don't set this, email notifications won't work.  ex. myemail@collabralink.com
+#   - CMS_SPA_FORM_FROM_EMAIL: Email that has been verified in SES for sending notifications..  If you don't set this, email notifications won't work.  ex. myemail@collabralink.com
 #
 # If using cloudtamer.io and CTKey for AWS authentication, set all of the following:
 #   - CTKEY_URL: The url to the cloudtamer installation against which to authenticate; no trailing slash please.  ex. https://cloudtamer.abc.gov
