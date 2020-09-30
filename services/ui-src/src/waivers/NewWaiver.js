@@ -86,7 +86,7 @@ export default function NewWaiver() {
         <div className="NewWaiver">
             <form onSubmit={handleSubmit}>
             <FormGroup controlId="territory">
-                <ControlLabel>State or Territory</ControlLabel>
+                <ControlLabel>State/Territory</ControlLabel>
                 <Select
                     name="form-field-name"
                     value={territoryList.filter(function(option) {
@@ -107,13 +107,6 @@ export default function NewWaiver() {
                     options={actionTypeOptions}
                 />
             </FormGroup>
-            <FormGroup controlId="waiverNumber">
-                <ControlLabel>Waiver Number</ControlLabel>
-                <FormControl
-                    value={waiverNumber}
-                    onChange={e => setWaiverNumber(e.target.value)}
-                />
-            </FormGroup>
             <FormGroup controlId="waiverAuthority">
                 <ControlLabel>Waiver Authority</ControlLabel>
                 <Select
@@ -123,6 +116,14 @@ export default function NewWaiver() {
                     })}
                     onChange={e => setWaiverAuthority(e.value)}
                     options={waiverAuthorityOptions}
+                />
+            </FormGroup>
+            <FormGroup controlId="waiverNumber">
+                <ControlLabel>Waiver Number</ControlLabel>
+                <FormControl
+                    value={waiverNumber}
+                    placeholder="AA.####.R##.##"
+                    onChange={e => setWaiverNumber(e.target.value)}
                 />
             </FormGroup>
             <h3>Attachments</h3>

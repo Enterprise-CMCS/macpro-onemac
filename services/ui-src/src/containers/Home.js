@@ -100,7 +100,7 @@ export default function Home() {
                     <li>Amendments to your Medicaid State Plans (not submitted through MACPro or MMDL)</li>
                     <li>Official state responses to formal Requests for Additional Information (RAIs) for SPAs (not submitted through MACPro)</li>
                     <li>Section 1915(b) waiver submissions (those not submitted through WMS)</li>
-                    <li>All Cost Effectiveness spreadsheets associated with 1915(b) waivers</li>
+                    <li>All Cost Effectiveness spreadsheets associated with 1915(b) waivers</li>
                     <li>Section 1915(c) Appendix K amendments (which cannot be submitted through WMS)</li>
                     <li>Official state responses to formal Requests for Additional Information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable)</li>
                     <li>State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers</li>
