@@ -97,7 +97,7 @@ export default function NewAmendment() {
                     <ControlLabel>SPA ID<span className="required-mark">*</span></ControlLabel>
                     <FormControl
                         value={transmittalNumber}
-                        placeholder='Sample: NY-20-0053'
+                        placeholder='AA-20-####'
                         onChange={e => setTransmittalNumber(e.target.value)}
                     />
                 </FormGroup>

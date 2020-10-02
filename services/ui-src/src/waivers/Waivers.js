@@ -89,7 +89,7 @@ export default function Waivers() {
                         />
                     </FormGroup>
                     <FormGroup controlId="waiverNumber">
-                        <ControlLabel>Waiver Number)</ControlLabel>
+                        <ControlLabel>Waiver Number</ControlLabel>
                         <FormControl
                             disabled={true}
                             value={waiverNumber}

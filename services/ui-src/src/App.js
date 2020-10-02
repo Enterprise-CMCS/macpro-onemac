@@ -46,9 +46,9 @@ function App() {
             <div className="App container">
                 <Navbar fluid collapseOnSelect>
                     <Navbar.Header>
-                        <Navbar.Brand>
-                            <Link to="/">&lt; Back to Dashboard</Link>
-                        </Navbar.Brand>
+                            <Navbar.Brand>
+                            <Link to="/">SPA Home</Link>
+                            </Navbar.Brand>
                         <Navbar.Toggle />
                     </Navbar.Header>
                     <Navbar.Collapse>
