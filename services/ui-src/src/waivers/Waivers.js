@@ -77,13 +77,6 @@ export default function Waivers() {
                             options={actionTypeOptions}
                         />
                     </FormGroup>
-                    <FormGroup controlId="waiverNumber">
-                        <ControlLabel>Waiver Number)</ControlLabel>
-                        <FormControl
-                            disabled={true}
-                            value={waiverNumber}
-                        />
-                    </FormGroup>
                     <FormGroup controlId="actionType">
                         <ControlLabel>Waiver Authority</ControlLabel>
                         <Select
@@ -93,6 +86,13 @@ export default function Waivers() {
                             })}
                             isDisabled={true}
                             options={waiverAuthorityOptions}
+                        />
+                    </FormGroup>
+                    <FormGroup controlId="waiverNumber">
+                        <ControlLabel>Waiver Number</ControlLabel>
+                        <FormControl
+                            disabled={true}
+                            value={waiverNumber}
                         />
                     </FormGroup>
                     <h3>Attachments</h3>

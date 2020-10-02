@@ -82,30 +82,6 @@ export default function NewAmendment() {
         <div className="NewAmendment">
             <form onSubmit={handleSubmit}>
                 <h3>SPA Details</h3>
-                <FormGroup controlId="email">
-                    <ControlLabel>Contact Email</ControlLabel>
-                    <FormControl
-                        value={email}
-                        disabled={true}
-                        onChange={e => setEmail(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup controlId="firstName">
-                    <ControlLabel>First Name</ControlLabel>
-                    <FormControl
-                        value={firstName}
-                        disabled={true}
-                        onChange={e => setFirstName(e.target.value)}
-                    />
-                </FormGroup>
-                <FormGroup controlId="lastName">
-                    <ControlLabel>Last Name</ControlLabel>
-                    <FormControl
-                        value={lastName}
-                        disabled={true}
-                        onChange={e => setLastName(e.target.value)}
-                    />
-                </FormGroup>
                 <FormGroup controlId="territory">
                     <ControlLabel>State/Territory<span className="required-mark">*</span></ControlLabel>
                     <Select
@@ -121,12 +97,12 @@ export default function NewAmendment() {
                     <ControlLabel>SPA ID<span className="required-mark">*</span></ControlLabel>
                     <FormControl
                         value={transmittalNumber}
-                        placeholder='Sample: NY-20-0053'
+                        placeholder='AA-20-####'
                         onChange={e => setTransmittalNumber(e.target.value)}
                     />
                 </FormGroup>
                 <FormGroup controlId="urgent">
-                    <ControlLabel>This APS is classified as urgent &nbsp;</ControlLabel>
+                    <ControlLabel>This SPA is classified as urgent &nbsp;</ControlLabel>
                     <Switch controlId="urgent"
                         checked={urgent}
                         onChange={e => setUrgent(!urgent)}
