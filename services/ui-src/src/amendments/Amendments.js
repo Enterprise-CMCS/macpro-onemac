@@ -66,7 +66,7 @@ export default function Amendments() {
                 <form>
                     <h3>SPA Details</h3>
                     <FormGroup controlId="transmittalNumber">
-                        <ControlLabel>APS ID &nbsp;(Transmittal Number)</ControlLabel>
+                        <ControlLabel>SPA ID &nbsp;(Transmittal Number)</ControlLabel>
                         <FormControl
                             disabled={true}
                             value={transmittalNumber}

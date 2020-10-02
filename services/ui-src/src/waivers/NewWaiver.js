@@ -107,13 +107,6 @@ export default function NewWaiver() {
                     options={actionTypeOptions}
                 />
             </FormGroup>
-            <FormGroup controlId="waiverNumber">
-                <ControlLabel>Waiver Number</ControlLabel>
-                <FormControl
-                    value={waiverNumber}
-                    onChange={e => setWaiverNumber(e.target.value)}
-                />
-            </FormGroup>
             <FormGroup controlId="waiverAuthority">
                 <ControlLabel>Waiver Authority</ControlLabel>
                 <Select
@@ -123,6 +116,14 @@ export default function NewWaiver() {
                     })}
                     onChange={e => setWaiverAuthority(e.value)}
                     options={waiverAuthorityOptions}
+                />
+            </FormGroup>
+            <FormGroup controlId="waiverNumber">
+                <ControlLabel>Waiver Number</ControlLabel>
+                <FormControl
+                    value={waiverNumber}
+                    placeholder="AA.####.R##.##"
+                    onChange={e => setWaiverNumber(e.target.value)}
                 />
             </FormGroup>
             <h3>Attachments</h3>

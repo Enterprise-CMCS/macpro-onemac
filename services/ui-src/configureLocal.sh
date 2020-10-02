@@ -25,6 +25,7 @@ then
    echo "ERROR: Unable to obtain CloudFormation data for stage $stage."
    echo "Do you have the proper AWS credentials set?"
    echo "Is the stage name $stage correct?"
+   echo "Did you, perhaps, forget to run 'npm install' in /app-api??"
    exit 1
 fi
 
