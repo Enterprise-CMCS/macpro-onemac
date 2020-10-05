@@ -55,6 +55,9 @@ function App() {
                         <Nav pullRight>
                             {isAuthenticated ? (
                                 <>
+                                     <LinkContainer to="/FAQ">
+                                        <NavItem>FAQ</NavItem>
+                                    </LinkContainer>
                                     <NavDropdown
                                         id="User"
                                         title={email}  >
@@ -66,6 +69,9 @@ function App() {
                                 </>
                             ) : (
                                 <>
+                                    <LinkContainer to="/FAQ">
+                                        <NavItem>FAQ</NavItem>
+                                    </LinkContainer>
                                     <LinkContainer to="/signup">
                                         <NavItem>Signup</NavItem>
                                     </LinkContainer>
