@@ -167,6 +167,13 @@ resources:
                         - '/private/'
                         - '$'
                         - '{cognito-identity.amazonaws.com:sub}/*'
+                    - Fn::Join:
+                      - ''
+                      -
+                        - ${self:custom.attachments_bucket_arn}
+                        - '/protected/'
+                        - '$'
+                        - '{cognito-identity.amazonaws.com:sub}/*'
 
   Outputs:
     UserPoolId:
