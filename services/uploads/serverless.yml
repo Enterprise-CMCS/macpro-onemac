@@ -46,6 +46,12 @@ resources:
                 - DELETE
                 - HEAD
               MaxAge: 3000
+        #Set at rest encryption
+        BucketEncryption:
+            ServerSideEncryptionConfiguration:
+              - ServerSideEncryptionByDefault:
+                  SSEAlgorithm: AES256
+    # Policy to allow public read access to all attachments
     S3CMSReadBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
