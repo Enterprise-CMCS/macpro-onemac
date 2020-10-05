@@ -24,7 +24,7 @@ custom:
   s3:
     host: localhost
     directory: /tmp
-    cors: resource/local-cors-policy.xml
+    cors: resources/local-cors-policy.xml
 
 resources:
   Resources:
@@ -46,6 +46,11 @@ resources:
                 - DELETE
                 - HEAD
               MaxAge: 3000
+        #Set at rest encryption
+        BucketEncryption:
+            ServerSideEncryptionConfiguration:
+              - ServerSideEncryptionByDefault:
+                  SSEAlgorithm: AES256
 
   # Print out the name of the bucket that is created
   Outputs:
