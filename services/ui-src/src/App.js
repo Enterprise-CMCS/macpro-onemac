@@ -1,12 +1,15 @@
-import { LinkContainer } from "react-router-bootstrap";
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
+import { LinkContainer } from "react-router-bootstrap";
 import { Nav, Navbar, NavItem, NavDropdown } from "react-bootstrap";
-import "./App.css";
+import { Auth } from "aws-amplify";
+
 import Routes from "./Routes";
 import { AppContext } from "./libs/contextLib";
-import { Auth } from "aws-amplify";
 import { onError } from "./libs/errorLib";
+import medicaidLogo from "./images/medicaidLogo.png"
+import flagIcon from "./images/flagIcon.png"
+import "./App.scss";
 
 function App() {
     const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -41,50 +44,81 @@ function App() {
 
         history.push("/login");
     }
+
+    function renderBranding() {
+        return (
+            <div>
+                <div className="usaBanner">
+                    <img src={flagIcon} />
+                    An offical website of the United States government
+                </div>
+                <div className="headerLogo">
+                    <img src={medicaidLogo} />
+                </div>
+                <div className="borderLine" />
+            </div>
+        )
+    }
+
+    function renderNavBar() {
+        return (
+            <Navbar fluid collapseOnSelect>
+            <Navbar.Header>
+                <Navbar.Brand>
+                    <Link to="/">SPA Home</Link>
+                </Navbar.Brand>
+                <Navbar.Toggle />
+            </Navbar.Header>
+            <Navbar.Collapse>
+                <Nav pullRight>
+                    <LinkContainer to="/FAQ">
+                        <NavItem>FAQ</NavItem>
+                    </LinkContainer>
+                    {isAuthenticated ? (
+                        <NavDropdown
+                            id="User"
+                            title={email}  >
+                            <LinkContainer to="/profile">
+                                <NavItem>User Profile</NavItem>
+                            </LinkContainer>
+                            <NavItem onClick={handleLogout}>Logout</NavItem>
+                        </NavDropdown>
+                    ) : (
+                            <div>
+                                <LinkContainer to="/signup">
+                                    <NavItem>Signup</NavItem>
+                                </LinkContainer>
+                                <LinkContainer to="/login">
+                                    <NavItem>Login</NavItem>
+                                </LinkContainer>
+                            </div>
+                        )}
+                </Nav>
+            </Navbar.Collapse>
+        </Navbar>
+        )
+    }
+
+    function generateHeader() {
+        return (
+            <div>
+                {renderBranding()}
+                {renderNavBar()}
+            </div>
+        )
+    }
+
     return (
         !isAuthenticating && (
-            <div className="App container">
-                <Navbar fluid collapseOnSelect>
-                    <Navbar.Header>
-                            <Navbar.Brand>
-                            <Link to="/">SPA Home</Link>
-                            </Navbar.Brand>
-                        <Navbar.Toggle />
-                    </Navbar.Header>
-                    <Navbar.Collapse>
-                        <Nav pullRight>
-                            <LinkContainer to="/FAQ">
-                                <NavItem>FAQ</NavItem>
-                            </LinkContainer>
-                            {isAuthenticated ? (
-                                <>
-                                    <NavDropdown
-                                        id="User"
-                                        title={email}  >
-                                        <LinkContainer to="/profile">
-                                            <NavItem>User Profile</NavItem>
-                                        </LinkContainer>
-                                        <NavItem onClick={handleLogout}>Logout</NavItem>
-                                    </NavDropdown>
-                                </>
-                            ) : (
-                                <>
-                                    <LinkContainer to="/signup">
-                                        <NavItem>Signup</NavItem>
-                                    </LinkContainer>
-                                    <LinkContainer to="/login">
-                                        <NavItem>Login</NavItem>
-                                    </LinkContainer>
-                                </>
-                            )}
-                        </Nav>
-                    </Navbar.Collapse>
-                </Navbar>
-                <AppContext.Provider
-                    value={{ isAuthenticated, userHasAuthenticated }}
-                >
-                    <Routes />
-                </AppContext.Provider>
+            <div>
+                {generateHeader()}
+                <div className="App container">
+                    <AppContext.Provider
+                        value={{ isAuthenticated, userHasAuthenticated }}
+                    >
+                        <Routes />
+                    </AppContext.Provider>
+                </div>
             </div>
         )
     );

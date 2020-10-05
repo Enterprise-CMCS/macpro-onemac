@@ -1,0 +1,30 @@
+.borderLine {
+  background-color: #18415e;
+  height: 3px;
+}
+
+.headerLogo {
+  padding: 30px 10px 30px 70px;
+}
+
+.navbar {
+  background-color: #205493;
+  border: 0;
+  border-radius: 0;
+  height: 90px;
+}
+
+.navbar-brand {
+  font-weight: bold;
+}
+
+.usaBanner {
+  background-color: #f1f1f1;
+  font-size: 14px;
+  min-height: 25px;
+  padding: 0 10px 0 70px;
+  & img {
+    height: 20px;
+    padding-right: 10px;
+  }
+}
