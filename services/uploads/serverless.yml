@@ -24,7 +24,7 @@ custom:
   s3:
     host: localhost
     directory: /tmp
-    cors: resource/local-cors-policy.xml
+    cors: resources/local-cors-policy.xml
 
 resources:
   Resources:
@@ -46,6 +46,24 @@ resources:
                 - DELETE
                 - HEAD
               MaxAge: 3000
+    S3CMSReadBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: 
+          Ref: AttachmentsBucket
+        PolicyDocument:
+          Statement:
+            - Effect: 'Allow'
+              Action: 
+                - 's3:GetObject'
+              Principal: '*'
+              Resource: 
+                Fn::Join: 
+                  - ''
+                  -
+                    - 'arn:aws:s3:::'
+                    - Ref: AttachmentsBucket
+                    - '/private/*'
 
   # Print out the name of the bucket that is created
   Outputs:
