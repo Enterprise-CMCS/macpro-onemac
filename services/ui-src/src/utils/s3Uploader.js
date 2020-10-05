@@ -43,18 +43,18 @@ export async function uploadFile(file) {
 
   try {
     const stored = await Storage.vault.put(targetPathname, file, {
-      level: 'protected',
+      level: "protected",
       contentType: file.type,
     });
 
-    const url = await Storage.vault.get(stored.key, { level: 'public' });
+    const url = await Storage.vault.get(stored.key, { level: "public" });
 
     let result = {
       s3Key: stored.key,
       filename: file.name,
       contentType: file.type,
-      url: url.split('?',1)[0], //We only need the permalink part of the URL since the S3 bucket policy allows for public read
-      title: file.title
+      url: url.split("?", 1)[0], //We only need the permalink part of the URL since the S3 bucket policy allows for public read
+      title: file.title,
     };
     retPromise = Promise.resolve(result);
   } catch (error) {
