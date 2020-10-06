@@ -51,6 +51,25 @@ resources:
             ServerSideEncryptionConfiguration:
               - ServerSideEncryptionByDefault:
                   SSEAlgorithm: AES256
+    # Policy to allow public read access to all attachments
+    S3CMSReadBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket: 
+          Ref: AttachmentsBucket
+        PolicyDocument:
+          Statement:
+            - Effect: 'Allow'
+              Action: 
+                - 's3:GetObject'
+              Principal: '*'
+              Resource: 
+                Fn::Join: 
+                  - ''
+                  -
+                    - 'arn:aws:s3:::'
+                    - Ref: AttachmentsBucket
+                    - '/private/*'
 
   # Print out the name of the bucket that is created
   Outputs:
