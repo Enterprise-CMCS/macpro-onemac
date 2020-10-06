@@ -13,7 +13,7 @@ export default class FAQ extends Component {
             <h4>What format is used to enter a SPA ID?</h4>
             <p>Enter the State Plan Amendment transmittal number. Assign consecutive numbers on a calendar year basis (e.g., 20-001, 20-002, etc.).</p>
             <h4>What attachments do we need to submit a new SPA?</h4>
-            <p>SPA submission requirements can be found in regulation 
+            <p>SPA submission requirements can be found in regulation&nbsp;
                 <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=7d639b87112e05a57ff40731d647bd05&mc=true&node=se42.4.430_112&rgn=div8">42 C.F.R. §430.12.</a>.  Required attachments for form completion are:</p>
                 <ul>
                     <li>Digitized Transmittal and Notice of Approval of State Plan Material (CMS 179) form </li>
@@ -41,6 +41,10 @@ export default class FAQ extends Component {
                 <p>All separated by periods (.). For example, the waiver number KY.0003.R02.02 is a waiver for the state of Kentucky, with a base waiver number of 0003, the second renewal (R02) and the second appendix K amendment (02).</p>
                 <h4>What attachments are needed to submit 1915(b) and 1915(c) waivers?</h4>
                 <p>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe the requirements for submitting section 1915(b) and 1915(c) waivers.</p>
+                <ul>
+                    <li>...</li>
+                    <li>...</li>
+                </ul>
                 <h4>What should we do if we don’t receive a confirmation email?</h4>
                 <p>Refresh your inbox, check your SPAM filters, then contact the MACPro Help Desk (MACPro_HelpDesk@cms.hhs.gov or call 301-547-4688) or contact your state lead.</p>
                 <h4>Is this considered the official state submission?</h4>
