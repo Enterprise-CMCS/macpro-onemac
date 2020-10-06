@@ -53,11 +53,11 @@ function App() {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav pullRight>
+                            <LinkContainer to="/FAQ">
+                                <NavItem>FAQ</NavItem>
+                            </LinkContainer>
                             {isAuthenticated ? (
                                 <>
-                                     <LinkContainer to="/FAQ">
-                                        <NavItem>FAQ</NavItem>
-                                    </LinkContainer>
                                     <NavDropdown
                                         id="User"
                                         title={email}  >
@@ -69,9 +69,6 @@ function App() {
                                 </>
                             ) : (
                                 <>
-                                    <LinkContainer to="/FAQ">
-                                        <NavItem>FAQ</NavItem>
-                                    </LinkContainer>
                                     <LinkContainer to="/signup">
                                         <NavItem>Signup</NavItem>
                                     </LinkContainer>
