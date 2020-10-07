@@ -7,6 +7,7 @@ import { Auth } from "aws-amplify";
 import Routes from "./Routes";
 import { AppContext } from "./libs/contextLib";
 import { onError } from "./libs/errorLib";
+import { Button } from '@cmsgov/design-system';
 import medicaidLogo from "./images/medicaidLogo.png"
 import flagIcon from "./images/flagIcon.png"
 import "./App.scss";
@@ -62,11 +63,9 @@ function App() {
 
     function renderNavBar() {
         return (
-            <Navbar fluid collapseOnSelect>
+        <Navbar fluid collapseOnSelect>
             <Navbar.Header>
-                <Navbar.Brand>
-                    <Link to="/">SPA Home</Link>
-                </Navbar.Brand>
+                Header Title
                 <Navbar.Toggle />
             </Navbar.Header>
             <Navbar.Collapse>
@@ -84,12 +83,16 @@ function App() {
                             <NavItem onClick={handleLogout}>Logout</NavItem>
                         </NavDropdown>
                     ) : (
-                            <div>
+                            <div className="navbarButtons">
                                 <LinkContainer to="/signup">
-                                    <NavItem>Signup</NavItem>
+                                    <NavItem>
+                                        <Button inversed className="button">Sign Up</Button>
+                                    </NavItem>
                                 </LinkContainer>
                                 <LinkContainer to="/login">
-                                    <NavItem>Login</NavItem>
+                                    <NavItem>
+                                        <Button inversed className="button">Login</Button>
+                                    </NavItem>
                                 </LinkContainer>
                             </div>
                         )}
@@ -101,7 +104,7 @@ function App() {
 
     function generateHeader() {
         return (
-            <div>
+            <div className="headerContainer">
                 {renderBranding()}
                 {renderNavBar()}
             </div>
@@ -113,6 +116,7 @@ function App() {
             <div>
                 {generateHeader()}
                 <div className="App container">
+                    <Link to="/">Back to Dashboard</Link>
                     <AppContext.Provider
                         value={{ isAuthenticated, userHasAuthenticated }}
                     >

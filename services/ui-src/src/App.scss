@@ -3,26 +3,52 @@
   height: 3px;
 }
 
+.button {
+  background-color: #205493 !important;
+  margin-left: 15px;
+}
+
+.headerContainer {
+  padding-bottom: 30px;
+}
+
 .headerLogo {
-  padding: 30px 10px 30px 70px;
+  padding: 30px 10px 30px 60px;
+  & img {
+    max-width: 100%;
+  }
+}
+
+.navbarButtons {
+  padding: 30px 70px 0 0;
+  & li {
+    display: inline;
+  }
+}
+
+.dropdown {
+  padding-top: 25px;
 }
 
 .navbar {
   background-color: #205493;
   border: 0;
   border-radius: 0;
-  height: 90px;
+  padding-bottom: 20px;
+  min-height: 90px;
 }
 
-.navbar-brand {
-  font-weight: bold;
+.navbar-header{
+  color: #ffffff;
+  font-size: 35px;
+  padding: 20px 10px 10px 70px;
 }
 
 .usaBanner {
   background-color: #f1f1f1;
   font-size: 14px;
   min-height: 25px;
-  padding: 0 10px 0 70px;
+  padding: 0 10px 0 60px;
   & img {
     height: 20px;
     padding-right: 10px;
