@@ -9,14 +9,12 @@ import Select from 'react-select';
 import Switch from 'react-ios-switch';
 import { territoryList } from '../libs/territoryLib';
 import FileUploader from '../common/FileUploader';
+import { RECORD_TYPES } from "../libs/recordTypes";
 
 export default function NewAmendment() {
     const requiredUploads = ['CMS Form 179', 'SPA Pages'];
-    const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Notice', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
+    const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Consultation', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
     const history = useHistory();
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [transmittalNumber, setTransmittalNumber] = useState("");
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
@@ -29,24 +27,8 @@ export default function NewAmendment() {
     //Reference to the File Uploader.
     const uploader = useRef(null);
 
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
-
-    async function populateUserInfo() {
-        var userInfo = await Auth.currentUserInfo();
-        setEmail(userInfo.attributes.email);
-        setFirstName(capitalize(userInfo.attributes.given_name));
-        setLastName(capitalize(userInfo.attributes.family_name));
-        return userInfo.attributes.email;
-    }
-
-    populateUserInfo();
-
     function validateForm() {
-        return email.length > 0 && firstName.length > 0 && lastName.length > 0
-          && transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
+        return transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
     }
 
     async function handleSubmit(event) {
@@ -54,9 +36,15 @@ export default function NewAmendment() {
 
         setIsLoading(true);
 
+        var userInfo = await Auth.currentUserInfo();
+        let email = userInfo.attributes.email;
+        let firstName = userInfo.attributes.given_name;
+        let lastName = userInfo.attributes.family_name;
+        let type = RECORD_TYPES.AMENDMENT;
+
         try {
             let uploads = await uploader.current.uploadFiles();
-            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
+            await createAmendment({ type, email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
             history.push("/");
         } catch (error) {
             onError("There was an error submitting your request.  Please try again.");
@@ -65,7 +53,7 @@ export default function NewAmendment() {
     }
 
     function createAmendment(amendment) {
-        return API.post("amendments", "/amendments", {
+        return API.post("amendments", "/submit", {
             body: amendment
         });
     }

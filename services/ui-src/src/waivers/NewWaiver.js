@@ -8,6 +8,7 @@ import Select from 'react-select';
 import { territoryList } from '../libs/territoryLib';
 import {actionTypeOptions, waiverAuthorityOptions, requiredUploads, optionalUploads} from '../libs/waiverLib.js';
 import FileUploader from '../common/FileUploader';
+import { RECORD_TYPES } from "../libs/recordTypes";
 
 export default function NewWaiver() {
     const history = useHistory();  // ?? do we need?
@@ -16,7 +17,6 @@ export default function NewWaiver() {
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
     const [waiverNumber, setWaiverNumber] = useState("");
-    const [transmittalNumber, setTransmittalNumber] = useState("");
     const [territory, setTerritory] = useState("");
     const [summary, setSummary] = useState("");
     const [actionType, setActionType] = useState("");
@@ -59,8 +59,9 @@ export default function NewWaiver() {
 
         try {    
             let uploads = await uploader.current.uploadFiles();
-            setTransmittalNumber(waiverNumber);
-            await createWaiver({ email, firstName, lastName, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
+            let type = RECORD_TYPES.WAIVER;
+            let transmittalNumber = waiverNumber;
+            await createWaiver({ type, email, firstName, lastName, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
             history.push("/");
         } catch (e) {
             onError(e);
@@ -69,7 +70,7 @@ export default function NewWaiver() {
     }
 
     function createWaiver(waiver) {
-        return API.post("waivers", "/waivers", {
+        return API.post("amendments", "/submit", {
             body: waiver
         });
     }
