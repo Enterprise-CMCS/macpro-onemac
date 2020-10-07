@@ -53,6 +53,9 @@ function App() {
                     </Navbar.Header>
                     <Navbar.Collapse>
                         <Nav pullRight>
+                            <LinkContainer to="/FAQ">
+                                <NavItem>FAQ</NavItem>
+                            </LinkContainer>
                             {isAuthenticated ? (
                                 <>
                                     <NavDropdown

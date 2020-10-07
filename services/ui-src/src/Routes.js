@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
+import FAQ from "./containers/FAQ"
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
@@ -17,6 +18,9 @@ export default function Routes() {
         <Switch>
             <Route exact path="/">
                 <Home />
+            </Route>
+            <Route exact path="/FAQ">
+                <FAQ />
             </Route>
             <UnauthenticatedRoute exact path="/login">
                 <Login />
