@@ -50,11 +50,11 @@ function App() {
         return (
             <div>
                 <div className="usaBanner">
-                    <img src={flagIcon} />
+                    <img src={flagIcon} alt="united states flag" />
                     An offical website of the United States government
                 </div>
                 <div className="headerLogo">
-                    <img src={medicaidLogo} />
+                    <img src={medicaidLogo} alt="medicaid logo" />
                 </div>
                 <div className="borderLine" />
             </div>
