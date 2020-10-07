@@ -48,26 +48,21 @@ provider:
 
   environment:
     tableName: ${self:custom.tableName}
+    emailSource: ${self:custom.emailSource}
+    reviewerEmail: ${self:custom.reviewerEmail}
 
 
 functions:
-  create:
-    handler: create.main
+  submit:
+    handler: submit.main
     role: LambdaApiRole
     events:
       - http:
-          path: amendments
+          path: submit
           method: post
           cors: true
           authorizer: aws_iam
-      - http:
-          path: waivers
-          method: post
-          cors: true
-          authorizer: aws_iam
-    environment:
-      emailSource: ${self:custom.emailSource}
-      reviewerEmail: ${self:custom.reviewerEmail}
+
 
   get:
     handler: get.main
@@ -89,12 +84,7 @@ functions:
     role: LambdaApiRole
     events:
       - http:
-          path: amendments
-          method: get
-          cors: true
-          authorizer: aws_iam
-      - http:
-          path: waivers
+          path: list
           method: get
           cors: true
           authorizer: aws_iam

@@ -8,11 +8,6 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
-  var amendmentType = 'amendment';
-  if (event.path == '/waivers') {
-    amendmentType = 'waiver';
-  }
-
   const params = {
     TableName: process.env.tableName,
     // 'KeyConditionExpression' defines the condition for the query
@@ -23,11 +18,8 @@ export const main = handler(async (event, context) => {
     //   of the authenticated user
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
-      ":userId": event.requestContext.identity.cognitoIdentityId,
-      ":amendmentType" : amendmentType,
-    },
-    FilterExpression: 'amendmentType = :amendmentType',
-
+      ":userId": event.requestContext.identity.cognitoIdentityId
+    }
   };
 
   const result = await dynamoDb.query(params);
