@@ -3,32 +3,27 @@
   height: 3px;
 }
 
-.button {
-  background-color: #205493 !important;
-  margin-left: 15px;
-}
-
 .headerContainer {
   padding-bottom: 30px;
 }
 
 .headerLogo {
   padding: 30px 10px 30px 60px;
-  & img {
+  img {
     max-width: 100%;
   }
 }
 
 .navbarButtons {
   padding: 30px 70px 0 0;
-  & li {
+  li {
     display: inline;
   }
 }
 
-.dropdown {
-  padding-top: 25px;
-}
+// .dropdown {
+//   padding-top: 25px;
+// }
 
 .navbar {
   background-color: #205493;
@@ -39,7 +34,7 @@
 }
 
 .navbar-header{
-  color: #ffffff;
+  color: white;
   font-size: 35px;
   padding: 20px 10px 10px 70px;
 }
@@ -49,8 +44,65 @@
   font-size: 14px;
   min-height: 25px;
   padding: 0 10px 0 60px;
-  & img {
+  img {
     height: 20px;
     padding-right: 10px;
+  }
+}
+
+// .navElements {
+//   display: flex;
+//   justify-content: space-between;
+//   // align-items: center;
+// }
+
+.navElements {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+
+  button {
+    background-color: #205493;
+    margin: 15px;
+  }
+
+  a {
+    margin: 15px;
+    color: white;
+    font-weight: 600;
+    &:hover {
+      color: #d5d9df;
+    }
+    &:active {
+      color: #aab2be;
+    }
+  }
+}
+
+.navbarContainer {
+  background-color: #205493;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  align-items: center;
+  min-height: 100px;
+  padding: 0 70px;
+}
+
+.dropdownTitle {
+  background-color: #205493 !important;
+  color: white;
+  font-weight: 600;
+  border: none;
+  box-shadow: none !important;
+  &:hover {
+    color: #d5d9df;
+  }
+  &:active {
+    color: #aab2be;
+  }
+  &:focus {
+    color: #aab2be !important;
   }
 }

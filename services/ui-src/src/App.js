@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useHistory } from "react-router-dom";
-import { LinkContainer } from "react-router-bootstrap";
-import { Nav, Navbar, NavItem, NavDropdown } from "react-bootstrap";
+import { Dropdown, MenuItem } from "react-bootstrap";
 import { Auth } from "aws-amplify";
 
 import Routes from "./Routes";
@@ -42,8 +41,6 @@ function App() {
         await Auth.signOut();
 
         userHasAuthenticated(false);
-
-        history.push("/login");
     }
 
     function renderBranding() {
@@ -61,44 +58,40 @@ function App() {
         )
     }
 
+    function renderAccountButtons() {
+        if (isAuthenticated) {
+            return (
+                <Dropdown id="account info">
+                    <Dropdown.Toggle className="dropdownTitle">
+                        {email}
+                    </Dropdown.Toggle>
+
+                    <Dropdown.Menu>
+                        <MenuItem href="/profile">Profile</MenuItem>
+                        <MenuItem href="/login" onClick={handleLogout}>Logout</MenuItem>
+                    </Dropdown.Menu>
+                </Dropdown>
+            )
+        } else {
+            return(
+                <div className="navElements">
+                    <Button onClick={() => history.push("/signup")} inversed>Sign Up</Button>
+                    <Button onClick={() => history.push("/login")} inversed>Login</Button>
+                </div>
+            )
+        }
+    }
+
     function renderNavBar() {
         return (
-        <Navbar fluid collapseOnSelect>
-            <Navbar.Header>
-                Header Title
-                <Navbar.Toggle />
-            </Navbar.Header>
-            <Navbar.Collapse>
-                <Nav pullRight>
-                    <LinkContainer to="/FAQ">
-                        <NavItem>FAQ</NavItem>
-                    </LinkContainer>
-                    {isAuthenticated ? (
-                        <NavDropdown
-                            id="User"
-                            title={email}  >
-                            <LinkContainer to="/profile">
-                                <NavItem>User Profile</NavItem>
-                            </LinkContainer>
-                            <NavItem onClick={handleLogout}>Logout</NavItem>
-                        </NavDropdown>
-                    ) : (
-                            <div className="navbarButtons">
-                                <LinkContainer to="/signup">
-                                    <NavItem>
-                                        <Button inversed className="button">Sign Up</Button>
-                                    </NavItem>
-                                </LinkContainer>
-                                <LinkContainer to="/login">
-                                    <NavItem>
-                                        <Button inversed className="button">Login</Button>
-                                    </NavItem>
-                                </LinkContainer>
-                            </div>
-                        )}
-                </Nav>
-            </Navbar.Collapse>
-        </Navbar>
+            <div className="navbarContainer">
+                <div className="navElements">
+                    <Link to="/">About</Link>
+                    <Link to="/">Dashboard</Link>
+                    <Link to="/FAQ">FAQ</Link>
+                </div>
+                {renderAccountButtons()}
+            </div>
         )
     }
 
@@ -116,7 +109,6 @@ function App() {
             <div>
                 {generateHeader()}
                 <div className="App container">
-                    <Link to="/">Back to Dashboard</Link>
                     <AppContext.Provider
                         value={{ isAuthenticated, userHasAuthenticated }}
                     >
@@ -125,7 +117,7 @@ function App() {
                 </div>
             </div>
         )
-    );
+    )
 }
 
 export default App;
