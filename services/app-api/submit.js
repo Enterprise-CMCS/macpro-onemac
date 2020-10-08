@@ -20,11 +20,18 @@ export const main = handler(async (event, context) => {
   if (fieldsValid(data)) {
     // Add required data to the record before storing.
     console.log(event.requestContext.identity);
-    data.userId = event.requestContext.identity.cognitoIdentityId;
-    data.authProvider =
-      event.requestContext.identity.cognitoAuthenticationProvider;
-    data.amendmentId = uuid.v1();
+    data.id = uuid.v1();
     data.createdAt = Date.now();
+
+    //Normalize the user data.
+    data.user = {
+      id: event.requestContext.identity.cognitoIdentityId,
+      authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
+      email: data.user.attributes.email,
+      firstName: data.user.attributes.given_name,
+      lastName: data.user.attributes.family_name,
+    };
+    data.userId = event.requestContext.identity.cognitoIdentityId;
 
     //Store the data in the database.
     await dynamoDb.put({
@@ -48,8 +55,7 @@ export const main = handler(async (event, context) => {
     console.log("Successfully submitted amendment:", data);
 
     context.succeed(data);
-  }
-  else{
+  } else {
     context.fail("Invalid submission with missing fields.");
   }
 });
@@ -61,17 +67,17 @@ export const main = handler(async (event, context) => {
  */
 function fieldsValid(data) {
   let isValid = true;
-  if(!data.user) {
+  if (!data.user) {
     console.log("ERROR: Missing user info data.");
     isValid = false;
   }
 
-  if(!data.uploads) {
+  if (!data.uploads) {
     console.log("ERROR: Missing attachments.");
     isValid = false;
   }
 
-  if(!data.type) {
+  if (!data.type) {
     console.log("ERROR: Missing record type.");
     isValid = false;
   }

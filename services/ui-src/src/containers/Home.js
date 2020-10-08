@@ -44,7 +44,7 @@ export default function Home() {
 
     return sortedRecords.map((record, i) => {
       let title;
-      let link = "/" + record.type + "/" + record.amendmentId;
+      let link = "/" + record.type + "/" + record.id;
       switch (record.type) {
         case RECORD_TYPES.AMENDMENT:
           title = "SPA " + record.transmittalNumber;

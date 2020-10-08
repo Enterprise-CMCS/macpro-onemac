@@ -15,7 +15,7 @@ export const main = handler(async (event, context) => {
     // - 'amendmentId': path parameter
     Key: {
       userId: event.requestContext.identity.cognitoIdentityId,
-      amendmentId: event.pathParameters.id
+      id: event.pathParameters.id
     }
   };
 

@@ -40,7 +40,7 @@ export default function NewWaiver() {
         setIsLoading(true);
 
         var user = await Auth.currentUserInfo();
-        let type = RECORD_TYPES.AMENDMENT;
+        let type = RECORD_TYPES.WAIVER;
 
         try {    
             let uploads = await uploader.current.uploadFiles();

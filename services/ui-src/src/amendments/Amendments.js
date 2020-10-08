@@ -15,9 +15,6 @@ export default function Amendments() {
     const { id } = useParams();
     const [amendment, setAmendment] = useState(null);
     const [transmittalNumber, setTransmittalNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
@@ -34,10 +31,7 @@ export default function Amendments() {
         async function onLoad() {
             try {
                 const amendment = await loadAmendment();
-                const { email, firstName, lastName, territory, transmittalNumber, urgent, comments } = amendment;
-                setEmail(email);
-                setFirstName(capitalize(firstName));
-                setLastName(capitalize(lastName));
+                const { territory, transmittalNumber, urgent, comments } = amendment;
                 setTerritory(territory);
                 setTransmittalNumber(transmittalNumber);
                 setUrgent(urgent);
@@ -70,21 +64,6 @@ export default function Amendments() {
                         <FormControl
                             disabled={true}
                             value={transmittalNumber}
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="name">
-                        <ControlLabel>Submitter</ControlLabel>
-                        <FormControl
-                            value={firstName + ' ' + lastName}
-                            disabled={true}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="email">
-                        <ControlLabel>Submitter Email</ControlLabel>
-                        <FormControl
-                            value={email}
-                            disabled={true}
                         />
                     </FormGroup>
                     <FormGroup controlId="territory">
