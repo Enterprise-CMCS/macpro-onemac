@@ -2,30 +2,29 @@ import React, { useRef, useState } from "react";
 import LoaderButton from "./LoaderButton";
 import FileUploader from "../common/FileUploader";
 import { TextField } from "@cmsgov/design-system";
-import { API } from "aws-amplify";
-import { Auth } from "aws-amplify";
 import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { RECORD_TYPES } from "../libs/recordTypes";
+import submitChangeRequest from "../common/SubmitChangeRequest";
 
 export default function SpaRai() {
   // The attachment list
-  const requiredUploads = ["RAI Response"];
+  const requiredUploads = ['RAI Response'];
   const optionalUploads = [
-    "CMS Form 179",
-    "SPA Pages",
-    "Cover Letter",
-    "Existing state plan pages",
-    "Tribal Consultation",
-    "Public Notice",
-    "Standard Funding Questions (SFQs)",
-    "Other",
+    'CMS Form 179',
+    'SPA Pages',
+    'Cover Letter',
+    'Existing state plan pages',
+    'Tribal Consultation',
+    'Public Notice',
+    'Standard Funding Questions (SFQs)',
+    'Other',
   ];
 
   // The form field names
   const FIELD_NAMES = {
-    TRANSMITTAL_NUMBER: "transmittalNumber",
-    SUMMARY: "summary",
+    TRANSMITTAL_NUMBER: 'transmittalNumber',
+    SUMMARY: 'summary',
   };
 
   // True when the required attachments have been selected.
@@ -44,7 +43,7 @@ export default function SpaRai() {
   // The record we are using for the form.
   const [record, setRecord] = useState({
     type: RECORD_TYPES.SPA_RAI,
-    summary: "",
+    summary: '',
   });
 
   /**
@@ -98,31 +97,27 @@ export default function SpaRai() {
     setIsLoading(true);
 
     try {
-      record.user = await Auth.currentUserInfo();
-      record.uploads = await uploader.current.uploadFiles();
-
-      await API.post("amendments", "/submit", {
-        body: record,
-      });
-      history.push("/");
+      let uploadedList = await uploader.current.uploadFiles();
+      await submitChangeRequest(record, uploadedList);
+      history.push('/');
     } catch (error) {
-      onError("There was an error submitting your request.  Please try again.");
-      console.log("Error while submitting the form.", error);
+      onError('There was an error submitting your request.  Please try again.');
+      console.log('Error while submitting the form.', error);
       setIsLoading(false);
     }
   }
 
   // Render the component.
   return (
-    <div className="form-container">
+    <div className='form-container'>
       <form onSubmit={handleSubmit}>
         <h3>SPA Details</h3>
         <TextField
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          size="medium"
-          label="SPA ID"
-          requirementLabel="REQUIRED"
-          hint="Enter the State Plan Amendment transmittal number for this RAI."
+          size='medium'
+          label='SPA ID'
+          requirementLabel='REQUIRED'
+          hint='Enter the State Plan Amendment transmittal number for this RAI.'
           onChange={handleInputChange}
         ></TextField>
         <h3>Attachments</h3>
@@ -135,16 +130,16 @@ export default function SpaRai() {
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}
-          label="Summary"
-          fieldClassName="summary-field"
+          label='Summary'
+          fieldClassName='summary-field'
           multiline
           onChange={handleInputChange}
         ></TextField>
         <LoaderButton
           block
-          type="submit"
-          bsSize="large"
-          bsStyle="primary"
+          type='submit'
+          bsSize='large'
+          bsStyle='primary'
           isLoading={isLoading}
           disabled={!isFormReady}
         >

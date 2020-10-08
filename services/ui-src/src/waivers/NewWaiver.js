@@ -13,9 +13,6 @@ import { RECORD_TYPES } from "../libs/recordTypes";
 export default function NewWaiver() {
     const history = useHistory();  // ?? do we need?
 
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [waiverNumber, setWaiverNumber] = useState("");
     const [territory, setTerritory] = useState("");
     const [summary, setSummary] = useState("");
@@ -28,21 +25,6 @@ export default function NewWaiver() {
 
     //Reference to the File Uploader.
     const uploader = useRef(null);
-
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
-
-    async function populateUserInfo() {
-        var userInfo = await Auth.currentUserInfo();
-        setEmail(userInfo.attributes.email);
-        setFirstName(capitalize(userInfo.attributes.given_name));
-        setLastName(capitalize(userInfo.attributes.family_name));
-        return userInfo.attributes.email;
-    }
-
-    populateUserInfo();
  
     function validateForm() {
         return territory.length > 0 
@@ -57,11 +39,13 @@ export default function NewWaiver() {
 
         setIsLoading(true);
 
+        var user = await Auth.currentUserInfo();
+        let type = RECORD_TYPES.AMENDMENT;
+
         try {    
             let uploads = await uploader.current.uploadFiles();
-            let type = RECORD_TYPES.WAIVER;
             let transmittalNumber = waiverNumber;
-            await createWaiver({ type, email, firstName, lastName, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
+            await createWaiver({ type, user, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
             history.push("/");
         } catch (e) {
             onError(e);

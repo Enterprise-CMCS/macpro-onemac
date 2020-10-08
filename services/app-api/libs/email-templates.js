@@ -8,7 +8,7 @@ export function getUserAckEmailBody(data) {
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
     message.subject = "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
     message.body = `
-    <p>${data.userInfo.firstName} ${data.userInfo.lastName}</p>
+    <p>${data.user.firstName} ${data.user.lastName}</p>
     <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
     <p><b>State or territory</b>: ${data.territory}
     <br><b>ID</b>: ${data.transmittalNumber}
@@ -39,8 +39,8 @@ export function getSubmissionEmailBody(data) {
     message.body = `
     <p>The SPA Submission Form received a State Plan Amendment:</p>
     <p><b>State or territory</b>: ${data.territory}
-    <br><b>Name</b>: ${data.userInfo.firstName} ${data.userInfo.lastName}
-    <br><b>Email Address</b>: ${data.userInfo.email}
+    <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
+    <br><b>Email Address</b>: ${data.user.email}
     <br><b>ID</b>: ${data.transmittalNumber}
     <br><b>Urgent?</b>: ${isUrgent}</p>
     <p>Files:</p>

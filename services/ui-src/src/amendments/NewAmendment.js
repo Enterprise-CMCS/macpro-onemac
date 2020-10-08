@@ -36,15 +36,12 @@ export default function NewAmendment() {
 
         setIsLoading(true);
 
-        var userInfo = await Auth.currentUserInfo();
-        let email = userInfo.attributes.email;
-        let firstName = userInfo.attributes.given_name;
-        let lastName = userInfo.attributes.family_name;
+        var user = await Auth.currentUserInfo();
         let type = RECORD_TYPES.AMENDMENT;
 
         try {
             let uploads = await uploader.current.uploadFiles();
-            await createAmendment({ type, email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
+            await createAmendment({ type, user, territory, transmittalNumber, urgent, comments, uploads });
             history.push("/");
         } catch (error) {
             onError("There was an error submitting your request.  Please try again.");

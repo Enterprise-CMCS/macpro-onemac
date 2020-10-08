@@ -61,20 +61,20 @@ export const main = handler(async (event, context) => {
  */
 function fieldsValid(data) {
   let isValid = true;
-  if(!data.userInfo) {
-    console.log("ERROR: Missing user info data.")
+  if(!data.user) {
+    console.log("ERROR: Missing user info data.");
     isValid = false;
   }
 
   if(!data.uploads) {
-    console.log("ERROR: Missing attachments.")
+    console.log("ERROR: Missing attachments.");
     isValid = false;
   }
 
   if(!data.type) {
-    console.log("ERROR: Missing record type.")
+    console.log("ERROR: Missing record type.");
     isValid = false;
-  } 
+  }
 
   return isValid;
 }
@@ -88,7 +88,7 @@ function sendUserAckEmail(data) {
 
   var emailParams = {
     Destination: {
-      ToAddresses: [data.email],
+      ToAddresses: [data.user.email],
     },
     Message: {
       Body: {
