@@ -17,37 +17,67 @@ export const main = handler(async (event, context) => {
   const data = JSON.parse(event.body);
   console.log(JSON.stringify(event, null, 2));
 
-  // Add required data to the record before storing.
-  console.log(event.requestContext.identity);
-  data.userId = event.requestContext.identity.cognitoIdentityId;
-  data.authProvider =
-    event.requestContext.identity.cognitoAuthenticationProvider;
-  data.amendmentId = uuid.v1();
-  data.createdAt = Date.now();
+  if (fieldsValid(data)) {
+    // Add required data to the record before storing.
+    console.log(event.requestContext.identity);
+    data.userId = event.requestContext.identity.cognitoIdentityId;
+    data.authProvider =
+      event.requestContext.identity.cognitoAuthenticationProvider;
+    data.amendmentId = uuid.v1();
+    data.createdAt = Date.now();
 
-  //Store the data in the database.
-  await dynamoDb.put({
-    TableName: process.env.tableName,
-    Item: data,
-  });
+    //Store the data in the database.
+    await dynamoDb.put({
+      TableName: process.env.tableName,
+      Item: data,
+    });
 
-  // Now send the submission email
-  await sendSubmissionEmail(data);
+    // Now send the submission email
+    await sendSubmissionEmail(data);
 
-  //An error sending the user email is not a failure.
-  try {
-    await sendUserAckEmail(data);
-  } catch (error) {
-    console.log(
-      "Warning: There was an error sending the user acknowledgement email.",
-      error
-    );
+    //An error sending the user email is not a failure.
+    try {
+      await sendUserAckEmail(data);
+    } catch (error) {
+      console.log(
+        "Warning: There was an error sending the user acknowledgement email.",
+        error
+      );
+    }
+
+    console.log("Successfully submitted amendment:", data);
+
+    context.succeed(data);
+  }
+  else{
+    context.fail("Invalid submission with missing fields.");
+  }
+});
+
+/**
+ * Check if the received data is valid.
+ * @param {Object} data the received data
+ * @returns true if the data is valid
+ */
+function fieldsValid(data) {
+  let isValid = true;
+  if(!data.userInfo) {
+    console.log("ERROR: Missing user info data.")
+    isValid = false;
   }
 
-  console.log("Successfully submitted amendment:", data);
+  if(!data.uploads) {
+    console.log("ERROR: Missing attachments.")
+    isValid = false;
+  }
 
-  return data;
-});
+  if(!data.type) {
+    console.log("ERROR: Missing record type.")
+    isValid = false;
+  } 
+
+  return isValid;
+}
 
 /**
  * Send the user acknowledgement email.

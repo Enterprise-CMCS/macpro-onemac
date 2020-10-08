@@ -27,11 +27,6 @@ let amplifyConfig = {
                 endpoint: config.apiGateway.URL,
                 region: config.apiGateway.REGION
             },
-            {
-                name: "waivers",
-                endpoint: config.apiGateway.URL,
-                region: config.apiGateway.REGION
-            },
         ]
     }
 };
