@@ -4,7 +4,7 @@
 }
 
 .headerContainer {
-  padding-bottom: 30px;
+  padding-bottom: 50px;
 }
 
 .headerLogo {
@@ -12,31 +12,6 @@
   img {
     max-width: 100%;
   }
-}
-
-.navbarButtons {
-  padding: 30px 70px 0 0;
-  li {
-    display: inline;
-  }
-}
-
-// .dropdown {
-//   padding-top: 25px;
-// }
-
-.navbar {
-  background-color: #205493;
-  border: 0;
-  border-radius: 0;
-  padding-bottom: 20px;
-  min-height: 90px;
-}
-
-.navbar-header{
-  color: white;
-  font-size: 35px;
-  padding: 20px 10px 10px 70px;
 }
 
 .usaBanner {
@@ -49,12 +24,6 @@
     padding-right: 10px;
   }
 }
-
-// .navElements {
-//   display: flex;
-//   justify-content: space-between;
-//   // align-items: center;
-// }
 
 .navElements {
   display: flex;

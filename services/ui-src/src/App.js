@@ -45,7 +45,7 @@ function App() {
 
     function renderBranding() {
         return (
-            <div>
+            <div tabindex="0">
                 <div className="usaBanner">
                     <img src={flagIcon} alt="united states flag" />
                     An offical website of the United States government
@@ -87,7 +87,7 @@ function App() {
             <div className="navbarContainer">
                 <div className="navElements">
                     <Link to="/">About</Link>
-                    <Link to="/">Dashboard</Link>
+                    <Link to="/dashboard">Dashboard</Link>
                     <Link to="/FAQ">FAQ</Link>
                 </div>
                 {renderAccountButtons()}

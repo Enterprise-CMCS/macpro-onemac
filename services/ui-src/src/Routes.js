@@ -2,6 +2,7 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
+import Dashboard from "./containers/Dashboard";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
@@ -30,6 +31,9 @@ export default function Routes() {
             </UnauthenticatedRoute>
             <AuthenticatedRoute exact path="/profile">
                 <Profile />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path="/dashboard">
+                <Dashboard />
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path="/amendments/new">
                 <NewAmendment />
