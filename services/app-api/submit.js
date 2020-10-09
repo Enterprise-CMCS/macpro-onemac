@@ -54,6 +54,7 @@ export const main = handler(async (event, context) => {
 
     console.log("Successfully submitted amendment:", data);
     context.succeed(data);
+    return data;
   } else {
     console.log("Invalid submission with missing fields.", data);
     context.fail("Invalid submission with missing fields.");
