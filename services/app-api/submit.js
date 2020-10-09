@@ -59,7 +59,11 @@ export const main = handler(async (event, context) => {
     console.log("Invalid submission with missing fields.", data);
     // context.fail("Invalid submission with missing fields.");
   }
-  return data;
+  return {
+    statusCode: 200,
+    body: JSON.stringify(data),
+  };
+  // return data;
 });
 
 /**
