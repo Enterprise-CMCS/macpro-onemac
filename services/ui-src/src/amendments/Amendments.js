@@ -18,10 +18,6 @@ export default function Amendments() {
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
 
     useEffect(() => {
         function loadAmendment() {

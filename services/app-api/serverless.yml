@@ -63,7 +63,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-
   get:
     handler: get.main
     role: LambdaApiRole
