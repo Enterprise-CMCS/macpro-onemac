@@ -28,16 +28,10 @@ function App() {
         setIsAuthenticating(false);
     }
 
-    function generateHeader() {
-        return (
-            <Header isAuthenticated={isAuthenticated} />
-        )
-    }
-
     return (
         !isAuthenticating && (
             <div>
-                {generateHeader()}
+                <Header isAuthenticated={isAuthenticated} />
                 <div className="App container">
                     <AppContext.Provider
                         value={{ isAuthenticated, userHasAuthenticated }}
