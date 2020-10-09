@@ -8,7 +8,9 @@ var ses = new aws.SES({ region: "us-east-1" });
 /**
  * Submit a new record for storage.
  */
-export const main = handler(async (event, context) => {
+export const main = handler(async (event, context, callback) => {
+  let response;
+
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -53,16 +55,19 @@ export const main = handler(async (event, context) => {
     }
 
     console.log("Successfully submitted amendment:", data);
-    // context.succeed(data);
+    response = {
+      statusCode: 200,
+      body: JSON.stringify(data),
+    };
   } else {
     console.log("Invalid submission with missing fields.", data);
-    // context.fail("Invalid submission with missing fields.");
+    response = {
+      statusCode: 500,
+      body: JSON.stringify("Invalid submission with missing fields."),
+    };
   }
-  return {
-    statusCode: 200,
-    body: JSON.stringify(data),
-  };
-  // return data;
+
+  return response;
 });
 
 /**
