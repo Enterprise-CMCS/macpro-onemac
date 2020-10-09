@@ -8,7 +8,7 @@ var ses = new aws.SES({ region: "us-east-1" });
 /**
  * Submit a new record for storage.
  */
-export const main = handler(async (event, context, callback) => {
+export const main = handler(async (event) => {
   let response;
 
   // If this invokation is a prewarm, do nothing and return.
