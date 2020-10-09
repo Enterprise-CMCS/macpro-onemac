@@ -2,28 +2,52 @@ import sendEmail from "./email-lib";
 import {format, addDays} from "date-fns";
 
 /**
- * Send the appropriate emails based on the data
+ * Send the appropriate emails to the State User based on the data
  * Returns status messages regarding the emails sent
  * @param {Object} data the SPA data
  */
-export function sendAnyEmails(data) {
+export function sendStateEmail(data) {
+  let retPromise;
 
-  switch (data.amendmentType) {
+  switch (data.type) {
     case "amendment":
-      sendEmail(getStateSPAEmail(data));
-      sendEmail(getCMSSPAEmail(data));
+      console.log("sending SPA Email to State");
+      retPromise = sendEmail(getStateSPAEmailParams(data)).promise();
       break;
     case "waiver":
-      sendEmail(getStateWaiverEmail(data));
-      sendEmail(getCMSWaiverEmail(data));
+      console.log("sending waiver emails");
+      retPromise = sendEmail(getStateWaiverEmailParams(data)).promise();
       break;
     default:
       break;
   }
 
-  return "emails sent";
+  return retPromise;
 }
 
+/**
+ * Send the appropriate emails to the CMS inbox based on the data
+ * Returns status messages regarding the emails sent
+ * @param {Object} data the SPA data
+ */
+export function sendCMSEmail(data) {
+  let retPromise;
+
+  switch (data.type) {
+    case "amendment":
+      console.log("sending SPA Email to CMS");
+      retPromise = sendEmail(getCMSSPAEmailParams(data)).promise();
+      break;
+    case "waiver":
+      console.log("sending waiver email to CMS");
+      retPromise = sendEmail(getCMSWaiverEmailParams(data)).promise();
+      break;
+    default:
+        break;
+    }
+  
+  return retPromise;
+}
 /**
  * Generate the SPA Amendment Form Submission email parameters
  * This email goes to the State User and contains CMS-controlled text
@@ -32,7 +56,7 @@ export function sendAnyEmails(data) {
  * @param {Object} data the form fields
  * @returns a message object with subject and body
  */
-function getStateSPAEmail(data) {
+function getStateSPAEmailParams(data) {
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
     message.sendTo = data.email;
@@ -65,7 +89,7 @@ function getStateSPAEmail(data) {
  * @param {Object} data the form fields
  * @returns a message object with subject and body
  */
-function getStateWaiverEmail(data) {
+function getStateWaiverEmailParams(data) {
   let message = {};
   message.sendTo = data.email;
   message.subject = "Your Waiver " + data.waiverNumber + " has been submitted to CMS";
@@ -89,7 +113,7 @@ function getStateWaiverEmail(data) {
  * @param {Object} data the form fields
  * @returns a message object with subject and body
  */
-function getCMSSPAEmail(data) {
+function getCMSSPAEmailParams(data) {
     let message = {};
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
     message.subject = "New SPA " + data.transmittalNumber + " submitted";
@@ -113,7 +137,7 @@ function getCMSSPAEmail(data) {
  * @param {Object} data the form fields
  * @returns a message object with subject and body
  */
-function getCMSWaiverEmail(data) {
+function getCMSWaiverEmailParams(data) {
   let message = {};
   message.subject = "New Waiver " + data.waiverNumber + " submitted";
   message.body = `

@@ -8,9 +8,8 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-dynamodb-local
-  # Serverless offline needs to be last
   - serverless-offline
-
+  - serverless-s3-local
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-amendments

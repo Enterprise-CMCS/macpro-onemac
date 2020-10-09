@@ -36,6 +36,8 @@ function getSESEmailParams(message) {
 function sendOfflineEmail(message) {
   console.log("IN OFFLINE MODE: Will not send email.");
   console.log(message);
+  console.log("Amazon email parameters:\n");
+  console.log(getSESEmailParams(message));
   return Promise.resolve("ok");
 }
 

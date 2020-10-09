@@ -46,18 +46,19 @@ export const main = handler(async (event, context) => {
   }
 
   await dynamoDb.put(params);
+  await sendCMSEmail(data);
 
-  //An error sending the user email is not a failure, but it needs to be recorded.
+  //An error sending the State user email is not a failure, but it needs to be recorded.
   try {
-    await sendAnyEmails(data);
+    await sendStateEmail(data);
   } catch (error) {
     console.log(
-      "Warning: There was an error sending the emails.",
+      "Warning: There was an error sending the email to the State User.",
       error
     );
   }
 
-  console.log("Successfully submitted amendment:", data);
+  console.log("Successfully submitted change request:", data);
 
   return params.Item;
 });

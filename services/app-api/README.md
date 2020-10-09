@@ -12,6 +12,11 @@ Install the serverless Dynamo DB offline package by running the following comman
 npm install
 sls dynamodb install
 ```
+Install the serverless S3 offline plugin by running the following command:
+
+in /services/uploads
+sls plugin install --name serverless-s3-local
+...
 
 Run the software locally by running the following command:
 
