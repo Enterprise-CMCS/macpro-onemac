@@ -20,6 +20,7 @@
     "serverless-plugin-warmup": "^4.9.0"
   },
   "dependencies": {
+    "date-fns": "^2.16.1",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
   }
