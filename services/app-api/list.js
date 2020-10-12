@@ -8,9 +8,9 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
-  var amendmentType = 'amendment';
+  var changeRequestType = 'amendment';
   if (event.path == '/waivers') {
-    amendmentType = 'waiver';
+    changeRequestType = 'waiver';
   }
 
   const params = {
@@ -24,9 +24,9 @@ export const main = handler(async (event, context) => {
     KeyConditionExpression: "userId = :userId",
     ExpressionAttributeValues: {
       ":userId": event.requestContext.identity.cognitoIdentityId,
-      ":amendmentType" : amendmentType,
+      ":changeRequestType" : changeRequestType,
     },
-    FilterExpression: 'amendmentType = :amendmentType',
+    FilterExpression: 'changeRequestType = :changeRequestType',
 
   };
 

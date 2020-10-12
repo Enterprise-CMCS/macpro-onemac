@@ -1,7 +1,7 @@
 import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import sendAnyEmails from "./libs/email-templates";
+import { sendCMSEmail, sendStateEmail } from "./libs/email-lib";
 
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -13,12 +13,7 @@ export const main = handler(async (event, context) => {
   console.log(JSON.stringify(event, null, 2));
   data.createdDate = Date.now();
 
-  var amendmentType = 'amendment';
-  if (event.path == '/waivers') {
-    amendmentType = 'waiver';
-  }
-
-  const params = {
+  let params = {
     TableName: process.env.tableName,
     Item: {
       userId: event.requestContext.identity.cognitoIdentityId,
@@ -28,29 +23,31 @@ export const main = handler(async (event, context) => {
       firstName: data.firstName,
       lastName: data.lastName,
       territory: data.territory,
-      amendmentType: amendmentType,
       uploads: data.uploads,
       createdAt: data.createdDate,
     },
   };
 
   if (event.path=='/waivers') {
+    params.Item.changeRequestType = 'waiver';
+    params.Item.transmittalNumber = data.waiverNumber;
     params.Item.waiverNumber = data.waiverNumber;
     params.Item.summary = data.summary;
     params.Item.actionType = data.actionType;
     params.Item.waiverAuthority = data.waiverAuthority;
   } else {
+    params.Item.changeRequestType = 'amendment';
     params.Item.transmittalNumber = data.transmittalNumber;
     params.Item.urgent = data.urgent;
     params.Item.comments = data.comments;
   }
 
   await dynamoDb.put(params);
-  await sendCMSEmail(data);
+  await sendCMSEmail(params.Item);
 
   //An error sending the State user email is not a failure, but it needs to be recorded.
   try {
-    await sendStateEmail(data);
+    await sendStateEmail(params.Item);
   } catch (error) {
     console.log(
       "Warning: There was an error sending the email to the State User.",
@@ -58,7 +55,7 @@ export const main = handler(async (event, context) => {
     );
   }
 
-  console.log("Successfully submitted change request:", data);
+  console.log("Successfully submitted change request:", params);
 
   return params.Item;
 });
