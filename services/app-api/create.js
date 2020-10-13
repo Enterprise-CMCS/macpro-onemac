@@ -28,7 +28,10 @@ export const main = handler(async (event, context) => {
       createdAt: data.createdDate,
     },
   };
-  let cmsEmailParams = stateEmailParams = {
+  let cmsEmailParams = {
+    Destination: {
+      ToAddresses: [process.env.reviewerEmail],
+    },
     Message: {
       Body: {
         Html: {
@@ -41,6 +44,7 @@ export const main = handler(async (event, context) => {
     },
     Source: process.env.emailSource,
   };
+  let stateEmailParams = cmsEmailParams;
 
   if (event.path=='/waivers') {
     params.Item.changeRequestType = 'waiver';
@@ -50,9 +54,8 @@ export const main = handler(async (event, context) => {
     params.Item.actionType = data.actionType;
     params.Item.waiverAuthority = data.waiverAuthority;
 
-    cmsEmailParams.Destination.ToAddresses = process.env.reviewerEmail;
-    cmsEmailParams.Subject.Data = "New Waiver " + data.waiverNumber + " submitted";
-    cmsEmailParams.Message.Data = `
+    cmsEmailParams.Message.Subject.Data = "New Waiver " + data.waiverNumber + " submitted";
+    cmsEmailParams.Message.Body.Html.Data = `
     <p>The SPA and Waiver Submission Form received a Waiver Submission:</p>
     <p><b>State or territory</b>: ${data.territory}
     <br><b>Name</b>: ${data.firstName} ${data.lastName}
@@ -63,10 +66,10 @@ export const main = handler(async (event, context) => {
     <p>If these files seem suspicious, do not open them, and instead forward this email to <a href="mailto:CMS_IT_Service_Desk@cms.hhs.gov">CMS_IT_Service_Desk@cms.hhs.gov</a>.</p>
     <p>Thank you!</p>
     `;
-    
-    stateEmailParams.Destination.ToAddresses = data.email;
-    stateEmailParams.Subject.Data = "Your Waiver " + data.waiverNumber + " has been submitted to CMS";
-    stateEmailParams.Message.Data = `
+
+    stateEmailParams.Destination.ToAddresses = [data.email];
+    stateEmailParams.Message.Subject.Data = "Your Waiver " + data.waiverNumber + " has been submitted to CMS";
+    stateEmailParams.Message.Body.Html.Data = `
     <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
     <p><b>State or territory</b>: ${data.territory}
     <br><b>Waiver #</b>: ${data.waiverNumber}
@@ -75,7 +78,7 @@ export const main = handler(async (event, context) => {
     <p>Files:</p>
     <p>${getLinksHtml(data.uploads)}</p>
     <p>You can expect a formal response to your submission to be issued within 90 days, 
-    on ${format(get90thDay(data.createdAt), "MM dd, yyyy")}. If you have any questions, please contact spa@cms.hhs.gov or your state lead.</p>
+    on ${format(get90thDay(data.createdDate), "MM dd, yyyy")}. If you have any questions, please contact spa@cms.hhs.gov or your state lead.</p>
     `;
 
   } else {
@@ -85,9 +88,8 @@ export const main = handler(async (event, context) => {
     params.Item.comments = data.comments;
 
     let isUrgent = data.urgent == 'true' ? "Yes" : "No";
-    cmsEmailParams.Destination.ToAddresses = process.env.reviewerEmail;
-    cmsEmailParams.Subject.Data = "New SPA " + data.transmittalNumber + " submitted";
-    cmsEmailParams.Message.Data = `
+    cmsEmailParams.Message.Subject.Data = "New SPA " + data.transmittalNumber + " submitted";
+    cmsEmailParams.Message.Body.Html.Data = `
     <p>The SPA Submission Form received a State Plan Amendment:</p>
     <p><b>State or territory</b>: ${data.territory}
     <br><b>Name</b>: ${data.firstName} ${data.lastName}
@@ -100,9 +102,9 @@ export const main = handler(async (event, context) => {
     <p>Thank you!</p>
     `;
 
-    stateEmailParams.Destination.ToAddresses = data.email;
-    stateEmailParams.Subject.Data = "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
-    stateEmailParams.Message.Data = `
+    stateEmailParams.Destination.ToAddresses = [data.email];
+    stateEmailParams.Message.Subject.Data = "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
+    stateEmailParams.Message.Body.Html.Data = `
     <p>${data.firstName} ${data.lastName}</p>
     <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
     <p><b>State or territory</b>: ${data.territory}

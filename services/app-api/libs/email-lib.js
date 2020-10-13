@@ -1,5 +1,4 @@
 import AWS from "aws-sdk";
-import {format, addDays} from "date-fns";
 
 const sender = new AWS.SES({ region: "us-east-1" });
 
@@ -8,7 +7,7 @@ const sender = new AWS.SES({ region: "us-east-1" });
  * and "sends" the email.  Uses promises to capture sending details.
  * @param {Object} message the generic email properties
  */
-export function sendEmail(emailParams) {
+export default function sendEmail(emailParams) {
 
   // If we are in offline mode just log the email message.
   if(process.env.IS_OFFLINE) {
