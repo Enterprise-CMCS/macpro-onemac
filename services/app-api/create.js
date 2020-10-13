@@ -44,7 +44,7 @@ export const main = handler(async (event, context) => {
     },
     Source: process.env.emailSource,
   };
-  let stateEmailParams = cmsEmailParams;
+  let stateEmailParams = JSON.parse(JSON.stringify(cmsEmailParams));
 
   if (event.path=='/waivers') {
     params.Item.changeRequestType = 'waiver';
