@@ -1,4 +1,5 @@
 import * as uuid from "uuid";
+import { ROUTES } from "../ui-src/src/Routes"
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import * as emailTemplates from "./libs/email-templates";
@@ -15,7 +16,7 @@ export const main = handler(async (event, context) => {
   console.log(JSON.stringify(event, null, 2));
 
   var amendmentType = 'amendment';
-  if (event.path == '/waivers') {
+  if (event.path == ROUTES.WAIVERS) {
     amendmentType = 'waiver';
   }
 
@@ -35,7 +36,7 @@ export const main = handler(async (event, context) => {
     },
   };
 
-  if (event.path=='/waivers') {
+  if (event.path == ROUTES.WAIVERS) {
     params.Item.waiverNumber = data.waiverNumber;
     params.Item.summary = data.summary;
     params.Item.actionType = data.actionType;

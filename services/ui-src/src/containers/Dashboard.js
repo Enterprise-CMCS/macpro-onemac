@@ -2,6 +2,8 @@ import React, { useState, useEffect } from "react"
 import { ListGroup, ListGroupItem } from "react-bootstrap"
 import { LinkContainer } from "react-router-bootstrap"
 import { API } from "aws-amplify"
+
+import { ROUTES } from "../Routes"
 import { useAppContext } from "../libs/contextLib"
 import { onError } from "../libs/errorLib"
 import "./Dashboard.scss"
@@ -48,13 +50,13 @@ export default function Dashboard() {
     function renderAmendmentsList(amendments) {
         return [{}].concat(amendments).map((amendment, i) =>
             i !== 0 ? (
-                <LinkContainer key={amendment.amendmentId} to={`/amendments/${amendment.amendmentId}`}>
+                <LinkContainer key={amendment.amendmentId} to={`${ROUTES.AMENDMENTS}/${amendment.amendmentId}`}>
                     <ListGroupItem header={getNumber(amendment.transmittalNumber)}>
                         {"Created: " + new Date(amendment.createdAt).toLocaleString()}
                     </ListGroupItem>
                 </LinkContainer>
             ) : (
-                <LinkContainer key="new" to="/amendments/new">
+                <LinkContainer key="new" to={`${ROUTES.AMENDMENTS}/new`}>
                     <ListGroupItem>
                         <h4>
                             <b>{"\uFF0B"}</b> Submit New SPA
@@ -68,13 +70,13 @@ export default function Dashboard() {
     function renderWaiversList(waivers) {
         return [{}].concat(waivers).map((waiver, i) =>
             i !== 0 ? (
-                <LinkContainer key={waiver.amendmentId} to={`/waivers/${waiver.amendmentId}`}>
+                <LinkContainer key={waiver.amendmentId} to={`${ROUTES.WAIVERS}/${waiver.amendmentId}`}>
                     <ListGroupItem header={getNumber(waiver.waiverNumber)}>
                         {"Created: " + new Date(waiver.createdAt).toLocaleString()}
                     </ListGroupItem>
                 </LinkContainer>
             ) : (
-                <LinkContainer key="new" to="/waivers/new">
+                <LinkContainer key="new" to={`${ROUTES.WAIVERS}/new`}>
                     <ListGroupItem>
                         <h4>
                             <b>{"\uFF0B"}</b> Submit New Waiver
