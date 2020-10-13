@@ -1,4 +1,3 @@
-import { ROUTES } from "../ui-src/src/Routes"
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
@@ -10,7 +9,7 @@ export const main = handler(async (event, context) => {
   }
 
   var amendmentType = 'amendment';
-  if (event.path == ROUTES.WAIVERS) {
+  if (event.path == '/waivers') {
     amendmentType = 'waiver';
   }
 
