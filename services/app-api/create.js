@@ -87,7 +87,7 @@ export const main = handler(async (event, context) => {
     params.Item.urgent = data.urgent;
     params.Item.comments = data.comments;
 
-    let isUrgent = data.urgent == 'true' ? "Yes" : "No";
+    let isUrgent = (data.urgent == true ? "Yes" : "No");
     cmsEmailParams.Message.Subject.Data = "New SPA " + data.transmittalNumber + " submitted";
     cmsEmailParams.Message.Body.Html.Data = `
     <p>The SPA Submission Form received a State Plan Amendment:</p>
