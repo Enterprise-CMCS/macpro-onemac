@@ -8,6 +8,10 @@ import { useAppContext } from "../libs/contextLib"
 import { onError } from "../libs/errorLib"
 import "./Dashboard.scss"
 
+/**
+ * Returns a Dashboard component
+ * @constructor
+ */
 export default function Dashboard() {
     const [amendments, setAmendments] = useState([])
     const [waivers, setWaivers] = useState([])
@@ -34,12 +38,24 @@ export default function Dashboard() {
         onLoad()
     }, [isAuthenticated])
 
+    /**
+     * Returns amendments data from api call
+     */
     function loadAmendments() {
         return API.get("amendments", "/amendments")
     }
+
+    /**
+     * Returns waivers data from api call
+     */
     function loadWaivers() {
         return API.get("waivers", "/waivers")
     }
+
+    /**
+     * Returns parsed out information from string or returns error string
+     * @param {string} numberIn - list of amendments objects
+     */
     function getNumber(numberIn) {
         if (numberIn)
             return numberIn.trim().split("\n")[0]
@@ -47,6 +63,10 @@ export default function Dashboard() {
             return "Number Undefined"
     }
 
+    /**
+     * Renders either a list of amendments submitted by user or an option to submit a new one
+     * @param {Array} amendments - list of amendments objects
+     */
     function renderAmendmentsList(amendments) {
         return [{}].concat(amendments).map((amendment, i) =>
             i !== 0 ? (
@@ -67,6 +87,10 @@ export default function Dashboard() {
         )
     }
 
+    /**
+     * Renders either a list of waivers submitted by user or an option to submit a new one
+     * @param {Array} waivers - list of waivers objects
+     */
     function renderWaiversList(waivers) {
         return [{}].concat(waivers).map((waiver, i) =>
             i !== 0 ? (

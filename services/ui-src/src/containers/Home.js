@@ -1,5 +1,9 @@
 import React from "react";
 
+/**
+ * Returns html formatted text about the usage of the webform
+ * @constructor
+ */
 export default function Home() {
     return (
         <div className="about">

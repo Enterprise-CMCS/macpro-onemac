@@ -9,9 +9,17 @@ import medicaidLogo from "../images/medicaidLogo.png"
 import flagIcon from "../images/flagIcon.png"
 import "./Header.scss"
 
+/**
+ * Returns a header component
+ * @constructor
+ * @param {Object} props - component properties
+ */
 function Header(props) {
     const history = useHistory()
 
+    /**
+     * Renders a branding bar
+     */
     function renderBrandingBar() {
         return (
             <div tabIndex="0">
@@ -29,6 +37,9 @@ function Header(props) {
         )
     }
 
+    /**
+     * Renders account related buttons based on whether the user is authenticated or not authenticated
+     */
     function renderAccountButtons() {
         if (props.isAuthenticated) {
             return (
@@ -52,6 +63,9 @@ function Header(props) {
         }
     }
 
+    /**
+     * Renders a navigation bar
+     */
     function renderNavBar() {
         return (
             <div className="navbarContainer">
