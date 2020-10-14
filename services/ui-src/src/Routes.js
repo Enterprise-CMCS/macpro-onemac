@@ -16,14 +16,14 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 export const ROUTES = {
-    AMENDMENTS: '/amendments',
+    AMENDMENTS: '/amendment',
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
     HOME: '/',
     LOGIN: '/login',
     PROFILE: '/profile',
     SIGNUP: '/signup',
-    WAIVERS: '/waivers',
+    WAIVERS: '/waiver',
     SPA_RAI: '/sparai'
 }
 

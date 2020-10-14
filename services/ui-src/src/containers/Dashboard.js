@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
+import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
@@ -34,6 +34,11 @@ export default function Dashboard() {
     onLoad();
   }, [isAuthenticated]);
 
+  /**
+   * Render the list of change requests.
+   * @param {Array} changeRequests
+   * @returns the change requests
+   */
   function renderChangeRequestList(changeRequests) {
     // First sort the list with the lastest record first.
     let sortedChangeRequests = changeRequests.sort(function (a, b) {
@@ -47,6 +52,7 @@ export default function Dashboard() {
       return retVal;
     });
 
+    //Now generate the list
     return sortedChangeRequests.map((changeRequest, i) => {
       let title;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
@@ -76,10 +82,39 @@ export default function Dashboard() {
     });
   }
 
+  // Render the dashboard
   return (
-    <div className="submissions">
-      <h1>Your SPA and Waiver Submissions</h1>
-      <ListGroup>{!isLoading && renderChangeRequestList(changeRequestList)}</ListGroup>
+    <div>
+      <div className="actions-container">
+        <div className="actions-left-col">
+          <div className="action-title">SPAs</div>
+          <div className="action">
+            <a href="/amendment/new">Submit new SPA</a>
+          </div>
+          <div className="action">
+            <a href="/sparai">Respond to SPA RAI</a>
+          </div>
+        </div>
+        <div className="actions-right-col">
+          <div className="action-title">Waivers</div>
+          <div className="action">
+            <a href="/waiver/new">Submit new Waiver</a>
+          </div>
+        </div>
+      </div>
+      <br />
+      <div className="amendments">
+        <PageHeader>Your Submissions</PageHeader>
+        {changeRequestList.length > 0 ? (
+          <ListGroup>
+            {!isLoading && renderChangeRequestList(changeRequestList)}
+          </ListGroup>
+        ) :
+        (
+          <div>You have not submitted any change requests yet</div>
+        )
+        }
+      </div>
     </div>
   );
 }

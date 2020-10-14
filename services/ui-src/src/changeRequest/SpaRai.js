@@ -6,6 +6,7 @@ import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import submitChangeRequest from "../common/SubmitChangeRequest";
+import { ROUTES } from "../Routes"
 
 export default function SpaRai() {
   // The attachment list
@@ -99,7 +100,7 @@ export default function SpaRai() {
     try {
       let uploadedList = await uploader.current.uploadFiles();
       await submitChangeRequest(changeRequest, uploadedList);
-      history.push('/');
+      history.push(ROUTES.DASHBOARD);
     } catch (error) {
       onError('There was an error submitting your request.  Please try again.');
       console.log('Error while submitting the form.', error);
