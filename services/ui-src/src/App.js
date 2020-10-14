@@ -16,7 +16,7 @@ function App() {
 
     async function onLoad() {
         try {
-            await Auth.currentSession();
+            const userInfo = await Auth.currentSession();
             userHasAuthenticated(true);
         }
         catch(e) {

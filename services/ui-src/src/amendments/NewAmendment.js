@@ -36,11 +36,8 @@ export default function NewAmendment() {
     }
 
     async function populateUserInfo() {
-        var userInfo = await Auth.currentUserInfo();
-        setEmail(userInfo.attributes.email);
-        setFirstName(capitalize(userInfo.attributes.given_name));
-        setLastName(capitalize(userInfo.attributes.family_name));
-        return userInfo.attributes.email;
+      const userInfo = await Auth.currentSession();
+      setEmail(userInfo.idToken.payload.email);
     }
 
     populateUserInfo();
