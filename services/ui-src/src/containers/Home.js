@@ -1,8 +1,7 @@
 import React from "react";
 
 /**
- * Returns html formatted text about the usage of the webform
- * @constructor
+ * Component containing html formatted text about the usage of the webform
  */
 export default function Home() {
     return (

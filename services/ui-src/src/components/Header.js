@@ -10,8 +10,7 @@ import flagIcon from "../images/flagIcon.png"
 import "./Header.scss"
 
 /**
- * Returns a header component
- * @constructor
+ * Component containing header
  * @param {Object} props - component properties
  */
 function Header(props) {

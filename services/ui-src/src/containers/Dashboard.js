@@ -9,8 +9,7 @@ import { onError } from "../libs/errorLib"
 import "./Dashboard.scss"
 
 /**
- * Returns a Dashboard component
- * @constructor
+ * Component containing dashboard
  */
 export default function Dashboard() {
     const [amendments, setAmendments] = useState([])
