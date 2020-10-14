@@ -38,7 +38,7 @@ export default function Amendments() {
                     let i;
                     // Use a for loop instead of forEach to stay in the context of this async function.
                     for (i = 0; i < amendment.uploads.length; i++) {
-                        amendment.uploads[i].url = await Storage.vault.get(amendment.uploads[i].s3Key);
+                        amendment.uploads[i].url = await Storage.vault.get(amendment.uploads[i].s3Key, { level: "protected" });
                     }
                 }
                 setAmendment(amendment);
