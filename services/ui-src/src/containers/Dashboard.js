@@ -105,15 +105,19 @@ export default function Dashboard() {
       <br />
       <div className="amendments">
         <PageHeader>Your Submissions</PageHeader>
-        {changeRequestList.length > 0 ? (
-          <ListGroup>
-            {!isLoading && renderChangeRequestList(changeRequestList)}
-          </ListGroup>
-        ) :
-        (
-          <div>You have not submitted any change requests yet</div>
-        )
-        }
+        {isLoading ? (
+          <div>Please wait while we fetch your submissions...</div>
+        ) : (
+          <div>
+            {changeRequestList.length > 0 ? (
+              <ListGroup>
+                {renderChangeRequestList(changeRequestList)}
+              </ListGroup>
+            ) : (
+              <div>You have not submitted any change requests yet</div>
+            )}
+          </div>
+        )}
       </div>
     </div>
   );
