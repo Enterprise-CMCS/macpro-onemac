@@ -16,8 +16,8 @@ export default function NewAmendment() {
     const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Notice', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
     const history = useHistory();
     const [email, setEmail] = useState("");
-    // const [firstName, setFirstName] = useState("");
-    // const [lastName, setLastName] = useState("");
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
     const [transmittalNumber, setTransmittalNumber] = useState("");
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
@@ -30,14 +30,17 @@ export default function NewAmendment() {
     //Reference to the File Uploader.
     const uploader = useRef(null);
 
-    // const capitalize = (s) => {
-    //     if (typeof s !== 'string') return ''
-    //     return s.charAt(0).toUpperCase() + s.slice(1)
-    // }
+    const capitalize = (s) => {
+        if (typeof s !== 'string') return ''
+        return s.charAt(0).toUpperCase() + s.slice(1)
+    }
 
     async function populateUserInfo() {
-      const userInfo = await Auth.currentSession();
-      setEmail(userInfo.idToken.payload.email);
+        var userInfo = await Auth.currentUserInfo();
+        setEmail(userInfo.attributes.email);
+        setFirstName(capitalize(userInfo.attributes.given_name));
+        setLastName(capitalize(userInfo.attributes.family_name));
+        return userInfo.attributes.email;
     }
 
     populateUserInfo();
