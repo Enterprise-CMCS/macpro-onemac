@@ -1,7 +1,4 @@
-.borderLine {
-  background-color: #18415e;
-  height: 3px;
-}
+@import '../styles/variables';
 
 .headerContainer {
   padding-bottom: 50px;
@@ -15,7 +12,7 @@
 }
 
 .usaBanner {
-  background-color: #f1f1f1;
+  background-color: $gray-lightest;
   font-size: 14px;
   min-height: 25px;
   padding: 0 10px 0 60px;
@@ -31,25 +28,25 @@
   flex-wrap: wrap;
 
   button {
-    background-color: #205493;
+    background-color: $blue-darker;
     margin: 15px;
   }
 
   a {
     margin: 15px;
-    color: white;
+    color: $white;
     font-weight: 600;
     &:hover {
-      color: #d5d9df;
+      color: $gray-link-hover;
     }
     &:active {
-      color: #aab2be;
+      color: $gray-link-active;
     }
   }
 }
 
 .navbarContainer {
-  background-color: #205493;
+  background-color: $blue-darker;
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -60,19 +57,19 @@
 }
 
 .accountDropdown {
-  background-color: #205493 !important;
-  color: white;
+  background-color: $blue-darker !important;
+  color: $white;
   font-weight: 600;
   font-size: 16px;
   border: none;
   box-shadow: none !important;
   &:hover {
-    color: #d5d9df;
+    color: $gray-link-hover;
   }
   &:active {
-    color: #aab2be;
+    color: $gray-link-active;
   }
   &:focus {
-    color: #aab2be !important;
+    color: $gray-link-active !important;
   }
 }

@@ -32,7 +32,6 @@ function Header(props) {
                         <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy" />
                     </a>
                 </div>
-                <div className="borderLine" />
             </div>
         )
     }

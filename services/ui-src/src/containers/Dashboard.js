@@ -64,8 +64,8 @@ export default function Dashboard() {
     }
 
     /**
-     * Renders either a list of amendments submitted by user or an option to submit a new one
-     * @param {Array} amendments - list of amendments objects
+     * Renders either a list of amendments if `amendments` is non-empty or an option to submit a new one
+     * @param {Object[]} amendments - list of amendments objects
      */
     function renderAmendmentsList(amendments) {
         return [{}].concat(amendments).map((amendment, i) =>
@@ -88,8 +88,8 @@ export default function Dashboard() {
     }
 
     /**
-     * Renders either a list of waivers submitted by user or an option to submit a new one
-     * @param {Array} waivers - list of waivers objects
+     * Renders either a list of waivers if `waivers` is non-empty or an option to submit a new one
+     * @param {Object[]} waivers - list of waivers objects
      */
     function renderWaiversList(waivers) {
         return [{}].concat(waivers).map((waiver, i) =>
