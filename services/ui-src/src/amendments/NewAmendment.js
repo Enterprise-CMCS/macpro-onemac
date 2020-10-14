@@ -7,6 +7,7 @@ import { API } from "aws-amplify";
 import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
+import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
 import FileUploader from '../common/FileUploader';
 
@@ -57,7 +58,7 @@ export default function NewAmendment() {
         try {
             let uploads = await uploader.current.uploadFiles();
             await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
-            history.push("/");
+            history.push(ROUTES.DASHBOARD)
         } catch (error) {
             onError("There was an error submitting your request.  Please try again.");
             setIsLoading(false);
