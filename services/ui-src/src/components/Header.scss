@@ -1,75 +1,82 @@
-@import '../styles/variables';
+@import "@cmsgov/design-system/dist/scss/settings/variables/color";
 
 .headerContainer {
-  padding-bottom: 50px;
+    padding-bottom: 50px;
 }
 
 .headerLogo {
-  padding: 30px 10px 30px 60px;
-  img {
-    max-width: 100%;
-  }
+    padding: 30px 10px 30px 60px;
+
+    img {
+        max-width: 100%;
+    }
 }
 
 .usaBanner {
-  background-color: $gray-lightest;
-  font-size: 14px;
-  min-height: 25px;
-  padding: 0 10px 0 60px;
-  img {
-    height: 20px;
-    padding-right: 10px;
-  }
+    background-color: $color-gray-lightest;
+    font-size: 14px;
+    min-height: 25px;
+    padding: 0 10px 0 60px;
+
+    img {
+        height: 20px;
+        padding-right: 10px;
+    }
 }
 
 .navElements {
-  display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
 
-  button {
-    background-color: $blue-darker;
-    margin: 15px;
-  }
+    button {
+        background-color: $color-primary-darker;
+        margin: 15px;
+    }
 
-  a {
-    margin: 15px;
-    color: $white;
-    font-weight: 600;
-    &:hover {
-      color: $gray-link-hover;
+    a {
+        margin: 15px;
+        color: $color-white;
+        font-weight: 600;
+
+        &:hover {
+            color: rgba($color-base-inverse, 0.8);
+        }
+
+        &:active {
+            color: rgba($color-base-inverse, 0.6);
+        }
     }
-    &:active {
-      color: $gray-link-active;
-    }
-  }
 }
 
 .navbarContainer {
-  background-color: $blue-darker;
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  align-items: center;
-  min-height: 100px;
-  padding: 0 70px;
+    background-color: $color-primary-darker;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100px;
+    padding: 0 70px;
 }
 
 .accountDropdown {
-  background-color: $blue-darker !important;
-  color: $white;
-  font-weight: 600;
-  font-size: 16px;
-  border: none;
-  box-shadow: none !important;
-  &:hover {
-    color: $gray-link-hover;
-  }
-  &:active {
-    color: $gray-link-active;
-  }
-  &:focus {
-    color: $gray-link-active !important;
-  }
+    background-color: $color-primary-darker !important;
+    color: $color-white;
+    font-weight: 600;
+    font-size: 16px;
+    border: none;
+    box-shadow: none !important;
+
+    &:hover {
+        color: rgba($color-base-inverse, 0.8);
+    }
+
+    &:active {
+        color: rgba($color-base-inverse, 0.6);
+    }
+
+    &:focus {
+        color: rgba($color-base-inverse, 0.6);
+    }
 }
