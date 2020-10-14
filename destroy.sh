@@ -15,8 +15,8 @@ popd
 services=(
   'uploads'
   'app-api'
-  'ui-auth'
   'ui'
+  'ui-auth'
   # Running remove on ui-src would delete the s3 bucket and cause remove on ui to fail.
   # We empty the bucket near the top of this file, and allow ui to delete it
   # 'ui-src'
