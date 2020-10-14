@@ -1,10 +1,10 @@
 import React, { useRef, useState } from "react";
-import LoaderButton from "./LoaderButton";
+import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../common/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
-import { RECORD_TYPES } from "../libs/recordTypes";
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import submitChangeRequest from "../common/SubmitChangeRequest";
 
 export default function SpaRai() {
@@ -41,8 +41,8 @@ export default function SpaRai() {
   const uploader = useRef(null);
 
   // The record we are using for the form.
-  const [record, setRecord] = useState({
-    type: RECORD_TYPES.SPA_RAI,
+  const [record, setChangeRequest] = useState({
+    type: CHANGE_REQUEST_TYPES.SPA_RAI,
     summary: '',
   });
 
@@ -60,7 +60,7 @@ export default function SpaRai() {
   function uploadsReadyCallbackFunction(state) {
     setAreUploadsReady(state);
     // Need to use the current data to validate and not what is in the state
-    validateForm(record, state);
+    validateForm(changeRequest, state);
   }
 
   /**
@@ -69,7 +69,7 @@ export default function SpaRai() {
    */
   async function handleInputChange(event) {
     if (event && event.target) {
-      let updatedRecord = record;
+      let updatedRecord = changeRequest;
       switch (event.target.name) {
         case FIELD_NAMES.TRANSMITTAL_NUMBER:
           updatedRecord.transmittalNumber = event.target.value;
@@ -81,14 +81,14 @@ export default function SpaRai() {
           //nothing to do here
           break;
       }
-      setRecord(updatedRecord);
+      setChangeRequest(updatedRecord);
       // Need to use the current data to validate and not what is in the state
       validateForm(updatedRecord, areUploadsReady);
     }
   }
 
   /**
-   * Submit the new record.
+   * Submit the new change request.
    * @param {Object} event the click event
    */
   async function handleSubmit(event) {
@@ -98,7 +98,7 @@ export default function SpaRai() {
 
     try {
       let uploadedList = await uploader.current.uploadFiles();
-      await submitChangeRequest(record, uploadedList);
+      await submitChangeRequest(changeRequest, uploadedList);
       history.push('/');
     } catch (error) {
       onError('There was an error submitting your request.  Please try again.');

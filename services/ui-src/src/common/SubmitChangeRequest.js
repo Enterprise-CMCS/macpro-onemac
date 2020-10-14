@@ -16,7 +16,7 @@ export default async function submitChangeRequest(data, uploadedList) {
         data.user = await Auth.currentUserInfo();
         data.uploads = uploadedList;
   
-        return await API.post('amendments', '/submit', {
+        return await API.post('changeRequestAPI', '/submit', {
           body: data,
         });
       } catch (error) {

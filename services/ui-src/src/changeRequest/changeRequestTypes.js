@@ -1,7 +1,7 @@
 /**
  * Record types.
  */
-export const RECORD_TYPES = {
+export const CHANGE_REQUEST_TYPES = {
     AMENDMENT: 'amendment',
     WAIVER: 'waiver',
     SPA_RAI: 'sparai'

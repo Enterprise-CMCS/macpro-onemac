@@ -54,7 +54,7 @@ export default function NewWaiver() {
     }
 
     function createWaiver(waiver) {
-        return API.post("amendments", "/submit", {
+        return API.post("changeRequestAPI", "/submit", {
             body: waiver
         });
     }

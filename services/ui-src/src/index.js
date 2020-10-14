@@ -23,7 +23,7 @@ let amplifyConfig = {
     API: {
         endpoints: [
             {
-                name: "amendments",
+                name: "changeRequestAPI",
                 endpoint: config.apiGateway.URL,
                 region: config.apiGateway.REGION
             },

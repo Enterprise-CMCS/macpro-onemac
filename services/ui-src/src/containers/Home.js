@@ -5,10 +5,10 @@ import { onError } from "../libs/errorLib";
 import "./Home.css";
 import { API } from "aws-amplify";
 import { LinkContainer } from "react-router-bootstrap";
-import { RECORD_TYPES } from "../libs/recordTypes";
+import { CHANGE_REQUEST_TYPES } from "../libs/recordTypes";
 
 export default function Home() {
-  const [amendments, setAmendments] = useState([]);
+  const [changeRequestList, setChangeRequestList] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   useEffect(() => {
@@ -18,7 +18,7 @@ export default function Home() {
       }
 
       try {
-        setAmendments(await API.get("amendments", "/list"));
+        setChangeRequestList(await API.get("changeRequestAPI", "/list"));
       } catch (e) {
         onError(e);
       }
@@ -29,9 +29,9 @@ export default function Home() {
     onLoad();
   }, [isAuthenticated]);
 
-  function renderRecordList(records) {
+  function renderChangeRequestList(changeRequests) {
     // First sort the list with the lastest record first.
-    let sortedRecords = records.sort(function(a, b) {
+    let sortedChangeRequests = changeRequests.sort(function(a, b) {
       let retVal = 0;
       if(a && b && a.createdAt && b.createdAt) {
         let aDate = new Date(a.createdAt);
@@ -42,19 +42,19 @@ export default function Home() {
       return retVal;
     });
 
-    return sortedRecords.map((record, i) => {
+    return sortedChangeRequests.map((changeRequest, i) => {
       let title;
-      let link = "/" + record.type + "/" + record.id;
-      switch (record.type) {
-        case RECORD_TYPES.AMENDMENT:
-          title = "SPA " + record.transmittalNumber;
+      let link = "/" + changeRequest.type + "/" + changeRequest.id;
+      switch (changeRequest.type) {
+        case CHANGE_REQUEST_TYPES.AMENDMENT:
+          title = "SPA " + changeRequest.transmittalNumber;
           break;
-        case RECORD_TYPES.WAIVER:
-          title = "Waiver " + record.transmittalNumber;
+        case CHANGE_REQUEST_TYPES.WAIVER:
+          title = "Waiver " + changeRequest.transmittalNumber;
           break;
 
-        case RECORD_TYPES.SPA_RAI:
-          title = "RAI for SPA " + record.transmittalNumber;
+        case CHANGE_REQUEST_TYPES.SPA_RAI:
+          title = "RAI for SPA " + changeRequest.transmittalNumber;
           break;
 
         default:
@@ -62,9 +62,9 @@ export default function Home() {
       }
 
       return (
-        <LinkContainer key={record.amendmentId} to={link}>
+        <LinkContainer key={changeRequest.id} to={link}>
           <ListGroupItem header={title}>
-            {"Created: " + new Date(record.createdAt).toLocaleString()}
+            {"Created: " + new Date(changeRequest.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       );
@@ -141,7 +141,7 @@ export default function Home() {
         <br />
         <div className="amendments">
           <PageHeader>Your SPA and Waiver Submissions</PageHeader>
-          <ListGroup>{!isLoading && renderRecordList(amendments)}</ListGroup>
+          <ListGroup>{!isLoading && renderChangeRequestList(changeRequestList)}</ListGroup>
         </div>
       </div>
     );

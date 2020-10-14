@@ -21,7 +21,7 @@ export default function Waivers() {
 
     useEffect(() => {
         function loadWaiver() {
-            return API.get("amendments", `/waivers/${id}`);
+            return API.get("changeRequestAPI", `/waivers/${id}`);
         }
 
         async function onLoad() {

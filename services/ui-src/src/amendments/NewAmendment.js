@@ -50,7 +50,7 @@ export default function NewAmendment() {
     }
 
     function createAmendment(amendment) {
-        return API.post("amendments", "/submit", {
+        return API.post("changeRequestAPI", "/submit", {
             body: amendment
         });
     }

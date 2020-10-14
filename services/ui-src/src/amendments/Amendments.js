@@ -21,7 +21,7 @@ export default function Amendments() {
 
     useEffect(() => {
         function loadAmendment() {
-            return API.get("amendments", `/amendments/${id}`);
+            return API.get("changeRequestAPI", `/amendments/${id}`);
         }
 
         async function onLoad() {
