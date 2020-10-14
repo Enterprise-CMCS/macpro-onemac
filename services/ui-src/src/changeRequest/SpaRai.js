@@ -41,7 +41,7 @@ export default function SpaRai() {
   const uploader = useRef(null);
 
   // The record we are using for the form.
-  const [record, setChangeRequest] = useState({
+  const [changeRequest, setChangeRequest] = useState({
     type: CHANGE_REQUEST_TYPES.SPA_RAI,
     summary: '',
   });

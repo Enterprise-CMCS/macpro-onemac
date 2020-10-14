@@ -1,6 +1,7 @@
 import React from "react";
 import { Route, Redirect, useLocation } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
+import { ROUTES } from "../Routes"
 
 export default function AuthenticatedRoute({ children, ...rest }) {
     const { pathname, search } = useLocation();
@@ -11,7 +12,7 @@ export default function AuthenticatedRoute({ children, ...rest }) {
                 children
             ) : (
                 <Redirect to={
-                    `/login?redirect=${pathname}${search}`
+                    `${ROUTES.LOGIN}?redirect=${pathname}${search}`
                 } />
             )}
         </Route>

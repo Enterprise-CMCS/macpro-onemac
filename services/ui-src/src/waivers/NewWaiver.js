@@ -5,13 +5,14 @@ import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import { API, Auth } from "aws-amplify";
 import Select from 'react-select';
+import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
 import {actionTypeOptions, waiverAuthorityOptions, requiredUploads, optionalUploads} from '../libs/waiverLib.js';
 import FileUploader from '../common/FileUploader';
-import { RECORD_TYPES } from "../libs/recordTypes";
+import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function NewWaiver() {
-    const history = useHistory();  // ?? do we need?
+    const history = useHistory()
 
     const [waiverNumber, setWaiverNumber] = useState("");
     const [territory, setTerritory] = useState("");
@@ -40,13 +41,13 @@ export default function NewWaiver() {
         setIsLoading(true);
 
         var user = await Auth.currentUserInfo();
-        let type = RECORD_TYPES.WAIVER;
+        let type = CHANGE_REQUEST_TYPES.WAIVER;
 
         try {    
             let uploads = await uploader.current.uploadFiles();
             let transmittalNumber = waiverNumber;
             await createWaiver({ type, user, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
-            history.push("/");
+            history.push(ROUTES.DASHBOARD);
         } catch (e) {
             onError(e);
             setIsLoading(false);

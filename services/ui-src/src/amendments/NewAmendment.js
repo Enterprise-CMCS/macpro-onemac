@@ -7,9 +7,10 @@ import { API } from "aws-amplify";
 import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
+import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
 import FileUploader from '../common/FileUploader';
-import { RECORD_TYPES } from "../libs/recordTypes";
+import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function NewAmendment() {
     const requiredUploads = ['CMS Form 179', 'SPA Pages'];
@@ -37,12 +38,12 @@ export default function NewAmendment() {
         setIsLoading(true);
 
         var user = await Auth.currentUserInfo();
-        let type = RECORD_TYPES.AMENDMENT;
+        let type = CHANGE_REQUEST_TYPES.AMENDMENT;
 
         try {
             let uploads = await uploader.current.uploadFiles();
             await createAmendment({ type, user, territory, transmittalNumber, urgent, comments, uploads });
-            history.push("/");
+            history.push(ROUTES.DASHBOARD);
         } catch (error) {
             onError("There was an error submitting your request.  Please try again.");
             setIsLoading(false);
