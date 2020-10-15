@@ -39,7 +39,7 @@ export default function Waivers() {
                     let i;
                     // Use a for loop instead of forEach to stay in the context of this async function.
                     for (i = 0; i < waiver.uploads.length; i++) {
-                        waiver.uploads[i].url = await Storage.vault.get(waiver.uploads[i].s3Key);
+                        waiver.uploads[i].url = await Storage.vault.get(waiver.uploads[i].s3Key, { level: "protected" });
                     }
                 }
                 setWaiver(waiver);
