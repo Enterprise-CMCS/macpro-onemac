@@ -6,26 +6,26 @@ import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import submitChangeRequest from "../common/SubmitChangeRequest";
-import { ROUTES } from "../Routes"
+import { ROUTES } from "../Routes";
 
 export default function SpaRai() {
   // The attachment list
-  const requiredUploads = ['RAI Response'];
+  const requiredUploads = ["RAI Response"];
   const optionalUploads = [
-    'CMS Form 179',
-    'SPA Pages',
-    'Cover Letter',
-    'Existing state plan pages',
-    'Tribal Consultation',
-    'Public Notice',
-    'Standard Funding Questions (SFQs)',
-    'Other',
+    "CMS Form 179",
+    "SPA Pages",
+    "Cover Letter",
+    "Existing state plan pages",
+    "Tribal Consultation",
+    "Public Notice",
+    "Standard Funding Questions (SFQs)",
+    "Other",
   ];
 
   // The form field names
   const FIELD_NAMES = {
-    TRANSMITTAL_NUMBER: 'transmittalNumber',
-    SUMMARY: 'summary',
+    TRANSMITTAL_NUMBER: "transmittalNumber",
+    SUMMARY: "summary",
   };
 
   // True when the required attachments have been selected.
@@ -44,7 +44,7 @@ export default function SpaRai() {
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
     type: CHANGE_REQUEST_TYPES.SPA_RAI,
-    summary: '',
+    summary: "",
   });
 
   /**
@@ -102,25 +102,28 @@ export default function SpaRai() {
       await submitChangeRequest(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
-      onError('There was an error submitting your request.  Please try again.');
-      console.log('Error while submitting the form.', error);
+      onError("There was an error submitting your request.  Please try again.");
+      console.log("Error while submitting the form.", error);
       setIsLoading(false);
     }
   }
 
   // Render the component.
   return (
-    <div className='form-container'>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>SPA Details</h3>
-        <TextField
+        <label for={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+          SPA ID<span className="required-mark">*</span>
+        </label>
+        <p>Enter the State Plan Amendment transmittal number for this RAI</p>
+        <input
+          type="text"
+          required
+          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          size='medium'
-          label='SPA ID'
-          requirementLabel='REQUIRED'
-          hint='Enter the State Plan Amendment transmittal number for this RAI.'
           onChange={handleInputChange}
-        ></TextField>
+        ></input>
         <h3>Attachments</h3>
         <FileUploader
           ref={uploader}
@@ -131,16 +134,16 @@ export default function SpaRai() {
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}
-          label='Summary'
-          fieldClassName='summary-field'
+          label="Summary"
+          fieldClassName="summary-field"
           multiline
           onChange={handleInputChange}
         ></TextField>
         <LoaderButton
           block
-          type='submit'
-          bsSize='large'
-          bsStyle='primary'
+          type="submit"
+          bsSize="large"
+          bsStyle="primary"
           isLoading={isLoading}
           disabled={!isFormReady}
         >
