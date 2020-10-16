@@ -28,7 +28,8 @@ export default function Profile() {
 
         async function onLoad() {
             try {
-                const userInfo = await loadProfile();
+                //const userInfo = await loadProfile();
+                const userInfo = await Auth.currentSession();
                 console.log(JSON.stringify(userInfo))
                 setEmail(userInfo.idToken.payload.email);
                // setEmail(userInfo.attributes.email);
