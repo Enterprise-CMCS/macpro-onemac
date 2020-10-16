@@ -23,13 +23,12 @@ export default function Profile() {
    */
     useEffect(() => {
         function loadProfile() {
-            return Auth.currentUserInfo();
+            return Auth.currentSession;
         }
 
         async function onLoad() {
             try {
-                //const userInfo = await loadProfile();
-                const userInfo = await Auth.currentSession();
+                const userInfo = await loadProfile();
                 console.log(JSON.stringify(userInfo))
                 setEmail(userInfo.idToken.payload.email);
                // setEmail(userInfo.attributes.email);
