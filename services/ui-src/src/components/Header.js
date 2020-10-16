@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react"
 import { Link } from "react-router-dom"
 //import { Dropdown, MenuItem } from "react-bootstrap"
 import { Auth } from "aws-amplify"
-import { Button } from '@cmsgov/design-system'
+import { Button, FormLabel } from '@cmsgov/design-system'
 import {signInWithOkta} from '../containers/Login'
 import { ROUTES } from "../Routes"
 import medicaidLogo from "../images/medicaidLogo.png"
@@ -61,7 +61,7 @@ function Header(props) {
         if (props.isAuthenticated) {
             return (
                 <div className="navElements">
-                    <Button onClick={() => console.log("here") } inversed>{email}</Button>
+                    <FormLabel inversed>{email}</FormLabel>
                     <Button onClick={() => Auth.signOut() } inversed>Logout</Button>
                 </div>
             )
