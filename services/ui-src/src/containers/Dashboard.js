@@ -114,7 +114,7 @@ export default function Dashboard() {
                 {renderChangeRequestList(changeRequestList)}
               </ListGroup>
             ) : (
-              <div>You have not submitted any change requests yet</div>
+              <div>You have no submissions yet</div>
             )}
           </div>
         )}
