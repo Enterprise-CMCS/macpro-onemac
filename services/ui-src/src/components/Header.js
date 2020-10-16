@@ -1,20 +1,39 @@
-import React from "react"
-import { Link, useHistory } from "react-router-dom"
-import { Dropdown, MenuItem } from "react-bootstrap"
+import React, {useEffect, useState} from "react"
+import { Link } from "react-router-dom"
+//import { Dropdown, MenuItem } from "react-bootstrap"
 import { Auth } from "aws-amplify"
 import { Button } from '@cmsgov/design-system'
-
+import {signInWithOkta} from '../containers/Login'
 import { ROUTES } from "../Routes"
 import medicaidLogo from "../images/medicaidLogo.png"
 import flagIcon from "../images/flagIcon.png"
 import "./Header.scss"
+//import {onError} from "../libs/errorLib";
 
 /**
  * Component containing header
  * @param {Object} props - component properties
  */
 function Header(props) {
-    const history = useHistory()
+    //const history = useHistory()
+    const [email, setEmail] = useState("");
+    useEffect(() => {
+        function loadProfile() {
+            return Auth.currentSession();
+        }
+
+        async function onLoad() {
+            try {
+                const userInfo = await loadProfile();
+                setEmail(userInfo.idToken.payload.email);
+            } catch (e) {
+               // onError(e);
+                console.log("Debug: Auth.currentSession:" + e)
+            }
+        }
+
+        onLoad();
+    }, []);
 
     /**
      * Renders a branding bar
@@ -41,21 +60,15 @@ function Header(props) {
     function renderAccountButtons() {
         if (props.isAuthenticated) {
             return (
-                <Dropdown id="account info">
-                    <Dropdown.Toggle className="accountDropdown">
-                        Account
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <MenuItem href={ROUTES.PROFILE}>Profile</MenuItem>
-                        <MenuItem href={ROUTES.LOGIN} onClick={() => Auth.signOut()}>Logout</MenuItem>
-                    </Dropdown.Menu>
-                </Dropdown>
+                <div className="navElements">
+                    <Button onClick={() => console.log("here") } inversed>{email}</Button>
+                    <Button onClick={() => Auth.signOut() } inversed>Logout</Button>
+                </div>
             )
         } else {
             return(
                 <div className="navElements">
-                    <Button onClick={() => history.push(ROUTES.SIGNUP)} inversed>Sign Up</Button>
-                    <Button onClick={() => history.push(ROUTES.LOGIN)} inversed>Login</Button>
+                      <Button onClick={() => signInWithOkta()} inversed>Login</Button>
                 </div>
             )
         }
