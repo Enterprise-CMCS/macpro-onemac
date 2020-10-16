@@ -10,19 +10,21 @@ import NewAmendment from "./amendments/NewAmendment";
 import Amendments from "./amendments/Amendments";
 import NewWaiver from "./waivers/NewWaiver";
 import Waivers from "./waivers/Waivers";
+import SpaRai from "./changeRequest/SpaRai";
 import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 export const ROUTES = {
-    AMENDMENTS: '/amendments',
+    AMENDMENTS: '/amendment',
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
     HOME: '/',
     LOGIN: '/login',
     PROFILE: '/profile',
     SIGNUP: '/signup',
-    WAIVERS: '/waivers'
+    WAIVERS: '/waiver',
+    SPA_RAI: '/sparai'
 }
 
 export default function Routes() {
@@ -57,6 +59,9 @@ export default function Routes() {
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/:id`}>
                 <Waivers />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path={`${ROUTES.SPA_RAI}`}>
+                <SpaRai />
             </AuthenticatedRoute>
             <Route>
                 <NotFound />

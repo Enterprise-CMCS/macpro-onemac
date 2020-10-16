@@ -13,7 +13,7 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  tableName: cms-spa-form-${self:custom.stage}-amendments
+  tableName: cms-spa-form-${self:custom.stage}-change-requests
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
@@ -48,26 +48,20 @@ provider:
 
   environment:
     tableName: ${self:custom.tableName}
+    emailSource: ${self:custom.emailSource}
+    reviewerEmail: ${self:custom.reviewerEmail}
 
 
 functions:
-  create:
-    handler: create.main
+  submit:
+    handler: submit.main
     role: LambdaApiRole
     events:
       - http:
-          path: amendments
+          path: submit
           method: post
           cors: true
           authorizer: aws_iam
-      - http:
-          path: waivers
-          method: post
-          cors: true
-          authorizer: aws_iam
-    environment:
-      emailSource: ${self:custom.emailSource}
-      reviewerEmail: ${self:custom.reviewerEmail}
 
   get:
     handler: get.main
@@ -89,12 +83,7 @@ functions:
     role: LambdaApiRole
     events:
       - http:
-          path: amendments
-          method: get
-          cors: true
-          authorizer: aws_iam
-      - http:
-          path: waivers
+          path: list
           method: get
           cors: true
           authorizer: aws_iam
