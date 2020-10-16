@@ -16,11 +16,11 @@ export default function Profile() {
     const [lastName, setLastName] = useState("");
     const [phoneNumber, setPhoneNumber] = useState("");
     const [isLoading, setIsLoading] = useState(false);
-    const capitalize = (s) => {
+   /* const capitalize = (s) => {
         if (typeof s !== 'string') return ''
         return s.charAt(0).toUpperCase() + s.slice(1)
     }
-
+   */
     useEffect(() => {
         function loadProfile() {
             return Auth.currentUserInfo();
@@ -55,10 +55,10 @@ export default function Profile() {
         return Auth.updateUserAttributes(user, userAttributes);
     }
 
-    function formatPhoneNumberForForm(phone) {
+    /* function formatPhoneNumberForForm(phone) {
         if ( phone == null ) return ""
         return phone.replace('+', '')
-    }
+    } */
 
     function formatPhoneNumberForSubmission(phone) {
         if (phone === "1" || phone === "" || phone == null ) return ""
