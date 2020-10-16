@@ -8,7 +8,7 @@ import Select from 'react-select';
 import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
 import {actionTypeOptions, waiverAuthorityOptions, requiredUploads, optionalUploads} from '../libs/waiverLib.js';
-import FileUploader from '../common/FileUploader';
+import FileUploader from '../components/FileUploader';
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function NewWaiver() {

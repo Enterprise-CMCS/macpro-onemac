@@ -1,11 +1,13 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
-import FileUploader from "../common/FileUploader";
+import FileUploader from "../components/FileUploader";
+import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
 import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
-import submitChangeRequest from "../common/SubmitChangeRequest";
+import ChangeRequestDataApi from "../libs/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 
 export default function SpaRai() {
@@ -35,17 +37,52 @@ export default function SpaRai() {
   // True if we are currently submitting the form
   const [isLoading, setIsLoading] = useState(false);
 
+  // True if the form is read only.
+  const [isReadOnly, setReadOnly] = useState(true);
+
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
   //Reference to the File Uploader.
   const uploader = useRef(null);
 
+  // Optional ID parameter from the URL
+  const { id } = useParams();
+
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
     type: CHANGE_REQUEST_TYPES.SPA_RAI,
     summary: "",
+    transmittalNumber: "", //This is needed to be able to control the field
   });
+
+  useEffect(() => {
+    /**
+     * Fetch the given ID
+     */
+    async function fetchChangeRequest() {
+      if (!id) {
+        throw new Error("ID not specified for fetchChangeRequest");
+      }
+
+      try {
+        const changeRequest = await ChangeRequestDataApi.get(id);
+        setChangeRequest(changeRequest);
+        setReadOnly(true);
+      } catch (e) {
+        onError(
+          "There was an error fetching your change request.  Please try again"
+        );
+      }
+    }
+
+    // Trigger the fetch only if an ID is present.
+    if (id) {
+      fetchChangeRequest();
+    } else {
+      setReadOnly(false);
+    }
+  }, [id]);
 
   /**
    * Validate the form fields.
@@ -99,11 +136,11 @@ export default function SpaRai() {
 
     try {
       let uploadedList = await uploader.current.uploadFiles();
-      await submitChangeRequest(changeRequest, uploadedList);
+      await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
       onError("There was an error submitting your request.  Please try again.");
-      console.log("Error while submitting the form.", error);
+      console.log(error);
       setIsLoading(false);
     }
   }
@@ -113,7 +150,7 @@ export default function SpaRai() {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>SPA Details</h3>
-        <label for={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
         </label>
         <p>Enter the State Plan Amendment transmittal number for this RAI</p>
@@ -123,14 +160,21 @@ export default function SpaRai() {
           id={FIELD_NAMES.TRANSMITTAL_NUMBER}
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
           onChange={handleInputChange}
+          readOnly={isReadOnly}
+          value={changeRequest.transmittalNumber}
         ></input>
         <h3>Attachments</h3>
-        <FileUploader
-          ref={uploader}
-          requiredUploads={requiredUploads}
-          optionalUploads={optionalUploads}
-          readyCallback={uploadsReadyCallbackFunction}
-        ></FileUploader>
+        {isReadOnly ? (
+          <FileList uploadList={changeRequest.uploads}></FileList>
+        ) : (
+          <FileUploader
+            ref={uploader}
+            requiredUploads={requiredUploads}
+            optionalUploads={optionalUploads}
+            readyCallback={uploadsReadyCallbackFunction}
+          ></FileUploader>
+        )}
+
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}
