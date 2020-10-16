@@ -29,10 +29,12 @@ export default function Profile() {
         async function onLoad() {
             try {
                 const userInfo = await loadProfile();
-                setEmail(userInfo.attributes.email);
-                setFirstName(capitalize(userInfo.attributes.given_name));
-                setLastName(capitalize(userInfo.attributes.family_name));
-                setPhoneNumber(formatPhoneNumberForForm(userInfo.attributes.phone_number));
+                console.log(JSON.stringify(userInfo))
+                setEmail(userInfo.idToken.payload.email);
+               // setEmail(userInfo.attributes.email);
+               // setFirstName(capitalize(userInfo.attributes.given_name));
+               // setLastName(capitalize(userInfo.attributes.family_name));
+               // setPhoneNumber(formatPhoneNumberForForm(userInfo.attributes.phone_number));
             } catch (e) {
                 onError(e);
             }
