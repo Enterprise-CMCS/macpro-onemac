@@ -23,11 +23,7 @@ h4 {
 }
 
 .uploader {
-  // @extend .ds-u-display--flex;
-  // @extend .ds-u-flex-direction--row;
-  // @extend .ds-u-align-items--center;
-  // @extend .ds-u-padding--3;
-  // height: 4rem;
+
   table {
     border-collapse: collapse;
     width: 100%;
@@ -44,8 +40,6 @@ h4 {
   }
 
   .uploader-type-cell {
-    // @extend .ds-u-justify-content--start;
-    // @extend .ds-u-padding-left--1;
     width: 30%;
   }
 
@@ -54,7 +48,6 @@ h4 {
   }
 
   .uploader-input-cell {
-    // @extend .ds-u-justify-content--start;
     width: 52%;
   }
 
@@ -70,11 +63,9 @@ h4 {
   }
 
   .uploader-controls-cell {
-    // @extend .ds-u-justify-content--end;
     width: 8%;
-
-
   }
+  
   .uploader-clear-button {
     @extend .ds-c-button;
     @extend .ds-c-button--transparent;
@@ -98,14 +89,37 @@ input[type="file"] {
 .NewAmendment form, 
 .Amendments form, 
 .NewWaiver form, 
-.Waivers form {
+.Waivers form ,
+.form-container {
   padding-bottom: 15px;
 }
 
 .NewAmendment form textarea, 
 .Amendments form textarea, 
 .NewWaiver form textarea, 
-.Waivers form textarea {
+.Waivers form textarea,
+.form-container .summary-field {
   height: 300px;
   font-size: 24px;
+  width: 100%;
+  max-width: 100%
+}
+
+.actions-container {
+  @extend .ds-l-row;
+
+  .actions-left-col, .actions-right-col {
+    @extend .ds-l-col;
+  }
+
+  .action-title {
+    @extend .ds-l-row;
+    @extend .ds-h3;
+    // font-weight: bold;
+  }
+
+  .action {
+    @extend .ds-l-row;
+    @extend .ds-h5;
+  }
 }

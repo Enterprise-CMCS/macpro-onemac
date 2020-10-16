@@ -47,7 +47,7 @@ export async function uploadFile(file) {
       contentType: file.type,
     });
 
-    const url = await Storage.vault.get(stored.key, { level: "public" });
+    const url = await Storage.vault.get(stored.key, { level: "protected" });
 
     let result = {
       s3Key: stored.key,
