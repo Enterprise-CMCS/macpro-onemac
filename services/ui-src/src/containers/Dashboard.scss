@@ -1,0 +1,12 @@
+@import "@cmsgov/design-system/dist/scss/settings/variables/color";
+
+.submissions {
+    .h4 {
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    p {
+        color: $color-gray;
+    }
+}

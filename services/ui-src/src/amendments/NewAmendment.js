@@ -7,16 +7,15 @@ import { API } from "aws-amplify";
 import { Auth } from "aws-amplify"
 import Select from 'react-select';
 import Switch from 'react-ios-switch';
+import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
 import FileUploader from '../common/FileUploader';
+import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function NewAmendment() {
     const requiredUploads = ['CMS Form 179', 'SPA Pages'];
-    const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Notice', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
+    const optionalUploads = ['Cover Letter', 'Existing state plan pages', 'Tribal Consultation', 'Public Notice', 'Standard Funding Questions (SFQs)', 'Other'];
     const history = useHistory();
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [transmittalNumber, setTransmittalNumber] = useState("");
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
@@ -29,24 +28,8 @@ export default function NewAmendment() {
     //Reference to the File Uploader.
     const uploader = useRef(null);
 
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
-
-    async function populateUserInfo() {
-        var userInfo = await Auth.currentUserInfo();
-        setEmail(userInfo.attributes.email);
-        setFirstName(capitalize(userInfo.attributes.given_name));
-        setLastName(capitalize(userInfo.attributes.family_name));
-        return userInfo.attributes.email;
-    }
-
-    populateUserInfo();
-
     function validateForm() {
-        return email.length > 0 && firstName.length > 0 && lastName.length > 0
-          && transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
+        return transmittalNumber.length > 0 && territory.length > 0 && areUploadsComplete;
     }
 
     async function handleSubmit(event) {
@@ -54,10 +37,13 @@ export default function NewAmendment() {
 
         setIsLoading(true);
 
+        var user = await Auth.currentUserInfo();
+        let type = CHANGE_REQUEST_TYPES.AMENDMENT;
+
         try {
             let uploads = await uploader.current.uploadFiles();
-            await createAmendment({ email, firstName, lastName, territory, transmittalNumber, urgent, comments, uploads });
-            history.push("/");
+            await createAmendment({ type, user, territory, transmittalNumber, urgent, comments, uploads });
+            history.push(ROUTES.DASHBOARD);
         } catch (error) {
             onError("There was an error submitting your request.  Please try again.");
             setIsLoading(false);
@@ -65,7 +51,7 @@ export default function NewAmendment() {
     }
 
     function createAmendment(amendment) {
-        return API.post("amendments", "/amendments", {
+        return API.post("changeRequestAPI", "/submit", {
             body: amendment
         });
     }

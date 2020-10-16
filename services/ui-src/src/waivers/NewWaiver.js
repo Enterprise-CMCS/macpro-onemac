@@ -5,18 +5,16 @@ import LoaderButton from "../components/LoaderButton";
 import { onError } from "../libs/errorLib";
 import { API, Auth } from "aws-amplify";
 import Select from 'react-select';
+import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
 import {actionTypeOptions, waiverAuthorityOptions, requiredUploads, optionalUploads} from '../libs/waiverLib.js';
 import FileUploader from '../common/FileUploader';
+import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function NewWaiver() {
-    const history = useHistory();  // ?? do we need?
+    const history = useHistory()
 
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [waiverNumber, setWaiverNumber] = useState("");
-    const [transmittalNumber, setTransmittalNumber] = useState("");
     const [territory, setTerritory] = useState("");
     const [summary, setSummary] = useState("");
     const [actionType, setActionType] = useState("");
@@ -28,21 +26,6 @@ export default function NewWaiver() {
 
     //Reference to the File Uploader.
     const uploader = useRef(null);
-
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
-
-    async function populateUserInfo() {
-        var userInfo = await Auth.currentUserInfo();
-        setEmail(userInfo.attributes.email);
-        setFirstName(capitalize(userInfo.attributes.given_name));
-        setLastName(capitalize(userInfo.attributes.family_name));
-        return userInfo.attributes.email;
-    }
-
-    populateUserInfo();
  
     function validateForm() {
         return territory.length > 0 
@@ -57,11 +40,14 @@ export default function NewWaiver() {
 
         setIsLoading(true);
 
+        var user = await Auth.currentUserInfo();
+        let type = CHANGE_REQUEST_TYPES.WAIVER;
+
         try {    
             let uploads = await uploader.current.uploadFiles();
-            setTransmittalNumber(waiverNumber);
-            await createWaiver({ email, firstName, lastName, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
-            history.push("/");
+            let transmittalNumber = waiverNumber;
+            await createWaiver({ type, user, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
+            history.push(ROUTES.DASHBOARD);
         } catch (e) {
             onError(e);
             setIsLoading(false);
@@ -69,7 +55,7 @@ export default function NewWaiver() {
     }
 
     function createWaiver(waiver) {
-        return API.post("waivers", "/waivers", {
+        return API.post("changeRequestAPI", "/submit", {
             body: waiver
         });
     }

@@ -7,6 +7,7 @@ import "./Profile.css";
 import { Auth } from "aws-amplify"
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
+import { ROUTES } from "../Routes"
 
 export default function Profile() {
     const history = useHistory();
@@ -72,7 +73,7 @@ export default function Profile() {
                 "family_name": lastName,
                 "phone_number": formatPhoneNumberForSubmission(phoneNumber)
             });
-            history.push("/");
+            history.push(ROUTES.DASHBOARD)
         } catch (e) {
             onError(e);
             setIsLoading(false);

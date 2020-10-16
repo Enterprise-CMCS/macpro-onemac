@@ -15,29 +15,19 @@ export default function Amendments() {
     const { id } = useParams();
     const [amendment, setAmendment] = useState(null);
     const [transmittalNumber, setTransmittalNumber] = useState("");
-    const [email, setEmail] = useState("");
-    const [firstName, setFirstName] = useState("");
-    const [lastName, setLastName] = useState("");
     const [territory, setTerritory] = useState("");
     const [urgent, setUrgent] = useState(false);
     const [comments, setComments] = useState("");
-    const capitalize = (s) => {
-        if (typeof s !== 'string') return ''
-        return s.charAt(0).toUpperCase() + s.slice(1)
-    }
 
     useEffect(() => {
         function loadAmendment() {
-            return API.get("amendments", `/amendments/${id}`);
+            return API.get("changeRequestAPI", `/amendments/${id}`);
         }
 
         async function onLoad() {
             try {
                 const amendment = await loadAmendment();
-                const { email, firstName, lastName, territory, transmittalNumber, urgent, comments } = amendment;
-                setEmail(email);
-                setFirstName(capitalize(firstName));
-                setLastName(capitalize(lastName));
+                const { territory, transmittalNumber, urgent, comments } = amendment;
                 setTerritory(territory);
                 setTransmittalNumber(transmittalNumber);
                 setUrgent(urgent);
@@ -48,7 +38,7 @@ export default function Amendments() {
                     let i;
                     // Use a for loop instead of forEach to stay in the context of this async function.
                     for (i = 0; i < amendment.uploads.length; i++) {
-                        amendment.uploads[i].url = await Storage.vault.get(amendment.uploads[i].s3Key);
+                        amendment.uploads[i].url = await Storage.vault.get(amendment.uploads[i].s3Key, { level: "protected" });
                     }
                 }
                 setAmendment(amendment);
@@ -70,21 +60,6 @@ export default function Amendments() {
                         <FormControl
                             disabled={true}
                             value={transmittalNumber}
-                        />
-                    </FormGroup>
-                    <FormGroup controlId="name">
-                        <ControlLabel>Submitter</ControlLabel>
-                        <FormControl
-                            value={firstName + ' ' + lastName}
-                            disabled={true}
-                        />
-                    </FormGroup>
-
-                    <FormGroup controlId="email">
-                        <ControlLabel>Submitter Email</ControlLabel>
-                        <FormControl
-                            value={email}
-                            disabled={true}
                         />
                     </FormGroup>
                     <FormGroup controlId="territory">

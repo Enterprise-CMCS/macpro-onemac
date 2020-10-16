@@ -67,7 +67,7 @@ resources:
                   -
                     - 'arn:aws:s3:::'
                     - Ref: AttachmentsBucket
-                    - '/private/*'
+                    - '/protected/*'
 
   # Print out the name of the bucket that is created
   Outputs:
