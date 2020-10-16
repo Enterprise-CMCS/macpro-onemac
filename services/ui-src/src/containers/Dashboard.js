@@ -100,6 +100,9 @@ export default function Dashboard() {
           <div className="action">
             <a href="/waiver/new">Submit new Waiver</a>
           </div>
+          <div className="action">
+            <a href="/waiverrai">Respond to 1915(b) Waiver RAI</a>
+          </div>
         </div>
       </div>
       <br />
