@@ -3,6 +3,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import {format, addDays} from "date-fns";
+import getEmailTemplates from './email-templates/getEmailTemplates.js';
 
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -28,22 +29,7 @@ export const main = handler(async (event, context) => {
       createdAt: data.createdDate,
     },
   };
-  let cmsEmailParams = {
-    Destination: {
-      ToAddresses: [process.env.reviewerEmail],
-    },
-    Message: {
-      Body: {
-        Html: {
-          Charset: "UTF-8",
-        },
-      },
-      Subject: {
-        Charset: "UTF-8",
-      },
-    },
-    Source: process.env.emailSource,
-  };
+  let cmsEmailParams = getCMSEmailParams(data);
   let stateEmailParams = JSON.parse(JSON.stringify(cmsEmailParams));
 
   if (event.path=='/waivers') {
@@ -54,6 +40,7 @@ export const main = handler(async (event, context) => {
     params.Item.actionType = data.actionType;
     params.Item.waiverAuthority = data.waiverAuthority;
 
+    let template = getEmailTemplates(data);
     cmsEmailParams.Message.Subject.Data = "New Waiver " + data.waiverNumber + " submitted";
     cmsEmailParams.Message.Body.Html.Data = `
     <p>The SPA and Waiver Submission Form received a Waiver Submission:</p>
@@ -125,11 +112,12 @@ export const main = handler(async (event, context) => {
   }
 
   await dynamoDb.put(params);
-  await sendEmail(cmsEmailParams);
+  let emailTemplates = getEmailTemplates(data.type);
+  await sendEmail(emailTemplates.getCMSEmailParams());
 
   //An error sending the State user email is not a failure, but it needs to be recorded.
   try {
-    await sendEmail(stateEmailParams);
+    await sendEmail(emailTemplates.getStateEmailParams());
   } catch (error) {
     console.log(
       "Warning: There was an error sending the email to the State User.",

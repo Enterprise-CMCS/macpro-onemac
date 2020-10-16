@@ -1,0 +1,8 @@
+{
+  "Template": {
+    "TemplateName": "StateWaiver",
+    "SubjectPart": "New Waiver {{data.waiverNumber}} submitted",
+    "HtmlPart": "<p>The SPA and Waiver Submission Form received a Waiver Submission:</p><p><b>State or territory</b>: {{data.territory}}<br><b>Name</b>: {{data.firstName}} {{data.lastName}}<br><b>Email Address</b>: {{data.email}}<br><b>ID</b>: {{data.transmittalNumber}}<p>Files:</p><p>{{linksHtml}}</p><p>If these files seem suspicious, do not open them, and instead forward this email to <a href='mailto:CMS_IT_Service_Desk@cms.hhs.gov'>CMS_IT_Service_Desk@cms.hhs.gov</a>.</p><p>Thank you!</p>",
+    "TextPart": "The SPA and Waiver Submission Form received a Waiver Submission:\r\nState or territory: {{data.territory}}\r\nName: {{data.firstName}} {{data.lastName}}\r\nEmail Address: {{data.email}}\r\nID: {{data.transmittalNumber}}\r\nFiles:\r\n{{linksHtml}}\r\nIf these files seem suspicious, do not open them, and instead forward this email to CMS_IT_Service_Desk@cms.hhs.gov.\r\nThank you!"
+  }
+}
