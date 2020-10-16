@@ -23,7 +23,7 @@ export default function Profile() {
    */
     useEffect(() => {
         function loadProfile() {
-            return Auth.currentSession;
+            return Auth.currentSession();
         }
 
         async function onLoad() {
