@@ -97,7 +97,6 @@ export default function SpaRai() {
    * @param {Object} event the event
    */
   async function handleInputChange(event) {
-    console.log("CHANGE", changeRequest);
     if (event && event.target) {
       let updatedRecord = {...changeRequest}; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
