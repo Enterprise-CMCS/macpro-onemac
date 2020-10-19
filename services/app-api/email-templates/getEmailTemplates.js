@@ -1,21 +1,22 @@
-import SPAEmailTemplates from './SPAEmailTemplates.js';
-import SPARAIEmailTemplates from './SPARAIEmailTemplates.js';
-import WaiverEmailTemplates from './WaiverEmailTemplates.js';
-import DefaultEmailTemplates from './DefaultEmailTemplates.js';
+import SPAEmailTemplates from "./SPAEmailTemplates";
+import SPARAIEmailTemplates from "./SPARAIEmailTemplates";
+import WaiverEmailTemplates from "./WaiverEmailTemplates";
+import DefaultEmailTemplates from "./DefaultEmailTemplates";
+import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function getEmailTemplates(type) {
   let retval = {};
 
     switch(type) {
-        case 'waiver':
+        case CHANGE_REQUEST_TYPES.WAIVER:
             retval = WaiverEmailTemplates;
             break;
-        case 'spa':
+        case CHANGE_REQUEST_TYPES.AMENDMENT:
             retval = SPAEmailTemplates;
             break;
-        case 'sparai':
-              retval = SPARAIEmailTemplates;
-              break;
+        case CHANGE_REQUEST_TYPES.SPA_RAI:
+            retval = SPARAIEmailTemplates;
+            break;
         default:
             retval = DefaultEmailTemplates;
             break;

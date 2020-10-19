@@ -1,28 +1,26 @@
-import DefaultEmailTemplates from './DefaultEmailTemplates.js';
+import { getLinksHtml } from "./email-util";
 
-class SPAEmailTemplates extends DefaultEmailTemplates {
-    
+class SPAEmailTemplates {
+
     constructor(){
-        super();
-
         if(! SPAEmailTemplates.instance){
             SPAEmailTemplates.instance = this;
         }
-       
+
         return SPAEmailTemplates.instance;
     }
 
-    getCMSMessage(data) {
-        let cmsMessage;
+    getCMSEmail(data) {
+        const cmsEmail = {};
         let isUrgent = (data.urgent == true ? "Yes" : "No");
-    
-        cmsMessage.ToAddresses = [process.env.reviewerEmail];
-        cmsMessage.Subject = `New SPA ${data.transmittalNumber} submitted`;
-        cmsMessage.HTML = `
+
+        cmsEmail.ToAddresses = [process.env.reviewerEmail];
+        cmsEmail.Subject = `New SPA ${data.transmittalNumber} submitted`;
+        cmsEmail.HTML = `
         <p>The SPA Submission Form received a State Plan Amendment:</p>
         <p><b>State or territory</b>: ${data.territory}
-        <br><b>Name</b>: ${data.firstName} ${data.lastName}
-        <br><b>Email Address</b>: ${data.email}
+        <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
+        <br><b>Email Address</b>: ${data.user.email}
         <br><b>ID</b>: ${data.transmittalNumber}
         <br><b>Urgent?</b>: ${isUrgent}</p>
         <p>Files:</p>
@@ -31,25 +29,33 @@ class SPAEmailTemplates extends DefaultEmailTemplates {
         <p>Thank you!</p>
         `;
 
-        return cmsMessage;
+        return cmsEmail;
     }
 
-    getStateMessage(data) {
-        let stateMessage;
+    getStateEmail(data) {
+        const stateEmail = {};
+        let isUrgent = data.urgent == 'true' ? "Yes" : "No";
 
-        stateMessage.ToAddresses = [data.email];
-        stateMessage.Subject = "Your Waiver " + data.waiverNumber + " has been submitted to CMS";
-        stateMessage.HTML = `
-    <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
-    <p><b>State or territory</b>: ${data.territory}
-    <br><b>Waiver #</b>: ${data.waiverNumber}
-    <br><b>Submitter name</b>: ${data.firstName} ${data.lastName}
-    <br><b>Submitter email</b>: ${data.email}</p>
-    <p>Files:</p>
-    <p>${getLinksHtml(data.uploads)}</p>
-    <p>You can expect a formal response to your submission to be issued within 90 days, 
-    on ${format(get90thDay(data.createdDate), "MM dd, yyyy")}. If you have any questions, please contact spa@cms.hhs.gov or your state lead.</p>
-    `;
+        stateEmail.ToAddresses = [data.user.email];
+        stateEmail.Subject = "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.HTML = `
+        <p>${data.user.firstName} ${data.user.lastName}</p>
+        <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
+        <p><b>State or territory</b>: ${data.territory}
+        <br><b>ID</b>: ${data.transmittalNumber}
+        <br><b>Urgent?</b>: ${isUrgent}</p>
+        <p><strong>THIS MAILBOX IS FOR THE SUBMITTAL OF STATE PLAN AMENDMENTS AND SECTION 1915(b) 
+          AND 1915(c) NON-WEB BASED WAIVERS AND RESPONSES TO REQUESTS FOR ADDITIONAL INFORMATION ON 
+          SUBMITTED SPAs/WAIVERS ONLY. ANY OTHER CORRESPONDENCE WILL BE DISREGARDED.</strong></p>
+        <p><strong>This response confirms the receipt of your State Plan Amendment (SPA/Waiver 
+          request or your response to a SPA/Waiver Request for additional information (RAI)). You 
+          can expect a formal response to your submittal to be issued within 90 days. To calculate 
+          the 90th day, please count the date of receipt as Day Zero. The 90th day will be 90 
+          calendar days from that date.</strong></p>
+        <p>Thank you!</p>
+        <p>If you have questions or did not expect this email, please contact <a href="mailto:example@cms.gov">example@cms.gov</a>`;
+
+        return stateEmail;
     }
 
 }
