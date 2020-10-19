@@ -103,7 +103,7 @@ export default function SpaRai() {
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber);
+      setIsFormReady(updatedRecord.transmittalNumber && updatedRecord.territory);
     }
   }
 
@@ -154,7 +154,9 @@ export default function SpaRai() {
           onChange={handleInputChange}
           disabled={isReadOnly}
           value={changeRequest.territory}
+          defaultValue="none-selected"
         >
+          <option disabled value="none-selected"> -- select a territory -- </option>
           {renderTerritoryList()}
         </select>
         <br />
