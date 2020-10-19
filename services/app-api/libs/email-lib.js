@@ -21,7 +21,7 @@ function getSESEmailParams (email) {
         },
         Subject: {
           Charset: "UTF-8",
-          Data: email.subject
+          Data: email.Subject
         },
       },
       Source: process.env.emailSource,
