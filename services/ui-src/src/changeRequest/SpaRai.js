@@ -85,20 +85,11 @@ export default function SpaRai() {
   }, [id]);
 
   /**
-   * Validate the form fields.
-   */
-  function validateForm(currentRecord, uploadsReady) {
-    setIsFormReady(currentRecord.transmittalNumber && uploadsReady);
-  }
-
-  /**
    * Callback for the uploader to set if the upload requirements are met.
    * @param {Boolean} state true if the required uploads have been specified
    */
   function uploadsReadyCallbackFunction(state) {
     setAreUploadsReady(state);
-    // Need to use the current data to validate and not what is in the state
-    validateForm(changeRequest, state);
   }
 
   /**
@@ -106,12 +97,14 @@ export default function SpaRai() {
    * @param {Object} event the event
    */
   async function handleInputChange(event) {
+    console.log("CHANGE", changeRequest);
     if (event && event.target) {
       let updatedRecord = {...changeRequest}; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
-      // Need to use the current data to validate and not what is in the state
-      validateForm(updatedRecord, areUploadsReady);
+      
+      // Check to see if the required fields are provided
+      setIsFormReady(updatedRecord.transmittalNumber);
     }
   }
 
@@ -179,7 +172,7 @@ export default function SpaRai() {
           bsSize='large'
           bsStyle='primary'
           isLoading={isLoading}
-          disabled={!isFormReady}
+          disabled={!isFormReady || !areUploadsReady}
         >
           Submit
         </LoaderButton>
