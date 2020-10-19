@@ -9,13 +9,12 @@ import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
+import { territoryList } from "../libs/territoryLib";
 
 export default function SpaRai() {
   // The attachment list
-  const requiredUploads = ["RAI Response"];
+  const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
-    "CMS Form 179",
-    "SPA Pages",
     "Cover Letter",
     "Existing state plan pages",
     "Tribal Consultation",
@@ -28,6 +27,7 @@ export default function SpaRai() {
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
     SUMMARY: "summary",
+    TERRITORY: "territory",
   };
 
   // True when the required attachments have been selected.
@@ -51,7 +51,7 @@ export default function SpaRai() {
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: CHANGE_REQUEST_TYPES.SPA_RAI,
+    type: CHANGE_REQUEST_TYPES.AMENDMENT,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
@@ -127,11 +127,37 @@ export default function SpaRai() {
     }
   }
 
+  function renderTerritoryList() {
+    let optionsList = territoryList.map((item, i) => {
+      return (
+        <option key={i} value={item.value}>
+          {item.label}
+        </option>
+      );
+    });
+    return optionsList;
+  }
+
   // Render the component.
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>SPA Details</h3>
+        <label htmlFor={FIELD_NAMES.TERRITORY}>
+          State/Territory<span className="required-mark">*</span>
+        </label>
+        <br />
+        <select
+          id={FIELD_NAMES.TERRITORY}
+          name={FIELD_NAMES.TERRITORY}
+          required={!isReadOnly}
+          onChange={handleInputChange}
+          disabled={isReadOnly}
+          value={changeRequest.territory}
+        >
+          {renderTerritoryList()}
+        </select>
+        <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
         </label>
