@@ -168,6 +168,7 @@ export default function SpaRai() {
           multiline
           onChange={handleInputChange}
           disabled={isReadOnly}
+          value={changeRequest.summary}
         ></TextField>
         <LoaderButton
           block
