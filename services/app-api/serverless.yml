@@ -77,6 +77,11 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+      - http:
+          path: get/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
 
   list:
     handler: list.main
@@ -84,6 +89,11 @@ functions:
     events:
       - http:
           path: list
+          method: get
+          cors: true
+          authorizer: aws_iam
+      - http:
+          path: get
           method: get
           cors: true
           authorizer: aws_iam

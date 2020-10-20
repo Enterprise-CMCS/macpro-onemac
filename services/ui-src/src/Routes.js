@@ -62,10 +62,10 @@ export default function Routes() {
             <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/:id`}>
                 <Waivers />
             </AuthenticatedRoute>
-            <AuthenticatedRoute path={`${ROUTES.SPA_RAI}`}>
+            <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
                 <SpaRai />
             </AuthenticatedRoute>
-            <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}`}>
+            <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
                 <WaiverRai />
             </AuthenticatedRoute>
             <Route>
