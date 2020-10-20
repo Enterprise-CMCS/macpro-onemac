@@ -6,8 +6,7 @@ import Dashboard from "./containers/Dashboard";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
-import NewAmendment from "./amendments/NewAmendment";
-import Amendments from "./amendments/Amendments";
+import Spa from "./changeRequest/Spa";
 import NewWaiver from "./waivers/NewWaiver";
 import Waivers from "./waivers/Waivers";
 import SpaRai from "./changeRequest/SpaRai";
@@ -50,11 +49,8 @@ export default function Routes() {
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
             </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={`${ROUTES.AMENDMENTS}/new`}>
-                <NewAmendment />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={`${ROUTES.AMENDMENTS}/:id`}>
-                <Amendments />
+            <AuthenticatedRoute path={`${ROUTES.AMENDMENTS}/:id?`}>
+                <Spa/>
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/new`}>
                 <NewWaiver />
