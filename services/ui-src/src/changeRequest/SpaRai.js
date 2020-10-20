@@ -170,16 +170,18 @@ export default function SpaRai() {
           disabled={isReadOnly}
           value={changeRequest.summary}
         ></TextField>
-        <LoaderButton
-          block
-          type="submit"
-          bsSize="large"
-          bsStyle="primary"
-          isLoading={isLoading}
-          disabled={!isFormReady || !areUploadsReady}
-        >
-          Submit
-        </LoaderButton>
+        {!isReadOnly && (
+          <LoaderButton
+            block
+            type="submit"
+            bsSize="large"
+            bsStyle="primary"
+            isLoading={isLoading}
+            disabled={!isFormReady || !areUploadsReady}
+          >
+            Submit
+          </LoaderButton>
+        )}
       </form>
     </div>
   );
