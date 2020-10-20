@@ -9,7 +9,7 @@ import Select from 'react-select';
 import Switch from 'react-ios-switch';
 import { ROUTES } from "../Routes"
 import { territoryList } from '../libs/territoryLib';
-import FileUploader from '../common/FileUploader';
+import FileUploader from '../components/FileUploader';
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 export default function NewAmendment() {
