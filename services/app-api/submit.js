@@ -44,7 +44,7 @@ export const main = handler(async (event) => {
     // map the email templates from the data.type
     const emailTemplate = getEmailTemplates(data.type);
 
-    if (typeOf(emailTemplate) != 'umdefined') {
+    if (typeof(emailTemplate) != 'umdefined') {
       // Now send the CMS email
       await sendEmail(emailTemplate.getCMSEmail(data));
 
@@ -58,7 +58,7 @@ export const main = handler(async (event) => {
           error
         );
       }
-    } else console.log("No email template for this type!")
+    } else console.log("No email template for this type!");
 
     console.log("Successfully submitted amendment:", data);
     response = {
