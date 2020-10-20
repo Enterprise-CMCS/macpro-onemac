@@ -68,6 +68,10 @@ export default function Dashboard() {
           title = "RAI for SPA " + changeRequest.transmittalNumber;
           break;
 
+        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
+          title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          break;
+
         default:
           title = "Unknown record type";
       }
