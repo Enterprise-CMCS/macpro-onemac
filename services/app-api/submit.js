@@ -44,7 +44,7 @@ export const main = handler(async (event) => {
     // map the email templates from the data.type
     const emailTemplate = getEmailTemplates(data.type);
 
-    if (typeof(emailTemplate) != 'umdefined') {
+    if (emailTemplate) {
       // Now send the CMS email
       await sendEmail(emailTemplate.getCMSEmail(data));
 
