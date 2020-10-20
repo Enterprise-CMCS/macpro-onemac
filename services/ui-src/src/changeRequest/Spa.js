@@ -147,7 +147,6 @@ export default function SpaRai() {
         <label htmlFor={FIELD_NAMES.TERRITORY}>
           State/Territory<span className="required-mark">*</span>
         </label>
-        <br />
         <select
           id={FIELD_NAMES.TERRITORY}
           name={FIELD_NAMES.TERRITORY}
@@ -164,9 +163,11 @@ export default function SpaRai() {
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
         </label>
-        <p className="field-hint">
-          Enter the State Plan Amendment transmittal number for this RAI
-        </p>
+        { !isReadOnly && 
+          <p className="field-hint">
+            Enter the State Plan Amendment transmittal number for this RAI
+          </p>
+        }
         <input
           className="field"
           type="text"
@@ -181,7 +182,6 @@ export default function SpaRai() {
           <div>
             <br />
             <label htmlFor="createdAt">Submitted on</label>
-            <br />
             <input
               className="field"
               type="text"

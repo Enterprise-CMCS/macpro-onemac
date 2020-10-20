@@ -135,13 +135,11 @@ export default function RaiTemplate({
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           {raiType} ID<span className="required-mark">*</span>
         </label>
-        {!isReadOnly ? (
+        { !isReadOnly &&
           <p className="field-hint">
             Enter the transmittal number for this RAI
           </p>
-        ) : (
-          <br />
-        )}
+        }
         <input
           className="field"
           type="text"
@@ -156,7 +154,6 @@ export default function RaiTemplate({
           <div>
             <br />
             <label htmlFor="createdAt">Submitted on</label>
-            <br />
             <input
               className="field"
               type="text"
