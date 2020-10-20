@@ -69,6 +69,10 @@ export default function Dashboard() {
           title = "RAI for SPA " + changeRequest.transmittalNumber;
           break;
 
+        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
+          title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          break;
+
         default:
           title = "Unknown record type";
       }
@@ -100,6 +104,9 @@ export default function Dashboard() {
           <div className="action-title">Waivers</div>
           <div className="action">
             <a href="/waiver/new">Submit new Waiver</a>
+          </div>
+          <div className="action">
+            <a href="/waiverrai">Respond to 1915(b) Waiver RAI</a>
           </div>
         </div>
       </div>
