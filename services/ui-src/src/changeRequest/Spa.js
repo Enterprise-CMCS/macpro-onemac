@@ -10,6 +10,7 @@ import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import { territoryList } from "../libs/territoryLib";
+import { formatDate } from "../utils/date-utils";
 
 export default function SpaRai() {
   // The attachment list
@@ -176,6 +177,21 @@ export default function SpaRai() {
           disabled={isReadOnly}
           value={changeRequest.transmittalNumber}
         ></input>
+        {isReadOnly && (
+          <div>
+            <br />
+            <label htmlFor="createdAt">Submitted on</label>
+            <br />
+            <input
+              className="field"
+              type="text"
+              id="createdAt"
+              name="createdAt"
+              disabled
+              value={formatDate(changeRequest.createdAt)}
+            ></input>
+          </div>
+        )}
         <h3>Attachments</h3>
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>

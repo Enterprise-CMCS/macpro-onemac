@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
+import { formatDate } from "../utils/date-utils";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -135,7 +136,9 @@ export default function RaiTemplate({
           {raiType} ID<span className="required-mark">*</span>
         </label>
         {!isReadOnly ? (
-          <p className="field-hint">Enter the transmittal number for this RAI</p>
+          <p className="field-hint">
+            Enter the transmittal number for this RAI
+          </p>
         ) : (
           <br />
         )}
@@ -160,7 +163,7 @@ export default function RaiTemplate({
               id="createdAt"
               name="createdAt"
               disabled
-              value={new Date(changeRequest.createdAt)}
+              value={formatDate(changeRequest.createdAt)}
             ></input>
           </div>
         )}
