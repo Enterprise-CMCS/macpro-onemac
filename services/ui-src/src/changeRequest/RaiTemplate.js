@@ -8,16 +8,21 @@ import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 
-  /**
-   * RAI Form template to allow rendering for different types of RAI's.
-   * @param {String} changeRequestType - functional name for the type of change request
-   * @param {Array} optionalUploads - list of attachment that are optional
-   * @param {Array} requiredUploads - list of attachments that are required
-   * @param {String} raiType - display name for the type of change request
-   */
-export default function RaiTemplate({changeRequestType, optionalUploads, requiredUploads, raiType}) {
+/**
+ * RAI Form template to allow rendering for different types of RAI's.
+ * @param {String} changeRequestType - functional name for the type of change request
+ * @param {Array} optionalUploads - list of attachment that are optional
+ * @param {Array} requiredUploads - list of attachments that are required
+ * @param {String} raiType - display name for the type of change request
+ */
+export default function RaiTemplate({
+  changeRequestType,
+  optionalUploads,
+  requiredUploads,
+  raiType,
+}) {
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
@@ -46,8 +51,8 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
     type: changeRequestType,
-    summary: '',
-    transmittalNumber: '', //This is needed to be able to control the field
+    summary: "",
+    transmittalNumber: "", //This is needed to be able to control the field
   });
 
   useEffect(() => {
@@ -56,7 +61,7 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
      */
     async function fetchChangeRequest() {
       if (!id) {
-        throw new Error('ID not specified for fetchChangeRequest');
+        throw new Error("ID not specified for fetchChangeRequest");
       }
 
       try {
@@ -65,7 +70,7 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
         setReadOnly(true);
       } catch (e) {
         onError(
-          'There was an error fetching your change request.  Please try again'
+          "There was an error fetching your change request.  Please try again"
         );
       }
     }
@@ -92,10 +97,10 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
    */
   async function handleInputChange(event) {
     if (event && event.target) {
-      let updatedRecord = {...changeRequest}; // You need a new object to be able to update the state
+      let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
-      
+
       // Check to see if the required fields are provided
       setIsFormReady(updatedRecord.transmittalNumber);
     }
@@ -115,23 +120,27 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
-      onError('There was an error submitting your request.  Please try again.');
-      console.log('There was an error submitting a request.', error);
+      onError("There was an error submitting your request.  Please try again.");
+      console.log("There was an error submitting a request.", error);
       setIsLoading(false);
     }
   }
 
   // Render the component.
   return (
-    <div className='form-container'>
+    <div className="form-container">
       <form onSubmit={handleSubmit}>
-      <h3>{raiType} Details</h3>
+        <h3>{raiType} RAI Details</h3>
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-        {raiType} ID<span className="required-mark">*</span>
+          {raiType} ID<span className="required-mark">*</span>
         </label>
-        <p>Enter the State Plan Amendment transmittal number for this RAI</p>
+        {!isReadOnly ? (
+          <p>Enter the transmittal number for this RAI</p>
+        ) : (
+          <br />
+        )}
         <input
-          type='text' 
+          type="text"
           required={!isReadOnly}
           id={FIELD_NAMES.TRANSMITTAL_NUMBER}
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
@@ -139,6 +148,20 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
           disabled={isReadOnly}
           value={changeRequest.transmittalNumber}
         ></input>
+        {isReadOnly && (
+          <div>
+            <br />
+            <label htmlFor="createdAt">Submitted on</label>
+            <br />
+            <input
+              type="text"
+              id="createdAt"
+              name="createdAt"
+              disabled
+              value={new Date(changeRequest.createdAt)}
+            ></input>
+          </div>
+        )}
         <h3>Attachments</h3>
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
@@ -154,16 +177,16 @@ export default function RaiTemplate({changeRequestType, optionalUploads, require
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}
-          label='Summary'
-          fieldClassName='summary-field'
+          label="Summary"
+          fieldClassName="summary-field"
           multiline
           onChange={handleInputChange}
         ></TextField>
         <LoaderButton
           block
-          type='submit'
-          bsSize='large'
-          bsStyle='primary'
+          type="submit"
+          bsSize="large"
+          bsStyle="primary"
           isLoading={isLoading}
           disabled={!isFormReady || !areUploadsReady}
         >
@@ -178,5 +201,5 @@ RaiTemplate.propTypes = {
   changeRequestType: PropTypes.string.isRequired,
   optionalUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
   requiredUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  raiType: PropTypes.oneOf(['SPA', 'Waiver']).isRequired
-}
+  raiType: PropTypes.oneOf(["SPA", "Waiver"]).isRequired,
+};
