@@ -6,7 +6,6 @@ import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
 import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
-import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import PropTypes from 'prop-types';
