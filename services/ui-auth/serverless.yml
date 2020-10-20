@@ -26,7 +26,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
           - ""
-          - ${env:SES_SOURCE_EMAIL_ADDRESS, ""}
+          - ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
@@ -52,7 +52,7 @@ resources:
                     - 'arn:aws:ses:us-east-1:'
                     - Ref: AWS::AccountId
                     - ':identity/'
-                    - '${env:SES_SOURCE_EMAIL_ADDRESS, ""}'
+                    - '${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}'
             - Ref: AWS::NoValue
         Schema:
           - Name: given_name
@@ -155,13 +155,16 @@ resources:
 
                 - Effect: 'Allow'
                   Action:
-                    - 's3:*'
+                    # These are all required for amplify to do a PUT
+                    - 's3:GetObject'
+                    - 's3:PutObject'
+                    - 's3:DeleteObject'
                   Resource:
                     - Fn::Join:
                       - ''
                       -
                         - ${self:custom.attachments_bucket_arn}
-                        - '/private/'
+                        - '/protected/'
                         - '$'
                         - '{cognito-identity.amazonaws.com:sub}/*'
 

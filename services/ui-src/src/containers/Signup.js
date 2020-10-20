@@ -6,6 +6,7 @@ import {
     FormControl,
     ControlLabel
 } from "react-bootstrap";
+import { ROUTES } from "../Routes"
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
@@ -73,7 +74,7 @@ export default function Signup() {
             await Auth.signIn(fields.email, fields.password);
 
             userHasAuthenticated(true);
-            history.push("/");
+            history.push(ROUTES.DASHBOARD)
         } catch (e) {
             onError(e);
             setIsLoading(false);

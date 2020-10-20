@@ -1,35 +1,72 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
+import FAQ from "./containers/FAQ"
+import Dashboard from "./containers/Dashboard";
 import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
-import NewAmendment from "./containers/NewAmendment";
-import Amendments from "./containers/Amendments";
+import NewAmendment from "./amendments/NewAmendment";
+import Amendments from "./amendments/Amendments";
+import NewWaiver from "./waivers/NewWaiver";
+import Waivers from "./waivers/Waivers";
+import SpaRai from "./changeRequest/SpaRai";
+import WaiverRai from "./changeRequest/WaiverRai";
 import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
+export const ROUTES = {
+    AMENDMENTS: '/amendment',
+    DASHBOARD: '/dashboard',
+    FAQ: '/FAQ',
+    HOME: '/',
+    LOGIN: '/login',
+    PROFILE: '/profile',
+    SIGNUP: '/signup',
+    SPA_RAI: '/sparai',
+    WAIVER_RAI: '/waiverrai',
+    WAIVERS: '/waiver'
+}
+
 export default function Routes() {
     return (
         <Switch>
-            <Route exact path="/">
+            <Route exact path={ROUTES.HOME}>
                 <Home />
             </Route>
-            <UnauthenticatedRoute exact path="/login">
+            <Route exact path={ROUTES.FAQ}>
+                <FAQ />
+            </Route>
+            <UnauthenticatedRoute exact path={ROUTES.LOGIN}>
                 <Login />
             </UnauthenticatedRoute>
-            <UnauthenticatedRoute exact path="/signup">
+            <UnauthenticatedRoute exact path={ROUTES.SIGNUP}>
                 <Signup />
             </UnauthenticatedRoute>
-            <AuthenticatedRoute exact path="/profile">
+            <AuthenticatedRoute exact path={ROUTES.PROFILE}>
                 <Profile />
             </AuthenticatedRoute>
-            <AuthenticatedRoute exact path="/amendments/new">
+            <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+                <Dashboard />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path={`${ROUTES.AMENDMENTS}/new`}>
                 <NewAmendment />
             </AuthenticatedRoute>
-            <AuthenticatedRoute exact path="/amendments/:id">
+            <AuthenticatedRoute exact path={`${ROUTES.AMENDMENTS}/:id`}>
                 <Amendments />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/new`}>
+                <NewWaiver />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/:id`}>
+                <Waivers />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
+                <SpaRai />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
+                <WaiverRai />
             </AuthenticatedRoute>
             <Route>
                 <NotFound />

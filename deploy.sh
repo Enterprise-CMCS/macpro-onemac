@@ -5,13 +5,8 @@ set -e
 stage=${1:-dev}
 
 services=(
-  'database'
   'uploads'
   'app-api'
-  'elasticsearch-auth'
-  'elasticsearch'
-  'elasticsearch-config'
-  'stream-functions'
   'ui-auth'
   'ui'
   'ui-src'

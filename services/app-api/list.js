@@ -7,6 +7,7 @@ export const main = handler(async (event, context) => {
     console.log("Warmed up!");
     return null;
   }
+
   const params = {
     TableName: process.env.tableName,
     // 'KeyConditionExpression' defines the condition for the query

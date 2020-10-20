@@ -13,13 +13,8 @@ aws s3 rm s3://$uploads_bucket_name --recursive
 popd
 
 services=(
-  'database'
   'uploads'
   'app-api'
-  'elasticsearch-auth'
-  'elasticsearch'
-  'elasticsearch-config'
-  'stream-functions'
   'ui-auth'
   'ui'
   # Running remove on ui-src would delete the s3 bucket and cause remove on ui to fail.
