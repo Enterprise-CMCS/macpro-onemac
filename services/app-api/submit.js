@@ -44,19 +44,21 @@ export const main = handler(async (event) => {
     // map the email templates from the data.type
     const emailTemplate = getEmailTemplates(data.type);
 
-    // Now send the CMS email
-    await sendEmail(emailTemplate.getCMSEmail(data));
+    if (typeOf(emailTemplate) != 'umdefined') {
+      // Now send the CMS email
+      await sendEmail(emailTemplate.getCMSEmail(data));
 
-    //An error sending the user email is not a failure.
-    try {
-      // send the submission "reciept" to the State User
-      await sendEmail(emailTemplate.getStateEmail(data));
-    } catch (error) {
-      console.log(
-        "Warning: There was an error sending the user acknowledgement email.",
-        error
-      );
-    }
+      //An error sending the user email is not a failure.
+      try {
+        // send the submission "reciept" to the State User
+        await sendEmail(emailTemplate.getStateEmail(data));
+      } catch (error) {
+        console.log(
+          "Warning: There was an error sending the user acknowledgement email.",
+          error
+        );
+      }
+    } else console.log("No email template for this type!")
 
     console.log("Successfully submitted amendment:", data);
     response = {
