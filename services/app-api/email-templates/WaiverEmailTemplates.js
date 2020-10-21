@@ -34,7 +34,9 @@ class WaiverEmailTemplates {
     <p><b>State or territory</b>: ${data.territory}
     <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Email Address</b>: ${data.user.email}
-    <br><b>ID</b>: ${data.transmittalNumber}
+    <br><b>ID</b>: ${data.waiverNumber}
+    <br><b>Action Type</b>: ${data.actionType}
+    <br><b>Waiver Authority</b>: ${data.waiverAuthority}
     <p>Files:</p>
     <p>${getLinksHtml(data.uploads)}</p>
     <p>If these files seem suspicious, do not open them, and instead forward this email to <a href="mailto:CMS_IT_Service_Desk@cms.hhs.gov">CMS_IT_Service_Desk@cms.hhs.gov</a>.</p>
