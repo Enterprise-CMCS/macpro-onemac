@@ -14,7 +14,7 @@ export const ALERT_TYPES = {
 /**
  * Singleton Alert bar to display notifications to the user.  Note you can only add this
  * component once as it is a singleton.  Example usage:
- *   AlertBar.error("alert heading", "This is my alert text")
+ *   AlertBar.alert(ALERTS_MSG.MY_ALERT)
  */
 export default class AlertBar extends Component {
   /**
