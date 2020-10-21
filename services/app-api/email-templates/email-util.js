@@ -19,11 +19,11 @@ export function getLinksHtml(uploads) {
 
 /**
  * Get the 90th day from the created Date (with created Date as day 0)
- * @param {Object} startDate
- * @returns {Date} CMS approved 90th day.
+ * @param {Date} startDate
+ * @returns {String} CMS approved 90th day formatted for readability.
  */
 export function get90thDay(startDate) {
-    var realNumberOfDays = 91;
+    var realNumberOfDays = 90;
 
-    return format(addDays(startDate, realNumberOfDays), "MM dd, yyyy");
+    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy");
 }

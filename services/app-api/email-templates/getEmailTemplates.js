@@ -3,6 +3,14 @@ import SPARAIEmailTemplates from "./SPARAIEmailTemplates";
 import WaiverEmailTemplates from "./WaiverEmailTemplates";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
+/**
+ * Get a singleton object that overloads the getCMSEmail and getStateEmail
+ * with the specfic functions for the data type.
+ * @param {String} type
+ * @returns {Object, undefined} the object with the functions, or undefined
+ * to let developer know the emails haven't been set for that type.
+ */
+
 export default function getEmailTemplates(type) {
   let retval = {};
 

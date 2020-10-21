@@ -1,7 +1,15 @@
 import { getLinksHtml, get90thDay } from "./email-util";
 
+/**
+ * Waiver submission specific email generation functions.
+ * @class
+ */
 class WaiverEmailTemplates {
 
+    /**
+    * returns or creates the singleton instance.
+    * @constructor
+     */
     constructor(){
 
         if(! WaiverEmailTemplates.instance){
@@ -11,6 +19,11 @@ class WaiverEmailTemplates {
         return WaiverEmailTemplates.instance;
     }
 
+    /**
+     * Waiver submission email to CMS details wrapped in generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
     getCMSEmail(data) {
         const cmsEmail={};
 
@@ -30,6 +43,12 @@ class WaiverEmailTemplates {
         return cmsEmail;
     }
 
+    /**
+     * Waiver submission confimation email to State User wrapped in
+     * generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
     getStateEmail(data) {
         const stateEmail={};
 

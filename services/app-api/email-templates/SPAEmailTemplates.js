@@ -1,7 +1,15 @@
 import { getLinksHtml } from "./email-util";
 
+/**
+ * SPA submission specific email generation functions.
+ * @class
+ */
 class SPAEmailTemplates {
 
+    /**
+    * returns or creates the singleton instance.
+    * @constructor
+     */
     constructor(){
         if(! SPAEmailTemplates.instance){
             SPAEmailTemplates.instance = this;
@@ -10,10 +18,20 @@ class SPAEmailTemplates {
         return SPAEmailTemplates.instance;
     }
 
-    getUrgentText(data) {
-        return (data.urgent == true ? "Yes" : "No");
+    /**
+     * converts a Boolean to Yes and No.
+     * @param {Boolean}
+     * @returns {String}
+     */
+    getUrgentText(urgency) {
+        return (urgency == true ? "Yes" : "No");
     }
 
+    /**
+     * SPA submission email to CMS details wrapped in generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
     getCMSEmail(data) {
         const cmsEmail = {};
 
@@ -25,7 +43,7 @@ class SPAEmailTemplates {
         <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
         <br><b>Email Address</b>: ${data.user.email}
         <br><b>ID</b>: ${data.transmittalNumber}
-        <br><b>Urgent?</b>: ${this.getUrgentText(data)}</p>
+        <br><b>Urgent?</b>: ${this.getUrgentText(data.urgent)}</p>
         <p>Files:</p>
         <p>${getLinksHtml(data.uploads)}</p>
         <p>If these files seem suspicious, do not open them, and instead forward this email to <a href="mailto:CMS_IT_Service_Desk@cms.hhs.gov">CMS_IT_Service_Desk@cms.hhs.gov</a>.</p>
@@ -35,6 +53,12 @@ class SPAEmailTemplates {
         return cmsEmail;
     }
 
+    /**
+     * SPA submission confimation email to State User wrapped in
+     * generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
     getStateEmail(data) {
         const stateEmail = {};
 
