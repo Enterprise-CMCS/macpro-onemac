@@ -3,8 +3,8 @@ import { Auth } from "aws-amplify";
 
 import Routes from "./Routes";
 import Header from "./components/Header"
+import AlertBar from "./components/AlertBar"
 import { AppContext } from "./libs/contextLib";
-import { onError } from "./libs/errorLib";
 
 function App() {
     const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -19,9 +19,9 @@ function App() {
             await Auth.currentSession();
             userHasAuthenticated(true);
         }
-        catch(e) {
-            if (e !== 'No current user') {
-                onError(e);
+        catch(error) {
+            if (error !== 'No current user') {
+                console.log("There was an error while loading the user information.", error)
             }
         }
 
@@ -33,6 +33,7 @@ function App() {
             <div>
                 <Header isAuthenticated={isAuthenticated} />
                 <div className="App container">
+                    <AlertBar/>
                     <AppContext.Provider
                         value={{ isAuthenticated, userHasAuthenticated }}
                     >

@@ -4,11 +4,12 @@ import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
+import AlertBar from "../components/AlertBar"
+import {ALERTS_MSG} from "../libs/alert-messages";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -68,10 +69,9 @@ export default function RaiTemplate({
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
         setReadOnly(true);
-      } catch (e) {
-        onError(
-          "There was an error fetching your change request.  Please try again"
-        );
+      } catch (error) {
+        console.log("Error while fetching submission.", error);
+        AlertBar.alert(ALERTS_MSG.RAI_FETCH_ERROR);
       }
     }
 
@@ -118,10 +118,11 @@ export default function RaiTemplate({
     try {
       let uploadedList = await uploader.current.uploadFiles();
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
-      onError("There was an error submitting your request.  Please try again.");
       console.log("There was an error submitting a request.", error);
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
       setIsLoading(false);
     }
   }

@@ -3,8 +3,9 @@ import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
-import { onError } from "../libs/errorLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 import "./Dashboard.scss";
 
 /**
@@ -23,9 +24,10 @@ export default function Dashboard() {
       }
 
       try {
-        setChangeRequestList(await API.get("changeRequestAPI", "/list"));
-      } catch (e) {
-        onError(e);
+        setChangeRequestList(await API.get("changeRequestAPI", "/lists"));
+      } catch (error) {
+        console.log("Error while fetching user's list.", error);
+        AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
 
       setIsLoading(false);
