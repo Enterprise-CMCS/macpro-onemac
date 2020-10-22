@@ -6,7 +6,7 @@ import { ALERT_TYPES } from "../components/AlertBar";
 export const ALERTS_MSG = {
   // Success
   SUBMISSION_SUCCESS: {
-    type: ALERT_TYPES.SUCESS,
+    type: ALERT_TYPES.SUCCESS,
     heading: "Submission Completed",
     text: "Your submission has been received.",
   },

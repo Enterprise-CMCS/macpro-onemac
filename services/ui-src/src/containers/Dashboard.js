@@ -25,12 +25,11 @@ export default function Dashboard() {
 
       try {
         setChangeRequestList(await API.get("changeRequestAPI", "/lists"));
+        setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
         AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
-
-      setIsLoading(false);
     }
 
     onLoad();
