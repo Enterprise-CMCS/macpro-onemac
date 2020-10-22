@@ -9,7 +9,6 @@ plugins:
   - serverless-plugin-warmup
   - serverless-dynamodb-local
   - serverless-offline
-  - serverless-s3-local
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests

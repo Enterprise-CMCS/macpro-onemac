@@ -20,8 +20,8 @@ class SPAEmailTemplates {
 
     /**
      * converts a Boolean to Yes and No.
-     * @param {Boolean}
-     * @returns {String}
+     * @param {Boolean} urgency the Boolean describing the urgency of the form submission
+     * @returns {String} "Yes" or "No" so that the email has a more readable representation of the urgency.
      */
     getUrgentText(urgency) {
         return (urgency == true ? "Yes" : "No");
