@@ -22,6 +22,19 @@ h4 {
   @extend .ds-h4;
 }
 
+select, .field {
+  @extend .ds-c-field;
+}
+
+label {
+  @extend .ds-c-label;
+  @extend .ds-u-margin-top--0;
+}
+
+.field-hint {
+  @extend .ds-c-field__hint;
+}
+
 .uploader {
 
   table {

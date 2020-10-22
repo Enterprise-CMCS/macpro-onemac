@@ -10,6 +10,7 @@ import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
 import AlertBar from "../components/AlertBar"
 import {ALERTS_MSG} from "../libs/alert-messages";
+import { formatDate } from "../utils/date-utils";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -135,12 +136,13 @@ export default function RaiTemplate({
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           {raiType} ID<span className="required-mark">*</span>
         </label>
-        {!isReadOnly ? (
-          <p>Enter the transmittal number for this RAI</p>
-        ) : (
-          <br />
-        )}
+        { !isReadOnly &&
+          <p className="field-hint">
+            Enter the transmittal number for this RAI
+          </p>
+        }
         <input
+          className="field"
           type="text"
           required={!isReadOnly}
           id={FIELD_NAMES.TRANSMITTAL_NUMBER}
@@ -153,13 +155,13 @@ export default function RaiTemplate({
           <div>
             <br />
             <label htmlFor="createdAt">Submitted on</label>
-            <br />
             <input
+              className="field"
               type="text"
               id="createdAt"
               name="createdAt"
               disabled
-              value={new Date(changeRequest.createdAt)}
+              value={formatDate(changeRequest.createdAt)}
             ></input>
           </div>
         )}
@@ -182,17 +184,21 @@ export default function RaiTemplate({
           fieldClassName="summary-field"
           multiline
           onChange={handleInputChange}
+          disabled={isReadOnly}
+          value={changeRequest.summary}
         ></TextField>
-        <LoaderButton
-          block
-          type="submit"
-          bsSize="large"
-          bsStyle="primary"
-          isLoading={isLoading}
-          disabled={!isFormReady || !areUploadsReady}
-        >
-          Submit
-        </LoaderButton>
+        {!isReadOnly && (
+          <LoaderButton
+            block
+            type="submit"
+            bsSize="large"
+            bsStyle="primary"
+            isLoading={isLoading}
+            disabled={!isFormReady || !areUploadsReady}
+          >
+            Submit
+          </LoaderButton>
+        )}
       </form>
     </div>
   );
