@@ -3,6 +3,7 @@
  */
 export const CHANGE_REQUEST_TYPES = {
     AMENDMENT: 'amendment',
+    SPA_RAI: 'sparai',
     WAIVER: 'waiver',
-    SPA_RAI: 'sparai'
+    WAIVER_RAI: 'waiverrai'
 };
