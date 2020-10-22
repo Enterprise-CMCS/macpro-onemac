@@ -5,6 +5,7 @@ import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
 import { onError } from "../libs/errorLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
+import { ROUTES } from "../Routes";
 import "./Dashboard.scss";
 
 /**
@@ -93,10 +94,10 @@ export default function Dashboard() {
         <div className="actions-left-col">
           <div className="action-title">SPAs</div>
           <div className="action">
-            <a href="/amendment/new">Submit new SPA</a>
+            <a href={ROUTES.AMENDMENTS}>Submit new SPA</a>
           </div>
           <div className="action">
-            <a href="/sparai">Respond to SPA RAI</a>
+            <a href={ROUTES.SPA_RAI}>Respond to SPA RAI</a>
           </div>
         </div>
         <div className="actions-right-col">
@@ -105,7 +106,7 @@ export default function Dashboard() {
             <a href="/waiver/new">Submit new Waiver</a>
           </div>
           <div className="action">
-            <a href="/waiverrai">Respond to 1915(b) Waiver RAI</a>
+            <a href={ROUTES.WAIVER_RAI}>Respond to 1915(b) Waiver RAI</a>
           </div>
         </div>
       </div>
