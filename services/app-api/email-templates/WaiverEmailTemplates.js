@@ -37,7 +37,7 @@ class WaiverEmailTemplates {
     <br><b>ID</b>: ${data.waiverNumber}
     <br><b>Action Type</b>: ${data.actionType}
     <br><b>Waiver Authority</b>: ${data.waiverAuthority}
-    <br><b>Summary</b>: <p>${data.summary}
+    <p><b>Summary</b>:<br>${data.summary}</p>
     <p>Files:</p>
     <p>${getLinksHtml(data.uploads)}</p>
     <p>If these files seem suspicious, do not open them, and instead forward this email to <a href="mailto:CMS_IT_Service_Desk@cms.hhs.gov">CMS_IT_Service_Desk@cms.hhs.gov</a>.</p>
@@ -63,7 +63,7 @@ class WaiverEmailTemplates {
     <br><b>Waiver #</b>: ${data.waiverNumber}
     <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Submitter email</b>: ${data.user.email}</p>
-    <br><b>Summary</b>: <p>${data.summary}
+    <p><b>Summary</b>:<br>${data.summary}</p>
     <p>You can expect a formal response to your submission to be issued within 90 days, 
     on ${get90thDay(data.createdDate)}. If you have any questions, please contact spa@cms.hhs.gov or your state lead.</p>
     `;
