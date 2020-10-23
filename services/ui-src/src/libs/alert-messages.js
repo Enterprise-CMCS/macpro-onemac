@@ -22,7 +22,7 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "Data Retrieval Error",
     text:
-      "We encountered and error while fetching your data.  Please reload the page and try again.",
+      "We encountered an error while fetching your data.  Please reload the page and try again.",
   },
   SUBMISSION_ERROR: {
     type: ALERT_TYPES.ERROR,
