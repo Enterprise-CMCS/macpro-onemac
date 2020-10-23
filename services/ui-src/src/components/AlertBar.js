@@ -57,7 +57,7 @@ export default class AlertBar extends Component {
    * Dismisses/hides the alert.
    */
   static dismiss() {
-    AlertBar.__dismiss();
+    AlertBar.__singletonRef.__dismiss();
   }
 
   /**
