@@ -39,7 +39,7 @@ export default class AlertBar extends Component {
 
   /**
    * Displays an alert.
-   * @param {Object} alertMsg the alert message object
+   * @param {Object} alertMsg the alert message object with type, heading and text
    */
   static alert(alertMsg) {
     if (alertMsg) {
@@ -69,7 +69,7 @@ export default class AlertBar extends Component {
   }
 
   /**
-   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.info|warning|error|success().
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.alert().
    * Displays an informational alert.
    * @param {string} type the type of alert
    * @param {string} heading the alert heading
