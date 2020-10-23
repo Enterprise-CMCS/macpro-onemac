@@ -2,7 +2,6 @@ import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
-import { onError } from "../libs/errorLib";
 import { API, Auth } from "aws-amplify";
 import Select from 'react-select';
 import { ROUTES } from "../Routes"
@@ -10,6 +9,8 @@ import { territoryList } from '../libs/territoryLib';
 import {actionTypeOptions, waiverAuthorityOptions, requiredUploads, optionalUploads} from '../libs/waiverLib.js';
 import FileUploader from '../components/FileUploader';
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
+import AlertBar from "../components/AlertBar"
+import {ALERTS_MSG} from "../libs/alert-messages";
 
 export default function NewWaiver() {
     const history = useHistory()
@@ -48,8 +49,9 @@ export default function NewWaiver() {
             let transmittalNumber = waiverNumber;
             await createWaiver({ type, user, transmittalNumber, waiverNumber, territory, actionType, waiverAuthority, summary, uploads });
             history.push(ROUTES.DASHBOARD);
-        } catch (e) {
-            onError(e);
+        } catch (error) {
+            console.log("There was an error submitting a request.", error);
+            AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
             setIsLoading(false);
         }
     }
