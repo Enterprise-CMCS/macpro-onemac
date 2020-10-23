@@ -31,7 +31,6 @@ class WaiverRAIEmailTemplates {
         cmsEmail.Subject = "New Waiver RAI " + data.transmittalNumber + " submitted";
         cmsEmail.HTML = `
     <p>The SPA and Waiver Submission Form received a Waiver RAI Submission:</p>
-    <p><b>State or territory</b>: ${data.territory}
     <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Email Address</b>: ${data.user.email}
     <br><b>ID</b>: ${data.transmittalNumber}
@@ -58,7 +57,6 @@ class WaiverRAIEmailTemplates {
         stateEmail.Subject = "Your Waiver RAI " + data.transmittalNumber + " has been submitted to CMS";
         stateEmail.HTML = `
     <p>This response confirms the receipt of your Waiver RAI submission:</p>
-    <p><b>State or territory</b>: ${data.territory}
     <br><b>SPA #</b>: ${data.transmittalNumber}
     <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Submitter email</b>: ${data.user.email}</p>
