@@ -7,19 +7,6 @@ import { getLinksHtml } from "./email-util";
 class WaiverRAIEmailTemplates {
 
     /**
-    * returns or creates the singleton instance.
-    * @constructor
-     */
-    constructor(){
-
-        if(! WaiverRAIEmailTemplates.instance){
-            WaiverRAIEmailTemplates.instance = this;
-        }
-
-        return WaiverRAIEmailTemplates.instance;
-    }
-
-    /**
      * Waiver RAI submission email to CMS details wrapped in generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.

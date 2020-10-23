@@ -7,19 +7,6 @@ import { getLinksHtml } from "./email-util";
 class SPARAIEmailTemplates {
 
     /**
-    * returns or creates the singleton instance.
-    * @constructor
-     */
-    constructor(){
-
-        if(! SPARAIEmailTemplates.instance){
-            SPARAIEmailTemplates.instance = this;
-        }
-
-        return SPARAIEmailTemplates.instance;
-    }
-
-    /**
      * SPA RAI submission email to CMS details wrapped in generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.

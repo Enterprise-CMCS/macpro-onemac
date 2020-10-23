@@ -7,19 +7,6 @@ import { getLinksHtml, get90thDay } from "./email-util";
 class WaiverEmailTemplates {
 
     /**
-    * returns or creates the singleton instance.
-    * @constructor
-     */
-    constructor(){
-
-        if(! WaiverEmailTemplates.instance){
-            WaiverEmailTemplates.instance = this;
-        }
-
-        return WaiverEmailTemplates.instance;
-    }
-
-    /**
      * Waiver submission email to CMS details wrapped in generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.
