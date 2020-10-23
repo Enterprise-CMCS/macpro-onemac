@@ -10,6 +10,6 @@
   "license": "CC0-1.0",
   "devDependencies": {
     "serverless-offline": "^6.7.0",
-    "serverless-s3-local": "^0.6.5"
+    "serverless-s3-local": "^0.6.7"
   }
 }
