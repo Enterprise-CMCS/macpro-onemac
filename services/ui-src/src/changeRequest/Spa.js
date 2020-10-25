@@ -12,7 +12,7 @@ import { ROUTES } from "../Routes";
 import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
 
-export default function SpaRai() {
+export default function Spa() {
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [

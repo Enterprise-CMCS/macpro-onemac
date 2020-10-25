@@ -58,7 +58,7 @@ export default function Dashboard() {
       let title;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
-        case CHANGE_REQUEST_TYPES.AMENDMENT:
+        case CHANGE_REQUEST_TYPES.SPA:
           title = "SPA " + changeRequest.transmittalNumber;
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
@@ -71,6 +71,10 @@ export default function Dashboard() {
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
           title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          break;
+
+        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
+          title = "Temporary Extension Request for Waiver " + changeRequest.transmittalNumber;
           break;
 
         default:
@@ -94,7 +98,7 @@ export default function Dashboard() {
         <div className="actions-left-col">
           <div className="action-title">SPAs</div>
           <div className="action">
-            <a href={ROUTES.AMENDMENTS}>Submit new SPA</a>
+            <a href={ROUTES.SPA}>Submit new SPA</a>
           </div>
           <div className="action">
             <a href={ROUTES.SPA_RAI}>Respond to SPA RAI</a>
@@ -103,10 +107,13 @@ export default function Dashboard() {
         <div className="actions-right-col">
           <div className="action-title">Waivers</div>
           <div className="action">
-            <a href="/waiver/new">Submit new Waiver</a>
+            <a href={ROUTES.WAIVER}>Submit new Waiver</a>
           </div>
           <div className="action">
             <a href={ROUTES.WAIVER_RAI}>Respond to 1915(b) Waiver RAI</a>
+          </div>
+          <div className="action">
+            <a href={ROUTES.WAIVER_EXTENSION}>Request Temporary Extension form - 1915(b) and 1915(c)</a>
           </div>
         </div>
       </div>

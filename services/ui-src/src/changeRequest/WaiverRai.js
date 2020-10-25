@@ -1,5 +1,4 @@
 import React from 'react';
-import { optionalUploads } from '../libs/waiverLib.js';
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import RaiTemplate from './RaiTemplate';
 
@@ -8,6 +7,14 @@ import RaiTemplate from './RaiTemplate';
  */
 export default function WaiverRai() {
   const requiredUploads = ['Waiver RAI response'];
+  const optionalUploads = [
+    '1915(b)(4) waiver application', 
+    'Cost effectiveness spreadsheets', 
+    'Tribal Consultation', 
+    '1915(c) Appendix K amendment waiver template', 
+    '1915(b) waiver', 
+    'Other'
+  ];
 
   return(
     <RaiTemplate
