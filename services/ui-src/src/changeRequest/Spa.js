@@ -18,7 +18,7 @@ export default function SpaRai() {
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
     "Cover Letter",
-    "Existing state plan pages",
+    "Existing state plan page(s)",
     "Tribal Consultation",
     "Public Notice",
     "Standard Funding Questions (SFQs)",
