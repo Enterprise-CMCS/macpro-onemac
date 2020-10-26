@@ -52,7 +52,7 @@ export default function Spa() {
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: CHANGE_REQUEST_TYPES.AMENDMENT,
+    type: CHANGE_REQUEST_TYPES.SPA,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
