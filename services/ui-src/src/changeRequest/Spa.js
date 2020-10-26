@@ -4,13 +4,14 @@ import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function Spa() {
   // The attachment list
@@ -70,10 +71,9 @@ export default function Spa() {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
         setReadOnly(true);
-      } catch (e) {
-        onError(
-          "There was an error fetching your change request.  Please try again"
-        );
+      } catch (error) {
+        console.log("Error while fetching submission.", error);
+        AlertBar.alert(ALERTS_MSG.RAI_FETCH_ERROR);
       }
     }
 
@@ -104,7 +104,9 @@ export default function Spa() {
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber && updatedRecord.territory);
+      setIsFormReady(
+        updatedRecord.transmittalNumber && updatedRecord.territory
+      );
     }
   }
 
@@ -121,9 +123,11 @@ export default function Spa() {
       let uploadedList = await uploader.current.uploadFiles();
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
+      //Alert must come last or it will be cleared after the history push.
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
     } catch (error) {
-      onError("There was an error submitting your request.  Please try again.");
       console.log("There was an error submitting a request.", error);
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
       setIsLoading(false);
     }
   }
@@ -156,18 +160,21 @@ export default function Spa() {
           value={changeRequest.territory}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select a territory -- </option>
+          <option disabled value="none-selected">
+            {" "}
+            -- select a territory --{" "}
+          </option>
           {renderTerritoryList()}
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
         </label>
-        { !isReadOnly && 
+        {!isReadOnly && (
           <p className="field-hint">
             Enter the State Plan Amendment transmittal number for this RAI
           </p>
-        }
+        )}
         <input
           className="field"
           type="text"
