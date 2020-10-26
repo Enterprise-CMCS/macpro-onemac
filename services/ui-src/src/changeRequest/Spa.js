@@ -172,7 +172,7 @@ export default function Spa() {
         </label>
         {!isReadOnly && (
           <p className="field-hint">
-            Enter the State Plan Amendment transmittal number for this RAI
+            Enter the State Plan Amendment transmittal number
           </p>
         )}
         <input

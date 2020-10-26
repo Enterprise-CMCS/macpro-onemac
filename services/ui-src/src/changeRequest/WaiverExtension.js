@@ -115,6 +115,8 @@ export default function WaiverExtension() {
       let uploadedList = await uploader.current.uploadFiles();
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
+      //Alert must come last or it will be cleared after the history push.
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
     } catch (error) {
       console.log("There was an error submitting a request.", error);
       AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
