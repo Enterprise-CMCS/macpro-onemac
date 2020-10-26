@@ -14,7 +14,6 @@ var_list=(
   'IAM_PATH'
   'IAM_PERMISSIONS_BOUNDARY_POLICY'
   'STAGE_PREFIX'
-  'OKTA_METADATA_URL'
 )
 
 set_value() {
