@@ -7,6 +7,8 @@ import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
+import { useHistory } from "react-router-dom";
+import { Button } from "@cmsgov/design-system";
 import "./Dashboard.scss";
 
 /**
@@ -16,6 +18,8 @@ export default function Dashboard() {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
+
+  const history = useHistory();
 
   // Load the data from the backend.
   useEffect(() => {
@@ -95,19 +99,39 @@ export default function Dashboard() {
         <div className="actions-left-col">
           <div className="action-title">SPAs</div>
           <div className="action">
-            <a href={ROUTES.AMENDMENTS}>Submit new SPA</a>
+            <Button
+              variation="transparent"
+              onClick={() => history.push(ROUTES.AMENDMENTS)}
+            >
+              Submit new SPA
+            </Button>
           </div>
           <div className="action">
-            <a href={ROUTES.SPA_RAI}>Respond to SPA RAI</a>
+            <Button
+              variation="transparent"
+              onClick={() => history.push(ROUTES.SPA_RAI)}
+            >
+              Respond to SPA RAI
+            </Button>
           </div>
         </div>
         <div className="actions-right-col">
           <div className="action-title">Waivers</div>
           <div className="action">
-            <a href="/waiver/new">Submit new Waiver</a>
+            <Button
+              variation="transparent"
+              onClick={() => history.push("/waiver/new")}
+            >
+              Submit new Waiver
+            </Button>
           </div>
           <div className="action">
-            <a href={ROUTES.WAIVER_RAI}>Respond to 1915(b) Waiver RAI</a>
+            <Button
+              variation="transparent"
+              onClick={() => history.push(ROUTES.WAIVER_RAI)}
+            >
+              Respond to 1915(b) Waiver RAI
+            </Button>
           </div>
         </div>
       </div>

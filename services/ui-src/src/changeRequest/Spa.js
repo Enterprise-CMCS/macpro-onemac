@@ -10,8 +10,8 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
-import AlertBar from "../components/AlertBar"
-import {ALERTS_MSG} from "../libs/alert-messages";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function SpaRai() {
   // The attachment list
@@ -104,7 +104,9 @@ export default function SpaRai() {
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber && updatedRecord.territory);
+      setIsFormReady(
+        updatedRecord.transmittalNumber && updatedRecord.territory
+      );
     }
   }
 
@@ -121,6 +123,8 @@ export default function SpaRai() {
       let uploadedList = await uploader.current.uploadFiles();
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
+      //Alert must come last or it will be cleared after the history push.
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
     } catch (error) {
       console.log("There was an error submitting a request.", error);
       AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
@@ -156,18 +160,21 @@ export default function SpaRai() {
           value={changeRequest.territory}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select a territory -- </option>
+          <option disabled value="none-selected">
+            {" "}
+            -- select a territory --{" "}
+          </option>
           {renderTerritoryList()}
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
         </label>
-        { !isReadOnly && 
+        {!isReadOnly && (
           <p className="field-hint">
             Enter the State Plan Amendment transmittal number for this RAI
           </p>
-        }
+        )}
         <input
           className="field"
           type="text"

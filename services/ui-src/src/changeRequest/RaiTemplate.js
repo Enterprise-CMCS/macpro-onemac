@@ -8,8 +8,8 @@ import { useHistory } from "react-router-dom";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
-import AlertBar from "../components/AlertBar"
-import {ALERTS_MSG} from "../libs/alert-messages";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
 
 /**
@@ -119,8 +119,9 @@ export default function RaiTemplate({
     try {
       let uploadedList = await uploader.current.uploadFiles();
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
       history.push(ROUTES.DASHBOARD);
+      //Alert must come last or it will be cleared after the history push.
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
     } catch (error) {
       console.log("There was an error submitting a request.", error);
       AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
@@ -136,11 +137,11 @@ export default function RaiTemplate({
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           {raiType} ID<span className="required-mark">*</span>
         </label>
-        { !isReadOnly &&
+        {!isReadOnly && (
           <p className="field-hint">
             Enter the transmittal number for this RAI
           </p>
-        }
+        )}
         <input
           className="field"
           type="text"
