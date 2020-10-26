@@ -4,25 +4,35 @@ import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
-import { actionTypeOptions, waiverAuthorityOptions } from "../libs/waiverLib";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function Waiver() {
   // The attachment list
   const requiredUploads = ['Required Upload (per Waiver Authority)'];
   const optionalUploads = [
-    '1915(b)(4) waiver application', 
-    'Cost effectiveness spreadsheets', 
-    'Tribal Consultation', 
-    '1915(c) Appendix K amendment waiver template', 
-    '1915(b) waiver', 
+    '1915(b)(4) waiver application',
+    'Cost effectiveness spreadsheets',
+    'Tribal Consultation',
+    '1915(c) Appendix K amendment waiver template',
+    '1915(b) waiver',
     'Other'
+  ];
+  const actionTypeOptions = [
+    { "label": "New waiver", "value": "New waiver" },
+    { "label": "Waiver amendment", "value": "Waiver amendment" },
+    { "label": "Request for waiver renewal", "value": "Request for waiver renewal" }
+  ];
+  const waiverAuthorityOptions = [
+    { "label": "1915(b)(4) FFS Selective Contracting waivers", "value": "1915(b)(4) FFS Selective Contracting waivers" },
+    { "label": "All other 1915(b) Waivers", "value": "All other 1915(b) Waivers" },
+    { "label": "1915(c) Appendix K waiver", "value": "1915(c) Appendix K waiver" }
   ];
 
   // The form field names
@@ -73,10 +83,9 @@ export default function Waiver() {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
         setReadOnly(true);
-      } catch (e) {
-        onError(
-          "There was an error fetching your change request.  Please try again"
-        );
+      } catch (error) {
+        console.log("Error while fetching submission.", error);
+        AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
     }
 
@@ -107,11 +116,11 @@ export default function Waiver() {
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber 
+      setIsFormReady(updatedRecord.transmittalNumber
         && updatedRecord.territory
         && updatedRecord.actionType
         && updatedRecord.waiverAuthority
-        );
+      );
     }
   }
 
@@ -128,9 +137,11 @@ export default function Waiver() {
       let uploadedList = await uploader.current.uploadFiles();
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
+      //Alert must come last or it will be cleared after the history push.
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
     } catch (error) {
-      onError("There was an error submitting your request.  Please try again.");
       console.log("There was an error submitting a request.", error);
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
       setIsLoading(false);
     }
   }
@@ -179,7 +190,7 @@ export default function Waiver() {
           value={changeRequest.actionType}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select action type -- </option>
+          <option disabled value="none-selected"> -- select an action type -- </option>
           {renderOptionsList(actionTypeOptions)}
         </select>
         <br />
@@ -195,14 +206,14 @@ export default function Waiver() {
           value={changeRequest.waiverAuthority}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select waiver authority -- </option>
+          <option disabled value="none-selected"> -- select a waiver authority -- </option>
           {renderOptionsList(waiverAuthorityOptions)}
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
-        { !isReadOnly && 
+        {!isReadOnly &&
           <p className="field-hint">
             Enter the Waiver number
           </p>
@@ -235,13 +246,13 @@ export default function Waiver() {
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
+            <FileUploader
+              ref={uploader}
+              requiredUploads={requiredUploads}
+              optionalUploads={optionalUploads}
+              readyCallback={uploadsReadyCallbackFunction}
+            ></FileUploader>
+          )}
 
         <br />
         <TextField

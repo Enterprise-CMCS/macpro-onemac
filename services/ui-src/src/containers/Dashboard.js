@@ -138,7 +138,12 @@ export default function Dashboard() {
             </Button>
           </div>
           <div className="action">
-            <a href={ROUTES.WAIVER_EXTENSION}>Request Temporary Extension form - 1915(b) and 1915(c)</a>
+          <Button
+              variation="transparent"
+              onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+            >
+              Request Temporary Extension form - 1915(b) and 1915(c)
+          </Button>
           </div>
         </div>
       </div>

@@ -73,7 +73,7 @@ export default function Spa() {
         setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
-        AlertBar.alert(ALERTS_MSG.RAI_FETCH_ERROR);
+        AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
     }
 

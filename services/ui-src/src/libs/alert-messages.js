@@ -18,7 +18,7 @@ export const ALERTS_MSG = {
     text:
       "There was an error fetching your list of submissions.  Please reload the page and try again.",
   },
-  RAI_FETCH_ERROR: {
+  FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Data Retrieval Error",
     text:

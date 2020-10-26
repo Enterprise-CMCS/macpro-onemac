@@ -4,27 +4,26 @@ import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { onError } from "../libs/errorLib";
 import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
-import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function WaiverExtension() {
   // The attachment list
   const requiredUploads = ["Waiver Extension Request"];
   const optionalUploads = [
-    "Independant Assessment Reports",
+    "Independent Assessment Reports",
     "Other"
   ];
 
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
-    SUMMARY: "summary",
-    TERRITORY: "territory",
+    SUMMARY: "summary"
   };
 
   // True when the required attachments have been selected.
@@ -66,10 +65,9 @@ export default function WaiverExtension() {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
         setReadOnly(true);
-      } catch (e) {
-        onError(
-          "There was an error fetching your change request.  Please try again"
-        );
+      } catch (error) {
+        console.log("Error while fetching submission.", error);
+        AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
     }
 
@@ -118,21 +116,10 @@ export default function WaiverExtension() {
       await ChangeRequestDataApi.submit(changeRequest, uploadedList);
       history.push(ROUTES.DASHBOARD);
     } catch (error) {
-      onError("There was an error submitting your request.  Please try again.");
       console.log("There was an error submitting a request.", error);
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
       setIsLoading(false);
     }
-  }
-
-  function renderTerritoryList() {
-    let optionsList = territoryList.map((item, i) => {
-      return (
-        <option key={i} value={item.value}>
-          {item.label}
-        </option>
-      );
-    });
-    return optionsList;
   }
 
   // Render the component.
@@ -140,22 +127,6 @@ export default function WaiverExtension() {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>Request Temporary Extension</h3>
-        <label htmlFor={FIELD_NAMES.TERRITORY}>
-          State/Territory<span className="required-mark">*</span>
-        </label>
-        <select
-          id={FIELD_NAMES.TERRITORY}
-          name={FIELD_NAMES.TERRITORY}
-          required={!isReadOnly}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.territory}
-          defaultValue="none-selected"
-        >
-          <option disabled value="none-selected"> -- select a territory -- </option>
-          {renderTerritoryList()}
-        </select>
-        <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
