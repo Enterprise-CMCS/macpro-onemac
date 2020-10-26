@@ -63,7 +63,7 @@ export default function Dashboard() {
       let title;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
-        case CHANGE_REQUEST_TYPES.AMENDMENT:
+        case CHANGE_REQUEST_TYPES.SPA:
           title = "SPA " + changeRequest.transmittalNumber;
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
@@ -76,6 +76,10 @@ export default function Dashboard() {
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
           title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          break;
+
+        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
+          title = "Temporary Extension Request for Waiver " + changeRequest.transmittalNumber;
           break;
 
         default:
@@ -101,7 +105,7 @@ export default function Dashboard() {
           <div className="action">
             <Button
               variation="transparent"
-              onClick={() => history.push(ROUTES.AMENDMENTS)}
+              onClick={() => history.push(ROUTES.SPA)}
             >
               Submit new SPA
             </Button>
@@ -120,7 +124,7 @@ export default function Dashboard() {
           <div className="action">
             <Button
               variation="transparent"
-              onClick={() => history.push("/waiver/new")}
+              onClick={() => history.push(ROUTES.WAIVER)}
             >
               Submit new Waiver
             </Button>
@@ -132,6 +136,14 @@ export default function Dashboard() {
             >
               Respond to 1915(b) Waiver RAI
             </Button>
+          </div>
+          <div className="action">
+          <Button
+              variation="transparent"
+              onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+            >
+              Request Temporary Extension form - 1915(b) and 1915(c)
+          </Button>
           </div>
         </div>
       </div>

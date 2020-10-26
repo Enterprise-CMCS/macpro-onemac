@@ -13,7 +13,7 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 
-export default function SpaRai() {
+export default function Spa() {
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
@@ -53,7 +53,7 @@ export default function SpaRai() {
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: CHANGE_REQUEST_TYPES.AMENDMENT,
+    type: CHANGE_REQUEST_TYPES.SPA,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
@@ -73,7 +73,7 @@ export default function SpaRai() {
         setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
-        AlertBar.alert(ALERTS_MSG.RAI_FETCH_ERROR);
+        AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
     }
 
@@ -172,7 +172,7 @@ export default function SpaRai() {
         </label>
         {!isReadOnly && (
           <p className="field-hint">
-            Enter the State Plan Amendment transmittal number for this RAI
+            Enter the State Plan Amendment transmittal number
           </p>
         )}
         <input

@@ -2,6 +2,7 @@ import SPAEmailTemplates from "./SPAEmailTemplates";
 import SPARAIEmailTemplates from "./SPARAIEmailTemplates";
 import WaiverEmailTemplates from "./WaiverEmailTemplates";
 import WaiverRAIEmailTemplates from "./WaiverRAIEmailTemplates";
+import WaiverExtensionEmailTemplates from "./WaiverExtensionEmailTemplates";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 /**
@@ -19,7 +20,7 @@ export default function getEmailTemplates(type) {
         case CHANGE_REQUEST_TYPES.WAIVER:
             retval = WaiverEmailTemplates;
             break;
-        case CHANGE_REQUEST_TYPES.AMENDMENT:
+        case CHANGE_REQUEST_TYPES.SPA:
             retval = SPAEmailTemplates;
             break;
         case CHANGE_REQUEST_TYPES.SPA_RAI:
@@ -27,6 +28,9 @@ export default function getEmailTemplates(type) {
             break;
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
             retval = WaiverRAIEmailTemplates;
+            break;
+        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
+            retval = WaiverExtensionEmailTemplates;
             break;
         default:
             retval = undefined;

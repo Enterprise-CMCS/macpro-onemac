@@ -5,30 +5,25 @@ import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
-import PropTypes from "prop-types";
+import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { formatDate } from "../utils/date-utils";
 
-/**
- * RAI Form template to allow rendering for different types of RAI's.
- * @param {String} changeRequestType - functional name for the type of change request
- * @param {Array} optionalUploads - list of attachment that are optional
- * @param {Array} requiredUploads - list of attachments that are required
- * @param {String} raiType - display name for the type of change request
- */
-export default function RaiTemplate({
-  changeRequestType,
-  optionalUploads,
-  requiredUploads,
-  raiType,
-}) {
+export default function WaiverExtension() {
+  // The attachment list
+  const requiredUploads = ["Waiver Extension Request"];
+  const optionalUploads = [
+    "Independent Assessment Reports",
+    "Other"
+  ];
+
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
-    SUMMARY: "summary",
+    SUMMARY: "summary"
   };
 
   // True when the required attachments have been selected.
@@ -52,7 +47,7 @@ export default function RaiTemplate({
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: changeRequestType,
+    type: CHANGE_REQUEST_TYPES.WAIVER_EXTENSION,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
@@ -133,15 +128,15 @@ export default function RaiTemplate({
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h3>{raiType} RAI Details</h3>
+        <h3>Request Temporary Extension</h3>
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          {raiType} ID<span className="required-mark">*</span>
+          Waiver Number<span className="required-mark">*</span>
         </label>
-        {!isReadOnly && (
+        {!isReadOnly &&
           <p className="field-hint">
-            Enter the transmittal number for this RAI
+            Enter the Waiver number for this Temporary Extension Request
           </p>
-        )}
+        }
         <input
           className="field"
           type="text"
@@ -170,13 +165,13 @@ export default function RaiTemplate({
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
+            <FileUploader
+              ref={uploader}
+              requiredUploads={requiredUploads}
+              optionalUploads={optionalUploads}
+              readyCallback={uploadsReadyCallbackFunction}
+            ></FileUploader>
+          )}
 
         <br />
         <TextField
@@ -204,10 +199,3 @@ export default function RaiTemplate({
     </div>
   );
 }
-
-RaiTemplate.propTypes = {
-  changeRequestType: PropTypes.string.isRequired,
-  optionalUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  requiredUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  raiType: PropTypes.oneOf(["SPA", "Waiver"]).isRequired,
-};
