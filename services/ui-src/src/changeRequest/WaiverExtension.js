@@ -98,7 +98,7 @@ export default function WaiverExtension() {
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber && updatedRecord.territory);
+      setIsFormReady(updatedRecord.transmittalNumber);
     }
   }
 
@@ -130,7 +130,7 @@ export default function WaiverExtension() {
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
-        { !isReadOnly && 
+        {!isReadOnly &&
           <p className="field-hint">
             Enter the Waiver number for this Temporary Extension Request
           </p>
@@ -163,13 +163,13 @@ export default function WaiverExtension() {
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
+            <FileUploader
+              ref={uploader}
+              requiredUploads={requiredUploads}
+              optionalUploads={optionalUploads}
+              readyCallback={uploadsReadyCallbackFunction}
+            ></FileUploader>
+          )}
 
         <br />
         <TextField
