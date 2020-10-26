@@ -19,7 +19,7 @@ export default function getEmailTemplates(type) {
         case CHANGE_REQUEST_TYPES.WAIVER:
             retval = WaiverEmailTemplates;
             break;
-        case CHANGE_REQUEST_TYPES.AMENDMENT:
+        case CHANGE_REQUEST_TYPES.SPA:
             retval = SPAEmailTemplates;
             break;
         case CHANGE_REQUEST_TYPES.SPA_RAI:
