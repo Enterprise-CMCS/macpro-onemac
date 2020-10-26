@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
-import { onError } from "../libs/errorLib";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import "./Profile.css";
@@ -8,6 +7,8 @@ import { Auth } from "aws-amplify"
 import PhoneInput from 'react-phone-input-2'
 import 'react-phone-input-2/lib/style.css'
 import { ROUTES } from "../Routes"
+import AlertBar from "../components/AlertBar"
+import {ALERTS_MSG} from "../libs/alert-messages";
 
 export default function Profile() {
     const history = useHistory();
@@ -34,7 +35,7 @@ export default function Profile() {
                 setLastName(capitalize(userInfo.attributes.family_name));
                 setPhoneNumber(formatPhoneNumberForForm(userInfo.attributes.phone_number));
             } catch (e) {
-                onError(e);
+                console.log("Unable to obtain the current user information.", e);
             }
         }
 
@@ -74,8 +75,9 @@ export default function Profile() {
                 "phone_number": formatPhoneNumberForSubmission(phoneNumber)
             });
             history.push(ROUTES.DASHBOARD)
-        } catch (e) {
-            onError(e);
+        } catch (error) {
+            console.log("There was an error submitting the profile update.", error);
+            AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
             setIsLoading(false);
         }
     }
