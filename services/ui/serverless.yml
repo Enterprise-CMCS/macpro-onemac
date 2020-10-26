@@ -138,7 +138,7 @@ resources:
               - CloudFrontDefaultCertificate: true
           CustomErrorResponses:
             - ErrorCode: 403
-              ResponseCode: 403
+              ResponseCode: 200 # Returning a 200 allows the react app to serve the file correctly
               ResponsePagePath: /index.html
           WebACLId:
             Fn::GetAtt:
