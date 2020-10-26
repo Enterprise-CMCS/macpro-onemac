@@ -5,29 +5,42 @@ import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
-import PropTypes from "prop-types";
+import { territoryList } from "../libs/territoryLib";
+import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { formatDate } from "../utils/date-utils";
 
-/**
- * RAI Form template to allow rendering for different types of RAI's.
- * @param {String} changeRequestType - functional name for the type of change request
- * @param {Array} optionalUploads - list of attachment that are optional
- * @param {Array} requiredUploads - list of attachments that are required
- * @param {String} raiType - display name for the type of change request
- */
-export default function RaiTemplate({
-  changeRequestType,
-  optionalUploads,
-  requiredUploads,
-  raiType,
-}) {
+export default function Waiver() {
+  // The attachment list
+  const requiredUploads = ['Required Upload (per Waiver Authority)'];
+  const optionalUploads = [
+    '1915(b)(4) waiver application',
+    'Cost effectiveness spreadsheets',
+    'Tribal Consultation',
+    '1915(c) Appendix K amendment waiver template',
+    '1915(b) waiver',
+    'Other'
+  ];
+  const actionTypeOptions = [
+    { "label": "New waiver", "value": "New waiver" },
+    { "label": "Waiver amendment", "value": "Waiver amendment" },
+    { "label": "Request for waiver renewal", "value": "Request for waiver renewal" }
+  ];
+  const waiverAuthorityOptions = [
+    { "label": "1915(b)(4) FFS Selective Contracting waivers", "value": "1915(b)(4) FFS Selective Contracting waivers" },
+    { "label": "All other 1915(b) Waivers", "value": "All other 1915(b) Waivers" },
+    { "label": "1915(c) Appendix K waiver", "value": "1915(c) Appendix K waiver" }
+  ];
+
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
+    TERRITORY: "territory",
+    ACTION_TYPE: "actionType",
+    WAIVER_AUTHORITY: "waiverAuthority",
     SUMMARY: "summary",
   };
 
@@ -52,7 +65,7 @@ export default function RaiTemplate({
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: changeRequestType,
+    type: CHANGE_REQUEST_TYPES.WAIVER,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
@@ -103,7 +116,11 @@ export default function RaiTemplate({
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber);
+      setIsFormReady(updatedRecord.transmittalNumber
+        && updatedRecord.territory
+        && updatedRecord.actionType
+        && updatedRecord.waiverAuthority
+      );
     }
   }
 
@@ -129,19 +146,78 @@ export default function RaiTemplate({
     }
   }
 
+  function renderOptionsList(theList) {
+    let optionsList = theList.map((item, i) => {
+      return (
+        <option key={i} value={item.value}>
+          {item.label}
+        </option>
+      );
+    });
+    return optionsList;
+  }
+
   // Render the component.
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h3>{raiType} RAI Details</h3>
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          {raiType} ID<span className="required-mark">*</span>
+        <h3>Waiver Submission</h3>
+        <label htmlFor={FIELD_NAMES.TERRITORY}>
+          State/Territory<span className="required-mark">*</span>
         </label>
-        {!isReadOnly && (
+        <select
+          id={FIELD_NAMES.TERRITORY}
+          name={FIELD_NAMES.TERRITORY}
+          required={!isReadOnly}
+          onChange={handleInputChange}
+          disabled={isReadOnly}
+          value={changeRequest.territory}
+          defaultValue="none-selected"
+        >
+          <option disabled value="none-selected"> -- select a territory -- </option>
+          {renderOptionsList(territoryList)}
+        </select>
+        <br />
+        <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
+          Action Type<span className="required-mark">*</span>
+        </label>
+        <select
+          id={FIELD_NAMES.ACTION_TYPE}
+          name={FIELD_NAMES.ACTION_TYPE}
+          required={!isReadOnly}
+          onChange={handleInputChange}
+          disabled={isReadOnly}
+          value={changeRequest.actionType}
+          defaultValue="none-selected"
+        >
+          <option disabled value="none-selected"> -- select an action type -- </option>
+          {renderOptionsList(actionTypeOptions)}
+        </select>
+        <br />
+        <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
+          Action Type<span className="required-mark">*</span>
+        </label>
+        <select
+          id={FIELD_NAMES.WAIVER_AUTHORITY}
+          name={FIELD_NAMES.WAIVER_AUTHORITY}
+          required={!isReadOnly}
+          onChange={handleInputChange}
+          disabled={isReadOnly}
+          value={changeRequest.waiverAuthority}
+          defaultValue="none-selected"
+        >
+          <option disabled value="none-selected"> -- select a waiver authority -- </option>
+          {renderOptionsList(waiverAuthorityOptions)}
+        </select>
+        <br />
+        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+          Waiver Number<span className="required-mark">*</span>
+        </label>
+        {!isReadOnly &&
           <p className="field-hint">
-            Enter the transmittal number for this RAI
+            Enter the Waiver number
           </p>
-        )}
+        }
         <input
           className="field"
           type="text"
@@ -170,13 +246,13 @@ export default function RaiTemplate({
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
+            <FileUploader
+              ref={uploader}
+              requiredUploads={requiredUploads}
+              optionalUploads={optionalUploads}
+              readyCallback={uploadsReadyCallbackFunction}
+            ></FileUploader>
+          )}
 
         <br />
         <TextField
@@ -204,10 +280,3 @@ export default function RaiTemplate({
     </div>
   );
 }
-
-RaiTemplate.propTypes = {
-  changeRequestType: PropTypes.string.isRequired,
-  optionalUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  requiredUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  raiType: PropTypes.oneOf(["SPA", "Waiver"]).isRequired,
-};

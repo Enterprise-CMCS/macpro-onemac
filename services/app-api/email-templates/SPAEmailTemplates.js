@@ -22,6 +22,8 @@ class SPAEmailTemplates {
         <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
         <br><b>Email Address</b>: ${data.user.email}
         <br><b>ID</b>: ${data.transmittalNumber}
+        <p><b>Summary</b>:
+        <br>${data.summary}</p>    
         <p>Files:</p>
         <p>${getLinksHtml(data.uploads)}</p>
         <p>If these files seem suspicious, do not open them, and instead forward this email to <a href="mailto:CMS_IT_Service_Desk@cms.hhs.gov">CMS_IT_Service_Desk@cms.hhs.gov</a>.</p>
@@ -47,6 +49,8 @@ class SPAEmailTemplates {
         <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
         <p><b>State or territory</b>: ${data.territory}
         <br><b>ID</b>: ${data.transmittalNumber}
+        <p><b>Summary</b>:
+        <br>${data.summary}</p>    
         <p><strong>THIS MAILBOX IS FOR THE SUBMITTAL OF STATE PLAN AMENDMENTS AND SECTION 1915(b) 
           AND 1915(c) NON-WEB BASED WAIVERS AND RESPONSES TO REQUESTS FOR ADDITIONAL INFORMATION ON 
           SUBMITTED SPAs/WAIVERS ONLY. ANY OTHER CORRESPONDENCE WILL BE DISREGARDED.</strong></p>

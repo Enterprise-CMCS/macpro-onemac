@@ -1,13 +1,13 @@
 import { getLinksHtml } from "./email-util";
 
 /**
- * Waiver RAI submission specific email generation functions.
+ * Waiver Extension submission specific email generation functions.
  * @class
  */
-class WaiverRAIEmailTemplates {
+class WaiverExtensionEmailTemplates {
 
     /**
-     * Waiver RAI submission email to CMS details wrapped in generic function name.
+     * Waiver Extension submission email to CMS details wrapped in generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.
      */
@@ -15,9 +15,9 @@ class WaiverRAIEmailTemplates {
         const cmsEmail = {};
 
         cmsEmail.ToAddresses = [process.env.reviewerEmail];
-        cmsEmail.Subject = "New Waiver RAI " + data.transmittalNumber + " submitted";
+        cmsEmail.Subject = "New Waiver Extension for " + data.transmittalNumber + " submitted";
         cmsEmail.HTML = `
-    <p>The SPA and Waiver Submission Form received a Waiver RAI Submission:</p>
+    <p>The SPA and Waiver Submission Form received a Request for Waiver Extension Submission:</p>
     <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Email Address</b>: ${data.user.email}
     <br><b>ID</b>: ${data.transmittalNumber}
@@ -32,7 +32,7 @@ class WaiverRAIEmailTemplates {
     }
 
     /**
-     * Waiver RAI submission confimation email to State User wrapped in
+     * Waiver Extension submission confimation email to State User wrapped in
      * generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.
@@ -41,9 +41,9 @@ class WaiverRAIEmailTemplates {
         const stateEmail = {};
 
         stateEmail.ToAddresses = [data.user.email];
-        stateEmail.Subject = "Your Waiver RAI " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.Subject = "Your Request for Waiver Extension " + data.transmittalNumber + " has been submitted to CMS";
         stateEmail.HTML = `
-    <p>This response confirms the receipt of your Waiver RAI submission:</p>
+    <p>This response confirms the receipt of your Waiver Extension submission:</p>
     <br><b>Waiver #</b>: ${data.transmittalNumber}
     <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Submitter email</b>: ${data.user.email}</p>
@@ -56,6 +56,6 @@ class WaiverRAIEmailTemplates {
 
 }
 
-const instance = new WaiverRAIEmailTemplates();
+const instance = new WaiverExtensionEmailTemplates();
 Object.freeze(instance);
 export default instance;

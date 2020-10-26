@@ -7,25 +7,26 @@ import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
 import Spa from "./changeRequest/Spa";
-import NewWaiver from "./waivers/NewWaiver";
-import Waivers from "./waivers/Waivers";
 import SpaRai from "./changeRequest/SpaRai";
+import Waiver from "./changeRequest/Waiver";
 import WaiverRai from "./changeRequest/WaiverRai";
+import WaiverExtension from "./changeRequest/WaiverExtension";
 import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 
 export const ROUTES = {
-    AMENDMENTS: '/amendment',
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
     HOME: '/',
     LOGIN: '/login',
     PROFILE: '/profile',
     SIGNUP: '/signup',
+    SPA: '/spa',
     SPA_RAI: '/sparai',
+    WAIVER: '/waiver',
     WAIVER_RAI: '/waiverrai',
-    WAIVERS: '/waiver'
+    WAIVER_EXTENSION: '/waiverextension'
 }
 
 export default function Routes() {
@@ -49,20 +50,20 @@ export default function Routes() {
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
             </AuthenticatedRoute>
-            <AuthenticatedRoute path={`${ROUTES.AMENDMENTS}/:id?`}>
+            <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
                 <Spa/>
             </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/new`}>
-                <NewWaiver />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/:id`}>
-                <Waivers />
+            <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
+                <Waiver />
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
                 <SpaRai />
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
                 <WaiverRai />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
+                <WaiverExtension />
             </AuthenticatedRoute>
             <Route>
                 <NotFound />

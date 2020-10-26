@@ -2,8 +2,9 @@
  * Record types.
  */
 export const CHANGE_REQUEST_TYPES = {
-    AMENDMENT: 'amendment',
+    SPA: 'spa',
     SPA_RAI: 'sparai',
     WAIVER: 'waiver',
-    WAIVER_RAI: 'waiverrai'
+    WAIVER_RAI: 'waiverrai',
+    WAIVER_EXTENSION: 'waiverextension'
 };
