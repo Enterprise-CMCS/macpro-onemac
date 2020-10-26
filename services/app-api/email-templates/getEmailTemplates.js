@@ -1,6 +1,7 @@
 import SPAEmailTemplates from "./SPAEmailTemplates";
 import SPARAIEmailTemplates from "./SPARAIEmailTemplates";
 import WaiverEmailTemplates from "./WaiverEmailTemplates";
+import WaiverRAIEmailTemplates from "./WaiverRAIEmailTemplates";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 
 /**
@@ -23,6 +24,9 @@ export default function getEmailTemplates(type) {
             break;
         case CHANGE_REQUEST_TYPES.SPA_RAI:
             retval = SPARAIEmailTemplates;
+            break;
+        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
+            retval = WaiverRAIEmailTemplates;
             break;
         default:
             retval = undefined;

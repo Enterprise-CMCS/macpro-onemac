@@ -7,18 +7,6 @@ import { getLinksHtml } from "./email-util";
 class SPAEmailTemplates {
 
     /**
-    * returns or creates the singleton instance.
-    * @constructor
-     */
-    constructor(){
-        if(! SPAEmailTemplates.instance){
-            SPAEmailTemplates.instance = this;
-        }
-
-        return SPAEmailTemplates.instance;
-    }
-
-    /**
      * SPA submission email to CMS details wrapped in generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.

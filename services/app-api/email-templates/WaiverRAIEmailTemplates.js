@@ -1,13 +1,13 @@
 import { getLinksHtml } from "./email-util";
 
 /**
- * SPA RAI submission specific email generation functions.
+ * Waiver RAI submission specific email generation functions.
  * @class
  */
-class SPARAIEmailTemplates {
+class WaiverRAIEmailTemplates {
 
     /**
-     * SPA RAI submission email to CMS details wrapped in generic function name.
+     * Waiver RAI submission email to CMS details wrapped in generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.
      */
@@ -15,9 +15,9 @@ class SPARAIEmailTemplates {
         const cmsEmail = {};
 
         cmsEmail.ToAddresses = [process.env.reviewerEmail];
-        cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
+        cmsEmail.Subject = "New Waiver RAI " + data.transmittalNumber + " submitted";
         cmsEmail.HTML = `
-    <p>The SPA and Waiver Submission Form received a SPA RAI Submission:</p>
+    <p>The SPA and Waiver Submission Form received a Waiver RAI Submission:</p>
     <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Email Address</b>: ${data.user.email}
     <br><b>ID</b>: ${data.transmittalNumber}
@@ -41,9 +41,9 @@ class SPARAIEmailTemplates {
         const stateEmail = {};
 
         stateEmail.ToAddresses = [data.user.email];
-        stateEmail.Subject = "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.Subject = "Your Waiver RAI " + data.transmittalNumber + " has been submitted to CMS";
         stateEmail.HTML = `
-    <p>This response confirms the receipt of your SPA RAI submission:</p>
+    <p>This response confirms the receipt of your Waiver RAI submission:</p>
     <br><b>SPA #</b>: ${data.transmittalNumber}
     <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
     <br><b>Submitter email</b>: ${data.user.email}</p>
@@ -56,6 +56,6 @@ class SPARAIEmailTemplates {
 
 }
 
-const instance = new SPARAIEmailTemplates();
+const instance = new WaiverRAIEmailTemplates();
 Object.freeze(instance);
 export default instance;
