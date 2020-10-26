@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { API } from "aws-amplify";
-import { onError } from "../libs/errorLib";
 import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import Select from 'react-select';
 import { territoryList } from '../libs/territoryLib';
@@ -9,6 +8,8 @@ import { actionTypeOptions, waiverAuthorityOptions } from '../libs/waiverLib';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faExternalLinkAlt } from "@fortawesome/free-solid-svg-icons";
 import { Storage } from "aws-amplify";
+import AlertBar from "../components/AlertBar"
+import {ALERTS_MSG} from "../libs/alert-messages";
 
 export default function Waivers() {
     const { id } = useParams();
@@ -43,8 +44,9 @@ export default function Waivers() {
                     }
                 }
                 setWaiver(waiver);
-            } catch (e) {
-                onError(e);
+            } catch (error) {
+                console.log("Error while fetching submission.", error);
+                AlertBar.alert(ALERTS_MSG.RAI_FETCH_ERROR);
             }
         }
 

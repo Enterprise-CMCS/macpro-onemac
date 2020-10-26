@@ -4,7 +4,8 @@ import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
-import { onError } from "../libs/errorLib";
+import AlertBar from "../components/AlertBar"
+import {ALERTS_MSG} from "../libs/alert-messages";
 import "./Login.css";
 
 export default function Login() {
@@ -27,8 +28,9 @@ export default function Login() {
         try {
             await Auth.signIn(fields.email, fields.password);
             userHasAuthenticated(true);
-        } catch (e) {
-            onError(e);
+        } catch (error) {
+            console.log("Error while logging in.", error);
+            AlertBar.alert(ALERTS_MSG.LOGIN_ERROR);
             setIsLoading(false);
         }
     }

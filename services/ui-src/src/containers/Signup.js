@@ -10,9 +10,10 @@ import { ROUTES } from "../Routes"
 import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
-import { onError } from "../libs/errorLib";
 import "./Signup.css";
 import { Auth } from "aws-amplify";
+import AlertBar from "../components/AlertBar"
+import {ALERTS_MSG} from "../libs/alert-messages";
 
 export default function Signup() {
     const [fields, handleFieldChange] = useFormFields({
@@ -58,8 +59,9 @@ export default function Signup() {
             });
             setIsLoading(false);
             setNewUser(newUser);
-        } catch (e) {
-            onError(e);
+        } catch (error) {
+            console.log("There was an error submitting the signup request.", error);
+            AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
             setIsLoading(false);
         }
     }
@@ -75,8 +77,9 @@ export default function Signup() {
 
             userHasAuthenticated(true);
             history.push(ROUTES.DASHBOARD)
-        } catch (e) {
-            onError(e);
+        } catch (error) {
+            console.log("There was an error submitting the signup request.", error);
+            AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
             setIsLoading(false);
         }
     }
