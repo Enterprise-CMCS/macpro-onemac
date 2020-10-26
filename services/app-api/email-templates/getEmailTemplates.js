@@ -29,7 +29,7 @@ export default function getEmailTemplates(type) {
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
             retval = WaiverRAIEmailTemplates;
             break;
-        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
+        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
             retval = WaiverExtensionEmailTemplates;
             break;
         default:
