@@ -98,71 +98,66 @@ export default function Dashboard() {
 
   // Render the dashboard
   return (
-    <div>
-      <div className="actions-container">
-        <div className="actions-left-col">
-          <div className="action-title">SPAs</div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.SPA)}
-            >
-              Submit new SPA
-            </Button>
-          </div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.SPA_RAI)}
-            >
-              Respond to SPA RAI
-            </Button>
-          </div>
-        </div>
-        <div className="actions-right-col">
-          <div className="action-title">Waivers</div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.WAIVER)}
-            >
-              Submit new Waiver
-            </Button>
-          </div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.WAIVER_RAI)}
-            >
-              Respond to 1915(b) Waiver RAI
-            </Button>
-          </div>
-          <div className="action">
+    <div className="dashboard-container">
+      <div className="dashboard-left-col">
+        <div className="action-title">SPAs</div>
+        <div className="action">
           <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-            >
-              Request Temporary Extension form - 1915(b) and 1915(c)
-          </Button>
-          </div>
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA)}
+          >
+            Submit new SPA
+            </Button>
+        </div>
+        <div className="action">
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA_RAI)}
+          >
+            Respond to SPA RAI
+            </Button>
         </div>
       </div>
-      <br />
-      <div className="amendments">
+      <div className="action-title">Waivers</div>
+      <div className="action">
+        <Button
+          variation="transparent"
+          onClick={() => history.push(ROUTES.WAIVER)}
+        >
+          Submit new Waiver
+            </Button>
+      </div>
+      <div className="action">
+        <Button
+          variation="transparent"
+          onClick={() => history.push(ROUTES.WAIVER_RAI)}
+        >
+          Respond to 1915(b) Waiver RAI
+            </Button>
+      </div>
+      <div className="action">
+        <Button
+          variation="transparent"
+          onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+        >
+          Request Temporary Extension form - 1915(b) and 1915(c)
+          </Button>
+      </div>
+      <div className="dashboard-right-col">
         <PageHeader>Your Submissions</PageHeader>
         {isLoading ? (
           <div>Please wait while we fetch your submissions...</div>
         ) : (
-          <div>
-            {changeRequestList.length > 0 ? (
-              <ListGroup>
-                {renderChangeRequestList(changeRequestList)}
-              </ListGroup>
-            ) : (
-              <div>You have no submissions yet</div>
-            )}
-          </div>
-        )}
+            <div>
+              {changeRequestList.length > 0 ? (
+                <ListGroup>
+                  {renderChangeRequestList(changeRequestList)}
+                </ListGroup>
+              ) : (
+                  <div>You have no submissions yet</div>
+                )}
+            </div>
+          )}
       </div>
     </div>
   );
