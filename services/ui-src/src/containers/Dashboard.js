@@ -64,32 +64,32 @@ export default function Dashboard() {
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.SPA:
-          title = "SPA " + changeRequest.transmittalNumber;
+          title = "SPA Submission: " + changeRequest.transmittalNumber;
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
-          title = "Waiver " + changeRequest.transmittalNumber;
+          title = "Waiver Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.SPA_RAI:
-          title = "RAI for SPA " + changeRequest.transmittalNumber;
+          title = "Response to RAI for SPA Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          title = "Response to RAI for Waiver Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-          title = "Temporary Extension Request for Waiver " + changeRequest.transmittalNumber;
+          title = "Temporary Extension Request for Waiver: " + changeRequest.transmittalNumber;
           break;
 
         default:
-          title = "Unknown record type";
+          title = "Submission type " + changeRequest.type + " needs inclusion in code.";
       }
 
       return (
         <LinkContainer key={changeRequest.id} to={link}>
           <ListGroupItem header={title}>
-            {"Created: " + new Date(changeRequest.createdAt).toLocaleString()}
+            {"Submitted on: " + new Date(changeRequest.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       );
@@ -145,7 +145,7 @@ export default function Dashboard() {
                   {renderChangeRequestList(changeRequestList)}
                 </ListGroup>
               ) : (
-                  <div className="list-group">You have no submissions yet</div>
+                  <div className="empty-list">You have no submissions yet</div>
                 )}
             </div>
           )}

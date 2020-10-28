@@ -138,7 +138,7 @@ input[type="file"] {
     @extend .ds-l-sm-col--12;
     @extend .ds-l-col--12;
     @extend .ds-u-align-items--start;
-    @extend .ds-u-padding-left--2;
+    @extend .ds-u-padding-left--4;
   }
   .action-title {
     @extend .ds-l-row;
@@ -155,5 +155,8 @@ input[type="file"] {
     @extend .ds-u-border--1;
     @extend .ds-u-margin--2;
     @extend .ds-u-padding--5;
+  }
+  .list-group-item {
+    @extend .ds-u-text-decoration--none;
   }
 }
