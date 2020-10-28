@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
@@ -99,54 +99,45 @@ export default function Dashboard() {
   // Render the dashboard
   return (
     <div className="dashboard-container">
+      <div className="dashboard-title">SPA and Waiver Dashboard</div>
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
-        <div className="action">
           <Button
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >
             Submit new SPA
             </Button>
-        </div>
-        <div className="action">
           <Button
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
             Respond to SPA RAI
             </Button>
-        </div>
-      </div>
-      <div className="action-title">Waivers</div>
-      <div className="action">
-        <Button
-          variation="transparent"
-          onClick={() => history.push(ROUTES.WAIVER)}
-        >
-          Submit new Waiver
+        <div className="action-title">Waivers</div>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER)}
+          >
+            Submit new Waiver
             </Button>
-      </div>
-      <div className="action">
-        <Button
-          variation="transparent"
-          onClick={() => history.push(ROUTES.WAIVER_RAI)}
-        >
-          Respond to 1915(b) Waiver RAI
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_RAI)}
+          >
+            Respond to 1915(b) Waiver RAI
             </Button>
-      </div>
-      <div className="action">
-        <Button
-          variation="transparent"
-          onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-        >
-          Request Temporary Extension form - 1915(b) and 1915(c)
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+          >
+            Request Temporary Extension form - 1915(b) and 1915(c)
           </Button>
       </div>
       <div className="dashboard-right-col">
-        <PageHeader>Your Submissions</PageHeader>
+      <div className="action-title">Your SPA and Waiver Submissions</div>
         {isLoading ? (
-          <div>Please wait while we fetch your submissions...</div>
+          <div className="loading">Please wait while we fetch your submissions...</div>
         ) : (
             <div>
               {changeRequestList.length > 0 ? (
@@ -154,7 +145,7 @@ export default function Dashboard() {
                   {renderChangeRequestList(changeRequestList)}
                 </ListGroup>
               ) : (
-                  <div>You have no submissions yet</div>
+                  <div className="list-group">You have no submissions yet</div>
                 )}
             </div>
           )}
