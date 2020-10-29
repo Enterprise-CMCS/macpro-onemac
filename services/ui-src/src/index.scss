@@ -120,9 +120,9 @@ input[type="file"] {
   .dashboard-title {
     @extend .ds-l-col--12;
     @extend .ds-h1;
-    @extend .ds-u-margin-bottom--5;
   }
   .dashboard-left-col{
+    @extend .ds-u-margin-top--5;
     @extend .ds-l-xl-col--3;
     @extend .ds-l-lg-col--3;
     @extend .ds-l-md-col--4;
@@ -132,6 +132,7 @@ input[type="file"] {
     @extend .ds-u-text-align--left;
   }
   .dashboard-right-col {
+    @extend .ds-u-margin-top--5;
     @extend .ds-l-xl-col--9;
     @extend .ds-l-lg-col--9;
     @extend .ds-l-md-col--8;
