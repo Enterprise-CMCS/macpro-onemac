@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
@@ -64,32 +64,32 @@ export default function Dashboard() {
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.SPA:
-          title = "SPA " + changeRequest.transmittalNumber;
+          title = "SPA Submission: " + changeRequest.transmittalNumber;
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
-          title = "Waiver " + changeRequest.transmittalNumber;
+          title = "Waiver Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.SPA_RAI:
-          title = "RAI for SPA " + changeRequest.transmittalNumber;
+          title = "Response to RAI for SPA Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          title = "Response to RAI for Waiver Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-          title = "Temporary Extension Request for Waiver " + changeRequest.transmittalNumber;
+          title = "Temporary Extension Request for Waiver: " + changeRequest.transmittalNumber;
           break;
 
         default:
-          title = "Unknown record type";
+          title = "Submission Type: " + changeRequest.type ;
       }
 
       return (
         <LinkContainer key={changeRequest.id} to={link}>
           <ListGroupItem header={title}>
-            {"Created: " + new Date(changeRequest.createdAt).toLocaleString()}
+            {"Submitted on: " + new Date(changeRequest.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       );
@@ -98,71 +98,57 @@ export default function Dashboard() {
 
   // Render the dashboard
   return (
-    <div>
-      <div className="actions-container">
-        <div className="actions-left-col">
-          <div className="action-title">SPAs</div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.SPA)}
-            >
-              Submit new SPA
-            </Button>
-          </div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.SPA_RAI)}
-            >
-              Respond to SPA RAI
-            </Button>
-          </div>
-        </div>
-        <div className="actions-right-col">
-          <div className="action-title">Waivers</div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.WAIVER)}
-            >
-              Submit new Waiver
-            </Button>
-          </div>
-          <div className="action">
-            <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.WAIVER_RAI)}
-            >
-              Respond to 1915(b) Waiver RAI
-            </Button>
-          </div>
-          <div className="action">
+    <div className="dashboard-container">
+      <div className="dashboard-title">SPA and Waiver Dashboard</div>
+      <div className="dashboard-left-col">
+        <div className="action-title">SPAs</div>
           <Button
-              variation="transparent"
-              onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-            >
-              Request Temporary Extension form - 1915(b) and 1915(c)
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA)}
+          >
+            Submit new SPA
+            </Button>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA_RAI)}
+          >
+            Respond to SPA RAI
+            </Button>
+        <div className="action-title">Waivers</div>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER)}
+          >
+            Submit new Waiver
+            </Button>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_RAI)}
+          >
+            Respond to 1915(b) Waiver RAI
+            </Button>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+          >
+            Request Temporary Extension form - 1915(b) and 1915(c)
           </Button>
-          </div>
-        </div>
       </div>
-      <br />
-      <div className="amendments">
-        <PageHeader>Your Submissions</PageHeader>
+      <div className="dashboard-right-col">
+      <div className="action-title">Your SPA and Waiver Submissions</div>
         {isLoading ? (
-          <div>Please wait while we fetch your submissions...</div>
+          <div className="loading">Please wait while we fetch your submissions...</div>
         ) : (
-          <div>
-            {changeRequestList.length > 0 ? (
-              <ListGroup>
-                {renderChangeRequestList(changeRequestList)}
-              </ListGroup>
-            ) : (
-              <div>You have no submissions yet</div>
-            )}
-          </div>
-        )}
+            <div>
+              {changeRequestList.length > 0 ? (
+                <ListGroup>
+                  {renderChangeRequestList(changeRequestList)}
+                </ListGroup>
+              ) : (
+                  <div className="empty-list">You have no submissions yet</div>
+                )}
+            </div>
+          )}
       </div>
     </div>
   );

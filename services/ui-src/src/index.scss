@@ -103,14 +103,10 @@ input[type="file"] {
   width: 100%;
 }
 
-.NewWaiver form, 
-.Waivers form ,
 .form-container {
   padding-bottom: 15px;
 }
 
-.NewWaiver form textarea, 
-.Waivers form textarea,
 .form-container .summary-field {
   height: 300px;
   font-size: 24px;
@@ -118,21 +114,50 @@ input[type="file"] {
   max-width: 100%
 }
 
-.actions-container {
+.dashboard-container {
   @extend .ds-l-row;
 
-  .actions-left-col, .actions-right-col {
-    @extend .ds-l-col;
+  .dashboard-title {
+    @extend .ds-l-col--12;
+    @extend .ds-h1;
   }
-
+  .dashboard-left-col{
+    @extend .ds-u-margin-top--5;
+    @extend .ds-l-xl-col--3;
+    @extend .ds-l-lg-col--3;
+    @extend .ds-l-md-col--4;
+    @extend .ds-l-sm-col--12;
+    @extend .ds-l-col--12;
+    @extend .ds-u-border-right--2;
+    @extend .ds-u-text-align--left;
+  }
+  .dashboard-right-col {
+    @extend .ds-u-margin-top--5;
+    @extend .ds-l-xl-col--9;
+    @extend .ds-l-lg-col--9;
+    @extend .ds-l-md-col--8;
+    @extend .ds-l-sm-col--12;
+    @extend .ds-l-col--12;
+    @extend .ds-u-align-items--start;
+    @extend .ds-u-padding-left--4;
+  }
   .action-title {
     @extend .ds-l-row;
     @extend .ds-h3;
-    // font-weight: bold;
+    @extend .ds-u-text-align--left;
+    @extend .ds-u-align-items--start;
   }
-
-  .action {
+  Button {
     @extend .ds-l-row;
-    @extend .ds-h5;
+    @extend .ds-u-text-align--left;
+    @extend .ds-u-padding-right--5;
+  }
+  .empty-list {
+    @extend .ds-u-border--1;
+    @extend .ds-u-margin--2;
+    @extend .ds-u-padding--5;
+  }
+  .list-group-item {
+    @extend .ds-u-text-decoration--none;
   }
 }
