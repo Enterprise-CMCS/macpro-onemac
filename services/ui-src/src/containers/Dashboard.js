@@ -83,7 +83,7 @@ export default function Dashboard() {
           break;
 
         default:
-          title = "Submission type: " + changeRequest.type ;
+          title = "Submission Type: " + changeRequest.type ;
       }
 
       return (
