@@ -5,15 +5,15 @@
 2. Install the latest Node distribution 
 3. Install NPM globaly
 4. Install serverless globally
+5. Install the serverless s3 offline package by going to [/macstack-spa-submission-form/services/uploads](/macstack-spa-submission-form/services/uploads) and run `npm install`
 
 Install the serverless Dynamo DB offline package by running the following command:
-
 ```
 npm install
 sls dynamodb install
 ```
-Run the software locally by running the following command:
 
+Run the software locally by running the following command:
 ```
 sls offline start --httpPort 3001 
 ```
