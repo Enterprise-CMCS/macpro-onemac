@@ -9,7 +9,7 @@ This is a private fork of [macpro-serverless-quickstart](https://github.com/CMSg
 
 ## Usage
 
-CircleCI support in the .circleci folder.  See master build [here](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn and EUA)
+This application is built and deployed with GitHub Actions.  See the master build [here](https://github.com/CMSgov/macstack-spa-submission-form/actions?query=branch%3Amaster+)
 
 Want to deploy from your Mac?
 - Create an AWS account

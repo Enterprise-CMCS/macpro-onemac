@@ -12,7 +12,6 @@ Install the serverless Dynamo DB offline package by running the following comman
 npm install
 sls dynamodb install
 ```
-
 Run the software locally by running the following command:
 
 ```

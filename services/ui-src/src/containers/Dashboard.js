@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
-import { PageHeader, ListGroup, ListGroupItem } from "react-bootstrap";
+import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
-import { onError } from "../libs/errorLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
+import { ROUTES } from "../Routes";
+import { useHistory } from "react-router-dom";
+import { Button } from "@cmsgov/design-system";
 import "./Dashboard.scss";
 
 /**
@@ -15,6 +19,8 @@ export default function Dashboard() {
   const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
+  const history = useHistory();
+
   // Load the data from the backend.
   useEffect(() => {
     async function onLoad() {
@@ -24,11 +30,11 @@ export default function Dashboard() {
 
       try {
         setChangeRequestList(await API.get("changeRequestAPI", "/list"));
-      } catch (e) {
-        onError(e);
+        setIsLoading(false);
+      } catch (error) {
+        console.log("Error while fetching user's list.", error);
+        AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
-
-      setIsLoading(false);
     }
 
     onLoad();
@@ -57,29 +63,33 @@ export default function Dashboard() {
       let title;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
-        case CHANGE_REQUEST_TYPES.AMENDMENT:
-          title = "SPA " + changeRequest.transmittalNumber;
+        case CHANGE_REQUEST_TYPES.SPA:
+          title = "SPA Submission: " + changeRequest.transmittalNumber;
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
-          title = "Waiver " + changeRequest.transmittalNumber;
+          title = "Waiver Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.SPA_RAI:
-          title = "RAI for SPA " + changeRequest.transmittalNumber;
+          title = "Response to RAI for SPA Submission: " + changeRequest.transmittalNumber;
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          title = "RAI for Waiver " + changeRequest.transmittalNumber;
+          title = "Response to RAI for Waiver Submission: " + changeRequest.transmittalNumber;
+          break;
+
+        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
+          title = "Temporary Extension Request for Waiver: " + changeRequest.transmittalNumber;
           break;
 
         default:
-          title = "Unknown record type";
+          title = "Submission Type: " + changeRequest.type ;
       }
 
       return (
         <LinkContainer key={changeRequest.id} to={link}>
           <ListGroupItem header={title}>
-            {"Created: " + new Date(changeRequest.createdAt).toLocaleString()}
+            {"Submitted on: " + new Date(changeRequest.createdAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       );
@@ -88,43 +98,57 @@ export default function Dashboard() {
 
   // Render the dashboard
   return (
-    <div>
-      <div className="actions-container">
-        <div className="actions-left-col">
-          <div className="action-title">SPAs</div>
-          <div className="action">
-            <a href="/amendment/new">Submit new SPA</a>
-          </div>
-          <div className="action">
-            <a href="/sparai">Respond to SPA RAI</a>
-          </div>
-        </div>
-        <div className="actions-right-col">
-          <div className="action-title">Waivers</div>
-          <div className="action">
-            <a href="/waiver/new">Submit new Waiver</a>
-          </div>
-          <div className="action">
-            <a href="/waiverrai">Respond to 1915(b) Waiver RAI</a>
-          </div>
-        </div>
+    <div className="dashboard-container">
+      <div className="dashboard-title">SPA and Waiver Dashboard</div>
+      <div className="dashboard-left-col">
+        <div className="action-title">SPAs</div>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA)}
+          >
+            Submit new SPA
+            </Button>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA_RAI)}
+          >
+            Respond to SPA RAI
+            </Button>
+        <div className="action-title">Waivers</div>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER)}
+          >
+            Submit new Waiver
+            </Button>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_RAI)}
+          >
+            Respond to 1915(b) Waiver RAI
+            </Button>
+          <Button
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+          >
+            Request Temporary Extension form - 1915(b) and 1915(c)
+          </Button>
       </div>
-      <br />
-      <div className="amendments">
-        <PageHeader>Your Submissions</PageHeader>
+      <div className="dashboard-right-col">
+      <div className="action-title">Your SPA and Waiver Submissions</div>
         {isLoading ? (
-          <div>Please wait while we fetch your submissions...</div>
+          <div className="loading">Please wait while we fetch your submissions...</div>
         ) : (
-          <div>
-            {changeRequestList.length > 0 ? (
-              <ListGroup>
-                {renderChangeRequestList(changeRequestList)}
-              </ListGroup>
-            ) : (
-              <div>You have no submissions yet</div>
-            )}
-          </div>
-        )}
+            <div>
+              {changeRequestList.length > 0 ? (
+                <ListGroup>
+                  {renderChangeRequestList(changeRequestList)}
+                </ListGroup>
+              ) : (
+                  <div className="empty-list">You have no submissions yet</div>
+                )}
+            </div>
+          )}
       </div>
     </div>
   );

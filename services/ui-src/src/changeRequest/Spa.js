@@ -5,30 +5,31 @@ import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
 import { useHistory } from "react-router-dom";
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
-import PropTypes from "prop-types";
+import { territoryList } from "../libs/territoryLib";
+import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { formatDate } from "../utils/date-utils";
 
-/**
- * RAI Form template to allow rendering for different types of RAI's.
- * @param {String} changeRequestType - functional name for the type of change request
- * @param {Array} optionalUploads - list of attachment that are optional
- * @param {Array} requiredUploads - list of attachments that are required
- * @param {String} raiType - display name for the type of change request
- */
-export default function RaiTemplate({
-  changeRequestType,
-  optionalUploads,
-  requiredUploads,
-  raiType,
-}) {
+export default function Spa() {
+  // The attachment list
+  const requiredUploads = ["CMS Form 179", "SPA Pages"];
+  const optionalUploads = [
+    "Cover Letter",
+    "Existing state plan page(s)",
+    "Tribal Consultation",
+    "Public Notice",
+    "Standard Funding Questions (SFQs)",
+    "Other",
+  ];
+
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
     SUMMARY: "summary",
+    TERRITORY: "territory",
   };
 
   // True when the required attachments have been selected.
@@ -52,7 +53,7 @@ export default function RaiTemplate({
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: changeRequestType,
+    type: CHANGE_REQUEST_TYPES.SPA,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
@@ -103,7 +104,9 @@ export default function RaiTemplate({
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber);
+      setIsFormReady(
+        updatedRecord.transmittalNumber && updatedRecord.territory
+      );
     }
   }
 
@@ -129,17 +132,47 @@ export default function RaiTemplate({
     }
   }
 
+  function renderTerritoryList() {
+    let optionsList = territoryList.map((item, i) => {
+      return (
+        <option key={i} value={item.value}>
+          {item.label}
+        </option>
+      );
+    });
+    return optionsList;
+  }
+
   // Render the component.
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h3>{raiType} RAI Details</h3>
+        <h3>SPA Details</h3>
+        <label htmlFor={FIELD_NAMES.TERRITORY}>
+          State/Territory<span className="required-mark">*</span>
+        </label>
+        <select
+          id={FIELD_NAMES.TERRITORY}
+          name={FIELD_NAMES.TERRITORY}
+          required={!isReadOnly}
+          onChange={handleInputChange}
+          disabled={isReadOnly}
+          value={changeRequest.territory}
+          defaultValue="none-selected"
+        >
+          <option disabled value="none-selected">
+            {" "}
+            -- select a territory --{" "}
+          </option>
+          {renderTerritoryList()}
+        </select>
+        <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          {raiType} ID<span className="required-mark">*</span>
+          SPA ID<span className="required-mark">*</span>
         </label>
         {!isReadOnly && (
           <p className="field-hint">
-            Enter the transmittal number for this RAI
+            Enter the State Plan Amendment transmittal number
           </p>
         )}
         <input
@@ -204,10 +237,3 @@ export default function RaiTemplate({
     </div>
   );
 }
-
-RaiTemplate.propTypes = {
-  changeRequestType: PropTypes.string.isRequired,
-  optionalUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  requiredUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
-  raiType: PropTypes.oneOf(["SPA", "Waiver"]).isRequired,
-};
