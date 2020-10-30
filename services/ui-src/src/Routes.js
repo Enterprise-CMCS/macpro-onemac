@@ -65,18 +65,6 @@ export default function Routes() {
             <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
                 <WaiverExtension />
             </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/new`}>
-                <NewWaiver />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={`${ROUTES.WAIVERS}/:id`}>
-                <Waivers />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
-                <SpaRai />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
-                <WaiverRai />
-            </AuthenticatedRoute>
             <Route>
                 <NotFound />
             </Route>
