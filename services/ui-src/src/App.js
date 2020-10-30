@@ -17,10 +17,13 @@ function App() {
 
   async function onLoad() {
     try {
-      await Auth.currentSession();
+      const user = await Auth.currentAuthenticatedUser();
+      console.log(JSON.stringify(user.signInUserSession.idToken.payload.email))
+      //const email = JSON.stringify(user.signInUserSession.idToken.payload.email)
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "No current user") {
+        setIsAuthenticating(false);
         console.log(
           "There was an error while loading the user information.",
           error

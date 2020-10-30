@@ -1,10 +1,9 @@
 import React from "react"
-import { Link, useHistory } from "react-router-dom"
-import { Dropdown, MenuItem } from "react-bootstrap"
+import { Link } from "react-router-dom"
 import { Auth } from "aws-amplify"
-import { Button } from '@cmsgov/design-system'
-
+import { Button, FormLabel } from '@cmsgov/design-system'
 import { ROUTES } from "../Routes"
+import {signInWithOkta} from '../containers/Login'
 import medicaidLogo from "../images/medicaidLogo.png"
 import flagIcon from "../images/flagIcon.png"
 import "./Header.scss"
@@ -14,7 +13,6 @@ import "./Header.scss"
  * @param {Object} props - component properties
  */
 function Header(props) {
-    const history = useHistory()
 
     /**
      * Renders a branding bar
@@ -41,21 +39,18 @@ function Header(props) {
     function renderAccountButtons() {
         if (props.isAuthenticated) {
             return (
-                <Dropdown id="account info">
-                    <Dropdown.Toggle className="accountDropdown">
-                        Account
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                        <MenuItem href={ROUTES.PROFILE}>Profile</MenuItem>
-                        <MenuItem href={ROUTES.LOGIN} onClick={() => Auth.signOut()}>Logout</MenuItem>
-                    </Dropdown.Menu>
-                </Dropdown>
+                <div className="navElements">
+                    <FormLabel inversed>
+                        <Button onClick={() => {
+                            Auth.signOut()
+                        }} inversed>Logout</Button>
+                    </FormLabel>
+                </div>
             )
         } else {
             return(
                 <div className="navElements">
-                    <Button onClick={() => history.push(ROUTES.SIGNUP)} inversed>Sign Up</Button>
-                    <Button onClick={() => history.push(ROUTES.LOGIN)} inversed>Login</Button>
+                    <Button onClick={() => signInWithOkta()} inversed>Login</Button>
                 </div>
             )
         }

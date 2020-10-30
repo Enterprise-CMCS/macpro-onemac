@@ -3,7 +3,6 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
 import Dashboard from "./containers/Dashboard";
-import Login from "./containers/Login";
 import NotFound from "./containers/NotFound";
 import Signup from "./containers/Signup";
 import Spa from "./changeRequest/Spa";
@@ -19,7 +18,6 @@ export const ROUTES = {
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
     HOME: '/',
-    LOGIN: '/login',
     PROFILE: '/profile',
     SIGNUP: '/signup',
     SPA: '/spa',
@@ -38,9 +36,6 @@ export default function Routes() {
             <Route exact path={ROUTES.FAQ}>
                 <FAQ />
             </Route>
-            <UnauthenticatedRoute exact path={ROUTES.LOGIN}>
-                <Login />
-            </UnauthenticatedRoute>
             <UnauthenticatedRoute exact path={ROUTES.SIGNUP}>
                 <Signup />
             </UnauthenticatedRoute>
