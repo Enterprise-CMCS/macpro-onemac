@@ -17,7 +17,6 @@ if [ $output == "url" ]; then
   output="CloudFrontEndpointUrl"
 fi
 
-cd $service 
 service_output=`cd $service && serverless info --stage $stage -v`
 
 if [ $? -ne 0 ]
