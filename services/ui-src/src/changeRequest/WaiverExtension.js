@@ -150,14 +150,14 @@ export default function WaiverExtension() {
         {isReadOnly && (
           <div>
             <br />
-            <label htmlFor="createdAt">Submitted on</label>
+            <label htmlFor="submittedAt">Submitted on</label>
             <input
               className="field"
               type="text"
-              id="createdAt"
-              name="createdAt"
+              id="submittedAt"
+              name="submittedAt"
               disabled
-              value={formatDate(changeRequest.createdAt)}
+              value={formatDate(changeRequest.submittedAt)}
             ></input>
           </div>
         )}

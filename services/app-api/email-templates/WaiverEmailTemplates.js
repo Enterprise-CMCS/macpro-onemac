@@ -52,7 +52,7 @@ class WaiverEmailTemplates {
     <br><b>Submitter email</b>: ${data.user.email}</p>
     <p><b>Summary</b>:<br>${data.summary}</p>
     <p>You can expect a formal response to your submission to be issued within 90 days, 
-    on ${get90thDay(data.createdDate)}. If you have any questions, please contact spa@cms.hhs.gov or your state lead.</p>
+    on ${get90thDay(data.submittedAt)}. If you have any questions, please contact spa@cms.hhs.gov or your state lead.</p>
     `;
         return stateEmail;
     }

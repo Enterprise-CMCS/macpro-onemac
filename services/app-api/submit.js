@@ -5,6 +5,14 @@ import sendEmail from "./libs/email-lib";
 import getEmailTemplates from "./email-templates/getEmailTemplates";
 
 /**
+ * Submission states for the change requests.
+ */
+const SUBMISSION_STATES = {
+  CREATED: "created",     // Change request is in process
+  SUBMITTED: "submitted"  // Email sent to CMS
+};
+
+/**
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
@@ -16,14 +24,13 @@ export const main = handler(async (event) => {
     return null;
   }
   const data = JSON.parse(event.body);
-  console.log(JSON.stringify(event, null, 2));
-  data.createdDate = Date.now();
 
   if (fieldsValid(data)) {
     // Add required data to the record before storing.
     console.log(event.requestContext.identity);
     data.id = uuid.v1();
     data.createdAt = Date.now();
+    data.state = SUBMISSION_STATES.CREATED;
 
     //Normalize the user data.
     data.user = {
@@ -43,6 +50,20 @@ export const main = handler(async (event) => {
 
     // map the email templates from the data.type
     const emailTemplate = getEmailTemplates(data.type);
+
+    //Store the data in the database.
+    await dynamoDb.put({
+      TableName: process.env.tableName,
+      Item: data,
+    });
+
+    //We successfully sent the submission email.  Update the record to reflect that.
+    data.state = SUBMISSION_STATES.SUBMITTED;
+    data.submittedAt = Date.now();
+    await dynamoDb.put({
+      TableName: process.env.tableName,
+      Item: data,
+    });
 
     if (emailTemplate) {
       // Now send the CMS email
