@@ -11,7 +11,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   attachments_bucket_arn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   api_gateway_rest_api_name: ${cf:app-api-${self:custom.stage}.ApiGatewayRestApiName}
-  application_endpoint_url: "https://d2xv61lyqr7pf.cloudfront.net"
+  application_endpoint_url: ${cf:ui-${self:custom.stage}.CloudFrontEndpointUrl}
   okta_metadata_url: "https://test.idp.idm.cms.gov/app/exk5bjd90z4eMr7zz297/sso/saml/metadata"
   iamPath: ${env:IAM_PATH, "/"}
 
