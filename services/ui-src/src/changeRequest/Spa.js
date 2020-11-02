@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
+import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -37,8 +38,8 @@ export default function Spa() {
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
 
-  // True if we are currently submitting the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form or on inital load of the form
+  const [isLoading, setIsLoading] = useState(true);
 
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
@@ -76,6 +77,8 @@ export default function Spa() {
         console.log("Error while fetching submission.", error);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      setIsLoading(false);
     }
 
     // Trigger the fetch only if an ID is present.
@@ -83,6 +86,7 @@ export default function Spa() {
       fetchChangeRequest();
     } else {
       setReadOnly(false);
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -201,7 +205,6 @@ export default function Spa() {
             readyCallback={uploadsReadyCallbackFunction}
           ></FileUploader>
         )}
-
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}
@@ -220,8 +223,8 @@ export default function Spa() {
             bsStyle="primary"
             isLoading={isLoading}
             disabled={!isFormReady || !areUploadsReady}
-          >
-            Submit
+            >
+              Submit
           </LoaderButton>
         )}
       </form>

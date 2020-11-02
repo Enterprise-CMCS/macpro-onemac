@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
+import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -30,8 +31,8 @@ export default function WaiverExtension() {
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
 
-  // True if we are currently submitting the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form or on inital load of the form
+  const [isLoading, setIsLoading] = useState(true);
 
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
@@ -69,6 +70,8 @@ export default function WaiverExtension() {
         console.log("Error while fetching submission.", error);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      setIsLoading(false);
     }
 
     // Trigger the fetch only if an ID is present.
@@ -76,6 +79,7 @@ export default function WaiverExtension() {
       fetchChangeRequest();
     } else {
       setReadOnly(false);
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -132,11 +136,11 @@ export default function WaiverExtension() {
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
-        {!isReadOnly &&
+        {!isReadOnly && (
           <p className="field-hint">
             Enter the Waiver number for this Temporary Extension Request
           </p>
-        }
+        )}
         <input
           className="field"
           type="text"
@@ -165,14 +169,13 @@ export default function WaiverExtension() {
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
-            <FileUploader
-              ref={uploader}
-              requiredUploads={requiredUploads}
-              optionalUploads={optionalUploads}
-              readyCallback={uploadsReadyCallbackFunction}
-            ></FileUploader>
-          )}
-
+          <FileUploader
+            ref={uploader}
+            requiredUploads={requiredUploads}
+            optionalUploads={optionalUploads}
+            readyCallback={uploadsReadyCallbackFunction}
+          ></FileUploader>
+        )}
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}
