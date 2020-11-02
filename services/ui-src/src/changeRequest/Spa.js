@@ -44,6 +44,9 @@ export default function Spa() {
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
 
+  // True if there's an error fetching a change request.
+  const [shouldHideForm, setShouldHideForm] = useState(false);
+
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -76,6 +79,7 @@ export default function Spa() {
       } catch (error) {
         console.log("Error while fetching submission.", error);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
+        setShouldHideForm(true);
       }
 
       setIsLoading(false);
@@ -139,95 +143,98 @@ export default function Spa() {
   }
 
   // Render the component.
-  return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h3>SPA Details</h3>
-        <label htmlFor={FIELD_NAMES.TERRITORY}>
-          State/Territory<span className="required-mark">*</span>
-        </label>
-        <select
-          id={FIELD_NAMES.TERRITORY}
-          name={FIELD_NAMES.TERRITORY}
-          required={!isReadOnly}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.territory}
-          defaultValue="none-selected"
-        >
-          <option disabled value="none-selected">
-            {" "}
-            -- select a territory --{" "}
-          </option>
-          {renderOptionsList(territoryList)}
-        </select>
-        <br />
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          SPA ID<span className="required-mark">*</span>
-        </label>
-        {!isReadOnly && (
-          <p className="field-hint">
-            Enter the State Plan Amendment transmittal number
-          </p>
-        )}
-        <input
-          className="field"
-          type="text"
-          required={!isReadOnly}
-          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.transmittalNumber}
-        ></input>
-        {isReadOnly && (
-          <div>
+  if (!shouldHideForm) {
+    return (
+      <LoadingScreen isLoading={isLoading}>
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>SPA Details</h3>
+            <label htmlFor={FIELD_NAMES.TERRITORY}>
+              State/Territory<span className="required-mark">*</span>
+            </label>
+            <select
+              id={FIELD_NAMES.TERRITORY}
+              name={FIELD_NAMES.TERRITORY}
+              required={!isReadOnly}
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.territory}
+              defaultValue="none-selected"
+            >
+              <option disabled value="none-selected">-- select a territory --</option>
+              {renderOptionsList(territoryList)}
+            </select>
             <br />
-            <label htmlFor="submittedAt">Submitted on</label>
+            <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+              SPA ID<span className="required-mark">*</span>
+            </label>
+            {!isReadOnly && (
+              <p className="field-hint">
+                Enter the State Plan Amendment transmittal number
+              </p>
+            )}
             <input
               className="field"
               type="text"
-              id="submittedAt"
-              name="submittedAt"
-              disabled
-              value={formatDate(changeRequest.submittedAt)}
+              required={!isReadOnly}
+              id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.transmittalNumber}
             ></input>
-          </div>
-        )}
-        <h3>Attachments</h3>
-        {isReadOnly ? (
-          <FileList uploadList={changeRequest.uploads}></FileList>
-        ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
-        <br />
-        <TextField
-          name={FIELD_NAMES.SUMMARY}
-          label="Summary"
-          fieldClassName="summary-field"
-          multiline
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.summary}
-        ></TextField>
-        {!isReadOnly && (
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!isFormReady || !areUploadsReady}
-            >
-              Submit
-          </LoaderButton>
-        )}
-      </form>
-    </div>
-  );
+            {isReadOnly && (
+              <div>
+                <br />
+                <label htmlFor="submittedAt">Submitted on</label>
+                <input
+                  className="field"
+                  type="text"
+                  id="submittedAt"
+                  name="submittedAt"
+                  disabled
+                  value={formatDate(changeRequest.submittedAt)}
+                ></input>
+              </div>
+            )}
+            <h3>Attachments</h3>
+            {isReadOnly ? (
+              <FileList uploadList={changeRequest.uploads} />
+            ) : (
+              <FileUploader
+                ref={uploader}
+                requiredUploads={requiredUploads}
+                optionalUploads={optionalUploads}
+                readyCallback={uploadsReadyCallbackFunction}
+              />
+            )}
+            <br />
+            <TextField
+              name={FIELD_NAMES.SUMMARY}
+              label="Summary"
+              fieldClassName="summary-field"
+              multiline
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.summary}
+            />
+            {!isReadOnly && (
+              <LoaderButton
+                block
+                type="submit"
+                bsSize="large"
+                bsStyle="primary"
+                isLoading={isLoading}
+                disabled={!isFormReady || !areUploadsReady}
+              >
+                Submit
+              </LoaderButton>
+            )}
+          </form>
+        </div>
+      </LoadingScreen>
+    );
+  } else {
+    return null;
+  }
 }
