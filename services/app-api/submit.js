@@ -8,8 +8,8 @@ import getEmailTemplates from "./email-templates/getEmailTemplates";
  * Submission states for the change requests.
  */
 const SUBMISSION_STATES = {
-  CREATED: "created",     // Change request is in process
-  SUBMITTED: "submitted"  // Email sent to CMS
+  CREATED: "created", // Change request is in process
+  SUBMITTED: "submitted", // Email sent to CMS
 };
 
 /**
@@ -51,23 +51,17 @@ export const main = handler(async (event) => {
     // map the email templates from the data.type
     const emailTemplate = getEmailTemplates(data.type);
 
-    //Store the data in the database.
-    await dynamoDb.put({
-      TableName: process.env.tableName,
-      Item: data,
-    });
-
-    //We successfully sent the submission email.  Update the record to reflect that.
-    data.state = SUBMISSION_STATES.SUBMITTED;
-    data.submittedAt = Date.now();
-    await dynamoDb.put({
-      TableName: process.env.tableName,
-      Item: data,
-    });
-
     if (emailTemplate) {
       // Now send the CMS email
       await sendEmail(emailTemplate.getCMSEmail(data));
+
+      //We successfully sent the submission email.  Update the record to reflect that.
+      data.state = SUBMISSION_STATES.SUBMITTED;
+      data.submittedAt = Date.now();
+      await dynamoDb.put({
+        TableName: process.env.tableName,
+        Item: data,
+      });
 
       //An error sending the user email is not a failure.
       try {
