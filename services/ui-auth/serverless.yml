@@ -12,7 +12,7 @@ custom:
   attachments_bucket_arn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   api_gateway_rest_api_name: ${cf:app-api-${self:custom.stage}.ApiGatewayRestApiName}
   application_endpoint_url: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl}
-  okta_metadata_url: ${env:OKTA_METADATA_URL}
+  okta_metadata_url: "https://test.idp.idm.cms.gov/app/exk5bjd90z4eMr7zz297/sso/saml/metadata"
   iamPath: ${env:IAM_PATH, "/"}
 
 # The `provider` block defines where your service will be deployed
