@@ -1,8 +1,8 @@
 export default {
   MAX_ATTACHMENT_SIZE_MB: 50,
   s3: {
-    REGION: "us-east-1",
-    BUCKET: "oy220-state-okta-login"
+    REGION: window._env_.S3_ATTACHMENTS_BUCKET_REGION,
+    BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME
   },
   apiGateway: {
     REGION: "us-east-1",
