@@ -119,6 +119,7 @@ input[type="file"] {
 .loading-screen {
   display: flex;
   justify-content: center;
+  padding-top: 40px;
   @extend .ds-u-color--primary;
   .ds-c-spinner::before, .ds-c-spinner::after {
     border-width: 8px;
