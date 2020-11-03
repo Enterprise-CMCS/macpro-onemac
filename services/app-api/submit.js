@@ -29,9 +29,9 @@ export const main = handler(async (event) => {
     data.user = {
       id: event.requestContext.identity.cognitoIdentityId,
       authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
-      email: data.user.attributes.email,
-      firstName: data.user.attributes.given_name,
-      lastName: data.user.attributes.family_name,
+      email: data.user.signInUserSession.idToken.payload.email,
+      firstName: data.user.signInUserSession.idToken.payload.given_name,
+      lastName: data.user.signInUserSession.idToken.payload.family_name,
     };
     data.userId = event.requestContext.identity.cognitoIdentityId;
 
