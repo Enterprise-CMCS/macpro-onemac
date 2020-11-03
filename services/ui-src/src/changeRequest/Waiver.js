@@ -195,7 +195,7 @@ export default function Waiver() {
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
-          Action Type<span className="required-mark">*</span>
+          Waiver Authority<span className="required-mark">*</span>
         </label>
         <select
           id={FIELD_NAMES.WAIVER_AUTHORITY}
