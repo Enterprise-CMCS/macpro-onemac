@@ -162,6 +162,34 @@ export default function Waiver() {
     }
   }
 
+  function renderOptionsList(theList) {
+    let optionsList = theList.map((item, i) => {
+      return (
+        <option key={i} value={item.value}>
+          {item.label}
+        </option>
+      );
+    });
+    return optionsList;
+  }
+
+  function getSelectProps(id, value) {
+    const selectProps = {
+      id,
+      name: id,
+      required: !isReadOnly,
+      onChange: handleInputChange,
+      disabled: isReadOnly,
+      value
+    }
+
+    if (!isReadOnly) {
+      selectProps.defaultValue = "none-selected"
+    }
+
+    return selectProps
+  }
+
   // Render the component.
   if (!shouldHideForm) {
     return (
@@ -172,48 +200,24 @@ export default function Waiver() {
             <label htmlFor={FIELD_NAMES.TERRITORY}>
               State/Territory<span className="required-mark">*</span>
             </label>
-            <select
-              id={FIELD_NAMES.TERRITORY}
-              name={FIELD_NAMES.TERRITORY}
-              required={!isReadOnly}
-              onChange={handleInputChange}
-              disabled={isReadOnly}
-              value={changeRequest.territory}
-              defaultValue="none-selected"
-            >
-              <option disabled value="none-selected"> -- select a territory -- </option>
+            <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+              <option disabled value="none-selected">-- select a territory --</option>
               {renderOptionsList(territoryList)}
             </select>
             <br />
             <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
               Action Type<span className="required-mark">*</span>
             </label>
-            <select
-              id={FIELD_NAMES.ACTION_TYPE}
-              name={FIELD_NAMES.ACTION_TYPE}
-              required={!isReadOnly}
-              onChange={handleInputChange}
-              disabled={isReadOnly}
-              value={changeRequest.actionType}
-              defaultValue="none-selected"
-            >
-              <option disabled value="none-selected"> -- select an action type -- </option>
+            <select {...getSelectProps(FIELD_NAMES.ACTION_TYPE, changeRequest.actionType)}>
+              <option disabled value="none-selected">-- select an action type --</option>
               {renderOptionsList(actionTypeOptions)}
             </select>
             <br />
             <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
-              Action Type<span className="required-mark">*</span>
+              Waiver Authority<span className="required-mark">*</span>
             </label>
-            <select
-              id={FIELD_NAMES.WAIVER_AUTHORITY}
-              name={FIELD_NAMES.WAIVER_AUTHORITY}
-              required={!isReadOnly}
-              onChange={handleInputChange}
-              disabled={isReadOnly}
-              value={changeRequest.waiverAuthority}
-              defaultValue="none-selected"
-            >
-              <option disabled value="none-selected"> -- select a waiver authority -- </option>
+            <select {...getSelectProps(FIELD_NAMES.WAIVER_AUTHORITY, changeRequest.waiverAuthority)}>
+              <option disabled value="none-selected">-- select a waiver authority --</option>
               {renderOptionsList(waiverAuthorityOptions)}
             </select>
             <br />

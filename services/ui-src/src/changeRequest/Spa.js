@@ -142,6 +142,23 @@ export default function Spa() {
     }
   }
 
+  function getSelectProps(id, value) {
+    const selectProps = {
+      id,
+      name: id,
+      required: !isReadOnly,
+      onChange: handleInputChange,
+      disabled: isReadOnly,
+      value
+    }
+
+    if (!isReadOnly) {
+      selectProps.defaultValue = "none-selected"
+    }
+
+    return selectProps
+  }
+
   // Render the component.
   if (!shouldHideForm) {
     return (
@@ -152,15 +169,7 @@ export default function Spa() {
             <label htmlFor={FIELD_NAMES.TERRITORY}>
               State/Territory<span className="required-mark">*</span>
             </label>
-            <select
-              id={FIELD_NAMES.TERRITORY}
-              name={FIELD_NAMES.TERRITORY}
-              required={!isReadOnly}
-              onChange={handleInputChange}
-              disabled={isReadOnly}
-              value={changeRequest.territory}
-              defaultValue="none-selected"
-            >
+            <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
               <option disabled value="none-selected">-- select a territory --</option>
               {renderOptionsList(territoryList)}
             </select>
