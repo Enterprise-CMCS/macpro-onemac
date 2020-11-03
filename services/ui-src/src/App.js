@@ -35,8 +35,7 @@ function App() {
         );
       }
     }
-
-    //setIsAuthenticating(false);
+    setIsAuthenticating(false);
   }
   // Dismiss the alert when the page changes.
   useHistory().listen((location, action) => {
