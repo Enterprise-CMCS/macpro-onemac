@@ -5,8 +5,8 @@ export default {
     BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME
   },
   apiGateway: {
-    REGION: "us-east-1",
-    URL: "https://ole6o1ykv5.execute-api.us-east-1.amazonaws.com"
+    REGION: window._env_.API_REGION,
+    URL: window._env_.API_URL
   },
   cognito: {
     REGION: "us-east-1",
