@@ -2,7 +2,7 @@ export default {
   MAX_ATTACHMENT_SIZE_MB: 50,
   s3: {
     REGION: "us-east-1",
-    BUCKET: "https://uploads-oy2-1060-view-submissio-attachmentsbucket-169tt83bmjna5"
+    BUCKET: "oy220-state-okta-login"
   },
   apiGateway: {
     REGION: "us-east-1",
