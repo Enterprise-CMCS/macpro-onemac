@@ -28,7 +28,6 @@ function App() {
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "No current user") {
-        setIsAuthenticating(false);
         console.log(
             "There was an error while loading the user information.",
             error
