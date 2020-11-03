@@ -173,6 +173,11 @@ export default function Waiver() {
     return optionsList;
   }
 
+  /**
+   * Render props for the select component.
+   * @param {String} id an identifier used to set select params
+   * @param {String} value the display text in select params
+   */
   function getSelectProps(id, value) {
     const selectProps = {
       id,
