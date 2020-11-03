@@ -6,7 +6,6 @@ import AlertBar from "./components/AlertBar";
 import { AppContext } from "./libs/contextLib";
 import { useHistory } from "react-router-dom";
 
-import {checkUser} from "./utils/auth-utils";
 import {Auth} from "aws-amplify";
 
 function App() {
@@ -18,18 +17,27 @@ function App() {
   });
 
   async function onLoad() {
-
-    const user = await checkUser()
-    if (user.authenticated) {
-      const data = await Auth.currentAuthenticatedUser();
-      console.log("DEBUG Current:" + JSON.stringify(data))
-      setIsAuthenticating(false)
-      console.log("Debug checkuser:" + JSON.stringify(user))
-    } else {
-      setIsAuthenticating(false)
+    try {
+      const user = await Auth.currentAuthenticatedUser();
+      //
+      // TODO: Update cognito to allow profile info
+      //
+      console.log(JSON.stringify(user.signInUserSession.idToken.payload.email))
+      console.log(JSON.stringify(user.signInUserSession.idToken.payload.family_name))
+      console.log(JSON.stringify(user.signInUserSession.idToken.payload.given_name))
+      userHasAuthenticated(true);
+    } catch (error) {
+      if (error !== "No current user") {
+        setIsAuthenticating(false);
+        console.log(
+            "There was an error while loading the user information.",
+            error
+        );
+      }
     }
-  }
 
+    //setIsAuthenticating(false);
+  }
   // Dismiss the alert when the page changes.
   useHistory().listen((location, action) => {
     AlertBar.dismiss();
