@@ -11,9 +11,11 @@ import { ROUTES } from "../Routes";
 import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
+import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function Spa() {
+
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
@@ -80,8 +82,12 @@ export default function Spa() {
     // Trigger the fetch only if an ID is present.
     if (id) {
       fetchChangeRequest();
+      
+      PageTitleBar.setPageTitleInfo({heading: "SPA Submission Details",text : ""});
     } else {
       setReadOnly(false);
+
+      PageTitleBar.setPageTitleInfo({heading : "Submit New SPA",text : ""});
     }
   }, [id]);
 
@@ -148,6 +154,8 @@ export default function Spa() {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>SPA Details</h3>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
         <label htmlFor={FIELD_NAMES.TERRITORY}>
           State/Territory<span className="required-mark">*</span>
         </label>
@@ -167,9 +175,13 @@ export default function Spa() {
           {renderTerritoryList()}
         </select>
         <br />
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+        <div className="label-container">
+          <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
-        </label>
+          </label>
+          </div>
+          <div className="label-rcol"><a href="/FAQ">What is my SPA ID?</a></div>
+          </div>
         {!isReadOnly && (
           <p className="field-hint">
             Enter the State Plan Amendment transmittal number
@@ -199,7 +211,11 @@ export default function Spa() {
             ></input>
           </div>
         )}
+        </div>
         <h3>Attachments</h3>
+        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -210,7 +226,7 @@ export default function Spa() {
             readyCallback={uploadsReadyCallbackFunction}
           ></FileUploader>
         )}
-
+        </div>
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}

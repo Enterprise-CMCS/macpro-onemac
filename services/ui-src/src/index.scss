@@ -2,8 +2,10 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 @import "@cmsgov/design-system/dist/scss/index";
 
+
 body {
   @extend .ds-base;
+  background-color: $color-gray-lightest;
 }
 
 h1 {
@@ -33,6 +35,25 @@ label {
 
 .field-hint {
   @extend .ds-c-field__hint;
+}
+
+.app-bar {
+  @extend .ds-l-row;
+  padding-left: 146px;
+  padding-right: 150px;
+  @extend .ds-u-padding-top--1;
+  @extend .ds-u-padding-bottom--1;
+  @extend .ds-u-margin-left--0;
+  @extend .ds-u-margin-right--0;
+}
+
+.page-title-bar {
+  @extend .app-bar;
+  @extend .ds-u-padding-top--3;
+  font-weight: normal;
+  background-color: $color-primary-darkest;
+  color: #fff;
+  min-height: 88px;
 }
 
 .uploader {
@@ -102,13 +123,46 @@ input.form-control {
 input[type="file"] {
   width: 100%;
 }
-
 .form-container {
-  padding-bottom: 15px;
-  background-color: #f2f2f2;
+  @extend .app-bar;
+  @extend .ds-u-margin-top--7;
+  @extend .ds-u-margin-left--7;
+  @extend .ds-u-margin-right--7;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
+  @extend .ds-u-justify-content--center;
+  @extend .ds-l-col--auto;
+  background-color: $color-gray-lightest;
+
+  .form-card {
+    background-color: $color-white;
+    @extend .ds-l-col--auto;
+    @extend .ds-u-border-right--2;
+    @extend .ds-u-border-bottom--2;
+    @extend .ds-u-padding-top--3;
+    @extend .ds-u-padding-bottom--3;
+    @extend .ds-u-padding-left--2;
+
+  }  
+  .label-container {
+    @extend .ds-l-row;
+    width: 460px;
+    margin-left: 0px;
+  }
+  .label-lcol {
+    @extend .ds-l-col--3;
+    @extend .ds-c-label;
+    margin-top: 0px;
+  }
+  .label-rcol {
+    @extend .ds-l-col--5;
+    @extend .ds-u-margin-left--auto;
+    padding-right: 0px;
+    text-align: right;
+  }
 }
 
-.form-container .summary-field {
+.summary-field {
   height: 300px;
   font-size: 24px;
   width: 100%;
@@ -117,13 +171,17 @@ input[type="file"] {
 
 .dashboard-container {
   @extend .ds-l-row;
+  @extend .ds-u-padding-left--7;
+  @extend .ds-u-padding-right--7;
+  @extend .ds-u-padding-top--5;
+  @extend .ds-u-margin-left--7;
 
   .dashboard-title {
     @extend .ds-l-col--12;
     @extend .ds-h1;
   }
   .dashboard-left-col{
-    @extend .ds-u-margin-top--5;
+    @extend .ds-u-margin-top--1;
     @extend .ds-l-xl-col--3;
     @extend .ds-l-lg-col--3;
     @extend .ds-l-md-col--4;
@@ -133,7 +191,7 @@ input[type="file"] {
     @extend .ds-u-text-align--left;
   }
   .dashboard-right-col {
-    @extend .ds-u-margin-top--5;
+    @extend .ds-u-margin-top--1;
     @extend .ds-l-xl-col--9;
     @extend .ds-l-lg-col--9;
     @extend .ds-l-md-col--8;
@@ -160,5 +218,75 @@ input[type="file"] {
   }
   .list-group-item {
     @extend .ds-u-text-decoration--none;
+  }
+}
+
+.nav-bar {
+  @extend .app-bar;
+  @extend .ds-u-padding-top--3;
+  background-color: $color-primary;
+  min-height: 70px;
+  padding-bottom: 25px;
+  padding-left: 120px;
+}
+  .nav-left {
+    @extend .ds-l-col--4;
+    @extend .ds-l-row;
+
+    a {
+      @extend .ds-l-col--4;
+      color: $color-white;
+      font-weight: bold;
+      @extend .ds-u-text-align--center;
+      
+      &:hover {
+        color: rgba($color-base-inverse, 0.8);
+      }
+
+      &:active {
+        color: rgba($color-base-inverse, 0.6);
+      }
+    }
+  }
+  .nav-right {
+    @extend .ds-l-col--2;
+    @extend .ds-u-margin-left--auto;
+    font-weight: bold;
+  }
+
+.usa-bar {
+  @extend .app-bar;
+  background-color: $color-gray-lightest;
+  font-size: 14px;
+  min-height: 20px;
+
+  img {
+      height: 20px;
+      padding-right: 10px;
+  }
+}
+.brand-bar {
+  @extend .app-bar;
+  background-color: $color-white;
+  @extend .ds-u-padding-top--3;
+}
+.accountDropdown {
+  background-color: $color-primary !important;
+  color: $color-white;
+  font-weight: bold;
+  font-size: 16px;
+  border: none;
+  box-shadow: none !important;
+
+  &:hover {
+      color: rgba($color-base-inverse, 0.8);
+  }
+
+  &:active {
+      color: rgba($color-base-inverse, 0.6);
+  }
+
+  &:focus {
+      color: rgba($color-base-inverse, 0.6);
   }
 }

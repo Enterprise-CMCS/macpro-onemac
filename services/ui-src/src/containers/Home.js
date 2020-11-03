@@ -1,12 +1,15 @@
 import React from "react";
+import PageTitleBar from "../components/PageTitleBar";
 
 /**
  * Component containing html formatted text about the usage of the webform
  */
 export default function Home() {
+
+    PageTitleBar.setPageTitleInfo({ heading: "CMS State Plan Amendment and Waiver Submission Platform", text: "Welcome to the official submission system for email-based state plan amendments (SPAs) and section 1915 waivers." })
+ 
   return (
       <div className="about">
-          <h1>CMS State Plan Amendment and Waiver Submission Platform</h1>
           <p>Welcome to the official submission system for email-based state plan 
               amendments (SPAs) and section 1915 waivers. After signing up for the 
               system, you can fill out forms to send the SPA and/or waivers and 

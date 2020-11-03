@@ -7,7 +7,6 @@ import { Button } from '@cmsgov/design-system'
 import { ROUTES } from "../Routes"
 import medicaidLogo from "../images/medicaidLogo.png"
 import flagIcon from "../images/flagIcon.png"
-import "./Header.scss"
 
 /**
  * Component containing header
@@ -17,20 +16,26 @@ function Header(props) {
     const history = useHistory()
 
     /**
+     * Renders the USA bar
+     */
+    function renderUSABar() {
+        return (
+            <div className="usa-bar">
+                <img src={flagIcon} alt="united states flag" />
+                    An offical website of the United States government
+            </div>
+        )
+    }
+
+    /**
      * Renders a branding bar
      */
-    function renderBrandingBar() {
+    function renderBrandBar() {
         return (
-            <div tabIndex="0">
-                <div className="usaBanner">
-                    <img src={flagIcon} alt="united states flag" />
-                    An offical website of the United States government
-                </div>
-                <div className="headerLogo">
-                    <a href="https://www.medicaid.gov/">
-                        <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy" />
-                    </a>
-                </div>
+            <div className="brand-bar">
+                <a href="https://www.medicaid.gov/">
+                    <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy" />
+                </a>
             </div>
         )
     }
@@ -41,7 +46,7 @@ function Header(props) {
     function renderAccountButtons() {
         if (props.isAuthenticated) {
             return (
-                <Dropdown id="account info">
+                <Dropdown id="account info" className="nav-right">
                     <Dropdown.Toggle className="accountDropdown">
                         Account
                     </Dropdown.Toggle>
@@ -52,8 +57,8 @@ function Header(props) {
                 </Dropdown>
             )
         } else {
-            return(
-                <div className="navElements">
+            return (
+                <div className="nav-right">
                     <Button onClick={() => history.push(ROUTES.SIGNUP)} inversed>Sign Up</Button>
                     <Button onClick={() => history.push(ROUTES.LOGIN)} inversed>Login</Button>
                 </div>
@@ -66,8 +71,8 @@ function Header(props) {
      */
     function renderNavBar() {
         return (
-            <div className="navbarContainer">
-                <div className="navElements">
+            <div className="nav-bar">
+                <div className="nav-left">
                     <Link to={ROUTES.HOME}>About</Link>
                     <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
                     <Link to={ROUTES.FAQ}>FAQ</Link>
@@ -78,8 +83,9 @@ function Header(props) {
     }
 
     return (
-        <div className="headerContainer">
-            {renderBrandingBar()}
+        <div tabIndex="0">
+            {renderUSABar()}
+            {renderBrandBar()}
             {renderNavBar()}
         </div>
     )
