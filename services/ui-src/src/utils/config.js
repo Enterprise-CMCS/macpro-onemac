@@ -2,11 +2,11 @@ export default {
   MAX_ATTACHMENT_SIZE_MB: 50,
   s3: {
     REGION: "us-east-1",
-    BUCKET: "uploads-oy2-62-user-entered-spa-attachmentsbucket-19mow7z65ezh3"
+    BUCKET: "https://uploads-oy2-1060-view-submissio-attachmentsbucket-169tt83bmjna5"
   },
   apiGateway: {
     REGION: "us-east-1",
-    URL: "http://localhost:3001"
+    URL: "https://ole6o1ykv5.execute-api.us-east-1.amazonaws.com"
   },
   cognito: {
     REGION: "us-east-1",
