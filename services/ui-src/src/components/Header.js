@@ -44,6 +44,10 @@ function Header(props) {
                         <Button onClick={() => {
                             Auth.signOut()
                         }} inversed>Logout</Button>
+                        <Button onClick={() => {
+                            Auth.signOut()
+                           history.push(ROUTES.DEVLOGIN)
+                        }} inversed>Dev Logout</Button>
                     </FormLabel>
                 </div>
             )
