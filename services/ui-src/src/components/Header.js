@@ -45,8 +45,8 @@ function Header(props) {
                             Auth.signOut()
                         }} inversed>Logout</Button>
                         <Button onClick={() => {
-                           history.push(ROUTES.DEVLOGIN)
                            Auth.signOut()
+                           window.location.href = window.location.protocol + "//" + window.location.hostname
                         }} inversed>Dev Logout</Button>
                     </FormLabel>
                 </div>
