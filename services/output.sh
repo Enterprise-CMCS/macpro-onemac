@@ -1,6 +1,4 @@
 
-set -e
-
 help='This script is run with the format  ./output.sh <target service name> <serverless output variable name> <stage name (optional, default dev)>'
 example='ex.  ./output.sh ui CloudFrontEndpointUrl'
 
@@ -19,4 +17,14 @@ if [ $output == "url" ]; then
   output="CloudFrontEndpointUrl"
 fi
 
-cd $service && serverless info --stage $stage -v | sed -e '1,/^Stack Outputs/d' -e '$d' | sed -n -e "s/^.*$output: //p" && cd ..
+service_output=`cd $service && serverless info --stage $stage -v`
+
+if [ $? -ne 0 ]
+then
+  >&2 echo "ERROR trying to obtain serverless app information".
+  >&2 echo "$service_output"
+  exit 1
+else
+  echo "$service_output" | sed -e '1,/^Stack Outputs/d' -e '$d' | sed -n -e "s/^.*$output: //p"
+fi
+

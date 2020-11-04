@@ -12,27 +12,34 @@ import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import { renderOptionsList } from "../utils/form-utils";
 
 export default function Waiver() {
   // The attachment list
-  const requiredUploads = ['Required Upload (per Waiver Authority)'];
+  const requiredUploads = ["Required Upload (per Waiver Authority)"];
   const optionalUploads = [
-    '1915(b)(4) waiver application',
-    'Cost effectiveness spreadsheets',
-    'Tribal Consultation',
-    '1915(c) Appendix K amendment waiver template',
-    '1915(b) waiver',
-    'Other'
+    "1915(b)(4) waiver application",
+    "Cost effectiveness spreadsheets",
+    "Tribal Consultation",
+    "1915(c) Appendix K amendment waiver template",
+    "1915(b) waiver",
+    "Other",
   ];
   const actionTypeOptions = [
-    { "label": "New waiver", "value": "New waiver" },
-    { "label": "Waiver amendment", "value": "Waiver amendment" },
-    { "label": "Request for waiver renewal", "value": "Request for waiver renewal" }
+    { label: "New waiver", value: "new" },
+    { label: "Waiver amendment", value: "amendment" },
+    {
+      label: "Request for waiver renewal",
+      value: "renewal",
+    },
   ];
   const waiverAuthorityOptions = [
-    { "label": "1915(b)(4) FFS Selective Contracting waivers", "value": "1915(b)(4) FFS Selective Contracting waivers" },
-    { "label": "All other 1915(b) Waivers", "value": "All other 1915(b) Waivers" },
-    { "label": "1915(c) Appendix K waiver", "value": "1915(c) Appendix K waiver" }
+    {
+      label: "1915(b)(4) FFS Selective Contracting waivers",
+      value: "1915(b)(4)",
+    },
+    { label: "All other 1915(b) Waivers", value: "1915(b)" },
+    { label: "1915(c) Appendix K waiver", value: "1915(c)" },
   ];
 
   // The form field names
@@ -116,10 +123,11 @@ export default function Waiver() {
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber
-        && updatedRecord.territory
-        && updatedRecord.actionType
-        && updatedRecord.waiverAuthority
+      setIsFormReady(
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
+          updatedRecord[FIELD_NAMES.TERRITORY] &&
+          updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
+          updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
       );
     }
   }
@@ -146,17 +154,6 @@ export default function Waiver() {
     }
   }
 
-  function renderOptionsList(theList) {
-    let optionsList = theList.map((item, i) => {
-      return (
-        <option key={i} value={item.value}>
-          {item.label}
-        </option>
-      );
-    });
-    return optionsList;
-  }
-
   // Render the component.
   return (
     <div className="form-container">
@@ -174,7 +171,10 @@ export default function Waiver() {
           value={changeRequest.territory}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select a territory -- </option>
+          <option disabled value="none-selected">
+            {" "}
+            -- select a territory --{" "}
+          </option>
           {renderOptionsList(territoryList)}
         </select>
         <br />
@@ -190,7 +190,10 @@ export default function Waiver() {
           value={changeRequest.actionType}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select an action type -- </option>
+          <option disabled value="none-selected">
+            {" "}
+            -- select an action type --{" "}
+          </option>
           {renderOptionsList(actionTypeOptions)}
         </select>
         <br />
@@ -206,18 +209,17 @@ export default function Waiver() {
           value={changeRequest.waiverAuthority}
           defaultValue="none-selected"
         >
-          <option disabled value="none-selected"> -- select a waiver authority -- </option>
+          <option disabled value="none-selected">
+            {" "}
+            -- select a waiver authority --{" "}
+          </option>
           {renderOptionsList(waiverAuthorityOptions)}
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
-        {!isReadOnly &&
-          <p className="field-hint">
-            Enter the Waiver number
-          </p>
-        }
+        {!isReadOnly && <p className="field-hint">Enter the Waiver number</p>}
         <input
           className="field"
           type="text"
@@ -231,14 +233,14 @@ export default function Waiver() {
         {isReadOnly && (
           <div>
             <br />
-            <label htmlFor="createdAt">Submitted on</label>
+            <label htmlFor="submittedAt">Submitted on</label>
             <input
               className="field"
               type="text"
-              id="createdAt"
-              name="createdAt"
+              id="submittedAt"
+              name="submittedAt"
               disabled
-              value={formatDate(changeRequest.createdAt)}
+              value={formatDate(changeRequest.submittedAt)}
             ></input>
           </div>
         )}
@@ -246,13 +248,13 @@ export default function Waiver() {
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
-            <FileUploader
-              ref={uploader}
-              requiredUploads={requiredUploads}
-              optionalUploads={optionalUploads}
-              readyCallback={uploadsReadyCallbackFunction}
-            ></FileUploader>
-          )}
+          <FileUploader
+            ref={uploader}
+            requiredUploads={requiredUploads}
+            optionalUploads={optionalUploads}
+            readyCallback={uploadsReadyCallbackFunction}
+          ></FileUploader>
+        )}
 
         <br />
         <TextField
