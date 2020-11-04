@@ -15,7 +15,7 @@ import { Auth } from "aws-amplify";
 import AlertBar from "../components/AlertBar"
 import {ALERTS_MSG} from "../libs/alert-messages";
 
-export default function Signup() {
+export default function DevSignup() {
     const [fields, handleFieldChange] = useFormFields({
         firstName: "",
         lastName: "",

@@ -1,5 +1,5 @@
 import React from "react"
-import { Link } from "react-router-dom"
+import { Link, useHistory } from "react-router-dom"
 import { Auth } from "aws-amplify"
 import { Button, FormLabel } from '@cmsgov/design-system'
 import { ROUTES } from "../Routes"
@@ -13,7 +13,7 @@ import "./Header.scss"
  * @param {Object} props - component properties
  */
 function Header(props) {
-
+    const history = useHistory()
     /**
      * Renders a branding bar
      */
@@ -51,6 +51,8 @@ function Header(props) {
             return(
                 <div className="navElements">
                     <Button onClick={() => signInWithOkta()} inversed>Login</Button>
+                    <Button onClick={() => history.push(ROUTES.DEVSIGNUP)} inversed>DevTest Sign Up</Button>
+                    <Button onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>DevTest Login</Button>
                 </div>
             )
         }

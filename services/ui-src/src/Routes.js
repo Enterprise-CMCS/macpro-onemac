@@ -4,7 +4,7 @@ import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
 import Dashboard from "./containers/Dashboard";
 import NotFound from "./containers/NotFound";
-import Signup from "./containers/Signup";
+import DevSignup from "./containers/DevSignup";
 import Spa from "./changeRequest/Spa";
 import SpaRai from "./changeRequest/SpaRai";
 import Waiver from "./changeRequest/Waiver";
@@ -13,13 +13,15 @@ import WaiverExtension from "./changeRequest/WaiverExtension";
 import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+import DevLogin from "./containers/DevLogin";
 
 export const ROUTES = {
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
     HOME: '/',
     PROFILE: '/profile',
-    SIGNUP: '/signup',
+    DEVLOGIN: '/devlogin',
+    DEVSIGNUP: '/devsignup',
     SPA: '/spa',
     SPA_RAI: '/sparai',
     WAIVER: '/waiver',
@@ -36,8 +38,11 @@ export default function Routes() {
             <Route exact path={ROUTES.FAQ}>
                 <FAQ />
             </Route>
-            <UnauthenticatedRoute exact path={ROUTES.SIGNUP}>
-                <Signup />
+            <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
+                <DevLogin />
+            </UnauthenticatedRoute>
+            <UnauthenticatedRoute exact path={ROUTES.DEVSIGNUP}>
+                <DevSignup />
             </UnauthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.PROFILE}>
                 <Profile />
