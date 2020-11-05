@@ -53,25 +53,27 @@ function Header(props) {
             >
               Logout
             </Button>
-            <Button
-              onClick={() => {
-                Auth.signOut();
-                window.location.href =
-                  window.location.protocol + "//" + window.location.hostname;
-              }}
-              inversed
-            >
-              Dev Logout
-            </Button>
+            {config.ALLOW_DEV_LOGIN && (
+              <Button
+                onClick={() => {
+                  Auth.signOut();
+                  window.location.href =
+                    window.location.protocol + "//" + window.location.hostname;
+                }}
+                inversed
+              >
+                Dev Logout
+              </Button>
+            )}
           </FormLabel>
         </div>
       );
     } else {
       return (
         <div className="navElements">
-            <Button onClick={() => signInWithOkta()} inversed>
-              Login
-            </Button>
+          <Button onClick={() => signInWithOkta()} inversed>
+            Login
+          </Button>
           {config.ALLOW_DEV_LOGIN && (
             <Button onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
               Development Login
