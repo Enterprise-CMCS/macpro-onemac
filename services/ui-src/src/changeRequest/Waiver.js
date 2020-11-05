@@ -62,9 +62,6 @@ export default function Waiver() {
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
 
-  // True if there's an error fetching a change request.
-  const [shouldHideForm, setShouldHideForm] = useState(false);
-
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -93,11 +90,10 @@ export default function Waiver() {
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-        setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
+        setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
-        setShouldHideForm(true);
       }
 
       setIsLoading(false);
@@ -105,6 +101,7 @@ export default function Waiver() {
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      setReadOnly(true);
       fetchChangeRequest();
     } else {
       setReadOnly(false);
@@ -174,31 +171,44 @@ export default function Waiver() {
   }
 
   /**
-   * Render props for the select component.
+   * Get props for the select component dependent on the value of isReadOnly.
+   * Note: The defaultValue prop should NOT be set when the form is read only due to the following warning:
+   *   "Select elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both).
+   *    Decide between using a controlled or uncontrolled select element and remove one of these props."
    * @param {String} id an identifier used to set select params
    * @param {String} value the display text in select params
    */
   function getSelectProps(id, value) {
-    const selectProps = {
+    const defaultSelectProps = {
       id,
       name: id,
-      required: !isReadOnly,
-      onChange: handleInputChange,
-      disabled: isReadOnly,
       value
     }
 
+    let selectProps = {}
+
     if (!isReadOnly) {
-      selectProps.defaultValue = "none-selected"
+      selectProps = {
+        defaultValue: "none-selected",
+        onChange: handleInputChange,
+        required: true,
+        ...defaultSelectProps
+      }
+    } else {
+      selectProps = {
+        disabled: true,
+        ...defaultSelectProps
+      }
     }
 
     return selectProps
   }
 
-  // Render the component.
-  if (!shouldHideForm) {
-    return (
-      <LoadingScreen isLoading={isLoading}>
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
+  return (
+    <LoadingScreen isLoading={isLoading}>
+      {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>Waiver Submission</h3>
@@ -293,9 +303,7 @@ export default function Waiver() {
             )}
           </form>
         </div>
-      </LoadingScreen>
-    );
-  } else {
-    return null;
-  }
+      ) : null}
+    </LoadingScreen>
+  );
 }

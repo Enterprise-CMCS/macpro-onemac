@@ -37,9 +37,6 @@ export default function WaiverExtension() {
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
 
-  // True if there's an error fetching a change request.
-  const [shouldHideForm, setShouldHideForm] = useState(false);
-
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -68,11 +65,10 @@ export default function WaiverExtension() {
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-        setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
+        setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
-        setShouldHideForm(true);
       }
 
       setIsLoading(false);
@@ -80,6 +76,7 @@ export default function WaiverExtension() {
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      setReadOnly(true);
       fetchChangeRequest();
     } else {
       setReadOnly(false);
@@ -132,10 +129,11 @@ export default function WaiverExtension() {
     }
   }
 
-  // Render the component.
-  if (!shouldHideForm) {
-    return (
-      <LoadingScreen isLoading={isLoading}>
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
+  return (
+    <LoadingScreen isLoading={isLoading}>
+      {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>Request Temporary Extension</h3>
@@ -206,9 +204,7 @@ export default function WaiverExtension() {
             )}
           </form>
         </div>
-      </LoadingScreen>
-    );
-  } else {
-    return null;
-  }
+      ) : null}
+    </LoadingScreen>
+  );
 }
