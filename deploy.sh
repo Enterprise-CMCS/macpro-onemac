@@ -107,7 +107,6 @@ then
     echo "ERROR: There was an error obtaining AWS resource information to create users."
     exit 1
   fi
-  popd
 fi
 
 echo """
