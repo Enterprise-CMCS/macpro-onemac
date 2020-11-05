@@ -1,5 +1,6 @@
 export default {
     MAX_ATTACHMENT_SIZE: 5000000,
+    ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
     s3: {
         REGION: window._env_.S3_ATTACHMENTS_BUCKET_REGION,
         BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME

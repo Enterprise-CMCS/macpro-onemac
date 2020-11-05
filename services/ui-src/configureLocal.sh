@@ -57,6 +57,7 @@ export COGNITO_REDIRECT_SIGNIN=http://localhost:3000/
 export COGNITO_REDIRECT_SIGNOUT=http://localhost:3000/
 export S3_ATTACHMENTS_BUCKET_REGION=$s3_attachments_bucket_region
 export S3_ATTACHMENTS_BUCKET_NAME=$s3_attachments_bucket_name
+export ALLOW_DEV_LOGIN=true
 export IS_OFFLINE=true
 
 ./env.sh

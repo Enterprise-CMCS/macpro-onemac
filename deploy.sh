@@ -46,19 +46,33 @@ deploy() {
 }
 
 install_deps
-set -x
-echo "CARLOS INSERT"
+
+# Identify if we need test
 include_test_users=true
+export ALLOW_DEV_LOGIN=true
 for excluded_stage in ${test_users_exclude_stages[@]}
 do
-    if [ "$stage" == excluded_stage ]
+    if [ $stage == $excluded_stage ]
     then
        include_test_users=false
+       export ALLOW_DEV_LOGIN=false
        echo "INFO: Will not set test users in this branch."
        break
     fi
 done
 
+# Run deploy
+set -e
+for i in "${services[@]}"
+do
+	deploy $i
+done
+
+
+pushd services
+set +e
+
+# Add test users as necessary
 if [ $include_test_users == true ]
 then
   pushd services
@@ -74,7 +88,7 @@ then
       aws cognito-idp sign-up \
       --region $cognito_region \
       --client-id $cognito_user_pool_client_id \
-      --username user1@sample.com \
+      --username $user \
       --password $test_user_password >& /dev/null
 
       # If the user was created then make sure it is confirmed
@@ -83,7 +97,7 @@ then
         aws cognito-idp admin-confirm-sign-up \
         --region $cognito_region \
         --user-pool-id $cognito_user_pool_id \
-        --username user1@sample.com || true
+        --username $user || true
         echo "INFO: Test user $user created."
       else
         echo "INFO: Test user $user already exists."
@@ -95,17 +109,7 @@ then
   fi
   popd
 fi
-echo "CARLOS INSERT"
-set +x
 
-set -e
-for i in "${services[@]}"
-do
-	deploy $i
-done
-
-pushd services
-set +e
 echo """
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
