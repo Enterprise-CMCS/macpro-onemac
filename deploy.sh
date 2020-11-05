@@ -43,11 +43,11 @@ then
   --region $cognito_region \
   --client-id $cognito_user_pool_client_id \
   --username user1@sample.com \
-  --password Passw0rd!
+  --password Passw0rd! || true
   aws cognito-idp admin-confirm-sign-up \
   --region $cognito_region \
   --user-pool-id $cognito_user_pool_id \
-  --username user1@sample.com
+  --username user1@sample.com || true
 else
    echo "ERROR: Missing something"
 fi
