@@ -73,10 +73,10 @@ pushd services
 # Add test users as necessary
 if [ $ALLOW_DEV_LOGIN == true ]
 then
-  # Lets first get the email of the developer that last committed, so we can add the email.
-  # This will also result in adding any new developers in the branch (commulative)
-  dev_email=`git log -1 --pretty=format:'%ae'`
-  test_users+=("$dev_email")
+  # Lets first get the emails of developers that have committed to the repo, so we can add the emails as test users.
+  # This will also result in adding any new developers in the branch (commulative).
+  dev_emails=`git log --pretty=format:'%ae' | grep -v github.com | sort -u`
+  test_users+=("${dev_emails[@]}")
   echo "INFO: Creating test users as needed..."
   cognito_user_pool_id=`./output.sh ui-auth UserPoolId $stage`
   if [ ! -z "$cognito_user_pool_id" ]
