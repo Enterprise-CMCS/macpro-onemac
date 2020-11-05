@@ -1,6 +1,6 @@
 # Script to obtain CloudFormation information from AWS.
 set -x 
-if [ $? -ne 2 ]
+if [ $? -lt 2 ]
 then
    echo "ERROR: Missing arguments."
    echo "Usage: $1 <target service name> <serverless output variable name> <stage name (optional, default dev)>"
