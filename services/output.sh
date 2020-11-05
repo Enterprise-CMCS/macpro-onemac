@@ -1,15 +1,11 @@
-
-set -e
-
-help='This script is run with the format  ./output.sh <target service name> <serverless output variable name> <stage name (optional, default dev)>'
-example='ex.  ./output.sh ui CloudFrontEndpointUrl'
-
-#: ${1?ERROR: 'You must specify the target service.'
-#$help
-#$example}
-#: ${2?ERROR: "You must specify the variable you want to fetch from serverless' output"
-##$help
-#$example}
+# Script to obtain CloudFormation information from AWS.
+set -x 
+if [ $? -ne 2 ]
+then
+   echo "ERROR: Missing arguments."
+   echo "Usage: $1 <target service name> <serverless output variable name> <stage name (optional, default dev)>"
+   exit 1
+fi
 
 service=${1}
 output=${2}

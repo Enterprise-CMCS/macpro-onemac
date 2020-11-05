@@ -34,9 +34,9 @@ install_deps
 
 echo "CARLOS INSERT"
 pushd services
-cognito_region=`sh -x ./output.sh ui-auth Region $stage`
-cognito_user_pool_client_id=`sh ./output.sh ui-auth UserPoolClientId $stage`
-cognito_user_pool_id=`sh ./output.sh ui-auth UserPoolId $stage`
+cognito_region=`./output.sh ui-auth Region $stage`
+cognito_user_pool_client_id=`./output.sh ui-auth UserPoolClientId $stage`
+cognito_user_pool_id=`./output.sh ui-auth UserPoolId $stage`
 if [ ! -z "$cognito_region" -a ! -z "$cognito_user_pool_client_id" -a ! -z "$cognito_user_pool_id" ]
 then
    aws cognito-idp sign-up \
