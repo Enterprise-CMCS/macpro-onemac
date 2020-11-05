@@ -24,11 +24,6 @@ provider:
 
 resources:
   Conditions:
-    CreateEmailConfiguration:
-      Fn::Not:
-        - Fn::Equals:
-          - ""
-          - ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
@@ -40,7 +35,7 @@ resources:
       Properties:
         UserPoolName: ${self:custom.stage}-user-pool
         AdminCreateUserConfig:
-          - AllowAdminCreateUserOnly: true # Disable signup by the user
+          AllowAdminCreateUserOnly: true # Disable signup by the user
         UsernameAttributes:
           - email
         Schema:

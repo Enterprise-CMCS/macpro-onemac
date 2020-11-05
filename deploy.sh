@@ -4,6 +4,15 @@ set -e
 
 stage=${1:-dev}
 
+# These test users are only available in DEV environments.
+test_users=(
+  'user1@sample.com'
+  'user2@sample.com'
+  'user3@sample.com'
+  'user@sample.com'
+  'user5@sample.com'
+)
+
 services=(
   'uploads'
   'app-api'
@@ -39,17 +48,31 @@ cognito_user_pool_client_id=`./output.sh ui-auth UserPoolClientId $stage`
 cognito_user_pool_id=`./output.sh ui-auth UserPoolId $stage`
 if [ ! -z "$cognito_region" -a ! -z "$cognito_user_pool_client_id" -a ! -z "$cognito_user_pool_id" ]
 then
-   aws cognito-idp sign-up \
-  --region $cognito_region \
-  --client-id $cognito_user_pool_client_id \
-  --username user1@sample.com \
-  --password Passw0rd! || true
-  aws cognito-idp admin-confirm-sign-up \
-  --region $cognito_region \
-  --user-pool-id $cognito_user_pool_id \
-  --username user1@sample.com || true
+  echo "Creating test users as needed..."
+  for user in test_users
+  do
+    # Note that when the users already exist then an error is returned, but we will ignore that.
+    aws cognito-idp sign-up \
+    --region $cognito_region \
+    --client-id $cognito_user_pool_client_id \
+    --username user1@sample.com \
+    --password Passw0rd! 
+
+    # If the user was created then make sure it is confirmed
+    if [ $? -eq 0 ]
+    then
+      aws cognito-idp admin-confirm-sign-up \
+      --region $cognito_region \
+      --user-pool-id $cognito_user_pool_id \
+      --username user1@sample.com || true
+      echo "User $user created."
+    else
+      echo "User $user already exists."
+    fi
+  done
 else
-   echo "ERROR: Missing something"
+   echo "ERROR: There was an error obtaining AWS resource information to create users."
+   exit 1
 fi
 popd
 echo "CARLOS INSERT"
