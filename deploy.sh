@@ -4,11 +4,11 @@ stage=${1:-dev}
 
 # These test users are only available in DEV environments.
 test_users=(
-  'user1@samplee.com'
-  'user2@samplee.com'
-  'user3@samplee.com'
-  'user4@samplee.com'
-  'user5@samplee.com'
+  'user1@sample.com'
+  'user2@sample.com'
+  'user3@sample.com'
+  'user4@sample.com'
+  'user5@sample.com'
 )
 
 test_user_password="Passw0rd!"
@@ -48,13 +48,11 @@ deploy() {
 install_deps
 
 # Identify if we need test
-include_test_users=true
-export ALLOW_DEV_LOGIN=true
+export ALLOW_DEV_LOGIN=true # We use this export for the ui-src as well.
 for excluded_stage in ${test_users_exclude_stages[@]}
 do
     if [ $stage == $excluded_stage ]
     then
-       include_test_users=false
        export ALLOW_DEV_LOGIN=false
        echo "INFO: Will not set test users in this branch."
        break
@@ -73,9 +71,8 @@ pushd services
 set +e
 
 # Add test users as necessary
-if [ $include_test_users == true ]
+if [ $ALLOW_DEV_LOGIN == true ]
 then
-  pushd services
   cognito_region=`./output.sh ui-auth Region $stage`
   cognito_user_pool_client_id=`./output.sh ui-auth UserPoolClientId $stage`
   cognito_user_pool_id=`./output.sh ui-auth UserPoolId $stage`
