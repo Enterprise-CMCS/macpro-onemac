@@ -78,15 +78,9 @@ then
   then
     for user in ${test_users[@]}
     do
-      # Note that when the users already exist then an error is returned, but we will ignore that.
+      # We ignore all the errors if the user exists.
       aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user 
-      if [ $? -eq 0 ]
-      then
-        aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $test_user_password --permanent
-        echo "INFO: Test user $user created."
-      else
-        echo "INFO: Test user $user already exists."
-      fi
+      aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $test_user_password --permanent
     done
   else
     echo "ERROR: There was an error obtaining AWS resource information to create users."
