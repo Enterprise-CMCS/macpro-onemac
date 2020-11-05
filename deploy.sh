@@ -59,26 +59,23 @@ do
     fi
 done
 
-# Run deploy
+# Run deploy for each folder
 set -e
 for i in "${services[@]}"
 do
 	deploy $i
 done
-
+set +e
 
 pushd services
-set +e
 
 # Add test users as necessary
 if [ $ALLOW_DEV_LOGIN == true ]
 then
-  cognito_region=`./output.sh ui-auth Region $stage`
-  cognito_user_pool_client_id=`./output.sh ui-auth UserPoolClientId $stage`
+  echo "INFO: Creating test users as needed..."
   cognito_user_pool_id=`./output.sh ui-auth UserPoolId $stage`
-  if [ ! -z "$cognito_region" -a ! -z "$cognito_user_pool_client_id" -a ! -z "$cognito_user_pool_id" ]
+  if [ ! -z "$cognito_user_pool_id" ]
   then
-    echo "INFO: Creating test users as needed..."
     for user in ${test_users[@]}
     do
       # Note that when the users already exist then an error is returned, but we will ignore that.

@@ -41,6 +41,7 @@ function Header(props) {
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
   function renderAccountButtons() {
+    let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (props.isAuthenticated) {
       return (
         <div className="navElements">
@@ -53,7 +54,7 @@ function Header(props) {
             >
               Logout
             </Button>
-            {config.ALLOW_DEV_LOGIN && (
+            {showDevLogin && (
               <Button
                 onClick={() => {
                   Auth.signOut();
@@ -74,7 +75,7 @@ function Header(props) {
           <Button onClick={() => signInWithOkta()} inversed>
             Login
           </Button>
-          {config.ALLOW_DEV_LOGIN && (
+          {showDevLogin && (
             <Button onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
               Development Login
             </Button>
