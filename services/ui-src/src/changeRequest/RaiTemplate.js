@@ -11,6 +11,7 @@ import PropTypes from "prop-types";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
+import PageTitleBar from "../components/PageTitleBar";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -79,8 +80,10 @@ export default function RaiTemplate({
     // Trigger the fetch only if an ID is present.
     if (id) {
       fetchChangeRequest();
+      PageTitleBar.setPageTitleInfo({heading: "Respond to " + raiType + " RAI",text : ""});
     } else {
       setReadOnly(false);
+      PageTitleBar.setPageTitleInfo({heading: "Respond to " + raiType + " RAI",text : ""});
     }
   }, [id]);
 
@@ -134,6 +137,7 @@ export default function RaiTemplate({
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>{raiType} RAI Details</h3>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           {raiType} ID<span className="required-mark">*</span>
         </label>
@@ -167,6 +171,9 @@ export default function RaiTemplate({
           </div>
         )}
         <h3>Attachments</h3>
+        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -177,7 +184,7 @@ export default function RaiTemplate({
             readyCallback={uploadsReadyCallbackFunction}
           ></FileUploader>
         )}
-
+        </div>
         <br />
         <TextField
           name={FIELD_NAMES.SUMMARY}

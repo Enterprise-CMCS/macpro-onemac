@@ -12,6 +12,7 @@ import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import PageTitleBar from "../components/PageTitleBar";
 
 export default function Waiver() {
   // The attachment list
@@ -92,8 +93,12 @@ export default function Waiver() {
     // Trigger the fetch only if an ID is present.
     if (id) {
       fetchChangeRequest();
+
+      PageTitleBar.setPageTitleInfo({heading: "Submit New Waiver Action",text : ""});
     } else {
       setReadOnly(false);
+
+      PageTitleBar.setPageTitleInfo({heading: "Submit New Waiver Action",text : ""});
     }
   }, [id]);
 
@@ -161,7 +166,9 @@ export default function Waiver() {
   return (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
-        <h3>Waiver Submission</h3>
+        <h3>Waiver Action Details</h3>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
         <label htmlFor={FIELD_NAMES.TERRITORY}>
           State/Territory<span className="required-mark">*</span>
         </label>
@@ -210,9 +217,14 @@ export default function Waiver() {
           {renderOptionsList(waiverAuthorityOptions)}
         </select>
         <br />
+        <div className="label-container">
+          <div className="label-lcol">
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
+        </div>
+          <div className="label-rcol"><a href="/FAQ">What is my Waiver Number?</a></div>
+        </div>
         {!isReadOnly &&
           <p className="field-hint">
             Enter the Waiver number
@@ -242,7 +254,11 @@ export default function Waiver() {
             ></input>
           </div>
         )}
+        </div>
         <h3>Attachments</h3>
+        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -253,6 +269,7 @@ export default function Waiver() {
               readyCallback={uploadsReadyCallbackFunction}
             ></FileUploader>
           )}
+          </div>
 
         <br />
         <TextField

@@ -83,7 +83,7 @@ export default function Spa() {
     if (id) {
       fetchChangeRequest();
       
-      PageTitleBar.setPageTitleInfo({heading: "SPA Submission Details",text : ""});
+      PageTitleBar.setPageTitleInfo({heading: "Submit New SPA",text : ""});
     } else {
       setReadOnly(false);
 

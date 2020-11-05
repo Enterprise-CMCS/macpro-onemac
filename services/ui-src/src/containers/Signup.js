@@ -86,6 +86,7 @@ export default function Signup() {
 
     function renderConfirmationForm() {
         return (
+            <div className="form-container">
             <form onSubmit={handleConfirmationSubmit}>
                 <FormGroup controlId="confirmationCode" bsSize="large">
                     <ControlLabel>Confirmation Code</ControlLabel>
@@ -107,6 +108,7 @@ export default function Signup() {
                     Verify
                 </LoaderButton>
             </form>
+            </div>
         );
     }
 

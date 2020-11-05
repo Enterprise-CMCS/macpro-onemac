@@ -23,7 +23,7 @@ export default class PageTitleBar extends Component {
         "You can only use the PageTitleBar once in your application."
       );
     }
-    this.state = { isShown: true, heading: "Test", text: "Test description" };
+    this.state = { isShown: true, heading: "SPA and Waiver Submission Application", text: "" };
   }
 
   /**
