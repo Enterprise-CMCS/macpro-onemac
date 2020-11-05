@@ -39,23 +39,10 @@ resources:
       Type: AWS::Cognito::UserPool
       Properties:
         UserPoolName: ${self:custom.stage}-user-pool
+        AdminCreateUserConfig:
+          - AllowAdminCreateUserOnly: true # Disable signup by the user
         UsernameAttributes:
           - email
-        AutoVerifiedAttributes:
-          - email
-        EmailConfiguration:
-          Fn::If:
-            - CreateEmailConfiguration
-            - EmailSendingAccount: DEVELOPER
-              SourceArn:
-                Fn::Join:
-                  - ''
-                  -
-                    - 'arn:aws:ses:us-east-1:'
-                    - Ref: AWS::AccountId
-                    - ':identity/'
-                    - '${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}'
-            - Ref: AWS::NoValue
         Schema:
           - Name: given_name
             AttributeDataType: String
