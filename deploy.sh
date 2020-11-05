@@ -84,7 +84,8 @@ then
     for user in ${test_users[@]}
     do
       # We ignore all the errors if the user exists.
-      aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user 
+      aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user \
+        --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName
       aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $test_user_password --permanent
     done
   else
