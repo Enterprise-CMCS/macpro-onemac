@@ -47,8 +47,9 @@ deploy() {
 
 install_deps
 
-# Identify if we need test
-export ALLOW_DEV_LOGIN=true # We use this export for the ui-src as well.
+# Identify if we need the test users.
+# Note that we use ALLOW_DEV_LOGIN in ui-src as well to show Dev only login buttons.
+export ALLOW_DEV_LOGIN=true 
 for excluded_stage in ${test_users_exclude_stages[@]}
 do
     if [ $stage == $excluded_stage ]

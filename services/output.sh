@@ -3,7 +3,7 @@
 if [ $# -lt 2 ]
 then
    echo "ERROR: Missing arguments."
-   echo "Usage: $1 <target service name> <serverless output variable name> <stage name (optional, default dev)>"
+   echo "Usage: $1 <service folder> <serverless output variable name> [stage name, defaults to dev]"
    exit 1
 fi
 
