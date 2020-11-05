@@ -4,11 +4,11 @@ stage=${1:-dev}
 
 # These test users are only available in DEV environments.
 test_users=(
-  'user1@sample.com'
-  'user2@sample.com'
-  'user3@sample.com'
-  'user4@sample.com'
-  'user5@sample.com'
+  'user1@samplee.com'
+  'user2@samplee.com'
+  'user3@samplee.com'
+  'user4@samplee.com'
+  'user5@samplee.com'
 )
 
 test_user_password="Passw0rd!"
@@ -85,30 +85,14 @@ then
     for user in ${test_users[@]}
     do
       # Note that when the users already exist then an error is returned, but we will ignore that.
-      set -x
       aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user 
       if [ $? -eq 0 ]
       then
-        aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $test_user_password
+        aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $test_user_password --permanent
+        echo "INFO: Test user $user created."
+      else
+        echo "INFO: Test user $user already exists."
       fi
-      set +x
-#      aws cognito-idp sign-up \
-#      --region $cognito_region \
-#      --client-id $cognito_user_pool_client_id \
-#      --username $user \
-#      --password $test_user_password 
-
-      # If the user was created then make sure it is confirmed
-#      if [ $? -eq 0 ]
-#      then
-#        aws cognito-idp admin-confirm-sign-up \
-#        --region $cognito_region \
-#        --user-pool-id $cognito_user_pool_id \
-#        --username $user || true  # || true here is to ignore any errors.
-#        echo "INFO: Test user $user created."
-#      else
-#        echo "INFO: Test user $user already exists."
-#      fi
     done
   else
     echo "ERROR: There was an error obtaining AWS resource information to create users."
