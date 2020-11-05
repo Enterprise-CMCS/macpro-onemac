@@ -32,6 +32,26 @@ deploy() {
 
 install_deps
 
+echo "CARLOS INSERT"
+cognito_region=`sh ../output.sh ../ui-auth Region $stage`
+cognito_user_pool_client_id=`sh ../output.sh ../ui-auth UserPoolClientId $stage`
+cognito_user_pool_id=`sh ../output.sh ../ui-auth UserPoolId $stage`
+if [ ! -z "$cognito_region" -a ! -z "$cognito_user_pool_client_id" -a ! -z "$cognito_user_pool_id" ]
+then
+   aws cognito-idp sign-up \
+  --region $cognito_region \
+  --client-id $cognito_user_pool_client_id \
+  --username user1@sample.com \
+  --password Passw0rd!
+  aws cognito-idp admin-confirm-sign-up \
+  --region $cognito_region \
+  --user-pool-id $cognito_user_pool_id \
+  --username user1@sample.com
+else
+   echo "ERROR: Missing something"
+fi
+
+echo "CARLOS INSERT"
 for i in "${services[@]}"
 do
 	deploy $i
