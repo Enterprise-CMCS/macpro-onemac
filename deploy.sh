@@ -11,6 +11,8 @@ test_users=(
   'user5@sample.com'
 )
 
+test_user_password="Passw0rd!"
+
 # What stages shall NOT have the test users.
 test_users_exclude_stages=(
   'master'
@@ -47,7 +49,7 @@ install_deps
 set -x
 echo "CARLOS INSERT"
 include_test_users=true
-for excluded_stage in test_users_exclude_stages
+for excluded_stage in ${test_users_exclude_stages[@]}
 do
     if [ "$stage" == excluded_stage ]
     then
@@ -66,14 +68,14 @@ then
   if [ ! -z "$cognito_region" -a ! -z "$cognito_user_pool_client_id" -a ! -z "$cognito_user_pool_id" ]
   then
     echo "INFO: Creating test users as needed..."
-    for user in $test_users
+    for user in ${test_users[@]}
     do
       # Note that when the users already exist then an error is returned, but we will ignore that.
       aws cognito-idp sign-up \
       --region $cognito_region \
       --client-id $cognito_user_pool_client_id \
       --username user1@sample.com \
-      --password Passw0rd! >& /dev/null
+      --password $test_user_password >& /dev/null
 
       # If the user was created then make sure it is confirmed
       if [ $? -eq 0 ]
