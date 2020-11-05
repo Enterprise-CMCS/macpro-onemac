@@ -4,8 +4,8 @@ stage=${1:-dev}
 
 # These test users are only available in DEV environments.
 test_users=(
-  'user1@sample.com'
-  'user2@sample.com'
+  'user1@sample.coms'
+  'user2@sample.coms'
   'user3@sample.com'
   'user4@sample.com'
   'user5@sample.com'
