@@ -1,7 +1,5 @@
 #!/bin/bash
 
-set -e
-
 stage=${1:-dev}
 
 # These test users are only available in DEV environments.
@@ -77,12 +75,14 @@ fi
 popd
 echo "CARLOS INSERT"
 
+set -e
 for i in "${services[@]}"
 do
 	deploy $i
 done
 
 pushd services
+set +e
 echo """
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
