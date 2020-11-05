@@ -1,5 +1,5 @@
 # Script to obtain CloudFormation information from AWS.
-set -x 
+
 if [ $# -lt 2 ]
 then
    echo "ERROR: Missing arguments."

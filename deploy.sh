@@ -7,7 +7,7 @@ test_users=(
   'user1@sample.com'
   'user2@sample.com'
   'user3@sample.com'
-  'user@sample.com'
+  'user4@sample.com'
   'user5@sample.com'
 )
 
@@ -44,7 +44,7 @@ deploy() {
 }
 
 install_deps
-
+set -x
 echo "CARLOS INSERT"
 include_test_users=true
 for excluded_stage in test_users_exclude_stages
@@ -94,6 +94,7 @@ then
   popd
 fi
 echo "CARLOS INSERT"
+set +x
 
 set -e
 for i in "${services[@]}"
