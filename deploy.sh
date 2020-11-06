@@ -63,4 +63,3 @@ echo """
 Application endpoint:  `./services/output.sh services/ui CloudFrontEndpointUrl $stage`
 ------------------------------------------------------------------------------------------------
 """
-popd
