@@ -5,6 +5,7 @@ $image-path: "~@cmsgov/design-system/dist/images";
 
 body {
   @extend .ds-base;
+  width: 100%;
 }
 
 h1 {
@@ -23,6 +24,14 @@ h4 {
   @extend .ds-h4;
 }
 
+.black-text {
+  color: $color-black;
+}
+
+.white-text {
+  color: $color-white;
+}
+
 select, .field {
   @extend .ds-c-field;
 }
@@ -34,6 +43,10 @@ label {
 
 .field-hint {
   @extend .ds-c-field__hint;
+}
+
+ul {
+  @extend .ds-c-list
 }
 
 .uploader {
@@ -126,6 +139,81 @@ input[type="file"] {
     height: 70px;
     width: 70px;
   }
+}
+
+.about {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .section {
+    padding: 100px 0;
+  }
+
+  .section-title {
+    @extend .ds-h2;
+    padding-bottom: 30px;
+    text-align: center;
+  }
+
+  .section-subtitle {
+    @extend .ds-h3;
+  }
+
+  .section-how-it-works {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: $color-gray-lightest;
+  }
+
+  .section-service-types {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .section-support {
+    display: flex;
+    justify-content: center;
+    background-color: $color-primary-darker;
+  }
+}
+
+.info-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: $color-white;
+  border-radius: 3px;
+  border-color: $color-gray-lighter;
+  border-style: solid;
+  border-width: 1px;
+  width: 310px;
+  padding: 35px;
+  margin: 15px;
+}
+
+.circle-single-digit {
+  @extend .ds-h2;
+  width: 40px;
+  height: 40px;
+  color: $color-primary;
+  text-align: center;
+  line-height: 35px;
+  border-radius: 50%;
+  border-style: solid;
+  border-width: 2px;
+  border-color: $color-primary;
+}
+
+.card-content {
+  padding-top: 15px;
+  text-align: center;
+}
+
+.container-step-cards {
+  display: flex;
 }
 
 .dashboard-container {
