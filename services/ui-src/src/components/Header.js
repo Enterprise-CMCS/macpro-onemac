@@ -7,31 +7,26 @@ import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import "./Header.scss";
-import { faLongArrowAltUp } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
  */
 function getSignInUrl() {
-    const authConfig = Auth.configure();
-    const {
-        domain,
-        redirectSignIn,
-        responseType
-    } = authConfig.oauth;
-    const clientId = authConfig.userPoolWebClientId;
-    const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
-    return url;
+  const authConfig = Auth.configure();
+  const { domain, redirectSignIn, responseType } = authConfig.oauth;
+  const clientId = authConfig.userPoolWebClientId;
+  const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
+  return url;
 }
 
 /**
  * Logout the user.
  */
 function logout() {
-        const authConfig = Auth.configure();
-        Auth.signOut();
-        window.location.href = authConfig.oauth.redirectSignOut;
+  const authConfig = Auth.configure();
+  Auth.signOut();
+  window.location.href = authConfig.oauth.redirectSignOut;
 }
 
 /**
@@ -71,10 +66,7 @@ function Header(props) {
       return (
         <div className="navElements">
           <FormLabel inversed>
-            <Button
-              onClick={() => logout()}
-              inversed
-            >
+            <Button onClick={() => logout()} inversed>
               Logout
             </Button>
           </FormLabel>
@@ -83,7 +75,7 @@ function Header(props) {
     } else {
       return (
         <div className="navElements">
-          <Button onClick={() => window.location = getSignInUrl()} inversed>
+          <Button onClick={() => (window.location = getSignInUrl())} inversed>
             Login
           </Button>
           {showDevLogin && (
@@ -113,7 +105,7 @@ function Header(props) {
   }
 
   const authConfig = Auth.configure();
-    console.log(authConfig.oauth);
+  console.log(authConfig.oauth);
 
   return (
     <div className="headerContainer">
