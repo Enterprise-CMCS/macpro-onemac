@@ -10,7 +10,6 @@ import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
 import { useHistory } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
-import "./Dashboard.scss";
 
 /**
  * Component containing dashboard
@@ -100,6 +99,7 @@ export default function Dashboard() {
 
   // Render the dashboard
   return (
+    <div className="form-card">
     <div className="dashboard-container">
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
@@ -151,6 +151,7 @@ export default function Dashboard() {
             </div>
           )}
       </div>
+    </div>
     </div>
   );
 }

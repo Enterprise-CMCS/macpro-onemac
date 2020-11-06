@@ -83,7 +83,7 @@ export default function Spa() {
     if (id) {
       fetchChangeRequest();
       
-      PageTitleBar.setPageTitleInfo({heading: "Submit New SPA",text : ""});
+      PageTitleBar.setPageTitleInfo({heading: "SPA Submission Details",text : ""});
     } else {
       setReadOnly(false);
 
@@ -174,7 +174,6 @@ export default function Spa() {
           </option>
           {renderTerritoryList()}
         </select>
-        <br />
         <div className="label-container">
           <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">*</span>
@@ -199,7 +198,6 @@ export default function Spa() {
         ></input>
         {isReadOnly && (
           <div>
-            <br />
             <label htmlFor="createdAt">Submitted on</label>
             <input
               className="field"
@@ -215,7 +213,7 @@ export default function Spa() {
         <h3>Attachments</h3>
         <p className="req-message">Maximum file size of 50MB.</p>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-        <div className="form-card">
+        <div className="upload-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -227,7 +225,7 @@ export default function Spa() {
           ></FileUploader>
         )}
         </div>
-        <br />
+        <div className="summary-box">
         <TextField
           name={FIELD_NAMES.SUMMARY}
           label="Summary"
@@ -237,9 +235,9 @@ export default function Spa() {
           disabled={isReadOnly}
           value={changeRequest.summary}
         ></TextField>
+        </div>
         {!isReadOnly && (
           <LoaderButton
-            block
             type="submit"
             bsSize="large"
             bsStyle="primary"

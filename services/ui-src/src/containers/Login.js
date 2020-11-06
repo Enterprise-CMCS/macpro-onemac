@@ -5,8 +5,7 @@ import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import AlertBar from "../components/AlertBar"
-import {ALERTS_MSG} from "../libs/alert-messages";
-import "./Login.css";
+import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function Login() {
     const { userHasAuthenticated } = useAppContext();
@@ -36,7 +35,8 @@ export default function Login() {
     }
 
     return (
-        <div className="Login">
+        <div className="form-container">
+            <div className="form-card">
             <form onSubmit={handleSubmit}>
                 <FormGroup controlId="email" bsSize="large">
                     <ControlLabel>Email</ControlLabel>
@@ -66,5 +66,6 @@ export default function Login() {
                 </LoaderButton>
             </form>
         </div>
+        </div >
     );
 }

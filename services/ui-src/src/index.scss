@@ -1,5 +1,8 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
+$input-border-color: #AEB0B5;
+$input-border-radius: 3px;
+
 @import "@cmsgov/design-system/dist/scss/index";
 
 
@@ -18,6 +21,7 @@ h2 {
 
 h3 {
   @extend .ds-h3;
+  @extend .ds-u-margin-top--7;
 }
 
 h4 {
@@ -30,7 +34,6 @@ select, .field {
 
 label {
   @extend .ds-c-label;
-  @extend .ds-u-margin-top--0;
 }
 
 .field-hint {
@@ -66,10 +69,14 @@ label {
     td {
       text-align: left;
       padding: 8px;
+      border-top: 2px #333;
     }
-
-    tr:nth-child(even) {
-      background-color: #f2f2f2;
+    tr {
+      height: 72px;
+      border-bottom: 1px solid #5B616B;
+    }
+    tr:nth-last-child(1) {
+      border-bottom: none;
     }
   }
 
@@ -89,11 +96,11 @@ label {
     // Make the label look like a button
     @extend .ds-c-button;
     @extend .ds-c-button--primary;
-    margin-right: 1rem;
-    border-top: 1px solid #cccccc;
-    border-right: 1px solid #333333;
-    border-bottom: 1px solid #333333;
-    border-left: 1px solid #cccccc;
+    @extend .ds-u-margin-right--7;
+    @extend .ds-u-radius;
+    font-weight: 400;
+    font-size: 14px;
+    margin-top: 0px;
   }
 
   .uploader-controls-cell {
@@ -127,7 +134,6 @@ input[type="file"] {
 }
 .form-container {
   @extend .app-bar;
-  @extend .ds-u-margin-top--7;
   @extend .ds-u-margin-left--7;
   @extend .ds-u-margin-right--7;
   @extend .ds-u-display--flex;
@@ -145,7 +151,10 @@ input[type="file"] {
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
 
-  }  
+    label {
+      margin-top:10px;
+    }
+  }
   .label-container {
     @extend .ds-l-row;
     width: 460px;
@@ -154,13 +163,14 @@ input[type="file"] {
   .label-lcol {
     @extend .ds-l-col--4;
     @extend .ds-c-label;
-    margin-top: 0px;
   }
   .label-rcol {
     @extend .ds-l-col--6;
     @extend .ds-u-margin-left--auto;
+    @extend .ds-u-padding-top--4;
     padding-right: 0px;
     text-align: right;
+    font-weight: 400;
   }
 }
 
@@ -168,13 +178,22 @@ input[type="file"] {
   height: 300px;
   font-size: 2rem;
   width: 100%;
-  max-width: 100%
+  max-width: 100%;
+}
+
+.upload-card {
+  background-color: $color-white;
+  @extend .ds-l-col--auto;
+  @extend .ds-u-border-right--2;
+  @extend .ds-u-border-bottom--2;
+  @extend .ds-u-padding-left--2;
 }
 
 .dashboard-container {
   @extend .app-bar;
   background-color: $color-white;
   @extend .ds-u-padding-top--7;
+  @extend .ds-u-padding-bottom--7;
 
   .dashboard-title {
     @extend .ds-l-col--12;
@@ -220,6 +239,16 @@ input[type="file"] {
   }
   .list-group-item {
     @extend .ds-u-text-decoration--none;
+  }
+  .submissions {
+    .h4 {
+        font-weight: 600;
+        line-height: 1.5;
+    }
+
+    p {
+        color: $color-gray;
+    }
   }
 }
 
@@ -296,4 +325,11 @@ input[type="file"] {
   &:focus {
       color: rgba($color-base-inverse, 0.6);
   }
+}
+.summary-box label {
+  @extend .ds-h3;
+  @extend .ds-u-margin-top--5;
+}
+.LoaderButton {
+  @extend .ds-u-margin-top--5;
 }

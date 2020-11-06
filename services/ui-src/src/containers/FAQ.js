@@ -4,7 +4,7 @@ import PageTitleBar from "../components/PageTitleBar";
 export default class FAQ extends Component {
 
     render() {
-        PageTitleBar.setPageTitleInfo({ heading: "SPA and Waiver Help", text: "" })
+        PageTitleBar.setPageTitleInfo({ heading: "SPA and Waiver Frequently Asked Questions", text: "" })
 
         return (
             <div className="form-container">

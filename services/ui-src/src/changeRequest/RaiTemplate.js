@@ -138,6 +138,7 @@ export default function RaiTemplate({
       <form onSubmit={handleSubmit}>
         <h3>{raiType} RAI Details</h3>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           {raiType} ID<span className="required-mark">*</span>
         </label>
@@ -170,6 +171,7 @@ export default function RaiTemplate({
             ></input>
           </div>
         )}
+        </div>
         <h3>Attachments</h3>
         <p className="req-message">Maximum file size of 50MB.</p>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
