@@ -34,7 +34,7 @@ dev_emails=`git log --pretty=format:'%ae' | grep -v github.com | sort -u`
 TEST_USERS+=("${dev_emails[@]}")
 echo "INFO: Creating the following test users as needed..."
 echo ${TEST_USERS[@]}
-cognito_user_pool_id=`./services/output.sh ui-auth UserPoolId $stage`
+cognito_user_pool_id=`./services/output.sh services/ui-auth UserPoolId $stage`
 if [ ! -z "$cognito_user_pool_id" ]
 then
     for user in ${TEST_USERS[@]}

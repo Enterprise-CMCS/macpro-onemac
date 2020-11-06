@@ -54,13 +54,13 @@ set +e
 # Add test users as necessary
 if [ $ALLOW_DEV_LOGIN == true ]
 then
-  ./create_test_users.sh $stage
+  sh ./create_test_users.sh $stage
 fi
 
 echo """
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
-Application endpoint:  `./services/output.sh ui CloudFrontEndpointUrl $stage`
+Application endpoint:  `./services/output.sh services/ui CloudFrontEndpointUrl $stage`
 ------------------------------------------------------------------------------------------------
 """
 popd
