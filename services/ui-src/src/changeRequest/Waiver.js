@@ -226,7 +226,7 @@ export default function Waiver() {
           required={!isReadOnly}
           id={FIELD_NAMES.TRANSMITTAL_NUMBER}
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          placeholder="AA.####.R##.##"
+          placeholder="SS.XX.RXX.MXX"
           onChange={handleInputChange}
           disabled={isReadOnly}
           value={changeRequest.transmittalNumber}

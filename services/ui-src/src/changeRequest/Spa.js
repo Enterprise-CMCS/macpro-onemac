@@ -174,7 +174,7 @@ export default function Spa() {
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
           onChange={handleInputChange}
           disabled={isReadOnly}
-          placeholder="AA-20-####"
+          placeholder="SS-YY-NNNN-xxxx"
           value={changeRequest.transmittalNumber}
         ></input>
         {isReadOnly && (
