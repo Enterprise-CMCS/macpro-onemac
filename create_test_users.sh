@@ -1,4 +1,4 @@
-#!/bin/bash
+
 
 # Script to create a group of test users for dev testing.  This script uses
 # a set list of fake test users and gets a list of developer emails that 
