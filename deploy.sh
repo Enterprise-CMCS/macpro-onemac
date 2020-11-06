@@ -82,9 +82,11 @@ then
       for user in ${TEST_USERS[@]}
       do
           # We ignore all the errors if the user exists.
+          set +e
           aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user \
           --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName
           aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $TEST_USER_PASSWORD --permanent
+          set -e
       done
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
