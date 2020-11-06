@@ -6,7 +6,7 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import AlertBar from "../components/AlertBar"
 import {ALERTS_MSG} from "../libs/alert-messages";
-import "./Login.css";
+import "./DevLogin.css";
 
 export default function DevLogin() {
     const { userHasAuthenticated } = useAppContext();

@@ -6,6 +6,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import config from './utils/config';
+import { ROUTES } from "./Routes";
 
 let amplifyConfig = {
     Auth: {
@@ -16,8 +17,8 @@ let amplifyConfig = {
         userPoolWebClientId: config.cognito.APP_CLIENT_ID,
         oauth: {
             domain: config.cognito.APP_CLIENT_DOMAIN,
-            redirectSignIn: config.cognito.REDIRECT_SIGNIN,
-            redirectSignOut: config.cognito.REDIRECT_SIGNOUT,
+            redirectSignIn: window.location.origin + ROUTES.DASHBOARD,
+            redirectSignOut: window.location.origin,
             scope: ['email', 'openid','aws.cognito.signin.user.admin', 'profile'],
             responseType: 'token'
         }

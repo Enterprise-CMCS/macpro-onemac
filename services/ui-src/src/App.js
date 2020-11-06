@@ -27,7 +27,7 @@ function App() {
       console.log(JSON.stringify(user.signInUserSession.idToken.payload.given_name))
       userHasAuthenticated(true);
     } catch (error) {
-      if (error !== "No current user") {
+      if (error !== "not authenticated") {
         console.log(
             "There was an error while loading the user information.",
             error

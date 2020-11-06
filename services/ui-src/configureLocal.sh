@@ -50,7 +50,8 @@ echo "Using s3_attachments_bucket_name: $s3_attachments_bucket_name"
 if [ -z "$cognito_region" ] || \
    [ -z "$cognito_identity_pool_id" ] || \
    [ -z "$cognito_user_pool_id" ] || \
-   [ -z "$cognito_client_id" ] || \
+   [ -z "$cognito_user_pool_client_id" ] || \
+   [ -z "$cognito_user_pool_client_domain" ] || \
    [ -z "$s3_attachments_bucket_region" ] || \
    [ -z "$s3_attachments_bucket_name" ]
 then
@@ -67,13 +68,11 @@ export COGNITO_IDENTITY_POOL_ID=$cognito_identity_pool_id
 export COGNITO_USER_POOL_ID=$cognito_user_pool_id
 export COGNITO_USER_POOL_CLIENT_ID=$cognito_user_pool_client_id
 export COGNITO_USER_POOL_CLIENT_DOMAIN=$cognito_user_pool_client_domain
-export COGNITO_REDIRECT_SIGNIN=http://localhost:3000/
-export COGNITO_REDIRECT_SIGNOUT=http://localhost:3000/
 export S3_ATTACHMENTS_BUCKET_REGION=$s3_attachments_bucket_region
 export S3_ATTACHMENTS_BUCKET_NAME=$s3_attachments_bucket_name
 export ALLOW_DEV_LOGIN=true
 export IS_OFFLINE=true
 
-./env.sh
+bash -x ./env.sh
 
 echo "SUCCESS: Updated environment information."

@@ -3,11 +3,41 @@ import { Link, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button, FormLabel } from "@cmsgov/design-system";
 import { ROUTES } from "../Routes";
-import { signInWithOkta } from "../containers/Login";
 import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import "./Header.scss";
+
+/**
+ * Get the sign in URL used with OKTA.
+ * @returns the signin URL
+ */
+function getSignInUrl() {
+    const authConfig = Auth.configure();
+    const {
+        domain,
+        redirectSignIn,
+        responseType
+    } = authConfig.oauth;
+    const clientId = authConfig.userPoolWebClientId;
+    const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
+    return url;
+}
+
+/**
+ * Get the sign out URL used with OKTA.
+ * @returns the signout URL
+ */
+function getSignOutUrl() {
+    const authConfig = Auth.configure();
+    const {
+        domain,
+        redirectSignOut
+    } = authConfig.oauth;
+    const clientId = authConfig.userPoolWebClientId;
+    const url = `https://${domain}/logout?client_id=${clientId}&redirect_uri=${redirectSignOut}`;
+    return url;
+}
 
 /**
  * Component containing header
@@ -47,9 +77,7 @@ function Header(props) {
         <div className="navElements">
           <FormLabel inversed>
             <Button
-              onClick={() => {
-                Auth.signOut();
-              }}
+              onClick={() => window.location = getSignOutUrl()}
               inversed
             >
               Logout
@@ -72,7 +100,7 @@ function Header(props) {
     } else {
       return (
         <div className="navElements">
-          <Button onClick={() => signInWithOkta()} inversed>
+          <Button onClick={() => window.location = getSignInUrl()} inversed>
             Login
           </Button>
           {showDevLogin && (
@@ -100,6 +128,9 @@ function Header(props) {
       </div>
     );
   }
+
+  const authConfig = Auth.configure();
+    console.log(authConfig.oauth);
 
   return (
     <div className="headerContainer">
