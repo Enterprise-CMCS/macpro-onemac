@@ -7,6 +7,7 @@ import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import "./Header.scss";
+import { faLongArrowAltUp } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -35,7 +36,7 @@ function getSignOutUrl() {
         redirectSignOut
     } = authConfig.oauth;
     const clientId = authConfig.userPoolWebClientId;
-    const url = `https://${domain}/logout?client_id=${clientId}&redirect_uri=${redirectSignOut}`;
+    const url = `https://${domain}/logout?client_id=${clientId}&logout_uri=${redirectSignOut}`;
     return url;
 }
 
@@ -77,7 +78,11 @@ function Header(props) {
         <div className="navElements">
           <FormLabel inversed>
             <Button
-              onClick={() => window.location = getSignOutUrl()}
+              onClick={() => {
+                Auth.signOut();
+                window.location.href =
+                  window.location.protocol + "//" + window.location.hostname;
+              }}
               inversed
             >
               Logout
