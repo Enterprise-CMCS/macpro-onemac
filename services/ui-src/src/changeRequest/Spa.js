@@ -12,6 +12,7 @@ import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import { renderOptionsList } from "../utils/form-utils";
 
 export default function Spa() {
   // The attachment list
@@ -105,7 +106,8 @@ export default function Spa() {
 
       // Check to see if the required fields are provided
       setIsFormReady(
-        updatedRecord.transmittalNumber && updatedRecord.territory
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
+          updatedRecord[FIELD_NAMES.TERRITORY]
       );
     }
   }
@@ -132,17 +134,6 @@ export default function Spa() {
     }
   }
 
-  function renderTerritoryList() {
-    let optionsList = territoryList.map((item, i) => {
-      return (
-        <option key={i} value={item.value}>
-          {item.label}
-        </option>
-      );
-    });
-    return optionsList;
-  }
-
   // Render the component.
   return (
     <div className="form-container">
@@ -164,7 +155,7 @@ export default function Spa() {
             {" "}
             -- select a territory --{" "}
           </option>
-          {renderTerritoryList()}
+          {renderOptionsList(territoryList)}
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
@@ -188,14 +179,14 @@ export default function Spa() {
         {isReadOnly && (
           <div>
             <br />
-            <label htmlFor="createdAt">Submitted on</label>
+            <label htmlFor="submittedAt">Submitted on</label>
             <input
               className="field"
               type="text"
-              id="createdAt"
-              name="createdAt"
+              id="submittedAt"
+              name="submittedAt"
               disabled
-              value={formatDate(changeRequest.createdAt)}
+              value={formatDate(changeRequest.submittedAt)}
             ></input>
           </div>
         )}

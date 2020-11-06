@@ -103,7 +103,7 @@ export default function RaiTemplate({
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber);
+      setIsFormReady(updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER]);
     }
   }
 
@@ -155,14 +155,14 @@ export default function RaiTemplate({
         {isReadOnly && (
           <div>
             <br />
-            <label htmlFor="createdAt">Submitted on</label>
+            <label htmlFor="submittedAt">Submitted on</label>
             <input
               className="field"
               type="text"
-              id="createdAt"
-              name="createdAt"
+              id="submittedAt"
+              name="submittedAt"
               disabled
-              value={formatDate(changeRequest.createdAt)}
+              value={formatDate(changeRequest.submittedAt)}
             ></input>
           </div>
         )}

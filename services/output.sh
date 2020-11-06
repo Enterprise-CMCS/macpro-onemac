@@ -15,4 +15,14 @@ if [ "$output" == "url" ]; then
   output="CloudFrontEndpointUrl"
 fi
 
-cd $service && serverless info --stage $stage -v | sed -e '1,/^Stack Outputs/d' -e '$d' | sed -n -e "s/^.*$output: //p" && cd ..
+service_output=`cd $service && serverless info --stage $stage -v`
+
+if [ $? -ne 0 ]
+then
+  >&2 echo "ERROR trying to obtain serverless app information".
+  >&2 echo "$service_output"
+  exit 1
+else
+  echo "$service_output" | sed -e '1,/^Stack Outputs/d' -e '$d' | sed -n -e "s/^.*$output: //p"
+fi
+
