@@ -10,6 +10,12 @@ services=(
   'ui-src'
 )
 
+# What stages shall NOT have the test users.
+test_users_exclude_stages=(
+  'master'
+  'production'
+)
+
 install_deps() {
   if [ "$CI" == "true" ]; then # If we're in a CI system
     if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
@@ -49,12 +55,11 @@ for i in "${services[@]}"
 do
 	deploy $i
 done
-set +e
 
 # Add test users as necessary
 if [ $ALLOW_DEV_LOGIN == true ]
 then
-  sh ./create_test_users.sh $stage
+  bash ./create_test_users.sh $stage
 fi
 
 echo """

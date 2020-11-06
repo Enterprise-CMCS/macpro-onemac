@@ -22,12 +22,6 @@ TEST_USERS=(
 
 TEST_USER_PASSWORD="Passw0rd!"
 
-# What stages shall NOT have the test users.
-test_users_exclude_stages=(
-  'master'
-  'production'
-)
-
 # Lets first get the emails of developers that have committed to the repo, so we can add the emails as test users.
 # This will also result in adding any new developers in the branch (cumulative).
 dev_emails=`git log --pretty=format:'%ae' | grep -v github.com | sort -u`
