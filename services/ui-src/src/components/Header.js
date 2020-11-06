@@ -26,18 +26,12 @@ function getSignInUrl() {
 }
 
 /**
- * Get the sign out URL used with OKTA.
- * @returns the signout URL
+ * Logout the user.
  */
-function getSignOutUrl() {
-    const authConfig = Auth.configure();
-    const {
-        domain,
-        redirectSignOut
-    } = authConfig.oauth;
-    const clientId = authConfig.userPoolWebClientId;
-    const url = `https://${domain}/logout?client_id=${clientId}&logout_uri=${redirectSignOut}`;
-    return url;
+function logout() {
+        const authConfig = Auth.configure();
+        Auth.signOut();
+        window.location.href = authConfig.oauth.redirectSignOut;
 }
 
 /**
@@ -78,27 +72,11 @@ function Header(props) {
         <div className="navElements">
           <FormLabel inversed>
             <Button
-              onClick={() => {
-                Auth.signOut();
-                window.location.href =
-                  window.location.protocol + "//" + window.location.hostname;
-              }}
+              onClick={() => logout()}
               inversed
             >
               Logout
             </Button>
-            {showDevLogin && (
-              <Button
-                onClick={() => {
-                  Auth.signOut();
-                  window.location.href =
-                    window.location.protocol + "//" + window.location.hostname;
-                }}
-                inversed
-              >
-                Dev Logout
-              </Button>
-            )}
           </FormLabel>
         </div>
       );
