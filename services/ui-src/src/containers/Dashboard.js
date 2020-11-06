@@ -4,6 +4,7 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import AlertBar from "../components/AlertBar";
+import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
 import { useHistory } from "react-router-dom";
@@ -136,19 +137,17 @@ export default function Dashboard() {
       </div>
       <div className="dashboard-right-col">
       <div className="action-title">Your SPA and Waiver Submissions</div>
-        {isLoading ? (
-          <div className="loading">Please wait while we fetch your submissions...</div>
-        ) : (
-            <div>
-              {changeRequestList.length > 0 ? (
-                <ListGroup>
-                  {renderChangeRequestList(changeRequestList)}
-                </ListGroup>
-              ) : (
-                  <div className="empty-list">You have no submissions yet</div>
-                )}
-            </div>
-          )}
+        <LoadingScreen isLoading={isLoading}>
+          <div>
+            {changeRequestList.length > 0 ? (
+              <ListGroup>
+                {renderChangeRequestList(changeRequestList)}
+              </ListGroup>
+            ) : (
+              <div className="empty-list">You have no submissions yet</div>
+            )}
+          </div>
+        </LoadingScreen>
       </div>
     </div>
   );

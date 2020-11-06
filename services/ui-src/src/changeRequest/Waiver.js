@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
+import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -55,8 +56,8 @@ export default function Waiver() {
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
 
-  // True if we are currently submitting the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form or on inital load of the form
+  const [isLoading, setIsLoading] = useState(true);
 
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
@@ -89,18 +90,22 @@ export default function Waiver() {
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-        setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
+        setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      setIsLoading(false);
     }
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      setReadOnly(true);
       fetchChangeRequest();
     } else {
       setReadOnly(false);
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -154,131 +159,151 @@ export default function Waiver() {
     }
   }
 
-  // Render the component.
+  function renderOptionsList(theList) {
+    let optionsList = theList.map((item, i) => {
+      return (
+        <option key={i} value={item.value}>
+          {item.label}
+        </option>
+      );
+    });
+    return optionsList;
+  }
+
+  /**
+   * Get props for the select component dependent on the value of isReadOnly.
+   * Note: The defaultValue prop should NOT be set when the form is read only due to the following warning:
+   *   "Select elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both).
+   *    Decide between using a controlled or uncontrolled select element and remove one of these props."
+   * @param {String} id an identifier used to set select params
+   * @param {String} value the display text in select params
+   */
+  function getSelectProps(id, value) {
+    const defaultSelectProps = {
+      id,
+      name: id,
+      value
+    }
+
+    let selectProps = {}
+
+    if (!isReadOnly) {
+      selectProps = {
+        defaultValue: "none-selected",
+        onChange: handleInputChange,
+        required: true,
+        ...defaultSelectProps
+      }
+    } else {
+      selectProps = {
+        disabled: true,
+        ...defaultSelectProps
+      }
+    }
+
+    return selectProps
+  }
+
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h3>Waiver Submission</h3>
-        <label htmlFor={FIELD_NAMES.TERRITORY}>
-          State/Territory<span className="required-mark">*</span>
-        </label>
-        <select
-          id={FIELD_NAMES.TERRITORY}
-          name={FIELD_NAMES.TERRITORY}
-          required={!isReadOnly}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.territory}
-          defaultValue="none-selected"
-        >
-          <option disabled value="none-selected">
-            {" "}
-            -- select a territory --{" "}
-          </option>
-          {renderOptionsList(territoryList)}
-        </select>
-        <br />
-        <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
-          Action Type<span className="required-mark">*</span>
-        </label>
-        <select
-          id={FIELD_NAMES.ACTION_TYPE}
-          name={FIELD_NAMES.ACTION_TYPE}
-          required={!isReadOnly}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.actionType}
-          defaultValue="none-selected"
-        >
-          <option disabled value="none-selected">
-            {" "}
-            -- select an action type --{" "}
-          </option>
-          {renderOptionsList(actionTypeOptions)}
-        </select>
-        <br />
-        <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
-          Waiver Authority<span className="required-mark">*</span>
-        </label>
-        <select
-          id={FIELD_NAMES.WAIVER_AUTHORITY}
-          name={FIELD_NAMES.WAIVER_AUTHORITY}
-          required={!isReadOnly}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.waiverAuthority}
-          defaultValue="none-selected"
-        >
-          <option disabled value="none-selected">
-            {" "}
-            -- select a waiver authority --{" "}
-          </option>
-          {renderOptionsList(waiverAuthorityOptions)}
-        </select>
-        <br />
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          Waiver Number<span className="required-mark">*</span>
-        </label>
-        {!isReadOnly && <p className="field-hint">Enter the Waiver number</p>}
-        <input
-          className="field"
-          type="text"
-          required={!isReadOnly}
-          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.transmittalNumber}
-        ></input>
-        {isReadOnly && (
-          <div>
+    <LoadingScreen isLoading={isLoading}>
+      {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>Waiver Submission</h3>
+            <label htmlFor={FIELD_NAMES.TERRITORY}>
+              State/Territory<span className="required-mark">*</span>
+            </label>
+            <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+              <option disabled value="none-selected">-- select a territory --</option>
+              {renderOptionsList(territoryList)}
+            </select>
             <br />
-            <label htmlFor="submittedAt">Submitted on</label>
+            <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
+              Action Type<span className="required-mark">*</span>
+            </label>
+            <select {...getSelectProps(FIELD_NAMES.ACTION_TYPE, changeRequest.actionType)}>
+              <option disabled value="none-selected">-- select an action type --</option>
+              {renderOptionsList(actionTypeOptions)}
+            </select>
+            <br />
+            <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
+              Waiver Authority<span className="required-mark">*</span>
+            </label>
+            <select {...getSelectProps(FIELD_NAMES.WAIVER_AUTHORITY, changeRequest.waiverAuthority)}>
+              <option disabled value="none-selected">-- select a waiver authority --</option>
+              {renderOptionsList(waiverAuthorityOptions)}
+            </select>
+            <br />
+            <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+              Waiver Number<span className="required-mark">*</span>
+            </label>
+            {!isReadOnly &&
+              <p className="field-hint">
+                Enter the Waiver number
+              </p>
+            }
             <input
               className="field"
               type="text"
-              id="submittedAt"
-              name="submittedAt"
-              disabled
-              value={formatDate(changeRequest.submittedAt)}
+              required={!isReadOnly}
+              id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.transmittalNumber}
             ></input>
-          </div>
-        )}
-        <h3>Attachments</h3>
-        {isReadOnly ? (
-          <FileList uploadList={changeRequest.uploads}></FileList>
-        ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
-
-        <br />
-        <TextField
-          name={FIELD_NAMES.SUMMARY}
-          label="Summary"
-          fieldClassName="summary-field"
-          multiline
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.summary}
-        ></TextField>
-        {!isReadOnly && (
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!isFormReady || !areUploadsReady}
-          >
-            Submit
-          </LoaderButton>
-        )}
-      </form>
-    </div>
+            {isReadOnly && (
+              <div>
+                <br />
+                <label htmlFor="submittedAt">Submitted on</label>
+                <input
+                  className="field"
+                  type="text"
+                  id="submittedAt"
+                  name="submittedAt"
+                  disabled
+                  value={formatDate(changeRequest.submittedAt)}
+                ></input>
+              </div>
+            )}
+            <h3>Attachments</h3>
+            {isReadOnly ? (
+              <FileList uploadList={changeRequest.uploads} />
+            ) : (
+              <FileUploader
+                ref={uploader}
+                requiredUploads={requiredUploads}
+                optionalUploads={optionalUploads}
+                readyCallback={uploadsReadyCallbackFunction}
+              />
+            )}
+            <br />
+            <TextField
+              name={FIELD_NAMES.SUMMARY}
+              label="Summary"
+              fieldClassName="summary-field"
+              multiline
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.summary}
+            />
+            {!isReadOnly && (
+              <LoaderButton
+                block
+                type="submit"
+                bsSize="large"
+                bsStyle="primary"
+                isLoading={isLoading}
+                disabled={!isFormReady || !areUploadsReady}
+              >
+                Submit
+              </LoaderButton>
+            )}
+          </form>
+        </div>
+      ) : null}
+    </LoadingScreen>
   );
 }
