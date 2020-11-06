@@ -64,7 +64,7 @@ resources:
           - openid
           - profile
         CallbackURLs:
-          - ${self:custom.application_endpoint_url}
+          - ${self:custom.application_endpoint_url}/dashboard
           - http://localhost:3000/
         DefaultRedirectURI: ${self:custom.application_endpoint_url}
         ExplicitAuthFlows:
