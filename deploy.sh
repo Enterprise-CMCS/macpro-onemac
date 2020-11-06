@@ -59,7 +59,7 @@ done
 # Add test users as necessary
 if [ $ALLOW_DEV_LOGIN == true ]
 then
-  bash ./create_test_users.sh $stage
+  ./create_test_users.sh $stage
 fi
 
 echo """
