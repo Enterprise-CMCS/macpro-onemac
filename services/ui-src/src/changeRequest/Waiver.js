@@ -219,14 +219,13 @@ export default function Waiver() {
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
-        {!isReadOnly && <p className="field-hint">Enter the Waiver number</p>}
+        {!isReadOnly && <p className="field-hint">Enter the Waiver number: SS.XX.RXX.MXX</p>}
         <input
           className="field"
           type="text"
           required={!isReadOnly}
           id={FIELD_NAMES.TRANSMITTAL_NUMBER}
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          placeholder="SS.XX.RXX.MXX"
           onChange={handleInputChange}
           disabled={isReadOnly}
           value={changeRequest.transmittalNumber}

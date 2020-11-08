@@ -163,7 +163,7 @@ export default function Spa() {
         </label>
         {!isReadOnly && (
           <p className="field-hint">
-            Enter the State Plan Amendment transmittal number
+            Enter the State Plan Amendment transmittal number: SS-YY-NNNN-xxxx
           </p>
         )}
         <input
@@ -174,7 +174,6 @@ export default function Spa() {
           name={FIELD_NAMES.TRANSMITTAL_NUMBER}
           onChange={handleInputChange}
           disabled={isReadOnly}
-          placeholder="SS-YY-NNNN-xxxx"
           value={changeRequest.transmittalNumber}
         ></input>
         {isReadOnly && (
