@@ -159,11 +159,11 @@ export default function Spa() {
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          SPA ID<span className="required-mark">*</span>
+          SPA ID<span className="required-mark">* SS-YY-NNNN-xxxx</span>
         </label>
         {!isReadOnly && (
-          <p className="field-hint">
-            Enter the State Plan Amendment transmittal number: SS-YY-NNNN-xxxx
+          <p className=".ds-c-field__hint">
+            Enter the State Plan Amendment transmittal number
           </p>
         )}
         <input

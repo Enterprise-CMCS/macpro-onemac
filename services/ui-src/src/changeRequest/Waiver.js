@@ -217,9 +217,9 @@ export default function Waiver() {
         </select>
         <br />
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          Waiver Number<span className="required-mark">*</span>
+          Waiver Number<span className="required-mark">* SS.XX.RXX.MXX</span>
         </label>
-        {!isReadOnly && <p className="field-hint">Enter the Waiver number: SS.XX.RXX.MXX</p>}
+        {!isReadOnly && <p className="field-hint">Enter the Waiver number</p>}
         <input
           className="field"
           type="text"
