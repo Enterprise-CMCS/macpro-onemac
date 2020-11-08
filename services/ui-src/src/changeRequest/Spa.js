@@ -158,7 +158,7 @@ export default function Spa() {
           {renderOptionsList(territoryList)}
         </select>
         <br />
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+        <label className=".ds-c-field__hint" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           SPA ID<span className="required-mark">* SS-YY-NNNN-xxxx</span>
         </label>
         {!isReadOnly && (

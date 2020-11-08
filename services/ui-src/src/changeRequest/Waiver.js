@@ -216,7 +216,7 @@ export default function Waiver() {
           {renderOptionsList(waiverAuthorityOptions)}
         </select>
         <br />
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+        <label className=".ds-c-field__hint" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">* SS.XX.RXX.MXX</span>
         </label>
         {!isReadOnly && <p className="field-hint">Enter the Waiver number</p>}
