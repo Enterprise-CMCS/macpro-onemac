@@ -159,7 +159,7 @@ export default function Spa() {
         </select>
         <br />
         <label className=".ds-c-field__hint" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          SPA ID<span className="required-mark">* SS-YY-NNNN-xxxx</span>
+          SPA ID: SS-YY-NNNN-xxxx
         </label>
         {!isReadOnly && (
           <p className=".ds-c-field__hint">
