@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { Auth } from "aws-amplify";
 
 import Routes from "./Routes";
 import Header from "./components/Header";
@@ -7,30 +6,30 @@ import AlertBar from "./components/AlertBar";
 import { AppContext } from "./libs/contextLib";
 import { useHistory } from "react-router-dom";
 
+import {Auth} from "aws-amplify";
+
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
   const [isAuthenticated, userHasAuthenticated] = useState(false);
 
   useEffect(() => {
     onLoad();
-  }, []);
+  });
 
   async function onLoad() {
     try {
-      await Auth.currentSession();
+      await Auth.currentAuthenticatedUser();
       userHasAuthenticated(true);
     } catch (error) {
-      if (error !== "No current user") {
+      if (error !== "not authenticated") {
         console.log(
-          "There was an error while loading the user information.",
-          error
+            "There was an error while loading the user information.",
+            error
         );
       }
     }
-
     setIsAuthenticating(false);
   }
-
   // Dismiss the alert when the page changes.
   useHistory().listen((location, action) => {
     AlertBar.dismiss();

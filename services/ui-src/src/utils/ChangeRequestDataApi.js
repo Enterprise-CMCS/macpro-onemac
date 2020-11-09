@@ -22,7 +22,8 @@ class ChangeRequestDataApi {
       throw new Error("Missing required data or uploads");
     }
     try {
-      data.user = await Auth.currentUserInfo();
+      data.user = await Auth.currentAuthenticatedUser();
+      console.log(JSON.stringify(data.user))
       data.uploads = uploadsList;
 
       return await API.post("changeRequestAPI", "/submit", {
