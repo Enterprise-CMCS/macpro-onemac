@@ -6,7 +6,7 @@ import { Alert } from "@cmsgov/design-system";
  */
 export const ALERT_TYPES = {
   INFO: null, // Per CMS Design System
-  WARNING: "warning",
+  WARNING: "warn",
   ERROR: "error",
   SUCCESS: "success",
 };

@@ -1,20 +1,18 @@
-import React from "react";
-import { Route, Redirect, useLocation } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
-import { ROUTES } from "../Routes"
+import AlertBar from "../components/AlertBar";
+import { ALERTS_MSG } from "../libs/alert-messages";
 
 export default function AuthenticatedRoute({ children, ...rest }) {
-    const { pathname, search } = useLocation();
-    const { isAuthenticated } = useAppContext();
-    return (
-        <Route {...rest}>
-            {isAuthenticated ? (
-                children
-            ) : (
-                <Redirect to={
-                    `${ROUTES.LOGIN}?redirect=${pathname}${search}`
-                } />
-            )}
-        </Route>
-    );
+  const { isAuthenticated } = useAppContext();
+
+  useEffect(() => {
+    // Show a warning if the user has not logged in.
+    if (!isAuthenticated) {
+      AlertBar.alert(ALERTS_MSG.NOT_AUTHENTICATED);
+    }
+  });
+
+  return <Route {...rest}>{isAuthenticated ? children : <div></div>}</Route>;
 }
