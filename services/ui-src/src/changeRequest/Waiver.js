@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
@@ -184,7 +184,6 @@ export default function Waiver() {
           <option disabled value="none-selected"> -- select a territory -- </option>
           {renderOptionsList(territoryList)}
         </select>
-        <br />
         <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
           Action Type<span className="required-mark">*</span>
         </label>
@@ -200,7 +199,6 @@ export default function Waiver() {
           <option disabled value="none-selected"> -- select an action type -- </option>
           {renderOptionsList(actionTypeOptions)}
         </select>
-        <br />
         <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
           Waiver Authority<span className="required-mark">*</span>
         </label>
@@ -216,14 +214,13 @@ export default function Waiver() {
           <option disabled value="none-selected"> -- select a waiver authority -- </option>
           {renderOptionsList(waiverAuthorityOptions)}
         </select>
-        <br />
         <div className="label-container">
           <div className="label-lcol">
         <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
         </label>
         </div>
-          <div className="label-rcol"><a href="/FAQ">What is my Waiver Number?</a></div>
+          <div className="label-rcol"><HashLink to="/FAQ#waiver-id-format">What is my Waiver Number?</HashLink></div>
         </div>
         {!isReadOnly &&
           <p className="field-hint">
@@ -242,7 +239,6 @@ export default function Waiver() {
         ></input>
         {isReadOnly && (
           <div>
-            <br />
             <label htmlFor="createdAt">Submitted on</label>
             <input
               className="field"
@@ -258,7 +254,7 @@ export default function Waiver() {
         <h3>Attachments</h3>
         <p className="req-message">Maximum file size of 50MB.</p>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-        <div className="form-card">
+        <div className="upload-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -270,8 +266,7 @@ export default function Waiver() {
             ></FileUploader>
           )}
           </div>
-
-        <br />
+          <div className="summary-box">
         <TextField
           name={FIELD_NAMES.SUMMARY}
           label="Summary"
@@ -281,9 +276,9 @@ export default function Waiver() {
           disabled={isReadOnly}
           value={changeRequest.summary}
         ></TextField>
+        </div>
         {!isReadOnly && (
           <LoaderButton
-            block
             type="submit"
             bsSize="large"
             bsStyle="primary"

@@ -99,7 +99,6 @@ export default function Dashboard() {
 
   // Render the dashboard
   return (
-    <div className="form-card">
     <div className="dashboard-container">
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
@@ -151,7 +150,6 @@ export default function Dashboard() {
             </div>
           )}
       </div>
-    </div>
     </div>
   );
 }

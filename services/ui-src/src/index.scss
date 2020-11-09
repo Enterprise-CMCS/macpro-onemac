@@ -21,7 +21,6 @@ h2 {
 
 h3 {
   @extend .ds-h3;
-  @extend .ds-u-margin-top--7;
 }
 
 h4 {
@@ -69,7 +68,6 @@ label {
     td {
       text-align: left;
       padding: 8px;
-      border-top: 2px #333;
     }
     tr {
       height: 72px;
@@ -81,6 +79,12 @@ label {
   }
 
   .uploader-type-cell {
+    width: 40%;
+  }
+  .uploader-input-cell {
+    width: 20%;
+  }
+  .uploader-filename-cell {
     width: 30%;
   }
 
@@ -88,15 +92,10 @@ label {
     font-weight: bold;
   }
 
-  .uploader-input-cell {
-    width: 52%;
-  }
-
   .uploader-input-label {
     // Make the label look like a button
     @extend .ds-c-button;
     @extend .ds-c-button--primary;
-    @extend .ds-u-margin-right--7;
     @extend .ds-u-radius;
     font-weight: 400;
     font-size: 14px;
@@ -104,7 +103,7 @@ label {
   }
 
   .uploader-controls-cell {
-    width: 8%;
+    width: 10%;
   }
   
   .uploader-clear-button {
@@ -115,9 +114,11 @@ label {
 }
 
 .alert-bar {
-  margin: 4rem;
-  margin-left: 14rem;
-  margin-right: 14rem;
+  background-color: $color-white;
+  padding-top: 4rem;
+  padding-left: 14rem;
+  padding-right: 14rem;
+  padding-bottom: 0rem;
 }
 
 .required-mark {
@@ -142,32 +143,36 @@ input[type="file"] {
   @extend .ds-l-col--auto;
   background-color: $color-gray-lightest;
 
+  h3 {
+    @extend .ds-u-margin-top--7;
+  }
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
     @extend .ds-u-border-right--2;
     @extend .ds-u-border-bottom--2;
-    @extend .ds-u-padding-top--3;
+    @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
 
     label {
-      margin-top:10px;
+      @extend .ds-u-margin-top--3;
     }
   }
   .label-container {
     @extend .ds-l-row;
     width: 460px;
     margin-left: 0px;
+    @extend .ds-u-align-items--end
   }
   .label-lcol {
     @extend .ds-l-col--4;
     @extend .ds-c-label;
+    margin-top: 0px;
   }
   .label-rcol {
     @extend .ds-l-col--6;
     @extend .ds-u-margin-left--auto;
-    @extend .ds-u-padding-top--4;
     padding-right: 0px;
     text-align: right;
     font-weight: 400;
@@ -187,6 +192,10 @@ input[type="file"] {
   @extend .ds-u-border-right--2;
   @extend .ds-u-border-bottom--2;
   @extend .ds-u-padding-left--2;
+  div {
+    padding-top: 1rem;
+    padding-bottom: 1rem;
+  }
 }
 
 .dashboard-container {
@@ -262,7 +271,8 @@ input[type="file"] {
   .nav-left {
     @extend .ds-l-col--4;
     @extend .ds-l-row;
-    @extend .ds-u-align-items--center;
+    @extend .ds-u-justify-content--between;
+
     a {
       @extend .ds-l-col--4;
       color: $color-white;

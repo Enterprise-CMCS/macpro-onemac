@@ -1,16 +1,17 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import PageTitleBar from "../components/PageTitleBar";
 
 export default function WaiverExtension() {
   // The attachment list
@@ -74,8 +75,10 @@ export default function WaiverExtension() {
     // Trigger the fetch only if an ID is present.
     if (id) {
       fetchChangeRequest();
+      PageTitleBar.setPageTitleInfo({heading: "Waiver Temporary Extension Details",text : ""});
     } else {
       setReadOnly(false);
+      PageTitleBar.setPageTitleInfo({heading: "Request Waiver Temporary Extension",text : ""});
     }
   }, [id]);
 
@@ -129,9 +132,15 @@ export default function WaiverExtension() {
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>Request Temporary Extension</h3>
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="form-card">
+        <div className="label-container">
+          <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           Waiver Number<span className="required-mark">*</span>
-        </label>
+          </label>
+          </div>
+          <div className="label-rcol"><HashLink to="/FAQ#waiver-id-format">What is my Waiver Number?</HashLink></div>
+          </div>
         {!isReadOnly &&
           <p className="field-hint">
             Enter the Waiver number for this Temporary Extension Request
@@ -161,7 +170,11 @@ export default function WaiverExtension() {
             ></input>
           </div>
         )}
+        </div>
         <h3>Attachments</h3>
+        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+        <div className="upload-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -172,8 +185,8 @@ export default function WaiverExtension() {
               readyCallback={uploadsReadyCallbackFunction}
             ></FileUploader>
           )}
-
-        <br />
+          </div>
+          <div className="summary-box">
         <TextField
           name={FIELD_NAMES.SUMMARY}
           label="Summary"
@@ -183,9 +196,9 @@ export default function WaiverExtension() {
           disabled={isReadOnly}
           value={changeRequest.summary}
         ></TextField>
+        </div>
         {!isReadOnly && (
           <LoaderButton
-            block
             type="submit"
             bsSize="large"
             bsStyle="primary"

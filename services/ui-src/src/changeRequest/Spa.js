@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
@@ -179,7 +179,7 @@ export default function Spa() {
           SPA ID<span className="required-mark">*</span>
           </label>
           </div>
-          <div className="label-rcol"><a href="/FAQ">What is my SPA ID?</a></div>
+          <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
           </div>
         {!isReadOnly && (
           <p className="field-hint">

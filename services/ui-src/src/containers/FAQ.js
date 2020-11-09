@@ -13,7 +13,7 @@ export default class FAQ extends Component {
                     <p>For assistance, please email the MACPro Help Desk at MACPro_HelpDesk@cms.hhs.gov or call (301) 547-4688.</p>
                     <h2>Frequently Asked Questions</h2>
                     <h3>State Plan Amendments (SPAs)</h3>
-                    <h4>What format is used to enter a SPA ID?</h4>
+                    <h4 id="spa-id-format">What format is used to enter a SPA ID?</h4>
                     <p>Enter the State Plan Amendment transmittal number. Assign consecutive numbers on a calendar year basis (e.g., 20-001, 20-002, etc.).</p>
                     <h4>What attachments do we need to submit a new SPA?</h4>
                     <p>SPA submission requirements can be found in regulation&nbsp;
@@ -25,7 +25,7 @@ export default class FAQ extends Component {
                     <p>If submitting a cover letter, please address the cover letter to: Center for Medicaid &amp; CHIP Services (CMCS).</p>
                     <h3>Waivers</h3>
                     <h4>What format is used to enter a 1915(b) waiver number?</h4>
-                    <p>Waiver numbers should include:</p>
+                    <p id="waiver-id-format">Waiver numbers should include:</p>
                     <ul>
                         <li>the two-character state abbreviation (XX) </li>
                         <li>the two-digit waiver base number (##) </li>

@@ -1,10 +1,10 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
@@ -96,6 +96,13 @@ export default function RaiTemplate({
   }
 
   /**
+   * Creates the FAQ link for the correct RAI type ID
+   */
+  function RAIFAQLink() {
+    return "/FAQ#" + raiType.toLowerCase() + "-id-format";
+  }
+
+  /**
    * Handle changes to the form.
    * @param {Object} event the event
    */
@@ -139,9 +146,13 @@ export default function RaiTemplate({
         <h3>{raiType} RAI Details</h3>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
         <div className="form-card">
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+        <div className="label-container">
+          <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
           {raiType} ID<span className="required-mark">*</span>
-        </label>
+          </label>
+          </div>
+          <div className="label-rcol"><HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink></div>
+          </div>
         {!isReadOnly && (
           <p className="field-hint">
             Enter the transmittal number for this RAI
@@ -159,7 +170,6 @@ export default function RaiTemplate({
         ></input>
         {isReadOnly && (
           <div>
-            <br />
             <label htmlFor="createdAt">Submitted on</label>
             <input
               className="field"
@@ -175,7 +185,7 @@ export default function RaiTemplate({
         <h3>Attachments</h3>
         <p className="req-message">Maximum file size of 50MB.</p>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-        <div className="form-card">
+        <div className="upload-card">
         {isReadOnly ? (
           <FileList uploadList={changeRequest.uploads}></FileList>
         ) : (
@@ -187,7 +197,7 @@ export default function RaiTemplate({
           ></FileUploader>
         )}
         </div>
-        <br />
+        <div className="summary-box">
         <TextField
           name={FIELD_NAMES.SUMMARY}
           label="Summary"
@@ -197,9 +207,9 @@ export default function RaiTemplate({
           disabled={isReadOnly}
           value={changeRequest.summary}
         ></TextField>
+        </div>
         {!isReadOnly && (
           <LoaderButton
-            block
             type="submit"
             bsSize="large"
             bsStyle="primary"
