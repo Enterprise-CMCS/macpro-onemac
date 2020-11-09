@@ -104,9 +104,6 @@ function Header(props) {
     );
   }
 
-  const authConfig = Auth.configure();
-  console.log(authConfig.oauth);
-
   return (
     <div className="headerContainer">
       {renderBrandingBar()}
