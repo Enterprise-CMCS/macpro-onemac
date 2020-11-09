@@ -217,7 +217,7 @@ export default function Waiver() {
         </select>
         <br />
         <label className=".ds-c-field__hint" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          Waiver #: SS.##.R##.M## or SS.####.R##.##
+          Waiver #: SS.##.R##.M## or SS.####.R##.##<span className="required-mark">*</span>
         </label>
         {!isReadOnly && <p className="field-hint">Enter the Waiver number</p>}
         <input
