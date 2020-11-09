@@ -19,12 +19,6 @@ function App() {
   async function onLoad() {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      //
-      // TODO: Update cognito to allow profile info
-      //
-      console.log(JSON.stringify(user.signInUserSession.idToken.payload.email))
-      console.log(JSON.stringify(user.signInUserSession.idToken.payload.family_name))
-      console.log(JSON.stringify(user.signInUserSession.idToken.payload.given_name))
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "not authenticated") {
