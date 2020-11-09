@@ -63,6 +63,7 @@ ul {
   @extend .ds-l-row;
   .column {
     @extend .ds-l-col;
+    min-width: 200px;
   }
 }
 
@@ -230,6 +231,8 @@ input[type="file"] {
 
 .container-step-cards {
   display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .dashboard-container {
