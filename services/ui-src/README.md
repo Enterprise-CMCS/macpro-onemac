@@ -1,4 +1,4 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This folder contains the SPA Form React JS application.
 
 ## Development
 
@@ -11,9 +11,11 @@ This project was bootstrapped with [Create React App](https://github.com/faceboo
 
 ### Logging in to the Application
 The application provides a set of test users for the DEV environment that you can use for all feature branches and the develop branch, including when running the application locally.
+
 **Note that these users are not present in the master or production branches.**
 
-The following are the static test users available:
+The following are the available static test users:
+
 ```
  user1@cms.hhs.local
  user2@cms.hhs.local
@@ -22,13 +24,14 @@ The following are the static test users available:
  user5@cms.hhs.local
 ```
 
-A dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application.  To see the list of emails added run the following command in the Git repository.  Note that developers need to setup their correct email in the Git configuration and have already committed changes to the repo.
-```git log --pretty=format:'%ae' | grep -v github.com | sort -u```
+A dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application.  Developers need to setup their correct email in the Git configuration and have already committed changes to the repo.  To see the list of emails added run the following command in the Git repository. 
+
+```git log --pretty=format:'%ae' | grep -v github.com | sort -u``` 
 
 The password for all test users is ```Passw0rd!```
 
-Here are the ways you can logging to the application:
-* Features branches - static test users and dynamic developer emails
+Here are the ways you can log in to the application:
+* Feature and hotfix branches - static test users and dynamic developer emails
 * [develop](https://github.com/CMSgov/macstack-spa-submission-form/tree/develop) branch - OKTA authentication, static test users and dynamic developer emails
 * [master](https://github.com/CMSgov/macstack-spa-submission-form/tree/master) branch - OKTA authentication only
 * [production](https://github.com/CMSgov/macstack-spa-submission-form/tree/production) branch - OKTA authentication only
