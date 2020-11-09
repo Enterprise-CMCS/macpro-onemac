@@ -1,6 +1,7 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 @import "@cmsgov/design-system/dist/scss/index";
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 body {
   @extend .ds-base;
@@ -99,6 +100,7 @@ textarea.form-control,
 input.form-control {
   font-size: 16px;
 }
+
 input[type="file"] {
   width: 100%;
 }
@@ -112,6 +114,18 @@ input[type="file"] {
   font-size: 24px;
   width: 100%;
   max-width: 100%
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  @extend .ds-u-color--primary;
+  .ds-c-spinner::before, .ds-c-spinner::after {
+    border-width: 8px;
+    height: 70px;
+    width: 70px;
+  }
 }
 
 .dashboard-container {

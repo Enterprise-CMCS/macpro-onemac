@@ -66,16 +66,6 @@ functions:
     role: LambdaApiRole
     events:
       - http:
-          path: amendments/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-      - http:
-          path: waivers/{id}
-          method: get
-          cors: true
-          authorizer: aws_iam
-      - http:
           path: get/{id}
           method: get
           cors: true
@@ -85,11 +75,6 @@ functions:
     handler: list.main
     role: LambdaApiRole
     events:
-      - http:
-          path: list
-          method: get
-          cors: true
-          authorizer: aws_iam
       - http:
           path: get
           method: get
