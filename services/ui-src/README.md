@@ -24,7 +24,7 @@ The following are the available static test users:
  user5@cms.hhs.local
 ```
 
-A dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application.  Developers need to setup their correct email in the Git configuration and have already committed changes to the repo.  To see the list of emails added run the following command in the Git repository. 
+For every build, a dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application.  Developers need to setup their correct email in the Git configuration and have already committed changes to the repo.  To see the list of emails added run the following command in the Git repository. 
 
 ```git log --pretty=format:'%ae' | grep -v github.com | sort -u``` 
 
