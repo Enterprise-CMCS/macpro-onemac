@@ -30,6 +30,16 @@ h4 {
 
 .white-text {
   color: $color-white;
+  @extend .white-link;
+}
+
+.white-link {
+  a {
+    color: $color-white;
+    &:hover {
+      color: $color-gray-lighter;
+    }
+  }
 }
 
 select, .field {
@@ -46,7 +56,14 @@ label {
 }
 
 ul {
-  @extend .ds-c-list
+  @extend .ds-c-list;
+}
+
+.four-column-content {
+  @extend .ds-l-row;
+  .column {
+    @extend .ds-l-col;
+  }
 }
 
 .uploader {
@@ -152,7 +169,6 @@ input[type="file"] {
 
   .section-title {
     @extend .ds-h2;
-    padding-bottom: 30px;
     text-align: center;
   }
 
@@ -192,6 +208,11 @@ input[type="file"] {
   width: 310px;
   padding: 35px;
   margin: 15px;
+
+  .card-content {
+    padding-top: 15px;
+    text-align: center;
+  }
 }
 
 .circle-single-digit {
@@ -205,11 +226,6 @@ input[type="file"] {
   border-style: solid;
   border-width: 2px;
   border-color: $color-primary;
-}
-
-.card-content {
-  padding-top: 15px;
-  text-align: center;
 }
 
 .container-step-cards {
@@ -262,4 +278,8 @@ input[type="file"] {
   .list-group-item {
     @extend .ds-u-text-decoration--none;
   }
+}
+
+.extra-side-margin {
+  margin: 0 60px;
 }
