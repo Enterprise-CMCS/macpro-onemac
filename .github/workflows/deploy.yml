@@ -96,17 +96,6 @@ jobs:
           # This can optionally be set as a variable in GitHub Actions Secrets
           source set.env.sh
           ./deploy.sh $STAGE_PREFIX$branch_name
-      - name: show Application Endpoint
-        run: |
-          source set.env.sh
-          pushd services
-          echo """
-          ------------------------------------------------------------------------------------------------
-          ------------------------------------------------------------------------------------------------
-          Application endpoint:  `./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$branch_name`
-          ------------------------------------------------------------------------------------------------
-          """
-          popd
       - name: Run TestCafe suite
         run: |
           source set.env.sh
