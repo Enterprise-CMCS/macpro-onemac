@@ -13,7 +13,6 @@ import { territoryList } from "../libs/territoryLib";
 import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { renderOptionsList } from "../utils/form-utils";
 
 export default function Waiver() {
   // The attachment list

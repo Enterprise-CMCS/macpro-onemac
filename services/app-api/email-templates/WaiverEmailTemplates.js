@@ -1,4 +1,4 @@
-import { getLinksHtml, get90thDay } from "./email-util";
+import { getLinksHtml } from "./email-util";
 
 /**
  * Waiver submission specific email generation functions.
