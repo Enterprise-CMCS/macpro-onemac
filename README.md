@@ -10,7 +10,7 @@ Lengend: R = Required, O = Optional
 * (R) AWS_ACCESS_KEY_ID - AWS Access key with write access for creating AWS resources in the account
 * (R) AWS_SECRET_ACCESS_KEY - AWS secret with write access for creating AWS resources in the account
 * (R) AWS_DEFAULT_REGION - The AWS region to deploy the application to
-* INFRASTRUCTURE_TYPE
+* (O) INFRASTRUCTURE_TYPE - Defaults to "development"
 * ROUTE_53_HOSTED_ZONE_ID
 * ROUTE_53_DOMAIN_NAME
 * CLOUDFRONT_CERTIFICATE_ARN

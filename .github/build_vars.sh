@@ -27,7 +27,13 @@ set_value() {
 
 set_name() {
   varname=${1}
-  echo "::set-env name=BRANCH_SPECIFIC_VARNAME_$varname::${branch_name//-/_}_$varname"
+  generic_branch_varname="BRANCH_SPECIFIC_VARNAME_$varname"
+  branch_varname="${branch_name//-/_}_$varname"
+  echo "::set-env name=$generic_branch_varname::$branch_varname"
+  if [ ! -z "${!branch_varname}" ]
+  then
+     echo "Using custom value in $branch_varname"
+  fi
 }
 
 action=${1}
