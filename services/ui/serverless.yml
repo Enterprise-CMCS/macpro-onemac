@@ -160,7 +160,7 @@ resources:
           EvaluateTargetHealth: false
         Type: A
 
-    # Set the application endpoint to the custom name if set, otherwise use the CloudFrontDistribution domain name.
+    # Set the application endpoint to the custom name if CLOUDFRONT_DOMAIN_NAME is set, otherwise use the CloudFrontDistribution domain name.
     # Note this URL has no trailing slash.
     ApplicationEndpointUrl:
       Type: AWS::SSM::Parameter
