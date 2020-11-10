@@ -104,7 +104,7 @@ export default function Waiver() {
       setReadOnly(true);
       fetchChangeRequest();
 
-      PageTitleBar.setPageTitleInfo({ heading: "Submit New Waiver Action", text: "" });
+      PageTitleBar.setPageTitleInfo({ heading: "Waiver Action Details", text: "" });
     } else {
       setReadOnly(false);
 
@@ -278,7 +278,7 @@ export default function Waiver() {
             </div>
             <h3>Attachments</h3>
             <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
             <div className="upload-card">
               {isReadOnly ? (
                 <FileList uploadList={changeRequest.uploads}></FileList>

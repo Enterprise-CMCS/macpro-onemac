@@ -84,7 +84,7 @@ export default function RaiTemplate({
     if (id) {
       setReadOnly(true);
       fetchChangeRequest();
-      PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
+      PageTitleBar.setPageTitleInfo({ heading: raiType + " RAI Reponse Details", text: "" });
     } else {
       setReadOnly(false);
       PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
@@ -192,7 +192,7 @@ export default function RaiTemplate({
             </div>
             <h3>Attachments</h3>
             <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
             <div className="upload-card">
               {isReadOnly ? (
                 <FileList uploadList={changeRequest.uploads}></FileList>

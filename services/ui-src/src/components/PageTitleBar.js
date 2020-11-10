@@ -28,7 +28,7 @@ export default class PageTitleBar extends Component {
 
   /**
    * Displays a page header area which describes this specific page/form.
-   * @param {Object} setPageTitle the alert message object with type, heading and text
+   * @param {Object} setPageTitle the title and message to contain within the bar
    */
   static setPageTitleInfo(pageInfo) {
     if (pageInfo) {
@@ -43,14 +43,14 @@ export default class PageTitleBar extends Component {
 
 
   /**
-   * Dismisses/hides the alert.
+   * Dismisses/hides the page title bar.
    */
   static dismiss() {
     PageTitleBar.__singletonRef.__dismiss();
   }
 
   /**
-   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.dismiss().
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use PageTitleBar.dismiss().
    * Dismisses/hides the alert.
    */
   __dismiss() {
@@ -58,7 +58,7 @@ export default class PageTitleBar extends Component {
   }
 
   /**
-   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use PageTitleBar.alert().
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use PageTitleBar.setPageTitleInfo().
    * Displays informational text under the nav bar.
    * @param {string} heading the page title
    * @param {string} text the optional description

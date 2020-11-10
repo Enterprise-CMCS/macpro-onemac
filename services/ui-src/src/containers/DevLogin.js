@@ -8,7 +8,6 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import config from "../utils/config";
-//import "./DevLogin.css";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
