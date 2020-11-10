@@ -194,7 +194,7 @@ export default function Spa() {
             </label>
             {!isReadOnly && (
               <p className="field-hint">
-                Enter the State Plan Amendment transmittal number
+                  Must follow the format SS-YY-NNNN-xxxx
               </p>
             )}
             <input
