@@ -6,8 +6,9 @@ import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import PageTitleBar from "../components/PageTitleBar";
 import config from "../utils/config";
-import "./DevLogin.css";
+//import "./DevLogin.css";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
@@ -17,6 +18,8 @@ export default function DevLogin() {
     password: "",
   });
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
+
+  PageTitleBar.setPageTitleInfo({ heading: "Developer Login", text: "" });
 
   function validateForm() {
     return fields.email.length > 0 && fields.password.length > 0;
@@ -38,9 +41,11 @@ export default function DevLogin() {
   }
 
   return (
-    <div className="Login">
+    <div className="form-container">
       {showDevLogin && (
         <form onSubmit={handleSubmit}>
+          <h3>Developer Login</h3>
+          <div className="form-card">
           <FormGroup controlId="email" bsSize="large">
             <ControlLabel>Email</ControlLabel>
             <FormControl
@@ -67,6 +72,7 @@ export default function DevLogin() {
           >
             Login
           </LoaderButton>
+          </div>
         </form>
       )}
     </div>

@@ -6,7 +6,6 @@ import { ROUTES } from "../Routes";
 import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
-import "./Header.scss";
 
 /**
  * Get the sign in URL used with OKTA.
