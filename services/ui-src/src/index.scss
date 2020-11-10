@@ -89,7 +89,7 @@ ul {
   @extend .ds-l-row;
   .column {
     @extend .ds-l-col;
-    min-width: 200px;
+    min-width: 250px;
   }
 }
 
@@ -246,7 +246,6 @@ input[type="file"] {
 }
 
 .about {
-  @extend .app-bar;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -275,6 +274,9 @@ input[type="file"] {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    background-color: $color-white;
+    padding-left: 14rem;
+    padding-right: 14rem;
   }
 
   .section-support {
@@ -421,6 +423,9 @@ input[type="file"] {
     label {
       margin-right: 2rem;
       margin-top: 0px;
+    }
+    button {
+      background-color: $color-primary;
     }
   }
 }
