@@ -73,6 +73,6 @@ export S3_ATTACHMENTS_BUCKET_NAME=$s3_attachments_bucket_name
 export ALLOW_DEV_LOGIN=true
 export IS_OFFLINE=true
 
-bash -x ./env.sh
+./env.sh
 
 echo "SUCCESS: Updated environment information."
