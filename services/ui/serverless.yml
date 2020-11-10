@@ -160,6 +160,8 @@ resources:
           EvaluateTargetHealth: false
         Type: A
 
+    # Set the application endpoint to the custom name if set, otherwise use the CloudFrontDistribution domain name.
+    # Note this URL has no trailing slash.
     ApplicationEndpointUrl:
       Type: AWS::SSM::Parameter
       Properties:
@@ -168,7 +170,7 @@ resources:
         Value:
           Fn::If:
             - CreateCustomCloudFrontDomain
-            - https://${env:CLOUDFRONT_DOMAIN_NAME, ""}/
+            - https://${env:CLOUDFRONT_DOMAIN_NAME, ""}
             - Fn::Join:
                 - ''
                 -
@@ -176,7 +178,6 @@ resources:
                   - Fn::GetAtt:
                     - CloudFrontDistribution
                     - DomainName
-                  - '/'
 
   Outputs:
     S3BucketName:
