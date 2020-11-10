@@ -193,6 +193,8 @@ export default class FileUploader extends Component {
                 }
               />
             </label>
+            </td>
+            <td className="uploaded-filename-cell">
             <span className="uploader-input-text">
               {this.state.uploaderHasFile[uploader.id]
                 ? uploader.file.name
@@ -206,7 +208,7 @@ export default class FileUploader extends Component {
                 title="Remove file"
                 onClick={(event) => this.handleFileClear(event, uploader.id)}
               >
-                <FontAwesomeIcon icon={faTimes} />
+                <FontAwesomeIcon icon={faTimes} size="2x" />
               </button>
             )}
           </td>
