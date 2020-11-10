@@ -4,8 +4,7 @@ $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
 
 @import "@cmsgov/design-system/dist/scss/index";
-//@import "~bootstrap/dist/css/bootstrap.min.css";
-
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 body {
   @extend .ds-base;
@@ -54,7 +53,7 @@ label {
   @extend .ds-c-label;
 }
 
-.field-hint {
+.field-hint, p.field-hint {
   @extend .ds-c-field__hint;
 }
 
@@ -70,11 +69,16 @@ label {
 
 .page-title-bar {
   @extend .app-bar;
-  @extend .ds-u-padding-top--3;
-  font-weight: normal;
-  background-color: $color-primary-darkest;
+  @extend .ds-u-align-items--center;
+  @extend .ds-u-padding-top--2;
+  @extend .ds-u-padding-bottom--2;
+  font-weight: 400;
+  background-color: $color-primary-darker;
   color: #fff;
-  min-height: 88px;
+
+  h1 {
+    font-size: 36px;
+  }
 }
 
 ul {
@@ -181,8 +185,6 @@ input[type="file"] {
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
-//    @extend .ds-u-border-right--2;
- //   @extend .ds-u-border-bottom--2;
     box-shadow: 2px 2px 4px #D6D7D9;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
@@ -244,6 +246,7 @@ input[type="file"] {
 }
 
 .about {
+  @extend .app-bar;
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -387,8 +390,7 @@ input[type="file"] {
   @extend .ds-u-align-items--center;
   background-color: $color-primary;
   min-height: 70px;
-  padding-left: 120px;
-}
+
   .nav-left {
     @extend .ds-l-col--4;
     @extend .ds-l-row;
@@ -416,10 +418,12 @@ input[type="file"] {
     font-weight: bold;
     @extend .ds-u-justify-content--end;
 
-    button {
+    label {
       margin-right: 2rem;
+      margin-top: 0px;
     }
   }
+}
 
 .usa-bar {
   @extend .app-bar;
@@ -461,6 +465,7 @@ input[type="file"] {
   @extend .ds-h3;
   @extend .ds-u-margin-top--5;
 }
+
 .LoaderButton {
   @extend .ds-u-margin-top--5;
 }

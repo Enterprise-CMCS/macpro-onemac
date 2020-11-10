@@ -204,7 +204,7 @@ export default function Spa() {
                 <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
               </div>
               {!isReadOnly && (
-                <p className="field-hint">
+                <p className="ds-c-field__hint">
                   Enter the State Plan Amendment transmittal number
                 </p>
               )}
