@@ -241,7 +241,7 @@ export default function Waiver() {
             </label>
             {!isReadOnly &&
               <p className="field-hint">
-                Enter the Waiver number
+              Must follow the format SS.##.R##.M## or SS.####.R##.##
               </p>
             }
             <input
