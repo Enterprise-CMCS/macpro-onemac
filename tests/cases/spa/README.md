@@ -1,0 +1,1 @@
+## Folder for all WMS Test Cases

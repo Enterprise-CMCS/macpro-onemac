@@ -1,0 +1,6 @@
+
+class Allure {
+    constructor() {
+
+    }
+}
