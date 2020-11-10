@@ -1,5 +1,4 @@
 import React from "react";
-import config from "config";
 
 /**
  * Generates options based on an array of objects with label and value for each option.
@@ -24,8 +23,4 @@ export function renderOptionsList(optionsList) {
     );
   });
   return retval;
-}
-
-export function getAttachmentMax() {
-  return config.MAX_ATTACHMENT_SIZE;
 }
