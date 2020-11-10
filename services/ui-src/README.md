@@ -1,45 +1,42 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+This folder contains the SPA Form React JS application.
 
-## Available Scripts
+## Development
 
-In the project directory, you can run:
+### Running the Application Locally
+1. Set your AWS credentials in the terminal you are using to run the application.  The AWS credentials are used to configure the UI to connect to the necessary AWS resources.
+1. Run the configureLocal.sh script to configure the UI to connect to the AWS resources.  The resulting configuration is written to *public/env-config.js*.  
+1. Run the app-api service locally.  See [APP API README](../app-api/README.md) for more information.
+1. Install all the UI dependencies by running ```npm install```.
+1. Run the application by running ```npm run start``` and open [http://localhost:3000](http://localhost:3000) to view it in the browser. 
 
-### `npm start`
+### Logging in to the Application
+The application provides a set of test users for the DEV environment that you can use for all feature branches and the develop branch, including when running the application locally.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+**Note that these users are not present in the master or production branches.**
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+The following are the available static test users:
 
-### `npm test`
-
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
-
-### `npm run build`
-
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
-
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
-
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
-
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Running Offline for Development
-Run the configureLocal.sh script to configure the UI to connect to the AWS resources to run the UI.  The configuration is written to public/env-config.js.  To run the UI with a local API, simply change the API_URL parameter in public/env-config.js to point to the local API URL (e.g. ```http://localhost:3001/dev```).  Run the UI by running
 ```
-npm install
-npm run start
+ user1@cms.hhs.local
+ user2@cms.hhs.local
+ user3@cms.hhs.local
+ user4@cms.hhs.local
+ user5@cms.hhs.local
 ```
+
+For every build, a dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application.  Developers need to setup their correct email in the Git configuration and have already committed changes to the repo.  To see the list of emails added run the following command in the Git repository. 
+
+```git log --pretty=format:'%ae' | grep -v github.com | sort -u``` 
+
+The password for all test users is ```Passw0rd!```
+
+Here are the ways you can log in to the application:
+* Feature and hotfix branches - static test users and dynamic developer emails
+* [develop](https://github.com/CMSgov/macstack-spa-submission-form/tree/develop) branch - OKTA authentication, static test users and dynamic developer emails
+* [master](https://github.com/CMSgov/macstack-spa-submission-form/tree/master) branch - OKTA authentication only
+* [production](https://github.com/CMSgov/macstack-spa-submission-form/tree/production) branch - OKTA authentication only
+
+### Building
+Building is done by the CI system, but if you need to generate a build you can do so by running
+
+```npm run build```

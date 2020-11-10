@@ -1,6 +1,7 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import LoaderButton from "../components/LoaderButton";
+import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -35,8 +36,8 @@ export default function RaiTemplate({
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
 
-  // True if we are currently submitting the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form or on inital load of the form
+  const [isLoading, setIsLoading] = useState(true);
 
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
@@ -69,18 +70,22 @@ export default function RaiTemplate({
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-        setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
+        setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      setIsLoading(false);
     }
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      setReadOnly(true);
       fetchChangeRequest();
     } else {
       setReadOnly(false);
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -129,79 +134,83 @@ export default function RaiTemplate({
     }
   }
 
-  // Render the component.
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h3>{raiType} RAI Details</h3>
-        <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          {raiType} ID<span className="required-mark">*</span>
-        </label>
-        {!isReadOnly && (
-          <p className="field-hint">
-            Enter the transmittal number for this RAI
-          </p>
-        )}
-        <input
-          className="field"
-          type="text"
-          required={!isReadOnly}
-          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.transmittalNumber}
-        ></input>
-        {isReadOnly && (
-          <div>
-            <br />
-            <label htmlFor="submittedAt">Submitted on</label>
+    <LoadingScreen isLoading={isLoading}>
+      {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>{raiType} RAI Details</h3>
+            <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+              {raiType} ID<span className="required-mark">*</span>
+            </label>
+            {!isReadOnly && (
+              <p className="field-hint">
+                Enter the transmittal number for this RAI
+              </p>
+            )}
             <input
               className="field"
               type="text"
-              id="submittedAt"
-              name="submittedAt"
-              disabled
-              value={formatDate(changeRequest.submittedAt)}
+              required={!isReadOnly}
+              id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.transmittalNumber}
             ></input>
-          </div>
-        )}
-        <h3>Attachments</h3>
-        {isReadOnly ? (
-          <FileList uploadList={changeRequest.uploads}></FileList>
-        ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
-
-        <br />
-        <TextField
-          name={FIELD_NAMES.SUMMARY}
-          label="Summary"
-          fieldClassName="summary-field"
-          multiline
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.summary}
-        ></TextField>
-        {!isReadOnly && (
-          <LoaderButton
-            block
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!isFormReady || !areUploadsReady}
-          >
-            Submit
-          </LoaderButton>
-        )}
-      </form>
-    </div>
+            {isReadOnly && (
+              <div>
+                <br />
+                <label htmlFor="submittedAt">Submitted on</label>
+                <input
+                  className="field"
+                  type="text"
+                  id="submittedAt"
+                  name="submittedAt"
+                  disabled
+                  value={formatDate(changeRequest.submittedAt)}
+                ></input>
+              </div>
+            )}
+            <h3>Attachments</h3>
+            {isReadOnly ? (
+              <FileList uploadList={changeRequest.uploads} />
+            ) : (
+              <FileUploader
+                ref={uploader}
+                requiredUploads={requiredUploads}
+                optionalUploads={optionalUploads}
+                readyCallback={uploadsReadyCallbackFunction}
+              />
+            )}
+            <br />
+            <TextField
+              name={FIELD_NAMES.SUMMARY}
+              label="Summary"
+              fieldClassName="summary-field"
+              multiline
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.summary}
+            />
+            {!isReadOnly && (
+              <LoaderButton
+                block
+                type="submit"
+                bsSize="large"
+                bsStyle="primary"
+                isLoading={isLoading}
+                disabled={!isFormReady || !areUploadsReady}
+              >
+                Submit
+              </LoaderButton>
+            )}
+          </form>
+        </div>
+      ) : null}
+    </LoadingScreen>
   );
 }
 
