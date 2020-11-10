@@ -39,7 +39,7 @@ function App() {
     !isAuthenticating && (
       <div>
         <Header isAuthenticated={isAuthenticated} />
-        <div className="App">
+        <div className="App container">
           <AlertBar />
           <AppContext.Provider
             value={{ isAuthenticated, userHasAuthenticated }}

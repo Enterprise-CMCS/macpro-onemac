@@ -77,7 +77,7 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="section section-service-types extra-side-margin">
+      <div className="section section-service-types">
         <div className="section-title black-text">
           In this system, you can submit
         </div>

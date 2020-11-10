@@ -5,7 +5,6 @@ $image-path: "~@cmsgov/design-system/dist/images";
 
 body {
   @extend .ds-base;
-  width: 100%;
 }
 
 h1 {
@@ -281,8 +280,4 @@ input[type="file"] {
   .list-group-item {
     @extend .ds-u-text-decoration--none;
   }
-}
-
-.extra-side-margin {
-  margin: 0 60px;
 }
