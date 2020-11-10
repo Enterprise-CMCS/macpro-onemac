@@ -83,7 +83,7 @@ function Header(props) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (props.isAuthenticated) {
       return (
-        <div className="navElements">
+        <div className="nav-right">
           <FormLabel inversed>
             <Button onClick={() => logout()} inversed>
               Logout
@@ -93,7 +93,7 @@ function Header(props) {
       );
     } else {
       return (
-        <div className="navElements">
+        <div className="nav-right">
           <Button onClick={() => (window.location = getSignInUrl())} inversed>
             Login
           </Button>
