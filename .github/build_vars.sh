@@ -29,6 +29,9 @@ set_name() {
   varname=${1}
   generic_branch_varname="BRANCH_SPECIFIC_VARNAME_$varname"
   branch_varname="${branch_name//-/_}_$varname"
+  echo $varname
+  echo $generic_branch_varname
+  echo $branch_varname
   echo "::set-env name=$generic_branch_varname::$branch_varname"
   if [ ! -z "${!branch_varname}" ]
   then
