@@ -30,17 +30,6 @@ set_name() {
   generic_branch_varname="BRANCH_SPECIFIC_VARNAME_$varname"
   branch_prefix="${branch_name//-/_}"
   branch_varname="${branch_prefix^^}_$varname"
-  echo $varname
-  echo $generic_branch_varname
-  echo $branch_varname
-  if [ $varname == "CLOUDFRONT_DOMAIN_NAME" ]
-  then
-    echo ${branch_varname} : ${!branch_varname}
-  fi
-  if [ ! -z "${!branch_varname}" ]
-  then
-     echo "Using custom value in $branch_varname"
-  fi
   echo "::set-env name=$generic_branch_varname::$branch_varname"
 }
 
