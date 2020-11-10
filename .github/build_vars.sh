@@ -33,7 +33,7 @@ set_name() {
   echo $varname
   echo $generic_branch_varname
   echo $branch_varname
-  if [ $varname == "CLOUDFRONT_DOMAIN_NAME"]
+  if [ $varname == "CLOUDFRONT_DOMAIN_NAME" ]
   then
     echo ${branch_varname} : ${!branch_varname}
   fi
