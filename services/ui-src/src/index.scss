@@ -4,6 +4,7 @@ $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
 
 @import "@cmsgov/design-system/dist/scss/index";
+@import "~bootstrap/dist/css/bootstrap.min.css";
 
 
 body {
@@ -130,6 +131,7 @@ textarea.form-control,
 input.form-control {
   font-size: 2rem;
 }
+
 input[type="file"] {
   width: 100%;
 }
@@ -149,8 +151,9 @@ input[type="file"] {
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
-    @extend .ds-u-border-right--2;
-    @extend .ds-u-border-bottom--2;
+//    @extend .ds-u-border-right--2;
+ //   @extend .ds-u-border-bottom--2;
+    box-shadow: 2px 2px 4px #D6D7D9;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
@@ -195,6 +198,18 @@ input[type="file"] {
   div {
     padding-top: 1rem;
     padding-bottom: 1rem;
+  }
+}
+
+.loading-screen {
+  display: flex;
+  justify-content: center;
+  padding-top: 40px;
+  @extend .ds-u-color--primary;
+  .ds-c-spinner::before, .ds-c-spinner::after {
+    border-width: 8px;
+    height: 70px;
+    width: 70px;
   }
 }
 

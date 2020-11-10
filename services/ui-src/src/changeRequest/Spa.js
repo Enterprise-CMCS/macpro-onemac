@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
+import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -13,6 +14,7 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import { renderOptionsList } from "../utils/form-utils";
 
 export default function Spa() {
 
@@ -38,8 +40,8 @@ export default function Spa() {
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
 
-  // True if we are currently submitting the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form or on inital load of the form
+  const [isLoading, setIsLoading] = useState(true);
 
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
@@ -72,22 +74,26 @@ export default function Spa() {
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-        setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
+        setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      setIsLoading(false);
     }
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      setReadOnly(true);
       fetchChangeRequest();
-      
-      PageTitleBar.setPageTitleInfo({heading: "SPA Submission Details",text : ""});
+
+      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
     } else {
       setReadOnly(false);
 
-      PageTitleBar.setPageTitleInfo({heading : "Submit New SPA",text : ""});
+      PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -111,7 +117,8 @@ export default function Spa() {
 
       // Check to see if the required fields are provided
       setIsFormReady(
-        updatedRecord.transmittalNumber && updatedRecord.territory
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
+        updatedRecord[FIELD_NAMES.TERRITORY]
       );
     }
   }
@@ -138,116 +145,133 @@ export default function Spa() {
     }
   }
 
-  function renderTerritoryList() {
-    let optionsList = territoryList.map((item, i) => {
-      return (
-        <option key={i} value={item.value}>
-          {item.label}
-        </option>
-      );
-    });
-    return optionsList;
+  /**
+   * Get props for the select component dependent on the value of isReadOnly.
+   * Note: The defaultValue prop should NOT be set when the form is read only due to the following warning:
+   *   "Select elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both).
+   *    Decide between using a controlled or uncontrolled select element and remove one of these props."
+   * @param {String} id an identifier used to set select params
+   * @param {String} value the display text in select params
+   */
+  function getSelectProps(id, value) {
+    const defaultSelectProps = {
+      id,
+      name: id,
+      value
+    }
+
+    let selectProps = {}
+
+    if (!isReadOnly) {
+      selectProps = {
+        defaultValue: "none-selected",
+        onChange: handleInputChange,
+        required: true,
+        ...defaultSelectProps
+      }
+    } else {
+      selectProps = {
+        disabled: true,
+        ...defaultSelectProps
+      }
+    }
+
+    return selectProps
   }
 
-  // Render the component.
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
   return (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h3>SPA Details</h3>
-        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-        <div className="form-card">
-        <label htmlFor={FIELD_NAMES.TERRITORY}>
-          State/Territory<span className="required-mark">*</span>
-        </label>
-        <select
-          id={FIELD_NAMES.TERRITORY}
-          name={FIELD_NAMES.TERRITORY}
-          required={!isReadOnly}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.territory}
-          defaultValue="none-selected"
-        >
-          <option disabled value="none-selected">
-            {" "}
-            -- select a territory --{" "}
-          </option>
-          {renderTerritoryList()}
-        </select>
-        <div className="label-container">
-          <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          SPA ID<span className="required-mark">*</span>
-          </label>
-          </div>
-          <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
-          </div>
-        {!isReadOnly && (
-          <p className="field-hint">
-            Enter the State Plan Amendment transmittal number
-          </p>
-        )}
-        <input
-          className="field"
-          type="text"
-          required={!isReadOnly}
-          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.transmittalNumber}
-        ></input>
-        {isReadOnly && (
-          <div>
-            <label htmlFor="createdAt">Submitted on</label>
-            <input
-              className="field"
-              type="text"
-              id="createdAt"
-              name="createdAt"
-              disabled
-              value={formatDate(changeRequest.createdAt)}
-            ></input>
-          </div>
-        )}
+    <LoadingScreen isLoading={isLoading}>
+      {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>SPA Details</h3>
+            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <div className="form-card">
+              <label htmlFor={FIELD_NAMES.TERRITORY}>
+                State/Territory<span className="required-mark">*</span>
+              </label>
+              <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                <option disabled value="none-selected">-- select a territory --</option>
+                {renderOptionsList(territoryList)}
+              </select>
+              <div className="label-container">
+                <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                  SPA ID<span className="required-mark">*</span>
+                </label>
+                </div>
+                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
+              </div>
+              {!isReadOnly && (
+                <p className="field-hint">
+                  Enter the State Plan Amendment transmittal number
+                </p>
+              )}
+              <input
+                className="field"
+                type="text"
+                required={!isReadOnly}
+                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.transmittalNumber}
+              ></input>
+              {isReadOnly && (
+                <div>
+                  <label htmlFor="submittedAt">Submitted on</label>
+                  <input
+                    className="field"
+                    type="text"
+                    id="submittedAt"
+                    name="submittedAt"
+                    disabled
+                    value={formatDate(changeRequest.submittedAt)}
+                  ></input>
+                </div>
+              )}
+            </div>
+            <h3>Attachments</h3>
+            <p className="req-message">Maximum file size of 50MB.</p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <div className="upload-card">
+              {isReadOnly ? (
+                <FileList uploadList={changeRequest.uploads}></FileList>
+              ) : (
+                  <FileUploader
+                    ref={uploader}
+                    requiredUploads={requiredUploads}
+                    optionalUploads={optionalUploads}
+                    readyCallback={uploadsReadyCallbackFunction}
+                  ></FileUploader>
+                )}
+            </div>
+            <div className="summary-box">
+              <TextField
+                name={FIELD_NAMES.SUMMARY}
+                label="Summary"
+                fieldClassName="summary-field"
+                multiline
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.summary}
+              ></TextField>
+            </div>
+            {!isReadOnly && (
+              <LoaderButton
+                type="submit"
+                bsSize="large"
+                bsStyle="primary"
+                isLoading={isLoading}
+                disabled={!isFormReady || !areUploadsReady}
+              >
+                Submit
+              </LoaderButton>
+            )}
+          </form>
         </div>
-        <h3>Attachments</h3>
-        <p className="req-message">Maximum file size of 50MB.</p>
-        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-        <div className="upload-card">
-        {isReadOnly ? (
-          <FileList uploadList={changeRequest.uploads}></FileList>
-        ) : (
-          <FileUploader
-            ref={uploader}
-            requiredUploads={requiredUploads}
-            optionalUploads={optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
-          ></FileUploader>
-        )}
-        </div>
-        <div className="summary-box">
-        <TextField
-          name={FIELD_NAMES.SUMMARY}
-          label="Summary"
-          fieldClassName="summary-field"
-          multiline
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.summary}
-        ></TextField>
-        </div>
-        {!isReadOnly && (
-          <LoaderButton
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!isFormReady || !areUploadsReady}
-          >
-            Submit
-          </LoaderButton>
-        )}
-      </form>
-    </div>
+      ) : null}
+    </LoadingScreen>
   );
 }

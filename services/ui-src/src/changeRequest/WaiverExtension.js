@@ -2,6 +2,7 @@ import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
+import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -31,8 +32,8 @@ export default function WaiverExtension() {
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
 
-  // True if we are currently submitting the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form or on inital load of the form
+  const [isLoading, setIsLoading] = useState(true);
 
   // True if the form is read only.
   const [isReadOnly, setReadOnly] = useState(false);
@@ -65,20 +66,24 @@ export default function WaiverExtension() {
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-        setReadOnly(true);
       } catch (error) {
         console.log("Error while fetching submission.", error);
+        setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      setIsLoading(false);
     }
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      setReadOnly(true);
       fetchChangeRequest();
       PageTitleBar.setPageTitleInfo({heading: "Waiver Temporary Extension Details",text : ""});
     } else {
       setReadOnly(false);
       PageTitleBar.setPageTitleInfo({heading: "Request Waiver Temporary Extension",text : ""});
+      setIsLoading(false);
     }
   }, [id]);
 
@@ -127,8 +132,11 @@ export default function WaiverExtension() {
     }
   }
 
-  // Render the component.
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
   return (
+    <LoadingScreen isLoading={isLoading}>
+      {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
     <div className="form-container">
       <form onSubmit={handleSubmit}>
         <h3>Request Temporary Extension</h3>
@@ -159,15 +167,15 @@ export default function WaiverExtension() {
         {isReadOnly && (
           <div>
             <br />
-            <label htmlFor="createdAt">Submitted on</label>
-            <input
-              className="field"
-              type="text"
-              id="createdAt"
-              name="createdAt"
-              disabled
-              value={formatDate(changeRequest.createdAt)}
-            ></input>
+            <label htmlFor="submittedAt">Submitted on</label>
+                <input
+                  className="field"
+                  type="text"
+                  id="submittedAt"
+                  name="submittedAt"
+                  disabled
+                  value={formatDate(changeRequest.submittedAt)}
+                ></input>
           </div>
         )}
         </div>
@@ -210,5 +218,7 @@ export default function WaiverExtension() {
         )}
       </form>
     </div>
+      ) : null}
+    </LoadingScreen>
   );
 }

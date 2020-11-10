@@ -1,15 +1,16 @@
 import React, { useState, useEffect } from "react";
 import { ListGroup, ListGroupItem } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
-import { API } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
+import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
 import { useHistory } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
+import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 
 /**
  * Component containing dashboard
@@ -30,7 +31,7 @@ export default function Dashboard() {
       }
 
       try {
-        setChangeRequestList(await API.get("changeRequestAPI", "/list"));
+        setChangeRequestList(await ChangeRequestDataApi.getAll());
         setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
@@ -50,9 +51,9 @@ export default function Dashboard() {
     // First sort the list with the lastest record first.
     let sortedChangeRequests = changeRequests.sort(function (a, b) {
       let retVal = 0;
-      if (a && b && a.createdAt && b.createdAt) {
-        let aDate = new Date(a.createdAt);
-        let bDate = new Date(b.createdAt);
+      if (a && b && a.submittedAt && b.submittedAt) {
+        let aDate = new Date(a.submittedAt);
+        let bDate = new Date(b.submittedAt);
         if (aDate < bDate) retVal = 1;
         else if (aDate > bDate) retVal = -1;
       }
@@ -90,7 +91,7 @@ export default function Dashboard() {
       return (
         <LinkContainer key={changeRequest.id} to={link}>
           <ListGroupItem header={title}>
-            {"Submitted on: " + new Date(changeRequest.createdAt).toLocaleString()}
+            {"Submitted on: " + new Date(changeRequest.submittedAt).toLocaleString()}
           </ListGroupItem>
         </LinkContainer>
       );
@@ -136,19 +137,17 @@ export default function Dashboard() {
       </div>
       <div className="dashboard-right-col">
       <div className="action-title">Your SPA and Waiver Submissions</div>
-        {isLoading ? (
-          <div className="loading">Please wait while we fetch your submissions...</div>
-        ) : (
-            <div>
-              {changeRequestList.length > 0 ? (
-                <ListGroup>
-                  {renderChangeRequestList(changeRequestList)}
-                </ListGroup>
-              ) : (
-                  <div className="empty-list">You have no submissions yet</div>
-                )}
-            </div>
-          )}
+        <LoadingScreen isLoading={isLoading}>
+          <div>
+            {changeRequestList.length > 0 ? (
+              <ListGroup>
+                {renderChangeRequestList(changeRequestList)}
+              </ListGroup>
+            ) : (
+              <div className="empty-list">You have no submissions yet</div>
+            )}
+          </div>
+        </LoadingScreen>
       </div>
     </div>
   );

@@ -11,7 +11,7 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
-  // Errors
+  // Errors and warnings
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Unable to Fetch Your Submissions",
@@ -33,5 +33,10 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "Login Error",
     text: "We were unable to log you in with the credentials you provided.  Please try to login again.",
+  },
+  NOT_AUTHENTICATED: {
+    type: ALERT_TYPES.WARNING,
+    heading: "Login Required",
+    text: "You need to be signed in to your account to access this page.  Please login and try again.",
   }
 };
