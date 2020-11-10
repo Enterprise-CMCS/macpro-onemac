@@ -1,4 +1,5 @@
 import React from "react";
+import PageTitleBar from "../components/PageTitleBar";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../Routes";
 import serviceTypes from "../libs/serviceTypes.json";
@@ -8,6 +9,9 @@ import StepCard from "../components/StepCard";
  * Displays information about the usage of the webform
  */
 export default function Home() {
+
+  PageTitleBar.setPageTitleInfo({ heading: "CMS State Plan Amendment and Waiver Submission Platform", text: "Welcome to the official submission system for email-based state plan amendments (SPAs) and section 1915 waivers." })
+
   /**
    * Chunks/divides items in an array into multiple arrays of the specified chunkSize length.
    * The last array contains the remainder of the items if it's less than the chunkSize.

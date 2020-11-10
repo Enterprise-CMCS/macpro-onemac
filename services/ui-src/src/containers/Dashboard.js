@@ -4,13 +4,13 @@ import { LinkContainer } from "react-router-bootstrap";
 import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import AlertBar from "../components/AlertBar";
+import PageTitleBar from "../components/PageTitleBar";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
 import { useHistory } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import "./Dashboard.scss";
 
 /**
  * Component containing dashboard
@@ -22,6 +22,7 @@ export default function Dashboard() {
 
   const history = useHistory();
 
+  PageTitleBar.setPageTitleInfo({heading : "SPA and Waiver Dashboard", text: "" })
   // Load the data from the backend.
   useEffect(() => {
     async function onLoad() {
@@ -100,7 +101,6 @@ export default function Dashboard() {
   // Render the dashboard
   return (
     <div className="dashboard-container">
-      <div className="dashboard-title">SPA and Waiver Dashboard</div>
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
           <Button

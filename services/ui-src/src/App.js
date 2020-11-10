@@ -5,6 +5,7 @@ import Header from "./components/Header";
 import AlertBar from "./components/AlertBar";
 import { AppContext } from "./libs/contextLib";
 import { useHistory } from "react-router-dom";
+import PageTitleBar from "./components/PageTitleBar";
 
 import {Auth} from "aws-amplify";
 
@@ -39,14 +40,13 @@ function App() {
     !isAuthenticating && (
       <div>
         <Header isAuthenticated={isAuthenticated} />
-        <div className="App container">
-          <AlertBar />
-          <AppContext.Provider
-            value={{ isAuthenticated, userHasAuthenticated }}
-          >
-            <Routes />
-          </AppContext.Provider>
-        </div>
+        <PageTitleBar />
+        <AlertBar />
+        <AppContext.Provider
+          value={{ isAuthenticated, userHasAuthenticated }}
+        >
+          <Routes />
+        </AppContext.Provider>
       </div>
     )
   );

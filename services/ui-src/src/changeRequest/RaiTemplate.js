@@ -1,17 +1,18 @@
 import React, { useRef, useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
-import { useHistory } from "react-router-dom";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
+import PageTitleBar from "../components/PageTitleBar";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -83,8 +84,10 @@ export default function RaiTemplate({
     if (id) {
       setReadOnly(true);
       fetchChangeRequest();
+      PageTitleBar.setPageTitleInfo({ heading: raiType + " RAI Reponse Details", text: "" });
     } else {
       setReadOnly(false);
+      PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
       setIsLoading(false);
     }
   }, [id]);
@@ -95,6 +98,13 @@ export default function RaiTemplate({
    */
   function uploadsReadyCallbackFunction(state) {
     setAreUploadsReady(state);
+  }
+
+  /**
+   * Creates the FAQ link for the correct RAI type ID
+   */
+  function RAIFAQLink() {
+    return "/FAQ#" + raiType.toLowerCase() + "-id-format";
   }
 
   /**
@@ -142,62 +152,72 @@ export default function RaiTemplate({
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>{raiType} RAI Details</h3>
-            <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-              {raiType} ID<span className="required-mark">*</span>
-            </label>
-            {!isReadOnly && (
-              <p className="field-hint">
-                Enter the transmittal number for this RAI
-              </p>
-            )}
-            <input
-              className="field"
-              type="text"
-              required={!isReadOnly}
-              id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-              name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-              onChange={handleInputChange}
-              disabled={isReadOnly}
-              value={changeRequest.transmittalNumber}
-            ></input>
-            {isReadOnly && (
-              <div>
-                <br />
-                <label htmlFor="submittedAt">Submitted on</label>
-                <input
-                  className="field"
-                  type="text"
-                  id="submittedAt"
-                  name="submittedAt"
-                  disabled
-                  value={formatDate(changeRequest.submittedAt)}
-                ></input>
+            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <div className="form-card">
+              <div className="label-container">
+                <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                  {raiType} ID<span className="required-mark">*</span>
+                </label>
+                </div>
+                <div className="label-rcol"><HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink></div>
               </div>
-            )}
+              {!isReadOnly && (
+                <p className="field-hint">
+                  Enter the transmittal number for this RAI
+                </p>
+              )}
+              <input
+                className="field"
+                type="text"
+                required={!isReadOnly}
+                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.transmittalNumber}
+              ></input>
+              {isReadOnly && (
+                <div>
+                  <label htmlFor="submittedAt">Submitted on</label>
+                  <input
+                    className="field"
+                    type="text"
+                    id="submittedAt"
+                    name="submittedAt"
+                    disabled
+                    value={formatDate(changeRequest.submittedAt)}
+                  ></input>
+                </div>
+              )}
+            </div>
             <h3>Attachments</h3>
-            {isReadOnly ? (
-              <FileList uploadList={changeRequest.uploads} />
-            ) : (
-              <FileUploader
-                ref={uploader}
-                requiredUploads={requiredUploads}
-                optionalUploads={optionalUploads}
-                readyCallback={uploadsReadyCallbackFunction}
-              />
-            )}
-            <br />
-            <TextField
-              name={FIELD_NAMES.SUMMARY}
-              label="Summary"
-              fieldClassName="summary-field"
-              multiline
-              onChange={handleInputChange}
-              disabled={isReadOnly}
-              value={changeRequest.summary}
-            />
+            <p className="req-message">Maximum file size of 50MB.</p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
+            <div className="upload-card">
+              {isReadOnly ? (
+                <FileList uploadList={changeRequest.uploads}></FileList>
+              ) : (
+                  <FileUploader
+                    ref={uploader}
+                    requiredUploads={requiredUploads}
+                    optionalUploads={optionalUploads}
+                    readyCallback={uploadsReadyCallbackFunction}
+                  ></FileUploader>
+                )}
+            </div>
+            <div className="summary-box">
+              <TextField
+                name={FIELD_NAMES.SUMMARY}
+                label="Summary"
+                fieldClassName="summary-field"
+                multiline
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.summary}
+              ></TextField>
+            </div>
             {!isReadOnly && (
               <LoaderButton
-                block
                 type="submit"
                 bsSize="large"
                 bsStyle="primary"
