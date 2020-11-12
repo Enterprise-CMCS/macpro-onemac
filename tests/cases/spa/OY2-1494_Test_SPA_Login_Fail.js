@@ -4,13 +4,12 @@ module.exports = {
 
   before : function(browser) {
     login.before(browser);
+    login["Click Login"](browser);
   },
 
   after : function(browser) {
     login.after(browser);
   },
-
-  "Select Developement Login" : login["Select Development Login"],
 
   'Login to WMS Dashboard' : function (browser) {
     const spa = browser.page.spaLoginPage();
