@@ -17,6 +17,6 @@ Lengend: R = Required, O = Optional
 * (O) CLOUDFRONT_DOMAIN_NAME - The custom domain name for the application 
 * (O) IAM_PATH - Defaults to "/"
 * IAM_PERMISSIONS_BOUNDARY_POLICY
-* STAGE_PREFIX
+* STAGE_PREFIX 
 * (R) OKTA_METADATA_URL - The OKTA URL to authenticate at
 
