@@ -11,7 +11,7 @@ module.exports = {
     tags : ['regression'],
 
     before : function(browser) {
-        new_spa.before(browser);
+        new_spa.before(browser)
     },
 
     after : function(browser) {
