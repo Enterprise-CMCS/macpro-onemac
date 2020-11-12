@@ -66,7 +66,5 @@ module.exports = {
 
     "Enter Comments": new_spa["Enter Comments"],
 
-    "Submit SPA Waiver": new_spa["Submit SPA"],
-
-    "Logout of SPA and Waiver Dashboard" : new_spa["Logout of SPA and Waiver Dashboard"]
+    "Submit SPA Waiver": new_spa["Submit SPA"]
 };

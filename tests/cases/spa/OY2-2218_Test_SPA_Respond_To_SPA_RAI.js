@@ -44,6 +44,4 @@ module.exports = {
     "Enter Comments" : new_spa["Enter Comments"],
 
     "Submit Response" : new_spa["Submit SPA"],
-
-    "Logout" : new_spa["Logout of SPA and Waiver Dashboard"]
 };

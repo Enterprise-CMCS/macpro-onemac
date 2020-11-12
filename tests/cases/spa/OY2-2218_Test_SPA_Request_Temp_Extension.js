@@ -7,21 +7,16 @@
  */
 
 const timeout = 500;
-const login = require('./OY2-1494_Test_SPA_Login');
-const spaID = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
-
+const spa_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 module.exports = {
     tags : ['regression'],
 
     before : function(browser) {
-        login.before(browser);
-        login["Verify SPA and Waiver Dashboard"](browser);
-        login["Enter Login Credentials"](browser);
-
+        spa_waiver.before(browser);
     },
 
     after : function(browser) {
-        login.after(browser);
+        spa_waiver.after(browser);
     },
 
     "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'" : function (browser) {
@@ -33,15 +28,14 @@ module.exports = {
         spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
     },
 
-    "Enter Waiver ID" : spaID["Enter Waiver Number"],
+    "Enter Waiver ID" : spa_waiver["Enter Waiver Number"],
 
     "Upload Documents": function(browser) {
         const spa = browser.page.spaBasePage();
         spa.uploadFiles(3).pause(500);
     },
 
-    "Enter Comments": spaID["Enter Comments"],
+    "Enter Comments": spa_waiver["Enter Comments"],
 
-    "Submit Response": spaID["Submit SPA"]
-
+    "Submit Response": spa_waiver["Submit SPA"],
 };

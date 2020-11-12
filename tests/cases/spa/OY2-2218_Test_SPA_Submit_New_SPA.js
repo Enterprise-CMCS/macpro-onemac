@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 1000;
+const timeout = 500;
 const login = require('./OY2-1494_Test_SPA_Login');
 
 module.exports = {
@@ -33,7 +33,7 @@ module.exports = {
             .assert.elementPresent(link)
             .click(link)
             .expect.url().to.contain(subDir)
-            .before(spa.pauseAction);
+            .before(timeout);
     },
 
     'Enter SPA State/Territory Information' : function (browser) {
@@ -52,7 +52,7 @@ module.exports = {
         let spa_id = "A1234567890";
         const spa = browser.page.spaBasePage();
         spa.click(selector)
-            .sendKeys(selector, spa_id)
+            .setValue(selector, spa_id).pause(500)
             .expect.element(selector).value.to.equals(spa_id);
     },
 

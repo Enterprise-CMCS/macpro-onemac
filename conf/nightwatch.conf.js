@@ -24,12 +24,15 @@ module.exports = {
         start_process: true,
         server_path: browser === 'chrome' ? Services.chromedriver.path : Services.geckodriver.path,
         port: 9515,
-        log_path: false
+        log_path: false,
+        cli_args: []
     },
 
     test_settings: {
         default: {
-            desiredCapabilities: {browserName: browser},
+            desiredCapabilities: {
+                browserName: browser
+            }
         },
 
     }

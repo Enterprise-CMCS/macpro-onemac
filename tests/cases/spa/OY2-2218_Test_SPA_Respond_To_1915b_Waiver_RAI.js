@@ -7,19 +7,16 @@
  */
 
 const timeout = 500;
-const login = require('./OY2-1494_Test_SPA_Login');
-const spaID = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
+const spa_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 module.exports = {
     tags : ['regression'],
 
     before : function(browser) {
-        login.before(browser);
-        login["Click Login"](browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        spa_waiver.before(browser);
     },
 
     after : function(browser) {
-        spaID.after(browser);
+        spa_waiver.after(browser);
     },
 
     "Click on Respond to 1915(b) Waiver RAI" : function (browser) {
@@ -31,12 +28,12 @@ module.exports = {
         spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
     },
 
-    "Enter Waiver ID" : spaID["Enter Waiver Number"],
+    "Enter Waiver ID" : spa_waiver["Enter Waiver Number"],
 
-    "Upload Documents": spaID["Upload Documents"],
+    "Upload Documents": spa_waiver["Upload Documents"],
 
-    "Enter Comments": spaID["Enter Comments"],
+    "Enter Comments": spa_waiver["Enter Comments"],
 
-    "Submit Response": spaID["Submit SPA"]
+    "Submit Response": spa_waiver["Submit SPA"]
 
 };
