@@ -90,7 +90,7 @@ export default function RaiTemplate({
       PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
       setIsLoading(false);
     }
-  }, [id]);
+  }, [id, raiType]);
 
   /**
    * Callback for the uploader to set if the upload requirements are met.

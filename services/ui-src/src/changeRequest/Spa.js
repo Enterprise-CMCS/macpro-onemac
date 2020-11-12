@@ -22,7 +22,8 @@ export default function Spa() {
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
     "Cover Letter",
-    "Existing state plan page(s)",
+    "Existing State Plan Page(s)",
+    "Document Demonstrating Good-Faith Tribal Engagement",
     "Tribal Consultation",
     "Public Notice",
     "Standard Funding Questions (SFQs)",
