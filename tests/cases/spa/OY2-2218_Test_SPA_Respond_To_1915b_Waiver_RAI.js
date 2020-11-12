@@ -19,10 +19,8 @@ module.exports = {
         spaID.after(browser);
     },
 
-    "Login to SPA and Waiver Dashboard" : spaID["Login to SPA and Waiver Dashboard"],
-
     "Click on Respond to 1915(b) Waiver RAI" : function (browser) {
-    let buttonText = "Respond to 1915(b) Waiver RAI";
+        let buttonText = "Respond to 1915(b) Waiver RAI";
         const spa = browser.page.spaBasePage();
         let buttonSelected = '@respondWaiver';
         spa.expect.element('xpath', buttonSelected).to.be.present.before(timeout);

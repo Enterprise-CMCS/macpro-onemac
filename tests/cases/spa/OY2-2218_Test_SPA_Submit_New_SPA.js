@@ -14,14 +14,14 @@ module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        login["Select Development Login"](browser)
+        login["Verify SPA and Waiver Dashboard"](browser);
+        login["Enter Login Credentials"](browser)
     },
 
     after : function(browser) {
+        login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
     },
-
-    'Login to SPA and Waiver Dashboard': login["Login to SPA and Waiver Dashboard"],
 
     "Click on 'Start a new SPA'": function (browser) {
         let link = '@newSPA';
@@ -86,8 +86,5 @@ module.exports = {
             .assert.containsText(alert_selector, alert_msg)
             .assert.containsText(p_selector, msg)
             .pause(1000);
-    },
-
-    "Logout of SPA and Waiver Dashboard" : login["Logout of SPA and Waiver Dashboard"]
-
+    }
 };
