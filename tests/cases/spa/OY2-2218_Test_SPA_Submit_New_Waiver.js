@@ -24,7 +24,6 @@ module.exports = {
         let new_spa = "@newWaiver";
         const spa = browser.page.spaBasePage();
         spa
-            .useXpath()
             .assert.elementPresent('@newWaiver')
             .click(new_spa)
             .expect.url().to.contain("/waiver")
@@ -61,12 +60,11 @@ module.exports = {
     "Enter Waiver Number": new_spa["Enter SPA ID"],
 
     "Upload Documents": function (browser) {
-        browser.page.spaBasePage().uploadFiles(7);
+        const spa = browser.page.spaBasePage();
+        spa.uploadFiles(7).pause(500);
     },
 
     "Enter Comments": new_spa["Enter Comments"],
 
-    "Submit SPA Waiver": new_spa["Submit SPA"],
-
-    "Logout of SPA and Waiver Dashboard" : new_spa["Logout of SPA and Waiver Dashboard"]
+    "Submit SPA Waiver": new_spa["Submit SPA"]
 };

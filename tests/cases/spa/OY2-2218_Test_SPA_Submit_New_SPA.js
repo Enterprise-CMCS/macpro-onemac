@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 1000;
+const timeout = 500;
 const login = require('./OY2-1494_Test_SPA_Login');
 
 module.exports = {
@@ -15,7 +15,7 @@ module.exports = {
     before : function(browser) {
         login.before(browser);
         login["Verify SPA and Waiver Dashboard"](browser);
-        login["Enter Login Credentials"](browser)
+        login["Enter Login Credentials"](browser);
     },
 
     after : function(browser) {
@@ -27,19 +27,16 @@ module.exports = {
         let link = '@newSPA';
         let subDir = '/spa';
         const spa = browser.page.spaBasePage();
-
-        spa
-            .useXpath()
-            .assert.elementPresent(link)
+        spa.assert.elementPresent(link)
             .click(link)
             .expect.url().to.contain(subDir)
-            .before(spa.pauseAction);
+            .before(timeout);
     },
 
     'Enter SPA State/Territory Information' : function (browser) {
         let selector = 'select[id=territory]'
         let state_option = "Virginia";
-        browser.useCss()
+        browser
             .click(selector)
             .setValue(selector, ["V", "V" , "V"])
             .click(selector)
@@ -51,15 +48,13 @@ module.exports = {
         let selector = '@transmittalNumber';
         let spa_id = "A1234567890";
         const spa = browser.page.spaBasePage();
-        spa.click(selector)
-            .sendKeys(selector, spa_id)
+        spa.click(selector).setValue(selector, spa_id)
             .expect.element(selector).value.to.equals(spa_id);
     },
 
     'Upload Documents' : function (browser) {
         const spa = browser.page.spaBasePage();
-        spa.uploadFiles(8)
-        browser.pause(timeout);
+        spa.uploadFiles(9).pause(500);
     },
 
     'Enter Comments' : function (browser) {
@@ -86,5 +81,6 @@ module.exports = {
             .assert.containsText(alert_selector, alert_msg)
             .assert.containsText(p_selector, msg)
             .pause(1000);
-    }
+    },
+
 };

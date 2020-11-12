@@ -7,36 +7,36 @@
  */
 
 const timeout = 500;
-const login = require('./OY2-1494_Test_SPA_Login');
-const spaID = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
+const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 module.exports = {
     tags : ['regression'],
 
     before : function(browser) {
-        login.before(browser);
-        login["Click Login"](browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        new_spa.before(browser);
     },
 
     after : function(browser) {
-        spaID.after(browser);
+        new_spa.after(browser);
     },
 
     "Click on Respond to 1915(b) Waiver RAI" : function (browser) {
         let buttonText = "Respond to 1915(b) Waiver RAI";
         const spa = browser.page.spaBasePage();
         let buttonSelected = '@respondWaiver';
-        spa.expect.element('xpath', buttonSelected).to.be.present.before(timeout);
-        spa.useXpath().expect.element(buttonSelected).text.equals(buttonText);
+        spa.expect.element(buttonSelected).to.be.present.before(timeout);
+        spa.expect.element(buttonSelected).text.equals(buttonText);
         spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
     },
 
-    "Enter Waiver ID" : spaID["Enter Waiver Number"],
+    "Enter Waiver ID" : new_spa["Enter SPA ID"],
 
-    "Upload Documents": spaID["Upload Documents"],
+    "Upload Documents": function (browser) {
+        const spa = browser.page.spaBasePage();
+        spa.uploadFiles(7).pause(500);
+    },
 
-    "Enter Comments": spaID["Enter Comments"],
+    "Enter Comments": new_spa["Enter Comments"],
 
-    "Submit Response": spaID["Submit SPA"]
+    "Submit Response": new_spa["Submit SPA"]
 
 };
