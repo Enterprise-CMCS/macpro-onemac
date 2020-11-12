@@ -14,14 +14,13 @@ module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        login["Select Development Login"](browser)
+        login["Click Login"](browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
     },
 
     after : function(browser) {
         login.after(browser);
     },
-
-    'Login to SPA and Waiver Dashboard': login["Login to SPA and Waiver Dashboard"],
 
     "Click on 'Start a new SPA'": function (browser) {
         let link = '@newSPA';
