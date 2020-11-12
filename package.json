@@ -1,7 +1,7 @@
 {
-  "name": "at-deploy",
+  "name": "macstack-spa-submission-form",
   "version": "1.0.0",
-  "description": "<<<<<<< HEAD\r # chain-reaction\r Nightwatch.js Framework Development with java plugin for reporting\r =======\r # ChainREACTion\r >>>>>>> Initial commit",
+  "description": "Automated Testing Framework using Nightwatch.js",
   "main": "nightwatch.js",
   "directories": {
     "lib": "lib",
@@ -12,19 +12,20 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/collabra-glockett/at-deploy.git"
+    "url": "git+https://github.com/CMSgov/macstack-spa-submission-form.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/collabra-glockett/at-deploy/issues"
+    "url": "https://github.com/CMSgov/macstack-spa-submission-form/issues"
   },
-  "homepage": "https://github.com/collabra-glockett/at-deploy#readme",
+  "homepage": "https://github.com/CMSgov/macstack-spa-submission-form#readme",
   "dependencies": {
-    "chromedriver": "^86.0.0",
-    "geckodriver": "^1.20.0",
     "nightwatch": "^1.5.1"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "chromedriver": "^86.0.0",
+    "geckodriver": "^1.20.0"
+  }
 }

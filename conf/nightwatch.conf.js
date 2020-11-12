@@ -2,7 +2,7 @@
 // Refer to the online docs for more details: https://nightwatchjs.org/gettingstarted/configuration/
 const browser = 'chrome'
 const Services ={}; loadServices();
-const Allure = {}; reporting();
+
 module.exports = {
     // An array of folders (excluding subfolders) where your tests are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
@@ -46,12 +46,5 @@ function loadServices() {
     try {
         Services.geckodriver = require('geckodriver');
     } catch (err) {}
-}
 
-function reporting() {
-    try {
-        Allure.reporter = require('allure-mocha');
-    }catch (err) {
-        console.log(err);
-    }
 }
