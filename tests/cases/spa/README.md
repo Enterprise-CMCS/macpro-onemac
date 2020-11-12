@@ -1,1 +1,1 @@
-## Folder for all WMS Test Cases
+## Folder for all SPA Test Cases

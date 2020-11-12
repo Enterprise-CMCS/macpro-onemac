@@ -3,15 +3,19 @@ const uploadCMD = {
     uploadFiles : function (total) {
         let fs = require('fs');
         let dir = process.cwd() + '/files/';
-        let iterator = fs.readdirSync(dir);
-        this.api.useCss();
-        for(let i = 0; i < total; i++) { //Performs trivial loop over all upload fields
-            let selector = "#uploader-input-" + i;
-            let file = dir + iterator[i];
-            this.api.assert.elementPresent(selector).setValue(selector, file);
+        let files = fs.readdirSync(dir);
+
+        for (let i = 0; i < total; i++) {
+            let selector = 'input[id="uploader-input-' + i + '"]';
+            this.api.assert.elementPresent(selector);
+            let file = require('path').resolve(dir, files[i]);
+            this.api.setValue(selector, file);
+            //not.contain("No file chosen")
         }
+
         return this.api;
-    }
+    },
+
 };
 
 module.exports = {
@@ -21,11 +25,7 @@ module.exports = {
         waiverAuthority: '#waiverAuthority',
         title: 'div[class=dashboard-title]',
 
-
-        transmittalNumber: {
-            selector: "//input[@id='transmittalNumber']",
-            locateStrategy: 'xpath'
-        },
+        transmittalNumber: "input[id='transmittalNumber']",
 
         newSPA: {
             selector: "(//button[@class='ds-c-button ds-c-button--transparent'])[1]",
@@ -50,7 +50,9 @@ module.exports = {
         requestTemp: {
             selector: "(//button[@class='ds-c-button ds-c-button--transparent'])[5]",
             locateStrategy: 'xpath'
-        }
+        },
+
+        territory : "select[id=territory]"
     },
 
     commands : [uploadCMD],
