@@ -1,13 +1,30 @@
-# at-deploy
+# Nightwatch Automated Testing framework
+
 Automated Testing Framework using Nightwatch.js
 
 ## Installation
 
-1. Install node.js
+Pre-requisite: 
 
-2. From the root directory folder, use node package manager `npm` (After node.js is installed):
+- Node.js 12.x or higher
 
-    `npm install`
+
+From the root directory folder, use node package manager `npm`:
+
+`npm install`
+   
+## Running Tests 
+
+To run tests:
     
+`node nightwatch -c conf/nightwatch.conf.js # runs all tests`
+
+see [Running Tests in Nightwatch](https://nightwatchjs.org/guide/running-tests/nightwatch-runner.html)
+
+A test_runner script will be updated and provided soon.
+
+## Other Guides
+
+[Best Practices for writing automated tests](tests/README.md)
 
 
