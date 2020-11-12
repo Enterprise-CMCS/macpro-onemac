@@ -4,9 +4,8 @@ module.exports = {
 
     before : function(browser) {
         console.log('Setting up...');
-        const spa = browser.page.spaLoginPage();
-        spa.navigate()
-            .waitForElementVisible('body');
+        const loginPage = browser.page.spaLoginPage();
+        loginPage.navigate().waitForElementVisible('body');
     },
 
     after : function(browser) {
@@ -14,33 +13,35 @@ module.exports = {
         browser.end();
     },
 
-    "Select Development Login" : function (browser) {
+    'Verify SPA and Waiver Dashboard' : function (browser) {
+        let title = "Developer Login";
+        let urlSubDir = '/devlogin';
+
         const loginPage = browser.page.spaLoginPage();
-        loginPage.assert.elementPresent('@loginButton');
         loginPage.click('@loginButton')
+            .expect.url().to.contain(urlSubDir).after(500);
+
+        loginPage
+            .assert.visible('@loginTitle')
+            .assert.containsText('h1', title)
+            .assert.elementPresent('@submitBtn');
+
     },
 
-    'Login to SPA and Waiver Dashboard' : function (browser) {
+    'Enter Login Credentials' : function(browser) {
         let username = 'automatedtester090@gmail.com';
         let password = 'id~p)$6XB:9t';
+
         const loginPage = browser.page.spaLoginPage();
-        loginPage.assert.elementPresent('@loginButton');
-        loginPage.click('@loginButton')
-            .assert.titleContains('SPA and Waiver Submission Form')
-            .assert.not.titleContains('CARTS')
-            .assert.visible('div[class=Login]');
-
-        loginPage.setValue('@userField', username);
-        loginPage.setValue('@passField', password);
-        loginPage.click('@submitBtn').expect.url().to.contain("/dashboard").after('3000');
-        loginPage.waitForElementNotPresent('@submitBtn');
-
-        },
+        loginPage.setValue('@userField', username).pause(10);
+        loginPage.setValue('@passField', password).pause(10);
+        loginPage.click('@submitBtn').waitForElementNotPresent('@submitBtn');
+    },
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
-        const spa = browser.page.spaLoginPage();
-        spa.click('@logout');
-        spa.assert.containsText('h1', 'CMS State Plan Amendment and Waiver Submission Platform');
+        let title = 'CMS State Plan Amendment and Waiver Submission Platform'
+        const loginPage = browser.page.spaLoginPage();
+        loginPage.click('@logout');
+        loginPage.assert.containsText('h1', title);
     }
-
 };

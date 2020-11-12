@@ -4,19 +4,18 @@ module.exports = {
 
   before : function(browser) {
     login.before(browser);
+    login["Verify SPA and Waiver Dashboard"](browser);
   },
 
   after : function(browser) {
     login.after(browser);
   },
 
-  "Select Developement Login" : login["Select Development Login"],
-
-  'Login to WMS Dashboard' : function (browser) {
-    const spa = browser.page.spaLoginPage();
-    spa.setValue('@userField', 'automatedtester011@gmail.com');
-    spa.setValue('@passField', 'badpassword');
-    spa.click('@submitBtn')
+  'Enter Login Credentials' : function (browser) {
+    const loginPage = browser.page.spaLoginPage();
+    loginPage.setValue('@userField', 'automatedtester011@gmail.com');
+    loginPage.setValue('@passField', 'badpassword');
+    loginPage.click('@submitBtn')
         .verify.visible('@submitBtn')
         .assert.elementPresent("#alert_1")
         .assert.visible("#alert_1")
