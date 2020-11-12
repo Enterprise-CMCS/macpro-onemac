@@ -42,9 +42,9 @@ module.exports = {
         retryAssertionTimeout: 5000,
 
         // Custom reporter
-        reporter: function(results, done) {
+       /* reporter: function(results, done) {
             // do something with the results
             done(results);
-        }
+        }*/
     }
 }

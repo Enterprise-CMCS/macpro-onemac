@@ -1,4 +1,5 @@
 .idea
+.run
 !*.md
 *.log
 reports/*

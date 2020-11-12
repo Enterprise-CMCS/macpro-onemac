@@ -7,41 +7,36 @@
  */
 
 const timeout = 500;
-const login = require('./OY2-1494_Test_SPA_Login');
-const spaID = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
+const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 
 module.exports = {
     tags : ['regression'],
 
     before : function(browser) {
-        login.before(browser);
-        login["Verify SPA and Waiver Dashboard"](browser);
-        login["Enter Login Credentials"](browser);
-
+        new_spa.before(browser);
     },
 
     after : function(browser) {
-        login.after(browser);
+        new_spa.after(browser);
     },
 
     "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'" : function (browser) {
         let buttonText = "Request Temporary Extension form - 1915(b) and 1915(c)";
         const spa = browser.page.spaBasePage();
         let buttonSelected = '@requestTemp';
-        spa.expect.element('xpath', buttonSelected).to.be.present.before(timeout);
-        spa.useXpath().expect.element(buttonSelected).text.equals(buttonText);
+        spa.expect.element(buttonSelected).to.be.present.before(timeout);
+        spa.expect.element(buttonSelected).text.equals(buttonText);
         spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
     },
 
-    "Enter Waiver ID" : spaID["Enter Waiver Number"],
+    "Enter Waiver ID" : new_spa["Enter SPA ID"],
 
     "Upload Documents": function(browser) {
         const spa = browser.page.spaBasePage();
         spa.uploadFiles(3).pause(500);
     },
 
-    "Enter Comments": spaID["Enter Comments"],
+    "Enter Comments": new_spa["Enter Comments"],
 
-    "Submit Response": spaID["Submit SPA"]
-
+    "Submit Response": new_spa["Submit SPA"],
 };

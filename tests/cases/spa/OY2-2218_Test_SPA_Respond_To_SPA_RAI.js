@@ -26,9 +26,7 @@ module.exports = {
 
         const spa = browser.page.spaBasePage();
 
-        spa
-            .useXpath()
-            .assert.elementPresent(link)
+        spa.assert.elementPresent(link)
             .click(link)
             .expect.url().to.contain(subDir)
             .before(spa.pauseAction);
@@ -38,12 +36,10 @@ module.exports = {
 
     "Upload Documents" : function (browser) {
         const spa = browser.page.spaBasePage();
-        spa.uploadFiles(9);
+        spa.uploadFiles(10);
     },
 
     "Enter Comments" : new_spa["Enter Comments"],
 
     "Submit Response" : new_spa["Submit SPA"],
-
-    "Logout" : new_spa["Logout of SPA and Waiver Dashboard"]
 };

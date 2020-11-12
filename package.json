@@ -8,7 +8,13 @@
     "test": "tests"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "chrome": "nightwatch -c conf/nightwatch.conf.js",
+    "chrome-win": "node nightwatch -c conf/nightwatch.conf.js",
+    "firefox": "nightwatch -c conf/nightwatch.conf.js -e firefox",
+    "firefox-win": "node nightwatch -c conf/nightwatch.conf.js -e firefox",
+    "test": "nightwatch -c conf/nightwatch.conf.js -e chrome, firefox",
+    "test-win": "node nightwatch -c conf/nightwatch.conf.js -e default, firefox",
+    "update": "npx npm-check-updates -u && npm install"
   },
   "repository": {
     "type": "git",
@@ -22,6 +28,7 @@
   },
   "homepage": "https://github.com/CMSgov/macstack-spa-submission-form#readme",
   "dependencies": {
+    "glob": "^7.1.6",
     "nightwatch": "^1.5.1"
   },
   "devDependencies": {
