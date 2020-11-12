@@ -27,10 +27,6 @@ h4 {
   @extend .ds-h4;
 }
 
-.black-text {
-  color: $color-black;
-}
-
 .white-text {
   color: $color-white;
   @extend .white-link;
@@ -83,14 +79,6 @@ label {
 
 ul {
   @extend .ds-c-list;
-}
-
-.four-column-content {
-  @extend .ds-l-row;
-  .column {
-    @extend .ds-l-col;
-    min-width: 250px;
-  }
 }
 
 .uploader {
@@ -254,9 +242,13 @@ input[type="file"] {
     padding: 100px 0;
   }
 
-  .section-title {
+  .section-title-center {
     @extend .ds-h2;
     text-align: center;
+  }
+
+  .section-title {
+    @extend .ds-h2;
   }
 
   .section-subtitle {
@@ -270,7 +262,7 @@ input[type="file"] {
     background-color: $color-gray-lightest;
   }
 
-  .section-service-types {
+  .section-submission-types {
     display: flex;
     flex-direction: column;
     justify-content: center;
