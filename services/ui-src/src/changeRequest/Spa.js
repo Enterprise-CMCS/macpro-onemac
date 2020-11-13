@@ -15,9 +15,19 @@ import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList } from "../utils/form-utils";
-import { Formik, Form, Field} from 'formik';
+import {Formik, Form, Field, ErrorMessage} from 'formik';
+import * as Yup from 'yup';
+
+const DisplayingErrorMessagesSchema = Yup.object().shape({
+  transmittalNumber: Yup.string()
+      .min(2, 'Too Short!')
+      .max(10, 'Too Long!')
+      .required('Required'),
+});
 
 export default function Spa() {
+
+
 
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
@@ -63,6 +73,14 @@ export default function Spa() {
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
+
+  const DisplayingErrorMessagesSchema = Yup.object().shape({
+    transmittalNumber: Yup.string().matches(/AA/,"SPA ID Format")
+        .min(2, 'Too Short!')
+        .max(10, 'Too Long!')
+        .required('Required'),
+  });
+
 
   useEffect(() => {
     /**
@@ -182,7 +200,10 @@ export default function Spa() {
   }
 
   function validateTransmittalNumber(values) {
-    console.log(values)
+    console.log("Validate Transmittal:" + JSON.stringify(values))
+    let error;
+    error = "Required !"
+    return error
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -192,11 +213,10 @@ export default function Spa() {
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
           <Formik
-              initialValues={{ transmittalNumber: "" }}
-              onBlur={async values => {
-                alert("Main:" + JSON.stringify(values, null, 2));
-              }}
-          >
+              initialValues={{ transmittalNumber: '' }}
+              validationSchema={DisplayingErrorMessagesSchema}
+            >
+            {({errors, touched, isValidating }) => (
           <Form onSubmit={handleSubmit}>
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
@@ -223,15 +243,15 @@ export default function Spa() {
               <Field
                 className="field"
                 type="text"
-                required={!isReadOnly}
                 id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                onChange={handleInputChange}
-                onBlur={validateTransmittalNumber(changeRequest)}
+                //onBlur={validateTransmittalNumber}
                 disabled={isReadOnly}
-                value={changeRequest.transmittalNumber}
-               // validate={validateTransmittalNumber(changeRequest)}
+                //validate={validateTransmittalNumber}
               ></Field>
+              {errors.transmittalNumber && touched.transmittalNumber && <div>{errors.transmittalNumber}</div>}
+
+              <ErrorMessage name={FIELD_NAMES.TRANSMITTAL_NUMBER}>Error</ErrorMessage>
               {isReadOnly && (
                 <div>
                   <label htmlFor="submittedAt">Submitted on</label>
@@ -284,6 +304,7 @@ export default function Spa() {
               </LoaderButton>
             )}
           </Form>
+          )}
           </Formik>
         </div>
       ) : null}
