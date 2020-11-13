@@ -15,6 +15,7 @@ import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList } from "../utils/form-utils";
+import { Formik, Form, Field} from 'formik';
 
 export default function Spa() {
 
@@ -180,13 +181,23 @@ export default function Spa() {
     return selectProps
   }
 
+  function validateTransmittalNumber(values) {
+    console.log(values)
+  }
+
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
+          <Formik
+              initialValues={{ transmittalNumber: "" }}
+              onBlur={async values => {
+                alert("Main:" + JSON.stringify(values, null, 2));
+              }}
+          >
+          <Form onSubmit={handleSubmit}>
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
@@ -209,16 +220,18 @@ export default function Spa() {
                   Must follow the format SS-YY-NNNN-xxxx
                 </p>
               )}
-              <input
+              <Field
                 className="field"
                 type="text"
                 required={!isReadOnly}
                 id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 name={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 onChange={handleInputChange}
+                onBlur={validateTransmittalNumber(changeRequest)}
                 disabled={isReadOnly}
                 value={changeRequest.transmittalNumber}
-              ></input>
+               // validate={validateTransmittalNumber(changeRequest)}
+              ></Field>
               {isReadOnly && (
                 <div>
                   <label htmlFor="submittedAt">Submitted on</label>
@@ -270,7 +283,8 @@ export default function Spa() {
                 Submit
               </LoaderButton>
             )}
-          </form>
+          </Form>
+          </Formik>
         </div>
       ) : null}
     </LoadingScreen>
