@@ -15,19 +15,13 @@ import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList } from "../utils/form-utils";
-import {Formik, Form, Field, ErrorMessage} from 'formik';
+import {Formik, Form, Field} from 'formik';
 import * as Yup from 'yup';
 
-const DisplayingErrorMessagesSchema = Yup.object().shape({
-  transmittalNumber: Yup.string()
-      .min(2, 'Too Short!')
-      .max(10, 'Too Long!')
-      .required('Required'),
-});
 
 export default function Spa() {
 
-
+  const [errors, setErrors] = useState({});
 
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
@@ -65,7 +59,7 @@ export default function Spa() {
   const uploader = useRef(null);
 
   // Optional ID parameter from the URL
-  const { id } = useParams();
+  const {id} = useParams();
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
@@ -73,14 +67,6 @@ export default function Spa() {
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
   });
-
-  const DisplayingErrorMessagesSchema = Yup.object().shape({
-    transmittalNumber: Yup.string().matches(/AA/,"SPA ID Format")
-        .min(2, 'Too Short!')
-        .max(10, 'Too Long!')
-        .required('Required'),
-  });
-
 
   useEffect(() => {
     /**
@@ -125,6 +111,12 @@ export default function Spa() {
     setAreUploadsReady(state);
   }
 
+  const SpaIdErrorMessagesSchema = Yup.object().shape({
+    transmittalNumber: Yup.string()
+        .matches(/^[A-Za-z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$/, "SPA ID Format")
+        .required('Required'),
+  });
+
   /**
    * Handle changes to the form.
    * @param {Object} event the event
@@ -134,6 +126,15 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
+
+      SpaIdErrorMessagesSchema
+          .isValid({transmittalNumber:
+                updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER]})
+          .then(function (valid) {
+            //alert(valid)
+            if (valid) setIsFormReady(valid)
+            else setErrors({...errors, transmittalNumber: "Format Error"})
+      });
 
       // Check to see if the required fields are provided
       setIsFormReady(
@@ -150,18 +151,23 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    setIsLoading(true);
+    if (isFormReady) {
 
-    try {
-      let uploadedList = await uploader.current.uploadFiles();
-      await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-      history.push(ROUTES.DASHBOARD);
-      //Alert must come last or it will be cleared after the history push.
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
-      setIsLoading(false);
+      setIsLoading(true);
+
+      try {
+        let uploadedList = await uploader.current.uploadFiles();
+        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        history.push(ROUTES.DASHBOARD);
+        //Alert must come last or it will be cleared after the history push.
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+      } catch (error) {
+        console.log("There was an error submitting a request.", error);
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+        setIsLoading(false);
+      }
+    } else {
+      alert("Not Ready !")
     }
   }
 
@@ -199,13 +205,6 @@ export default function Spa() {
     return selectProps
   }
 
-  function validateTransmittalNumber(values) {
-    console.log("Validate Transmittal:" + JSON.stringify(values))
-    let error;
-    error = "Required !"
-    return error
-  }
-
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
@@ -214,7 +213,7 @@ export default function Spa() {
         <div className="form-container">
           <Formik
               initialValues={{ transmittalNumber: '' }}
-              validationSchema={DisplayingErrorMessagesSchema}
+              validationSchema={SpaIdErrorMessagesSchema}
             >
             {({errors, touched, isValidating }) => (
           <Form onSubmit={handleSubmit}>
@@ -245,13 +244,15 @@ export default function Spa() {
                 type="text"
                 id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                //onBlur={validateTransmittalNumber}
+                onBlur={e => {
+                  // call the built-in handleBur
+                  handleInputChange(e)
+                }}
                 disabled={isReadOnly}
-                //validate={validateTransmittalNumber}
               ></Field>
-              {errors.transmittalNumber && touched.transmittalNumber && <div>{errors.transmittalNumber}</div>}
-
-              <ErrorMessage name={FIELD_NAMES.TRANSMITTAL_NUMBER}>Error</ErrorMessage>
+              {errors.transmittalNumber && (
+                  <div style={{ color: "red" }}>{errors.transmittalNumber}</div>
+              )}
               {isReadOnly && (
                 <div>
                   <label htmlFor="submittedAt">Submitted on</label>
@@ -298,7 +299,7 @@ export default function Spa() {
                 bsSize="large"
                 bsStyle="primary"
                 isLoading={isLoading}
-                disabled={!isFormReady || !areUploadsReady}
+                disabled={false}
               >
                 Submit
               </LoaderButton>
