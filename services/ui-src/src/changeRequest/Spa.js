@@ -16,12 +16,9 @@ import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList } from "../utils/form-utils";
 import {Formik, Form, Field} from 'formik';
-import * as Yup from 'yup';
 
 
 export default function Spa() {
-
-  const [errors, setErrors] = useState({});
 
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
@@ -46,6 +43,7 @@ export default function Spa() {
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
+  const [ hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -125,35 +123,46 @@ export default function Spa() {
       if ( event.target.name === "territory" )  updatedRecord[FIELD_NAMES.STATE_CODE] = event.target.value
 
       setIsFormReady(
-          updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
+          hasValidTransmittalNumber &&
           updatedRecord[FIELD_NAMES.TERRITORY]
       );
 
     }
   }
 
+  function focusStateFieldFirst() {
+    document.getElementById(FIELD_NAMES.TERRITORY).focus();
+  }
+
+  /**
+   * Validate Transmittal Number Format
+   * @param {value} Transmittal Number Field Entered on Change Event.
+   */
   function validateTransmittalNumber(value) {
 
     let errorMessage
     let updatedRecord = {...changeRequest}
     changeRequest.transmittalNumber = value
 
-    let RegexFormatString = "^" + `${updatedRecord[FIELD_NAMES.STATE_CODE]}` + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
-    let transmittalNumberFormatErrorMessage = `${updatedRecord[FIELD_NAMES.STATE_CODE]}` + "-YY-NNNN-xxxx"
+
+    let RegexFormatString = "^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
+    let transmittalNumberFormatErrorMessage = updatedRecord[FIELD_NAMES.STATE_CODE] + "-YY-NNNN-xxxx"
     let transmittalNumberRegex = new RegExp(RegexFormatString)
 
     if (!value) {
       errorMessage = 'Transmittal Number Required !';
+    } else if (updatedRecord[FIELD_NAMES.STATE_CODE] === undefined) {
+      errorMessage = ""
+      alert("Select State/Territory First !")
+      focusStateFieldFirst()
     } else if (!value.match(transmittalNumberRegex)) {
       errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
     } else {
 
     updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-    setIsFormReady(
-        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-        updatedRecord[FIELD_NAMES.TERRITORY]
-       );
+      setValidTransmittalNumber(true)
     }
+
     return errorMessage;
   };
 
@@ -230,7 +239,7 @@ export default function Spa() {
           <Formik
               initialValues={{ transmittalNumber: '' }}
             >
-            {({errors, validate }) => (
+            {({errors }) => (
           <Form onSubmit={handleSubmit}>
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
@@ -322,7 +331,7 @@ export default function Spa() {
                 bsSize="large"
                 bsStyle="primary"
                 isLoading={isLoading}
-                disabled={false}
+                disabled={!isFormReady || !areUploadsReady}
               >
                 Submit
               </LoaderButton>
