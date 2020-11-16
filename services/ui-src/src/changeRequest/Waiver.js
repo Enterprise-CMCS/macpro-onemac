@@ -178,7 +178,7 @@ export default function Waiver() {
       focusStateFieldFirst()
     } else if (!value.match(transmittalNumberRegex) ) {
       if (!value.match(transmittalNumberRegex2) )
-      errorMessage = `wwTransmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+      errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
     } else {
       updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
       setValidTransmittalNumber(true)
