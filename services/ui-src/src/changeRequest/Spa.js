@@ -130,6 +130,9 @@ export default function Spa() {
     }
   }
 
+  /**
+   * Set Focus to State/Territory Field
+   */
   function focusStateFieldFirst() {
     document.getElementById(FIELD_NAMES.TERRITORY).focus();
   }

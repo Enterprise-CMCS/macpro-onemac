@@ -13,6 +13,8 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
+import {Formik, Form, Field} from 'formik';
+import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -36,6 +38,7 @@ export default function RaiTemplate({
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
+  const [ hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -108,6 +111,51 @@ export default function RaiTemplate({
   }
 
   /**
+   * Validate Transmittal Number Format
+   * @param {value} Transmittal Number Field Entered on Change Event.
+   */
+  function validateTransmittalNumber(value) {
+    let errorMessage
+    let updatedRecord = {...changeRequest}
+    changeRequest.transmittalNumber = value
+
+    if (changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI) {
+      let RegexFormatString = "^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
+      let transmittalNumberFormatErrorMessage = "SS-YY-NNNN-xxxx"
+      let transmittalNumberRegex = new RegExp(RegexFormatString)
+
+      if (!value) {
+        errorMessage = 'Transmittal Number Required !';
+      } else if (!value.match(transmittalNumberRegex)) {
+        errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+      } else {
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+        setValidTransmittalNumber(true)
+      }
+
+    } else if (changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI)
+    {
+    let RegexFormatString = "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$"
+    let RegexFormatString2 = "^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$"
+    let transmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+    let transmittalNumberRegex = new RegExp(RegexFormatString)
+    let transmittalNumberRegex2 = new RegExp(RegexFormatString2)
+
+    if (!value) {
+      errorMessage = 'Transmittal Number Required !';
+    } else if (!value.match(transmittalNumberRegex)) {
+      if (!value.match(transmittalNumberRegex2))
+        errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+    } else {
+      updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+      setValidTransmittalNumber(true)
+    }
+  }
+    return errorMessage;
+  };
+
+
+  /**
    * Handle changes to the form.
    * @param {Object} event the event
    */
@@ -118,7 +166,7 @@ export default function RaiTemplate({
       setChangeRequest(updatedRecord);
 
       // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER]);
+      setIsFormReady(hasValidTransmittalNumber);
     }
   }
 
@@ -150,7 +198,11 @@ export default function RaiTemplate({
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
+          <Formik
+              initialValues={{ transmittalNumber: '' }}
+          >
+            {({errors }) => (
+                <Form onSubmit={handleSubmit}>
             <h3>{raiType} RAI Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
@@ -166,16 +218,28 @@ export default function RaiTemplate({
                   Enter the transmittal number for this RAI
                 </p>
               )}
-              <input
-                className="field"
-                type="text"
-                required={!isReadOnly}
-                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                onChange={handleInputChange}
-                disabled={isReadOnly}
-                value={changeRequest.transmittalNumber}
-              ></input>
+              {!isReadOnly && (
+                  <Field
+                      className="field"
+                      type="text"
+                      id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                      name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                      validate={validateTransmittalNumber}
+                      value={changeRequest.transmittalNumber}
+                  ></Field> )}
+              {errors.transmittalNumber && (
+                  <div style={{ color: "red" }}>{errors.transmittalNumber}</div>
+              )}
+              {isReadOnly && <input
+                  className="field"
+                  type="text"
+                  required={!isReadOnly}
+                  id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                  name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                  onChange={handleInputChange}
+                  disabled={isReadOnly}
+                  value={changeRequest.transmittalNumber}
+              ></input> }
               {isReadOnly && (
                 <div>
                   <label htmlFor="submittedAt">Submitted on</label>
@@ -227,7 +291,8 @@ export default function RaiTemplate({
                 Submit
               </LoaderButton>
             )}
-          </form>
+          </Form> )}
+          </Formik>
         </div>
       ) : null}
     </LoadingScreen>

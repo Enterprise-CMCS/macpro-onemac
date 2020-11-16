@@ -13,6 +13,7 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
+import {Formik, Form, Field} from 'formik';
 
 export default function WaiverExtension() {
   // The attachment list
@@ -25,12 +26,13 @@ export default function WaiverExtension() {
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
-    SUMMARY: "summary"
+    SUMMARY: "summary",
   };
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-  const [isFormReady, setIsFormReady] = useState(false);
+
+  const [ hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -105,10 +107,37 @@ export default function WaiverExtension() {
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
 
-      // Check to see if the required fields are provided
-      setIsFormReady(updatedRecord.transmittalNumber);
     }
   }
+
+  /**
+   * Validate Transmittal Number Format
+   * @param {value} Transmittal Number Field Entered on Change Event.
+   */
+  function validateTransmittalNumber(value) {
+    let errorMessage
+    let updatedRecord = {...changeRequest}
+    changeRequest.transmittalNumber = value
+
+
+    let RegexFormatString = "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$"
+    let RegexFormatString2 = "^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$"
+    let transmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+    let transmittalNumberRegex = new RegExp(RegexFormatString)
+    let transmittalNumberRegex2 = new RegExp(RegexFormatString2)
+
+    if (!value) {
+      errorMessage = 'Transmittal Number Required !';
+    } else if (!value.match(transmittalNumberRegex) ) {
+      if (!value.match(transmittalNumberRegex2) )
+        errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+    } else {
+      updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+      setValidTransmittalNumber(true)
+    }
+
+    return errorMessage;
+  };
 
   /**
    * Submit the new change request.
@@ -138,7 +167,11 @@ export default function WaiverExtension() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
     <div className="form-container">
-      <form onSubmit={handleSubmit}>
+      <Formik
+          initialValues={{ transmittalNumber: '' }}
+      >
+        {({errors }) => (
+            <Form onSubmit={handleSubmit}>
         <h3>Request Temporary Extension</h3>
         <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
         <div className="form-card">
@@ -154,16 +187,28 @@ export default function WaiverExtension() {
             Enter the Waiver number for this Temporary Extension Request
           </p>
         }
-        <input
-          className="field"
-          type="text"
-          required={!isReadOnly}
-          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.transmittalNumber}
-        ></input>
+        {!isReadOnly && (
+            <Field
+                className="field"
+                type="text"
+                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                validate={validateTransmittalNumber}
+                value={changeRequest.transmittalNumber}
+            ></Field> )}
+          {errors.transmittalNumber && (
+              <div style={{ color: "red" }}>{errors.transmittalNumber}</div>
+          )}
+          {isReadOnly && <input
+              className="field"
+              type="text"
+              required={!isReadOnly}
+              id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+              onChange={handleInputChange}
+              disabled={isReadOnly}
+              value={changeRequest.transmittalNumber}
+          ></input> }
         {isReadOnly && (
           <div>
             <br />
@@ -211,12 +256,14 @@ export default function WaiverExtension() {
             bsSize="large"
             bsStyle="primary"
             isLoading={isLoading}
-            disabled={!isFormReady || !areUploadsReady}
+            disabled={!hasValidTransmittalNumber || !areUploadsReady}
           >
             Submit
           </LoaderButton>
         )}
-      </form>
+      </Form>
+        )}
+      </Formik>
     </div>
       ) : null}
     </LoadingScreen>
