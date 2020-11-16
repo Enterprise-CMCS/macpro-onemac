@@ -40,6 +40,7 @@ export default function Spa() {
     TRANSMITTAL_NUMBER: "transmittalNumber",
     SUMMARY: "summary",
     TERRITORY: "territory",
+    STATE_CODE: "state_code",
   };
 
   // True when the required attachments have been selected.
@@ -111,12 +112,6 @@ export default function Spa() {
     setAreUploadsReady(state);
   }
 
-  const SpaIdErrorMessagesSchema = Yup.object().shape({
-    transmittalNumber: Yup.string()
-        .matches(/^[A-Za-z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$/, "SPA ID Format")
-        .required('Required'),
-  });
-
   /**
    * Handle changes to the form.
    * @param {Object} event the event
@@ -127,22 +122,41 @@ export default function Spa() {
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
 
-      SpaIdErrorMessagesSchema
-          .isValid({transmittalNumber:
-                updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER]})
-          .then(function (valid) {
-            //alert(valid)
-            if (valid) setIsFormReady(valid)
-            else setErrors({...errors, transmittalNumber: "Format Error"})
-      });
+      if ( event.target.name === "territory" )  updatedRecord[FIELD_NAMES.STATE_CODE] = event.target.value
 
-      // Check to see if the required fields are provided
       setIsFormReady(
-        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-        updatedRecord[FIELD_NAMES.TERRITORY]
+          updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
+          updatedRecord[FIELD_NAMES.TERRITORY]
       );
+
     }
   }
+
+  function validateTransmittalNumber(value) {
+
+    let errorMessage
+    let updatedRecord = {...changeRequest}
+    changeRequest.transmittalNumber = value
+
+    let RegexFormatString = "^" + `${updatedRecord[FIELD_NAMES.STATE_CODE]}` + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
+    let transmittalNumberFormatErrorMessage = `${updatedRecord[FIELD_NAMES.STATE_CODE]}` + "-YY-NNNN-xxxx"
+    let transmittalNumberRegex = new RegExp(RegexFormatString)
+
+    if (!value) {
+      errorMessage = 'Transmittal Number Required !';
+    } else if (!value.match(transmittalNumberRegex)) {
+      errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+    } else {
+
+    updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+    setIsFormReady(
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
+        updatedRecord[FIELD_NAMES.TERRITORY]
+       );
+    }
+    return errorMessage;
+  };
+
 
   /**
    * Submit the new change request.
@@ -151,7 +165,7 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (isFormReady) {
+    if (isFormReady && areUploadsReady) {
 
       setIsLoading(true);
 
@@ -170,6 +184,8 @@ export default function Spa() {
       alert("Not Ready !")
     }
   }
+
+
 
   /**
    * Get props for the select component dependent on the value of isReadOnly.
@@ -213,9 +229,8 @@ export default function Spa() {
         <div className="form-container">
           <Formik
               initialValues={{ transmittalNumber: '' }}
-              validationSchema={SpaIdErrorMessagesSchema}
             >
-            {({errors, touched, isValidating }) => (
+            {({errors, validate }) => (
           <Form onSubmit={handleSubmit}>
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
@@ -239,17 +254,25 @@ export default function Spa() {
                   Must follow the format SS-YY-NNNN-xxxx
                 </p>
               )}
+              {!isReadOnly && (
+              <Field
+                  className="field"
+                  type="text"
+                  id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                  name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                  validate={validateTransmittalNumber}
+                  disabled={isReadOnly}
+                  value={changeRequest.transmittalNumber}
+              ></Field> )}
+              {isReadOnly && (
               <Field
                 className="field"
                 type="text"
                 id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                onBlur={e => {
-                  // call the built-in handleBur
-                  handleInputChange(e)
-                }}
+                value={changeRequest.transmittalNumber}
                 disabled={isReadOnly}
-              ></Field>
+              ></Field> )}
               {errors.transmittalNumber && (
                   <div style={{ color: "red" }}>{errors.transmittalNumber}</div>
               )}
