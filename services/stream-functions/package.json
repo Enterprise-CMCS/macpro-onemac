@@ -1,0 +1,14 @@
+{
+  "name": "stream-functions",
+  "description": "",
+  "version": "1.0.0",
+  "dependencies": {
+    "kafka-node": "^5.0.0",
+    "kafkajs": "^1.14.0"
+  },
+  "devDependencies": {
+    "serverless-bundle": "^3.1.0",
+    "serverless-dotenv-plugin": "^3.0.0",
+    "serverless-plugin-scripts": "^1.0.2"
+  }
+}

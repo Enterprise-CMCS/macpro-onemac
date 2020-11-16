@@ -48,6 +48,7 @@ jobs:
           INFRASTRUCTURE_TYPE: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_INFRASTRUCTURE_TYPE] || secrets.INFRASTRUCTURE_TYPE || 'development' }}
           CMS_SPA_FORM_FROM_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_SPA_FORM_FROM_EMAIL] || secrets.CMS_SPA_FORM_FROM_EMAIL }}
           CMS_SPA_FORM_CMS_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_SPA_FORM_CMS_EMAIL] || secrets.CMS_SPA_FORM_CMS_EMAIL }}
+          BIGMAC_NAME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_BIGMAC_NAME] || secrets.BIGMAC_NAME }}
           ROUTE_53_HOSTED_ZONE_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ROUTE_53_HOSTED_ZONE_ID] }}
           ROUTE_53_DOMAIN_NAME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ROUTE_53_DOMAIN_NAME] }}
           CLOUDFRONT_CERTIFICATE_ARN: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CLOUDFRONT_CERTIFICATE_ARN] }}
@@ -55,6 +56,16 @@ jobs:
           IAM_PATH: ${{ secrets.IAM_PATH }}
           IAM_PERMISSIONS_BOUNDARY_POLICY: ${{ secrets.IAM_PERMISSIONS_BOUNDARY_POLICY }}
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+          VPC_ID:  ${{ secrets.VPC_ID }}
+          DATA_SUBNET_ID_1: ${{ secrets.DATA_SUBNET_ID_1 }}
+          DATA_SUBNET_ID_2: ${{ secrets.DATA_SUBNET_ID_2 }}
+          DATA_SUBNET_ID_3: ${{ secrets.DATA_SUBNET_ID_3 }}
+          PRIVATE_SUBNET_ID_1: ${{ secrets.PRIVATE_SUBNET_ID_1 }}
+          PRIVATE_SUBNET_ID_2: ${{ secrets.PRIVATE_SUBNET_ID_2 }}
+          PRIVATE_SUBNET_ID_3: ${{ secrets.PRIVATE_SUBNET_ID_3 }}
+          PUBLIC_SUBNET_ID_1: ${{ secrets.PUBLIC_SUBNET_ID_1 }}
+          PUBLIC_SUBNET_ID_2: ${{ secrets.PUBLIC_SUBNET_ID_2 }}
+          PUBLIC_SUBNET_ID_3: ${{ secrets.PUBLIC_SUBNET_ID_3 }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
@@ -85,6 +96,7 @@ jobs:
           path: |
             services/uploads/node_modules
             services/app-api/node_modules
+            services/stream-functions/node_modules
             services/ui/node_modules
             services/ui-auth/node_modules
             services/ui-src/node_modules

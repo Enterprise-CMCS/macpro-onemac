@@ -42,6 +42,19 @@ export const main = handler(async (event) => {
     };
     data.userId = event.requestContext.identity.cognitoIdentityId;
 
+    let result = await dynamoDb.get({
+      TableName: process.env.spaIdTableName,
+      Key: {
+        id: data.transmittalNumber
+      },
+      AttributesToGet: [
+        'id'
+      ]
+    });
+    if (result.Item !== undefined && result.Item !== null) {
+      throw  `State Plan with ID ${data.transmittalNumber} already exists in SEATool.  Not submitting.`;
+    }
+
     //Store the data in the database.
     await dynamoDb.put({
       TableName: process.env.tableName,
