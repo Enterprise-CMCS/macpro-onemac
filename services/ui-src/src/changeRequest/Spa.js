@@ -263,8 +263,7 @@ export default function Spa() {
                                             Must follow the format SS-YY-NNNN-xxxx
                                         </p>
                                     )}
-                                    {!isReadOnly && (
-                                        <Field
+                                    <Field
                                             className="field"
                                             type="text"
                                             id={FIELD_NAMES.TRANSMITTAL_NUMBER}
@@ -272,16 +271,7 @@ export default function Spa() {
                                             validate={validateTransmittalNumber}
                                             disabled={isReadOnly}
                                             value={changeRequest.transmittalNumber}
-                                        ></Field>)}
-                                    {isReadOnly && (
-                                        <Field
-                                            className="field"
-                                            type="text"
-                                            id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            value={changeRequest.transmittalNumber}
-                                            disabled={isReadOnly}
-                                        ></Field>)}
+                                        ></Field>
                                     {errors.transmittalNumber && (
                                         <div class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}

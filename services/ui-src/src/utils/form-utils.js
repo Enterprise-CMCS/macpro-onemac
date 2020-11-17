@@ -25,11 +25,6 @@ export function renderOptionsList(optionsList) {
     return retval;
 }
 
-export const WavierTransmittalNumberRegEx = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
-export const SpaTransmittalNumberRegEx = "^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
-export const WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
-export const SpaTransmittalNumber = "SS-YY-NNNN-xxxx"
-
 /**
  * Validate SPA Id Transmittal Number Format
  * @param {statecode} The Territory/State Code Selected by a Form
@@ -41,13 +36,17 @@ export function validateSpaId(stateCode, spaId) {
     let errorMessage
 
     let RegexFormatString = "^" + stateCode + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
-    if (stateCode === "SS")
+
+    let SpaTransmittalNumberFormatErrorMessage = stateCode + "-YY-NNNN-xxxx"
+    if (stateCode === "SS") {
         RegexFormatString = "^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
+        SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN-xxxx"
+    }
 
     if (!spaId) {
         errorMessage = 'Transmittal Number Required !';
     } else if (!isValidFieldFormat(spaId, RegexFormatString)) {
-        errorMessage = `Transmittal Number Format Error must Match: ${SpaTransmittalNumber} !`;
+        errorMessage = `Transmittal Number Format Error must Match: ${SpaTransmittalNumberFormatErrorMessage} !`;
     }
     return errorMessage
 }
@@ -61,12 +60,14 @@ export function validateWavierId(stateCode, wavierId) {
 
     let errorMessage
     let RegexFormatString = "(^" + stateCode + "[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^" + stateCode + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
+    let WaiverTransmittalNumberFormatErrorMessage = stateCode + ".##.R##.M## or SS.####.R##.##"
+    if (stateCode === "SS") {
+        RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^" + stateCode + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
+        WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+    }
 
-    if (stateCode === "SS")
-        RegexFormatString = WavierTransmittalNumberRegEx
 
-
-    console.log( wavierId + " = " + RegexFormatString)
+    console.log(wavierId + " = " + RegexFormatString)
     if (!wavierId) {
         errorMessage = 'Transmittal Number Required !';
     } else if (!isValidFieldFormat(wavierId, RegexFormatString)) {

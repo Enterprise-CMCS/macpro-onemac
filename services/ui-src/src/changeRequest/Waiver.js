@@ -297,29 +297,18 @@ export default function Waiver() {
                                         Must follow the format SS.##.R##.M## or SS.####.R##.##
                                     </p>
                                     }
-                                    {!isReadOnly && (
-                                        <Field
-                                            className="field"
-                                            type="text"
-                                            id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            validate={validateTransmittalNumber}
-                                            disabled={isReadOnly}
-                                            value={changeRequest.transmittalNumber}
-                                        ></Field>)}
+                                    <Field
+                                        className="field"
+                                        type="text"
+                                        id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                                        name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                                        validate={validateTransmittalNumber}
+                                        disabled={isReadOnly}
+                                        value={changeRequest.transmittalNumber}
+                                    ></Field>
                                     {errors.transmittalNumber && (
                                         <div class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
-                                    {isReadOnly && <input
-                                        className="field"
-                                        type="text"
-                                        required={!isReadOnly}
-                                        id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                        name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                        onChange={handleInputChange}
-                                        disabled={isReadOnly}
-                                        value={changeRequest.transmittalNumber}
-                                    ></input>}
                                     {isReadOnly && (
                                         <div>
                                             <label htmlFor="submittedAt">Submitted on</label>
