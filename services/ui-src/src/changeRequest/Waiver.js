@@ -15,7 +15,7 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import {Formik, Form, Field} from 'formik';
-import {isValidFieldFormat} from "../utils/form-utils";
+import {validateWavierId} from "../utils/form-utils";
 
 export default function Waiver() {
   // The attachment list
@@ -157,21 +157,17 @@ export default function Waiver() {
     let updatedRecord = {...changeRequest}
     changeRequest.transmittalNumber = value
 
-
-    let RegexFormatString = "^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "([.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
-    let transmittalNumberFormatErrorMessage = updatedRecord[FIELD_NAMES.STATE_CODE] + ".##.R##.M## or " + updatedRecord[FIELD_NAMES.STATE_CODE] + ".####.R##.##"
-
-    if (!value) {
-      errorMessage = 'Transmittal Number Required !';
-    } else if (updatedRecord[FIELD_NAMES.STATE_CODE] === undefined) {
-      errorMessage = 'Select State/Territory First'
+    let selectedStateCode = updatedRecord[FIELD_NAMES.STATE_CODE]
+    if (selectedStateCode === undefined) {
+      errorMessage = undefined
       AlertBar.alert(ALERTS_MSG.STATE_REQUIRED);
       document.getElementById(FIELD_NAMES.TERRITORY).focus();
-    } else if ( !isValidFieldFormat(value, RegexFormatString) ) {
-      errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
     } else {
-      updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-      setValidTransmittalNumber(true)
+      errorMessage = validateWavierId(selectedStateCode, value)
+      if (errorMessage === undefined) {
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+        setValidTransmittalNumber(true)
+      }
     }
 
     return errorMessage;

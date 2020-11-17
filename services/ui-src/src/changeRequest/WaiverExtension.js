@@ -14,7 +14,9 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import {Formik, Form, Field} from 'formik';
-import {isValidFieldFormat, WavierTransmittalNumberRegEx, WaiverTransmittalNumberFormatErrorMessage} from "../utils/form-utils";
+import {
+  validateWavierId
+} from "../utils/form-utils";
 
 export default function WaiverExtension() {
   // The attachment list
@@ -119,12 +121,8 @@ export default function WaiverExtension() {
     let errorMessage
     let updatedRecord = {...changeRequest}
     changeRequest.transmittalNumber = value
-
-    if (!value) {
-      errorMessage = 'Transmittal Number Required !';
-    } else if ( !isValidFieldFormat(value, WavierTransmittalNumberRegEx) ) {
-        errorMessage = `Transmittal Number Format Error must Match: ${WaiverTransmittalNumberFormatErrorMessage} !`;
-    } else {
+    errorMessage = validateWavierId("SS", value)
+    if (errorMessage === undefined) {
       updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
       setValidTransmittalNumber(true)
     }
