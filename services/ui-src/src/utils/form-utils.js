@@ -62,7 +62,7 @@ export function validateWavierId(stateCode, wavierId) {
     let RegexFormatString = "(^" + stateCode + "[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^" + stateCode + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
     let WaiverTransmittalNumberFormatErrorMessage = stateCode + ".##.R##.M## or SS.####.R##.##"
     if (stateCode === "SS") {
-        RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^" + stateCode + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
+        RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
         WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
     }
 
