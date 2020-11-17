@@ -278,7 +278,7 @@ export default function Spa() {
                 disabled={isReadOnly}
               ></Field> )}
               {errors.transmittalNumber && (
-                  <div style={{ color: "red" }}>{errors.transmittalNumber}</div>
+                  <div class="ds-u-color--error">{errors.transmittalNumber}</div>
               )}
               {isReadOnly && (
                 <div>

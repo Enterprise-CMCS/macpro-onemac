@@ -228,7 +228,7 @@ export default function RaiTemplate({
                       value={changeRequest.transmittalNumber}
                   ></Field> )}
               {errors.transmittalNumber && (
-                  <div style={{ color: "red" }}>{errors.transmittalNumber}</div>
+                  <div class="ds-u-color--error">{errors.transmittalNumber}</div>
               )}
               {isReadOnly && <input
                   className="field"
