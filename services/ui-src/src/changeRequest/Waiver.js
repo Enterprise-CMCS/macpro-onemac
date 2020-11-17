@@ -15,6 +15,7 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import {Formik, Form, Field} from 'formik';
+import {isValidFieldFormat} from "../utils/form-utils";
 
 export default function Waiver() {
   // The attachment list
@@ -147,13 +148,6 @@ export default function Waiver() {
   }
 
   /**
-   * Set Focus to State/Territory Field
-   */
-  function focusStateFieldFirst() {
-    document.getElementById(FIELD_NAMES.TERRITORY).focus();
-  }
-
-  /**
    * Validate Transmittal Number Format
    * @param {value} Transmittal Number Field Entered on Change Event.
    */
@@ -164,20 +158,16 @@ export default function Waiver() {
     changeRequest.transmittalNumber = value
 
 
-    let RegexFormatString = "^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$"
-    let RegexFormatString2 = "^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$"
+    let RegexFormatString = "^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "([.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
     let transmittalNumberFormatErrorMessage = updatedRecord[FIELD_NAMES.STATE_CODE] + ".##.R##.M## or " + updatedRecord[FIELD_NAMES.STATE_CODE] + ".####.R##.##"
-    let transmittalNumberRegex = new RegExp(RegexFormatString)
-    let transmittalNumberRegex2 = new RegExp(RegexFormatString2)
 
     if (!value) {
       errorMessage = 'Transmittal Number Required !';
     } else if (updatedRecord[FIELD_NAMES.STATE_CODE] === undefined) {
-      errorMessage = ""
-      alert("Select State/Territory First !")
-      focusStateFieldFirst()
-    } else if (!value.match(transmittalNumberRegex) ) {
-      if (!value.match(transmittalNumberRegex2) )
+      errorMessage = 'Select State/Territory First'
+      AlertBar.alert(ALERTS_MSG.STATE_REQUIRED);
+      document.getElementById(FIELD_NAMES.TERRITORY).focus();
+    } else if ( !isValidFieldFormat(value, RegexFormatString) ) {
       errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
     } else {
       updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value

@@ -14,7 +14,7 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { renderOptionsList } from "../utils/form-utils";
+import { renderOptionsList, isValidFieldFormat } from "../utils/form-utils";
 import {Formik, Form, Field} from 'formik';
 
 
@@ -131,15 +131,9 @@ export default function Spa() {
   }
 
   /**
-   * Set Focus to State/Territory Field
-   */
-  function focusStateFieldFirst() {
-    document.getElementById(FIELD_NAMES.TERRITORY).focus();
-  }
-
-  /**
    * Validate Transmittal Number Format
    * @param {value} Transmittal Number Field Entered on Change Event.
+   * NOTE: State Code should be removed when we get info form user profile.
    */
   function validateTransmittalNumber(value) {
 
@@ -147,26 +141,24 @@ export default function Spa() {
     let updatedRecord = {...changeRequest}
     changeRequest.transmittalNumber = value
 
-
     let RegexFormatString = "^" + updatedRecord[FIELD_NAMES.STATE_CODE] + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
     let transmittalNumberFormatErrorMessage = updatedRecord[FIELD_NAMES.STATE_CODE] + "-YY-NNNN-xxxx"
-    let transmittalNumberRegex = new RegExp(RegexFormatString)
 
     if (!value) {
       errorMessage = 'Transmittal Number Required !';
     } else if (updatedRecord[FIELD_NAMES.STATE_CODE] === undefined) {
-      errorMessage = ""
+      errorMessage = undefined
       AlertBar.alert(ALERTS_MSG.STATE_REQUIRED);
-      focusStateFieldFirst()
-    } else if (!value.match(transmittalNumberRegex)) {
+      document.getElementById(FIELD_NAMES.TERRITORY).focus();
+    } else if ( !isValidFieldFormat(value, RegexFormatString ))  {
       errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
     } else {
-
-    updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+      updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
       setValidTransmittalNumber(true)
     }
 
-    return errorMessage;
+    return errorMessage
+
   };
 
 

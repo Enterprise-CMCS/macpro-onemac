@@ -24,3 +24,23 @@ export function renderOptionsList(optionsList) {
   });
   return retval;
 }
+
+/**
+ * Validate Field
+ * @param {value} Transmittal Number Field Entered on Change Event.
+ */
+export function isValidFieldFormat(fieldValue,regexFormatString) {
+
+  let fieldValidationRegEx = new RegExp(regexFormatString)
+  let result = false;
+
+  if (fieldValue && fieldValue.match(fieldValidationRegEx)) {
+    result = true
+  }
+  else {
+    result = false
+  }
+
+  return result;
+
+};
