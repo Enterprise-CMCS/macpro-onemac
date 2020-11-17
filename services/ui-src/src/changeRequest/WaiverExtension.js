@@ -14,6 +14,7 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import {Formik, Form, Field} from 'formik';
+import {isValidFieldFormat, WavierTransmittalNumberRegEx, WaiverTransmittalNumberFormatErrorMessage} from "../utils/form-utils";
 
 export default function WaiverExtension() {
   // The attachment list
@@ -119,18 +120,10 @@ export default function WaiverExtension() {
     let updatedRecord = {...changeRequest}
     changeRequest.transmittalNumber = value
 
-
-    let RegexFormatString = "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$"
-    let RegexFormatString2 = "^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$"
-    let transmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
-    let transmittalNumberRegex = new RegExp(RegexFormatString)
-    let transmittalNumberRegex2 = new RegExp(RegexFormatString2)
-
     if (!value) {
       errorMessage = 'Transmittal Number Required !';
-    } else if (!value.match(transmittalNumberRegex) ) {
-      if (!value.match(transmittalNumberRegex2) )
-        errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+    } else if ( !isValidFieldFormat(value, WavierTransmittalNumberRegEx) ) {
+        errorMessage = `Transmittal Number Format Error must Match: ${WaiverTransmittalNumberFormatErrorMessage} !`;
     } else {
       updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
       setValidTransmittalNumber(true)

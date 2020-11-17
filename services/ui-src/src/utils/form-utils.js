@@ -25,6 +25,10 @@ export function renderOptionsList(optionsList) {
   return retval;
 }
 
+export const WavierTransmittalNumberRegEx = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
+export const SpaTransmittalNumberRegEx = "^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
+export const WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+
 /**
  * Validate Field
  * @param {value} Transmittal Number Field Entered on Change Event.
@@ -44,3 +48,4 @@ export function isValidFieldFormat(fieldValue,regexFormatString) {
   return result;
 
 };
+

@@ -15,6 +15,7 @@ import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import {Formik, Form, Field} from 'formik';
 import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
+import {isValidFieldFormat,  SpaTransmittalNumberRegEx} from "../utils/form-utils";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -120,13 +121,11 @@ export default function RaiTemplate({
     changeRequest.transmittalNumber = value
 
     if (changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI) {
-      let RegexFormatString = "^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
       let transmittalNumberFormatErrorMessage = "SS-YY-NNNN-xxxx"
-      let transmittalNumberRegex = new RegExp(RegexFormatString)
 
       if (!value) {
         errorMessage = 'Transmittal Number Required !';
-      } else if (!value.match(transmittalNumberRegex)) {
+      } else if ( !isValidFieldFormat(value, SpaTransmittalNumberRegEx) ) {
         errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
       } else {
         updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
@@ -135,17 +134,11 @@ export default function RaiTemplate({
 
     } else if (changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI)
     {
-    let RegexFormatString = "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$"
-    let RegexFormatString2 = "^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$"
     let transmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
-    let transmittalNumberRegex = new RegExp(RegexFormatString)
-    let transmittalNumberRegex2 = new RegExp(RegexFormatString2)
-
     if (!value) {
       errorMessage = 'Transmittal Number Required !';
-    } else if (!value.match(transmittalNumberRegex)) {
-      if (!value.match(transmittalNumberRegex2))
-        errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
+    } else if ( !isValidFieldFormat(value, SpaTransmittalNumberRegEx) ) {
+      errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
     } else {
       updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
       setValidTransmittalNumber(true)
