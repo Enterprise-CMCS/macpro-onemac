@@ -11,6 +11,18 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
+  FORM_INCOMPLETE: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Form Missing Required Fields",
+    text: "Enter all Requried Fields",
+  },
+
+  STATE_REQUIRED: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Select State First",
+    text: "State/Territory must be selected First",
+  },
+
   // Errors and warnings
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,

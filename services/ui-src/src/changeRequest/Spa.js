@@ -156,7 +156,7 @@ export default function Spa() {
       errorMessage = 'Transmittal Number Required !';
     } else if (updatedRecord[FIELD_NAMES.STATE_CODE] === undefined) {
       errorMessage = ""
-      alert("Select State/Territory First !")
+      AlertBar.alert(ALERTS_MSG.STATE_REQUIRED);
       focusStateFieldFirst()
     } else if (!value.match(transmittalNumberRegex)) {
       errorMessage = `Transmittal Number Format Error must Match: ${transmittalNumberFormatErrorMessage} !`;
@@ -193,7 +193,7 @@ export default function Spa() {
         setIsLoading(false);
       }
     } else {
-      alert("Not Ready !")
+      AlertBar.alert(ALERTS_MSG.FORM_INCOMPLETE);
     }
   }
 
