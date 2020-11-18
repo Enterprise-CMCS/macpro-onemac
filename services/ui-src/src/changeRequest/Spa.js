@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { HashLink } from 'react-router-hash-link';
-import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
@@ -39,7 +38,7 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-  const [isFormReady, setIsFormReady] = useState(false);
+  const [displayErrors, setDisplayErrors] = useState(false);
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -115,12 +114,6 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
-
-      // Check to see if the required fields are provided
-      setIsFormReady(
-        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-        updatedRecord[FIELD_NAMES.TERRITORY]
-      );
     }
   }
 
@@ -131,18 +124,30 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    setIsLoading(true);
+    if (!event.target.checkValidity()) {
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
+      setDisplayErrors(true);
+      return;
+    }
 
-    try {
-      let uploadedList = await uploader.current.uploadFiles();
-      await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-      history.push(ROUTES.DASHBOARD);
-      //Alert must come last or it will be cleared after the history push.
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
+    if (!areUploadsReady) {
+      console.log("Uploads are not readyt.");
       AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
-      setIsLoading(false);
+    } else {
+      setDisplayErrors(false);
+      setIsLoading(true);
+
+      try {
+        let uploadedList = await uploader.current.uploadFiles();
+        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        history.push(ROUTES.DASHBOARD);
+        //Alert must come last or it will be cleared after the history push.
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+      } catch (error) {
+        console.log("There was an error submitting a request.", error);
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+        setIsLoading(false);
+      }
     }
   }
 
@@ -165,7 +170,7 @@ export default function Spa() {
 
     if (!isReadOnly) {
       selectProps = {
-        defaultValue: "none-selected",
+        defaultValue: "",
         onChange: handleInputChange,
         required: true,
         ...defaultSelectProps
@@ -186,37 +191,49 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate
+            className={displayErrors ? 'displayErrors' : ''}
+          >
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
                 State/Territory<span className="required-mark">*</span>
               </label>
+              {displayErrors && (
+                <p className="field-error-message">
+                  Please select a State or Territory from the dropdown
+                </p>
+              )}
               <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
-                <option disabled value="none-selected">-- select a territory --</option>
+                <option value="">-- select a territory --</option>
                 {renderOptionsList(territoryList)}
               </select>
               <div className="label-container">
-                <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
                   SPA ID<span className="required-mark">*</span>
                 </label>
                 </div>
                 <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
               </div>
               {!isReadOnly && (
-                <p className="ds-c-field__hint">
+                <p className="field-hint">
                   Must follow the format SS-YY-NNNN-xxxx
+                </p>
+              )}
+              {displayErrors && (
+                <p className="field-error-message">
+                  Please enter a valid SPA Number
                 </p>
               )}
               <input
                 className="field"
                 type="text"
-                required={!isReadOnly}
                 id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 name={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 onChange={handleInputChange}
                 disabled={isReadOnly}
+                required={!isReadOnly}
                 value={changeRequest.transmittalNumber}
               ></input>
               {isReadOnly && (
@@ -260,14 +277,11 @@ export default function Spa() {
               ></TextField>
             </div>
             {!isReadOnly && (
-              <LoaderButton
+              <input
                 type="submit"
-                bsSize="large"
-                bsStyle="primary"
-                isLoading={isLoading}
-              >
-                Submit
-              </LoaderButton>
+                className="form-submit"
+                value="Submit"
+              />
             )}
           </form>
         </div>
