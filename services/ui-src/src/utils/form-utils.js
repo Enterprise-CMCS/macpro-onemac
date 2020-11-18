@@ -35,18 +35,18 @@ export function validateSpaId(stateCode, spaId) {
 
     let errorMessage
 
-    let RegexFormatString = "^" + stateCode + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
+    let RegexFormatString = "(^" + stateCode + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^" + stateCode + "-[0-9]{2}-[0-9]{4})"
 
-    let SpaTransmittalNumberFormatErrorMessage = stateCode + "-YY-NNNN-xxxx"
+    let SpaTransmittalNumberFormatErrorMessage = stateCode + "-YY-NNNN-xxxx or " + stateCode + "-YY-NNNN"
     if (stateCode === "SS") {
-        RegexFormatString = "^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$"
-        SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN-xxxx"
+        RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)"
+        SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN-xxxx or SS-YY-NNNN"
     }
 
     if (!spaId) {
         errorMessage = 'Transmittal Number Required !';
     } else if (!isValidFieldFormat(spaId, RegexFormatString)) {
-        errorMessage = `Transmittal Number Format Error must Match: ${SpaTransmittalNumberFormatErrorMessage} !`;
+        errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
     }
     return errorMessage
 }
@@ -71,7 +71,7 @@ export function validateWavierId(stateCode, wavierId) {
     if (!wavierId) {
         errorMessage = 'Transmittal Number Required !';
     } else if (!isValidFieldFormat(wavierId, RegexFormatString)) {
-        errorMessage = `Transmittal Number Format Error must Match: ${WaiverTransmittalNumberFormatErrorMessage} !`;
+        errorMessage = `The Waiver ID must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
     }
     return errorMessage
 }
