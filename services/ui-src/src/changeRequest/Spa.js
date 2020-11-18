@@ -265,7 +265,6 @@ export default function Spa() {
                 bsSize="large"
                 bsStyle="primary"
                 isLoading={isLoading}
-                disabled={!isFormReady || !areUploadsReady}
               >
                 Submit
               </LoaderButton>
