@@ -35,12 +35,12 @@ export function validateSpaId(stateCode, spaId) {
 
     let errorMessage
 
-    let RegexFormatString = "(^" + stateCode + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^" + stateCode + "-[0-9]{2}-[0-9]{4})"
+    let RegexFormatString = "(^" + stateCode + "-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^" + stateCode + "-[0-9]{2}-[0-9]{4}$)"
 
-    let SpaTransmittalNumberFormatErrorMessage = stateCode + "-YY-NNNN-xxxx or " + stateCode + "-YY-NNNN"
+    let SpaTransmittalNumberFormatErrorMessage = stateCode + "-YY-NNNN or " + stateCode + "-YY-NNNN-xxxx"
     if (stateCode === "SS") {
         RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)"
-        SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN-xxxx or SS-YY-NNNN"
+        SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN or SS-YY-NNNN-xxxx"
     }
 
     if (!spaId) {

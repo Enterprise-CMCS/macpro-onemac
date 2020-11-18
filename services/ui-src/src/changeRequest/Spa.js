@@ -260,7 +260,7 @@ export default function Spa() {
                                     </div>
                                     {!isReadOnly && (
                                         <p className="ds-c-field__hint">
-                                            Must follow the format SS-YY-NNNN-xxxx or SS-YY-NNNN
+                                            Must follow the format SS-YY-NNNN or SS-YY-NNNN-xxxx
                                         </p>
                                     )}
                                     <Field
