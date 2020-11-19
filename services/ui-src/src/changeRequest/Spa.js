@@ -141,9 +141,7 @@ export default function Spa() {
         let updatedRecord = {...changeRequest}
         changeRequest.transmittalNumber = value
 
-        let selectedStateCode = updatedRecord[FIELD_NAMES.STATE_CODE]
-
-        errorMessage = validateSpaId(selectedStateCode, value)
+        errorMessage = validateSpaId(value)
         if (errorMessage === undefined) {
             updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
             setValidTransmittalNumber(true)
