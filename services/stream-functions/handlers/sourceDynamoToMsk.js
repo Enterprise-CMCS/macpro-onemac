@@ -22,7 +22,6 @@ const mappings = {
 function mapFields(event, callback) {
   const path = 'dynamodb.NewImage';
   _.each(_.get(event, 'Records'), function(v, index) {
-    console.log(index);
     _.each(mappings, function(value, key) {
       const stream_entry = _.get(event, `Records[${index}].${path}.${key}`);
       const mapped_item = _.get(value, `mapping.${stream_entry}`);
