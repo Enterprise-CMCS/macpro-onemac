@@ -68,7 +68,7 @@ function Header(props) {
       <div className="nav-bar">
         <div className="nav-left">
           <Link to={ROUTES.HOME}>About</Link>
-          <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
+          <Link id={"dashboardLink"} to={ROUTES.DASHBOARD}>Dashboard</Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
         </div>
         {renderAccountButtons()}
