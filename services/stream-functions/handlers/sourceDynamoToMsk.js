@@ -13,7 +13,7 @@ const mappings = {
   'state.S': {
     'name': 'status.S',
     'mapping': {
-      'created': 'Pending'
+      'submitted': 'Pending'
     }
   }
 };
