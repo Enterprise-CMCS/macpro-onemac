@@ -142,22 +142,16 @@ export default function Spa() {
         changeRequest.transmittalNumber = value
 
         let selectedStateCode = updatedRecord[FIELD_NAMES.STATE_CODE]
-        if (selectedStateCode === undefined) {
-            errorMessage = undefined
-            AlertBar.alert(ALERTS_MSG.STATE_REQUIRED);
-            document.getElementById(FIELD_NAMES.TERRITORY).focus();
-        } else {
-            errorMessage = validateSpaId(selectedStateCode, value)
-            if (errorMessage === undefined) {
-                updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-                setValidTransmittalNumber(true)
-            }
+
+        errorMessage = validateSpaId(selectedStateCode, value)
+        if (errorMessage === undefined) {
+            updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+            setValidTransmittalNumber(true)
         }
 
-    return errorMessage
+
+        return errorMessage
     }
-
-
 
 
     /**
@@ -243,7 +237,8 @@ export default function Spa() {
                                         State/Territory
                                         <span className="required-mark">*</span>
                                     </label>
-                                    <select id={"territorySelect"} {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                                    <select
+                                        id={"territorySelect"} {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
                                         <option disabled value="none-selected">-- select a territory --</option>
                                         {renderOptionsList(territoryList)}
                                     </select>
@@ -264,16 +259,17 @@ export default function Spa() {
                                         </p>
                                     )}
                                     <Field
-                                            className="field"
-                                            type="text"
-                                            id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            validate={validateTransmittalNumber}
-                                            disabled={isReadOnly}
-                                            value={changeRequest.transmittalNumber}
-                                        ></Field>
+                                        className="field"
+                                        type="text"
+                                        id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                                        name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                                        validate={validateTransmittalNumber}
+                                        disabled={isReadOnly}
+                                        value={changeRequest.transmittalNumber}
+                                    ></Field>
                                     {errors.transmittalNumber && (
-                                        <div id={"transmittalNumberErrorMsg"} class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                        <div id={"transmittalNumberErrorMsg"}
+                                             class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
                                     {isReadOnly && (
                                         <div>

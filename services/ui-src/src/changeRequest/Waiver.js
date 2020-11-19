@@ -158,16 +158,11 @@ export default function Waiver() {
         changeRequest.transmittalNumber = value
 
         let selectedStateCode = updatedRecord[FIELD_NAMES.STATE_CODE]
-        if (selectedStateCode === undefined) {
-            errorMessage = undefined
-            AlertBar.alert(ALERTS_MSG.STATE_REQUIRED);
-            document.getElementById(FIELD_NAMES.TERRITORY).focus();
-        } else {
-            errorMessage = validateWavierId(selectedStateCode, value)
-            if (errorMessage === undefined) {
-                updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-                setValidTransmittalNumber(true)
-            }
+
+        errorMessage = validateWavierId(selectedStateCode, value)
+        if (errorMessage === undefined) {
+            updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
+            setValidTransmittalNumber(true)
         }
 
         return errorMessage;
