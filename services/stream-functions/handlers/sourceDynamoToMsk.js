@@ -16,7 +16,7 @@ const mappings = {
       'created': 'Pending'
     }
   }
-}
+};
 
 function mapFields(event, callback) {
   const path = 'dynamodb.NewImage';
@@ -25,7 +25,7 @@ function mapFields(event, callback) {
     const mapped_item = _.get(value, `mapping.${stream_entry}`);
     _.isEmpty(mapped_item) && callback(new Error(`Field "${key}" ${stream_entry} does not map to a valid field in SEATool`));
     _.set(event, `${path}.${_.get(value, 'name')}`, mapped_item);
-  })
+  });
   return event;
 }
 
