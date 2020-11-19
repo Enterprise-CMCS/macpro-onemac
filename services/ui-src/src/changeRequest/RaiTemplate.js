@@ -15,7 +15,7 @@ import {formatDate} from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import {Formik, Form, Field} from 'formik';
 import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
-import {validateSpaId,validateWavierId} from "../utils/form-utils";
+import {validateSpaId, validateWavierId} from "../utils/form-utils";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -210,6 +210,9 @@ export default function RaiTemplate({
                                             Enter the transmittal number for this RAI
                                         </p>
                                     )}
+                                    {errors.transmittalNumber && (
+                                        <div id={"raiTransmittalNumError"} class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                    )}
                                     {!isReadOnly && (
                                         <Field
                                             className="field"
@@ -219,9 +222,7 @@ export default function RaiTemplate({
                                             validate={validateTransmittalNumber}
                                             value={changeRequest.transmittalNumber}
                                         ></Field>)}
-                                    {errors.transmittalNumber && (
-                                        <div class="ds-u-color--error">{errors.transmittalNumber}</div>
-                                    )}
+
                                     {isReadOnly && <input
                                         className="field"
                                         type="text"

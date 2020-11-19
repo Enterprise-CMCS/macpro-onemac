@@ -256,6 +256,10 @@ export default function Spa() {
                                             Must follow the format SS-YY-NNNN or SS-YY-NNNN-xxxx
                                         </p>
                                     )}
+                                    {errors.transmittalNumber && (
+                                        <div id={"spaTransmittalNumberErrorMsg"}
+                                             class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                    )}
                                     <Field
                                         className="field"
                                         type="text"
@@ -265,10 +269,7 @@ export default function Spa() {
                                         disabled={isReadOnly}
                                         value={changeRequest.transmittalNumber}
                                     ></Field>
-                                    {errors.transmittalNumber && (
-                                        <div id={"transmittalNumberErrorMsg"}
-                                             class="ds-u-color--error">{errors.transmittalNumber}</div>
-                                    )}
+
                                     {isReadOnly && (
                                         <div>
                                             <label htmlFor="submittedAt">Submitted on</label>

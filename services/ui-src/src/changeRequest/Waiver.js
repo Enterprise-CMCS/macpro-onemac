@@ -290,6 +290,9 @@ export default function Waiver() {
                                         Must follow the format SS.##.R##.M## or SS.####.R##.##
                                     </p>
                                     }
+                                    {errors.transmittalNumber && (
+                                        <div id={"waiverTransmittalError"} class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                    )}
                                     <Field
                                         className="field"
                                         type="text"
@@ -299,9 +302,7 @@ export default function Waiver() {
                                         disabled={isReadOnly}
                                         value={changeRequest.transmittalNumber}
                                     ></Field>
-                                    {errors.transmittalNumber && (
-                                        <div class="ds-u-color--error">{errors.transmittalNumber}</div>
-                                    )}
+
                                     {isReadOnly && (
                                         <div>
                                             <label htmlFor="submittedAt">Submitted on</label>
