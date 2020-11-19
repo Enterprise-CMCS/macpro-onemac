@@ -273,7 +273,7 @@ export default function Spa() {
                                             value={changeRequest.transmittalNumber}
                                         ></Field>
                                     {errors.transmittalNumber && (
-                                        <div class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                        <div id={"transmittalNumberErrorMsg"} class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
                                     {isReadOnly && (
                                         <div>
