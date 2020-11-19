@@ -62,7 +62,7 @@ export default function DevLogin() {
               onChange={handleFieldChange}
             />
           </FormGroup>
-          <LoaderButton
+          <LoaderButton id={"devLoginBtn"}
             block
             type="submit"
             bsSize="large"
