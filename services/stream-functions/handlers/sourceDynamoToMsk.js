@@ -30,6 +30,10 @@ function mapFields(event, callback) {
 }
 
 function myHandler(event, context, callback) {
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up!");
+    return null;
+  }
   //map fields that don't directly correlate
   event = mapFields(event, callback);
 
