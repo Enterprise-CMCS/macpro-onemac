@@ -461,7 +461,7 @@ input[type="file"] {
   line-height: 24px;
   border: none;
 }
-.displayErrors input:invalid, 
-.displayErrors select:invalid  {
+.display-errors input:invalid, 
+.display-errors select:invalid  {
   border-color: red;
 }

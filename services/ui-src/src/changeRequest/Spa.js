@@ -13,7 +13,8 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { renderOptionsList } from "../utils/form-utils";
+import { renderOptionsList, validateSpaId } from "../utils/form-utils";
+import { Formik, Form, Field } from 'formik';
 
 export default function Spa() {
 
@@ -38,7 +39,8 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-  const [displayErrors, setDisplayErrors] = useState(false);
+//  const [isFormReady, setIsFormReady] = useState(false);
+  const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -55,11 +57,12 @@ export default function Spa() {
   // Optional ID parameter from the URL
   const { id } = useParams();
 
-  // The record we are using for the form.
+  // The data record associated with form, used for initialValues
   const [changeRequest, setChangeRequest] = useState({
     type: CHANGE_REQUEST_TYPES.SPA,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
+    territory: "",
   });
 
   useEffect(() => {
@@ -85,14 +88,14 @@ export default function Spa() {
 
     // Trigger the fetch only if an ID is present.
     if (id) {
+      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+
       setReadOnly(true);
       fetchChangeRequest();
-
-      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
     } else {
-      setReadOnly(false);
-
       PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+
+      setReadOnly(false);
       setIsLoading(false);
     }
   }, [id]);
@@ -114,7 +117,32 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
+
+     // setIsFormReady(
+     //   hasValidTransmittalNumber &&
+     //   updatedRecord[FIELD_NAMES.TERRITORY]
+     // );
     }
+  }
+
+  /**
+      * Validate Transmittal Number Format
+      * @param {value} Transmittal Number Field Entered on Change Event.
+      * NOTE: State Code should be removed when we get info form user profile.
+      */
+  function validateTransmittalNumber(value) {
+
+    let errorMessage;
+    let updatedRecord = { ...changeRequest };
+    changeRequest.transmittalNumber = value;
+
+    errorMessage = validateSpaId(value)
+    if (errorMessage === undefined) {
+      updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
+      setValidTransmittalNumber(true);
+    }
+
+    return errorMessage;
   }
 
   /**
@@ -124,17 +152,17 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!event.target.checkValidity()) {
+    if (!event.target.checkValidity() || hasValidTransmittalNumber !== true) {
       AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
-      setDisplayErrors(true);
+      window.scrollTo(0, 0);
       return;
     }
 
     if (!areUploadsReady) {
       console.log("Uploads are not readyt.");
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+      AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
+      window.scrollTo(0, 0);
     } else {
-      setDisplayErrors(false);
       setIsLoading(true);
 
       try {
@@ -163,14 +191,14 @@ export default function Spa() {
     const defaultSelectProps = {
       id,
       name: id,
-      value
+      value,
+      as: "select",
     }
 
     let selectProps = {}
 
     if (!isReadOnly) {
       selectProps = {
-        defaultValue: "",
         onChange: handleInputChange,
         required: true,
         ...defaultSelectProps
@@ -191,99 +219,103 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit} noValidate
-            className={displayErrors ? 'displayErrors' : ''}
-          >
-            <h3>SPA Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-            <div className="form-card">
-              <label htmlFor={FIELD_NAMES.TERRITORY}>
-                State/Territory<span className="required-mark">*</span>
-              </label>
-              {displayErrors && (
-                <p className="field-error-message">
-                  Please select a State or Territory from the dropdown
-                </p>
-              )}
-              <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
-                <option value="">-- select a territory --</option>
-                {renderOptionsList(territoryList)}
-              </select>
-              <div className="label-container">
-                <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                  SPA ID<span className="required-mark">*</span>
-                </label>
-                </div>
-                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
-              </div>
-              {!isReadOnly && (
-                <p className="field-hint">
-                  Must follow the format SS-YY-NNNN-xxxx
-                </p>
-              )}
-              {displayErrors && (
-                <p className="field-error-message">
-                  Please enter a valid SPA Number
-                </p>
-              )}
-              <input
-                className="field"
-                type="text"
-                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                onChange={handleInputChange}
-                disabled={isReadOnly}
-                required={!isReadOnly}
-                value={changeRequest.transmittalNumber}
-              ></input>
-              {isReadOnly && (
-                <div>
-                  <label htmlFor="submittedAt">Submitted on</label>
-                  <input
+          <Formik initialValues={changeRequest}>
+            {({ errors }) => (
+              <Form onSubmit={handleSubmit} noValidate
+              >
+                <h3>SPA Details</h3>
+                <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+                <div className="form-card">
+                  <label htmlFor={FIELD_NAMES.TERRITORY}>
+                    State/Territory<span className="required-mark">*</span>
+                  </label>
+                  {errors.territory && (
+                    <div id={"spaTerritoryErrorMsg"}
+                      class="ds-u-color--error">{errors.territory}</div>
+                  )}
+                  <Field {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                    <option value="">-- select a territory --</option>
+                    {renderOptionsList(territoryList)}
+                  </Field>
+                  <div className="label-container">
+                    <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                      SPA ID<span className="required-mark">*</span>
+                    </label>
+                    </div>
+                    <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
+                  </div>
+                  {!isReadOnly && (
+                    <p className="field-hint">
+                      Must follow the format SS-YY-NNNN-xxxx
+                    </p>
+                  )}
+                  {errors.transmittalNumber && (
+                    <div id={"spaTransmittalNumberErrorMsg"}
+                      class="ds-u-color--error">{errors.transmittalNumber}</div>
+                  )}
+                  <Field
                     className="field"
                     type="text"
-                    id="submittedAt"
-                    name="submittedAt"
-                    disabled
-                    value={formatDate(changeRequest.submittedAt)}
-                  ></input>
+                    id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                    name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                    validate={validateTransmittalNumber}
+                    disabled={isReadOnly}
+                    value={changeRequest.transmittalNumber}
+                  ></Field>
+                  {isReadOnly && (
+                    <div>
+                      <label htmlFor="submittedAt">Submitted on</label>
+                      <input
+                        className="field"
+                        type="text"
+                        id="submittedAt"
+                        name="submittedAt"
+                        disabled
+                        value={formatDate(changeRequest.submittedAt)}
+                      ></input>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            <div className="upload-card">
-              {isReadOnly ? (
-                <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
-                  <FileUploader
-                    ref={uploader}
-                    requiredUploads={requiredUploads}
-                    optionalUploads={optionalUploads}
-                    readyCallback={uploadsReadyCallbackFunction}
-                  ></FileUploader>
+                <h3>Attachments</h3>
+                <p className="req-message">Maximum file size of 50MB.</p>
+                <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
+                {errors.uploads && (
+                    <div id={"spaUploadsErrorMsg"}
+                      class="ds-u-color--error">{errors.uploads}</div>
+                  )}
+                <div className="upload-card">
+                  {isReadOnly ? (
+                    <FileList uploadList={changeRequest.uploads}></FileList>
+                  ) : (
+                      <FileUploader
+                        ref={uploader}
+                        requiredUploads={requiredUploads}
+                        optionalUploads={optionalUploads}
+                        readyCallback={uploadsReadyCallbackFunction}
+                      ></FileUploader>
+                    )}
+                </div>
+                <div className="summary-box">
+                  <TextField
+                    name={FIELD_NAMES.SUMMARY}
+                    label="Summary"
+                    fieldClassName="summary-field"
+                    multiline
+                    onChange={handleInputChange}
+                    disabled={isReadOnly}
+                    value={changeRequest.summary}
+                  ></TextField>
+                </div>
+                {!isReadOnly && (
+                  <input
+                    type="submit"
+                    className="form-submit"
+                    value="Submit"
+                  />
                 )}
-            </div>
-            <div className="summary-box">
-              <TextField
-                name={FIELD_NAMES.SUMMARY}
-                label="Summary"
-                fieldClassName="summary-field"
-                multiline
-                onChange={handleInputChange}
-                disabled={isReadOnly}
-                value={changeRequest.summary}
-              ></TextField>
-            </div>
-            {!isReadOnly && (
-              <input
-                type="submit"
-                className="form-submit"
-                value="Submit"
-              />
+              </Form>
             )}
-          </form>
+          </Formik>
         </div>
       ) : null}
     </LoadingScreen>
