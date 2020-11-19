@@ -103,7 +103,7 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
-          <Button
+          <Button id={"spaSubmitBtn"}
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >

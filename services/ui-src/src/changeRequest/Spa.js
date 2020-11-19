@@ -243,7 +243,7 @@ export default function Spa() {
                                         State/Territory
                                         <span className="required-mark">*</span>
                                     </label>
-                                    <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                                    <select id={"territorySelect"} {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
                                         <option disabled value="none-selected">-- select a territory --</option>
                                         {renderOptionsList(territoryList)}
                                     </select>
