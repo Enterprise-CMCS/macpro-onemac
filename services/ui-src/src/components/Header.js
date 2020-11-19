@@ -85,7 +85,7 @@ function Header(props) {
       return (
         <div className="nav-right">
           <FormLabel inversed>
-            <Button onClick={() => logout()} inversed>
+            <Button id={"logoutBtn"} onClick={() => logout()} inversed>
               Logout
             </Button>
           </FormLabel>
