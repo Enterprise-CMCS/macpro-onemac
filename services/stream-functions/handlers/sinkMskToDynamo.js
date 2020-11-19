@@ -1,6 +1,10 @@
 var AWS = require('aws-sdk');
 
 function myHandler(event, context, callback) {
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up!");
+    return null;
+  }
   console.log('Received event:', JSON.stringify(event, null, 2));
   if (event.topic == "amendments") {
     console.log("Event from amendments... this is probably for dev and debug... doing nothing");

@@ -2,6 +2,10 @@ const { Kafka } = require('kafkajs');
 const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
 
 function myHandler(event, context, callback) {
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up!");
+    return null;
+  }
   console.log('Received event:', JSON.stringify(event, null, 2));
 
   const kafka = new Kafka({

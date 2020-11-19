@@ -8,9 +8,24 @@ plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
+  - serverless-plugin-warmup
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  warmupEnabled:
+    production: true
+    development: false
+  warmup:
+    enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
+    role: LambdaWarmupRole
+    vpc: false
+    events:
+      - schedule: rate(3 minutes)
+    timeout: 20
+    prewarm: true
+    concurrency: 5
+    folderName: node_modules/serverless-bundle/src/_warmup
+    cleanFolder: false
   tableStreamArn: ${cf:app-api-${self:custom.stage}.AmendmentsTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
@@ -28,9 +43,16 @@ custom:
   iamPath: ${env:IAM_PATH, "/"}
   scripts:
     hooks:
+      package:setupProviderConfiguration: |
+        # Remove the timestamp line from the warmup handler so a new function is uploaded
+        #   only if a configuration has truly changed.
+        set -e
+        if [ -d "node_modules/serverless-bundle/src/_warmup" ]; then
+          cd node_modules/serverless-bundle/src/_warmup
+          sed '/Generated/d' index.js > index.js.sub && mv -f index.js.sub index.js
+        fi
       deploy:finalize: |
         serverless invoke --stage ${self:custom.stage} --function configureConnectors
-
 provider:
   name: aws
   runtime: nodejs12.x
@@ -76,6 +98,8 @@ functions:
       topics: seatool-SEA-State_Plan
     maximumRetryAttempts: 2
     timeout: 120
+    warmup:
+      enabled: false
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
@@ -418,3 +442,40 @@ resources:
                 Action:
                 - "dynamodb:*"
                 Resource: ${self:custom.spaIdTableArn}
+    LambdaWarmupRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Service: 'lambda.amazonaws.com'
+              Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'Warmup'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: 'arn:aws:logs:*:*:*'
+                - Effect: 'Allow'
+                  Action:
+                    - lambda:InvokeFunction
+                  Resource: '*'
