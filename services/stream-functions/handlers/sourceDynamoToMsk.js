@@ -20,11 +20,14 @@ const mappings = {
 
 function mapFields(event, callback) {
   const path = 'dynamodb.NewImage';
-  _.each(mappings, function(value, key) {
-    const stream_entry = _.get(event, `${path}.${key}`);
-    const mapped_item = _.get(value, `mapping.${stream_entry}`);
-    _.isEmpty(mapped_item) && callback(new Error(`Field "${key}" ${stream_entry} does not map to a valid field in SEATool`));
-    _.set(event, `${path}.${_.get(value, 'name')}`, mapped_item);
+  _.each(_.get(event, 'Records'), function(v, index) {
+    console.log(index);
+    _.each(mappings, function(value, key) {
+      const stream_entry = _.get(event, `Records[${index}].${path}.${key}`);
+      const mapped_item = _.get(value, `mapping.${stream_entry}`);
+      _.isEmpty(mapped_item) && callback(new Error(`Field "${key}" ${stream_entry} does not map to a valid field in SEATool`));
+      _.set(event, `Records[${index}].${path}.${_.get(value, 'name')}`, mapped_item);
+    });
   });
   return event;
 }
