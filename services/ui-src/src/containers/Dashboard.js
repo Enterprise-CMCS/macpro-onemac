@@ -109,26 +109,26 @@ export default function Dashboard() {
           >
             Submit new SPA
             </Button>
-          <Button
+          <Button id={"spaRaiBtn"}
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
             Respond to SPA RAI
             </Button>
         <div className="action-title">Waivers</div>
-          <Button
+          <Button id={"waiverBtn"}
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER)}
           >
             Submit new Waiver
             </Button>
-          <Button
+          <Button id={"waiverRaiBtn"}
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER_RAI)}
           >
             Respond to 1915(b) Waiver RAI
             </Button>
-          <Button
+          <Button id={"waiverExtBtn"}
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
           >
