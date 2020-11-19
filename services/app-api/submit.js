@@ -60,6 +60,7 @@ export const main = handler(async (event) => {
       TableName: process.env.tableName,
       Item: data,
     });
+    console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
 
     // map the email templates from the data.type
     const emailTemplate = getEmailTemplates(data.type);

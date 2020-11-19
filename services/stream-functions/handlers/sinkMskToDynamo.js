@@ -1,3 +1,4 @@
+var AWS = require('aws-sdk');
 
 function myHandler(event, context, callback) {
   console.log('Received event:', JSON.stringify(event, null, 2));
@@ -10,7 +11,6 @@ function myHandler(event, context, callback) {
     console.log(`State Plan ID Number: ${id}`);
     console.log(process.env.spaIdTableName);
     if (id != undefined) {
-      var AWS = require('aws-sdk');
       AWS.config.update({region: 'us-east-1'});
       var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
       var params = {
@@ -24,6 +24,7 @@ function myHandler(event, context, callback) {
           console.log("Error", err);
         } else {
           console.log("Success", data);
+          console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
         }
       });
     }

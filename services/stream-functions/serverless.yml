@@ -59,7 +59,7 @@ functions:
     environment:
       spaIdTableName: ${self:custom.spaIdTableName}
     maximumRetryAttempts: 2
-    memorySize: 256
+    memorySize: 1024
   configureConnectors:
     handler: handlers/configureConnectors.handler
     role: LambdaConfigureConnectorsRole

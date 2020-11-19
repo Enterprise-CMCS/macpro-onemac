@@ -10,6 +10,7 @@ const connectors = [
       "tasks.max": "1",
       "connector.class": "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
       "topics": process.env.topics,
+      "poll.interval.ms":200,
       "key.converter": "org.apache.kafka.connect.storage.StringConverter",
       "value.converter": "org.apache.kafka.connect.storage.StringConverter",
       "aws.region": "us-east-1",
