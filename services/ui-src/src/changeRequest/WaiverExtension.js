@@ -121,7 +121,7 @@ export default function WaiverExtension() {
         let errorMessage
         let updatedRecord = {...changeRequest}
         changeRequest.transmittalNumber = value
-        errorMessage = validateWavierId("SS", value)
+        errorMessage = validateWavierId(value)
         if (errorMessage === undefined) {
             updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
             setValidTransmittalNumber(true)
