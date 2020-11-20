@@ -27,8 +27,7 @@ export function renderOptionsList(optionsList) {
 
 /**
  * Validate SPA Id Transmittal Number Format
- * @param {statecode} The Territory/State Code Selected by a Form
- * @param {spaId} The SPA Transmittal Number
+ * @return
  *
  */
 export function validateSpaId(spaId) {
@@ -47,8 +46,7 @@ export function validateSpaId(spaId) {
 
 /**
  * Validate Wavier Id Transmittal Number Format
- * @param {statecode} The Territory/State Code Selected by a Form
- * @param {waiverId} The Waiver Transmittal Number
+ * @return
  */
 export function validateWavierId(wavierId) {
 

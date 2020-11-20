@@ -291,7 +291,7 @@ export default function Waiver() {
                                     </p>
                                     }
                                     {errors.transmittalNumber && (
-                                        <div id={"waiverTransmittalError"} class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                        <div id="waiverTransmittalError" class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
                                     <Field
                                         className="field"

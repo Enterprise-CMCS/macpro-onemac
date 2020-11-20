@@ -236,7 +236,7 @@ export default function Spa() {
                                         <span className="required-mark">*</span>
                                     </label>
                                     <select
-                                        id={"territorySelect"} {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                                        id="territorySelect" {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
                                         <option disabled value="none-selected">-- select a territory --</option>
                                         {renderOptionsList(territoryList)}
                                     </select>
@@ -257,7 +257,7 @@ export default function Spa() {
                                         </p>
                                     )}
                                     {errors.transmittalNumber && (
-                                        <div id={"spaTransmittalNumberErrorMsg"}
+                                        <div id="spaTransmittalNumberErrorMsg"
                                              class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
                                     <Field

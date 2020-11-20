@@ -211,7 +211,7 @@ export default function RaiTemplate({
                                         </p>
                                     )}
                                     {errors.transmittalNumber && (
-                                        <div id={"raiTransmittalNumError"} class="ds-u-color--error">{errors.transmittalNumber}</div>
+                                        <div id="raiTransmittalNumError" class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
                                     {!isReadOnly && (
                                         <Field
