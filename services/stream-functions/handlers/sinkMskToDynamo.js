@@ -1,5 +1,10 @@
+var AWS = require('aws-sdk');
 
 function myHandler(event, context, callback) {
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up!");
+    return null;
+  }
   console.log('Received event:', JSON.stringify(event, null, 2));
   if (event.topic == "amendments") {
     console.log("Event from amendments... this is probably for dev and debug... doing nothing");
@@ -10,7 +15,6 @@ function myHandler(event, context, callback) {
     console.log(`State Plan ID Number: ${id}`);
     console.log(process.env.spaIdTableName);
     if (id != undefined) {
-      var AWS = require('aws-sdk');
       AWS.config.update({region: 'us-east-1'});
       var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
       var params = {
@@ -24,6 +28,7 @@ function myHandler(event, context, callback) {
           console.log("Error", err);
         } else {
           console.log("Success", data);
+          console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
         }
       });
     }

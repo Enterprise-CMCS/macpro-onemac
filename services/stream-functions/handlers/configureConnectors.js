@@ -10,6 +10,7 @@ const connectors = [
       "tasks.max": "1",
       "connector.class": "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
       "topics": process.env.topics,
+      "poll.interval.ms":200,
       "key.converter": "org.apache.kafka.connect.storage.StringConverter",
       "value.converter": "org.apache.kafka.connect.storage.StringConverter",
       "aws.region": "us-east-1",
@@ -21,6 +22,10 @@ const connectors = [
 ];
 
 function myHandler(event, context, callback) {
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up... although this function shouldn't be prewarmed.  So, turn it off.");
+    return null;
+  }
   console.log('Received event:', JSON.stringify(event, null, 2));
   var ecs = new aws.ECS();
   var params = {
