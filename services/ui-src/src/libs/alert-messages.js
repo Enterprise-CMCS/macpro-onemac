@@ -11,12 +11,6 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
-  FORM_INCOMPLETE: {
-    type: ALERT_TYPES.ERROR,
-    heading: "Form Missing required Fields",
-    text: "enter all required fields",
-  },
-
   // Errors and warnings
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,

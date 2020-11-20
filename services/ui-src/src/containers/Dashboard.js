@@ -103,20 +103,20 @@ export default function Dashboard() {
     <div className="dashboard-container">
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
-          <Button id={"spaSubmitBtn"}
+          <Button id="spaSubmitBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >
             Submit new SPA
             </Button>
-          <Button id={"spaRaiBtn"}
+          <Button id="spaRaiBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
             Respond to SPA RAI
             </Button>
         <div className="action-title">Waivers</div>
-          <Button id={"waiverBtn"}
+          <Button id="waiverBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER)}
           >
@@ -128,7 +128,7 @@ export default function Dashboard() {
           >
             Respond to 1915(b) Waiver RAI
             </Button>
-          <Button id={"waiverExtBtn"}
+          <Button id="waiverExtBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
           >
