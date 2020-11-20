@@ -13,8 +13,7 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { renderOptionsList, validateSpaId } from "../utils/form-utils";
-import { Formik, Form, Field } from 'formik';
+import { renderOptionsList, validateSpaId, validateTerritory } from "../utils/form-utils";
 
 export default function Spa() {
 
@@ -39,7 +38,11 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-  const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
+//  const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
+  const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+  const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
+  const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
+  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");  
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -85,7 +88,7 @@ export default function Spa() {
       setIsLoading(false);
     }
 
-    // Trigger the fetch only if an ID is present.
+    // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
       PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
 
@@ -116,37 +119,14 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
+
+      if (!firstTimeThrough) {
+        setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
+        setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
+      }
     }
   }
 
-  /**
-      * Validate Transmittal Number Format
-      * @param {value} Transmittal Number Field Entered on Change Event.
-      * NOTE: State Code should be removed when we get info form user profile.
-      */
-  function validateTransmittalNumber(value) {
-
-    let errorMessage;
-    let updatedRecord = { ...changeRequest };
-    changeRequest.transmittalNumber = value;
-
-    errorMessage = validateSpaId(value)
-    if (errorMessage === undefined) {
-      updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
-      setValidTransmittalNumber(true);
-    }
-
-    return errorMessage;
-  }
-
-  function validateTerritory(territory) {
-    let errorMessage;
-
-    if (!territory)
-      errorMessage =  "Please select a State or Territory";
-    
-    return errorMessage;
-  }
   /**
    * Submit the new change request.
    * @param {Object} event the click event
@@ -154,7 +134,12 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    if (!event.target.checkValidity() || hasValidTransmittalNumber !== true) {
+    setFirstTimeThrough(false);
+    setTerritoryErrorMessage(validateTerritory(changeRequest.territory));
+    setTransmittalNumberErrorMessage(validateSpaId(changeRequest.transmittalNumber));
+
+    if (territoryErrorMessage !== "" || 
+      transmittalNumberErrorMessage !== "" ) {
       AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
       window.scrollTo(0, 0);
       return;
@@ -163,7 +148,7 @@ export default function Spa() {
     if (!areUploadsReady) {
       console.log("Uploads are not ready.");
       AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
-      window.scrollTo(0, 0);
+      setAttachmentsErrorMessage("Required Attachements Missing")
     } else {
       setIsLoading(true);
 
@@ -179,6 +164,7 @@ export default function Spa() {
         setIsLoading(false);
       }
     }
+    window.scrollTo(0, 0);
   }
 
   /**
@@ -194,16 +180,13 @@ export default function Spa() {
       id,
       name: id,
       value,
-      as: "select",
     }
 
     let selectProps = {}
 
     if (!isReadOnly) {
       selectProps = {
-        onChange: handleInputChange,
         required: true,
-      //  validate: validateTerritory,
         ...defaultSelectProps
       }
     } else {
@@ -212,125 +195,114 @@ export default function Spa() {
         ...defaultSelectProps
       }
     }
-selectProps="";
+    selectProps = "";
     return selectProps
   }
-  function validateTerritory(value) {
-    if (value === "")
-      return false;
-    else
-      return true;
-  }
+
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <Formik initialValues={changeRequest}>
-            {({ errors, touched }) => (
-              <Form onSubmit={handleSubmit} noValidate
-              >
-                <h3>SPA Details</h3>
-                <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-                <div className="form-card">
-                  <label htmlFor={FIELD_NAMES.TERRITORY}>
-                    State/Territory<span className="required-mark">*</span>
-                  </label>
-                  {errors.territory && touched.territory && (
-                    <div id={"spaTerritoryErrorMsg"}
-                      className="ds-u-color--error">{errors.territory}</div>
-                  )}
-                  <Field validate={validateTerritory}
-                                      className="field"
-                                      as="select"
-                                      id={FIELD_NAMES.TERRITORY}
-                                      name={FIELD_NAMES.TERRITORY}
-                                      disabled={isReadOnly}
-                  
-                  {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
-                    <option value="">-- select a territory --</option>
-                    {renderOptionsList(territoryList)}
-                  </Field>
-                  <div className="label-container">
-                    <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                      SPA ID<span className="required-mark">*</span>
-                    </label>
-                    </div>
-                    <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
-                  </div>
-                  {!isReadOnly && (
-                    <p className="field-hint">
-                      Must follow the format SS-YY-NNNN-xxxx
-                    </p>
-                  )}
-                  {errors.transmittalNumber || touched.transmittalNumber ? (
-                    <div id={"spaTransmittalNumberErrorMsg"}
-                      className="ds-u-color--error">Test{errors.transmittalNumber}</div>
-                  ): null }
-                  <Field
+          <form onSubmit={handleSubmit} >
+            <h3>SPA Details</h3>
+            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <div className="form-card">
+              <label htmlFor={FIELD_NAMES.TERRITORY}>
+                State/Territory<span className="required-mark">*</span>
+              </label>
+              {territoryErrorMessage && (
+                <div id={"spaTerritoryErrorMsg"}
+                  className="ds-u-color--error">{territoryErrorMessage}</div>
+              )}
+              <select 
+                className="field"
+                id={FIELD_NAMES.TERRITORY}
+                name={FIELD_NAMES.TERRITORY}
+                disabled={isReadOnly}
+
+                {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                <option value="">-- select a territory --</option>
+                {renderOptionsList(territoryList)}
+              </select>
+              <div className="label-container">
+                <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                  SPA ID<span className="required-mark">*</span>
+                </label>
+                </div>
+                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
+              </div>
+              {!isReadOnly && (
+                <p className="field-hint">
+                  Must follow the format SS-YY-NNNN-xxxx
+                </p>
+              )}
+              {transmittalNumberErrorMessage && (
+                <div id={"spaTransmittalNumberErrorMsg"}
+                  className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
+              )}
+              <input
+                className="field"
+                type="text"
+                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.transmittalNumber}
+              ></input>
+              {isReadOnly && (
+                <div>
+                  <label htmlFor="submittedAt">Submitted on</label>
+                  <input
                     className="field"
                     type="text"
-                    id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                    name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                    validate={validateTransmittalNumber}
-                    disabled={isReadOnly}
-                    value={changeRequest.transmittalNumber}
-                  ></Field>
-                  {isReadOnly && (
-                    <div>
-                      <label htmlFor="submittedAt">Submitted on</label>
-                      <input
-                        className="field"
-                        type="text"
-                        id="submittedAt"
-                        name="submittedAt"
-                        disabled
-                        value={formatDate(changeRequest.submittedAt)}
-                      ></input>
-                    </div>
-                  )}
+                    id="submittedAt"
+                    name="submittedAt"
+                    disabled
+                    value={formatDate(changeRequest.submittedAt)}
+                  ></input>
                 </div>
-                <h3>Attachments</h3>
-                <p className="req-message">Maximum file size of 50MB.</p>
-                <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-                {errors.uploads && (
-                  <div id={"spaUploadsErrorMsg"}
-                    className="ds-u-color--error">{errors.uploads}</div>
-                )}
-                <div className="upload-card">
-                  {isReadOnly ? (
-                    <FileList uploadList={changeRequest.uploads}></FileList>
-                  ) : (
-                      <FileUploader
-                        ref={uploader}
-                        requiredUploads={requiredUploads}
-                        optionalUploads={optionalUploads}
-                        readyCallback={uploadsReadyCallbackFunction}
-                      ></FileUploader>
-                    )}
-                </div>
-                <div className="summary-box">
-                  <TextField
-                    name={FIELD_NAMES.SUMMARY}
-                    label="Summary"
-                    fieldClassName="summary-field"
-                    multiline
-                    onChange={handleInputChange}
-                    disabled={isReadOnly}
-                    value={changeRequest.summary}
-                  ></TextField>
-                </div>
-                {!isReadOnly && (
-                  <input
-                    type="submit"
-                    className="form-submit"
-                    value="Submit"
-                  />
-                )}
-              </Form>
+              )}
+            </div>
+            <h3>Attachments</h3>
+            <p className="req-message">Maximum file size of 50MB.</p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
+            {attachmentsErrorMessage && (
+              <div id={"spaUploadsErrorMsg"}
+                className="ds-u-color--error">{attachmentsErrorMessage}</div>
             )}
-          </Formik>
+            <div className="upload-card">
+              {isReadOnly ? (
+                <FileList uploadList={changeRequest.uploads}></FileList>
+              ) : (
+                  <FileUploader
+                    ref={uploader}
+                    requiredUploads={requiredUploads}
+                    optionalUploads={optionalUploads}
+                    readyCallback={uploadsReadyCallbackFunction}
+                  ></FileUploader>
+                )}
+            </div>
+            <div className="summary-box">
+              <TextField
+                name={FIELD_NAMES.SUMMARY}
+                label="Summary"
+                fieldClassName="summary-field"
+                multiline
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.summary}
+              ></TextField>
+            </div>
+            {!isReadOnly && (
+              <input
+                type="submit"
+                className="form-submit"
+                value="Submit"
+              />
+            )}
+          </form>
         </div>
       ) : null}
     </LoadingScreen>

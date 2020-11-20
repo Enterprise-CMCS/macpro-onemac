@@ -82,4 +82,12 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
 
   return result;
 
-};
+}
+
+export function validateTerritory(value) {
+  let errorMessage;
+
+  if (value==="") errorMessage="Please select a State or Territory.";
+  else errorMessage="";
+  return errorMessage;
+}
