@@ -38,9 +38,9 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-//  const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
   const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
+  const [transmittalFieldTouched, setTransmittalFieldTouched] = useState(false);
   const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
   const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");  
 
@@ -122,6 +122,8 @@ export default function Spa() {
 
       if (!firstTimeThrough) {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
+      }
+      if (event.target.name === 'transmittalNumber') {
         setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
       }
     }
@@ -148,7 +150,7 @@ export default function Spa() {
     if (!areUploadsReady) {
       console.log("Uploads are not ready.");
       AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
-      setAttachmentsErrorMessage("Required Attachements Missing")
+      setAttachmentsErrorMessage("Required Attachments Missing")
     } else {
       setIsLoading(true);
 
@@ -220,6 +222,7 @@ export default function Spa() {
                 className="field"
                 id={FIELD_NAMES.TERRITORY}
                 name={FIELD_NAMES.TERRITORY}
+                onChange={handleInputChange}
                 disabled={isReadOnly}
 
                 {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
