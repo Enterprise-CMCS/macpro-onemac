@@ -121,7 +121,7 @@ export default function RaiTemplate({
         changeRequest.transmittalNumber = value
 
         if (changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI) {
-            errorMessage = validateSpaId("SS", value)
+            errorMessage = validateSpaId(value)
             if (errorMessage === undefined) {
                 updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
                 setValidTransmittalNumber(true)
@@ -130,7 +130,7 @@ export default function RaiTemplate({
         } else if (changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI) {
             let updatedRecord = {...changeRequest}
             changeRequest.transmittalNumber = value
-            errorMessage = validateWavierId("SS", value)
+            errorMessage = validateWavierId(value)
             if (errorMessage === undefined) {
                 updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
                 setValidTransmittalNumber(true)
@@ -213,26 +213,15 @@ export default function RaiTemplate({
                                     {errors.transmittalNumber && (
                                         <div id="raiTransmittalNumError" class="ds-u-color--error">{errors.transmittalNumber}</div>
                                     )}
-                                    {!isReadOnly && (
-                                        <Field
-                                            className="field"
-                                            type="text"
-                                            id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                            validate={validateTransmittalNumber}
-                                            value={changeRequest.transmittalNumber}
-                                        ></Field>)}
-
-                                    {isReadOnly && <input
+                                    <Field
                                         className="field"
                                         type="text"
-                                        required={!isReadOnly}
                                         id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                                         name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                        onChange={handleInputChange}
+                                        validate={validateTransmittalNumber}
                                         disabled={isReadOnly}
                                         value={changeRequest.transmittalNumber}
-                                    ></input>}
+                                    ></Field>
                                     {isReadOnly && (
                                         <div>
                                             <label htmlFor="submittedAt">Submitted on</label>
