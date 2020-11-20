@@ -39,7 +39,6 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-//  const [isFormReady, setIsFormReady] = useState(false);
   const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
 
   // True if we are currently submitting the form or on inital load of the form
@@ -117,11 +116,6 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
-
-     // setIsFormReady(
-     //   hasValidTransmittalNumber &&
-     //   updatedRecord[FIELD_NAMES.TERRITORY]
-     // );
     }
   }
 
@@ -145,6 +139,14 @@ export default function Spa() {
     return errorMessage;
   }
 
+  function validateTerritory(territory) {
+    let errorMessage;
+
+    if (!territory)
+      errorMessage =  "Please select a State or Territory";
+    
+    return errorMessage;
+  }
   /**
    * Submit the new change request.
    * @param {Object} event the click event
@@ -159,7 +161,7 @@ export default function Spa() {
     }
 
     if (!areUploadsReady) {
-      console.log("Uploads are not readyt.");
+      console.log("Uploads are not ready.");
       AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
       window.scrollTo(0, 0);
     } else {
@@ -201,6 +203,7 @@ export default function Spa() {
       selectProps = {
         onChange: handleInputChange,
         required: true,
+      //  validate: validateTerritory,
         ...defaultSelectProps
       }
     } else {
@@ -209,10 +212,15 @@ export default function Spa() {
         ...defaultSelectProps
       }
     }
-
+selectProps="";
     return selectProps
   }
-
+  function validateTerritory(value) {
+    if (value === "")
+      return false;
+    else
+      return true;
+  }
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
@@ -220,7 +228,7 @@ export default function Spa() {
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
           <Formik initialValues={changeRequest}>
-            {({ errors }) => (
+            {({ errors, touched }) => (
               <Form onSubmit={handleSubmit} noValidate
               >
                 <h3>SPA Details</h3>
@@ -229,11 +237,18 @@ export default function Spa() {
                   <label htmlFor={FIELD_NAMES.TERRITORY}>
                     State/Territory<span className="required-mark">*</span>
                   </label>
-                  {errors.territory && (
+                  {errors.territory && touched.territory && (
                     <div id={"spaTerritoryErrorMsg"}
-                      class="ds-u-color--error">{errors.territory}</div>
+                      className="ds-u-color--error">{errors.territory}</div>
                   )}
-                  <Field {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+                  <Field validate={validateTerritory}
+                                      className="field"
+                                      as="select"
+                                      id={FIELD_NAMES.TERRITORY}
+                                      name={FIELD_NAMES.TERRITORY}
+                                      disabled={isReadOnly}
+                  
+                  {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
                     <option value="">-- select a territory --</option>
                     {renderOptionsList(territoryList)}
                   </Field>
@@ -249,10 +264,10 @@ export default function Spa() {
                       Must follow the format SS-YY-NNNN-xxxx
                     </p>
                   )}
-                  {errors.transmittalNumber && (
+                  {errors.transmittalNumber || touched.transmittalNumber ? (
                     <div id={"spaTransmittalNumberErrorMsg"}
-                      class="ds-u-color--error">{errors.transmittalNumber}</div>
-                  )}
+                      className="ds-u-color--error">Test{errors.transmittalNumber}</div>
+                  ): null }
                   <Field
                     className="field"
                     type="text"
@@ -280,9 +295,9 @@ export default function Spa() {
                 <p className="req-message">Maximum file size of 50MB.</p>
                 <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
                 {errors.uploads && (
-                    <div id={"spaUploadsErrorMsg"}
-                      class="ds-u-color--error">{errors.uploads}</div>
-                  )}
+                  <div id={"spaUploadsErrorMsg"}
+                    className="ds-u-color--error">{errors.uploads}</div>
+                )}
                 <div className="upload-card">
                   {isReadOnly ? (
                     <FileList uploadList={changeRequest.uploads}></FileList>
