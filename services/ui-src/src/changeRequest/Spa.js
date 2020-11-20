@@ -40,9 +40,8 @@ export default function Spa() {
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
   const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
-  const [transmittalFieldTouched, setTransmittalFieldTouched] = useState(false);
   const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
-  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");  
+  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -122,6 +121,8 @@ export default function Spa() {
 
       if (!firstTimeThrough) {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
+        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+        else setAttachmentsErrorMessage("");
       }
       if (event.target.name === 'transmittalNumber') {
         setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
@@ -134,14 +135,18 @@ export default function Spa() {
    * @param {Object} event the click event
    */
   async function handleSubmit(event) {
+    // so the old alert goes away
+    AlertBar.dismiss();
     event.preventDefault();
+    const form = event.target;
+    const data = new FormData(form);
 
     setFirstTimeThrough(false);
-    setTerritoryErrorMessage(validateTerritory(changeRequest.territory));
-    setTransmittalNumberErrorMessage(validateSpaId(changeRequest.transmittalNumber));
+    setTerritoryErrorMessage(validateTerritory(data.get("territory")));
+    setTransmittalNumberErrorMessage(validateSpaId(data.get("transmittalNumber")));
+    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
 
-    if (territoryErrorMessage !== "" || 
-      transmittalNumberErrorMessage !== "" ) {
+    if (!form.checkValidity()) {
       AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
       window.scrollTo(0, 0);
       return;
@@ -207,7 +212,7 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit} >
+          <form onSubmit={handleSubmit} noValidate >
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
@@ -218,12 +223,14 @@ export default function Spa() {
                 <div id={"spaTerritoryErrorMsg"}
                   className="ds-u-color--error">{territoryErrorMessage}</div>
               )}
-              <select 
+              <select
                 className="field"
                 id={FIELD_NAMES.TERRITORY}
                 name={FIELD_NAMES.TERRITORY}
                 onChange={handleInputChange}
                 disabled={isReadOnly}
+                defaultValue={changeRequest.territory}
+                required
 
                 {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
                 <option value="">-- select a territory --</option>
@@ -253,6 +260,7 @@ export default function Spa() {
                 onChange={handleInputChange}
                 disabled={isReadOnly}
                 value={changeRequest.transmittalNumber}
+                required
               ></input>
               {isReadOnly && (
                 <div>
@@ -271,7 +279,7 @@ export default function Spa() {
             <h3>Attachments</h3>
             <p className="req-message">Maximum file size of 50MB.</p>
             <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            {attachmentsErrorMessage && (
+            {attachmentsErrorMessage && !areUploadsReady && (
               <div id={"spaUploadsErrorMsg"}
                 className="ds-u-color--error">{attachmentsErrorMessage}</div>
             )}
