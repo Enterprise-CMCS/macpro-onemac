@@ -212,7 +212,7 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit} noValidate >
+          <form onSubmit={handleSubmit} noValidate class={!firstTimeThrough ? "display-errors" : ""}>
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
