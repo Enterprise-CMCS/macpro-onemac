@@ -95,7 +95,7 @@ functions:
         - KafkaConnectWorkerRole
         - Arn
       sessionName: ${self:custom.stage}-sink-role
-      topics: seatool-SEA-State_Plan
+      topics: lmdc.seatool.submission.cdc.sea-dbo-State_Plan
     maximumRetryAttempts: 2
     timeout: 120
     warmup:
@@ -185,13 +185,13 @@ resources:
                 Value: >-
                   ${self:custom.bootstrapBrokerStringTls}
               - Name: CONNECT_GROUP_ID
-                Value: connect-macstack
+                Value: mgmt.connect.${self:service}-${self:custom.stage}
               - Name: CONNECT_CONFIG_STORAGE_TOPIC
-                Value: connect-macstack-config
+                Value: mgmt.connect.${self:service}-${self:custom.stage}.config
               - Name: CONNECT_OFFSET_STORAGE_TOPIC
-                Value: connect-macstack-offsets
+                Value: mgmt.connect.${self:service}-${self:custom.stage}.offsets
               - Name: CONNECT_STATUS_STORAGE_TOPIC
-                Value: connect-macstack-status
+                Value: mgmt.connect.${self:service}-${self:custom.stage}.status
               - Name: CONNECT_KEY_CONVERTER
                 Value: org.apache.kafka.connect.json.JsonConverter
               - Name: CONNECT_VALUE_CONVERTER
