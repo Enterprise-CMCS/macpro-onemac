@@ -55,7 +55,7 @@ function myHandler(event, context, callback) {
   const publish = async () => {
     await producer.connect();
     await producer.send({
-      topic: 'amendments',
+      topic: 'aws.submission_portal.submissions.cdc.submission',
       messages: [
         {
           value: JSON.stringify(event, null, 2)
