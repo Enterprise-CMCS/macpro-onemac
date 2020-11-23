@@ -125,6 +125,8 @@ export default function RaiTemplate({
             if (errorMessage === undefined) {
                 updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
                 setValidTransmittalNumber(true)
+            } {
+                setValidTransmittalNumber(false)
             }
 
         } else if (changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI) {
@@ -134,12 +136,11 @@ export default function RaiTemplate({
             if (errorMessage === undefined) {
                 updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
                 setValidTransmittalNumber(true)
-                setIsFormReady(true);
             } else {
                 setValidTransmittalNumber(false)
-                setIsFormReady(false)
             }
         }
+        setIsFormReady(hasValidTransmittalNumber)
         return errorMessage;
     };
 
