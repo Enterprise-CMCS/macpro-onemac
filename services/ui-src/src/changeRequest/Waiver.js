@@ -356,7 +356,7 @@ export default function Waiver() {
                                     ></TextField>
                                 </div>
                                 {!isReadOnly && (
-                                    <LoaderButton
+                                    <LoaderButton id="waiverSubmitButton"
                                         type="submit"
                                         bsSize="large"
                                         bsStyle="primary"

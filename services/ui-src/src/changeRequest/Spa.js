@@ -322,7 +322,7 @@ export default function Spa() {
                                     ></TextField>
                                 </div>
                                 {!isReadOnly && (
-                                    <LoaderButton
+                                    <LoaderButton id="spaSubmitButton"
                                         type="submit"
                                         bsSize="large"
                                         bsStyle="primary"
