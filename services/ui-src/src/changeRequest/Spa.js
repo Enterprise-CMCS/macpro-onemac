@@ -38,7 +38,11 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
+
+  // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+
+  // if the message string is set, then the error div should be shown for these items
   const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
   const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
   const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
@@ -64,11 +68,12 @@ export default function Spa() {
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
     territory: "",
+    submittedAt: "",
   });
 
   useEffect(() => {
     /**
-     * Fetch the given ID
+     * Fetch the data for the given ID
      */
     async function fetchChangeRequest() {
       if (!id) {
@@ -83,8 +88,6 @@ export default function Spa() {
         setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
-
-      setIsLoading(false);
     }
 
     // ID is present means we are viewing and need to fetch the changeRequest record
@@ -97,8 +100,9 @@ export default function Spa() {
       PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
 
       setReadOnly(false);
-      setIsLoading(false);
     }
+
+    setIsLoading(false);
   }, [id]);
 
   /**
@@ -141,21 +145,19 @@ export default function Spa() {
     const form = event.target;
     const data = new FormData(form);
 
+    // set any error messages that should be shown
     setFirstTimeThrough(false);
-    setTerritoryErrorMessage(validateTerritory(data.get("territory")));
-    setTransmittalNumberErrorMessage(validateSpaId(data.get("transmittalNumber")));
+    setTerritoryErrorMessage(validateTerritory(data.get(FIELD_NAMES.TERRITORY)));
+    setTransmittalNumberErrorMessage(validateSpaId(data.get(FIELD_NAMES.TRANSMITTAL_NUMBER)));
     if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
 
+    // check which alert to show.  Fields first, than attachments
+    // if all passes, submit the form and return to dashboard
     if (!form.checkValidity()) {
       AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
-      window.scrollTo(0, 0);
-      return;
-    }
-
-    if (!areUploadsReady) {
+    } else if (!areUploadsReady) {
       console.log("Uploads are not ready.");
       AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
-      setAttachmentsErrorMessage("Required Attachments Missing")
     } else {
       setIsLoading(true);
 
@@ -174,45 +176,13 @@ export default function Spa() {
     window.scrollTo(0, 0);
   }
 
-  /**
-   * Get props for the select component dependent on the value of isReadOnly.
-   * Note: The defaultValue prop should NOT be set when the form is read only due to the following warning:
-   *   "Select elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both).
-   *    Decide between using a controlled or uncontrolled select element and remove one of these props."
-   * @param {String} id an identifier used to set select params
-   * @param {String} value the display text in select params
-   */
-  function getSelectProps(id, value) {
-    const defaultSelectProps = {
-      id,
-      name: id,
-      value,
-    }
-
-    let selectProps = {}
-
-    if (!isReadOnly) {
-      selectProps = {
-        required: true,
-        ...defaultSelectProps
-      }
-    } else {
-      selectProps = {
-        disabled: true,
-        ...defaultSelectProps
-      }
-    }
-    selectProps = "";
-    return selectProps
-  }
-
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit} noValidate class={!firstTimeThrough ? "display-errors" : ""}>
+          <form onSubmit={handleSubmit} noValidate className={!firstTimeThrough ? "display-errors" : ""}>
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
@@ -220,22 +190,29 @@ export default function Spa() {
                 State/Territory<span className="required-mark">*</span>
               </label>
               {territoryErrorMessage && (
-                <div id={"spaTerritoryErrorMsg"}
+                <div id="spaTerritoryErrorMsg"
                   className="ds-u-color--error">{territoryErrorMessage}</div>
               )}
-              <select
+              {!isReadOnly ? <select
                 className="field"
                 id={FIELD_NAMES.TERRITORY}
                 name={FIELD_NAMES.TERRITORY}
                 onChange={handleInputChange}
-                disabled={isReadOnly}
-                defaultValue={changeRequest.territory}
                 required
-
-                {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
+              >
                 <option value="">-- select a territory --</option>
                 {renderOptionsList(territoryList)}
               </select>
+                :
+                <input
+                  className="field"
+                  type="text"
+                  id={FIELD_NAMES.TERRITORY}
+                  name={FIELD_NAMES.TERRITORY}
+                  disabled
+                  value={changeRequest.territory}
+                ></input>
+              }
               <div className="label-container">
                 <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
                   SPA ID<span className="required-mark">*</span>
@@ -249,7 +226,7 @@ export default function Spa() {
                 </p>
               )}
               {transmittalNumberErrorMessage && (
-                <div id={"spaTransmittalNumberErrorMsg"}
+                <div id="spaTransmittalNumberErrorMsg"
                   className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
               )}
               <input
@@ -271,7 +248,7 @@ export default function Spa() {
                     id="submittedAt"
                     name="submittedAt"
                     disabled
-                    value={formatDate(changeRequest.submittedAt)}
+                    value={formatDate(changeRequest.submittedAt) || ""}
                   ></input>
                 </div>
               )}
@@ -280,7 +257,7 @@ export default function Spa() {
             <p className="req-message">Maximum file size of 50MB.</p>
             <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
             {attachmentsErrorMessage && !areUploadsReady && (
-              <div id={"spaUploadsErrorMsg"}
+              <div id="spaUploadsErrorMsg"
                 className="ds-u-color--error">{attachmentsErrorMessage}</div>
             )}
             <div className="upload-card">

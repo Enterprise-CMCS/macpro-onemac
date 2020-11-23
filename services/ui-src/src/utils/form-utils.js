@@ -84,6 +84,10 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
 
 }
 
+/**
+ * Validate that the State/Territory has been selected
+ * @param {value} String The Territory/State Code Selected
+ */
 export function validateTerritory(value) {
   let errorMessage = "";
 
