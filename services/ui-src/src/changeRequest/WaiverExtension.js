@@ -128,6 +128,7 @@ export default function WaiverExtension() {
 
         } else {
             setValidTransmittalNumber(false)
+            setIsFormReady(false)
         }
 
         return errorMessage;

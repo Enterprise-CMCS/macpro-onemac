@@ -169,6 +169,7 @@ export default function Waiver() {
             );
         } else {
             setValidTransmittalNumber(false)
+            setIsFormReady(false)
         }
 
         return errorMessage;

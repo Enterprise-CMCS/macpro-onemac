@@ -152,6 +152,7 @@ export default function Spa() {
 
         } else {
             setValidTransmittalNumber(false)
+            setIsFormReady(false)
         }
 
 

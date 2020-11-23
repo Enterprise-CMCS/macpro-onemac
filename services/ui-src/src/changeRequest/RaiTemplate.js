@@ -137,6 +137,7 @@ export default function RaiTemplate({
                 setIsFormReady(true);
             } else {
                 setValidTransmittalNumber(false)
+                setIsFormReady(false)
             }
         }
         return errorMessage;
