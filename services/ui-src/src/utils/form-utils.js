@@ -32,7 +32,7 @@ export function renderOptionsList(optionsList) {
  */
 export function validateSpaId(spaId) {
 
-    let errorMessage
+    let errorMessage = undefined
     let SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN or SS-YY-NNNN-xxxx"
     let RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)"
 
@@ -50,7 +50,7 @@ export function validateSpaId(spaId) {
  */
 export function validateWavierId(wavierId) {
 
-    let errorMessage
+    let errorMessage = undefined
     let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
 
     let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
