@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -13,6 +13,7 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
+import config from "../utils/config";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -84,10 +85,16 @@ export default function RaiTemplate({
     if (id) {
       setReadOnly(true);
       fetchChangeRequest();
-      PageTitleBar.setPageTitleInfo({ heading: raiType + " RAI Reponse Details", text: "" });
+      PageTitleBar.setPageTitleInfo({
+        heading: raiType + " RAI Reponse Details",
+        text: "",
+      });
     } else {
       setReadOnly(false);
-      PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
+      PageTitleBar.setPageTitleInfo({
+        heading: "Respond to " + raiType + " RAI",
+        text: "",
+      });
       setIsLoading(false);
     }
   }, [id, raiType]);
@@ -152,14 +159,21 @@ export default function RaiTemplate({
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>{raiType} RAI Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message">
+              <span className="required-mark">*</span> indicates required field.
+            </p>
             <div className="form-card">
               <div className="label-container">
-                <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                  {raiType} ID<span className="required-mark">*</span>
-                </label>
+                <div className="label-lcol">
+                  <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                    {raiType} ID<span className="required-mark">*</span>
+                  </label>
                 </div>
-                <div className="label-rcol"><HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink></div>
+                <div className="label-rcol">
+                  <HashLink to={RAIFAQLink()}>
+                    What is my {raiType} ID?
+                  </HashLink>
+                </div>
               </div>
               {!isReadOnly && (
                 <p className="field-hint">
@@ -191,20 +205,30 @@ export default function RaiTemplate({
               )}
             </div>
             <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            <div className="upload-card">
-              {isReadOnly ? (
+            {isReadOnly ? (
+              <div className="upload-card">
                 <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
+              </div>
+            ) : (
+              <div>
+                <p className="req-message">
+                  Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+                </p>
+                <p className="req-message">
+                  <span className="required-mark">*</span> indicates required
+                  attachment.
+                </p>
+                <div className="upload-card">
                   <FileUploader
                     ref={uploader}
                     requiredUploads={requiredUploads}
                     optionalUploads={optionalUploads}
                     readyCallback={uploadsReadyCallbackFunction}
                   ></FileUploader>
-                )}
-            </div>
+                </div>
+              </div>
+            )}
+
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}

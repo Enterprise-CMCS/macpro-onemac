@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -13,19 +13,17 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
+import config from "../utils/config";
 
 export default function WaiverExtension() {
   // The attachment list
   const requiredUploads = ["Waiver Extension Request"];
-  const optionalUploads = [
-    "Independent Assessment Reports",
-    "Other"
-  ];
+  const optionalUploads = ["Independent Assessment Reports", "Other"];
 
   // The form field names
   const FIELD_NAMES = {
     TRANSMITTAL_NUMBER: "transmittalNumber",
-    SUMMARY: "summary"
+    SUMMARY: "summary",
   };
 
   // True when the required attachments have been selected.
@@ -79,10 +77,16 @@ export default function WaiverExtension() {
     if (id) {
       setReadOnly(true);
       fetchChangeRequest();
-      PageTitleBar.setPageTitleInfo({heading: "Waiver Temporary Extension Details",text : ""});
+      PageTitleBar.setPageTitleInfo({
+        heading: "Waiver Temporary Extension Details",
+        text: "",
+      });
     } else {
       setReadOnly(false);
-      PageTitleBar.setPageTitleInfo({heading: "Request Waiver Temporary Extension",text : ""});
+      PageTitleBar.setPageTitleInfo({
+        heading: "Request Waiver Temporary Extension",
+        text: "",
+      });
       setIsLoading(false);
     }
   }, [id]);
@@ -137,87 +141,103 @@ export default function WaiverExtension() {
   return (
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
-    <div className="form-container">
-      <form onSubmit={handleSubmit}>
-        <h3>Request Temporary Extension</h3>
-        <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-        <div className="form-card">
-        <div className="label-container">
-          <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-          Waiver Number<span className="required-mark">*</span>
-          </label>
-          </div>
-          <div className="label-rcol"><HashLink to="/FAQ#waiver-id-format">What is my Waiver Number?</HashLink></div>
-          </div>
-        {!isReadOnly &&
-          <p className="field-hint">
-            Enter the Waiver number for this Temporary Extension Request
-          </p>
-        }
-        <input
-          className="field"
-          type="text"
-          required={!isReadOnly}
-          id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.transmittalNumber}
-        ></input>
-        {isReadOnly && (
-          <div>
-            <br />
-            <label htmlFor="submittedAt">Submitted on</label>
-                <input
-                  className="field"
-                  type="text"
-                  id="submittedAt"
-                  name="submittedAt"
-                  disabled
-                  value={formatDate(changeRequest.submittedAt)}
-                ></input>
-          </div>
-        )}
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>Request Temporary Extension</h3>
+            <p className="req-message">
+              <span className="required-mark">*</span> indicates required field.
+            </p>
+            <div className="form-card">
+              <div className="label-container">
+                <div className="label-lcol">
+                  <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                    Waiver Number<span className="required-mark">*</span>
+                  </label>
+                </div>
+                <div className="label-rcol">
+                  <HashLink to="/FAQ#waiver-id-format">
+                    What is my Waiver Number?
+                  </HashLink>
+                </div>
+              </div>
+              {!isReadOnly && (
+                <p className="field-hint">
+                  Enter the Waiver number for this Temporary Extension Request
+                </p>
+              )}
+              <input
+                className="field"
+                type="text"
+                required={!isReadOnly}
+                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.transmittalNumber}
+              ></input>
+              {isReadOnly && (
+                <div>
+                  <br />
+                  <label htmlFor="submittedAt">Submitted on</label>
+                  <input
+                    className="field"
+                    type="text"
+                    id="submittedAt"
+                    name="submittedAt"
+                    disabled
+                    value={formatDate(changeRequest.submittedAt)}
+                  ></input>
+                </div>
+              )}
+            </div>
+            <h3>Attachments</h3>
+            {isReadOnly ? (
+              <div className="upload-card">
+                <FileList uploadList={changeRequest.uploads}></FileList>
+              </div>
+            ) : (
+              <div>
+                <p className="req-message">
+                  Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+                </p>
+                <p className="req-message">
+                  <span className="required-mark">*</span> indicates required
+                  attachment.
+                </p>
+                <div className="upload-card">
+                  <FileUploader
+                    ref={uploader}
+                    requiredUploads={requiredUploads}
+                    optionalUploads={optionalUploads}
+                    readyCallback={uploadsReadyCallbackFunction}
+                  ></FileUploader>
+                </div>
+              </div>
+            )}
+            <div className="summary-box">
+              <TextField
+                name={FIELD_NAMES.SUMMARY}
+                label="Summary"
+                fieldClassName="summary-field"
+                multiline
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.summary}
+              ></TextField>
+            </div>
+            {!isReadOnly && (
+              <LoaderButton
+                type="submit"
+                bsSize="large"
+                bsStyle="primary"
+                isLoading={isLoading}
+                disabled={!isFormReady || !areUploadsReady}
+              >
+                Submit
+              </LoaderButton>
+            )}
+          </form>
         </div>
-        <h3>Attachments</h3>
-        <p className="req-message">Maximum file size of 50MB.</p>
-        <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-        <div className="upload-card">
-        {isReadOnly ? (
-          <FileList uploadList={changeRequest.uploads}></FileList>
-        ) : (
-            <FileUploader
-              ref={uploader}
-              requiredUploads={requiredUploads}
-              optionalUploads={optionalUploads}
-              readyCallback={uploadsReadyCallbackFunction}
-            ></FileUploader>
-          )}
-          </div>
-          <div className="summary-box">
-        <TextField
-          name={FIELD_NAMES.SUMMARY}
-          label="Summary"
-          fieldClassName="summary-field"
-          multiline
-          onChange={handleInputChange}
-          disabled={isReadOnly}
-          value={changeRequest.summary}
-        ></TextField>
-        </div>
-        {!isReadOnly && (
-          <LoaderButton
-            type="submit"
-            bsSize="large"
-            bsStyle="primary"
-            isLoading={isLoading}
-            disabled={!isFormReady || !areUploadsReady}
-          >
-            Submit
-          </LoaderButton>
-        )}
-      </form>
-    </div>
       ) : null}
     </LoadingScreen>
   );

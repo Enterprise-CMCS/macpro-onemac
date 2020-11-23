@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -14,6 +14,7 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
+import config from "../utils/config";
 
 export default function Waiver() {
   // The attachment list
@@ -104,11 +105,17 @@ export default function Waiver() {
       setReadOnly(true);
       fetchChangeRequest();
 
-      PageTitleBar.setPageTitleInfo({ heading: "Waiver Action Details", text: "" });
+      PageTitleBar.setPageTitleInfo({
+        heading: "Waiver Action Details",
+        text: "",
+      });
     } else {
       setReadOnly(false);
 
-      PageTitleBar.setPageTitleInfo({ heading: "Submit New Waiver Action", text: "" });
+      PageTitleBar.setPageTitleInfo({
+        heading: "Submit New Waiver Action",
+        text: "",
+      });
       setIsLoading(false);
     }
   }, [id]);
@@ -134,9 +141,9 @@ export default function Waiver() {
       // Check to see if the required fields are provided
       setIsFormReady(
         updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-        updatedRecord[FIELD_NAMES.TERRITORY] &&
-        updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
-        updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
+          updatedRecord[FIELD_NAMES.TERRITORY] &&
+          updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
+          updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
       );
     }
   }
@@ -186,26 +193,26 @@ export default function Waiver() {
     const defaultSelectProps = {
       id,
       name: id,
-      value
-    }
+      value,
+    };
 
-    let selectProps = {}
+    let selectProps = {};
 
     if (!isReadOnly) {
       selectProps = {
         defaultValue: "none-selected",
         onChange: handleInputChange,
         required: true,
-        ...defaultSelectProps
-      }
+        ...defaultSelectProps,
+      };
     } else {
       selectProps = {
         disabled: true,
-        ...defaultSelectProps
-      }
+        ...defaultSelectProps,
+      };
     }
 
-    return selectProps
+    return selectProps;
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -216,27 +223,50 @@ export default function Waiver() {
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>Waiver Action Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message">
+              <span className="required-mark">*</span> indicates required field.
+            </p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
                 State/Territory<span className="required-mark">*</span>
               </label>
-              <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
-                <option disabled value="none-selected">-- select a territory --</option>
+              <select
+                {...getSelectProps(
+                  FIELD_NAMES.TERRITORY,
+                  changeRequest.territory
+                )}
+              >
+                <option disabled value="none-selected">
+                  -- select a territory --
+                </option>
                 {renderOptionsList(territoryList)}
               </select>
               <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
                 Action Type<span className="required-mark">*</span>
               </label>
-              <select {...getSelectProps(FIELD_NAMES.ACTION_TYPE, changeRequest.actionType)}>
-                <option disabled value="none-selected">-- select an action type --</option>
+              <select
+                {...getSelectProps(
+                  FIELD_NAMES.ACTION_TYPE,
+                  changeRequest.actionType
+                )}
+              >
+                <option disabled value="none-selected">
+                  -- select an action type --
+                </option>
                 {renderOptionsList(actionTypeOptions)}
               </select>
               <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
                 Waiver Authority<span className="required-mark">*</span>
               </label>
-              <select {...getSelectProps(FIELD_NAMES.WAIVER_AUTHORITY, changeRequest.waiverAuthority)}>
-                <option disabled value="none-selected">-- select a waiver authority --</option>
+              <select
+                {...getSelectProps(
+                  FIELD_NAMES.WAIVER_AUTHORITY,
+                  changeRequest.waiverAuthority
+                )}
+              >
+                <option disabled value="none-selected">
+                  -- select a waiver authority --
+                </option>
                 {renderOptionsList(waiverAuthorityOptions)}
               </select>
               <div className="label-container">
@@ -245,13 +275,17 @@ export default function Waiver() {
                     Waiver Number<span className="required-mark">*</span>
                   </label>
                 </div>
-                <div className="label-rcol"><HashLink to="/FAQ#waiver-id-format">What is my Waiver Number?</HashLink></div>
+                <div className="label-rcol">
+                  <HashLink to="/FAQ#waiver-id-format">
+                    What is my Waiver Number?
+                  </HashLink>
+                </div>
               </div>
-              {!isReadOnly &&
+              {!isReadOnly && (
                 <p className="field-hint">
                   Must follow the format SS.##.R##.M## or SS.####.R##.##
-          </p>
-              }
+                </p>
+              )}
               <input
                 className="field"
                 type="text"
@@ -277,20 +311,30 @@ export default function Waiver() {
               )}
             </div>
             <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            <div className="upload-card">
-              {isReadOnly ? (
+            {isReadOnly ? (
+              <div className="upload-card">
                 <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
+              </div>
+            ) : (
+              <div>
+                <p className="req-message">
+                  Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+                </p>
+                <p className="req-message">
+                  <span className="required-mark">*</span> indicates required
+                  attachment.
+                </p>
+                <div className="upload-card">
                   <FileUploader
                     ref={uploader}
                     requiredUploads={requiredUploads}
                     optionalUploads={optionalUploads}
                     readyCallback={uploadsReadyCallbackFunction}
                   ></FileUploader>
-                )}
-            </div>
+                </div>
+              </div>
+            )}
+
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}

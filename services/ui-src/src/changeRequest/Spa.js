@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -15,9 +15,9 @@ import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList } from "../utils/form-utils";
+import config from "../utils/config";
 
 export default function Spa() {
-
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
@@ -89,7 +89,10 @@ export default function Spa() {
       setReadOnly(true);
       fetchChangeRequest();
 
-      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+      PageTitleBar.setPageTitleInfo({
+        heading: "SPA Submission Details",
+        text: "",
+      });
     } else {
       setReadOnly(false);
 
@@ -119,7 +122,7 @@ export default function Spa() {
       // Check to see if the required fields are provided
       setIsFormReady(
         updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-        updatedRecord[FIELD_NAMES.TERRITORY]
+          updatedRecord[FIELD_NAMES.TERRITORY]
       );
     }
   }
@@ -158,26 +161,26 @@ export default function Spa() {
     const defaultSelectProps = {
       id,
       name: id,
-      value
-    }
+      value,
+    };
 
-    let selectProps = {}
+    let selectProps = {};
 
     if (!isReadOnly) {
       selectProps = {
         defaultValue: "none-selected",
         onChange: handleInputChange,
         required: true,
-        ...defaultSelectProps
-      }
+        ...defaultSelectProps,
+      };
     } else {
       selectProps = {
         disabled: true,
-        ...defaultSelectProps
-      }
+        ...defaultSelectProps,
+      };
     }
 
-    return selectProps
+    return selectProps;
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -188,21 +191,35 @@ export default function Spa() {
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>SPA Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message">
+              <span className="required-mark">*</span> indicates required field.
+            </p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
                 State/Territory<span className="required-mark">*</span>
               </label>
-              <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
-                <option disabled value="none-selected">-- select a territory --</option>
+              <select
+                {...getSelectProps(
+                  FIELD_NAMES.TERRITORY,
+                  changeRequest.territory
+                )}
+              >
+                <option disabled value="none-selected">
+                  -- select a territory --
+                </option>
                 {renderOptionsList(territoryList)}
               </select>
               <div className="label-container">
-                <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                  SPA ID<span className="required-mark">*</span>
-                </label>
+                <div className="label-lcol">
+                  <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                    SPA ID<span className="required-mark">*</span>
+                  </label>
                 </div>
-                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
+                <div className="label-rcol">
+                  <HashLink to="/FAQ#spa-id-format">
+                    What is my SPA ID?
+                  </HashLink>
+                </div>
               </div>
               {!isReadOnly && (
                 <p className="ds-c-field__hint">
@@ -234,20 +251,29 @@ export default function Spa() {
               )}
             </div>
             <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            <div className="upload-card">
-              {isReadOnly ? (
+            {isReadOnly ? (
+              <div className="upload-card">
                 <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
+              </div>
+            ) : (
+              <div>
+                <p className="req-message">
+                  Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+                </p>
+                <p className="req-message">
+                  <span className="required-mark">*</span> indicates required
+                  attachment.
+                </p>
+                <div className="upload-card">
                   <FileUploader
                     ref={uploader}
                     requiredUploads={requiredUploads}
                     optionalUploads={optionalUploads}
                     readyCallback={uploadsReadyCallbackFunction}
                   ></FileUploader>
-                )}
-            </div>
+                </div>
+              </div>
+            )}
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}

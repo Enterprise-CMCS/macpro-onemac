@@ -4,6 +4,8 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { ALERTS_MSG } from "../libs/alert-messages";
+import AlertBar from "../components/AlertBar";
 
 const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
 
@@ -91,6 +93,9 @@ export default class FileUploader extends Component {
       return;
     }
 
+    //Clear any errors after an action.
+    AlertBar.dismiss();
+
     let uploader = this.uploaders[id];
 
     // If there is no file speficified then the state is false.
@@ -98,9 +103,7 @@ export default class FileUploader extends Component {
       // First check if the upload is larger than what is allowed
       if (files[0].size > MAX_FILE_SIZE_BYTES) {
         this.handleFileClear(event, id);
-        alert(
-          `Attachments cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.`
-        );
+        AlertBar.alert(ALERTS_MSG.ATTACHMENT_TOO_LARGE);
         return;
       }
 
@@ -135,6 +138,9 @@ export default class FileUploader extends Component {
    * @param {number} id the ID of the uploader
    */
   handleFileClear(event, id) {
+    //Clear any errors after an action.
+    AlertBar.dismiss();
+
     document.getElementById("uploader-input-" + id).value = "";
     this.handleFileChange(event, id);
   }

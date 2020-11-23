@@ -77,6 +77,7 @@ export default class AlertBar extends Component {
    */
   __alert(type, heading, text) {
     this.setState({ isShown: true, type, heading, text });
+    window.scrollTo(0, 0);
   }
 
   /**
