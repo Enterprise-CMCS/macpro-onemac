@@ -161,6 +161,12 @@ export default function Waiver() {
         if (errorMessage === undefined) {
             updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
             setValidTransmittalNumber(true)
+            setIsFormReady(
+                hasValidTransmittalNumber &&
+                updatedRecord[FIELD_NAMES.TERRITORY] &&
+                updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
+                updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
+            );
         } else {
             setValidTransmittalNumber(false)
         }

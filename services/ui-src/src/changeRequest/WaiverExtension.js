@@ -125,6 +125,7 @@ export default function WaiverExtension() {
         if (errorMessage === undefined) {
             updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
             setValidTransmittalNumber(true)
+
         } else {
             setValidTransmittalNumber(false)
         }

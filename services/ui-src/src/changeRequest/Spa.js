@@ -145,6 +145,11 @@ export default function Spa() {
         if (errorMessage === undefined) {
             updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
             setValidTransmittalNumber(true)
+            setIsFormReady(
+                hasValidTransmittalNumber &&
+                updatedRecord[FIELD_NAMES.TERRITORY]
+            );
+
         } else {
             setValidTransmittalNumber(false)
         }
