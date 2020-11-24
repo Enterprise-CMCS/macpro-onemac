@@ -11,8 +11,8 @@ import React from "react";
  * @param {Array} optionsList array of objects with label and value for each option
  */
 export function renderOptionsList(optionsList) {
-  if(!optionsList || !Array.isArray(optionsList)) {
-      throw new Error("Options list must be an array of items.");
+  if (!optionsList || !Array.isArray(optionsList)) {
+    throw new Error("Options list must be an array of items.");
   }
 
   let retval = optionsList.map((item, i) => {
@@ -27,47 +27,46 @@ export function renderOptionsList(optionsList) {
 
 /**
  * Validate SPA Id Transmittal Number Format
- * @param {statecode} The Territory/State Code Selected by a Form
- * @param {spaId} The SPA Transmittal Number
+ * @param {spaId} String The SPA Transmittal Number
  *
  */
 export function validateSpaId(spaId) {
 
   let errorMessage = "";
-  let SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN or SS-YY-NNNN-xxxx"
-  let RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)"
+  let SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN or SS-YY-NNNN-xxxx";
+  let RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)";
 
   if (!spaId) {
-      errorMessage = 'Transmittal Number Required !';
+    errorMessage = 'Transmittal Number Required !';
   } else if (!isValidFieldFormat(spaId, RegexFormatString)) {
-      errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
+    errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
   }
-  return errorMessage
+  return errorMessage;
 }
 
 /**
 * Validate Wavier Id Transmittal Number Format
-* @param {statecode} The Territory/State Code Selected by a Form
-* @param {waiverId} The Waiver Transmittal Number
+* @param {waiverId} String The Waiver Transmittal Number
 */
 export function validateWavierId(wavierId) {
 
   let errorMessage = "";
-  let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
+  let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)";
 
-  let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+  let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##";
 
   if (!wavierId) {
-      errorMessage = 'Transmittal Number Required !';
+    errorMessage = 'Transmittal Number Required !';
   } else if (!isValidFieldFormat(wavierId, RegexFormatString)) {
-      errorMessage = `The Waiver ID must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
+    errorMessage = `The Waiver ID must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
   }
-  return errorMessage
+  return errorMessage;
 }
 
 /**
-* Validate Field
-* @param {value} Transmittal Number Field Entered on Change Event.
+* Validate Field against a Regex
+* @param {fieldValue} String Transmittal Number Field Entered on Change Event.
+* @param {regexFormatString} String The Regex to compare to
 */
 export function isValidFieldFormat(fieldValue, regexFormatString) {
 
@@ -75,9 +74,9 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
   let result = false;
 
   if (fieldValue && fieldValue.match(fieldValidationRegEx)) {
-      result = true
+    result = true
   } else {
-      result = false
+    result = false
   }
 
   return result;
@@ -91,7 +90,7 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
 export function validateTerritory(value) {
   let errorMessage = "";
 
-  if (value==="") errorMessage="Please select a State or Territory.";
+  if (!value) errorMessage = "Please select a State or Territory.";
 
   return errorMessage;
 }

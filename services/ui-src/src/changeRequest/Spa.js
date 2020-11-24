@@ -68,7 +68,6 @@ export default function Spa() {
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
     territory: "",
-    submittedAt: "",
   });
 
   useEffect(() => {
@@ -139,27 +138,36 @@ export default function Spa() {
    * @param {Object} event the click event
    */
   async function handleSubmit(event) {
+    event.preventDefault();
+    event.persist()
+
     // so the old alert goes away
     AlertBar.dismiss();
-    event.preventDefault();
-    const form = event.target;
-    const data = new FormData(form);
 
-    // set any error messages that should be shown
+    // in case form validation takes a while (external validation)
+    setIsLoading(true);
+
+    // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
-    setTerritoryErrorMessage(validateTerritory(data.get(FIELD_NAMES.TERRITORY)));
-    setTransmittalNumberErrorMessage(validateSpaId(data.get(FIELD_NAMES.TRANSMITTAL_NUMBER)));
-    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+
+    const data = new FormData(event.target);
+
+    // validate the form fields and set the messages
+    // because this is an asynchronous function, you can't trust that the 
+    // state functions will be processed in time to use the variables
+    let territoryMessage="";
+    let transmittalNumberMessage="";
+  
+    territoryMessage = validateTerritory(data.get('territory'));
+    transmittalNumberMessage = validateSpaId(data.get('transmittalNumber'));
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
-    if (!form.checkValidity()) {
+    if (territoryMessage || transmittalNumberMessage) {
       AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
     } else if (!areUploadsReady) {
-      console.log("Uploads are not ready.");
       AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
     } else {
-      setIsLoading(true);
 
       try {
         let uploadedList = await uploader.current.uploadFiles();
@@ -168,12 +176,18 @@ export default function Spa() {
         //Alert must come last or it will be cleared after the history push.
         AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
       } catch (error) {
-        console.log("There was an error submitting a request.", error);
         AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
         setIsLoading(false);
       }
     }
+
+    // now set the state variables to show thw error messages
+    setTerritoryErrorMessage(territoryMessage);
+    setTransmittalNumberErrorMessage(transmittalNumberMessage);
+    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+
     window.scrollTo(0, 0);
+    setIsLoading(false);
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -248,7 +262,7 @@ export default function Spa() {
                     id="submittedAt"
                     name="submittedAt"
                     disabled
-                    value={formatDate(changeRequest.submittedAt) || ""}
+                    value={formatDate(changeRequest.submittedAt)}
                   ></input>
                 </div>
               )}
