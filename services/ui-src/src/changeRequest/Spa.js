@@ -84,12 +84,14 @@ export default function Spa() {
         setChangeRequest(changeRequest);
 
         // has to happen *after* the await... if you pull this out, it goes to false too soon
-        setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching submission.", error);
         setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
+
+      // has to happen *after* the await... if you pull this out, it goes to false too soon
+      setIsLoading(false);
     }
 
     // ID is present means we are viewing and need to fetch the changeRequest record
@@ -158,9 +160,9 @@ export default function Spa() {
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the 
     // state functions will be processed in time to use the variables
-    let territoryMessage="";
-    let transmittalNumberMessage="";
-  
+    let territoryMessage = "";
+    let transmittalNumberMessage = "";
+
     territoryMessage = validateTerritory(data.get('territory'));
     transmittalNumberMessage = validateSpaId(data.get('transmittalNumber'));
 
