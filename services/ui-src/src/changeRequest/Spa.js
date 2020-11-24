@@ -16,7 +16,6 @@ import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList, validateSpaId, validateTerritory } from "../utils/form-utils";
 
 export default function Spa() {
-
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
@@ -34,6 +33,7 @@ export default function Spa() {
     TRANSMITTAL_NUMBER: "transmittalNumber",
     SUMMARY: "summary",
     TERRITORY: "territory",
+    STATE_CODE: "state_code",
   };
 
   // True when the required attachments have been selected.
@@ -94,12 +94,18 @@ export default function Spa() {
 
     // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
-      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+      PageTitleBar.setPageTitleInfo({ 
+        heading: "SPA Submission Details", 
+        text: "" 
+      });
 
       setReadOnly(true);
       fetchChangeRequest();
     } else {
-      PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+      PageTitleBar.setPageTitleInfo({ 
+        heading: "Submit New SPA", 
+        text: "" 
+      });
 
       // because if we are in a new SPA, we don't have to wait for the data to load
       setIsLoading(false);
@@ -125,7 +131,7 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
-
+      
       if (!firstTimeThrough) {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
         if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
@@ -135,6 +141,33 @@ export default function Spa() {
         setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
       }
     }
+  }
+
+  /**
+   * Validate Transmittal Number Format
+   * @param {value} Transmittal Number Field Entered on Change Event.
+   * NOTE: State Code should be removed when we get info form user profile.
+   */
+  function validateTransmittalNumber(value) {
+    let errorMessage;
+
+    errorMessage = validateSpaId(value);
+    let isValidId;
+    if (errorMessage === undefined) {
+      isValidId = true;
+    } else {
+      isValidId = false;
+    }
+
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
+    setChangeRequest(updatedRecord);
+    setValidTransmittalNumber(isValidId);
+    setIsFormReady(
+      isValidId && updatedRecord[FIELD_NAMES.TERRITORY]
+    );
+
+    return errorMessage;
   }
 
   /**
@@ -262,11 +295,55 @@ export default function Spa() {
                   <input
                     className="field"
                     type="text"
-                    id="submittedAt"
-                    name="submittedAt"
-                    disabled
-                    value={formatDate(changeRequest.submittedAt)}
-                  ></input>
+                    id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                    name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                    validate={validateTransmittalNumber}
+                    disabled={isReadOnly}
+                    value={changeRequest.transmittalNumber}
+                  ></Field>
+
+                  {isReadOnly && (
+                    <div>
+                      <label htmlFor="submittedAt">Submitted on</label>
+                      <input
+                        className="field"
+                        type="text"
+                        id="submittedAt"
+                        name="submittedAt"
+                        disabled
+                        value={formatDate(changeRequest.submittedAt)}
+                      ></input>
+                    </div>
+                  )}
+                </div>
+                <h3>Attachments</h3>
+                <p className="req-message">Maximum file size of 50MB.</p>
+                <p className="req-message">
+                  <span className="required-mark">*</span>
+                  indicates required attachment.
+                </p>
+                <div className="upload-card">
+                  {isReadOnly ? (
+                    <FileList uploadList={changeRequest.uploads}></FileList>
+                  ) : (
+                    <FileUploader
+                      ref={uploader}
+                      requiredUploads={requiredUploads}
+                      optionalUploads={optionalUploads}
+                      readyCallback={uploadsReadyCallbackFunction}
+                    ></FileUploader>
+                  )}
+                </div>
+                <div className="summary-box">
+                  <TextField
+                    name={FIELD_NAMES.SUMMARY}
+                    label="Summary"
+                    fieldClassName="summary-field"
+                    multiline
+                    onChange={handleInputChange}
+                    disabled={isReadOnly}
+                    value={changeRequest.summary}
+                  ></TextField>
                 </div>
               )}
             </div>
