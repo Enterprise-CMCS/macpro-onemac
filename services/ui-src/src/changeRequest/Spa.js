@@ -82,8 +82,6 @@ export default function Spa() {
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
         setChangeRequest(changeRequest);
-
-        // has to happen *after* the await... if you pull this out, it goes to false too soon
       } catch (error) {
         console.log("Error while fetching submission.", error);
         setChangeRequest(null);
@@ -102,12 +100,11 @@ export default function Spa() {
       fetchChangeRequest();
     } else {
       PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+      setReadOnly(false);
 
       // because if we are in a new SPA, we don't have to wait for the data to load
       setIsLoading(false);
-      setReadOnly(false);
     }
-
   }, [id]);
 
   /**
