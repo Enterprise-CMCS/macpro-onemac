@@ -114,33 +114,32 @@ export default function RaiTemplate({
     /**
      * Validate Transmittal Number Format
      * @param {value} Transmittal Number Field Entered on Change Event.
+     * @return the validation error message or undefined
      */
     function validateTransmittalNumber(value) {
         let errorMessage
-        let updatedRecord = {...changeRequest}
-        changeRequest.transmittalNumber = value
 
         if (changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI) {
             errorMessage = validateSpaId(value)
-            if (errorMessage === undefined) {
-                updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-                setValidTransmittalNumber(true)
-            } else {
-                setValidTransmittalNumber(false)
-            }
-
         } else if (changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI) {
-            let updatedRecord = {...changeRequest}
-            changeRequest.transmittalNumber = value
             errorMessage = validateWavierId(value)
-            if (errorMessage === undefined) {
-                updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-                setValidTransmittalNumber(true)
-            } else {
-                setValidTransmittalNumber(false)
-            }
+        } else {
+            throw new Error(`Unable to validate invalid type ${changeRequestType}.`)
         }
-        setIsFormReady(hasValidTransmittalNumber)
+
+        let isValidId;
+        if (errorMessage === undefined) {
+            isValidId = true;
+        } else {
+            isValidId = false;
+        }
+
+        let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
+        setChangeRequest(updatedRecord);
+        setValidTransmittalNumber(isValidId);
+        setIsFormReady(isValidId);
+
         return errorMessage;
     };
 

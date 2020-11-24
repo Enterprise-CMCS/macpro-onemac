@@ -119,16 +119,19 @@ export default function WaiverExtension() {
      */
     function validateTransmittalNumber(value) {
         let errorMessage
-        let updatedRecord = {...changeRequest}
-        changeRequest.transmittalNumber = value
-        errorMessage = validateWavierId(value)
-        if (errorMessage === undefined) {
-            updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value
-            setValidTransmittalNumber(true)
 
+        errorMessage = validateWavierId(value)
+        let isValidId;
+        if (errorMessage === undefined) {
+            isValidId = true;
         } else {
-            setValidTransmittalNumber(false)
+            isValidId = false;
         }
+        
+        let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
+        setChangeRequest(updatedRecord);
+        setValidTransmittalNumber(isValidId);
 
         return errorMessage;
     };
