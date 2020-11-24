@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { HashLink } from 'react-router-hash-link';
+import { HashLink } from "react-router-hash-link";
 import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -14,10 +14,11 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { renderOptionsList } from "../utils/form-utils";
+import { renderOptionsList, validateSpaId } from "../utils/form-utils";
+import { Formik, Form, Field } from "formik";
+import { isValid } from "date-fns";
 
 export default function Spa() {
-
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
@@ -35,11 +36,15 @@ export default function Spa() {
     TRANSMITTAL_NUMBER: "transmittalNumber",
     SUMMARY: "summary",
     TERRITORY: "territory",
+    STATE_CODE: "state_code",
   };
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isFormReady, setIsFormReady] = useState(false);
+  const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(
+    false
+  );
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -89,7 +94,10 @@ export default function Spa() {
       setReadOnly(true);
       fetchChangeRequest();
 
-      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+      PageTitleBar.setPageTitleInfo({
+        heading: "SPA Submission Details",
+        text: "",
+      });
     } else {
       setReadOnly(false);
 
@@ -115,13 +123,37 @@ export default function Spa() {
       let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
-
-      // Check to see if the required fields are provided
       setIsFormReady(
-        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-        updatedRecord[FIELD_NAMES.TERRITORY]
+        hasValidTransmittalNumber && updatedRecord[FIELD_NAMES.TERRITORY]
       );
     }
+  }
+
+  /**
+   * Validate Transmittal Number Format
+   * @param {value} Transmittal Number Field Entered on Change Event.
+   * NOTE: State Code should be removed when we get info form user profile.
+   */
+  function validateTransmittalNumber(value) {
+    let errorMessage;
+
+    errorMessage = validateSpaId(value);
+    let isValidId;
+    if (errorMessage === undefined) {
+      isValidId = true;
+    } else {
+      isValidId = false;
+    }
+
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
+    setChangeRequest(updatedRecord);
+    setValidTransmittalNumber(isValidId);
+    setIsFormReady(
+      isValidId && updatedRecord[FIELD_NAMES.TERRITORY]
+    );
+
+    return errorMessage;
   }
 
   /**
@@ -131,18 +163,22 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    setIsLoading(true);
+    if (isFormReady && areUploadsReady) {
+      setIsLoading(true);
 
-    try {
-      let uploadedList = await uploader.current.uploadFiles();
-      await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-      history.push(ROUTES.DASHBOARD);
-      //Alert must come last or it will be cleared after the history push.
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
-      setIsLoading(false);
+      try {
+        let uploadedList = await uploader.current.uploadFiles();
+        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        history.push(ROUTES.DASHBOARD);
+        //Alert must come last or it will be cleared after the history push.
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+      } catch (error) {
+        console.log("There was an error submitting a request.", error);
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+        setIsLoading(false);
+      }
+    } else {
+      AlertBar.alert(ALERTS_MSG.FORM_INCOMPLETE);
     }
   }
 
@@ -158,26 +194,26 @@ export default function Spa() {
     const defaultSelectProps = {
       id,
       name: id,
-      value
-    }
+      value,
+    };
 
-    let selectProps = {}
+    let selectProps = {};
 
     if (!isReadOnly) {
       selectProps = {
         defaultValue: "none-selected",
         onChange: handleInputChange,
         required: true,
-        ...defaultSelectProps
-      }
+        ...defaultSelectProps,
+      };
     } else {
       selectProps = {
         disabled: true,
-        ...defaultSelectProps
-      }
+        ...defaultSelectProps,
+      };
     }
 
-    return selectProps
+    return selectProps;
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -186,91 +222,125 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
-            <h3>SPA Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
-            <div className="form-card">
-              <label htmlFor={FIELD_NAMES.TERRITORY}>
-                State/Territory<span className="required-mark">*</span>
-              </label>
-              <select {...getSelectProps(FIELD_NAMES.TERRITORY, changeRequest.territory)}>
-                <option disabled value="none-selected">-- select a territory --</option>
-                {renderOptionsList(territoryList)}
-              </select>
-              <div className="label-container">
-                <div className="label-lcol"><label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                  SPA ID<span className="required-mark">*</span>
-                </label>
-                </div>
-                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
-              </div>
-              {!isReadOnly && (
-                <p className="ds-c-field__hint">
-                  Must follow the format SS-YY-NNNN-xxxx
+          <Formik initialValues={{ transmittalNumber: "" }}>
+            {({ errors }) => (
+              <Form onSubmit={handleSubmit}>
+                <h3>SPA Details</h3>
+                <p className="req-message">
+                  <span className="required-mark">*</span>
+                  indicates required field.
                 </p>
-              )}
-              <input
-                className="field"
-                type="text"
-                required={!isReadOnly}
-                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                onChange={handleInputChange}
-                disabled={isReadOnly}
-                value={changeRequest.transmittalNumber}
-              ></input>
-              {isReadOnly && (
-                <div>
-                  <label htmlFor="submittedAt">Submitted on</label>
-                  <input
+                <div className="form-card">
+                  <label htmlFor={FIELD_NAMES.TERRITORY}>
+                    State/Territory
+                    <span className="required-mark">*</span>
+                  </label>
+                  <select
+                    id="territorySelect"
+                    {...getSelectProps(
+                      FIELD_NAMES.TERRITORY,
+                      changeRequest.territory
+                    )}
+                  >
+                    <option disabled value="none-selected">
+                      -- select a territory --
+                    </option>
+                    {renderOptionsList(territoryList)}
+                  </select>
+                  <div className="label-container">
+                    <div className="label-lcol">
+                      <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                        SPA ID
+                        <span className="required-mark">*</span>
+                      </label>
+                    </div>
+                    <div className="label-rcol">
+                      <HashLink to="/FAQ#spa-id-format">
+                        What is my SPA ID?
+                      </HashLink>
+                    </div>
+                  </div>
+                  {!isReadOnly && (
+                    <p className="ds-c-field__hint">
+                      Must follow the format SS-YY-NNNN or SS-YY-NNNN-xxxx
+                    </p>
+                  )}
+                  {errors.transmittalNumber && (
+                    <div
+                      id="spaTransmittalNumberErrorMsg"
+                      className="ds-u-color--error"
+                    >
+                      {errors.transmittalNumber}
+                    </div>
+                  )}
+                  <Field
                     className="field"
                     type="text"
-                    id="submittedAt"
-                    name="submittedAt"
-                    disabled
-                    value={formatDate(changeRequest.submittedAt)}
-                  ></input>
+                    id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                    name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                    validate={validateTransmittalNumber}
+                    disabled={isReadOnly}
+                    value={changeRequest.transmittalNumber}
+                  ></Field>
+
+                  {isReadOnly && (
+                    <div>
+                      <label htmlFor="submittedAt">Submitted on</label>
+                      <input
+                        className="field"
+                        type="text"
+                        id="submittedAt"
+                        name="submittedAt"
+                        disabled
+                        value={formatDate(changeRequest.submittedAt)}
+                      ></input>
+                    </div>
+                  )}
                 </div>
-              )}
-            </div>
-            <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            <div className="upload-card">
-              {isReadOnly ? (
-                <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
-                  <FileUploader
-                    ref={uploader}
-                    requiredUploads={requiredUploads}
-                    optionalUploads={optionalUploads}
-                    readyCallback={uploadsReadyCallbackFunction}
-                  ></FileUploader>
+                <h3>Attachments</h3>
+                <p className="req-message">Maximum file size of 50MB.</p>
+                <p className="req-message">
+                  <span className="required-mark">*</span>
+                  indicates required attachment.
+                </p>
+                <div className="upload-card">
+                  {isReadOnly ? (
+                    <FileList uploadList={changeRequest.uploads}></FileList>
+                  ) : (
+                    <FileUploader
+                      ref={uploader}
+                      requiredUploads={requiredUploads}
+                      optionalUploads={optionalUploads}
+                      readyCallback={uploadsReadyCallbackFunction}
+                    ></FileUploader>
+                  )}
+                </div>
+                <div className="summary-box">
+                  <TextField
+                    name={FIELD_NAMES.SUMMARY}
+                    label="Summary"
+                    fieldClassName="summary-field"
+                    multiline
+                    onChange={handleInputChange}
+                    disabled={isReadOnly}
+                    value={changeRequest.summary}
+                  ></TextField>
+                </div>
+                {!isReadOnly && (
+                  <LoaderButton
+                    id="spaSubmitButton"
+                    type="submit"
+                    bsSize="large"
+                    bsStyle="primary"
+                    isLoading={isLoading}
+                    disabled={!isFormReady || !areUploadsReady}
+                  >
+                    Submit
+                  </LoaderButton>
                 )}
-            </div>
-            <div className="summary-box">
-              <TextField
-                name={FIELD_NAMES.SUMMARY}
-                label="Summary"
-                fieldClassName="summary-field"
-                multiline
-                onChange={handleInputChange}
-                disabled={isReadOnly}
-                value={changeRequest.summary}
-              ></TextField>
-            </div>
-            {!isReadOnly && (
-              <LoaderButton
-                type="submit"
-                bsSize="large"
-                bsStyle="primary"
-                isLoading={isLoading}
-                disabled={!isFormReady || !areUploadsReady}
-              >
-                Submit
-              </LoaderButton>
+              </Form>
             )}
-          </form>
+          </Formik>
         </div>
       ) : null}
     </LoadingScreen>

@@ -68,7 +68,7 @@ function Header(props) {
       <div className="nav-bar">
         <div className="nav-left">
           <Link to={ROUTES.HOME}>About</Link>
-          <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
+          <Link id="dashboardLink" to={ROUTES.DASHBOARD}>Dashboard</Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
         </div>
         {renderAccountButtons()}
@@ -85,7 +85,7 @@ function Header(props) {
       return (
         <div className="nav-right">
           <FormLabel inversed>
-            <Button onClick={() => logout()} inversed>
+            <Button id="logoutBtn" onClick={() => logout()} inversed>
               Logout
             </Button>
           </FormLabel>
@@ -98,7 +98,7 @@ function Header(props) {
             Login
           </Button>
           {showDevLogin && (
-            <Button onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
+            <Button id="devloginBtn" onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
               Development Login
             </Button>
           )}
