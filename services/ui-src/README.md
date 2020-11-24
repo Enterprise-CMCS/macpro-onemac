@@ -1,5 +1,6 @@
 This folder contains the SPA Form React JS application.
 
+
 ## Development
 
 ### Running the Application Locally
