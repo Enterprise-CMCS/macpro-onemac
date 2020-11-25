@@ -57,7 +57,13 @@ module.exports = {
             .pause(500);
     },
 
-    "Enter Waiver Number": new_spa["Enter SPA ID"],
+    "Enter Waiver Number": function (browser) {
+        const spa = browser.page.spaBasePage();
+        let selector = '@transmittal';
+        let spa_id = spa.waiverNumber();
+        spa.click(selector).setValue(selector, spa_id)
+            .expect.element(selector).value.to.equals(spa_id);
+    },
 
     "Upload Documents": function (browser) {
         const spa = browser.page.spaBasePage();

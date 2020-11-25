@@ -45,9 +45,9 @@ module.exports = {
     },
 
     'Enter SPA ID' : function (browser) {
-        let selector = '@transmittalNumber';
-        let spa_id = "A1234567890";
+        let selector = '@transmittal';
         const spa = browser.page.spaBasePage();
+        let spa_id = spa.transmitNumber();
         spa.click(selector).setValue(selector, spa_id)
             .expect.element(selector).value.to.equals(spa_id);
     },
