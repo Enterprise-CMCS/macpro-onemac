@@ -8,12 +8,10 @@
     "test": "tests"
   },
   "scripts": {
-    "chrome": "nightwatch -c conf/nightwatch.conf.js",
-    "chrome-win": "node nightwatch -c conf/nightwatch.conf.js",
-    "firefox": "nightwatch -c conf/nightwatch.conf.js -e firefox",
-    "firefox-win": "node nightwatch -c conf/nightwatch.conf.js -e firefox",
-    "test": "nightwatch -c conf/nightwatch.conf.js -e chrome, firefox",
-    "test-win": "node nightwatch -c conf/nightwatch.conf.js -e default, firefox",
+    "chrome": "nightwatch -c conf/nightwatch.conf.js -t regression",
+    "chrome-win": "node nightwatch -c conf/nightwatch.conf.js -t [regression]",
+    "firefox": "nightwatch -c conf/nightwatch.conf.js -e firefox -t regression",
+    "firefox-win": "node nightwatch -c conf/nightwatch.conf.js -e firefox -t regression",
     "update": "npx npm-check-updates -u && npm install"
   },
   "repository": {
@@ -32,7 +30,8 @@
     "nightwatch": "^1.5.1"
   },
   "devDependencies": {
+    "chai": "*",
     "chromedriver": "^86.0.0",
-    "geckodriver": "^1.20.0"
+    "geckodriver": "^1.21.0"
   }
 }

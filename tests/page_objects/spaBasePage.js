@@ -1,6 +1,6 @@
 
-const uploadCMD = {
-    uploadFiles : function (total) {
+const commands = {
+    uploadFiles: function (total) {
         let fs = require('fs');
         let dir = process.cwd() + '/files/';
         let files = fs.readdirSync(dir);
@@ -10,13 +10,20 @@ const uploadCMD = {
             this.api.assert.elementPresent(selector);
             let file = require('path').resolve(dir, files[i]);
             this.api.setValue(selector, file);
-            //not.contain("No file chosen")
+
         }
 
         return this.api;
     },
 
-};
+    transmitNumber: function () {
+        return 'VA-20-1234'
+    },
+
+    waiverNumber: function () {
+        return 'VA.12.R34.M56'
+    }
+}
 
 module.exports = {
 
@@ -25,7 +32,7 @@ module.exports = {
         waiverAuthority: '#waiverAuthority',
         title: 'div[class=dashboard-title]',
 
-        transmittalNumber: "input[id='transmittalNumber']",
+        transmittal: "input[id='transmittalNumber']",
 
         newSPA: {
             selector: "(//button[@class='ds-c-button ds-c-button--transparent'])[1]",
@@ -55,10 +62,11 @@ module.exports = {
         territory : "select[id=territory]"
     },
 
-    commands : [uploadCMD],
+    commands : [commands],
 
     props : {
-        pauseAction: 1000
+        pauseAction: 1000,
+
     }
 
 };
