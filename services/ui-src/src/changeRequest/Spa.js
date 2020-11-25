@@ -191,12 +191,12 @@ export default function Spa() {
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>SPA Details</h3>
-            <p className="req-message">
+            <p className={isReadOnly ? "display: none" : "req-message"}>
               <span className="required-mark">*</span> indicates required field.
             </p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
-                State/Territory<span className="required-mark">*</span>
+                State/Territory<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
               </label>
               <select
                 {...getSelectProps(
@@ -212,7 +212,7 @@ export default function Spa() {
               <div className="label-container">
                 <div className="label-lcol">
                   <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                    SPA ID<span className="required-mark">*</span>
+                    SPA ID<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
                   </label>
                 </div>
                 <div className="label-rcol">

@@ -144,14 +144,14 @@ export default function WaiverExtension() {
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>Request Temporary Extension</h3>
-            <p className="req-message">
+            <p className={isReadOnly ? "display: none" : "req-message"}>
               <span className="required-mark">*</span> indicates required field.
             </p>
             <div className="form-card">
               <div className="label-container">
                 <div className="label-lcol">
                   <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                    Waiver Number<span className="required-mark">*</span>
+                    Waiver Number<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
                   </label>
                 </div>
                 <div className="label-rcol">

@@ -223,12 +223,12 @@ export default function Waiver() {
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>Waiver Action Details</h3>
-            <p className="req-message">
+            <p className={isReadOnly ? "display: none" : "req-message"}>
               <span className="required-mark">*</span> indicates required field.
             </p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
-                State/Territory<span className="required-mark">*</span>
+                State/Territory<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
               </label>
               <select
                 {...getSelectProps(
@@ -242,7 +242,7 @@ export default function Waiver() {
                 {renderOptionsList(territoryList)}
               </select>
               <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
-                Action Type<span className="required-mark">*</span>
+                Action Type<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
               </label>
               <select
                 {...getSelectProps(
@@ -256,7 +256,7 @@ export default function Waiver() {
                 {renderOptionsList(actionTypeOptions)}
               </select>
               <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
-                Waiver Authority<span className="required-mark">*</span>
+                Waiver Authority<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
               </label>
               <select
                 {...getSelectProps(
@@ -272,7 +272,7 @@ export default function Waiver() {
               <div className="label-container">
                 <div className="label-lcol">
                   <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                    Waiver Number<span className="required-mark">*</span>
+                    Waiver Number<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
                   </label>
                 </div>
                 <div className="label-rcol">

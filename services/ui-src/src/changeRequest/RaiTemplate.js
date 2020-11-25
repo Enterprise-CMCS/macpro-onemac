@@ -159,14 +159,14 @@ export default function RaiTemplate({
         <div className="form-container">
           <form onSubmit={handleSubmit}>
             <h3>{raiType} RAI Details</h3>
-            <p className="req-message">
+            <p className={isReadOnly ? "display: none" : "req-message"}>
               <span className="required-mark">*</span> indicates required field.
             </p>
             <div className="form-card">
               <div className="label-container">
                 <div className="label-lcol">
                   <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                    {raiType} ID<span className="required-mark">*</span>
+                    {raiType} ID<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
                   </label>
                 </div>
                 <div className="label-rcol">
