@@ -11,5 +11,5 @@ module.exports = {
             selector: '(//button)[1]',
             locateStrategy: 'xpath'
         },
-    }
+    },
 }
