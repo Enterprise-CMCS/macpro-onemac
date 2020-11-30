@@ -94,12 +94,18 @@ export default function Spa() {
 
     // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
-      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+      PageTitleBar.setPageTitleInfo({ 
+        heading: "SPA Submission Details", 
+        text: "" 
+      });
 
       setReadOnly(true);
       fetchChangeRequest();
     } else {
-      PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+      PageTitleBar.setPageTitleInfo({ 
+        heading: "Submit New SPA", 
+        text: "" 
+      });
       setReadOnly(false);
 
       // because if we are in a new SPA, we don't have to wait for the data to load
@@ -198,7 +204,11 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit} noValidate className={!firstTimeThrough ? "display-errors" : ""}>
+          <form 
+            onSubmit={handleSubmit} 
+            noValidate 
+            className={!firstTimeThrough ? "display-errors" : ""}
+            >
             <h3>SPA Details</h3>
             <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">

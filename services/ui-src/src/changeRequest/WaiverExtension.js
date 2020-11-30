@@ -14,7 +14,7 @@ import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import { Formik, Form, Field } from 'formik';
 import {
-    validateWavierId
+    validateWaiverId
 } from "../utils/form-utils";
 
 export default function WaiverExtension() {
@@ -119,7 +119,7 @@ export default function WaiverExtension() {
     function validateTransmittalNumber(value) {
         let errorMessage
 
-        errorMessage = validateWavierId(value)
+        errorMessage = validateWaiverId(value)
         let isValidId;
         if (errorMessage === undefined) {
             isValidId = true;

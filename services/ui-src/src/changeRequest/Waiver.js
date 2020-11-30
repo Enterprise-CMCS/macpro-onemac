@@ -13,8 +13,8 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
-import { Formik, Form, Field } from "formik";
-import { validateWavierId } from "../utils/form-utils";
+import { renderOptionsList, validateWaiverId, validateTerritory } from "../utils/form-utils";
+
 
 export default function Waiver() {
   // The attachment list
@@ -56,10 +56,16 @@ export default function Waiver() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-  const [isFormReady, setIsFormReady] = useState(false);
-  const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(
-    false
-  );
+
+  // because the first time through, we do not want to be annoying with the error messaging
+  const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+
+  // if the message string is set, then the error div should be shown for these items
+  const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
+  const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
+  const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] = useState("");
+  const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
+  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -81,6 +87,9 @@ export default function Waiver() {
     type: CHANGE_REQUEST_TYPES.WAIVER,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
+    territory: "",
+    actionType: "",
+    waiverAuthority: "",
   });
 
   useEffect(() => {
@@ -106,20 +115,19 @@ export default function Waiver() {
 
     // Trigger the fetch only if an ID is present.
     if (id) {
-      setReadOnly(true);
-      fetchChangeRequest();
-
       PageTitleBar.setPageTitleInfo({
         heading: "Waiver Action Details",
         text: "",
       });
-    } else {
-      setReadOnly(false);
 
+      setReadOnly(true);
+      fetchChangeRequest();
+    } else {
       PageTitleBar.setPageTitleInfo({
         heading: "Submit New Waiver Action",
         text: "",
       });
+      setReadOnly(false);
       setIsLoading(false);
     }
   }, [id]);
@@ -133,6 +141,30 @@ export default function Waiver() {
   }
 
   /**
+   * Validate that the Waiver Action Type has been selected
+   * @param {value} String The actionType Selected
+   */
+  function validateActionType(value) {
+    let errorMessage = "";
+
+    if (!value) errorMessage = "Please select the Action Type.";
+
+    return errorMessage;
+  }
+
+  /**
+   * Validate that the Waiver Authority has been selected
+   * @param {value} String The waiverAuthourity Selected
+   */
+  function validateWaiverAuthority(value) {
+    let errorMessage = "";
+
+    if (!value) errorMessage = "Please select the Waiver Authority.";
+
+    return errorMessage;
+  }
+
+  /**
    * Handle changes to the form.
    * @param {Object} event the event
    */
@@ -142,46 +174,17 @@ export default function Waiver() {
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
 
-      if (event.target.name === "territory")
-        updatedRecord[FIELD_NAMES.STATE_CODE] = event.target.value;
-
-      // Check to see if the required fields are provided
-      setIsFormReady(
-        hasValidTransmittalNumber &&
-        updatedRecord[FIELD_NAMES.TERRITORY] &&
-        updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
-        updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
-      );
+      if (!firstTimeThrough) {
+        setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
+        setActionTypeErrorMessage(validateActionType(updatedRecord.actionType));
+        setWaiverAuthorityErrorMessage(validateWaiverAuthority(updatedRecord.waiverAuthority));
+        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+        else setAttachmentsErrorMessage("");
+      }
+      if (event.target.name === 'transmittalNumber') {
+        setTransmittalNumberErrorMessage(validateWaiverId(updatedRecord.transmittalNumber));
+      }
     }
-  }
-
-  /**
-   * Validate Transmittal Number Format
-   * @param {value} Transmittal Number Field Entered on Change Event.
-   */
-  function validateTransmittalNumber(value) {
-    let errorMessage;
-
-    errorMessage = validateWavierId(value);
-    let isValidId;
-    if (errorMessage === undefined) {
-      isValidId = true;
-    } else {
-      isValidId = false;
-    }
-
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-    updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
-    setChangeRequest(updatedRecord);
-    setValidTransmittalNumber(isValidId);
-    setIsFormReady(
-      isValidId &&
-      updatedRecord[FIELD_NAMES.TERRITORY] &&
-      updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
-      updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
-    );
-
-    return errorMessage;
   }
 
   /**
@@ -191,64 +194,59 @@ export default function Waiver() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    // so the old alert goes away
+    AlertBar.dismiss();
+
     setIsLoading(true);
 
-    try {
-      let uploadedList = await uploader.current.uploadFiles();
-      await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-      history.push(ROUTES.DASHBOARD);
-      //Alert must come last or it will be cleared after the history push.
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
-      setIsLoading(false);
-    }
-  }
+    // once Submit is clicked, show error messages
+    setFirstTimeThrough(false);
 
-  function renderOptionsList(theList) {
-    let optionsList = theList.map((item, i) => {
-      return (
-        <option key={i} value={item.value}>
-          {item.label}
-        </option>
-      );
-    });
-    return optionsList;
-  }
+    const data = new FormData(event.target);
 
-  /**
-   * Get props for the select component dependent on the value of isReadOnly.
-   * Note: The defaultValue prop should NOT be set when the form is read only due to the following warning:
-   *   "Select elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both).
-   *    Decide between using a controlled or uncontrolled select element and remove one of these props."
-   * @param {String} id an identifier used to set select params
-   * @param {String} value the display text in select params
-   */
-  function getSelectProps(id, value) {
-    const defaultSelectProps = {
-      id,
-      name: id,
-      value,
-    };
+    // validate the form fields and set the messages
+    // because this is an asynchronous function, you can't trust that the 
+    // state functions will be processed in time to use the variables
+    let territoryMessage = "";
+    let actionTypeMessage = "";
+    let waiverAuthorityMessage = "";
+    let transmittalNumberMessage = "";
 
-    let selectProps = {};
+    territoryMessage = validateTerritory(data.get('territory'));
+    actionTypeMessage = validateActionType(data.get('actionType'));
+    waiverAuthorityMessage = validateWaiverAuthority(data.get('waiverAuthority'));
+    transmittalNumberMessage = validateWaiverId(data.get('transmittalNumber'));
 
-    if (!isReadOnly) {
-      selectProps = {
-        defaultValue: "none-selected",
-        onChange: handleInputChange,
-        required: true,
-        ...defaultSelectProps,
-      };
+    // check which alert to show.  Fields first, than attachments
+    // if all passes, submit the form and return to dashboard
+    if (territoryMessage || transmittalNumberMessage || 
+        actionTypeMessage || waiverAuthorityMessage) {
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
+    } else if (!areUploadsReady) {
+      AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
     } else {
-      selectProps = {
-        disabled: true,
-        ...defaultSelectProps,
-      };
+
+      try {
+        let uploadedList = await uploader.current.uploadFiles();
+        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        history.push(ROUTES.DASHBOARD);
+        //Alert must come last or it will be cleared after the history push.
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+      } catch (error) {
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+        setIsLoading(false);
+      }
     }
 
-    return selectProps;
+    // now set the state variables to show thw error messages
+    setTerritoryErrorMessage(territoryMessage);
+    setActionTypeErrorMessage(actionTypeMessage);
+    setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+    setTransmittalNumberErrorMessage(transmittalNumberMessage);
+    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+
+    window.scrollTo(0, 0);
+    setIsLoading(false);
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -257,9 +255,11 @@ export default function Waiver() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <Formik initialValues={{ transmittalNumber: "" }}>
-            {({ errors }) => (
-              <Form onSubmit={handleSubmit}>
+          <form 
+            onSubmit={handleSubmit} 
+            noValidate 
+            className={!firstTimeThrough ? "display-errors" : ""}
+            >
                 <h3>Waiver Action Details</h3>
                 <p className="req-message">
                   <span className="required-mark">*</span>
@@ -270,47 +270,89 @@ export default function Waiver() {
                     State/Territory
                     <span className="required-mark">*</span>
                   </label>
-                  <select
-                    {...getSelectProps(
-                      FIELD_NAMES.TERRITORY,
-                      changeRequest.territory
-                    )}
-                  >
-                    <option disabled value="none-selected">
-                      -- select a territory --
-                    </option>
-                    {renderOptionsList(territoryList)}
-                  </select>
+                  {territoryErrorMessage && (
+                <div id="spaTerritoryErrorMsg"
+                  className="ds-u-color--error">{territoryErrorMessage}</div>
+              )}
+              {!isReadOnly ? <select
+                className="field"
+                id={FIELD_NAMES.TERRITORY}
+                name={FIELD_NAMES.TERRITORY}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">-- select a territory --</option>
+                {renderOptionsList(territoryList)}
+              </select>
+                :
+                <input
+                  className="field"
+                  type="text"
+                  id={FIELD_NAMES.TERRITORY}
+                  name={FIELD_NAMES.TERRITORY}
+                  disabled
+                  value={changeRequest.territory}
+                ></input>
+              }
                   <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
                     Action Type
                     <span className="required-mark">*</span>
                   </label>
-                  <select
-                    {...getSelectProps(
-                      FIELD_NAMES.ACTION_TYPE,
-                      changeRequest.actionType
-                    )}
-                  >
-                    <option disabled value="none-selected">
-                      -- select an action type --
-                    </option>
-                    {renderOptionsList(actionTypeOptions)}
-                  </select>
-                  <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
-                    Waiver Authority
+                  {actionTypeErrorMessage && (
+                <div id="actionTypeErrorMsg"
+                  className="ds-u-color--error">{actionTypeErrorMessage}</div>
+              )}
+              {!isReadOnly ? (
+                <select
+                className="field"
+                id={FIELD_NAMES.ACTION_TYPE}
+                name={FIELD_NAMES.ACTION_TYPE}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">-- select an action type --</option>
+                {renderOptionsList(actionTypeOptions)}
+              </select>)
+                :
+                (<input
+                  className="field"
+                  type="text"
+                  id={FIELD_NAMES.ACTION_TYPE}
+                  name={FIELD_NAMES.ACTION_TYPE}
+                  disabled
+                  value={changeRequest.actionType}
+                ></input>
+                )}
+
+                <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
+                Waiver Authority
                     <span className="required-mark">*</span>
                   </label>
-                  <select
-                    {...getSelectProps(
-                      FIELD_NAMES.WAIVER_AUTHORITY,
-                      changeRequest.waiverAuthority
-                    )}
-                  >
-                    <option disabled value="none-selected">
-                      -- select a waiver authority --
-                    </option>
-                    {renderOptionsList(waiverAuthorityOptions)}
-                  </select>
+                  {waiverAuthorityErrorMessage && (
+                <div id="waiverAuthorityErrorMsg"
+                  className="ds-u-color--error">{waiverAuthorityErrorMessage}</div>
+              )}
+                  {!isReadOnly ? (
+                <select
+                className="field"
+                id={FIELD_NAMES.WAIVER_AUTHORITY}
+                name={FIELD_NAMES.WAIVER_AUTHORITY}
+                onChange={handleInputChange}
+                required
+              >
+                <option value="">-- select a waiver authority --</option>
+                {renderOptionsList(waiverAuthorityOptions)}
+              </select>)
+                :
+                (<input
+                  className="field"
+                  type="text"
+                  id={FIELD_NAMES.WAIVER_AUTHORITY}
+                  name={FIELD_NAMES.WAIVER_AUTHORITY}
+                  disabled
+                  value={changeRequest.waiverAuthority}
+                ></input>
+                )}
                   <div className="label-container">
                     <div className="label-lcol">
                       <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
@@ -329,21 +371,20 @@ export default function Waiver() {
                       Must follow the format SS.##.R##.M## or SS.####.R##.##
                     </p>
                   )}
-                  {errors.transmittalNumber && (
-                    <div id="waiverTransmittalError" class="ds-u-color--error">
-                      {errors.transmittalNumber}
-                    </div>
-                  )}
-                  <Field
-                    className="field"
-                    type="text"
-                    id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                    name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                    validate={validateTransmittalNumber}
-                    disabled={isReadOnly}
-                    value={changeRequest.transmittalNumber}
-                  ></Field>
-
+                {transmittalNumberErrorMessage && (
+                <div id="waiverTransmittalNumberErrorMsg"
+                  className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
+              )}
+              <input
+                className="field"
+                type="text"
+                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.transmittalNumber}
+                required
+              ></input>
                   {isReadOnly && (
                     <div>
                       <label htmlFor="submittedAt">Submitted on</label>
@@ -364,6 +405,10 @@ export default function Waiver() {
                   <span className="required-mark">*</span>
                   indicates required attachment.
                 </p>
+                {attachmentsErrorMessage && !areUploadsReady && (
+              <div id="spaUploadsErrorMsg"
+                className="ds-u-color--error">{attachmentsErrorMessage}</div>
+            )}
                 <div className="upload-card">
                   {isReadOnly ? (
                     <FileList uploadList={changeRequest.uploads}></FileList>
@@ -394,9 +439,7 @@ export default function Waiver() {
                     value="Submit"
                   />
                 )}
-              </Form>
-            )}
-          </Formik>
+          </form>
         </div>
       ) : null}
     </LoadingScreen>

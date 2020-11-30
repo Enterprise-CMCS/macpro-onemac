@@ -13,7 +13,7 @@ import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
-import { validateSpaId, validateWavierId } from "../utils/form-utils";
+import { validateSpaId, validateWaiverId } from "../utils/form-utils";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -127,7 +127,7 @@ export default function RaiTemplate({
         if (changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI) {
             errorMessage = validateSpaId(value)
         } else if (changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI) {
-            errorMessage = validateWavierId(value)
+            errorMessage = validateWaiverId(value)
         } else {
             throw new Error(`Unable to validate invalid type ${changeRequestType}.`)
         }
