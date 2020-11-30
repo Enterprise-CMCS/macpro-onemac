@@ -67,7 +67,7 @@ export default function Home() {
       <div className="section section-support">
         <div className="section-title-center white-text">
           {"Do you have questions or need support? "}
-          <Link to={ROUTES.FAQ}>Please read the FAQ page.</Link>
+          <Link to={ROUTES.FAQ_TOP}>Please read the FAQ page.</Link>
         </div>
       </div>
     </div>
