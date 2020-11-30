@@ -76,8 +76,9 @@ export default class AlertBar extends Component {
    * @param {string} text the alert text
    */
   __alert(type, heading, text) {
+    // Going to the anchor must happen first of the alert will not show.
+    window.location.href = "#title";  // Go to the top of the page to show the alert.
     this.setState({ isShown: true, type, heading, text });
-    window.scrollTo(0, 0);
   }
 
   /**

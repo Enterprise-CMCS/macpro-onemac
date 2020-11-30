@@ -4,8 +4,6 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
-import { ALERTS_MSG } from "../libs/alert-messages";
-import AlertBar from "../components/AlertBar";
 
 const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
 
@@ -32,10 +30,15 @@ const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
  * @property {Array.string} optionalUploads an array of optional upload types or null if no optional uploads
  * @callback readyCallback callback that returns a boolean with true when all required uploads have been set
  */
+
+const MISSING_REQUIRED_MESSAGE = "Required attachments missing";
+const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX_ATTACHMENT_SIZE_MB}MB`;
+
 export default class FileUploader extends Component {
   static propTypes = {
     requiredUploads: PropTypes.arrayOf(PropTypes.string),
     optionalUploads: PropTypes.arrayOf(PropTypes.string),
+    showErrors: PropTypes.arrayOf(PropTypes.bool),
   };
 
   /**
@@ -78,7 +81,9 @@ export default class FileUploader extends Component {
     }
 
     // This state is used to be able to update the form when a change occurs.
-    this.state = { uploaderHasFile };
+    this.state = { uploaderHasFile,
+      errorMessage: MISSING_REQUIRED_MESSAGE,
+    };
   }
 
   /**
@@ -93,9 +98,6 @@ export default class FileUploader extends Component {
       return;
     }
 
-    //Clear any errors after an action.
-    AlertBar.dismiss();
-
     let uploader = this.uploaders[id];
 
     // If there is no file speficified then the state is false.
@@ -103,7 +105,8 @@ export default class FileUploader extends Component {
       // First check if the upload is larger than what is allowed
       if (files[0].size > MAX_FILE_SIZE_BYTES) {
         this.handleFileClear(event, id);
-        AlertBar.alert(ALERTS_MSG.ATTACHMENT_TOO_LARGE);
+        // The user could select a large file before the form is showing errors.
+        this.state.tooLargeErrorMessage = SIZE_TOO_LARGE_MESSAGE;
         return;
       }
 
@@ -113,6 +116,9 @@ export default class FileUploader extends Component {
       uploader.isComplete = false;
       uploader.file = null;
     }
+
+    // At this point, there are no size errors, so let the form decide when to show errors.
+    this.state.tooLargeErrorMessage = null;
 
     //Update the state, so the form is updated.
     let newState = this.state.uploaderHasFile;
@@ -124,8 +130,15 @@ export default class FileUploader extends Component {
     this.uploaders.forEach((uploader) => {
       if (uploader.isRequired && !uploader.isComplete) {
         areAllComplete = false;
+        this.state.errorMessage = MISSING_REQUIRED_MESSAGE;
       }
     });
+
+    // Clear any error messages if everything is ready.
+    if(areAllComplete) {
+      this.state.errorMessage = null;
+    }
+
     this.allUploadsComplete = areAllComplete;
     if (this.readyCallback) {
       this.readyCallback(this.allUploadsComplete);
@@ -138,9 +151,6 @@ export default class FileUploader extends Component {
    * @param {number} id the ID of the uploader
    */
   handleFileClear(event, id) {
-    //Clear any errors after an action.
-    AlertBar.dismiss();
-
     document.getElementById("uploader-input-" + id).value = "";
     this.handleFileChange(event, id);
   }
@@ -231,10 +241,27 @@ export default class FileUploader extends Component {
     let allControls = reqControls.concat(optControls);
 
     return (
-      <div className="uploader">
-        <table>
-          <tbody>{allControls}</tbody>
-        </table>
+      <div>
+        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message">
+          <span className="required-mark">*</span> indicates required
+          attachment.
+        </p>
+        <div className="ds-u-color--error">
+          {this.state.errorMessage && this.props.showErrors && (
+            <div>{this.state.errorMessage}</div>
+          )}
+          {this.state.tooLargeErrorMessage && (
+            <div>{this.state.tooLargeErrorMessage}</div>
+          )}
+        </div>
+        <div className="upload-card">
+          <div className="uploader">
+            <table>
+              <tbody>{allControls}</tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }

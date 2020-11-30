@@ -45,7 +45,6 @@ export default function Spa() {
   // if the message string is set, then the error div should be shown for these items
   const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
   const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
-  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -127,8 +126,6 @@ export default function Spa() {
 
       if (!firstTimeThrough) {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
-        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-        else setAttachmentsErrorMessage("");
       }
       if (event.target.name === 'transmittalNumber') {
         setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
@@ -186,9 +183,6 @@ export default function Spa() {
     // now set the state variables to show thw error messages
     setTerritoryErrorMessage(territoryMessage);
     setTransmittalNumberErrorMessage(transmittalNumberMessage);
-    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-
-    window.scrollTo(0, 0);
     setIsLoading(false);
   }
 
@@ -270,24 +264,17 @@ export default function Spa() {
               )}
             </div>
             <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            {attachmentsErrorMessage && !areUploadsReady && (
-              <div id="spaUploadsErrorMsg"
-                className="ds-u-color--error">{attachmentsErrorMessage}</div>
-            )}
-            <div className="upload-card">
-              {isReadOnly ? (
-                <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
-                  <FileUploader
-                    ref={uploader}
-                    requiredUploads={requiredUploads}
-                    optionalUploads={optionalUploads}
-                    readyCallback={uploadsReadyCallbackFunction}
-                  ></FileUploader>
-                )}
-            </div>
+            {isReadOnly ? (
+              <FileList uploadList={changeRequest.uploads}></FileList>
+            ) : (
+                <FileUploader
+                  ref={uploader}
+                  requiredUploads={requiredUploads}
+                  optionalUploads={optionalUploads}
+                  readyCallback={uploadsReadyCallbackFunction}
+                  showErrors={!firstTimeThrough}
+                ></FileUploader>
+              )}
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}

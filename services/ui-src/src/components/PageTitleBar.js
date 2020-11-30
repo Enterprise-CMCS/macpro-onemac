@@ -73,6 +73,7 @@ export default class PageTitleBar extends Component {
   render() {
     return (
       <div>
+        <a name="title"></a>
         {this.state.isShown && (
           <div className="page-title-bar">
             <h1>{this.state.heading}</h1>
