@@ -234,7 +234,7 @@ export default function Spa() {
                   SPA ID<span className="required-mark">*</span>
                 </label>
                 </div>
-                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
+                <div className="label-rcol"><HashLink to={ROUTES.FAQ_SPA_ID}>What is my SPA ID?</HashLink></div>
               </div>
               {!isReadOnly && (
                 <p className="field-hint">

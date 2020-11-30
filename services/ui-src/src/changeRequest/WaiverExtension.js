@@ -182,7 +182,7 @@ export default function WaiverExtension() {
                                             </label>
                                         </div>
                                         <div className="label-rcol">
-                                            <HashLink to="/FAQ#waiver-id-format">What is my Waiver Number?</HashLink>
+                                            <HashLink to={ROUTES.FAQ_WAIVER_ID}>What is my Waiver Number?</HashLink>
                                         </div>
                                     </div>
                                     {!isReadOnly &&

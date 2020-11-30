@@ -319,7 +319,7 @@ export default function Waiver() {
                       </label>
                     </div>
                     <div className="label-rcol">
-                      <HashLink to="/FAQ#waiver-id-format">
+                      <HashLink to={ROUTES.FAQ_WAIVER_ID}>
                         What is my Waiver Number?
                       </HashLink>
                     </div>

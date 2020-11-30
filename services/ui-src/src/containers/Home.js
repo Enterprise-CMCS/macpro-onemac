@@ -1,6 +1,6 @@
 import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
-import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import { ROUTES } from "../Routes";
 import StepCard from "../components/StepCard";
 
@@ -45,15 +45,15 @@ export default function Home() {
         <div className="container-step-cards">
           <StepCard
             stepNumber="1"
-            content="Login with MACPro credentials."
+            content="Login with your EIDM username and password to access your SPA and Waiver dashboard."
           />
           <StepCard
             stepNumber="2"
-            content="Fill out and attach required forms for your SPA and/or Waiver submission to submit to CMS through the platform."
+            content="Select a submission type and attach required documents relevant your SPA and/or Waiver submission."
           />
           <StepCard
             stepNumber="3"
-            content="After you submit, you will receive an email confirmation that your submission was received, marking the start of the 90-day review process."
+            content="After you submit, you will receive an email confirmation that your submission was successful, marking the start of the 90-day review process."
           />
         </div>
       </div>
@@ -67,7 +67,7 @@ export default function Home() {
       <div className="section section-support">
         <div className="section-title-center white-text">
           {"Do you have questions or need support? "}
-          <Link to={ROUTES.FAQ}>Please read the FAQ page.</Link>
+          <HashLink to={ROUTES.FAQ_TOP}>Please read the FAQ page.</HashLink>
         </div>
       </div>
     </div>
