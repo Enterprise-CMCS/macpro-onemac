@@ -6,7 +6,6 @@ import { ROUTES } from "../Routes";
 import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
-import "./Header.scss";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -34,27 +33,47 @@ function logout() {
  * @param {Object} props - component properties
  */
 function Header(props) {
-  const history = useHistory();
+  const history = useHistory()
+
+  /**
+   * Renders the USA bar
+   */
+  function renderUSABar() {
+    return (
+      <div className="usa-bar">
+        <img src={flagIcon} alt="united states flag" />
+                    An offical website of the United States government
+      </div>
+    )
+  }
+
   /**
    * Renders a branding bar
    */
-  function renderBrandingBar() {
+  function renderBrandBar() {
     return (
-      <div tabIndex="0">
-        <div className="usaBanner">
-          <img src={flagIcon} alt="united states flag" />
-          An offical website of the United States government
-        </div>
-        <div className="headerLogo">
-          <a href="https://www.medicaid.gov/">
-            <img
-              src={medicaidLogo}
-              alt="Medicaid.gov-Keeping America Healthy"
-            />
-          </a>
-        </div>
+      <div className="brand-bar">
+        <a href="https://www.medicaid.gov/">
+          <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy" />
+        </a>
       </div>
-    );
+    )
+  }
+
+  /**
+   * Renders a navigation bar
+   */
+  function renderNavBar() {
+    return (
+      <div className="nav-bar">
+        <div className="nav-left">
+          <Link to={ROUTES.HOME}>About</Link>
+          <Link id="dashboardLink" to={ROUTES.DASHBOARD}>Dashboard</Link>
+          <Link to={ROUTES.FAQ}>FAQ</Link>
+        </div>
+        {renderAccountButtons()}
+      </div>
+    )
   }
 
   /**
@@ -64,9 +83,9 @@ function Header(props) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (props.isAuthenticated) {
       return (
-        <div className="navElements">
+        <div className="nav-right">
           <FormLabel inversed>
-            <Button onClick={() => logout()} inversed>
+            <Button id="logoutBtn" onClick={() => logout()} inversed>
               Logout
             </Button>
           </FormLabel>
@@ -74,12 +93,12 @@ function Header(props) {
       );
     } else {
       return (
-        <div className="navElements">
+        <div className="nav-right">
           <Button onClick={() => (window.location = getSignInUrl())} inversed>
             Login
           </Button>
           {showDevLogin && (
-            <Button onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
+            <Button id="devloginBtn" onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
               Development Login
             </Button>
           )}
@@ -88,25 +107,10 @@ function Header(props) {
     }
   }
 
-  /**
-   * Renders a navigation bar
-   */
-  function renderNavBar() {
-    return (
-      <div className="navbarContainer">
-        <div className="navElements">
-          <Link to={ROUTES.HOME}>About</Link>
-          <Link to={ROUTES.DASHBOARD}>Dashboard</Link>
-          <Link to={ROUTES.FAQ}>FAQ</Link>
-        </div>
-        {renderAccountButtons()}
-      </div>
-    );
-  }
-
   return (
-    <div className="headerContainer">
-      {renderBrandingBar()}
+    <div tabIndex="0">
+      {renderUSABar()}
+      {renderBrandBar()}
       {renderNavBar()}
     </div>
   );

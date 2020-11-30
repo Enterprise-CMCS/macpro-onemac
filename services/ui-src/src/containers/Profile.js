@@ -83,7 +83,7 @@ export default function Profile() {
     }
 
     return (
-        <div className="Profile">
+        <div className="form-container">
             <form onSubmit={handleSubmit}>
                 <FormGroup controlId="email">
                     <ControlLabel>Email</ControlLabel>

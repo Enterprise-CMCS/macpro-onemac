@@ -13,6 +13,7 @@
     "aws-amplify": "^3.0.23",
     "bootstrap": "^3.3.7",
     "date-fns": "^2.16.1",
+    "formik": "^2.2.5",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^0.33.1",
@@ -21,6 +22,7 @@
     "react-phone-input-2": "^2.13.8",
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
+    "react-router-hash-link": "^2.2.2",
     "react-scripts": "3.4.3",
     "react-select": "^3.1.0"
   },

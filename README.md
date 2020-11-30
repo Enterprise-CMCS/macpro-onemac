@@ -1,30 +1,22 @@
 # macstack-spa-submission-form
 
-A serverless form submission application built and deployed to AWS with the Serverless Application Framework.
+An official submission system for email-based state plan amendments (SPAs) and section 1915 waivers.
 
-Quick Navigation:
-- [Master Build](https://circleci.west.cms.gov/gh/CMSgov/macstack-spa-submission-form/tree/master) (be advised:  this is behind cloud vpn and EUA)
+### Application Configuration
+The following environment variables can be set to change the configuration of the application (reference [build_vars.sh](./.github/build_vars.sh)):
+Lengend: R = Required, O = Optional
+* (O) CMS_SPA_FORM_CMS_EMAIL - The CMS email address submissions are sent to.  Defaults to *spa-reply@cms.hhs.gov*
+* (O) CMS_SPA_FORM_FROM_EMAIL - The CMS email address used to send emails from (the FROM email address in the emails).  Defaults to *spa-reply@cms.hhs.gov*
+* (R) AWS_ACCESS_KEY_ID - AWS Access key with write access for creating AWS resources in the account
+* (R) AWS_SECRET_ACCESS_KEY - AWS secret with write access for creating AWS resources in the account
+* (R) AWS_DEFAULT_REGION - The AWS region to deploy the application to
+* (O) INFRASTRUCTURE_TYPE - Defaults to "development"
+* ROUTE_53_HOSTED_ZONE_ID
+* ROUTE_53_DOMAIN_NAME
+* CLOUDFRONT_CERTIFICATE_ARN
+* (O) CLOUDFRONT_DOMAIN_NAME - The custom domain name for the application 
+* (O) IAM_PATH - Defaults to "/"
+* IAM_PERMISSIONS_BOUNDARY_POLICY
+* STAGE_PREFIX 
+* (R) OKTA_METADATA_URL - The OKTA URL to authenticate at
 
-This is a private fork of [macpro-serverless-quickstart](https://github.com/CMSgov/macpro-quickstart-serverless).
-
-## Usage
-
-This application is built and deployed with GitHub Actions.  See the master build [here](https://github.com/CMSgov/macstack-spa-submission-form/actions?query=branch%3Amaster+)
-
-Want to deploy from your Mac?
-- Create an AWS account
-- Install/configure the AWS CLI
-- npm install -g severless
-- sh deploy.sh
-
-Building the app locally
-- todo
-
-Running tests locally
-- todo
-
-## Requirements
-
-NodeJS and Serverless - Get help installing both at the [Serverless Getting Started page](https://www.serverless.com/framework/docs/providers/aws/guide/installation/)
-
-AWS Account:  You'll need an AWS account with appropriate IAM permissions (admin recommended) to build this app in Amazon.

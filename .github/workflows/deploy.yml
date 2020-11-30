@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
-        run: echo "::set-env name=branch_name::${GITHUB_REF#refs/heads/}"
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - name: Check branch name is a legal serverless stage name
         run: |
           if [[ ! $branch_name =~ ^[a-z][a-z0-9-]*$ ]] || [[ $branch_name -gt 128 ]]; then
@@ -100,7 +100,7 @@ jobs:
         run: |
           source set.env.sh
           pushd services
-          export APPLICATION_ENDPOINT=`./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$branch_name`
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           popd
           ./test.sh
       - name: Store test reults

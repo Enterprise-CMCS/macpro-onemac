@@ -1,67 +1,47 @@
 import React from "react";
+import PageTitleBar from "../components/PageTitleBar";
 import { Link } from "react-router-dom";
 import { ROUTES } from "../Routes";
-import serviceTypes from "../libs/serviceTypes.json";
 import StepCard from "../components/StepCard";
 
 /**
  * Displays information about the usage of the webform
  */
 export default function Home() {
-  /**
-   * Chunks/divides items in an array into multiple arrays of the specified chunkSize length.
-   * The last array contains the remainder of the items if it's less than the chunkSize.
-   * @param {Array} items the data to be split into multiple arrays
-   * @param {Number} chunkSize the length of the arrays for chunked data
-   * @returns an array containing the multiple arrays of chunked data
-   */
-  function chunkItems(items, chunkSize) {
-    let chunkedItems = [];
+  const submissionsList = [
+    "Amendments to your Medicaid State Plans (not submitted through MACPro, MMDL or WMS);",
+    "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro),",
+    "Section 1915(b) waiver submissions (those not submitted through WMS),",
+    "Section 1915(c) Appendix K amendments (which cannot be submitted through WMS);",
+    "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable); and",
+    "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
+  ];
+  const submissionTypesid = "submission-types";
 
-    let i;
-    for (i = 0; i < items.length; i += chunkSize) {
-      items.slice(i, i + chunkSize);
-      chunkedItems.push(items.slice(i, i + chunkSize));
-    }
-    return chunkedItems;
-  }
+  PageTitleBar.setPageTitleInfo({
+    heading: "CMS State Plan Amendment and Waiver Submission Platform",
+    text:
+      "Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers.",
+  });
 
   /**
-   * Takes a list of items and renders it into a column-formatted unordered list.
-   * @param {Array} columnData data items for the list
-   * @param {Number} index the index of the column, used as a key attribute on the div element
-   * @returns a column with an unordered list of data items
+   * Takes a list of items and renders it into an unordered list.
+   * @param {Array} listData data items for the list
+   * @param {String} ariaLabelledBy aria-labelledby attribute on the unordered list for accessiblity
+   * @returns an unordered list of data items
    */
-  function renderColumn(columnData, index) {
-    const columnList = columnData.map((dataItem, index) => (
+  function renderList(listData, ariaLabelledBy = "") {
+    const list = listData.map((dataItem, index) => (
       <li key={index}>{dataItem}</li>
     ));
 
-    return (
-      <div className="column" key={index}>
-        <ul>{columnList}</ul>
-      </div>
-    );
-  }
-
-  /**
-   * Takes a list of items and renders it into a series of columns
-   * @param {Array} itemsToColumnize the items to render into columns
-   * @returns columns of data
-   */
-  function renderColumns(itemsToColumnize) {
-    const numItemsPerCol = Math.ceil(itemsToColumnize.length / 4);
-    const columnsData = chunkItems(itemsToColumnize, numItemsPerCol);
-
-    return columnsData.map((columnData, index) =>
-      renderColumn(columnData, index)
-    );
+    return <ul aria-labelledby={ariaLabelledBy}>{list}</ul>;
   }
 
   return (
     <div className="about">
       <div className="section section-how-it-works">
-        <div className="section-title black-text">How it Works</div>
+        <div className="section-title-center">How it Works</div>
         <div className="container-step-cards">
           <StepCard
             stepNumber="1"
@@ -77,26 +57,15 @@ export default function Home() {
           />
         </div>
       </div>
-      <div className="section section-service-types">
-        <div className="section-title black-text">
-          In this system, you can submit
+      <div className="section section-submission-types">
+        <div className="section-title" id={submissionTypesid}>
+          In this system, pilot program users can submit paper-based
+          submissions, including:
         </div>
-        <div className="section-subtitle">
-          Amendments to your Medicaid State Plans (including related RAIs) for the following service types:
-        </div>
-        <div className="four-column-content">{renderColumns(serviceTypes)}</div>
-        <div className="section-subtitle">
-          Section 1915(b) waiver submissions and related formal Requests for Additional Information (RAIs)
-        </div>
-        <div className="section-subtitle">
-          Section 1915(c) Appendix K amendments and related formal Requests for Additional Information (RAIs)
-        </div>
-        <div className="section-subtitle">
-          State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers
-        </div>
+        {renderList(submissionsList, submissionTypesid)}
       </div>
       <div className="section section-support">
-        <div className="section-title white-text">
+        <div className="section-title-center white-text">
           {"Do you have questions or need support? "}
           <Link to={ROUTES.FAQ}>Please read the FAQ page.</Link>
         </div>
