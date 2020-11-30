@@ -17,7 +17,9 @@ import DevLogin from "./containers/DevLogin";
 export const ROUTES = {
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
-    FAQ_TOP: '/FAQ#spa-id-format',
+    FAQ_TOP: '/FAQ/#top',
+    FAQ_SPA_ID: '/FAQ#spa-id-format',
+    FAQ_WAIVER_ID: '/FAQ#waiver-id-format',
     HOME: '/',
     PROFILE: '/profile',
     DEVLOGIN: '/devlogin',

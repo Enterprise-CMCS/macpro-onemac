@@ -7,7 +7,7 @@ export default class FAQ extends Component {
         PageTitleBar.setPageTitleInfo({ heading: "SPA and Waiver Frequently Asked Questions", text: "" })
 
         return (
-            <div className="form-container">
+            <div className="form-container" id="top" >
                 <div className="form-card">
                     <h2>Help Desk Contact Information</h2>
                     <p>For assistance, please email the MACPro Help Desk at MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540.</p>

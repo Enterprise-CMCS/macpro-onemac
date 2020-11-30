@@ -255,7 +255,7 @@ export default function Spa() {
                       </label>
                     </div>
                     <div className="label-rcol">
-                      <HashLink to="/FAQ#spa-id-format">
+                      <HashLink to={ROUTES.FAQ_SPA_ID}>
                         What is my SPA ID?
                       </HashLink>
                     </div>
