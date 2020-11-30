@@ -1,19 +1,18 @@
-import React, {useRef, useState, useEffect} from "react";
-import {useParams, useHistory} from "react-router-dom";
-import {HashLink} from 'react-router-hash-link';
-import LoaderButton from "../components/LoaderButton";
+import React, { useRef, useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
-import {TextField} from "@cmsgov/design-system";
-import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
+import { TextField } from "@cmsgov/design-system";
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import {ROUTES} from "../Routes";
-import {formatDate} from "../utils/date-utils";
+import { ROUTES } from "../Routes";
+import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
-import {ALERTS_MSG} from "../libs/alert-messages";
+import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
-import {Formik, Form, Field} from 'formik';
+import { Formik, Form, Field } from 'formik';
 import {
     validateWavierId
 } from "../utils/form-utils";
@@ -50,7 +49,7 @@ export default function WaiverExtension() {
     const uploader = useRef(null);
 
     // Optional ID parameter from the URL
-    const {id} = useParams();
+    const { id } = useParams();
 
     // The record we are using for the form.
     const [changeRequest, setChangeRequest] = useState({
@@ -84,10 +83,10 @@ export default function WaiverExtension() {
         if (id) {
             setReadOnly(true);
             fetchChangeRequest();
-            PageTitleBar.setPageTitleInfo({heading: "Waiver Temporary Extension Details", text: ""});
+            PageTitleBar.setPageTitleInfo({ heading: "Waiver Temporary Extension Details", text: "" });
         } else {
             setReadOnly(false);
-            PageTitleBar.setPageTitleInfo({heading: "Request Waiver Temporary Extension", text: ""});
+            PageTitleBar.setPageTitleInfo({ heading: "Request Waiver Temporary Extension", text: "" });
             setIsLoading(false);
         }
     }, [id]);
@@ -106,7 +105,7 @@ export default function WaiverExtension() {
      */
     async function handleInputChange(event) {
         if (event && event.target) {
-            let updatedRecord = {...changeRequest}; // You need a new object to be able to update the state
+            let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
             updatedRecord[event.target.name] = event.target.value;
             setChangeRequest(updatedRecord);
 
@@ -127,7 +126,7 @@ export default function WaiverExtension() {
         } else {
             isValidId = false;
         }
-        
+
         let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
         updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
         setChangeRequest(updatedRecord);
@@ -165,9 +164,9 @@ export default function WaiverExtension() {
             {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
                 <div className="form-container">
                     <Formik
-                        initialValues={{transmittalNumber: ''}}
+                        initialValues={{ transmittalNumber: '' }}
                     >
-                        {({errors}) => (
+                        {({ errors }) => (
                             <Form onSubmit={handleSubmit}>
                                 <h3>Request Temporary Extension</h3>
                                 <p className="req-message">
@@ -187,8 +186,8 @@ export default function WaiverExtension() {
                                         </div>
                                     </div>
                                     {!isReadOnly &&
-                                    <p className="field-hint">
-                                        Enter the Waiver number for this Temporary Extension Request
+                                        <p className="field-hint">
+                                            Enter the Waiver number for this Temporary Extension Request
                                     </p>
                                     }
                                     {errors.transmittalNumber && (
@@ -216,7 +215,7 @@ export default function WaiverExtension() {
                                     ></input>}
                                     {isReadOnly && (
                                         <div>
-                                            <br/>
+                                            <br />
                                             <label htmlFor="submittedAt">Submitted on</label>
                                             <input
                                                 className="field"
@@ -239,13 +238,13 @@ export default function WaiverExtension() {
                                     {isReadOnly ? (
                                         <FileList uploadList={changeRequest.uploads}></FileList>
                                     ) : (
-                                        <FileUploader
-                                            ref={uploader}
-                                            requiredUploads={requiredUploads}
-                                            optionalUploads={optionalUploads}
-                                            readyCallback={uploadsReadyCallbackFunction}
-                                        ></FileUploader>
-                                    )}
+                                            <FileUploader
+                                                ref={uploader}
+                                                requiredUploads={requiredUploads}
+                                                optionalUploads={optionalUploads}
+                                                readyCallback={uploadsReadyCallbackFunction}
+                                            ></FileUploader>
+                                        )}
                                 </div>
                                 <div className="summary-box">
                                     <TextField
@@ -259,15 +258,11 @@ export default function WaiverExtension() {
                                     ></TextField>
                                 </div>
                                 {!isReadOnly && (
-                                    <LoaderButton
+                                    <input
                                         type="submit"
-                                        bsSize="large"
-                                        bsStyle="primary"
-                                        isLoading={isLoading}
-                                        disabled={!hasValidTransmittalNumber || !areUploadsReady}
-                                    >
-                                        Submit
-                                    </LoaderButton>
+                                        className="form-submit"
+                                        value="Submit"
+                                    />
                                 )}
                             </Form>
                         )}

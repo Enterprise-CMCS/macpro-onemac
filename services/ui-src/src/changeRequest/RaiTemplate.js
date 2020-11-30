@@ -1,21 +1,20 @@
-import React, {useRef, useState, useEffect} from "react";
-import {useParams, useHistory} from "react-router-dom";
-import {HashLink} from 'react-router-hash-link';
-import LoaderButton from "../components/LoaderButton";
+import React, { useRef, useState, useEffect } from "react";
+import { useParams, useHistory } from "react-router-dom";
+import { HashLink } from 'react-router-hash-link';
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
-import {TextField} from "@cmsgov/design-system";
+import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import {ROUTES} from "../Routes";
+import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
 import AlertBar from "../components/AlertBar";
-import {ALERTS_MSG} from "../libs/alert-messages";
-import {formatDate} from "../utils/date-utils";
+import { ALERTS_MSG } from "../libs/alert-messages";
+import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
-import {Formik, Form, Field} from 'formik';
-import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
-import {validateSpaId, validateWavierId} from "../utils/form-utils";
+import { Formik, Form, Field } from 'formik';
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
+import { validateSpaId, validateWavierId } from "../utils/form-utils";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -25,11 +24,11 @@ import {validateSpaId, validateWavierId} from "../utils/form-utils";
  * @param {String} raiType - display name for the type of change request
  */
 export default function RaiTemplate({
-                                        changeRequestType,
-                                        optionalUploads,
-                                        requiredUploads,
-                                        raiType,
-                                    }) {
+    changeRequestType,
+    optionalUploads,
+    requiredUploads,
+    raiType,
+}) {
     // The form field names
     const FIELD_NAMES = {
         TRANSMITTAL_NUMBER: "transmittalNumber",
@@ -54,7 +53,7 @@ export default function RaiTemplate({
     const uploader = useRef(null);
 
     // Optional ID parameter from the URL
-    const {id} = useParams();
+    const { id } = useParams();
 
     // The record we are using for the form.
     const [changeRequest, setChangeRequest] = useState({
@@ -88,10 +87,10 @@ export default function RaiTemplate({
         if (id) {
             setReadOnly(true);
             fetchChangeRequest();
-            PageTitleBar.setPageTitleInfo({heading: raiType + " RAI Reponse Details", text: ""});
+            PageTitleBar.setPageTitleInfo({ heading: raiType + " RAI Reponse Details", text: "" });
         } else {
             setReadOnly(false);
-            PageTitleBar.setPageTitleInfo({heading: "Respond to " + raiType + " RAI", text: ""});
+            PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
             setIsLoading(false);
         }
     }, [id, raiType]);
@@ -150,7 +149,7 @@ export default function RaiTemplate({
      */
     async function handleInputChange(event) {
         if (event && event.target) {
-            let updatedRecord = {...changeRequest}; // You need a new object to be able to update the state
+            let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
             updatedRecord[event.target.name] = event.target.value;
             setChangeRequest(updatedRecord);
 
@@ -188,9 +187,9 @@ export default function RaiTemplate({
             {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
                 <div className="form-container">
                     <Formik
-                        initialValues={{transmittalNumber: ''}}
+                        initialValues={{ transmittalNumber: '' }}
                     >
-                        {({errors}) => (
+                        {({ errors }) => (
                             <Form onSubmit={handleSubmit}>
                                 <h3>{raiType} RAI Details</h3>
                                 <p className="req-message">
@@ -250,13 +249,13 @@ export default function RaiTemplate({
                                     {isReadOnly ? (
                                         <FileList uploadList={changeRequest.uploads}></FileList>
                                     ) : (
-                                        <FileUploader
-                                            ref={uploader}
-                                            requiredUploads={requiredUploads}
-                                            optionalUploads={optionalUploads}
-                                            readyCallback={uploadsReadyCallbackFunction}
-                                        ></FileUploader>
-                                    )}
+                                            <FileUploader
+                                                ref={uploader}
+                                                requiredUploads={requiredUploads}
+                                                optionalUploads={optionalUploads}
+                                                readyCallback={uploadsReadyCallbackFunction}
+                                            ></FileUploader>
+                                        )}
                                 </div>
                                 <div className="summary-box">
                                     <TextField
@@ -270,15 +269,11 @@ export default function RaiTemplate({
                                     ></TextField>
                                 </div>
                                 {!isReadOnly && (
-                                    <LoaderButton
+                                    <input
                                         type="submit"
-                                        bsSize="large"
-                                        bsStyle="primary"
-                                        isLoading={isLoading}
-                                        disabled={!isFormReady || !areUploadsReady}
-                                    >
-                                        Submit
-                                    </LoaderButton>
+                                        className="form-submit"
+                                        value="Submit"
+                                    />
                                 )}
                             </Form>)}
                     </Formik>

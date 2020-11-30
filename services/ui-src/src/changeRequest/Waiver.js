@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import { HashLink } from "react-router-hash-link";
-import LoaderButton from "../components/LoaderButton";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
@@ -149,9 +148,9 @@ export default function Waiver() {
       // Check to see if the required fields are provided
       setIsFormReady(
         hasValidTransmittalNumber &&
-          updatedRecord[FIELD_NAMES.TERRITORY] &&
-          updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
-          updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
+        updatedRecord[FIELD_NAMES.TERRITORY] &&
+        updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
+        updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
       );
     }
   }
@@ -177,9 +176,9 @@ export default function Waiver() {
     setValidTransmittalNumber(isValidId);
     setIsFormReady(
       isValidId &&
-        updatedRecord[FIELD_NAMES.TERRITORY] &&
-        updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
-        updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
+      updatedRecord[FIELD_NAMES.TERRITORY] &&
+      updatedRecord[FIELD_NAMES.ACTION_TYPE] &&
+      updatedRecord[FIELD_NAMES.WAIVER_AUTHORITY]
     );
 
     return errorMessage;
@@ -369,13 +368,13 @@ export default function Waiver() {
                   {isReadOnly ? (
                     <FileList uploadList={changeRequest.uploads}></FileList>
                   ) : (
-                    <FileUploader
-                      ref={uploader}
-                      requiredUploads={requiredUploads}
-                      optionalUploads={optionalUploads}
-                      readyCallback={uploadsReadyCallbackFunction}
-                    ></FileUploader>
-                  )}
+                      <FileUploader
+                        ref={uploader}
+                        requiredUploads={requiredUploads}
+                        optionalUploads={optionalUploads}
+                        readyCallback={uploadsReadyCallbackFunction}
+                      ></FileUploader>
+                    )}
                 </div>
                 <div className="summary-box">
                   <TextField
@@ -389,16 +388,11 @@ export default function Waiver() {
                   ></TextField>
                 </div>
                 {!isReadOnly && (
-                  <LoaderButton
-                    id="waiverSubmitButton"
+                  <input
                     type="submit"
-                    bsSize="large"
-                    bsStyle="primary"
-                    isLoading={isLoading}
-                    disabled={!isFormReady || !areUploadsReady}
-                  >
-                    Submit
-                  </LoaderButton>
+                    className="form-submit"
+                    value="Submit"
+                  />
                 )}
               </Form>
             )}
