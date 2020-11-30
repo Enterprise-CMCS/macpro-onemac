@@ -32,8 +32,8 @@ export default class FAQ extends Component {
                     </ul>
                     <p>In this system, you can submit other optional files. If submitting a cover letter, please address the cover letter to: Center for Medicaid &amp; CHIP Services (CMCS).</p>
                     <h3>Waivers</h3>
-                    <h4>What format is used to enter a 1915(b) waiver number?</h4>
-                    <p id="waiver-id-format">Waiver number must follow the format SS.##.R##.M## to include:</p>
+                    <h4 id="waiver-id-format">What format is used to enter a 1915(b) waiver number?</h4>
+                    <p>Waiver number must follow the format SS.##.R##.M## to include:</p>
                     <ul>
                         <li>SS=  2 character state abbreviation</li>
                         <li>##= 2 digit waiver base number</li>
