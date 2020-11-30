@@ -37,8 +37,13 @@ export default function RaiTemplate({
 
     // True when the required attachments have been selected.
     const [areUploadsReady, setAreUploadsReady] = useState(false);
-    const [isFormReady, setIsFormReady] = useState(false);
-    const [hasValidTransmittalNumber, setValidTransmittalNumber] = useState(false);
+
+    // because the first time through, we do not want to be annoying with the error messaging
+    const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+
+    // if the message string is set, then the error div should be shown for these items
+    const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
+    const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
     // True if we are currently submitting the form or on inital load of the form
     const [isLoading, setIsLoading] = useState(true);
@@ -85,12 +90,14 @@ export default function RaiTemplate({
 
         // Trigger the fetch only if an ID is present.
         if (id) {
+            PageTitleBar.setPageTitleInfo({ heading: raiType + " RAI Reponse Details", text: "" });
+
             setReadOnly(true);
             fetchChangeRequest();
-            PageTitleBar.setPageTitleInfo({ heading: raiType + " RAI Reponse Details", text: "" });
         } else {
-            setReadOnly(false);
             PageTitleBar.setPageTitleInfo({ heading: "Respond to " + raiType + " RAI", text: "" });
+
+            setReadOnly(false);
             setIsLoading(false);
         }
     }, [id, raiType]);
@@ -155,6 +162,14 @@ export default function RaiTemplate({
 
             // Check to see if the required fields are provided
             setIsFormReady(hasValidTransmittalNumber);
+
+            if (!firstTimeThrough) {
+                if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+                else setAttachmentsErrorMessage("");
+            }
+            if (event.target.name === 'transmittalNumber') {
+                setTransmittalNumberErrorMessage(validateTransmittalNumber(updatedRecord.transmittalNumber));
+            }
         }
     }
 
@@ -165,19 +180,50 @@ export default function RaiTemplate({
     async function handleSubmit(event) {
         event.preventDefault();
 
+        // so the old alert goes away
+        AlertBar.dismiss();
+
+        // in case form validation takes a while (external validation)
         setIsLoading(true);
 
-        try {
-            let uploadedList = await uploader.current.uploadFiles();
-            await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-            history.push(ROUTES.DASHBOARD);
-            //Alert must come last or it will be cleared after the history push.
-            AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
-        } catch (error) {
-            console.log("There was an error submitting a request.", error);
-            AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
-            setIsLoading(false);
+        // once Submit is clicked, show error messages
+        setFirstTimeThrough(false);
+
+        const data = new FormData(event.target);
+
+        // validate the form fields and set the messages
+        // because this is an asynchronous function, you can't trust that the 
+        // state functions will be processed in time to use the variables
+        let transmittalNumberMessage = "";
+        transmittalNumberMessage = validateSpaId(data.get('transmittalNumber'));
+
+        // check which alert to show.  Fields first, than attachments
+        // if all passes, submit the form and return to dashboard
+        if (transmittalNumberMessage) {
+            AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
+        } else if (!areUploadsReady) {
+            AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
+        } else {
+
+            try {
+                let uploadedList = await uploader.current.uploadFiles();
+                await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+                history.push(ROUTES.DASHBOARD);
+                //Alert must come last or it will be cleared after the history push.
+                AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+            } catch (error) {
+                AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+                setIsLoading(false);
+            }
         }
+
+        // now set the state variables to show thw error messages
+        setTransmittalNumberErrorMessage(transmittalNumberMessage);
+        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+
+        window.scrollTo(0, 0);
+        setIsLoading(false);
+
     }
 
     // Render the component conditionally when NOT in read only mode
@@ -186,100 +232,107 @@ export default function RaiTemplate({
         <LoadingScreen isLoading={isLoading}>
             {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
                 <div className="form-container">
-                    <Formik
-                        initialValues={{ transmittalNumber: '' }}
-                    >
-                        {({ errors }) => (
-                            <Form onSubmit={handleSubmit}>
-                                <h3>{raiType} RAI Details</h3>
-                                <p className="req-message">
-                                    <span className="required-mark">*</span>
+                    <form onSubmit={handleSubmit} noValidate className={!firstTimeThrough ? "display-errors" : ""}>
+                        <h3>{raiType} RAI Details</h3>
+                        <p className="req-message">
+                            <span className="required-mark">*</span>
                                     indicates required field.
                                 </p>
-                                <div className="form-card">
-                                    <div className="label-container">
-                                        <div className="label-lcol">
-                                            <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                                                {raiType} ID
+                        <div className="form-card">
+                            <div className="label-container">
+                                <div className="label-lcol">
+                                    <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                                        {raiType} ID
                                                 <span className="required-mark">*</span>
-                                            </label>
-                                        </div>
-                                        <div className="label-rcol">
-                                            <HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink>
-                                        </div>
-                                    </div>
-                                    {!isReadOnly && (
-                                        <p className="field-hint">
-                                            Enter the transmittal number for this RAI
-                                        </p>
-                                    )}
-                                    {errors.transmittalNumber && (
-                                        <div id="raiTransmittalNumError" class="ds-u-color--error">{errors.transmittalNumber}</div>
-                                    )}
-                                    <Field
+                                    </label>
+                                </div>
+                                <div className="label-rcol">
+                                    <HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink>
+                                </div>
+                            </div>
+                            {!isReadOnly && (
+                                <p className="field-hint">
+                                    Enter the transmittal number for this RAI
+                                </p>
+                            )}
+                            {!isReadOnly && (
+                                <p className="field-hint">
+                                    Must follow the format SS-YY-NNNN-xxxx
+                                </p>
+                            )}
+                            {transmittalNumberErrorMessage && (
+                                <div id="spaTransmittalNumberErrorMsg"
+                                    className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
+                            )}
+                            <input
+                                className="field"
+                                type="text"
+                                id={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                                name={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                                onChange={handleInputChange}
+                                disabled={isReadOnly}
+                                value={changeRequest.transmittalNumber}
+                                required
+                            ></input>
+                            {isReadOnly && (
+                                <div>
+                                    <label htmlFor="submittedAt">Submitted on</label>
+                                    <input
                                         className="field"
                                         type="text"
-                                        id={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                        name={FIELD_NAMES.TRANSMITTAL_NUMBER}
-                                        validate={validateTransmittalNumber}
-                                        disabled={isReadOnly}
-                                        value={changeRequest.transmittalNumber}
-                                    ></Field>
-                                    {isReadOnly && (
-                                        <div>
-                                            <label htmlFor="submittedAt">Submitted on</label>
-                                            <input
-                                                className="field"
-                                                type="text"
-                                                id="submittedAt"
-                                                name="submittedAt"
-                                                disabled
-                                                value={formatDate(changeRequest.submittedAt)}
-                                            ></input>
-                                        </div>
-                                    )}
+                                        id="submittedAt"
+                                        name="submittedAt"
+                                        disabled
+                                        value={formatDate(changeRequest.submittedAt)}
+                                    ></input>
                                 </div>
-                                <h3>Attachments</h3>
-                                <p className="req-message">Maximum file size of 50MB.</p>
-                                <p className="req-message">
-                                    <span className="required-mark">*</span>
+                            )}
+                        </div>
+                        <h3>Attachments</h3>
+                        <p className="req-message">Maximum file size of 50MB.</p>
+                        <p className="req-message">
+                            <span className="required-mark">*</span>
                                     indicates required attachment.
                                 </p>
-                                <div className="upload-card">
-                                    {isReadOnly ? (
-                                        <FileList uploadList={changeRequest.uploads}></FileList>
-                                    ) : (
-                                            <FileUploader
-                                                ref={uploader}
-                                                requiredUploads={requiredUploads}
-                                                optionalUploads={optionalUploads}
-                                                readyCallback={uploadsReadyCallbackFunction}
-                                            ></FileUploader>
-                                        )}
-                                </div>
-                                <div className="summary-box">
-                                    <TextField
-                                        name={FIELD_NAMES.SUMMARY}
-                                        label="Summary"
-                                        fieldClassName="summary-field"
-                                        multiline
-                                        onChange={handleInputChange}
-                                        disabled={isReadOnly}
-                                        value={changeRequest.summary}
-                                    ></TextField>
-                                </div>
-                                {!isReadOnly && (
-                                    <input
-                                        type="submit"
-                                        className="form-submit"
-                                        value="Submit"
-                                    />
+                        {attachmentsErrorMessage && !areUploadsReady && (
+                            <div id="spaUploadsErrorMsg"
+                                className="ds-u-color--error">{attachmentsErrorMessage}</div>
+                        )}
+                        <div className="upload-card">
+                            {isReadOnly ? (
+                                <FileList uploadList={changeRequest.uploads}></FileList>
+                            ) : (
+                                    <FileUploader
+                                        ref={uploader}
+                                        requiredUploads={requiredUploads}
+                                        optionalUploads={optionalUploads}
+                                        readyCallback={uploadsReadyCallbackFunction}
+                                    ></FileUploader>
                                 )}
-                            </Form>)}
-                    </Formik>
+                        </div>
+                        <div className="summary-box">
+                            <TextField
+                                name={FIELD_NAMES.SUMMARY}
+                                label="Summary"
+                                fieldClassName="summary-field"
+                                multiline
+                                onChange={handleInputChange}
+                                disabled={isReadOnly}
+                                value={changeRequest.summary}
+                            ></TextField>
+                        </div>
+                        {!isReadOnly && (
+                            <input
+                                type="submit"
+                                className="form-submit"
+                                value="Submit"
+                            />
+                        )}
+                    </form>
                 </div>
-            ) : null}
-        </LoadingScreen>
+    ) : null
+}
+        </LoadingScreen >
     );
 }
 
