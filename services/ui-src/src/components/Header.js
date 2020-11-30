@@ -108,7 +108,7 @@ function Header(props) {
   }
 
   return (
-    <div tabIndex="0">
+    <div>
       {renderUSABar()}
       {renderBrandBar()}
       {renderNavBar()}
