@@ -344,7 +344,6 @@ export default function Waiver() {
                     disabled={isReadOnly}
                     value={changeRequest.transmittalNumber}
                   ></Field>
-
                   {isReadOnly && (
                     <div>
                       <label htmlFor="submittedAt">Submitted on</label>
