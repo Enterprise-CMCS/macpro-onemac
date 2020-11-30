@@ -52,6 +52,10 @@ label {
 .field-hint, p.field-hint {
   @extend .ds-c-field__hint;
 }
+.field-error-message {
+  @extend .ds-c-field__hint;
+  color: $color-red;
+}
 
 .app-bar {
   @extend .ds-l-row;
@@ -138,10 +142,10 @@ ul {
 
 .alert-bar {
   background-color: $color-white;
-  padding-top: 4rem;
+  padding-top: 2rem;
   padding-left: 14rem;
   padding-right: 14rem;
-  padding-bottom: 0rem;
+  padding-bottom: 2rem;
 }
 
 .required-mark {
@@ -438,31 +442,26 @@ input[type="file"] {
   background-color: $color-white;
   @extend .ds-u-padding-top--3;
 }
-.accountDropdown {
-  background-color: $color-primary !important;
-  color: $color-white;
-  font-weight: bold;
-  font-size: 16px;
-  border: none;
-  box-shadow: none !important;
-
-  &:hover {
-      color: rgba($color-base-inverse, 0.8);
-  }
-
-  &:active {
-      color: rgba($color-base-inverse, 0.6);
-  }
-
-  &:focus {
-      color: rgba($color-base-inverse, 0.6);
-  }
-}
 .summary-box label {
   @extend .ds-h3;
   @extend .ds-u-margin-top--5;
 }
 
-.LoaderButton {
+.LoaderButton, .form-submit {
   @extend .ds-u-margin-top--5;
+  background-color: $color-primary;
+  color: $color-white;
+  padding: 10px 28px;
+  border-radius: 3px;
+  align-self: center;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  border: none;
+}
+.display-errors input:invalid, 
+.display-errors select:invalid  {
+  border-color: red;
 }

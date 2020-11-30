@@ -29,6 +29,16 @@ export const ALERTS_MSG = {
     heading: "Submission Error",
     text: "There was an issue submitting your request.  Please try again.",
   },
+  SUBMISSION_INCOMPLETE: {
+    type: ALERT_TYPES.ERROR,
+    heading: "There was a problem submitting your form.",
+    text: "Please review the highlighted items below before resubmitting.",
+  },
+  REQUIRED_UPLOADS_MISSING: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Missing Required Attachments",
+    text: "Please attach the required documents before resubmitting.",
+  },
   LOGIN_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Login Error",

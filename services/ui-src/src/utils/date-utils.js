@@ -6,7 +6,10 @@ import { format } from 'date-fns'
  * @returns a string with the date
  */
 export function formatDate(date) {
+    let dateString="";
+
     if (date) {
-        return format(date, "EEE, MMM d yyyy, h:mm:ss a")
-    } else return null
+        dateString = format(date, "EEE, MMM d yyyy, h:mm:ss a");
+    } 
+    return dateString;
 }

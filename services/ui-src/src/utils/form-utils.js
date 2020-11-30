@@ -11,18 +11,31 @@ import React from "react";
  * @param {Array} optionsList array of objects with label and value for each option
  */
 export function renderOptionsList(optionsList) {
-    if (!optionsList || !Array.isArray(optionsList)) {
-        throw new Error("Options list must be an array of items.");
-    }
 
-    let retval = optionsList.map((item, i) => {
-        return (
-            <option key={i} value={item.value}>
-                {item.label}
-            </option>
-        );
-    });
-    return retval;
+  if (!optionsList || !Array.isArray(optionsList)) {
+    throw new Error("Options list must be an array of items.");
+  }
+
+  let retval = optionsList.map((item, i) => {
+    return (
+      <option key={i} value={item.value}>
+        {item.label}
+      </option>
+    );
+  });
+  return retval;
+}
+
+/**
+ * Validate that the State/Territory has been selected
+ * @param {value} String The Territory/State Code Selected
+ */
+export function validateTerritory(value) {
+  let errorMessage = "";
+
+  if (!value) errorMessage = "Please select a State or Territory.";
+
+  return errorMessage;
 }
 
 /**
@@ -81,4 +94,3 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
     return result;
 
 };
-
