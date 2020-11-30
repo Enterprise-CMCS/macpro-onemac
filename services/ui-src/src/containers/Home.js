@@ -1,6 +1,6 @@
 import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
-import { Link } from "react-router-dom";
+import { HashLink } from "react-router-hash-link";
 import { ROUTES } from "../Routes";
 import StepCard from "../components/StepCard";
 
@@ -67,7 +67,7 @@ export default function Home() {
       <div className="section section-support">
         <div className="section-title-center white-text">
           {"Do you have questions or need support? "}
-          <Link to={ROUTES.FAQ_TOP}>Please read the FAQ page.</Link>
+          <HashLink to={ROUTES.FAQ_TOP}>Please read the FAQ page.</HashLink>
         </div>
       </div>
     </div>
