@@ -66,7 +66,7 @@ export default function Home() {
       </div>
       <div className="section section-support">
         <div className="section-title-center white-text">
-          {"Do you have questions or need support? "}
+          {"Do you have questions or need support?"}
           <HashLink to={ROUTES.FAQ_TOP}>Please read the FAQ page.</HashLink>
         </div>
       </div>
