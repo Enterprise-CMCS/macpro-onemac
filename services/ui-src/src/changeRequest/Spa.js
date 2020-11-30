@@ -1,7 +1,6 @@
 import React, { useRef, useState, useEffect } from "react";
 import { useParams, useHistory } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
-import LoaderButton from "../components/LoaderButton";
+import { HashLink } from 'react-router-hash-link';
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import FileList from "../components/FileList";
@@ -14,10 +13,10 @@ import { formatDate } from "../utils/date-utils";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { renderOptionsList } from "../utils/form-utils";
-import config from "../utils/config";
+import { renderOptionsList, validateSpaId, validateTerritory } from "../utils/form-utils";
 
 export default function Spa() {
+
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
   const optionalUploads = [
@@ -39,7 +38,14 @@ export default function Spa() {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-  const [isFormReady, setIsFormReady] = useState(false);
+
+  // because the first time through, we do not want to be annoying with the error messaging
+  const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+
+  // if the message string is set, then the error div should be shown for these items
+  const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
+  const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
+  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -56,16 +62,17 @@ export default function Spa() {
   // Optional ID parameter from the URL
   const { id } = useParams();
 
-  // The record we are using for the form.
+  // The data record associated with form, used for initialValues
   const [changeRequest, setChangeRequest] = useState({
     type: CHANGE_REQUEST_TYPES.SPA,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
+    territory: "",
   });
 
   useEffect(() => {
     /**
-     * Fetch the given ID
+     * Fetch the data for the given ID
      */
     async function fetchChangeRequest() {
       if (!id) {
@@ -81,22 +88,21 @@ export default function Spa() {
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
 
+      // has to happen *after* the await... if you pull this out, it goes to false too soon
       setIsLoading(false);
     }
 
-    // Trigger the fetch only if an ID is present.
+    // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
+      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+
       setReadOnly(true);
       fetchChangeRequest();
-
-      PageTitleBar.setPageTitleInfo({
-        heading: "SPA Submission Details",
-        text: "",
-      });
     } else {
+      PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
       setReadOnly(false);
 
-      PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+      // because if we are in a new SPA, we don't have to wait for the data to load
       setIsLoading(false);
     }
   }, [id]);
@@ -119,11 +125,14 @@ export default function Spa() {
       updatedRecord[event.target.name] = event.target.value;
       setChangeRequest(updatedRecord);
 
-      // Check to see if the required fields are provided
-      setIsFormReady(
-        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] &&
-          updatedRecord[FIELD_NAMES.TERRITORY]
-      );
+      if (!firstTimeThrough) {
+        setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
+        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+        else setAttachmentsErrorMessage("");
+      }
+      if (event.target.name === 'transmittalNumber') {
+        setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
+      }
     }
   }
 
@@ -134,53 +143,53 @@ export default function Spa() {
   async function handleSubmit(event) {
     event.preventDefault();
 
+    // so the old alert goes away
+    AlertBar.dismiss();
+
+    // in case form validation takes a while (external validation)
     setIsLoading(true);
 
-    try {
-      let uploadedList = await uploader.current.uploadFiles();
-      await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-      history.push(ROUTES.DASHBOARD);
-      //Alert must come last or it will be cleared after the history push.
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
-      AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
-      setIsLoading(false);
-    }
-  }
+    // once Submit is clicked, show error messages
+    setFirstTimeThrough(false);
 
-  /**
-   * Get props for the select component dependent on the value of isReadOnly.
-   * Note: The defaultValue prop should NOT be set when the form is read only due to the following warning:
-   *   "Select elements must be either controlled or uncontrolled (specify either the value prop, or the defaultValue prop, but not both).
-   *    Decide between using a controlled or uncontrolled select element and remove one of these props."
-   * @param {String} id an identifier used to set select params
-   * @param {String} value the display text in select params
-   */
-  function getSelectProps(id, value) {
-    const defaultSelectProps = {
-      id,
-      name: id,
-      value,
-    };
+    const data = new FormData(event.target);
 
-    let selectProps = {};
+    // validate the form fields and set the messages
+    // because this is an asynchronous function, you can't trust that the 
+    // state functions will be processed in time to use the variables
+    let territoryMessage = "";
+    let transmittalNumberMessage = "";
 
-    if (!isReadOnly) {
-      selectProps = {
-        defaultValue: "none-selected",
-        onChange: handleInputChange,
-        required: true,
-        ...defaultSelectProps,
-      };
+    territoryMessage = validateTerritory(data.get('territory'));
+    transmittalNumberMessage = validateSpaId(data.get('transmittalNumber'));
+
+    // check which alert to show.  Fields first, than attachments
+    // if all passes, submit the form and return to dashboard
+    if (territoryMessage || transmittalNumberMessage) {
+      AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
+    } else if (!areUploadsReady) {
+      AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
     } else {
-      selectProps = {
-        disabled: true,
-        ...defaultSelectProps,
-      };
+
+      try {
+        let uploadedList = await uploader.current.uploadFiles();
+        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        history.push(ROUTES.DASHBOARD);
+        //Alert must come last or it will be cleared after the history push.
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+      } catch (error) {
+        AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+        setIsLoading(false);
+      }
     }
 
-    return selectProps;
+    // now set the state variables to show thw error messages
+    setTerritoryErrorMessage(territoryMessage);
+    setTransmittalNumberErrorMessage(transmittalNumberMessage);
+    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
+
+    window.scrollTo(0, 0);
+    setIsLoading(false);
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -189,52 +198,62 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} noValidate className={!firstTimeThrough ? "display-errors" : ""}>
             <h3>SPA Details</h3>
-            <p className={isReadOnly ? "display: none" : "req-message"}>
-              <span className="required-mark">*</span> indicates required field.
-            </p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
-                State/Territory<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
+                State/Territory<span className="required-mark">*</span>
               </label>
-              <select
-                {...getSelectProps(
-                  FIELD_NAMES.TERRITORY,
-                  changeRequest.territory
-                )}
+              {territoryErrorMessage && (
+                <div id="spaTerritoryErrorMsg"
+                  className="ds-u-color--error">{territoryErrorMessage}</div>
+              )}
+              {!isReadOnly ? <select
+                className="field"
+                id={FIELD_NAMES.TERRITORY}
+                name={FIELD_NAMES.TERRITORY}
+                onChange={handleInputChange}
+                required
               >
-                <option disabled value="none-selected">
-                  -- select a territory --
-                </option>
+                <option value="">-- select a territory --</option>
                 {renderOptionsList(territoryList)}
               </select>
+                :
+                <input
+                  className="field"
+                  type="text"
+                  id={FIELD_NAMES.TERRITORY}
+                  name={FIELD_NAMES.TERRITORY}
+                  disabled
+                  value={changeRequest.territory}
+                ></input>
+              }
               <div className="label-container">
-                <div className="label-lcol">
-                  <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                    SPA ID<span className={isReadOnly ? "display: none" : "required-mark"}>*</span>
-                  </label>
+                <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                  SPA ID<span className="required-mark">*</span>
+                </label>
                 </div>
-                <div className="label-rcol">
-                  <HashLink to="/FAQ#spa-id-format">
-                    What is my SPA ID?
-                  </HashLink>
-                </div>
+                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
               </div>
               {!isReadOnly && (
-                <p className="ds-c-field__hint">
+                <p className="field-hint">
                   Must follow the format SS-YY-NNNN-xxxx
                 </p>
+              )}
+              {transmittalNumberErrorMessage && (
+                <div id="spaTransmittalNumberErrorMsg"
+                  className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
               )}
               <input
                 className="field"
                 type="text"
-                required={!isReadOnly}
                 id={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 name={FIELD_NAMES.TRANSMITTAL_NUMBER}
                 onChange={handleInputChange}
                 disabled={isReadOnly}
                 value={changeRequest.transmittalNumber}
+                required
               ></input>
               {isReadOnly && (
                 <div>
@@ -251,29 +270,24 @@ export default function Spa() {
               )}
             </div>
             <h3>Attachments</h3>
-            {isReadOnly ? (
-              <div className="upload-card">
+            <p className="req-message">Maximum file size of 50MB.</p>
+            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
+            {attachmentsErrorMessage && !areUploadsReady && (
+              <div id="spaUploadsErrorMsg"
+                className="ds-u-color--error">{attachmentsErrorMessage}</div>
+            )}
+            <div className="upload-card">
+              {isReadOnly ? (
                 <FileList uploadList={changeRequest.uploads}></FileList>
-              </div>
-            ) : (
-              <div>
-                <p className="req-message">
-                  Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
-                </p>
-                <p className="req-message">
-                  <span className="required-mark">*</span> indicates required
-                  attachment.
-                </p>
-                <div className="upload-card">
+              ) : (
                   <FileUploader
                     ref={uploader}
                     requiredUploads={requiredUploads}
                     optionalUploads={optionalUploads}
                     readyCallback={uploadsReadyCallbackFunction}
                   ></FileUploader>
-                </div>
-              </div>
-            )}
+                )}
+            </div>
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}
@@ -286,15 +300,11 @@ export default function Spa() {
               ></TextField>
             </div>
             {!isReadOnly && (
-              <LoaderButton
+              <input
                 type="submit"
-                bsSize="large"
-                bsStyle="primary"
-                isLoading={isLoading}
-                disabled={!isFormReady || !areUploadsReady}
-              >
-                Submit
-              </LoaderButton>
+                className="form-submit"
+                value="Submit"
+              />
             )}
           </form>
         </div>

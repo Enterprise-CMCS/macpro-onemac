@@ -13,6 +13,7 @@
     "aws-amplify": "^3.0.23",
     "bootstrap": "^3.3.7",
     "date-fns": "^2.16.1",
+    "formik": "^2.2.5",
     "node-sass": "^4.14.1",
     "react": "^16.13.1",
     "react-bootstrap": "^0.33.1",
