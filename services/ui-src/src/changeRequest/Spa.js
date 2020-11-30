@@ -192,28 +192,36 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form onSubmit={handleSubmit} noValidate className={!firstTimeThrough ? "display-errors" : ""}>
+          <form
+            onSubmit={handleSubmit}
+            noValidate
+            className={!firstTimeThrough ? "display-errors" : ""}
+          >
             <h3>SPA Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message">
+              <span className="required-mark">*</span> indicates required field.
+            </p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
                 State/Territory<span className="required-mark">*</span>
               </label>
               {territoryErrorMessage && (
-                <div id="spaTerritoryErrorMsg"
-                  className="ds-u-color--error">{territoryErrorMessage}</div>
+                <div id="spaTerritoryErrorMsg" className="ds-u-color--error">
+                  {territoryErrorMessage}
+                </div>
               )}
-              {!isReadOnly ? <select
-                className="field"
-                id={FIELD_NAMES.TERRITORY}
-                name={FIELD_NAMES.TERRITORY}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">-- select a territory --</option>
-                {renderOptionsList(territoryList)}
-              </select>
-                :
+              {!isReadOnly ? (
+                <select
+                  className="field"
+                  id={FIELD_NAMES.TERRITORY}
+                  name={FIELD_NAMES.TERRITORY}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">-- select a territory --</option>
+                  {renderOptionsList(territoryList)}
+                </select>
+              ) : (
                 <input
                   className="field"
                   type="text"
@@ -222,13 +230,19 @@ export default function Spa() {
                   disabled
                   value={changeRequest.territory}
                 ></input>
-              }
+              )}
               <div className="label-container">
-                <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                  SPA ID<span className="required-mark">*</span>
-                </label>
+                <div className="label-lcol">
+                  <label
+                    className="ds-c-label"
+                    htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                  >
+                    SPA ID<span className="required-mark">*</span>
+                  </label>
                 </div>
-                <div className="label-rcol"><HashLink to="/FAQ#spa-id-format">What is my SPA ID?</HashLink></div>
+                <div className="label-rcol">
+                  <HashLink to={ROUTES.FAQ_SPA_ID}>What is my SPA ID?</HashLink>
+                </div>
               </div>
               {!isReadOnly && (
                 <p className="field-hint">
@@ -236,8 +250,12 @@ export default function Spa() {
                 </p>
               )}
               {transmittalNumberErrorMessage && (
-                <div id="spaTransmittalNumberErrorMsg"
-                  className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
+                <div
+                  id="spaTransmittalNumberErrorMsg"
+                  className="ds-u-color--error"
+                >
+                  {transmittalNumberErrorMessage}
+                </div>
               )}
               <input
                 className="field"
@@ -267,14 +285,14 @@ export default function Spa() {
             {isReadOnly ? (
               <FileList uploadList={changeRequest.uploads}></FileList>
             ) : (
-                <FileUploader
-                  ref={uploader}
-                  requiredUploads={requiredUploads}
-                  optionalUploads={optionalUploads}
-                  readyCallback={uploadsReadyCallbackFunction}
-                  showErrors={!firstTimeThrough}
-                ></FileUploader>
-              )}
+              <FileUploader
+                ref={uploader}
+                requiredUploads={requiredUploads}
+                optionalUploads={optionalUploads}
+                readyCallback={uploadsReadyCallbackFunction}
+                showErrors={!firstTimeThrough}
+              ></FileUploader>
+            )}
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}
@@ -287,11 +305,7 @@ export default function Spa() {
               ></TextField>
             </div>
             {!isReadOnly && (
-              <input
-                type="submit"
-                className="form-submit"
-                value="Submit"
-              />
+              <input type="submit" className="form-submit" value="Submit" />
             )}
           </form>
         </div>
