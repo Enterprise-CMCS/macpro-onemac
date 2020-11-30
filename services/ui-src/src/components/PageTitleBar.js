@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 
+export const TITLE_BAR_ID = "title_bar";
+
 /**
  * PageTitleBar contains supplemental information for the user in the form of a
  * title (usually describes the page) and an optional description (see About page)
@@ -73,9 +75,8 @@ export default class PageTitleBar extends Component {
   render() {
     return (
       <div>
-        <a name="title"></a>
         {this.state.isShown && (
-          <div className="page-title-bar">
+          <div id={TITLE_BAR_ID} className="page-title-bar">
             <h1>{this.state.heading}</h1>
               {this.state.text && (
                 <p className="ds-c-alert__text">{this.state.text}</p>

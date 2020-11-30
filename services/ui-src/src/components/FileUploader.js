@@ -38,7 +38,7 @@ export default class FileUploader extends Component {
   static propTypes = {
     requiredUploads: PropTypes.arrayOf(PropTypes.string),
     optionalUploads: PropTypes.arrayOf(PropTypes.string),
-    showErrors: PropTypes.arrayOf(PropTypes.bool),
+    showErrors: PropTypes.bool,
   };
 
   /**
@@ -82,9 +82,30 @@ export default class FileUploader extends Component {
 
     // This state is used to be able to update the form when a change occurs.
     this.state = { uploaderHasFile,
-      errorMessage: MISSING_REQUIRED_MESSAGE,
+      errorMessages: [],
     };
   }
+
+  /**
+   * Track updates to the showErrors property.
+   * @param {*} prevProps the previous property state
+   */
+  componentDidUpdate(prevProps) {
+    // Make sure we only continue if the property has changed value to stop cascading calls.
+    // If the showErrors flag is true then show a missing required field error if needed.
+    if (this.props.showErrors !== prevProps.showErrors && this.state.errorMessages.length === 0) {
+      let areAllComplete = true;
+      this.uploaders.forEach((uploader) => {
+        if (uploader.isRequired && !uploader.isComplete) {
+          areAllComplete = false;
+        }
+      });
+
+      if(!areAllComplete) {
+        this.setState({errorMessages: [MISSING_REQUIRED_MESSAGE]});
+      }
+    }
+}
 
   /**
    * Set the provided uploader information.
@@ -99,26 +120,26 @@ export default class FileUploader extends Component {
     }
 
     let uploader = this.uploaders[id];
+    let errorMessages = [];
 
-    // If there is no file speficified then the state is false.
+    // If there is a file speficified then
     if (files && files.length === 1) {
       // First check if the upload is larger than what is allowed
       if (files[0].size > MAX_FILE_SIZE_BYTES) {
         this.handleFileClear(event, id);
-        // The user could select a large file before the form is showing errors.
-        this.state.tooLargeErrorMessage = SIZE_TOO_LARGE_MESSAGE;
-        return;
+        errorMessages.push(SIZE_TOO_LARGE_MESSAGE);
+        uploader.isComplete = false;
+        uploader.file = null;
+      } else {
+        uploader.isComplete = true;
+        uploader.file = files[0];
       }
-
-      uploader.isComplete = true;
-      uploader.file = files[0];
-    } else {
+    }
+    // Else there is no file selected (e.g. clear the selected file). 
+    else {
       uploader.isComplete = false;
       uploader.file = null;
     }
-
-    // At this point, there are no size errors, so let the form decide when to show errors.
-    this.state.tooLargeErrorMessage = null;
 
     //Update the state, so the form is updated.
     let newState = this.state.uploaderHasFile;
@@ -130,19 +151,20 @@ export default class FileUploader extends Component {
     this.uploaders.forEach((uploader) => {
       if (uploader.isRequired && !uploader.isComplete) {
         areAllComplete = false;
-        this.state.errorMessage = MISSING_REQUIRED_MESSAGE;
       }
     });
 
     // Clear any error messages if everything is ready.
-    if(areAllComplete) {
-      this.state.errorMessage = null;
-    }
+    if(!areAllComplete && this.props.showErrors) {
+      errorMessages.push(MISSING_REQUIRED_MESSAGE);
+    } 
 
     this.allUploadsComplete = areAllComplete;
     if (this.readyCallback) {
       this.readyCallback(this.allUploadsComplete);
     }
+
+    this.setState({errorMessages: errorMessages});
   }
 
   /**
@@ -248,11 +270,8 @@ export default class FileUploader extends Component {
           attachment.
         </p>
         <div className="ds-u-color--error">
-          {this.state.errorMessage && this.props.showErrors && (
-            <div>{this.state.errorMessage}</div>
-          )}
-          {this.state.tooLargeErrorMessage && (
-            <div>{this.state.tooLargeErrorMessage}</div>
+          {this.state.errorMessages.map((message, index) => 
+           <div key={index}>{message}</div>
           )}
         </div>
         <div className="upload-card">

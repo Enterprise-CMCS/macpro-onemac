@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Alert } from "@cmsgov/design-system";
+import {TITLE_BAR_ID} from "./PageTitleBar";
 
 /**
  * Alert types
@@ -77,7 +78,8 @@ export default class AlertBar extends Component {
    */
   __alert(type, heading, text) {
     // Going to the anchor must happen first of the alert will not show.
-    window.location.href = "#title";  // Go to the top of the page to show the alert.
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    elmnt.scrollIntoView();
     this.setState({ isShown: true, type, heading, text });
   }
 
