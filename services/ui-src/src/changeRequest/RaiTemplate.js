@@ -12,7 +12,6 @@ import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
-import { Formik, Form, Field } from 'formik';
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import { validateSpaId, validateWavierId } from "../utils/form-utils";
 
@@ -133,7 +132,7 @@ export default function RaiTemplate({
             throw new Error(`Unable to validate invalid type ${changeRequestType}.`)
         }
 
-        let isValidId;
+/*        let isValidId;
         if (errorMessage === undefined) {
             isValidId = true;
         } else {
@@ -145,7 +144,7 @@ export default function RaiTemplate({
         setChangeRequest(updatedRecord);
         setValidTransmittalNumber(isValidId);
         setIsFormReady(isValidId);
-
+*/
         return errorMessage;
     };
 
@@ -159,9 +158,6 @@ export default function RaiTemplate({
             let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
             updatedRecord[event.target.name] = event.target.value;
             setChangeRequest(updatedRecord);
-
-            // Check to see if the required fields are provided
-            setIsFormReady(hasValidTransmittalNumber);
 
             if (!firstTimeThrough) {
                 if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
