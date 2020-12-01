@@ -152,16 +152,14 @@ export default function Spa() {
     // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
 
-    const data = new FormData(event.target);
-
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the 
     // state functions will be processed in time to use the variables
     let territoryMessage = "";
     let transmittalNumberMessage = "";
 
-    territoryMessage = validateTerritory(data.get('territory'));
-    transmittalNumberMessage = validateSpaId(data.get('transmittalNumber'));
+    territoryMessage = validateTerritory(changeRequest.territory);
+    transmittalNumberMessage = validateSpaId(changeRequest.transmittalNumber);
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
