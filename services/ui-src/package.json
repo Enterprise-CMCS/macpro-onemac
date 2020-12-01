@@ -21,6 +21,7 @@
     "promise-polyfill": "8.2.0",
     "react": "^16.13.1",
     "react-bootstrap": "^0.33.1",
+    "react-device-detect": "^1.14.0",
     "react-dom": "^16.13.1",
     "react-ios-switch": "^0.1.19",
     "react-phone-input-2": "^2.13.8",
