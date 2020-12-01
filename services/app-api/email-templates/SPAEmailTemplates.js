@@ -17,16 +17,21 @@ class SPAEmailTemplates {
     cmsEmail.Subject = `New SPA ${data.transmittalNumber} submitted`;
     cmsEmail.HTML = `
       <p>The Submission Portal received a State Plan Amendment:</p>
-      <p><b>State or territory</b>: ${data.territory}
-      <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
-      <br><b>Email Address</b>: ${data.user.email}
-      <br><b>ID</b>: ${data.transmittalNumber}</p>
-      <p><b>Summary</b>:
-      <br>${data.summary}</p>
-      <p><b>Files:</b>
-      <br>${getLinksHtml(data.uploads)}</p>
-      <br>
-      <p>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@CMS.HHS.gov">SPAM@CMS.HHS.gov</a>.</p>
+      <p>
+        <br><b>State or territory</b>: ${data.territory}
+        <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
+        <br><b>Email Address</b>: ${data.user.email}
+        <br><b>SPA ID</b>: ${data.transmittalNumber}
+      </p>
+      <p>
+        <b>Summary</b>:
+        <br>${data.summary}
+      </p>
+      <p>
+        <b>Files</b>:
+        ${getLinksHtml(data.uploads)}
+      </p>
+      <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@CMS.HHS.gov">SPAM@CMS.HHS.gov</a>.</p>
       <p>Thank you!</p>
     `;
 
@@ -46,18 +51,27 @@ class SPAEmailTemplates {
     stateEmail.Subject =
       "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
     stateEmail.HTML = `
-      <p>${data.user.firstName} ${data.user.lastName}</p>
       <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
-      <p><b>State or territory</b>: ${data.territory}
-      <br><b>ID</b>: ${data.transmittalNumber}
-      <p><b>Summary</b>:
-      <br>${data.summary}</p>
-      <br>
-      <p>This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
+      <p>
+        <br><b>State or territory</b>: ${data.territory}
+        <br><b>SPA ID</b>: ${data.transmittalNumber}
+        <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
+        <br><b>Submitter email</b>: ${data.user.email}
+      </p>
+      <p>
+        <b>Summary</b>:
+        <br>${data.summary}
+      </p>
+      <p>
+        <br>
+        This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
         You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
-        as day zero. The 90th day will be 90 calendar days from that date.</p>
-      <p>This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 
-        submitted SPAs only.  Any other correspondence will be disregarded.</p>
+        as day zero. The 90th day will be 90 calendar days from that date.
+      </p>
+      <p>
+        This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 
+        submitted SPAs only.  Any other correspondence will be disregarded.
+      </p>
       <p>If you have questions or did not expect this email, please contact <a href="mailto:SPA@CMS.HHS.gov">SPA@CMS.HHS.gov</a></p>
       <p>Thank you!</p>
     `;
