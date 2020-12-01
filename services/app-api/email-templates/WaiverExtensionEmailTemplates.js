@@ -23,8 +23,9 @@ class WaiverExtensionEmailTemplates {
             <br><b>ID</b>: ${data.transmittalNumber}
             <p><b>Summary</b>:
             <br>${data.summary}</p>
-            <p>Files:</p>
-            <p>${getLinksHtml(data.uploads)}</p>
+            <p><b>Files:</b>
+            <br>${getLinksHtml(data.uploads)}</p>
+            <br>
             <p>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@CMS.HHS.gov">SPAM@CMS.HHS.gov</a>.</p>
             <p>Thank you!</p>
         `;
@@ -52,6 +53,7 @@ class WaiverExtensionEmailTemplates {
             <br><b>Submitter email</b>: ${data.user.email}</p>
             <p><b>Summary</b>:
             <br>${data.summary}</p>
+            <br>
             <p>If you have any questions, please contact <a href="mailto:SPA@CMS.HHS.gov">SPA@CMS.HHS.gov</a> or your state lead.</p>
             <p>Thank you!</p>
         `;

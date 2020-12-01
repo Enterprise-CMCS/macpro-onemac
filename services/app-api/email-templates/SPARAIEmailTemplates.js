@@ -22,8 +22,9 @@ class SPARAIEmailTemplates {
             <br><b>ID</b>: ${data.transmittalNumber}
             <p><b>Summary</b>:
             <br>${data.summary}</p>
-            <p>Files:</p>
-            <p>${getLinksHtml(data.uploads)}</p>
+            <p><b>Files:</b>
+            <br>${getLinksHtml(data.uploads)}</p>
+            <br>
             <p>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@CMS.HHS.gov">SPAM@CMS.HHS.gov</a>.</p>
             <p>Thank you!</p>
         `;
@@ -49,6 +50,7 @@ class SPARAIEmailTemplates {
             <br><b>Submitter email</b>: ${data.user.email}</p>
             <p><b>Summary</b>:
             <br>${data.summary}</p>
+            <br>
             <p>This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
                 You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
                 as day zero. The 90th day will be 90 calendar days from that date.</p>
