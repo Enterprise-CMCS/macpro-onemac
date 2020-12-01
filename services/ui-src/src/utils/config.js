@@ -1,19 +1,19 @@
 export default {
     MAX_ATTACHMENT_SIZE: 5000000,
-    ALLOW_DEV_LOGIN: "true",
+    ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
     s3: {
-        REGION: "us-east-1",
-        BUCKET: "uploads-oy3088-storybook-figma-attachmentsbucket-1twn51p951zou"
+        REGION: window._env_.S3_ATTACHMENTS_BUCKET_REGION,
+        BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME
     },
     apiGateway: {
-        REGION: "us-east-1",
-        URL: "https://g0i63eeypf.execute-api.us-east-1.amazonaws.com/oy3088-storybook-figma"
+        REGION: window._env_.API_REGION,
+        URL: window._env_.API_URL
     },
     cognito: {
-        REGION: "us-east-1",
-        USER_POOL_ID: "us-east-1_g1CoR3kNs",
-        APP_CLIENT_ID: "fllf7qear614m9kvhftrlh4lk",
-        APP_CLIENT_DOMAIN: "oy3088-storybook-figma-login-fllf7qear614m9kvhftrlh4lk.auth.us-east-1.amazoncognito.com",
-        IDENTITY_POOL_ID: "us-east-1:7d5b79e2-99df-4082-aa25-ba210d48f44a",
+        REGION: window._env_.COGNITO_REGION,
+        USER_POOL_ID: window._env_.COGNITO_USER_POOL_ID,
+        APP_CLIENT_ID: window._env_.COGNITO_USER_POOL_CLIENT_ID,
+        APP_CLIENT_DOMAIN: window._env_.COGNITO_USER_POOL_CLIENT_DOMAIN,
+        IDENTITY_POOL_ID: window._env_.COGNITO_IDENTITY_POOL_ID,
     }
 };
