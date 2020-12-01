@@ -202,8 +202,6 @@ export default function Waiver() {
     // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
 
-    const data = new FormData(event.target);
-
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the 
     // state functions will be processed in time to use the variables
@@ -212,10 +210,10 @@ export default function Waiver() {
     let waiverAuthorityMessage = "";
     let transmittalNumberMessage = "";
 
-    territoryMessage = validateTerritory(data.get('territory'));
-    actionTypeMessage = validateActionType(data.get('actionType'));
-    waiverAuthorityMessage = validateWaiverAuthority(data.get('waiverAuthority'));
-    transmittalNumberMessage = validateWaiverId(data.get('transmittalNumber'));
+    territoryMessage = validateTerritory(changeRequest.territory);
+    actionTypeMessage = validateActionType(changeRequest.actionType);
+    waiverAuthorityMessage = validateWaiverAuthority(changeRequest.waiverAuthority);
+    transmittalNumberMessage = validateWaiverId(changeRequest.transmittalNumber);
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard

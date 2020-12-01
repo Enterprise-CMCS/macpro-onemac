@@ -137,8 +137,6 @@ export default function WaiverExtension() {
     async function handleSubmit(event) {
         event.preventDefault();
 
-        const data = new FormData(event.target);
-
         // so the old alert goes away
         AlertBar.dismiss();
 
@@ -152,7 +150,7 @@ export default function WaiverExtension() {
         // state functions will be processed in time to use the variables
         let transmittalNumberMessage = "";
 
-        transmittalNumberMessage = validateWaiverId(data.get('transmittalNumber'));
+        transmittalNumberMessage = validateWaiverId(changeRequest.transmittalNumber);
 
         // check which alert to show.  Fields first, than attachments
         // if all passes, submit the form and return to dashboard
