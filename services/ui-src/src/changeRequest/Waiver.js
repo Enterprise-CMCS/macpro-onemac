@@ -238,7 +238,7 @@ export default function Waiver() {
       }
     }
 
-    // now set the state variables to show thw error messages
+    // now set the state variables to show the error messages
     setTerritoryErrorMessage(territoryMessage);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);

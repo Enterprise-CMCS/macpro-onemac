@@ -219,7 +219,6 @@ export default function RaiTemplate({
 
         window.scrollTo(0, 0);
         setIsLoading(false);
-
     }
 
     // Render the component conditionally when NOT in read only mode
@@ -246,11 +245,6 @@ export default function RaiTemplate({
                                     <HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink>
                                 </div>
                             </div>
-                            {!isReadOnly && (
-                                <p className="field-hint">
-                                    Enter the transmittal number for this RAI
-                                </p>
-                            )}
                             {!isReadOnly && (
                                 <p className="field-hint">
                                     Must follow the format SS-YY-NNNN-xxxx
