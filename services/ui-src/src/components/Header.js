@@ -114,7 +114,7 @@ function Header(props) {
             <div>
                 {renderUSABar()}
                 {renderBrandBar()}
-                <Alert class="ds-c-field__error-message ds-c-field__error-message--inverse">
+                <Alert variation="error" heading="*** IE will have some styling issues.  Consider upgrading to a recommended browser.">
                     *** IE will have some styling issues.  Consider upgrading to a recommended browser.  IE support will be discontinued in 2021 ***
                 </Alert>
                 {renderNavBar()}
