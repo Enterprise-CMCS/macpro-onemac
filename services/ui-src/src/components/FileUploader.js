@@ -38,7 +38,7 @@ export default class FileUploader extends Component {
   static propTypes = {
     requiredUploads: PropTypes.arrayOf(PropTypes.string),
     optionalUploads: PropTypes.arrayOf(PropTypes.string),
-    showErrors: PropTypes.bool,
+    showRequiredFieldErrors: PropTypes.bool,
   };
 
   /**
@@ -87,13 +87,13 @@ export default class FileUploader extends Component {
   }
 
   /**
-   * Track updates to the showErrors property.
+   * Track updates to the showRequiredFieldErrors property.
    * @param {*} prevProps the previous property state
    */
   componentDidUpdate(prevProps) {
     // Make sure we only continue if the property has changed value to stop cascading calls.
-    // If the showErrors flag is true then show a missing required field error if needed.
-    if (this.props.showErrors !== prevProps.showErrors && this.state.errorMessages.length === 0) {
+    // If the showRequiredFieldErrors flag is true then show a missing required field error if needed.
+    if (this.props.showRequiredFieldErrors !== prevProps.showRequiredFieldErrors && this.state.errorMessages.length === 0) {
       let areAllComplete = true;
       this.uploaders.forEach((uploader) => {
         if (uploader.isRequired && !uploader.isComplete) {
@@ -122,7 +122,7 @@ export default class FileUploader extends Component {
     let uploader = this.uploaders[id];
     let errorMessages = [];
 
-    // If there is a file speficified then
+    // If there is a file specified then
     if (files && files.length === 1) {
       // First check if the upload is larger than what is allowed
       if (files[0].size > MAX_FILE_SIZE_BYTES) {
@@ -155,7 +155,7 @@ export default class FileUploader extends Component {
     });
 
     // Clear any error messages if everything is ready.
-    if(!areAllComplete && this.props.showErrors) {
+    if(!areAllComplete && this.props.showRequiredFieldErrors) {
       errorMessages.push(MISSING_REQUIRED_MESSAGE);
     } 
 

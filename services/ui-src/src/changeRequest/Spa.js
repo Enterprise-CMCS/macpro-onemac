@@ -290,7 +290,7 @@ export default function Spa() {
                 requiredUploads={requiredUploads}
                 optionalUploads={optionalUploads}
                 readyCallback={uploadsReadyCallbackFunction}
-                showErrors={!firstTimeThrough}
+                showRequiredFieldErrors={!firstTimeThrough}
               ></FileUploader>
             )}
             <div className="summary-box">
