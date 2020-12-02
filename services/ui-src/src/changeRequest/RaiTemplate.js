@@ -225,7 +225,11 @@ export default function RaiTemplate({
         <LoadingScreen isLoading={isLoading}>
             {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
                 <div className="form-container">
-                    <form onSubmit={handleSubmit} noValidate className={!firstTimeThrough ? "display-errors" : ""}>
+                    <form 
+                    onSubmit={handleSubmit} 
+                    noValidate 
+                    className={!firstTimeThrough ? "display-errors" : ""}
+                    >
                         <h3>{raiType} RAI Details</h3>
                         <p className="req-message">
                             <span className="required-mark">*</span>
