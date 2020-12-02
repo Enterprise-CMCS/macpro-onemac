@@ -31,7 +31,7 @@ class WaiverExtensionEmailTemplates {
             <b>Files</b>:
             ${getLinksHtml(data.uploads)}
         </p>
-        <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@CMS.HHS.gov">SPAM@CMS.HHS.gov</a>.</p>
+        <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
     `;
 
@@ -63,7 +63,7 @@ class WaiverExtensionEmailTemplates {
             <b>Summary</b>:
             <br>${data.summary}
         </p>
-        <p><br>If you have any questions, please contact <a href="mailto:SPA@CMS.HHS.gov">SPA@CMS.HHS.gov</a> or your state lead.</p>
+        <p><br>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>
         <p>Thank you!</p>
     `;
 

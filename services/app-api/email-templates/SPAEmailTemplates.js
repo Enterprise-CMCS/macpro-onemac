@@ -31,7 +31,7 @@ class SPAEmailTemplates {
         <b>Files</b>:
         ${getLinksHtml(data.uploads)}
       </p>
-      <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@CMS.HHS.gov">SPAM@CMS.HHS.gov</a>.</p>
+      <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
       <p>Thank you!</p>
     `;
 
@@ -72,7 +72,7 @@ class SPAEmailTemplates {
         This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 
         submitted SPAs only.  Any other correspondence will be disregarded.
       </p>
-      <p>If you have questions or did not expect this email, please contact <a href="mailto:SPA@CMS.HHS.gov">SPA@CMS.HHS.gov</a></p>
+      <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a></p>
       <p>Thank you!</p>
     `;
 
