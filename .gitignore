@@ -3,4 +3,5 @@
 .idea/
 .infra
 node_modules
-testcafe_results
+tests_output
+*.log
