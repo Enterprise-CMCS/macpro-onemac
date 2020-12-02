@@ -5,7 +5,7 @@ const Services ={}; loadServices();
 module.exports = {
     // An array of folders (excluding subfolders) where your tests are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
-    src_folders: './tests/cases',
+    src_folders: ["./tests/suites"],
 
     // See https://nightwatchjs.org/guide/working-with-page-objects/
     page_objects_path: './tests/page_objects',
@@ -19,21 +19,20 @@ module.exports = {
     // See https://nightwatchjs.org/guide/#external-globals
     globals_path: './nightwatch_globals.js',
 
-    disable_error_log: true,
-
+    disable_error_log: false,
 
     test_settings: {
-
+        exclude : ["./tests/unit", "./tests/cases"],
         default: {
             webdriver: {
                 start_process: true,
                 log_path: false,
             },
             screenshots : {
-                enabled : true,
-                on_failure : true,
-                on_error : false,
-                path : "../reports/screenshots/"
+                enabled : false,
+                on_failure: false,
+                on_error : true,
+                path : "./tests/reports/screenshots"
             },
         },
 
@@ -45,14 +44,14 @@ module.exports = {
                     // acceptInsecureCerts: true,
                     'moz:firefoxOptions': {
                         args: [
-                            // '-headless',
+                            //'-headless',
                             // '-verbose'
                         ],
                     }
                 }
             },
             webdriver: {
-                port: 9515,
+                port: 9516,
                 server_path: Services.geckodriver.path,
                 cli_args: [
                     // very verbose geckodriver logs
@@ -64,13 +63,13 @@ module.exports = {
         chrome: {
             desiredCapabilities : {
                 browserName : 'chrome',
-                chromeOptions : {
+                'goog:chromeOptions': {
                     // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
                     // w3c: false,
                     // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
                     args: [
                         "--log-level=3",
-                        //'--no-sandbox',
+                        //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
                         //'--headless'
@@ -80,7 +79,7 @@ module.exports = {
 
             webdriver: {
                 start_process: true,
-                port: 9516,
+                port: 9515,
                 server_path: Services.chromedriver.path,
                 cli_args: [
                     // --verbose
@@ -98,7 +97,7 @@ module.exports = {
             }
         },
 
-        'selenium.chrome': {
+        "selenium.chrome": {
             extends: 'selenium',
             desiredCapabilities: {
                 browserName: 'chrome',
@@ -109,7 +108,7 @@ module.exports = {
             }
         },
 
-        'selenium.firefox': {
+        "selenium.firefox": {
             extends: 'selenium',
             desiredCapabilities: {
                 browserName: 'firefox',
@@ -120,6 +119,11 @@ module.exports = {
             }
         },
 
+        "unit-tests" : {   // Runs only the unit tests
+            unit_tests_mode : true,
+            filter: "./tests/unit",
+            exclude : ["./tests/cases", "./tests/suites", "./tests/reports/tests"]
+        }
     }
 };
 

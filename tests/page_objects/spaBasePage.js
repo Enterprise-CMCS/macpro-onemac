@@ -1,5 +1,11 @@
 
 const commands = {
+    login: function () {
+        this.api.setValue(this.elements.userField, this.props.username).pause(100);
+        this.api.setValue(this.elements.passField, this.props.password).pause(100);
+        this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+    },
+
     uploadFiles: function (total) {
         let fs = require('fs');
         let dir = process.cwd() + '/files/';
@@ -12,16 +18,15 @@ const commands = {
             this.api.setValue(selector, file);
 
         }
-
         return this.api;
     },
 
-    transmitNumber: function () {
-        return 'VA-20-1234'
+    getTransmitNumber: function () {
+        return this.props.transmitNumber;
     },
 
-    waiverNumber: function () {
-        return 'VA.12.R34.M56'
+    getWaiverNumber: function () {
+        return this.props.waiverNumber;
     }
 }
 
@@ -33,6 +38,18 @@ module.exports = {
         title: 'div[class=dashboard-title]',
 
         transmittal: "input[id='transmittalNumber']",
+        url: 'https://d2dr7dgo9g0124.cloudfront.net',
+        userField : '#email',
+        loginButton : 'button:nth-child(2)',
+        loginTitle : 'div[class=page-title-bar]',
+        submitBtn : 'button[type=submit]',
+
+        logout : {
+            selector: '(//button)[1]',
+            locateStrategy: 'xpath'
+        },
+
+        passField : '#password',
 
         newSPA: {
             selector: "(//button[@class='ds-c-button ds-c-button--transparent'])[1]",
@@ -65,8 +82,10 @@ module.exports = {
     commands : [commands],
 
     props : {
+        username : 'automatedtester090@gmail.com',
+        password : 'id~p)$6XB:9t',
         pauseAction: 1000,
-
+        transmitNumber: 'VA-20-1234',
+        waiverNumber: 'VA.12.R34.M56'
     }
-
 };

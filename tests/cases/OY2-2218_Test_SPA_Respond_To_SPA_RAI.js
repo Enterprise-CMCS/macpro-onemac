@@ -6,19 +6,21 @@
 
  */
 
+const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 module.exports = {
     tags : ['regression'],
 
     before : function(browser) {
-        new_spa.before(browser)
+        login.before(browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
     },
 
     after : function(browser) {
-        new_spa.after(browser);
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        login.after(browser);
     },
 
-    "Login to SPA and Waiver Dashboard": new_spa["Login to SPA and Waiver Dashboard"],
 
     "Click on 'Respond to SPA RAI'": function (browser) {
         let link = '@respondSPA'
@@ -32,14 +34,20 @@ module.exports = {
             .before(spa.pauseAction);
     },
 
-    "Enter SPA ID" : new_spa["Enter SPA ID"],
+    "Enter SPA ID" : function (browser) {
+        new_spa["Enter SPA ID"](browser);
+    },
 
     "Upload Documents" : function (browser) {
         const spa = browser.page.spaBasePage();
         spa.uploadFiles(10);
     },
 
-    "Enter Comments" : new_spa["Enter Comments"],
+    "Enter Comments" : function(browser) {
+        new_spa["Enter Comments"](browser);
+    },
 
-    "Submit Response" : new_spa["Submit SPA"],
+    "Submit Response" : function (browser) {
+        new_spa["Submit SPA"](browser);
+    },
 };
