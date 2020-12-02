@@ -13,35 +13,28 @@ module.exports = {
         browser.end();
     },
 
-    'Verify SPA and Waiver Dashboard' : function (browser) {
-        let title = "Developer Login";
-        let urlSubDir = '/devlogin';
+    'Login to SPA and Waiver Dashboard' : function(browser) {
+        const loginPage = browser.page.spaBasePage();
+        let title = "SPA and Waiver Dashboard";
+        let urlSubDir = '/dashboard';
 
-        const loginPage = browser.page.spaLoginPage();
-        loginPage.click('@loginButton')
-            .expect.url().to.contain(urlSubDir).after(500);
+        loginPage.click("@loginButton");
+        browser.waitForElementPresent('body');
+
+        loginPage.login();
+        browser.verify.containsText('h1', title);
+        browser.expect.url().to.contain(urlSubDir).after(5000);
 
         loginPage
-            .assert.visible('@loginTitle')
-            .assert.containsText('h1', title)
-            .assert.elementPresent('@submitBtn');
+            .verify.visible('@loginTitle')
+            .verify.containsText('h1', title)
 
-    },
-
-    'Enter Login Credentials' : function(browser) {
-        let username = 'automatedtester090@gmail.com';
-        let password = 'id~p)$6XB:9t';
-
-        const loginPage = browser.page.spaLoginPage();
-        loginPage.setValue('@userField', username).pause(10);
-        loginPage.setValue('@passField', password).pause(10);
-        loginPage.click('@submitBtn').waitForElementNotPresent('@submitBtn');
     },
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
-        let title = 'CMS State Plan Amendment and Waiver Submission Platform'
+        let title = 'SPA and Waiver Dashboard'
         const loginPage = browser.page.spaLoginPage();
         loginPage.click('@logout');
-        loginPage.assert.containsText('h1', title);
+        loginPage.verify.not.containsText('h1', title);
     }
 };

@@ -6,19 +6,24 @@
 
  */
 
+const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 module.exports = {
     tags : ['regression'],
 
     before: function (browser) {
-        new_spa.before(browser);
+        login.before(browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
     },
 
     after: function (browser) {
-        new_spa.after(browser);
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        login.after(browser);
     },
 
-    "Login to SPA and Waiver Dashboard": new_spa["Login to SPA and Waiver Dashboard"],
+    "Login to SPA and Waiver Dashboard": function (browser) {
+        new_spa["Login to SPA and Waiver Dashboard"](browser);
+    },
 
     "Click on 'Submit new Waiver'": function (browser) {
         let new_spa = "@newWaiver";
@@ -30,7 +35,9 @@ module.exports = {
             .before(spa.pauseAction);
     },
 
-    "Enter SPA State/Territory Information": new_spa["Enter SPA State/Territory Information"],
+    "Enter SPA State/Territory Information": function(browser) {
+        new_spa["Enter SPA State/Territory Information"](browser);
+    },
 
     "Enter Action Type": function (browser) {
         let selector = '#actionType';
@@ -60,7 +67,7 @@ module.exports = {
     "Enter Waiver Number": function (browser) {
         const spa = browser.page.spaBasePage();
         let selector = '@transmittal';
-        let spa_id = spa.waiverNumber();
+        let spa_id = spa.getWaiverNumber();
         spa.click(selector).setValue(selector, spa_id)
             .expect.element(selector).value.to.equals(spa_id);
     },
@@ -70,7 +77,12 @@ module.exports = {
         spa.uploadFiles(7).pause(500);
     },
 
-    "Enter Comments": new_spa["Enter Comments"],
+    "Enter Comments": function (browser) {
+        new_spa["Enter Comments"](browser);
+    },
 
-    "Submit SPA Waiver": new_spa["Submit SPA"]
+    "Submit SPA Waiver": function (browser) {
+        new_spa["Submit SPA"](browser);
+    }
+
 };

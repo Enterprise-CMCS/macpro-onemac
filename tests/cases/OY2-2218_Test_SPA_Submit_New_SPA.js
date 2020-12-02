@@ -14,8 +14,7 @@ module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        login["Verify SPA and Waiver Dashboard"](browser);
-        login["Enter Login Credentials"](browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
     },
 
     after : function(browser) {
@@ -33,7 +32,7 @@ module.exports = {
             .before(timeout);
     },
 
-    'Enter SPA State/Territory Information' : function (browser) {
+    "Enter SPA State/Territory Information" : function (browser) {
         let selector = 'select[id=territory]'
         let state_option = "Virginia";
         browser
@@ -47,20 +46,21 @@ module.exports = {
     'Enter SPA ID' : function (browser) {
         let selector = '@transmittal';
         const spa = browser.page.spaBasePage();
-        let spa_id = spa.transmitNumber();
-        spa.click(selector).setValue(selector, spa_id)
-            .expect.element(selector).value.to.equals(spa_id);
+        let spa_id = spa.getTransmitNumber();
+        spa.click(selector);
+        spa.setValue(selector, spa_id);
+        browser.pause(500);
+        spa.expect.element(selector).value.to.equal(spa_id);
     },
 
     'Upload Documents' : function (browser) {
         const spa = browser.page.spaBasePage();
-        spa.uploadFiles(9).pause(500);
+        spa.uploadFiles(9);
     },
 
     'Enter Comments' : function (browser) {
         let selector = '#textfield_1';
         let entered_text = "Relax. This is only a test";
-
         browser
             .assert.elementPresent(selector)
             .sendKeys(selector, entered_text)
@@ -74,8 +74,9 @@ module.exports = {
         let alert_msg = "Submission Completed";
         let msg = "Your submission has been received.";
 
-        browser.click('button[type=submit]')
-            .waitForElementVisible('body')
+        browser.click('[type="submit"]');
+        browser.waitForElementVisible('body');
+        browser
             .assert.elementPresent(alert_selector)
             .assert.elementPresent(p_selector)
             .assert.containsText(alert_selector, alert_msg)

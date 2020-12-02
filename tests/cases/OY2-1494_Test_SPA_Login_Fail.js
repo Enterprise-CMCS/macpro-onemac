@@ -4,7 +4,6 @@ module.exports = {
 
   before : function(browser) {
     login.before(browser);
-    login["Verify SPA and Waiver Dashboard"](browser);
   },
 
   after : function(browser) {
@@ -12,7 +11,9 @@ module.exports = {
   },
 
   'Enter Login Credentials' : function (browser) {
-    const loginPage = browser.page.spaLoginPage();
+    const loginPage = browser.page.spaBasePage();
+    loginPage.click("@loginButton");
+    browser.waitForElementPresent('body');
     loginPage.setValue('@userField', 'automatedtester011@gmail.com');
     loginPage.setValue('@passField', 'badpassword');
     loginPage.click('@submitBtn')
