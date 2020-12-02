@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import { Alert } from "@cmsgov/design-system";
+import {TITLE_BAR_ID} from "./PageTitleBar";
 
 /**
  * Alert types
@@ -76,6 +77,9 @@ export default class AlertBar extends Component {
    * @param {string} text the alert text
    */
   __alert(type, heading, text) {
+    // Going to the anchor must happen first of the alert will not show.
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    elmnt.scrollIntoView();
     this.setState({ isShown: true, type, heading, text });
   }
 

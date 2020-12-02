@@ -1,4 +1,5 @@
 import { ALERT_TYPES } from "../components/AlertBar";
+import config from "../utils/config";
 
 /**
  * List of alert messages for the application.
@@ -43,6 +44,11 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "Login Error",
     text: "We were unable to log you in with the credentials you provided.  Please try to login again.",
+  },
+  ATTACHMENT_TOO_LARGE: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Attachment Too Large",
+    text: `An individual attachment cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.  Please select a smaller file.`,
   },
   NOT_AUTHENTICATED: {
     type: ALERT_TYPES.WARNING,
