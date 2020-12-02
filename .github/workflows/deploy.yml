@@ -63,20 +63,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: cache tools
-        uses: actions/cache@v2
-        with:
-          path: |
-            .github/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('./.github/package-lock.json') }}
-      - name: install tools
-        run: |
-          pushd .github
-            if [ ! -d node_modules ]; then
-              npm ci
-            fi
-          popd
-          echo "PATH=$(pwd)/.github/node_modules/.bin:\$PATH" >> set.env.sh
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
