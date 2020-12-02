@@ -47,6 +47,8 @@ deploy() {
 
 install_deps
 
+export PATH=$(pwd)/node_modules/.bin/:$PATH
+
 # Identify if we need the test users.
 # Note that we use ALLOW_DEV_LOGIN in ui-src as well to show Dev only login buttons.
 export ALLOW_DEV_LOGIN=true
