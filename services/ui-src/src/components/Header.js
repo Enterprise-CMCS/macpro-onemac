@@ -109,26 +109,16 @@ function Header(props) {
         }
     }
 
-    if (isIE) {
         return (
             <div>
                 {renderUSABar()}
                 {renderBrandBar()}
-                <Alert variation="error" heading="*** IE will have some styling issues.  Consider upgrading to a recommended browser.">
+                { !isIE && <Alert variation="error" heading="*** IE will have some styling issues.  Consider upgrading to a recommended browser.">
                     *** IE will have some styling issues.  Consider upgrading to a recommended browser.  IE support will be discontinued in 2021 ***
-                </Alert>
+                </Alert> }
                 {renderNavBar()}
             </div>
         )
-    } else {
-        return (
-            <div>
-                {renderUSABar()}
-                {renderBrandBar()}
-                {renderNavBar()}
-            </div>
-        );
-    }
 }
 
 export default Header;
