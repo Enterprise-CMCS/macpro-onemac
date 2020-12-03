@@ -44,6 +44,9 @@ module.exports = {
                     // acceptInsecureCerts: true,
                     'moz:firefoxOptions': {
                         args: [
+                            '-headless',
+                            '--window-size=1024,768',
+                            '-verbose'
                             //'-headless',
                             // '-verbose'
                         ],
@@ -69,6 +72,8 @@ module.exports = {
                     // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
                     args: [
                         "--log-level=3",
+                        "--window-size='1024,768'",
+                        "--headless"
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
@@ -78,7 +83,6 @@ module.exports = {
             },
 
             webdriver: {
-                start_process: true,
                 port: 9515,
                 server_path: Services.chromedriver.path,
                 cli_args: [
