@@ -21,10 +21,6 @@ module.exports = {
         login.after(browser);
     },
 
-    "Login to SPA and Waiver Dashboard": function (browser) {
-        new_spa["Login to SPA and Waiver Dashboard"](browser);
-    },
-
     "Click on 'Submit new Waiver'": function (browser) {
         let new_spa = "@newWaiver";
         const spa = browser.page.spaBasePage();
@@ -43,12 +39,8 @@ module.exports = {
         let selector = '#actionType';
         let value = 'N';
         let action_type = 'New waiver';
-        browser
-            .click(selector)
-            .keys(value)
-            .click(selector)
-            .verify.containsText(selector, action_type)
-            .pause(500);
+        browser.setValue(selector, value);
+        browser.verify.containsText(selector, action_type);
     },
 
     "Enter Waiver Authority": function (browser) {
@@ -56,12 +48,8 @@ module.exports = {
         let value = 'A'
         let state_option = 'All other 1915(b) Waivers';
 
-        browser.useCss()
-            .click(selector)
-            .keys(value)
-            .click(selector)
-            .verify.containsText(selector, state_option)
-            .pause(500);
+        browser.setValue(selector, value);
+        browser.verify.containsText(selector, state_option).pause(500);
     },
 
     "Enter Waiver Number": function (browser) {
