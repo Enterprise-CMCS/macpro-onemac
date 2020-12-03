@@ -36,7 +36,7 @@ module.exports = {
         browserName : 'chrome',
         chromeOptions : {
           args: [
-            //'-headless',
+            '-headless',
           ]
         }
       },
@@ -153,3 +153,4 @@ function loadServices() {
   try {
     Services.geckodriver = require('geckodriver');
   } catch (err) {}
+}
