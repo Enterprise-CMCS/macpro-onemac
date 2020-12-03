@@ -23,24 +23,21 @@ module.exports = {
     },
 
     "Click on 'Start a new SPA'": function (browser) {
-        let link = '@newSPA';
-        let subDir = '/spa';
         const spa = browser.page.spaBasePage();
-        spa.assert.elementPresent(link)
-            .click(link)
-            .expect.url().to.contain(subDir)
-            .before(timeout);
+        spa.verify.elementPresent('@newSPA');
+        spa.click('@newSPA').waitForElementPresent('body');
+        spa.expect.url().to.contain('/spa').before(5000);
     },
 
     "Enter SPA State/Territory Information" : function (browser) {
         let selector = 'select[id=territory]'
         let state_option = "Virginia";
-        browser
-            .click(selector)
-            .setValue(selector, ["V", "V" , "V"])
-            .click(selector)
-            .assert.containsText(selector, state_option)
-            .pause(timeout);
+        browser.click(selector)
+        browser.setValue(selector, "VVV");
+
+        browser.waitForElementVisible(selector);
+        browser.verify.containsText(selector, state_option);
+        browser.pause(timeout);
     },
 
     'Enter SPA ID' : function (browser) {
