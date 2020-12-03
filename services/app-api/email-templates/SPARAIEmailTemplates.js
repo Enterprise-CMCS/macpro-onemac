@@ -30,7 +30,7 @@ class SPARAIEmailTemplates {
             <b>Files</b>:
             ${getLinksHtml(data.uploads)}
         </p>
-        <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
+        <p><br>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
     `;
 
