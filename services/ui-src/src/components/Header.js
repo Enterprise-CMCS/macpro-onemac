@@ -113,8 +113,8 @@ function Header(props) {
             <div>
                 {renderUSABar()}
                 {renderBrandBar()}
-                { isIE && <Alert variation="error" heading="*** IE will have some styling issues.  Consider upgrading to a recommended browser.">
-                    *** IE will have some styling issues.  Consider upgrading to a recommended browser.  IE support will be discontinued in 2021 ***
+                { isIE && <Alert variation="error" heading="Internet Explorer Browser Issues">
+                    Please consider upgrading to a recommended browser. Internet Explorer may have functionality issues and we recommend using another browser to access the system. Check out the  <a href="/FAQ"> FAQ page</a> for a list of recommended browsers.”
                 </Alert> }
                 {renderNavBar()}
             </div>
