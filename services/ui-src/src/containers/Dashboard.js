@@ -32,6 +32,8 @@ export default function Dashboard() {
 
       try {
         setChangeRequestList(await ChangeRequestDataApi.getAll());
+        const allIssues = await ChangeRequestDataApi.listAll();
+        console.log(JSON.stringify(allIssues));
         setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);

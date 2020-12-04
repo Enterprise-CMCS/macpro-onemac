@@ -85,7 +85,7 @@ functions:
     role: LambdaApiRole
     events:
       - http:
-          path: get
+          path: listall
           method: get
           cors: true
           authorizer: aws_iam
