@@ -81,7 +81,7 @@ functions:
           cors: true
           authorizer: aws_iam
   listall:
-    handler: list.main
+    handler: listall.main
     role: LambdaApiRole
     events:
       - http:
