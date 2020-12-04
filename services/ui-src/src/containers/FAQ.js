@@ -25,7 +25,7 @@ export default class FAQ extends Component {
 
                     <h4>What attachments do we need to submit a new SPA?</h4>
                     <p>SPA submission requirements can be found in regulation&nbsp;
-                <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=7d639b87112e05a57ff40731d647bd05&mc=true&node=se42.4.430_112&rgn=div8" target="_blank">42 C.F.R. §430.12.</a>.  Required attachments for form completion are:</p>
+                <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=7d639b87112e05a57ff40731d647bd05&mc=true&node=se42.4.430_112&rgn=div8" target="blank">42 C.F.R. §430.12.</a>.  Required attachments for form completion are:</p>
                     <ul>
                         <li>Digitized Transmittal and Notice of Approval of State Plan Material (CMS 179) form </li>
                         <li>SPA Pages</li>
