@@ -22,6 +22,7 @@ module.exports = {
     disable_error_log: false,
 
     test_settings: {
+        launch_url: `${process.env.APPLICATION_ENDPOINT}`,
         exclude : ["./tests/unit", "./tests/cases"],
         default: {
             webdriver: {

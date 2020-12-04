@@ -38,7 +38,7 @@ module.exports = {
         title: 'div[class=dashboard-title]',
 
         transmittal: "input[id='transmittalNumber']",
-        url: 'https://d2dr7dgo9g0124.cloudfront.net',
+        url: `${process.env.APPLICATION_ENDPOINT}`,
         userField : '#email',
         loginButton : 'button:nth-child(2)',
         loginTitle : 'div[class=page-title-bar]',
