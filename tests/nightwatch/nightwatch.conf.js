@@ -69,10 +69,12 @@ module.exports = {
                     // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
                     args: [
                         "--log-level=3",
+                        "--window-size='1024,768'",
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        //'--headless'
+                        '--headless'
+
                     ]
                 }
             },
