@@ -87,13 +87,7 @@ class ChangeRequestDataApi {
    */
   async listAll() {
     try {
-      return await API.get("changeRequestAPI", `/listall`,  {
-        headers: {
-        "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Origin": "*",
-            "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
-      },
-      });
+      return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
       console.log(
           `There was an error fetching all change requests for the user.`,
