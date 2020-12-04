@@ -2,6 +2,6 @@
 
 set -e
 
-pushd tests/nightwatch
-./test_runner.sh
+pushd tests
+./test.sh
 popd
