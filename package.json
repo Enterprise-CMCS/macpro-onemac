@@ -21,7 +21,9 @@
   "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
   "devDependencies": {
     "chromedriver": "^86.0.0",
+    "geckodriver": "^1.21.0",
     "nightwatch": "^1.5.1",
+    "selenium-server": "^3.141.59",
     "serverless": "^1.82.0"
   }
 }

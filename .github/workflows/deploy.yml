@@ -76,6 +76,7 @@ jobs:
             services/ui-src/node_modules
             node_modules
             tests/nightwatch/node_modules
+            tests/nightwatch/conf/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: set path
         run: |

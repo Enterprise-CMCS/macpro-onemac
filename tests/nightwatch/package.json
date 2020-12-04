@@ -1,15 +1,31 @@
 {
-  "name": "intro-nightwatch",
+  "name": "macstack-spa-submission-form",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "Automated Testing Framework using Nightwatch.js",
+  "private": "true",
   "scripts": {
-    "test": "nightwatch"
+    "chrome": "node nightwatch -c conf/nightwatch.conf.js -e chrome",
+    "firefox": "node nightwatch -c conf/nightwatch.conf.js -e firefox",
+    "cross-browser": "node nightwatch -c conf/nightwatch.conf.js -e chrome,firefox",
+    "update": "npx npm-check-updates -u && npm install"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CMSgov/macstack-spa-submission-form.git"
+  },
+  "keywords": [],
   "author": "",
   "license": "ISC",
-  "devDependencies": {
-    "chromedriver": "^86.0.0",
+  "bugs": {
+    "url": "https://github.com/CMSgov/macstack-spa-submission-form/issues"
+  },
+  "homepage": "https://github.com/CMSgov/macstack-spa-submission-form#readme",
+  "dependencies": {
     "nightwatch": "^1.5.1"
+  },
+  "devDependencies": {
+    "chromedriver": "^87.0.1",
+    "geckodriver": "^1.21.0",
+    "selenium-server": "^3.141.59"
   }
 }

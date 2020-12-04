@@ -3,5 +3,12 @@
 .idea/
 .infra
 node_modules
-tests_output
+tests_output/*
+scratch
+.run
+!*.md
 *.log
+*.xml
+reports/
+reports/screenshots/
+tests/aut_model/*

@@ -1,0 +1,40 @@
+
+module.exports = {
+    tags : ['login', 'smoke'],
+
+    before : function(browser) {
+        console.log('Setting up...');
+        const loginPage = browser.page.spaLoginPage();
+        loginPage.navigate().waitForElementVisible('body');
+    },
+
+    after : function(browser) {
+        console.log('Closing down...');
+        browser.end();
+    },
+
+    'Login to SPA and Waiver Dashboard' : function(browser) {
+        const loginPage = browser.page.spaBasePage();
+        let title = "SPA and Waiver Dashboard";
+        let urlSubDir = '/dashboard';
+
+        loginPage.click("@loginButton");
+        browser.waitForElementPresent('body');
+
+        loginPage.login();
+        browser.verify.containsText('h1', title);
+        browser.expect.url().to.contain(urlSubDir).after(5000);
+
+        loginPage
+            .verify.visible('@loginTitle')
+            .verify.containsText('h1', title)
+
+    },
+
+    'Logout of SPA and Waiver Dashboard' : function (browser) {
+        let title = 'SPA and Waiver Dashboard'
+        const loginPage = browser.page.spaLoginPage();
+        loginPage.click('@logout');
+        loginPage.verify.not.containsText('h1', title);
+    }
+};
