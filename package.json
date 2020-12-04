@@ -18,6 +18,7 @@
     "update": "npx npm-check-updates -u && npm install",
     "integration": "node nightwatch.js -c nightwatch/conf/nightwatch.conf.js -e unit-test --tag integration"
   },
+  "unsafe-perm": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CMSgov/macpro-quickstart-serverless.git"
