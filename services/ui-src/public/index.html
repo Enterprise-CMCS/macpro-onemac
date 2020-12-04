@@ -12,6 +12,13 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
+    <!-- Legacy browser (IE11) -->
+    <script nomodule src="webcomponents-loader.js"></script>
+    <script nomodule src='index.js'></script>
+    <script src="https://sdk.amazonaws.com/js/aws-sdk-2.797.0.min.js"></script>
+    <reference types="aws-sdk" />
+    <!-- Modern browser -->
+    <script type="module" src='index.es6.js'></script>
     <div id="root"></div>
   </body>
 </html>
