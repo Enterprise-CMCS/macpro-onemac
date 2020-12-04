@@ -2,7 +2,6 @@
 */.DS_Store
 .idea/
 .infra
-node_modules
 tests_output/*
 scratch
 .run
@@ -12,3 +11,4 @@ scratch
 reports/
 reports/screenshots/
 tests/aut_model/*
+node_modules
