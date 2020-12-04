@@ -132,7 +132,7 @@ ul {
   .uploader-controls-cell {
     width: 10%;
   }
-  
+
   .uploader-clear-button {
     @extend .ds-c-button;
     @extend .ds-c-button--transparent;
@@ -298,6 +298,7 @@ input[type="file"] {
   .card-content {
     padding-top: 15px;
     text-align: center;
+    width: 240px;
   }
 }
 
@@ -461,7 +462,7 @@ input[type="file"] {
   line-height: 24px;
   border: none;
 }
-.display-errors input:invalid, 
+.display-errors input:invalid,
 .display-errors select:invalid  {
   border-color: red;
 }
