@@ -9,6 +9,7 @@
     "cross-browser": "node nightwatch -c conf/nightwatch.conf.js -e chrome,firefox",
     "update": "npx npm-check-updates -u && npm install"
   },
+  "unsafe-perm": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CMSgov/macstack-spa-submission-form.git"

@@ -1,5 +1,5 @@
 .run
-!*.md
+!README.md
 *.log
 *.xml
 .idea
@@ -10,3 +10,4 @@ scratch
 /node_modules/*
 /tests_output/*
 node_modules/**
+
