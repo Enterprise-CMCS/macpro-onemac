@@ -90,7 +90,7 @@ class ChangeRequestDataApi {
       return await API.get("changeRequestAPI", `/listall`,  {
         headers: {
         "Access-Control-Allow-Headers" : "Content-Type",
-            "Access-Control-Allow-Origin": "https://www.example.com",
+            "Access-Control-Allow-Origin": "*",
             "Access-Control-Allow-Methods": "OPTIONS,POST,GET"
       },
       });
