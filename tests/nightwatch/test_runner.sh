@@ -13,7 +13,7 @@ install_deps() {
   fi
 }
 
-pushd nightwatch
+pushd /tests/nightwatch
 install_deps
 PATH=$(pwd)/node_modules/.bin/:$PATH
 popd
