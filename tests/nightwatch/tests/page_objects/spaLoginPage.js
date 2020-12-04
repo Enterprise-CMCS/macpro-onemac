@@ -1,6 +1,6 @@
 
 module.exports = {
-    url: 'https://d2dr7dgo9g0124.cloudfront.net',
+    url: `${process.env.APPLICATION_ENDPOINT}`,
 
     elements : {
         loginTitle : 'div[class=page-title-bar]',

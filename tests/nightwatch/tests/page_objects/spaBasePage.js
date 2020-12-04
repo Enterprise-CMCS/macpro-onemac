@@ -82,8 +82,8 @@ module.exports = {
     commands : [commands],
 
     props : {
-        username : 'automatedtester090@gmail.com',
-        password : 'id~p)$6XB:9t',
+        username : 'user1@cms.hhs.local',
+        password : 'Passw0rd!',
         pauseAction: 1000,
         transmitNumber: 'VA-20-1234',
         waiverNumber: 'VA.12.R34.M56'
