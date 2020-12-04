@@ -398,27 +398,16 @@ export default function Waiver() {
                   )}
                 </div>
                 <h3>Attachments</h3>
-                <p className="req-message">Maximum file size of 50MB.</p>
-                <p className="req-message">
-                  <span className="required-mark">*</span>
-                  indicates required attachment.
-                </p>
-                {attachmentsErrorMessage && !areUploadsReady && (
-              <div id="spaUploadsErrorMsg"
-                className="ds-u-color--error">{attachmentsErrorMessage}</div>
-            )}
-                <div className="upload-card">
-                  {isReadOnly ? (
-                    <FileList uploadList={changeRequest.uploads}></FileList>
-                  ) : (
-                      <FileUploader
-                        ref={uploader}
-                        requiredUploads={requiredUploads}
-                        optionalUploads={optionalUploads}
-                        readyCallback={uploadsReadyCallbackFunction}
-                      ></FileUploader>
-                    )}
-                </div>
+                {isReadOnly ? (
+                  <FileList uploadList={changeRequest.uploads}></FileList>
+                ) : (
+                  <FileUploader
+                    ref={uploader}
+                    requiredUploads={requiredUploads}
+                    optionalUploads={optionalUploads}
+                    readyCallback={uploadsReadyCallbackFunction}
+                  ></FileUploader>
+                )}
                 <div className="summary-box">
                   <TextField
                     name={FIELD_NAMES.SUMMARY}

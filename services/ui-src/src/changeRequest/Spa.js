@@ -45,7 +45,6 @@ export default function Spa() {
   // if the message string is set, then the error div should be shown for these items
   const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
   const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
-  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -133,8 +132,6 @@ export default function Spa() {
 
       if (!firstTimeThrough) {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
-        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-        else setAttachmentsErrorMessage("");
       }
       if (event.target.name === 'transmittalNumber') {
         setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
@@ -190,9 +187,6 @@ export default function Spa() {
     // now set the state variables to show thw error messages
     setTerritoryErrorMessage(territoryMessage);
     setTransmittalNumberErrorMessage(transmittalNumberMessage);
-    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-
-    window.scrollTo(0, 0);
     setIsLoading(false);
   }
 
@@ -202,32 +196,36 @@ export default function Spa() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form 
-            onSubmit={handleSubmit} 
-            noValidate 
+          <form
+            onSubmit={handleSubmit}
+            noValidate
             className={!firstTimeThrough ? "display-errors" : ""}
-            >
+          >
             <h3>SPA Details</h3>
-            <p className="req-message"><span className="required-mark">*</span> indicates required field.</p>
+            <p className="req-message">
+              <span className="required-mark">*</span> indicates required field.
+            </p>
             <div className="form-card">
               <label htmlFor={FIELD_NAMES.TERRITORY}>
                 State/Territory<span className="required-mark">*</span>
               </label>
               {territoryErrorMessage && (
-                <div id="spaTerritoryErrorMsg"
-                  className="ds-u-color--error">{territoryErrorMessage}</div>
+                <div id="spaTerritoryErrorMsg" className="ds-u-color--error">
+                  {territoryErrorMessage}
+                </div>
               )}
-              {!isReadOnly ? <select
-                className="field"
-                id={FIELD_NAMES.TERRITORY}
-                name={FIELD_NAMES.TERRITORY}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">-- select a territory --</option>
-                {renderOptionsList(territoryList)}
-              </select>
-                :
+              {!isReadOnly ? (
+                <select
+                  className="field"
+                  id={FIELD_NAMES.TERRITORY}
+                  name={FIELD_NAMES.TERRITORY}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">-- select a territory --</option>
+                  {renderOptionsList(territoryList)}
+                </select>
+              ) : (
                 <input
                   className="field"
                   type="text"
@@ -236,13 +234,19 @@ export default function Spa() {
                   disabled
                   value={changeRequest.territory}
                 ></input>
-              }
+              )}
               <div className="label-container">
-                <div className="label-lcol"><label className="ds-c-label" htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                  SPA ID<span className="required-mark">*</span>
-                </label>
+                <div className="label-lcol">
+                  <label
+                    className="ds-c-label"
+                    htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}
+                  >
+                    SPA ID<span className="required-mark">*</span>
+                  </label>
                 </div>
-                <div className="label-rcol"><HashLink to={ROUTES.FAQ_SPA_ID}>What is my SPA ID?</HashLink></div>
+                <div className="label-rcol">
+                  <HashLink to={ROUTES.FAQ_SPA_ID}>What is my SPA ID?</HashLink>
+                </div>
               </div>
               {!isReadOnly && (
                 <p className="field-hint">
@@ -250,8 +254,12 @@ export default function Spa() {
                 </p>
               )}
               {transmittalNumberErrorMessage && (
-                <div id="spaTransmittalNumberErrorMsg"
-                  className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
+                <div
+                  id="spaTransmittalNumberErrorMsg"
+                  className="ds-u-color--error"
+                >
+                  {transmittalNumberErrorMessage}
+                </div>
               )}
               <input
                 className="field"
@@ -278,24 +286,17 @@ export default function Spa() {
               )}
             </div>
             <h3>Attachments</h3>
-            <p className="req-message">Maximum file size of 50MB.</p>
-            <p className="req-message"><span className="required-mark">*</span> indicates required attachment.</p>
-            {attachmentsErrorMessage && !areUploadsReady && (
-              <div id="spaUploadsErrorMsg"
-                className="ds-u-color--error">{attachmentsErrorMessage}</div>
+            {isReadOnly ? (
+              <FileList uploadList={changeRequest.uploads}></FileList>
+            ) : (
+              <FileUploader
+                ref={uploader}
+                requiredUploads={requiredUploads}
+                optionalUploads={optionalUploads}
+                readyCallback={uploadsReadyCallbackFunction}
+                showRequiredFieldErrors={!firstTimeThrough}
+              ></FileUploader>
             )}
-            <div className="upload-card">
-              {isReadOnly ? (
-                <FileList uploadList={changeRequest.uploads}></FileList>
-              ) : (
-                  <FileUploader
-                    ref={uploader}
-                    requiredUploads={requiredUploads}
-                    optionalUploads={optionalUploads}
-                    readyCallback={uploadsReadyCallbackFunction}
-                  ></FileUploader>
-                )}
-            </div>
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}
@@ -308,11 +309,7 @@ export default function Spa() {
               ></TextField>
             </div>
             {!isReadOnly && (
-              <input
-                type="submit"
-                className="form-submit"
-                value="Submit"
-              />
+              <input type="submit" className="form-submit" value="Submit" />
             )}
           </form>
         </div>

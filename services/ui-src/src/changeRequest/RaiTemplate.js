@@ -45,7 +45,6 @@ export default function RaiTemplate({
 
     // if the message string is set, then the error div should be shown for these items
     const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
-    const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
     // True if we are currently submitting the form or on inital load of the form
     const [isLoading, setIsLoading] = useState(true);
@@ -208,10 +207,10 @@ export default function RaiTemplate({
         <LoadingScreen isLoading={isLoading}>
             {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
                 <div className="form-container">
-                    <form 
-                    onSubmit={handleSubmit} 
-                    noValidate 
-                    className={!firstTimeThrough ? "display-errors" : ""}
+                    <form
+                        onSubmit={handleSubmit}
+                        noValidate
+                        className={!firstTimeThrough ? "display-errors" : ""}
                     >
                         <h3>{raiType} RAI Details</h3>
                         <p className="req-message">
@@ -223,7 +222,7 @@ export default function RaiTemplate({
                                 <div className="label-lcol">
                                     <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
                                         {transmittalNumberLabel}
-                                                <span className="required-mark">*</span>
+                                        <span className="required-mark">*</span>
                                     </label>
                                 </div>
                                 <div className="label-rcol">
@@ -262,18 +261,7 @@ export default function RaiTemplate({
                                     ></input>
                                 </div>
                             )}
-                        </div>
-                        <h3>Attachments</h3>
-                        <p className="req-message">Maximum file size of 50MB.</p>
-                        <p className="req-message">
-                            <span className="required-mark">*</span>
-                                    indicates required attachment.
-                                </p>
-                        {attachmentsErrorMessage && !areUploadsReady && (
-                            <div id="spaUploadsErrorMsg"
-                                className="ds-u-color--error">{attachmentsErrorMessage}</div>
-                        )}
-                        <div className="upload-card">
+                            <h3>Attachments</h3>
                             {isReadOnly ? (
                                 <FileList uploadList={changeRequest.uploads}></FileList>
                             ) : (
@@ -284,18 +272,17 @@ export default function RaiTemplate({
                                         readyCallback={uploadsReadyCallbackFunction}
                                     ></FileUploader>
                                 )}
-                        </div>
-                        <div className="summary-box">
-                            <TextField
-                                name={FIELD_NAMES.SUMMARY}
-                                label="Summary"
-                                fieldClassName="summary-field"
-                                multiline
-                                onChange={handleInputChange}
-                                disabled={isReadOnly}
-                                value={changeRequest.summary}
-                            ></TextField>
-                        </div>
+                            <div className="summary-box">
+                                <TextField
+                                    name={FIELD_NAMES.SUMMARY}
+                                    label="Summary"
+                                    fieldClassName="summary-field"
+                                    multiline
+                                    onChange={handleInputChange}
+                                    disabled={isReadOnly}
+                                    value={changeRequest.summary}
+                                ></TextField>
+                            </div>
                         {!isReadOnly && (
                             <input
                                 type="submit"
@@ -305,8 +292,8 @@ export default function RaiTemplate({
                         )}
                     </form>
                 </div>
-    ) : null
-}
+            ) : null
+            }
         </LoadingScreen >
     );
 }
@@ -316,4 +303,7 @@ RaiTemplate.propTypes = {
     optionalUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
     requiredUploads: PropTypes.arrayOf(PropTypes.string).isRequired,
     raiType: PropTypes.oneOf(["SPA", "Waiver"]).isRequired,
+    transmittalNumberLabel: PropTypes.string.isRequired,
+    transmittalNumberHint: PropTypes.string.isRequired,
+    FAQLink: PropTypes.string.isRequired,
 };
