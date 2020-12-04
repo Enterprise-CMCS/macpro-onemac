@@ -141,10 +141,6 @@ export default function RaiTemplate({
             updatedRecord[event.target.name] = event.target.value;
             setChangeRequest(updatedRecord);
 
-            if (!firstTimeThrough) {
-                if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-                else setAttachmentsErrorMessage("");
-            }
             if (event.target.name === 'transmittalNumber') {
                 setTransmittalNumberErrorMessage(validateTransmittalNumber(updatedRecord.transmittalNumber));
             }
@@ -195,9 +191,6 @@ export default function RaiTemplate({
 
         // now set the state variables to show thw error messages
         setTransmittalNumberErrorMessage(transmittalNumberMessage);
-        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-
-        window.scrollTo(0, 0);
         setIsLoading(false);
     }
 
@@ -261,28 +254,30 @@ export default function RaiTemplate({
                                     ></input>
                                 </div>
                             )}
-                            <h3>Attachments</h3>
-                            {isReadOnly ? (
-                                <FileList uploadList={changeRequest.uploads}></FileList>
-                            ) : (
-                                    <FileUploader
-                                        ref={uploader}
-                                        requiredUploads={requiredUploads}
-                                        optionalUploads={optionalUploads}
-                                        readyCallback={uploadsReadyCallbackFunction}
-                                    ></FileUploader>
-                                )}
-                            <div className="summary-box">
-                                <TextField
-                                    name={FIELD_NAMES.SUMMARY}
-                                    label="Summary"
-                                    fieldClassName="summary-field"
-                                    multiline
-                                    onChange={handleInputChange}
-                                    disabled={isReadOnly}
-                                    value={changeRequest.summary}
-                                ></TextField>
-                            </div>
+                        </div>
+                        <h3>Attachments</h3>
+                        {isReadOnly ? (
+                            <FileList uploadList={changeRequest.uploads}></FileList>
+                        ) : (
+                                <FileUploader
+                                    ref={uploader}
+                                    requiredUploads={requiredUploads}
+                                    optionalUploads={optionalUploads}
+                                    readyCallback={uploadsReadyCallbackFunction}
+                                    showRequiredFieldErrors={!firstTimeThrough}
+                                ></FileUploader>
+                            )}
+                        <div className="summary-box">
+                            <TextField
+                                name={FIELD_NAMES.SUMMARY}
+                                label="Summary"
+                                fieldClassName="summary-field"
+                                multiline
+                                onChange={handleInputChange}
+                                disabled={isReadOnly}
+                                value={changeRequest.summary}
+                            ></TextField>
+                        </div>
                         {!isReadOnly && (
                             <input
                                 type="submit"

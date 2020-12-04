@@ -36,7 +36,6 @@ export default function WaiverExtension() {
 
     // if the message string is set, then the error div should be shown for these items
     const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
-    const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
     // True if we are currently submitting the form or on inital load of the form
     const [isLoading, setIsLoading] = useState(true);
@@ -119,10 +118,6 @@ export default function WaiverExtension() {
             updatedRecord[event.target.name] = event.target.value;
             setChangeRequest(updatedRecord);
 
-            if (!firstTimeThrough) {
-                if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-                else setAttachmentsErrorMessage("");
-            }
             if (event.target.name === 'transmittalNumber') {
                 setTransmittalNumberErrorMessage(validateWaiverId(updatedRecord.transmittalNumber));
             }
@@ -175,9 +170,6 @@ export default function WaiverExtension() {
 
         // now set the state variables to show the error messages
         setTransmittalNumberErrorMessage(transmittalNumberMessage);
-        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-
-        window.scrollTo(0, 0);
         setIsLoading(false);
     }
 
@@ -242,6 +234,7 @@ export default function WaiverExtension() {
                                     ></input>
                                 </div>
                             )}
+                            </div>
                             <h3>Attachments</h3>
                             {isReadOnly ? (
                                 <FileList uploadList={changeRequest.uploads}></FileList>
@@ -251,9 +244,9 @@ export default function WaiverExtension() {
                                         requiredUploads={requiredUploads}
                                         optionalUploads={optionalUploads}
                                         readyCallback={uploadsReadyCallbackFunction}
+                                        showRequiredFieldErrors={!firstTimeThrough}
                                     ></FileUploader>
                                 )}
-                        </div>
                         <div className="summary-box">
                             <TextField
                                 name={FIELD_NAMES.SUMMARY}

@@ -65,7 +65,6 @@ export default function Waiver() {
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] = useState("");
   const [transmittalNumberErrorMessage, setTransmittalNumberErrorMessage] = useState("");
-  const [attachmentsErrorMessage, setAttachmentsErrorMessage] = useState("");
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(true);
@@ -178,8 +177,6 @@ export default function Waiver() {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
         setActionTypeErrorMessage(validateActionType(updatedRecord.actionType));
         setWaiverAuthorityErrorMessage(validateWaiverAuthority(updatedRecord.waiverAuthority));
-        if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-        else setAttachmentsErrorMessage("");
       }
       if (event.target.name === 'transmittalNumber') {
         setTransmittalNumberErrorMessage(validateWaiverId(updatedRecord.transmittalNumber));
@@ -217,8 +214,8 @@ export default function Waiver() {
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
-    if (territoryMessage || transmittalNumberMessage || 
-        actionTypeMessage || waiverAuthorityMessage) {
+    if (territoryMessage || transmittalNumberMessage ||
+      actionTypeMessage || waiverAuthorityMessage) {
       AlertBar.alert(ALERTS_MSG.SUBMISSION_INCOMPLETE);
     } else if (!areUploadsReady) {
       AlertBar.alert(ALERTS_MSG.REQUIRED_UPLOADS_MISSING);
@@ -241,9 +238,6 @@ export default function Waiver() {
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setTransmittalNumberErrorMessage(transmittalNumberMessage);
-    if (!areUploadsReady) setAttachmentsErrorMessage("Required Attachments Missing");
-
-    window.scrollTo(0, 0);
     setIsLoading(false);
   }
 
@@ -253,22 +247,22 @@ export default function Waiver() {
     <LoadingScreen isLoading={isLoading}>
       {!isReadOnly || (isReadOnly && changeRequest !== null) ? (
         <div className="form-container">
-          <form 
-            onSubmit={handleSubmit} 
-            noValidate 
+          <form
+            onSubmit={handleSubmit}
+            noValidate
             className={!firstTimeThrough ? "display-errors" : ""}
-            >
-                <h3>Waiver Action Details</h3>
-                <p className="req-message">
-                  <span className="required-mark">*</span>
+          >
+            <h3>Waiver Action Details</h3>
+            <p className="req-message">
+              <span className="required-mark">*</span>
                   indicates required field.
                 </p>
-                <div className="form-card">
-                  <label htmlFor={FIELD_NAMES.TERRITORY}>
-                    State/Territory
+            <div className="form-card">
+              <label htmlFor={FIELD_NAMES.TERRITORY}>
+                State/Territory
                     <span className="required-mark">*</span>
-                  </label>
-                  {territoryErrorMessage && (
+              </label>
+              {territoryErrorMessage && (
                 <div id="spaTerritoryErrorMsg"
                   className="ds-u-color--error">{territoryErrorMessage}</div>
               )}
@@ -292,25 +286,25 @@ export default function Waiver() {
                   value={changeRequest.territory}
                 ></input>
               }
-                  <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
-                    Action Type
+              <label htmlFor={FIELD_NAMES.ACTION_TYPE}>
+                Action Type
                     <span className="required-mark">*</span>
-                  </label>
-                  {actionTypeErrorMessage && (
+              </label>
+              {actionTypeErrorMessage && (
                 <div id="actionTypeErrorMsg"
                   className="ds-u-color--error">{actionTypeErrorMessage}</div>
               )}
               {!isReadOnly ? (
                 <select
-                className="field"
-                id={FIELD_NAMES.ACTION_TYPE}
-                name={FIELD_NAMES.ACTION_TYPE}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">-- select an action type --</option>
-                {renderOptionsList(actionTypeOptions)}
-              </select>)
+                  className="field"
+                  id={FIELD_NAMES.ACTION_TYPE}
+                  name={FIELD_NAMES.ACTION_TYPE}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">-- select an action type --</option>
+                  {renderOptionsList(actionTypeOptions)}
+                </select>)
                 :
                 (<input
                   className="field"
@@ -322,25 +316,25 @@ export default function Waiver() {
                 ></input>
                 )}
 
-                <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
+              <label htmlFor={FIELD_NAMES.WAIVER_AUTHORITY}>
                 Waiver Authority
                     <span className="required-mark">*</span>
-                  </label>
-                  {waiverAuthorityErrorMessage && (
+              </label>
+              {waiverAuthorityErrorMessage && (
                 <div id="waiverAuthorityErrorMsg"
                   className="ds-u-color--error">{waiverAuthorityErrorMessage}</div>
               )}
-                  {!isReadOnly ? (
+              {!isReadOnly ? (
                 <select
-                className="field"
-                id={FIELD_NAMES.WAIVER_AUTHORITY}
-                name={FIELD_NAMES.WAIVER_AUTHORITY}
-                onChange={handleInputChange}
-                required
-              >
-                <option value="">-- select a waiver authority --</option>
-                {renderOptionsList(waiverAuthorityOptions)}
-              </select>)
+                  className="field"
+                  id={FIELD_NAMES.WAIVER_AUTHORITY}
+                  name={FIELD_NAMES.WAIVER_AUTHORITY}
+                  onChange={handleInputChange}
+                  required
+                >
+                  <option value="">-- select a waiver authority --</option>
+                  {renderOptionsList(waiverAuthorityOptions)}
+                </select>)
                 :
                 (<input
                   className="field"
@@ -351,25 +345,25 @@ export default function Waiver() {
                   value={changeRequest.waiverAuthority}
                 ></input>
                 )}
-                  <div className="label-container">
-                    <div className="label-lcol">
-                      <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                        Waiver Number
+              <div className="label-container">
+                <div className="label-lcol">
+                  <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
+                    Waiver Number
                         <span className="required-mark">*</span>
-                      </label>
-                    </div>
-                    <div className="label-rcol">
-                      <HashLink to={ROUTES.FAQ_WAIVER_ID}>
-                        What is my Waiver Number?
+                  </label>
+                </div>
+                <div className="label-rcol">
+                  <HashLink to={ROUTES.FAQ_WAIVER_ID}>
+                    What is my Waiver Number?
                       </HashLink>
-                    </div>
-                  </div>
-                  {!isReadOnly && (
-                    <p className="field-hint">
-                      Must follow the format SS.##.R##.M## or SS.####.R##.##
-                    </p>
-                  )}
-                {transmittalNumberErrorMessage && (
+                </div>
+              </div>
+              {!isReadOnly && (
+                <p className="field-hint">
+                  Must follow the format SS.##.R##.M## or SS.####.R##.##
+                </p>
+              )}
+              {transmittalNumberErrorMessage && (
                 <div id="waiverTransmittalNumberErrorMsg"
                   className="ds-u-color--error">{transmittalNumberErrorMessage}</div>
               )}
@@ -383,49 +377,50 @@ export default function Waiver() {
                 value={changeRequest.transmittalNumber}
                 required
               ></input>
-                  {isReadOnly && (
-                    <div>
-                      <label htmlFor="submittedAt">Submitted on</label>
-                      <input
-                        className="field"
-                        type="text"
-                        id="submittedAt"
-                        name="submittedAt"
-                        disabled
-                        value={formatDate(changeRequest.submittedAt)}
-                      ></input>
-                    </div>
-                  )}
-                </div>
-                <h3>Attachments</h3>
-                {isReadOnly ? (
-                  <FileList uploadList={changeRequest.uploads}></FileList>
-                ) : (
-                  <FileUploader
-                    ref={uploader}
-                    requiredUploads={requiredUploads}
-                    optionalUploads={optionalUploads}
-                    readyCallback={uploadsReadyCallbackFunction}
-                  ></FileUploader>
-                )}
-                <div className="summary-box">
-                  <TextField
-                    name={FIELD_NAMES.SUMMARY}
-                    label="Summary"
-                    fieldClassName="summary-field"
-                    multiline
-                    onChange={handleInputChange}
-                    disabled={isReadOnly}
-                    value={changeRequest.summary}
-                  ></TextField>
-                </div>
-                {!isReadOnly && (
+              {isReadOnly && (
+                <div>
+                  <label htmlFor="submittedAt">Submitted on</label>
                   <input
-                    type="submit"
-                    className="form-submit"
-                    value="Submit"
-                  />
-                )}
+                    className="field"
+                    type="text"
+                    id="submittedAt"
+                    name="submittedAt"
+                    disabled
+                    value={formatDate(changeRequest.submittedAt)}
+                  ></input>
+                </div>
+              )}
+            </div>
+            <h3>Attachments</h3>
+            {isReadOnly ? (
+              <FileList uploadList={changeRequest.uploads}></FileList>
+            ) : (
+                <FileUploader
+                  ref={uploader}
+                  requiredUploads={requiredUploads}
+                  optionalUploads={optionalUploads}
+                  readyCallback={uploadsReadyCallbackFunction}
+                  showRequiredFieldErrors={!firstTimeThrough}
+                ></FileUploader>
+              )}
+            <div className="summary-box">
+              <TextField
+                name={FIELD_NAMES.SUMMARY}
+                label="Summary"
+                fieldClassName="summary-field"
+                multiline
+                onChange={handleInputChange}
+                disabled={isReadOnly}
+                value={changeRequest.summary}
+              ></TextField>
+            </div>
+            {!isReadOnly && (
+              <input
+                type="submit"
+                className="form-submit"
+                value="Submit"
+              />
+            )}
           </form>
         </div>
       ) : null}
