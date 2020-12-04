@@ -67,7 +67,7 @@ module.exports = {
                     // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
                     // w3c: false,
                     // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
-                    args: ["--log-level=3", --window-size='1024,768', "--headless"]
+                    args: ["--log-level=3", "--window-size=1024,768", "--headless"]
 
                 }
             },
