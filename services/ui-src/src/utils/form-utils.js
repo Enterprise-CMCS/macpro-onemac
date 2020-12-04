@@ -71,7 +71,7 @@ export function validateWaiverId(waiverId) {
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
-        errorMessage = `The Waiver ID must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
+        errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
     }
     return errorMessage
 }

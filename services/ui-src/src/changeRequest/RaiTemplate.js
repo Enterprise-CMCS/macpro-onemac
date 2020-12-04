@@ -27,6 +27,9 @@ export default function RaiTemplate({
     optionalUploads,
     requiredUploads,
     raiType,
+    transmittalNumberLabel,
+    transmittalNumberHint,
+    FAQLink,
 }) {
     // The form field names
     const FIELD_NAMES = {
@@ -110,13 +113,6 @@ export default function RaiTemplate({
     }
 
     /**
-     * Creates the FAQ link for the correct RAI type ID
-     */
-    function RAIFAQLink() {
-        return "/FAQ#" + raiType.toLowerCase() + "-id-format";
-    }
-
-    /**
      * Validate Transmittal Number Format
      * @param {value} Transmittal Number Field Entered on Change Event.
      * @return the validation error message or undefined
@@ -132,19 +128,6 @@ export default function RaiTemplate({
             throw new Error(`Unable to validate invalid type ${changeRequestType}.`)
         }
 
-/*        let isValidId;
-        if (errorMessage === undefined) {
-            isValidId = true;
-        } else {
-            isValidId = false;
-        }
-
-        let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-        updatedRecord[FIELD_NAMES.TRANSMITTAL_NUMBER] = value;
-        setChangeRequest(updatedRecord);
-        setValidTransmittalNumber(isValidId);
-        setIsFormReady(isValidId);
-*/
         return errorMessage;
     };
 
@@ -189,7 +172,7 @@ export default function RaiTemplate({
         // because this is an asynchronous function, you can't trust that the 
         // state functions will be processed in time to use the variables
         let transmittalNumberMessage = "";
-        transmittalNumberMessage = validateSpaId(changeRequest.transmittalNumber);
+        transmittalNumberMessage = validateTransmittalNumber(changeRequest.transmittalNumber);
 
         // check which alert to show.  Fields first, than attachments
         // if all passes, submit the form and return to dashboard
@@ -239,17 +222,17 @@ export default function RaiTemplate({
                             <div className="label-container">
                                 <div className="label-lcol">
                                     <label htmlFor={FIELD_NAMES.TRANSMITTAL_NUMBER}>
-                                        {raiType} ID
+                                        {transmittalNumberLabel}
                                                 <span className="required-mark">*</span>
                                     </label>
                                 </div>
                                 <div className="label-rcol">
-                                    <HashLink to={RAIFAQLink()}>What is my {raiType} ID?</HashLink>
+                                    <HashLink to={FAQLink}>What is my {transmittalNumberLabel}?</HashLink>
                                 </div>
                             </div>
                             {!isReadOnly && (
                                 <p className="field-hint">
-                                    Must follow the format SS-YY-NNNN-xxxx
+                                    {transmittalNumberHint}
                                 </p>
                             )}
                             {transmittalNumberErrorMessage && (
