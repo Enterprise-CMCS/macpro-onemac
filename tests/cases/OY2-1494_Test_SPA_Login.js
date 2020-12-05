@@ -4,8 +4,8 @@ module.exports = {
 
     before : function(browser) {
         console.log('Setting up...');
-        const loginPage = browser.page.spaLoginPage();
-        loginPage.navigate().waitForElementVisible('body');
+        browser.url(browser.launch_url);
+        browser.waitForElementVisible('body');
     },
 
     after : function(browser) {
@@ -33,7 +33,7 @@ module.exports = {
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
         let title = 'SPA and Waiver Dashboard'
-        const loginPage = browser.page.spaLoginPage();
+        const loginPage = browser.page.spaBasePage();
         loginPage.click('@logout');
         loginPage.verify.not.containsText('h1', title);
     }
