@@ -26,6 +26,7 @@
   },
   "devDependencies": {
     "chromedriver": "^87.0.1",
+    "dotenv": "^8.2.0",
     "geckodriver": "^1.21.0",
     "selenium-server": "^3.141.59"
   }

@@ -2,8 +2,9 @@
 // Refer to the online docs for more details: https://nightwatchjs.org/gettingstarted/configuration/
 const fs = require('fs');
 const path = require('path');
-
 const Services ={}; loadServices();
+
+
 module.exports = {
     // An array of folders (excluding subfolders) where your tests are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
@@ -19,17 +20,24 @@ module.exports = {
     //custom_assertions_path: '',
 
     // See https://nightwatchjs.org/guide/#external-globals
-    globals_path: './nightwatch_globals.js',
+    "globals_path": "./nightwatch_globals.js",
 
     disable_error_log: false,
 
     test_settings: {
         exclude : ["./tests/unit", "./tests/cases"],
+
         default: {
+            launch_url: "https://d2dr7dgo9g0124.cloudfront.net/",
+            globals: {
+                username: "user1@cms.hhs.local",
+                password: "Passw0rd!"
+            },
             webdriver: {
                 start_process: true,
                 log_path: false,
             },
+
             screenshots : {
                 enabled : false,
                 on_failure: false,
@@ -46,7 +54,6 @@ module.exports = {
                     // acceptInsecureCerts: true,
                     'moz:firefoxOptions': {
                         args: [
-                            '-headless',
                             '--window-size=1024,768',
                             '-verbose'
                             //'-headless',
@@ -75,7 +82,6 @@ module.exports = {
                     args: [
                         "--log-level=3",
                         "--window-size=1024,768",
-                        "--headless"
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',

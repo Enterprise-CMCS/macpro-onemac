@@ -5,6 +5,7 @@ Automated Testing Framework using Nightwatch.js
 
 1. Overview
 1. Installation
+1. Configuration
 1. Running Tests
     1. Automated Test Writing Guides
     1. Nightwatch Test Writing Guides
@@ -27,6 +28,12 @@ From the root directory folder, use node package manager `npm`:
 
 `npm install`
    
+### Configuration
+
+Location of the NightWatch configuration: ``` conf/nightwatch.conf.js```
+
+[Structure and configuration details](conf/README.md)
+
 ### Running Tests 
 
 To run tests:

@@ -1,8 +1,8 @@
 
 const commands = {
     login: function () {
-        this.api.setValue(this.elements.userField, this.props.username).pause(100);
-        this.api.setValue(this.elements.passField, this.props.password).pause(100);
+        this.api.setValue(this.elements.userField, this.api.globals.username).pause(100);
+        this.api.setValue(this.elements.passField, this.api.globals.password).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
     },
 
@@ -38,7 +38,6 @@ module.exports = {
         title: 'div[class=dashboard-title]',
 
         transmittal: "input[id='transmittalNumber']",
-        url: 'https://d2dr7dgo9g0124.cloudfront.net',
         userField : '#email',
         loginButton : 'button:nth-child(2)',
         loginTitle : 'div[class=page-title-bar]',
@@ -82,8 +81,6 @@ module.exports = {
     commands : [commands],
 
     props : {
-        username : 'automatedtester090@gmail.com',
-        password : 'id~p)$6XB:9t',
         pauseAction: 1000,
         transmitNumber: 'VA-20-1234',
         waiverNumber: 'VA.12.R34.M56'
