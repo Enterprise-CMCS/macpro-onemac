@@ -3,30 +3,13 @@ import AlertBar from "../components/AlertBar";
 import {ALERTS_MSG} from "../libs/alert-messages";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import {useAppContext} from "../libs/contextLib";
-import {
-    JsonToCsv,
-} from 'react-json-csv';
+import {s3JsonToCsv} from "../utils/csvUtils";
 import LoadingScreen from "../components/LoadingScreen";
-import {Spinner} from "@cmsgov/design-system";
-
 
 export default function Metrics() {
     const {isAuthenticated} = useAppContext();
     const [changeRequestList, setChangeRequestList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
-    const filename = 'Csv-file'
-    const fields = {
-        "transmittalNumber": "transmittalNumber",
-        "territory": "territory",
-        "type": "type",
-        "user": "user",
-        "createdAt": "createdAt",
-    }
-    const style = {
-        padding: "5px"
-    }
-
-    const text = "Convert Json to Csv";
 
     useEffect(() => {
         async function onLoad() {
@@ -36,7 +19,8 @@ export default function Metrics() {
             try {
                 setIsLoading(true)
                 const metrics = await ChangeRequestDataApi.listAll();
-                setChangeRequestList(metrics)
+                const csvData = s3JsonToCsv(metrics)
+                setChangeRequestList(csvData)
                 setIsLoading(false)
             } catch (error) {
                 console.log("Error while fetching list.", error);
@@ -47,16 +31,20 @@ export default function Metrics() {
         onLoad();
     }, [isAuthenticated]);
 
+    function downloadCsv() {
+
+        var hiddenElement = document.createElement('a');
+        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(changeRequestList);
+        hiddenElement.target = '_blank';
+        hiddenElement.download = 'SPAFormMetrics.csv';
+        hiddenElement.click();
+
+    }
+
     return (
         <div className="dashboard-container">
             <LoadingScreen isLoading={isLoading}>
-                <JsonToCsv
-                    data={changeRequestList}
-                    filename={filename}
-                    fields={fields}
-                    style={style}
-                    text={text}
-                />
+                <button onClick={downloadCsv}>Download Metrics (CSV Format)</button>
             </LoadingScreen>
         </div>
     );
