@@ -5,6 +5,8 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import {useAppContext} from "../libs/contextLib";
 import {s3JsonToCsv} from "../utils/csvUtils";
 import LoadingScreen from "../components/LoadingScreen";
+import {Auth} from "aws-amplify";
+import config from "../utils/config";
 
 export default function Metrics() {
     const {isAuthenticated} = useAppContext();
@@ -15,6 +17,22 @@ export default function Metrics() {
         async function onLoad() {
             if (!isAuthenticated) {
                 return;
+            } else {
+                try {
+                    var data = await Auth.currentAuthenticatedUser();
+                    var currentUser = data.attributes.email
+                    console.log(currentUser)
+                    var metricEmail = config.METRICS_EMAIL
+                    console.log(metricEmail.includes(data.attributes.email))
+                    console.log(metricEmail)
+                    if ( ! metricEmail.includes(data.attributes.email )) {
+                        window.location = "/dashboard"
+                      return;
+                    }
+                } catch {
+                    window.location = "/dashboard"
+                    return ;
+                }
             }
             try {
                 setIsLoading(true)
