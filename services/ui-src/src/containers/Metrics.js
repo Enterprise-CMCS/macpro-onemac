@@ -21,10 +21,10 @@ export default function Metrics() {
                 try {
                     var data = await Auth.currentAuthenticatedUser();
                     var currentUser = data.attributes.email
-                    console.log(currentUser)
+                    console.log("DEBUG: Current User:" + currentUser)
                     var metricEmail = config.METRICS_EMAIL
-                    console.log(metricEmail.includes(data.attributes.email))
-                    console.log(metricEmail)
+                    console.log("DEBUG: Metric Check:" + metricEmail.includes(data.attributes.email))
+                    console.log("DEBUG: Metric User:" +metricEmail)
                     if ( ! metricEmail.includes(data.attributes.email )) {
                         //window.location = "/dashboard"
                       return;
