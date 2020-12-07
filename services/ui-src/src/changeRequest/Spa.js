@@ -93,12 +93,18 @@ export default function Spa() {
 
     // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
-      PageTitleBar.setPageTitleInfo({ heading: "SPA Submission Details", text: "" });
+      PageTitleBar.setPageTitleInfo({ 
+        heading: "SPA Submission Details", 
+        text: "" 
+      });
 
       setReadOnly(true);
       fetchChangeRequest();
     } else {
-      PageTitleBar.setPageTitleInfo({ heading: "Submit New SPA", text: "" });
+      PageTitleBar.setPageTitleInfo({ 
+        heading: "Submit New SPA", 
+        text: "" 
+      });
       setReadOnly(false);
 
       // because if we are in a new SPA, we don't have to wait for the data to load
@@ -149,16 +155,14 @@ export default function Spa() {
     // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
 
-    const data = new FormData(event.target);
-
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the 
     // state functions will be processed in time to use the variables
     let territoryMessage = "";
     let transmittalNumberMessage = "";
 
-    territoryMessage = validateTerritory(data.get('territory'));
-    transmittalNumberMessage = validateSpaId(data.get('transmittalNumber'));
+    territoryMessage = validateTerritory(changeRequest.territory);
+    transmittalNumberMessage = validateSpaId(changeRequest.transmittalNumber);
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
