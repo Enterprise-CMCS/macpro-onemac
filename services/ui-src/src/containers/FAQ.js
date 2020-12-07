@@ -12,6 +12,8 @@ export default class FAQ extends Component {
                     <h2>Help Desk Contact Information</h2>
                     <p>For assistance, please email the MACPro Help Desk at MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540.</p>
                     <h2>Frequently Asked Questions</h2>
+                    <h4>What browsers can I use to access the system?</h4>
+                    <p>The submission portal works best on Google Chrome, Firefox, Edge, and Safari. We do not recommend using Internet Explorer due to potential functionality issues.</p>
                     <h3>State Plan Amendments (SPAs)</h3>
                     <h4 id="spa-id-format">What format is used to enter a SPA ID?</h4>
                     <p>Enter the State Plan Amendment transmittal number. Assign consecutive numbers on a calendar year basis (e.g., 20-0001.xxxx, 20-0002.xxxx, etc.).</p>
