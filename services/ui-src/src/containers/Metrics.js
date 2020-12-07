@@ -26,11 +26,11 @@ export default function Metrics() {
                     console.log("DEBUG: Metric Check:" + metricEmail.includes(data.attributes.email))
                     console.log("DEBUG: Metric User:" +metricEmail)
                     if ( ! metricEmail.includes(data.attributes.email )) {
-                        //window.location = "/dashboard"
+                        window.location = "/dashboard"
                       return;
                     }
                 } catch {
-                    //window.location = "/dashboard"
+                    window.location = "/dashboard"
                     return ;
                 }
             }
