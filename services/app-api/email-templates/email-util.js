@@ -25,5 +25,5 @@ export function getLinksHtml(uploads) {
 export function get90thDay(startDate) {
     var realNumberOfDays = 90;
 
-    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy");
+    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy")+" @ 11:59pm EST";
 }
