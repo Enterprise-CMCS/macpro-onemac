@@ -25,9 +25,11 @@
     "nightwatch": "^1.5.1"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
     "chromedriver": "^87.0.1",
     "dotenv": "^8.2.0",
     "geckodriver": "^1.21.0",
-    "selenium-server": "^3.141.59"
+    "selenium-server": "^3.141.59",
+    "sinon": "^9.2.1"
   }
 }

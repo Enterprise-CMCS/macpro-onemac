@@ -1,8 +1,8 @@
 
 const commands = {
     login: function () {
-        this.api.setValue(this.elements.userField, `${process.env.TEST_USERS}`).pause(100);
-        this.api.setValue(this.elements.passField, `${process.env.TEST_USER_PASSWORD}`).pause(100);
+        this.api.setValue(this.elements.userField, this.globals.userName).pause(100);
+        this.api.setValue(this.elements.passField, this.globals.passWord).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
     },
 
