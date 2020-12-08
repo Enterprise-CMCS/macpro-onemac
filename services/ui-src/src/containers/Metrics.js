@@ -62,7 +62,7 @@ export default function Metrics() {
     return (
         <div className="dashboard-container">
             <LoadingScreen isLoading={isLoading}>
-                <button onClick={downloadCsv}>Download Metrics (CSV Format)</button>
+                <button class="ds-c-button" onClick={downloadCsv}>&nbsp;Download Metrics (CSV format)</button>
             </LoadingScreen>
         </div>
     );
