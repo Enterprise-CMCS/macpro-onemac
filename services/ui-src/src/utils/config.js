@@ -1,7 +1,7 @@
 export default {
     MAX_ATTACHMENT_SIZE_MB: 50,
     ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
-    METRICS_EMAIL: "user1@cms.hhs.local,zlewis@clarityinnovates.com",
+    METRICS_EMAIL: window._env_.METRICS_EMAIL,
     s3: {
         REGION: window._env_.S3_ATTACHMENTS_BUCKET_REGION,
         BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME
