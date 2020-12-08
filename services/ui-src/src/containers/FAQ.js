@@ -12,15 +12,17 @@ export default class FAQ extends Component {
                     <h2>Help Desk Contact Information</h2>
                     <p>For assistance, please email the MACPro Help Desk at MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540.</p>
                     <h2>Frequently Asked Questions</h2>
+                    <h4>What browsers can I use to access the system?</h4>
+                    <p>The submission portal works best on Google Chrome, Firefox, Edge, and Safari. We do not recommend using Internet Explorer due to potential functionality issues.</p>
                     <h3>State Plan Amendments (SPAs)</h3>
                     <h4 id="spa-id-format">What format is used to enter a SPA ID?</h4>
                     <p>Enter the State Plan Amendment transmittal number. Assign consecutive numbers on a calendar year basis (e.g., 20-0001.xxxx, 20-0002.xxxx, etc.).</p>
-                    <p>The Official Submission package SPA ID must follow the format SS-YY-NNNN-xxxx where:</p>
+                    <p>The Official Submission package SPA ID must follow the format SS-YY-NNNN OR SS-YY-NNNN-xxxx to include:</p>
                     <ul>
                         <li>SS = 2 alpha character (State Abbreviation)</li>
                         <li>YY = 2 numeric digits (Year)</li>
                         <li>NNNN = 4 numeric digits (Serial number)</li>
-                        <li>xxxx = 4 character alpha/numeric modifier (Suffix)</li>
+                        <li>xxxx = OPTIONAL 4 character alpha/numeric modifier (Suffix)</li>
                     </ul>
 
                     <h4>What attachments do we need to submit a new SPA?</h4>
