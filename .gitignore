@@ -11,3 +11,4 @@ scratch
 /tests_output/*
 node_modules/**
 
+*.env*
