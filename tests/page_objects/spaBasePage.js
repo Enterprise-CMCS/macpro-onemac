@@ -1,8 +1,8 @@
 
 const commands = {
     login: function () {
-        this.api.setValue(this.elements.userField, this.api.globals.username).pause(100);
-        this.api.setValue(this.elements.passField, this.api.globals.password).pause(100);
+        this.api.setValue(this.elements.userField, `${process.env.TEST_USERS}`).pause(100);
+        this.api.setValue(this.elements.passField, `${process.env.TEST_USER_PASSWORD}`).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
     },
 
@@ -31,12 +31,11 @@ const commands = {
 }
 
 module.exports = {
-
+    url: this.launch_url,
     elements: {
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
         title: 'div[class=dashboard-title]',
-
         transmittal: "input[id='transmittalNumber']",
         userField : '#email',
         loginButton : 'button:nth-child(2)',
@@ -47,7 +46,6 @@ module.exports = {
             selector: '(//button)[1]',
             locateStrategy: 'xpath'
         },
-
         passField : '#password',
 
         newSPA: {

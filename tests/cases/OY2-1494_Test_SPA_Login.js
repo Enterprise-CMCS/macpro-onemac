@@ -1,4 +1,3 @@
-
 module.exports = {
     tags : ['login', 'smoke'],
 
@@ -6,6 +5,7 @@ module.exports = {
         console.log('Setting up...');
         browser.url(browser.launch_url);
         browser.waitForElementVisible('body');
+
     },
 
     after : function(browser) {
@@ -17,11 +17,13 @@ module.exports = {
         const loginPage = browser.page.spaBasePage();
         let title = "SPA and Waiver Dashboard";
         let urlSubDir = '/dashboard';
+        let username = browser.userName;
+        let password = browser.passWord;
+        console.log(username + "\n" + password);
 
         loginPage.click("@loginButton");
         browser.waitForElementPresent('body');
-
-        loginPage.login();
+        loginPage.login(username, password);
         browser.verify.containsText('h1', title);
         browser.expect.url().to.contain(urlSubDir).after(5000);
 

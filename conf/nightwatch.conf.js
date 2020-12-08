@@ -20,7 +20,7 @@ module.exports = {
     //custom_assertions_path: '',
 
     // See https://nightwatchjs.org/guide/#external-globals
-    "globals_path": "./nightwatch_globals.js",
+    globals_path: "./nightwatch_globals.js",
 
     disable_error_log: false,
 
@@ -28,11 +28,11 @@ module.exports = {
         exclude : ["./tests/unit", "./tests/cases"],
 
         default: {
-            launch_url: "https://d2dr7dgo9g0124.cloudfront.net/",
             globals: {
-                username: "user1@cms.hhs.local",
-                password: "Passw0rd!"
+                userName: `${process.env.TEST_USERS}`,
+                passWord: `${process.env.TEST_USER_PASSWORD}`
             },
+            launch_url: `${process.env.APPLICATION_ENDPOINT}`,
             webdriver: {
                 start_process: true,
                 log_path: false,
