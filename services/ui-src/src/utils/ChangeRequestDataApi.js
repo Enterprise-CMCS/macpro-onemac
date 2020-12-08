@@ -90,7 +90,7 @@ class ChangeRequestDataApi {
       return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
       console.log(
-          `There was an error fetching all change requests for the user.`,
+          `There was an error fetching all change requests`,
           error
       );
       throw error;

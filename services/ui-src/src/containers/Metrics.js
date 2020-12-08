@@ -21,10 +21,7 @@ export default function Metrics() {
                 try {
                     var data = await Auth.currentAuthenticatedUser();
                     var currentUser = data.attributes.email
-                    console.log("DEBUG: Current User:" + currentUser)
                     var metricEmail = config.METRICS_EMAIL
-                    console.log("DEBUG: Metric Check:" + metricEmail.includes(data.attributes.email))
-                    console.log("DEBUG: Metric User:" +metricEmail)
                     if ( ! metricEmail.includes(data.attributes.email )) {
                         window.location = "/dashboard"
                       return;
@@ -41,7 +38,6 @@ export default function Metrics() {
                 setChangeRequestList(csvData)
                 setIsLoading(false)
             } catch (error) {
-                console.log("Error while fetching list.", error);
                 AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
             }
         }
