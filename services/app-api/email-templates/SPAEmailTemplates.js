@@ -57,7 +57,7 @@ class SPAEmailTemplates {
         <br><b>SPA ID</b>: ${data.transmittalNumber}
         <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
         <br><b>Submitter email</b>: ${data.user.email}
-        <br><b>90th Day Deadline</b>: ${get90thDay(data.submittedAt)}
+        <br><b>90th day deadline</b>: ${get90thDay(data.submittedAt)}
       </p>
       <p>
         <b>Summary</b>:
