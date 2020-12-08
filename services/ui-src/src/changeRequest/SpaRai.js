@@ -25,6 +25,9 @@ export default function SpaRai() {
       optionalUploads={optionalUploads}
       requiredUploads={requiredUploads}
       raiType="SPA"
+      transmittalNumberLabel="SPA ID"
+      transmittalNumberHint="Must follow the format SS-YY-NNNN or SS-YY-NNNN-xxxx"
+      FAQLink="/FAQ#spa-id-format"
     />
   );
 }

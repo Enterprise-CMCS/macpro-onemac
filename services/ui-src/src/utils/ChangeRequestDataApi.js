@@ -23,7 +23,6 @@ class ChangeRequestDataApi {
     }
     try {
       data.user = await Auth.currentAuthenticatedUser();
-      console.log(JSON.stringify(data.user))
       data.uploads = uploadsList;
 
       return await API.post("changeRequestAPI", "/submit", {

@@ -7,33 +7,35 @@ export default class FAQ extends Component {
         PageTitleBar.setPageTitleInfo({ heading: "SPA and Waiver Frequently Asked Questions", text: "" })
 
         return (
-            <div className="form-container">
+            <div className="form-container" id="top" >
                 <div className="form-card">
                     <h2>Help Desk Contact Information</h2>
                     <p>For assistance, please email the MACPro Help Desk at MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540.</p>
                     <h2>Frequently Asked Questions</h2>
+                    <h4>What browsers can I use to access the system?</h4>
+                    <p>The submission portal works best on Google Chrome, Firefox, Edge, and Safari. We do not recommend using Internet Explorer due to potential functionality issues.</p>
                     <h3>State Plan Amendments (SPAs)</h3>
                     <h4 id="spa-id-format">What format is used to enter a SPA ID?</h4>
                     <p>Enter the State Plan Amendment transmittal number. Assign consecutive numbers on a calendar year basis (e.g., 20-0001.xxxx, 20-0002.xxxx, etc.).</p>
-                    <p>The Official Submission package SPA ID must follow the format SS-YY-NNNN-xxxx where:</p>
+                    <p>The Official Submission package SPA ID must follow the format SS-YY-NNNN OR SS-YY-NNNN-xxxx to include:</p>
                     <ul>
                         <li>SS = 2 alpha character (State Abbreviation)</li>
                         <li>YY = 2 numeric digits (Year)</li>
                         <li>NNNN = 4 numeric digits (Serial number)</li>
-                        <li>xxxx = 4 character alpha/numeric modifier (Suffix)</li>
+                        <li>xxxx = OPTIONAL 4 character alpha/numeric modifier (Suffix)</li>
                     </ul>
 
                     <h4>What attachments do we need to submit a new SPA?</h4>
                     <p>SPA submission requirements can be found in regulation&nbsp;
-                <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=7d639b87112e05a57ff40731d647bd05&mc=true&node=se42.4.430_112&rgn=div8">42 C.F.R. §430.12.</a>.  Required attachments for form completion are:</p>
+                <a href="https://www.ecfr.gov/cgi-bin/text-idx?SID=7d639b87112e05a57ff40731d647bd05&mc=true&node=se42.4.430_112&rgn=div8" target="_blank" rel="noopener" >42 C.F.R. §430.12.</a>.  Required attachments for form completion are:</p>
                     <ul>
                         <li>Digitized Transmittal and Notice of Approval of State Plan Material (CMS 179) form </li>
                         <li>SPA Pages</li>
                     </ul>
                     <p>In this system, you can submit other optional files. If submitting a cover letter, please address the cover letter to: Center for Medicaid &amp; CHIP Services (CMCS).</p>
                     <h3>Waivers</h3>
-                    <h4>What format is used to enter a 1915(b) waiver number?</h4>
-                    <p id="waiver-id-format">Waiver number must follow the format SS.##.R##.M## to include:</p>
+                    <h4 id="waiver-id-format">What format is used to enter a 1915(b) waiver number?</h4>
+                    <p>Waiver number must follow the format SS.##.R##.M## to include:</p>
                     <ul>
                         <li>SS=  2 character state abbreviation</li>
                         <li>##= 2 digit waiver base number</li>
