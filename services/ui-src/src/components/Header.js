@@ -55,7 +55,7 @@ function Header(props) {
     function renderBrandBar() {
         return (
             <div className="brand-bar">
-                <a href="https://www.medicaid.gov/">
+                <a href="https://www.medicaid.gov/" target="_blank">
                     <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy"/>
                 </a>
             </div>

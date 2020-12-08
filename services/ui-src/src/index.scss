@@ -188,7 +188,8 @@ input[type="file"] {
   }
   .label-container {
     @extend .ds-l-row;
-    width: 460px;
+    max-width: 460px;
+    width: 100%;
     margin-left: 0px;
     @extend .ds-u-align-items--end
   }
