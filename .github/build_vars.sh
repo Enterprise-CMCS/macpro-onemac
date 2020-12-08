@@ -15,6 +15,7 @@ var_list=(
   'IAM_PERMISSIONS_BOUNDARY_POLICY'
   'STAGE_PREFIX'
   'OKTA_METADATA_URL'
+  'METRICS_EMAIL'
 )
 
 set_value() {
