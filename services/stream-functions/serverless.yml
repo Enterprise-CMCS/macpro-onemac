@@ -12,11 +12,12 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type~true, ssm:/configuration/default/infrastucture/type~true, "development"}
   warmupEnabled:
     production: true
     development: false
   warmup:
-    enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
+    enabled: ${self:custom.warmupEnabled.${self:custom.infrastructureType}}
     role: LambdaWarmupRole
     vpc: false
     events:
@@ -29,18 +30,18 @@ custom:
   tableStreamArn: ${cf:app-api-${self:custom.stage}.AmendmentsTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
-  bigmacName: ${env:BIGMAC_NAME, "bigmac"}
-  bootstrapBrokerStringTls: ${ssm:/${self:custom.bigmacName, "bigmac"}/bootstrapBrokerStringTls}
-  vpcId: ${env:VPC_ID}
+  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
+  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   subnets:
-    - ${env:PRIVATE_SUBNET_ID_1}
-    - ${env:PRIVATE_SUBNET_ID_2}
-    - ${env:PRIVATE_SUBNET_ID_3}
+    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/private/a~true}
+    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/private/b~true}
+    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/private/c~true}
   dataSubnets:
-    - ${env:DATA_SUBNET_ID_1}
-    - ${env:DATA_SUBNET_ID_2}
-    - ${env:DATA_SUBNET_ID_3}
-  iamPath: ${env:IAM_PATH, "/"}
+    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/data/a~true}
+    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/data/a~true}
+    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/data/a~true}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissions_boundary_policy~true, ssm:/configuration/default/iam/permissions_boundary_policy~true, ""}
   scripts:
     hooks:
       package:setupProviderConfiguration: |
@@ -111,7 +112,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
           - ""
-          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
+          - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
     KafkaConnectWorkerLogGroup:
       Type: 'AWS::Logs::LogGroup'
@@ -149,7 +150,7 @@ resources:
                 - 'arn:aws:iam::'
                 - Ref: AWS::AccountId
                 - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
             - Ref: AWS::NoValue
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
@@ -280,7 +281,7 @@ resources:
                 - 'arn:aws:iam::'
                 - Ref: AWS::AccountId
                 - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
             - Ref: AWS::NoValue
         Policies:
           - PolicyName: 'LambdaRolePolicy'
@@ -338,7 +339,7 @@ resources:
                 - 'arn:aws:iam::'
                 - Ref: AWS::AccountId
                 - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
             - Ref: AWS::NoValue
         Policies:
           - PolicyName: 'LambdaRolePolicy'
@@ -385,7 +386,7 @@ resources:
                 - 'arn:aws:iam::'
                 - Ref: AWS::AccountId
                 - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
             - Ref: AWS::NoValue
         Policies:
           - PolicyName: 'LambdaRolePolicy'
@@ -425,7 +426,7 @@ resources:
                 - 'arn:aws:iam::'
                 - Ref: AWS::AccountId
                 - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
             - Ref: AWS::NoValue
         Policies:
           - PolicyName: 'LambdaRolePolicy'
@@ -462,7 +463,7 @@ resources:
                 - 'arn:aws:iam::'
                 - Ref: AWS::AccountId
                 - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
             - Ref: AWS::NoValue
         Policies:
           - PolicyName: 'Warmup'
