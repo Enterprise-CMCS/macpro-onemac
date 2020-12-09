@@ -32,14 +32,14 @@ custom:
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
-  subnets:
-    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/private/a~true}
-    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/private/b~true}
-    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/private/c~true}
   dataSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/data/a~true}
-    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/data/a~true}
-    - ${ssm:/configuration/${self:custom.stage}/subnets/private/a~true, ssm:/configuration/default/subnets/data/a~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a~true, ssm:/configuration/default/vpc/subnets/data/a~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b~true, ssm:/configuration/default/vpc/subnets/data/b~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c~true, ssm:/configuration/default/vpc/subnets/data/c~true}
+  privateSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a~true, ssm:/configuration/default/vpc/subnets/private/a~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b~true, ssm:/configuration/default/vpc/subnets/private/b~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c~true, ssm:/configuration/default/vpc/subnets/private/c~true}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissions_boundary_policy~true, ssm:/configuration/default/iam/permissions_boundary_policy~true, ""}
   scripts:
@@ -75,7 +75,7 @@ functions:
     vpc:
       securityGroupIds:
         - Ref: LambdaSecurityGroup
-      subnetIds: ${self:custom.subnets}
+      subnetIds: ${self:custom.privateSubnets}
   sinkMskToDynamo:
     handler: handlers/sinkMskToDynamo.handler
     role: LamdaSinkMskToDynamoRole
@@ -104,7 +104,7 @@ functions:
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
-      subnetIds: ${self:custom.subnets}
+      subnetIds: ${self:custom.privateSubnets}
 
 resources:
   Conditions:
