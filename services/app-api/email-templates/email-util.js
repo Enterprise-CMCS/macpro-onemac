@@ -1,4 +1,4 @@
-import {format, addDays} from "date-fns-tz";
+import {format, addDays} from "date-fns";
 
 /**
  * Get HTML containing links representing the attached documents.
@@ -18,12 +18,14 @@ export function getLinksHtml(uploads) {
 }
 
 /**
- * Get the 90th day from the created Date (with created Date as day 0)
- * @param {Date} startDate the start date of the 90 day period.
+ * Get the EST 90th day from the submitted Date (with submitted Date as day 0)
+ * @param {Number} startDate the Unix timestamp for the start date of the 90 day period.
  * @returns {String} CMS approved 90th day formatted for readability.
  */
 export function get90thDay(startDate) {
+
+    var estOffset = 18000;          // the amount of milliseconds between UTC and EST
     var realNumberOfDays = 90;
 
-    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy @ 11:59 ZZZ", { timeZone: "America/New York"});
+    return format(addDays(startDate-estOffset, realNumberOfDays), "MMMM d, yyyy") + " @ 11:59 EST";
 }
