@@ -19,5 +19,5 @@ Lengend: R = Required, O = Optional
 * IAM_PERMISSIONS_BOUNDARY_POLICY
 * STAGE_PREFIX
 * (R) OKTA_METADATA_URL - The OKTA URL to authenticate at
-* METRICS_EMAIL - The list of email that have access to the private Metrics page.
+* ALLOWED_METRICS_EMAILS - The list of email that have access to the private Metrics page.
 
