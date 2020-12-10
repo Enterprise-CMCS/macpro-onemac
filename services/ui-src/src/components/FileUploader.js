@@ -264,7 +264,7 @@ export default class FileUploader extends Component {
 
     return (
       <div>
-        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message">Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.</p>
         <p className="req-message">
           <span className="required-mark">*</span> indicates required
           attachment.
