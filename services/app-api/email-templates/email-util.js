@@ -1,4 +1,4 @@
-import {format, addDays} from "date-fns";
+import {format, addDays} from "date-fns-tz";
 
 /**
  * Get HTML containing links representing the attached documents.
@@ -25,5 +25,5 @@ export function getLinksHtml(uploads) {
 export function get90thDay(startDate) {
     var realNumberOfDays = 90;
 
-    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy")+" @ 11:59pm EST";
+    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy @ 11:59 ZZZ", { timeZone: "America/New York"});
 }
