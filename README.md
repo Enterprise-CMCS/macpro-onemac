@@ -14,9 +14,10 @@ Lengend: R = Required, O = Optional
 * ROUTE_53_HOSTED_ZONE_ID
 * ROUTE_53_DOMAIN_NAME
 * CLOUDFRONT_CERTIFICATE_ARN
-* (O) CLOUDFRONT_DOMAIN_NAME - The custom domain name for the application 
+* (O) CLOUDFRONT_DOMAIN_NAME - The custom domain name for the application
 * (O) IAM_PATH - Defaults to "/"
 * IAM_PERMISSIONS_BOUNDARY_POLICY
-* STAGE_PREFIX 
+* STAGE_PREFIX
 * (R) OKTA_METADATA_URL - The OKTA URL to authenticate at
+* METRICS_EMAIL - The list of email that have access to the private Metrics page.
 

@@ -2,6 +2,12 @@ import {Parser} from 'json2csv';
 import {formatDate} from "../utils/date-utils";
 const {transforms: {unwind}} = require('json2csv');
 
+/**
+ *
+ *  Convert SPA Form S3 Bucket Json to CSV Format.
+ *
+ */
+
 export function s3JsonToCsv(data) {
     console.log(formatFormDate(data))
     try {
@@ -21,6 +27,9 @@ export function s3JsonToCsv(data) {
     }
 }
 
+/*
+ * Format the createdAt Json Timestamp field to Readable Date.
+ */
 function formatFormDate(data) {
     data.forEach( newData => newData.createdAt = formatDate(newData.createdAt)  );
     return data;
