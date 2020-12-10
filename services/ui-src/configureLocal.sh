@@ -72,7 +72,7 @@ export S3_ATTACHMENTS_BUCKET_REGION=$s3_attachments_bucket_region
 export S3_ATTACHMENTS_BUCKET_NAME=$s3_attachments_bucket_name
 export ALLOW_DEV_LOGIN=true
 export IS_OFFLINE=true
-export ALLOWED_METRICS_EMAILS=`git config user.email`
+export METRICS_EMAILS=`git config user.email`
 
 ./env.sh
 

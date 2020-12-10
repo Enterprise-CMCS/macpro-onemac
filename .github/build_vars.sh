@@ -12,7 +12,7 @@ var_list=(
   'CLOUDFRONT_CERTIFICATE_ARN'
   'CLOUDFRONT_DOMAIN_NAME'
   'IAM_PATH'
-  'ALLOWED_METRICS_EMAILS'
+  'METRICS_EMAIL'
   'IAM_PERMISSIONS_BOUNDARY_POLICY'
   'STAGE_PREFIX'
   'OKTA_METADATA_URL'
@@ -23,7 +23,6 @@ set_value() {
   if [ ! -z "${!varname}" ]; then
     echo "Setting $varname"
     echo "${varname}=${!varname}" >> $GITHUB_ENV
-    echo "${varname}=${!varname}" 
   fi
 }
 

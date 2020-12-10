@@ -55,7 +55,7 @@ jobs:
           IAM_PATH: ${{ secrets.IAM_PATH }}
           IAM_PERMISSIONS_BOUNDARY_POLICY: ${{ secrets.IAM_PERMISSIONS_BOUNDARY_POLICY }}
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
-          ALLOWED_METRICS_EMAILS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ALLOWED_METRICS_EMAILS] || secrets.ALLOWED_METRICS_EMAILS }}
+          METRICS_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_METRICS_EMAIL] || secrets.METRICS_EMAIL }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
