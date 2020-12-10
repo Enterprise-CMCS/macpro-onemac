@@ -12,6 +12,8 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
   infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type~true, ssm:/configuration/default/infrastucture/type~true, "development"}
   warmupEnabled:
     production: true
@@ -33,15 +35,13 @@ custom:
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   dataSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a~true, ssm:/configuration/default/vpc/subnets/data/a~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b~true, ssm:/configuration/default/vpc/subnets/data/b~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c~true, ssm:/configuration/default/vpc/subnets/data/c~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id~true, ssm:/configuration/default/vpc/subnets/data/a/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id~true, ssm:/configuration/default/vpc/subnets/data/b/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id~true, ssm:/configuration/default/vpc/subnets/data/c/id~true}
   privateSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a~true, ssm:/configuration/default/vpc/subnets/private/a~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b~true, ssm:/configuration/default/vpc/subnets/private/b~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c~true, ssm:/configuration/default/vpc/subnets/private/c~true}
-  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true}
-  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissions_boundary_policy~true, ssm:/configuration/default/iam/permissions_boundary_policy~true, ""}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id~true, ssm:/configuration/default/vpc/subnets/private/a/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id~true, ssm:/configuration/default/vpc/subnets/private/b/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id~true, ssm:/configuration/default/vpc/subnets/private/c/id~true}
   scripts:
     hooks:
       package:setupProviderConfiguration: |
