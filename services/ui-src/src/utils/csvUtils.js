@@ -5,11 +5,11 @@ const {transforms: {unwind}} = require('json2csv');
 /**
  *
  *  Convert SPA Form S3 Bucket Json to CSV Format.
- *
+ *  @param {data} JSON string.
+ *  @returns a CSV string
  */
 
 export function s3JsonToCsv(data) {
-    console.log(formatFormDate(data))
     try {
         const fields = ['transmittalNumber', 'territory', 'createdAt', 'user.email', 'type', 'uploads.title'];
         const transforms = [unwind({paths: ['uploads', 'uploads.title']})];
@@ -29,6 +29,8 @@ export function s3JsonToCsv(data) {
 
 /*
  * Format the createdAt Json Timestamp field to Readable Date.
+ *  @param {data} JSON string.
+ *  @returns a updated JSON for createdAt Field.
  */
 function formatFormDate(data) {
     data.forEach( newData => newData.createdAt = formatDate(newData.createdAt)  );
