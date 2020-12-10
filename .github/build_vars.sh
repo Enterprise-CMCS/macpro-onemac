@@ -23,6 +23,7 @@ set_value() {
   if [ ! -z "${!varname}" ]; then
     echo "Setting $varname"
     echo "${varname}=${!varname}" >> $GITHUB_ENV
+    echo "${varname}=${!varname}" 
   fi
 }
 
