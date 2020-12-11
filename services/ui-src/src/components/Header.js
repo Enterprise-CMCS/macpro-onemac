@@ -100,9 +100,11 @@ function Header(props) {
                         Login
                     </Button>
                     {showDevLogin && (
-                        <Button id="devloginBtn" onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
-                            Development Login
-                        </Button>
+                        <div className="dev-login">
+                            <Button id="devloginBtn" onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
+                                Development Login
+                            </Button>
+                        </div>
                     )}
                 </div>
             );

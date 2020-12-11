@@ -387,21 +387,20 @@ input[type="file"] {
 
 .nav-bar {
   @extend .app-bar;
-  @extend .ds-u-align-items--center;
   background-color: $color-primary;
   min-height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: nowrap;
 
   .nav-left {
-    @extend .ds-l-col--4;
-    @extend .ds-l-row;
-    @extend .ds-u-justify-content--between;
-
+    display: flex;
+    flex-wrap: wrap;
     a {
-      @extend .ds-l-col--4;
       color: $color-white;
       font-weight: bold;
-      @extend .ds-u-text-align--center;
-      @extend .ds-u-align-items--center;
+      padding-right: 50px;
 
       &:hover {
         color: rgba($color-base-inverse, 0.8);
@@ -412,11 +411,12 @@ input[type="file"] {
       }
     }
   }
+
   .nav-right {
-    @extend .ds-l-col--3;
-    @extend .ds-u-margin-left--auto;
+    display: flex;
+    justify-content: flex-end;
+    flex-wrap: wrap;
     font-weight: bold;
-    @extend .ds-u-justify-content--end;
 
     label {
       margin-right: 2rem;
@@ -424,6 +424,10 @@ input[type="file"] {
     }
     button {
       background-color: $color-primary;
+    }
+
+    .dev-login {
+      padding-left: 25px;
     }
   }
 }
@@ -439,11 +443,13 @@ input[type="file"] {
       padding-right: 10px;
   }
 }
+
 .brand-bar {
   @extend .app-bar;
   background-color: $color-white;
   @extend .ds-u-padding-top--3;
 }
+
 .summary-box label {
   @extend .ds-h3;
   @extend .ds-u-margin-top--5;
@@ -463,6 +469,7 @@ input[type="file"] {
   line-height: 24px;
   border: none;
 }
+
 .display-errors input:invalid,
 .display-errors select:invalid  {
   border-color: red;
