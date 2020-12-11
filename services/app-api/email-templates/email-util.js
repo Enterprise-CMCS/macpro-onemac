@@ -1,4 +1,4 @@
-import {format, addDays} from "date-fns";
+import {format, utcToZonedTime} from "date-fns-tz";
 
 /**
  * Get HTML containing links representing the attached documents.
@@ -18,14 +18,17 @@ export function getLinksHtml(uploads) {
 }
 
 /**
- * Get the EST 90th day from the submitted Date (with submitted Date as day 0)
- * @param {Number} startTimestamp the Unix timestamp for the start date of the 90 day period.
- * @returns {String} CMS approved 90th day formatted for readability.
+ * takes a UTC timestamp, converts to CMS TimeZone, and formats it in the CMS email way
+ * @param {Number} theTimestamp the Unix timestamp to be used as the date
+ * @returns {String} CMS approved date format.
  */
-export function get90thDay(startTimestamp) {
+export function getESTDateFormat(theTimestamp) {
+    console.log("TimeStamp is: "+theTimestamp);
+    const theDate = new Date(theTimestamp);
+    console.log("theDate is: "+theDate.toString());
+    const cmsTimeZone = 'America/New_York';
+    const cmsDate = utcToZonedTime(theDate, cmsTimeZone);
+    console.log("cmsDate is: "+cmsDate);
 
-    var estTimestamp = startTimestamp-18000;  // subtract the amount of milliseconds between UTC and EST
-    var realNumberOfDays = 90;
-
-    return format(addDays(estTimestamp, realNumberOfDays), "MMMM d, yyyy") + " @ 11:59 EST";
+    return format(cmsDate, 'MMMM d, yyyy @ 11:59 zzz', { timeZone: 'America/New_York' });
 }

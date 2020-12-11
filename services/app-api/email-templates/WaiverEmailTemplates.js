@@ -1,4 +1,4 @@
-import { get90thDay, getLinksHtml } from "./email-util";
+import { getESTDateFormat, getLinksHtml } from "./email-util";
 
 /**
  * Waiver submission specific email generation functions.
@@ -58,7 +58,7 @@ class WaiverEmailTemplates {
             <br><b>Waiver #</b>: ${data.transmittalNumber}
             <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Submitter email</b>: ${data.user.email}
-            <br><b>90th day deadline</b>: ${get90thDay(data.submittedAt)}
+            <br><b>90th day deadline</b>: ${getESTDateFormat(data.endAt)}
         </p>
         <p>
             <b>Summary</b>:
@@ -67,7 +67,7 @@ class WaiverEmailTemplates {
         <p>
             <br>
             This response confirms the receipt of your Waiver request or your response to a Waiver Request for Additional Information (RAI)). 
-            You can expect a formal response to your submittal to be issued within 90 days, before ${get90thDay(data.submittedAt)}.
+            You can expect a formal response to your submittal to be issued within 90 days, before ${getESTDateFormat(data.endAt)}.
         </p>
         <p>
             This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers and responses to Requests for Additional 

@@ -58,6 +58,9 @@ export const main = handler(async (event) => {
       //We successfully sent the submission email.  Update the record to reflect that.
       data.state = SUBMISSION_STATES.SUBMITTED;
       data.submittedAt = Date.now();
+      // record the current end timestamp (can be start/stopped/changed)
+      // 90 days is current CMS review period
+      data.endAt = data.submittedAt+(90*86400);
       await dynamoDb.put({
         TableName: process.env.tableName,
         Item: data,
