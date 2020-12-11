@@ -9,20 +9,22 @@ const sinon = require('sinon');
  */
 
 let myApp = {}
-let myFake = {}
+const sandbox = sinon.createSandbox();
 
 module.exports = {
-    '@unitTest': true,
+    "@tags": ["integration"],
 
-    before: function () {
+    before: function (done) {
         chai.config.includeStack = true; // So I can inspect the stack trace for errors
         chai.config.showDiff = true; // Show me what I got vs what I was supposed to get
         chai.config.truncateThreshold = 0; // Don't truncate the error output
-        myFake.func = sinon.fakeFn(myCodeToEmailFunc()); // Using my functions default values as actual results
+
+        done();
     },
 
-    after: function () {
-        myFake.func.restore();  // Resets my fake for reuse
+    after: function (done) {
+
+        done();
     },
 
     // Does my function meet Acceptance Criteria (works as intended)?
@@ -56,6 +58,5 @@ function myCodeToEmailFunc(expObj = {}) {
     if(expObj.phoneNumber) {        // This should not be included in this email
         emailOut.concat("P.S. Is this your correct number: ", expObj.phoneNumber);
     }
-    console.log(emailOut);
     return emailOut;
 }

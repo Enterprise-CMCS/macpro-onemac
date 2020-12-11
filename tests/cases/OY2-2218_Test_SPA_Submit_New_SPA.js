@@ -10,7 +10,6 @@ const timeout = 500;
 const login = require('./OY2-1494_Test_SPA_Login');
 
 module.exports = {
-    tags : ['regression'],
 
     before : function(browser) {
         login.before(browser);

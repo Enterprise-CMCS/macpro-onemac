@@ -12,7 +12,6 @@ const login =require('./OY2-1494_Test_SPA_Login');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 
 module.exports = {
-    tags : ['regression'],
 
     before : function(browser) {
         login.before(browser);
