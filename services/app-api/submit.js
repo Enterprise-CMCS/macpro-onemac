@@ -60,7 +60,7 @@ export const main = handler(async (event) => {
       data.submittedAt = Date.now();
       // record the current end timestamp (can be start/stopped/changed)
       // 90 days is current CMS review period
-      data.endAt = data.submittedAt+(90*86400);
+      data.endAt = data.submittedAt+(90*24*60*60*1000);
       await dynamoDb.put({
         TableName: process.env.tableName,
         Item: data,
