@@ -1,10 +1,14 @@
+
+let spaPage;
 module.exports = {
-    tags : ['login', 'smoke'],
+    tags : ['smoke'],
+
 
     before : function(browser) {
         console.log('Setting up...');
+        spaPage = browser.page.spaBasePage();
         browser.url(browser.launch_url);
-        browser.waitForElementVisible('body');
+        browser.waitForElementPresent('body');
 
     },
 
@@ -14,20 +18,16 @@ module.exports = {
     },
 
     'Login to SPA and Waiver Dashboard' : function(browser) {
-        const loginPage = browser.page.spaBasePage();
         let title = "SPA and Waiver Dashboard";
         let urlSubDir = '/dashboard';
-        let username = browser.userName;
-        let password = browser.passWord;
-        console.log(username + "\n" + password);
+        const username = browser.globals.userName;
+        const password = browser.globals.passWord;
 
-        loginPage.click("@loginButton");
+        spaPage.login(username, password);
         browser.waitForElementPresent('body');
-        loginPage.login(username, password);
         browser.verify.containsText('h1', title);
-        browser.expect.url().to.contain(urlSubDir).after(5000);
-
-        loginPage
+        browser.expect.url().to.contain(urlSubDir).before(10000);
+        spaPage
             .verify.visible('@loginTitle')
             .verify.containsText('h1', title)
 
@@ -35,8 +35,9 @@ module.exports = {
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
         let title = 'SPA and Waiver Dashboard'
-        const loginPage = browser.page.spaBasePage();
-        loginPage.click('@logout');
-        loginPage.verify.not.containsText('h1', title);
+        const spaPage = browser.page.spaBasePage();
+        spaPage.logout();
+        spaPage.verify.not.containsText('h1', title);
+        browser.pause(1000);
     }
 };

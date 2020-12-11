@@ -8,7 +8,7 @@ const Services ={}; loadServices();
 module.exports = {
     // An array of folders (excluding subfolders) where your tests are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
-    src_folders: ["./tests/suites"],
+    src_folders: ["./tests/"],
 
     // See https://nightwatchjs.org/guide/working-with-page-objects/
     page_objects_path: './tests/page_objects',
@@ -25,12 +25,11 @@ module.exports = {
     disable_error_log: false,
 
     test_settings: {
-        exclude : ["./tests/unit", "./tests/cases"],
-
         default: {
+            exclude: ["./tests/page_objects", "./tests/examples"],
             globals: {
                 userName: `${process.env.TEST_USERS}`,
-                passWord: `${process.env.TEST_USER_PASSWORD}`
+                passWord: `${process.env.TEST_USER_PASSWORD}`,
             },
             launch_url: `${process.env.APPLICATION_ENDPOINT}`,
             webdriver: {
@@ -55,8 +54,8 @@ module.exports = {
                     'moz:firefoxOptions': {
                         args: [
                             '--window-size=1024,768',
-                            '-verbose'
-                            //'-headless',
+                            '-verbose',
+                            '-headless',
                             // '-verbose'
                         ],
                     }
@@ -85,7 +84,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        //'--headless'
+                        '--headless'
                     ]
                 }
             },
@@ -131,10 +130,9 @@ module.exports = {
             }
         },
 
-        "unit-tests" : {   // Runs only the unit tests
+        "unit-test" : {
             unit_tests_mode : true,
-            filter: "./tests/unit",
-            exclude : ["./tests/cases", "./tests/suites", "./tests/reports/tests"]
+            filter: "./tests/unit"
         }
     }
 };

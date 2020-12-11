@@ -4,10 +4,12 @@
   "description": "Automated Testing Framework using Nightwatch.js",
   "private": "true",
   "scripts": {
-    "chrome": "node nightwatch -c conf/nightwatch.conf.js -e chrome",
+    "chrome": "node nightwatch -c conf/nightwatch.conf.js -e chrome ./tests/cases/OY2-1494_Test_SPA_Login.js",
     "firefox": "node nightwatch -c conf/nightwatch.conf.js -e firefox",
-    "cross-browser": "node nightwatch -c conf/nightwatch.conf.js -e chrome,firefox",
-    "update": "npx npm-check-updates -u && npm install"
+    "cross-browser": "node nightwatch -c conf/nightwatch.conf.js -e chrome,firefox --skiptags unit,integration",
+    "regression": "node nightwatch -c conf/nightwatch.conf.js -e chrome --tag regression --skiptags unit,smoke,integration",
+    "update": "npx npm-check-updates -u && npm install",
+    "integration": "node nightwatch.js -c conf/nightwatch.conf.js -e unit-test --tag integration"
   },
   "unsafe-perm": true,
   "repository": {

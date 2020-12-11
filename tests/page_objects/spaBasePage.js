@@ -1,9 +1,23 @@
 
 const commands = {
-    login: function () {
-        this.api.setValue(this.elements.userField, this.globals.userName).pause(100);
-        this.api.setValue(this.elements.passField, this.globals.passWord).pause(100);
+
+    getTransmitNumber: function () {
+        return this.props.transmitNumber;
+    },
+
+    getWaiverNumber: function () {
+        return this.props.waiverNumber;
+    },
+
+    login: function (user, pass) {
+        this.api.click(this.elements.loginButton);
+        this.api.setValue(this.elements.userField, user).pause(100);
+        this.api.setValue(this.elements.passField, pass).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+    },
+
+    logout: function () {
+        this.api.click(this.elements.logout);
     },
 
     uploadFiles: function (total) {
@@ -19,19 +33,10 @@ const commands = {
 
         }
         return this.api;
-    },
-
-    getTransmitNumber: function () {
-        return this.props.transmitNumber;
-    },
-
-    getWaiverNumber: function () {
-        return this.props.waiverNumber;
     }
 }
 
 module.exports = {
-    url: this.launch_url,
     elements: {
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
