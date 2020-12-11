@@ -19,13 +19,13 @@ export function getLinksHtml(uploads) {
 
 /**
  * Get the EST 90th day from the submitted Date (with submitted Date as day 0)
- * @param {Number} startDate the Unix timestamp for the start date of the 90 day period.
+ * @param {Number} startTimestamp the Unix timestamp for the start date of the 90 day period.
  * @returns {String} CMS approved 90th day formatted for readability.
  */
-export function get90thDay(startDate) {
+export function get90thDay(startTimestamp) {
 
-    var estOffset = 18000;          // the amount of milliseconds between UTC and EST
+    var estTimestamp = startTimestamp-18000;  // subtract the amount of milliseconds between UTC and EST
     var realNumberOfDays = 90;
 
-    return format(addDays(startDate-estOffset, realNumberOfDays), "MMMM d, yyyy") + " @ 11:59 EST";
+    return format(addDays(estTimestamp, realNumberOfDays), "MMMM d, yyyy") + " @ 11:59 EST";
 }
