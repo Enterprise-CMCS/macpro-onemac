@@ -3,13 +3,10 @@
 *.log
 *.xml
 .idea
-reports/
-reports/screenshots/
 tests/aut_model/*
 scratch
-/node_modules/*
-/tests_output/*
-node_modules/**
+/test_results/*
 
 *.env*
 /log/log.txt
+/node_modules/

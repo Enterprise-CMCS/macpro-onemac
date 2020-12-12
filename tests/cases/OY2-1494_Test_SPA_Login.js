@@ -1,13 +1,12 @@
 
-let spaPage;
 module.exports = {
-    tags : ['smoke'],
 
 
     before : function(browser) {
         console.log('Setting up...');
-        spaPage = browser.page.spaBasePage();
-        browser.url(browser.launch_url);
+        let url = browser.launch_url;
+        console.log(url)
+        browser.url(url);
         browser.waitForElementPresent('body');
 
     },
@@ -20,8 +19,9 @@ module.exports = {
     'Login to SPA and Waiver Dashboard' : function(browser) {
         let title = "SPA and Waiver Dashboard";
         let urlSubDir = '/dashboard';
-        const username = browser.globals.userName;
-        const password = browser.globals.passWord;
+        let spaPage = browser.page.spaBasePage();
+        const username = browser.globals.user;
+        const password = browser.globals.pass;
 
         spaPage.login(username, password);
         browser.waitForElementPresent('body');
