@@ -23,33 +23,34 @@ Pre-requisite:
 - Node.js 12.x or higher
 
 
-From the root directory folder, use node package manager `npm`:
+From the root of this project's repo (where nightwatch package is placed), using node package manager `npm`:
 
-`npm install`
-   
+`npm update` # checks the package.json, updates for the environment, and then installs the package dependencies
+
+Note: The environment file `.env` provides the username, password and url for nightwatch.
+The `nightwatch.conf.js` references this file. A `blank.env` file is provided. Enter credentials and the URL 
+to the application and rename to `.env`. This file is not intended to be checked-in to the
+repo. 
+
 ### Running Tests 
 
-To run tests:
-    
-`node nightwatch -c conf/nightwatch.conf.js # runs all tests`
+Tests run "headless" (no visible browser) by default. If you want to see the browser run, 
 
-\*New Commands\*
+for troubleshooting, comment out the headless argument for the desired browser.
+
 To run tests (by browser type):
 
-For Chrome:
-    - Windows: `npm run chrome-win`
-    - Linux/Mac: `npm run chrome`
-    
-For Firefox:
-    - Windows: `npm run firefox-win`
-    - Linux/Mac: `npm run firefox-chrome`
+** Updated Commands **
 
-To update packages: 
-    `npm run update`
+Chrome: `npm run chrome`
+    
+Firefox: `npm run firefox`
+
+Cross-browser(both Firefox and Chrome in parallel): `npm run cross-browser`
+
+To update packages: `npm update`
 
 see [Running Tests in Nightwatch](https://nightwatchjs.org/guide/running-tests/nightwatch-runner.html)
-
-A test_runner script will be updated and provided soon.
 
 ### Automated Test Writing Guides
 
@@ -59,7 +60,3 @@ A test_runner script will be updated and provided soon.
 
 ### Other Notes/Bugs
 
-- 13 November 2020: Bug Impact (Low) There is a (possible) bug in chromedriver, when running tests headless(without a browser).
-Description: When attempting to perform an action on a clickable element, chromedriver reports an error, 
-falsely identifying the element as a non-clickable element`[size of the element is zero]`. Until this is resolved,
-avoid running headless tests in chromedriver. 

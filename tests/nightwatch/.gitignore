@@ -1,0 +1,8 @@
+!README.md
+*.log
+*.xml
+.idea
+test_results/*.*
+
+/log/log.txt
+/.env

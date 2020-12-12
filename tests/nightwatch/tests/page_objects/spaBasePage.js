@@ -1,9 +1,23 @@
 
 const commands = {
-    login: function () {
-        this.api.setValue(this.elements.userField, this.props.username).pause(100);
-        this.api.setValue(this.elements.passField, this.props.password).pause(100);
+
+    getTransmitNumber: function () {
+        return this.props.transmitNumber;
+    },
+
+    getWaiverNumber: function () {
+        return this.props.waiverNumber;
+    },
+
+    login: function (user, pass) {
+        this.api.click(this.elements.loginButton);
+        this.api.setValue(this.elements.userField, user).pause(100);
+        this.api.setValue(this.elements.passField, pass).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+    },
+
+    logout: function () {
+        this.api.click(this.elements.logout);
     },
 
     uploadFiles: function (total) {
@@ -19,26 +33,15 @@ const commands = {
 
         }
         return this.api;
-    },
-
-    getTransmitNumber: function () {
-        return this.props.transmitNumber;
-    },
-
-    getWaiverNumber: function () {
-        return this.props.waiverNumber;
     }
 }
 
 module.exports = {
-
     elements: {
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
         title: 'div[class=dashboard-title]',
-
         transmittal: "input[id='transmittalNumber']",
-        url: `${process.env.APPLICATION_ENDPOINT}`,
         userField : '#email',
         loginButton : 'button:nth-child(2)',
         loginTitle : 'div[class=page-title-bar]',
@@ -48,7 +51,6 @@ module.exports = {
             selector: '(//button)[1]',
             locateStrategy: 'xpath'
         },
-
         passField : '#password',
 
         newSPA: {
@@ -82,8 +84,6 @@ module.exports = {
     commands : [commands],
 
     props : {
-        username : 'user1@cms.hhs.local',
-        password : 'Passw0rd!',
         pauseAction: 1000,
         transmitNumber: 'VA-20-1234',
         waiverNumber: 'VA.12.R34.M56'

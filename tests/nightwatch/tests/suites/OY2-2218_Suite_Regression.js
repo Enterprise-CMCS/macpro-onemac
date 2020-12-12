@@ -1,7 +1,8 @@
 
 const login = require('../cases/OY2-1494_Test_SPA_Login');
+
 module.exports = {
-    tags: ['smoke', 'regression'],
+    "@tags": ["regression"],
 
     before : function(browser) {
         console.log('Setting up...');
@@ -15,7 +16,7 @@ module.exports = {
 
     "Submit a SPA Report": function (browser) {
         const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
-        newSPA.before(browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
         newSPA["Click on 'Start a new SPA'"](browser);
         newSPA["Enter SPA State/Territory Information"](browser);
         newSPA["Enter SPA ID"](browser);
@@ -26,8 +27,8 @@ module.exports = {
     },
 
     "Submit a SPA RAI Response'": function (browser) {
+        login["Login to SPA and Waiver Dashboard"](browser);
         const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
-        spaRAI.before(browser);
         spaRAI["Click on 'Respond to SPA RAI'"](browser);
         spaRAI["Enter SPA ID"](browser);
         spaRAI["Upload Documents"](browser);
@@ -37,8 +38,8 @@ module.exports = {
     },
 
     "Submit a SPA Waiver ": function (browser) {
+        login["Login to SPA and Waiver Dashboard"](browser);
         const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
-        spaWaiver.before(browser);
         spaWaiver["Click on 'Submit new Waiver'"](browser);
         spaWaiver["Enter SPA State/Territory Information"](browser);
         spaWaiver["Enter Waiver Authority"](browser);
@@ -51,8 +52,8 @@ module.exports = {
     },
 
     "Submit a 1915b Waiver RAI": function (browser) {
+        login["Login to SPA and Waiver Dashboard"](browser);
         const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
-        waiverRAI.before(browser);
         waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser);
         waiverRAI["Enter Waiver Number"](browser);
         waiverRAI["Upload Documents"](browser);
@@ -62,8 +63,8 @@ module.exports = {
     },
 
     "Submit a Temporary Request Extension": function (browser) {
+        login["Login to SPA and Waiver Dashboard"](browser);
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
-        tempExt.before(browser);
         tempExt["Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'"](browser);
         tempExt["Enter Waiver Number"](browser);
         tempExt["Upload Documents"](browser);
