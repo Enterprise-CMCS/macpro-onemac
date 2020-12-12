@@ -4,7 +4,6 @@ const fs = require('fs');
 const path = require('path');
 const Services ={}; loadServices();
 
-
 module.exports = {
     // An array of folders (excluding subfolders) where your tests are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
@@ -26,12 +25,12 @@ module.exports = {
 
     test_settings: {
         default: {
-            exclude: ["./tests/page_objects", "./tests/examples"],
-            globals: {
-                userName: `${process.env.TEST_USERS}`,
-                passWord: `${process.env.TEST_USER_PASSWORD}`,
-            },
             launch_url: `${process.env.APPLICATION_ENDPOINT}`,
+            globals: {
+                user: `${process.env.TEST_USERS}`,
+                pass: `${process.env.TEST_USER_PASSWORD}`,
+            },
+            exclude: ["./tests/page_objects", "./tests/examples"],
             webdriver: {
                 start_process: true,
                 log_path: false,
@@ -55,7 +54,7 @@ module.exports = {
                         args: [
                             '--window-size=1024,768',
                             '-verbose',
-                            '-headless',
+                            //'-headless',
                             // '-verbose'
                         ],
                     }
@@ -84,7 +83,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        '--headless'
+                        //'--headless'
                     ]
                 }
             },

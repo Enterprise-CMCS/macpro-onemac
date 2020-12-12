@@ -1,10 +1,8 @@
-module.exports = {
-    globals: {
 
-    },
+module.exports = {
 
     reporter: function(results, done) {
-        console.log(results);
+        require('html-reporter').reporter(results);
         done();
     }
 }
