@@ -17,7 +17,7 @@ export default function Metrics() {
             } else {
                 try {
                     var data = await Auth.currentAuthenticatedUser();
-                    var metricEmail = config.ALLOWED_METRICS_EMAILS
+                    var metricEmail = config.METRICS_USERS
                     console.log("DEBUG: " + metricEmail + " = " + metricEmail.includes(data.attributes.email))
                     if (!metricEmail.includes(data.attributes.email)) {
                         window.location = "/dashboard"
