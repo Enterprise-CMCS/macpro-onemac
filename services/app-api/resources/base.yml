@@ -64,6 +64,11 @@ Resources:
               - ses:SendEmail
               - ses:SendRawEmail
               Resource: '*'
+            - Effect: 'Allow'
+              Action:
+                - "dynamodb:GetItem"
+              Resource: !GetAtt SpaIdTable.Arn
+
   LambdaWarmupRole:
     Type: 'AWS::IAM::Role'
     Properties:

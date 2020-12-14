@@ -8,7 +8,7 @@
   },
   "dependencies": {},
   "devDependencies": {
-    "serverless": "^1.82.0",
+    "serverless": "^2.7.0",
     "testcafe": "^1.8.5"
   },
   "scripts": {
