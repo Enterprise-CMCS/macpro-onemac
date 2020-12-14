@@ -1,17 +1,14 @@
-import React, {useEffect, useState} from "react";
-import AlertBar from "../components/AlertBar";
-import {ALERTS_MSG} from "../libs/alert-messages";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import React, {useEffect} from "react";
 import {useAppContext} from "../libs/contextLib";
-import {s3JsonToCsv} from "../utils/csvUtils";
-import LoadingScreen from "../components/LoadingScreen";
 import {Auth} from "aws-amplify";
 import config from "../utils/config";
+import CMSTable from "../components/CMSTable";
 
+/**
+ * Metrics is a temporary page to allow download of all submissions metadata to generate reports.
+ */
 export default function Metrics() {
     const {isAuthenticated} = useAppContext();
-    const [changeRequestList, setChangeRequestList] = useState([]);
-    const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
         async function onLoad() {
@@ -20,45 +17,26 @@ export default function Metrics() {
             } else {
                 try {
                     var data = await Auth.currentAuthenticatedUser();
-                    var metricEmail = config.METRICS_USERS
-                    if ( ! metricEmail.includes(data.attributes.email )) {
+                    var metricEmail = config.ALLOWED_METRICS_EMAILS
+                    console.log("DEBUG: " + metricEmail + " = " + metricEmail.includes(data.attributes.email))
+                    if (!metricEmail.includes(data.attributes.email)) {
                         window.location = "/dashboard"
-                      return;
+                        return;
                     }
                 } catch {
                     window.location = "/dashboard"
-                    return ;
+                    return;
                 }
             }
-            try {
-                setIsLoading(true)
-                const metrics = await ChangeRequestDataApi.listAll();
-                const csvData = s3JsonToCsv(metrics)
-                setChangeRequestList(csvData)
-                setIsLoading(false)
-            } catch (error) {
-                AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
-            }
+
         }
 
         onLoad();
     }, [isAuthenticated]);
 
-    function downloadCsv() {
-
-        var hiddenElement = document.createElement('a');
-        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(changeRequestList);
-        hiddenElement.target = '_blank';
-        hiddenElement.download = 'SPAFormMetrics.csv';
-        hiddenElement.click();
-
-    }
-
     return (
-        <div className="dashboard-container">
-            <LoadingScreen isLoading={isLoading}>
-                <button class="ds-c-button" onClick={downloadCsv}>&nbsp;Download Metrics (CSV format)</button>
-            </LoadingScreen>
+        <div>
+            <CMSTable/>
         </div>
     );
 }

@@ -10,6 +10,7 @@ const {transforms: {unwind}} = require('json2csv');
  */
 
 export function s3JsonToCsv(data) {
+    data = formatFormDate(data)
     try {
         const fields = ['transmittalNumber', 'territory', 'createdAt', 'user.email', 'type', 'uploads.title'];
         const transforms = [unwind({paths: ['uploads', 'uploads.title']})];
