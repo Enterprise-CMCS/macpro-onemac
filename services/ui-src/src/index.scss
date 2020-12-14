@@ -387,16 +387,16 @@ input[type="file"] {
 
 .nav-bar {
   @extend .app-bar;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-align-items--center;
+  @extend .ds-u-justify-content--between;
+  @extend .ds-u-flex-wrap--nowrap;
   background-color: $color-primary;
   min-height: 70px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  flex-wrap: nowrap;
 
   .nav-left {
-    display: flex;
-    flex-wrap: wrap;
+    @extend .ds-u-display--flex;
+    @extend .ds-u-flex-wrap--wrap;
     a {
       color: $color-white;
       font-weight: bold;
@@ -413,9 +413,9 @@ input[type="file"] {
   }
 
   .nav-right {
-    display: flex;
-    justify-content: flex-end;
-    flex-wrap: wrap;
+    @extend .ds-u-display--flex;
+    @extend .ds-u-justify-content--end;
+    @extend .ds-u-flex-wrap--wrap;
     font-weight: bold;
 
     label {
