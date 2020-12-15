@@ -57,7 +57,7 @@ class SPAEmailTemplates {
         <br><b>SPA ID</b>: ${data.transmittalNumber}
         <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
         <br><b>Submitter email</b>: ${data.user.email}
-        <br><b>90th day deadline</b>: ${getCMSDateFormat(data.endAt)}
+        <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
         <b>Summary</b>:
@@ -66,7 +66,7 @@ class SPAEmailTemplates {
       <p>
         <br>
         This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
-        You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.endAt)}.
+        You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
       </p>
       <p>
         This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 

@@ -64,7 +64,7 @@ export const main = handler(async (event) => {
       // 90 days is current CMS review period and it is based on CMS time!!
       // UTC is 4-5 hours ahead, convert first to get the correct start day
       // AND use plus days function b/c DST days are 23 or 25 hours!!
-      data.endAt = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
+      data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
       await dynamoDb.put({
         TableName: process.env.tableName,
         Item: data,
