@@ -21,7 +21,7 @@
   },
   "dependencies": {
     "date-fns": "^2.16.1",
-    "date-fns-tz": "^1.0.12",
+    "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
   }
