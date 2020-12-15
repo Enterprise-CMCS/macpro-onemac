@@ -474,3 +474,18 @@ input[type="file"] {
 .display-errors select:invalid  {
   border-color: red;
 }
+
+
+.submissions-table {
+  @extend .ds-c-table;
+  @extend .ds-c-table--borderless;
+  width: 100%;
+
+  a {
+    font-weight: bold;
+  }
+
+  .column-header {
+    background-color: $color-white;
+  }
+}
