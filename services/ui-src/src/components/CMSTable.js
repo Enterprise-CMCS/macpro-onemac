@@ -32,6 +32,7 @@ export default function CMSTable() {
     const [changeRequestList, setChangeRequestList] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
+
     useEffect(() => {
         async function onLoad() {
             try {
@@ -69,9 +70,13 @@ export default function CMSTable() {
         // We don't want to render all of the rows for this example, so cap
         // it at 100 for this use case
         const firstPageRows = rows.slice(0, 100)
+        const collapseIcon = String.fromCharCode(8709) + "- ";
+        const groupByIcon = String.fromCharCode(8721) + "- ";
 
         return (
             <div>
+                <span>Group By Column Icon: {groupByIcon}</span>
+                <span>Remove Group By Column Icon: {collapseIcon}</span>
                 <table {...getTableProps()}>
                     <thead>
                         {headerGroups.map(headerGroup => (
@@ -80,7 +85,7 @@ export default function CMSTable() {
                                     <th {...column.getHeaderProps()}>
                                         {column.canGroupBy ? (
                                             <span {...column.getGroupByToggleProps()}>
-                                                {column.isGrouped ? '🛑 ' : '👊 '}
+                                                {column.isGrouped ? collapseIcon  : groupByIcon }
                                             </span>
                                         ) : null}
                                         {column.render('Header')}
