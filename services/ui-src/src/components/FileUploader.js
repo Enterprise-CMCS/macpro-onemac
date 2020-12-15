@@ -30,10 +30,15 @@ const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
  * @property {Array.string} optionalUploads an array of optional upload types or null if no optional uploads
  * @callback readyCallback callback that returns a boolean with true when all required uploads have been set
  */
+
+const MISSING_REQUIRED_MESSAGE = "Required attachments missing";
+const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX_ATTACHMENT_SIZE_MB}MB`;
+
 export default class FileUploader extends Component {
   static propTypes = {
     requiredUploads: PropTypes.arrayOf(PropTypes.string),
     optionalUploads: PropTypes.arrayOf(PropTypes.string),
+    showRequiredFieldErrors: PropTypes.bool,
   };
 
   /**
@@ -76,8 +81,31 @@ export default class FileUploader extends Component {
     }
 
     // This state is used to be able to update the form when a change occurs.
-    this.state = { uploaderHasFile };
+    this.state = { uploaderHasFile,
+      errorMessages: [],
+    };
   }
+
+  /**
+   * Track updates to the showRequiredFieldErrors property.
+   * @param {*} prevProps the previous property state
+   */
+  componentDidUpdate(prevProps) {
+    // Make sure we only continue if the property has changed value to stop cascading calls.
+    // If the showRequiredFieldErrors flag is true then show a missing required field error if needed.
+    if (this.props.showRequiredFieldErrors !== prevProps.showRequiredFieldErrors && this.state.errorMessages.length === 0) {
+      let areAllComplete = true;
+      this.uploaders.forEach((uploader) => {
+        if (uploader.isRequired && !uploader.isComplete) {
+          areAllComplete = false;
+        }
+      });
+
+      if(!areAllComplete) {
+        this.setState({errorMessages: [MISSING_REQUIRED_MESSAGE]});
+      }
+    }
+}
 
   /**
    * Set the provided uploader information.
@@ -92,21 +120,23 @@ export default class FileUploader extends Component {
     }
 
     let uploader = this.uploaders[id];
+    let errorMessages = [];
 
-    // If there is no file speficified then the state is false.
+    // If there is a file specified then
     if (files && files.length === 1) {
       // First check if the upload is larger than what is allowed
       if (files[0].size > MAX_FILE_SIZE_BYTES) {
         this.handleFileClear(event, id);
-        alert(
-          `Attachments cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.`
-        );
-        return;
+        errorMessages.push(SIZE_TOO_LARGE_MESSAGE);
+        uploader.isComplete = false;
+        uploader.file = null;
+      } else {
+        uploader.isComplete = true;
+        uploader.file = files[0];
       }
-
-      uploader.isComplete = true;
-      uploader.file = files[0];
-    } else {
+    }
+    // Else there is no file selected (e.g. clear the selected file). 
+    else {
       uploader.isComplete = false;
       uploader.file = null;
     }
@@ -123,10 +153,18 @@ export default class FileUploader extends Component {
         areAllComplete = false;
       }
     });
+
+    // Clear any error messages if everything is ready.
+    if(!areAllComplete && this.props.showRequiredFieldErrors) {
+      errorMessages.push(MISSING_REQUIRED_MESSAGE);
+    } 
+
     this.allUploadsComplete = areAllComplete;
     if (this.readyCallback) {
       this.readyCallback(this.allUploadsComplete);
     }
+
+    this.setState({errorMessages: errorMessages});
   }
 
   /**
@@ -225,10 +263,24 @@ export default class FileUploader extends Component {
     let allControls = reqControls.concat(optControls);
 
     return (
-      <div className="uploader">
-        <table>
-          <tbody>{allControls}</tbody>
-        </table>
+      <div>
+        <p className="req-message">Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.</p>
+        <p className="req-message">
+          <span className="required-mark">*</span> indicates required
+          attachment.
+        </p>
+        <div className="ds-u-color--error">
+          {this.state.errorMessages.map((message, index) => 
+           <div key={index}>{message}</div>
+          )}
+        </div>
+        <div className="upload-card">
+          <div className="uploader">
+            <table>
+              <tbody>{allControls}</tbody>
+            </table>
+          </div>
+        </div>
       </div>
     );
   }

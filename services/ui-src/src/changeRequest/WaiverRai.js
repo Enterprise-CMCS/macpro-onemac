@@ -22,6 +22,10 @@ export default function WaiverRai() {
       optionalUploads={optionalUploads}
       requiredUploads={requiredUploads}
       raiType='Waiver'
+      transmittalNumberLabel="Waiver Number"
+      transmittalNumberHint="Must follow the format SS.##.R##.M## or SS.####.R##.##"
+      FAQLink="/FAQ#waiver-id-format"
+
     />
   )
 }
