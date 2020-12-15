@@ -23,8 +23,7 @@ export function getLinksHtml(uploads) {
  * @returns {String} CMS approved date format.
  */
 export function getCMSDateFormat(theTimestamp) {
- 
     const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
- 
+
     return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
