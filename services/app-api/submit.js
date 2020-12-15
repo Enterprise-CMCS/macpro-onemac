@@ -3,6 +3,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getEmailTemplates from "./email-templates/getEmailTemplates";
+import {DateTime} from "luxon";
 
 /**
  * Submission states for the change requests.
@@ -60,7 +61,7 @@ export const main = handler(async (event) => {
       data.submittedAt = Date.now();
       // record the current end timestamp (can be start/stopped/changed)
       // 90 days is current CMS review period
-      data.endAt = data.submittedAt+(90*24*60*60*1000);
+      data.endAt = DateTime.fromMillis(data.submittedAt).plus({ days: 90 }).toMillis();
       await dynamoDb.put({
         TableName: process.env.tableName,
         Item: data,

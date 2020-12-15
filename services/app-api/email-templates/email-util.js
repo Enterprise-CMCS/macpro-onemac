@@ -1,4 +1,4 @@
-import {format, utcToZonedTime} from "date-fns-tz";
+ import {DateTime} from "luxon";
 
 /**
  * Get HTML containing links representing the attached documents.
@@ -24,11 +24,11 @@ export function getLinksHtml(uploads) {
  */
 export function getESTDateFormat(theTimestamp) {
     console.log("TimeStamp is: "+theTimestamp);
-    const theDate = new Date(theTimestamp);
+    const theDate = DateTime.fromMillis(theTimestamp);
     console.log("theDate is: "+theDate.toString());
-    const cmsTimeZone = 'America/New_York';
-    const cmsDate = utcToZonedTime(theDate, cmsTimeZone);
-    console.log("cmsDate is: "+cmsDate);
+ //   const cmsTimeZone = 'America/New_York';
+   // const cmsDate = utcToZonedTime(theDate, cmsTimeZone);
+   // console.log("cmsDate is: "+cmsDate);
 
-    return format(cmsDate, 'MMMM d, yyyy @ 11:59 zzz', { timeZone: 'America/New_York' });
+    return "sample string with Timestamp: " + theDate.toString(); //format(cmsDate, 'MMMM d, yyyy @ 11:59 zzz', { timeZone: 'America/New_York' });
 }
