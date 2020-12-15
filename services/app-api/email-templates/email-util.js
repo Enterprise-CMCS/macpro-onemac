@@ -22,13 +22,13 @@ export function getLinksHtml(uploads) {
  * @param {Number} theTimestamp the Unix timestamp to be used as the date
  * @returns {String} CMS approved date format.
  */
-export function getESTDateFormat(theTimestamp) {
+export function getCMSDateFormat(theTimestamp) {
     console.log("TimeStamp is: "+theTimestamp);
-    const theDate = DateTime.fromMillis(theTimestamp);
+    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
     console.log("theDate is: "+theDate.toString());
  //   const cmsTimeZone = 'America/New_York';
    // const cmsDate = utcToZonedTime(theDate, cmsTimeZone);
    // console.log("cmsDate is: "+cmsDate);
 
-    return "sample string with Timestamp: " + theDate.toString(); //format(cmsDate, 'MMMM d, yyyy @ 11:59 zzz', { timeZone: 'America/New_York' });
+    return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }

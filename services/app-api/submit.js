@@ -59,9 +59,12 @@ export const main = handler(async (event) => {
       //We successfully sent the submission email.  Update the record to reflect that.
       data.state = SUBMISSION_STATES.SUBMITTED;
       data.submittedAt = Date.now();
+
       // record the current end timestamp (can be start/stopped/changed)
-      // 90 days is current CMS review period
-      data.endAt = DateTime.fromMillis(data.submittedAt).plus({ days: 90 }).toMillis();
+      // 90 days is current CMS review period and it is based on CMS time!!
+      // UTC is 4-5 hours ahead, convert first to get the correct start day
+      // AND use plus days function b/c DST days are 23 or 25 hours!!
+      data.endAt = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
       await dynamoDb.put({
         TableName: process.env.tableName,
         Item: data,
