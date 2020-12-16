@@ -385,6 +385,38 @@ input[type="file"] {
   }
 }
 
+.submissions-table {
+  @extend .ds-c-table;
+  @extend .ds-c-table--borderless;
+  width: 100%;
+  color: $color-gray;
+
+  th {
+    border-color: $color-gray-lightest;
+    background-color: $color-white;
+    color: $color-black;
+  }
+
+  td {
+    border-color: $color-gray-lightest;
+  }
+
+  a {
+    font-weight: bold;
+  }
+
+  .date-submitted-column {
+    text-align: center;
+  }
+
+  .type-badge {
+    @extend .ds-c-badge;
+    font-weight: bold;
+    background-color: $color-primary-alt-lightest;
+    color: $color-gray;
+  }
+}
+
 .nav-bar {
   @extend .app-bar;
   @extend .ds-u-display--flex;
@@ -473,35 +505,4 @@ input[type="file"] {
 .display-errors input:invalid,
 .display-errors select:invalid  {
   border-color: red;
-}
-
-
-.submissions-table {
-  @extend .ds-c-table;
-  @extend .ds-c-table--borderless;
-  width: 100%;
-  color: $color-gray;
-  text-align: left;
-
-  th, td {
-    border-color: $color-gray-lightest;
-    border-width: 2px;
-  }
-
-  a {
-    font-weight: bold;
-  }
-
-  .column-header {
-    background-color: $color-white;
-    color: $color-black;
-    text-align: left;
-  }
-
-  .type-badge {
-    @extend .ds-c-badge;
-    font-weight: bold;
-    background-color: $color-primary-alt-lightest;
-    color: $color-gray;
-  }
 }

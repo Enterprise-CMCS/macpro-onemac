@@ -95,7 +95,7 @@ export default function Dashboard() {
             </Link>
           </td>
           <td><span className="type-badge">{type}</span></td>
-          <td>{format(changeRequest.submittedAt, "MMM d, yyyy")}</td>
+          <td className="date-submitted-column">{format(changeRequest.submittedAt, "MMM d, yyyy")}</td>
         </tr>
       );
     });
@@ -139,16 +139,16 @@ export default function Dashboard() {
           </Button>
       </div>
       <div className="dashboard-right-col">
-      <div className="action-title">Submissions List</div>
+        <div className="action-title">Submissions List</div>
         <LoadingScreen isLoading={isLoading}>
           <div>
             {changeRequestList.length > 0 ? (
               <table class="submissions-table">
                 <thead>
                   <tr>
-                    <th className="column-header" scope="col">SPA ID/Waiver Number</th>
-                    <th className="column-header" scope="col">Type</th>
-                    <th className="column-header" scope="col">Date Submitted</th>
+                    <th scope="col">SPA ID/Waiver Number</th>
+                    <th scope="col">Type</th>
+                    <th className="date-submitted-column" scope="col">Date Submitted</th>
                   </tr>
                 </thead>
                 <tbody>
