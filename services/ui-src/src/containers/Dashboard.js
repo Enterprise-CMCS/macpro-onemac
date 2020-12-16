@@ -87,9 +87,6 @@ export default function Dashboard() {
           type = ""
       }
 
-      const dateString = new Date(changeRequest.submittedAt).toDateString()
-      const formattedDateString = format(changeRequest.submittedAt, "MMM d, yyyy")
-
       return (
         <tr>
           <td>
@@ -97,8 +94,8 @@ export default function Dashboard() {
               {changeRequest.transmittalNumber}
             </Link>
           </td>
-          <td>{type}</td>
-          <td>{formattedDateString}</td>
+          <td><span className="type-badge">{type}</span></td>
+          <td>{format(changeRequest.submittedAt, "MMM d, yyyy")}</td>
         </tr>
       );
     });

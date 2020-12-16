@@ -480,6 +480,13 @@ input[type="file"] {
   @extend .ds-c-table;
   @extend .ds-c-table--borderless;
   width: 100%;
+  color: $color-gray;
+  text-align: left;
+
+  th, td {
+    border-color: $color-gray-lightest;
+    border-width: 2px;
+  }
 
   a {
     font-weight: bold;
@@ -487,5 +494,14 @@ input[type="file"] {
 
   .column-header {
     background-color: $color-white;
+    color: $color-black;
+    text-align: left;
+  }
+
+  .type-badge {
+    @extend .ds-c-badge;
+    font-weight: bold;
+    background-color: $color-primary-alt-lightest;
+    color: $color-gray;
   }
 }
