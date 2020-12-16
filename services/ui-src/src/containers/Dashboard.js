@@ -146,7 +146,7 @@ export default function Dashboard() {
               <table class="submissions-table">
                 <thead>
                   <tr>
-                    <th className="column-header" scope="col">Package ID</th>
+                    <th className="column-header" scope="col">SPA ID/Waiver Number</th>
                     <th className="column-header" scope="col">Type</th>
                     <th className="column-header" scope="col">Date Submitted</th>
                   </tr>
