@@ -1,6 +1,4 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
 import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import AlertBar from "../components/AlertBar";
@@ -8,9 +6,10 @@ import PageTitleBar from "../components/PageTitleBar";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import { format } from 'date-fns'
 
 /**
  * Component containing dashboard
@@ -62,38 +61,42 @@ export default function Dashboard() {
 
     //Now generate the list
     return sortedChangeRequests.map((changeRequest, i) => {
-      let title;
+      let type;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.SPA:
-          title = "SPA Submission: " + changeRequest.transmittalNumber;
+          type = "SPA";
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
-          title = "Waiver Submission: " + changeRequest.transmittalNumber;
+          type = "Waiver";
           break;
 
         case CHANGE_REQUEST_TYPES.SPA_RAI:
-          title = "Response to RAI for SPA Submission: " + changeRequest.transmittalNumber;
+          type = "SPA RAI";
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          title = "Response to RAI for Waiver Submission: " + changeRequest.transmittalNumber;
+          type = "Waiver RAI";
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-          title = "Temporary Extension Request for Waiver: " + changeRequest.transmittalNumber;
+          type = "Temporary Extension Request";
           break;
 
         default:
-          title = "Submission Type: " + changeRequest.type ;
+          type = ""
       }
 
       return (
-        <LinkContainer key={changeRequest.id} to={link}>
-          <ListGroupItem header={title}>
-            {"Submitted on: " + new Date(changeRequest.submittedAt).toLocaleString()}
-          </ListGroupItem>
-        </LinkContainer>
+        <tr>
+          <td>
+            <Link to={link}>
+              {changeRequest.transmittalNumber}
+            </Link>
+          </td>
+          <td><span className="type-badge">{type}</span></td>
+          <td className="date-submitted-column">{format(changeRequest.submittedAt, "MMM d, yyyy")}</td>
+        </tr>
       );
     });
   }
@@ -136,13 +139,22 @@ export default function Dashboard() {
           </Button>
       </div>
       <div className="dashboard-right-col">
-      <div className="action-title">Your SPA and Waiver Submissions</div>
+        <div className="action-title">Submissions List</div>
         <LoadingScreen isLoading={isLoading}>
           <div>
             {changeRequestList.length > 0 ? (
-              <ListGroup>
-                {renderChangeRequestList(changeRequestList)}
-              </ListGroup>
+              <table class="submissions-table">
+                <thead>
+                  <tr>
+                    <th scope="col">SPA ID/Waiver Number</th>
+                    <th scope="col">Type</th>
+                    <th className="date-submitted-column" scope="col">Date Submitted</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {renderChangeRequestList(changeRequestList)}
+                </tbody>
+              </table>
             ) : (
               <div className="empty-list">You have no submissions yet</div>
             )}
