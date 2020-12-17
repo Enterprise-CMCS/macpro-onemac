@@ -39,7 +39,7 @@ module.exports = {
 
         transmittal: "input[id='transmittalNumber']",
         userField : '#email',
-        loginButton : 'button:nth-child(2)',
+        loginButton : '#devloginBtn',
         loginTitle : 'div[class=page-title-bar]',
         submitBtn : 'button[type=submit]',
 

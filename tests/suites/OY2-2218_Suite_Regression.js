@@ -14,6 +14,10 @@ module.exports = {
         login.after(browser);
     },
 
+    afterEach: function (browser) {
+        browser.pause(1000);
+    },
+
     "Submit a SPA Report": function (browser) {
         const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
         login["Login to SPA and Waiver Dashboard"](browser);
