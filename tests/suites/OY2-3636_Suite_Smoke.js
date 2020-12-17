@@ -156,7 +156,9 @@ module.exports = {
         browser.back();  // go back to previous page
     },
 
-    'Verify error message > Submit new SPA': function(browser){
+    // ------------------- VERIFYING ERROR MESSSAGE ---------------------------------- //
+
+    'Verify error message > Submit new SPA': function(browser) {
         let link_submitNewSPA = 'button#spaSubmitBtn';
         let bttn_submit = "[value='Submit']";
         
@@ -185,7 +187,7 @@ module.exports = {
     }, 
 
 
-    'Verify error message > Respond to SPA RAI': function(browser){
+    'Verify error message > Respond to SPA RAI': function(browser) {
         let link_respondToSPARAI = 'button#spaRaiBtn';
         let bttn_submit = "[value='Submit']";
 
@@ -244,7 +246,7 @@ module.exports = {
 
     }, 
     
-    'Verify error message > Respond to 1915(c) Waiver RAI': function(browser){
+    'Verify error message > Respond to 1915(c) Waiver RAI': function(browser) {
         let link_RespondTo1915 = 'button#waiverRaiBtn';
         let bttn_submit = "[value='Submit']";
 
@@ -275,7 +277,7 @@ module.exports = {
 
     }, 
 
-    'Verify error message > Request Temporary Extension form - 1915(b) and 1915(c)': function(browser){
+    'Verify error message > Request Temporary Extension form - 1915(b) and 1915(c)': function(browser) {
         let link_requestTempExtension = 'button#waiverExtBtn';
         let bttn_submit = "[value='Submit']";
 
@@ -300,6 +302,37 @@ module.exports = {
             })
             browser.useCss();
         });
+
+         browser.back();  // go back to previous page
+    }, 
+
+
+    'Verify logout from SPA and Wavier Dashboard and login as CSM.gov Regular user': function(browser) {
+        let username = "FLSESPA2";
+        let password = "Macbis9!1";
+
+        // elements 
+        let bttn_logout = 'button#logoutBtn';
+        let bttn_login = '.nav-right > [type]';
+
+        // logout from SPA and Wavier Dashboard page
+        browser.click(bttn_logout);
+        browser.waitForElementPresent('h1');
+
+        // Verify the successful logout 
+        browser.verify.containsText('h1', "CMS State Plan Amendment and Waiver Submission Platform");
+
+        // Log back in as CSM.gov Regular user 
+        browser.click(bttn_login);
+        browser.setValue('#okta-signin-username', username);
+        browser.setValue('#okta-signin-password', password);
+        browser.click('input#tandc');  // Agree to Terms & Condition checkbox
+        browser.click('input#okta-signin-submit');
+
+        // Verify the successful logoin 
+        browser.waitForElementPresent('body');
+        let txt_emptySubmission = '.empty-list';
+        browser.verify.containsText(txt_emptySubmission, "You have no submissions yet");
     }
 
 };
