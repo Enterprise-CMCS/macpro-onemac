@@ -1,14 +1,10 @@
 
+let spa;
 module.exports = {
-
-
     before : function(browser) {
         console.log('Setting up...');
-        let url = browser.launch_url;
-        console.log(url)
-        browser.url(url);
-        browser.waitForElementPresent('body');
-
+        browser.url(browser.launch_url).waitForElementPresent('body');
+        spa= browser.page.spaBasePage();
     },
 
     after : function(browser) {
@@ -19,15 +15,14 @@ module.exports = {
     'Login to SPA and Waiver Dashboard' : function(browser) {
         let title = "SPA and Waiver Dashboard";
         let urlSubDir = '/dashboard';
-        let spaPage = browser.page.spaBasePage();
         const username = browser.globals.user;
         const password = browser.globals.pass;
 
-        spaPage.login(username, password);
+        spa.login(username, password);
         browser.waitForElementPresent('body');
         browser.verify.containsText('h1', title);
         browser.expect.url().to.contain(urlSubDir).before(10000);
-        spaPage
+        spa
             .verify.visible('@loginTitle')
             .verify.containsText('h1', title)
 
