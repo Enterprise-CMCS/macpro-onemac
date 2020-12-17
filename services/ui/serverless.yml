@@ -224,7 +224,7 @@ Resources:
         !Join
           - ''
           - - aws-waf-logs-${self:custom.stage}
-            - !Ref AWS::StackName
+        #  #  - !Ref AWS::StackName
       ExtendedS3DestinationConfiguration:
         RoleARN: !GetAtt DeliveryRole.Arn
         BucketARN: !GetAtt S3Bucket.Arn
@@ -300,7 +300,7 @@ Resources:
     Type: AWS::Lambda::Function
     Properties:
       # The AmazonSSMAutomationRole role expects the Lambda function name to begin with Automation*
-      FunctionName: !Sub Automation-${AWS::StackName}-EnableWafLogging
+      FunctionName: !Sub Automation-${self:custom.stage}-EnableWafLogging
       Code:
         ZipFile:
           !Sub |
@@ -392,7 +392,9 @@ Resources:
         !Join
           - ''
           - - Enable-WebACL-Logging-
-            - !Ref AWS::StackName
+        #    - !Ref AWS::StackName
+
+
       Description: 'Ensures that all new web ACLs have logging enabled'
       Scope:
         ComplianceResourceTypes:
