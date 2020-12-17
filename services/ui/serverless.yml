@@ -178,23 +178,14 @@ resources:
                   - Fn::GetAtt:
                     - CloudFrontDistribution
                     - DomainName
+################################################
 
 
 
 
-## Enabling waflogging
 
-
-  Outputs:
-    S3BucketName:
-      Value: !Ref S3Bucket
-    FirehoseName:
-      Value: !Ref Firehose
 
   Resources:
-    S3Bucket:
-      Type: AWS::S3::Bucket
-
     Firehose:
       Type: AWS::KinesisFirehose::DeliveryStream
       Properties:
@@ -202,10 +193,10 @@ resources:
           !Join
             - ''
             - - aws-waf-logs-${self:custom.stage}
-          #  #  - !Ref AWS::StackName
+        #     - Ref AWS::StackName
         ExtendedS3DestinationConfiguration:
           RoleARN: !GetAtt DeliveryRole.Arn
-          BucketARN: !GetAtt S3Bucket.Arn
+          BucketARN: arn:aws:s3:::test-ish-waflogs
           BufferingHints:
             IntervalInSeconds: 300
             SizeInMBs: 5
@@ -576,15 +567,7 @@ resources:
 
 
 
-
-
-
-
-
-
-
-
-
+##################################################
   Outputs:
     S3BucketName:
       Value:
