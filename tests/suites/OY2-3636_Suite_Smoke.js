@@ -37,6 +37,14 @@ module.exports = {
         browser.click('a:nth-of-type(1) > .list-group-item-heading');
         browser.waitForElementPresent('form > h3:nth-of-type(1)');
         browser.verify.containsText('form > h3:nth-of-type(1)', ' RAI Details');
+
+        // Verify the SPA-ID 
+        let input_spaId = 'input#transmittalNumber';
+        browser.assert.attributeEquals(input_spaId, 'value', "I-2-1111-1");
+
+        // Verify Submission data 
+        let input_submissionDate = 'input#submittedAt';
+        browser.assert.attributeContains(input_submissionDate, 'value', 'Thu, Nov 12 2020, 4:29:12 PM');
         
         // checking for all the diabled elements 
         let count = 1;
@@ -60,6 +68,17 @@ module.exports = {
         browser.click('a:nth-of-type(2) > .list-group-item-heading');
         browser.waitForElementPresent('form > h3:nth-of-type(1)');
         browser.verify.containsText('form > h3:nth-of-type(1)', 'SPA Details');
+
+        // Verify State / Territory
+        let input_state = 'input#territory';
+        browser.assert.attributeContains(input_state, 'value', 'DC');
+
+        // Verify spa ID 
+        let spa_id = 'input#transmittalNumber';
+        browser.assert.attributeContains(spa_id, 'value', 'DC-20-1111-EFG');
+
+        let submit_date = 'input#submittedAt';
+        browser.assert.attributeContains(submit_date, 'value', 'Thu, Nov 5 2020, 1:19:09 PM');
 
         // checking for all the diabled elements 
         let count = 1;
@@ -86,6 +105,11 @@ module.exports = {
         browser.waitForElementPresent('form > h3:nth-of-type(1)');
         browser.verify.containsText('form > h3:nth-of-type(1)', 'SPA Details');
 
+        // Verifying state and territory 
+        let stateInput = 'input#territory';
+        browser.assert.attributeContains(stateInput, 'value', 'IL');
+        browser.assert.attributeContains('input#transmittalNumber', 'value', 'IL-20-1111-ABC');
+       
         // checking for all the diabled elements 
         let count = 1;
         let locator = '(//*[@disabled])';
@@ -111,6 +135,13 @@ module.exports = {
         browser.waitForElementPresent('form > h3:nth-of-type(1)');
         browser.verify.containsText('form > h3:nth-of-type(1)', 'Waiver Action Details');
 
+        // Verifying inputs text value 
+        browser.assert.attributeContains('input#territory', 'value', 'AR');
+        browser.assert.attributeContains('input#actionType', 'value', 'renewal');
+        browser.assert.attributeContains('input#waiverAuthority', 'value', '1915(b)(4)');
+        browser.assert.attributeContains('input#transmittalNumber', 'value', 'WI-20-1221-abcd');
+        browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:19:11 AM');
+
         // checking for all the diabled elements 
         let count = 1;
         let locator = '(//*[@disabled])';
@@ -133,6 +164,10 @@ module.exports = {
         browser.click('a:nth-of-type(5) > .list-group-item-heading');
         browser.waitForElementPresent('form > h3:nth-of-type(1)');
         browser.verify.containsText('form > h3:nth-of-type(1)', 'RAI Details');
+
+        // Verifying the input text values 
+        browser.assert.attributeContains('input#transmittalNumber', 'value', 'IL-20-1111-ABC');
+        browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:18:16 AM');
 
         // checking for all the diabled elements 
         let count = 1;
