@@ -10,3 +10,4 @@ scratch
 *.env*
 /log/log.txt
 /node_modules/
+/tests/nightwatch/node_modules/
