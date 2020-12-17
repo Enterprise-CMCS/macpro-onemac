@@ -185,7 +185,7 @@ resources:
 
 
 
-  Resources:
+
     Firehose:
       Type: AWS::KinesisFirehose::DeliveryStream
       Properties:
