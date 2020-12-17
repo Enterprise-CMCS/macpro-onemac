@@ -179,21 +179,21 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
-    Outputs:
-        S3BucketName:
-          Value:
-            Ref: S3Bucket
-        CloudFrontDistributionId:
-          Value:
-            Ref: CloudFrontDistribution
-        CloudFrontEndpointUrl:
-          Value:
-            Fn::Join:
-              - ''
-              -
-                - https://
-                - Fn::GetAtt:
-                  - CloudFrontDistribution
-                  - DomainName
-        ApplicationEndpointUrl:
-          Value: !GetAtt ApplicationEndpointUrl.Value
+  Outputs:
+    S3BucketName:
+      Value:
+        Ref: S3Bucket
+    CloudFrontDistributionId:
+      Value:
+        Ref: CloudFrontDistribution
+    CloudFrontEndpointUrl:
+      Value:
+        Fn::Join:
+          - ''
+          -
+            - https://
+            - Fn::GetAtt:
+              - CloudFrontDistribution
+              - DomainName
+    ApplicationEndpointUrl:
+      Value: !GetAtt ApplicationEndpointUrl.Value
