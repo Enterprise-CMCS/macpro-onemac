@@ -391,8 +391,8 @@ Resources:
       ConfigRuleName:
         !Join
           - ''
-          - - Enable-WebACL-Logging-
-        #    - !Ref AWS::StackName
+          - - Enable-WebACL-Logging-${self:custom.stage}
+
 
 
       Description: 'Ensures that all new web ACLs have logging enabled'
