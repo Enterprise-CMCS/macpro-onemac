@@ -1,0 +1,8 @@
+# Steps
+1. Copy this file and rename it .env (no .txt)
+2. In the copied file, replace the values (after the "=") in the variables
+3. In the copied file, remove these instructions. Not here!!
+
+TEST_USERS=username
+TEST_USER_PASSWORD=password
+APPLICATION_ENDPOINT=https://www.mytestpage.url
