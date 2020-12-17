@@ -7,7 +7,6 @@ tests/aut_model/*
 scratch
 /test_results/*
 
-*.env*
 /log/log.txt
 /node_modules/
 /tests/nightwatch/node_modules/
