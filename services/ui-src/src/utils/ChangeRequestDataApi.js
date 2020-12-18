@@ -80,6 +80,22 @@ class ChangeRequestDataApi {
       throw error;
     }
   }
+
+  /**
+   * Does the id already exist in the data?
+   * @return {Boolean} true - exists; false - does not exist
+   */
+  async idExists(id) {
+    try {
+      return await API.idExists("changeRequestAPI", `/id-exists/${id}`);
+    } catch (error) {
+      console.log(
+        `There was an error checking the id: ` + id ,
+        error
+      );
+      throw error;
+    }
+  }
 }
 
 const instance = new ChangeRequestDataApi();

@@ -4,6 +4,8 @@ import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getEmailTemplates from "./email-templates/getEmailTemplates";
 import {DateTime} from "luxon";
+import idExists from "./changeRequest/changeRequest-util";
+import { CHANGE_REQUEST_TYPES } from "./changeRequest/changeRequestTypes";
 
 /**
  * Submission states for the change requests.
@@ -132,6 +134,14 @@ function fieldsValid(data) {
   if (!data.type) {
     console.log("ERROR: Missing record type.");
     isValid = false;
+  } else {
+
+    switch (data.type) {
+      case CHANGE_REQUEST_TYPES.SPA:
+        isValid = !idExists(data.id);  // SPA submissions need a new ID
+        break;
+
+    }
   }
 
   return isValid;
