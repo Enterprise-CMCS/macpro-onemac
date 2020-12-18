@@ -367,6 +367,7 @@ module.exports = {
         // Verify the successful logoin 
         browser.waitForElementPresent('body');
         let txt_emptySubmission = '.empty-list';
+        browser.waitForElementPresent(txt_emptySubmission);
         browser.verify.containsText(txt_emptySubmission, "You have no submissions yet");
     }
 
