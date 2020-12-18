@@ -10,8 +10,7 @@ export const main = handler(async (event, context) => {
 
   const params = {
     TableName: process.env.tableName,
-    Select:'COUNT'
-
+    ProjectionExpression: 'territory,createdAt,state,type'
   };
 
   const result = await dynamoDb.scan(params);

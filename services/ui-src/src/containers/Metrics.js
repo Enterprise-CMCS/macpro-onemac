@@ -26,6 +26,7 @@ export default function Metrics() {
                     var data = await Auth.currentAuthenticatedUser();
                     var metricEmail = config.METRICS_USERS
                     const metrics = await ChangeRequestDataApi.listAll();
+                    console.log(metrics)
                     const csvData = s3JsonToCsv(metrics)
                     setChangeRequestCSV(csvData)
                     if (!metricEmail.includes(data.attributes.email)) {
