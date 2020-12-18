@@ -10,6 +10,13 @@ export const main = handler(async (event, context) => {
 
   const params = {
     TableName: process.env.tableName
+    Item: {
+      "territory":  territory,
+      "createdAt": createdAt,
+      "type":  type,
+      "uploads.title": uploads.title
+    }
+
   };
 
   const result = await dynamoDb.scan(params);
