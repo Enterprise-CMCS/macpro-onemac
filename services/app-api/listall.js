@@ -9,7 +9,7 @@ export const main = handler(async (event, context) => {
   }
 
   const params = {
-    TableName: process.env.tableName
+    TableName: process.env.tableName,
     Item: {
       "territory":  territory,
       "createdAt": createdAt,
