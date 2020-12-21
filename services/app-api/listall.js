@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import generateMetrics from "./libs/metrics-lib";
+import { generateMetrics } from "./libs/metrics-lib";
 
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -16,5 +16,6 @@ export const main = handler(async (event, context) => {
   const result = await dynamoDb.scan(params);
 
   // Return the matching list of items in response body
+
   return  generateMetrics(result.Items);
 });

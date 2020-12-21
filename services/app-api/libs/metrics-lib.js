@@ -19,7 +19,7 @@ export function generateMetrics(scanData) {
     });
 
     var result =  {};
-    result["totalSubmissiona"] = submissions;
+    result["totalSubmissions"] = submissions;
     result["totalUniqueUserSubmissions"] = Object.keys(userMap).length;
     Object.keys(stateMap).forEach(function(key) {
         result["totalForTerritory-" +  key] = stateMap[key];
