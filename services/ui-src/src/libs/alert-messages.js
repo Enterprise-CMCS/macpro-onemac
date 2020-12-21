@@ -30,6 +30,16 @@ export const ALERTS_MSG = {
     heading: "Submission Error",
     text: "There was an issue submitting your request.  Please try again.",
   },
+  SUBMISSION_DUPLICATE_ID: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Duplicate ID",
+    text: "That ID already exists in the system, please create a new ID.",
+  },
+  SUBMISSION_ID_NOT_FOUND: {
+    type: ALERT_TYPES.ERROR,
+    heading: "ID Not Found",
+    text: "We could not find that ID in our system, please try again.",
+  },
   SUBMISSION_INCOMPLETE: {
     type: ALERT_TYPES.ERROR,
     heading: "There was a problem submitting your form.",

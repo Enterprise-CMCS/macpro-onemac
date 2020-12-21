@@ -93,17 +93,17 @@ export default function Spa() {
 
     // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
-      PageTitleBar.setPageTitleInfo({ 
-        heading: "SPA Submission Details", 
-        text: "" 
+      PageTitleBar.setPageTitleInfo({
+        heading: "SPA Submission Details",
+        text: ""
       });
 
       setReadOnly(true);
       fetchChangeRequest();
     } else {
-      PageTitleBar.setPageTitleInfo({ 
-        heading: "Submit New SPA", 
-        text: "" 
+      PageTitleBar.setPageTitleInfo({
+        heading: "Submit New SPA",
+        text: ""
       });
       setReadOnly(false);
 
@@ -179,7 +179,12 @@ export default function Spa() {
         //Alert must come last or it will be cleared after the history push.
         AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
       } catch (error) {
-        AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+        console.log("There was an error submitting a request.", error);
+        if (error[0] == "C") {
+          AlertBar.alert(ALERTS_MSG.SUBMISSION_DUPLICATE_ID);
+        } else {
+          AlertBar.alert(ALERTS_MSG.SUBMISSION_ID_NOT_FOUND);
+        }
         setIsLoading(false);
       }
     }
@@ -226,15 +231,15 @@ export default function Spa() {
                   {renderOptionsList(territoryList)}
                 </select>
               ) : (
-                <input
-                  className="field"
-                  type="text"
-                  id={FIELD_NAMES.TERRITORY}
-                  name={FIELD_NAMES.TERRITORY}
-                  disabled
-                  value={changeRequest.territory}
-                ></input>
-              )}
+                  <input
+                    className="field"
+                    type="text"
+                    id={FIELD_NAMES.TERRITORY}
+                    name={FIELD_NAMES.TERRITORY}
+                    disabled
+                    value={changeRequest.territory}
+                  ></input>
+                )}
               <div className="label-container">
                 <div className="label-lcol">
                   <label
@@ -289,14 +294,14 @@ export default function Spa() {
             {isReadOnly ? (
               <FileList uploadList={changeRequest.uploads}></FileList>
             ) : (
-              <FileUploader
-                ref={uploader}
-                requiredUploads={requiredUploads}
-                optionalUploads={optionalUploads}
-                readyCallback={uploadsReadyCallbackFunction}
-                showRequiredFieldErrors={!firstTimeThrough}
-              ></FileUploader>
-            )}
+                <FileUploader
+                  ref={uploader}
+                  requiredUploads={requiredUploads}
+                  optionalUploads={optionalUploads}
+                  readyCallback={uploadsReadyCallbackFunction}
+                  showRequiredFieldErrors={!firstTimeThrough}
+                ></FileUploader>
+              )}
             <div className="summary-box">
               <TextField
                 name={FIELD_NAMES.SUMMARY}

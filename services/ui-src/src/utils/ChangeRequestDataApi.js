@@ -25,9 +25,14 @@ class ChangeRequestDataApi {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
-      return await API.post("changeRequestAPI", "/submit", {
-        body: data,
-      });
+      try {
+        return await API.post("changeRequestAPI", "/submit", {
+          body: data,
+        });
+      } catch (dbError) {
+        console.log("Errors Errors Errors", dbError);
+        throw dbError;
+      }
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
@@ -90,7 +95,7 @@ class ChangeRequestDataApi {
       return await API.idExists("changeRequestAPI", `/id-exists/${id}`);
     } catch (error) {
       console.log(
-        `There was an error checking the id: ` + id ,
+        `There was an error checking the id: ` + id,
         error
       );
       throw error;

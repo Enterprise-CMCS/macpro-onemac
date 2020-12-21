@@ -3,9 +3,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getEmailTemplates from "./email-templates/getEmailTemplates";
-import {DateTime} from "luxon";
-import idExists from "./changeRequest/changeRequest-util";
-import { CHANGE_REQUEST_TYPES } from "./changeRequest/changeRequestTypes";
+import { DateTime } from "luxon";
 
 /**
  * Submission states for the change requests.
@@ -30,7 +28,7 @@ export const main = handler(async (event) => {
 
   if (fieldsValid(data)) {
     // Add required data to the record before storing.
-    console.log(event.requestContext.identity);
+    //    console.log(event.requestContext.identity);
     data.id = uuid.v1();
     data.createdAt = Date.now();
     data.state = SUBMISSION_STATES.CREATED;
@@ -45,24 +43,20 @@ export const main = handler(async (event) => {
     };
     data.userId = event.requestContext.identity.cognitoIdentityId;
 
-    let result = await dynamoDb.get({
-      TableName: process.env.spaIdTableName,
-      Key: {
-        id: data.transmittalNumber
-      },
-      AttributesToGet: [
-        'id'
-      ]
-    });
-    if (result.Item !== undefined && result.Item !== null) {
-      throw  `State Plan with ID ${data.transmittalNumber} already exists in SEATool.  Not submitting.`;
-    }
-
     //Store the data in the database.
-    await dynamoDb.put({
-      TableName: process.env.tableName,
-      Item: data,
-    });
+   try {
+      await dynamoDb.put({
+        TableName: process.env.tableName,
+        Item: data,
+        ConditionExpression: "transmittalNumber = :tn",
+        ExpressionAttributeValues: {
+          ":tn": data.transmittalNumber
+        }
+      });
+   } catch (dbError) {
+      console.log("This error is: " + dbError);
+      throw dbError;
+    }
     console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
 
     // map the email templates from the data.type
@@ -134,14 +128,6 @@ function fieldsValid(data) {
   if (!data.type) {
     console.log("ERROR: Missing record type.");
     isValid = false;
-  } else {
-
-    switch (data.type) {
-      case CHANGE_REQUEST_TYPES.SPA:
-        isValid = !idExists(data.id);  // SPA submissions need a new ID
-        break;
-
-    }
   }
 
   return isValid;

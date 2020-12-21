@@ -163,7 +163,11 @@ export default function WaiverExtension() {
                 AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
             } catch (error) {
                 console.log("There was an error submitting a request.", error);
-                AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+                if (error.code === "ConditionalCheckFailedException") {
+                    AlertBar.alert(ALERTS_MSG.SUBMISSION_DUPLICATE_ID);
+                } else {
+                    AlertBar.alert(ALERTS_MSG.SUBMISSION_ID_NOT_FOUND);
+                }
                 setIsLoading(false);
             }
         }
