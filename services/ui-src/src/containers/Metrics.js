@@ -3,10 +3,8 @@ import {useAppContext} from "../libs/contextLib";
 import {Auth} from "aws-amplify";
 import config from "../utils/config";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import {s3JsonToCsv} from "../utils/csvUtils";
 import LoadingScreen from "../components/LoadingScreen";
 import "./Metrics.css"
-
 
 /**
  * Read only component to Display Submission Data With GroupBy Metrics.
@@ -26,7 +24,7 @@ export default function Metrics() {
                     var data = await Auth.currentAuthenticatedUser();
                     var metricEmail = config.METRICS_USERS
                     const metrics = await ChangeRequestDataApi.listAll();
-                    console.log("DEBUG:(" + metrics )
+                    console.log("DEBUG:(" + JSON.toString(metrics))
                     setChangeRequestCSV(metrics)
                     if (!metricEmail.includes(data.attributes.email)) {
                         window.location = "/dashboard"
@@ -44,12 +42,24 @@ export default function Metrics() {
         onLoad();
     }, [isAuthenticated]);
 
-
     return (
         <div>
             <LoadingScreen isLoading={isLoading}>
                 <div class="ds-l-row ds-u-justify-content--center ds-u-padding--1">
-                    {changeRequestCSV}
+                    <table class="ds-c-table ds-c-table">
+                        <tr><td>Total Submissions</td>
+                            <td>{JSON.stringify(changeRequestCSV.totalSubmissions)}</td>
+                        </tr>
+                        <tr><td>Total Unique Users</td>
+                            <td>{JSON.stringify(changeRequestCSV.totalUniqueUserSubmissions)}</td>
+                        </tr>
+                        <tr><td>Total Submissions</td>
+                            <td>{JSON.stringify(changeRequestCSV.stateTotals)}</td>
+                        </tr>
+                        <tr><td>Total Submissions</td>
+                            <td>{JSON.stringify(changeRequestCSV.submissionTypeTotals)}</td>
+                        </tr>
+                    </table>
                 </div>
             </LoadingScreen>
         </div>

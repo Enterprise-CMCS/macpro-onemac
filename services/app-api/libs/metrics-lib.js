@@ -21,13 +21,17 @@ export function generateMetrics(scanData) {
     var result =  {};
     result["totalSubmissions"] = submissions;
     result["totalUniqueUserSubmissions"] = Object.keys(userMap).length;
+    var stateTotals = [];
     Object.keys(stateMap).forEach(function(key) {
-        result["totalForTerritory-" +  key] = stateMap[key];
+        stateTotals.push({ key : stateMap[key] });
     });
+    result["stateTotals"] = stateTotals;
 
+    var typeTotals = [];
     Object.keys(submissionTypeMap).forEach(function(key) {
-        result["totalForSubmissionType-(" +  key + ")"] = submissionTypeMap[key];
+        typeTotals.push({  key : submissionTypeMap[key] });
     });
+    result["submissionTypeTotals"] = typeTotals;
 
     return result;
 }
