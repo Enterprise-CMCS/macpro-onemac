@@ -12,7 +12,7 @@ import "./Metrics.css"
  */
 export default function Metrics() {
     const {isAuthenticated} = useAppContext();
-    const [changeRequestCSV, setChangeRequestCSV] = useState([]);
+    const [metrics, setMetrics] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -23,9 +23,9 @@ export default function Metrics() {
                 try {
                     var data = await Auth.currentAuthenticatedUser();
                     var metricEmail = config.METRICS_USERS
-                    const metrics = await ChangeRequestDataApi.listAll();
-                    console.log("DEBUG:(" + JSON.toString(metrics))
-                    setChangeRequestCSV(metrics)
+                    const results = await ChangeRequestDataApi.listAll();
+                    console.log("DEBUG:(" + JSON.toString(results))
+                    setMetrics(results)
                     if (!metricEmail.includes(data.attributes.email)) {
                         window.location = "/dashboard"
                         return;
@@ -46,18 +46,18 @@ export default function Metrics() {
         <div>
             <LoadingScreen isLoading={isLoading}>
                 <div class="ds-l-row ds-u-justify-content--center ds-u-padding--1">
-                    <table class="ds-c-table ds-c-table">
+                    <table class="ds-c-table">
                         <tr><td>Total Submissions</td>
-                            <td>{JSON.stringify(changeRequestCSV.totalSubmissions)}</td>
+                            <td>{JSON.stringify(metrics.totalSubmissions)}</td>
                         </tr>
                         <tr><td>Total Unique Users</td>
-                            <td>{JSON.stringify(changeRequestCSV.totalUniqueUserSubmissions)}</td>
+                            <td>{JSON.stringify(metrics.totalUniqueUserSubmissions)}</td>
                         </tr>
-                        <tr><td>Total Submissions</td>
-                            <td>{JSON.stringify(changeRequestCSV.stateTotals)}</td>
+                        <tr><td>Total Submissions By State</td>
+                            <td>{ metrics.stateTotals }</td>
                         </tr>
-                        <tr><td>Total Submissions</td>
-                            <td>{JSON.stringify(changeRequestCSV.submissionTypeTotals)}</td>
+                        <tr><td>Total Submissions By Type</td>
+                            <td>{metrics.submissionTypeTotals}</td>
                         </tr>
                     </table>
                 </div>

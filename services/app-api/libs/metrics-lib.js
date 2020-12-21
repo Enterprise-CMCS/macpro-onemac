@@ -23,14 +23,14 @@ export function generateMetrics(scanData) {
     result["totalUniqueUserSubmissions"] = Object.keys(userMap).length;
     var stateTotals = [];
     Object.keys(stateMap).forEach(function (stateCode) {
-        let temp = "{"  + stateCode + ":"  + stateMap[stateCode] +  "}";
+        let temp = " { "  + stateCode + " Total = " + stateMap[stateCode] +  " } ";
         stateTotals.push(temp);
     });
     result["stateTotals"] = stateTotals;
 
     var typeTotals = [];
     Object.keys(submissionTypeMap).forEach(function (type) {
-        let temp = "{" + type + ":" + submissionTypeMap[type] + "}";
+        let temp = " { " + type + " Total = " + submissionTypeMap[type] + " } ";
         typeTotals.push(temp);
     });
     result["submissionTypeTotals"] = typeTotals;
