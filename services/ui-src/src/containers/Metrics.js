@@ -26,9 +26,8 @@ export default function Metrics() {
                     var data = await Auth.currentAuthenticatedUser();
                     var metricEmail = config.METRICS_USERS
                     const metrics = await ChangeRequestDataApi.listAll();
-                    console.log("DEBUG:(" + metricEmail )
-                    const csvData = s3JsonToCsv(metrics)
-                    setChangeRequestCSV(csvData)
+                    console.log("DEBUG:(" + metrics )
+                    setChangeRequestCSV(metrics)
                     if (!metricEmail.includes(data.attributes.email)) {
                         window.location = "/dashboard"
                         return;
@@ -46,24 +45,11 @@ export default function Metrics() {
     }, [isAuthenticated]);
 
 
-    /**
-     * file download button action click
-     * @returns download action for the browser.
-     */
-    function downloadCsv() {
-
-        var hiddenElement = document.createElement('a');
-        hiddenElement.href = 'data:text/csv;charset=utf-8,' + encodeURI(changeRequestCSV);
-        hiddenElement.target = '_blank';
-        hiddenElement.download = 'SPAFormMetrics.csv';
-        hiddenElement.click();
-    }
-
     return (
         <div>
             <LoadingScreen isLoading={isLoading}>
                 <div class="ds-l-row ds-u-justify-content--center ds-u-padding--1">
-                    <button class="ds-c-button" onClick={downloadCsv}>&nbsp;Download Metrics (CSV format)</button>
+                    {changeRequestCSV}
                 </div>
             </LoadingScreen>
         </div>
