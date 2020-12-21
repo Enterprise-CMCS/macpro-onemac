@@ -13,6 +13,7 @@ import "./Metrics.css"
 export default function Metrics() {
     const {isAuthenticated} = useAppContext();
     const [metrics, setMetrics] = useState([]);
+    const [stateTotals, setStateTotals] = useState(true);
     const [isLoading, setIsLoading] = useState(true);
 
     useEffect(() => {
@@ -25,6 +26,7 @@ export default function Metrics() {
                     var metricEmail = config.METRICS_USERS
                     const results = await ChangeRequestDataApi.listAll();
                     console.log("DEBUG:(" + JSON.toString(results))
+                    setStateTotals(JSON.stringify(results.stateTotals).replaceAll("\""," "))
                     setMetrics(results)
                     if (!metricEmail.includes(data.attributes.email)) {
                         window.location = "/dashboard"
@@ -54,7 +56,7 @@ export default function Metrics() {
                             <td>{JSON.stringify(metrics.totalUniqueUserSubmissions)}</td>
                         </tr>
                         <tr><td>Total Submissions By State</td>
-                            <td>{ metrics.stateTotals }</td>
+                            <td>{ stateTotals }</td>
                         </tr>
                         <tr><td>Total Submissions By Type</td>
                             <td>{metrics.submissionTypeTotals}</td>
