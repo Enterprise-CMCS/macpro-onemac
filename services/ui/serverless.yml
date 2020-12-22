@@ -205,6 +205,18 @@ resources:
     DeliveryRole:
       Type: AWS::IAM::Role
       Properties:
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+            - Ref: AWS::NoValue
         AssumeRolePolicyDocument:
           Version: '2012-10-17'
           Statement:
