@@ -185,7 +185,7 @@ resources:
                   - Fn::GetAtt:
                     - CloudFrontDistribution
                     - DomainName
-  Resources:
+
     Firehose:
       Type: AWS::KinesisFirehose::DeliveryStream
       Properties:
