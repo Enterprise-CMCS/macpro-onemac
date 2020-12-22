@@ -4,6 +4,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getEmailTemplates from "./email-templates/getEmailTemplates";
 import { DateTime } from "luxon";
+import packageExists from "./changeRequest/changeRequest-util";
 
 /**
  * Submission states for the change requests.
@@ -26,7 +27,7 @@ export const main = handler(async (event) => {
   }
   const data = JSON.parse(event.body);
 
-  if (fieldsValid(data)) {
+  if (await fieldsValid(data)) {
     // Add required data to the record before storing.
     //    console.log(event.requestContext.identity);
     data.id = uuid.v1();
@@ -48,11 +49,18 @@ export const main = handler(async (event) => {
       await dynamoDb.put({
         TableName: process.env.tableName,
         Item: data,
-        ConditionExpression: "transmittalNumber = :tn",
-        ExpressionAttributeValues: {
-          ":tn": data.transmittalNumber
-        }
       });
+
+    // create the (package) ID data
+    const packageParams = {
+      TableName: process.env.spaIdTableName,
+      Item: {
+        "id": data.transmittalNumber,
+        [data.id]: data.userId,
+      }
+    };
+    await dynamoDb.put(packageParams);
+
    } catch (dbError) {
       console.log("This error is: " + dbError);
       throw dbError;
@@ -113,7 +121,7 @@ export const main = handler(async (event) => {
  * @param {Object} data the received data
  * @returns true if the data is valid
  */
-function fieldsValid(data) {
+async function fieldsValid(data) {
   let isValid = true;
   if (!data.user) {
     console.log("ERROR: Missing user info data.");
@@ -128,6 +136,14 @@ function fieldsValid(data) {
   if (!data.type) {
     console.log("ERROR: Missing record type.");
     isValid = false;
+  } else {
+    console.log("Fields Valid checking" + data.transmittalNumber);
+    let isDup = await packageExists(data.transmittalNumber);
+    if (isDup===true) {
+      console.log("ERROR: Duplicate ID." + data.transmittalNumber);
+      isValid = false;
+    }
+
   }
 
   return isValid;

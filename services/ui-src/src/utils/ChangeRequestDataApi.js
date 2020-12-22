@@ -71,6 +71,27 @@ class ChangeRequestDataApi {
   }
 
   /**
+   * Check to see if an id exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the ID exists in the back end
+   */
+  async packageExists(id) {
+    if (!id) {
+      console.log("ID was not specified for packageExists API call");
+      throw new Error("ID was not specified for packageExists API call");
+    }
+
+    try {
+      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
+
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking ID ${id}.`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Fetch a specific record from the backend.
    * @return {Array} a list of change requests
    */
@@ -80,22 +101,6 @@ class ChangeRequestDataApi {
     } catch (error) {
       console.log(
         `There was an error fetching all change requests for the user.`,
-        error
-      );
-      throw error;
-    }
-  }
-
-  /**
-   * Does the id already exist in the data?
-   * @return {Boolean} true - exists; false - does not exist
-   */
-  async idExists(id) {
-    try {
-      return await API.idExists("changeRequestAPI", `/id-exists/${id}`);
-    } catch (error) {
-      console.log(
-        `There was an error checking the id: ` + id,
         error
       );
       throw error;

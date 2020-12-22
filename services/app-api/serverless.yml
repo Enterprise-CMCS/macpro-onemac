@@ -73,12 +73,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  id-exists:
-    handler: id-exists.main
+  package-exists:
+    handler: package-exists.main
     role: LambdaApiRole
     events:
       - http:
-          path: id-exists/{id}
+          path: package-exists/{packageId}
           method: get
           cors: true
           authorizer: aws_iam

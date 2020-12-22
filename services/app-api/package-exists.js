@@ -1,5 +1,5 @@
 import handler from "./libs/handler-lib";
-import idExists from "./changeRequest/changeRequest-util";
+import packageExists from "./changeRequest/changeRequest-util";
 
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -8,5 +8,5 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
-  return idExists(event.pathParameters.id);
+  return packageExists(event.pathParameters.packageId);
 });

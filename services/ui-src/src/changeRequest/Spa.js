@@ -134,7 +134,24 @@ export default function Spa() {
         setTerritoryErrorMessage(validateTerritory(updatedRecord.territory));
       }
       if (event.target.name === 'transmittalNumber') {
-        setTransmittalNumberErrorMessage(validateSpaId(updatedRecord.transmittalNumber));
+        let errorMessage = validateSpaId(updatedRecord.transmittalNumber);
+
+        // if we have an ID and there's no errors, check if ID is in the database
+        if ((errorMessage === undefined) && updatedRecord.transmittalNumber) {
+          let dupID;
+          console.log("Checking package ID: ", updatedRecord.transmittalNumber);
+          try {
+            dupID = await ChangeRequestDataApi.packageExists(updatedRecord.transmittalNumber);
+          } catch (error) {
+            console.log("There was an error submitting a request.", error);
+
+            AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
+          }
+          if (dupID) {
+            errorMessage = "That SPA ID has already been used."
+          } 
+        }
+        setTransmittalNumberErrorMessage(errorMessage);
       }
     }
   }
@@ -174,13 +191,19 @@ export default function Spa() {
 
       try {
         let uploadedList = await uploader.current.uploadFiles();
-        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-        history.push(ROUTES.DASHBOARD);
-        //Alert must come last or it will be cleared after the history push.
-        AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
+        let submitResponse = await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        console.log("Submission response",submitResponse);
+
+        if (submitResponse.statusCode===500) {
+          AlertBar.alert(ALERTS_MSG.SUBMISSION_DUPLICATE_ID);
+        } else {
+          history.push(ROUTES.DASHBOARD);
+          //Alert must come last or it will be cleared after the history push.
+          AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);  
+        }
       } catch (error) {
         console.log("There was an error submitting a request.", error);
-        if (error[0] == "C") {
+        if (error[0] === "C") {
           AlertBar.alert(ALERTS_MSG.SUBMISSION_DUPLICATE_ID);
         } else {
           AlertBar.alert(ALERTS_MSG.SUBMISSION_ID_NOT_FOUND);
