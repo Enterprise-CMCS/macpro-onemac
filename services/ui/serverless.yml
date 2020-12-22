@@ -247,7 +247,7 @@ resources:
                 - 's3:PutObject'
               Resource:
                 - arn:aws:s3:::test-ish-waflogs
-                -arn:aws:s3:::test-ish-waflogs/*
+                - arn:aws:s3:::test-ish-waflogs/*
 
         Roles:
           - !Ref DeliveryRole
