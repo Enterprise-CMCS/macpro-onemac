@@ -246,10 +246,9 @@ resources:
                 - 's3:ListBucketMultipartUploads'
                 - 's3:PutObject'
               Resource:
-                - !GetAtt S3Bucket.Arn
                 - !Join
                   - ''
-                  - - !GetAtt S3Bucket.Arn
+                  - - 'arn:aws:s3:::test-ish-waflogs'
                     - '*'
         Roles:
           - !Ref DeliveryRole
