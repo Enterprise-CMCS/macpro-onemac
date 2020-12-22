@@ -534,7 +534,7 @@ resources:
               - lambda.amazonaws.com
             Action:
             - sts:AssumeRole
-        Path: "/"
+      #  Path: "/"
         Policies:
         - PolicyName: lambda-logging
           PolicyDocument:
