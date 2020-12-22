@@ -234,6 +234,7 @@ resources:
       Type: AWS::IAM::Policy
       Properties:
         PolicyName: 'firehose_delivery_policy'
+
         PolicyDocument:
           Version: 2012-10-17
           Statement:
@@ -246,7 +247,17 @@ resources:
                 - s3:ListBucketMultipartUploads
                 - s3:PutObject
               Resource:
-                - arn:aws:s3:::test-ish-waflogs/*
+                - !Join
+                  - ''
+                  - - 'arn:aws:s3:::test-ish-waflogs/*'
+                    - !Ref s3bucket
+                    - !Join
+                - !Join
+                  - ''
+                  - - 'arn:aws:s3:::test-ish-waflogs/*'
+                    - !Ref s3bucket
+                    - '*'
+
 
         Roles:
           - !Ref DeliveryRole
