@@ -250,13 +250,12 @@ resources:
                 - !Join
                   - ''
                   - - 'arn:aws:s3:::test-ish-waflogs/*'
-                    - !Ref s3bucket
 
-                - !Join
-                  - ''
-                  - - 'arn:aws:s3:::test-ish-waflogs/*'
-                    - !Ref s3bucket
-                    - '*'
+                
+
+
+
+
 
         Roles:
           - !Ref DeliveryRole
