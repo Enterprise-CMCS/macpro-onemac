@@ -80,6 +80,15 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+  listall:
+    handler: listall.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: listall
+          method: get
+          cors: true
+          authorizer: aws_iam
 
 resources:
   - ${file(resources/base.yml)}
@@ -93,4 +102,4 @@ resources:
   # API Gateway
   - ${file(resources/api-gateway.yml)}
 
-  
+

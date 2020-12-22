@@ -13,6 +13,8 @@ import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
+import Metrics from "./containers/Metrics";
+
 
 export const ROUTES = {
     DASHBOARD: '/dashboard',
@@ -22,6 +24,7 @@ export const ROUTES = {
     FAQ_WAIVER_ID: '/FAQ#waiver-id-format',
     HOME: '/',
     PROFILE: '/profile',
+    METRICS: '/metrics',
     DEVLOGIN: '/devlogin',
     SPA: '/spa',
     SPA_RAI: '/sparai',
@@ -62,6 +65,9 @@ export default function Routes() {
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
                 <WaiverExtension />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+                <Metrics/>
             </AuthenticatedRoute>
             <Route>
                 <NotFound />
