@@ -17,7 +17,6 @@ resources:
         - Fn::Equals:
           - ""
           - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
-  Conditions:
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
@@ -38,6 +37,7 @@ resources:
           - Fn::Equals:
             - ""
             - ${env:CLOUDFRONT_DOMAIN_NAME, ""}
+
   Resources:
     S3Bucket:
       Type: AWS::S3::Bucket
@@ -185,6 +185,402 @@ resources:
                   - Fn::GetAtt:
                     - CloudFrontDistribution
                     - DomainName
+  Resources:
+    Firehose:
+      Type: AWS::KinesisFirehose::DeliveryStream
+      Properties:
+        DeliveryStreamName:
+          !Join
+            - ''
+            - - aws-waf-logs-
+              - Ref AWS::StackName
+        ExtendedS3DestinationConfiguration:
+          RoleARN: !GetAtt DeliveryRole.Arn
+          BucketARN: arn:aws:s3:::test-ish-waflogs
+          BufferingHints:
+            IntervalInSeconds: 300
+            SizeInMBs: 5
+          CompressionFormat: UNCOMPRESSED
+
+    DeliveryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: ''
+              Effect: Allow
+              Principal:
+                Service: firehose.amazonaws.com
+              Action: 'sts:AssumeRole'
+              Condition:
+                StringEquals:
+                  'sts:ExternalId': !Ref 'AWS::AccountId'
+
+
+    DeliveryPolicy:
+      Type: AWS::IAM::Policy
+      Properties:
+        PolicyName: 'firehose_delivery_policy'
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+            - Effect: Allow
+              Action:
+                - 's3:AbortMultipartUpload'
+                - 's3:GetBucketLocation'
+                - 's3:GetObject'
+                - 's3:ListBucket'
+                - 's3:ListBucketMultipartUploads'
+                - 's3:PutObject'
+              Resource:
+                - !GetAtt S3Bucket.Arn
+                - !Join
+                  - ''
+                  - - !GetAtt S3Bucket.Arn
+                    - '*'
+        Roles:
+          - !Ref DeliveryRole
+
+    AutomationDoc:
+      Type: "AWS::SSM::Document"
+      Properties:
+        Content:
+          schemaVersion: "0.3"
+          description: "Adds logging to non-compliant WebACLs"
+          assumeRole: "{{ AutomationAssumeRole }}"
+          parameters:
+            WebACLId:
+              type: "String"
+              description: "(Required) The WebACLId of the WebACL"
+            AutomationAssumeRole:
+              type: "String"
+              description: "(Optional) The ARN of the role that allows Automation to perform the actions on your behalf"
+          mainSteps:
+            - name: performRemediation
+              action: aws:invokeLambdaFunction
+              inputs:
+                FunctionName: !GetAtt WafLambda.Arn
+                Payload: '{"webAclName":"{{ WebACLId }}"}'
+        DocumentType: Automation
+
+
+    WafLambda:
+      Type: AWS::Lambda::Function
+      Properties:
+        # The AmazonSSMAutomationRole role expects the Lambda function name to begin with Automation*
+        FunctionName: !Sub Automation-${self:custom.stage}-EnableWafLogging
+        Code:
+          ZipFile:
+            !Sub |
+              #CODE GOES HERE
+              import boto3
+              import json
+              import os
+
+              #
+              # This Lambda function ensures that all WAF web ACLs have logging enabled.
+              #
+              # Trigger Type: SSM Automation
+              # Scope of Automation: AWS::WAF::WebACL & AWS::WAFRegional::WebACL
+              #
+
+              FIREHOSE_ARN = os.environ['FIREHOSE_ARN']
+              CONFIG_RULE_NAME = os.environ['CONFIG_RULE_NAME']
+
+              def evaluate_compliance(webAclName):
+                hasConfig = False
+
+                #Setting up variables
+                client = ''
+                response = ''
+                wafArn = ''
+
+                #Check if this is a WAFv2. The ResourceId passed in is already the ARN
+                if webAclName.find('arn:aws:wafv2:') >= 0:
+                  wafArn = webAclName
+                  client = boto3.client('wafv2')
+                else:
+
+                  isWebAcl = True
+                  #Test if this is AWS::WAF::WebACL
+                  try:
+                    print('Testing for WAF::WebACL')
+                    client = boto3.client('waf')
+                    response = client.get_web_acl(WebACLId=webAclName)
+                  except:
+                    isWebAcl = False
+                    pass
+
+                  if not isWebAcl:
+                    #Test if this is AWS::WAFRegional::WebACL
+                    try:
+                      print('Testing for WAFRegional::WebACL')
+                      client = boto3.client('waf-regional')
+                      response = client.get_web_acl(WebACLId=webAclName)
+                    except:
+                      pass
+
+                  wafArn = response['WebACL']['WebACLArn']
+
+                try:
+                  response = client.get_logging_configuration(ResourceArn=wafArn)
+                  hasConfig = True
+                except:
+                  print('Attempting to fix non-compliance')
+                  print('WAF ARN: ' + wafArn)
+                  response = client.put_logging_configuration(LoggingConfiguration={'ResourceArn': wafArn,'LogDestinationConfigs': [ FIREHOSE_ARN ]})
+
+              def regen_compliance():
+                try:
+                  print("Attempting to re-run AWS Config rule to update compliance status")
+                  client = boto3.client('config')
+                  response = client.start_config_rules_evaluation(ConfigRuleNames=[CONFIG_RULE_NAME])
+                except:
+                  pass
+
+              def handler(event, context):
+                aclName = event['webAclName']
+                evaluate_compliance(aclName)
+
+                regen_compliance()
+
+        Handler: "index.handler"
+        Environment:
+          Variables:
+            FIREHOSE_ARN: !GetAtt Firehose.Arn
+            CONFIG_RULE_NAME: !Ref ConfigRule
+        Runtime: python3.7
+        Timeout: 30
+        Role: !GetAtt LambdaExecutionRole.Arn
+
+    ConfigRule:
+      Type: AWS::Config::ConfigRule
+      Properties:
+        ConfigRuleName:
+          !Join
+            - ''
+            - - Enable-WebACL-Logging-${self:custom.stage}
+
+
+
+        Description: 'Ensures that all new web ACLs have logging enabled'
+        Scope:
+          ComplianceResourceTypes:
+            - AWS::WAF::WebACL
+            - AWS::WAFv2::WebACL
+            - AWS::WAFRegional::WebACL
+        Source:
+          Owner: "CUSTOM_LAMBDA"
+          SourceDetails:
+          - EventSource: "aws.config"
+            MessageType: ConfigurationItemChangeNotification
+          - EventSource: "aws.config"
+            MessageType: OversizedConfigurationItemChangeNotification
+          SourceIdentifier: !GetAtt Lambda.Arn
+      DependsOn: PermissionToCallLambda
+
+    WebACLRemediation:
+      Type: "AWS::Config::RemediationConfiguration"
+      Properties:
+        # AutomationAssumeRole, MaximumAutomaticAttempts and RetryAttemptSeconds are Required if Automatic is true
+        Automatic: true
+        ConfigRuleName: !Ref ConfigRule
+        MaximumAutomaticAttempts: 1
+        Parameters:
+          AutomationAssumeRole:
+            StaticValue:
+              Values:
+                - !GetAtt AutoRemediationIamRole.Arn
+          WebACLId:
+            ResourceValue:
+              Value: RESOURCE_ID
+        RetryAttemptSeconds: 60
+        TargetId: !Ref AutomationDoc
+        TargetType: SSM_DOCUMENT
+
+
+    AutoRemediationIamRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+            - Ref: AWS::NoValue
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - ssm.amazonaws.com
+              Action:
+                - 'sts:AssumeRole'
+        ManagedPolicyArns:
+          - 'arn:aws:iam::aws:policy/service-role/AmazonSSMAutomationRole'
+        Policies: []
+
+    PermissionToCallRemediationLambda:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName: !GetAtt WafLambda.Arn
+        Action: "lambda:InvokeFunction"
+        Principal: "ssm.amazonaws.com"
+
+    PermissionToCallLambda:
+      Type: AWS::Lambda::Permission
+      Properties:
+        FunctionName: !GetAtt Lambda.Arn
+        Action: "lambda:InvokeFunction"
+        Principal: "config.amazonaws.com"
+
+    Lambda:
+      Type: AWS::Lambda::Function
+      Properties:
+        Code:
+          ZipFile:
+            !Sub |
+              import boto3
+              import json
+              #
+              # This Lambda function determines if WAF web ACLs have logging enabled
+              #
+              # Trigger Type: Config: Change Triggered
+              # Scope of Changes: AWS::WAF::WebACL, AWS::WAFv2::WebACL & AWS::WAFRegional::WebACL
+              #
+
+              def is_applicable(config_item, event):
+                status = config_item['configurationItemStatus']
+                event_left_scope = event['eventLeftScope']
+                test = ((status in ['OK', 'ResourceDiscovered']) and
+                  event_left_scope == False)
+                return test
+
+              def evaluate_compliance(config_item):
+                wafArn = config_item['ARN']
+                hasConfig = False
+
+                client = ''
+                if (config_item['resourceType'] == 'AWS::WAF::WebACL'):
+                  client = boto3.client('waf')
+                elif (config_item['resourceType'] == 'AWS::WAFRegional::WebACL'):
+                  client = boto3.client('waf-regional')
+                elif (config_item['resourceType'] == 'AWS::WAFv2::WebACL'):
+                  client = boto3.client('wafv2')
+
+                try:
+                  response = client.get_logging_configuration(ResourceArn=wafArn)
+                  hasConfig = True
+                except:
+                  pass
+
+                if not hasConfig:
+                  return 'NON_COMPLIANT'
+                else:
+                  return 'COMPLIANT'
+
+              def handler(event, context):
+                invoking_event = json.loads(event['invokingEvent'])
+                compliance_value = 'NOT_APPLICABLE'
+
+                if is_applicable(invoking_event['configurationItem'], event):
+                  compliance_value = evaluate_compliance(invoking_event['configurationItem'])
+
+                config = boto3.client('config')
+                response = config.put_evaluations(
+                  Evaluations=[
+                    {
+                    'ComplianceResourceType': invoking_event['configurationItem']['resourceType'],
+                    'ComplianceResourceId': invoking_event['configurationItem']['resourceId'],
+                    'ComplianceType': compliance_value,
+                    'OrderingTimestamp': invoking_event['configurationItem']['configurationItemCaptureTime']
+                    },
+                  ],
+                  ResultToken=event['resultToken'])
+        Handler: "index.handler"
+        Runtime: python3.7
+        Timeout: 30
+        Role: !GetAtt LambdaExecutionRole.Arn
+
+    LambdaExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+            - Ref: AWS::NoValue
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: Allow
+            Principal:
+              Service:
+              - lambda.amazonaws.com
+            Action:
+            - sts:AssumeRole
+        Path: "/"
+        Policies:
+        - PolicyName: lambda-logging
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - logs:*
+              Resource: arn:aws:logs:*:*:*
+        - PolicyName: waf-config
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - waf:PutLoggingConfiguration
+              - waf:GetLoggingConfiguration
+              - waf:GetWebACL
+              - wafv2:PutLoggingConfiguration
+              - wafv2:GetLoggingConfiguration
+              - wafv2:GetWebACL
+              - waf-regional:PutLoggingConfiguration
+              - waf-regional:GetLoggingConfiguration
+              - waf-regional:GetWebACL
+              Resource:
+              - arn:aws:waf::*:*
+              - arn:aws:wafv2:*:*:*/*/*
+              - arn:aws:waf-regional:*:*:*
+        - PolicyName: config-evaluate
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - config:PutEvaluations
+              - config:StartConfigRulesEvaluation
+              Resource: '*'
+        - PolicyName: allow-lambda-servicelinkedrole
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - iam:CreateServiceLinkedRole
+              Resource: arn:aws:iam::*:role/aws-service-role/*
+
 
   Outputs:
     S3BucketName:
