@@ -162,12 +162,7 @@ export default function WaiverExtension() {
                 //Alert must come last or it will be cleared after the history push.
                 AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
             } catch (error) {
-                console.log("There was an error submitting a request.", error);
-                if (error.code === "ConditionalCheckFailedException") {
-                    AlertBar.alert(ALERTS_MSG.SUBMISSION_DUPLICATE_ID);
-                } else {
-                    AlertBar.alert(ALERTS_MSG.SUBMISSION_ID_NOT_FOUND);
-                }
+                AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
                 setIsLoading(false);
             }
         }

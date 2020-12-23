@@ -106,10 +106,9 @@ export const main = handler(async (event) => {
       body: JSON.stringify(data),
     };
   } else {
-    console.log("Invalid submission with missing fields.", data);
     response = {
       statusCode: 500,
-      body: JSON.stringify("Invalid submission with missing fields."),
+      body: JSON.stringify("Field Validation Failed"),
     };
   }
 
