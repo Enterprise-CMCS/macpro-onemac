@@ -1,10 +1,27 @@
-import { getLinksHtml } from "./email-util";
+import { packageExists, getLinksHtml } from "./changeRequest-util";
 
 /**
  * Waiver RAI submission specific email generation functions.
  * @class
  */
-class WaiverRAIEmailTemplates {
+class WaiverRAI {
+
+  /**
+   * Waiver RAI Submissions require that the Package ID is currently being used.
+   * @param {Object} data the received data
+   * @returns {String} any errors
+   */
+  async fieldsValid(data) {
+    let errorMessages = "";
+
+    let idExists = await packageExists(data.transmittalNumber);
+    if (!idExists) {
+        errorMessages += "ERROR: No ID." + data.transmittalNumber;
+    }
+
+    return errorMessages;
+  }
+
   /**
    * Waiver RAI submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
@@ -81,6 +98,6 @@ class WaiverRAIEmailTemplates {
   }
 }
 
-const instance = new WaiverRAIEmailTemplates();
+const instance = new WaiverRAI();
 Object.freeze(instance);
 export default instance;

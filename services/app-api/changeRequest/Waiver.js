@@ -1,21 +1,38 @@
-import { getCMSDateFormat, getLinksHtml } from "./email-util";
-
+import { packageExists, getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 /**
  * Waiver submission specific email generation functions.
  * @class
  */
-class WaiverEmailTemplates {
-  /**
+class Waiver {
+
+    /**
+   * Waivers can only be made on current packages
+   * @param {Object} data the received data
+   * @returns {String} any errors
+   */
+    async fieldsValid(data) {
+        let errorMessages = "";
+
+        let idExists = await packageExists(data.transmittalNumber);
+        if (!idExists) {
+            errorMessages += "ERROR: No ID." + data.transmittalNumber;
+        }
+
+        return errorMessages;
+    }
+
+
+    /**
    * Waiver submission email to CMS details wrapped in generic function name.
-   * @param {Object} data from the form submission.
+    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
    */
-  getCMSEmail(data) {
-    const cmsEmail = {};
+    getCMSEmail(data) {
+        const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
-    cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
-    cmsEmail.HTML = `
+        cmsEmail.ToAddresses = [process.env.reviewerEmail];
+        cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
+        cmsEmail.HTML = `
         <p>The Submission Portal received a Waiver Submission:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
@@ -37,21 +54,21 @@ class WaiverEmailTemplates {
         <p>Thank you!</p>
     `;
 
-    return cmsEmail;
-  }
+        return cmsEmail;
+    }
 
-  /**
-   * Waiver submission confimation email to State User wrapped in
-   * generic function name.
-   * @param {Object} data from the form submission.
-   * @returns {Object} email parameters in generic format.
-   */
-  getStateEmail(data) {
-    const stateEmail = {};
+    /**
+     * Waiver submission confimation email to State User wrapped in
+     * generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
+    getStateEmail(data) {
+        const stateEmail = {};
 
-    stateEmail.ToAddresses = [data.user.email];
-    stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
-    stateEmail.HTML = `
+        stateEmail.ToAddresses = [data.user.email];
+        stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.HTML = `
         <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
@@ -77,10 +94,10 @@ class WaiverEmailTemplates {
         <p>Thank you!</p>
     `;
 
-    return stateEmail;
-  }
+        return stateEmail;
+    }
 }
 
-const instance = new WaiverEmailTemplates();
+const instance = new Waiver();
 Object.freeze(instance);
 export default instance;

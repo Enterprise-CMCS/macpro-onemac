@@ -1,10 +1,27 @@
-import { getLinksHtml } from "./email-util";
+import { packageExists, getLinksHtml } from "./changeRequest-util";
 
 /**
  * Waiver Extension submission specific email generation functions.
  * @class
  */
-class WaiverExtensionEmailTemplates {
+class WaiverExtension {
+
+    /**
+   * Waiver Extensions can only be made on current packages
+   * @param {Object} data the received data
+   * @returns {String} any errors
+   */
+  async fieldsValid(data) {
+    let errorMessages = "";
+
+    let idExists = await packageExists(data.transmittalNumber);
+    if (!idExists) {
+        errorMessages += "ERROR: No ID." + data.transmittalNumber;
+    }
+
+    return errorMessages;
+}
+
   /**
    * Waiver Extension submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
@@ -71,6 +88,6 @@ class WaiverExtensionEmailTemplates {
   }
 }
 
-const instance = new WaiverExtensionEmailTemplates();
+const instance = new WaiverExtension();
 Object.freeze(instance);
 export default instance;

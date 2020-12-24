@@ -1,21 +1,38 @@
-import { getLinksHtml } from "./email-util";
+import { packageExists, getLinksHtml } from "./changeRequest-util";
 
 /**
  * SPA RAI submission specific email generation functions.
  * @class
  */
-class SPARAIEmailTemplates {
-  /**
+class SPARAI {
+
+    /**
+     * SPA RAIs can only be made on current packages
+     * @param {Object} data the received data
+     * @returns {String} any errors
+     */
+    async fieldsValid(data) {
+        let errorMessages = "";
+
+        let idExists = await packageExists(data.transmittalNumber);
+        if (!idExists) {
+            errorMessages += "ERROR: No ID." + data.transmittalNumber;
+        }
+
+        return errorMessages;
+    }
+
+    /**
    * SPA RAI submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
    */
-  getCMSEmail(data) {
-    const cmsEmail = {};
+    getCMSEmail(data) {
+        const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
-    cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
-    cmsEmail.HTML = `
+        cmsEmail.ToAddresses = [process.env.reviewerEmail];
+        cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
+        cmsEmail.HTML = `
         <p>The Submission Portal received a SPA RAI Submission:</p>
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -34,22 +51,22 @@ class SPARAIEmailTemplates {
         <p>Thank you!</p>
     `;
 
-    return cmsEmail;
-  }
+        return cmsEmail;
+    }
 
-  /**
-   * SPA RAI submission confimation email to State User wrapped in
-   * generic function name.
-   * @param {Object} data from the form submission.
-   * @returns {Object} email parameters in generic format.
-   */
-  getStateEmail(data) {
-    const stateEmail = {};
+    /**
+     * SPA RAI submission confimation email to State User wrapped in
+     * generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
+    getStateEmail(data) {
+        const stateEmail = {};
 
-    stateEmail.ToAddresses = [data.user.email];
-    stateEmail.Subject =
-      "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
-    stateEmail.HTML = `
+        stateEmail.ToAddresses = [data.user.email];
+        stateEmail.Subject =
+            "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.HTML = `
         <p>This response confirms the receipt of your SPA RAI submission:</p>
         <p>
             <br><b>SPA ID</b>: ${data.transmittalNumber}
@@ -74,10 +91,10 @@ class SPARAIEmailTemplates {
         <p>Thank you!</p>
     `;
 
-    return stateEmail;
-  }
+        return stateEmail;
+    }
 }
 
-const instance = new SPARAIEmailTemplates();
+const instance = new SPARAI();
 Object.freeze(instance);
 export default instance;

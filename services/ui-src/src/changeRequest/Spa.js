@@ -70,25 +70,28 @@ export default function Spa() {
   });
 
   useEffect(() => {
+    
+    let mounted = true;
     /**
      * Fetch the data for the given ID
      */
     async function fetchChangeRequest() {
+
       if (!id) {
         throw new Error("ID not specified for fetchChangeRequest");
       }
 
       try {
         const changeRequest = await ChangeRequestDataApi.get(id);
-        setChangeRequest(changeRequest);
+        if (mounted) setChangeRequest(changeRequest);
       } catch (error) {
         console.log("Error while fetching submission.", error);
-        setChangeRequest(null);
+        if (mounted) setChangeRequest(null);
         AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
 
       // has to happen *after* the await... if you pull this out, it goes to false too soon
-      setIsLoading(false);
+      if (mounted) setIsLoading(false);
     }
 
     // ID is present means we are viewing and need to fetch the changeRequest record
@@ -98,17 +101,21 @@ export default function Spa() {
         text: ""
       });
 
-      setReadOnly(true);
+      if (mounted) setReadOnly(true);
       fetchChangeRequest();
     } else {
       PageTitleBar.setPageTitleInfo({
         heading: "Submit New SPA",
         text: ""
       });
-      setReadOnly(false);
+      if (mounted) setReadOnly(false);
 
       // because if we are in a new SPA, we don't have to wait for the data to load
-      setIsLoading(false);
+      if (mounted) setIsLoading(false);
+    }
+
+    return function cleanup() {
+      mounted = false;
     }
   }, [id]);
 
@@ -149,7 +156,7 @@ export default function Spa() {
           }
           if (dupID) {
             errorMessage = "That SPA ID has already been used."
-          } 
+          }
         }
         setTransmittalNumberErrorMessage(errorMessage);
       }
@@ -192,14 +199,14 @@ export default function Spa() {
       try {
         let uploadedList = await uploader.current.uploadFiles();
         let submitResponse = await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-        console.log("Submission response",submitResponse);
+        console.log("Submission response", submitResponse);
 
-        if (submitResponse.statusCode===500) {
+        if (submitResponse.statusCode === 500) {
           AlertBar.alert(ALERTS_MSG.SUBMISSION_DUPLICATE_ID);
         } else {
           history.push(ROUTES.DASHBOARD);
           //Alert must come last or it will be cleared after the history push.
-          AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);  
+          AlertBar.alert(ALERTS_MSG.SUBMISSION_SUCCESS);
         }
       } catch (error) {
         console.log("There was an error submitting a request.", error);

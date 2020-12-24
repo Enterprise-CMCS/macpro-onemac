@@ -1,21 +1,38 @@
-import { getLinksHtml, getCMSDateFormat } from "./email-util";
+import { packageExists, getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 
 /**
- * SPA submission specific email generation functions.
+ * SPA submission specific functions.
  * @class
  */
-class SPAEmailTemplates {
-  /**
-   * SPA submission email to CMS details wrapped in generic function name.
-   * @param {Object} data from the form submission.
-   * @returns {Object} email parameters in generic format.
-   */
-  getCMSEmail(data) {
-    const cmsEmail = {};
+class SPA {
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
-    cmsEmail.Subject = `New SPA ${data.transmittalNumber} submitted`;
-    cmsEmail.HTML = `
+/**
+ * SPA Submissions require that the Package ID is not currently being used.
+ * @param {Object} data the received data
+ * @returns {String} any errors
+ */
+async fieldsValid(data) {
+  let errorMessages = "";
+
+  let isDup = await packageExists(data.transmittalNumber);
+  if (isDup) {
+    errorMessages += "ERROR: Duplicate ID." + data.transmittalNumber;
+  }
+
+  return errorMessages;
+}
+
+/**
+ * SPA submission email to CMS details wrapped in generic function name.
+ * @param {Object} data from the form submission.
+ * @returns {Object} email parameters in generic format.
+ */
+getCMSEmail(data) {
+  const cmsEmail = {};
+
+  cmsEmail.ToAddresses = [process.env.reviewerEmail];
+  cmsEmail.Subject = `New SPA ${data.transmittalNumber} submitted`;
+  cmsEmail.HTML = `
       <p>The Submission Portal received a State Plan Amendment:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
@@ -35,22 +52,22 @@ class SPAEmailTemplates {
       <p>Thank you!</p>
     `;
 
-    return cmsEmail;
-  }
+  return cmsEmail;
+}
 
-  /**
-   * SPA submission confimation email to State User wrapped in
-   * generic function name.
-   * @param {Object} data from the form submission.
-   * @returns {Object} email parameters in generic format.
-   */
-  getStateEmail(data) {
-    const stateEmail = {};
+/**
+ * SPA submission confimation email to State User wrapped in
+ * generic function name.
+ * @param {Object} data from the form submission.
+ * @returns {Object} email parameters in generic format.
+ */
+getStateEmail(data) {
+  const stateEmail = {};
 
-    stateEmail.ToAddresses = [data.user.email];
-    stateEmail.Subject =
-      "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
-    stateEmail.HTML = `
+  stateEmail.ToAddresses = [data.user.email];
+  stateEmail.Subject =
+    "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
+  stateEmail.HTML = `
       <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
@@ -76,10 +93,10 @@ class SPAEmailTemplates {
       <p>Thank you!</p>
     `;
 
-    return stateEmail;
-  }
+  return stateEmail;
+}
 }
 
-const instance = new SPAEmailTemplates();
+const instance = new SPA();
 Object.freeze(instance);
 export default instance;
