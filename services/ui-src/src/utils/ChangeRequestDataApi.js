@@ -101,6 +101,23 @@ class ChangeRequestDataApi {
       throw error;
     }
   }
+
+  /**
+   * Fetch a specific record from the backend.
+   * @return {Array} a list of change requests
+   */
+  async listAll() {
+    try {
+      return await API.get("changeRequestAPI", `/listall`);
+    } catch (error) {
+      console.log(
+          `There was an error fetching all change requests`,
+          error
+      );
+      throw error;
+    }
+  }
+
 }
 
 const instance = new ChangeRequestDataApi();
