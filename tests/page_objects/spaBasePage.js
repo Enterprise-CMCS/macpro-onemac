@@ -10,7 +10,7 @@ const commands = {
     },
 
     login: function (user, pass) {
-        this.api.click(this.elements.loginButton);
+        this.api.click(this.elements.normalLoginButton);
         this.api.setValue(this.elements.userField, user).pause(100);
         this.api.setValue(this.elements.passField, pass).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
@@ -30,7 +30,6 @@ const commands = {
             this.api.assert.elementPresent(selector);
             let file = require('path').resolve(dir, files[i]);
             this.api.setValue(selector, file);
-
         }
         return this.api;
     }
@@ -43,6 +42,7 @@ module.exports = {
         title: 'div[class=dashboard-title]',
         transmittal: "input[id='transmittalNumber']",
         userField : '#email',
+        normalLoginButton: '.nav-right > [type]',
         loginButton : '#devloginBtn',
         loginTitle : 'div[class=page-title-bar]',
         submitBtn : 'button[type=submit]',

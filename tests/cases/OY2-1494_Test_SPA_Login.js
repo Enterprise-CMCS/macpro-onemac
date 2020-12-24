@@ -3,7 +3,7 @@ let spa;
 module.exports = {
     before : function(browser) {
         console.log('Setting up...');
-        browser.url(browser.launch_url).waitForElementPresent('body');
+        browser.windowMaximize().url(browser.launch_url).waitForElementPresent('body');
         spa= browser.page.spaBasePage();
     },
 
