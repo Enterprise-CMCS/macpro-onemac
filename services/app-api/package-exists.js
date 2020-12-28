@@ -1,5 +1,5 @@
 import handler from "./libs/handler-lib";
-import packageExists from "./changeRequest/changeRequest-util";
+import packageExists from "./utils/packageExists";
 
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -7,6 +7,10 @@ export const main = handler(async (event, context) => {
     console.log("Warmed up!");
     return null;
   }
+  console.log("being Handled... id is: " + event.pathParameters.packageId);
+  const doesExist = await packageExists(event.pathParameters.packageId);
 
-  return packageExists(event.pathParameters.packageId);
+  console.log("doesExist is: " + doesExist);
+
+  return doesExist;
 });
