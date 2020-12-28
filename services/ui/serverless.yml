@@ -193,10 +193,13 @@ resources:
           !Join
             - ''
             - - aws-waf-logs-
-              - Ref AWS::StackName
+              - !Ref AWS::StackName
         ExtendedS3DestinationConfiguration:
           RoleARN: !GetAtt DeliveryRole.Arn
-          BucketARN: arn:aws:s3:::test-ish-waflogs
+          BucketARN: !Join
+            - ''
+            - - 'arn:aws:s3:::'
+              - !Ref s3bucket
           BufferingHints:
             IntervalInSeconds: 300
             SizeInMBs: 5
