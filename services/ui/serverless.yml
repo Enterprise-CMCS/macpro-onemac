@@ -251,23 +251,23 @@ resources:
           Statement:
             - Effect: Allow
               Action:
-                - s3:AbortMultipartUpload
-                - s3:GetBucketLocation
-                - s3:GetObject
-                - s3:ListBucket
-                - s3:ListBucketMultipartUploads
-                - s3:PutObject
-      #        Resource:
-      #          - !Join
-      #            - ''
-      #            - - 'arn:aws:s3:::test-ish-waflogs/*'
+                - 's3:AbortMultipartUpload'
+                - 's3:GetBucketLocation'
+                - 's3:GetObject'
+                - 's3:ListBucket'
+                - 's3:ListBucketMultipartUploads'
+                - 's3:PutObject'
+#              Resource:
+#                !Join
+#                  - ''
+#                  - - 'arn:aws:s3:::test-ish-waflogs/*'
 
               Resource:
-                  - !Join
+                   !Join
                     - ''
                     - - 'arn:aws:s3:::'
                       - !Ref s3bucket
-                  - !Join
+                   !Join
                     - ''
                     - - 'arn:aws:s3:::'
                       - !Ref s3bucket
