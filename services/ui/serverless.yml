@@ -202,6 +202,15 @@ resources:
             SizeInMBs: 5
           CompressionFormat: UNCOMPRESSED
 
+   s3bucket:
+     Type: AWS::S3::Bucket
+     Properties:
+       VersioningConfiguration:
+         Status: Enabled
+
+
+
+
     DeliveryRole:
       Type: AWS::IAM::Role
       Properties:
@@ -234,7 +243,6 @@ resources:
       Type: AWS::IAM::Policy
       Properties:
         PolicyName: 'firehose_delivery_policy'
-
         PolicyDocument:
           Version: 2012-10-17
           Statement:
@@ -246,16 +254,21 @@ resources:
                 - s3:ListBucket
                 - s3:ListBucketMultipartUploads
                 - s3:PutObject
+      #        Resource:
+      #          - !Join
+      #            - ''
+      #            - - 'arn:aws:s3:::test-ish-waflogs/*'
+
               Resource:
-                - !Join
-                  - ''
-                  - - 'arn:aws:s3:::test-ish-waflogs/*'
-
-
-
-
-
-
+                  - !Join
+                    - ''
+                    - - 'arn:aws:s3:::'
+                      - !Ref s3bucket
+                  - !Join
+                    - ''
+                    - - 'arn:aws:s3:::'
+                      - !Ref s3bucket
+                      - '/*'
 
         Roles:
           - !Ref DeliveryRole
