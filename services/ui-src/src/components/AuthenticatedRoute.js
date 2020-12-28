@@ -8,9 +8,14 @@ export default function AuthenticatedRoute({ children, ...rest }) {
   const { isAuthenticated } = useAppContext();
 
   useEffect(() => {
+    let mounted = true;
+
     // Show a warning if the user has not logged in.
-    if (!isAuthenticated) {
+    if (!isAuthenticated && mounted) {
       AlertBar.alert(ALERTS_MSG.NOT_AUTHENTICATED);
+    }
+    return function cleanup() {
+      mounted = false;
     }
   });
 

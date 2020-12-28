@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { HashLink } from "react-router-hash-link";
 import { ROUTES } from "../Routes";
@@ -17,12 +17,21 @@ export default function Home() {
     "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
   ];
   const submissionTypesid = "submission-types";
+  
+  useEffect(() => {
+    let mounted = true;
 
-  PageTitleBar.setPageTitleInfo({
-    heading: "CMS State Plan Amendment and Waiver Submission Platform",
-    text:
-      "Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers.",
-  });
+    if (mounted)
+      PageTitleBar.setPageTitleInfo({
+        heading: "CMS State Plan Amendment and Waiver Submission Platform",
+        text:
+          "Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers.",
+      });
+
+    return function cleanup() {
+      mounted = false;
+    };
+  }, []);
 
   /**
    * Takes a list of items and renders it into an unordered list.

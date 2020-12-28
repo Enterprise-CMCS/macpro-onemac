@@ -48,7 +48,7 @@ export default function Routes() {
                 <Dashboard />
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
-                <Spa/>
+                <Spa />
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
                 <Waiver />

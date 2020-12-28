@@ -61,18 +61,18 @@ export const main = handler(async (event) => {
   };
   data.userId = event.requestContext.identity.cognitoIdentityId;
 
-  // check for submission-specific validation
-  errorMessage = await crFunctions.fieldsValid(data);
-  if (errorMessage) {
-    return buildAppropriateResponse({
-      type: "error",
-      from: "fieldsValid",
-      message: errorMessage
-    });
-  }
-
-  //Store the data in the database.
   try {
+    // check for submission-specific validation (uses database)
+    errorMessage = await crFunctions.fieldsValid(data);
+    if (errorMessage) {
+      return buildAppropriateResponse({
+        type: "error",
+        from: "fieldsValid",
+        message: errorMessage
+      });
+    }
+
+
     await dynamoDb.put({
       TableName: process.env.tableName,
       Item: data,
@@ -160,7 +160,7 @@ function buildAppropriateResponse(details) {
     case "error":
       response = {
         statusCode: 500,
-        body: JSON.stringify(details.message),
+        body: "Getting an ERROR", //  JSON.stringify(details.message),
       };
       break;
 

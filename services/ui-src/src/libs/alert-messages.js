@@ -33,7 +33,7 @@ export const ALERTS_MSG = {
   SUBMISSION_DUPLICATE_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Duplicate ID",
-    text: "That ID already exists in the system, please create a new ID.",
+    text: "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.",
   },
   SUBMISSION_ID_NOT_FOUND: {
     type: ALERT_TYPES.ERROR,

@@ -1,4 +1,5 @@
-import { packageExists, getLinksHtml } from "./changeRequest-util";
+import { getLinksHtml } from "./changeRequest-util";
+import { packageExists } from "../utils/packageExists";
 
 /**
  * SPA RAI submission specific email generation functions.

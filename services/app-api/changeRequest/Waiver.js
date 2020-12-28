@@ -1,4 +1,6 @@
-import { packageExists, getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
+import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
+import { packageExists } from "../utils/packageExists";
+
 /**
  * Waiver submission specific email generation functions.
  * @class

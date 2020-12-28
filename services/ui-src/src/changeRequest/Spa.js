@@ -15,7 +15,10 @@ import PageTitleBar from "../components/PageTitleBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { renderOptionsList, validateSpaId, validateTerritory } from "../utils/form-utils";
 
-export default function Spa() {
+const Spa = () => {
+
+    // Optional ID parameter from the URL
+  const { id } = useParams();
 
   // The attachment list
   const requiredUploads = ["CMS Form 179", "SPA Pages"];
@@ -58,9 +61,6 @@ export default function Spa() {
   //Reference to the File Uploader.
   const uploader = useRef(null);
 
-  // Optional ID parameter from the URL
-  const { id } = useParams();
-
   // The data record associated with form, used for initialValues
   const [changeRequest, setChangeRequest] = useState({
     type: CHANGE_REQUEST_TYPES.SPA,
@@ -69,8 +69,7 @@ export default function Spa() {
     territory: "",
   });
 
-  useEffect(() => {
-    
+  useEffect( () => {
     let mounted = true;
     /**
      * Fetch the data for the given ID
@@ -87,7 +86,7 @@ export default function Spa() {
       } catch (error) {
         console.log("Error while fetching submission.", error);
         if (mounted) setChangeRequest(null);
-        AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
+        if (mounted) AlertBar.alert(ALERTS_MSG.FETCH_ERROR);
       }
 
       // has to happen *after* the await... if you pull this out, it goes to false too soon
@@ -96,15 +95,15 @@ export default function Spa() {
 
     // ID is present means we are viewing and need to fetch the changeRequest record
     if (id) {
-      PageTitleBar.setPageTitleInfo({
+      if (mounted) PageTitleBar.setPageTitleInfo({
         heading: "SPA Submission Details",
         text: ""
       });
 
       if (mounted) setReadOnly(true);
-      fetchChangeRequest();
+      if (mounted) fetchChangeRequest();
     } else {
-      PageTitleBar.setPageTitleInfo({
+      if (mounted) PageTitleBar.setPageTitleInfo({
         heading: "Submit New SPA",
         text: ""
       });
@@ -155,7 +154,7 @@ export default function Spa() {
             AlertBar.alert(ALERTS_MSG.SUBMISSION_ERROR);
           }
           if (dupID) {
-            errorMessage = "That SPA ID has already been used."
+            errorMessage = "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again."
           }
         }
         setTransmittalNumberErrorMessage(errorMessage);
@@ -352,3 +351,5 @@ export default function Spa() {
     </LoadingScreen>
   );
 }
+
+export default Spa;

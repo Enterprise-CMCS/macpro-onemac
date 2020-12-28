@@ -1,4 +1,5 @@
-import { packageExists, getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
+import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
+import { packageExists } from "../utils/packageExists";
 
 /**
  * SPA submission specific functions.
@@ -13,8 +14,13 @@ class SPA {
  */
 async fieldsValid(data) {
   let errorMessages = "";
+  let isDup;
 
-  let isDup = await packageExists(data.transmittalNumber);
+  try {
+    isDup = await packageExists(data.transmittalNumber);
+  } catch (error) {
+    console.log("what do do??" + error);
+  }
   if (isDup) {
     errorMessages += "ERROR: Duplicate ID." + data.transmittalNumber;
   }

@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useAppContext } from "../libs/contextLib";
+//import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
@@ -16,19 +16,18 @@ import { format } from 'date-fns'
  */
 export default function Dashboard() {
   const [changeRequestList, setChangeRequestList] = useState([]);
-  const { isAuthenticated } = useAppContext();
+  //const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
 
   const history = useHistory();
 
-  PageTitleBar.setPageTitleInfo({heading : "SPA and Waiver Dashboard", text: "" })
   // Load the data from the backend.
   useEffect(() => {
+    let mounted = true;
+    
     async function onLoad() {
-      if (!isAuthenticated) {
-        return;
-      }
 
+      PageTitleBar.setPageTitleInfo({heading : "SPA and Waiver Dashboard", text: "" });
       try {
         setChangeRequestList(await ChangeRequestDataApi.getAll());
         setIsLoading(false);
@@ -38,8 +37,11 @@ export default function Dashboard() {
       }
     }
 
-    onLoad();
-  }, [isAuthenticated]);
+    if (mounted) onLoad();
+    return function cleanup() {
+      mounted = false;
+    }
+  }, []);
 
   /**
    * Render the list of change requests.
@@ -88,7 +90,7 @@ export default function Dashboard() {
       }
 
       return (
-        <tr>
+        <tr key={i}>
           <td>
             <Link to={link}>
               {changeRequest.transmittalNumber}
@@ -143,7 +145,7 @@ export default function Dashboard() {
         <LoadingScreen isLoading={isLoading}>
           <div>
             {changeRequestList.length > 0 ? (
-              <table class="submissions-table">
+              <table className="submissions-table">
                 <thead>
                   <tr>
                     <th scope="col">SPA ID/Waiver Number</th>

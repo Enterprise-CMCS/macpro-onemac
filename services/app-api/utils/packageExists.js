@@ -27,6 +27,7 @@ export default async function packageExists(id) {
     console.log("the Item exists", result);
     idResponse = true;
   } else {
+    console.log("result.Item does not exist");
     idResponse = false;
   }
   return idResponse;
