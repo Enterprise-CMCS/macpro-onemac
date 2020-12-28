@@ -202,11 +202,11 @@ resources:
             SizeInMBs: 5
           CompressionFormat: UNCOMPRESSED
 
-   s3bucket:
-     Type: AWS::S3::Bucket
-     Properties:
-       VersioningConfiguration:
-         Status: Enabled
+    s3bucket:
+      Type: AWS::S3::Bucket
+      Properties:
+        VersioningConfiguration:
+          Status: Enabled
 
 
 
