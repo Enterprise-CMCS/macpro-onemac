@@ -293,5 +293,11 @@ resources:
             - Fn::GetAtt:
               - CloudFrontDistribution
               - DomainName
+    CloudFrontWebAclArn:
+      Value:
+        Ref: CloudFrontWebAcl
+    FirehoseArn:
+      Value:
+        Ref: Firehose
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value

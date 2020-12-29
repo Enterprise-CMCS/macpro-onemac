@@ -6,6 +6,7 @@ services=(
   'uploads'
   'app-api'
   'ui'
+  'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'
 )
