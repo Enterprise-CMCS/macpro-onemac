@@ -294,10 +294,8 @@ resources:
               - CloudFrontDistribution
               - DomainName
     CloudFrontWebAclArn:
-      Value:
-        Ref: CloudFrontWebAcl
+      Value: !GetAtt CloudFrontWebAcl.Arn
     FirehoseArn:
-      Value:
-        Ref: Firehose
+      Value: !GetAtt Firehose.Arn
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value
