@@ -1,5 +1,7 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
-import { packageExists } from "../utils/packageExists";
+//import { packageExists } from "../utils/packageExists";
+import dynamoDb from "../libs/dynamodb-lib";
+
 
 /**
  * SPA submission specific functions.
@@ -14,15 +16,39 @@ class SPA {
  */
 async fieldsValid(data) {
   let errorMessages = "";
-  let isDup;
 
   try {
-    isDup = await packageExists(data.transmittalNumber);
-  } catch (error) {
-    console.log("what do do??" + error);
-  }
-  if (isDup) {
-    errorMessages += "ERROR: Duplicate ID." + data.transmittalNumber;
+    const params = {
+      TableName: process.env.spaIdTableName,
+      // 'Key' defines the partition key and sort key of the item to be retrieved
+      // - 'id': change request ID
+      Key: {
+        id: data.transmittalNumber
+      }
+    };
+    console.log("the params for checking", params);
+    let idResponse;
+    let result;
+    try {
+      result = await dynamoDb.get(params);
+    } catch (error) {
+      console.log("packageExists got an error: ", error);
+    }
+    if (result.Item) {
+      console.log("the Item exists", result);
+      idResponse = true;
+    } else {
+      console.log("result.Item does not exist");
+      idResponse = false;
+    }
+
+   // const isDup = await packageExists(data.transmittalNumber);
+//    if (isDup) {
+    if (idResponse) {
+      errorMessages += "ID " + data.transmittalNumber + " already exists.";
+    }
+    } catch (error) {
+    console.log("what do we do??", error);
   }
 
   return errorMessages;
