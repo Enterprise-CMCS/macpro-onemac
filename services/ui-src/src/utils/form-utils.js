@@ -18,7 +18,7 @@ export function renderOptionsList(optionsList) {
 
   let retval = optionsList.map((item, i) => {
     return (
-      <option key={i} value={item.value}>
+      <option key={i} value={item.value} >
         {item.label}
       </option>
     );

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 //import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
-import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
@@ -10,6 +9,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from 'date-fns'
+import { Alert } from "@cmsgov/design-system";
 
 /**
  * Component containing dashboard
@@ -18,6 +18,7 @@ export default function Dashboard() {
   const [changeRequestList, setChangeRequestList] = useState([]);
   //const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
+  const [alert, setAlert] = useState(ALERTS_MSG.NONE);
 
   const history = useHistory();
 
@@ -27,13 +28,12 @@ export default function Dashboard() {
     
     async function onLoad() {
 
-      PageTitleBar.setPageTitleInfo({heading : "SPA and Waiver Dashboard", text: "" });
       try {
         setChangeRequestList(await ChangeRequestDataApi.getAll());
         setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
     }
 
@@ -42,6 +42,30 @@ export default function Dashboard() {
       mounted = false;
     }
   }, []);
+
+  const jumpToPageTitle = () => {
+    var elmnt = document.getElementById("title_bar");
+    elmnt.scrollIntoView();
+  };
+
+  useEffect(() => {
+    if (alert && alert.heading && alert.heading !== "") {
+      jumpToPageTitle();
+    }
+  }, [alert]);
+
+  const renderAlert = (alert) => {
+    if (!alert) return;
+    if (alert.heading && alert.heading !== "") {
+      return (
+        <div className="alert-bar">
+          <Alert variation={alert.type} heading={alert.heading}>
+            <p className="ds-c-alert__text">{alert.text}</p>
+          </Alert>
+        </div>
+      );
+    }
+  };
 
   /**
    * Render the list of change requests.
@@ -105,7 +129,11 @@ export default function Dashboard() {
 
   // Render the dashboard
   return (
+    <>
+        <PageTitleBar heading= "SPA and Waiver Dashboard" text="" />
     <div className="dashboard-container">
+      {renderAlert(alert)}
+
       <div className="dashboard-left-col">
         <div className="action-title">SPAs</div>
           <Button id="spaSubmitBtn"
@@ -164,5 +192,6 @@ export default function Dashboard() {
         </LoadingScreen>
       </div>
     </div>
+    </>
   );
 }

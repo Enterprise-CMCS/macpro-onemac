@@ -1,10 +1,26 @@
-import { ALERT_TYPES } from "../components/AlertBar";
 import config from "../utils/config";
+
+/**
+ * Alert types
+ */
+export const ALERT_TYPES = {
+  INFO: null, // Per CMS Design System
+  WARNING: "warn",
+  ERROR: "error",
+  SUCCESS: "success",
+};
 
 /**
  * List of alert messages for the application.
  */
 export const ALERTS_MSG = {
+  // DOn't show
+  NONE: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "",
+    text: "",
+  },
+
   // Success
   SUBMISSION_SUCCESS: {
     type: ALERT_TYPES.SUCCESS,

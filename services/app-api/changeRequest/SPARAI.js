@@ -1,5 +1,5 @@
 import { getLinksHtml } from "./changeRequest-util";
-import { packageExists } from "../utils/packageExists";
+// import { packageExists } from "../utils/packageExists";
 
 /**
  * SPA RAI submission specific email generation functions.
@@ -15,10 +15,10 @@ class SPARAI {
     async fieldsValid(data) {
         let errorMessages = "";
 
-        let idExists = await packageExists(data.transmittalNumber);
+      /*  let idExists = await packageExists(data.transmittalNumber);
         if (!idExists) {
             errorMessages += "ERROR: No ID." + data.transmittalNumber;
-        }
+        }*/
 
         return errorMessages;
     }
