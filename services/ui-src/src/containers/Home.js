@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { HashLink } from "react-router-hash-link";
 import { ROUTES } from "../Routes";
@@ -18,21 +18,6 @@ export default function Home() {
   ];
   const submissionTypesid = "submission-types";
   
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted)
-      PageTitleBar.setPageTitleInfo({
-        heading: "CMS State Plan Amendment and Waiver Submission Platform",
-        text:
-          "Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers.",
-      });
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, []);
-
   /**
    * Takes a list of items and renders it into an unordered list.
    * @param {Array} listData data items for the list
@@ -48,6 +33,10 @@ export default function Home() {
   }
 
   return (
+    <>
+        <PageTitleBar 
+        heading= "CMS State Plan Amendment and Waiver Submission Platform" 
+        text="Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers." />
     <div className="about">
       <div className="section section-how-it-works">
         <div className="section-title-center">How it Works</div>
@@ -80,5 +69,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }

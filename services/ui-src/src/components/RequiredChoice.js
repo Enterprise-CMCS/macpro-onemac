@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { territoryList } from "../libs/territoryLib";
 
 /**
  * Returns the territory form element
@@ -11,7 +10,7 @@ import { territoryList } from "../libs/territoryLib";
  * @returns the HTML for the SPA ID
  */
 const RequiredChoice = ({ 
-  fieldname,
+  fieldInfo,
   label,
   errorMessage, 
   value, 
@@ -41,11 +40,11 @@ const RequiredChoice = ({
     });
     return retval;
   };
-  const errorMsgId = fieldname+"ErrorMsg";
+  const errorMsgId = fieldInfo.fieldName+"ErrorMsg";
 
   return (
     <>
-      <label htmlFor={fieldname}>
+      <label htmlFor={fieldInfo.fieldName}>
         {label}<span className="required-mark">*</span>
       </label>
       {errorMessage && (
@@ -56,21 +55,21 @@ const RequiredChoice = ({
       {!isReadOnly ? (
         <select
           className="field"
-          id={fieldname}
-          name={fieldname}
+          id={fieldInfo.fieldName}
+          name={fieldInfo.fieldName}
           value={value}
           onChange={onChange}
           required
         >
-          <option value="">-- select a {fieldname} --</option>
-          {renderOptionsList(territoryList)}
+          <option value="">-- select a {fieldInfo.defaultItem} --</option>
+          {renderOptionsList(fieldInfo.optionsList)}
         </select>
       ) : (
         <input
           className="field"
           type="text"
-          id={fieldname}
-          name={fieldname}
+          id={fieldInfo.fieldName}
+          name={fieldInfo.fieldName}
           disabled
           value={value}
         ></input>
@@ -80,10 +79,10 @@ const RequiredChoice = ({
 };
 
 RequiredChoice.propTypes = {
-  fieldname: PropTypes.string.isRequired,
+  fieldInfo: PropTypes.object.isRequired,
   label: PropTypes.string.isRequired,
   errorMessage: PropTypes.string,
-  isReadOnly: PropTypes.string,
+  isReadOnly: PropTypes.bool,
   value: PropTypes.string,
 };
 

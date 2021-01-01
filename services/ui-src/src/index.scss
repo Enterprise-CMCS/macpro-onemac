@@ -56,7 +56,9 @@ label {
   @extend .ds-c-field__hint;
   color: $color-red;
 }
-
+.dashboard-white {
+  background-color: $color-white;
+}
 .app-bar {
   @extend .ds-l-row;
   padding-left: 14rem;
@@ -141,7 +143,6 @@ ul {
 }
 
 .alert-bar {
-  background-color: $color-white;
   padding-top: 2rem;
   padding-left: 14rem;
   padding-right: 14rem;
