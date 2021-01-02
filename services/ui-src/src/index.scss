@@ -175,6 +175,19 @@ input[type="file"] {
   h3 {
     @extend .ds-u-margin-top--7;
   }
+  .ds-c-review {
+    @extend .ds-u-border-bottom--0;
+  }
+  .ds-c-review__heading {
+    @extend .ds-u-margin-top--1;
+  }
+  .ds-c-review__body {
+    background-color: $color-gray-lighter;
+    width: 460px;
+    padding: 8px;
+    border: 2px solid #aeb0b5;
+    border-radius: 3px;
+  }
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;

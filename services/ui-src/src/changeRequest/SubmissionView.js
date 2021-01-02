@@ -93,10 +93,10 @@ const SubmissionView = ({ formInfo, id }) => {
                 {changeRequest.territory}
               </Review>
             )}
-            {formInfo.actionType && (
+            {changeRequest.actionType && (
               <Review heading="Action Type">{changeRequest.actionType}</Review>
             )}
-            {formInfo.waiverAuthority && (
+            {changeRequest.waiverAuthority && (
               <Review heading="Waiver Authority">
                 {changeRequest.waiverAuthority}
               </Review>
