@@ -13,6 +13,7 @@ import { validateSpaId, validateWaiverId } from "../utils/form-utils";
 import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -210,6 +211,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
 
+
+
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the
     // state functions will be processed in time to use the variables
@@ -241,11 +244,17 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       try {
         let uploadedList = await uploader.current.uploadFiles();
         console.log("changeRequest is: ", changeRequest);
-        await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-        history.push(ROUTES.DASHBOARD);
-        //Alert must come last or it will be cleared after the history push.
-        newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
+        const aresponse = await ChangeRequestDataApi.submit(changeRequest, uploadedList);
+        console.log("Response is: ", aresponse);
+        if (!aresponse.error) {
+          newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
+        } else if (aresponse.error === ERROR_MSG.DUPLICATE_ID) {
+          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+        } else if (aresponse.error === ERROR_MSG.ID_NOT_FOUND) {
+          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+        }
       } catch (error) {
+        console.log("Error is: ", error);
         newAlert = ALERTS_MSG.SUBMISSION_ERROR;
       }
     }

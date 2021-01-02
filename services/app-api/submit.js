@@ -30,7 +30,7 @@ export const main = handler(async (event) => {
   errorMessage = runInitialCheck(data);
   if (errorMessage) {
     return buildAppropriateResponse({
-      type: "error",
+      type: "logicError",
       from: "runInitialCheck",
       message: errorMessage
     });
@@ -40,7 +40,7 @@ export const main = handler(async (event) => {
   const crFunctions = getChangeRequestFunctions(data.type);
   if (!crFunctions) {
     return buildAppropriateResponse({
-      type: "error",
+      type: "logicError",
       from: "getChangeRequestFunctions",
       message: "crFunctions object not created."
     });
@@ -63,15 +63,17 @@ export const main = handler(async (event) => {
 
   try {
     // check for submission-specific validation (uses database)
-    errorMessage = await crFunctions.fieldsValid(data);
-    if (errorMessage) {
+    const validationResponse = await crFunctions.fieldsValid(data);
+    console.log("validation Response: ",validationResponse);
+
+    if (validationResponse.areFieldsValid===false) {
+      console.log("Message from fieldsValid: ",validationResponse);
       return buildAppropriateResponse({
-        type: "error",
+        type: "logicError",
         from: "fieldsValid",
-        message: errorMessage
+        message: validationResponse.whyNot,
       });
     }
-
 
     await dynamoDb.put({
       TableName: process.env.tableName,
@@ -127,7 +129,7 @@ export const main = handler(async (event) => {
   return buildAppropriateResponse({
     type: "success",
     from: "submit",
-    message: JSON.stringify(data)
+    message: "Submission successfull!"
   });
 });
 
@@ -153,30 +155,26 @@ function runInitialCheck(data) {
  * @returns {Object} response contains a statusCode and a body
  */
 function buildAppropriateResponse(details) {
-  let response;
+  let actualResponse;
 
   switch (details.type) {
 
-    case "error":
-      response = {
-        statusCode: 500,
-        body: "Getting an ERROR", //  JSON.stringify(details.message),
+    case "logicError":
+      actualResponse = {
+        error: details.message,
       };
       break;
 
     case "success":
-      response = {
-        statusCode: 200,
-        body: details.message,
-      };
+      actualResponse = details.message;
       break;
 
     default:
-      response = {
+      actualResponse = {
         statusCode: 500,
         body: "Don't know this response type??" + JSON.stringify(details),
       };
   }
 
-  return response;
+  return actualResponse;
 }

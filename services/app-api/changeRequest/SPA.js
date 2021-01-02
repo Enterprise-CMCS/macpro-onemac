@@ -1,7 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
-//import { packageExists } from "../utils/packageExists";
 import dynamoDb from "../libs/dynamodb-lib";
-
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
  * SPA submission specific functions.
@@ -15,9 +14,9 @@ class SPA {
  * @returns {String} any errors
  */
 async fieldsValid(data) {
-  let errorMessages = "";
+  let areFieldsValid = false;
+  let whyNot = "";
 
-  try {
     const params = {
       TableName: process.env.spaIdTableName,
       // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -27,31 +26,24 @@ async fieldsValid(data) {
       }
     };
     console.log("the params for checking", params);
-    let idResponse;
-    let result;
     try {
-      result = await dynamoDb.get(params);
+
+      const result = await dynamoDb.get(params);
+
+      if (result.Item) {
+        console.log("the Item exists", result);
+        areFieldsValid = false;
+        whyNot = ERROR_MSG.DUPLICATE_ID;
+      } else {
+        console.log("result.Item does not exist");
+        areFieldsValid = true;
+      }
+
     } catch (error) {
       console.log("packageExists got an error: ", error);
     }
-    if (result.Item) {
-      console.log("the Item exists", result);
-      idResponse = true;
-    } else {
-      console.log("result.Item does not exist");
-      idResponse = false;
-    }
 
-   // const isDup = await packageExists(data.transmittalNumber);
-//    if (isDup) {
-    if (idResponse) {
-      errorMessages += "ID " + data.transmittalNumber + " already exists.";
-    }
-    } catch (error) {
-    console.log("what do we do??", error);
-  }
-
-  return errorMessages;
+  return { areFieldsValid, whyNot };
 }
 
 /**

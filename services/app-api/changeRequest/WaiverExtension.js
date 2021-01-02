@@ -1,5 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
-import { packageExists } from "../utils/packageExists";
+import dynamoDb from "../libs/dynamodb-lib";
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
  * Waiver Extension submission specific email generation functions.
@@ -7,11 +8,50 @@ import { packageExists } from "../utils/packageExists";
  */
 class WaiverExtension {
 
+/**
+ * Waiver Extension Submissions require that the Package ID is in the system.
+ * @param {Object} data the received data
+ * @returns {String} any errors
+ */
+async fieldsValid(data) {
+  let areFieldsValid = false;
+  let whyNot = "";
+
+    const params = {
+      TableName: process.env.spaIdTableName,
+      // 'Key' defines the partition key and sort key of the item to be retrieved
+      // - 'id': change request ID
+      Key: {
+        id: data.transmittalNumber
+      }
+    };
+    console.log("the params for checking", params);
+    try {
+
+      const result = await dynamoDb.get(params);
+
+      if (result.Item) {
+        console.log("the Item exists", result);
+        areFieldsValid = true;
+      } else {
+        console.log("result.Item does not exist");
+        areFieldsValid = false;
+        whyNot = ERROR_MSG.ID_NOT_FOUND;
+      }
+
+    } catch (error) {
+      console.log("packageExists got an error: ", error);
+    }
+
+  return { areFieldsValid, whyNot };
+}
+
+
     /**
    * Waiver Extensions can only be made on current packages
    * @param {Object} data the received data
    * @returns {String} any errors
-   */
+
   async fieldsValid(data) {
     let errorMessages = "";
 
@@ -22,7 +62,7 @@ class WaiverExtension {
 
     return errorMessages;
 }
-
+*/
   /**
    * Waiver Extension submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
