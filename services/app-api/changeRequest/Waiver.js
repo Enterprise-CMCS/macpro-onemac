@@ -15,7 +15,8 @@ class Waiver {
  * @returns {String} any errors
  */
 async fieldsValid(data) {
-    let areFieldsValid = false;
+    let areFieldsValid=true;
+    let idExists = null;
     let whyNot = "";
 
       const params = {
@@ -33,15 +34,53 @@ async fieldsValid(data) {
 
         if (result.Item) {
           console.log("the Item exists", result);
-          areFieldsValid = false;
-          whyNot = ERROR_MSG.DUPLICATE_ID;
+          idExists = true;
         } else {
           console.log("result.Item does not exist");
-          areFieldsValid = true;
+          idExists = false;
         }
-
       } catch (error) {
         console.log("packageExists got an error: ", error);
+      }
+
+      switch (data.actionType) {
+
+        // renewals all needs an existing ID
+        case "renewal":
+          if (!idExists)  {
+            areFieldsValid = false;
+            whyNot = ERROR_MSG.WAIVER_RENEWAL_ID;
+          }
+          break;
+
+        // amendmends modify existing IDs EXCEPT for Amendment Ks, which need a new ID
+        case "amendment":
+          if (data.waiverAuthority==="1915(c)" && idExists) {
+            areFieldsValid = false;
+            whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
+          } else if (!idExists) {
+            areFieldsValid = false;
+            whyNot = ERROR_MSG.WAIVER_AMENDMENT_NO_ID;
+          }
+          break;
+
+        // New waiver actions... only Amendment Ks should have existing IDs
+        case "new":
+          if (data.waiverAuthority==="1915(c)" && !idExists) {
+            areFieldsValid = false;
+            whyNot = ERROR_MSG.WAIVER_NEW_ON_K;
+          } else if (idExists) {
+            areFieldsValid = false;
+            whyNot = ERROR_MSG.WAIVER_NEW_NOT_K;
+          }
+          break;
+
+        // if we get here... we don't know the action type
+        default:
+          areFieldsValid = false;
+          whyNot = ERROR_MSG.WAIVER_ACTION_UNKNOWN;
+          break;
+
       }
 
     return { areFieldsValid, whyNot };

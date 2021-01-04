@@ -248,11 +248,32 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         console.log("Response is: ", aresponse);
         if (!aresponse.error) {
           newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
-        } else if (aresponse.error === ERROR_MSG.DUPLICATE_ID) {
-          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
-        } else if (aresponse.error === ERROR_MSG.ID_NOT_FOUND) {
-          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-        }
+        } else switch (aresponse.error) {
+          case ERROR_MSG.DUPLICATE_ID:
+            newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+            break;
+          case ERROR_MSG.ID_NOT_FOUND:
+            newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+            break;
+          case ERROR_MSG.WAIVER_RENEWAL_ID:
+            newAlert = ALERTS_MSG.WAIVER_RENEWAL_ID;
+            break;
+          case ERROR_MSG.WAIVER_AMENDMENT_ON_K:
+            newAlert = ALERTS_MSG.WAIVER_AMENDMENT_ON_K;
+            break;
+          case ERROR_MSG.WAIVER_NEW_ON_K:
+            newAlert = ALERTS_MSG.WAIVER_NEW_ON_K;
+            break;
+          case ERROR_MSG.WAIVER_NEW_NOT_K:
+            newAlert = ALERTS_MSG.WAIVER_NEW_NOT_K;
+            break;
+          case ERROR_MSG.WAIVER_ACTION_UNKNOWN:
+            newAlert = ALERTS_MSG.WAIVER_ACTION_UNKNOWN;
+            break;
+          default:
+            newAlert = ALERTS_MSG.SUBMISSION_ERROR;
+            break;
+        } 
       } catch (error) {
         console.log("Error is: ", error);
         newAlert = ALERTS_MSG.SUBMISSION_ERROR;

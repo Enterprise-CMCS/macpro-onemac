@@ -56,6 +56,36 @@ export const ALERTS_MSG = {
     heading: "ID Not Found",
     text: "We could not find that ID in our system, please try again.",
   },
+  WAIVER_RENEWAL_ID: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Waiver Action Error",
+    text: "Waiver Renewal Action requires existing ID",
+  },
+  WAIVER_AMENDMENT_ON_K: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Waiver Action Error",
+    text:"Waiver Amendment Ks need new ID for amendment action",
+  },
+  WAIVER_AMENDMENT_NO_ID: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Waiver Action Error",
+    text:"Waiver Amendment actions (other than Amendment Ks) require existing ID",
+  },
+  WAIVER_NEW_ON_K: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Waiver Action Error",
+    text:"New Amendment K actions must have existing IDs",
+  },
+  WAIVER_NEW_NOT_K: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Waiver Action Error",
+    text:"New Waiver Actions (other than Amendment Ks) require new IDs",
+  },
+  WAIVER_ACTION_UNKNOWN: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Waiver Action Error",
+    text:"This Waiver Action cannot be validated",
+  },
   SUBMISSION_INCOMPLETE: {
     type: ALERT_TYPES.ERROR,
     heading: "There was a problem submitting your form.",

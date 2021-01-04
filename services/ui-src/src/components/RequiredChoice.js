@@ -61,7 +61,7 @@ const RequiredChoice = ({
           onChange={onChange}
           required
         >
-          <option value="">-- select a {fieldInfo.defaultItem} --</option>
+          <option value="">-- select {fieldInfo.defaultItem} --</option>
           {renderOptionsList(fieldInfo.optionsList)}
         </select>
       ) : (
