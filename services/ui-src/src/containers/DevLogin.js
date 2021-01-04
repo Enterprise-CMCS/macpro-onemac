@@ -1,22 +1,47 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
-import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import PageTitleBar from "../components/PageTitleBar";
 import config from "../utils/config";
+import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import { Alert } from "@cmsgov/design-system";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
+  const [alert, setAlert] = useState();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
   });
-  PageTitleBar.setPageTitleInfo({ heading: "Developer Login", text: "" });
+
+  const jumpToPageTitle = () => {
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    if (elmnt) elmnt.scrollIntoView();
+  };
+
+  useEffect(() => {
+    if (alert && alert.heading && alert.heading !== "") {
+      jumpToPageTitle();
+    }
+  }, [alert]);
+
+  const renderAlert = (alert) => {
+    if (!alert) return;
+    if (alert.heading && alert.heading !== "") {
+      return (
+        <div className="alert-bar">
+          <Alert variation={alert.type} heading={alert.heading}>
+            <p className="ds-c-alert__text">{alert.text}</p>
+          </Alert>
+        </div>
+      );
+    }
+  };
 
   async function handleSubmit(event) {
+    let newAlert = ALERTS_MSG.NONE;
     event.preventDefault();
 
     try {
@@ -24,11 +49,15 @@ export default function DevLogin() {
       userHasAuthenticated(true);
     } catch (error) {
       console.log("Error while logging in.", error);
-      AlertBar.alert(ALERTS_MSG.LOGIN_ERROR);
+      newAlert = ALERTS_MSG.LOGIN_ERROR;
     }
+    setAlert(newAlert);
   }
 
   return (
+    <div className="dashboard-white">
+    <PageTitleBar heading="Developer Login" text="" />
+    {renderAlert(alert)}
     <div className="form-container">
       {showDevLogin && (
         <div className="form-container">
@@ -71,6 +100,6 @@ export default function DevLogin() {
           </form>
         </div>
       )}
-    </div>
+    </div></div>
   );
 }
