@@ -13,6 +13,7 @@ const commands = {
         this.api.click(this.elements.normalLoginButton);
         this.api.setValue(this.elements.userField, user).pause(100);
         this.api.setValue(this.elements.passField, pass).pause(100);
+        this.api.click(this.elements.termsCheckBox).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
     },
 
@@ -41,17 +42,17 @@ module.exports = {
         waiverAuthority: '#waiverAuthority',
         title: 'div[class=dashboard-title]',
         transmittal: "input[id='transmittalNumber']",
-        userField : '#email',
+        userField : '#okta-signin-username',
         normalLoginButton: '.nav-right > [type]',
-        loginButton : '#devloginBtn',
+        loginButton : 'button[id=devloginBtn]',
         loginTitle : 'div[class=page-title-bar]',
-        submitBtn : 'button[type=submit]',
-
+        submitBtn : 'input[type=submit]',
+        termsCheckBox: '#tandc',
         logout : {
             selector: '(//button)[1]',
             locateStrategy: 'xpath'
         },
-        passField : '#password',
+        passField : '#okta-signin-password',
 
         newSPA: {
             selector: "(//button[@class='ds-c-button ds-c-button--transparent'])[1]",

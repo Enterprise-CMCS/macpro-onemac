@@ -3,8 +3,8 @@ let spa;
 module.exports = {
     before : function(browser) {
         console.log('Setting up...');
-        browser.windowMaximize().url(browser.launch_url).waitForElementPresent('body');
-        spa= browser.page.spaBasePage();
+        browser.maximizeWindow().url(browser.launch_url).waitForElementPresent('body');
+        spa = browser.page.spaBasePage();
     },
 
     after : function(browser) {
@@ -30,9 +30,8 @@ module.exports = {
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
         let title = 'SPA and Waiver Dashboard'
-        const spaPage = browser.page.spaBasePage();
-        spaPage.logout();
-        spaPage.verify.not.containsText('h1', title);
+        spa.logout();
+        spa.verify.not.containsText('h1', title);
         browser.pause(1000);
     }
 };
