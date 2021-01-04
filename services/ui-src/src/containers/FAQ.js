@@ -2,21 +2,10 @@ import React, { useEffect } from "react";
 import PageTitleBar from "../components/PageTitleBar";
 
 const FAQ = () => {
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted)
-      PageTitleBar.setPageTitleInfo({
-        heading: "SPA and Waiver Frequently Asked Questions",
-        text: "",
-      });
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, []);
 
   return (
+    <div>
+    <PageTitleBar heading="SPA and Waiver Frequently Asked Questions" text="" />
     <div className="form-container" id="top">
       <div className="form-card">
         <h2>Help Desk Contact Information</h2>
@@ -130,6 +119,7 @@ const FAQ = () => {
           for HCBS or managed care.
         </p>
       </div>
+    </div>
     </div>
   );
 };

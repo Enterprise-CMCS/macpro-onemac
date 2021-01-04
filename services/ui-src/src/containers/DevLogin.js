@@ -55,7 +55,7 @@ export default function DevLogin() {
   }
 
   return (
-    <div className="dashboard-white">
+    <div>
     <PageTitleBar heading="Developer Login" text="" />
     {renderAlert(alert)}
     <div className="form-container">
