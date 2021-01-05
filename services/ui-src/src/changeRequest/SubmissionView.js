@@ -15,9 +15,11 @@ import { Alert, Review } from "@cmsgov/design-system";
  * @param {String} id - the id of the change request data element to view
  */
 const SubmissionView = ({ formInfo, id }) => {
-
   // for setting the alert
   const [alert, setAlert] = useState(ALERTS_MSG.NONE);
+
+  // so we show the spinner during the data load
+  const [isLoading, setIsLoading] = useState(true);
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState();
@@ -25,24 +27,24 @@ const SubmissionView = ({ formInfo, id }) => {
   useEffect(() => {
     let mounted = true;
     let innerAlert = ALERTS_MSG.NONE;
-    let initialChangeRequest;
+    let innerLoading = true;
 
     console.log("called and id is: " + id);
 
     async function fetchChangeRequest() {
-      if (!id) return;
+      if (!id) return true;
 
       try {
         const fetchedChangeRequest = await ChangeRequestDataApi.get(id);
-        setChangeRequest(fetchedChangeRequest);
+        if (mounted) setChangeRequest(fetchedChangeRequest);
+        return false;
       } catch (error) {
         console.log("Error while fetching submission.", error);
       }
     }
 
-    initialChangeRequest = fetchChangeRequest();
-    if (mounted) setChangeRequest(initialChangeRequest);
-
+    innerLoading = fetchChangeRequest();
+    if (mounted) setIsLoading(!innerLoading);
     if (mounted) setAlert(innerAlert);
 
     return function cleanup() {
@@ -74,60 +76,51 @@ const SubmissionView = ({ formInfo, id }) => {
     }
   };
 
-  if (!changeRequest) {
-    return (
-      <LoadingScreen isLoading={true}>
-        <PageTitleBar heading={formInfo.readOnlyPageTitle} text="" />
-      </LoadingScreen>
-    );
-  } else {
-    return (
-      <>
-        <PageTitleBar heading={formInfo.readOnlyPageTitle} text="" />
-        {renderAlert(alert)}
-        <div className="form-container">
-          <h3>{formInfo.detailsHeader} Details</h3>
-          <div className="form-card">
-            {formInfo.territory && changeRequest.territory && (
-              <Review heading="State/Territory">
-                {changeRequest.territory}
-              </Review>
-            )}
-            {changeRequest.actionType && (
-              <Review heading="Action Type">{changeRequest.actionType}</Review>
-            )}
-            {changeRequest.waiverAuthority && (
-              <Review heading="Waiver Authority">
-                {changeRequest.waiverAuthority}
-              </Review>
-            )}
-            {changeRequest.transmittalNumber && (
-              <Review heading={formInfo.idLabel}>
-                {changeRequest.transmittalNumber}
-              </Review>
-            )}
-            {changeRequest.submittedAt && (
-              <Review heading="Submitted On">
-                {formatDate(changeRequest.submittedAt)}
-              </Review>
-            )}
-          </div>
-          <h3>Attachments</h3>
-          <FileList uploadList={changeRequest.uploads}></FileList>
-          <div className="summary-box">
-            <TextField
-              name="summary"
-              label="Summary"
-              fieldClassName="summary-field"
-              multiline
-              disabled
-              value={changeRequest.summary}
-            ></TextField>
-          </div>
+  return (
+    <LoadingScreen isLoading={isLoading}>
+      <PageTitleBar heading={formInfo.readOnlyPageTitle} text="" />
+      {renderAlert(alert)}
+      {changeRequest && (
+      <div className="form-container">
+        <h3>{formInfo.detailsHeader} Details</h3>
+        <div className="form-card">
+          {formInfo.territory && changeRequest.territory && (
+            <Review heading="State/Territory">{changeRequest.territory}</Review>
+          )}
+          {changeRequest.actionType && (
+            <Review heading="Action Type">{changeRequest.actionType}</Review>
+          )}
+          {changeRequest.waiverAuthority && (
+            <Review heading="Waiver Authority">
+              {changeRequest.waiverAuthority}
+            </Review>
+          )}
+          {changeRequest.transmittalNumber && (
+            <Review heading={formInfo.idLabel}>
+              {changeRequest.transmittalNumber}
+            </Review>
+          )}
+          {changeRequest.submittedAt && (
+            <Review heading="Submitted On">
+              {formatDate(changeRequest.submittedAt)}
+            </Review>
+          )}
         </div>
-      </>
-    );
-  }
+        <h3>Attachments</h3>
+        <FileList uploadList={changeRequest.uploads}></FileList>
+        <div className="summary-box">
+          <TextField
+            name="summary"
+            label="Summary"
+            fieldClassName="summary-field"
+            multiline
+            disabled
+            value={changeRequest.summary}
+          ></TextField>
+        </div>
+      </div>)}
+    </LoadingScreen>
+  );
 };
 
 SubmissionView.propTypes = {

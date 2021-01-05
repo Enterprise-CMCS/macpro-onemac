@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from "react";
-//import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import LoadingScreen from "../components/LoadingScreen";
@@ -16,7 +15,6 @@ import { Alert } from "@cmsgov/design-system";
  */
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
-  //const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState();
 

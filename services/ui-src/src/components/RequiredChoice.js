@@ -2,7 +2,8 @@ import React from "react";
 import PropTypes from "prop-types";
 
 /**
- * Returns the territory form element
+ * Returns a form element used frequently in the Portal submission forms.
+ * Namely, a required field with selectable choices passed in.
  * @param {string} errorMessage any error message to show
  * @param {string} value the current field value
  * @param {string} isReadOnly
