@@ -10,8 +10,8 @@ const timeout = 500;
 const login = require('./OY2-1494_Test_SPA_Login');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 let spa;
-module.exports = {
 
+module.exports = {
     before : function(browser) {
         login.before(browser);
         spa = browser.page.spaBasePage();

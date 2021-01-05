@@ -278,7 +278,6 @@ module.exports = {
         });
 
         browser.back();
-
     }, 
 
 
