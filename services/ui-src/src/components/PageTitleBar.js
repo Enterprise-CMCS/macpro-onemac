@@ -1,89 +1,21 @@
-import React, { Component } from "react";
+import React from "react";
 
 export const TITLE_BAR_ID = "title_bar";
 
 /**
  * PageTitleBar contains supplemental information for the user in the form of a
  * title (usually describes the page) and an optional description (see About page)
-*/
-export default class PageTitleBar extends Component {
+*/  
+const PageTitleBar = ({ heading, text }) => {
 
-  /**
-   * Reference to the component instance.
-   */
-  static __singletonRef;
-
-  /**
-   * Constructor.
-   */
-  constructor() {
-    super();
-    if (!PageTitleBar.__singletonRef) {
-      PageTitleBar.__singletonRef = this;
-    } else {
-      throw new Error(
-        "You can only use the PageTitleBar once in your application."
-      );
-    }
-    this.state = { isShown: true, heading: "SPA and Waiver Submission Application", text: "" };
-  }
-
-  /**
-   * Displays a page header area which describes this specific page/form.
-   * @param {Object} setPageTitle the title and message to contain within the bar
-   */
-  static setPageTitleInfo(pageInfo) {
-    if (pageInfo) {
-      PageTitleBar.__singletonRef.__setPageTitleInfo(
-        pageInfo.heading,
-        pageInfo.text
-      );
-    } else {
-      throw new Error("Must specify a Page Info object.");
-    }
-  }
-
-
-  /**
-   * Dismisses/hides the page title bar.
-   */
-  static dismiss() {
-    PageTitleBar.__singletonRef.__dismiss();
-  }
-
-  /**
-   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use PageTitleBar.dismiss().
-   * Dismisses/hides the alert.
-   */
-  __dismiss() {
-    this.setState({ isShown: false });
-  }
-
-  /**
-   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use PageTitleBar.setPageTitleInfo().
-   * Displays informational text under the nav bar.
-   * @param {string} heading the page title
-   * @param {string} text the optional description
-   */
-  __setPageTitleInfo(heading, text) {
-    this.setState({ isShown: true, heading, text });
-  }
-
-  /**
-   * Render the component.
-   */
-  render() {
     return (
-      <div>
-        {this.state.isShown && (
           <div id={TITLE_BAR_ID} className="page-title-bar">
-            <h1>{this.state.heading}</h1>
-              {this.state.text && (
-                <p className="ds-c-alert__text">{this.state.text}</p>
+            <h1>{heading}</h1>
+              {text && (
+                <p className="ds-c-alert__text">{text}</p>
               )}
           </div>
-        )}
-      </div>
     );
-  }
-}
+};
+
+export default PageTitleBar;

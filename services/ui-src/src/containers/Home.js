@@ -17,13 +17,7 @@ export default function Home() {
     "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
   ];
   const submissionTypesid = "submission-types";
-
-  PageTitleBar.setPageTitleInfo({
-    heading: "CMS State Plan Amendment and Waiver Submission Platform",
-    text:
-      "Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers.",
-  });
-
+  
   /**
    * Takes a list of items and renders it into an unordered list.
    * @param {Array} listData data items for the list
@@ -39,6 +33,10 @@ export default function Home() {
   }
 
   return (
+    <>
+        <PageTitleBar 
+        heading= "CMS State Plan Amendment and Waiver Submission Platform" 
+        text="Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers." />
     <div className="about">
       <div className="section section-how-it-works">
         <div className="section-title-center">How it Works</div>
@@ -71,5 +69,6 @@ export default function Home() {
         </div>
       </div>
     </div>
+    </>
   );
 }

@@ -9,7 +9,6 @@ import SpaRai from "./changeRequest/SpaRai";
 import Waiver from "./changeRequest/Waiver";
 import WaiverRai from "./changeRequest/WaiverRai";
 import WaiverExtension from "./changeRequest/WaiverExtension";
-import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
@@ -45,14 +44,11 @@ export default function Routes() {
             <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
                 <DevLogin />
             </UnauthenticatedRoute>
-            <AuthenticatedRoute exact path={ROUTES.PROFILE}>
-                <Profile />
-            </AuthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
-                <Spa/>
+                <Spa />
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
                 <Waiver />
