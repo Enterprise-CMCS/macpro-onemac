@@ -4,49 +4,57 @@ module.exports = {
     "@tags": ["smokeTest"],
 
     before : function(browser) {
-        console.log('Setting up...');
+        console.log('Setting up the browser instance...');
+        console.log('Opening the browser...')
         let env = 'https://d2dr7dgo9g0124.cloudfront.net/devlogin';
+        console.log('Maximizing the browser window size...');
         browser.windowMaximize().url(env);
         browser.waitForElementPresent('body');
     },
 
     after : function(browser) {
-        console.log('Closing down...');
+        console.log("Stopping test executions...")
+        console.log('Closing down the browser instance...');
         browser.end();
-    },
+    }, 
 
-    'Login to Medicaid as Developer' : function(browser) {
-        // Verifying that Login page is dispalyed
-        let title = 'Developer Login';
-        browser.waitForElementPresent('h1');
-        browser.verify.containsText('h1', title);
-
-        // Login to the site
+    'Login to Medicaid as Regular User' : function(browser) {
+        // Test Data 
+        const username = browser.globals.user;
+        const password = browser.globals.pass;
         let spaPageTitle = 'SPA and Waiver Dashboard';
-        let username = browser.globals.user;
-        let password = browser.globals.pass;
-        browser.setValue('input#email', username);
-        browser.setValue('input#password', password);
-        browser.click('button#loginDevUserBtn');
+
+        // Test Stesp
+        browser.click('.nav-right > [type]');  // click the login button
+        browser.setValue('#okta-signin-username', username);
+        browser.setValue('#okta-signin-password', password);
+        browser.click('#tandc');
+        browser.click('#okta-signin-submit');
         browser.waitForElementPresent('body');
+
+        // Test Assertion
         browser.verify.containsText('h1', spaPageTitle);
-
     },
 
-    'Verify SPA and Waiver Dashboard > Response to RAI for SPA Submission':function(browser) {
-        browser.click('a:nth-of-type(1) > .list-group-item-heading');
-        browser.waitForElementPresent('form > h3:nth-of-type(1)');
-        browser.verify.containsText('form > h3:nth-of-type(1)', ' RAI Details');
+    // ------------------- VERIFYING PACKAGE CONTENT for SPAs ---------------------------------- //
+    'Verify SPA and Waiver Dashboard Submission > Submit new SPA':function(browser) {
+        // Submit a SPA Report 
+        const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
+        newSPA["Click on 'Start a new SPA'"](browser);
+        newSPA["Enter SPA State/Territory Information"](browser);
+        newSPA["Enter SPA ID"](browser);
+        newSPA["Upload Documents"](browser);
+        newSPA["Enter Comments"](browser);
+        newSPA["Submit SPA"](browser);
 
-        // Verify the SPA-ID
-        let input_spaId = 'input#transmittalNumber';
-        browser.assert.attributeEquals(input_spaId, 'value', "I-2-1111-1");
+        // Verify the submitted SPA Report Content 
+        let submitted = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.useXpath();
+        browser.click(submitted).pause(2000);
+        browser.useCss();
 
-        // Verify Submission data
-        let input_submissionDate = 'input#submittedAt';
-        browser.assert.attributeContains(input_submissionDate, 'value', 'Thu, Nov 12 2020, 4:29:12 PM');
-
-        // checking for all the diabled elements
+        // verify the disabled content 
+        // checking for all the diabled elements 
         let count = 1;
         let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
@@ -58,29 +66,124 @@ module.exports = {
             browser.useCss();
         });
 
-        // checking for attachement
-        let attachmenetLink = "form a[target='_blank']";
-        browser.expect.element(attachmenetLink).to.be.visible;
+        // // Checking for attachements 
+        let counts = 1;
+        locator1 = "(//form//div/a[@target='_blank'])";
+        browser.elements('xpath', locator1, function (elements) {
+            elements.value.forEach(function(element){
+                let xpaths = locator1.concat('[' + counts + ']');
+                browser.useXpath().assert.containsText(xpaths, 'file');
+                counts++;
+            })
+            browser.useCss();
+        });
         browser.back();  // go back to previous page
     },
 
-    'Verify SPA and Waiver Dashboard > SPA Submission: DC-20-1111-EFG':function(browser) {
-        browser.click('a:nth-of-type(2) > .list-group-item-heading');
-        browser.waitForElementPresent('form > h3:nth-of-type(1)');
-        browser.verify.containsText('form > h3:nth-of-type(1)', 'SPA Details');
+    'Verify SPA and Waiver Dashboard Submission > Respond to SPA RAI': function(browser) {
+        // Submit a SPA RAI 
+            const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
+            spaRAI["Click on 'Respond to SPA RAI'"](browser);
+            spaRAI["Enter SPA ID"](browser);
+            spaRAI["Upload Documents"](browser);
+            spaRAI["Enter Comments"](browser);
+            spaRAI["Submit Response"](browser);
 
-        // Verify State / Territory
-        let input_state = 'input#territory';
-        browser.assert.attributeContains(input_state, 'value', 'DC');
+           // Verify the submitted content 
+           let submitted = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+           browser.useXpath();
+           browser.click(submitted).pause(2000);
+           browser.useCss();
+   
+           // verify the disabled content 
+           // checking for all the diabled elements 
+           let count = 1;
+           let locator = '(//*[@disabled])';
+           browser.elements('xpath', locator, function (elements) {
+               elements.value.forEach(function(element){
+                   let xpath = locator.concat('[' + count + ']');
+                   browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
+                   count++;
+               })
+               browser.useCss();
+           });
+   
+           // // Checking for attachements 
+           let counts = 1;
+           locator1 = "(//form//div/a[@target='_blank'])";
+           browser.elements('xpath', locator1, function (elements) {
+               elements.value.forEach(function(element){
+                   let xpaths = locator1.concat('[' + counts + ']');
+                   browser.useXpath().assert.containsText(xpaths, 'file');
+                   counts++;
+               })
+               browser.useCss();
+           });
+           browser.back();  // go back to previous page
+    },
 
-        // Verify spa ID
-        let spa_id = 'input#transmittalNumber';
-        browser.assert.attributeContains(spa_id, 'value', 'DC-20-1111-EFG');
+    // ------------------- VERIFYING PACKAGE CONTENT for Waivers ---------------------------------- //
+    'Verify SPA and Waiver Dashboard Submission > Submit new Waiver': function(browser) {
+        const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
+        spaWaiver["Click on 'Submit new Waiver'"](browser);
+        spaWaiver["Enter SPA State/Territory Information"](browser);
+        spaWaiver["Enter Waiver Authority"](browser);
+        spaWaiver["Enter Waiver Number"](browser);
+        spaWaiver["Enter Action Type"](browser);
+        spaWaiver["Upload Documents"](browser);
+        spaWaiver["Enter Comments"](browser);
+        spaWaiver["Submit SPA Waiver"](browser);
 
-        let submit_date = 'input#submittedAt';
-        browser.assert.attributeContains(submit_date, 'value', 'Thu, Nov 5 2020, 1:19:09 PM');
+          // Verify the submitted content 
+          let submitted = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+          browser.useXpath();
+          browser.click(submitted).pause(2000);
+          browser.useCss();
+  
+          // verify the disabled content 
+          // checking for all the diabled elements 
+          let count = 1;
+          let locator = '(//*[@disabled])';
+          browser.elements('xpath', locator, function (elements) {
+              elements.value.forEach(function(element){
+                  let xpath = locator.concat('[' + count + ']');
+                  browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
+                  count++;
+              })
+              browser.useCss();
+          });
+  
+          // // Checking for attachements 
+          let counts = 1;
+          locator1 = "(//form//div/a[@target='_blank'])";
+          browser.elements('xpath', locator1, function (elements) {
+              elements.value.forEach(function(element){
+                  let xpaths = locator1.concat('[' + counts + ']');
+                  browser.useXpath().assert.containsText(xpaths, 'file');
+                  counts++;
+              })
+              browser.useCss();
+          });
+          browser.back();  // go back to previous page
 
-        // checking for all the diabled elements
+    },
+
+    'Verify SPA and Waiver Dashboard Submission > Respond to 1915(b) Waiver RAI': function(browser) {
+        const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
+        waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser);
+        waiverRAI["Enter Waiver Number"](browser);
+        waiverRAI["Upload Documents"](browser);
+        waiverRAI["Enter Comments"](browser);
+        waiverRAI["Submit Response"](browser);
+
+        // Verify the submitted content 
+        let submitted = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.useXpath();
+        browser.click(submitted).pause(2000);
+        browser.useCss();
+
+        // verify the disabled content 
+        // checking for all the diabled elements 
         let count = 1;
         let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
@@ -92,25 +195,36 @@ module.exports = {
             browser.useCss();
         });
 
-        // check for attachements
-        let attachement_cmsForm179 = "div:nth-of-type(1) > a[target='_blank']";
-        let attachement_spaPages = "form div:nth-child(5) div:nth-of-type(2) [target]";
-        browser.expect.element(attachement_cmsForm179).to.be.visible;
-        browser.expect.element(attachement_spaPages).to.be.visible;
+        // // Checking for attachements 
+        let counts = 1;
+        locator1 = "(//form//div/a[@target='_blank'])";
+        browser.elements('xpath', locator1, function (elements) {
+            elements.value.forEach(function(element){
+                let xpaths = locator1.concat('[' + counts + ']');
+                browser.useXpath().assert.containsText(xpaths, 'file');
+                counts++;
+            })
+            browser.useCss();
+        });
         browser.back();  // go back to previous page
     },
 
-    'Verify SPA and Waiver Dashboard > SPA Submission: IL-20-1111-ABC':function(browser) {
-        browser.click('a:nth-of-type(3) > .list-group-item-heading');
-        browser.waitForElementPresent('form > h3:nth-of-type(1)');
-        browser.verify.containsText('form > h3:nth-of-type(1)', 'SPA Details');
+    'Verify SPA and Waiver Dashboard Submission > Respond to 1915(b) Waiver RAI': function(browser) {
+        const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
+        tempExt["Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'"](browser);
+        tempExt["Enter Waiver Number"](browser);
+        tempExt["Upload Documents"](browser);
+        tempExt["Enter Comments"](browser);
+        tempExt["Submit Response"](browser);
+        
+        // Verify the submitted content 
+        let submitted = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.useXpath();
+        browser.click(submitted).pause(2000);
+        browser.useCss();
 
-        // Verifying state and territory
-        let stateInput = 'input#territory';
-        browser.assert.attributeContains(stateInput, 'value', 'IL');
-        browser.assert.attributeContains('input#transmittalNumber', 'value', 'IL-20-1111-ABC');
-
-        // checking for all the diabled elements
+        // verify the disabled content 
+        // checking for all the diabled elements 
         let count = 1;
         let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
@@ -122,82 +236,28 @@ module.exports = {
             browser.useCss();
         });
 
-        // check for attachements
-        let attachement_cmsForm179 = "div:nth-of-type(1) > a[target='_blank']";
-        let attachement_spaPages = "form div:nth-child(5) div:nth-of-type(2) [target]";
-        browser.expect.element(attachement_cmsForm179).to.be.visible;
-        browser.expect.element(attachement_spaPages).to.be.visible;
-        browser.back();  // go back to previous page
-    },
-
-    'Verify SPA and Waiver Dashboard > Waiver Submission: WI-20-1221-abcd': function(browser) {
-        browser.click('a:nth-of-type(4) > .list-group-item-heading');
-        browser.waitForElementPresent('form > h3:nth-of-type(1)');
-        browser.verify.containsText('form > h3:nth-of-type(1)', 'Waiver Action Details');
-
-        // Verifying inputs text value
-        browser.assert.attributeContains('input#territory', 'value', 'AR');
-        browser.assert.attributeContains('input#actionType', 'value', 'renewal');
-        browser.assert.attributeContains('input#waiverAuthority', 'value', '1915(b)(4)');
-        browser.assert.attributeContains('input#transmittalNumber', 'value', 'WI-20-1221-abcd');
-        browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:19:11 AM');
-
-        // checking for all the diabled elements
-        let count = 1;
-        let locator = '(//*[@disabled])';
-        browser.elements('xpath', locator, function (elements) {
+        // // Checking for attachements 
+        let counts = 1;
+        locator1 = "(//form//div/a[@target='_blank'])";
+        browser.elements('xpath', locator1, function (elements) {
             elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
-                browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
-                count++;
+                let xpaths = locator1.concat('[' + counts + ']');
+                browser.useXpath().assert.containsText(xpaths, 'file');
+                counts++;
             })
             browser.useCss();
         });
-
-        // check for attachements
-        let attachement_requiredUpload = "form a[target='_blank']";
-        browser.expect.element(attachement_requiredUpload).to.be.visible;
         browser.back();  // go back to previous page
     },
 
-    'Verify SPA and Waiver Dashboard > Response to RAI for SPA Submission: IL-20-1111-ABC': function(browser) {
-        browser.click('a:nth-of-type(5) > .list-group-item-heading');
-        browser.waitForElementPresent('form > h3:nth-of-type(1)');
-        browser.verify.containsText('form > h3:nth-of-type(1)', 'RAI Details');
-
-        // Verifying the input text values
-        browser.assert.attributeContains('input#transmittalNumber', 'value', 'IL-20-1111-ABC');
-        browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:18:16 AM');
-
-        // checking for all the diabled elements
-        let count = 1;
-        let locator = '(//*[@disabled])';
-        browser.elements('xpath', locator, function (elements) {
-            elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
-                browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
-                count++;
-            })
-            browser.useCss();
-        });
-
-        // check for attachements
-        let attachment_raiResponse = "div:nth-of-type(1) > a[target='_blank']";
-        let attachment_cmsForm = "form div:nth-child(5) div:nth-of-type(2) [target]";
-        let attachment_spaPages = "div:nth-of-type(3) > a[target='_blank']";
-        browser.expect.element(attachment_raiResponse).to.be.visible;
-        browser.expect.element(attachment_cmsForm).to.be.visible;
-        browser.expect.element(attachment_spaPages).to.be.visible;
-        browser.back();  // go back to previous page
-    },
 
     // ------------------- VERIFYING ERROR MESSSAGE ---------------------------------- //
 
     'Verify error message > Submit new SPA': function(browser) {
         let link_submitNewSPA = 'button#spaSubmitBtn';
         let bttn_submit = "[value='Submit']";
-
-        // Go to New SAP page and click Submit button
+        
+        // Go to New SAP page and click Submit button 
         browser.click(link_submitNewSPA);
         browser.click(bttn_submit);
 
@@ -218,12 +278,7 @@ module.exports = {
         });
 
         browser.back();
-<<<<<<< HEAD
     }, 
-=======
-
-    },
->>>>>>> 3575e7ae192e88801621ebf39c566bdba681254e
 
 
     'Verify error message > Respond to SPA RAI': function(browser) {
@@ -234,7 +289,7 @@ module.exports = {
         browser.click(link_respondToSPARAI);
         browser.click(bttn_submit);
 
-        // Check for page error header after clicking Submit button
+        // Check for page error header after clicking Submit button 
         // without any inputs to the required fields
         let error_pageAlert = '.ds-c-alert__heading';
         browser.waitForElementPresent(error_pageAlert);
@@ -253,7 +308,7 @@ module.exports = {
         });
 
         browser.back();
-    },
+    }, 
 
     'Verify error message > Submit new Waiver': function(browser) {
         let link_submitNewWaiver = 'button#waiverBtn';
@@ -263,7 +318,7 @@ module.exports = {
         browser.click(link_submitNewWaiver);
         browser.click(bttn_submit);
 
-        // Check for page error header after clicking Submit button
+        // Check for page error header after clicking Submit button 
         // without any inputs to the required fields
         let error_pageAlert = '.ds-c-alert__heading';
         browser.waitForElementPresent(error_pageAlert);
@@ -283,8 +338,8 @@ module.exports = {
 
         browser.back();
 
-    },
-
+    }, 
+    
     'Verify error message > Respond to 1915(c) Waiver RAI': function(browser) {
         let link_RespondTo1915 = 'button#waiverRaiBtn';
         let bttn_submit = "[value='Submit']";
@@ -294,7 +349,7 @@ module.exports = {
         browser.click(bttn_submit);
 
 
-        // Check for page error header after clicking Submit button
+        // Check for page error header after clicking Submit button 
         // without any inputs to the required fields
         let error_pageAlert = '.ds-c-alert__heading';
         browser.waitForElementPresent(error_pageAlert);
@@ -314,7 +369,7 @@ module.exports = {
 
         browser.back();
 
-    },
+    }, 
 
     'Verify error message > Request Temporary Extension form - 1915(b) and 1915(c)': function(browser) {
         let link_requestTempExtension = 'button#waiverExtBtn';
@@ -324,7 +379,7 @@ module.exports = {
         browser.click(link_requestTempExtension);
         browser.click(bttn_submit);
 
-                // Check for page error header after clicking Submit button
+                // Check for page error header after clicking Submit button 
         // without any inputs to the required fields
         let error_pageAlert = '.ds-c-alert__heading';
         browser.waitForElementPresent(error_pageAlert);
@@ -343,35 +398,20 @@ module.exports = {
         });
 
          browser.back();  // go back to previous page
-    },
+    }, 
 
 
-    'Verify logout from SPA and Wavier Dashboard and login as CSM.gov Regular user': function(browser) {
-        let username = "FLSESPA2";
-        let password = "Macbis9!1";
-
-        // elements
+    'Verify logout from SPA and Wavier Dashboard': function(browser) {
+        // elements 
         let bttn_logout = 'button#logoutBtn';
-        let bttn_login = '.nav-right > [type]';
+        let logout_banner_text = "CMS State Plan Amendment and Waiver Submission Platform";
 
         // logout from SPA and Wavier Dashboard page
         browser.click(bttn_logout);
         browser.waitForElementPresent('h1');
 
-        // Verify the successful logout
-        browser.verify.containsText('h1', "CMS State Plan Amendment and Waiver Submission Platform");
-
-        // Log back in as CSM.gov Regular user
-        browser.click(bttn_login);
-        browser.setValue('#okta-signin-username', username);
-        browser.setValue('#okta-signin-password', password);
-        browser.click('input#tandc');  // Agree to Terms & Condition checkbox
-        browser.click('input#okta-signin-submit');
-
-        // Verify the successful logoin
-        browser.waitForElementPresent('body');
-        let txt_emptySubmission = '.empty-list';
-        browser.verify.containsText(txt_emptySubmission, "You have no submissions yet");
+        // Verify the successful logout 
+        browser.verify.containsText('h1', logout_banner_text);
     }
 
 };

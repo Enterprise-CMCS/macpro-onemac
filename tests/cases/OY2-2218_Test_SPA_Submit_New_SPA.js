@@ -55,7 +55,8 @@ module.exports = {
     },
 
     'Enter Comments' : function (browser) {
-        let selector = '#textfield_1';
+       // let selector = '#textfield_1';
+       let selector = 'textarea';
         let entered_text = "Relax. This is only a test";
         browser
             .assert.elementPresent(selector)
