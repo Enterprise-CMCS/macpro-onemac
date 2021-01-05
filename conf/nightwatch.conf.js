@@ -26,10 +26,12 @@ module.exports = {
     test_settings: {
         default: {
             launch_url: `${process.env.APPLICATION_ENDPOINT}`,
+
             globals: {
                 user: `${process.env.TEST_USERS}`,
                 pass: `${process.env.TEST_USER_PASSWORD}`,
             },
+
             exclude: ["./tests/page_objects", "./tests/examples"],
             webdriver: {
                 start_process: true,
@@ -54,7 +56,7 @@ module.exports = {
                         args: [
                             '--window-size=1024,768',
                             '-verbose',
-                            //'-headless',
+                            '-headless',
                             // '-verbose'
                         ],
                     }

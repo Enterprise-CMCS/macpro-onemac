@@ -8,6 +8,7 @@
     "firefox": "node nightwatch -c conf/nightwatch.conf.js -e firefox",
     "cross-browser": "node nightwatch -c conf/nightwatch.conf.js -e chrome,firefox --skiptags unit,integration",
     "regression": "node nightwatch -c conf/nightwatch.conf.js -e chrome --tag regression --skiptags unit,smoke,integration",
+    "smoke-test": "node nightwatch.js -c conf/nightwatch.conf.js -e chrome --tag smokeTest --skiptags unit,integration,regression",
     "update": "npx npm-check-updates -u && npm install",
     "integration": "node nightwatch.js -c conf/nightwatch.conf.js -e unit-test --tag integration"
   },
@@ -28,10 +29,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chromedriver": "^87.0.1",
+    "chromedriver": "^87.0.4",
     "dotenv": "^8.2.0",
-    "geckodriver": "^1.21.0",
+    "geckodriver": "^1.21.1",
     "selenium-server": "^3.141.59",
-    "sinon": "^9.2.1"
+    "sinon": "^9.2.2"
   }
 }
