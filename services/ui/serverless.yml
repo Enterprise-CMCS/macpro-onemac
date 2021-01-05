@@ -205,12 +205,18 @@ resources:
             SizeInMBs: 5
           CompressionFormat: UNCOMPRESSED
 
-    s3bucket:
-      Type: AWS::S3::Bucket
-      Properties:
-        VersioningConfiguration:
-          Status: Enabled
+#    s3bucket:
+#      Type: AWS::S3::Bucket
+#      Properties:
+#        VersioningConfiguration:
+#          Status: Enabled
 
+    ImportedBucket:
+      Type: AWS::S3::Bucket
+      DeletionPolicy: Retain
+      Properties: {
+        BucketName: cms-cloud-116229642442-us-east-1
+        }
 
 
 
