@@ -26,8 +26,8 @@ class ChangeRequestDataApi {
       data.uploads = uploadsList;
 
       return await API.post("changeRequestAPI", "/submit", {
-        body: data,
-      });
+          body: data,
+        });
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
@@ -61,6 +61,27 @@ class ChangeRequestDataApi {
       return changeRequest;
     } catch (error) {
       console.log(`There was an error fetching ID ${id}.`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Check to see if an id exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the ID exists in the back end
+   */
+  async packageExists(id) {
+    if (!id) {
+      console.log("ID was not specified for packageExists API call");
+      throw new Error("ID was not specified for packageExists API call");
+    }
+
+    try {
+      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
+
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking ID ${id}.`, error);
       throw error;
     }
   }
