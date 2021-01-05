@@ -211,7 +211,7 @@ resources:
 #        VersioningConfiguration:
 #          Status: Enabled
 
-    ImportedBucket:
+    s3bucket:
       Type: AWS::S3::Bucket
       DeletionPolicy: Retain
       Properties: {
