@@ -1,25 +1,17 @@
 
 const login = require('../cases/OY2-1494_Test_SPA_Login');
-
 module.exports = {
     "@tags": ["regression"],
 
     before: function (browser) {
-        console.log('Setting up...');
-    },
-
-    beforeEach: function (browser) {
         login.before(browser);
+        login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-    },
-
-    afterEach: function(browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        login.after(browser);
+        browser.pause(2000);
     },
 
     after: function (browser) {
-        console.log('Closing down...');
+        login.after(browser);
     },
 
     "Submit a SPA Report": function (browser) {

@@ -8,6 +8,7 @@
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
+let spa;
 module.exports = {
 
     before: function (browser) {
@@ -22,12 +23,12 @@ module.exports = {
 
     "Click on 'Submit new Waiver'": function (browser) {
         let new_spa = "@newWaiver";
-        const spa = browser.page.spaBasePage();
+        spa = browser.page.spaBasePage();
+        spa.assert.elementPresent('@newWaiver');
         spa
-            .assert.elementPresent('@newWaiver')
             .click(new_spa)
             .expect.url().to.contain("/waiver")
-            .before(spa.pauseAction);
+            .before(5000);
     },
 
     "Enter SPA State/Territory Information": function(browser) {
@@ -43,24 +44,23 @@ module.exports = {
     },
 
     "Enter Waiver Authority": function (browser) {
-        let selector = '#waiverAuthority'
-        let value = 'A'
-        let state_option = 'All other 1915(b) Waivers';
+        const testData = {
+            authority: "All other 1915(b) Waivers",
+        }
 
-        browser.setValue(selector, value);
-        browser.verify.containsText(selector, state_option).pause(500);
+        spa.setValue('@waiverAuthority', testData.authority);
+        browser.verify.containsText(testData.selector, testData.authority).pause(500);
     },
 
     "Enter Waiver Number": function (browser) {
-        const spa = browser.page.spaBasePage();
         let selector = '@transmittal';
         let spa_id = spa.getWaiverNumber();
-        spa.click(selector).setValue(selector, spa_id)
-            .expect.element(selector).value.to.equals(spa_id);
+        spa.click(selector).setValue(selector, spa_id);
+        browser.expect.element(selector).value.to.equals(spa_id);
     },
 
     "Upload Documents": function (browser) {
-        const spa = browser.page.spaBasePage();
+        spa = browser.page.spaBasePage();
         spa.uploadFiles(7).pause(500);
     },
 

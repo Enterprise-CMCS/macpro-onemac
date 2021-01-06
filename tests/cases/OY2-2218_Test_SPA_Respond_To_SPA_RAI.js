@@ -8,11 +8,14 @@
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
+let spa;
 module.exports = {
 
     before : function(browser) {
         login.before(browser);
+        login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
+        spa = browser.page.spaBasePage();
     },
 
     after : function(browser) {
@@ -20,25 +23,26 @@ module.exports = {
         login.after(browser);
     },
 
-
     "Click on 'Respond to SPA RAI'": function (browser) {
-        let link = '@respondSPA'
+        let link = '[id=spaRaiBtn]'
         let subDir = "/sparai";
-
-        const spa = browser.page.spaBasePage();
-
-        spa.assert.elementPresent(link)
-            .click(link)
-            .expect.url().to.contain(subDir)
-            .before(spa.pauseAction);
+        spa = browser.page.spaBasePage();
+        browser.assert.elementPresent(link);
+        browser.click(link);
+        browser.expect.url().to.contain(subDir).before(5000);
     },
 
     "Enter SPA ID" : function (browser) {
-        new_spa["Enter SPA ID"](browser);
+        let selector = "#transmittalNumber";
+        let transmitNumber = "VA-20-1234"
+        browser.setValue(selector, transmitNumber);
+        browser.pause(500);
+        browser.expect.element(selector).value.to.equal(transmitNumber);
+
     },
 
     "Upload Documents" : function (browser) {
-        const spa = browser.page.spaBasePage();
+        spa = browser.page.spaBasePage();
         spa.uploadFiles(10);
     },
 
