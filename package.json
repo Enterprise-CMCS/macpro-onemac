@@ -21,5 +21,6 @@
   "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
   "devDependencies": {
     "eslint-plugin-react-hooks": "^4.2.0"
+    "serverless": "^2.7.0"
   }
 }
