@@ -29,10 +29,10 @@
   },
   "devDependencies": {
     "chai": "^4.2.0",
-    "chromedriver": "^87.0.2",
+    "chromedriver": "^87.0.5",
     "dotenv": "^8.2.0",
-    "geckodriver": "^1.21.0",
+    "geckodriver": "^1.21.1",
     "selenium-server": "^3.141.59",
-    "sinon": "^9.2.2"
+    "sinon": "^9.2.3"
   }
 }
