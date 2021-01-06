@@ -12,6 +12,7 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
+  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
@@ -46,6 +47,7 @@ provider:
 
   environment:
     tableName: ${self:custom.tableName}
+    spaIdTableName: ${self:custom.spaIdTableName}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
 
@@ -71,12 +73,31 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  package-exists:
+    handler: package-exists.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: package-exists/{packageId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   list:
     handler: list.main
     role: LambdaApiRole
     events:
       - http:
           path: get
+          method: get
+          cors: true
+          authorizer: aws_iam
+  listall:
+    handler: listall.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: listall
           method: get
           cors: true
           authorizer: aws_iam
@@ -92,5 +113,3 @@ resources:
 
   # API Gateway
   - ${file(resources/api-gateway.yml)}
-
-  

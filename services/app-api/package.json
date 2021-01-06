@@ -16,11 +16,13 @@
     "aws-sdk": "^2.752.0",
     "serverless-bundle": "^3.1.0",
     "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-offline": "^6.7.0",
+    "serverless-offline": "^6.8.0",
     "serverless-plugin-warmup": "^4.9.0"
   },
   "dependencies": {
     "date-fns": "^2.16.1",
+    "hapi": "^18.1.0",
+    "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
   }

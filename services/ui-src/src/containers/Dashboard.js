@@ -1,46 +1,73 @@
 import React, { useState, useEffect } from "react";
-import { ListGroup, ListGroupItem } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
-import { useAppContext } from "../libs/contextLib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
-import AlertBar from "../components/AlertBar";
-import PageTitleBar from "../components/PageTitleBar";
+import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import { format } from "date-fns";
+import { Alert } from "@cmsgov/design-system";
 
 /**
  * Component containing dashboard
  */
-export default function Dashboard() {
+const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
-  const { isAuthenticated } = useAppContext();
   const [isLoading, setIsLoading] = useState(true);
+  const [alert, setAlert] = useState();
 
   const history = useHistory();
+  const location = useLocation();
 
-  PageTitleBar.setPageTitleInfo({heading : "SPA and Waiver Dashboard", text: "" })
   // Load the data from the backend.
   useEffect(() => {
-    async function onLoad() {
-      if (!isAuthenticated) {
-        return;
-      }
+    let mounted = true;
+    let newAlert = ALERTS_MSG.NONE;
 
+    async function onLoad() {
       try {
-        setChangeRequestList(await ChangeRequestDataApi.getAll());
-        setIsLoading(false);
+        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
+        if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        AlertBar.alert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
       }
     }
 
-    onLoad();
-  }, [isAuthenticated]);
+    if (location.state) newAlert = location.state.showAlert;
+    if (mounted) onLoad();
+    if (mounted) setAlert(newAlert);
+
+    return function cleanup() {
+      mounted = false;
+    };
+  }, [location]);
+
+  const jumpToPageTitle = () => {
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    if (elmnt) elmnt.scrollIntoView();
+  };
+
+  useEffect(() => {
+    if (alert && alert.heading && alert.heading !== "") {
+      jumpToPageTitle();
+    }
+  }, [alert]);
+
+  const renderAlert = (alert) => {
+    if (!alert) return;
+    if (alert.heading && alert.heading !== "") {
+      return (
+        <div className="alert-bar">
+          <Alert variation={alert.type} heading={alert.heading}>
+            <p className="ds-c-alert__text">{alert.text}</p>
+          </Alert>
+        </div>
+      );
+    }
+  };
 
   /**
    * Render the list of change requests.
@@ -62,93 +89,119 @@ export default function Dashboard() {
 
     //Now generate the list
     return sortedChangeRequests.map((changeRequest, i) => {
-      let title;
+      let type;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.SPA:
-          title = "SPA Submission: " + changeRequest.transmittalNumber;
+          type = "SPA";
           break;
         case CHANGE_REQUEST_TYPES.WAIVER:
-          title = "Waiver Submission: " + changeRequest.transmittalNumber;
+          type = "Waiver";
           break;
 
         case CHANGE_REQUEST_TYPES.SPA_RAI:
-          title = "Response to RAI for SPA Submission: " + changeRequest.transmittalNumber;
+          type = "SPA RAI";
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          title = "Response to RAI for Waiver Submission: " + changeRequest.transmittalNumber;
+          type = "Waiver RAI";
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-          title = "Temporary Extension Request for Waiver: " + changeRequest.transmittalNumber;
+          type = "Temporary Extension Request";
           break;
 
         default:
-          title = "Submission Type: " + changeRequest.type ;
+          type = "";
       }
 
       return (
-        <LinkContainer key={changeRequest.id} to={link}>
-          <ListGroupItem header={title}>
-            {"Submitted on: " + new Date(changeRequest.submittedAt).toLocaleString()}
-          </ListGroupItem>
-        </LinkContainer>
+        <tr key={i}>
+          <td>
+            <Link to={link}>{changeRequest.transmittalNumber}</Link>
+          </td>
+          <td>
+            <span className="type-badge">{type}</span>
+          </td>
+          <td className="date-submitted-column">
+            {format(changeRequest.submittedAt, "MMM d, yyyy")}
+          </td>
+        </tr>
       );
     });
   }
 
   // Render the dashboard
   return (
-    <div className="dashboard-container">
-      <div className="dashboard-left-col">
-        <div className="action-title">SPAs</div>
-          <Button id="spaSubmitBtn"
+    <div className="dashboard-white">
+      <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
+      {renderAlert(alert)}
+      <div className="dashboard-container">
+        <div className="dashboard-left-col">
+          <div className="action-title">SPAs</div>
+          <Button
+            id="spaSubmitBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >
             Submit new SPA
-            </Button>
-          <Button id="spaRaiBtn"
+          </Button>
+          <Button
+            id="spaRaiBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
             Respond to SPA RAI
-            </Button>
-        <div className="action-title">Waivers</div>
-          <Button id="waiverBtn"
+          </Button>
+          <div className="action-title">Waivers</div>
+          <Button
+            id="waiverBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER)}
           >
             Submit new Waiver
-            </Button>
-          <Button id={"waiverRaiBtn"}
+          </Button>
+          <Button
+            id={"waiverRaiBtn"}
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER_RAI)}
           >
             Respond to 1915(b) Waiver RAI
-            </Button>
-          <Button id="waiverExtBtn"
+          </Button>
+          <Button
+            id="waiverExtBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
           >
             Request Temporary Extension form - 1915(b) and 1915(c)
           </Button>
-      </div>
-      <div className="dashboard-right-col">
-      <div className="action-title">Your SPA and Waiver Submissions</div>
-        <LoadingScreen isLoading={isLoading}>
-          <div>
-            {changeRequestList.length > 0 ? (
-              <ListGroup>
-                {renderChangeRequestList(changeRequestList)}
-              </ListGroup>
-            ) : (
-              <div className="empty-list">You have no submissions yet</div>
-            )}
-          </div>
-        </LoadingScreen>
+        </div>
+        <div className="dashboard-right-col">
+          <div className="action-title">Submissions List</div>
+          <LoadingScreen isLoading={isLoading}>
+            <div>
+              {changeRequestList.length > 0 ? (
+                <table className="submissions-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">SPA ID/Waiver Number</th>
+                      <th scope="col">Type</th>
+                      <th className="date-submitted-column" scope="col">
+                        Date Submitted
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
+                </table>
+              ) : (
+                <div className="empty-list">You have no submissions yet</div>
+              )}
+            </div>
+          </LoadingScreen>
+        </div>
       </div>
     </div>
   );
-}
+};
+
+export default Dashboard;

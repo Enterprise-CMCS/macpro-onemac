@@ -1,12 +1,50 @@
-import { getLinksHtml } from "./email-util";
+import { getLinksHtml } from "./changeRequest-util";
+import dynamoDb from "../libs/dynamodb-lib";
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
- * Waiver submission specific email generation functions.
+ * Waiver RAI submission specific email generation functions.
  * @class
  */
-class WaiverEmailTemplates {
+class WaiverRAI {
   /**
-   * Waiver submission email to CMS details wrapped in generic function name.
+   * Waiver RAI Submissions require that the Package ID is in the system.
+   * @param {Object} data the received data
+   * @returns {String} any errors
+   */
+  async fieldsValid(data) {
+    let areFieldsValid = false;
+    let whyNot = "";
+
+    const params = {
+      TableName: process.env.spaIdTableName,
+      // 'Key' defines the partition key and sort key of the item to be retrieved
+      // - 'id': change request ID
+      Key: {
+        id: data.transmittalNumber,
+      },
+    };
+    console.log("the params for checking", params);
+    try {
+      const result = await dynamoDb.get(params);
+
+      if (result.Item) {
+        console.log("the Item exists", result);
+        areFieldsValid = true;
+      } else {
+        console.log("result.Item does not exist");
+        areFieldsValid = false;
+        whyNot = ERROR_MSG.ID_NOT_FOUND;
+      }
+    } catch (error) {
+      console.log("packageExists got an error: ", error);
+    }
+
+    return { areFieldsValid, whyNot };
+  }
+
+  /**
+   * Waiver RAI submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
    */
@@ -14,16 +52,14 @@ class WaiverEmailTemplates {
     const cmsEmail = {};
 
     cmsEmail.ToAddresses = [process.env.reviewerEmail];
-    cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
+    cmsEmail.Subject =
+      "New Waiver RAI " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
-        <p>The Submission Portal received a Waiver Submission:</p>
+        <p>The Submission Portal received a Waiver RAI Submission:</p>
         <p>
-            <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
             <br><b>Waiver #</b>: ${data.transmittalNumber}
-            <br><b>Action Type</b>: ${data.actionType}
-            <br><b>Waiver Authority</b>: ${data.waiverAuthority}
         </p>
         <p>
             <b>Summary</b>:
@@ -33,7 +69,7 @@ class WaiverEmailTemplates {
             <b>Files</b>:
             ${getLinksHtml(data.uploads)}
         </p>
-        <p><br>If the contents of this email seem seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
+        <p><br>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
     `;
 
@@ -41,7 +77,7 @@ class WaiverEmailTemplates {
   }
 
   /**
-   * Waiver submission confimation email to State User wrapped in
+   * Waiver RAI submission confimation email to State User wrapped in
    * generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
@@ -50,11 +86,13 @@ class WaiverEmailTemplates {
     const stateEmail = {};
 
     stateEmail.ToAddresses = [data.user.email];
-    stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
+    stateEmail.Subject =
+      "Your Waiver RAI " +
+      data.transmittalNumber +
+      " has been submitted to CMS";
     stateEmail.HTML = `
-        <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
+        <p>This response confirms the receipt of your Waiver RAI submission:</p>
         <p>
-            <br><b>State or territory</b>: ${data.territory}
             <br><b>Waiver #</b>: ${data.transmittalNumber}
             <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Submitter email</b>: ${data.user.email}
@@ -81,6 +119,6 @@ class WaiverEmailTemplates {
   }
 }
 
-const instance = new WaiverEmailTemplates();
+const instance = new WaiverRAI();
 Object.freeze(instance);
 export default instance;
