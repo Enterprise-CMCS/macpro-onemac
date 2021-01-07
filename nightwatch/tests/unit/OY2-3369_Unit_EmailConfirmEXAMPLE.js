@@ -1,5 +1,4 @@
 const chai = require('chai');
-//const sinon = require('sinon');
 
 /**
  * Tutorial: Using fakes to create a unit test (without dependencies)
@@ -8,11 +7,8 @@ const chai = require('chai');
  *
  */
 
-//let myApp = {}
-//const sandbox = sinon.createSandbox();
 
 module.exports = {
-    '@unitTest': true,
     "@tags": ["integration"],
 
     before: function (done) {

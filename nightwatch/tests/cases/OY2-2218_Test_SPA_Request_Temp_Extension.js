@@ -14,12 +14,13 @@ module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        spa = browser.page.spaBasePage();
+        login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
+        browser.pause(2000);
     },
 
     after : function(browser) {
-        browser.page.spaBasePage().logout();
+        login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
     },
 
@@ -30,10 +31,15 @@ module.exports = {
         spa.expect.element(buttonSelected).to.be.present.before(timeout);
         spa.expect.element(buttonSelected).text.equals(buttonText);
         spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
+        spa.pause(3000)
     },
 
     "Enter Waiver Number" : function (browser) {
-        new_waiver["Enter Waiver Number"](browser);
+        let selector = '@transmittal';
+        spa = browser.page.spaBasePage();
+        spa.click(selector);
+        spa.setValue(selector, 'VA.53.R04.M67');
+        spa.expect.element(selector).value.to.equals('VA.53.R04.M67');
     },
 
     "Upload Documents": function(browser) {

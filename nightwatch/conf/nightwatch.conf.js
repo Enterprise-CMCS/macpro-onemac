@@ -5,12 +5,12 @@ const path = require('path');
 const Services ={}; loadServices();
 
 module.exports = {
-    // An array of folders (excluding subfolders) where your tests are located;
+    // An array of folders (excluding subfolders) where your nightwatch are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
-    src_folders: ["./tests/"],
+    src_folders: ["./nightwatch/tests"],
 
     // See https://nightwatchjs.org/guide/working-with-page-objects/
-    page_objects_path: './tests/page_objects',
+    page_objects_path: './nightwatch/page_objects',
 
     // See https://nightwatchjs.org/guide/extending-nightwatch/#writing-custom-commands
     //custom_commands_path: '',
@@ -26,11 +26,13 @@ module.exports = {
     test_settings: {
         default: {
             launch_url: `${process.env.APPLICATION_ENDPOINT}`,
+
             globals: {
                 user: `${process.env.TEST_USERS}`,
                 pass: `${process.env.TEST_USER_PASSWORD}`,
             },
-            exclude: ["./tests/page_objects", "./tests/examples"],
+
+            exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
             webdriver: {
                 start_process: true,
                 log_path: false,
@@ -40,7 +42,7 @@ module.exports = {
                 enabled : false,
                 on_failure: false,
                 on_error : true,
-                path : "./tests/reports/screenshots"
+                path : "./nightwatch/reports/screenshots"
             },
         },
 
@@ -131,7 +133,7 @@ module.exports = {
 
         "unit-test" : {
             unit_tests_mode : true,
-            filter: "./tests/unit"
+            filter: "./nightwatch/unit"
         }
     }
 };
