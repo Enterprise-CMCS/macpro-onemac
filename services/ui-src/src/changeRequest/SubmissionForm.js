@@ -30,8 +30,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  // if the message string is set, then the error div should be shown for these items
-  const [territoryErrorMessage, setTerritoryErrorMessage] = useState("");
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
   const [
     waiverAuthorityErrorMessage,
@@ -56,7 +54,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     type: changeRequestType,
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
-    territory: "",
     actionType: "",
     waiverAuthority: "",
   });
@@ -133,6 +130,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = event.target.value;
+    updatedRecord["territory"] =    event.target.value.toString().substring(0,2)
     setChangeRequest(updatedRecord);
 
     const newTransmittalNumber = event.target.value;
@@ -177,13 +175,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = event.target.value;
 
-    let territoryMessage = "";
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
 
     if (!firstTimeThrough) {
-      if (formInfo.territory && !updatedRecord.territory)
-        territoryMessage = formInfo.territory.errorMessage;
       if (formInfo.actionType && !updatedRecord.actionType)
         actionTypeMessage = formInfo.actionType.errorMessage;
       if (formInfo.waiverAuthority && !updatedRecord.waiverAuthority)
@@ -193,7 +188,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // state set functions have to be at top level
     // because we can't trust they got set, can't use them in the function
     setChangeRequest(updatedRecord);
-    setTerritoryErrorMessage(territoryMessage);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
   };
@@ -215,16 +209,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the
-    // state functions will be processed in time to use the variables
-    let territoryMessage = "";
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
     let transmittalNumberMessage = "";
     let newAlert = null;
     let mounted = true;
 
-    if (formInfo.territory && !changeRequest.territory)
-      territoryMessage = formInfo.territory.errorMessage;
     if (formInfo.actionType && !changeRequest.actionType)
       actionTypeMessage = formInfo.actionType.errorMessage;
     if (formInfo.waiverAuthority && !changeRequest.waiverAuthority)
@@ -273,7 +263,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           default:
             newAlert = ALERTS_MSG.SUBMISSION_ERROR;
             break;
-        } 
+        }
       } catch (error) {
         console.log("Error is: ", error);
         newAlert = ALERTS_MSG.SUBMISSION_ERROR;
@@ -292,7 +282,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // now set the state variables to show thw error messages
     if (mounted) setTransmittalNumberErrorMessage(transmittalNumberMessage);
-    if (mounted) setTerritoryErrorMessage(territoryMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlert(newAlert);
@@ -332,15 +321,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               indicates required field.
             </p>
             <div className="form-card">
-              {formInfo.territory && (
-                <RequiredChoice
-                  fieldInfo={formInfo.territory}
-                  label="State/Territory"
-                  errorMessage={territoryErrorMessage}
-                  value={changeRequest.territory}
-                  onChange={handleInputChange}
-                />
-              )}
               {formInfo.actionType && (
                 <RequiredChoice
                   fieldInfo={formInfo.actionType}

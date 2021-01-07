@@ -84,9 +84,6 @@ const SubmissionView = ({ formInfo, id }) => {
       <div className="form-container">
         <h3>{formInfo.detailsHeader} Details</h3>
         <div className="form-card">
-          {formInfo.territory && changeRequest.territory && (
-            <Review heading="State/Territory">{changeRequest.territory}</Review>
-          )}
           {changeRequest.actionType && (
             <Review heading="Action Type">{changeRequest.actionType}</Review>
           )}
