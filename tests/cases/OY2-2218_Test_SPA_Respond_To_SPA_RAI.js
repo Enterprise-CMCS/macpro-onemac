@@ -15,7 +15,7 @@ module.exports = {
         login.before(browser);
         login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        spa = browser.page.spaBasePage();
+        browser.pause(2000);
     },
 
     after : function(browser) {

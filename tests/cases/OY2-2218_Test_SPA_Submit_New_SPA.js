@@ -47,7 +47,7 @@ module.exports = {
         spa.click(selector);
         spa.setValue(selector, spa_id);
         browser.pause(500);
-        spa.expect.element(selector).value.to.equal(spa_id);
+        spa.expect.element(selector).value.to.contain(spa_id);
     },
 
     'Upload Documents' : function (browser) {
@@ -56,18 +56,15 @@ module.exports = {
     },
 
     'Enter Comments' : function (browser,
-                                 selector = '//textarea',
+                                 selector = 'textarea',
                                  entered_text = "Relax. This is only a test") {
         spa = browser.page.spaBasePage();
         spa.enterComments(selector, entered_text);
-        browser
-            .assert.elementPresent(selector)
-            .assert.containsText(selector, entered_text)
-            .pause(timeout);
+        spa.assert.containsText(selector, entered_text)
     },
 
     'Submit SPA' : function (browser) {
-        let alert_selector = "#alert_3";
+        let alert_selector = "[id*=alert_]";
         let p_selector = "p[class=ds-c-alert__text]"
         let alert_msg = "Submission Completed";
         let msg = "Your submission has been received.";

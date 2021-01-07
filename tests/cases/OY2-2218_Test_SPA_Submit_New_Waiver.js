@@ -13,7 +13,10 @@ module.exports = {
 
     before: function (browser) {
         login.before(browser);
+        login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
+        browser.pause(2000);
+        spa = browser.page.spaBasePage();
     },
 
     after: function (browser) {
@@ -22,13 +25,14 @@ module.exports = {
     },
 
     "Click on 'Submit new Waiver'": function (browser) {
-        let new_spa = "@newWaiver";
+        let testData = {
+            selector: "@newWaiver",
+            subUrl: '/waiver'
+        };
         spa = browser.page.spaBasePage();
-        spa.assert.elementPresent('@newWaiver');
-        spa
-            .click(new_spa)
-            .expect.url().to.contain("/waiver")
-            .before(5000);
+        spa.assert.elementPresent(testData.selector);
+        spa.click(testData.selector);
+        browser.expect.url().to.contain(testData.subUrl).before(5000);
     },
 
     "Enter SPA State/Territory Information": function(browser) {
@@ -36,27 +40,33 @@ module.exports = {
     },
 
     "Enter Action Type": function (browser) {
-        let selector = '#actionType';
-        let value = 'N';
-        let action_type = 'New waiver';
-        browser.setValue(selector, value);
-        browser.verify.containsText(selector, action_type);
+        spa = browser.page.spaBasePage();
+        let testData = {
+            selector: '@actionType',
+            value: 'N',
+            action_type: 'New waiver'
+        }
+        spa.expect.element(testData.selector).to.be.visible;
+        spa.setValue(testData.selector, testData.value);
+        spa.verify.containsText(testData.selector, testData.action_type);
     },
 
     "Enter Waiver Authority": function (browser) {
         const testData = {
+            selector: '@waiverAuthority',
             authority: "All other 1915(b) Waivers",
         }
-
-        spa.setValue('@waiverAuthority', testData.authority);
-        browser.verify.containsText(testData.selector, testData.authority).pause(500);
+        spa = browser.page.spaBasePage();
+        spa.setValue(testData.selector, testData.authority).pause(500);
+        spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser) {
+    "Enter Waiver Number": function (browser, spa_id = spa.getWaiverNumber()) {
         let selector = '@transmittal';
-        let spa_id = spa.getWaiverNumber();
-        spa.click(selector).setValue(selector, spa_id);
-        browser.expect.element(selector).value.to.equals(spa_id);
+        spa = browser.page.spaBasePage();
+        spa.click(selector);
+        spa.setValue(selector, spa_id);
+        spa.expect.element(selector).value.to.equals(spa_id);
     },
 
     "Upload Documents": function (browser) {

@@ -7,7 +7,10 @@ module.exports = {
         login.before(browser);
         login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(2000);
+    },
+
+    beforeEach: function (browser) {
+        browser.pause(1000);
     },
 
     after: function (browser) {
