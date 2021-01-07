@@ -55,7 +55,7 @@ function Header(props) {
     function renderBrandBar() {
         return (
             <div className="brand-bar">
-                <a href="https://www.medicaid.gov/">
+                <a href="https://www.medicaid.gov/" target="_blank" rel="noopener noreferrer">
                     <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy"/>
                 </a>
             </div>
@@ -100,9 +100,11 @@ function Header(props) {
                         Login
                     </Button>
                     {showDevLogin && (
-                        <Button id="devloginBtn" onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
-                            Development Login
-                        </Button>
+                        <div className="dev-login">
+                            <Button id="devloginBtn" onClick={() => history.push(ROUTES.DEVLOGIN)} inversed>
+                                Development Login
+                            </Button>
+                        </div>
                     )}
                 </div>
             );

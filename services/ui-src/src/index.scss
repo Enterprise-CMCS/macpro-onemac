@@ -56,7 +56,9 @@ label {
   @extend .ds-c-field__hint;
   color: $color-red;
 }
-
+.dashboard-white {
+  background-color: $color-white;
+}
 .app-bar {
   @extend .ds-l-row;
   padding-left: 14rem;
@@ -141,7 +143,6 @@ ul {
 }
 
 .alert-bar {
-  background-color: $color-white;
   padding-top: 2rem;
   padding-left: 14rem;
   padding-right: 14rem;
@@ -174,6 +175,19 @@ input[type="file"] {
   h3 {
     @extend .ds-u-margin-top--7;
   }
+  .ds-c-review {
+    @extend .ds-u-border-bottom--0;
+  }
+  .ds-c-review__heading {
+    @extend .ds-u-margin-top--1;
+  }
+  .ds-c-review__body {
+    background-color: $color-gray-lighter;
+    width: 460px;
+    padding: 8px;
+    border: 2px solid #aeb0b5;
+    border-radius: 3px;
+  }
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
@@ -188,7 +202,8 @@ input[type="file"] {
   }
   .label-container {
     @extend .ds-l-row;
-    width: 460px;
+    max-width: 460px;
+    width: 100%;
     margin-left: 0px;
     @extend .ds-u-align-items--end
   }
@@ -384,23 +399,54 @@ input[type="file"] {
   }
 }
 
+.submissions-table {
+  @extend .ds-c-table;
+  @extend .ds-c-table--borderless;
+  width: 100%;
+  color: $color-gray;
+
+  th {
+    border-color: $color-gray-lightest;
+    background-color: $color-white;
+    color: $color-black;
+  }
+
+  td {
+    border-color: $color-gray-lightest;
+  }
+
+  a {
+    font-weight: bold;
+  }
+
+  .date-submitted-column {
+    text-align: center;
+  }
+
+  .type-badge {
+    @extend .ds-c-badge;
+    font-weight: bold;
+    background-color: $color-primary-alt-lightest;
+    color: $color-gray;
+  }
+}
+
 .nav-bar {
   @extend .app-bar;
+  @extend .ds-u-display--flex;
   @extend .ds-u-align-items--center;
+  @extend .ds-u-justify-content--between;
+  @extend .ds-u-flex-wrap--nowrap;
   background-color: $color-primary;
   min-height: 70px;
 
   .nav-left {
-    @extend .ds-l-col--4;
-    @extend .ds-l-row;
-    @extend .ds-u-justify-content--between;
-
+    @extend .ds-u-display--flex;
+    @extend .ds-u-flex-wrap--wrap;
     a {
-      @extend .ds-l-col--4;
       color: $color-white;
       font-weight: bold;
-      @extend .ds-u-text-align--center;
-      @extend .ds-u-align-items--center;
+      padding-right: 50px;
 
       &:hover {
         color: rgba($color-base-inverse, 0.8);
@@ -411,11 +457,12 @@ input[type="file"] {
       }
     }
   }
+
   .nav-right {
-    @extend .ds-l-col--3;
-    @extend .ds-u-margin-left--auto;
-    font-weight: bold;
+    @extend .ds-u-display--flex;
     @extend .ds-u-justify-content--end;
+    @extend .ds-u-flex-wrap--wrap;
+    font-weight: bold;
 
     label {
       margin-right: 2rem;
@@ -423,6 +470,10 @@ input[type="file"] {
     }
     button {
       background-color: $color-primary;
+    }
+
+    .dev-login {
+      padding-left: 25px;
     }
   }
 }
@@ -438,11 +489,13 @@ input[type="file"] {
       padding-right: 10px;
   }
 }
+
 .brand-bar {
   @extend .app-bar;
   background-color: $color-white;
   @extend .ds-u-padding-top--3;
 }
+
 .summary-box label {
   @extend .ds-h3;
   @extend .ds-u-margin-top--5;
@@ -462,6 +515,7 @@ input[type="file"] {
   line-height: 24px;
   border: none;
 }
+
 .display-errors input:invalid,
 .display-errors select:invalid  {
   border-color: red;

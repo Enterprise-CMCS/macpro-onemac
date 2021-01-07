@@ -2,7 +2,8 @@ import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getEmailTemplates from "./email-templates/getEmailTemplates";
+import getChangeRequestFunctions from "./changeRequest/changeRequest-util";
+import { DateTime } from "luxon";
 
 /**
  * Submission states for the change requests.
@@ -16,7 +17,7 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-  let response;
+  let errorMessage = '';
 
   // If this invocation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
@@ -25,93 +26,155 @@ export const main = handler(async (event) => {
   }
   const data = JSON.parse(event.body);
 
-  if (fieldsValid(data)) {
-    // Add required data to the record before storing.
-    console.log(event.requestContext.identity);
-    data.id = uuid.v1();
-    data.createdAt = Date.now();
-    data.state = SUBMISSION_STATES.CREATED;
+  // do a pre-check for things that should stop us immediately
+  errorMessage = runInitialCheck(data);
+  if (errorMessage) {
+    return buildAppropriateResponse({
+      type: "logicError",
+      from: "runInitialCheck",
+      message: errorMessage
+    });
+  }
 
-    //Normalize the user data.
-    data.user = {
-      id: event.requestContext.identity.cognitoIdentityId,
-      authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
-      email: data.user.signInUserSession.idToken.payload.email,
-      firstName: data.user.signInUserSession.idToken.payload.given_name,
-      lastName: data.user.signInUserSession.idToken.payload.family_name,
-    };
-    data.userId = event.requestContext.identity.cognitoIdentityId;
+  // map the changeRequest functions from the data.type
+  const crFunctions = getChangeRequestFunctions(data.type);
+  if (!crFunctions) {
+    return buildAppropriateResponse({
+      type: "logicError",
+      from: "getChangeRequestFunctions",
+      message: "crFunctions object not created."
+    });
+  }
 
-    //Store the data in the database.
+  // Add required data to the record before storing.
+  data.id = uuid.v1();
+  data.createdAt = Date.now();
+  data.state = SUBMISSION_STATES.CREATED;
+
+  //Normalize the user data.
+  data.user = {
+    id: event.requestContext.identity.cognitoIdentityId,
+    authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
+    email: data.user.signInUserSession.idToken.payload.email,
+    firstName: data.user.signInUserSession.idToken.payload.given_name,
+    lastName: data.user.signInUserSession.idToken.payload.family_name,
+  };
+  data.userId = event.requestContext.identity.cognitoIdentityId;
+
+  try {
+    // check for submission-specific validation (uses database)
+    const validationResponse = await crFunctions.fieldsValid(data);
+    console.log("validation Response: ",validationResponse);
+
+    if (validationResponse.areFieldsValid===false) {
+      console.log("Message from fieldsValid: ",validationResponse);
+      return buildAppropriateResponse({
+        type: "logicError",
+        from: "fieldsValid",
+        message: validationResponse.whyNot,
+      });
+    }
+
     await dynamoDb.put({
       TableName: process.env.tableName,
       Item: data,
     });
 
-    // map the email templates from the data.type
-    const emailTemplate = getEmailTemplates(data.type);
-
-    if (emailTemplate) {
-      // Now send the CMS email
-      await sendEmail(emailTemplate.getCMSEmail(data));
-
-      //We successfully sent the submission email.  Update the record to reflect that.
-      data.state = SUBMISSION_STATES.SUBMITTED;
-      data.submittedAt = Date.now();
-      await dynamoDb.put({
-        TableName: process.env.tableName,
-        Item: data,
-      });
-
-      //An error sending the user email is not a failure.
-      try {
-        // send the submission "reciept" to the State User
-        await sendEmail(emailTemplate.getStateEmail(data));
-      } catch (error) {
-        console.log(
-          "Warning: There was an error sending the user acknowledgement email.",
-          error
-        );
+    // create the (package) ID data
+    const packageParams = {
+      TableName: process.env.spaIdTableName,
+      Item: {
+        "id": data.transmittalNumber,
+        [data.id]: data.userId,
       }
-    } else console.log("No email template for this type!");
+    };
+    await dynamoDb.put(packageParams);
 
-    console.log("Successfully submitted amendment:", data);
-    response = {
-      statusCode: 200,
-      body: JSON.stringify(data),
-    };
-  } else {
-    console.log("Invalid submission with missing fields.", data);
-    response = {
-      statusCode: 500,
-      body: JSON.stringify("Invalid submission with missing fields."),
-    };
+  } catch (dbError) {
+    console.log("This error is: " + dbError);
+    throw dbError;
+  }
+  console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+  // Now send the CMS email
+  await sendEmail(crFunctions.getCMSEmail(data));
+
+  //We successfully sent the submission email.  Update the record to reflect that.
+  data.state = SUBMISSION_STATES.SUBMITTED;
+  data.submittedAt = Date.now();
+
+  // record the current end timestamp (can be start/stopped/changed)
+  // 90 days is current CMS review period and it is based on CMS time!!
+  // UTC is 4-5 hours ahead, convert first to get the correct start day
+  // AND use plus days function b/c DST days are 23 or 25 hours!!
+  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
+  await dynamoDb.put({
+    TableName: process.env.tableName,
+    Item: data,
+  });
+
+  //An error sending the user email is not a failure.
+  try {
+    // send the submission "reciept" to the State User
+    await sendEmail(crFunctions.getStateEmail(data));
+  } catch (error) {
+    console.log(
+      "Warning: There was an error sending the user acknowledgement email.",
+      error
+    );
   }
 
-  return response;
+  console.log("Successfully submitted amendment:", data);
+
+  return buildAppropriateResponse({
+    type: "success",
+    from: "submit",
+    message: "Submission successfull!"
+  });
 });
 
 /**
- * Check if the received data is valid.
+ * Validation check for items that should be checked before anything else is done
  * @param {Object} data the received data
- * @returns true if the data is valid
+ * @returns {String} any error messages triggered
  */
-function fieldsValid(data) {
-  let isValid = true;
-  if (!data.user) {
-    console.log("ERROR: Missing user info data.");
-    isValid = false;
+function runInitialCheck(data) {
+  let errorMessages = "";
+
+  if (!data.user) errorMessages += "ERROR: Missing user info data. ";
+  if (!data.uploads) errorMessages += "ERROR: Missing attachments. ";
+  if (!data.type) errorMessages += "ERROR: Missing record type. ";
+  return errorMessages;
+}
+
+/**
+ * We consolidate the response building into a function so that we can change
+ * verbosity based on requestor... devs get debug info, users get helpful info,
+ * and hackers get no response (or a faked one, oh, and trigger alarms!)
+ * @param {Object} details what happened to trigger the response
+ * @returns {Object} response contains a statusCode and a body
+ */
+function buildAppropriateResponse(details) {
+  let actualResponse;
+
+  switch (details.type) {
+
+    case "logicError":
+      actualResponse = {
+        error: details.message,
+      };
+      break;
+
+    case "success":
+      actualResponse = details.message;
+      break;
+
+    default:
+      actualResponse = {
+        statusCode: 500,
+        body: "Don't know this response type??" + JSON.stringify(details),
+      };
   }
 
-  if (!data.uploads) {
-    console.log("ERROR: Missing attachments.");
-    isValid = false;
-  }
-
-  if (!data.type) {
-    console.log("ERROR: Missing record type.");
-    isValid = false;
-  }
-
-  return isValid;
+  return actualResponse;
 }
