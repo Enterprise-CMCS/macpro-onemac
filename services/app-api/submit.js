@@ -49,9 +49,9 @@ export const main = handler(async (event) => {
   const crVerifyStateCode = isValidStateCode(data.transmittalNumber);
   if (!crVerifyStateCode) {
     return buildAppropriateResponse({
-      type: "fieldFormatError",
+      type: "logicError",
       from: "isValidStateCode",
-      message: crVerifyStateCode + ": crFunctions object not created."
+      message: "crFunctions object not created."
     });
   }
 
