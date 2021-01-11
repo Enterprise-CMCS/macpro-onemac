@@ -3,7 +3,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getChangeRequestFunctions, { isValidStateCode } from "./changeRequest/changeRequest-util";
-import { ERROR_MSG } from "../libs/error-messages";
+import { ERROR_MSG } from "./libs/error-messages";
 import { DateTime } from "luxon";
 
 /**
