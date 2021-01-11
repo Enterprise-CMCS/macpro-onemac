@@ -80,16 +80,16 @@ export function isValidStateCode(fieldValue) {
 
     function findState(states) {
         if (states.value === fieldValue.substring(0,2))
-            return true
+            return true;
         return false;
     }
 
-    const foundState = territoryList.find(findState)
+    const foundState = territoryList.find(findState);
 
     if (foundState === undefined  ) {
-        result = false
+        result = false;
     } else {
-        result = true
+        result = true;
     }
 
     return result;
