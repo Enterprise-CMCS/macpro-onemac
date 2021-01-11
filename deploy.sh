@@ -12,18 +12,15 @@ services=(
 )
 
 # These test users are only available in DEV environments.
-#TEST_USERS=(
-#  'user1@cms.hhs.local'
-#  'user2@cms.hhs.local'
-#  'user3@cms.hhs.local'
-#  'user4@cms.hhs.local'
-#  'user5@cms.hhs.local'
-#)
+TEST_USERS=(
+  'user1@cms.hhs.local'
+  'user2@cms.hhs.local'
+  'user3@cms.hhs.local'
+  'user4@cms.hhs.local'
+  'user5@cms.hhs.local'
+)
 
-TEST_USERS=([$stage]="MOSESPA01")
-
-#TEST_USER_PASSWORD="Passw0rd!"
-TEST_USER_PASSWORD=([$stage]="Macbis4!1")
+TEST_USER_PASSWORD="Passw0rd!"
 
 # What stages shall NOT have the test users.
 test_users_exclude_stages=(
@@ -31,21 +28,14 @@ test_users_exclude_stages=(
   'production'
 )
 
-#install_deps() {
-#  if [ "$CI" == "true" ]; then # If we're in a CI system
-#    if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
-#      npm ci
-#    fi
-#  else # We're not in a CI system, let's npm install
-#    npm install
-#  fi
-#}
-
 install_deps() {
-  ENV_VAR=".env"
-  sed -i "s/TEST_USERS=/TEST_USERS=${TEST_USERS[$stage]}/g" ${ENV_VAR}
-  echo "${TEST_USER_PASSWORD[$stage]}" >> $ENV_VAR
-  npm update
+  if [ "$CI" == "true" ]; then # If we're in a CI system
+    if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
+      npm ci
+    fi
+  else # We're not in a CI system, let's npm install
+    npm install
+  fi
 }
 
 deploy() {
