@@ -2,6 +2,4 @@
 
 set -e
 
-pushd tests
-./test.sh
-popd
+npm update && npm run regression >&1 || exit 1
