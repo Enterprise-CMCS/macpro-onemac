@@ -13,9 +13,8 @@
     "firefox": "node nightwatch -c ./nightwatch/conf/nightwatch.conf.js -e firefox",
     "unit": "node nightwatch.js -c ./nightwatch/conf/nightwatch.conf.js -e unit-test --skiptags=smoke,regression,integration",
     "cross-browser": "node nightwatch -c ./nightwatch/conf/nightwatch.conf.js -e chrome,firefox --tag regression --skiptags unit,smoke,integration",
-    "regression": "node nightwatch -c ./nightwatch/conf/nightwatch.conf.js  -e chrome --tag regression --skiptags unit,smoke,integration",
+    "regression": "node nightwatch -c ./nightwatch/conf/nightwatch.conf.js  -e chrome,firefox --tag regression --skiptags unit,smoke,integration",
     "smoke-test": "node nightwatch.js -c ./nightwatch/conf/nightwatch.conf.js -e chrome --tag smokeTest --skiptags unit,integration,regression",
-    "update": "npx npm-check-updates -u && npm install",
     "integration": "node nightwatch.js -c ./nightwatch/conf/nightwatch.conf.js -e unit-test --tag integration"
   },
   "unsafe-perm": true,
