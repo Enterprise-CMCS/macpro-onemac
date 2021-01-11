@@ -22,5 +22,8 @@
   "devDependencies": {
     "eslint-plugin-react-hooks": "^4.2.0",
     "serverless": "^2.7.0"
+  },
+  "dependencies": {
+    "dotenv": "^8.2.0"
   }
 }
