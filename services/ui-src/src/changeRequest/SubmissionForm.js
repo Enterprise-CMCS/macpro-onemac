@@ -239,6 +239,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         if (!aresponse.error) {
           newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
         } else switch (aresponse.error) {
+          case ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID:
+            newAlert = ALERTS_MSG.SUBMISSION_TERRITORY_ERROR;
+            break;
           case ERROR_MSG.DUPLICATE_ID:
             newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
             break;

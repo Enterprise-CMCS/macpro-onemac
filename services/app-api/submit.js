@@ -51,7 +51,7 @@ export const main = handler(async (event) => {
     return buildAppropriateResponse({
       type: "logicError",
       from: "isValidStateCode",
-      message: "crFunctions object not created."
+      message: ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID
     });
   }
 
