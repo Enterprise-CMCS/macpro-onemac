@@ -10,5 +10,5 @@ scratch
 *.xml
 reports/
 reports/screenshots/
-tests/aut_model/*
-node_modules
+node_modules/*
+/nightwatch/log/webDriver.log.txt
