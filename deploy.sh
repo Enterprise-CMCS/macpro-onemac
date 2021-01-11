@@ -31,15 +31,15 @@ test_users_exclude_stages=(
   'production'
 )
 
-#install_deps() {
-#  if [ "$CI" == "true" ]; then # If we're in a CI system
-#    if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
-#      npm ci
-#    fi
-#  else # We're not in a CI system, let's npm install
-#    npm install
-#  fi
-#}
+install_deps() {
+  if [ "$CI" == "true" ]; then # If we're in a CI system
+    if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run npm ci.  Otherwise, we're all set, do nothing.
+      npm ci
+    fi
+  else # We're not in a CI system, let's npm install
+    npm install
+  fi
+}
 
 #install_deps() {
 #  ENV_VAR=".env"
