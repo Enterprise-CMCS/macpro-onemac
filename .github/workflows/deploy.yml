@@ -82,7 +82,11 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: set path
         run: |
-          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV      
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name:set .env
+          uses: c-py/action-dotenv-to-setenv@v2
+          with:
+            env-file: .env     
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
