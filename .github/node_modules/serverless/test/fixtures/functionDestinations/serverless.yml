@@ -1,0 +1,15 @@
+service: service
+
+configValidationMode: error
+frameworkVersion: '*'
+
+provider:
+  name: aws
+
+functions:
+  target:
+    handler: target.handler
+  trigger:
+    handler: trigger.handler
+    destinations:
+      onSuccess: target

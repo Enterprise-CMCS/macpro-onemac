@@ -30,6 +30,7 @@ module.exports = {
             globals: {
                 user: `${process.env.TEST_USERS}`,
                 pass: `${process.env.TEST_USER_PASSWORD}`,
+                okta_url: `${process.env.OKTA_URL}`
             },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
@@ -140,9 +141,10 @@ module.exports = {
 
 function loadServices() {
     // Catches any general WebDriver Service Errors and writes to logFile
-    const logPath = path.join(process.cwd(), "log", "webdriverService.log");
+    const logPath = path.join(process.cwd(), "nightwatch", "log");
     const timeStamp = new Date().toString()
-    const serviceLog = fs.existsSync(logPath) ? logPath : fs.writeFileSync(logPath, timeStamp);
+    const serviceLog = path.join(logPath, "webDriver.log.txt");
+    fs.writeFileSync(serviceLog, timeStamp, 'utf8');
 
     try {
         Services.seleniumServer = require('selenium-server');

@@ -11,4 +11,4 @@ scratch
 reports/
 reports/screenshots/
 node_modules/*
-/.env
+/nightwatch/log/webDriver.log.txt
