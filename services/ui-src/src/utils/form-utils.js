@@ -34,6 +34,8 @@ export function validateWaiverId(waiverId) {
 
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
+    }  else if (!isValidStateCode(waiverId)) {
+        errorMessage = `The SPA ID must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
     }
