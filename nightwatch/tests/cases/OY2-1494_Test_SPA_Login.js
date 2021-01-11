@@ -23,12 +23,12 @@ module.exports = {
 
     'Login to SPA and Waiver Dashboard' : function(browser) {
         const testData = {
-            okta_url: "https://test.idp.idm.cms.gov/",
+            okta_url: browser.globals.okta_url,
             username: browser.globals.user,
             password: browser.globals.pass
         };
 
-        browser.expect.url().to.be.equal(testData.okta_url);
+        browser.expect.url().to.be.contain(testData.okta_url);
         spa.login(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
 
