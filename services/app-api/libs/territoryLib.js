@@ -1,8 +1,9 @@
 
+// NOTE: In Future this may come from SeaTool or Backend Process.
 export const territoryList = [
     {
         "label": "Alabama",
-        "value": "AX"
+        "value": "AL"
     },
     {
         "label": "Alaska",
