@@ -30,15 +30,15 @@
   },
   "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
   "devDependencies": {
-    "eslint-plugin-react-hooks": "^4.2.0",
     "chai": "^4.2.0",
     "chromedriver": ">=86.0.0",
     "dotenv": "^8.2.0",
+    "eslint-plugin-react-hooks": "^4.2.0",
     "geckodriver": "^1.21.1",
     "lodash": "^4.17.20",
     "nightwatch": "^1.5.1",
-    "sinon": "^9.2.3",
     "selenium-server": "^3.141.59",
-    "serverless": "^2.18.0"
+    "serverless": "^2.18.0",
+    "sinon": "^9.2.3"
   }
 }
