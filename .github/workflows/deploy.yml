@@ -86,10 +86,10 @@ jobs:
       - name: Make envfile
         uses: SpicyPizza/create-envfile@v1
         with:
-          envkey_TEST_USERS=MOSESPA01
-          envkey_TEST_USER_PASSWORD=Macbis4!1
-          envkey_APPLICATION_ENDPOINT=https://d2dr7dgo9g0124.cloudfront.net/
-          envkey_OKTA_URL=https://test.idp.idm.cms.gov/
+          envkey_TEST_USERS: "MOSESPA01"
+          envkey_TEST_USER_PASSWORD: "Macbis4!1"
+          envkey_APPLICATION_ENDPOINT: "https://d2dr7dgo9g0124.cloudfront.net/"
+          envkey_OKTA_URL: "https://test.idp.idm.cms.gov/"
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
