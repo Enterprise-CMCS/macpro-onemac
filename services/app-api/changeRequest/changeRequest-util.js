@@ -4,6 +4,7 @@ import Waiver from "./Waiver";
 import WaiverRAI from "./WaiverRAI";
 import WaiverExtension from "./WaiverExtension";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
+import { territoryList } from "../libs/territoryLib";
 import {DateTime} from "luxon";
 
 /**
@@ -68,3 +69,29 @@ export function getCMSDateFormat(theTimestamp) {
 
     return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
+
+/**
+ * Validate Field Territory/State Code
+ * @param {value} Transmittal Number Field Entered on Change Event.
+ */
+export function isValidStateCode(fieldValue) {
+
+    let result = false;
+
+    function findState(states) {
+        if (states.value === fieldValue.substring(0,2))
+            return true
+        return false;
+    }
+
+    const foundState = territoryList.find(findState)
+
+    if (foundState === undefined  ) {
+        result = false
+    } else {
+        result = true
+    }
+
+    return result;
+
+};

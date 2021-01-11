@@ -2,7 +2,7 @@ import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getChangeRequestFunctions from "./changeRequest/changeRequest-util";
+import getChangeRequestFunctions, { isValidStateCode } from "./changeRequest/changeRequest-util";
 import { DateTime } from "luxon";
 
 /**
@@ -42,6 +42,15 @@ export const main = handler(async (event) => {
     return buildAppropriateResponse({
       type: "logicError",
       from: "getChangeRequestFunctions",
+      message: "crFunctions object not created."
+    });
+  }
+
+  const crVerifyStateCode = isValidStateCode(data.transmittalNumber);
+  if (crVerifyStateCode) {
+    return buildAppropriateResponse({
+      type: "fieldFormatError",
+      from: "isValidStateCode",
       message: "crFunctions object not created."
     });
   }
