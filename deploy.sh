@@ -107,6 +107,17 @@ then
   fi
 fi
 
+
+
+install_deps() {
+  ENV_VAR=".env"
+  sed -i "s/TEST_USERS=/TEST_USERS=${TEST_USERS[$stage]}/g" ${ENV_VAR}
+  echo "${TEST_USER_PASSWORD[$stage]}" >> $ENV_VAR
+  npm update
+}
+
+
+
 echo """
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------
