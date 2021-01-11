@@ -1,3 +1,5 @@
+import { territoryList } from "../libs/territoryLib";
+
 /**
  * Validate SPA Id Transmittal Number Format
  * @return
@@ -11,7 +13,9 @@ export function validateSpaId(spaId) {
 
     if (!spaId) {
         errorMessage = 'SPA ID Required !';
-    } else if (!isValidFieldFormat(spaId, RegexFormatString)) {
+    }  else if (!isValidStateCode(spaId)) {
+        errorMessage = `The SPA ID must contain valid Territory/State Code`
+    }  else if (!isValidFieldFormat(spaId, RegexFormatString)) {
         errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
     }
     return errorMessage
@@ -49,6 +53,33 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
         result = true
     } else {
         result = false
+    }
+
+    return result;
+
+};
+
+
+/**
+ * Validate Field Territory/State Code
+ * @param {value} Transmittal Number Field Entered on Change Event.
+ */
+export function isValidStateCode(fieldValue) {
+
+    let result = false;
+
+    function findState(states) {
+        if (states.value === fieldValue.substring(0,2))
+           return true
+        return false;
+    }
+
+    const foundState = territoryList.find(findState)
+
+    if (foundState === undefined  ) {
+        result = false
+    } else {
+        result = true
     }
 
     return result;
