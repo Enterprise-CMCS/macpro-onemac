@@ -47,11 +47,11 @@ export const main = handler(async (event) => {
   }
 
   const crVerifyStateCode = isValidStateCode(data.transmittalNumber);
-  if (crVerifyStateCode) {
+  if (!crVerifyStateCode) {
     return buildAppropriateResponse({
       type: "fieldFormatError",
       from: "isValidStateCode",
-      message: "crFunctions object not created."
+      message: crVerifyStateCode + ": crFunctions object not created."
     });
   }
 
