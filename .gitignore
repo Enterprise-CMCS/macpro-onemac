@@ -2,5 +2,14 @@
 */.DS_Store
 .idea/
 .infra
+tests_output/*
+scratch
+.run
+!*.md
+*.log
+*.xml
+reports/
+reports/screenshots/
 node_modules
-testcafe_results
+/.env
+/nightwatch/log/webDriver.log.txt

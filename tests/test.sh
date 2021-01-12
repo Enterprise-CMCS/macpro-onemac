@@ -1,5 +1,4 @@
 #!/bin/bash
-
 set -e
 
-testcafe "chrome:headless" testcafe/**/*.js --reporter json:testcafe/testcafe_results/results.json
+npm update && npm run regression >&1 || exit 1
