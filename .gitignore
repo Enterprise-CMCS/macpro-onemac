@@ -10,6 +10,6 @@ scratch
 *.xml
 reports/
 reports/screenshots/
-node_modules
+node_modules/*
 /.env
 /nightwatch/log/webDriver.log.txt
