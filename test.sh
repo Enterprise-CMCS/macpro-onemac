@@ -1,7 +1,6 @@
 #!/bin/bash
 
+
 set -e
 
-pushd tests
-sh test.sh
-popd
+npm update && npm run regression >&1 || exit 1
