@@ -12,15 +12,18 @@ services=(
 )
 
 # These test users are only available in DEV environments.
-TEST_USERS=(
-  'user1@cms.hhs.local'
-  'user2@cms.hhs.local'
-  'user3@cms.hhs.local'
-  'user4@cms.hhs.local'
-  'user5@cms.hhs.local'
-)
+#TEST_USERS=(
+#  'user1@cms.hhs.local'
+#  'user2@cms.hhs.local'
+#  'user3@cms.hhs.local'
+#  'user4@cms.hhs.local'
+#  'user5@cms.hhs.local'
+#)
 
-TEST_USER_PASSWORD="Passw0rd!"
+TEST_USERS=([$stage]="MOSESPA01")
+
+#TEST_USER_PASSWORD="Passw0rd!"
+TEST_USER_PASSWORD=([$stage]="Macbis4!1")
 
 # What stages shall NOT have the test users.
 test_users_exclude_stages=(
@@ -38,6 +41,13 @@ install_deps() {
   fi
 }
 
+#install_deps() {
+#  ENV_VAR=".env"
+#  sed -i "s/TEST_USERS=/TEST_USERS=${TEST_USERS[$stage]}/g" ${ENV_VAR}
+#  echo "${TEST_USER_PASSWORD[$stage]}" >> $ENV_VAR
+#  npm update
+#}
+
 deploy() {
   service=$1
   pushd services/$service
@@ -47,6 +57,8 @@ deploy() {
 }
 
 install_deps
+
+export PATH=$(pwd)/node_modules/.bin/:$PATH
 
 # Identify if we need the test users.
 # Note that we use ALLOW_DEV_LOGIN in ui-src as well to show Dev only login buttons.
@@ -94,6 +106,17 @@ then
       exit 1
   fi
 fi
+
+
+
+install_deps() {
+  ENV_VAR=".env"
+  sed -i "s/TEST_USERS=/TEST_USERS=${TEST_USERS[$stage]}/g" ${ENV_VAR}
+  echo "${TEST_USER_PASSWORD[$stage]}" >> $ENV_VAR
+  npm update
+}
+
+
 
 echo """
 ------------------------------------------------------------------------------------------------
