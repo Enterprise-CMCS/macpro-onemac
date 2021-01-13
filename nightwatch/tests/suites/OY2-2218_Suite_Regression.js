@@ -5,16 +5,19 @@ module.exports = {
 
     before: function (browser) {
         login.before(browser);
-        login["Navigate to SPA and Waiver Dashboard"](browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
     },
 
     beforeEach: function (browser) {
         browser.pause(1000);
+        login["Login to SPA and Waiver Dashboard"](browser);
     },
 
     after: function (browser) {
         login.after(browser);
+    },
+
+    afterEach: function (browser) {
+        login["Logout of SPA and Waiver Dashboard"](browser);
     },
 
     "Submit a SPA Report": function (browser) {

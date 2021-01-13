@@ -57,16 +57,11 @@ To run tests:
 \*New Commands\*
 To run tests (by browser type):
 
-For Chrome:
-    - Windows: `npm run chrome-win`
-    - Linux/Mac: `npm run chrome`
+For Chrome: `npm run chrome [<path/to/testfile>]`
     
-For Firefox:
-    - Windows: `npm run firefox-win`
-    - Linux/Mac: `npm run firefox-chrome`
+For Firefox: `npm run firefox [<path/to/testfile>]`
 
-To update packages: 
-    `npm run update`
+To update packages: `npm run update`
 
 see [Running Tests in Nightwatch](https://nightwatchjs.org/guide/running-tests/nightwatch-runner.html)
 

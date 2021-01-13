@@ -3,7 +3,6 @@ module.exports = {
     '@tags': ['integration'],
     "@unitTest" : true,
 
-
     before : function(done) {
         console.log('Setting up...');
         done();
@@ -15,7 +14,6 @@ module.exports = {
     },
 
     "Integration Test": function (done) {
-
         done();
     }
 };
