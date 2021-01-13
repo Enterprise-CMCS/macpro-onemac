@@ -1,11 +1,12 @@
 
+const locator = '(//*[@disabled])';
 module.exports = {
     "@tags": ["smokeTest"],
 
     before : function(browser) {
         console.log('Setting up...');
         let env = 'https://d2dr7dgo9g0124.cloudfront.net/devlogin';
-        browser.windowMaximize().url(env);
+        browser.maximizeWindow().url(env);
         browser.waitForElementPresent('body');
     },
 
@@ -46,8 +47,6 @@ module.exports = {
         browser.assert.attributeContains(input_submissionDate, 'value', 'Thu, Nov 12 2020, 4:29:12 PM');
 
         // checking for all the diabled elements
-        let count = 1;
-        let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
             elements.value.forEach(function(element, index){
                 let xpath = locator.concat('[' + index + ']');
@@ -58,7 +57,7 @@ module.exports = {
 
         // checking for attachement
         let attachmenetLink = "form a[target='_blank']";
-        browser.expect.element(attachmenetLink).to.be.visible;
+        browser.verify.elementPresent(attachmenetLink);
         browser.back();  // go back to previous page
     },
 
@@ -79,13 +78,10 @@ module.exports = {
         browser.assert.attributeContains(submit_date, 'value', 'Thu, Nov 5 2020, 1:19:09 PM');
 
         // checking for all the diabled elements
-        let count = 1;
-        let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
-            elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
+            elements.value.forEach(function(element, index){
+                let xpath = locator.concat('[' + index + ']');
                 browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
-                count++;
             })
             browser.useCss();
         });
@@ -109,13 +105,11 @@ module.exports = {
         browser.assert.attributeContains('input#transmittalNumber', 'value', 'IL-20-1111-ABC');
 
         // checking for all the diabled elements
-        let count = 1;
         let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
-            elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
+            elements.value.forEach(function(element, index){
+                let xpath = locator.concat('[' + index + ']');
                 browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
-                count++;
             })
             browser.useCss();
         });
@@ -141,20 +135,18 @@ module.exports = {
         browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:19:11 AM');
 
         // checking for all the diabled elements
-        let count = 1;
-        let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
-            elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
+            elements.value.forEach(function(element, index){
+                let xpath = locator.concat('[' + index + ']');
                 browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
-                count++;
             })
             browser.useCss();
         });
 
         // check for attachements
         let attachement_requiredUpload = "form a[target='_blank']";
-        browser.expect.element(attachement_requiredUpload).to.be.visible;
+        let element = browser.element(attachement_requiredUpload);
+        browser.verify.elementPresent(element);
         browser.back();  // go back to previous page
     },
 
@@ -168,13 +160,11 @@ module.exports = {
         browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:18:16 AM');
 
         // checking for all the diabled elements
-        let count = 1;
         let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
-            elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
+            elements.value.forEach(function(element, index){
+                let xpath = locator.concat('[' + index + ']');
                 browser.useXpath().assert.attributeContains(xpath, 'disabled', true);
-                count++;
             })
             browser.useCss();
         });
