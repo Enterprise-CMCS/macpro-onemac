@@ -30,7 +30,6 @@ module.exports = {
             globals: {
                 user: `${process.env.TEST_USERS}`,
                 pass: `${process.env.TEST_USER_PASSWORD}`,
-                okta_url: `${process.env.OKTA_URL}`
             },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
@@ -57,7 +56,7 @@ module.exports = {
                         args: [
                             '--window-size=1024,768',
                             '-verbose',
-                            '-headless',
+                            //'-headless',
                             // '-verbose'
                         ],
                     }
@@ -86,7 +85,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        '--headless'
+                        //'--headless'
                     ]
                 }
             },
