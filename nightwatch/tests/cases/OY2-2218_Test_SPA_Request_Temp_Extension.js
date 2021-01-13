@@ -14,7 +14,6 @@ module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        login["Navigate to SPA and Waiver Dashboard"](browser);
         login["Login to SPA and Waiver Dashboard"](browser);
         browser.pause(2000);
     },
