@@ -4,6 +4,7 @@ module.exports = {
 
     before : function(browser) {
         console.log('Setting up...');
+        spa = browser.page.spaBasePage();
         browser.maximizeWindow()
             .url(browser.launch_url)
             .waitForElementPresent('body');
@@ -15,20 +16,12 @@ module.exports = {
         browser.end();
     },
 
-    "Navigate to SPA and Waiver Dashboard": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.toDashBoard();
-
-    },
-
     'Login to SPA and Waiver Dashboard' : function(browser) {
         const testData = {
-            okta_url: browser.globals.okta_url,
             username: browser.globals.user,
             password: browser.globals.pass
         };
 
-        browser.expect.url().to.be.contain(testData.okta_url);
         spa.login(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
 

@@ -10,7 +10,7 @@ const commands = {
     },
 
     toDashBoard: function () {
-        this.api.click(this.elements.normalLoginButton)
+        this.api.click(this.elements.loginButton)
             .waitForElementPresent('body');
         this.api.pause(3000);
     },
@@ -20,6 +20,7 @@ const commands = {
     },
 
     login: function (user, pass) {
+        this.toDashBoard();
         this.api.setValue(this.elements.userField, user).pause(100);
         this.api.setValue(this.elements.passField, pass).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
