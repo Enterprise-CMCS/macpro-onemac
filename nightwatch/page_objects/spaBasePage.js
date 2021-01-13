@@ -22,7 +22,6 @@ const commands = {
     login: function (user, pass) {
         this.api.setValue(this.elements.userField, user).pause(100);
         this.api.setValue(this.elements.passField, pass).pause(100);
-        this.api.click(this.elements.termsCheckBox).pause(100);
         this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
     },
 
@@ -51,14 +50,12 @@ module.exports = {
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
         transmittal: '[id=transmittalNumber]',
-        userField : '#okta-signin-username',
-        normalLoginButton: '.nav-right > button[type="button"]',
+        userField : '#email',
         loginButton : 'button[id=devloginBtn]',
         loginTitle : 'div[id=title_bar]',
         submitBtn : 'input[type=submit]',
-        termsCheckBox: '#tandc',
         logout : '[id=logoutBtn]',
-        passField : '#okta-signin-password',
+        passField : '#password',
         newSPA: "[id=spaSubmitBtn]",
         respondSPA: "#spaRaiBtn",
         newWaiver: "[id=waiverBtn]",
