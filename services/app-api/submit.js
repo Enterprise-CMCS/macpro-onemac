@@ -2,7 +2,7 @@ import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getChangeRequestFunctions, { isValidStateCode } from "./changeRequest/changeRequest-util";
+import getChangeRequestFunctions, { hasValidStateCode } from "./changeRequest/changeRequest-util";
 import { ERROR_MSG } from "./libs/error-messages";
 import { DateTime } from "luxon";
 
@@ -47,12 +47,21 @@ export const main = handler(async (event) => {
     });
   }
 
-  const crVerifyStateCode = isValidStateCode(data.transmittalNumber);
-  if (!crVerifyStateCode) {
+  const crVerifyTransmittalIdStateCode = hasValidStateCode(data.transmittalNumber);
+  if (!crVerifyTransmittalIdStateCode) {
     return buildAppropriateResponse({
       type: "logicError",
       from: "isValidStateCode",
       message: ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID
+    });
+  }
+
+  const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
+  if (!crVerifyTerritoryStateCode) {
+    return buildAppropriateResponse({
+      type: "logicError",
+      from: "isValidStateCode",
+      message: ERROR_MSG.TERRITORY_NOT_VALID
     });
   }
 

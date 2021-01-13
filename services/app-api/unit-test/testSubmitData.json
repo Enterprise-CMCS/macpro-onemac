@@ -1,10 +1,10 @@
 {
     "type": "spa",
     "summary": "",
-    "transmittalNumber": "AX-33-1112",
+    "transmittalNumber": "AL-33-1112",
     "actionType": "",
     "waiverAuthority": "",
-    "territory": "AL",
+    "territory": "AX",
     "user": {
         "username": "demoUser",
         "signInUserSession": {

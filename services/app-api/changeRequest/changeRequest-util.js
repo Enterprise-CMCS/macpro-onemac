@@ -74,23 +74,11 @@ export function getCMSDateFormat(theTimestamp) {
  * Validate Field Territory/State Code
  * @param {value} Transmittal Number Field Entered on Change Event.
  */
-export function isValidStateCode(fieldValue) {
+export function hasValidStateCode(fieldValue) {
 
-    let result = false;
-
-    function findState(states) {
-        if (states.value === fieldValue.substring(0,2))
-            return true;
-        return false;
-    }
-
-    const foundState = territoryList.find(findState);
-
-    if (foundState === undefined  ) {
-        result = false;
-    } else {
-        result = true;
-    }
+    const result = territoryList.some(
+        state => state['value'] === fieldValue.substring(0,2)
+    );
 
     return result;
 

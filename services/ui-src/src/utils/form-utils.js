@@ -13,7 +13,7 @@ export function validateSpaId(spaId) {
 
     if (!spaId) {
         errorMessage = 'SPA ID Required !';
-    }  else if (!isValidStateCode(spaId)) {
+    }  else if (!hasValidStateCode(spaId)) {
         errorMessage = `The SPA ID must contain valid Territory/State Code`
     }  else if (!isValidFieldFormat(spaId, RegexFormatString)) {
         errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
@@ -34,7 +34,7 @@ export function validateWaiverId(waiverId) {
 
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
-    }  else if (!isValidStateCode(waiverId)) {
+    }  else if (!hasValidStateCode(waiverId)) {
         errorMessage = `The SPA ID must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
@@ -66,23 +66,11 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
  * Validate Field Territory/State Code
  * @param {value} Transmittal Number Field Entered on Change Event.
  */
-export function isValidStateCode(fieldValue) {
+export function hasValidStateCode(fieldValue) {
 
-    let result = false;
-
-    function findState(states) {
-        if (states.value === fieldValue.substring(0,2))
-           return true
-        return false;
-    }
-
-    const foundState = territoryList.find(findState)
-
-    if (foundState === undefined  ) {
-        result = false
-    } else {
-        result = true
-    }
+    const result = territoryList.some(
+        state => state['value'] === fieldValue.substring(0,2)
+    )
 
     return result;
 
