@@ -8,7 +8,7 @@ scratch
 !*.md
 *.log
 *.xml
-*.env
+.env
 reports/
 reports/screenshots/
 node_modules/*
