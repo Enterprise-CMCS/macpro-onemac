@@ -31,11 +31,13 @@ module.exports = {
         browser.expect.url().to.contain(subDir).before(5000);
     },
 
-    "Enter SPA ID" : function (browser) {
+    "Enter SPA ID" : async function (browser) {
+        spa = browser.page.spaBasePage();
         let selector = "#transmittalNumber";
-        let transmitNumber = "VA-20-1234"
+        let transmitNumber = spa.getSPA();
+        console.log(transmitNumber);
         browser.setValue(selector, transmitNumber);
-        browser.pause(500);
+        browser.pause(1000);
         browser.expect.element(selector).value.to.equal(transmitNumber);
 
     },

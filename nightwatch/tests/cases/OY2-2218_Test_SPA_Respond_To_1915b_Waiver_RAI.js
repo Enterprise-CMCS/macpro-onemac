@@ -34,11 +34,11 @@ module.exports = {
     },
 
     "Enter Waiver Number" : function(browser) {
+        spa = browser.page.spaBasePage();
         let testData = {
             selector: '@transmittal',
-            value: 'VA.17.R66.M68'
+            value: spa.getWaiver()
         }
-        spa = browser.page.spaBasePage();
         spa.expect.element(testData.selector).to.be.visible;
         spa.setValue(testData.selector, testData.value);
 

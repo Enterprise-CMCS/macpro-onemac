@@ -18,6 +18,7 @@ module.exports = {
 
     afterEach: function (browser) {
         login["Logout of SPA and Waiver Dashboard"](browser);
+        browser.pause(1000);
     },
 
     "Submit a SPA Report": function (browser) {
