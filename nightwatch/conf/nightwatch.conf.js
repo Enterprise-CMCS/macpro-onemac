@@ -28,8 +28,8 @@ module.exports = {
             launch_url: `${process.env.APPLICATION_ENDPOINT}`,
 
             globals: {
-                user: `${process.env.TEST_USERS}`,
-                pass: `${process.env.TEST_USER_PASSWORD}`,
+                user: 'user1@cms.hhs.local',
+                pass: 'user1@cms.hhs.local',
             },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
