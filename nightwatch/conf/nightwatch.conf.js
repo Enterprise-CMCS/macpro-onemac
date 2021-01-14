@@ -56,7 +56,7 @@ module.exports = {
                         args: [
                             '--window-size=1024,768',
                             '-verbose',
-                            //'-headless',
+                            '-headless',
                             // '-verbose'
                         ],
                     }
