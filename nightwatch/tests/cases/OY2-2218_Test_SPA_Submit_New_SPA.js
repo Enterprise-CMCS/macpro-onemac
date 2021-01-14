@@ -54,8 +54,7 @@ module.exports = {
         spa.uploadFiles(9);
     },
 
-    'Enter Comments' : function (browser,
-                                 selector = 'textarea',
+    'Enter Comments' : function (browser, selector = 'textarea',
                                  entered_text = "Relax. This is only a test") {
         spa = browser.page.spaBasePage();
         spa.enterComments(selector, entered_text);

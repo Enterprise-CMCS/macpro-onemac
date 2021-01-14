@@ -1,3 +1,6 @@
+const fs = require('fs');
+const path = require('path');
+const spaVar = path.join(__dirname, "spaVar.txt");
 
 const commands = {
 
@@ -9,6 +12,14 @@ const commands = {
         return idNumbers.waiver1915B(isWaiverB, state);
     },
 
+    getSPA: function () {
+        return idNumbers.getSpaID();
+    },
+
+    getWaiver: function () {
+        return idNumbers.getWaiverID();
+    },
+
     toDashBoard: function () {
         this.api.click(this.elements.loginButton)
             .waitForElementPresent('body');
@@ -16,7 +27,7 @@ const commands = {
     },
 
     enterComments: function (selector, text) {
-        this.api.setValue('css selector',selector, text);
+        this.api.setValue('css selector', selector, text);
     },
 
     login: function (user, pass) {
@@ -75,7 +86,6 @@ module.exports = {
 
 /**
     Description: Utilities for random number generation and other trivial operations.
-
 **/
 const idNumbers = {
 
@@ -89,8 +99,9 @@ const idNumbers = {
             .toString()
             .slice(2);
         let group = [st, yrAbbr, requiredFour]
-        return (optional) ? group.join("-") : [group, opt].flat().join("-");
-
+        let id = (optional) ? group.join("-") : [group, opt].flat().join("-");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8"});
+        return id;
     },
 
     // 1915(b) SS.##.R##.M##
@@ -99,8 +110,18 @@ const idNumbers = {
         let rand = getRandomNumber(6);
         let groupX = rand.slice(0, 2), groupY = "R".concat(rand.slice(2, 4)), groupZ = rand.slice(4);
         let group = (isWaiverB) ? [state, groupX, groupY, ["M", groupZ].join('')] : [state, groupX, groupY, groupZ];
-        return group.join(".");
+        let id = group.join(".");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
+
+    getSpaID: () => {
+        return fs.readFileSync(spaVar, 'utf8');
+    },
+
+    getWaiverID: () => {
+        return fs.readFileSync(spaVar, 'utf8');
+    }
 }
 
 function getRandomNumber(numberOfDigits) {
