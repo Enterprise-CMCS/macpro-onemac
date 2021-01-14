@@ -34,11 +34,14 @@ module.exports = {
     },
 
     "Enter Waiver Number" : function (browser) {
-        let selector = '@transmittal';
+        let testData = {
+            selector: '@transmittal',
+            value: spa.getWaiver()
+        }
         spa = browser.page.spaBasePage();
-        spa.click(selector);
-        spa.setValue(selector, 'VA.53.R04.M67');
-        spa.expect.element(selector).value.to.equals('VA.53.R04.M67');
+        spa.click(testData.selector);
+        spa.setValue(testData.selector, testData.value);
+        spa.expect.element(testData.selector).value.to.equals(testData.value);
     },
 
     "Upload Documents": function(browser) {
