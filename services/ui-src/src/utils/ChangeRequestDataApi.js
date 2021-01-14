@@ -15,7 +15,7 @@ class ChangeRequestDataApi {
   async submit(data, uploadsList) {
     if (!data || !uploadsList || !data.type || uploadsList.length === 0) {
       console.log(
-        "Unable to submit data due to missing fields or uploads.",
+        "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
         data,
         uploadsList
       );
@@ -25,6 +25,7 @@ class ChangeRequestDataApi {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
+      console.log(JSON.stringify(data))
       return await API.post("changeRequestAPI", "/submit", {
           body: data,
         });
