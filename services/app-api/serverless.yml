@@ -8,6 +8,7 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-warmup
   - serverless-dynamodb-local
+  - serverless-associate-waf
   - serverless-offline
 custom:
   stage: ${opt:stage, self:provider.stage}
@@ -37,7 +38,9 @@ custom:
       migrate: true
   serverless-offline:
     allowCache: true
-
+associateWaf:
+  name: ${self:custom.stage}-ApiGwWebAcl
+  version: V2 #(optional) Regional | V2
 
 provider:
   name: aws
@@ -50,7 +53,6 @@ provider:
     spaIdTableName: ${self:custom.spaIdTableName}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
-
 
 functions:
   submit:
