@@ -100,4 +100,7 @@ echo """
 ------------------------------------------------------------------------------------------------
 Application endpoint:  `./services/output.sh services/ui ApplicationEndpointUrl $stage`
 ------------------------------------------------------------------------------------------------
+
 """
+echo $user
+echo $TEST_USER_PASSWORD
