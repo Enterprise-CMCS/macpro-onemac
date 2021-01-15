@@ -80,11 +80,17 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      - uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      - name: AWS SSM Build Secrets for GitHub Actions
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: "/macstack/nightwatch/TEST_USERS"
           env_variable_name: "TEST_USERS"
-      - uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      - name: AWS SSM Build Secrets for GitHub Actions Nightwatch
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: "/macstack/nightwatch/TEST_USER_PASSWORD"
           env_variable_name: "TEST_USER_PASSWORD"
@@ -107,3 +113,8 @@ jobs:
         with:
           name: test_results
           path: tests/nightwatch/tests_output
+
+
+
+
+  uses: marvinpinto/action-inject-ssm-secrets@v1.1.0
