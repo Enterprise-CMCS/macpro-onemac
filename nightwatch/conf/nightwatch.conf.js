@@ -29,7 +29,7 @@ module.exports = {
 
             globals: {
                 user: 'user1@cms.hhs.local',
-                pass: 'user1@cms.hhs.local',
+                pass: 'Passw0rd!',
             },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
