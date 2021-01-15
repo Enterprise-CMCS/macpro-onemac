@@ -92,10 +92,9 @@ jobs:
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
-          popd
-          echo $TEST_USERS
-          echo $TEST_USER_PASSWORD
-
+          popd                    
+          export TEST_USERS=user1@cms.hhs.local
+          export TEST_USER_PASSWORD=Passw0rd!
           ./test.sh
       - name: Store test reults
         uses: actions/upload-artifact@v2

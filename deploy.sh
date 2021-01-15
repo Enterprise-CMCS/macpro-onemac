@@ -103,8 +103,8 @@ Application endpoint:  `./services/output.sh services/ui ApplicationEndpointUrl 
 ------------------------------------------------------------------------------------------------
 
 """
-export TEST_USERS=user1@cms.hhs.local
-export TEST_USER_PASSWORD=Passw0rd!
 
-echo $TEST_USERS
-echo $TEST_USER_PASSWORD
+
+
+export $TEST_USERS=user1@cms.hhs.local
+export $TEST_USER_PASSWORD=Passw0rd!
