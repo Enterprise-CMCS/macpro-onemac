@@ -80,11 +80,11 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-       - uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      - uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
           ssm_parameter: "/macstack/nightwatch/TEST_USERS"
           env_variable_name: "TEST_USERS"
-       - uses: "marvinpinto/action-inject-ssm-secrets@latest"
+      - uses: "marvinpinto/action-inject-ssm-secrets@latest"
         with:
           ssm_parameter: "/macstack/nightwatch/TEST_USER_PASSWORD"
           env_variable_name: "TEST_USER_PASSWORD"
