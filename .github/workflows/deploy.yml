@@ -117,4 +117,4 @@ jobs:
 
 
 
-  uses: marvinpinto/action-inject-ssm-secrets@v1.1.0
+  
