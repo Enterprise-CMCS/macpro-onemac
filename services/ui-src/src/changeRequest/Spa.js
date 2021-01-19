@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
-import { territoryList } from "../libs/territoryLib";
 
 /**
  * Spa acts as a wrapper around SubmissionForm to render SPA-specific form
@@ -29,12 +28,6 @@ const Spa = () => {
     idType: "spa",
     idLabel: "SPA ID",
     idMustExist: false,
-    territory: {
-      fieldName: "territory",
-      errorMessage: "Please select a State or Territory.",
-      optionsList: territoryList,
-      defaultItem: "a territory",
-    },
   };
 
   if (id) {
