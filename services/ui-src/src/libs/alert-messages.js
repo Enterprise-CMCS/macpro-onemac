@@ -51,6 +51,11 @@ export const ALERTS_MSG = {
     heading: "Duplicate ID",
     text: "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.",
   },
+  SUBMISSION_TERRITORY_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Territory Error",
+    text: "The Transmittal ID Territory/State is not Valid Please check the  Transmittal ID and try entering it again.",
+  },
   SUBMISSION_ID_NOT_FOUND: {
     type: ALERT_TYPES.ERROR,
     heading: "ID Not Found",

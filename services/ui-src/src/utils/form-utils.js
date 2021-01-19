@@ -1,3 +1,5 @@
+import { territoryList } from "../libs/territoryLib";
+
 /**
  * Validate SPA Id Transmittal Number Format
  * @return
@@ -11,7 +13,9 @@ export function validateSpaId(spaId) {
 
     if (!spaId) {
         errorMessage = 'SPA ID Required !';
-    } else if (!isValidFieldFormat(spaId, RegexFormatString)) {
+    }  else if (!hasValidStateCode(spaId)) {
+        errorMessage = `The SPA ID must contain valid Territory/State Code`
+    }  else if (!isValidFieldFormat(spaId, RegexFormatString)) {
         errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
     }
     return errorMessage
@@ -30,6 +34,8 @@ export function validateWaiverId(waiverId) {
 
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
+    }  else if (!hasValidStateCode(waiverId)) {
+        errorMessage = `The SPA ID must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
     }
@@ -50,6 +56,21 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
     } else {
         result = false
     }
+
+    return result;
+
+};
+
+
+/**
+ * Validate Field Territory/State Code
+ * @param {value} Transmittal Number Field Entered on Change Event.
+ */
+export function hasValidStateCode(fieldValue) {
+
+    const result = territoryList.some(
+        state => state['value'] === fieldValue.substring(0,2)
+    )
 
     return result;
 
