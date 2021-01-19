@@ -1,5 +1,6 @@
 
 let spa;
+const timeout = 1000;
 module.exports = {
 
     before : function(browser) {
@@ -8,7 +9,6 @@ module.exports = {
         browser.maximizeWindow()
             .url(browser.launch_url)
             .waitForElementPresent('body');
-
     },
 
     after : function(browser) {
@@ -31,8 +31,7 @@ module.exports = {
         let title = 'SPA and Waiver Dashboard'
         spa.logout();
         spa.verify.not.containsText('h1', title);
-        browser.pause(1000);
+        browser.pause(timeout);
     },
-
 
 };
