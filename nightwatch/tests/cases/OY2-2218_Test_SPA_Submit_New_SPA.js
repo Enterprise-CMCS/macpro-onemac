@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 500;
+const timeout = 1000;
 const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(2000);
+        browser.pause(timeout * 2);
     },
 
     after : function(browser) {
@@ -26,18 +26,21 @@ module.exports = {
         spa = browser.page.spaBasePage();
         spa.assert.elementPresent('@newSPA');
         spa.click('@newSPA').waitForElementPresent('body');
-        browser.expect.url().to.contain('/spa').before(5000);
+        browser.expect.url().to.contain('/spa').before(timeout * 5);
     },
 
     "Enter SPA State/Territory Information" : function (browser) {
-        let selector = '#territory'
-        let state_option = "Virginia";
-        browser.click(selector)
-        browser.setValue(selector, "VVV");
+        spa = browser.page.spaBasePage();
+        let testData = {
+            selector: '@territory',
+            state_option: "Virginia"
+        }
 
-        browser.waitForElementVisible(selector);
-        browser.verify.containsText(selector, state_option);
-        browser.pause(timeout);
+        spa.click(testData.selector)
+        spa.setValue(testData.selector, "VVV");
+        spa.waitForElementVisible(testData.selector);
+        spa.verify.containsText(testData.selector, testData.state_option);
+        spa.pause(timeout);
     },
 
     'Enter SPA ID' : function (browser, transmitNumber) {
@@ -45,7 +48,7 @@ module.exports = {
         let spa_id = (typeof transmitNumber === 'undefined') ? spa.getTransmitNumber() : transmitNumber;
         spa.click(selector);
         spa.setValue(selector, spa_id);
-        browser.pause(500);
+        browser.pause(timeout / 2);
         spa.expect.element(selector).value.to.contain(spa_id);
     },
 
@@ -74,7 +77,7 @@ module.exports = {
             .assert.elementPresent(p_selector)
             .assert.containsText(alert_selector, alert_msg)
             .assert.containsText(p_selector, msg)
-            .pause(1000);
+            .pause(timeout);
     },
 
 };

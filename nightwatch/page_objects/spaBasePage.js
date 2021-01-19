@@ -69,7 +69,7 @@ module.exports = {
         logout : '[id=logoutBtn]',
         passField : '#password',
         newSPA: "[id=spaSubmitBtn]",
-        respondSPA: "#spaRaiBtn",
+        respondSPA: "[id=spaRaiBtn]",
         newWaiver: "[id=waiverBtn]",
         respondWaiver: "[id=waiverRaiBtn]",
         requestTemp: "[id=waiverExtBtn]",
