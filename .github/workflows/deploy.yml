@@ -58,6 +58,7 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           METRICS_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_METRICS_USERS] || secrets.METRICS_USERS }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
         env:
@@ -80,17 +81,13 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      - name: AWS SSM Build Secrets for GitHub Actions
+      - name: AWS SSM Build Secrets for Nightwatch test (test user name)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
-        env:
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: "/macstack/nightwatch/TEST_USERS"
           env_variable_name: "TEST_USERS"
-      - name: AWS SSM Build Secrets for GitHub Actions Nightwatch
+      - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
-        env:
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: "/macstack/nightwatch/TEST_USER_PASSWORD"
           env_variable_name: "TEST_USER_PASSWORD"
@@ -113,8 +110,3 @@ jobs:
         with:
           name: test_results
           path: tests/nightwatch/tests_output
-
-
-
-
-  
