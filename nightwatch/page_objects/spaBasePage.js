@@ -20,21 +20,28 @@ const commands = {
         return idNumbers.getWaiverID();
     },
 
-    toDashBoard: function () {
-        this.api.click(this.elements.loginButton)
-            .waitForElementPresent('body');
-        this.api.pause(3000);
-    },
-
     enterComments: function (selector, text) {
         this.api.setValue('css selector', selector, text);
     },
 
+    onDashBoard: function (loginBtn = this.elements.loginBtn) {
+        this.api.click(loginBtn).waitForElementPresent('body');
+        this.api.pause(3000);
+    },
+
     login: function (user, pass) {
-        this.toDashBoard();
+        this.onDashBoard();
         this.api.setValue(this.elements.userField, user).pause(100);
         this.api.setValue(this.elements.passField, pass).pause(100);
-        this.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+        this.api.click(this.elements.tandc).pause(100);
+        this.api.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+    },
+
+    devLogin: function (user, pass) {
+        this.onDashBoard(this.elements.devLoginButton);
+        this.api.setValue(this.elements.devUserField, user).pause(100);
+        this.api.setValue(this.elements.devPassField, pass).pause(100);
+        this.api.click(this.elements.devSubmitBtn).waitForElementNotPresent(this.elements.devSubmitBtn);
     },
 
     logout: function () {
@@ -61,19 +68,24 @@ module.exports = {
     elements: {
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
-        transmittal: '[id=transmittalNumber]',
-        userField : '#email',
-        loginButton : 'button[id=devloginBtn]',
+        devLoginButton : '[id=devloginBtn]',
+        devPassField : '[id=password]',
+        devSubmitBtn : 'input[type=submit]',
+        devUserField : '[id=email]',
+        userField : '[id=okta-signin-username]',
+        loginBtn: 'div.nav-right > button',
         loginTitle : 'div[id=title_bar]',
-        submitBtn : 'input[type=submit]',
         logout : '[id=logoutBtn]',
-        passField : '#password',
+        passField : '[id=okta-signin-password]',
         newSPA: "[id=spaSubmitBtn]",
         respondSPA: "[id=spaRaiBtn]",
         newWaiver: "[id=waiverBtn]",
         respondWaiver: "[id=waiverRaiBtn]",
         requestTemp: "[id=waiverExtBtn]",
-        territory : "#territory"
+        submitBtn: "[id=okta-signin-submit]",
+        tandc: "[id=tandc]",
+        territory : "#territory",
+        transmittal: '[id=transmittalNumber]',
     },
 
     commands : [commands],

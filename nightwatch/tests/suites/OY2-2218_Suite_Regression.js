@@ -1,15 +1,16 @@
-
 const login = require('../cases/OY2-1494_Test_SPA_Login');
+const timeout = 1000;
+
 module.exports = {
     "@tags": ["regression"],
 
     before: function (browser) {
         login.before(browser);
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
     },
 
     beforeEach: function (browser) {
-        browser.pause(1000);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        browser.pause(timeout);
     },
 
     after: function (browser) {
@@ -17,14 +18,12 @@ module.exports = {
     },
 
     afterEach: function (browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        browser.pause(1000);
+        browser.pause(timeout);
     },
 
     "Submit a SPA Report": function (browser) {
         const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
         newSPA["Click on 'Start a new SPA'"](browser);
-        newSPA["Enter SPA State/Territory Information"](browser);
         newSPA["Enter SPA ID"](browser);
         newSPA["Upload Documents"](browser);
         newSPA["Enter Comments"](browser);
@@ -43,7 +42,6 @@ module.exports = {
     "Submit a SPA Waiver ": function (browser) {
         const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
         spaWaiver["Click on 'Submit new Waiver'"](browser);
-        spaWaiver["Enter SPA State/Territory Information"](browser);
         spaWaiver["Enter Waiver Authority"](browser);
         spaWaiver["Enter Waiver Number"](browser);
         spaWaiver["Enter Action Type"](browser);

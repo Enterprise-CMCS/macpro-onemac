@@ -21,10 +21,17 @@ module.exports = {
             username: browser.globals.user,
             password: browser.globals.pass
         };
+        spa.devLogin(testData.username, testData.password);
+        spa.verify.visible('@loginTitle');
+    },
 
+    'Login to SPA and Waiver Dashboard via Okta' : function(browser) {
+        const testData = {
+            username: browser.globals.user,
+            password: browser.globals.pass
+        };
         spa.login(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
-
     },
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
@@ -33,5 +40,4 @@ module.exports = {
         spa.verify.not.containsText('h1', title);
         browser.pause(timeout);
     },
-
 };

@@ -85,7 +85,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        //'--headless'
+                        '--headless'
                     ]
                 }
             },
@@ -99,37 +99,6 @@ module.exports = {
             }
         },
 
-        selenium: {
-            selenium: {
-                start_process: true,
-                server_path: Services.seleniumServer.path,
-                port: 4444,
-                default_path_prefix: '/wd/hub',
-                cli_args: []
-            }
-        },
-
-        "selenium.chrome": {
-            extends: 'selenium',
-            desiredCapabilities: {
-                browserName: 'chrome',
-                chromeOptions : {
-                    args: []
-                },
-                cli_args : ["--verbose"]
-            }
-        },
-
-        "selenium.firefox": {
-            extends: 'selenium',
-            desiredCapabilities: {
-                browserName: 'firefox',
-                firefoxOptions: {
-                    args: []
-                },
-                cli_args: ["--verbose"]
-            }
-        },
 
         "unit-test" : {
             unit_tests_mode : true,
@@ -160,6 +129,8 @@ function loadServices() {
 
     try {
         Services.geckodriver = require('geckodriver');
+        // Have to specify the path explicitly because geckodriver did not set the binary path by default
+        Services.geckodriver.path = "node_modules/geckodriver/geckodriver.exe";
     } catch (err) {
         fs.appendFileSync(serviceLog, err);
     }
