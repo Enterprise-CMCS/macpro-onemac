@@ -88,7 +88,6 @@ ul {
 }
 
 .uploader {
-
   table {
     border-collapse: collapse;
     width: 100%;
@@ -96,11 +95,12 @@ ul {
     th,
     td {
       text-align: left;
-      padding: 8px;
+      padding: 12px 8px 8px 8px;
     }
     tr {
       height: 72px;
       border-bottom: 1px solid #5B616B;
+      vertical-align: text-top;
     }
     tr:nth-last-child(1) {
       border-bottom: none;
@@ -110,11 +110,15 @@ ul {
   .uploader-type-cell {
     width: 40%;
   }
+
   .uploader-input-cell {
     width: 20%;
   }
-  .uploader-filename-cell {
-    width: 30%;
+
+  .uploader-file-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .uploader-type-label {
@@ -131,14 +135,10 @@ ul {
     margin-top: 0px;
   }
 
-  .uploader-controls-cell {
-    width: 10%;
-  }
-
   .uploader-clear-button {
     @extend .ds-c-button;
     @extend .ds-c-button--transparent;
-    color: black;
+    color: $color-primary;
   }
 }
 
