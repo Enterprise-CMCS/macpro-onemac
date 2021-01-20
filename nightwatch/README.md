@@ -54,7 +54,7 @@ To run tests:
     
 `node nightwatch -c conf/nightwatch.conf.js # runs all tests`
 
-\*New Commands\*
+####**New Commands**
 To run tests (by browser type):
 
 For Chrome: `npm run chrome [<path/to/testfile>]`
@@ -65,7 +65,11 @@ To update packages: `npm run update`
 
 see [Running Tests in Nightwatch](https://nightwatchjs.org/guide/running-tests/nightwatch-runner.html)
 
-A test_runner script will be updated and provided soon.
+####Using the `test.sh` runner(DevOps)
+
+All environments (default): `test.sh`
+
+To run tests for development environment: `test.sh --dev` 
 
 ### Automated Test Writing Guides
 

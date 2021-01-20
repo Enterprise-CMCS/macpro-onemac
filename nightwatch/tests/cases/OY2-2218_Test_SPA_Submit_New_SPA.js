@@ -27,7 +27,9 @@ module.exports = {
         spa.assert.elementPresent('@newSPA');
         spa.click('@newSPA').waitForElementPresent('body');
         browser.expect.url().to.contain('/spa').before(timeout * 5);
+        browser.pause(timeout);
     },
+
 
     "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
@@ -43,13 +45,19 @@ module.exports = {
         spa.pause(timeout);
     },
 
-    'Enter SPA ID' : function (browser, transmitNumber) {
-        let selector = '@transmittal';
-        let spa_id = (typeof transmitNumber === 'undefined') ? spa.getTransmitNumber() : transmitNumber;
-        spa.click(selector);
-        spa.setValue(selector, spa_id);
+
+
+    'Enter SPA ID' : function (browser, spa_id = spa.getTransmitNumber()) {
+        let testData = {
+            selector: '@transmittal',
+            spa_id: spa_id,
+        };
+
+        spa.click(testData.selector);
+        spa.setValue(testData.selector, testData.spa_id);
         browser.pause(timeout / 2);
-        spa.expect.element(selector).value.to.contain(spa_id);
+        spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
+
     },
 
     'Upload Documents' : function (browser) {
