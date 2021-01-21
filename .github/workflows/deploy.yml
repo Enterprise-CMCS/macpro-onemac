@@ -97,7 +97,6 @@ jobs:
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
-          echo $branch_name
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
@@ -108,7 +107,7 @@ jobs:
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           popd
-          ./test.sh --dev
+          ./run.sh
       - name: Store test reults
         uses: actions/upload-artifact@v2
         with:
