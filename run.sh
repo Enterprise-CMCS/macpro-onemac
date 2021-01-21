@@ -1,15 +1,16 @@
 #!/bin/bash
 
+okta_branches=(
+'develop'
+'master'
+'production'
+)
+
 echo $branch_name
 
-
-okta_branches= [develop,master,production]
-
-for branch_name in ${okta@}
-do
-  if [ $branch == $okta ]
+if [ "$branch_name" ==  "${okta_branches[@]}" ]
+then
   ./test.sh
-
-else 
-  echo branch is not an okta branch
+else
   ./test.sh --dev
+fi
