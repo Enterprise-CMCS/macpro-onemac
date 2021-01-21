@@ -3,7 +3,6 @@
 okta_branches=(
 'develop'
 'master'
-'production'
 )
 
 echo $branch_name
