@@ -9,7 +9,7 @@ function myHandler(event, context, callback) {
   var value = JSON.parse(event.value);
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
   var id = value.payload.ID_Number;
-  var packageStatusID = value.payload.SPW_Status_ID;
+  var packageStatusID = value.payload.SPW_Status_ID.toString();
   console.log(`State Plan ID Number: ${id}`);
   console.log(process.env.spaIdTableName);
   if (id != undefined) {
