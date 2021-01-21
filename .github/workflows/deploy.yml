@@ -103,8 +103,8 @@ jobs:
           # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
       - name: Run Nightwatch suite
-        run: |
-          if: contains(github.ref, "ish-night")        
+        if: contains(github.ref, "ish-night")
+        run: |                 
           echo "I only run if the branch has ish-night in its name!"
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
