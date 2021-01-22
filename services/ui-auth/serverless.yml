@@ -208,15 +208,15 @@ resources:
         Name: /${self:custom.stage}/nightwatch/TEST_USERS
         Type: String
         Value:
-          Fn::If:
-            - isDev
-            - MOSESPA01
-          Fn::If:
-            - isVal
-            - WYSESPA1
-          Fn::Not:
-            - isValOrDev
-            - user1@cms.hhs.local
+          - Fn::If:
+             - isDev
+             - MOSESPA01
+          - Fn::If:
+             - isVal
+             - WYSESPA1
+          - Fn::Not:
+             - isValOrDev
+             - user1@cms.hhs.local
 
   Outputs:
     UserPoolId:
