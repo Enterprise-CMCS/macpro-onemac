@@ -24,12 +24,14 @@ provider:
 
 resources:
   Conditions:
+    isVal: {"Fn::Equals" : ["${self:custom.stage}", "master"]}
+    isDev: {"Fn::Equals" : ["${self:custom.stage}", "develop"]}
+    isValOrDev: {"Fn::Or": [{"Condition": "isProd"}, {"Condition": "isRC" }]}
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
           - ""
           - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
-  Resources:
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
       Properties:
@@ -198,6 +200,23 @@ resources:
                         - '/protected/'
                         - '$'
                         - '{cognito-identity.amazonaws.com:sub}/*'
+
+  Resources:
+    BasicParameter:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:custom.stage}/nightwatch/TEST_USERS
+        Type: String
+        Value:
+          Fn::If:
+            - isDev
+            - MOSESPA01
+          Fn::If:
+            - isVal
+            - WYSESPA1
+          Fn::Not:
+            - isValOrDev
+            - user1@cms.hhs.local
 
   Outputs:
     UserPoolId:
