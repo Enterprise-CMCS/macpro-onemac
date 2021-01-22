@@ -81,7 +81,7 @@ jobs:
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: AWS SSM Build Secrets for Nightwatch test (test user name)
-        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        uses: "bomb-on/aws-ssm-to-env@master"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
