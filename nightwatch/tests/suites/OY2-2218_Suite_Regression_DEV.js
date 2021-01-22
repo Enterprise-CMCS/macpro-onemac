@@ -1,6 +1,6 @@
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 const regression = require('./OY2-2218_Suite_Regression');
-
+const badtransmital = require('../cases/OY2-4513_Test_Backend_Submit_Transmittal_ID_Bad')
 const timeout = 1000;
 
 module.exports = {
@@ -42,5 +42,9 @@ module.exports = {
 
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
+    },
+
+    "Backend Test Bad Transmittal ID": function (browser) {
+        badtransmital["Backend Test Bad Transmittal ID"](browser);
     },
 };
