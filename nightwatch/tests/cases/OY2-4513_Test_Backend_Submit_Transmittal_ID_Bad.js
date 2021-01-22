@@ -37,7 +37,7 @@ module.exports = {
     "Click on 'Dev Backend Test'": function (browser) {
         spa = browser.page.spaBasePage();
         spa.assert.elementPresent('@newSPA');
-        spa.click('@newSPA').waitForElementPresent('body');
+        browser.url(browser.launch_url +'/devbackendtest')
         browser.expect.url().to.contain('/devbackendtest').before(timeout * 5);
         browser.pause(timeout);
     },
@@ -62,9 +62,10 @@ module.exports = {
         let msg = "{\"error\":\"Transmittal ID State/Territory Not Valid\"}";
 
         browser.click('[type="submit"]');
+        browser.pause(timeout / 2);
         browser.waitForElementVisible('body');
         browser
-            .assert.containsText(backend_response, msg)
+            .assert.value(backend_response, msg)
             .pause(timeout);
     },
 
