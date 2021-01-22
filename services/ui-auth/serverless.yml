@@ -217,6 +217,10 @@ resources:
           - Fn::Not:
              - isValOrDev
              - user1@cms.hhs.local
+               - Fn::GetAtt:
+                 - NightWatchUser
+                 - Outputs.NightWatchUser
+
 
   Outputs:
     UserPoolId:
@@ -240,3 +244,8 @@ resources:
     Region:
       Value:
         Ref: AWS::Region
+    NightWatchUserName:
+      Value:
+            - Fn::GetAtt:
+              - NightWatchUser
+              - Outputs.NightWatchUser
