@@ -12,8 +12,9 @@ import WaiverExtension from "./changeRequest/WaiverExtension";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
+import DevBackendTest from "./containers/DevBackendTest";
 import Metrics from "./containers/Metrics";
-
+import config from "./utils/config";
 
 export const ROUTES = {
     DASHBOARD: '/dashboard',
@@ -25,6 +26,7 @@ export const ROUTES = {
     PROFILE: '/profile',
     METRICS: '/metrics',
     DEVLOGIN: '/devlogin',
+    DEVBACKENDTEST: '/devbackendtest',
     SPA: '/spa',
     SPA_RAI: '/sparai',
     WAIVER: '/waiver',
@@ -33,6 +35,7 @@ export const ROUTES = {
 }
 
 export default function Routes() {
+    const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     return (
         <Switch>
             <Route exact path={ROUTES.HOME}>
@@ -44,6 +47,9 @@ export default function Routes() {
             <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
                 <DevLogin />
             </UnauthenticatedRoute>
+            <AuthenticatedRoute exact path={ROUTES.DEVBACKENDTEST}>
+                { showDevLogin ? <DevBackendTest />: <Dashboard/> }
+            </AuthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
             </AuthenticatedRoute>
