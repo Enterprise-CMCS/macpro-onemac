@@ -470,10 +470,10 @@ input[type="file"] {
       margin-right: 2rem;
       margin-top: 0px;
     }
-    button {
+    button.dropdown {
       color: $color-white;
       font-weight: bold;
-      border: none;    
+      border: none;
       outline: none;
       background-color: $color-primary;
       &:hover {
@@ -483,7 +483,10 @@ input[type="file"] {
       &:active {
         color: rgba($color-base-inverse, 0.6);
       }  
-}
+    }
+    button {
+      background-color: $color-primary;
+    }
 
     .dev-login {
       padding-left: 25px;
