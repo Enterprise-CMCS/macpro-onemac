@@ -85,8 +85,7 @@ jobs:
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter: "/macstack/Dev/nightwatch/TEST_USERS"
-          env_variable_name: "TEST_USERS"
+          ssm_parameter_list: "/macstack/Dev/nightwatch/TEST_USERS"
       - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
