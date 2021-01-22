@@ -179,6 +179,26 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
+    BasicParameter:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Name: /${self:custom.stage}/nightwatch/TEST_USERS
+        Type: String
+        Value:
+          - Fn::If:
+             - isDev
+             - MOSESPA01
+          - Fn::If:
+             - isVal
+             - WYSESPA1
+          - Fn::Not:
+             - isValOrDev
+             - user1@cms.hhs.local
+          - Fn::GetAtt:
+                 - NightWatchUser
+                 - Outputs.NightWatchUser
+
+
   Outputs:
     S3BucketName:
       Value:
@@ -197,3 +217,5 @@ resources:
               - DomainName
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value
+    NightwatchBasicParameter:
+      Value: !GetAtt NightwatchBasicParameter.Value
