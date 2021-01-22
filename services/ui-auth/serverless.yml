@@ -24,9 +24,6 @@ provider:
 
 resources:
   Conditions:
-    isVal: {"Fn::Equals" : ["${self:custom.stage}", "master"]}
-    isDev: {"Fn::Equals" : ["${self:custom.stage}", "develop"]}
-    isValOrDev: {"Fn::Or": [{"Condition": "isProd"}, {"Condition": "isRC" }]}
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
@@ -201,26 +198,6 @@ resources:
                         - '$'
                         - '{cognito-identity.amazonaws.com:sub}/*'
 
-  Resources:
-    BasicParameter:
-      Type: AWS::SSM::Parameter
-      Properties:
-        Name: /${self:custom.stage}/nightwatch/TEST_USERS
-        Type: String
-        Value:
-          - Fn::If:
-             - isDev
-             - MOSESPA01
-          - Fn::If:
-             - isVal
-             - WYSESPA1
-          - Fn::Not:
-             - isValOrDev
-             - user1@cms.hhs.local
-          - Fn::GetAtt:
-                 - NightWatchUser
-                 - Outputs.NightWatchUser
-
 
   Outputs:
     UserPoolId:
@@ -244,8 +221,3 @@ resources:
     Region:
       Value:
         Ref: AWS::Region
-    NightWatchUserName:
-      Value:
-            - Fn::GetAtt:
-              - NightWatchUser
-              - Outputs.NightWatchUser
