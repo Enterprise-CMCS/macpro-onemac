@@ -2,7 +2,7 @@
 let spa;
 const timeout = 1000;
 module.exports = {
-
+    "@tags": ["badtransmittal"],
     before : function(browser) {
         console.log('Setting up...');
         spa = browser.page.spaBasePage();
@@ -42,7 +42,7 @@ module.exports = {
         browser.pause(timeout);
     },
 
-    'Enter SPA ID' : function (browser, spa_id = "badID") {
+    "Enter Bad SPA ID" : function (browser, spa_id = "badID") {
         let testData = {
             selector: '@transmittal',
             spa_id: spa_id,
@@ -55,7 +55,7 @@ module.exports = {
 
     },
 
-    'Submit SPA' : function (browser) {
+    "Submit Bad SPA" : function (browser) {
         let backend_response = "[id*=backendResponse]";
 
         let alert_msg = "Submission Completed";
@@ -68,11 +68,4 @@ module.exports = {
             .pause(timeout);
     },
 
-
-    'Logout of SPA and Waiver Dashboard' : function (browser) {
-        let title = 'SPA and Waiver Dashboard'
-        spa.logout();
-        spa.verify.not.containsText('h1', title);
-        browser.pause(timeout);
-    },
 };
