@@ -86,11 +86,15 @@ function Header(props) {
         if (props.isAuthenticated) {
             return (
                 <div className="nav-right">
-                    <FormLabel inversed>
-                        <Button id="logoutBtn" onClick={() => logout()} inversed>
-                            Logout
-                        </Button>
-                    </FormLabel>
+                    <div class="dropdown">
+    <button class="dropbtn">My Account
+      <i class="fa fa-caret-down"></i>
+    </button>
+    <div class="dropdown-content">
+      <Link to={ROUTES.FAQ}>Manage account</Link>
+      <Link to={ROUTES.HOME} onClick={() => logout()} >Logout</Link>
+    </div>
+  </div>
                 </div>
             );
         } else {
