@@ -196,9 +196,7 @@ resources:
              - isVal
              - WYSESPA1
              - ""
-          - Fn::GetAtt:
-             - NightwatchBasicParameter
-             - Outputs.NightWatchUser
+
 
 
   Outputs:
@@ -220,4 +218,4 @@ resources:
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value
     NightwatchBasicParameter:
-      Value: !GetAtt NightwatchBasicParameter.Value
+      
