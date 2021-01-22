@@ -85,14 +85,14 @@ jobs:
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter: "/macstack/nightwatch/TEST_USERS"
+          ssm_parameter: "/$branch_name/nightwatch/TEST_USERS"
           env_variable_name: "TEST_USERS"
       - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter: "/macstack/nightwatch/TEST_USER_PASSWORD"
+          ssm_parameter: "/$branch_name/nightwatch/TEST_USER_PASSWORD"
           env_variable_name: "TEST_USER_PASSWORD"
       - name: set path
         run: |
@@ -103,7 +103,7 @@ jobs:
           # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
       - name: Run Nightwatch suite
-        if: env.branch_name != 'production' 
+        if: env.branch_name != 'production'
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
