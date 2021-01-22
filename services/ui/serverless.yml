@@ -11,9 +11,6 @@ provider:
 
 resources:
   Conditions:
-    isVal: {"Fn::Equals" : ["${self:custom.stage}", "master"]}
-    isDev: {"Fn::Equals" : ["${self:custom.stage}", "develop"]}
-    isValOrDev: {"Fn::Or": [{"Condition": "isVal"}, {"Condition": "isDev" }]}
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
@@ -182,22 +179,6 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
-    NightwatchBasicParameter:
-      Type: AWS::SSM::Parameter
-      Properties:
-        Name: /${self:custom.stage}/nightwatch/TEST_USERS
-        Type: String
-        Value:
-          - Fn::If:
-             - isDev
-             - MOSESPA01
-             - ""
-          - Fn::If:
-             - isVal
-             - WYSESPA1
-             - ""
-
-
 
   Outputs:
     S3BucketName:
@@ -217,4 +198,3 @@ resources:
               - DomainName
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value
-    
