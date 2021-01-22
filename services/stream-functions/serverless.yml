@@ -97,6 +97,7 @@ functions:
         - Arn
       sessionName: ${self:custom.stage}-sink-role
       topics: lmdc.seatool.submission.cdc.sea-dbo-State_Plan
+      sinkPrefix: spa-${self:custom.stage}-
     maximumRetryAttempts: 2
     timeout: 120
     warmup:
