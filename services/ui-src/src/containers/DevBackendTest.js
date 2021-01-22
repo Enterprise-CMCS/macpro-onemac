@@ -1,6 +1,5 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import LoadingScreen from "../components/LoadingScreen";
-import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PropTypes from "prop-types";
@@ -41,13 +40,13 @@ const DevBackend = ({  changeRequestType }) => {
 
   const [alert, setAlert] = useState(ALERTS_MSG.NONE);
 
-  // True when the required attachments have been selected.
-  const [setAreUploadsReady] = useState(false);
-
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
+  const [backendResponse, setBackendResponse] = useState("")
+
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
+
   const [
     waiverAuthorityErrorMessage,
     setWaiverAuthorityErrorMessage,
@@ -63,7 +62,6 @@ const DevBackend = ({  changeRequestType }) => {
   // The browser history, so we can redirect to the home page
 
   //Reference to the File Uploader.
-  const uploader = useRef(null);
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
@@ -74,13 +72,6 @@ const DevBackend = ({  changeRequestType }) => {
     waiverAuthority: "",
   });
 
-  /**
-   * Callback for the uploader to set if the upload requirements are met.
-   * @param {Boolean} state true if the required uploads have been specified
-   */
-  function uploadsReadyCallbackFunction(state) {
-    setAreUploadsReady(state);
-  }
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
@@ -188,7 +179,8 @@ const DevBackend = ({  changeRequestType }) => {
         let uploadedList =  { "uploads": [{"s3Key":"wewewe","filename":"foo","contentType":"","url":"foo","title":"CMS Form 179"}]}
         console.log("changeRequest is: ", changeRequest);
         const aresponse = await ChangeRequestDataApi.submit( changeRequest, uploadedList);
-        console.log("Response is: ", aresponse);
+        console.log("Response is: ", aresponse)
+        setBackendResponse(aresponse)
         if (!aresponse.error) {
           newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
         } else switch (aresponse.error) {
@@ -222,7 +214,7 @@ const DevBackend = ({  changeRequestType }) => {
         }
       } catch (error) {
         console.log("Error is: ", error);
-        newAlert = ALERTS_MSG.SUBMISSION_ERROR;
+        newAlert = ALERTS_MSG.SUBMISSION_ERROR
       }
     }
     if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
@@ -235,7 +227,7 @@ const DevBackend = ({  changeRequestType }) => {
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlert(newAlert);
-    if (mounted) setIsLoading(false);
+    if (mounted) setIsLoading(false)
     if (mounted) jumpToPageTitle();
   }
 
@@ -259,6 +251,7 @@ const DevBackend = ({  changeRequestType }) => {
             text=""
         />
         {renderAlert(alert)}
+
         <div className="form-container">
           <form
               onSubmit={handleSubmit}
@@ -291,16 +284,13 @@ const DevBackend = ({  changeRequestType }) => {
               )}
               {renderTransmittalNumber()}
             </div>
-            <h3>Attachments</h3>
-
-            <div className="summary-box">
+            <div className="backend">
               <TextField
-                  name="summary"
-                  label="Summary"
-                  fieldClassName="summary-field"
-                  multiline
-                  onChange={handleInputChange}
-                  value={changeRequest.summary}
+                  id={"backendResponse"}
+                  name="Backend Response"
+                  label="Backend Response"
+                  value={JSON.stringify(backendResponse)}
+                  disabled={true}
               ></TextField>
             </div>
             <input type="submit" className="form-submit" value="Submit" />
