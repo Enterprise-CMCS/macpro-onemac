@@ -28,27 +28,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
           - ""
-          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
-  Resources:
-    BasicParameter:
-      Type: AWS::SSM::Parameter
-      Properties:
-        Name: /${self:custom.stage}/nightwatch/TEST_USERS
-        Type: String
-        Value:
-          - Fn::If:
-             - isDev
-             - MOSESPA01
-          - Fn::If:
-             - isVal
-             - WYSESPA1
-          - Fn::Not:
-             - isValOrDev
-             - user1@cms.hhs.local
-          - Fn::GetAtt:
-                 - NightWatchUser
-                 - Outputs.NightWatchUser
-          
+          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}        
   Resources:
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
@@ -249,5 +229,3 @@ resources:
     Region:
       Value:
         Ref: AWS::Region
-    NightwatchBasicParameter:
-      Value: !GetAtt NightwatchBasicParameter.Value
