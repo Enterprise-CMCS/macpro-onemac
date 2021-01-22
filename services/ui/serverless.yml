@@ -11,6 +11,9 @@ provider:
 
 resources:
   Conditions:
+    isVal: {"Fn::Equals" : ["${self:custom.stage}", "master"]}
+    isDev: {"Fn::Equals" : ["${self:custom.stage}", "develop"]}
+    isValOrDev: {"Fn::Or": [{"Condition": "isVal"}, {"Condition": "isDev" }]}
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
@@ -188,15 +191,18 @@ resources:
           - Fn::If:
              - isDev
              - MOSESPA01
+             - ""
           - Fn::If:
              - isVal
              - WYSESPA1
+             - ""
           - Fn::Not:
              - isValOrDev
              - user1@cms.hhs.local
+             - ""
           - Fn::GetAtt:
-                 - NightWatchUser
-                 - Outputs.NightWatchUser
+             - NightWatchUser
+             - Outputs.NightWatchUser
 
 
   Outputs:
