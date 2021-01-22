@@ -217,5 +217,4 @@ resources:
               - DomainName
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value
-    NightwatchBasicParameter:
-      
+    
