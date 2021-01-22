@@ -45,6 +45,7 @@ module.exports = {
 
     "SPA Submission Bad Transmittal ID": function (browser) {
         const tempExt = require('../cases/OY2-4513_Test_Backend_Submit_Transmittal_ID_Bad');
+        tempExt["Login to SPA and Waiver Dashboard"](browser);
         tempExt["Click on 'Dev Backend Test'"](browser);
         tempExt["Enter Bad SPA ID"](browser);
         tempExt["Submit Bad SPA"](browser);
