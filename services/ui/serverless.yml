@@ -182,7 +182,7 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
-    BasicParameter:
+    NightwatchBasicParameter:
       Type: AWS::SSM::Parameter
       Properties:
         Name: /${self:custom.stage}/nightwatch/TEST_USERS
@@ -197,7 +197,7 @@ resources:
              - WYSESPA1
              - ""
           - Fn::GetAtt:
-             - NightWatchUser
+             - NightwatchBasicParameter
              - Outputs.NightWatchUser
 
 
