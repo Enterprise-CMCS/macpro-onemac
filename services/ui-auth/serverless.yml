@@ -217,7 +217,7 @@ resources:
           - Fn::Not:
              - isValOrDev
              - user1@cms.hhs.local
-               - Fn::GetAtt:
+          - Fn::GetAtt:
                  - NightWatchUser
                  - Outputs.NightWatchUser
 
