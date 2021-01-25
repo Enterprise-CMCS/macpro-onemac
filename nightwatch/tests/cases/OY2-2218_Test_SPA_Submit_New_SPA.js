@@ -77,7 +77,7 @@ module.exports = {
 
         browser.url(function (current) {
             browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.expect.url().to.not.equals(current.value).before(timeout * 6);
+            browser.expect.url().to.not.equals(current.value).before(timeout * 10);
         });
         browser
             .assert.elementPresent(alert_selector)
