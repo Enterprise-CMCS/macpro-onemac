@@ -85,14 +85,13 @@ jobs:
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter_list: "/macstack/Dev/nightwatch/TEST_USERS"
+          ssm_parameter_list: '/macstack/env.branch_name/nightwatch/TEST_USERS || /macstack/nightwatch/TEST_USERS'
       - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
-        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        uses: "ssm_parameter_list"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter: "/macstack/nightwatch/TEST_USER_PASSWORD"
-          env_variable_name: "TEST_USER_PASSWORD"
+          ssm_parameter_list: '/macstack/env.branch_name/nightwatch/TEST_USER_PASSWORD || /macstack/nightwatch/TEST_USER_PASSWORD'
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
