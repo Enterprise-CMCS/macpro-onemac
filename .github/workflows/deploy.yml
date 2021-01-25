@@ -87,7 +87,7 @@ jobs:
         with:
           ssm_parameter_list: '/macstack/env.branch_name/nightwatch/TEST_USERS || /macstack/nightwatch/TEST_USERS'
       - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
-        uses: "ssm_parameter_list"
+        uses: bomb-on/aws-ssm-to-env@master
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
