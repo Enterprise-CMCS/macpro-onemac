@@ -19,8 +19,10 @@ module.exports = {
     'Login to SPA and Waiver Dashboard' : function(browser) {
         const testData = {
             username: browser.globals.user,
-            password: browser.globals.pass
+            password: browser.globals.pass,
+            userSelector: '//*[@id="email"]'
         };
+
         spa.devLogin(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
     },
@@ -33,6 +35,7 @@ module.exports = {
         spa.login(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
     },
+
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
         let title = 'SPA and Waiver Dashboard'
