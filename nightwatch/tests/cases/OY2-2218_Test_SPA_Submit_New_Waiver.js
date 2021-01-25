@@ -56,6 +56,7 @@ module.exports = {
             authority: "All other 1915(b) Waivers",
         }
         spa = browser.page.spaBasePage();
+        spa.expect.element(testData.selector).to.be.visible;
         spa.setValue(testData.selector, testData.authority).pause(500);
         spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },

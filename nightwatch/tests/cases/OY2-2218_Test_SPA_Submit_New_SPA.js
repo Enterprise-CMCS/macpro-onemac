@@ -30,7 +30,6 @@ module.exports = {
         browser.pause(timeout);
     },
 
-
     "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
         let testData = {
@@ -44,8 +43,6 @@ module.exports = {
         spa.verify.containsText(testData.selector, testData.state_option);
         spa.pause(timeout);
     },
-
-
 
     'Enter SPA ID' : function (browser, spa_id = spa.getTransmitNumber()) {
         let testData = {
@@ -78,8 +75,10 @@ module.exports = {
         let alert_msg = "Submission Completed";
         let msg = "Your submission has been received.";
 
-        browser.click('[type="submit"]');
-        browser.waitForElementVisible('body');
+        browser.url(function (current) {
+            browser.click('[type="submit"]').waitForElementPresent('body');
+            browser.expect.url().to.not.equals(current.value).before(timeout * 6);
+        });
         browser
             .assert.elementPresent(alert_selector)
             .assert.elementPresent(p_selector)
