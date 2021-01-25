@@ -58,7 +58,7 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           METRICS_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_METRICS_USERS] || secrets.METRICS_USERS }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
-          BRANCH_NAME: "echo $branch_name"
+          BRANCH_NAMES: $branch_name
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
         env:
@@ -86,7 +86,7 @@ jobs:
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter: "/macstack/${{ env.BUILD_STAGE }}/nightwatch/TEST_USERS"
+          ssm_parameter: "/macstack/${{ env.BRANCH_NAMES }}/nightwatch/TEST_USERS"
           env_variable_name: "TEST_USERS"
       - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
