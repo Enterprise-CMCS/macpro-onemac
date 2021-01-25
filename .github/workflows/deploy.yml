@@ -58,7 +58,6 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           METRICS_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_METRICS_USERS] || secrets.METRICS_USERS }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
-          BRANCH_NAMES: $branch_name
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
         env:
@@ -81,14 +80,22 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      - name: AWS SSM Build Secrets for Nightwatch test (test user name)
+      - name: Get default test user name
         uses: "bomb-on/aws-ssm-to-env@master"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter_list: |
-           /macstack/${{ env.branch_name }}/nightwatch/TEST_USERS,
-           /macstack/nightwatch/TEST_USERS
+          ssm_parameter: /macstack/default/nightwatch/TEST_USERS
+          env_variable_name: TEST_USER_NAME
+        continue-on-error: true
+      - name: Get branch specific test user name, if exists
+        uses: "bomb-on/aws-ssm-to-env@master"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: /macstack/${{ env.branch_name }}/nightwatch/TEST_USERS
+          env_variable_name: TEST_USER_NAME
+        continue-on-error: true
       - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
