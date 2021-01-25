@@ -1,15 +1,13 @@
 #!/bin/bash
 
-okta_branches=(
-'develop'
-'master'
-)
+
 
 echo $branch_name
 
-if [ "$branch_name" ==  "${okta_branches[@]}" ]
+if [ "$branch_name" ==  "develop" ]  || [ "$branch_name" = "master" ]
 then
   ./test.sh
 else
+  echo "This branch is not develop or master, it is $branch_name branch"
   ./test.sh --dev
 fi
