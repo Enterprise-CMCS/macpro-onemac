@@ -82,6 +82,8 @@ jobs:
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: AWS SSM Build Secrets for Nightwatch test (test user name)
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: "/macstack/${GITHUB_REF##*/}/nightwatch/TEST_USERS"
           env_variable_name: "TEST_USERS"
