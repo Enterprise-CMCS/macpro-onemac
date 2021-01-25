@@ -81,7 +81,7 @@ jobs:
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Get default test user name
-        uses: "bomb-on/aws-ssm-to-env@master"
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
@@ -89,7 +89,7 @@ jobs:
           env_variable_name: TEST_USER_NAME
         continue-on-error: true
       - name: Get branch specific test user name, if exists
-        uses: "bomb-on/aws-ssm-to-env@master"
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
