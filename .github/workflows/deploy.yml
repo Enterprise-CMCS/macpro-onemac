@@ -86,7 +86,7 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: /macstack/default/nightwatch/TEST_USERS
-          env_variable_name: TEST_USER_NAME
+          env_variable_name: TEST_USERS
         continue-on-error: true
       - name: Get branch specific test user name, if exists
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
@@ -94,15 +94,24 @@ jobs:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
           ssm_parameter: /macstack/${{ env.branch_name }}/nightwatch/TEST_USERS
-          env_variable_name: TEST_USER_NAME
+          env_variable_name: TEST_USERS
         continue-on-error: true
-      - name: AWS SSM Build Secrets for  Nightwatch test (test user password)
+      - name: Get default test user password
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
           AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         with:
-          ssm_parameter: "/macstack/${{ env.branch_name }}/nightwatch/TEST_USER_PASSWORD /macstack/nightwatch/TEST_USERS"
+          ssm_parameter: "/macstack/default/nightwatch/TEST_USER_PASSWORD"
+          env_variable_name: TEST_USER_PASSWORD
+        continue-on-error: true
+      - name: Get branch specific test user password
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: "/macstack/${{ env.branch_name }}/nightwatch/TEST_USER_PASSWORD"
           env_variable_name: "TEST_USER_PASSWORD"
+        continue-on-error: true
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
