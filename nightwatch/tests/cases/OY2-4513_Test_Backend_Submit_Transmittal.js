@@ -1,6 +1,8 @@
 
 let spa;
 const timeout = 1000;
+var test_id_num = 3101;
+
 module.exports = {
     "@tags": ["badtransmittal"],
     before : function(browser) {
@@ -58,7 +60,6 @@ module.exports = {
     "Submit Bad SPA" : function (browser) {
         let backend_response = "[id*=backendResponse]";
 
-        let alert_msg = "Submission Completed";
         let msg = "{\"error\":\"Transmittal ID State/Territory Not Valid\"}";
 
         browser.click('[type="submit"]');
@@ -68,5 +69,72 @@ module.exports = {
             .assert.value(backend_response, msg)
             .pause(timeout);
     },
+
+    "Refresh Valid 'Dev Backend Test'": function (browser) {
+        browser.url(browser.launch_url +'/devbackendtest')
+        browser.expect.url().to.contain('/devbackendtest').before(timeout * 5);
+        browser.pause(timeout);
+    },
+
+    "Enter Valid SPA ID" : function (browser, spa_id = "AL-11-") {
+
+        test_id_num = test_id_num + 1;
+        let testData = {
+            selector: '@transmittal',
+            spa_id: spa_id + test_id_num,
+        };
+
+        spa.click(testData.selector);
+        spa.setValue(testData.selector, testData.spa_id);
+        browser.pause(timeout / 2);
+        spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
+
+    },
+
+    "Submit Valid SPA Id" : function (browser) {
+        let backend_response = "[id*=backendResponse]";
+
+        let msg = "\"Submission successfull!\"";
+
+        browser.click('[type="submit"]');
+        browser.pause(timeout / 2);
+        browser.waitForElementVisible('body');
+        browser
+            .assert.value(backend_response, msg)
+            .pause(timeout);
+    },
+
+    "Refresh Dup 'Dev Backend Test'": function (browser) {
+        browser.url(browser.launch_url +'/devbackendtest')
+        browser.expect.url().to.contain('/devbackendtest').before(timeout * 5);
+        browser.pause(timeout);
+    },
+
+    "Enter Duplicate SPA ID" : function (browser, spa_id = "AL-11-") {
+        let testData = {
+            selector: '@transmittal',
+            spa_id: spa_id + test_id_num,
+        };
+
+        spa.click(testData.selector);
+        spa.setValue(testData.selector, testData.spa_id);
+        browser.pause(timeout / 2);
+        spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
+
+    },
+
+    "Submit Dup Id Submission Response" : function (browser) {
+        let backend_response = "[id*=backendResponse]";
+
+        let msg = "{\"error\":\"Duplicate ID\"}";
+
+        browser.click('[type="submit"]');
+        browser.pause(timeout / 2);
+        browser.waitForElementVisible('body');
+        browser
+            .assert.value(backend_response, msg)
+            .pause(timeout);
+    },
+
 
 };
