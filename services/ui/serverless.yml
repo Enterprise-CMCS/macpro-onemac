@@ -3,6 +3,7 @@ service: ui
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${env:IAM_PATH, "/"}
+  wafLoggingBucket: ${ssm:/configuration/${self:custom.stage}/wafLoggingBucket/ARN~true, ssm:/configuration/default/wafLoggingBucket/ARN~true, ""}
 
 provider:
   name: aws
@@ -198,25 +199,21 @@ resources:
           RoleARN: !GetAtt DeliveryRole.Arn
           BucketARN: !Join
             - ''
-            - - 'arn:aws:s3:::'
-              - !Ref s3bucket
+            - - '${self:custom.wafLoggingBucket}'
+#              - !Ref s3bucket
           BufferingHints:
             IntervalInSeconds: 300
             SizeInMBs: 5
           CompressionFormat: UNCOMPRESSED
 
+
+
 #    s3bucket:
 #      Type: AWS::S3::Bucket
-#      Properties:
-#        VersioningConfiguration:
-#          Status: Enabled
-
-    s3bucket:
-      Type: AWS::S3::Bucket
-      DeletionPolicy: Retain
-      Properties: {
-        BucketName: cms-cloud-116229642442-us-east-1
-        }
+#      DeletionPolicy: Retain
+#      Properties: {
+#        BucketName: cms-cloud-116229642442-us-east-1
+#        }
 
 
 
@@ -270,12 +267,13 @@ resources:
               Resource:
                 - !Join
                   - ''
-                  - - 'arn:aws:s3:::'
-                    - !Ref s3bucket
+                  - - '${self:custom.wafLoggingBucket}'
+#                    - !Ref s3bucket
                 - !Join
                   - ''
-                  - - 'arn:aws:s3:::'
-                    - !Ref s3bucket
+#                  - - 'arn:aws:s3:::'
+                   - - '${self:custom.wafLoggingBucket}'
+#                    - !Ref s3bucket
                     - '/*'
         Roles:
           - !Ref DeliveryRole
