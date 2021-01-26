@@ -1,10 +1,48 @@
-import { getLinksHtml } from "./email-util";
+import { getLinksHtml } from "./changeRequest-util";
+import dynamoDb from "../libs/dynamodb-lib";
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
  * Waiver RAI submission specific email generation functions.
  * @class
  */
-class WaiverRAIEmailTemplates {
+class WaiverRAI {
+  /**
+   * Waiver RAI Submissions require that the Package ID is in the system.
+   * @param {Object} data the received data
+   * @returns {String} any errors
+   */
+  async fieldsValid(data) {
+    let areFieldsValid = false;
+    let whyNot = "";
+
+    const params = {
+      TableName: process.env.spaIdTableName,
+      // 'Key' defines the partition key and sort key of the item to be retrieved
+      // - 'id': change request ID
+      Key: {
+        id: data.transmittalNumber,
+      },
+    };
+    console.log("the params for checking", params);
+    try {
+      const result = await dynamoDb.get(params);
+
+      if (result.Item) {
+        console.log("the Item exists", result);
+        areFieldsValid = true;
+      } else {
+        console.log("result.Item does not exist");
+        areFieldsValid = false;
+        whyNot = ERROR_MSG.ID_NOT_FOUND;
+      }
+    } catch (error) {
+      console.log("packageExists got an error: ", error);
+    }
+
+    return { areFieldsValid, whyNot };
+  }
+
   /**
    * Waiver RAI submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
@@ -81,6 +119,6 @@ class WaiverRAIEmailTemplates {
   }
 }
 
-const instance = new WaiverRAIEmailTemplates();
+const instance = new WaiverRAI();
 Object.freeze(instance);
 export default instance;

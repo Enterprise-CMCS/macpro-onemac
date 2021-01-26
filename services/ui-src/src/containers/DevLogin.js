@@ -1,79 +1,105 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
-import { FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-import LoaderButton from "../components/LoaderButton";
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
-import AlertBar from "../components/AlertBar";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import PageTitleBar from "../components/PageTitleBar";
 import config from "../utils/config";
+import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import { Alert } from "@cmsgov/design-system";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
-  const [isLoading, setIsLoading] = useState(false);
+  const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
+  const [alert, setAlert] = useState();
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
   });
-  const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
 
-  PageTitleBar.setPageTitleInfo({ heading: "Developer Login", text: "" });
+  const jumpToPageTitle = () => {
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    if (elmnt) elmnt.scrollIntoView();
+  };
 
-  function validateForm() {
-    return fields.email.length > 0 && fields.password.length > 0;
-  }
+  useEffect(() => {
+    if (alert && alert.heading && alert.heading !== "") {
+      jumpToPageTitle();
+    }
+  }, [alert]);
+
+  const renderAlert = (alert) => {
+    if (!alert) return;
+    if (alert.heading && alert.heading !== "") {
+      return (
+        <div className="alert-bar">
+          <Alert variation={alert.type} heading={alert.heading}>
+            <p className="ds-c-alert__text">{alert.text}</p>
+          </Alert>
+        </div>
+      );
+    }
+  };
 
   async function handleSubmit(event) {
+    let newAlert = ALERTS_MSG.NONE;
     event.preventDefault();
-
-    setIsLoading(true);
 
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
     } catch (error) {
       console.log("Error while logging in.", error);
-      AlertBar.alert(ALERTS_MSG.LOGIN_ERROR);
-      setIsLoading(false);
+      newAlert = ALERTS_MSG.LOGIN_ERROR;
     }
+    setAlert(newAlert);
   }
 
   return (
+    <div>
+    <PageTitleBar heading="Developer Login" text="" />
+    {renderAlert(alert)}
     <div className="form-container">
       {showDevLogin && (
-        <form onSubmit={handleSubmit}>
-          <h3>Developer Login</h3>
-          <div className="form-card">
-          <FormGroup controlId="email" bsSize="large">
-            <ControlLabel>Email</ControlLabel>
-            <FormControl
-              autoFocus
-              type="email"
-              value={fields.email}
-              onChange={handleFieldChange}
-            />
-          </FormGroup>
-          <FormGroup controlId="password" bsSize="large">
-            <ControlLabel>Password</ControlLabel>
-            <FormControl
-              type="password"
-              value={fields.password}
-              onChange={handleFieldChange}
-            />
-          </FormGroup>
-          <LoaderButton id="loginDevUserBtn"
-            block
-            type="submit"
-            bsSize="large"
-            isLoading={isLoading}
-            disabled={!validateForm()}
-          >
-            Login
-          </LoaderButton>
-          </div>
-        </form>
+        <div className="form-container">
+          <form onSubmit={handleSubmit}>
+            <h3>Developer Login</h3>
+            <div className="form-card">
+              <label
+                className="ds-c-label"
+                htmlFor="email"
+              >
+                Email<span className="required-mark">*</span>
+              </label>
+              <input
+                className="field"
+                type="email"
+                id="email"
+                name="email"
+                value={fields.email}
+                onChange={handleFieldChange}
+                required
+              ></input>
+              <label
+                className="ds-c-label"
+                htmlFor="password"
+              >
+                Password<span className="required-mark">*</span>
+              </label>
+              <input
+                className="field"
+                type="password"
+                id="password"
+                name="password"
+                value={fields.password}
+                onChange={handleFieldChange}
+                required
+              ></input>
+              <input id="loginDevUserBtn"
+                type="submit" className="form-submit" value="Login" />
+            </div>
+          </form>
+        </div>
       )}
-    </div>
+    </div></div>
   );
 }

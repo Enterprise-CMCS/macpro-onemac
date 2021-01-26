@@ -5,6 +5,7 @@ stage=${1:-dev}
 services=(
   'uploads'
   'app-api'
+  'stream-functions'
   'ui'
   'ui-waf-log-assoc'
   'ui-auth'

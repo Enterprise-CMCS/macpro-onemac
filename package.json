@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/CMSgov/macpro-quickstart-serverless/issues"
   },
-  "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme"
+  "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
+  "devDependencies": {
+    "eslint-plugin-react-hooks": "^4.2.0"
+  }
 }

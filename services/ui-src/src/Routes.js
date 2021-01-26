@@ -9,10 +9,11 @@ import SpaRai from "./changeRequest/SpaRai";
 import Waiver from "./changeRequest/Waiver";
 import WaiverRai from "./changeRequest/WaiverRai";
 import WaiverExtension from "./changeRequest/WaiverExtension";
-import Profile from "./containers/Profile"
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
+import Metrics from "./containers/Metrics";
+
 
 export const ROUTES = {
     DASHBOARD: '/dashboard',
@@ -22,6 +23,7 @@ export const ROUTES = {
     FAQ_WAIVER_ID: '/FAQ#waiver-id-format',
     HOME: '/',
     PROFILE: '/profile',
+    METRICS: '/metrics',
     DEVLOGIN: '/devlogin',
     SPA: '/spa',
     SPA_RAI: '/sparai',
@@ -42,14 +44,11 @@ export default function Routes() {
             <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
                 <DevLogin />
             </UnauthenticatedRoute>
-            <AuthenticatedRoute exact path={ROUTES.PROFILE}>
-                <Profile />
-            </AuthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
-                <Spa/>
+                <Spa />
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
                 <Waiver />
@@ -62,6 +61,9 @@ export default function Routes() {
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
                 <WaiverExtension />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+                <Metrics/>
             </AuthenticatedRoute>
             <Route>
                 <NotFound />

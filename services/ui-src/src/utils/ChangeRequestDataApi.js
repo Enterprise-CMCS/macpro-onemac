@@ -15,7 +15,7 @@ class ChangeRequestDataApi {
   async submit(data, uploadsList) {
     if (!data || !uploadsList || !data.type || uploadsList.length === 0) {
       console.log(
-        "Unable to submit data due to missing fields or uploads.",
+        "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
         data,
         uploadsList
       );
@@ -25,9 +25,10 @@ class ChangeRequestDataApi {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
+      console.log(JSON.stringify(data))
       return await API.post("changeRequestAPI", "/submit", {
-        body: data,
-      });
+          body: data,
+        });
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
@@ -66,6 +67,27 @@ class ChangeRequestDataApi {
   }
 
   /**
+   * Check to see if an id exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the ID exists in the back end
+   */
+  async packageExists(id) {
+    if (!id) {
+      console.log("ID was not specified for packageExists API call");
+      throw new Error("ID was not specified for packageExists API call");
+    }
+
+    try {
+      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
+
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking ID ${id}.`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Fetch a specific record from the backend.
    * @return {Array} a list of change requests
    */
@@ -80,6 +102,23 @@ class ChangeRequestDataApi {
       throw error;
     }
   }
+
+  /**
+   * Fetch a specific record from the backend.
+   * @return {Array} a list of change requests
+   */
+  async listAll() {
+    try {
+      return await API.get("changeRequestAPI", `/listall`);
+    } catch (error) {
+      console.log(
+          `There was an error fetching all change requests`,
+          error
+      );
+      throw error;
+    }
+  }
+
 }
 
 const instance = new ChangeRequestDataApi();

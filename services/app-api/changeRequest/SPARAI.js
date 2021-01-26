@@ -1,21 +1,62 @@
-import { getLinksHtml } from "./email-util";
+import { getLinksHtml } from "./changeRequest-util";
+import dynamoDb from "../libs/dynamodb-lib";
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
  * SPA RAI submission specific email generation functions.
  * @class
  */
-class SPARAIEmailTemplates {
+class SPARAI {
+
+/**
+ * SPA RAI Submissions require that the Package ID is in the system.
+ * @param {Object} data the received data
+ * @returns {String} any errors
+ */
+async fieldsValid(data) {
+    let areFieldsValid = false;
+    let whyNot = "";
+
+      const params = {
+        TableName: process.env.spaIdTableName,
+        // 'Key' defines the partition key and sort key of the item to be retrieved
+        // - 'id': change request ID
+        Key: {
+          id: data.transmittalNumber
+        }
+      };
+      console.log("the params for checking", params);
+      try {
+
+        const result = await dynamoDb.get(params);
+
+        if (result.Item) {
+          console.log("the Item exists", result);
+          areFieldsValid = true;
+        } else {
+          console.log("result.Item does not exist");
+          areFieldsValid = false;
+          whyNot = ERROR_MSG.ID_NOT_FOUND;
+        }
+
+      } catch (error) {
+        console.log("packageExists got an error: ", error);
+      }
+
+    return { areFieldsValid, whyNot };
+  }
+
   /**
    * SPA RAI submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
    */
-  getCMSEmail(data) {
-    const cmsEmail = {};
+    getCMSEmail(data) {
+        const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
-    cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
-    cmsEmail.HTML = `
+        cmsEmail.ToAddresses = [process.env.reviewerEmail];
+        cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
+        cmsEmail.HTML = `
         <p>The Submission Portal received a SPA RAI Submission:</p>
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -34,22 +75,22 @@ class SPARAIEmailTemplates {
         <p>Thank you!</p>
     `;
 
-    return cmsEmail;
-  }
+        return cmsEmail;
+    }
 
-  /**
-   * SPA RAI submission confimation email to State User wrapped in
-   * generic function name.
-   * @param {Object} data from the form submission.
-   * @returns {Object} email parameters in generic format.
-   */
-  getStateEmail(data) {
-    const stateEmail = {};
+    /**
+     * SPA RAI submission confimation email to State User wrapped in
+     * generic function name.
+     * @param {Object} data from the form submission.
+     * @returns {Object} email parameters in generic format.
+     */
+    getStateEmail(data) {
+        const stateEmail = {};
 
-    stateEmail.ToAddresses = [data.user.email];
-    stateEmail.Subject =
-      "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
-    stateEmail.HTML = `
+        stateEmail.ToAddresses = [data.user.email];
+        stateEmail.Subject =
+            "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.HTML = `
         <p>This response confirms the receipt of your SPA RAI submission:</p>
         <p>
             <br><b>SPA ID</b>: ${data.transmittalNumber}
@@ -74,10 +115,10 @@ class SPARAIEmailTemplates {
         <p>Thank you!</p>
     `;
 
-    return stateEmail;
-  }
+        return stateEmail;
+    }
 }
 
-const instance = new SPARAIEmailTemplates();
+const instance = new SPARAI();
 Object.freeze(instance);
 export default instance;

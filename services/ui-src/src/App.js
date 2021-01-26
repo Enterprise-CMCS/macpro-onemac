@@ -1,12 +1,7 @@
 import React, { useState, useEffect } from "react";
-
 import Routes from "./Routes";
 import Header from "./components/Header";
-import AlertBar from "./components/AlertBar";
 import { AppContext } from "./libs/contextLib";
-import { useHistory } from "react-router-dom";
-import PageTitleBar from "./components/PageTitleBar";
-
 import {Auth} from "aws-amplify";
 
 function App() {
@@ -15,7 +10,7 @@ function App() {
 
   useEffect(() => {
     onLoad();
-  });
+  }, []);
 
   async function onLoad() {
     try {
@@ -31,17 +26,11 @@ function App() {
     }
     setIsAuthenticating(false);
   }
-  // Dismiss the alert when the page changes.
-  useHistory().listen((location, action) => {
-    AlertBar.dismiss();
-  });
-
+  
   return (
     !isAuthenticating && (
       <div>
         <Header isAuthenticated={isAuthenticated} />
-        <PageTitleBar />
-        <AlertBar />
         <AppContext.Provider
           value={{ isAuthenticated, userHasAuthenticated }}
         >

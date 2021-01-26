@@ -50,39 +50,32 @@ export default class FileUploader extends Component {
     this.allUploadsComplete = false;
     this.readyCallback = props.readyCallback;
 
-    //Generate an array to keep track of the state of the file uploaders.
-    //This method allows for duplicate titles.
-    this.uploaders = [];
-    let uploaderHasFile = [];
-    let id = 0;
+    // Initialization of the uploaders
+    let uploaders = [];
     if (props.requiredUploads) {
-      props.requiredUploads.forEach((title) => {
-        this.uploaders[id] = {
-          id,
+      const requiredUploaders = props.requiredUploads.map((title) => {
+        return {
           title,
           isRequired: true,
-          isComplete: false,
+          hasFile: false,
         };
-        uploaderHasFile.push(false);
-        id++;
       });
+      uploaders = uploaders.concat(requiredUploaders);
     }
     if (props.optionalUploads) {
-      props.optionalUploads.forEach((title) => {
-        this.uploaders[id] = {
-          id,
+      const optionalUploaders = props.optionalUploads.map((title) => {
+        return {
           title,
           isRequired: false,
-          isComplete: false,
+          hasFile: false,
         };
-        uploaderHasFile.push(false);
-        id++;
       });
+      uploaders = uploaders.concat(optionalUploaders);
     }
 
-    // This state is used to be able to update the form when a change occurs.
-    this.state = { uploaderHasFile,
+    this.state = {
       errorMessages: [],
+      uploaders: uploaders,
     };
   }
 
@@ -93,88 +86,93 @@ export default class FileUploader extends Component {
   componentDidUpdate(prevProps) {
     // Make sure we only continue if the property has changed value to stop cascading calls.
     // If the showRequiredFieldErrors flag is true then show a missing required field error if needed.
-    if (this.props.showRequiredFieldErrors !== prevProps.showRequiredFieldErrors && this.state.errorMessages.length === 0) {
+    if (
+      this.props.showRequiredFieldErrors !==
+        prevProps.showRequiredFieldErrors &&
+      this.state.errorMessages.length === 0
+    ) {
+      // Checks if all required uploaders have a file
       let areAllComplete = true;
-      this.uploaders.forEach((uploader) => {
-        if (uploader.isRequired && !uploader.isComplete) {
+      this.state.uploaders.forEach((uploader) => {
+        if (uploader.isRequired && !uploader.hasFile) {
           areAllComplete = false;
         }
       });
 
-      if(!areAllComplete) {
-        this.setState({errorMessages: [MISSING_REQUIRED_MESSAGE]});
+      if (!areAllComplete) {
+        this.setState({ errorMessages: [MISSING_REQUIRED_MESSAGE] });
       }
     }
-}
+  }
 
   /**
    * Set the provided uploader information.
    * @param {Object} event the event that triggered this action.
-   * @param {number} id the ID of the uploader
+   * @param {Object} uploader the uploader that the files are associated with
    * @param {Object} files the list of files provided by the input field
    */
-  handleFileChange(event, id, files = null) {
+  handleAddFiles(event, uploader, files = null) {
     // The state change here will result in kickin off a second empty event, so ignore it.
-    if (event === 0) {
+    if (event === 0 || !files || files.length === 0) {
       return;
     }
 
-    let uploader = this.uploaders[id];
+    let filesToUpload = [];
     let errorMessages = [];
 
-    // If there is a file specified then
-    if (files && files.length === 1) {
-      // First check if the upload is larger than what is allowed
-      if (files[0].size > MAX_FILE_SIZE_BYTES) {
-        this.handleFileClear(event, id);
+    // Adds files to uploader
+    for (let file of files) {
+      // Adds error message if any of the files are too large
+      if (file.size > MAX_FILE_SIZE_BYTES) {
         errorMessages.push(SIZE_TOO_LARGE_MESSAGE);
-        uploader.isComplete = false;
-        uploader.file = null;
-      } else {
-        uploader.isComplete = true;
-        uploader.file = files[0];
+        continue;
       }
-    }
-    // Else there is no file selected (e.g. clear the selected file). 
-    else {
-      uploader.isComplete = false;
-      uploader.file = null;
+
+      filesToUpload.push(file);
+      uploader.hasFile = true;
     }
 
-    //Update the state, so the form is updated.
-    let newState = this.state.uploaderHasFile;
-    newState[id] = uploader.isComplete;
-    this.setState({ uploaderHasFile: newState });
+    if (Array.isArray(uploader.files)) {
+      uploader.files = uploader.files.concat(filesToUpload);
+    } else {
+      uploader.files = filesToUpload;
+    }
 
     // Set the overall completeness of the input, so the overall form knows the required files are selected.
     let areAllComplete = true;
-    this.uploaders.forEach((uploader) => {
-      if (uploader.isRequired && !uploader.isComplete) {
+    this.state.uploaders.forEach((uploader) => {
+      if (uploader.isRequired && !uploader.hasFile) {
         areAllComplete = false;
       }
     });
 
     // Clear any error messages if everything is ready.
-    if(!areAllComplete && this.props.showRequiredFieldErrors) {
+    if (!areAllComplete && this.props.showRequiredFieldErrors) {
       errorMessages.push(MISSING_REQUIRED_MESSAGE);
-    } 
+    }
 
     this.allUploadsComplete = areAllComplete;
     if (this.readyCallback) {
       this.readyCallback(this.allUploadsComplete);
     }
 
-    this.setState({errorMessages: errorMessages});
+    this.setState({ errorMessages: errorMessages });
   }
 
   /**
-   * Clear the file selection for the provided uploader.
-   * @param {Object} event the event that triggered this action.
-   * @param {number} id the ID of the uploader
+   * Remove the file selection from the provided uploader
+   * @param {Object} uploader the uploader that the file is associated with
+   * @param {Object} file the event that triggered this action
    */
-  handleFileClear(event, id) {
-    document.getElementById("uploader-input-" + id).value = "";
-    this.handleFileChange(event, id);
+  handleRemoveFile(uploader, file) {
+    const fileIndex = uploader.files.indexOf(file);
+    uploader.files.splice(fileIndex, 1);
+
+    this.setState({ uploaders: this.state.uploaders });
+
+    if (!uploader.files || uploader.files.length === 0) {
+      uploader.hasFile = false;
+    }
   }
 
   /**
@@ -182,11 +180,12 @@ export default class FileUploader extends Component {
    */
   uploadFiles = () => {
     let files = [];
-    this.uploaders.forEach((uploader) => {
-      if (uploader.file) {
-        let file = uploader.file;
-        file.title = uploader.title;
-        files.push(uploader.file);
+    this.state.uploaders.forEach((uploader) => {
+      if (uploader.files) {
+        uploader.files.forEach((file) => {
+          file.title = uploader.title;
+        });
+        files = files.concat(uploader.files);
       }
     });
 
@@ -201,10 +200,10 @@ export default class FileUploader extends Component {
     // Generate each file input control first.
     let reqControls = [];
     let optControls = [];
-    this.uploaders.forEach((uploader) => {
+    this.state.uploaders.forEach((uploader, index) => {
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
-        <tr key={uploader.id}>
+        <tr key={index}>
           <td className="uploader-type-cell">
             <div className="uploader-type-label">
               {uploader.title}
@@ -213,11 +212,12 @@ export default class FileUploader extends Component {
           </td>
           <td className="uploader-input-cell">
             <label className="uploader-input-label">
-              Choose File
+              Add File
               <input
                 type="file"
-                id={"uploader-input-" + uploader.id}
-                name={"uploader-input-" + uploader.id}
+                id={"uploader-input-" + index}
+                name={"uploader-input-" + index}
+                multiple
                 style={{
                   width: "0.1px",
                   height: "0.1px",
@@ -227,28 +227,29 @@ export default class FileUploader extends Component {
                   zIndex: "-1",
                 }}
                 onChange={(event) =>
-                  this.handleFileChange(event, uploader.id, event.target.files)
+                  this.handleAddFiles(event, uploader, event.target.files)
                 }
               />
             </label>
-            </td>
-            <td className="uploaded-filename-cell">
-            <span className="uploader-input-text">
-              {this.state.uploaderHasFile[uploader.id]
-                ? uploader.file.name
-                : "No file chosen"}
-            </span>
           </td>
-          <td className="uploader-controls-cell">
-            {this.state.uploaderHasFile[uploader.id] && (
-              <button
-                className="uploader-clear-button"
-                title="Remove file"
-                onClick={(event) => this.handleFileClear(event, uploader.id)}
-              >
-                <FontAwesomeIcon icon={faTimes} size="2x" />
-              </button>
-            )}
+          <td>
+            {uploader.hasFile
+              ? uploader.files.map((file, index) => {
+                  return (
+                    <div key={index} className="uploader-file-items">
+                      <span>{file.name}</span>
+                      <button
+                        type="button"
+                        className="uploader-clear-button"
+                        title="Remove file"
+                        onClick={() => this.handleRemoveFile(uploader, file)}
+                      >
+                        <FontAwesomeIcon icon={faTimes} size="2x" />
+                      </button>
+                    </div>
+                  );
+                })
+              : "No file chosen"}
           </td>
         </tr>
       );
@@ -264,15 +265,17 @@ export default class FileUploader extends Component {
 
     return (
       <div>
-        <p className="req-message">Maximum file size of 50MB.</p>
+        <p className="req-message">
+          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+        </p>
         <p className="req-message">
           <span className="required-mark">*</span> indicates required
           attachment.
         </p>
         <div className="ds-u-color--error">
-          {this.state.errorMessages.map((message, index) => 
-           <div key={index}>{message}</div>
-          )}
+          {this.state.errorMessages.map((message, index) => (
+            <div key={index}>{message}</div>
+          ))}
         </div>
         <div className="upload-card">
           <div className="uploader">

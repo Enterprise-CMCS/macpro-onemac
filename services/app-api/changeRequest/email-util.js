@@ -1,4 +1,4 @@
-import {format, addDays} from "date-fns";
+ import {DateTime} from "luxon";
 
 /**
  * Get HTML containing links representing the attached documents.
@@ -18,12 +18,12 @@ export function getLinksHtml(uploads) {
 }
 
 /**
- * Get the 90th day from the created Date (with created Date as day 0)
- * @param {Date} startDate the start date of the 90 day period.
- * @returns {String} CMS approved 90th day formatted for readability.
+ * takes a UTC timestamp, converts to CMS TimeZone, and formats it in the CMS email way
+ * @param {Number} theTimestamp the Unix timestamp to be used as the date
+ * @returns {String} CMS approved date format.
  */
-export function get90thDay(startDate) {
-    var realNumberOfDays = 90;
+export function getCMSDateFormat(theTimestamp) {
+    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
 
-    return format(addDays(startDate, realNumberOfDays), "MMMM d, yyyy");
+    return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
