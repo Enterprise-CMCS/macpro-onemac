@@ -272,7 +272,7 @@ resources:
                 - !Join
                   - ''
 #                  - - 'arn:aws:s3:::'
-                   - - '${self:custom.wafLoggingBucket}'
+                  - - '${self:custom.wafLoggingBucket}'
 #                    - !Ref s3bucket
                     - '/*'
         Roles:
