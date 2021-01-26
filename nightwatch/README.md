@@ -52,14 +52,14 @@ APPLICATION_ENDPOINT=https://www.mytestpage.url
 
 To run tests:
     
-`node nightwatch -c conf/nightwatch.conf.js # runs all tests`
+`node nightwatch -c nightwatch/conf/nightwatch.conf.js # runs all tests`
 
 ####**New Commands**
 To run tests (by browser type):
 
-For Chrome: `npm run chrome [<path/to/testfile>]`
+For Chrome: `npm run chrome <path/to/testfile>`
     
-For Firefox: `npm run firefox [<path/to/testfile>]`
+For Firefox: `npm run firefox <path/to/testfile>`
 
 To update packages: `npm run update`
 
