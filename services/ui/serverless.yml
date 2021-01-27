@@ -5,6 +5,7 @@ custom:
   iamPath: ${env:IAM_PATH, "/"}
   wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN~true, ""}
 
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -200,7 +201,7 @@ resources:
           BucketARN: !Join
             - ''
             - - '${self:custom.wafLoggingBucket}'
-          Prefix: AWSLogs/WAF/${self:custom.stage}/  
+          Prefix: AWSLogs/${AWS::AccountId}/WAF/${self:custom.stage}/  
           BufferingHints:
             IntervalInSeconds: 300
             SizeInMBs: 5
@@ -251,21 +252,13 @@ resources:
                 - 's3:ListBucket'
                 - 's3:ListBucketMultipartUploads'
                 - 's3:PutObject'
-#              Resource:
-#                !Join
-#                  - ''
-#                  - - 'arn:aws:s3:::test-ish-waflogs/*'
               Resource:
                 - !Join
                   - ''
                   - - '${self:custom.wafLoggingBucket}'
-#                  - - 'arn:aws:s3:::'
-#                    - !Ref s3bucket
                 - !Join
                   - ''
                   - - '${self:custom.wafLoggingBucket}'
-#                    - !Ref s3bucket
-#                    - '/*'
                     - '/*'
         Roles:
           - !Ref DeliveryRole
