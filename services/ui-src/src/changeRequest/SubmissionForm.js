@@ -100,7 +100,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    * @param {value} Transmittal Number Field Entered on Change Event.
    * @return the validation error message or undefined
    */
-  function validateTransmittalNumber(value) {
+  function validateTransmittalNumber(value, authority) {
     let errorMessage;
 
     if (
@@ -113,7 +113,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER ||
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
     ) {
-      errorMessage = validateWaiverId(value);
+      errorMessage = validateWaiverId(value, authority);
     } else {
       throw new Error(`Unable to validate invalid type ${changeRequestType}.`);
     }
@@ -134,7 +134,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
 
     const newTransmittalNumber = event.target.value;
-    let errorMessage = validateTransmittalNumber(newTransmittalNumber);
+    let errorMessage = validateTransmittalNumber(newTransmittalNumber, updatedRecord["waiverAuthority"]);
 
     // when we have a valid ID, check for exists/not exists based on type
     if (errorMessage === undefined && newTransmittalNumber) {
@@ -174,7 +174,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = event.target.value;
-
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
 
@@ -187,6 +186,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // state set functions have to be at top level
     // because we can't trust they got set, can't use them in the function
+
     setChangeRequest(updatedRecord);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
@@ -221,7 +221,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
 
     transmittalNumberMessage = validateTransmittalNumber(
-      changeRequest.transmittalNumber
+      changeRequest.transmittalNumber, changeRequest.waiverAuthority
     );
 
     // check which alert to show.  Fields first, than attachments
