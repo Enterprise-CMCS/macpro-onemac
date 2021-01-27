@@ -179,6 +179,7 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
+
   Outputs:
     S3BucketName:
       Value:
