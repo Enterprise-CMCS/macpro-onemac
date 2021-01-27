@@ -201,7 +201,7 @@ resources:
           BucketARN: !Join
             - ''
             - - '${self:custom.wafLoggingBucket}'
-          Prefix: AWSLogs/${AWS::AccountId}/WAF/${self:custom.stage}/  
+          Prefix: AWSLogs/WAF/${self:custom.stage}/  
           BufferingHints:
             IntervalInSeconds: 300
             SizeInMBs: 5
