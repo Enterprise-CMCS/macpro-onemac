@@ -37,32 +37,32 @@ function logout() {
 function Header(props) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
-  
+
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
-/**
- * Hook that alerts clicks outside of the passed ref
- */
-function useOutsideAlerter(ref) {
+  /**
+   * Hook that alerts clicks outside of the passed ref
+   */
+  function useOutsideAlerter(ref) {
     useEffect(() => {
-        /**
-         * Alert if clicked on outside of element
-         */
-        function handleClickOutside(event) {
-            if (ref.current && !ref.current.contains(event.target)) {
-                setShowMenu(false);
-            }
+      /**
+       * Alert if clicked on outside of element
+       */
+      function handleClickOutside(event) {
+        if (ref.current && !ref.current.contains(event.target)) {
+          setShowMenu(false);
         }
+      }
 
-        // Bind the event listener
-        document.addEventListener("mousedown", handleClickOutside);
-        return () => {
-            // Unbind the event listener on clean up
-            document.removeEventListener("mousedown", handleClickOutside);
-        };
+      // Bind the event listener
+      document.addEventListener("mousedown", handleClickOutside);
+      return () => {
+        // Unbind the event listener on clean up
+        document.removeEventListener("mousedown", handleClickOutside);
+      };
     }, [ref]);
-}
+  }
 
   /**
    * Renders the USA bar
@@ -118,12 +118,12 @@ function useOutsideAlerter(ref) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (props.isAuthenticated) {
       return (
-        <div className="nav-right" ref={wrapperRef} >
+        <div className="nav-right" ref={wrapperRef}>
           <button className="dropdown" onClick={() => setShowMenu(!showMenu)}>
             My Account&nbsp;
             <svg
               width="11"
-              height="5"
+              height="9"
               viewBox="0 0 11 5"
               fill="none"
               xmlns="http://www.w3.org/2000/svg"
@@ -131,7 +131,7 @@ function useOutsideAlerter(ref) {
               <path
                 d="M5.66016 4.52295L0.660156 0.0229473L10.6602 0.0229473L5.66016 4.52295Z"
                 fill="white"
-              />
+              ></path>
             </svg>
           </button>
           {showMenu && (
@@ -151,7 +151,13 @@ function useOutsideAlerter(ref) {
                 </svg>
                 &nbsp; Manage account
               </Link>
-              <Link to={ROUTES.HOME} onClick={() => {setShowMenu(false);logout();}}>
+              <Link
+                to={ROUTES.HOME}
+                onClick={() => {
+                  setShowMenu(false);
+                  logout();
+                }}
+              >
                 <svg
                   width="17"
                   height="12"
