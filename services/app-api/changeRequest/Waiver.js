@@ -55,10 +55,10 @@ async fieldsValid(data) {
 
         // amendmends modify existing IDs EXCEPT for Amendment Ks, which need a new ID
         case "amendment":
-          if (data.waiverAuthority==="1915(c)" && idExists) {
+          if (data.waiverAuthority==="1915(c)" && !idExists) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
-          } else if (!idExists) {
+          } else if (!idExists && ! data.waiverAuthority==="1915(c)" ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_AMENDMENT_NO_ID;
           }
