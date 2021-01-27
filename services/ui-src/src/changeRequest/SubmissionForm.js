@@ -153,7 +153,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           formInfo.idLabel +
           " and try entering it again.";
       }
-      if (!formInfo.idMustExist && dupID) {
+      if (!formInfo.idMustExist && dupID
+          && updatedRecord["waiverAuthority"] !== "1915(c)"
+          && updatedRecord["actionType"] !== "amendment"
+      ) {
         errorMessage =
           "According to our records, this " +
           formInfo.idLabel +
