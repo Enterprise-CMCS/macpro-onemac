@@ -65,20 +65,6 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: '12.x'
-      - name: cache tools
-        uses: actions/cache@v2
-        with:
-          path: |
-            .github/node_modules
-          key: ${{ runner.os }}-${{ hashFiles('./.github/package-lock.json') }}
-      - name: install tools
-        run: |
-          pushd .github
-            if [ ! -d node_modules ]; then
-              npm ci
-            fi
-          popd
-          echo "PATH=$(pwd)/.github/node_modules/.bin:\$PATH" >> set.env.sh
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
@@ -92,22 +78,57 @@ jobs:
             services/ui-auth/node_modules
             services/ui-src/node_modules
             node_modules
+            tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+      - name: Get default test user name
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: /macstack/default/nightwatch/TEST_USERS
+          env_variable_name: TEST_USERS
+        continue-on-error: true
+      - name: Get branch specific test user name, if exists
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: /macstack/${{ env.branch_name }}/nightwatch/TEST_USERS
+          env_variable_name: TEST_USERS
+        continue-on-error: true
+      - name: Get default test user password
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: "/macstack/default/nightwatch/TEST_USER_PASSWORD"
+          env_variable_name: TEST_USER_PASSWORD
+        continue-on-error: true
+      - name: Get branch specific test user password
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: "/macstack/${{ env.branch_name }}/nightwatch/TEST_USER_PASSWORD"
+          env_variable_name: "TEST_USER_PASSWORD"
+        continue-on-error: true
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
           # This can optionally be set as a variable in GitHub Actions Secrets
-          source set.env.sh
           ./deploy.sh $STAGE_PREFIX$branch_name
-      - name: Run TestCafe suite
+      - name: Run Nightwatch suite
+        if: env.branch_name != 'production'
         run: |
-          source set.env.sh
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           popd
-          ./test.sh
+          ./run.sh
       - name: Store test reults
         uses: actions/upload-artifact@v2
         with:
           name: test_results
-          path: tests/testcafe/testcafe_results
+          path: tests/nightwatch/tests_output
