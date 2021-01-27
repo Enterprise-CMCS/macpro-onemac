@@ -265,7 +265,7 @@ resources:
                   - - '${self:custom.wafLoggingBucket}'
 #                    - !Ref s3bucket
 #                    - '/*'
-                    - '/AWSLogs/WAF/${self:custom.stage}'
+                    - '/AWSLogs/*'
         Roles:
           - !Ref DeliveryRole
 
