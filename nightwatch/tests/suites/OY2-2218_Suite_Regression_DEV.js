@@ -43,4 +43,17 @@ module.exports = {
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
     },
+    "SPA Submission Backend Test": function (browser) {
+        const tempExt = require('../cases/OY2-4513_Test_Backend_Submit_Transmittal');
+        tempExt["Click on 'Dev Backend Test'"](browser);
+        tempExt["Enter Bad SPA ID"](browser);
+        tempExt["Submit Bad SPA"](browser);
+        tempExt["Refresh Valid 'Dev Backend Test'"](browser);
+        tempExt["Enter Valid SPA ID"](browser);
+        tempExt["Submit Valid SPA Id"](browser);
+        tempExt["Refresh Dup 'Dev Backend Test'"](browser);
+        tempExt["Enter Duplicate SPA ID"](browser);
+        tempExt["Submit Dup Id Submission Response"](browser);
+
+    }
 };
