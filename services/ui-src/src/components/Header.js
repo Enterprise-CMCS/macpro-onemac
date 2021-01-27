@@ -119,7 +119,7 @@ function Header(props) {
     if (props.isAuthenticated) {
       return (
         <div className="nav-right" ref={wrapperRef}>
-          <button className="dropdown" onClick={() => setShowMenu(!showMenu)}>
+          <button className="dropdown" id="myAccountLink" onClick={() => setShowMenu(!showMenu)}>
             My Account&nbsp;
             <svg
               width="11"
@@ -136,7 +136,7 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
-              <Link to={ROUTES.FAQ} onClick={() => setShowMenu(false)}>
+              <Link to={ROUTES.FAQ} id="manageAccountLink" onClick={() => setShowMenu(false)}>
                 <svg
                   width="14"
                   height="15"
@@ -153,6 +153,7 @@ function Header(props) {
               </Link>
               <Link
                 to={ROUTES.HOME}
+                id="logoutLink"
                 onClick={() => {
                   setShowMenu(false);
                   logout();
