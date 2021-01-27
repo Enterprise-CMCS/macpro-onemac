@@ -25,17 +25,21 @@ export function validateSpaId(spaId) {
  * Validate Waiver Id Transmittal Number Format
  * @return
  */
-export function validateWaiverId(waiverId) {
+export function validateWaiverId(waiverId, authority) {
 
     let errorMessage = undefined
-    let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
-
-    let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+    let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
+    let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M##"
+    if (authority === "1915(c)")
+    {
+        WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.##"
+        RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
+    }
 
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
     }  else if (!hasValidStateCode(waiverId)) {
-        errorMessage = `The SPA ID must contain valid Territory/State Code`
+        errorMessage = `The Waiver Number must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
     }
