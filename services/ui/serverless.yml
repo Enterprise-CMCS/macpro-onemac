@@ -200,6 +200,7 @@ resources:
           BucketARN: !Join
             - ''
             - - '${self:custom.wafLoggingBucket}'
+          Prefix: AWSLogs/WAF/${self:custom.stage}/  
           BufferingHints:
             IntervalInSeconds: 300
             SizeInMBs: 5
@@ -265,7 +266,7 @@ resources:
                   - - '${self:custom.wafLoggingBucket}'
 #                    - !Ref s3bucket
 #                    - '/*'
-                    - '/AWSLogs/*'
+                    - '/*'
         Roles:
           - !Ref DeliveryRole
 
