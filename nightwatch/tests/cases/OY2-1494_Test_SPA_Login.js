@@ -36,7 +36,6 @@ module.exports = {
         spa.verify.visible('@loginTitle');
     },
 
-
     'Logout of SPA and Waiver Dashboard' : function (browser) {
         let title = 'SPA and Waiver Dashboard'
         spa.logout();
