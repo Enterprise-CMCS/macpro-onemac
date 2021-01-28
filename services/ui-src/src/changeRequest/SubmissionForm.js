@@ -145,16 +145,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       } catch (error) {
         console.log("There was an error submitting a request.", error);
       }
-      if (
-          (
-              updatedRecord["actionType"] !== "new"
-              && !dupID
-          )
-          ||
-          (
-              !dupID
-              && updatedRecord["waiverAuthority"] === "1915(c)"
-          )
+
+        if (
+          updatedRecord["actionType"] !== "new"
+          && !dupID
+          && updatedRecord["waiverAuthority"] !== "1915(c)"
+          || ( updatedRecord["waiverAuthority"] === "1915(c)"
+          && updatedRecord["actionType"] !== "amendment"
+          && !dupID )
       ) {
         errorMessage =
           "According to our records, this " +
@@ -163,6 +161,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           formInfo.idLabel +
           " and try entering it again.";
       }
+
       if (updatedRecord["actionType"] === "new"
           && dupID
           && updatedRecord["waiverAuthority"] !== "1915(c)"
