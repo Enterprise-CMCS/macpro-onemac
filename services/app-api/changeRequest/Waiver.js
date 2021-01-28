@@ -50,7 +50,7 @@ async fieldsValid(data) {
           if (!idExists)  {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_RENEWAL_ID;
-          } else if (idExists && data.waiverAuthority==="1915(c)" ) {
+          } else if (idExists && data.waiverAuthority==="1915(c)"  &&  data.actionType !== "amendment") {
               areFieldsValid = false;
               whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
           }
@@ -58,9 +58,12 @@ async fieldsValid(data) {
 
         // amendmends modify existing IDs EXCEPT for Amendment Ks, which need a new ID
         case "amendment":
-          if (!idExists && ! data.waiverAuthority==="1915(c)" ) {
+          if (!idExists && data.waiverAuthority !== "1915(c)" ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_AMENDMENT_NO_ID;
+          } else if ( idExists && data.waiverAuthority === "1915(c)" && data.actionType !== "amendment" )  {
+              areFieldsValid = false;
+              whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
           }
           break;
 
