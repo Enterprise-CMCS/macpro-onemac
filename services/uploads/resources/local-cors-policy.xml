@@ -6,5 +6,6 @@
    <AllowedMethod>GET</AllowedMethod>
    <AllowedHeader>*</AllowedHeader>
    <ExposeHeader>Access-Control-Allow-Origin</ExposeHeader>
+   <ExposeHeader>ETag</ExposeHeader>
  </CORSRule>
 </CORSConfiguration>
