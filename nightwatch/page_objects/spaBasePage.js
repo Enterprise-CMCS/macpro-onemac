@@ -45,6 +45,7 @@ const commands = {
     },
 
     logout: function () {
+        this.api.click(this.elements.myAccountLink).pause(100);
         this.api.click(this.elements.logout);
     },
 
