@@ -120,7 +120,6 @@ function loadServices() {
         fs.appendFileSync(serviceLog, err);
     }
 
-
     try {
         Services.chromedriver = require('chromedriver');
     } catch (err) {
