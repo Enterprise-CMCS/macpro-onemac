@@ -188,6 +188,7 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
+    ##This code block enables logging on waf and sends all logs to s3 and shipped off to splunk.  
     Firehose:
       Type: AWS::KinesisFirehose::DeliveryStream
       Properties:
@@ -206,8 +207,6 @@ resources:
             IntervalInSeconds: 300
             SizeInMBs: 5
           CompressionFormat: UNCOMPRESSED
-
-
 
     DeliveryRole:
       Type: AWS::IAM::Role
@@ -236,7 +235,6 @@ resources:
                 StringEquals:
                   'sts:ExternalId': !Ref 'AWS::AccountId'
 
-
     DeliveryPolicy:
       Type: AWS::IAM::Policy
       Properties:
@@ -262,8 +260,6 @@ resources:
                     - '/*'
         Roles:
           - !Ref DeliveryRole
-
-
 
 
   Outputs:
