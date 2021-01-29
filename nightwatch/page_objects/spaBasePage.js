@@ -45,6 +45,7 @@ const commands = {
     },
 
     logout: function () {
+        this.api.click(this.elements.myAccountLink).pause(100);
         this.api.click(this.elements.logout);
     },
 
@@ -75,7 +76,8 @@ module.exports = {
         userField : '[id=okta-signin-username]',
         loginBtn: 'div.nav-right > button',
         loginTitle : 'div[id=title_bar]',
-        logout : '[id=logoutBtn]',
+        myAccountLink : '[id=myAccountLink]',
+        logout : '[id=logoutLink]',
         passField : '[id=okta-signin-password]',
         newSPA: "[id=spaSubmitBtn]",
         respondSPA: "[id=spaRaiBtn]",
