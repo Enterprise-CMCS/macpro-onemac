@@ -113,7 +113,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER ||
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
     ) {
-      errorMessage = validateWaiverId(value, authority);
+      errorMessage = validateWaiverId(value, authority, formInfo.detailsHeader);
     } else {
       throw new Error(`Unable to validate invalid type ${changeRequestType}.`);
     }
