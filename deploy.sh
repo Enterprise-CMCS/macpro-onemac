@@ -7,6 +7,7 @@ services=(
   'app-api'
   'stream-functions'
   'ui'
+  'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'
 )
