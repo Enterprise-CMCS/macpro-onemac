@@ -2,6 +2,9 @@ service: ui
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  iamPath: ${env:IAM_PATH, "/"}
+  wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN~true, ""}
+
 
 provider:
   name: aws
@@ -11,6 +14,11 @@ provider:
 
 resources:
   Conditions:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
+          - ""
+          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
@@ -31,6 +39,7 @@ resources:
           - Fn::Equals:
             - ""
             - ${env:CLOUDFRONT_DOMAIN_NAME, ""}
+
   Resources:
     S3Bucket:
       Type: AWS::S3::Bucket
@@ -179,6 +188,79 @@ resources:
                     - CloudFrontDistribution
                     - DomainName
 
+    ##This code block enables logging on waf and sends all logs to s3 and shipped off to splunk.  
+    Firehose:
+      Type: AWS::KinesisFirehose::DeliveryStream
+      Properties:
+        DeliveryStreamName:
+          !Join
+            - ''
+            - - aws-waf-logs-
+              - !Ref AWS::StackName
+        ExtendedS3DestinationConfiguration:
+          RoleARN: !GetAtt DeliveryRole.Arn
+          BucketARN: !Join
+            - ''
+            - - '${self:custom.wafLoggingBucket}'
+          Prefix: AWSLogs/WAF/${self:custom.stage}/
+          BufferingHints:
+            IntervalInSeconds: 300
+            SizeInMBs: 5
+          CompressionFormat: UNCOMPRESSED
+
+    DeliveryRole:
+      Type: AWS::IAM::Role
+      Properties:
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+            - Ref: AWS::NoValue
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Sid: ''
+              Effect: Allow
+              Principal:
+                Service: firehose.amazonaws.com
+              Action: 'sts:AssumeRole'
+              Condition:
+                StringEquals:
+                  'sts:ExternalId': !Ref 'AWS::AccountId'
+
+    DeliveryPolicy:
+      Type: AWS::IAM::Policy
+      Properties:
+        PolicyName: 'firehose_delivery_policy'
+        PolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: Allow
+              Action:
+                - 's3:AbortMultipartUpload'
+                - 's3:GetBucketLocation'
+                - 's3:GetObject'
+                - 's3:ListBucket'
+                - 's3:ListBucketMultipartUploads'
+                - 's3:PutObject'
+              Resource:
+                - !Join
+                  - ''
+                  - - '${self:custom.wafLoggingBucket}'
+                - !Join
+                  - ''
+                  - - '${self:custom.wafLoggingBucket}'
+                    - '/*'
+        Roles:
+          - !Ref DeliveryRole
+
 
   Outputs:
     S3BucketName:
@@ -196,5 +278,9 @@ resources:
             - Fn::GetAtt:
               - CloudFrontDistribution
               - DomainName
+    CloudFrontWebAclArn:
+      Value: !GetAtt CloudFrontWebAcl.Arn
+    FirehoseArn:
+      Value: !GetAtt Firehose.Arn
     ApplicationEndpointUrl:
       Value: !GetAtt ApplicationEndpointUrl.Value
