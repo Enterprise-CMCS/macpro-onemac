@@ -195,7 +195,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               " already exists. Please check the " +
               formInfo.idLabel +
               " and try entering it again.";
-        } else if (!dupID ) {
+        } else if (!dupID && formInfo.detailsHeader !== "SPA") {
           errorMessage =
               "According to our records, this " +
               formInfo.idLabel +
