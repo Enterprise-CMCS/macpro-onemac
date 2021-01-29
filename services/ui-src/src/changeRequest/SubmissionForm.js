@@ -147,10 +147,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       }
 
         if (
-          updatedRecord["actionType"] !== "new"
+            ( updatedRecord["actionType"] !== "new"
           && !dupID
           && updatedRecord["waiverAuthority"] !== "1915(c)"
-          || ( updatedRecord["waiverAuthority"] === "1915(c)"
+            ) || ( updatedRecord["waiverAuthority"] === "1915(c)"
           && updatedRecord["actionType"] !== "amendment"
           && !dupID )
       ) {
@@ -196,12 +196,18 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
     }
 
+    if (updatedRecord[event.target.name] !== "transmittalNumber") {
+      setTransmittalNumberErrorMessage("")
+      updatedRecord["transmittalNumber"] = ""
+    }
+
     // state set functions have to be at top level
     // because we can't trust they got set, can't use them in the function
 
     setChangeRequest(updatedRecord);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+
   };
 
   /**
