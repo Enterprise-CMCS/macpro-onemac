@@ -108,6 +108,25 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  stateUserGet:
+    handler: stateUserGet.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: stateUserGet
+          method: get
+          cors: true
+          authorizer: aws_iam
+  stateAdminGet:
+    handler: stateAdminGet.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: stateAdminGet
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 
