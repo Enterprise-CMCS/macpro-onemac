@@ -24,7 +24,7 @@ module.exports = {
         const password = browser.globals.pass;
         let spaPageTitle = 'SPA and Waiver Dashboard';
 
-        // Test Stesp
+        // Test Steps
         browser.click('.nav-right > [type]');  // click the login button
         browser.setValue('#okta-signin-username', username);
         browser.setValue('#okta-signin-password', password);
@@ -400,7 +400,6 @@ module.exports = {
          browser.back();  // go back to previous page
     }, 
 
-
     'Verify logout from SPA and Wavier Dashboard': function(browser) {
         // elements 
         let bttn_logout = 'button#logoutBtn';
@@ -413,5 +412,4 @@ module.exports = {
         // Verify the successful logout 
         browser.verify.containsText('h1', logout_banner_text);
     }
-
 };

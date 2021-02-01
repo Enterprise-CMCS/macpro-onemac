@@ -2,7 +2,6 @@
 
 module.exports = {
     "@tags": ["formatTest1"],
-
     
     before : function(browser) {
         console.log('Setting up the browser instance...');
@@ -38,12 +37,13 @@ module.exports = {
     }, 
 
     'Verify the SPA ID format check on Submit New SPA' : function(browser) {
-        browser.click("button#spaSubmitBtn");  // clicking the "Submit new SPA" link
+        
 
         let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
         let spa_id_input = "[name='transmittalNumber']";
 
         // Enter valid SPA ID 1
+        browser.click("button#spaSubmitBtn");  // clicking the "Submit new SPA" link
         let valid_id_1 = "VA-20-1234";
         browser.setValue(spa_id_input, valid_id_1);
         browser.expect.element(error_msg_element).to.be.not.present;
@@ -54,11 +54,14 @@ module.exports = {
         browser.setValue(spa_id_input, valid_id_2);
         browser.expect.element(error_msg_element).to.be.not.present;
         browser.clearValue('css selector', spa_id_input);
+        browser.back();  // go back to previous page
+        browser.click("button#spaSubmitBtn");  // clicking the "Submit new SPA" link
 
         // Enter invalid SPA ID and make sure error message is displayed 
         let invalid_id = "20-VA-1234";
         browser.setValue(spa_id_input, invalid_id);
-        browser.expect.element(error_msg_element).to.be.visible;
+        browser.expect.element('#transmittalNumberErrorMsg').to.be.visible;
+        browser.clearValue('css selector', spa_id_input);
 
         browser.back();  // go back to previous page
     }, 
@@ -167,3 +170,4 @@ module.exports = {
         browser.back();  // go back to previous page
     }
 }
+
