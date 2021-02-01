@@ -69,7 +69,8 @@ class WaiverExtension {
             <b>Files</b>:
             ${getLinksHtml(data.uploads)}
         </p>
-        <p><br>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
+        <br>
+        <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
     `;
 
@@ -100,8 +101,8 @@ class WaiverExtension {
         <p>
             <b>Summary</b>:<br>
             ${data.summary}
-            <br>
         </p>
+        <br>
         <p>
             This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, 
             responses to Requests for Additional Information (RAI), and extension requests on Waivers only. 

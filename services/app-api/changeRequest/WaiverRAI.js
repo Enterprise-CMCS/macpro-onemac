@@ -69,7 +69,8 @@ class WaiverRAI {
             <b>Files</b>:
             ${getLinksHtml(data.uploads)}
         </p>
-        <p><br>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
+        <br>
+        <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
     `;
 
@@ -100,8 +101,8 @@ class WaiverRAI {
         <p>
             <b>Summary</b>:<br>
             ${data.summary}
-            <br>
         </p>
+        <br>
         <p>
             This response confirms the receipt of your Waiver request or your response to a Waiver Request for Additional Information (RAI)). 
             You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
