@@ -98,11 +98,11 @@ async fieldsValid(data) {
             <br><b>Submitter email</b>: ${data.user.email}
         </p>
         <p>
-            <b>Summary</b>:
-            <br>${data.summary}
+            <b>Summary</b>:<br>
+            ${data.summary}
+            <br>
         </p>
         <p>
-            <br>
             This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
             You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
             as day zero. The 90th day will be 90 calendar days from that date.

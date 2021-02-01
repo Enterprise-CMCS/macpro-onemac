@@ -142,11 +142,11 @@ async fieldsValid(data) {
             <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
         </p>
         <p>
-            <b>Summary</b>:
-            <br>${data.summary}
+            <b>Summary</b>:<br>
+            ${data.summary}
+            <br>
         </p>
         <p>
-            <br>
             This response confirms the receipt of your Waiver request or your response to a Waiver Request for Additional Information (RAI)). 
             You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
         </p>
