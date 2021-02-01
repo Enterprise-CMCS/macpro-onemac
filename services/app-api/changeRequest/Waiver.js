@@ -151,8 +151,8 @@ async fieldsValid(data) {
             You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
         </p>
         <p>
-            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers and responses to Requests for Additional 
-            Information (RAI) on Waivers only.  Any other correspondence will be disregarded.
+            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, responses to Requests for Additional 
+            Information (RAI) on Waivers, and extension requests on Waivers only.  Any other correspondence will be disregarded. 
         </p>
         <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>
         <p>Thank you!</p>
