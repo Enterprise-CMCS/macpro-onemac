@@ -72,7 +72,7 @@ async fieldsValid(data) {
           if (data.waiverAuthority==="1915(c)" && !idExists) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_NEW_ON_K;
-          } else if (!idExists && data.waiverAuthority !=="1915(c)"  ) {
+          } else if (idExists && data.waiverAuthority !=="1915(c)"  ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_NEW_NOT_K;
           }
