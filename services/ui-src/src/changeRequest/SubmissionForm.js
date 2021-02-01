@@ -228,8 +228,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     if (updatedRecord[event.target.name] !== "transmittalNumber") {
-      setTransmittalNumberErrorMessage("")
       updatedRecord["transmittalNumber"] = ""
+      actionTypeMessage = ""
     }
 
     // state set functions have to be at top level

@@ -47,10 +47,10 @@ async fieldsValid(data) {
 
         // renewals all needs an existing ID
         case "renewal":
-          if (!idExists)  {
+          if (!idExists && data.waiverAuthority !=="1915(c)")  {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_RENEWAL_ID;
-          } else if (idExists && data.waiverAuthority==="1915(c)"  &&  data.actionType !== "amendment") {
+          } else if (!idExists) {
               areFieldsValid = false;
               whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
           }
@@ -61,7 +61,7 @@ async fieldsValid(data) {
           if (!idExists && data.waiverAuthority !== "1915(c)" ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_AMENDMENT_NO_ID;
-          } else if ( idExists && data.waiverAuthority === "1915(c)" && data.actionType !== "amendment" )  {
+          } else if ( idExists && data.waiverAuthority === "1915(c)")  {
               areFieldsValid = false;
               whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
           }
@@ -72,7 +72,7 @@ async fieldsValid(data) {
           if (data.waiverAuthority==="1915(c)" && !idExists) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_NEW_ON_K;
-          } else if (idExists && ! data.waiverAuthority==="1915(c)"  ) {
+          } else if (!idExists && data.waiverAuthority !=="1915(c)"  ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_NEW_NOT_K;
           }
