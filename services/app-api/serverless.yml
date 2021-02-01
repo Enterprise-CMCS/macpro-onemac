@@ -14,6 +14,8 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
+  stateUserTableName: cms-spa-form-${self:custom.stage}-state-users
+  stateAdminTableName: cms-spa-form-${self:custom.stage}-state-admins
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
@@ -51,6 +53,8 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
+    stateUserTableName: ${self:custom.stateUserTableName}
+    stateAdminTableName: ${self:custom.stateAdminTableName}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
 
@@ -109,6 +113,9 @@ resources:
 
   # Uploads S3 bucket
   - ${file(resources/spa-form-tables.yml)}
+
+  # State User and State Admin dynamodb tables
+  - ${file(resources/user-data-tables.yml)}
 
   # Roles
   - ${file(resources/roles.yml)}
