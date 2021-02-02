@@ -28,7 +28,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
           - ""
-          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
+          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}        
   Resources:
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
@@ -198,6 +198,14 @@ resources:
                         - '/protected/'
                         - '$'
                         - '{cognito-identity.amazonaws.com:sub}/*'
+
+
+
+
+
+
+
+
 
   Outputs:
     UserPoolId:

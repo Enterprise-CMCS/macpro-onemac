@@ -25,7 +25,9 @@ export function validateSpaId(spaId) {
  * Validate Waiver Id Transmittal Number Format
  * @return
  */
+
 export function validateWaiverId(waiverId, authority, waiverType) {
+
 
     let errorMessage = undefined
     let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
