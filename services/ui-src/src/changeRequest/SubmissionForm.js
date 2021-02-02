@@ -43,6 +43,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(false);
 
+  const [isValidateDupId, setValidateDupId] = useState(false);
+
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -100,20 +102,19 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    * @param {value} Transmittal Number Field Entered on Change Event.
    * @return the validation error message or undefined
    */
-  function validateTransmittalNumber(value, authority) {
+  function validateTransmittalNumber(value, dupID) {
     let errorMessage;
-
     if (
       changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI ||
       changeRequestType === CHANGE_REQUEST_TYPES.SPA
     ) {
-      errorMessage = validateSpaId(value);
+      errorMessage = validateSpaId(value, dupID, formInfo);
     } else if (
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI ||
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER ||
       changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
     ) {
-      errorMessage = validateWaiverId(value, authority, formInfo.detailsHeader);
+      errorMessage = validateWaiverId(value,  dupID,{"authority": changeRequest.waiverAuthority, "actionType": changeRequest.actionType }, formInfo);
     } else {
       throw new Error(`Unable to validate invalid type ${changeRequestType}.`);
     }
@@ -134,7 +135,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
 
     const newTransmittalNumber = event.target.value;
-    let errorMessage = validateTransmittalNumber(newTransmittalNumber, updatedRecord["waiverAuthority"]);
+    let errorMessage //= validateTransmittalNumber(newTransmittalNumber,   isValidateDupId, updatedRecord["waiverAuthority"]);
+
 
     // when we have a valid ID, check for exists/not exists based on type
     if (errorMessage === undefined && newTransmittalNumber) {
@@ -142,69 +144,15 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       console.log("Checking package ID: ", newTransmittalNumber);
       try {
         dupID = await ChangeRequestDataApi.packageExists(newTransmittalNumber);
+        setValidateDupId(dupID)
       } catch (error) {
         console.log("There was an error submitting a request.", error);
       }
 
-      if (formInfo.detailsHeader === "Waiver Action") {
+      errorMessage = formInfo.idValidationFn(updatedRecord["transmittalNumber"], dupID, updatedRecord, formInfo)
 
-        if (
-            ( updatedRecord["actionType"] !== "new"
-          && !dupID
-          && updatedRecord["waiverAuthority"] !== "1915(c)"
-            ) || ( updatedRecord["waiverAuthority"] === "1915(c)"
-          && updatedRecord["actionType"] !== "amendment"
-          && !dupID )
-      ) {
-        errorMessage =
-          "According to our records, this " +
-          formInfo.idLabel +
-          " does not exist. Please check the " +
-          formInfo.idLabel +
-          " and try entering it again.";
-      }
-
-      if (updatedRecord["actionType"] === "new"
-          && dupID
-          && updatedRecord["waiverAuthority"] !== "1915(c)"
-      ) {
-        errorMessage =
-          "According to our records, this " +
-          formInfo.idLabel +
-          " already exists. Please check the " +
-          formInfo.idLabel +
-          " and try entering it again.";
-      }
-
-    } else if (formInfo.detailsHeader === "Request Temporary Extension"
-            || formInfo.detailsHeader === "Waiver RAI" ) {
-
-          if (!dupID) {
-            errorMessage =
-                "According to our records, this " +
-                formInfo.idLabel +
-                " does not exist. Please check the " +
-                formInfo.idLabel +
-                " and try entering it again.";
-          }
-    } else {
-        if (dupID && formInfo.detailsHeader === "SPA") {
-          errorMessage =
-              "According to our records, this " +
-              formInfo.idLabel +
-              " already exists. Please check the " +
-              formInfo.idLabel +
-              " and try entering it again.";
-        } else if (!dupID && formInfo.detailsHeader !== "SPA") {
-          errorMessage =
-              "According to our records, this " +
-              formInfo.idLabel +
-              " does not exist. Please check the " +
-              formInfo.idLabel +
-              " and try entering it again.";
-        }
-      }
     }
+
     setTransmittalNumberErrorMessage(errorMessage);
   }
 
@@ -264,14 +212,28 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let newAlert = null;
     let mounted = true;
 
-    if (formInfo.actionType && !changeRequest.actionType)
+    if (formInfo.actionType && !changeRequest.actionType) {
       actionTypeMessage = formInfo.actionType.errorMessage;
-    if (formInfo.waiverAuthority && !changeRequest.waiverAuthority)
-      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
+      transmittalNumberMessage = validateTransmittalNumber(
+          changeRequest.transmittalNumber
+      );
+    }
 
-    transmittalNumberMessage = validateTransmittalNumber(
-      changeRequest.transmittalNumber, changeRequest.waiverAuthority
-    );
+    if ( (
+        formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER
+        || formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
+        || formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER_RAI
+    ) && !changeRequest.waiverAuthority) {
+      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
+      transmittalNumberMessage = validateTransmittalNumber(
+          changeRequest.transmittalNumber, false, {"authority": changeRequest.waiverAuthority, "actionType": changeRequest.actionType }
+      );
+    } else {
+      transmittalNumberMessage =
+          validateTransmittalNumber(changeRequest.transmittalNumber, false, { "spaType": formInfo.idType })
+    }
+
+
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard

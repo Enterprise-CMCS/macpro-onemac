@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import {validateWaiverId} from "../utils/form-utils";
 
 /**
  * WaiverExtension acts as a wrapper around SubmissionForm to render the Waiver Extension Form
@@ -22,7 +23,7 @@ const WaiverExtension = () => {
         "Other"
     ],
     idType : "waiver",
-    idMustExist : true,
+    idValidationFn : validateWaiverId,
     idLabel : "Waiver Number",
   };
 
