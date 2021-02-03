@@ -1,5 +1,6 @@
 const { Kafka } = require('kafkajs');
 const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
+const shouldWriteSourceToMsk = process.env.SHOULD_WRITE_SOURCE_TO_MSK;
 const _ = require('lodash');
 
 const mappings = {
@@ -33,6 +34,10 @@ function mapFields(event, callback) {
 }
 
 function myHandler(event, context, callback) {
+  if (shouldWriteSourceToMsk === false) {
+    return null;
+  }
+
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
     return null;
