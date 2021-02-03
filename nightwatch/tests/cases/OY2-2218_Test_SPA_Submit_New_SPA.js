@@ -77,14 +77,14 @@ module.exports = {
 
         browser.url(function (current) {
             browser.click('[type="submit"]').waitForElementPresent('body');
-            //browser.expect.url().to.not.equals(current.value).before(timeout * 10);
+            browser.expect.url().to.not.equals(current.value).before(timeout * 10);
         });
-        //browser
-          //  .assert.elementPresent(alert_selector)
-          //  .assert.elementPresent(p_selector)
-           //// .assert.containsText(alert_selector, alert_msg)
-           // .assert.containsText(p_selector, msg)
-          //  .pause(timeout);
+        browser
+            .assert.elementPresent(alert_selector)
+            .assert.elementPresent(p_selector)
+            .assert.containsText(alert_selector, alert_msg)
+            .assert.containsText(p_selector, msg)
+            .pause(timeout);
     },
 
 };

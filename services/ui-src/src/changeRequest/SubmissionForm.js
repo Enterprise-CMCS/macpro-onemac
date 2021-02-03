@@ -43,8 +43,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(false);
 
-  const [isValidateDupId, setValidateDupId] = useState(false);
-
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -144,7 +142,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       console.log("Checking package ID: ", newTransmittalNumber);
       try {
         dupID = await ChangeRequestDataApi.packageExists(newTransmittalNumber);
-        setValidateDupId(dupID)
       } catch (error) {
         console.log("There was an error submitting a request.", error);
       }
@@ -164,6 +161,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (!event || !event.target) return;
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
     updatedRecord[event.target.name] = event.target.value;
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
@@ -175,8 +173,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
     }
 
-    if (updatedRecord[event.target.name] !== "transmittalNumber") {
-      updatedRecord["transmittalNumber"] = ""
+
+    if (event.target.name !== "transmittalNumber" && event.target.name !== "summary") {
+      //updatedRecord["transmittalNumber"] = ""
       actionTypeMessage = ""
     }
 
@@ -224,13 +223,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         || formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
         || formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER_RAI
     ) && !changeRequest.waiverAuthority) {
-      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
       transmittalNumberMessage = validateTransmittalNumber(
-          changeRequest.transmittalNumber, false, {"authority": changeRequest.waiverAuthority, "actionType": changeRequest.actionType }
+          changeRequest.transmittalNumber, undefined, {"authority": changeRequest.waiverAuthority, "actionType": changeRequest.actionType }
       );
     } else {
       transmittalNumberMessage =
-          validateTransmittalNumber(changeRequest.transmittalNumber, false, { "spaType": formInfo.idType })
+          validateTransmittalNumber(changeRequest.transmittalNumber, undefined, { "spaType": formInfo.idType })
     }
 
 

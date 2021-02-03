@@ -45,6 +45,7 @@ export function validateWaiverId(waiverId, dupID, formFields, formInfo) {
             RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
         }
     }
+
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
     }  else if (!hasValidStateCode(waiverId)) {
@@ -55,6 +56,7 @@ export function validateWaiverId(waiverId, dupID, formFields, formInfo) {
         errorMessage = "";
     } else if ( formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER)
     {
+        console.log(formInfo)
         if (formFields["waiverAuthority"] === "1915(c)" ) {
           if (formFields["actionType"] !== "amendment" && !dupID) {
             errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
@@ -66,7 +68,7 @@ export function validateWaiverId(waiverId, dupID, formFields, formInfo) {
              errorMessage =
                 "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.";
         }
-    } else if (!dupID) {
+    } else if (!dupID && formFields["actionType"] !== "new") {
         errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
     }
     return errorMessage

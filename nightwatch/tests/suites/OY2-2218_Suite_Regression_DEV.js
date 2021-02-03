@@ -36,4 +36,11 @@ module.exports = {
         regression["Submit a SPA Waiver "](browser);
     },
 
+    "Submit a 1915b Waiver RAI": function (browser) {
+        regression["Submit a 1915b Waiver RAI"](browser);
+    },
+
+    "Submit a Temporary Request Extension": function (browser) {
+        regression["Submit a Temporary Request Extension"](browser);
+    },
 };

@@ -4,11 +4,11 @@ const spaVar = path.join(__dirname, "spaVar.txt");
 
 const commands = {
 
-    getTransmitNumber: function (optionNumber = true, state = "MA") {
+    getTransmitNumber: function (optionNumber = true, state = "VA") {
         return idNumbers.transmitNumber(optionNumber, state);
     },
 
-    getWaiverNumber: function (isWaiverB = true, state = "MA") {
+    getWaiverNumber: function (isWaiverB = true, state = "VA") {
         return idNumbers.waiver1915B(isWaiverB, state);
     },
 
