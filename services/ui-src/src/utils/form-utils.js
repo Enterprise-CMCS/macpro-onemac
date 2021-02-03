@@ -6,7 +6,7 @@ import {CHANGE_REQUEST_TYPES} from "../changeRequest/changeRequestTypes";
  * @return
  *
  */
-export function validateSpaId(spaID, dupID, formInfo) {
+export function validateSpaId(spaID, isExistingSpaId, formInfo) {
     let errorMessage = undefined
     let SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN or SS-YY-NNNN-xxxx"
     let RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)"
@@ -17,9 +17,9 @@ export function validateSpaId(spaID, dupID, formInfo) {
         errorMessage = `The SPA ID must contain valid Territory/State Code`
     }  else if (!isValidFieldFormat(spaID, RegexFormatString)) {
         errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
-    }  else if (dupID && formInfo.type === CHANGE_REQUEST_TYPES.SPA ) {
+    }  else if (isExistingSpaId && formInfo.type === CHANGE_REQUEST_TYPES.SPA ) {
         errorMessage = "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.";
-    }  else if (!dupID && formInfo.type === CHANGE_REQUEST_TYPES.SPA_RAI ) {
+    }  else if (!isExistingSpaId && formInfo.type === CHANGE_REQUEST_TYPES.SPA_RAI ) {
         errorMessage = "According to our records, this SPA ID does not exist. Please check the SPA ID and try entering it again.";
     }
     return errorMessage
@@ -30,8 +30,8 @@ export function validateSpaId(spaID, dupID, formInfo) {
  * @return
  */
 
-export function validateWaiverId(waiverId, dupID, formFields, formInfo) {
-
+export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formInfo) {
+    console.log("WWW:" + isExistingWaiverId + "--" + JSON.stringify(formFields) + " -- " + formInfo)
     let errorMessage = undefined
     let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
     let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M##"
@@ -52,23 +52,23 @@ export function validateWaiverId(waiverId, dupID, formFields, formInfo) {
         errorMessage = `The Waiver Number must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
-    } else if ( dupID === undefined) {
+    } else if ( isExistingWaiverId === undefined) {
         errorMessage = "";
     } else if ( formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER)
     {
         console.log(formInfo)
         if (formFields["waiverAuthority"] === "1915(c)" ) {
-          if (formFields["actionType"] !== "amendment" && !dupID) {
+          if (formFields["actionType"] !== "amendment" && !isExistingWaiverId) {
             errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
           }
         } else if (formFields["waiverAuthority"] !== "1915(c)"
-            && formFields["actionType"] !== "new" && !dupID) {
+            && formFields["actionType"] !== "new" && !isExistingWaiverId) {
              errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
-        } else if (formFields["actionType"] === "new" && dupID) {
+        } else if (formFields["actionType"] === "new" && isExistingWaiverId) {
              errorMessage =
                 "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.";
         }
-    } else if (!dupID && formFields["actionType"] !== "new") {
+    } else if (!isExistingWaiverId && formFields["actionType"] !== "new") {
         errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
     }
     return errorMessage
