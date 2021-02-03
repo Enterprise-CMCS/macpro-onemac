@@ -14,6 +14,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
+  userTableName: cms-spa-form-${self:custom.stage}-users
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
@@ -51,6 +52,7 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
+    userTableName: ${self:custom.userTableName}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
 
@@ -104,11 +106,24 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getUser:
+    handler: getUser.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getUser
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 
   # Uploads S3 bucket
   - ${file(resources/spa-form-tables.yml)}
+
+  # User data DynamoDB table
+  - ${file(resources/user-table.yml)}
 
   # Roles
   - ${file(resources/roles.yml)}
