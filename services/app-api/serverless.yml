@@ -14,8 +14,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
-  stateUserTableName: cms-spa-form-${self:custom.stage}-state-users
-  stateAdminTableName: cms-spa-form-${self:custom.stage}-state-admins
+  userTableName: cms-spa-form-${self:custom.stage}-users
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
@@ -53,8 +52,7 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
-    stateUserTableName: ${self:custom.stateUserTableName}
-    stateAdminTableName: ${self:custom.stateAdminTableName}
+    userTableName: ${self:custom.userTableName}
     emailSource: ${self:custom.emailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
 
@@ -108,21 +106,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  stateUserGet:
-    handler: stateUserGet.main
+  getUser:
+    handler: getUser.main
     role: LambdaApiRole
     events:
       - http:
-          path: stateUserGet
-          method: get
-          cors: true
-          authorizer: aws_iam
-  stateAdminGet:
-    handler: stateAdminGet.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: stateAdminGet
+          path: getUser
           method: get
           cors: true
           authorizer: aws_iam
@@ -133,8 +122,8 @@ resources:
   # Uploads S3 bucket
   - ${file(resources/spa-form-tables.yml)}
 
-  # State User and State Admin dynamodb tables
-  - ${file(resources/user-data-tables.yml)}
+  # User data DynamoDB table
+  - ${file(resources/user-table.yml)}
 
   # Roles
   - ${file(resources/roles.yml)}

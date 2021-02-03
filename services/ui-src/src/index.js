@@ -44,6 +44,11 @@ let amplifyConfig = {
                 endpoint: config.apiGateway.URL,
                 region: config.apiGateway.REGION
             },
+            {
+                name: "userDataAPI",
+                endpoint: config.apiGateway.URL,
+                region: config.apiGateway.REGION
+            },
         ]
     }
 };
