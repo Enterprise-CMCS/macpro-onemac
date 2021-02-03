@@ -34,7 +34,7 @@ function mapFields(event, callback) {
 }
 
 function myHandler(event, context, callback) {
-  if (shouldWriteSourceToMsk === false) {
+  if (Boolean(shouldWriteSourceToMsk) === false) {
     return null;
   }
 
