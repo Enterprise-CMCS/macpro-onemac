@@ -34,13 +34,13 @@ function mapFields(event, callback) {
 }
 
 function myHandler(event, context, callback) {
-  if (Boolean(shouldWriteSourceToMsk) === false) {
+  /* if (Boolean(shouldWriteSourceToMsk) === false) {
     console.log("This message should appear if writing to BigMAC is disabled.");
     return null;
   }
 
   console.log("This message should NOT appear if BigMAC writing is disabled.");
-
+ */
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
     return null;
