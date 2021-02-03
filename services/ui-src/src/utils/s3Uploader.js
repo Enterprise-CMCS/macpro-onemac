@@ -30,7 +30,7 @@ export async function uploadFiles(fileArray) {
           resolve(results);
         })
         .catch((error) => {
-          reject("Error uploading.", error);
+          reject("Error when uploading.", error);
         });
     });
   } else {
