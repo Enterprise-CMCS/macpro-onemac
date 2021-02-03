@@ -1,6 +1,6 @@
 const { Kafka } = require('kafkajs');
 const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
-const shouldWriteSourceToMsk = process.env.SHOULD_WRITE_SOURCE_TO_MSK;
+// const shouldWriteSourceToMsk = process.env.SHOULD_WRITE_SOURCE_TO_MSK;
 const _ = require('lodash');
 
 const mappings = {
