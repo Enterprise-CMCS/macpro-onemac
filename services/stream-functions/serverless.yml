@@ -73,7 +73,6 @@ functions:
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
-      SHOULD_WRITE_SOURCE_TO_MSK: false
     maximumRetryAttempts: 2
     vpc:
       securityGroupIds:
