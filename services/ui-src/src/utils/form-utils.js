@@ -31,7 +31,7 @@ export function validateSpaId(spaID, isExistingSpaId, formInfo) {
  */
 
 export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formInfo) {
-    console.log("WWW:" + isExistingWaiverId + "--" + JSON.stringify(formFields) + " -- " + formInfo)
+
     let errorMessage = undefined
     let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
     let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M##"
@@ -56,7 +56,7 @@ export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formI
         errorMessage = "";
     } else if ( formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER)
     {
-        console.log(formInfo)
+
         if (formFields["waiverAuthority"] === "1915(c)" ) {
           if (formFields["actionType"] !== "amendment" && !isExistingWaiverId) {
             errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
