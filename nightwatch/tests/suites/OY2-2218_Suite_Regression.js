@@ -42,9 +42,9 @@ module.exports = {
     "Submit a SPA Waiver ": function (browser) {
         const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
         spaWaiver["Click on 'Submit new Waiver'"](browser);
+        spaWaiver["Enter Action Type"](browser);
         spaWaiver["Enter Waiver Authority"](browser);
         spaWaiver["Enter Waiver Number"](browser);
-        spaWaiver["Enter Action Type"](browser);
         spaWaiver["Upload Documents"](browser);
         spaWaiver["Enter Comments"](browser);
         spaWaiver["Submit SPA Waiver"](browser);
