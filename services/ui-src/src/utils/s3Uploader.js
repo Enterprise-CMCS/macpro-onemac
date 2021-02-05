@@ -1,10 +1,10 @@
-import 'promise-polyfill/src/polyfill';
-import 'core-js/es/typed-array/uint32-array';
-import 'core-js/es/array/find';
-import 'core-js/es/object/assign';
-import 'core-js/es/object/entries';
-import 'core-js/es/array';
-import 'core-js/es/object';
+import "promise-polyfill/src/polyfill";
+import "core-js/es/typed-array/uint32-array";
+import "core-js/es/array/find";
+import "core-js/es/object/assign";
+import "core-js/es/object/entries";
+import "core-js/es/array";
+import "core-js/es/object";
 import "isomorphic-fetch";
 import { Storage } from "aws-amplify";
 
@@ -27,11 +27,10 @@ export async function uploadFiles(fileArray) {
     resultPromise = new Promise((resolve, reject) => {
       Promise.all(uploadPromises)
         .then((results) => {
-          console.log("Promise Results are: ", results);
           resolve(results);
         })
         .catch((error) => {
-          reject("Error when uploading.", error);
+          reject("Error uploading.", error);
         });
     });
   } else {
@@ -66,25 +65,22 @@ export async function uploadFile(file) {
       title: file.title,
     };
 
-    // so... if the upload to S3 fails... a message gets added to the console, but the 
-    // promise comes back successfully, AND the get call will work as well.
+    // If the upload to S3 fails (handled in AWS Amplify Storage) a message gets added to the console, but the
+    // promise comes back resolved, AND the get call will work as well.
     // HOWEVER, if you try to access the url sent back, you receive an error message
     // so can check for that.
-    // Check Upload
     await fetch(result.url, {
-      method: 'HEAD'
-    }).then(response => {
-      console.log("response is ",response);
-    if (response.status !== 200) {
-      console.log("ERROR while uploading file: " + result.filename);
-      retPromise = Promise.reject("ERROR while uploading file: Could not Verify");
-    } else {
-      retPromise = Promise.resolve(result);
-    }
-    }) 
-    
+      method: "HEAD",
+    }).then((response) => {
+      if (response.status !== 200) {
+        retPromise = Promise.reject(
+          "ERROR while uploading file: Could not Verify"
+        );
+      } else {
+        retPromise = Promise.resolve(result);
+      }
+    });
   } catch (error) {
-    console.log("ERROR while uploading file: ", file, error);
     retPromise = Promise.reject(error);
   }
   return retPromise;
