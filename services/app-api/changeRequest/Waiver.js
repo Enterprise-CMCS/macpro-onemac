@@ -2,7 +2,6 @@ import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
 import { ERROR_MSG } from "../libs/error-messages";
 
-
 /**
  * Waiver submission specific email generation functions.
  * @class
@@ -47,18 +46,18 @@ async fieldsValid(data) {
 
         // renewals all needs an existing ID
         case "renewal":
-          if (!idExists)  {
+          if (!idExists && data.waiverAuthority !=="1915(c)")  {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_RENEWAL_ID;
+          } else if (!idExists) {
+              areFieldsValid = false;
+              whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
           }
           break;
 
-        // amendmends modify existing IDs EXCEPT for Amendment Ks, which need a new ID
+        // amend modify existing IDs EXCEPT for Amendment Ks, Ks do not have restriction
         case "amendment":
-          if (data.waiverAuthority==="1915(c)" && idExists) {
-            areFieldsValid = false;
-            whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
-          } else if (!idExists) {
+          if (!idExists && data.waiverAuthority !== "1915(c)" ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_AMENDMENT_NO_ID;
           }
@@ -69,7 +68,7 @@ async fieldsValid(data) {
           if (data.waiverAuthority==="1915(c)" && !idExists) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_NEW_ON_K;
-          } else if (idExists) {
+          } else if (idExists && data.waiverAuthority !=="1915(c)"  ) {
             areFieldsValid = false;
             whyNot = ERROR_MSG.WAIVER_NEW_NOT_K;
           }
