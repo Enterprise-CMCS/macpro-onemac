@@ -2,7 +2,6 @@ import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
 import { ERROR_MSG } from "../libs/error-messages";
 
-
 /**
  * Waiver submission specific email generation functions.
  * @class
