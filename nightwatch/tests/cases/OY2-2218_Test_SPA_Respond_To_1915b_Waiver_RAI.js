@@ -39,9 +39,10 @@ module.exports = {
             selector: '@transmittal',
             value: spa.getWaiver()
         }
+
         spa.expect.element(testData.selector).to.be.visible;
         spa.setValue(testData.selector, testData.value);
-
+        spa.pause(5000)
         spa.expect.element(testData.selector).value.to.contain(testData.value);
     },
 
