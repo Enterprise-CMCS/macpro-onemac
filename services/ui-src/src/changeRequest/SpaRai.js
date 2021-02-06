@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import {validateSpaId} from "../utils/form-utils";
 
 /**
  * SpaRai acts as a wrapper around RaiTemplate to render custom RAI form for a SPA RAI
@@ -28,7 +29,7 @@ const SpaRai = () => {
       "Other",
     ],
     idType: "spa",
-    idMustExist: true,
+    idValidationFn: validateSpaId,
     idLabel: "SPA ID",
   };
 

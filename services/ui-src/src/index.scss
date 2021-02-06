@@ -88,7 +88,6 @@ ul {
 }
 
 .uploader {
-
   table {
     border-collapse: collapse;
     width: 100%;
@@ -96,11 +95,12 @@ ul {
     th,
     td {
       text-align: left;
-      padding: 8px;
+      padding: 12px 8px 8px 8px;
     }
     tr {
       height: 72px;
       border-bottom: 1px solid #5B616B;
+      vertical-align: text-top;
     }
     tr:nth-last-child(1) {
       border-bottom: none;
@@ -110,11 +110,15 @@ ul {
   .uploader-type-cell {
     width: 40%;
   }
+
   .uploader-input-cell {
     width: 20%;
   }
-  .uploader-filename-cell {
-    width: 30%;
+
+  .uploader-file-items {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
   }
 
   .uploader-type-label {
@@ -131,14 +135,10 @@ ul {
     margin-top: 0px;
   }
 
-  .uploader-controls-cell {
-    width: 10%;
-  }
-
   .uploader-clear-button {
     @extend .ds-c-button;
     @extend .ds-c-button--transparent;
-    color: black;
+    color: $color-primary;
   }
 }
 
@@ -446,16 +446,18 @@ input[type="file"] {
     a {
       color: $color-white;
       font-weight: bold;
+      border: none;    
       padding-right: 50px;
-
-      &:hover {
+  
+     &:hover {
         color: rgba($color-base-inverse, 0.8);
       }
-
+  
       &:active {
         color: rgba($color-base-inverse, 0.6);
-      }
+      }  
     }
+  
   }
 
   .nav-right {
@@ -467,6 +469,20 @@ input[type="file"] {
     label {
       margin-right: 2rem;
       margin-top: 0px;
+    }
+    button.dropdown {
+      color: $color-white;
+      font-weight: bold;
+      border: none;
+      outline: none;
+      background-color: $color-primary;
+      &:hover {
+        color: rgba($color-base-inverse, 0.8);
+      }
+  
+      &:active {
+        color: rgba($color-base-inverse, 0.6);
+      }  
     }
     button {
       background-color: $color-primary;
@@ -519,4 +535,26 @@ input[type="file"] {
 .display-errors input:invalid,
 .display-errors select:invalid  {
   border-color: red;
+}
+
+.dropdown-content {
+  position: absolute;
+  margin-top: 48px;
+  background-color: $color-primary;
+  font-weight: normal;
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  float: none;
+  color: white;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  color: rgba($color-base-inverse, 0.8);
 }

@@ -43,6 +43,8 @@ resources:
                 - POST
                 - DELETE
                 - HEAD
+              ExposedHeaders:
+                - ETag
               MaxAge: 3000
         #Set at rest encryption
         BucketEncryption:

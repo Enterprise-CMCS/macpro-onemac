@@ -2,7 +2,8 @@ import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getChangeRequestFunctions from "./changeRequest/changeRequest-util";
+import getChangeRequestFunctions, { hasValidStateCode } from "./changeRequest/changeRequest-util";
+import { ERROR_MSG } from "./libs/error-messages";
 import { DateTime } from "luxon";
 
 /**
@@ -43,6 +44,24 @@ export const main = handler(async (event) => {
       type: "logicError",
       from: "getChangeRequestFunctions",
       message: "crFunctions object not created."
+    });
+  }
+
+  const crVerifyTransmittalIdStateCode = hasValidStateCode(data.transmittalNumber);
+  if (!crVerifyTransmittalIdStateCode) {
+    return buildAppropriateResponse({
+      type: "logicError",
+      from: "isValidStateCode",
+      message: ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID
+    });
+  }
+
+  const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
+  if (!crVerifyTerritoryStateCode) {
+    return buildAppropriateResponse({
+      type: "logicError",
+      from: "isValidStateCode",
+      message: ERROR_MSG.TERRITORY_NOT_VALID
     });
   }
 
@@ -123,6 +142,37 @@ export const main = handler(async (event) => {
       error
     );
   }
+  console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+  // Now send the CMS email
+  await sendEmail(crFunctions.getCMSEmail(data));
+
+  //We successfully sent the submission email.  Update the record to reflect that.
+  data.state = SUBMISSION_STATES.SUBMITTED;
+  data.submittedAt = Date.now();
+
+  // record the current end timestamp (can be start/stopped/changed)
+  // 90 days is current CMS review period and it is based on CMS time!!
+  // UTC is 4-5 hours ahead, convert first to get the correct start day
+  // AND use plus days function b/c DST days are 23 or 25 hours!!
+  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
+  await dynamoDb.put({
+    TableName: process.env.tableName,
+    Item: data,
+  });
+
+  //An error sending the user email is not a failure.
+  try {
+    // send the submission "reciept" to the State User
+    await sendEmail(crFunctions.getStateEmail(data));
+  } catch (error) {
+    console.log(
+      "Warning: There was an error sending the user acknowledgement email.",
+      error
+    );
+  }
+
+  console.log("Successfully submitted amendment:", data);
 
   console.log("Successfully submitted amendment:", data);
 

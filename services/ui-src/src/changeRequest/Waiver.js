@@ -1,9 +1,9 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { territoryList } from "../libs/territoryLib";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import {validateWaiverId} from "../utils/form-utils";
 
 /**
  * Waiver acts as a wrapper around SubmissionForm to render custom Waiver form
@@ -44,13 +44,7 @@ const Waiver = () => {
     ],
     idType: "waiver",
     idLabel: "Waiver Number",
-    idMustExist: false,
-    territory: {
-      fieldName: "territory",
-      errorMessage: "Please select a State or Territory.",
-      optionsList: territoryList,
-      defaultItem: "a territory",
-    },
+    idValidationFn: validateWaiverId,
     actionType: {
       fieldName: "actionType",
       errorMessage: "Please select the Action Type.",

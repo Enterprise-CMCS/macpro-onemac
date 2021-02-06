@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import {validateWaiverId} from "../utils/form-utils";
 
 /**
  * WaiverRai acts as a wrapper around RaiTemplate to render custom RAI form for a Waiver RAI
@@ -25,7 +26,7 @@ const WaiverRai = () => {
       "Other",
     ],
     idType: "waiver",
-    idMustExist: true,
+    idValidationFn: validateWaiverId,
     idLabel: "Waiver Number",
   };
 

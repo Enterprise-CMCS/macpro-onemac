@@ -12,6 +12,11 @@ Install the serverless Dynamo DB offline package by running the following comman
 npm install
 sls dynamodb install
 ```
+Install the serverless plugin to handle the WAF association without the race condition
+```
+npm install serverless-associate-waf --save-dev
+```
+
 Run the software locally by running the following command:
 
 ```

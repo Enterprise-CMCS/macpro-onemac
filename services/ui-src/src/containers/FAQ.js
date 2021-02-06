@@ -83,7 +83,7 @@ const FAQ = () => {
         <p>Waiver number must follow the format SS.##.R##.## to include:</p>
         <ul>
           <li>SS= 2 character state abbreviation</li>
-          <li>####= 4 digit waiver base number</li>
+          <li>## = 2 digit waiver base number</li>
           <li>R## = renewal number (R01, R02, ...)</li>
           <li>## = appendix K amendment number (01)</li>
         </ul>

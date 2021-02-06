@@ -4,6 +4,8 @@
  */
 export const ERROR_MSG = {
   NONE: "",
+  TERRITORY_NOT_VALID: "State/Territory Not Valid",
+  TRANSMITTAL_ID_TERRITORY_NOT_VALID: "Transmittal ID State/Territory Not Valid",
   DUPLICATE_ID: "Duplicate ID",
   ID_NOT_FOUND: "ID not found",
   WAIVER_RENEWAL_ID: "Waiver Renewal Action requires existing ID",
