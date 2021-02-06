@@ -5,7 +5,7 @@ var http = require('http');
 
 const connectors = [
   {
-    "name": "sink.lambda.sea-dbo-State_Plan",
+    "name": `${process.env.sinkPrefix}sink.lambda.sea-dbo-State_Plan`,
     "config": {
       "tasks.max": "1",
       "connector.class": "com.nordstrom.kafka.connect.lambda.LambdaSinkConnector",
