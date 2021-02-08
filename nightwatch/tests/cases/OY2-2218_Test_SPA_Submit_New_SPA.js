@@ -51,8 +51,8 @@ module.exports = {
         };
 
         spa.click(testData.selector);
-        spa.setValue(testData.selector, testData.spa_id);
-        browser.pause(timeout / 2);
+        spa.setValue(testData.selector, testData.spa_id + "\0");
+        browser.pause(timeout + 2000);
         spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
 
     },
@@ -77,6 +77,7 @@ module.exports = {
 
         browser.url(function (current) {
             browser.click('[type="submit"]').waitForElementPresent('body');
+            browser.pause(5000)
             browser.expect.url().to.not.equals(current.value).before(timeout * 10);
         });
         browser
