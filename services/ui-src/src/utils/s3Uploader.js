@@ -1,10 +1,10 @@
-import 'promise-polyfill/src/polyfill';
-import 'core-js/es/typed-array/uint32-array';
-import 'core-js/es/array/find';
-import 'core-js/es/object/assign';
-import 'core-js/es/object/entries';
-import 'core-js/es/array';
-import 'core-js/es/object';
+import "promise-polyfill/src/polyfill";
+import "core-js/es/typed-array/uint32-array";
+import "core-js/es/array/find";
+import "core-js/es/object/assign";
+import "core-js/es/object/entries";
+import "core-js/es/array";
+import "core-js/es/object";
 import "isomorphic-fetch";
 import { Storage } from "aws-amplify";
 
@@ -64,9 +64,23 @@ export async function uploadFile(file) {
       url: url.split("?", 1)[0], //We only need the permalink part of the URL since the S3 bucket policy allows for public read
       title: file.title,
     };
-    retPromise = Promise.resolve(result);
+
+    // If the upload to S3 fails (handled in AWS Amplify Storage) a message gets added to the console, but the
+    // promise comes back resolved, AND the get call will work as well.
+    // HOWEVER, if you try to access the url sent back, you receive an error message
+    // so can check for that.
+    await fetch(result.url, {
+      method: "HEAD",
+    }).then((response) => {
+      if (response.status !== 200) {
+        retPromise = Promise.reject(
+          "ERROR while uploading file: Could not Verify"
+        );
+      } else {
+        retPromise = Promise.resolve(result);
+      }
+    });
   } catch (error) {
-    console.log("ERROR while uploading file: ", file, error);
     retPromise = Promise.reject(error);
   }
   return retPromise;
