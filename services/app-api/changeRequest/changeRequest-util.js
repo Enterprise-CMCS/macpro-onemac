@@ -52,7 +52,7 @@ export function getLinksHtml(uploads) {
     if(Array.isArray(uploads) && uploads.length > 0) {
         html = "<ul>";
         uploads.forEach(async (upload) => {
-        html += "<li>" + upload.title + ": <a href=\"" + upload.url +"\">" + upload.filename + "</a></li>";
+        if (upload) html += "<li>" + upload.title + ": <a href=\"" + upload.url +"\">" + upload.filename + "</a></li>";
         });
     html += "</ul>";
     }
