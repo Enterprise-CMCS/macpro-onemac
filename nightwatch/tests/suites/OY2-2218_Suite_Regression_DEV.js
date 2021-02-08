@@ -28,19 +28,9 @@ module.exports = {
         regression["Submit a SPA Report"](browser);
     },
 
-    "Submit a SPA RAI Response": function (browser) {
-        regression["Submit a SPA RAI Response"](browser);
-    },
 
     "Submit a SPA Waiver ": function (browser) {
         regression["Submit a SPA Waiver "](browser);
-    },
+    }
 
-    "Submit a 1915b Waiver RAI": function (browser) {
-        regression["Submit a 1915b Waiver RAI"](browser);
-    },
-
-    "Submit a Temporary Request Extension": function (browser) {
-        regression["Submit a Temporary Request Extension"](browser);
-    },
 };

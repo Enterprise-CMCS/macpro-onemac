@@ -39,6 +39,7 @@ module.exports = {
         browser.pause(timeout)
         browser.setValue(selector, transmitNumber);
         browser.Keys.TAB;
+        browser.pause(timeout)
         browser.expect.element(selector).value.to.equal(transmitNumber);
     },
 
