@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 1000;
+const timeout = 2000;
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
@@ -35,20 +35,23 @@ module.exports = {
 
     "Enter Waiver Number" : function(browser) {
         spa = browser.page.spaBasePage();
+        const tid = spa.getWaiver()
         let testData = {
             selector: '@transmittal',
-            value: spa.getWaiver()
+            value: tid
         }
-        browser.pause(timeout + 2000)
         spa.expect.element(testData.selector).to.be.visible;
-        spa.setValue(testData.selector, testData.value + "\0");
-        browser.pause(timeout + 3000)
+        spa.setValue(testData.selector, testData.value);
+        browser.Keys.TAB;
+        browser.pause(timeout)
         spa.expect.element(testData.selector).value.to.contain(testData.value);
     },
 
     "Upload Documents": function (browser) {
         spa = browser.page.spaBasePage();
         spa.uploadFiles(7).pause(500);
+        browser.pause(timeout)
+
     },
 
     "Enter Comments": function (browser) {

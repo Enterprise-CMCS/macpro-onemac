@@ -36,15 +36,12 @@ export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formI
     let errorMessage = undefined
     let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
     let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M##"
-    if (formFields["actionType"] !== "Waiver Action") {
+    if (formFields["waiverAuthority"] !== "1915(c)") {
         RegexFormatString = RegexFormatString + "|(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
         WaiverTransmittalNumberFormatErrorMessage = WaiverTransmittalNumberFormatErrorMessage + " or SS.##.R##.##"
     } else {
-
-        if (formFields["waiverAuthority"] === "1915(c)") {
             WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.##"
             RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
-        }
     }
 
     if (!waiverId) {

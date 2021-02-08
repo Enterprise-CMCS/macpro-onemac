@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 1000;
+const timeout = 5000;
 const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 module.exports = {
@@ -51,8 +51,9 @@ module.exports = {
         };
 
         spa.click(testData.selector);
-        spa.setValue(testData.selector, testData.spa_id + "\0");
-        browser.pause(timeout + 2000);
+        spa.setValue(testData.selector, testData.spa_id);
+        browser.Keys.TAB;
+        browser.pause(timeout);
         spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
 
     },
@@ -76,9 +77,10 @@ module.exports = {
         let msg = "Your submission has been received.";
 
         browser.url(function (current) {
+            browser.pause(timeout )
             browser.click('[type="submit"]').waitForElementPresent('body');
             browser.pause(5000)
-            browser.expect.url().to.not.equals(current.value).before(timeout * 10);
+            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
         });
         browser
             .assert.elementPresent(alert_selector)

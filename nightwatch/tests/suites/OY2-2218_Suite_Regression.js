@@ -37,6 +37,7 @@ module.exports = {
         spaRAI["Upload Documents"](browser);
         spaRAI["Enter Comments"](browser);
         spaRAI["Submit Response"](browser);
+        browser.pause(timeout + 3000);
     },
 
     "Submit a SPA Waiver ": function (browser) {
