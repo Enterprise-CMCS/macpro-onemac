@@ -8,8 +8,6 @@ import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
-import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
-import { validateSpaId, validateWaiverId } from "../utils/form-utils";
 import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
@@ -96,31 +94,22 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   };
 
   /**
-   * Validate Transmittal Number Format
-   * @param {value} Transmittal Number Field Entered on Change Event.
-   * @return the validation error message or undefined
+   * Check for Existing Transmittal Number
+   * @param {value} Transmittal Number
+   * @return false or true;
    */
-  function validateTransmittalNumber(value) {
-    let errorMessage;
-
-    if (
-      changeRequestType === CHANGE_REQUEST_TYPES.SPA_RAI ||
-      changeRequestType === CHANGE_REQUEST_TYPES.SPA
-    ) {
-      errorMessage = validateSpaId(value);
-    } else if (
-      changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_RAI ||
-      changeRequestType === CHANGE_REQUEST_TYPES.WAIVER ||
-      changeRequestType === CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
-    ) {
-      errorMessage = validateWaiverId(value);
-    } else {
-      throw new Error(`Unable to validate invalid type ${changeRequestType}.`);
+  async function isExistingTransmittalID(transmittalID)
+  {
+    let dupID;
+    console.log("Checking package ID: ", transmittalID);
+    try {
+      dupID = await ChangeRequestDataApi.packageExists(transmittalID);
+    } catch (error) {
+      console.log("There was an error submitting a request.", error);
     }
-
-    return errorMessage;
+    console.log(dupID)
+    return dupID;
   }
-
   /**
    * Handle changes to the ID.
    * @param {Object} event the event
@@ -134,33 +123,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
 
     const newTransmittalNumber = event.target.value;
-    let errorMessage = validateTransmittalNumber(newTransmittalNumber);
+    let errorMessage
+
 
     // when we have a valid ID, check for exists/not exists based on type
     if (errorMessage === undefined && newTransmittalNumber) {
-      let dupID;
-      console.log("Checking package ID: ", newTransmittalNumber);
-      try {
-        dupID = await ChangeRequestDataApi.packageExists(newTransmittalNumber);
-      } catch (error) {
-        console.log("There was an error submitting a request.", error);
-      }
-      if (formInfo.idMustExist && !dupID) {
-        errorMessage =
-          "According to our records, this " +
-          formInfo.idLabel +
-          " does not exist. Please check the " +
-          formInfo.idLabel +
-          " and try entering it again.";
-      }
-      if (!formInfo.idMustExist && dupID) {
-        errorMessage =
-          "According to our records, this " +
-          formInfo.idLabel +
-          " already exists. Please check the " +
-          formInfo.idLabel +
-          " and try entering it again.";
-      }
+
+      errorMessage = formInfo.idValidationFn(updatedRecord["transmittalNumber"], await isExistingTransmittalID(newTransmittalNumber), updatedRecord, formInfo)
+
     }
     setTransmittalNumberErrorMessage(errorMessage);
   }
@@ -173,8 +143,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (!event || !event.target) return;
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-    updatedRecord[event.target.name] = event.target.value;
 
+    updatedRecord[event.target.name] = event.target.value;
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
 
@@ -185,11 +155,18 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
     }
 
+    if (event.target.name !== "summary") {
+      updatedRecord["transmittalNumber"] = ""
+      actionTypeMessage = ""
+    }
+
     // state set functions have to be at top level
     // because we can't trust they got set, can't use them in the function
+
     setChangeRequest(updatedRecord);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+
   };
 
   /**
@@ -205,8 +182,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
 
-
-
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the
     let actionTypeMessage = "";
@@ -215,14 +190,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let newAlert = null;
     let mounted = true;
 
-    if (formInfo.actionType && !changeRequest.actionType)
+    if (formInfo.actionType && !changeRequest.actionType) {
       actionTypeMessage = formInfo.actionType.errorMessage;
-    if (formInfo.waiverAuthority && !changeRequest.waiverAuthority)
-      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-
-    transmittalNumberMessage = validateTransmittalNumber(
-      changeRequest.transmittalNumber
-    );
+      transmittalNumberMessage = formInfo.idValidationFn(changeRequest.transmittalNumber, await isExistingTransmittalID(changeRequest.transmittalNumber), {"authority": changeRequest.waiverAuthority, "actionType": changeRequest.actionType }, formInfo);
+    }
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard

@@ -23,7 +23,7 @@ const TransmittalNumber = ({
   let FAQLink = ROUTES.FAQ_SPA_ID;
   if (idType === "waiver") {
     numName = "Waiver Number";
-    hint = "Must follow the format SS.##.R##.M## or SS.####.R##.##";
+    hint = "Must follow the format SS.##.R##.M## or SS.##.R##.##";
     FAQLink = ROUTES.FAQ_WAIVER_ID;
   }
 

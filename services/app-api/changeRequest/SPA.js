@@ -72,7 +72,8 @@ getCMSEmail(data) {
         <b>Files</b>:
         ${getLinksHtml(data.uploads)}
       </p>
-      <p><br>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
+      <br>
+      <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
       <p>Thank you!</p>
     `;
 
@@ -101,11 +102,11 @@ getStateEmail(data) {
         <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
-        <b>Summary</b>:
-        <br>${data.summary}
+        <b>Summary</b>:<br>
+        ${data.summary}
       </p>
+      <br>
       <p>
-        <br>
         This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
         You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
       </p>

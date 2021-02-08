@@ -54,6 +54,7 @@ custom:
         fi
       deploy:finalize: |
         serverless invoke --stage ${self:custom.stage} --function configureConnectors
+
 provider:
   name: aws
   runtime: nodejs12.x
@@ -68,6 +69,7 @@ functions:
           arn: ${self:custom.tableStreamArn}
           startingPosition: LATEST
           maximumRetryAttempts: 2
+          enabled: false
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}

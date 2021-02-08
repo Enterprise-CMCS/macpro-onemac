@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import {validateSpaId} from "../utils/form-utils";
 
 /**
  * Spa acts as a wrapper around SubmissionForm to render SPA-specific form
@@ -27,7 +28,7 @@ const Spa = () => {
     ],
     idType: "spa",
     idLabel: "SPA ID",
-    idMustExist: false,
+    idValidationFn: validateSpaId,
   };
 
   if (id) {
