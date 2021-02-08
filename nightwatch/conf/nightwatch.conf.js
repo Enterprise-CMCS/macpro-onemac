@@ -120,7 +120,6 @@ function loadServices() {
         fs.appendFileSync(serviceLog, err);
     }
 
-
     try {
         Services.chromedriver = require('chromedriver');
     } catch (err) {
@@ -129,8 +128,6 @@ function loadServices() {
 
     try {
         Services.geckodriver = require('geckodriver');
-        // Have to specify the path explicitly because geckodriver did not set the binary path by default
-        Services.geckodriver.path = "node_modules/geckodriver/geckodriver";
     } catch (err) {
         fs.appendFileSync(serviceLog, err);
     }
