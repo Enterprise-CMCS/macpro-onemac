@@ -12,12 +12,12 @@
     "chrome": "npm test -- -e chrome",
     "cross-browser": "npm test -- -e chrome,firefox",
     "firefox": "npm test -- -e firefox",
-    "unit": "node nightwatch.js -c ./nightwatch/conf/nightwatch.conf.js -e unit-test --skiptags=smoke,regression,integration",
-    "regression": "npm run chrome -- --tag regression --skiptags unit,smoke,integration,devEnv",
+    "unit": "npm test -- -e unit-test --skiptags=smoke,regression,integration",
+    "regression": "npm run firefox -- --tag regression --skiptags unit,smoke,integration,devEnv",
     "regression-dev": "npm run chrome -- --tag regression,devEnv --skiptags unit,smoke,integration",
-    "smoke-test": "node nightwatch.js -c ./nightwatch/conf/nightwatch.conf.js -e chrome --tag smokeTest --skiptags unit,integration,regression",
+    "smoke-test": "npm run chrome -- --tag smokeTest --skiptags unit,integration,regression",
     "update": "npx npm-check-updates -u && npm install",
-    "integration": "node nightwatch.js -c ./nightwatch/conf/nightwatch.conf.js -e unit-test --tag integration"
+    "integration": "npm test -- -e unit-test --tag integration --skiptags unit"
   },
   "unsafe-perm": true,
   "repository": {
