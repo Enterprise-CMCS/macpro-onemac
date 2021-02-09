@@ -130,11 +130,13 @@ const idNumbers = {
     },
 
     getSpaID: () => {
-        return fs.readFileSync(spaVar, 'utf8');
+        const data = fs.readFileSync(spaVar, 'utf8');
+        return data.toString()
     },
 
     getWaiverID: () => {
-        return fs.readFileSync(spaVar, 'utf8');
+        const data = fs.readFileSync(spaVar, 'utf8');
+        return data.toString()
     }
 }
 
