@@ -30,13 +30,14 @@ module.exports = {
         newSPA["Submit SPA"](browser);
     },
 
-    "Submit a SPA RAI Response'": function (browser) {
+    "Submit a SPA RAI Response": function (browser) {
         const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
         spaRAI["Click on 'Respond to SPA RAI'"](browser);
         spaRAI["Enter SPA ID"](browser);
         spaRAI["Upload Documents"](browser);
         spaRAI["Enter Comments"](browser);
         spaRAI["Submit Response"](browser);
+        browser.pause(timeout + 3000);
     },
 
     "Submit a SPA Waiver ": function (browser) {

@@ -9,6 +9,7 @@
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
+const timeout = 5000;
 module.exports = {
 
     before : function(browser) {
@@ -34,17 +35,18 @@ module.exports = {
     "Enter SPA ID" : async function (browser) {
         spa = browser.page.spaBasePage();
         let selector = "#transmittalNumber";
-        let transmitNumber = spa.getSPA();
-        console.log(transmitNumber);
+        const transmitNumber = spa.getSPA();
+        browser.pause(timeout)
         browser.setValue(selector, transmitNumber);
-        browser.pause(1000);
+        browser.Keys.TAB;
+        browser.pause(timeout)
         browser.expect.element(selector).value.to.equal(transmitNumber);
-
     },
 
     "Upload Documents" : function (browser) {
         spa = browser.page.spaBasePage();
         spa.uploadFiles(10);
+
     },
 
     "Enter Comments" : function(browser) {

@@ -22,6 +22,7 @@ export function validateSpaId(spaID, isExistingSpaId, formInfo) {
     }  else if (!isExistingSpaId && formInfo.type === CHANGE_REQUEST_TYPES.SPA_RAI ) {
         errorMessage = "According to our records, this SPA ID does not exist. Please check the SPA ID and try entering it again.";
     }
+
     return errorMessage
 }
 
@@ -35,15 +36,12 @@ export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formI
     let errorMessage = undefined
     let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
     let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M##"
-    if (formFields["actionType"] !== "Waiver Action") {
+    if (formFields["waiverAuthority"] !== "1915(c)") {
         RegexFormatString = RegexFormatString + "|(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
         WaiverTransmittalNumberFormatErrorMessage = WaiverTransmittalNumberFormatErrorMessage + " or SS.##.R##.##"
     } else {
-
-        if (formFields["waiverAuthority"] === "1915(c)") {
             WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.##"
             RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
-        }
     }
 
     if (!waiverId) {
@@ -52,8 +50,6 @@ export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formI
         errorMessage = `The Waiver Number must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
-    } else if ( isExistingWaiverId === undefined) {
-        errorMessage = "";
     } else if ( formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER)
     {
 
@@ -71,6 +67,7 @@ export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formI
     } else if (!isExistingWaiverId && formFields["actionType"] !== "new") {
         errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
     }
+
     return errorMessage
 }
 
