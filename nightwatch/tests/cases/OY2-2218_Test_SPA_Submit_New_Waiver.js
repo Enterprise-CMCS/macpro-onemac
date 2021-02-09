@@ -9,6 +9,7 @@
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
+const timeout = 2000;
 module.exports = {
 
     before: function (browser) {
@@ -79,6 +80,7 @@ module.exports = {
     },
 
     "Submit SPA Waiver": function (browser) {
+        browser.pause(timeout)
         new_spa["Submit SPA"](browser);
     }
 
