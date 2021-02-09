@@ -136,21 +136,6 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
-              <Link to={ROUTES.FAQ} id="manageAccountLink" onClick={() => setShowMenu(false)}>
-                <svg
-                  width="14"
-                  height="15"
-                  viewBox="0 0 14 15"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M13.6663 14.9999H0.333008V12.3332H13.6663V14.9999ZM7.70634 2.45988L10.2063 4.95988L4.16634 10.9999H1.66634V8.49987L7.70634 2.45988ZM10.9197 4.24654L8.41968 1.74654L9.63968 0.526543C9.89968 0.266543 10.3197 0.266543 10.5797 0.526543L12.1397 2.08654C12.3997 2.34654 12.3997 2.76654 12.1397 3.02654L10.9197 4.24654Z"
-                    fill="white"
-                  />
-                </svg>
-                &nbsp; Manage account
-              </Link>
               <Link
                 to={ROUTES.HOME}
                 id="logoutLink"
