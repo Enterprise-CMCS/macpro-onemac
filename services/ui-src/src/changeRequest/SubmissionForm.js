@@ -12,6 +12,7 @@ import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import { ERROR_MSG } from "../libs/error-messages";
+import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -28,6 +29,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
+  const [hasExistingSubmission, setExistingSubmission] = useState(false)
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
   const [
     waiverAuthorityErrorMessage,
@@ -101,13 +103,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   async function isExistingTransmittalID(transmittalID)
   {
     let dupID;
-    console.log("Checking package ID: ", transmittalID);
     try {
       dupID = await ChangeRequestDataApi.packageExists(transmittalID);
     } catch (error) {
       console.log("There was an error submitting a request.", error);
     }
-    console.log(dupID)
+    setExistingSubmission(dupID)
     return dupID;
   }
   /**
@@ -190,9 +191,21 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let newAlert = null;
     let mounted = true;
 
-    if (formInfo.actionType && !changeRequest.actionType) {
-      actionTypeMessage = formInfo.actionType.errorMessage;
-      transmittalNumberMessage = formInfo.idValidationFn(changeRequest.transmittalNumber, await isExistingTransmittalID(changeRequest.transmittalNumber), {"authority": changeRequest.waiverAuthority, "actionType": changeRequest.actionType }, formInfo);
+
+    transmittalNumberMessage = formInfo.idValidationFn(changeRequest.transmittalNumber, hasExistingSubmission, changeRequest, formInfo);
+
+    if (formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER
+        || CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
+        || CHANGE_REQUEST_TYPES.WAIVER_RAI)
+    {
+
+      if (formInfo.actionType && !changeRequest.actionType) {
+        actionTypeMessage = formInfo.actionType.errorMessage;
+      }
+
+      if (formInfo.waiverAuthority && !changeRequest.waiverAuthority) {
+        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
+      }
     }
 
     // check which alert to show.  Fields first, than attachments
