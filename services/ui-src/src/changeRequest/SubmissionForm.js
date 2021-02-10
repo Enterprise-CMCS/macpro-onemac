@@ -11,7 +11,7 @@ import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
-import { ERROR_MSG } from "../../../../libs/error-messages";
+import { ERROR_MSG } from "../libs/error-messages";
 import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
 
 /**

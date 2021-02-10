@@ -1,6 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_MSG } from "../libs/error-messages";
+import { ERROR_CODE } from "../libs/error-messages";
 
 /**
  * Waiver Extension submission specific email generation functions.
@@ -34,7 +34,7 @@ class WaiverExtension {
       } else {
         console.log("result.Item does not exist");
         areFieldsValid = false;
-        whyNot = ERROR_MSG.ID_NOT_FOUND;
+        whyNot = ERROR_CODE.ID_NOT_FOUND;
       }
     } catch (error) {
       console.log("packageExists got an error: ", error);

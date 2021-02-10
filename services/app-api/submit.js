@@ -3,7 +3,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getChangeRequestFunctions, { hasValidStateCode } from "./changeRequest/changeRequest-util";
-import { ERROR_MSG } from "./libs/error-messages";
+import { ERROR_CODE } from "./libs/error-messages";
 import { DateTime } from "luxon";
 
 /**
@@ -52,7 +52,7 @@ export const main = handler(async (event) => {
     return buildAppropriateResponse({
       type: "logicError",
       from: "isValidStateCode",
-      message: ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID
+      message: ERROR_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID
     });
   }
 
@@ -61,7 +61,7 @@ export const main = handler(async (event) => {
     return buildAppropriateResponse({
       type: "logicError",
       from: "isValidStateCode",
-      message: ERROR_MSG.TERRITORY_NOT_VALID
+      message: ERROR_CODE.TERRITORY_NOT_VALID
     });
   }
 
