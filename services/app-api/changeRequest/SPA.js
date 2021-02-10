@@ -1,6 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_CODE } from "../libs/error-messages";
+import { ERROR_CODE } from "../libs/error-codes";
 
 /**
  * SPA submission specific functions.
