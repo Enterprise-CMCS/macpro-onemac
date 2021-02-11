@@ -11,8 +11,7 @@ import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
-import { ERROR_MSG } from "../libs/error-messages";
-import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
+import { getAlert } from "../libs/error-mappings";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -29,7 +28,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  const [hasExistingSubmission, setExistingSubmission] = useState(false)
+  const [hasExistingSubmission, setExistingSubmission] = useState(false);
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
   const [
     waiverAuthorityErrorMessage,
@@ -100,15 +99,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    * @param {value} Transmittal Number
    * @return false or true;
    */
-  async function isExistingTransmittalID(transmittalID)
-  {
+  async function isExistingTransmittalID(transmittalID) {
     let dupID;
     try {
       dupID = await ChangeRequestDataApi.packageExists(transmittalID);
     } catch (error) {
       console.log("There was an error submitting a request.", error);
     }
-    setExistingSubmission(dupID)
+    setExistingSubmission(dupID);
     return dupID;
   }
   /**
@@ -120,18 +118,20 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = event.target.value;
-    updatedRecord["territory"] =    event.target.value.toString().substring(0,2)
+    updatedRecord["territory"] = event.target.value.toString().substring(0, 2);
     setChangeRequest(updatedRecord);
 
     const newTransmittalNumber = event.target.value;
-    let errorMessage
-
+    let errorMessage;
 
     // when we have a valid ID, check for exists/not exists based on type
     if (errorMessage === undefined && newTransmittalNumber) {
-
-      errorMessage = formInfo.idValidationFn(updatedRecord["transmittalNumber"], await isExistingTransmittalID(newTransmittalNumber), updatedRecord, formInfo)
-
+      errorMessage = formInfo.idValidationFn(
+        updatedRecord["transmittalNumber"],
+        await isExistingTransmittalID(newTransmittalNumber),
+        updatedRecord,
+        formInfo
+      );
     }
     setTransmittalNumberErrorMessage(errorMessage);
   }
@@ -157,8 +157,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     if (event.target.name !== "summary") {
-      updatedRecord["transmittalNumber"] = ""
-      actionTypeMessage = ""
+      updatedRecord["transmittalNumber"] = "";
+      actionTypeMessage = "";
     }
 
     // state set functions have to be at top level
@@ -167,7 +167,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-
   };
 
   /**
@@ -191,21 +190,19 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let newAlert = null;
     let mounted = true;
 
+    transmittalNumberMessage = formInfo.idValidationFn(
+      changeRequest.transmittalNumber,
+      hasExistingSubmission,
+      changeRequest,
+      formInfo
+    );
 
-    transmittalNumberMessage = formInfo.idValidationFn(changeRequest.transmittalNumber, hasExistingSubmission, changeRequest, formInfo);
+    if (formInfo.actionType && !changeRequest.actionType) {
+      actionTypeMessage = formInfo.actionType.errorMessage;
+    }
 
-    if (formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER
-        || CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
-        || CHANGE_REQUEST_TYPES.WAIVER_RAI)
-    {
-
-      if (formInfo.actionType && !changeRequest.actionType) {
-        actionTypeMessage = formInfo.actionType.errorMessage;
-      }
-
-      if (formInfo.waiverAuthority && !changeRequest.waiverAuthority) {
-        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-      }
+    if (formInfo.waiverAuthority && !changeRequest.waiverAuthority) {
+      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
     }
 
     // check which alert to show.  Fields first, than attachments
@@ -217,47 +214,17 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     } else {
       try {
         let uploadedList = await uploader.current.uploadFiles();
-        console.log("changeRequest is: ", changeRequest);
-        const aresponse = await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-        console.log("Response is: ", aresponse);
-        if (!aresponse.error) {
-          newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
-        } else switch (aresponse.error) {
-          case ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID:
-            newAlert = ALERTS_MSG.SUBMISSION_TERRITORY_ERROR;
-            break;
-          case ERROR_MSG.DUPLICATE_ID:
-            newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
-            break;
-          case ERROR_MSG.ID_NOT_FOUND:
-            newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-            break;
-          case ERROR_MSG.WAIVER_RENEWAL_ID:
-            newAlert = ALERTS_MSG.WAIVER_RENEWAL_ID;
-            break;
-          case ERROR_MSG.WAIVER_AMENDMENT_ON_K:
-            newAlert = ALERTS_MSG.WAIVER_AMENDMENT_ON_K;
-            break;
-          case ERROR_MSG.WAIVER_NEW_ON_K:
-            newAlert = ALERTS_MSG.WAIVER_NEW_ON_K;
-            break;
-          case ERROR_MSG.WAIVER_NEW_NOT_K:
-            newAlert = ALERTS_MSG.WAIVER_NEW_NOT_K;
-            break;
-          case ERROR_MSG.WAIVER_ACTION_UNKNOWN:
-            newAlert = ALERTS_MSG.WAIVER_ACTION_UNKNOWN;
-            break;
-          default:
-            newAlert = ALERTS_MSG.SUBMISSION_ERROR;
-            break;
-        }
+        const aresponse = await ChangeRequestDataApi.submit(
+          changeRequest,
+          uploadedList
+        );
+        newAlert = getAlert(aresponse);
       } catch (error) {
-        console.log("Error is: ", error);
-        newAlert = ALERTS_MSG.SUBMISSION_ERROR;
+        newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
       }
     }
     if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
-      mounted=false;
+      mounted = false;
       history.push({
         pathname: ROUTES.DASHBOARD,
         query: "?query=abc",
@@ -291,64 +258,61 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar
-        heading={formInfo.pageTitle}
-        text=""
-      />
+      <PageTitleBar heading={formInfo.pageTitle} text="" />
       {renderAlert(alert)}
-        <div className="form-container">
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className={!firstTimeThrough ? "display-errors" : ""}
-          >
-            <h3>{formInfo.detailsHeader} Details</h3>
-            <p className="req-message">
-              <span className="required-mark">*</span>
-              indicates required field.
-            </p>
-            <div className="form-card">
-              {formInfo.actionType && (
-                <RequiredChoice
-                  fieldInfo={formInfo.actionType}
-                  label="Action Type"
-                  errorMessage={actionTypeErrorMessage}
-                  value={changeRequest.actionType}
-                  onChange={handleInputChange}
-                />
-              )}
-              {formInfo.waiverAuthority && (
-                <RequiredChoice
-                  fieldInfo={formInfo.waiverAuthority}
-                  label="Waiver Authority"
-                  errorMessage={waiverAuthorityErrorMessage}
-                  value={changeRequest.waiverAuthority}
-                  onChange={handleInputChange}
-                />
-              )}
-              {renderTransmittalNumber()}
-            </div>
-            <h3>Attachments</h3>
-              <FileUploader
-                ref={uploader}
-                requiredUploads={formInfo.requiredUploads}
-                optionalUploads={formInfo.optionalUploads}
-                readyCallback={uploadsReadyCallbackFunction}
-                showRequiredFieldErrors={!firstTimeThrough}
-              ></FileUploader>
-            <div className="summary-box">
-              <TextField
-                name="summary"
-                label="Summary"
-                fieldClassName="summary-field"
-                multiline
+      <div className="form-container">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className={!firstTimeThrough ? "display-errors" : ""}
+        >
+          <h3>{formInfo.detailsHeader} Details</h3>
+          <p className="req-message">
+            <span className="required-mark">*</span>
+            indicates required field.
+          </p>
+          <div className="form-card">
+            {formInfo.actionType && (
+              <RequiredChoice
+                fieldInfo={formInfo.actionType}
+                label="Action Type"
+                errorMessage={actionTypeErrorMessage}
+                value={changeRequest.actionType}
                 onChange={handleInputChange}
-                value={changeRequest.summary}
-              ></TextField>
-            </div>
-              <input type="submit" className="form-submit" value="Submit" />
-          </form>
-        </div>
+              />
+            )}
+            {formInfo.waiverAuthority && (
+              <RequiredChoice
+                fieldInfo={formInfo.waiverAuthority}
+                label="Waiver Authority"
+                errorMessage={waiverAuthorityErrorMessage}
+                value={changeRequest.waiverAuthority}
+                onChange={handleInputChange}
+              />
+            )}
+            {renderTransmittalNumber()}
+          </div>
+          <h3>Attachments</h3>
+          <FileUploader
+            ref={uploader}
+            requiredUploads={formInfo.requiredUploads}
+            optionalUploads={formInfo.optionalUploads}
+            readyCallback={uploadsReadyCallbackFunction}
+            showRequiredFieldErrors={!firstTimeThrough}
+          ></FileUploader>
+          <div className="summary-box">
+            <TextField
+              name="summary"
+              label="Summary"
+              fieldClassName="summary-field"
+              multiline
+              onChange={handleInputChange}
+              value={changeRequest.summary}
+            ></TextField>
+          </div>
+          <input type="submit" className="form-submit" value="Submit" />
+        </form>
+      </div>
     </LoadingScreen>
   );
 };

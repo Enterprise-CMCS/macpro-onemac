@@ -54,7 +54,7 @@ export const ALERTS_MSG = {
   SUBMISSION_TERRITORY_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Territory Error",
-    text: "The Transmittal ID Territory/State is not Valid Please check the  Transmittal ID and try entering it again.",
+    text: "The Transmittal ID Territory/State is not Valid Please check the Transmittal ID and try entering it again.",
   },
   SUBMISSION_ID_NOT_FOUND: {
     type: ALERT_TYPES.ERROR,
@@ -115,5 +115,10 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.WARNING,
     heading: "Login Required",
     text: "You need to be signed in to your account to access this page.  Please login and try again.",
+  },
+  CONTACT_HELP_DESK: {
+    type: ALERT_TYPES.ERROR,
+    heading: "System Submission  Error",
+    text: "Please contact the Helpdesk MACPro_HelpDesk@cms.hhs.gov or (833) 228-2540 for additional support.",
   }
 };

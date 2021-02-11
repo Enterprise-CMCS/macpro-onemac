@@ -1,6 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_CODE } from "../libs/error-codes";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * Waiver submission specific email generation functions.
@@ -48,10 +48,10 @@ async fieldsValid(data) {
         case "renewal":
           if (!idExists && data.waiverAuthority !=="1915(c)")  {
             areFieldsValid = false;
-            whyNot = ERROR_CODE.WAIVER_RENEWAL_ID;
+            whyNot = RESPONSE_CODE.WAIVER_RENEWAL_ID;
           } else if (!idExists) {
               areFieldsValid = false;
-              whyNot = ERROR_CODE.WAIVER_AMENDMENT_ON_K;
+              whyNot = RESPONSE_CODE.WAIVER_AMENDMENT_ON_K;
           }
           break;
 
@@ -59,7 +59,7 @@ async fieldsValid(data) {
         case "amendment":
           if (!idExists && data.waiverAuthority !== "1915(c)" ) {
             areFieldsValid = false;
-            whyNot = ERROR_CODE.WAIVER_AMENDMENT_NO_ID;
+            whyNot = RESPONSE_CODE.WAIVER_AMENDMENT_NO_ID;
           }
           break;
 
@@ -67,17 +67,17 @@ async fieldsValid(data) {
         case "new":
           if (data.waiverAuthority==="1915(c)" && !idExists) {
             areFieldsValid = false;
-            whyNot = ERROR_CODE.WAIVER_NEW_ON_K;
+            whyNot = RESPONSE_CODE.WAIVER_NEW_ON_K;
           } else if (idExists && data.waiverAuthority !=="1915(c)"  ) {
             areFieldsValid = false;
-            whyNot = ERROR_CODE.WAIVER_NEW_NOT_K;
+            whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
           }
           break;
 
         // if we get here... we don't know the action type
         default:
           areFieldsValid = false;
-          whyNot = ERROR_CODE.WAIVER_ACTION_UNKNOWN;
+          whyNot = RESPONSE_CODE.WAIVER_ACTION_UNKNOWN;
           break;
 
       }

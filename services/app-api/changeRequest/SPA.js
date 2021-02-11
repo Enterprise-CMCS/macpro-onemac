@@ -1,6 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_CODE } from "../libs/error-codes";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * SPA submission specific functions.
@@ -33,7 +33,7 @@ async fieldsValid(data) {
       if (result.Item) {
         console.log("the Item exists", result);
         areFieldsValid = false;
-        whyNot = ERROR_CODE.DUPLICATE_ID;
+        whyNot = RESPONSE_CODE.DUPLICATE_ID;
       } else {
         console.log("result.Item does not exist");
         areFieldsValid = true;

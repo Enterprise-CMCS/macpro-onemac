@@ -1,9 +1,13 @@
 
 /**
- * Poosible error codes to send to front end
+ * Codes to send to front end
  */
-export const ERROR_CODE = {
+export const RESPONSE_CODE = {
   NONE: "",
+  SUCCESSFULLY_SUBMITTED: "SC000",
+  VALIDATION_ERROR: "VA000",
+  ATTACHMENT_ERROR: "AT000",
+  SYSTEM_ERROR: "SY000",
   TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
   DUPLICATE_ID: "ID002",
   ID_NOT_FOUND: "ID000",
