@@ -6,7 +6,8 @@ module.exports = {
     before : function(browser) {
         console.log('Setting up the browser instance...');
         console.log('Opening the browser...')
-        let env = 'https://d2dr7dgo9g0124.cloudfront.net/devlogin';
+       // let env = 'https://d2dr7dgo9g0124.cloudfront.net/devlogin';
+        let env = 'https://spa-val.cms.gov/';
         console.log('Maximizing the browser window size...');
         browser.windowMaximize().url(env);
         browser.waitForElementPresent('body');
@@ -46,10 +47,10 @@ module.exports = {
         browser.click('button#spaSubmitBtn');
         // 2. Click first ["Choose File"] button 
         //    and upload the file 
-        browser.assert.elementPresent(fileUploadElem);
+        browser.assert.elementPresent(fileUploadElem).pause(2000);
         let filePath = require('path').resolve(__dirname + '/files/Data_Larger_80mb.csv')
         console.log("FILE PAHT: " + filePath);
-        browser.setValue(fileUploadElem, filePath);
+        browser.setValue(fileUploadElem, filePath).pause(2000);
         
         // 3. Capture the error message displayed
         browser.assert.elementPresent(errorMsgElement);
