@@ -112,7 +112,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     return result;
   }
 
-  async function processTransmittalNumber(newTransmittalNumber) {
+  function validateTransmittalNumber(newTransmittalNumber) {
     let errorMessage = "";
 
     // Must have a value
@@ -137,6 +137,28 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         formInfo.idFormat +
         ` !`;
     }
+
+    return errorMessage;
+  }
+
+  /**
+   * Handle changes to the ID.
+   * @param {Object} event the event
+   */
+  async function handleTransmittalNumberChange(event) {
+    if (!event || !event.target) return;
+
+    const newTransmittalNumber = event.target.value;
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    updatedRecord[event.target.name] = newTransmittalNumber;
+    updatedRecord["territory"] = newTransmittalNumber
+      .toString()
+      .substring(0, 2);
+
+    // validate that the ID is in correct format
+    let errorMessage = "";
+
+    errorMessage = validateTransmittalNumber(newTransmittalNumber);
 
     // if the ID is valid, check if exists/not exist in data
     if (errorMessage === "") {
@@ -163,30 +185,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       } catch (error) {
         console.log("There was an error submitting a request.", error);
       }
-    }
-    return errorMessage;
-  }
-
-  /**
-   * Handle changes to the ID.
-   * @param {Object} event the event
-   */
-  async function handleTransmittalNumberChange(event) {
-    if (!event || !event.target) return;
-
-    const newTransmittalNumber = event.target.value;
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-    updatedRecord[event.target.name] = newTransmittalNumber;
-    updatedRecord["territory"] = newTransmittalNumber
-      .toString()
-      .substring(0, 2);
-
-    // validate that the ID is in correct format
-    let errorMessage = "";
-    try {
-      errorMessage = await processTransmittalNumber(newTransmittalNumber);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
     }
 
     setChangeRequest(updatedRecord);
@@ -246,13 +244,29 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let transmittalNumberMessage = "";
     let newAlert = null;
     let mounted = true;
+    const uploadRef = uploader.current;
 
-    try {
-      transmittalNumberMessage = await processTransmittalNumber(
-        changeRequest.transmittalNumber
-      );
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
+    transmittalNumberMessage = validateTransmittalNumber(
+      changeRequest.transmittalNumber
+    );
+
+    // if the ID is valid, check if exists/not exist in data
+    if (transmittalNumberMessage === "") {
+      try {
+        const dupID = await ChangeRequestDataApi.packageExists(
+          changeRequest.transmittalNumber
+        );
+
+        if (!dupID && formInfo.idMustExist(changeRequest)) {
+          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
+          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+        } else if (dupID && !formInfo.idMustExist()) {
+          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
+          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+        }
+      } catch (err) {
+        console.log("There was an error submitting a request.", err);
+      }
     }
 
     if (formInfo.actionType && !changeRequest.actionType) {
@@ -265,35 +279,45 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
-    if (transmittalNumberMessage) {
-      newAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
+    if (
+      transmittalNumberMessage ||
+      actionTypeMessage ||
+      waiverAuthorityMessage
+    ) {
+      if (!newAlert) newAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
     } else if (!areUploadsReady) {
       newAlert = ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
     } else {
       try {
-        let uploadedList = await uploader.current.uploadFiles();
-        const aresponse = await ChangeRequestDataApi.submit(
-          changeRequest,
-          uploadedList
-        );
-        newAlert = getAlert(aresponse);
-      } catch (error) {
+        const uploadedList = await uploadRef.uploadFiles();
+        try {
+          const returnCode = await ChangeRequestDataApi.submit(
+            changeRequest,
+            uploadedList
+          );
+          newAlert = getAlert(returnCode);
+
+          if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
+            mounted = false;
+            history.push({
+              pathname: ROUTES.DASHBOARD,
+              query: "?query=abc",
+              state: {
+                showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
+              },
+            });
+          }
+        } catch (err) {
+          newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+          console.log("submit caught error: ", err);
+        }
+      } catch (err) {
         newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
-        console.log("caught error: ",error);
+        console.log("uploadFiles() caught error: ", err);
       }
     }
-    if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
-      mounted = false;
-      history.push({
-        pathname: ROUTES.DASHBOARD,
-        query: "?query=abc",
-        state: {
-          showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
-        },
-      });
-    }
 
-    // now set the state variables to show thw error messages
+    // now set the state variables to show the error messages
     if (mounted) setTransmittalNumberErrorMessage(transmittalNumberMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);

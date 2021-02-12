@@ -5,7 +5,7 @@ import { ALERTS_MSG } from "./alert-messages";
  */
 export const getAlert = (errorCode) => {
   let returnAlert = ALERTS_MSG.NONE;
-  console.log("errorCode is: ", errorCode);
+  
   switch (errorCode) {
     // app-api/response-codes.js    NONE: ""
     case "":
