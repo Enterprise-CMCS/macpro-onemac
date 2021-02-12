@@ -3,7 +3,6 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
-import {validateWaiverId} from "../utils/form-utils";
 
 /**
  * Waiver acts as a wrapper around SubmissionForm to render custom Waiver form
@@ -44,7 +43,22 @@ const Waiver = () => {
     ],
     idType: "waiver",
     idLabel: "Waiver Number",
-    idValidationFn: validateWaiverId,
+    idFormat: "SS.##.R##.M##",
+    idRegex: "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)",
+    idMustExist: (changeRequest) => {
+      // Amendment Ks should always have an existing number
+      if (changeRequest.waiverAuthority === "1915(c)") {
+        return true;
+      } 
+      // NEW actions on 1915bs should not have existing numbers
+      else if ( changeRequest.actionType === "new") {
+        return false;
+      } else 
+
+      // default is that a waiver needs an existing number
+        return true;
+    },
+
     actionType: {
       fieldName: "actionType",
       errorMessage: "Please select the Action Type.",

@@ -12,6 +12,7 @@ import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import { getAlert } from "../libs/error-mappings";
+import { territoryList } from "../libs/territoryLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -28,7 +29,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  const [hasExistingSubmission, setExistingSubmission] = useState(false);
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
   const [
     waiverAuthorityErrorMessage,
@@ -51,6 +51,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
     type: changeRequestType,
+    territory: "",
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
     actionType: "",
@@ -95,20 +96,77 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   };
 
   /**
-   * Check for Existing Transmittal Number
-   * @param {value} Transmittal Number
-   * @return false or true;
+   * Validate Field
+   * @param {value} Transmittal Number Field Entered on Change Event.
    */
-  async function isExistingTransmittalID(transmittalID) {
-    let dupID;
-    try {
-      dupID = await ChangeRequestDataApi.packageExists(transmittalID);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
+  function matchesRegex(fieldValue, regexFormatString) {
+    let fieldValidationRegEx = new RegExp(regexFormatString);
+    let result = false;
+
+    if (fieldValue && fieldValue.match(fieldValidationRegEx)) {
+      result = true;
+    } else {
+      result = false;
     }
-    setExistingSubmission(dupID);
-    return dupID;
+
+    return result;
   }
+
+  async function processTransmittalNumber(newTransmittalNumber) {
+    let errorMessage = "";
+
+    // Must have a value
+    if (!newTransmittalNumber) {
+      errorMessage = formInfo.idLabel + " Required !";
+    }
+    // must have a valid state code as the first two characters
+    else if (
+      !territoryList.some(
+        (state) => state["value"] === newTransmittalNumber.substring(0, 2)
+      )
+    ) {
+      errorMessage =
+        `The ` + formInfo.idLabel + ` must contain valid Territory/State Code`;
+    }
+    // must match the associated Regex string for format
+    else if (!matchesRegex(newTransmittalNumber, formInfo.idRegex)) {
+      errorMessage =
+        `The ` +
+        formInfo.idLabel +
+        ` must be in the format of ` +
+        formInfo.idFormat +
+        ` !`;
+    }
+
+    // if the ID is valid, check if exists/not exist in data
+    if (errorMessage === "") {
+      try {
+        const dupID = await ChangeRequestDataApi.packageExists(
+          newTransmittalNumber
+        );
+
+        if (!dupID && formInfo.idMustExist(changeRequest)) {
+          errorMessage =
+            "According to our records, this " +
+            formInfo.idLabel +
+            " does not exist. Please check the " +
+            formInfo.idLabel +
+            " and try entering it again.";
+        } else if (dupID && !formInfo.idMustExist()) {
+          errorMessage =
+            "According to our records, this " +
+            formInfo.idLabel +
+            " already exists. Please check the " +
+            formInfo.idLabel +
+            " and try entering it again.";
+        }
+      } catch (error) {
+        console.log("There was an error submitting a request.", error);
+      }
+    }
+    return errorMessage;
+  }
+
   /**
    * Handle changes to the ID.
    * @param {Object} event the event
@@ -116,23 +174,22 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   async function handleTransmittalNumberChange(event) {
     if (!event || !event.target) return;
 
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-    updatedRecord[event.target.name] = event.target.value;
-    updatedRecord["territory"] = event.target.value.toString().substring(0, 2);
-    setChangeRequest(updatedRecord);
-
     const newTransmittalNumber = event.target.value;
-    let errorMessage;
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    updatedRecord[event.target.name] = newTransmittalNumber;
+    updatedRecord["territory"] = newTransmittalNumber
+      .toString()
+      .substring(0, 2);
 
-    // when we have a valid ID, check for exists/not exists based on type
-    if (errorMessage === undefined && newTransmittalNumber) {
-      errorMessage = formInfo.idValidationFn(
-        updatedRecord["transmittalNumber"],
-        await isExistingTransmittalID(newTransmittalNumber),
-        updatedRecord,
-        formInfo
-      );
+    // validate that the ID is in correct format
+    let errorMessage = "";
+    try {
+      errorMessage = await processTransmittalNumber(newTransmittalNumber);
+    } catch (error) {
+      console.log("There was an error submitting a request.", error);
     }
+
+    setChangeRequest(updatedRecord);
     setTransmittalNumberErrorMessage(errorMessage);
   }
 
@@ -190,12 +247,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let newAlert = null;
     let mounted = true;
 
-    transmittalNumberMessage = formInfo.idValidationFn(
-      changeRequest.transmittalNumber,
-      hasExistingSubmission,
-      changeRequest,
-      formInfo
-    );
+    try {
+      transmittalNumberMessage = await processTransmittalNumber(
+        changeRequest.transmittalNumber
+      );
+    } catch (error) {
+      console.log("There was an error submitting a request.", error);
+    }
 
     if (formInfo.actionType && !changeRequest.actionType) {
       actionTypeMessage = formInfo.actionType.errorMessage;
@@ -221,6 +279,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         newAlert = getAlert(aresponse);
       } catch (error) {
         newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+        console.log("caught error: ",error);
       }
     }
     if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
