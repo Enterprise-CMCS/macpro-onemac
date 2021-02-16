@@ -4,20 +4,34 @@ const spaVar = path.join(__dirname, "spaVar.txt");
 
 const commands = {
 
-    getTransmitNumber: function (optionNumber = true, state = "VA") {
-        return idNumbers.transmitNumber(optionNumber, state);
+    // SS-YY-NNNN-xxxx
+    getTransmitNumber: function (optionNumber = true, state = "VA",
+                                 year = this.props.getYear()) {
+        let rand = () => this.props.getRandomInt(1000, 10000).toString();
+        let group = (optionNumber) ? [state, year, rand(), rand()] : [state, year, rand()], id = group.join("-");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8"});
+        return id;
     },
 
-    getWaiverNumber: function (isWaiverB = true, state = "VA") {
-        return idNumbers.waiver1915B(isWaiverB, state);
+    // 1915(b) SS.##.R##.M##
+    // 1915(c) SS.##.R##.##
+    getWaiverNumber: function (isWaiverB = true, state = "VA",
+                               year = this.props.getYear()) {
+        let rand = () => this.props.getRandomInt().toString();
+        let group = (isWaiverB)
+            ? [state, year, "R".concat(rand()), "M".concat(rand())]
+            : [state, year, "R".concat(rand()), rand()];
+        let id = group.join(".");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
 
-    getSPA: function () {
-        return idNumbers.getSpaID();
+    getSpaID: function () {
+        return fs.readFileSync(spaVar, 'utf8');
     },
 
-    getWaiver: function () {
-        return idNumbers.getWaiverID();
+    getWaiverID: function() {
+        return fs.readFileSync(spaVar, 'utf8');
     },
 
     enterComments: function (selector, text) {
@@ -50,8 +64,6 @@ const commands = {
     },
 
     uploadFiles: function (total) {
-        const fs = require('fs');
-        const path = require('path');
         let dir = path.join(__dirname, 'files');
         let files = fs.readdirSync(dir, 'utf8');
 
@@ -67,6 +79,8 @@ const commands = {
 
 module.exports = {
     elements: {
+        alertText: "[id*=alert_]",
+        confirmText: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
         devLoginButton : '[id=devloginBtn]',
@@ -89,60 +103,19 @@ module.exports = {
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
     },
-
     commands : [commands],
 
     props : {
         pauseAction: 1000,
+
+        //The maximum is exclusive and the minimum is inclusive
+        getRandomInt: function (inclusiveMin = 10, exclusiveMax= 100) {
+            let min = Math.ceil(inclusiveMin), max = Math.floor(exclusiveMax);
+            return Math.floor(Math.random() * (max - min) + min);
+        },
+
+        getYear: function () {
+            return new Date().getFullYear().toString().slice(2);
+        },
     }
 };
-
-
-/**
-    Description: Utilities for random number generation and other trivial operations.
-**/
-const idNumbers = {
-
-    // SS-YY-NNNN-xxxx
-    transmitNumber: (optional, state) => {
-        let rand = getRandomNumber(8);
-        let requiredFour = rand.slice(0, 4);   // 4 digit number (required)
-        let opt = rand.slice(4, 8);
-        let st = state;                      // 2 character state
-        let yrAbbr = new Date().getFullYear()     // 2 character year
-            .toString()
-            .slice(2);
-        let group = [st, yrAbbr, requiredFour]
-        let id = (optional) ? group.join("-") : [group, opt].flat().join("-");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8"});
-        return id;
-    },
-
-    // 1915(b) SS.##.R##.M##
-    // 1915(c) SS.##.R##.##
-    waiver1915B: (isWaiverB, state) => {
-        let rand = getRandomNumber(6);
-        let groupX = rand.slice(0, 2), groupY = "R".concat(rand.slice(2, 4)), groupZ = rand.slice(4);
-        let group = (isWaiverB) ? [state, groupX, groupY, ["M", groupZ].join('')] : [state, groupX, groupY, groupZ];
-        let id = group.join(".");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
-        return id;
-    },
-
-    getSpaID: () => {
-        const data = fs.readFileSync(spaVar, 'utf8');
-        return data.toString()
-    },
-
-    getWaiverID: () => {
-        const data = fs.readFileSync(spaVar, 'utf8');
-        return data.toString()
-    }
-}
-
-function getRandomNumber(numberOfDigits) {
-    const _ = require('lodash');
-    let lower = Math.pow(10, numberOfDigits - 1);
-    let upper = Math.pow(10, numberOfDigits) - 1;
-    return _.random(lower,upper).toString();
-}

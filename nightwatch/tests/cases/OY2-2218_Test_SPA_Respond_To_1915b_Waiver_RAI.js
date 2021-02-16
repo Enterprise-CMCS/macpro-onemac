@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 2000;
+const timeout = 1000;
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
@@ -28,30 +28,26 @@ module.exports = {
         let buttonText = "Respond to 1915(b) Waiver RAI";
         let buttonSelected = '@respondWaiver';
         spa = browser.page.spaBasePage();
-        spa.expect.element(buttonSelected).to.be.present.before(timeout);
+        spa.expect.element(buttonSelected).to.be.present.before(timeout * 10);
         spa.expect.element(buttonSelected).text.equals(buttonText);
         spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
     },
 
     "Enter Waiver Number" : function(browser) {
         spa = browser.page.spaBasePage();
-        const tid = spa.getWaiver()
         let testData = {
             selector: '@transmittal',
-            value: tid
+            value: spa.getWaiverID(),
         }
-        spa.expect.element(testData.selector).to.be.visible;
+        spa.expect.element(testData.selector).to.be.present.before(timeout * 10);
         spa.setValue(testData.selector, testData.value);
-        browser.Keys.TAB;
+        browser.keys([browser.Keys.TAB, browser.Keys.NULL]);
         browser.pause(timeout)
         spa.expect.element(testData.selector).value.to.contain(testData.value);
     },
 
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
-        browser.pause(timeout)
-
+        new_waiver["Upload Documents"](browser, 7);
     },
 
     "Enter Comments": function (browser) {

@@ -6,14 +6,14 @@
 
  */
 
-const timeout = 5000;
+const timeout = 1000;
 const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
         browser.pause(timeout * 2);
     },
 
@@ -27,40 +27,41 @@ module.exports = {
         spa.assert.elementPresent('@newSPA');
         spa.click('@newSPA').waitForElementPresent('body');
         browser.expect.url().to.contain('/spa').before(timeout * 5);
-        browser.pause(timeout);
+        browser.pause(timeout * 3);
     },
 
+    /*
     "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
         let testData = {
             selector: '@territory',
             state_option: "Virginia"
         }
-
+        spa.waitForElementVisible(testData.selector);
         spa.click(testData.selector)
         spa.setValue(testData.selector, "VVV");
-        spa.waitForElementVisible(testData.selector);
         spa.verify.containsText(testData.selector, testData.state_option);
-        spa.pause(timeout);
+        spa.pause(timeout * 5);
     },
+     */
 
-    'Enter SPA ID' : function (browser, spa_id = spa.getTransmitNumber()) {
+    'Enter SPA ID': function (browser, id) {
+        spa = browser.page.spaBasePage();
         let testData = {
             selector: '@transmittal',
-            spa_id: spa_id,
-        };
-
+            id: (!id) ? spa.getTransmitNumber() : id,
+        }
         spa.click(testData.selector);
-        spa.setValue(testData.selector, testData.spa_id);
-        browser.Keys.TAB;
-        browser.pause(timeout);
-        spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
+        spa.setValue(testData.selector, testData.id);
+        browser.keys([browser.Keys.TAB, browser.Keys.NULL]);
+        browser.pause(timeout * 5);
+        spa.expect.element(testData.selector).value.to.contain(testData.id);
 
     },
 
-    'Upload Documents' : function (browser) {
+    'Upload Documents' : function (browser, numFiles = 9) {
         spa = browser.page.spaBasePage();
-        spa.uploadFiles(9);
+        spa.uploadFiles(numFiles);
     },
 
     'Enter Comments' : function (browser, selector = 'textarea',
@@ -71,23 +72,29 @@ module.exports = {
     },
 
     'Submit SPA' : function (browser) {
-        let alert_selector = "[id*=alert_]";
-        let p_selector = "p[class=ds-c-alert__text]"
-        let alert_msg = "Submission Completed";
-        let msg = "Your submission has been received.";
+        let testData = {
+            alert: {
+                selector: '@alertText',
+                msg: "Submission Completed",
+            },
+            confirm: {
+                selector: '@confirmText',
+                msg: "Your submission has been received.",
+            },
+        };
+        spa = browser.page.spaBasePage();
 
         browser.url(function (current) {
-            browser.pause(timeout )
             browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.pause(5000)
-            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
+            browser.expect.url().to.not.equals(current.value).before(timeout * 10);
         });
-        browser
-            .assert.elementPresent(alert_selector)
-            .assert.elementPresent(p_selector)
-            .assert.containsText(alert_selector, alert_msg)
-            .assert.containsText(p_selector, msg)
-            .pause(timeout);
+
+        spa
+            .assert.elementPresent(testData.alert.selector)
+            .assert.containsText(testData.alert.selector, testData.alert.msg)
+            .assert.elementPresent(testData.confirm.selector)
+            .assert.containsText(testData.confirm.selector, testData.confirm.msg)
+            .pause(timeout * 3);
     },
 
 };
