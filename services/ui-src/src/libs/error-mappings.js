@@ -41,19 +41,15 @@ export const getAlert = (errorCode) => {
       break;
     // app-api/response-codes.js    WAIVER_RENEWAL_ID: "ID020",
     case "ID020":
-      returnAlert = ALERTS_MSG.WAIVER_RENEWAL_ID;
+      returnAlert = ALERTS_MSG.WAIVER_RENEWAL_NO_ID;
       break;
     // app-api/response-codes.js    WAIVER_AMENDMENT_ON_K: "ID031",
     case "ID031":
-      returnAlert = ALERTS_MSG.WAIVER_AMENDMENT_ON_K;
+      returnAlert = ALERTS_MSG.WAIVER_NEED_ID_FOR_K;
       break;
     // app-api/response-codes.js    WAIVER_AMENDMENT_NO_ID: "ID022",
     case "ID022":
       returnAlert = ALERTS_MSG.WAIVER_AMENDMENT_NO_ID;
-      break;
-    // app-api/response-codes.js    WAIVER_NEW_ON_K: "ID030",
-    case "ID030":
-      returnAlert = ALERTS_MSG.WAIVER_NEW_ON_K;
       break;
     // app-api/response-codes.js    WAIVER_NEW_NOT_K: "ID023",
     case "ID023":

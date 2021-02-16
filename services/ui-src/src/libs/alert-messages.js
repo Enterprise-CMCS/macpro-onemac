@@ -61,25 +61,20 @@ export const ALERTS_MSG = {
     heading: "ID Not Found",
     text: "We could not find that ID in our system, please try again.",
   },
-  WAIVER_RENEWAL_ID: {
+  WAIVER_RENEWAL_NO_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
     text: "Waiver Renewal Action requires existing ID",
   },
-  WAIVER_AMENDMENT_ON_K: {
-    type: ALERT_TYPES.ERROR,
-    heading: "Waiver Action Error",
-    text:"Waiver Amendment Ks need new ID for amendment action",
-  },
   WAIVER_AMENDMENT_NO_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"Waiver Amendment actions (other than Amendment Ks) require existing ID",
+    text:"Waiver Amendment actions require existing ID",
   },
-  WAIVER_NEW_ON_K: {
+  WAIVER_NEED_ID_FOR_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"New Amendment K actions must have existing IDs",
+    text:"Amendment K actions must have existing IDs",
   },
   WAIVER_NEW_NOT_K: {
     type: ALERT_TYPES.ERROR,
