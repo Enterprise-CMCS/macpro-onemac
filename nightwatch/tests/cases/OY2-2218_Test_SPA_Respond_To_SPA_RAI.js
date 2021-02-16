@@ -14,7 +14,7 @@ module.exports = {
 
     before : function(browser) {
         login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
         browser.pause(2000);
     },
 
@@ -24,29 +24,21 @@ module.exports = {
     },
 
     "Click on 'Respond to SPA RAI'": function (browser) {
-        let link = '[id=spaRaiBtn]'
+        let link = '@respondSPA'
         let subDir = "/sparai";
         spa = browser.page.spaBasePage();
-        browser.assert.elementPresent(link);
-        browser.click(link);
+        spa.assert.elementPresent(link);
+        spa.click(link);
         browser.expect.url().to.contain(subDir).before(5000);
     },
 
-    "Enter SPA ID" : async function (browser) {
+    "Enter SPA ID" : function (browser) {
         spa = browser.page.spaBasePage();
-        let selector = "#transmittalNumber";
-        const transmitNumber = spa.getSPA();
-        browser.pause(timeout)
-        browser.setValue(selector, transmitNumber);
-        browser.Keys.TAB;
-        browser.pause(timeout)
-        browser.expect.element(selector).value.to.equal(transmitNumber);
+        new_spa["Enter SPA ID"](browser, spa.getSpaID());
     },
 
     "Upload Documents" : function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(10);
-
+        new_spa["Upload Documents"](browser, 10);
     },
 
     "Enter Comments" : function(browser) {

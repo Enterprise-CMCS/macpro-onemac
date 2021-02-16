@@ -1,21 +1,20 @@
-/*
+/**
     Test Scenario: Create SPA Waiver
     Description: This will login to the application, click the link to start the SPA Waiver process,
     enter the required SPA Waiver information, and upload documents using files
     located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
-
- */
+ **/
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
-const timeout = 2000;
+const timeout = 1000;
 module.exports = {
 
     before: function (browser) {
         login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(2000);
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
+        browser.pause(timeout * 2);
         spa = browser.page.spaBasePage();
     },
 
@@ -32,12 +31,14 @@ module.exports = {
         spa = browser.page.spaBasePage();
         spa.assert.elementPresent(testData.selector);
         spa.click(testData.selector);
-        browser.expect.url().to.contain(testData.subUrl).before(5000);
+        browser.expect.url().to.contain(testData.subUrl).before(timeout * 5);
     },
 
+/*
     "Enter SPA State/Territory Information": function(browser) {
         new_spa["Enter SPA State/Territory Information"](browser);
     },
+*/
 
     "Enter Action Type": function (browser) {
         spa = browser.page.spaBasePage();
@@ -46,7 +47,7 @@ module.exports = {
             value: 'N',
             action_type: 'New waiver'
         }
-        spa.expect.element(testData.selector).to.be.visible;
+        spa.expect.element(testData.selector).to.be.visible.before(timeout * 10);
         spa.setValue(testData.selector, testData.value);
         spa.verify.containsText(testData.selector, testData.action_type);
     },
@@ -57,22 +58,18 @@ module.exports = {
             authority: "All other 1915(b) Waivers",
         }
         spa = browser.page.spaBasePage();
-        spa.expect.element(testData.selector).to.be.visible;
-        spa.setValue(testData.selector, testData.authority).pause(500);
+        spa.expect.element(testData.selector).to.be.visible.before(timeout * 10);
+        spa.setValue(testData.selector, testData.authority).pause(timeout / 2);
         spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser, spa_id = spa.getWaiverNumber()) {
-        let selector = '@transmittal';
+    "Enter Waiver Number": function (browser) {
         spa = browser.page.spaBasePage();
-        spa.click(selector);
-        spa.setValue(selector, spa_id);
-        spa.expect.element(selector).value.to.equals(spa_id);
+        new_spa["Enter SPA ID"](browser, spa.getWaiverNumber());
     },
 
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
+        new_spa["Upload Documents"](browser, 7);
     },
 
     "Enter Comments": function (browser) {

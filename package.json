@@ -13,7 +13,7 @@
     "cross-browser": "npm test -- -e chrome,firefox",
     "firefox": "npm test -- -e firefox",
     "unit": "npm test -- -e unit-test --skiptags=smoke,regression,integration",
-    "regression": "npm run firefox -- --tag regression --skiptags unit,smoke,integration,devEnv",
+    "regression": "npm run chrome -- --tag regression --skiptags unit,smoke,integration,devEnv",
     "regression-dev": "npm run chrome -- --tag regression,devEnv --skiptags unit,smoke,integration",
     "smoke-test": "npm run chrome -- --tag smokeTest --skiptags unit,integration,regression",
     "update": "npx npm-check-updates -u && npm install",
