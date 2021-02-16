@@ -6,7 +6,6 @@ module.exports = {
     before : function(browser) {
         console.log('Setting up the browser instance...');
         console.log('Opening the browser...')
-       // let env = 'https://d2dr7dgo9g0124.cloudfront.net/devlogin';
         let env = 'https://spa-val.cms.gov/';
         console.log('Maximizing the browser window size...');
         browser.windowMaximize().url(env);
