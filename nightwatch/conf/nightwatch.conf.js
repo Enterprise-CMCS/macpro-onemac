@@ -39,10 +39,10 @@ module.exports = {
             },
 
             screenshots : {
-                enabled : false,
-                on_failure: false,
+                enabled : true,
+                on_failure: true,
                 on_error : true,
-                path : "./nightwatch/reports/screenshots"
+                path : "./nightwatch/screenshots"
             },
         },
 
@@ -56,7 +56,7 @@ module.exports = {
                         args: [
                             '--window-size=1024,768',
                             '-verbose',
-                            //'-headless',
+                            '-headless',
                             // '-verbose'
                         ],
                     }
@@ -85,7 +85,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        //'--headless'
+                        '--headless'
                     ]
                 }
             },
