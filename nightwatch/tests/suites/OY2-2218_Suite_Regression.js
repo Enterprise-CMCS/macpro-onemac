@@ -18,54 +18,63 @@ module.exports = {
     },
 
     afterEach: function (browser) {
-        browser.pause(timeout);
+        browser.pause(timeout * 5);
     },
 
-    "Submit a SPA Report": function (browser) {
+    "Submit New SPA": function (browser, steps = [
+        "Click on 'Start a new SPA'",
+        "Enter SPA ID",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit SPA"
+    ]) {
         const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
-        newSPA["Click on 'Start a new SPA'"](browser);
-        newSPA["Enter SPA ID"](browser);
-        newSPA["Upload Documents"](browser);
-        newSPA["Enter Comments"](browser);
-        newSPA["Submit SPA"](browser);
+        steps.forEach(step => newSPA[step](browser));
     },
 
-    "Submit a SPA RAI Response": function (browser) {
-        const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
-        spaRAI["Click on 'Respond to SPA RAI'"](browser);
-        spaRAI["Enter SPA ID"](browser);
-        spaRAI["Upload Documents"](browser);
-        spaRAI["Enter Comments"](browser);
-        spaRAI["Submit Response"](browser);
-        browser.pause(timeout * 3);
-    },
-
-    "Submit a SPA Waiver ": function (browser) {
+    "Submit New Waiver": function (browser, steps = [
+        "Click on 'Submit new Waiver'",
+        "Enter Action Type",
+        "Enter Waiver Authority",
+        "Enter Waiver Number",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit SPA Waiver"
+    ]) {
         const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
-        spaWaiver["Click on 'Submit new Waiver'"](browser);
-        spaWaiver["Enter Action Type"](browser);
-        spaWaiver["Enter Waiver Authority"](browser);
-        spaWaiver["Enter Waiver Number"](browser);
-        spaWaiver["Upload Documents"](browser);
-        spaWaiver["Enter Comments"](browser);
-        spaWaiver["Submit SPA Waiver"](browser);
+        steps.forEach(step => spaWaiver[step](browser));
     },
 
-    "Submit a 1915b Waiver RAI": function (browser) {
+    "Respond to SPA RAI": function (browser, steps = [
+        "Click on 'Respond to SPA RAI'",
+        "Enter SPA ID",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit Response"
+    ]) {
+        const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
+        steps.forEach(step => spaRAI[step](browser));
+    },
+
+    "Respond to 1915(b) Waiver RAI": function (browser, steps = [
+        "Click on Respond to 1915(b) Waiver RAI",
+        "Enter Waiver Number",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit Response"
+    ]) {
         const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
-        waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser);
-        waiverRAI["Enter Waiver Number"](browser);
-        waiverRAI["Upload Documents"](browser);
-        waiverRAI["Enter Comments"](browser);
-        waiverRAI["Submit Response"](browser);
+        steps.forEach(step => waiverRAI[step](browser));
     },
 
-    "Submit a Temporary Request Extension": function (browser) {
+    "Request Temporary Extension form - 1915(b) and 1915(c)": function (browser, steps = [
+        "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'",
+        "Enter Waiver Number",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit Response"
+    ]) {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
-        tempExt["Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'"](browser);
-        tempExt["Enter Waiver Number"](browser);
-        tempExt["Upload Documents"](browser);
-        tempExt["Enter Comments"](browser);
-        tempExt["Submit Response"](browser);
+        steps.forEach(step => tempExt[step](browser));
     },
 };

@@ -9,13 +9,13 @@
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
-const timeout = 5000;
+const timeout = 1000;
 module.exports = {
 
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard via Okta"](browser);
-        browser.pause(2000);
+        browser.pause(timeout * 2);
     },
 
     after : function(browser) {
@@ -29,7 +29,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
         spa.assert.elementPresent(link);
         spa.click(link);
-        browser.expect.url().to.contain(subDir).before(5000);
+        browser.expect.url().to.contain(subDir).before(timeout * 5);
     },
 
     "Enter SPA ID" : function (browser) {
@@ -38,7 +38,7 @@ module.exports = {
     },
 
     "Upload Documents" : function (browser) {
-        new_spa["Upload Documents"](browser, 10);
+        new_spa["Upload Documents"](browser);
     },
 
     "Enter Comments" : function(browser) {

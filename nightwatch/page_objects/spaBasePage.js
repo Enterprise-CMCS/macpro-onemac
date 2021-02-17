@@ -1,15 +1,17 @@
 const fs = require('fs');
 const path = require('path');
-const spaVar = path.join(__dirname, "spaVar.txt");
+const spaID = path.join(__dirname, "spa.txt");
+const waiverID = path.join(__dirname, "waiver.txt");
 
 const commands = {
 
     // SS-YY-NNNN-xxxx
-    getTransmitNumber: function (optionNumber = true, state = "VA",
-                                 year = this.props.getYear()) {
+    getTransmitNumber: function (state = "VA", optionNumber = false, year = this.props.getYear()) {
         let rand = () => this.props.getRandomInt(1000, 10000).toString();
-        let group = (optionNumber) ? [state, year, rand(), rand()] : [state, year, rand()], id = group.join("-");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8"});
+        let group = (optionNumber)
+            ? [state, year, rand(), rand()]
+            : [state, year, rand()], id = group.join("-");
+        fs.writeFileSync(spaID, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
 
@@ -22,16 +24,16 @@ const commands = {
             ? [state, year, "R".concat(rand()), "M".concat(rand())]
             : [state, year, "R".concat(rand()), rand()];
         let id = group.join(".");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        fs.writeFileSync(waiverID, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
 
     getSpaID: function () {
-        return fs.readFileSync(spaVar, 'utf8');
+        return fs.readFileSync(spaID, 'utf8');
     },
 
     getWaiverID: function() {
-        return fs.readFileSync(spaVar, 'utf8');
+        return fs.readFileSync(waiverID, 'utf8');
     },
 
     enterComments: function (selector, text) {
@@ -63,17 +65,25 @@ const commands = {
         this.api.click(this.elements.logout);
     },
 
-    uploadFiles: function (total) {
+    uploadFiles: function (validate, fileType= 'pdf') {
         let dir = path.join(__dirname, 'files');
-        let files = fs.readdirSync(dir, 'utf8');
+        let selectFile = fs.readdirSync(dir, 'utf8')
+            .map(file => path.resolve(dir, file))
+            .find(file => file.match(new RegExp(`^.*${fileType}$`)));
+        let browser = this.api;
 
-        for (let i = 0; i < total; i++) {
-            let selector = 'input[id="uploader-input-' + i + '"]';
-            this.api.assert.elementPresent(selector);
-            let file = require('path').resolve(dir, files[i]);
-            this.api.setValue(selector, file);
-        }
-        return this.api;
+        let allElementIds = function (result) {
+            Array.from(result.value).forEach(function (obj) {
+                let webElementId = obj["ELEMENT"];
+                browser.elementIdAttribute(webElementId, 'id', function (result) {
+                    let selector = `[id=${result.value}]`;
+                    browser.setValue(selector, selectFile);
+                    validate(selector, path.basename(selectFile));
+                });
+            });
+        };
+
+        browser.elements('css selector', this.elements.uploads, allElementIds);
     }
 }
 
@@ -102,10 +112,12 @@ module.exports = {
         tandc: "[id=tandc]",
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
+        uploads: 'input[id*="uploader-input"]',
     },
     commands : [commands],
 
     props : {
+
         pauseAction: 1000,
 
         //The maximum is exclusive and the minimum is inclusive
@@ -117,5 +129,6 @@ module.exports = {
         getYear: function () {
             return new Date().getFullYear().toString().slice(2);
         },
+
     }
 };

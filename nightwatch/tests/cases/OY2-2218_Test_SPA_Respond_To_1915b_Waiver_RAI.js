@@ -47,7 +47,7 @@ module.exports = {
     },
 
     "Upload Documents": function (browser) {
-        new_waiver["Upload Documents"](browser, 7);
+        new_waiver["Upload Documents"](browser);
     },
 
     "Enter Comments": function (browser) {

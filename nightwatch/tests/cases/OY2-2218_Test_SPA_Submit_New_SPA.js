@@ -51,17 +51,23 @@ module.exports = {
             selector: '@transmittal',
             id: (!id) ? spa.getTransmitNumber() : id,
         }
+
         spa.click(testData.selector);
         spa.setValue(testData.selector, testData.id);
-        browser.keys([browser.Keys.TAB, browser.Keys.NULL]);
+        browser.keys([browser.Keys.TAB]);
+        browser.keys([browser.Keys.NULL]);
         browser.pause(timeout * 5);
         spa.expect.element(testData.selector).value.to.contain(testData.id);
 
     },
 
-    'Upload Documents' : function (browser, numFiles = 9) {
+    'Upload Documents' : function (browser) {
         spa = browser.page.spaBasePage();
-        spa.uploadFiles(numFiles);
+        let validate = function (selector, file) {
+            spa.expect.element(selector).value.to.contain(file);
+        }
+        spa.uploadFiles(validate);
+
     },
 
     'Enter Comments' : function (browser, selector = 'textarea',
@@ -85,7 +91,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
 
         browser.url(function (current) {
-            browser.click('[type="submit"]').waitForElementPresent('body');
+            browser.click('input[type=submit]').waitForElementPresent('body');
             browser.expect.url().to.not.equals(current.value).before(timeout * 10);
         });
 

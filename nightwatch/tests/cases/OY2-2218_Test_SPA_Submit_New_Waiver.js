@@ -69,7 +69,7 @@ module.exports = {
     },
 
     "Upload Documents": function (browser) {
-        new_spa["Upload Documents"](browser, 7);
+        new_spa["Upload Documents"](browser);
     },
 
     "Enter Comments": function (browser) {
