@@ -1,7 +1,7 @@
 let spaID = '';
 
 module.exports = {
-   "@tags": ["waiverForm"],
+   "@tags": ["waive"],
 
    // Opens the browser, goes to the test site
     before : function(browser) {
@@ -77,10 +77,12 @@ module.exports = {
          browser.click('select#actionType');   // click action type
          browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
          browser.click('select#waiverAuthority'); // Click Waiver Authority
-         browser.click("select#waiverAuthority > option[value='1915(b)(4)']").pause(1000);
+         browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
          browser.click('input#transmittalNumber');
          browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
-       
+         browser.keys([browser.Keys.TAB]);
+        
+
         // browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
            
          // Verify that duplicate error message
@@ -95,9 +97,11 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)']").pause(1000);   // dropdown value
+        browser.click("select#waiverAuthority > option[value='1915(b)']");   // dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
+        
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -111,9 +115,10 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(c)']").pause(1000);   // ----- dropdown value
+        browser.click("select#waiverAuthority > option[value='1915(c)']");   // ----- dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -128,9 +133,10 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='amendment']");      // ----- Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']").pause(1000);
+        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -143,9 +149,10 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='amendment']");      // ----- Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)']").pause(1000);   // dropdown value
+        browser.click("select#waiverAuthority > option[value='1915(b)']");  // dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -158,9 +165,10 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='amendment']");  // Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(c)']").pause(1000);   // ----- dropdown value
+        browser.click("select#waiverAuthority > option[value='1915(c)']");   // ----- dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -173,11 +181,12 @@ module.exports = {
     'Validate Waiver Form Logic for Waiver Renewal and 1915(b)' : function(browser) {
         browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='renewal']");      // ----- Select "New Waiver"
+        browser.click("[value='renewal']");      // ----- Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']").pause(1000);
+        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -187,12 +196,13 @@ module.exports = {
 
     'Validate Waiver Form Logic for Waiver Renewal and All other' : function(browser) {
         browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.click('select#actionType');   // click action type
-        browser.click("sselect#actionType > option[value='renewal']");      // ----- Select "New Waiver"
+        browser.click('select#actionType').pause(1000);   // click action type
+        browser.click("[value='renewal']");      // ----- Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)']").pause(1000);   // dropdown value
+        browser.click("select#waiverAuthority > option[value='1915(b)']");   // dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
@@ -203,11 +213,12 @@ module.exports = {
     'Validate Waiver Form Logic for Waiver Renewal and Apendex K Waiver' : function(browser) {
         browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='renewal']");  // Select "New Waiver"
+        browser.click("[value='renewal']");  // Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(c)']").pause(1000);   // ----- dropdown value
+        browser.click("select#waiverAuthority > option[value='1915(c)']");   // ----- dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.keys([browser.Keys.TAB]);
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
         
         // Verify that duplicate error message
