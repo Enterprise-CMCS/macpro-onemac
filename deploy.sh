@@ -89,7 +89,9 @@ then
           --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName
           aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $TEST_USER_PASSWORD --permanent
           set -e
+          echo $user >> testuser.list
       done
+      loadTestUser.sh $stage testuser.list
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
       exit 1
