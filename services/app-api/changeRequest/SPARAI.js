@@ -1,6 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_MSG } from "../libs/error-messages";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * SPA RAI submission specific email generation functions.
@@ -36,7 +36,7 @@ async fieldsValid(data) {
         } else {
           console.log("result.Item does not exist");
           areFieldsValid = false;
-          whyNot = ERROR_MSG.ID_NOT_FOUND;
+          whyNot = RESPONSE_CODE.ID_NOT_FOUND;
         }
 
       } catch (error) {

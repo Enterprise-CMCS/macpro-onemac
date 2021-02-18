@@ -3,7 +3,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import getChangeRequestFunctions, { hasValidStateCode } from "./changeRequest/changeRequest-util";
-import { ERROR_MSG } from "./libs/error-messages";
+import { RESPONSE_CODE } from "./libs/response-codes";
 import { DateTime } from "luxon";
 
 /**
@@ -18,7 +18,6 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-  let errorMessage = '';
 
   // If this invocation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
@@ -28,41 +27,25 @@ export const main = handler(async (event) => {
   const data = JSON.parse(event.body);
 
   // do a pre-check for things that should stop us immediately
-  errorMessage = runInitialCheck(data);
+  const errorMessage = runInitialCheck(data);
   if (errorMessage) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "runInitialCheck",
-      message: errorMessage
-    });
+    return errorMessage;
   }
 
   // map the changeRequest functions from the data.type
   const crFunctions = getChangeRequestFunctions(data.type);
   if (!crFunctions) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "getChangeRequestFunctions",
-      message: "crFunctions object not created."
-    });
+    return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
   const crVerifyTransmittalIdStateCode = hasValidStateCode(data.transmittalNumber);
   if (!crVerifyTransmittalIdStateCode) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "isValidStateCode",
-      message: ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID
-    });
+    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
   }
 
   const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
   if (!crVerifyTerritoryStateCode) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "isValidStateCode",
-      message: ERROR_MSG.TERRITORY_NOT_VALID
-    });
+    return RESPONSE_CODE.TERRITORY_NOT_VALID;
   }
 
   // Add required data to the record before storing.
@@ -87,11 +70,7 @@ export const main = handler(async (event) => {
 
     if (validationResponse.areFieldsValid===false) {
       console.log("Message from fieldsValid: ",validationResponse);
-      return buildAppropriateResponse({
-        type: "logicError",
-        from: "fieldsValid",
-        message: validationResponse.whyNot,
-      });
+      return validationResponse.whyNot;
     }
 
     await dynamoDb.put({
@@ -145,11 +124,7 @@ export const main = handler(async (event) => {
 
   console.log("Successfully submitted amendment:", data);
 
-  return buildAppropriateResponse({
-    type: "success",
-    from: "submit",
-    message: "Submission successfull!"
-  });
+  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });
 
 /**
@@ -158,42 +133,13 @@ export const main = handler(async (event) => {
  * @returns {String} any error messages triggered
  */
 function runInitialCheck(data) {
-  let errorMessages = "";
 
-  if (!data.user) errorMessages += "ERROR: Missing user info data. ";
-  if (!data.uploads) errorMessages += "ERROR: Missing attachments. ";
-  if (!data.type) errorMessages += "ERROR: Missing record type. ";
-  return errorMessages;
-}
+  if (!data.user)
+    return RESPONSE_CODE.VALIDATION_ERROR;
+  if (!data.uploads)
+    return RESPONSE_CODE.ATTACHMENT_ERROR;
+  if (!data.type)
+    return RESPONSE_CODE.SYSTEM_ERROR;
 
-/**
- * We consolidate the response building into a function so that we can change
- * verbosity based on requestor... devs get debug info, users get helpful info,
- * and hackers get no response (or a faked one, oh, and trigger alarms!)
- * @param {Object} details what happened to trigger the response
- * @returns {Object} response contains a statusCode and a body
- */
-function buildAppropriateResponse(details) {
-  let actualResponse;
-
-  switch (details.type) {
-
-    case "logicError":
-      actualResponse = {
-        error: details.message,
-      };
-      break;
-
-    case "success":
-      actualResponse = details.message;
-      break;
-
-    default:
-      actualResponse = {
-        statusCode: 500,
-        body: "Don't know this response type??" + JSON.stringify(details),
-      };
-  }
-
-  return actualResponse;
+  return "";
 }

@@ -11,8 +11,8 @@ import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
-import { ERROR_MSG } from "../libs/error-messages";
-import {CHANGE_REQUEST_TYPES} from "./changeRequestTypes";
+import { getAlert } from "../libs/error-mappings";
+import { territoryList } from "../libs/territoryLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -29,7 +29,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  const [hasExistingSubmission, setExistingSubmission] = useState(false)
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
   const [
     waiverAuthorityErrorMessage,
@@ -52,6 +51,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
     type: changeRequestType,
+    territory: "",
     summary: "",
     transmittalNumber: "", //This is needed to be able to control the field
     actionType: "",
@@ -96,21 +96,51 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   };
 
   /**
-   * Check for Existing Transmittal Number
-   * @param {value} Transmittal Number
-   * @return false or true;
+   * Validate Field
+   * @param {value} Transmittal Number Field Entered on Change Event.
    */
-  async function isExistingTransmittalID(transmittalID)
-  {
-    let dupID;
-    try {
-      dupID = await ChangeRequestDataApi.packageExists(transmittalID);
-    } catch (error) {
-      console.log("There was an error submitting a request.", error);
+  function matchesRegex(fieldValue, regexFormatString) {
+    let fieldValidationRegEx = new RegExp(regexFormatString);
+    let result = false;
+
+    if (fieldValue && fieldValue.match(fieldValidationRegEx)) {
+      result = true;
+    } else {
+      result = false;
     }
-    setExistingSubmission(dupID)
-    return dupID;
+
+    return result;
   }
+
+  function validateTransmittalNumber(newTransmittalNumber) {
+    let errorMessage = "";
+
+    // Must have a value
+    if (!newTransmittalNumber) {
+      errorMessage = formInfo.idLabel + " Required !";
+    }
+    // must have a valid state code as the first two characters
+    else if (
+      !territoryList.some(
+        (state) => state["value"] === newTransmittalNumber.substring(0, 2)
+      )
+    ) {
+      errorMessage =
+        `The ` + formInfo.idLabel + ` must contain valid Territory/State Code`;
+    }
+    // must match the associated Regex string for format
+    else if (!matchesRegex(newTransmittalNumber, formInfo.idRegex)) {
+      errorMessage =
+        `The ` +
+        formInfo.idLabel +
+        ` must be in the format of ` +
+        formInfo.idFormat +
+        ` !`;
+    }
+
+    return errorMessage;
+  }
+
   /**
    * Handle changes to the ID.
    * @param {Object} event the event
@@ -118,21 +148,46 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   async function handleTransmittalNumberChange(event) {
     if (!event || !event.target) return;
 
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-    updatedRecord[event.target.name] = event.target.value;
-    updatedRecord["territory"] =    event.target.value.toString().substring(0,2)
-    setChangeRequest(updatedRecord);
-
     const newTransmittalNumber = event.target.value;
-    let errorMessage
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    updatedRecord[event.target.name] = newTransmittalNumber;
+    updatedRecord["territory"] = newTransmittalNumber
+      .toString()
+      .substring(0, 2);
 
+    // validate that the ID is in correct format
+    let errorMessage = "";
 
-    // when we have a valid ID, check for exists/not exists based on type
-    if (errorMessage === undefined && newTransmittalNumber) {
+    errorMessage = validateTransmittalNumber(newTransmittalNumber);
 
-      errorMessage = formInfo.idValidationFn(updatedRecord["transmittalNumber"], await isExistingTransmittalID(newTransmittalNumber), updatedRecord, formInfo)
+    // if the ID is valid, check if exists/not exist in data
+    if (errorMessage === "") {
+      try {
+        const dupID = await ChangeRequestDataApi.packageExists(
+          newTransmittalNumber
+        );
 
+        if (!dupID && formInfo.idMustExist(changeRequest)) {
+          errorMessage =
+            "According to our records, this " +
+            formInfo.idLabel +
+            " does not exist. Please check the " +
+            formInfo.idLabel +
+            " and try entering it again.";
+        } else if (dupID && !formInfo.idMustExist()) {
+          errorMessage =
+            "According to our records, this " +
+            formInfo.idLabel +
+            " already exists. Please check the " +
+            formInfo.idLabel +
+            " and try entering it again.";
+        }
+      } catch (error) {
+        console.log("There was an error submitting a request.", error);
+      }
     }
+
+    setChangeRequest(updatedRecord);
     setTransmittalNumberErrorMessage(errorMessage);
   }
 
@@ -157,8 +212,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     if (event.target.name !== "summary") {
-      updatedRecord["transmittalNumber"] = ""
-      actionTypeMessage = ""
+      updatedRecord["transmittalNumber"] = "";
+      actionTypeMessage = "";
     }
 
     // state set functions have to be at top level
@@ -167,7 +222,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
     setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-
   };
 
   /**
@@ -190,84 +244,80 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let transmittalNumberMessage = "";
     let newAlert = null;
     let mounted = true;
+    const uploadRef = uploader.current;
 
+    transmittalNumberMessage = validateTransmittalNumber(
+      changeRequest.transmittalNumber
+    );
 
-    transmittalNumberMessage = formInfo.idValidationFn(changeRequest.transmittalNumber, hasExistingSubmission, changeRequest, formInfo);
+    // if the ID is valid, check if exists/not exist in data
+    if (transmittalNumberMessage === "") {
+      try {
+        const dupID = await ChangeRequestDataApi.packageExists(
+          changeRequest.transmittalNumber
+        );
 
-    if (formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER
-        || CHANGE_REQUEST_TYPES.WAIVER_EXTENSION
-        || CHANGE_REQUEST_TYPES.WAIVER_RAI)
-    {
-
-      if (formInfo.actionType && !changeRequest.actionType) {
-        actionTypeMessage = formInfo.actionType.errorMessage;
+        if (!dupID && formInfo.idMustExist(changeRequest)) {
+          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
+          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+        } else if (dupID && !formInfo.idMustExist()) {
+          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
+          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+        }
+      } catch (err) {
+        console.log("There was an error submitting a request.", err);
       }
+    }
 
-      if (formInfo.waiverAuthority && !changeRequest.waiverAuthority) {
-        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-      }
+    if (formInfo.actionType && !changeRequest.actionType) {
+      actionTypeMessage = formInfo.actionType.errorMessage;
+    }
+
+    if (formInfo.waiverAuthority && !changeRequest.waiverAuthority) {
+      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
     }
 
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
-    if (transmittalNumberMessage) {
-      newAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
+    if (
+      transmittalNumberMessage ||
+      actionTypeMessage ||
+      waiverAuthorityMessage
+    ) {
+      if (!newAlert) newAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
     } else if (!areUploadsReady) {
       newAlert = ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
     } else {
       try {
-        let uploadedList = await uploader.current.uploadFiles();
-        console.log("changeRequest is: ", changeRequest);
-        const aresponse = await ChangeRequestDataApi.submit(changeRequest, uploadedList);
-        console.log("Response is: ", aresponse);
-        if (!aresponse.error) {
-          newAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
-        } else switch (aresponse.error) {
-          case ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID:
-            newAlert = ALERTS_MSG.SUBMISSION_TERRITORY_ERROR;
-            break;
-          case ERROR_MSG.DUPLICATE_ID:
-            newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
-            break;
-          case ERROR_MSG.ID_NOT_FOUND:
-            newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-            break;
-          case ERROR_MSG.WAIVER_RENEWAL_ID:
-            newAlert = ALERTS_MSG.WAIVER_RENEWAL_ID;
-            break;
-          case ERROR_MSG.WAIVER_AMENDMENT_ON_K:
-            newAlert = ALERTS_MSG.WAIVER_AMENDMENT_ON_K;
-            break;
-          case ERROR_MSG.WAIVER_NEW_ON_K:
-            newAlert = ALERTS_MSG.WAIVER_NEW_ON_K;
-            break;
-          case ERROR_MSG.WAIVER_NEW_NOT_K:
-            newAlert = ALERTS_MSG.WAIVER_NEW_NOT_K;
-            break;
-          case ERROR_MSG.WAIVER_ACTION_UNKNOWN:
-            newAlert = ALERTS_MSG.WAIVER_ACTION_UNKNOWN;
-            break;
-          default:
-            newAlert = ALERTS_MSG.SUBMISSION_ERROR;
-            break;
+        const uploadedList = await uploadRef.uploadFiles();
+        try {
+          const returnCode = await ChangeRequestDataApi.submit(
+            changeRequest,
+            uploadedList
+          );
+          newAlert = getAlert(returnCode);
+
+          if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
+            mounted = false;
+            history.push({
+              pathname: ROUTES.DASHBOARD,
+              query: "?query=abc",
+              state: {
+                showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
+              },
+            });
+          }
+        } catch (err) {
+          newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+          console.log("submit caught error: ", err);
         }
-      } catch (error) {
-        console.log("Error is: ", error);
-        newAlert = ALERTS_MSG.SUBMISSION_ERROR;
+      } catch (err) {
+        newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+        console.log("uploadFiles() caught error: ", err);
       }
     }
-    if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
-      mounted=false;
-      history.push({
-        pathname: ROUTES.DASHBOARD,
-        query: "?query=abc",
-        state: {
-          showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
-        },
-      });
-    }
 
-    // now set the state variables to show thw error messages
+    // now set the state variables to show the error messages
     if (mounted) setTransmittalNumberErrorMessage(transmittalNumberMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
@@ -291,64 +341,61 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar
-        heading={formInfo.pageTitle}
-        text=""
-      />
+      <PageTitleBar heading={formInfo.pageTitle} text="" />
       {renderAlert(alert)}
-        <div className="form-container">
-          <form
-            onSubmit={handleSubmit}
-            noValidate
-            className={!firstTimeThrough ? "display-errors" : ""}
-          >
-            <h3>{formInfo.detailsHeader} Details</h3>
-            <p className="req-message">
-              <span className="required-mark">*</span>
-              indicates required field.
-            </p>
-            <div className="form-card">
-              {formInfo.actionType && (
-                <RequiredChoice
-                  fieldInfo={formInfo.actionType}
-                  label="Action Type"
-                  errorMessage={actionTypeErrorMessage}
-                  value={changeRequest.actionType}
-                  onChange={handleInputChange}
-                />
-              )}
-              {formInfo.waiverAuthority && (
-                <RequiredChoice
-                  fieldInfo={formInfo.waiverAuthority}
-                  label="Waiver Authority"
-                  errorMessage={waiverAuthorityErrorMessage}
-                  value={changeRequest.waiverAuthority}
-                  onChange={handleInputChange}
-                />
-              )}
-              {renderTransmittalNumber()}
-            </div>
-            <h3>Attachments</h3>
-              <FileUploader
-                ref={uploader}
-                requiredUploads={formInfo.requiredUploads}
-                optionalUploads={formInfo.optionalUploads}
-                readyCallback={uploadsReadyCallbackFunction}
-                showRequiredFieldErrors={!firstTimeThrough}
-              ></FileUploader>
-            <div className="summary-box">
-              <TextField
-                name="summary"
-                label="Summary"
-                fieldClassName="summary-field"
-                multiline
+      <div className="form-container">
+        <form
+          onSubmit={handleSubmit}
+          noValidate
+          className={!firstTimeThrough ? "display-errors" : ""}
+        >
+          <h3>{formInfo.detailsHeader} Details</h3>
+          <p className="req-message">
+            <span className="required-mark">*</span>
+            indicates required field.
+          </p>
+          <div className="form-card">
+            {formInfo.actionType && (
+              <RequiredChoice
+                fieldInfo={formInfo.actionType}
+                label="Action Type"
+                errorMessage={actionTypeErrorMessage}
+                value={changeRequest.actionType}
                 onChange={handleInputChange}
-                value={changeRequest.summary}
-              ></TextField>
-            </div>
-              <input type="submit" className="form-submit" value="Submit" />
-          </form>
-        </div>
+              />
+            )}
+            {formInfo.waiverAuthority && (
+              <RequiredChoice
+                fieldInfo={formInfo.waiverAuthority}
+                label="Waiver Authority"
+                errorMessage={waiverAuthorityErrorMessage}
+                value={changeRequest.waiverAuthority}
+                onChange={handleInputChange}
+              />
+            )}
+            {renderTransmittalNumber()}
+          </div>
+          <h3>Attachments</h3>
+          <FileUploader
+            ref={uploader}
+            requiredUploads={formInfo.requiredUploads}
+            optionalUploads={formInfo.optionalUploads}
+            readyCallback={uploadsReadyCallbackFunction}
+            showRequiredFieldErrors={!firstTimeThrough}
+          ></FileUploader>
+          <div className="summary-box">
+            <TextField
+              name="summary"
+              label="Summary"
+              fieldClassName="summary-field"
+              multiline
+              onChange={handleInputChange}
+              value={changeRequest.summary}
+            ></TextField>
+          </div>
+          <input type="submit" className="form-submit" value="Submit" />
+        </form>
+      </div>
     </LoadingScreen>
   );
 };
