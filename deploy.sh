@@ -91,7 +91,7 @@ then
           set -e
           echo $user >> testuser.list
       done
-      loadTestUser.sh $stage testuser.list
+      ./loadTestUser.sh $stage testuser.list
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
       exit 1

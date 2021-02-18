@@ -1,0 +1,1 @@
+{  "userId": { "S": "fi" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "" },  "stateCodes": { "SS": [ "VA","AL" ] }  }
