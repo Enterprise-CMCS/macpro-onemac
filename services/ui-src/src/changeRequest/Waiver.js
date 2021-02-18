@@ -25,7 +25,6 @@ const Waiver = () => {
       value: "1915(b)(4)",
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
-    { label: "1915(c) Appendix K waiver", value: "1915(c)" },
   ];
 
   const formInfo = {
@@ -37,7 +36,6 @@ const Waiver = () => {
       "1915(b)(4) waiver application",
       "Cost effectiveness spreadsheets",
       "Tribal Consultation",
-      "1915(c) Appendix K amendment waiver template",
       "1915(b) waiver",
       "Other",
     ],
@@ -46,12 +44,8 @@ const Waiver = () => {
     idFormat: "SS.##.R##.M##",
     idRegex: "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)",
     idMustExist: (changeRequest) => {
-      // Amendment Ks should always have an existing number
-      if (changeRequest.waiverAuthority === "1915(c)") {
-        return true;
-      } 
       // NEW actions on 1915bs should not have existing numbers
-      else if ( changeRequest.actionType === "new") {
+      if ( changeRequest.actionType === "new") {
         return false;
       } else 
 
