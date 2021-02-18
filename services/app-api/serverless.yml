@@ -1,0 +1,132 @@
+service: app-api
+
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle
+  - serverless-dotenv-plugin
+  - serverless-plugin-warmup
+  - serverless-dynamodb-local
+  - serverless-associate-waf
+  - serverless-offline
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  tableName: cms-spa-form-${self:custom.stage}-change-requests
+  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
+  userTableName: cms-spa-form-${self:custom.stage}-users
+  iamPath: ${env:IAM_PATH, "/"}
+  emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
+  reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
+  warmupEnabled:
+    production: true
+    development: false
+  warmup:
+    enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
+    role: LambdaWarmupRole
+    vpc: false
+    events:
+      - schedule: rate(4 minutes)
+    timeout: 20
+    prewarm: true
+    concurrency: 5
+  #Dynamo DB local configuration
+  dynamodb:
+    stages:
+      - dev
+    start:
+      inMemory: true
+      migrate: true
+  serverless-offline:
+    allowCache: true
+associateWaf:
+  name: ${self:custom.stage}-ApiGwWebAcl
+  version: V2 #(optional) Regional | V2
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+  stage: dev
+
+  environment:
+    tableName: ${self:custom.tableName}
+    spaIdTableName: ${self:custom.spaIdTableName}
+    userTableName: ${self:custom.userTableName}
+    emailSource: ${self:custom.emailSource}
+    reviewerEmail: ${self:custom.reviewerEmail}
+
+functions:
+  submit:
+    handler: submit.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submit
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  get:
+    handler: get.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: get/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  package-exists:
+    handler: package-exists.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: package-exists/{packageId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  list:
+    handler: list.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: get
+          method: get
+          cors: true
+          authorizer: aws_iam
+  listall:
+    handler: listall.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: listall
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getUser:
+    handler: getUser.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getUser
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+resources:
+  - ${file(resources/base.yml)}
+
+  # Uploads S3 bucket
+  - ${file(resources/spa-form-tables.yml)}
+
+  # User data DynamoDB table
+  - ${file(resources/user-table.yml)}
+
+  # Roles
+  - ${file(resources/roles.yml)}
+
+  # API Gateway
+  - ${file(resources/api-gateway.yml)}
