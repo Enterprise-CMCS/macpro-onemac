@@ -6,9 +6,8 @@ module.exports = {
     before : function(browser) {
         console.log('Setting up the browser instance...');
         console.log('Opening the browser...')
-        let env = 'https://spa-val.cms.gov/';
         console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(env);
+        browser.windowMaximize().url(browser.launch_url);
         browser.waitForElementPresent('body');
     },
 
