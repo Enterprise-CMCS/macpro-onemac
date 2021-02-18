@@ -1,7 +1,7 @@
 let spaID = '';
 
 module.exports = {
-   "@tags": ["waive"],
+   "@tags": ["waive", "test1"],
 
    // Opens the browser, goes to the test site
     before : function(browser) {
