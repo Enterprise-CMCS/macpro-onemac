@@ -26,11 +26,12 @@ export const main = handler(async (event, context) => {
       return result;
     }
 
-    const userRole = JSON.stringify(result.Items.find(function checkUser(param) {
-          let row = JSON.parse(JSON.stringify(param));
+    let userRole = JSON.stringify(result.Items.find(function checkUser(parg) {
+          let row = JSON.parse(JSON.stringify(parg));
           return row.userId === data.email;
         }
     ));
+
     console.log("Sending back result:", JSON.stringify(userRole));
     // Return the retrieved item
     return userRole;
