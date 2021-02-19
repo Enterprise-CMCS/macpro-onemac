@@ -9,24 +9,31 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
+  const data = event.queryStringParameters;
+
   const params = {
     TableName: process.env.userTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
     // - 'userId': Identity Pool identity id of the authenticated user
     Key: {
-      userId: event.requestContext.identity.cognitoIdentityId,
+      userId: data.email,
     },
   };
 
-  const result = await dynamoDb.get(params);
+  try {
+    const result = await dynamoDb.get(params);
 
-  if (!result.Item) {
-    console.log("The user does not exists in this table.");
-    // The result is an empty object {} in this case
-    return result;
+    if (!result.Item) {
+      console.log("The user does not exists in this table.");
+      // The result is an empty object {} in this case
+      return result;
+    }
+
+    console.log("Sending back result:", JSON.stringify(result));
+    // Return the retrieved item
+    return result.Item;
+  } catch (err) {
+    console.log("ERROR: " +  JSON.stringify(err));
+    return "{ error: " +  JSON.stringify(err) + "}";
   }
-
-  console.log("Sending back result:", JSON.stringify(result));
-  // Return the retrieved item
-  return result.Item;
 });

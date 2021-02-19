@@ -6,6 +6,7 @@ import { ALERTS_MSG } from "../libs/alert-messages";
 import config from "../utils/config";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { Alert } from "@cmsgov/design-system";
+import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
@@ -45,7 +46,10 @@ export default function DevLogin() {
     event.preventDefault();
 
     try {
+
       await Auth.signIn(fields.email, fields.password);
+      const userProfile = await ChangeRequestDataApi.userExists(fields.email);
+      console.log("DEBUG: " + JSON.stringify(userProfile))
       userHasAuthenticated(true);
     } catch (error) {
       console.log("Error while logging in.", error);

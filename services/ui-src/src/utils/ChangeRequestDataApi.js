@@ -87,6 +87,27 @@ class ChangeRequestDataApi {
   }
 
   /**
+   * Check to see if an user exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the user  exists in the back end
+   */
+  async userExists(userEmail) {
+    if (!userEmail) {
+      console.log("user Email was not specified for packageExists API call");
+      throw new Error("user Email was not specified for packageExists API call");
+    }
+
+    try {
+      let answer = await API.get("changeRequestAPI", `/dev/getUser?email="${userEmail}"`);
+      console.log("DEBUG: " + answer)
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking ID ${userEmail}.`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Fetch a specific record from the backend.
    * @return {Array} a list of change requests
    */
