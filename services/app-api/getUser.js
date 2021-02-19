@@ -10,7 +10,7 @@ export const main = handler(async (event, context) => {
   }
 
   const data = event.queryStringParameters;
-
+  console.log(data);
   const params = {
     TableName: process.env.userTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
