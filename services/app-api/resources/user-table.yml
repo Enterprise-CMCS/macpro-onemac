@@ -8,9 +8,6 @@ Resources:
           AttributeType: S
     # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
-      Outputs:
-        UserTableArn:
-          Value: !GetAtt UserTable.Arn
       KeySchema:
         - AttributeName: userId
           KeyType: HASH
