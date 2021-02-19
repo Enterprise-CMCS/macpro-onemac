@@ -61,7 +61,9 @@ Resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
-              Resource: !GetAtt SpaIdTable.Arn
+              Resource:
+                - !GetAtt SpaIdTable.Arn
+                - !GetAtt UserTable.Arn
   LambdaWarmupRole:
     Type: 'AWS::IAM::Role'
     Properties:

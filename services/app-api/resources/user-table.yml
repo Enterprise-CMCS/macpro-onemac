@@ -3,11 +3,14 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: ${self:custom.userTableName}
-      AttributeDefinitions: 
+      AttributeDefinitions:
         - AttributeName: userId
           AttributeType: S
     # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
+      Outputs:
+        UserTableArn:
+          Value: !GetAtt UserTable.Arn
       KeySchema:
         - AttributeName: userId
           KeyType: HASH

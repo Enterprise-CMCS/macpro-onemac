@@ -102,7 +102,7 @@ class ChangeRequestDataApi {
       console.log("DEBUG: " + answer)
       return answer;
     } catch (error) {
-      console.log(`There was an error checking ID ${userEmail}.`, error);
+      console.log(`There was an error checking user ${userEmail}.`, error);
       throw error;
     }
   }
