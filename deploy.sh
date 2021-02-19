@@ -23,6 +23,9 @@ TEST_USERS=(
 
 TEST_USER_PASSWORD="Passw0rd!"
 
+#
+# This user is available in both DEV and PROD
+#
 CMS_SYSTEM_ADMIN="sabrina.mccrae@cms.hhs.gov"
 
 # What stages shall NOT have the test users.
@@ -93,12 +96,18 @@ then
           set -e
           echo $user >> testuser.list
       done
-      ./loadTestUser.sh $stage testuser.list $CMS_SYSTEM_ADMIN
+      ./loadTestUsers.sh $stage testuser.list
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
       exit 1
   fi
 fi
+
+#
+#Add System Admin User
+#
+echo '{  "userId": { "S": "'$CMS_SYSTEM_ADMIN'" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "SystemAdmin" },  "stateCodes": { "SS": [ "**" ] }  }' > user.json
+aws dynamodb put-item --table-name $userTable --item file://user.json
 
 
 echo """

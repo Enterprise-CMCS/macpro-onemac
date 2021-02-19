@@ -37,10 +37,4 @@ then
   done
 fi
 
-#
-#Add System Admin User
-#
-echo '{  "userId": { "S": '$adminUser'" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "SystemAdmin" },  "stateCodes": { "SS": [ "**" ] }  }' > user.json
-aws dynamodb put-item --table-name $userTable --item file://user.json
-
 aws dynamodb scan --table-name $userTable
