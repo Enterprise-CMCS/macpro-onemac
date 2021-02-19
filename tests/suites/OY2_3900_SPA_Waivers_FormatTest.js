@@ -1,7 +1,7 @@
 
 
 module.exports = {
-    "@tags": ["formatTest1"],
+    "@tags": ["formatTest1", "test1"],
     
     before : function(browser) {
         console.log('Setting up the browser instance...');
@@ -36,9 +36,7 @@ module.exports = {
     }, 
 
     'Verify the SPA ID format check on Submit New SPA' : function(browser) {
-        
-
-        let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
+                let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
         let spa_id_input = "[name='transmittalNumber']";
 
         // Enter valid SPA ID 1
