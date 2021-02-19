@@ -72,7 +72,7 @@ module.exports = {
 
     "Upload Documents": function (browser) {
         spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
+        spa.uploadFiles(6).pause(500);
     },
 
     "Enter Comments": function (browser) {

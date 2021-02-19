@@ -35,9 +35,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setWaiverAuthorityErrorMessage,
   ] = useState("");
   const [
-    transmittalNumberErrorMessage,
-    setTransmittalNumberErrorMessage,
-  ] = useState("");
+    transmittalNumberStatusMessage,
+    setTransmittalNumberStatusMessage,
+  ] = useState({
+    statusLevel: "",
+    statusMessage: "",
+  });
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(false);
@@ -134,8 +137,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         `The ` +
         formInfo.idLabel +
         ` must be in the format of ` +
-        formInfo.idFormat +
-        ` !`;
+        formInfo.idFormat;
     }
 
     return errorMessage;
@@ -156,39 +158,46 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       .substring(0, 2);
 
     // validate that the ID is in correct format
-    let errorMessage = "";
+    let newMessage = { ...transmittalNumberStatusMessage};
+    newMessage.statusLevel = "error";
 
-    errorMessage = validateTransmittalNumber(newTransmittalNumber);
+    newMessage.statusMessage = validateTransmittalNumber(newTransmittalNumber);
 
     // if the ID is valid, check if exists/not exist in data
-    if (errorMessage === "") {
-      try {
-        const dupID = await ChangeRequestDataApi.packageExists(
-          newTransmittalNumber
-        );
+    if (newMessage.statusMessage === "") {
+      if (!formInfo.idShouldTest(changeRequest)) {
+        newMessage.statusLevel = "warn";
+        newMessage.statusMessage =
+          "Please ensure you have the correct Waiver Number before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.";
+      } else {
+        try {
+          const dupID = await ChangeRequestDataApi.packageExists(
+            newTransmittalNumber
+          );
 
-        if (!dupID && formInfo.idMustExist(changeRequest)) {
-          errorMessage =
-            "According to our records, this " +
-            formInfo.idLabel +
-            " does not exist. Please check the " +
-            formInfo.idLabel +
-            " and try entering it again.";
-        } else if (dupID && !formInfo.idMustExist()) {
-          errorMessage =
-            "According to our records, this " +
-            formInfo.idLabel +
-            " already exists. Please check the " +
-            formInfo.idLabel +
-            " and try entering it again.";
+          if (!dupID && formInfo.idMustExist(changeRequest)) {
+            newMessage.statusMessage =
+              "According to our records, this " +
+              formInfo.idLabel +
+              " does not exist. Please check the " +
+              formInfo.idLabel +
+              " and try entering it again.";
+          } else if (dupID && !formInfo.idMustExist()) {
+            newMessage.statusMessage =
+              "According to our records, this " +
+              formInfo.idLabel +
+              " already exists. Please check the " +
+              formInfo.idLabel +
+              " and try entering it again.";
+          }
+        } catch (error) {
+          console.log("There was an error submitting a request.", error);
         }
-      } catch (error) {
-        console.log("There was an error submitting a request.", error);
       }
     }
 
     setChangeRequest(updatedRecord);
-    setTransmittalNumberErrorMessage(errorMessage);
+    setTransmittalNumberStatusMessage(newMessage);
   }
 
   /**
@@ -256,13 +265,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         const dupID = await ChangeRequestDataApi.packageExists(
           changeRequest.transmittalNumber
         );
-
-        if (!dupID && formInfo.idMustExist(changeRequest)) {
-          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
-          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-        } else if (dupID && !formInfo.idMustExist()) {
-          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
-          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+        if (formInfo.idShouldTest(changeRequest)) {
+          if (!dupID && formInfo.idMustExist(changeRequest)) {
+            transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
+            newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+          } else if (dupID && !formInfo.idMustExist()) {
+            transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
+            newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+          }
         }
       } catch (err) {
         console.log("There was an error submitting a request.", err);
@@ -318,7 +328,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     // now set the state variables to show the error messages
-    if (mounted) setTransmittalNumberErrorMessage(transmittalNumberMessage);
+    if (mounted) setTransmittalNumberStatusMessage("error", transmittalNumberMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlert(newAlert);
@@ -329,8 +339,11 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   const renderTransmittalNumber = () => {
     return (
       <TransmittalNumber
-        idType={formInfo.idType}
-        errorMessage={transmittalNumberErrorMessage}
+        idLabel={formInfo.idLabel}
+        hintText={formInfo.idHintText}
+        idFAQLink={formInfo.idFAQLink}
+        statusLevel={transmittalNumberStatusMessage.statusLevel}
+        statusMessage={transmittalNumberStatusMessage.statusMessage}
         value={changeRequest.transmittalNumber}
         onChange={handleTransmittalNumberChange}
       />

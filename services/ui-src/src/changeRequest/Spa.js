@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import { ROUTES } from "../Routes";
 
 /**
  * Spa acts as a wrapper around SubmissionForm to render SPA-specific form
@@ -27,8 +28,11 @@ const Spa = () => {
     ],
     idType: "spa",
     idLabel: "SPA ID",
+    idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+    idFAQLink: ROUTES.FAQ_SPA_ID,
     idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
     idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+    idShouldTest: (changeRequest) => {return true;},
     idMustExist: (changeRequest) => {return false;},
   };
 

@@ -23,8 +23,10 @@ const WaiverExtension = () => {
     ],
     idType : "waiver",
     idLabel : "Waiver Number",
+    idHintText: "Must follow the format SS.##.R##.M## or SS.##.R##.##",
     idFormat: "SS.##.R##.M##",
     idRegex: "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)",    
+    idShouldTest: (changeRequest) => {return true;},
     idMustExist: (changeRequest) => {return true;},
 
   };

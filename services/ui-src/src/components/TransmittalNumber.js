@@ -1,7 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { HashLink } from "react-router-hash-link";
-import { ROUTES } from "../Routes";
 
 /**
  * Returns the SPA ID specific form element
@@ -9,22 +8,22 @@ import { ROUTES } from "../Routes";
  * @param {string} value the current field value
  * @param {string} isReadOnly
  * @param {function} onChange
+ * @param {string} warningMessage any warning message to show
  * @returns the HTML for the SPA ID
  */
 const TransmittalNumber = ({
-  idType,
-  errorMessage,
+  idLabel,
+  hintText,
+  idFAQLink,
+  statusLevel,
+  statusMessage,
   value,
-  isReadOnly,
   onChange,
 }) => {
-  let numName = "SPA ID";
-  let hint = "Must follow the format SS-YY-NNNN-xxxx";
-  let FAQLink = ROUTES.FAQ_SPA_ID;
-  if (idType === "waiver") {
-    numName = "Waiver Number";
-    hint = "Must follow the format SS.##.R##.M## or SS.##.R##.##";
-    FAQLink = ROUTES.FAQ_WAIVER_ID;
+  let statusMsgClass = "ds-u-color--error";
+
+  if (statusLevel === "warn") {
+    statusMsgClass = "ds-u-color--primary";
   }
 
   return (
@@ -32,18 +31,18 @@ const TransmittalNumber = ({
       <div className="label-container">
         <div className="label-lcol">
           <label htmlFor="transmittalNumber">
-            {numName}
+            {idLabel}
             <span className="required-mark">*</span>
           </label>
         </div>
         <div className="label-rcol">
-          <HashLink to={FAQLink}>What is my {numName}?</HashLink>
+          <HashLink to={idFAQLink}>What is my {idLabel}?</HashLink>
         </div>
-        <p className="field-hint">{hint}</p>
+        <p className="field-hint">{hintText}</p>
       </div>
-      {errorMessage && (
-        <div id="transmittalNumberErrorMsg" className="ds-u-color--error">
-          {errorMessage}
+      {statusMessage && (
+        <div id="transmittalNumberStatusMsg" className={statusMsgClass}>
+          {statusMessage}
         </div>
       )}
       <input
@@ -51,7 +50,6 @@ const TransmittalNumber = ({
         type="text"
         id="transmittalNumber"
         name="transmittalNumber"
-        disabled={isReadOnly}
         value={value}
         onChange={onChange}
         required
@@ -61,8 +59,12 @@ const TransmittalNumber = ({
 };
 
 TransmittalNumber.propTypes = {
+  idLabel: PropTypes.string,
+  hintText: PropTypes.string,
+  idFAQLink: PropTypes.string,
+  statusLevel: PropTypes.string,
+  statusMessage: PropTypes.string,
   errorMessage: PropTypes.string,
-  isReadOnly: PropTypes.string,
   value: PropTypes.string,
 };
 
