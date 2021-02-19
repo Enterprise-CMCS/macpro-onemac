@@ -23,6 +23,8 @@ TEST_USERS=(
 
 TEST_USER_PASSWORD="Passw0rd!"
 
+CMS_SYSTEM_ADMIN="sabrina.mccrae@cms.hhs.gov"
+
 # What stages shall NOT have the test users.
 test_users_exclude_stages=(
   'master'
@@ -91,7 +93,7 @@ then
           set -e
           echo $user >> testuser.list
       done
-      ./loadTestUser.sh $stage testuser.list
+      ./loadTestUser.sh $stage testuser.list $CMS_SYSTEM_ADMIN
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
       exit 1
