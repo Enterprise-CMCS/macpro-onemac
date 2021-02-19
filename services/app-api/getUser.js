@@ -15,15 +15,12 @@ export const main = handler(async (event, context) => {
     TableName: process.env.userTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
     // - 'userId': Identity Pool identity id of the authenticated user
-    Key: {
-      userId: data.email,
-    },
   };
 
   try {
-    const result = await dynamoDb.get(params);
+    const result = await dynamoDb.scan(params);
 
-    if (!result.Item) {
+    if (!result.Items) {
       console.log("The user does not exists in this table.");
       // The result is an empty object {} in this case
       return result;
@@ -31,7 +28,7 @@ export const main = handler(async (event, context) => {
 
     console.log("Sending back result:", JSON.stringify(result));
     // Return the retrieved item
-    return result.Item;
+    return result.Items;
   } catch (err) {
     console.log("ERROR: " +  JSON.stringify(err));
     return "{ error: " +  JSON.stringify(err) + "}";
