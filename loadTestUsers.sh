@@ -19,7 +19,7 @@ then
   i=0
   for user in `cat $userList`
   do
-    echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item {  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] ] }  }'
+    echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item {  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] }  }'
     echo '{  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] }  }' > user.json
     aws dynamodb put-item --table-name $userTable --item file://user.json
     i=`expr $i + 1`
