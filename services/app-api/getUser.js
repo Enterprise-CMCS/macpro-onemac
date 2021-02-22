@@ -33,7 +33,7 @@ export const main = handler(async (event, context) => {
       let status = item.status;
       let stateCodes = item.stateCodes;
 
-      if (data.email === user) {
+      if (data.email === "\"" + user + "\"") {
         if (role === "CMSApprover" || role === "StateAdmin") {
           userResponse = result.Items;
           break;
@@ -44,7 +44,7 @@ export const main = handler(async (event, context) => {
       }
     }
       // Return the retrieved item
-    return data.email + " == " + userResponse;
+    return data.email + " : " + JSON.stringify(userResponse);
 
   } catch (err) {
     console.log("ERROR: " +  JSON.stringify(err));
