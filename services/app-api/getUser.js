@@ -44,7 +44,7 @@ export const main = handler(async (event, context) => {
       }
     }
       // Return the retrieved item
-    return data.email;
+    return data.email + " == " + userResponse;
 
   } catch (err) {
     console.log("ERROR: " +  JSON.stringify(err));
