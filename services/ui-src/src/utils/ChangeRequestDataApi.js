@@ -98,7 +98,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let answer = await API.get("changeRequestAPI", `/getUser?email="${userEmail}"`);
+      let answer = await API.get("changeRequestAPI", `/getUser?email=${userEmail}`);
       console.log("DEBUG: " + JSON.stringify(answer))
       return answer;
     } catch (error) {
