@@ -26,8 +26,25 @@ export const main = handler(async (event, context) => {
       return result;
     }
 
-    // Return the retrieved item
-    return result;
+    let userResponse = {"email": "UnknownUser", "userRole": "StateUser", "status": "AccessDenied", "stateCodes": "N/A"};
+    for (var item of result.Items) {
+      let role = item.userRole;
+      let user = item.userId;
+      let status = item.status;
+      let stateCodes = item.stateCodes;
+
+      if (data.email === user) {
+        if (role === "CMSApprover" || role === "StateAdmin") {
+          userResponse = result.Items;
+          break;
+        } else {
+          userResponse = { "email": user, "userRole": role, "status": status, "stateCodes": stateCodes };
+          break;
+        }
+      }
+    }
+      // Return the retrieved item
+    return userResponse;
 
   } catch (err) {
     console.log("ERROR: " +  JSON.stringify(err));
