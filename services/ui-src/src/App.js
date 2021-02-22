@@ -3,6 +3,7 @@ import Routes from "./Routes";
 import Header from "./components/Header";
 import { AppContext } from "./libs/contextLib";
 import {Auth} from "aws-amplify";
+import ChangeRequestDataApi from "./utils/ChangeRequestDataApi";
 
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -14,7 +15,9 @@ function App() {
 
   async function onLoad() {
     try {
-      await Auth.currentAuthenticatedUser();
+      const user = await Auth.currentAuthenticatedUser();
+      const userProfile = await ChangeRequestDataApi.userExists(user.signInUserSession.idToken.payload.email);
+      console.log("xDEBUG: " + JSON.stringify(userProfile))
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "not authenticated") {
@@ -26,7 +29,7 @@ function App() {
     }
     setIsAuthenticating(false);
   }
-  
+
   return (
     !isAuthenticating && (
       <div>
