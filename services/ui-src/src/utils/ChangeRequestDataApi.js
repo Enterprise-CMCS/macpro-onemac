@@ -99,7 +99,7 @@ class ChangeRequestDataApi {
 
     try {
       let answer = await API.get("changeRequestAPI", `/getUser?email=${userEmail}`);
-      console.log("DEBUG: " + JSON.stringify(answer))
+      console.log("ChangeRequestData - DEBUG: " + JSON.stringify(answer))
       return answer;
     } catch (error) {
       console.log(`There was an error checking user ${userEmail}.`, error);

@@ -17,7 +17,7 @@ function App() {
     try {
       const user = await Auth.currentAuthenticatedUser();
       const userProfile = await ChangeRequestDataApi.userExists(user.signInUserSession.idToken.payload.email);
-      console.log("xDEBUG: " + JSON.stringify(userProfile))
+      console.log("APP - DEBUG: " + JSON.stringify(userProfile))
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "not authenticated") {

@@ -6,9 +6,9 @@ userList=$2
 adminUser=$3
 
 userTable=cms-spa-form-${stage}-users
-testUserStatuses=(PendingAccess ActiveAccess PendingAccess AccessDenied AccessRevoked)
-testUserRoles=(StateAdmin StateUser CMSApprover)
-testStates=(AL VA AL TX AL)
+testUserStatuses=(PendingAccess ActiveAccess PendingAccess ActiveAccess, AccessDenied AccessRevoked)
+testUserRoles=(StateAdmin StateUser CMSRoleApprover StateUser CMSReviewer StateUser)
+testStates=(AL AL VA VA AL VA)
 
 #
 # Check if Table already Loaded, Do not load a second time
@@ -16,20 +16,14 @@ testStates=(AL VA AL TX AL)
 lineCount=`aws dynamodb scan --table-name $userTable | wc -l`
 if [ $lineCount -gt -6 ]
 then
-  x=0
   i=0
   for user in `cat $userList`
   do
-    echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item {  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$x]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] ] }  }'
-    echo '{  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$x]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] }  }' > user.json
+    echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item {  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] ] }  }'
+    echo '{  "userId": { "S": "'${user}'" }, "status": { "S": "'${testUserStatuses[$i]}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },  "stateCodes": { "SS": [ "MI","'${testStates[i]}'" ] }  }' > user.json
     aws dynamodb put-item --table-name $userTable --item file://user.json
-    x=`expr $x + 1`
     i=`expr $i + 1`
-    if [ $x -gt 2 ]
-    then
-        x=1
-    fi
-    if [ $i -gt 4 ]
+    if [ $i -gt 5 ]
     then
       i=1
     fi
