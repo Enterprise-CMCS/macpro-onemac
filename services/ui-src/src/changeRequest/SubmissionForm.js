@@ -159,7 +159,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   async function handleTransmittalNumberChange(event) {
     if (!event || !event.target) return;
 
-    const newTransmittalNumber = event.target.value;
+    const newTransmittalNumber = event.target.value.toUpperCase();
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = newTransmittalNumber;
     updatedRecord["territory"] = newTransmittalNumber
