@@ -297,29 +297,34 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // because this is an asynchronous function, you can't trust that the
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
-    let transmittalNumberMessage = "";
     let newAlert = null;
     let mounted = true;
     const uploadRef = uploader.current;
+    let newMessage = {
+      statusLevel: "error",
+      statusMessage: "",
+    };
 
-    transmittalNumberMessage = validateTransmittalNumber(
+    newMessage.statusMessage = validateTransmittalNumber(
       changeRequest.transmittalNumber
     );
 
     // if the ID is valid, check if exists/not exist in data
-    if (transmittalNumberMessage === "") {
+    // warnings are allowed to submit
+    if (
+      newMessage.statusMessage === "" &&
+      transmittalNumberDetails.errorLevel === "error"
+    ) {
       try {
         const dupID = await ChangeRequestDataApi.packageExists(
           changeRequest.transmittalNumber
         );
-        if (formInfo.transmittalNumber.idShouldTest) {
-          if (!dupID && formInfo.transmittalNumber.idMustExist) {
-            transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
-            newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-          } else if (dupID && !formInfo.transmittalNumber.idMustExist) {
-            transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
-            newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
-          }
+        if (!dupID && transmittalNumberDetails.idMustExist) {
+          newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+        } else if (dupID && !transmittalNumberDetails.idMustExist) {
+          newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
         }
       } catch (err) {
         console.log("There was an error submitting a request.", err);
@@ -337,7 +342,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
     if (
-      transmittalNumberMessage ||
+      newMessage.statusMessage ||
       actionTypeMessage ||
       waiverAuthorityMessage
     ) {
@@ -376,7 +381,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // now set the state variables to show the error messages
     if (mounted)
-      setTransmittalNumberStatusMessage("error", transmittalNumberMessage);
+      setTransmittalNumberStatusMessage(newMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlert(newAlert);
