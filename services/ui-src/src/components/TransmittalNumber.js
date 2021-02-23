@@ -3,13 +3,15 @@ import PropTypes from "prop-types";
 import { HashLink } from "react-router-hash-link";
 
 /**
- * Returns the SPA ID specific form element
- * @param {string} errorMessage any error message to show
- * @param {string} value the current field value
- * @param {string} isReadOnly
- * @param {function} onChange
- * @param {string} warningMessage any warning message to show
- * @returns the HTML for the SPA ID
+ * Returns the ID specific form element
+ * @param {string} idLabel the nice name to use for the id
+ * @param {string} hintText the contents of the hint text under the label
+ * @param {string} idFAQLink the link for additional help completing this id
+ * @param {string} statusLevel error or warn (ing)
+ * @param {string} statusMessage the message to show
+ * @param {string} value current input value
+ * @param {string} onChange the function name to show
+ * @returns the HTML for the Transmittal Number
  */
 const TransmittalNumber = ({
   idLabel,

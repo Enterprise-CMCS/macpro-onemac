@@ -111,7 +111,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let fieldValidationRegEx = new RegExp(regexFormatString);
     let result = false;
 
-    if (fieldValue && fieldValue.match(fieldValidationRegEx)) {
+    if (fieldValue && fieldValidationRegEx.test(fieldValue)) {
       result = true;
     } else {
       result = false;

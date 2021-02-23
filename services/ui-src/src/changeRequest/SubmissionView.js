@@ -93,7 +93,7 @@ const SubmissionView = ({ formInfo, id }) => {
             </Review>
           )}
           {changeRequest.transmittalNumber && (
-            <Review heading={formInfo.idLabel}>
+            <Review heading={formInfo.transmittalNumber.idLabel}>
               {changeRequest.transmittalNumber}
             </Review>
           )}
