@@ -3,7 +3,6 @@
 #
 stage=$1
 userList=$2
-adminUser=$3
 
 userTable=cms-spa-form-${stage}-users
 testUserStatuses=(pending active pending active, denied revoked)

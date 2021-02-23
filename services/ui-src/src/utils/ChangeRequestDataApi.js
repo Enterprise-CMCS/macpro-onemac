@@ -91,7 +91,7 @@ class ChangeRequestDataApi {
    * @param {string} id the ID to check
    * @return {Boolean} true if the user  exists in the back end
    */
-  async userExists(userEmail) {
+  async userProfile(userEmail) {
     if (!userEmail) {
       console.log("user Email was not specified for packageExists API call");
       throw new Error("user Email was not specified for packageExists API call");

@@ -23,11 +23,6 @@ TEST_USERS=(
 
 TEST_USER_PASSWORD="Passw0rd!"
 
-#
-# This user is available in both DEV and PROD
-#
-CMS_SYSTEM_ADMIN="sabrina.mccrae@cms.hhs.gov"
-
 # What stages shall NOT have the test users.
 test_users_exclude_stages=(
   'master'
@@ -105,8 +100,12 @@ fi
 
 #
 #Add System Admin User
+
 #
-echo '{  "userId": { "S": "'$CMS_SYSTEM_ADMIN'" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "SystemAdmin" } }' > user.json
+#
+# This user is available in both DEV and PROD
+#
+echo '{  "userId": { "S": "sabrina.mccrae@cms.hhs.gov" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "SystemAdmin" } }' > user.json
 userTable=cms-spa-form-${stage}-users
 aws dynamodb put-item --table-name $userTable --item file://user.json
 
