@@ -9,7 +9,7 @@ userTable=cms-spa-form-${stage}-users
 testUserStatuses=(PendingAccess ActiveAccess PendingAccess ActiveAccess, AccessDenied AccessRevoked)
 testUserRoles=(StateAdmin StateUser CMSRoleApprover StateUser CMSReviewer StateUser)
 testStates=(AL AL VA VA AL VA)
-
+createddate=`date '+%d-%m-%y'`
 #
 # Check if Table already Loaded, Do not load a second time
 #
@@ -19,8 +19,8 @@ then
   i=0
   for user in `cat $userList`
   do
-    echo 'DEBUG: aws dynamodb put-item --table-name $userTable --item  {  "userId": { "S": "'${user}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },"stateCodes": { "L": [ { "M": { "MI":{ "S":"'${testUserStatuses[$i]}'" } } }, { "M": { "'${testStates[i]}'":{ "S":"'${testUserStatuses[$i]}'" } } }] } } '
-    echo '{  "userId": { "S": "'${user}'" }, "userRole": { "S": "'${testUserRoles[$i]}'" },"stateCodes": { "L": [ { "M": { "MI":{ "S":"'${testUserStatuses[$i]}'" } } }, { "M": { "'${testStates[i]}'":{ "S":"'${testUserStatuses[$i]}'" } } }] } } ' > user.json
+    echo 'DEBUG: aws dynamodb put-item --table-name $userTable --item  {  "userid": { "S": "'${user}'" }, "userrole": { "S": "'${testUserRoles[$i]}'" },"statecodes": { "L": [ { "M": { "MI":{ "S":"'${testUserStatuses[$i]}'" } } }, { "M": { "'${testStates[i]}'":{ "S":"'${testUserStatuses[$i]}'" }, { "S": { '$createddate'" } } }] } } '
+    echo '{  "userid": { "S": "'${user}'" }, "userrole": { "S": "'${testUserRoles[$i]}'" },"statecodes": { "L": [ { "M": { "MI":{ "S":"'${testUserStatuses[$i]}'" } } }, { "M": { "'${testStates[i]}'":{ "S":"'${testUserStatuses[$i]}'" } } , { "S": { '$createddate'" } } }] } } ' > user.json
     aws dynamodb put-item --table-name $userTable --item file://user.json
     i=`expr $i + 1`
     if [ $i -gt 5 ]
