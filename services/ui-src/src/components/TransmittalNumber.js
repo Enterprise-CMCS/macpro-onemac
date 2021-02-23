@@ -27,6 +27,11 @@ const TransmittalNumber = ({
   if (statusLevel === "warn") {
     statusMsgClass = "ds-u-color--primary";
   }
+  if (idType === "waiverappk") {
+    numName = "Waiver Number";
+    hint = "Must follow the format SS.####.R##.## or SS.#####.R##.##";
+    FAQLink = ROUTES.FAQ_WAIVER_ID;
+  }
 
   return (
     <div>
