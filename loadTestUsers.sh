@@ -19,10 +19,10 @@ then
   i=0
   for user in `cat $userList`
   do
-    attributes1='{ "M": { "stateCode":{ "S":"MI" } }, { "M": { "status":"'${testUserStatuses[$i]}'" }, { "M": { "date":"'${createddate}'" }  }   } }'
-    attributes2='{ "M": { "stateCode":{ "S":"'${testStates[i]}'" } }, { "M": { "status":"'${testUserStatuses[$i]}'" }, { "M": { "date":"'${createddate}'" }  }   } }'
-    echo 'DEBUG: aws dynamodb put-item --table-name $userTable --item  {  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
-    echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
+    attributes1=' { "L": [ { "M": { "stateCode":{ "S":"MI" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
+    attributes2=' { "L": [ { "M": { "stateCode":{ "S":"'${testStates[i]}'" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
+    echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+    echo '{  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
     aws dynamodb put-item --table-name $userTable --item file://user.json
     i=`expr $i + 1`
     if [ $i -gt 5 ]
