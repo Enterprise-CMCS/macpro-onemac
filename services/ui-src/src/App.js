@@ -3,7 +3,6 @@ import Routes from "./Routes";
 import Header from "./components/Header";
 import { AppContext } from "./libs/contextLib";
 import {Auth} from "aws-amplify";
-import ChangeRequestDataApi from "./utils/ChangeRequestDataApi";
 
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -28,6 +27,7 @@ function App() {
     setIsAuthenticating(false);
   }
 
+  
   return (
     !isAuthenticating && (
       <div>

@@ -45,7 +45,6 @@ export default function DevLogin() {
     event.preventDefault();
 
     try {
-
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
     } catch (error) {
