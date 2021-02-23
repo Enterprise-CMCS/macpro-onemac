@@ -29,7 +29,7 @@ const TransmittalNumber = ({
   }
   if (idType === "waiverappk") {
     numName = "Waiver Number";
-    hint = "Must follow the format SS.####.R##.## or SS.#####.R##.##";
+    hint = "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)";
     FAQLink = ROUTES.FAQ_WAIVER_ID;
   }
 

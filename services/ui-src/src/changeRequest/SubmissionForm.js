@@ -407,6 +407,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <PageTitleBar heading={formInfo.pageTitle} text="" />
       {renderAlert(alert)}
       <div className="form-container">
+        {formInfo.subheaderMessage && <div className="form-subheader-message">{formInfo.subheaderMessage}</div>}
         <form
           onSubmit={handleSubmit}
           noValidate

@@ -14,7 +14,8 @@ const WaiverAppK = () => {
   const formInfo = {
     pageTitle: "Submit 1915(c) Appendix K Amendment",
     readOnlyPageTitle: "1915(c) Appendix K Amendment",
-    detailsHeader: "1915(c) Appendix K",
+    subheaderMessage: "If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.",
+    detailsHeader: "1915(c) Appendix K Amendment",
     requiredUploads: ["Appendix K Template"],
     optionalUploads: ["Other"],
     idType: "waiverappk",
