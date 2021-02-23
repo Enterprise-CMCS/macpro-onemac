@@ -106,7 +106,7 @@ fi
 #
 #Add System Admin User
 #
-echo '{  "userId": { "S": "'$CMS_SYSTEM_ADMIN'" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "SystemAdmin" },  "stateCodes": { "SS": [ "**" ] }  }' > user.json
+echo '{  "userId": { "S": "'$CMS_SYSTEM_ADMIN'" }, "status": { "S": "ActiveAccess" }, "userRole": { "S": "SystemAdmin" } }' > user.json
 userTable=cms-spa-form-${stage}-users
 aws dynamodb put-item --table-name $userTable --item file://user.json
 

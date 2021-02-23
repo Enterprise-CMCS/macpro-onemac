@@ -7,7 +7,7 @@ adminUser=$3
 
 userTable=cms-spa-form-${stage}-users
 testUserStatuses=(pending active pending active, denied revoked)
-testUserRoles=(stateadmin stateuser stateuser cmsreviewer stateuser)
+testUserRoles=(stateadmin stateuser stateuser cmsapprover stateuser)
 testStates=(AL AL VA VA AL VA)
 createddate=`date '+%d-%m-%y'`
 #
@@ -19,11 +19,18 @@ then
   i=0
   for user in `cat $userList`
   do
-    attributes1=' { "L": [ { "M": { "stateCode":{ "S":"MI" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
-    attributes2=' { "L": [ { "M": { "stateCode":{ "S":"'${testStates[i]}'" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
-    echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
-    echo '{  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
-    aws dynamodb put-item --table-name $userTable --item file://user.json
+    if [ "${testUserRoles[$i]}" = "stateadmin" ] || [ "${testUserRoles[$i]}" = "stateuser" ]
+    then
+      attributes1=' { "L": [ { "M": { "stateCode":{ "S":"MI" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
+      attributes2=' { "L": [ { "M": { "stateCode":{ "S":"'${testStates[i]}'" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
+      echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+      echo '{  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
+    else
+     attributes1=' { "L": [ { "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "S":"'${createddate}'"} } } ] }'
+     echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } '
+     echo '{  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } ' > user.json
+    fi
+      aws dynamodb put-item --table-name $userTable --item file://user.json
     i=`expr $i + 1`
     if [ $i -gt 5 ]
     then
