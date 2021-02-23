@@ -22,7 +22,7 @@ then
     attributes1='{ "M": { "stateCode":{ "S":"MI" } }, { "M": { "status":"'${testUserStatuses[$i]}'" }, { "M": { "date":"'${createddate}'" }  }   } }'
     attributes2='{ "M": { "stateCode":{ "S":"'${testStates[i]}'" } }, { "M": { "status":"'${testUserStatuses[$i]}'" }, { "M": { "date":"'${createddate}'" }  }   } }'
     echo 'DEBUG: aws dynamodb put-item --table-name $userTable --item  {  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
-    echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' #> user.json
+    echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
     aws dynamodb put-item --table-name $userTable --item file://user.json
     i=`expr $i + 1`
     if [ $i -gt 5 ]
