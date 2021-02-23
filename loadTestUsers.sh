@@ -5,8 +5,8 @@ stage=$1
 userList=$2
 
 userTable=cms-spa-form-${stage}-users
-testUserStatuses=(pending active pending active, denied revoked)
-testUserRoles=(stateadmin stateuser stateuser cmsapprover stateuser)
+testUserStatuses=(pending active pending active denied revoked)
+testUserRoles=(stateadmin stateuser stateuser cmsapprover stateadmin stateuser)
 testStates=(AL AL VA VA AL VA)
 createddate=`date '+%d-%m-%y'`
 #
