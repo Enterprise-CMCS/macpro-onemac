@@ -28,16 +28,16 @@ function App() {
   }
 
   return (
-    !isAuthenticating && (
-      <div>
-        <Header isAuthenticated={isAuthenticated} />
-        <AppContext.Provider
-          value={{ isAuthenticated, userHasAuthenticated }}
-        >
-          <Routes />
-        </AppContext.Provider>
-      </div>
-    )
+      !isAuthenticating && (
+          <div>
+            <Header isAuthenticated={isAuthenticated} />
+            <AppContext.Provider
+                value={{ isAuthenticated, userHasAuthenticated }}
+            >
+              <Routes />
+            </AppContext.Provider>
+          </div>
+      )
   );
 }
 
