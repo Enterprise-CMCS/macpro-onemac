@@ -105,7 +105,7 @@ fi
 #
 # This user is available in both DEV and PROD
 #
-echo '{  "userId": { "S": "sabrina.mccrae@cms.hhs.gov" }, "attributes": { "L": [ { "M": { "status": { "S": "ActiveAccess" } } }, { "M": { "type": { "S": "SystemAdmin" } } } ] } }' > user.json
+echo '{  "userId": { "S": "sabrina.mccrae@cms.hhs.gov" },  "type": { "S": "SystemAdmin" } }' > user.json
 userTable=cms-spa-form-${stage}-users
 aws dynamodb put-item --table-name $userTable --item file://user.json
 
