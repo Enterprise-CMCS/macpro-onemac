@@ -16,8 +16,6 @@ function App() {
   async function onLoad() {
     try {
       const user = await Auth.currentAuthenticatedUser();
-      const userProfile = await ChangeRequestDataApi.userProfile(user.signInUserSession.idToken.payload.email);
-      console.log("APP - DEBUG: " + JSON.stringify(userProfile))
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "not authenticated") {
