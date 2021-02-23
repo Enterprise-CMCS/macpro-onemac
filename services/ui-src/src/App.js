@@ -27,7 +27,6 @@ function App() {
     setIsAuthenticating(false);
   }
 
-  
   return (
     !isAuthenticating && (
       <div>
