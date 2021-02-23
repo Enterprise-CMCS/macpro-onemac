@@ -36,6 +36,19 @@ const commands = {
         return id;
     },
 
+    // 1915(c) Appendix K valid options:
+    // Note that the base waiver number is the first set of numbers which can be either 4 or 5 digits
+    // SS.####.R##.##
+    // SS.#####.R##.##
+    getWaiverAppKNumber: function (state = "VA") {
+        const baseNumLengthOptions = [4, 5];
+        const randomBaseNumLengthOption = baseNumLengthOptions[Math.floor(Math.random() * baseNumLengthOptions.length)]
+        let group = [state, getRandomNumberString(randomBaseNumLengthOption), `R${getRandomNumberString(2)}`, getRandomNumberString(2)];
+        let id = group.join(".");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        return id;
+    },
+
     getID: function (file = 'spa.txt') {
         return fs.readFileSync(path.join(__dirname, file),'utf8');
     },
@@ -106,7 +119,6 @@ const commands = {
         const path = require('path');
         let dir = path.join(__dirname, 'files');
         let files = fs.readdirSync(dir, 'utf8');
-
         for (let i = 0; i < total; i++) {
             let selector = 'input[id="uploader-input-' + i + '"]';
             this.api.assert.elementPresent(selector);
@@ -116,6 +128,21 @@ const commands = {
         return this.api;
     }
     */
+}
+
+/**
+ * Returns a random string of numbers to a specified number of digits
+ * allowing for leading zeros
+ * @param {Number} numDigits
+ * @returns string of numbers
+ */
+function getRandomNumberString(numDigits) {
+    const randomNum = Math.floor(Math.random() * Math.floor(max));
+    let randomNumString = randomNum.toString();
+    if (randomNumString.length < numDigits) {
+        randomNumString.padStart(numDigits, '0');
+    }
+    return randomNumString;
 }
 
 module.exports = {
@@ -163,4 +190,3 @@ module.exports = {
         },
     }
 };
-
