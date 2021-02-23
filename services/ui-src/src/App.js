@@ -15,7 +15,7 @@ function App() {
 
   async function onLoad() {
     try {
-      const user = await Auth.currentAuthenticatedUser();
+      await Auth.currentAuthenticatedUser();
       userHasAuthenticated(true);
     } catch (error) {
       if (error !== "not authenticated") {
