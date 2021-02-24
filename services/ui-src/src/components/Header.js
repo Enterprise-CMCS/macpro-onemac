@@ -8,6 +8,7 @@ import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
+import { useLoginTypeContext } from "../libs/contextLib";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -96,7 +97,7 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar() {
+  function renderNavBar(isLoggedInAsDeveloper) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
@@ -105,6 +106,7 @@ function Header(props) {
             Dashboard
           </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
+          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
       </div>
@@ -200,7 +202,8 @@ function Header(props) {
       );
     }
   }
-
+  const { isLoggedInAsDeveloper } = useLoginTypeContext();
+  
   return (
     <div>
       {renderUSABar()}
@@ -213,7 +216,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar()}
+      {renderNavBar(isLoggedInAsDeveloper)}
     </div>
   );
 }
