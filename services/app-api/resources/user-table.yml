@@ -4,7 +4,7 @@ Resources:
     Properties:
       TableName: ${self:custom.userTableName}
       AttributeDefinitions:
-        - AttributeName: userId
+        - AttributeName: id
           AttributeType: S
     # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
