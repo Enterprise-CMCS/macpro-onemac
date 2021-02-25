@@ -17,34 +17,20 @@ createddate=`date '+%s'`
 lineCount=`aws dynamodb scan --table-name $userTable | wc -l`
 if [ $lineCount -gt -6 ]
 then
-  i=0
-  for user in `cat $userList`
-  do
-    if [ "${testUserRoles[$i]}" = "stateadmin" ] || [ "${testUserRoles[$i]}" = "stateuser" ]
-    then
-      attributes1=' { "L": [ { "M": { "stateCode":{ "S":"MI" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "N":"'${createddate}'"} } } ] }'
-      attributes2=' { "L": [ { "M": { "stateCode":{ "S":"'${testStates[i]}'" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "N":"'${createddate}'"} } } ] }'
-      echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
-      echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
-    else
-     attributes1=' { "L": [ { "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "N":"'${createddate}'"} } } ] }'
-     echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } '
-     echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } ' > user.json
-    fi
-      aws dynamodb put-item --table-name $userTable --item file://user.json
-    i=`expr $i + 1`
-    if [ $i -gt 5 ]
-    then
-      i=1
-    fi
-  done
+
+  stateuser="user1@cms.hhs.local"
+  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "VA" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "stateuser" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+  aws dynamodb put-item --table-name $userTable --item file://user.json
 
   stateadmin="stateadmin1@cms.hhs.local"
-  echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "stateadmin" }, "type": { "S": "stateadmin" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+  stateadminattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "VA" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "stateadmin" }, "type": { "S": "stateadmin" }, '${stateadminattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
   cmsapprover="cmsapprover1@cms.hhs.local"
-  echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "cmsapprover" }, "type": { "S": "stateadmin" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+  cmsapproverattributes='"attributes": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": {  "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "cmsapprover" }, "type": { "S": "cmsapprover" }, '${cmsapproverattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
 fi
