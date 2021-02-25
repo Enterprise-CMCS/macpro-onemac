@@ -2,7 +2,9 @@ import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getChangeRequestFunctions, { hasValidStateCode } from "./changeRequest/changeRequest-util";
+import getChangeRequestFunctions, {
+  hasValidStateCode,
+} from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import { DateTime } from "luxon";
 
@@ -18,7 +20,6 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-
   // If this invocation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -38,7 +39,9 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
-  const crVerifyTransmittalIdStateCode = hasValidStateCode(data.transmittalNumber);
+  const crVerifyTransmittalIdStateCode = hasValidStateCode(
+    data.transmittalNumber
+  );
   if (!crVerifyTransmittalIdStateCode) {
     return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
   }
@@ -66,10 +69,10 @@ export const main = handler(async (event) => {
   try {
     // check for submission-specific validation (uses database)
     const validationResponse = await crFunctions.fieldsValid(data);
-    console.log("validation Response: ",validationResponse);
+    console.log("validation Response: ", validationResponse);
 
-    if (validationResponse.areFieldsValid===false) {
-      console.log("Message from fieldsValid: ",validationResponse);
+    if (validationResponse.areFieldsValid === false) {
+      console.log("Message from fieldsValid: ", validationResponse);
       return validationResponse.whyNot;
     }
 
@@ -82,17 +85,49 @@ export const main = handler(async (event) => {
     const packageParams = {
       TableName: process.env.spaIdTableName,
       Item: {
-        "id": data.transmittalNumber,
+        id: data.transmittalNumber,
         [data.id]: data.userId,
-      }
+      },
     };
     await dynamoDb.put(packageParams);
-
   } catch (dbError) {
     console.log("This error is: " + dbError);
     throw dbError;
   }
   console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+  // if the ID is a waiver, store all the possibilities for package checking
+  // if this is an id type where we want better searching, do that now
+  // 122 is 1915b (123 is 1915c)
+  if (data.type === "waiver") {
+    let planType = 122; 
+    let sliceEnd = data.transmittalNumber.lastIndexOf(".") - 1;
+    let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
+
+    while (smallerID.length !== 2) {
+      params = {
+        TableName: process.env.spaIdTableName,
+        Item: {
+          id: { S: smallerID },
+          cmsStatusID: { N: packageStatusID },
+          planType: { N: planType },
+          originalID: { S: data.transmittalNumber },
+        },
+      };
+      ddb.putItem(params, function (err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Success", data);
+          console.log(
+            `Current epoch time:  ${Math.floor(new Date().getTime())}`
+          );
+        }
+      });
+      sliceEnd = smallerID.lastIndexOf(".") - 1;
+      smallerID = smallerID.slice(0, sliceEnd); // one layer removed
+    }
+  }
 
   // Now send the CMS email
   await sendEmail(crFunctions.getCMSEmail(data));
@@ -105,7 +140,10 @@ export const main = handler(async (event) => {
   // 90 days is current CMS review period and it is based on CMS time!!
   // UTC is 4-5 hours ahead, convert first to get the correct start day
   // AND use plus days function b/c DST days are 23 or 25 hours!!
-  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
+  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt)
+    .setZone("America/New_York")
+    .plus({ days: 90 })
+    .toMillis();
   await dynamoDb.put({
     TableName: process.env.tableName,
     Item: data,
@@ -133,13 +171,9 @@ export const main = handler(async (event) => {
  * @returns {String} any error messages triggered
  */
 function runInitialCheck(data) {
-
-  if (!data.user)
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  if (!data.uploads)
-    return RESPONSE_CODE.ATTACHMENT_ERROR;
-  if (!data.type)
-    return RESPONSE_CODE.SYSTEM_ERROR;
+  if (!data.user) return RESPONSE_CODE.VALIDATION_ERROR;
+  if (!data.uploads) return RESPONSE_CODE.ATTACHMENT_ERROR;
+  if (!data.type) return RESPONSE_CODE.SYSTEM_ERROR;
 
   return "";
 }
