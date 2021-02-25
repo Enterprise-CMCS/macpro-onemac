@@ -100,30 +100,25 @@ export const main = handler(async (event) => {
   // if this is an id type where we want better searching, do that now
   // 122 is 1915b (123 is 1915c)
   if (data.type === "waiver") {
-    let planType = 122; 
+    let planType = 122;
     let sliceEnd = data.transmittalNumber.lastIndexOf(".") - 1;
     let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
+    let params;
 
     while (smallerID.length !== 2) {
-      params = {
-        TableName: process.env.spaIdTableName,
-        Item: {
-          id: { S: smallerID },
-          cmsStatusID: { N: packageStatusID },
-          planType: { N: planType },
-          originalID: { S: data.transmittalNumber },
-        },
-      };
-      ddb.putItem(params, function (err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Success", data);
-          console.log(
-            `Current epoch time:  ${Math.floor(new Date().getTime())}`
-          );
-        }
-      });
+      try {
+        params = {
+          TableName: process.env.spaIdTableName,
+          Item: {
+            id: { S: smallerID },
+            planType: { N: planType },
+            originalID: { S: data.transmittalNumber },
+          },
+        };
+        await dynamoDb.put(params);
+      } catch (error) {
+        console.log("Error", error);
+      }
       sliceEnd = smallerID.lastIndexOf(".") - 1;
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
     }
