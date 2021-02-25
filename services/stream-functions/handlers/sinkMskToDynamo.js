@@ -57,7 +57,7 @@ function myHandler(event, context, callback) {
             console.log("Success", data);
             console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
           }
-        });  
+        });
         sliceEnd = smallerID.lastIndexOf('.')-1;
         smallerID = smallerID.slice(0,sliceEnd); // one layer removed
       }
