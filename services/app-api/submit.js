@@ -122,7 +122,7 @@ export const main = handler(async (event) => {
       } catch (error) {
         if (error.code != 'ConditionalCheckFailedException')
           console.log("Error is: ", error);
-        else 
+        else
         console.log("ID " + smallerID + " exists in " + process.env.spaIdTableName );
       }
       sliceEnd = smallerID.lastIndexOf(".");
