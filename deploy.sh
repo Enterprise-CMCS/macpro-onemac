@@ -19,6 +19,8 @@ TEST_USERS=(
   'user3@cms.hhs.local'
   'user4@cms.hhs.local'
   'user5@cms.hhs.local'
+  'stateadmin1@cms.hhs.local'
+  'cmsapprover1@cms.hhs.local'
 )
 
 TEST_USER_PASSWORD="Passw0rd!"
@@ -105,7 +107,7 @@ fi
 #
 # This user is available in both DEV and PROD
 #
-echo '{  "userId": { "S": "sabrina.mccrae@cms.hhs.gov" },  "type": { "S": "SystemAdmin" } }' > user.json
+echo '{  "id": { "S": "sabrina.mccrae@cms.hhs.gov" },  "type": { "S": "systemadmin" } }' > user.json
 userTable=cms-spa-form-${stage}-users
 aws dynamodb put-item --table-name $userTable --item file://user.json
 

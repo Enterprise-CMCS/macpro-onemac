@@ -24,12 +24,12 @@ then
     then
       attributes1=' { "L": [ { "M": { "stateCode":{ "S":"MI" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "N":"'${createddate}'"} } } ] }'
       attributes2=' { "L": [ { "M": { "stateCode":{ "S":"'${testStates[i]}'" } } },{ "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "N":"'${createddate}'"} } } ] }'
-      echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
-      echo '{  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
+      echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+      echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } ' > user.json
     else
      attributes1=' { "L": [ { "M": { "status": { "S": "'${testUserStatuses[$i]}'" } } },{ "M": { "date":{ "N":"'${createddate}'"} } } ] }'
-     echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } '
-     echo '{  "userId": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } ' > user.json
+     echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } '
+     echo '{  "id": { "S": "'${user}'" }, "type": { "S": "'${testUserRoles[$i]}'" }, "attributes": { "L": [ '${attributes1}' ] } } ' > user.json
     fi
       aws dynamodb put-item --table-name $userTable --item file://user.json
     i=`expr $i + 1`
@@ -37,8 +37,16 @@ then
     then
       i=1
     fi
-
   done
+
+  stateadmin="stateadmin1@cms.hhs.local"
+  echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "stateadmin" }, "type": { "S": "stateadmin" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+  aws dynamodb put-item --table-name $userTable --item file://user.json
+
+  cmsapprover="cmsapprover1@cms.hhs.local"
+  echo 'DEBUG: aws dynamodb put-item --table-name '$userTable' --item  {  "id": { "S": "cmsapprover" }, "type": { "S": "stateadmin" }, "attributes": { "L": [ '${attributes1}','${attributes2}' ] } } '
+  aws dynamodb put-item --table-name $userTable --item file://user.json
+
 fi
 
 aws dynamodb scan --table-name $userTable
