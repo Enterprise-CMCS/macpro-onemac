@@ -120,7 +120,10 @@ export const main = handler(async (event) => {
         console.log("params are: ", params);
         await dynamoDb.put(params);
       } catch (error) {
-        console.log("Error is: ", error);
+        if (error.code != 'ConditionalCheckFailedException')
+          console.log("Error is: ", error);
+        else 
+        console.log("ID " + smallerID + " exists in " + process.env.spaIdTableName );
       }
       sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
