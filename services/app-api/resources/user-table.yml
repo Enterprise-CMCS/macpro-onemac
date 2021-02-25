@@ -10,6 +10,6 @@ Resources:
       BillingMode: PAY_PER_REQUEST
       KeySchema:
         - AttributeName: id
-          KeyType: RANGE
+          KeyType: HASH
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
