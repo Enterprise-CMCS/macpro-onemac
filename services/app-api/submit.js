@@ -104,7 +104,7 @@ export const main = handler(async (event) => {
     let sliceEnd = data.transmittalNumber.lastIndexOf(".");
     let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
     let params;
-    let numIterations=5;
+    let numIterations = 5;
 
     while (smallerID.length > 2 && numIterations-- > 0) {
       try {
@@ -112,18 +112,20 @@ export const main = handler(async (event) => {
           TableName: process.env.spaIdTableName,
           Item: {
             id: smallerID,
-            planType: planType ,
+            planType: planType,
             originalID: data.transmittalNumber,
           },
-          ConditionExpression: 'attribute_not_exists(id)',
+          ConditionExpression: "attribute_not_exists(id)",
         };
         console.log("params are: ", params);
         await dynamoDb.put(params);
       } catch (error) {
-        if (error.code != 'ConditionalCheckFailedException')
+        if (error.code != "ConditionalCheckFailedException")
           console.log("Error is: ", error);
         else
-        console.log("ID " + smallerID + " exists in " + process.env.spaIdTableName );
+          console.log(
+            "ID " + smallerID + " exists in " + process.env.spaIdTableName
+          );
       }
       sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
