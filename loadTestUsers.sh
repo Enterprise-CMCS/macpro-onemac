@@ -29,7 +29,7 @@ then
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
   cmsapprover="cmsapprover1@cms.hhs.local"
-  cmsapproverattributes='"attributes": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": {  "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  cmsapproverattributes='"attributes": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'$createddate'" } } } ] }'
   echo '{  "id": { "S": "cmsapprover" }, "type": { "S": "cmsapprover" }, '${cmsapproverattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
