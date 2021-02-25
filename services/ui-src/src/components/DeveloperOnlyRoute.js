@@ -1,10 +1,10 @@
 import React, { useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
-import { useLoginTypeContext } from "../libs/contextLib";
+import { useAppContext } from "../libs/contextLib";
 import { ROUTES } from "../Routes";
 
 export default function DeveloperOnlyRoute({ children, ...rest }) {
-  const { isLoggedInAsDeveloper } = useLoginTypeContext();
+  const { isLoggedInAsDeveloper } = useAppContext();
   const history = useHistory();
 
   useEffect(() => {

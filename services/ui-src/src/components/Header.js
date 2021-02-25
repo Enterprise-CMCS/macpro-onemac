@@ -8,7 +8,7 @@ import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
-import { useLoginTypeContext } from "../libs/contextLib";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -202,8 +202,8 @@ function Header(props) {
       );
     }
   }
-  const { isLoggedInAsDeveloper } = useLoginTypeContext();
-  
+  const { isLoggedInAsDeveloper } = useAppContext();
+
   return (
     <div>
       {renderUSABar()}

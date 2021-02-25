@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
-import { useAppContext, useLoginTypeContext } from "../libs/contextLib";
+import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import config from "../utils/config";
@@ -9,7 +9,7 @@ import { Alert } from "@cmsgov/design-system";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
-  const { developerLoggedIn } = useLoginTypeContext();
+  const { developerLoggedIn } = useAppContext();
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
   const [alert, setAlert] = useState();
   const [fields, handleFieldChange] = useFormFields({

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Routes from "./Routes";
 import Header from "./components/Header";
-import { AppContext, LoginTypeContext } from "./libs/contextLib";
+import { AppContext } from "./libs/contextLib";
 import { Auth } from "aws-amplify";
 
 function App() {
@@ -31,15 +31,11 @@ function App() {
   return (
     !isAuthenticating && (
       <div>
-        <LoginTypeContext.Provider
-          value={{ isLoggedInAsDeveloper, developerLoggedIn }}>
+        <AppContext.Provider
+          value={{ isLoggedInAsDeveloper, developerLoggedIn, isAuthenticated, userHasAuthenticated }}>
           <Header isAuthenticated={isAuthenticated} />
-          <AppContext.Provider
-            value={{ isAuthenticated, userHasAuthenticated }}
-          >
-            <Routes />
-          </AppContext.Provider>
-        </LoginTypeContext.Provider>
+          <Routes />
+        </AppContext.Provider>
       </div>
     )
   );
