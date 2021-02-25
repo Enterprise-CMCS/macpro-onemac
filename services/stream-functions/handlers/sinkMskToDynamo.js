@@ -11,7 +11,10 @@ function myHandler(event, context, callback) {
   var id = value.payload.ID_Number;
   var packageStatusID = value.payload.SPW_Status_ID.toString();
   console.log(`State Plan ID Number: ${id}`);
-  var planType = value.payload.Plan_Type.toString();
+  var planType = '0';
+  if (value.payload.Plan_Type) {
+    planType = value.payload.Plan_Type.toString();
+  }
   console.log(process.env.spaIdTableName);
   if (id != undefined) {
     AWS.config.update({region: 'us-east-1'});
@@ -37,10 +40,10 @@ function myHandler(event, context, callback) {
     // if this is an id type where we want better searching, do that now
     // 122 is 1915b and 123 is 1915c
     if (planType === 122 || planType === 123) {
-      let sliceEnd = id.lastIndexOf('.')-1;
+      let sliceEnd = id.lastIndexOf('.');
       let smallerID = id.slice(0,sliceEnd); // one layer removed
 
-      while ( smallerID.length !== 2 ) {
+      while ( smallerID.length > 2 ) {
         params = {
           TableName: process.env.spaIdTableName,
           Item: {
@@ -58,7 +61,7 @@ function myHandler(event, context, callback) {
             console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
           }
         });
-        sliceEnd = smallerID.lastIndexOf('.')-1;
+        sliceEnd = smallerID.lastIndexOf('.');
         smallerID = smallerID.slice(0,sliceEnd); // one layer removed
       }
     }

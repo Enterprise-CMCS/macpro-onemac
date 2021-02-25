@@ -101,25 +101,28 @@ export const main = handler(async (event) => {
   // 122 is 1915b (123 is 1915c)
   if (data.type === "waiver") {
     let planType = 122;
-    let sliceEnd = data.transmittalNumber.lastIndexOf(".") - 1;
+    let sliceEnd = data.transmittalNumber.lastIndexOf(".");
     let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
     let params;
+    let numIterations=5;
 
-    while (smallerID.length !== 2) {
+    while (smallerID.length > 2 && numIterations-- > 0) {
       try {
         params = {
           TableName: process.env.spaIdTableName,
           Item: {
-            id: { S: smallerID },
-            planType: { N: planType },
-            originalID: { S: data.transmittalNumber },
+            id: smallerID,
+            planType: planType ,
+            originalID: data.transmittalNumber,
           },
+          ConditionExpression: 'attribute_not_exists(id)',
         };
+        console.log("params are: ", params);
         await dynamoDb.put(params);
       } catch (error) {
         console.log("Error is: ", error);
       }
-      sliceEnd = smallerID.lastIndexOf(".") - 1;
+      sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
     }
   }
