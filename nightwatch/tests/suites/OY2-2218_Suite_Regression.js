@@ -7,18 +7,12 @@ module.exports = {
     before: function (browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard via Okta"](browser);
-    },
-
-    beforeEach: function (browser) {
-        browser.pause(timeout);
+        browser.pause(timeout * 5);
     },
 
     after: function (browser) {
+        login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
-    },
-
-    afterEach: function (browser) {
-        browser.pause(timeout);
     },
 
     "Submit a SPA Report": function (browser) {

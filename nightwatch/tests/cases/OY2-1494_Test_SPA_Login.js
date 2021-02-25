@@ -20,9 +20,9 @@ module.exports = {
         const testData = {
             username: browser.globals.user,
             password: browser.globals.pass,
-            userSelector: '//*[@id="email"]'
-        };
 
+        };
+        spa = browser.page.spaBasePage();
         spa.devLogin(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
     },

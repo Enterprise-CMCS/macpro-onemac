@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 5000;
+const timeout = 1000;
 const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 2);
+        browser.pause(timeout * 3);
     },
 
     after : function(browser) {
@@ -22,12 +22,14 @@ module.exports = {
         login.after(browser);
     },
 
-    "Click on 'Start a new SPA'": function (browser) {
+    "Click on 'Start a new SPA'": function (browser, testData = {
+        selector: '@newSPA',
+        subUrl: '/spa'
+    }) {
         spa = browser.page.spaBasePage();
-        spa.assert.elementPresent('@newSPA');
-        spa.click('@newSPA').waitForElementPresent('body');
-        browser.expect.url().to.contain('/spa').before(timeout * 5);
-        browser.pause(timeout);
+        spa.assert.elementPresent(testData.selector);
+        spa.click(testData.selector).waitForElementPresent('body');
+        browser.expect.url().to.contain(testData.subUrl).before(timeout * 5);
     },
 
     "Enter SPA State/Territory Information" : function (browser) {
@@ -44,12 +46,12 @@ module.exports = {
         spa.pause(timeout);
     },
 
-    'Enter SPA ID' : function (browser, spa_id = spa.getTransmitNumber()) {
+    'Enter SPA ID' : function (browser, spa_id) {
+        spa = browser.page.spaBasePage();
         let testData = {
             selector: '@transmittal',
-            spa_id: spa_id,
-        };
-
+            spa_id: (spa_id) ? spa_id : spa.getTransmitNumber(),
+        }
         spa.click(testData.selector);
         spa.setValue(testData.selector, testData.spa_id);
         browser.Keys.TAB;
@@ -60,7 +62,7 @@ module.exports = {
 
     'Upload Documents' : function (browser) {
         spa = browser.page.spaBasePage();
-        spa.uploadFiles(9);
+        spa.uploadFiles(2);
     },
 
     'Enter Comments' : function (browser, selector = 'textarea',
@@ -77,16 +79,14 @@ module.exports = {
         let msg = "Your submission has been received.";
 
         browser.url(function (current) {
-            browser.pause(timeout )
             browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.pause(5000)
-            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
+            browser.verify.not.urlEquals(current.value);
         });
         browser
-            .assert.elementPresent(alert_selector)
-            .assert.elementPresent(p_selector)
-            .assert.containsText(alert_selector, alert_msg)
-            .assert.containsText(p_selector, msg)
+            .verify.elementPresent(alert_selector)
+            .verify.elementPresent(p_selector)
+            .verify.containsText(alert_selector, alert_msg)
+            .verify.containsText(p_selector, msg)
             .pause(timeout);
     },
 
