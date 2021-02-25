@@ -117,7 +117,7 @@ export const main = handler(async (event) => {
         };
         await dynamoDb.put(params);
       } catch (error) {
-        console.log("Error", error);
+        console.log("Error is: ", error);
       }
       sliceEnd = smallerID.lastIndexOf(".") - 1;
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
