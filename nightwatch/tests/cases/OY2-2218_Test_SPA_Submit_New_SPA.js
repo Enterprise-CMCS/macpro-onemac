@@ -6,7 +6,7 @@
 
  */
 
-const timeout = 5000;
+const timeout = 1000;
 const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 module.exports = {
@@ -14,7 +14,7 @@ module.exports = {
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 2);
+        browser.pause(timeout * 3);
     },
 
     after : function(browser) {
@@ -79,14 +79,14 @@ module.exports = {
         browser.url(function (current) {
             browser.pause(timeout )
             browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.pause(5000)
-            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
+            browser.pause(timeout * 3)
+            browser.expect.url().not.to.equal(current.value).before(timeout * 20);
         });
         browser
-            .assert.elementPresent(alert_selector)
-            .assert.elementPresent(p_selector)
-            .assert.containsText(alert_selector, alert_msg)
-            .assert.containsText(p_selector, msg)
+            .verify.elementPresent(alert_selector)
+            .verify.elementPresent(p_selector)
+            .verify.containsText(alert_selector, alert_msg)
+            .verify.containsText(p_selector, msg)
             .pause(timeout);
     },
 
