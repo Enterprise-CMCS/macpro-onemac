@@ -24,20 +24,16 @@ module.exports = {
         login.after(browser);
     },
 
-    "Click on 'Submit new Waiver'": function (browser) {
-        let testData = {
-            selector: "@newWaiver",
-            subUrl: '/waiver'
-        };
-        spa = browser.page.spaBasePage();
-        spa.assert.elementPresent(testData.selector);
-        spa.click(testData.selector);
-        browser.expect.url().to.contain(testData.subUrl).before(5000);
+    "Click on 'Submit new Waiver'": function (browser, testData = {
+        selector: "@newWaiver",
+        subUrl: '/waiver'
+    }) {
+        new_spa["Click on 'Start a new SPA'"](browser, testData);
     },
 
-    "Enter SPA State/Territory Information": function(browser) {
+    /*"Enter SPA State/Territory Information": function(browser) {
         new_spa["Enter SPA State/Territory Information"](browser);
-    },
+    },*/
 
     "Enter Action Type": function (browser) {
         spa = browser.page.spaBasePage();
@@ -62,17 +58,13 @@ module.exports = {
         spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser, spa_id = spa.getWaiverNumber()) {
-        let selector = '@transmittal';
-        spa = browser.page.spaBasePage();
-        spa.click(selector);
-        spa.setValue(selector, spa_id);
-        spa.expect.element(selector).value.to.equals(spa_id);
+    "Enter Waiver Number": function (browser, spa_id = "") {
+        let id = (spa_id.length !== 0) ? spa_id : spa.getWaiverNumber();
+        new_spa["Enter SPA ID"](browser, id);
     },
 
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
+        new_spa["Upload Documents"](browser);
     },
 
     "Enter Comments": function (browser) {

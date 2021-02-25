@@ -1,23 +1,35 @@
 const fs = require('fs');
 const path = require('path');
-const spaVar = path.join(__dirname, "spaVar.txt");
-
+let spaVar;
 const commands = {
 
-    getTransmitNumber: function (optionNumber = true, state = "VA") {
-        return idNumbers.transmitNumber(optionNumber, state);
+    // SS-YY-NNNN-xxxx or SS-YY-NNNN
+    getTransmitNumber: function (optional = true, state = "VA") {
+        let rand = () => this.props.getRandomNumber(0, 10000);
+        let group = [state, this.props.getRandomNumber(), rand()];
+        if (optional) {
+            group.push(rand());
+        }
+        let id = group.join("-");
+        spaVar = path.join(__dirname, "spa.txt");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
 
+    // 1915(b) SS.##.R##.M##
+    // 1915(c) SS.##.R##.##
     getWaiverNumber: function (isWaiverB = true, state = "VA") {
-        return idNumbers.waiver1915B(isWaiverB, state);
+        let rand = () => this.props.getRandomNumber();
+        let group = (isWaiverB) ? [state, rand(), `R${rand()}`, `M${rand()}`] : [state, rand(), `R${rand()}`, `M${rand()}`];
+        let id = group.join(".");
+        spaVar = path.join(__dirname, "waiver.txt");
+        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
 
-    getSPA: function () {
-        return idNumbers.getSpaID();
-    },
-
-    getWaiver: function () {
-        return idNumbers.getWaiverID();
+    getID: function (spa = true) {
+        spaVar = (spa) ? path.join(__dirname, 'spa.txt') : path.join(__dirname, 'waiver.txt');
+        return fs.readFileSync(spaVar, 'utf8');
     },
 
     enterComments: function (selector, text) {
@@ -49,6 +61,31 @@ const commands = {
         this.api.click(this.elements.logout);
     },
 
+    uploadDocs: function (type = '.pdf', callBack) {
+        const dir = path.join(__dirname, 'files');
+        const uploadFile = fs.readdirSync(dir).find(file => {
+            const regEx = `^.*(${type})$`
+            return file.match(new RegExp(regEx));
+        });
+        const setValue = (selector, filePath) => this.api.setValue(selector, filePath);
+
+        const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', function (result) {
+            let selector = `[id=${result.value}]`;
+            let filePath = path.resolve(dir, uploadFile);
+            setValue(selector, filePath);
+            callBack(selector, uploadFile);
+        });
+
+        this.api.elements('css selector', this.elements.uploadFields, function (result) {
+            Array.from(result.value).forEach((obj, index) => {
+                if(index < 2) {
+                    let webElementId = obj["ELEMENT"];
+                    uploadElement(webElementId);
+                }
+            });
+        });
+    },
+
     uploadFiles: function (total) {
         const fs = require('fs');
         const path = require('path');
@@ -67,6 +104,8 @@ const commands = {
 
 module.exports = {
     elements: {
+        alert_banner: "[id*=alert_]",
+        alert_text: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
         devLoginButton : '[id=devloginBtn]',
@@ -88,61 +127,22 @@ module.exports = {
         tandc: "[id=tandc]",
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
+        uploadFields: '[id*=uploader-input]'
     },
 
     commands : [commands],
 
     props : {
         pauseAction: 1000,
+        getRandomNumber(inclusive = 0, exclusive= 100) {
+            let min = Math.ceil(inclusive), max = Math.floor(exclusive);
+            let randomNum = Math.floor(Math.random() * (max - min) + min);
+            let randNumStr = randomNum.toString(), size = max.toString().length;
+            while (randNumStr.length < size - 1) {
+                randNumStr = "0".concat(randNumStr);
+            }
+            return randNumStr;
+        }
     }
 };
 
-
-/**
-    Description: Utilities for random number generation and other trivial operations.
-**/
-const idNumbers = {
-
-    // SS-YY-NNNN-xxxx
-    transmitNumber: (optional, state) => {
-        let rand = getRandomNumber(8);
-        let requiredFour = rand.slice(0, 4);   // 4 digit number (required)
-        let opt = rand.slice(4, 8);
-        let st = state;                      // 2 character state
-        let yrAbbr = new Date().getFullYear()     // 2 character year
-            .toString()
-            .slice(2);
-        let group = [st, yrAbbr, requiredFour]
-        let id = (optional) ? group.join("-") : [group, opt].flat().join("-");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8"});
-        return id;
-    },
-
-    // 1915(b) SS.##.R##.M##
-    // 1915(c) SS.##.R##.##
-    waiver1915B: (isWaiverB, state) => {
-        let rand = getRandomNumber(6);
-        let groupX = rand.slice(0, 2), groupY = "R".concat(rand.slice(2, 4)), groupZ = rand.slice(4);
-        let group = (isWaiverB) ? [state, groupX, groupY, ["M", groupZ].join('')] : [state, groupX, groupY, groupZ];
-        let id = group.join(".");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
-        return id;
-    },
-
-    getSpaID: () => {
-        const data = fs.readFileSync(spaVar, 'utf8');
-        return data.toString()
-    },
-
-    getWaiverID: () => {
-        const data = fs.readFileSync(spaVar, 'utf8');
-        return data.toString()
-    }
-}
-
-function getRandomNumber(numberOfDigits) {
-    const _ = require('lodash');
-    let lower = Math.pow(10, numberOfDigits - 1);
-    let upper = Math.pow(10, numberOfDigits) - 1;
-    return _.random(lower,upper).toString();
-}

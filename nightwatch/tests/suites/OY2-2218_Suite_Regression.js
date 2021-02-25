@@ -30,16 +30,6 @@ module.exports = {
         newSPA["Submit SPA"](browser);
     },
 
-    "Submit a SPA RAI Response": function (browser) {
-        const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
-        spaRAI["Click on 'Respond to SPA RAI'"](browser);
-        spaRAI["Enter SPA ID"](browser);
-        spaRAI["Upload Documents"](browser);
-        spaRAI["Enter Comments"](browser);
-        spaRAI["Submit Response"](browser);
-        browser.pause(timeout + 3000);
-    },
-
     "Submit a SPA Waiver ": function (browser) {
         const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
         spaWaiver["Click on 'Submit new Waiver'"](browser);
@@ -51,7 +41,17 @@ module.exports = {
         spaWaiver["Submit SPA Waiver"](browser);
     },
 
-    "Submit a 1915b Waiver RAI": function (browser) {
+    "Submit a SPA RAI Response": function (browser) {
+        const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
+        spaRAI["Click on 'Respond to SPA RAI'"](browser);
+        spaRAI["Enter SPA ID"](browser);
+        spaRAI["Upload Documents"](browser);
+        spaRAI["Enter Comments"](browser);
+        spaRAI["Submit Response"](browser);
+        browser.pause(timeout * 3);
+    },
+
+    "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser) {
         const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
         waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser);
         waiverRAI["Enter Waiver Number"](browser);
