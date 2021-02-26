@@ -13,15 +13,23 @@ services=(
 )
 
 # These test users are only available in DEV environments.
-TEST_USERS=(
-  'user1@cms.hhs.local'
+TEST_USERS=('user1@cms.hhs.local'
   'user2@cms.hhs.local'
   'user3@cms.hhs.local'
   'user4@cms.hhs.local'
   'user5@cms.hhs.local'
-  'stateadmin1@cms.hhs.local'
-  'cmsapprover1@cms.hhs.local'
-)
+  'stateuseractive@cms.hhs.local'
+  'stateuserpending@cms.hhs.local'
+  'stateuserdenied@cms.hhs.local'
+  'stateuserrevoked@cms.hhs.local'
+  'stateadminactive@cms.hhs.local'
+  'stateadminpending@cms.hhs.local'
+  'stateadmindenied@cms.hhs.local'
+  'stateadminrevoked@cms.hhs.local'
+  'cmsapproveractive@cms.hhs.local'
+  'cmsapproverpending@cms.hhs.local'
+  'cmsapproverdenied@cms.hhs.local'
+  'cmsapproverrevoked@cms.hhs.local')
 
 TEST_USER_PASSWORD="Passw0rd!"
 
@@ -91,9 +99,8 @@ then
           --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName
           aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $TEST_USER_PASSWORD --permanent
           set -e
-          echo $user >> testuser.list
       done
-      ./loadTestUsers.sh $stage testuser.list
+      ./loadTestUsers.sh $stage
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
       exit 1
