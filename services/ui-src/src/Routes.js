@@ -4,6 +4,7 @@ import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
 import Dashboard from "./containers/Dashboard";
 import NotFound from "./containers/NotFound";
+import ComponentPage from "./containers/ComponentPage";
 import Spa from "./changeRequest/Spa";
 import SpaRai from "./changeRequest/SpaRai";
 import Waiver from "./changeRequest/Waiver";
@@ -11,6 +12,7 @@ import WaiverRai from "./changeRequest/WaiverRai";
 import WaiverExtension from "./changeRequest/WaiverExtension";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
+import DeveloperOnlyRoute from "./components/DeveloperOnlyRoute";
 import DevLogin from "./containers/DevLogin";
 import Metrics from "./containers/Metrics";
 
@@ -27,6 +29,7 @@ export const ROUTES = {
     DEVLOGIN: '/devlogin',
     SPA: '/spa',
     SPA_RAI: '/sparai',
+    COMPONENT_PAGE: '/componentpage', // temporary placeholder for the developers to house components //
     WAIVER: '/waiver',
     WAIVER_RAI: '/waiverrai',
     WAIVER_EXTENSION: '/waiverextension'
@@ -38,6 +41,9 @@ export default function Routes() {
             <Route exact path={ROUTES.HOME}>
                 <Home />
             </Route>
+            <DeveloperOnlyRoute exact path={ROUTES.COMPONENT_PAGE}>
+                <ComponentPage />
+            </DeveloperOnlyRoute>
             <Route exact path={ROUTES.FAQ}>
                 <FAQ />
             </Route>

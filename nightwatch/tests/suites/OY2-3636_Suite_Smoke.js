@@ -1,7 +1,9 @@
 
 const locator = '(//*[@disabled])';
+const login = require('../cases/OY2-1494_Test_SPA_Login');
+
 module.exports = {
-    "@tags": ["smokeTest"],
+    "@tags": ["smoke"],
 
     before : function(browser) {
         console.log('Setting up...');
@@ -16,21 +18,13 @@ module.exports = {
     },
 
     'Login to Medicaid as Developer' : function(browser) {
-        // Verifying that Login page is dispalyed
-        let title = 'Developer Login';
-        browser.waitForElementPresent('h1');
-        browser.verify.containsText('h1', title);
+        // Verifying that Login page is displayed
+        login["Logout of SPA and Waiver Dashboard"](browser);
+    },
 
-        // Login to the site
-        let spaPageTitle = 'SPA and Waiver Dashboard';
-        let username = browser.globals.user;
-        let password = browser.globals.pass;
-        browser.setValue('input#email', username);
-        browser.setValue('input#password', password);
-        browser.click('button#loginDevUserBtn');
-        browser.waitForElementPresent('body');
-        browser.verify.containsText('h1', spaPageTitle);
-
+    'Login to Medicaid' : function(browser) {
+        // Verifying that Login page is displayed
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
     },
 
     'Verify SPA and Waiver Dashboard > Response to RAI for SPA Submission':function(browser) {
@@ -77,7 +71,7 @@ module.exports = {
         let submit_date = 'input#submittedAt';
         browser.assert.attributeContains(submit_date, 'value', 'Thu, Nov 5 2020, 1:19:09 PM');
 
-        // checking for all the diabled elements
+        // checking for all the disabled elements
         browser.elements('xpath', locator, function (elements) {
             elements.value.forEach(function(element, index){
                 let xpath = locator.concat('[' + index + ']');
@@ -159,7 +153,7 @@ module.exports = {
         browser.assert.attributeContains('input#transmittalNumber', 'value', 'IL-20-1111-ABC');
         browser.assert.attributeContains('input#submittedAt', 'value', 'Thu, Nov 12 2020, 11:18:16 AM');
 
-        // checking for all the diabled elements
+        // checking for all the disabled elements
         let locator = '(//*[@disabled])';
         browser.elements('xpath', locator, function (elements) {
             elements.value.forEach(function(element, index){
@@ -169,7 +163,7 @@ module.exports = {
             browser.useCss();
         });
 
-        // check for attachements
+        // check for attachments
         let attachment_raiResponse = "div:nth-of-type(1) > a[target='_blank']";
         let attachment_cmsForm = "form div:nth-child(5) div:nth-of-type(2) [target]";
         let attachment_spaPages = "div:nth-of-type(3) > a[target='_blank']";
@@ -285,13 +279,11 @@ module.exports = {
         browser.verify.containsText(error_pageAlert, 'There was a problem submitting your form.');
 
         // Check for each input error message is visible to the user
-        let count = 1;
         let locator = "(//div[@class='ds-u-color--error'])";
         browser.elements('xpath', locator, function (elements) {
-            elements.value.forEach(function(element){
-                let xpath = locator.concat('[' + count + ']');
+            elements.value.forEach(function(element, index){
+                let xpath = locator.concat('[' + index + ']');
                 browser.useXpath().assert.visible(xpath);
-                count++;
             })
             browser.useCss();
         });
@@ -331,31 +323,15 @@ module.exports = {
 
 
     'Verify logout from SPA and Wavier Dashboard and login as CSM.gov Regular user': function(browser) {
-        let username = "FLSESPA2";
-        let password = "Macbis9!1";
-
-        // elements
-        let bttn_logout = 'button#logoutBtn';
-        let bttn_login = '.nav-right > [type]';
-
         // logout from SPA and Wavier Dashboard page
-        browser.click(bttn_logout);
-        browser.waitForElementPresent('h1');
-
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        browser.pause(3000);
         // Verify the successful logout
         browser.verify.containsText('h1', "CMS State Plan Amendment and Waiver Submission Platform");
 
         // Log back in as CSM.gov Regular user
-        browser.click(bttn_login);
-        browser.setValue('#okta-signin-username', username);
-        browser.setValue('#okta-signin-password', password);
-        browser.click('input#tandc');  // Agree to Terms & Condition checkbox
-        browser.click('input#okta-signin-submit');
-
-        // Verify the successful logoin
-        browser.waitForElementPresent('body');
-        let txt_emptySubmission = '.empty-list';
-        browser.verify.containsText(txt_emptySubmission, "You have no submissions yet");
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
+        browser.pause(5000);
     }
 
 };

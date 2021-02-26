@@ -13,5 +13,6 @@ reports/
 reports/screenshots/
 node_modules/*
 /nightwatch/log/webDriver.log.txt
-/nightwatch/page_objects/spaVar.txt
 /.github/
+/nightwatch/screenshots/*
+/nightwatch/page_objects/*.txt
