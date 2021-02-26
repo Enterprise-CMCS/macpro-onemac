@@ -18,6 +18,16 @@ module.exports = {
         browser.end();
     }, 
 
+    'User can go to the FAQ without logging into the application' : function(browser) {
+        let fqaLink = '.nav-left > a:nth-of-type(3)';
+        browser.click(fqaLink).pause(500);
+        let pageBanner = 'div#title_bar > h1';
+        let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
+        browser.useCss().expect.element(pageBanner).to.be.visible;
+        browser.verify.containsText(pageBanner, expectedBannerText).pause(500);
+        browser.back();  // go back to previous page
+    },
+
     // 1st: Logins to the test site 
     'Login to Medicaid as Regular User' : function(browser) {
          // Test Data 
@@ -38,7 +48,7 @@ module.exports = {
     }, 
 
 
-    'User can go to the FAQ with or without logging into the application' : function(browser) {
+    'User can go to the FAQ with logging into the application' : function(browser) {
         let fqaLink = '.nav-left > a:nth-of-type(3)';
         browser.click(fqaLink);
         let pageBanner = 'div#title_bar > h1';
