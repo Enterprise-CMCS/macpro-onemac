@@ -61,7 +61,7 @@ async fieldsValid(data) {
         cmsEmail.ToAddresses = [process.env.reviewerEmail];
         cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
         cmsEmail.HTML = `
-        <p>The Submission Portal received an Appendix K Amendment Submission:</p>
+        <p>The Submission Portal received a 1915(b) waiver/1915(c) Appendix K Amendment Submission:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -96,7 +96,7 @@ async fieldsValid(data) {
         stateEmail.ToAddresses = [data.user.email];
         stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
         stateEmail.HTML = `
-        <p>This response confirms the receipt of your 1915(c) Appendix K Amendment:</p>
+        <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
             <br><b>Waiver #</b>: ${data.transmittalNumber}

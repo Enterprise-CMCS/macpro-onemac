@@ -113,7 +113,7 @@ const Dashboard = () => {
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
-          type = "Appendix K Amendment";
+          type = "1915(c) Appendix K Amendment";
           break;
 
         default:
@@ -185,7 +185,7 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER_APP_K)}
           >
-            Submit 1915(c) Appendix K Waiver Amendment
+            Submit 1915(c) Appendix K Amendment
           </Button>
         </div>
         <div className="dashboard-right-col">

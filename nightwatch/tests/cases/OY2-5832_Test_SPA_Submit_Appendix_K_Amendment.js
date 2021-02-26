@@ -1,5 +1,5 @@
 /*
-    Test Scenario: Create Appendix K Waiver Amendment
+    Test Scenario: Create 1915(c) Appendix K Amendment
     Description: This will login to the application, click the link to start the Submission process,
     enter the required Waiver information, and upload documents using files located in the 'files' folder.
     Lastly, comments will be entered in the Additional Information and then submitted.
@@ -44,7 +44,7 @@ module.exports = {
 
     "Upload Documents": function (browser) {
         spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
+        spa.uploadFiles(2).pause(500);
     },
 
     "Enter Comments": function (browser) {
