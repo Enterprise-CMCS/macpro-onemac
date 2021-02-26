@@ -39,8 +39,8 @@ module.exports = {
             },
 
             screenshots : {
-                enabled : false,
-                on_failure: false,
+                enabled : true,
+                on_failure: true,
                 on_error : true,
                 path : "./nightwatch/screenshots"
             },
