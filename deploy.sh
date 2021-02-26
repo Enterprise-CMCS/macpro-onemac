@@ -115,7 +115,7 @@ fi
 # This user is available in both DEV and PROD
 #
 echo '{  "id": { "S": "sabrina.mccrae@cms.hhs.gov" },  "type": { "S": "systemadmin" } }' > user.json
-userTable=cms-spa-form-${stage}-users
+userTable=cms-spa-form-${stage}-user-profiles
 aws dynamodb put-item --table-name $userTable --item file://user.json
 
 
