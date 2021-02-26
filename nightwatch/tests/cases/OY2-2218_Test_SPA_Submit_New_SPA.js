@@ -32,8 +32,7 @@ module.exports = {
         browser.assert.urlContains(testData.subUrl);
         browser.pause(timeout);
     },
-
-/*
+    /*
     "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
         let testData = {
@@ -46,7 +45,9 @@ module.exports = {
         spa.waitForElementVisible(testData.selector);
         spa.verify.containsText(testData.selector, testData.state_option);
         spa.pause(timeout);
-    },*/
+    },
+
+    */
 
     "Enter SPA ID" : function (browser, spa_id = "") {
         let selector = '@transmittal';
@@ -65,16 +66,18 @@ module.exports = {
         spa = browser.page.spaBasePage();
         this["Enter ID"](browser, spa.getTransmitNumber(true));
     },
+/*
 
     'Upload Documents Number' : function (browser, numOfFiles = 9) {
         spa = browser.page.spaBasePage();
         spa.uploadFiles(numOfFiles);
     },
+*/
 
-    "Upload Documents": function (browser, type = 'pdf') {
+    "Upload Documents": function (browser, type = 'pdf', required = true) {
         let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
         spa = browser.page.spaBasePage();
-        spa.uploadDocs(type, validate);
+        spa.uploadDocs(type, required, validate);
     },
 
     'Enter Comments' : function (browser, selector = 'textarea',

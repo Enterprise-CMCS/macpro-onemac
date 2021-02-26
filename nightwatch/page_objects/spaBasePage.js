@@ -41,18 +41,20 @@ const commands = {
         this.api.pause(3000);
     },
 
-    login: function (user, pass) {
+
+    login: function (testData) {
         this.onDashBoard();
-        this.api.setValue(this.elements.userField, user).pause(100);
-        this.api.setValue(this.elements.passField, pass).pause(100);
+        this.api.setValue(this.elements.userField, testData.username).pause(100);
+        this.api.setValue(this.elements.passField, testData.password).pause(100);
         this.api.click(this.elements.tandc).pause(100);
         this.api.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+
     },
 
-    devLogin: function (user, pass) {
+    devLogin: function (testData) {
         this.onDashBoard(this.elements.devLoginButton);
-        this.api.setValue(this.elements.devUserField, user).pause(100);
-        this.api.setValue(this.elements.devPassField, pass).pause(100);
+        this.api.setValue(this.elements.devUserField, testData.username).pause(100);
+        this.api.setValue(this.elements.devPassField, testData.password).pause(100);
         this.api.click(this.elements.devSubmitBtn).waitForElementNotPresent(this.elements.devSubmitBtn);
     },
 
@@ -61,31 +63,35 @@ const commands = {
         this.api.click(this.elements.logout);
     },
 
-    uploadDocs: function (type = '.pdf', callBack) {
+    uploadDocs: function (type = '.pdf',requiredOnly= true, uploadValidation) {
         const dir = path.join(__dirname, 'files');
-        const uploadFile = fs.readdirSync(dir).find(file => {
+        const testFile = fs.readdirSync(dir).find(file => {
             const regEx = `^.*(${type})$`
             return file.match(new RegExp(regEx));
         });
-        const setValue = (selector, filePath) => this.api.setValue(selector, filePath);
-
-        const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', function (result) {
+        const eachElement = (result) => {
             let selector = `[id=${result.value}]`;
-            let filePath = path.resolve(dir, uploadFile);
-            setValue(selector, filePath);
-            callBack(selector, uploadFile);
-        });
+            let filePath = path.resolve(dir, testFile);
+            this.api.setValue(selector, filePath);
+            uploadValidation(selector, testFile);
+        }
+
+        const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', eachElement);
 
         this.api.elements('css selector', this.elements.uploadFields, function (result) {
-            Array.from(result.value).forEach((obj, index) => {
-                if(index < 2) {
-                    let webElementId = obj["ELEMENT"];
-                    uploadElement(webElementId);
-                }
+            let elements = Array.from(result.value);
+            if (requiredOnly) {
+                elements = elements.slice(0, 2);
+            }
+
+            elements.forEach(obj => {
+                let webElementId = obj["ELEMENT"];
+                uploadElement(webElementId);
             });
         });
-    },
 
+    },
+    /*
     uploadFiles: function (total) {
         const fs = require('fs');
         const path = require('path');
@@ -100,6 +106,7 @@ const commands = {
         }
         return this.api;
     }
+    */
 }
 
 module.exports = {

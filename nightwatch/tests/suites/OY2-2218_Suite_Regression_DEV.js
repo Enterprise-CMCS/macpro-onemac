@@ -24,23 +24,23 @@ module.exports = {
         browser.pause(timeout);
     },
 
-    "Submit New SPA": function (browser) {
-        regression["Submit New SPA"](browser);
+    "Submit a SPA Report": function (browser) {
+        regression["Submit a SPA Report"](browser);
     },
 
-    "Respond to SPA RAI": function (browser) {
-        regression["Respond to SPA RAI"](browser);
+    "Submit a SPA Waiver ": function (browser) {
+        regression["Submit a SPA Waiver "](browser);
     },
 
-    "Submit New Waiver": function (browser) {
-        regression["Submit New Waiver"](browser);
+    "Submit a SPA RAI Response": function (browser) {
+        regression["Submit a SPA RAI Response"](browser);
     },
 
-    "Respond to 1915(b) Waiver RAI": function (browser) {
-        regression["Respond to 1915(b) Waiver RAI"](browser);
+    "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser) {
+        regression["Submit a 'Respond to 1915(b) Waiver RAI'"](browser);
     },
 
-    "Request Temporary Extension form - 1915(b) and 1915(c)": function (browser) {
-        regression["Request Temporary Extension form - 1915(b) and 1915(c)"](browser);
+    "Submit a Temporary Request Extension": function (browser) {
+        regression["Submit a Temporary Request Extension"](browser);
     },
 };
