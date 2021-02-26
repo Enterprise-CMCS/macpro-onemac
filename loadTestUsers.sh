@@ -29,7 +29,17 @@ then
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
   stateuser="user3@cms.hhs.local"
-  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "AL" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "AL" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+  aws dynamodb put-item --table-name $userTable --item file://user.json
+
+  stateuser="user4@cms.hhs.local"
+  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "denied" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "AL" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+  aws dynamodb put-item --table-name $userTable --item file://user.json
+
+  stateuser="user5@cms.hhs.local"
+  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "revoked" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "VA" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } } ] }'
   echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
