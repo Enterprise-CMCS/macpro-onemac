@@ -18,10 +18,6 @@ module.exports = {
         browser.pause(timeout * 2);
     },
 
-    beforeEach: function (browser) {
-        spa = browser.page.spaBasePage();
-    },
-
     after : function(browser) {
         login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
@@ -30,14 +26,15 @@ module.exports = {
     "Click on 'Respond to SPA RAI'": function (browser) {
         let link = '[id=spaRaiBtn]'
         let subDir = "/sparai";
+        spa = browser.page.spaBasePage();
         browser.assert.elementPresent(link);
         browser.click(link);
-        browser.expect.url().to.contain(subDir).before(5000);
+        browser.expect.url().to.contain(subDir).before(timeout * 5);
     },
 
     "Enter SPA ID" : function (browser) {
         spa = browser.page.spaBasePage();
-        new_spa["Enter SPA ID"](browser, spa.getID());
+        new_spa["Enter SPA ID"](browser, spa.getSPA());
     },
 
     "Upload Documents" : function (browser) {

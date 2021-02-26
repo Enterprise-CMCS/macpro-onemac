@@ -14,7 +14,7 @@ module.exports = {
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 2);
+        browser.pause(timeout * 3);
     },
 
     after : function(browser) {
@@ -24,15 +24,14 @@ module.exports = {
 
     "Click on 'Start a new SPA'": function (browser, testData = {
         selector: '@newSPA',
-        subUrl: '/spa',
+        subUrl: '/spa'
     }) {
         spa = browser.page.spaBasePage();
         spa.assert.elementPresent(testData.selector);
         spa.click(testData.selector).waitForElementPresent('body');
-        browser.assert.urlContains(testData.subUrl);
-        browser.pause(timeout);
+        browser.expect.url().to.contain(testData.subUrl).before(timeout * 5);
     },
-    /*
+
     "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
         let testData = {
@@ -47,63 +46,48 @@ module.exports = {
         spa.pause(timeout);
     },
 
-    */
-
-    "Enter SPA ID" : function (browser, spa_id = "") {
-        let selector = '@transmittal';
-        let id = (spa_id.length !== 0) ? spa_id : spa.getTransmitNumber(false);
+    'Enter SPA ID' : function (browser, spa_id) {
         spa = browser.page.spaBasePage();
-        spa.expect.element(selector).to.be.visible.before(timeout * 10);
-        const enterValue = async function (result) {
-            console.log(result.value);
-            await spa.setValue(selector, id);
-            spa.expect.element(selector).value.to.contain(id);
-        };
-        spa.click(selector, enterValue);
+        let testData = {
+            selector: '@transmittal',
+            spa_id: (spa_id) ? spa_id : spa.getTransmitNumber(),
+        }
+        spa.click(testData.selector);
+        spa.setValue(testData.selector, testData.spa_id);
+        browser.Keys.TAB;
+        browser.pause(timeout);
+        spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
+
     },
 
-    "Enter SPA ID (Optional)" : function (browser) {
+    'Upload Documents' : function (browser) {
         spa = browser.page.spaBasePage();
-        this["Enter ID"](browser, spa.getTransmitNumber(true));
-    },
-/*
-
-    'Upload Documents Number' : function (browser, numOfFiles = 9) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(numOfFiles);
-    },
-*/
-
-    "Upload Documents": function (browser, type = 'pdf', required = true) {
-        let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
-        spa = browser.page.spaBasePage();
-        spa.uploadDocs(type, required, validate);
+        spa.uploadFiles(2);
     },
 
     'Enter Comments' : function (browser, selector = 'textarea',
                                  entered_text = "Relax. This is only a test") {
         spa = browser.page.spaBasePage();
         spa.enterComments(selector, entered_text);
-        spa.verify.containsText(selector, entered_text)
+        spa.assert.containsText(selector, entered_text)
     },
 
-    'Submit SPA' : function (browser, testData = [
-        {selector: '@alert_banner', msg: "Submission Completed"},
-        {selector: '@alert_text', msg: "Your submission has been received."},
-    ]) {
-        spa = browser.page.spaBasePage();
-        browser.url(function (current) {
-            browser.pause(timeout);
-            browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.pause(timeout * 5);
-            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
-        });
+    'Submit SPA' : function (browser) {
+        let alert_selector = "[id*=alert_]";
+        let p_selector = "p[class=ds-c-alert__text]"
+        let alert_msg = "Submission Completed";
+        let msg = "Your submission has been received.";
 
-        Array.from(testData).forEach(obj => {
-            spa.verify.elementPresent(obj.selector);
-            spa.verify.containsText(obj.selector, obj.msg);
-            browser.pause(timeout / 2);
+        browser.url(function (current) {
+            browser.click('[type="submit"]').waitForElementPresent('body');
+            browser.verify.not.urlEquals(current.value);
         });
+        browser
+            .verify.elementPresent(alert_selector)
+            .verify.elementPresent(p_selector)
+            .verify.containsText(alert_selector, alert_msg)
+            .verify.containsText(p_selector, msg)
+            .pause(timeout);
     },
 
 };

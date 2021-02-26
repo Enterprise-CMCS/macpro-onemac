@@ -174,7 +174,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             " does not exist. Please check the " +
             formInfo.idLabel +
             " and try entering it again.";
-        } else if (dupID && !formInfo.idMustExist()) {
+        } else if (dupID && !formInfo.idMustExist(changeRequest)) {
           errorMessage =
             "According to our records, this " +
             formInfo.idLabel +

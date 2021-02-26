@@ -7,40 +7,46 @@
  */
 
 const timeout = 1000;
-const waiverRAI = require('./OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
+const login = require('./OY2-1494_Test_SPA_Login');
+const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 let spa;
 module.exports = {
 
     before : function(browser) {
-        waiverRAI.before(browser);
-        browser.pause(timeout);
+        login.before(browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
+        browser.pause(timeout * 2);
     },
 
     after : function(browser) {
-        waiverRAI.after(browser);
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        login.after(browser);
     },
 
-    "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'" : function (browser, testData = {
-        selector: '@requestTemp',
-        subUrl: '/waiverextension',
-    }) {
+    "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'" : function (browser) {
+        let buttonText = "Request Temporary Extension form - 1915(b) and 1915(c)";
+        let buttonSelected = '@requestTemp';
         spa = browser.page.spaBasePage();
-        waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser, testData);
+        spa.expect.element(buttonSelected).to.be.present.before(timeout);
+        spa.expect.element(buttonSelected).text.equals(buttonText);
+        spa.click(buttonSelected).waitForElementNotPresent(buttonSelected);
+        spa.pause(timeout * 3);
     },
 
     "Enter Waiver Number" : function (browser) {
-        waiverRAI["Enter Waiver Number"](browser);
+        spa = browser.page.spaBasePage();
+        new_waiver["Enter Waiver Number"](browser, spa.getWaiver());
     },
 
     "Upload Documents": function(browser) {
-        waiverRAI["Upload Documents"](browser, 3);
+        new_waiver["Upload Documents"](browser);
     },
 
     "Enter Comments": function (browser) {
-        waiverRAI["Enter Comments"](browser);
+        new_waiver["Enter Comments"](browser);
     },
 
     "Submit Response": function (browser) {
-        waiverRAI["Submit Response"](browser);
+        new_waiver["Submit SPA Waiver"](browser);
     },
 };

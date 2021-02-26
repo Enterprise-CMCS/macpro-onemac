@@ -17,28 +17,24 @@ module.exports = {
         browser.end();
     },
 
-    'Login to SPA and Waiver Dashboard' : function(browser, testData = {
-        username: browser.globals.user,
-        password: browser.globals.pass,
-        spaPageTitle: 'SPA and Waiver Dashboard',
-    }) {
-        spa = browser.page.spaBasePage();
+    'Login to SPA and Waiver Dashboard' : function(browser) {
+        const testData = {
+            username: browser.globals.user,
+            password: browser.globals.pass,
 
-        spa.devLogin(testData);
+        };
+        spa = browser.page.spaBasePage();
+        spa.devLogin(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
-        browser.verify.elementPresent('h1');
-        browser.verify.containsText('h1', testData.spaPageTitle);
     },
 
-    'Login to SPA and Waiver Dashboard via Okta' : function(browser, testData = {
-        username: browser.globals.user,
-        password: browser.globals.pass,
-        spaPageTitle: 'SPA and Waiver Dashboard',
-    }) {
-        spa = browser.page.spaBasePage();
-        spa.login(testData);
+    'Login to SPA and Waiver Dashboard via Okta' : function(browser) {
+        const testData = {
+            username: browser.globals.user,
+            password: browser.globals.pass
+        };
+        spa.login(testData.username, testData.password);
         spa.verify.visible('@loginTitle');
-        browser.verify.containsText('h1', testData.spaPageTitle);
     },
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {

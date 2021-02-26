@@ -9,13 +9,13 @@
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
-const timeout = 2000;
+const timeout = 1000;
 module.exports = {
 
     before: function (browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(2000);
+        browser.pause(timeout * 2);
         spa = browser.page.spaBasePage();
     },
 
@@ -24,16 +24,20 @@ module.exports = {
         login.after(browser);
     },
 
-    "Click on 'Submit new Waiver'": function (browser, testData = {
-        selector: "@newWaiver",
-        subUrl: '/waiver'
-    }) {
-        new_spa["Click on 'Start a new SPA'"](browser, testData);
+    "Click on 'Submit new Waiver'": function (browser) {
+        let testData = {
+            selector: "@newWaiver",
+            subUrl: '/waiver'
+        };
+        spa = browser.page.spaBasePage();
+        spa.assert.elementPresent(testData.selector);
+        spa.click(testData.selector);
+        browser.expect.url().to.contain(testData.subUrl).before(5000);
     },
 
-    /*"Enter SPA State/Territory Information": function(browser) {
+    "Enter SPA State/Territory Information": function(browser) {
         new_spa["Enter SPA State/Territory Information"](browser);
-    },*/
+    },
 
     "Enter Action Type": function (browser) {
         spa = browser.page.spaBasePage();
@@ -58,8 +62,9 @@ module.exports = {
         spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser, spa_id = "") {
-        let id = (spa_id.length !== 0) ? spa_id : spa.getWaiverNumber();
+    "Enter Waiver Number": function (browser, spa_id) {
+        spa = browser.page.spaBasePage();
+        let id = (spa_id) ? spa_id : spa.getWaiverNumber();
         new_spa["Enter SPA ID"](browser, id);
     },
 
