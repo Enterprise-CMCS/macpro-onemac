@@ -4,7 +4,8 @@
 stage=$1
 #userList=$2
 
-userTable=cms-spa-form-${stage}-users
+userTable=cms-spa-form-${stage}-user-profiles
+
 testUserStatuses=(pending active pending active denied revoked)
 testUserRoles=(stateadmin stateuser stateuser cmsapprover stateadmin stateuser)
 testStates=(AL AL VA VA AL VA)
