@@ -91,6 +91,7 @@ module.exports = {
         browser.back();  
         browser.back();  
 
+        // Respond to 1915(b) Waiver RAI
         browser.click('button#waiverRaiBtn');
         browser.click('.form-card a');
         browser.useCss().expect.element(fqaHeader).to.be.visible;
@@ -98,6 +99,7 @@ module.exports = {
         browser.back();  
         browser.back();  
 
+        // Request Waiver Temporary Extension
         browser.click('button#waiverExtBtn');
         browser.click('.form-card a');
         browser.useCss().expect.element(fqaHeader).to.be.visible;
@@ -124,5 +126,4 @@ module.exports = {
             browser.switchWindow(handle);
         });
     }
-
 }
