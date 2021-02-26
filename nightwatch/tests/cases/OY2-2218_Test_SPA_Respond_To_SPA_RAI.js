@@ -32,7 +32,7 @@ module.exports = {
         let subDir = "/sparai";
         browser.assert.elementPresent(link);
         browser.click(link);
-        browser.expect.url().to.contain(subDir).before(5000);
+        browser.expect.url().to.contain(subDir).before(timeout * 5);
     },
 
     "Enter SPA ID" : function (browser) {

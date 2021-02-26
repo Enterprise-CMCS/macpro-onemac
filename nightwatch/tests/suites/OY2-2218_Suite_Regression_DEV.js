@@ -1,27 +1,16 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
 const regression = require('./OY2-2218_Suite_Regression');
-
 const timeout = 1000;
 
 module.exports = {
     "@tags": ["regression", "devEnv"],
 
     before: function (browser) {
-        login.before(browser);
-    },
-
-    beforeEach: function (browser) {
-        login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout);
+        regression.before(browser, "Login to SPA and Waiver Dashboard");
+        browser.pause(timeout * 5);
     },
 
     after: function (browser) {
-        login.after(browser);
-    },
-
-    afterEach: function (browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout);
+        regression.after(browser);
     },
 
     "Submit a SPA Report": function (browser) {

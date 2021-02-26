@@ -4,21 +4,15 @@ const timeout = 1000;
 module.exports = {
     "@tags": ["regression"],
 
-    before: function (browser) {
+    before: function (browser, loginType = "Login to SPA and Waiver Dashboard via Okta") {
         login.before(browser);
-        login["Login to SPA and Waiver Dashboard via Okta"](browser);
-    },
-
-    beforeEach: function (browser) {
-        browser.pause(timeout);
+        login[loginType](browser);
+        browser.pause(timeout * 5);
     },
 
     after: function (browser) {
+        login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
-    },
-
-    afterEach: function (browser) {
-        browser.pause(timeout);
     },
 
     "Submit a SPA Report": function (browser) {
