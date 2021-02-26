@@ -5,6 +5,7 @@ module.exports = {
 
     before : function(browser) {
         console.log('Setting up...');
+        console.log('url is: ', browser.launch_url);
         spa = browser.page.spaBasePage();
         browser.maximizeWindow()
             .url(browser.launch_url)
