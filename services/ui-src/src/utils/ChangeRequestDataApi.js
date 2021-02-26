@@ -93,8 +93,8 @@ class ChangeRequestDataApi {
    */
   async userProfile(userEmail) {
     if (!userEmail) {
-      console.log("user Email was not specified for packageExists API call");
-      throw new Error("user Email was not specified for packageExists API call");
+      console.log("user Email was not specified for userProfile API call");
+      throw new Error("user Email was not specified for userProfile API call");
     }
 
     try {

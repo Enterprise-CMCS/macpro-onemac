@@ -20,17 +20,27 @@ then
 
   stateuser="user1@cms.hhs.local"
   stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "VA" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
-  echo '{  "id": { "S": "stateuser" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+  echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+  aws dynamodb put-item --table-name $userTable --item file://user.json
+
+  stateuser="user2@cms.hhs.local"
+  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "AL" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "MI" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+  aws dynamodb put-item --table-name $userTable --item file://user.json
+
+  stateuser="user3@cms.hhs.local"
+  stateuserattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "AL" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
+  echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
   stateadmin="stateadmin1@cms.hhs.local"
   stateadminattributes='"attributes": { "L": [ { "M": { "stateCode": { "S": "MI" }, "status": { "S": "active" }, "date": { "N": "'$createddate'" } } }, { "M": { "stateCode": { "S": "VA" }, "status": { "S": "pending" }, "date": { "N": "'$createddate'" } } } ] }'
-  echo '{  "id": { "S": "stateadmin" }, "type": { "S": "stateadmin" }, '${stateadminattributes}' } ' > user.json
+  echo '{  "id": { "S": "'${stateadmin}" }, "type": { "S": "stateadmin" }, '${stateadminattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
   cmsapprover="cmsapprover1@cms.hhs.local"
   cmsapproverattributes='"attributes": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'$createddate'" } } } ] }'
-  echo '{  "id": { "S": "cmsapprover" }, "type": { "S": "cmsapprover" }, '${cmsapproverattributes}' } ' > user.json
+  echo '{  "id": { "S": "'${cmsapprover}'" }, "type": { "S": "cmsapprover" }, '${cmsapproverattributes}' } ' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
 fi
