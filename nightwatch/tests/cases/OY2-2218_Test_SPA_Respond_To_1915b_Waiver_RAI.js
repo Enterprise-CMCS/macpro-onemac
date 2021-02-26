@@ -35,22 +35,11 @@ module.exports = {
 
     "Enter Waiver Number" : function(browser) {
         spa = browser.page.spaBasePage();
-        const tid = spa.getWaiver()
-        let testData = {
-            selector: '@transmittal',
-            value: tid
-        }
-        spa.expect.element(testData.selector).to.be.visible;
-        spa.setValue(testData.selector, testData.value);
-        browser.Keys.TAB;
-        browser.pause(timeout)
-        spa.expect.element(testData.selector).value.to.contain(testData.value);
+        new_waiver["Enter Waiver Number"](browser, spa.getWaiver());
     },
 
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
-        browser.pause(timeout)
+       new_waiver["Upload Documents"](browser);
 
     },
 

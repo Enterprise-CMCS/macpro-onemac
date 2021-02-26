@@ -9,13 +9,13 @@
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
-const timeout = 2000;
+const timeout = 1000;
 module.exports = {
 
     before: function (browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(2000);
+        browser.pause(timeout * 2);
         spa = browser.page.spaBasePage();
     },
 
@@ -62,17 +62,14 @@ module.exports = {
         spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser, spa_id = spa.getWaiverNumber()) {
-        let selector = '@transmittal';
+    "Enter Waiver Number": function (browser, spa_id) {
         spa = browser.page.spaBasePage();
-        spa.click(selector);
-        spa.setValue(selector, spa_id);
-        spa.expect.element(selector).value.to.equals(spa_id);
+        let id = (spa_id) ? spa_id : spa.getWaiverNumber();
+        new_spa["Enter SPA ID"](browser, id);
     },
 
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
+        new_spa["Upload Documents"](browser);
     },
 
     "Enter Comments": function (browser) {
