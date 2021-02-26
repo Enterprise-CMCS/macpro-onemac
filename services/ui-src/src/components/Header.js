@@ -97,8 +97,7 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar() {
-    const { isLoggedInAsDeveloper } = useAppContext();
+  function renderNavBar(isLoggedInAsDeveloper) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
@@ -203,6 +202,7 @@ function Header(props) {
       );
     }
   }
+  const { isLoggedInAsDeveloper } = useAppContext();
 
   return (
     <div>
@@ -216,7 +216,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar()}
+      {renderNavBar(isLoggedInAsDeveloper)}
     </div>
   );
 }
