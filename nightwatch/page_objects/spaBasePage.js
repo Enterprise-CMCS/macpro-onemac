@@ -16,11 +16,17 @@ const commands = {
         return id;
     },
 
-    // 1915(b) SS.##.R##.M##
-    // 1915(c) SS.##.R##.##
-    getWaiverNumber: function (isWaiverB = true, state = "VA") {
+    // 1915(b) ID based on waiverAction
+    // new - SS.#### or SS.#####
+    // amendment - SS.####.R##.M## or SS.#####.R##.M## 
+    // renewal - SS.####.R## or SS.#####.R## 
+    getWaiverNumber: function (waiverAction = 'new') {
         let rand = () => this.props.getRandomNumber();
-        let group = (isWaiverB) ? [state, rand(), `R${rand()}`, `M${rand()}`] : [state, rand(), `R${rand()}`, `M${rand()}`];
+        let group = ['VA', rand(1,100000)];
+        if (waiverAction === 'amendment' && waiverAction=== 'renewal')
+            group.push(`R${rand()}`);
+        if (waiverAction === 'amendment')
+            group.push(`M${rand()}`);
         let id = group.join(".");
         spaVar = path.join(__dirname, "waiver.txt");
         fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});

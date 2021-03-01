@@ -1,7 +1,7 @@
 /*
-    Test Scenario: New Waiver Action
+    Test Scenario: Create Renew Waiver Action
     Description: This will login to the application, click the link to start the Waiver process,
-    enter the required Waiver information for a NEW waiver action, and upload documents using files
+    enter the required Waiver information for the RENEW action, and upload documents using files
     located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
 
  */
@@ -11,7 +11,6 @@ const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
 const timeout = 2000;
 const waiverAction = "renewal";
-
 module.exports = {
 
     before: function (browser) {
@@ -42,7 +41,7 @@ module.exports = {
         let testData = {
             selector: '@actionType',
             value: waiverAction,
-            action_type: 'New waiver'
+            action_type: 'Request for waiver renewal'
         }
         spa.expect.element(testData.selector).to.be.visible;
         spa.setValue(testData.selector, testData.value);
