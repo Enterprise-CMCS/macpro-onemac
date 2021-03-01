@@ -104,7 +104,7 @@ export const main = handler(async (event) => {
     let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
     let params;
     let numIterations = 5;
-    let planType
+    let planType;
 
     if (data.type === "waiver") {
       planType = 122;
