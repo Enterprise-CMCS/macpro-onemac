@@ -19,10 +19,10 @@ const WaiverAppK = () => {
     requiredUploads: ["Appendix K Template"],
     optionalUploads: ["Other"],
     idType: "waiverappk",
-    idLabel: "Waiver Number",
+    idLabel: "base waiver number",
     idFormat: "SS.####.R##.## or SS.#####.R##.##",
     idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
-    idMustExist: (changeRequest) => {return true;},
+    idMustExist: () => true,
   };
 
   if (id) {
