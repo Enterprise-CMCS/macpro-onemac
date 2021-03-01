@@ -60,7 +60,7 @@ module.exports = {
 
     "Enter Waiver Number": function (browser, spa_id = "") {
         let id = (spa_id.length !== 0) ? spa_id : spa.getWaiverNumber();
-        new_spa["Enter SPA ID"](browser, id);
+        new_spa["Enter Waiver Number"](browser, id);
     },
 
     "Upload Documents": function (browser) {
@@ -71,7 +71,7 @@ module.exports = {
         new_spa["Enter Comments"](browser);
     },
 
-    "Submit SPA Waiver": function (browser) {
+    "Submit Waiver": function (browser) {
         browser.pause(timeout)
         new_spa["Submit SPA"](browser);
     }

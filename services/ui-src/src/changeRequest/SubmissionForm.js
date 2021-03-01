@@ -159,7 +159,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   async function handleTransmittalNumberChange(event) {
     if (!event || !event.target) return;
 
-    const newTransmittalNumber = event.target.value.toUpperCase();
+    let newTransmittalNumber = event.target.value.toUpperCase();
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = newTransmittalNumber;
     updatedRecord["territory"] = newTransmittalNumber
@@ -178,6 +178,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (newMessage.statusMessage === "") {
       newMessage.statusLevel = transmittalNumberDetails.errorLevel;
       try {
+        if (transmittalNumberDetails.existenceRegex !== undefined) {
+          newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
+          console.log("new trans number: ", newTransmittalNumber);
+        } 
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
         );

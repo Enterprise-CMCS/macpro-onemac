@@ -80,16 +80,18 @@ const Waiver = () => {
       idHintText: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##",
       idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
-      idMustExist: false,
+      idMustExist: true,
       errorLevel: "warn",
+      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
     },
     renewalTransmittalNumber: {
       ...baseTransmittalNumber,
       idHintText: "Must follow the format SS.####.R## or SS.#####.R##",
       idFormat: "SS.####.R## or SS.#####.R##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
-      idMustExist: false,
+      idMustExist: true,
       errorLevel: "warn",
+      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
     },
 
   };
