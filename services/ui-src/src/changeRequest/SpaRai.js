@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import { ROUTES } from "../Routes";
 
 /**
  * SpaRai acts as a wrapper around RaiTemplate to render custom RAI form for a SPA RAI
@@ -27,11 +28,17 @@ const SpaRai = () => {
       "Standard Funding Questions (SFQs)",
       "Other",
     ],
-    idType: "spa",
-    idLabel: "SPA ID",
-    idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-    idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-    idMustExist: (changeRequest) => {return true;},
+
+    transmittalNumber: {
+      idType: "spa",
+      idLabel: "SPA ID",
+      idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+      idFAQLink: ROUTES.FAQ_SPA_ID,
+      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
+      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idMustExist: true,
+      errorLevel: "error",
+    },
 
   };
 
