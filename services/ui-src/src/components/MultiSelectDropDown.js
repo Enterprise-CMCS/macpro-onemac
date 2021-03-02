@@ -1,42 +1,62 @@
 import React, {useState} from "react";
-import MultiSelect from 'react-multiple-select-dropdown-lite'
-import "./MultiSelectDropDown.css"
+import {faSearch} from "@fortawesome/free-solid-svg-icons";
+import Select from "react-dropdown-select";
+import {Button} from "@cmsgov/design-system";
 
 /*
-    Demonstrate that the multi-chooser has the following abilities:
+   Simple Multi Select Component
 
-  1. It displays a list of items
+   Reference: https://www.npmjs.com/package/react-dropdown-select
 
-  2. list is searchable via a search box
-
-  3. selecting an item creates a "tag"
-
-  4. tagged item is unselected via an 'x'
-
-  5. Submit button exists and can accept a function  (Callback ???)
 */
 
-const MultiSelectDropDown = ({options, dropDownCallback}) => {
+const MultiSelectDropDown = ({options}) => {
 
-
-    const [value, setValue] = useState('')
+    const [value, setValue] = useState([])
 
     const  handleOnchange  =  val  => {
-        setValue(val)
-        dropDownCallback(val)
+        console.log(JSON.stringify(val))
+        setValue(JSON.stringify(val))
+    }
+
+    const  handleCancel  =  ()  => {
+        ;//  What do Do ?
+    }
+
+    const  handleSubmit  =  val  => {
+        console.log(value)
     }
 
     return(
-        <div className="app">
-            <div  className="preview-values">
-                <h4>Values</h4>
-                {value}
-            </div>
-
-            <MultiSelect
-                onChange={handleOnchange}
-                options={options}
-            />
+     <div>
+        <div style={{ maxWidth: "350px", maxHeight: "200px" }}>
+                <Select id="MultiSelect"
+                    dropdownHeight="150px"
+                    clearable="true"
+                    searchable="true"
+                    searchBy="label"
+                    multi="true"
+                    keepOpen="true"
+                    onChange={handleOnchange}
+                    options={options}
+                />
+       </div>
+        <div style={{ margin: "200px auto" }}>
+            <Button
+                id="selectedSubmit"
+                onClick={handleCancel}
+                inversed
+             >
+                Cancel
+            </Button>
+            <Button
+                id="selectedSubmit"
+                onClick={handleSubmit}
+                inversed
+            >
+                Submit
+            </Button>
+        </div>
         </div>
     )
 }
