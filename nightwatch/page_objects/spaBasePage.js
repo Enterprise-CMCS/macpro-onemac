@@ -137,10 +137,11 @@ const commands = {
  * @returns string of numbers
  */
 function getRandomNumberString(numDigits) {
-    const randomNum = Math.floor(Math.random() * Math.floor(max));
+    const maxNum = Math.pow(10, numDigits);
+    const randomNum = Math.floor(Math.random() * Math.floor(maxNum));
     let randomNumString = randomNum.toString();
     if (randomNumString.length < numDigits) {
-        randomNumString.padStart(numDigits, '0');
+        randomNumString = randomNumString.padStart(numDigits, '0');
     }
     return randomNumString;
 }
@@ -167,6 +168,7 @@ module.exports = {
         newWaiver: "[id=waiverBtn]",
         respondWaiver: "[id=waiverRaiBtn]",
         requestTemp: "[id=waiverExtBtn]",
+        submitAppK: "[id=waiverAppKBtn]",
         submitBtn: "[id=okta-signin-submit]",
         tandc: "[id=tandc]",
         territory : "#territory",
