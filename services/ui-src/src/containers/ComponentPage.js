@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import MultiSelectDropDown from "../components/MultiSelectDropDown";
 
 export default function ComponentPage() {
