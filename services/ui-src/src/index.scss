@@ -87,6 +87,10 @@ ul {
   @extend .ds-c-list;
 }
 
+.css-wmw4vi-ReactDropdownSelect {
+  background-color: #ffffff
+}
+
 .uploader {
   table {
     border-collapse: collapse;
@@ -446,18 +450,18 @@ input[type="file"] {
     a {
       color: $color-white;
       font-weight: bold;
-      border: none;    
+      border: none;
       padding-right: 50px;
-  
+
      &:hover {
         color: rgba($color-base-inverse, 0.8);
       }
-  
+
       &:active {
         color: rgba($color-base-inverse, 0.6);
-      }  
+      }
     }
-  
+
   }
 
   .nav-right {
@@ -479,10 +483,10 @@ input[type="file"] {
       &:hover {
         color: rgba($color-base-inverse, 0.8);
       }
-  
+
       &:active {
         color: rgba($color-base-inverse, 0.6);
-      }  
+      }
     }
     button {
       background-color: $color-primary;

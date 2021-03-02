@@ -1,8 +1,6 @@
 import React, {useState} from "react";
-import {faSearch, faTimes} from "@fortawesome/free-solid-svg-icons";
 import Select from "react-dropdown-select";
 import {Button} from "@cmsgov/design-system";
-import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
 
 /*
    Simple Multi Select Component
@@ -31,8 +29,9 @@ const MultiSelectDropDown = ({options}) => {
      <div>
 
         <div style={{ maxWidth: "350px", maxHeight: "200px" }}>
-                <Select id="MultiSelect"
-                    placeholder="Select ..."
+
+            <Select id="MultiSelect"
+                    placeholder="&#128269; Select ..."
                     dropdownHeight="150px"
                     clearable="false"
                     searchable="true"
@@ -41,11 +40,9 @@ const MultiSelectDropDown = ({options}) => {
                     keepOpen="true"
                     onChange={handleOnchange}
                     options={options}
-                        additionalProps={{}}
-
                 />
        </div>
-        <div style={{ margin: "200px auto" }}>
+        <div style={{ margin: "180px auto" }}>
             <Button
                 id="selectedSubmit"
                 onClick={handleCancel}
