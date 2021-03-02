@@ -21,8 +21,8 @@ const commands = {
     // amendment - SS.####.R##.M## or SS.#####.R##.M## 
     // renewal - SS.####.R## or SS.#####.R## 
     getWaiverNumber: function (waiverAction = 'new') {
-        let rand = () => this.props.getRandomNumber();
-        let group = ['VA', rand(1,100000)];
+        let rand = (min,max) => this.props.getRandomNumber(min,max);
+        let group = ['ND', rand(1000,100000)];
         if (waiverAction === 'amendment' && waiverAction=== 'renewal')
             group.push(`R${rand()}`);
         if (waiverAction === 'amendment')
@@ -97,22 +97,6 @@ const commands = {
         });
 
     },
-    /*
-    uploadFiles: function (total) {
-        const fs = require('fs');
-        const path = require('path');
-        let dir = path.join(__dirname, 'files');
-        let files = fs.readdirSync(dir, 'utf8');
-
-        for (let i = 0; i < total; i++) {
-            let selector = 'input[id="uploader-input-' + i + '"]';
-            this.api.assert.elementPresent(selector);
-            let file = require('path').resolve(dir, files[i]);
-            this.api.setValue(selector, file);
-        }
-        return this.api;
-    }
-    */
 }
 
 module.exports = {

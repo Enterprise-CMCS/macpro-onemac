@@ -32,7 +32,7 @@ module.exports = {
         spaWaiver["Enter Waiver Number"](browser);
         spaWaiver["Upload Documents"](browser);
         spaWaiver["Enter Comments"](browser);
-        spaWaiver["Submit SPA Waiver"](browser);
+        spaWaiver["Submit Waiver"](browser);
     },
 
     "Submit a SPA RAI Response": function (browser) {

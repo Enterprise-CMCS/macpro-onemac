@@ -10,7 +10,7 @@ const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
 const timeout = 2000;
-const waiverAction = "renewal";
+const waiverAction = "new";
 
 module.exports = {
 
@@ -32,10 +32,6 @@ module.exports = {
     }) {
         new_spa["Click on 'Start a new SPA'"](browser, testData);
     },
-
-    /*"Enter SPA State/Territory Information": function(browser) {
-        new_spa["Enter SPA State/Territory Information"](browser);
-    },*/
 
     "Enter Action Type": function (browser) {
         spa = browser.page.spaBasePage();

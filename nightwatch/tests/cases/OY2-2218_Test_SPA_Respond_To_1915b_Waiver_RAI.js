@@ -47,7 +47,7 @@ module.exports = {
     },
 
     "Submit Response": function (browser) {
-        new_waiver["Submit SPA Waiver"](browser);
+        new_waiver["Submit Waiver"](browser);
     }
 
 };

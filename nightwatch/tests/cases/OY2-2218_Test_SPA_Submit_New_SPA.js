@@ -32,31 +32,15 @@ module.exports = {
         browser.assert.urlContains(testData.subUrl);
         browser.pause(timeout);
     },
-    /*
-    "Enter SPA State/Territory Information" : function (browser) {
-        spa = browser.page.spaBasePage();
-        let testData = {
-            selector: '@territory',
-            state_option: "Virginia"
-        }
-
-        spa.click(testData.selector)
-        spa.setValue(testData.selector, "VVV");
-        spa.waitForElementVisible(testData.selector);
-        spa.verify.containsText(testData.selector, testData.state_option);
-        spa.pause(timeout);
-    },
-
-    */
 
     "Enter SPA ID" : function (browser, spa_id = "") {
         let selector = '@transmittal';
         let id = (spa_id.length !== 0) ? spa_id : spa.getTransmitNumber(false);
         spa = browser.page.spaBasePage();
         spa.expect.element(selector).to.be.visible.before(timeout * 10);
-        const enterValue = async function (result) {
-            console.log(result.value);
+        const enterValue = async function () {
             await spa.setValue(selector, id);
+            console.log("ID is: ",id);
             spa.expect.element(selector).value.to.contain(id);
         };
         spa.click(selector, enterValue);
@@ -66,13 +50,6 @@ module.exports = {
         spa = browser.page.spaBasePage();
         this["Enter ID"](browser, spa.getTransmitNumber(true));
     },
-/*
-
-    'Upload Documents Number' : function (browser, numOfFiles = 9) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(numOfFiles);
-    },
-*/
 
     "Upload Documents": function (browser, type = 'pdf', required = true) {
         let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
