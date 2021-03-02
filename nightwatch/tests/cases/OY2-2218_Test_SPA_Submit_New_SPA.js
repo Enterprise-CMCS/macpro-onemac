@@ -39,7 +39,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
         spa.expect.element(selector).to.be.visible.before(timeout * 10);
         const enterValue = async function () {
-            await spa.setValue(selector, id);
+            spa.setValue(selector, id);
             console.log("ID is: ",id);
             spa.expect.element(selector).value.to.contain(id);
         };
