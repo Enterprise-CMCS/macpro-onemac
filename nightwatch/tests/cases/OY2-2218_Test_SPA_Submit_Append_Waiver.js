@@ -14,7 +14,7 @@ module.exports = {
 
     before: function (browser) {
         new_waiver.before(browser);
-        browser.pause(2000);
+        browser.pause(timeout * 2);
         spa = browser.page.spaBasePage();
     },
 
@@ -26,22 +26,21 @@ module.exports = {
         new_waiver["Click on 'Submit new Waiver'"](browser);
     },
 
-    /*"Enter SPA State/Territory Information": function(browser) {
-        new_spa["Enter SPA State/Territory Information"](browser);
-    },*/
-
     "Enter Action Type": function (browser, testData = {
         selector: '@actionType',
-        text: "Request for waiver renewal",
+        text: "Waiver amendment",
     }) {
         new_waiver["Enter Action Type"](browser, testData);
     },
 
-    "Enter Waiver Authority": function (browser) {
-        this["Enter Action Type"](browser);
+    "Enter Waiver Authority": function (browser, testData = {
+        selector: '@waiverAuthority',
+        text: "All other 1915(b) Waivers",
+    }) {
+        this["Enter Action Type"](browser, testData);
     },
 
-    "Enter Waiver Number": function (browser, waiverAction = 'renew') {
+    "Enter Waiver Number": function (browser, waiverAction = 'amendment') {
         new_waiver["Enter Waiver Number"](browser, waiverAction);
     },
 
