@@ -18,7 +18,7 @@ export default function ComponentPage() {
         <>
             <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
             <div><h2>Multi Select Demo</h2></div>
-            <div><MultiSelectDropDown options={options} /></div>
+            <div><MultiSelectDropDown options={options} header="Header" subheader="Sub Header" /></div>
         </>
     );
 }

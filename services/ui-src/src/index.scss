@@ -562,3 +562,84 @@ input[type="file"] {
 .dropdown-content a:hover {
   color: rgba($color-base-inverse, 0.8);
 }
+
+.multi-select-dropdown-container {
+    display: flex;
+    align-items: left;
+    background-color: #fff;
+    border-radius: 3px;
+    border-color: #d6d7d9;
+    border-style: solid;
+    border-width: 1px;
+    padding: 20px;
+    width: 500px;
+    height: 475px;
+    margin: 15px;
+}
+
+.multi-select-dropdown-buttons {
+    display: flex;
+    margin: 190px;
+}
+
+.multi-select-dropdown-submit-button {
+  background-color: #0071bc;
+      color: #fff;
+      border-radius: 3px;
+      align-self: center;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+      border: none;
+}
+.multi-select-dropdown-cancel-button {
+          border-radius: 3px;
+          font-family: Open Sans;
+          font-style: normal;
+          font-weight: bold;
+          font-size: 16px;
+          line-height: 24px;
+          border: none;
+      @extend .ds-c-button;
+}
+
+
+element.style {
+}
+.css-148o527-ItemComponent {
+    padding: 5px 10px;
+    cursor: pointer;
+    border-bottom: 1px solid #fff;
+}
+
+.ReactDropdownSelect {
+    box-sizing: border-box;
+    width: 75%;
+}
+
+.ReactDropdownSelect2 {
+    width: 75%;
+    margin: 20px auto;
+    box-sizing: border-box;
+    position: relative;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    border: 1px solid #ccc;
+    border-radius: 2px;
+    padding: 2px 5px;
+    -webkit-flex-direction: row;
+    -ms-flex-direction: row;
+    flex-direction: row;
+    direction: ltr;
+    -webkit-align-items: left;
+    -webkit-box-align: left;
+    -ms-flex-align: left;
+    align-items: left;
+    cursor: pointer;
+    min-height: 36px;
+    pointer-events: all;
+}
