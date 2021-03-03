@@ -187,12 +187,20 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         );
 
         if (!dupID && transmittalNumberDetails.idMustExist) {
-          newMessage.statusMessage =
+          if (transmittalNumberDetails.errorLevel === "error") {
+            newMessage.statusMessage =
             "According to our records, this " +
             transmittalNumberDetails.idLabel +
             " does not exist. Please check the " +
             transmittalNumberDetails.idLabel +
             " and try entering it again.";
+          } else {
+            newMessage.statusMessage =
+            transmittalNumberDetails.idLabel +
+            " not found. Please ensure you have the correct " +
+            transmittalNumberDetails.idLabel +
+            " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
+          }
         } else if (dupID && !transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
             newMessage.statusMessage =
