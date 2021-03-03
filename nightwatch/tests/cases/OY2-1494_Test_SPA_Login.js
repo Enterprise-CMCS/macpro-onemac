@@ -23,7 +23,7 @@ module.exports = {
         spaPageTitle: 'SPA and Waiver Dashboard',
     }) {
         spa = browser.page.spaBasePage();
-
+        console.log('Login as: ', testData.username);
         spa.devLogin(testData);
         spa.verify.visible('@loginTitle');
         browser.verify.elementPresent('h1');

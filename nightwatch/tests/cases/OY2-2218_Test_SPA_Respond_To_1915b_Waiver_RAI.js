@@ -34,12 +34,12 @@ module.exports = {
 
     "Enter Waiver Number" : function(browser) {
         spa = browser.page.spaBasePage();
-        const tid = spa.getID(false);
+        const tid = spa.getID('waiver.txt');
         new_waiver["Enter Waiver Number"](browser, tid);
     },
 
     "Upload Documents": function (browser) {
-        new_waiver["Upload Documents"](browser);
+        new_waiver["Upload Documents"](browser, 1);
     },
 
     "Enter Comments": function (browser) {
@@ -47,7 +47,7 @@ module.exports = {
     },
 
     "Submit Response": function (browser) {
-        new_waiver["Submit SPA Waiver"](browser);
+        new_waiver["Submit Waiver"](browser);
     }
 
 };
