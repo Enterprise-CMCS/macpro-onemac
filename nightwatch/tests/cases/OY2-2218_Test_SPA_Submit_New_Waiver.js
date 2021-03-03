@@ -57,7 +57,7 @@ module.exports = {
     },
 
     "Enter Waiver Number": function (browser, spa_id = "") {
-        let id = (spa_id.length !== 0) ? spa_id : spa.getWaiverNumber(waiverAction);
+        let id = (spa_id.length !== 0) ? spa_id : spa.getWaiverNumber();
         console.log("in test ID: ", id);
         new_spa["Enter SPA ID"](browser, id);
     },

@@ -23,11 +23,12 @@ const commands = {
     getWaiverNumber: function (waiverAction = 'new') {
         let rand = (min,max) => this.props.getRandomNumber(min,max);
         let group = ['ND', rand(1000,100000)];
-        if (waiverAction === 'amendment' && waiverAction=== 'renewal')
+        if (waiverAction === 'amendment' || waiverAction === 'renewal')
             group.push(`R${rand()}`);
         if (waiverAction === 'amendment')
             group.push(`M${rand()}`);
         let id = group.join(".");
+        console.log("Group is: ", group, id, waiverAction);
         spaVar = path.join(__dirname, "waiver.txt");
         fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
         return id;
