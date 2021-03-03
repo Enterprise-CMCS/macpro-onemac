@@ -51,7 +51,7 @@ module.exports = {
         this["Enter Action Type"](browser, testData);
     },
 
-    "Enter Waiver Number": function (browser, waiverAction = 'new', state = "ND") {
+    "Enter Waiver Number": function (browser, waiverAction = 'new', state = "KS") {
         spa = browser.page.spaBasePage();
         new_spa["Enter SPA ID"](browser, spa.getWaiverNumber(waiverAction, state));
     },

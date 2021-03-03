@@ -51,7 +51,7 @@ module.exports = {
     "Enter SPA ID" : function (browser, spa_id) {
         spa = browser.page.spaBasePage();
         let selector = '@transmittal';
-        let id = (spa_id) ? spa_id : spa.getTransmitNumber(false, "ND");
+        let id = (spa_id) ? spa_id : spa.getTransmitNumber(false, "AK");
         spa.expect.element(selector).to.be.visible.before(timeout * 10);
         spa.setValue(selector, id, () => {
             browser.keys([browser.Keys.TAB]);

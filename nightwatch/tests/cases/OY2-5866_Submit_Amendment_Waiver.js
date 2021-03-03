@@ -54,7 +54,7 @@ module.exports = {
         spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser, waiverAction = 'amendment', state = "ND") {
+    "Enter Waiver Number": function (browser, waiverAction = 'amendment', state = "IL") {
         spa = browser.page.spaBasePage();
         new_spa["Enter SPA ID"](browser, spa.getWaiverNumber(waiverAction, state));
     },
