@@ -37,7 +37,7 @@ module.exports = {
         steps.forEach(step => spaRAI[step](browser));
     },
 
-    "Submit a Waiver ": function (browser, steps = [
+    "Submit a New Waiver Action": function (browser, steps = [
         "Click on 'Submit new Waiver'",
         "Enter Action Type",
         "Enter Waiver Authority",
@@ -50,7 +50,7 @@ module.exports = {
         steps.forEach((step) => spaWaiver[step](browser))
     },
 
-    "Submit a Waiver Amendment ": function (browser, steps = [
+    "Submit an Amendment Waiver Action": function (browser, steps = [
         "Click on 'Submit new Waiver'",
         "Enter Action Type",
         "Enter Waiver Authority",
@@ -59,11 +59,11 @@ module.exports = {
         "Enter Comments",
         "Submit Waiver"
     ]) {
-        const waiverAmendment = require('../cases/OY2-2218_Test_SPA_Submit_Append_Waiver');
+        const waiverAmendment = require('../cases/OY2-5866_Submit_Amendment_Waiver');
         steps.forEach(step => waiverAmendment[step](browser));
     },
 
-    "Submit a Waiver Renewal": function (browser, steps = [
+    "Submit a Renewal Waiver Action": function (browser, steps = [
         "Click on 'Submit new Waiver'",
         "Enter Action Type",
         "Enter Waiver Authority",
@@ -72,7 +72,7 @@ module.exports = {
         "Enter Comments",
         "Submit Waiver"
     ]) {
-        const renewWaiver = require('../cases/OY2-2218_Test_SPA_Submit_Renew_Waiver');
+        const renewWaiver = require('../cases/OY2-5866_Submit_Renewal_Waiver');
         steps.forEach(step => renewWaiver[step](browser));
     },
 

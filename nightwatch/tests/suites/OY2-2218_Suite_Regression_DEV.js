@@ -18,15 +18,15 @@ module.exports = {
     },
 
     "Submit a Waiver ": function (browser) {
-        regression["Submit a Waiver "](browser);
+        regression["Submit a New Waiver Action"](browser);
     },
 
-    "Submit a Waiver Amendment ": function (browser) {
-        regression["Submit a Waiver Amendment "](browser);
+    "Submit an Amendment Waiver Action": function (browser) {
+        regression["Submit an Amendment Waiver Action"](browser);
     },
 
-    "Submit a Waiver Renewal": function (browser) {
-        regression["Submit a Waiver Renewal"](browser);
+    "Submit a Renewal Waiver Action": function (browser) {
+        regression["Submit a Renewal Waiver Action"](browser);
     },
 
     "Submit a SPA RAI Response": function (browser) {
