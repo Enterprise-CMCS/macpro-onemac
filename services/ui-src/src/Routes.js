@@ -41,9 +41,9 @@ export default function Routes() {
             <Route exact path={ROUTES.HOME}>
                 <Home />
             </Route>
-            <Route exact path={ROUTES.COMPONENT_PAGE}>
+            <DeveloperOnlyRoute exact path={ROUTES.COMPONENT_PAGE}>
                 <ComponentPage />
-            </Route>
+            </DeveloperOnlyRoute>
             <Route exact path={ROUTES.FAQ}>
                 <FAQ />
             </Route>
