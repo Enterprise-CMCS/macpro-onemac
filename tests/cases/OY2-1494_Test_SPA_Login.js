@@ -1,18 +1,18 @@
 
 let spa;
 module.exports = {
-    before : function(browser) {
+    before: function (browser) {
         console.log('Setting up...');
         browser.maximizeWindow().url(browser.launch_url).waitForElementPresent('body');
         spa = browser.page.spaBasePage();
     },
 
-    after : function(browser) {
+    after: function (browser) {
         console.log('Closing down...');
         browser.end();
     },
 
-    'Login to SPA and Waiver Dashboard' : function(browser) {
+    'Login to SPA and Waiver Dashboard': function (browser) {
         let title = "SPA and Waiver Dashboard";
         let urlSubDir = '/dashboard';
         const username = browser.globals.user;
@@ -28,7 +28,26 @@ module.exports = {
 
     },
 
-    'Logout of SPA and Waiver Dashboard' : function (browser) {
+    // 1st: Logins to the test site 
+    'Login to Medicaid as Regular User': function (browser) {
+        // Test Data 
+        const username = browser.globals.user;
+        const password = browser.globals.pass;
+        let spaPageTitle = 'SPA and Waiver Dashboard';
+
+        // Test Stesp
+        browser.click('.nav-right > [type]');  // click the login button
+        browser.setValue('#okta-signin-username', username);
+        browser.setValue('#okta-signin-password', password);
+        browser.click('#tandc');
+        browser.click('#okta-signin-submit');
+        browser.waitForElementPresent('body');
+
+        // Test Assertion
+        browser.verify.containsText('h1', spaPageTitle);
+    },
+
+    'Logout of SPA and Waiver Dashboard': function (browser) {
         let title = 'SPA and Waiver Dashboard'
         spa.logout();
         spa.verify.not.containsText('h1', title);

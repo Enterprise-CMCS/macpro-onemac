@@ -1,5 +1,6 @@
 let generatedSPAID;
 let generatedWaiverID;
+const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
 
@@ -12,6 +13,7 @@ module.exports = {
         console.log('Maximizing the browser window size...');
         browser.windowMaximize().url(browser.launch_url);
         browser.waitForElementPresent('body');
+        login["Login to Medicaid as Regular User"](browser);
     },
 
     // After all the test case executions, clear out the browser
@@ -19,25 +21,6 @@ module.exports = {
         console.log("Stopping test executions...")
         console.log('Closing down the browser instance...');
         browser.end();
-    },
-
-    // 1st: Logins to the test site 
-    'Login to Medicaid as Regular User': function (browser) {
-        // Test Data 
-        const username = browser.globals.user;
-        const password = browser.globals.pass;
-        let spaPageTitle = 'SPA and Waiver Dashboard';
-
-        // Test Stesp
-        browser.click('.nav-right > [type]');  // click the login button
-        browser.setValue('#okta-signin-username', username);
-        browser.setValue('#okta-signin-password', password);
-        browser.click('#tandc');
-        browser.click('#okta-signin-submit');
-        browser.waitForElementPresent('body');
-
-        // Test Assertion
-        browser.verify.containsText('h1', spaPageTitle);
     },
 
 
@@ -185,6 +168,5 @@ module.exports = {
 
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
-    },
-
+    }
 }
