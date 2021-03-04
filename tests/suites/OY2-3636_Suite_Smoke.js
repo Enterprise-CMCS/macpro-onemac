@@ -1,7 +1,7 @@
 
 
 module.exports = {
-    "@tags": ["smokeTest"],
+    "@tags": ["smoke"],
 
     before : function(browser) {
         console.log('Setting up the browser instance...');

@@ -1,6 +1,6 @@
 module.exports = {
 
-    "@tags": ["faq", "regression"],
+    "@tags": ["FAQ", "smoke"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {

@@ -1,7 +1,7 @@
 
 module.exports = {
 
-    "@tags": ["fileUploadLimit", "test1", "regression"],
+    "@tags": ["fileUploadLimit", "test1", "smoke"],
 
     before : function(browser) {
         console.log('Setting up the browser instance...');

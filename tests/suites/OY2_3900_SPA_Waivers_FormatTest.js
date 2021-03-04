@@ -1,7 +1,7 @@
 
 
 module.exports = {
-    "@tags": ["formatTest1", "test1", "regression"],
+    "@tags": ["formatTest1", "test1", "smoke"],
     
     before : function(browser) {
         console.log('Setting up the browser instance...');
