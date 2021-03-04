@@ -564,7 +564,7 @@ input[type="file"] {
 }
 
 .multi-select-dropdown-container {
-    position: static;
+    position: relative;
     align-items: left;
     background-color: #fff;
     border-radius: 3px;
@@ -573,7 +573,7 @@ input[type="file"] {
     border-width: 1px;
     padding: 20px;
     width: 500px;
-    height: 475px;
+    height: 440px;
     margin: 15px;
 }
 
@@ -632,7 +632,7 @@ element.style {
     display: -ms-flexbox;
     display: flex;
     margin: auto;
-    bottom: -240px;
+    top: 230px;
     left: 195px;
 }
 
@@ -642,7 +642,28 @@ element.style {
   color: #aaa;
   font-size: 16px;
 }
-body { margin: 30px; }
+
+.multi-select-title {
+font-family: Open Sans;
+font-size: 21px;
+font-style: italic;
+font-weight: 400;
+line-height: 28px;
+letter-spacing: 0px;
+text-align: left;
+}
+
+.multi-select-header {
+margin-bottom: 10px;
+bottom: 10px;
+ont-family: Open Sans;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 30px;
+letter-spacing: 0px;
+text-align: left;
+}
 
 .search {display: inline-block;}
 

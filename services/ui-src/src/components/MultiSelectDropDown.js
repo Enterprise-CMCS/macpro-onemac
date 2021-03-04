@@ -20,8 +20,8 @@ const MultiSelectDropDown = ({options, header, subheader, cancelFn, submitFn}) =
     return (
         <div className="multi-select-dropdown-container">
             <div>
-                <h1>{header}</h1>
-                <h2>{subheader}</h2>
+                <p className="multi-select-title">{header}</p>
+                <p className="multi-select-header">{subheader}</p>
                 <div>
                     <Select id="MultiSelect" className="fa fa-search"
                             placeholder="Select ..."
@@ -34,16 +34,17 @@ const MultiSelectDropDown = ({options, header, subheader, cancelFn, submitFn}) =
                             onChange={handleOnchange}
                             options={options}
                     />
-                    <div className="ReactDropdownButtons">
-                        <button onClick={cancelFn} className="reactDropdownCancelButton" type="button">
-                            Cancel
-                        </button> &nbsp; &nbsp;
-                        <button onClick={submitFn(value)} className="reactDropdownSubmitButton" type="button">
-                            Submit
-                        </button>
-                    </div>
-                </div>
 
+                </div>
+            </div>
+            <div className="ReactDropdownButtons">
+                <button onClick={cancelFn} className="reactDropdownCancelButton" type="button">
+                    Cancel
+                </button>
+                &nbsp; &nbsp;
+                <button onClick={submitFn(value)} className="reactDropdownSubmitButton" type="button">
+                    Submit
+                </button>
             </div>
         </div>
     )
