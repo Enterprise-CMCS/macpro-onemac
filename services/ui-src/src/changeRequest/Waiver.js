@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import { ROUTES } from "../Routes";
 
 /**
  * Waiver acts as a wrapper around SubmissionForm to render custom Waiver form
@@ -25,8 +26,13 @@ const Waiver = () => {
       value: "1915(b)(4)",
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
-    { label: "1915(c) Appendix K waiver", value: "1915(c)" },
   ];
+
+  const baseTransmittalNumber = {
+    idType: "waiver",
+    idLabel: "Waiver Number",
+    idFAQLink: ROUTES.FAQ_WAIVER_ID,  
+  };
 
   const formInfo = {
     pageTitle: "Submit New Waiver Action",
@@ -37,27 +43,9 @@ const Waiver = () => {
       "1915(b)(4) waiver application",
       "Cost effectiveness spreadsheets",
       "Tribal Consultation",
-      "1915(c) Appendix K amendment waiver template",
       "1915(b) waiver",
       "Other",
     ],
-    idType: "waiver",
-    idLabel: "Waiver Number",
-    idFormat: "SS.##.R##.M##",
-    idRegex: "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)",
-    idMustExist: (changeRequest) => {
-      // Amendment Ks should always have an existing number
-      if (changeRequest.waiverAuthority === "1915(c)") {
-        return true;
-      } 
-      // NEW actions on 1915bs should not have existing numbers
-      else if ( changeRequest.actionType === "new") {
-        return false;
-      } else 
-
-      // default is that a waiver needs an existing number
-        return true;
-    },
 
     actionType: {
       fieldName: "actionType",
@@ -71,6 +59,41 @@ const Waiver = () => {
       optionsList: waiverAuthorityOptions,
       defaultItem: "a waiver authority",
     },
+    transmittalNumber: {
+      ...baseTransmittalNumber,
+      idHintText: "Must follow the format required by the Action Type",
+      idFormat: "the Action Type.  Please select an Action Type first.",
+      idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
+      idMustExist: false,  
+      errorLevel: "error",
+    },
+    newTransmittalNumber: {
+      ...baseTransmittalNumber,
+      idHintText: "Must be a new base number with the format SS.#### or SS.#####",
+      idFormat: "SS.#### or SS.#####",
+      idRegex: "^[A-Z]{2}[.][0-9]{4,5}$",
+      idMustExist: false,
+      errorLevel: "error",
+    },
+    amendmentTransmittalNumber: {
+      ...baseTransmittalNumber,
+      idHintText: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##",
+      idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
+      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
+      idMustExist: true,
+      errorLevel: "warn",
+      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+    },
+    renewalTransmittalNumber: {
+      ...baseTransmittalNumber,
+      idHintText: "Must follow the format SS.####.R## or SS.#####.R##",
+      idFormat: "SS.####.R## or SS.#####.R##",
+      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
+      idMustExist: true,
+      errorLevel: "warn",
+      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+    },
+
   };
 
   if (id) {

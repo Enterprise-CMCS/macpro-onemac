@@ -17,14 +17,22 @@ module.exports = {
         regression["Submit a SPA Report"](browser);
     },
 
-    "Submit a SPA Waiver ": function (browser) {
-        regression["Submit a SPA Waiver "](browser);
+    "Submit a Waiver ": function (browser) {
+        regression["Submit a New Waiver Action"](browser);
+    },
+
+    "Submit an Amendment Waiver Action": function (browser) {
+        regression["Submit an Amendment Waiver Action"](browser);
+    },
+
+    "Submit a Renewal Waiver Action": function (browser) {
+        regression["Submit a Renewal Waiver Action"](browser);
     },
 
     "Submit a SPA RAI Response": function (browser) {
         regression["Submit a SPA RAI Response"](browser);
     },
-
+/*
     "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser) {
         regression["Submit a 'Respond to 1915(b) Waiver RAI'"](browser);
     },
@@ -32,4 +40,5 @@ module.exports = {
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
     },
+    */
 };
