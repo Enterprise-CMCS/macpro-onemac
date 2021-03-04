@@ -2,6 +2,10 @@
 #
 An official submission system for email-based state plan amendments (SPAs) and section 1915 waivers.
 
+## Architecture
+
+![Architecture Diagram](./.images/architecture.svg?raw=true)
+
 ### Application Configuration
 The following environment variables can be set to change the configuration of the application (reference [build_vars.sh](./.github/build_vars.sh)):
 Lengend: R = Required, O = Optional
@@ -20,4 +24,3 @@ Lengend: R = Required, O = Optional
 * STAGE_PREFIX
 * (R) OKTA_METADATA_URL - The OKTA URL to authenticate at
 * METRICS_USERS - A comma separated list of emails of the users that are allowed access to the metrics page
-

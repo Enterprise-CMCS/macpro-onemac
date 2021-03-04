@@ -35,9 +35,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setWaiverAuthorityErrorMessage,
   ] = useState("");
   const [
-    transmittalNumberErrorMessage,
-    setTransmittalNumberErrorMessage,
-  ] = useState("");
+    transmittalNumberStatusMessage,
+    setTransmittalNumberStatusMessage,
+  ] = useState({
+    statusLevel: "error",
+    statusMessage: "",
+  });
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(false);
@@ -47,6 +50,11 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
   //Reference to the File Uploader.
   const uploader = useRef(null);
+
+  // because the transmittal number has state
+  const [transmittalNumberDetails, setTransmittalNumberDetails] = useState({
+    ...formInfo.transmittalNumber,
+  });
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
@@ -103,7 +111,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let fieldValidationRegEx = new RegExp(regexFormatString);
     let result = false;
 
-    if (fieldValue && fieldValue.match(fieldValidationRegEx)) {
+    if (fieldValue && fieldValidationRegEx.test(fieldValue)) {
       result = true;
     } else {
       result = false;
@@ -117,7 +125,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // Must have a value
     if (!newTransmittalNumber) {
-      errorMessage = formInfo.idLabel + " Required !";
+      errorMessage = transmittalNumberDetails.idLabel + " Required";
     }
     // must have a valid state code as the first two characters
     else if (
@@ -126,16 +134,19 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       )
     ) {
       errorMessage =
-        `The ` + formInfo.idLabel + ` must contain valid Territory/State Code`;
+        `The ` +
+        transmittalNumberDetails.idLabel +
+        ` must contain valid Territory/State Code`;
     }
     // must match the associated Regex string for format
-    else if (!matchesRegex(newTransmittalNumber, formInfo.idRegex)) {
+    else if (
+      !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
+    ) {
       errorMessage =
         `The ` +
-        formInfo.idLabel +
+        transmittalNumberDetails.idLabel +
         ` must be in the format of ` +
-        formInfo.idFormat +
-        ` !`;
+        transmittalNumberDetails.idFormat;
     }
 
     return errorMessage;
@@ -148,7 +159,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   async function handleTransmittalNumberChange(event) {
     if (!event || !event.target) return;
 
-    const newTransmittalNumber = event.target.value;
+    let newTransmittalNumber = event.target.value.toUpperCase();
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord[event.target.name] = newTransmittalNumber;
     updatedRecord["territory"] = newTransmittalNumber
@@ -156,31 +167,54 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       .substring(0, 2);
 
     // validate that the ID is in correct format
-    let errorMessage = "";
+    let newMessage = {
+      statusLevel: "error",
+      statusMessage: "",
+    };
 
-    errorMessage = validateTransmittalNumber(newTransmittalNumber);
+    newMessage.statusMessage = validateTransmittalNumber(newTransmittalNumber);
 
     // if the ID is valid, check if exists/not exist in data
-    if (errorMessage === "") {
+    if (newMessage.statusMessage === "") {
+      newMessage.statusLevel = transmittalNumberDetails.errorLevel;
       try {
+        if (transmittalNumberDetails.existenceRegex !== undefined) {
+          newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
+          console.log("new trans number: ", newTransmittalNumber);
+        } 
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
         );
 
-        if (!dupID && formInfo.idMustExist(changeRequest)) {
-          errorMessage =
+        if (!dupID && transmittalNumberDetails.idMustExist) {
+          if (transmittalNumberDetails.errorLevel === "error") {
+            newMessage.statusMessage =
             "According to our records, this " +
-            formInfo.idLabel +
+            transmittalNumberDetails.idLabel +
             " does not exist. Please check the " +
-            formInfo.idLabel +
+            transmittalNumberDetails.idLabel +
             " and try entering it again.";
-        } else if (dupID && !formInfo.idMustExist(changeRequest)) {
-          errorMessage =
-            "According to our records, this " +
-            formInfo.idLabel +
-            " already exists. Please check the " +
-            formInfo.idLabel +
-            " and try entering it again.";
+          } else {
+            newMessage.statusMessage =
+            transmittalNumberDetails.idLabel +
+            " not found. Please ensure you have the correct " +
+            transmittalNumberDetails.idLabel +
+            " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
+          }
+        } else if (dupID && !transmittalNumberDetails.idMustExist) {
+          if (transmittalNumberDetails.errorLevel === "error") {
+            newMessage.statusMessage =
+              "According to our records, this " +
+              transmittalNumberDetails.idLabel +
+              " already exists. Please check the " +
+              transmittalNumberDetails.idLabel +
+              " and try entering it again.";
+          } else {
+            newMessage.statusMessage =
+              "Please ensure you have the correct " +
+              transmittalNumberDetails.idLabel +
+              " before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.";
+          }
         }
       } catch (error) {
         console.log("There was an error submitting a request.", error);
@@ -188,8 +222,47 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     setChangeRequest(updatedRecord);
-    setTransmittalNumberErrorMessage(errorMessage);
+    setTransmittalNumberStatusMessage(newMessage);
   }
+
+  /**
+   * Handle changes to the action type.
+   * @param {Object} event the event
+   */
+  const handleActionTypeChange = (event) => {
+    if (!event || !event.target) return;
+
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
+    updatedRecord[event.target.name] = event.target.value;
+    let actionTypeMessage = "";
+
+    if (!firstTimeThrough) {
+      if (formInfo.actionType && !updatedRecord.actionType)
+        actionTypeMessage = formInfo.actionType.errorMessage;
+    }
+
+    let transmittalNumberInfo;
+
+    switch (updatedRecord.actionType) {
+      case "new":
+        transmittalNumberInfo = formInfo.newTransmittalNumber;
+        break;
+      case "amendment":
+        transmittalNumberInfo = formInfo.amendmentTransmittalNumber;
+        break;
+      case "renewal":
+        transmittalNumberInfo = formInfo.renewalTransmittalNumber;
+        break;
+      default:
+        transmittalNumberInfo = formInfo.transmittalNumber;
+        break;
+    }
+
+    setChangeRequest(updatedRecord);
+    setActionTypeErrorMessage(actionTypeMessage);
+    setTransmittalNumberDetails(transmittalNumberInfo);
+  };
 
   /**
    * Handle changes to the form.
@@ -201,26 +274,21 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
 
     updatedRecord[event.target.name] = event.target.value;
-    let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
 
     if (!firstTimeThrough) {
-      if (formInfo.actionType && !updatedRecord.actionType)
-        actionTypeMessage = formInfo.actionType.errorMessage;
       if (formInfo.waiverAuthority && !updatedRecord.waiverAuthority)
         waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
     }
 
     if (event.target.name !== "summary") {
       updatedRecord["transmittalNumber"] = "";
-      actionTypeMessage = "";
     }
 
     // state set functions have to be at top level
     // because we can't trust they got set, can't use them in the function
 
     setChangeRequest(updatedRecord);
-    setActionTypeErrorMessage(actionTypeMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
   };
 
@@ -241,27 +309,33 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // because this is an asynchronous function, you can't trust that the
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
-    let transmittalNumberMessage = "";
     let newAlert = null;
     let mounted = true;
     const uploadRef = uploader.current;
+    let newMessage = {
+      statusLevel: "error",
+      statusMessage: "",
+    };
 
-    transmittalNumberMessage = validateTransmittalNumber(
+    newMessage.statusMessage = validateTransmittalNumber(
       changeRequest.transmittalNumber
     );
 
     // if the ID is valid, check if exists/not exist in data
-    if (transmittalNumberMessage === "") {
+    // warnings are allowed to submit
+    if (
+      newMessage.statusMessage === "" &&
+      transmittalNumberDetails.errorLevel === "error"
+    ) {
       try {
         const dupID = await ChangeRequestDataApi.packageExists(
           changeRequest.transmittalNumber
         );
-
-        if (!dupID && formInfo.idMustExist(changeRequest)) {
-          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
+        if (!dupID && transmittalNumberDetails.idMustExist) {
+          newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
           newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-        } else if (dupID && !formInfo.idMustExist()) {
-          transmittalNumberMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
+        } else if (dupID && !transmittalNumberDetails.idMustExist) {
+          newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
           newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
         }
       } catch (err) {
@@ -280,7 +354,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // check which alert to show.  Fields first, than attachments
     // if all passes, submit the form and return to dashboard
     if (
-      transmittalNumberMessage ||
+      newMessage.statusMessage ||
       actionTypeMessage ||
       waiverAuthorityMessage
     ) {
@@ -318,24 +392,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     // now set the state variables to show the error messages
-    if (mounted) setTransmittalNumberErrorMessage(transmittalNumberMessage);
+    if (mounted)
+      setTransmittalNumberStatusMessage(newMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlert(newAlert);
     if (mounted) setIsLoading(false);
     if (mounted) jumpToPageTitle();
   }
-
-  const renderTransmittalNumber = () => {
-    return (
-      <TransmittalNumber
-        idType={formInfo.idType}
-        errorMessage={transmittalNumberErrorMessage}
-        value={changeRequest.transmittalNumber}
-        onChange={handleTransmittalNumberChange}
-      />
-    );
-  };
 
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
@@ -361,7 +425,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
                 label="Action Type"
                 errorMessage={actionTypeErrorMessage}
                 value={changeRequest.actionType}
-                onChange={handleInputChange}
+                onChange={handleActionTypeChange}
               />
             )}
             {formInfo.waiverAuthority && (
@@ -373,7 +437,15 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
                 onChange={handleInputChange}
               />
             )}
-            {renderTransmittalNumber()}
+            <TransmittalNumber
+              idLabel={transmittalNumberDetails.idLabel}
+              hintText={transmittalNumberDetails.idHintText}
+              idFAQLink={transmittalNumberDetails.idFAQLink}
+              statusLevel={transmittalNumberStatusMessage.statusLevel}
+              statusMessage={transmittalNumberStatusMessage.statusMessage}
+              value={changeRequest.transmittalNumber}
+              onChange={handleTransmittalNumberChange}
+            />
           </div>
           <h3>Attachments</h3>
           <FileUploader

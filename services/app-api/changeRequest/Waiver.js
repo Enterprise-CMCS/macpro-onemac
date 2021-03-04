@@ -52,16 +52,6 @@ async fieldsValid(data) {
         areFieldsValid = false;
         whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
       }
-      // 1915b renewals should have existing IDs
-      else if (data.actionType==='renewal' && !idExists) {
-        areFieldsValid = false;
-        whyNot = RESPONSE_CODE.WAIVER_RENEWAL_NO_ID;
-      }
-      // 1915b amendments should have existing IDs
-      else if (data.actionType==='amendment' && !idExists) {
-        areFieldsValid = false;
-        whyNot = RESPONSE_CODE.WAIVER_AMENDMENT_NO_ID;
-      }
 
       return { areFieldsValid, whyNot };
   }
