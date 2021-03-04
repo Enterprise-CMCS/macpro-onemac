@@ -8,7 +8,7 @@ import Select from "react-dropdown-select";
 
 */
 
-const MultiSelectDropDown = ({options,header,subheader}) => {
+const MultiSelectDropDown = ({options, header, subheader}) => {
 
     const [value, setValue] = useState([])
 
@@ -26,29 +26,31 @@ const MultiSelectDropDown = ({options,header,subheader}) => {
     }
     return (
         <div className="multi-select-dropdown-container">
-            <div >
+            <div>
                 <h1>{header}</h1>
                 <h2>{subheader}</h2>
-                <div className="ReactDropdownSelect">
-                <Select id="MultiSelect"
-                        placeholder="&#128269; Select ..."
-                        dropdownHeight="150px"
-                        clearable="false"
-                        searchable="true"
-                        searchBy="label"
-                        multi="true"
-                        keepOpen="true"
-                        onChange={handleOnchange}
-                        options={options}
-                />
+                <div>
+                    <Select id="MultiSelect"
+                            placeholder="&#128269; Select ..."
+                            dropdownHeight="175px"
+                            clearable="false"
+                            searchable="true"
+                            searchBy="label"
+                            multi="true"
+                            keepOpen="true"
+                            onChange={handleOnchange}
+                            options={options}
+                    />
+                    <div className="ReactDropdownButtons">
+                        <button onClick={handleCancel} className="reactDropdownCancelButton" type="button">
+                            Cancel
+                        </button> &nbsp; &nbsp; &nbsp;
+                        <button onClick={handleSubmit} className="reactDropdownSubmitButton" type="button">
+                            Submit
+                        </button>
+                    </div>
                 </div>
-                <div  className="multi-select-dropdown-buttons">
-                    <button onClick={handleCancel} type="button" className="multi-select-dropdown-cancel-button">
-                        Cancel
-                    </button><button onClick={handleSubmit} className="form-submit" type="button" >
-                    Submit
-                </button>
-                </div>
+
             </div>
         </div>
     )

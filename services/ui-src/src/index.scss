@@ -564,7 +564,7 @@ input[type="file"] {
 }
 
 .multi-select-dropdown-container {
-    display: flex;
+    position: static;
     align-items: left;
     background-color: #fff;
     border-radius: 3px;
@@ -579,10 +579,11 @@ input[type="file"] {
 
 .multi-select-dropdown-buttons {
     display: flex;
-    margin: 190px;
+    margin: auto;
 }
 
 .multi-select-dropdown-submit-button {
+      position: static;
   background-color: #0071bc;
       color: #fff;
       border-radius: 3px;
@@ -614,32 +615,23 @@ element.style {
     border-bottom: 1px solid #fff;
 }
 
-.ReactDropdownSelect {
-    box-sizing: border-box;
-    width: 75%;
+.reactDropdownCancelButton {
+ @extend .ds-c-button;
+ @extend .ds-c-button--transparent;
 }
 
-.ReactDropdownSelect2 {
-    width: 75%;
-    margin: 20px auto;
-    box-sizing: border-box;
+.reactDropdownSubmitButton {
+ @extend .ds-c-button;
+ @extend .ds-c-button--primary;
+}
+
+.ReactDropdownButtons {
     position: relative;
     display: -webkit-box;
     display: -webkit-flex;
     display: -ms-flexbox;
     display: flex;
-    border: 1px solid #ccc;
-    border-radius: 2px;
-    padding: 2px 5px;
-    -webkit-flex-direction: row;
-    -ms-flex-direction: row;
-    flex-direction: row;
-    direction: ltr;
-    -webkit-align-items: left;
-    -webkit-box-align: left;
-    -ms-flex-align: left;
-    align-items: left;
-    cursor: pointer;
-    min-height: 36px;
-    pointer-events: all;
+    margin: auto;
+    bottom: -240px;
 }
+
