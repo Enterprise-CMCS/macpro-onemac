@@ -87,10 +87,6 @@ ul {
   @extend .ds-c-list;
 }
 
-.css-wmw4vi-ReactDropdownSelect {
-  background-color: #ffffff
-}
-
 .uploader {
   table {
     border-collapse: collapse;
@@ -563,18 +559,54 @@ input[type="file"] {
   color: rgba($color-base-inverse, 0.8);
 }
 
+.multi-select-dropdown-container2 {
+position: relative;
+margin: 60px;
+}
+
 .multi-select-dropdown-container {
     position: relative;
     align-items: left;
-    background-color: #fff;
+    background-color: #ffffff;
     border-radius: 3px;
     border-color: #d6d7d9;
     border-style: solid;
     border-width: 1px;
-    padding: 20px;
-    width: 500px;
-    height: 440px;
-    margin: 15px;
+    padding: 15px;
+    width: 575px;
+    height: 470px;
+    margin: auto;
+}
+
+.css-uemekh-DropDown {
+    position: relative;
+    left: -1px;
+    border: 1px solid #ccc;
+    width: 400px;
+    padding: 0;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-flex-direction: column;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    background: #fff;
+    border-radius: 2px;
+    max-height: 100px;
+    overflow: auto;
+    z-index: 9;
+}
+
+.css-148o527-ItemComponent.react-dropdown-select-item-selected {
+background: #0071BC;
+    color: #fff;
+    border-bottom: 1px solid #fff;
+}
+.css-148o527-ItemComponent:selected {
+    background: #0071BC;
+    color: #fff;
+    border-bottom: 1px solid #fff;
 }
 
 .multi-select-dropdown-buttons {
@@ -582,9 +614,31 @@ input[type="file"] {
     margin: auto;
 }
 
+.css-148o527-ItemComponent {
+display: flex;
+  padding: 22px 10px;
+  height: 42px;
+  width: 405;
+  left: 432;
+  top: 519px;
+  border-radius: 2px;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 19px;
+  letter-spacing: 0px;
+  text-align: left;
+
+}
+
+.css-uemekh-DropDown {
+
+}
+
 .multi-select-dropdown-submit-button {
-      position: static;
-  background-color: #0071bc;
+      position: relative;
+      background-color: #0071bc;
       color: #fff;
       border-radius: 3px;
       align-self: center;
@@ -593,47 +647,59 @@ input[type="file"] {
       font-weight: bold;
       font-size: 16px;
       line-height: 24px;
+      height: 42px;
+      width: 119px;
+      left: 0px;
+      top: 0px;
+      border-radius: 3px;
       border: none;
-}
-.multi-select-dropdown-cancel-button {
-          border-radius: 3px;
-          font-family: Open Sans;
-          font-style: normal;
-          font-weight: bold;
-          font-size: 16px;
-          line-height: 24px;
-          border: none;
-      @extend .ds-c-button;
+      top: 215px;
 }
 
-
+.multi-select-box {
+   margin: 0px;
+   overflow: hidden;
+}
 element.style {
 }
+
+.css-wmw4vi-ReactDropdownSelect {
+   background-color: #ffffff;
+   box-sizing: border-box;
+}
+
+
 .css-148o527-ItemComponent {
     padding: 5px 10px;
     cursor: pointer;
     border-bottom: 1px solid #fff;
 }
 
-.reactDropdownCancelButton {
- @extend .ds-c-button;
- @extend .ds-c-button--transparent;
+.css-v1jrxw-ContentComponent {
+  height: 30px;
 }
 
-.reactDropdownSubmitButton {
- @extend .ds-c-button;
- @extend .ds-c-button--primary;
+.css-148o527-ItemComponent.react-dropdown-select-item-selected {
+    background: #0071BC;
+    color: #fff;
+    border-bottom: 1px solid #fff;
 }
 
-.ReactDropdownButtons {
+.css-148o527-ItemComponent {
+
+}
+.css-w3djcp-OptionComponent  {
+    background: #0071BC;
+    top: -60px;
     position: relative;
-    display: -webkit-box;
-    display: -webkit-flex;
-    display: -ms-flexbox;
+    padding: 20px 5px;
+    border-radius: 2px;
+    line-height: 21px;
+    margin: 0px 0px 0px 0px;
+    background: #0071BC;
+    color: rgb(255, 255, 255);
     display: flex;
-    margin: auto;
-    top: 230px;
-    left: 195px;
+    flex-direction: row;
 }
 
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
@@ -654,8 +720,8 @@ text-align: left;
 }
 
 .multi-select-header {
-margin-bottom: 10px;
-bottom: 10px;
+margin-bottom: 60px;
+bottom: 20px;
 ont-family: Open Sans;
 font-size: 24px;
 font-style: normal;
