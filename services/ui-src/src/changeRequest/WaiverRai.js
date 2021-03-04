@@ -32,7 +32,7 @@ const WaiverRai = () => {
       idFAQLink: ROUTES.FAQ_WAIVER_ID,  
       idHintText: "Please use the exact Waiver Number sent with the RAI",
       idFormat: "the Number format sent with the RAI",
-      idRegex: "(^[A-Z]{2}[.]$)",
+      idRegex: "(^[A-Z]{2}[.][0-9]{4,5})",
       idShouldTest: true,
       idMustExist: true,  
     },
