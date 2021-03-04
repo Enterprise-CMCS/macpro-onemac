@@ -8,7 +8,7 @@ import Select from "react-dropdown-select";
 
 */
 
-const MultiSelectDropDown = ({options, header, subheader}) => {
+const MultiSelectDropDown = ({options, header, subheader, cancelFn, submitFn}) => {
 
     const [value, setValue] = useState([])
 
@@ -17,22 +17,15 @@ const MultiSelectDropDown = ({options, header, subheader}) => {
         setValue(JSON.stringify(val))
     }
 
-    const handleCancel = () => {
-        ;//  What do Do ?
-    }
-
-    const handleSubmit = val => {
-        console.log(value)
-    }
     return (
         <div className="multi-select-dropdown-container">
             <div>
                 <h1>{header}</h1>
                 <h2>{subheader}</h2>
                 <div>
-                    <Select id="MultiSelect"
-                            placeholder="&#128269; Select ..."
-                            dropdownHeight="175px"
+                    <Select id="MultiSelect" className="fa fa-search"
+                            placeholder="Select ..."
+                            dropdownHeight="190px"
                             clearable="false"
                             searchable="true"
                             searchBy="label"
@@ -42,10 +35,10 @@ const MultiSelectDropDown = ({options, header, subheader}) => {
                             options={options}
                     />
                     <div className="ReactDropdownButtons">
-                        <button onClick={handleCancel} className="reactDropdownCancelButton" type="button">
+                        <button onClick={cancelFn} className="reactDropdownCancelButton" type="button">
                             Cancel
-                        </button> &nbsp; &nbsp; &nbsp;
-                        <button onClick={handleSubmit} className="reactDropdownSubmitButton" type="button">
+                        </button> &nbsp; &nbsp;
+                        <button onClick={submitFn(value)} className="reactDropdownSubmitButton" type="button">
                             Submit
                         </button>
                     </div>

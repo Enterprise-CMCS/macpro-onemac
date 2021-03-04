@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import MultiSelectDropDown from "../components/MultiSelectDropDown";
 
 export default function ComponentPage() {
@@ -14,11 +14,24 @@ export default function ComponentPage() {
         { label:  'Option 4', value:  'option_4'  },
     ]
 
+    const [value, setValue] = useState([])
+
+    const handleCancel = () => {
+        console.log("handledCancel Called ...")
+    }
+
     return (
         <>
             <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
             <div><h2>Multi Select Demo</h2></div>
-            <div><MultiSelectDropDown options={options} header="Header" subheader="Sub Header" /></div>
+            <div>{value}</div>
+            <div><MultiSelectDropDown
+                options={options}
+                header="Header"
+                subheader="Sub Header"
+                submitFn={val => setValue(val)}
+                cancelFn={handleCancel}
+            /></div>
         </>
     );
 }
