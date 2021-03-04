@@ -1,6 +1,6 @@
 
 module.exports = {
-    "@tags": ["attachementTest", "test1"],
+    "@tags": ["attachementTest", "test1", "regression"],
 
     before : function(browser) {
         console.log('Setting up the browser instance...');

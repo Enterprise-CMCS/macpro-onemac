@@ -1,0 +1,190 @@
+let generatedSPAID;
+let generatedWaiverID;
+
+module.exports = {
+
+    "@tags": ["subList", "regression"],
+
+    // Opens the browser, goes to the test site
+    before: function (browser) {
+        console.log('Setting up the browser instance...');
+        console.log('Opening the browser...')
+        console.log('Maximizing the browser window size...');
+        browser.windowMaximize().url(browser.launch_url);
+        browser.waitForElementPresent('body');
+    },
+
+    // After all the test case executions, clear out the browser
+    after: function (browser) {
+        console.log("Stopping test executions...")
+        console.log('Closing down the browser instance...');
+        browser.end();
+    },
+
+    // 1st: Logins to the test site 
+    'Login to Medicaid as Regular User': function (browser) {
+        // Test Data 
+        const username = browser.globals.user;
+        const password = browser.globals.pass;
+        let spaPageTitle = 'SPA and Waiver Dashboard';
+
+        // Test Stesp
+        browser.click('.nav-right > [type]');  // click the login button
+        browser.setValue('#okta-signin-username', username);
+        browser.setValue('#okta-signin-password', password);
+        browser.click('#tandc');
+        browser.click('#okta-signin-submit');
+        browser.waitForElementPresent('body');
+
+        // Test Assertion
+        browser.verify.containsText('h1', spaPageTitle);
+    },
+
+
+    'Submission List Verification > Submit new SPA': function (browser) {
+        // Submit a SPA Report 
+        const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
+        newSPA["Click on 'Start a new SPA'"](browser);
+        generatedSPAID = newSPA["Enter SPA ID"](browser);
+        newSPA["Upload Documents"](browser);
+        newSPA["Enter Comments"](browser);
+        newSPA["Submit SPA"](browser);
+
+        // Verify the submitted Content 
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
+        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+
+        // SPA ID Verification 
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+
+        // Submitted Type Verification 
+        browser.useXpath().expect.element(submittedType).to.be.visible;
+        browser.useXpath().assert.containsText(submittedType, "SPA");
+
+        // Data Submitted Verification 
+        browser.useXpath().expect.element(submittedDate).to.be.visible;
+    },
+
+
+    'Submission List Verification > Respond to SPA RAI': function (browser) {
+        const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
+        spaRAI["Click on 'Respond to SPA RAI'"](browser);
+
+        // Enter existing SPA ID 
+        let selector = '@transmittal';
+        const spa = browser.page.spaBasePage();
+        spa.click(selector);
+        spa.setValue(selector, generatedSPAID);
+        browser.pause(1000);
+
+        // upload a file 
+        console.log("About to upload a file")
+        let fileUploadElem = "[name='uploader-input-0']";
+        let filePath = require('path').resolve(__dirname + '/files/file.docx')
+        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+
+        spaRAI["Enter Comments"](browser);
+        browser.useCss().click("[value='Submit']").pause(500);
+
+        // Verify the submitted Content 
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
+        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+
+        // SPA ID Verification 
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+
+        // Submitted Type Verification 
+        browser.useXpath().expect.element(submittedType).to.be.visible;
+        browser.useXpath().assert.containsText(submittedType, "SPA RAI");
+
+        // Data Submitted Verification 
+        browser.useXpath().expect.element(submittedDate).to.be.visible;
+    },
+
+    'Submission List Verification > Respond to SPA RAI': function (browser) {
+        const spaWaiver = require('../cases/OY2-2218_Test_SPA_Submit_New_Waiver');
+        spaWaiver["Click on 'Submit new Waiver'"](browser);
+
+        browser.useCss().click("select#actionType");
+        browser.useCss().click("select#actionType > option[value='new']");
+        browser.useCss().click("select#waiverAuthority");
+        browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+
+        generatedWaiverID = spaWaiver["Enter Waiver Number"](browser);
+        spaWaiver["Upload Documents"](browser);
+        spaWaiver["Enter Comments"](browser);
+        browser.useCss().click("[value='Submit']").pause(500);
+
+        // Verify the submitted SPA Report Content 
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
+        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+
+        // Waiver ID Verification 
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+
+        // Submitted Type Verification 
+        browser.useXpath().expect.element(submittedType).to.be.visible;
+        browser.useXpath().assert.containsText(submittedType, "Waiver");
+
+        // Data Submitted Verification 
+        browser.useXpath().expect.element(submittedDate).to.be.visible;
+
+    },
+
+    'Submission List Verification  > Respond to 1915(b) Waiver RAI': function (browser) {
+        const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
+        waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser);
+        browser.useCss().setValue('input#transmittalNumber', generatedWaiverID);
+        waiverRAI["Upload Documents"](browser);
+        waiverRAI["Enter Comments"](browser);
+        browser.useCss().click("[value='Submit']").pause(500);
+
+        // Verify the submitted SPA Report Content 
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
+        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+
+        // ID Verification 
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+
+        // Submitted Type Verification 
+        browser.useXpath().expect.element(submittedType).to.be.visible;
+        browser.useXpath().assert.containsText(submittedType, "Waiver RAI");
+
+        // Data Submitted Verification 
+        browser.useXpath().expect.element(submittedDate).to.be.visible;
+    },
+
+    "Submission List Verification  >Submit a Temporary Request Extension": function (browser) {
+        const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
+        tempExt["Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'"](browser);
+        browser.useCss().setValue('input#transmittalNumber', generatedWaiverID);
+        tempExt["Upload Documents"](browser);
+        tempExt["Enter Comments"](browser);
+        browser.useCss().click("[value='Submit']").pause(500);
+
+        // Verify the submitted SPA Report Content 
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
+        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+
+        // ID Verification 
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+
+        // Submitted Type Verification 
+        browser.useXpath().expect.element(submittedType).to.be.visible;
+        browser.useXpath().assert.containsText(submittedType, "Temporary Extension Request");
+
+        // Data Submitted Verification 
+        browser.useXpath().expect.element(submittedDate).to.be.visible;
+    },
+
+}

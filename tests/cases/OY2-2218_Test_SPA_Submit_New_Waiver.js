@@ -53,10 +53,13 @@ module.exports = {
 
     "Enter Waiver Number": function (browser) {
         const spa = browser.page.spaBasePage();
-        let selector = '@transmittal';
-        let spa_id = spa.getWaiverNumber();
+        let selector = 'input#transmittalNumber';
+        let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let spa_id = 'MD.'+num1+'.R19.' + num2;
         spa.click(selector).setValue(selector, spa_id)
             .expect.element(selector).value.to.equals(spa_id);
+        return spa_id;
     },
 
     "Upload Documents": function (browser) {

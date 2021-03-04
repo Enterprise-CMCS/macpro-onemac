@@ -28,7 +28,7 @@ const commands = {
 
         for (let i = 0; i < total; i++) {
             let selector = 'input[id="uploader-input-' + i + '"]';
-            this.api.assert.elementPresent(selector);
+            //this.api.assert.elementPresent(selector);
             let file = require('path').resolve(dir, files[i]);
             this.api.setValue(selector, file);
         }

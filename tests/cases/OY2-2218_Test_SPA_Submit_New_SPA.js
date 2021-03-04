@@ -42,11 +42,15 @@ module.exports = {
     'Enter SPA ID' : function (browser) {
         let selector = '@transmittal';
         const spa = browser.page.spaBasePage();
-        let spa_id = spa.getTransmitNumber();
+        let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let spa_id = 'CA.'+num1+'.R19.' + num2;
+        //let spa_id = spa.getTransmitNumber();
         spa.click(selector);
         spa.setValue(selector, spa_id);
         browser.pause(500);
         spa.expect.element(selector).value.to.equal(spa_id);
+        return spa_id;
     },
 
     'Upload Documents' : function (browser) {
