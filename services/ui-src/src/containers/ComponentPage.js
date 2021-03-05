@@ -17,14 +17,12 @@ export default function ComponentPage() {
     const [value, setValue] = useState([])
 
     const handleCancel = () => {
-        console.log("handledCancel Called ...")
+        console.log("handledCancel Called ... Value: " + value)
     }
 
     return (
         <>
             <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
-            <div><h2>Multi Select Demo</h2></div>
-            <div>{value}</div>
             <div><MultiSelectDropDown
                 options={options}
                 header="State Affiliation"

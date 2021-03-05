@@ -668,14 +668,19 @@ element.style {
 .css-w3djcp-OptionComponent  {
     background: #0071BC !important;
     top: -60px;
+    height: 22px;
+    width: 82;
     position: relative;
-    padding: 20px 5px !important;
-    border-radius: 2px;
-    line-height: 21px;
-    margin: 0px 0px 0px 0px;
-    color: rgb(255, 255, 255);
+    border-radius: nullpx;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 22px;
+    /* identical to box height */
+
     display: flex;
-    flex-direction: row;
+    align-items: center;
 }
 
 @import url("//maxcdn.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css");
