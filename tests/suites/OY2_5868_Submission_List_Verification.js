@@ -27,7 +27,6 @@ module.exports = {
         browser.end();
     },
 
-
     'Submission List Verification > Submit new SPA': function (browser) {
         // Submit a SPA Report 
         const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
@@ -124,7 +123,7 @@ module.exports = {
 
     },
 
-    'Submission List Verification  > Respond to 1915(b) Waiver RAI': function (browser) {
+    'Submission List Verification > Respond to 1915(b) Waiver RAI': function (browser) {
         const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
         waiverRAI["Click on Respond to 1915(b) Waiver RAI"](browser);
         browser.useCss().setValue('input#transmittalNumber', generatedWaiverID);
@@ -149,7 +148,7 @@ module.exports = {
         browser.useXpath().expect.element(submittedDate).to.be.visible;
     },
 
-    "Submission List Verification  >Submit a Temporary Request Extension": function (browser) {
+    "Submission List Verification > Submit a Temporary Request Extension": function (browser) {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
         tempExt["Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'"](browser);
         browser.useCss().setValue('input#transmittalNumber', generatedWaiverID);
@@ -172,5 +171,6 @@ module.exports = {
 
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss();
     }
 }

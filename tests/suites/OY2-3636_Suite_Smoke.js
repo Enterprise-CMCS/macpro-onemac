@@ -23,7 +23,7 @@ module.exports = {
     },
 
     // ------------------- VERIFYING PACKAGE CONTENT for SPAs ---------------------------------- //
-    
+
     'Verify SPA and Waiver Dashboard Submission > Submit new SPA': function (browser) {
         // Submit a SPA Report 
         const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
@@ -247,12 +247,8 @@ module.exports = {
         browser.back();  // go back to previous page
     },
 
-    
-    
 
     // ------------------- VERIFYING ERROR MESSSAGE ---------------------------------- //
-
-
     'Verify error message > Submit new SPA': function (browser) {
         let link_submitNewSPA = 'button#spaSubmitBtn';
         let bttn_submit = "[value='Submit']";
@@ -269,11 +265,8 @@ module.exports = {
         let attachement_error_msg = '.ds-u-color--error div';
         browser.waitForElementPresent(attachement_error_msg);
         browser.verify.containsText(attachement_error_msg, 'Required attachments missing');
-
         browser.back();
     },
-    
-
 
     'Verify error message > Respond to SPA RAI': function (browser) {
         let link_respondToSPARAI = 'button#spaRaiBtn';
@@ -294,7 +287,7 @@ module.exports = {
 
         browser.back();
     },
-    
+
     'Verify error message > Submit new Waiver': function (browser) {
         let link_submitNewWaiver = 'button#waiverBtn';
         let bttn_submit = "[value='Submit']";
@@ -325,7 +318,6 @@ module.exports = {
         browser.back();
     },
 
-    
     'Verify error message > Respond to 1915(c) Waiver RAI': function (browser) {
         let link_RespondTo1915 = 'button#waiverRaiBtn';
         let bttn_submit = "[value='Submit']";
@@ -346,7 +338,7 @@ module.exports = {
         let attachement_error = ".ds-u-color--error div";
         browser.assert.visible(attachement_error);
         browser.assert.containsText(attachement_error, 'Required attachments missing');
-        
+
         browser.back();
     },
 
@@ -371,5 +363,5 @@ module.exports = {
         browser.assert.containsText(attachement_error, 'Required attachments missing');
 
         browser.back();  // go back to previous page
-    },
+    }
 };

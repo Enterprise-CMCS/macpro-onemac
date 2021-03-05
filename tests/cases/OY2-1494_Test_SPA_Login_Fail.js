@@ -1,6 +1,6 @@
 const login = require('./OY2-1494_Test_SPA_Login');
 module.exports = {
-  tags : ['smoke'],
+ // tags : ['smoke'],
 
   before : function(browser) {
     login.before(browser);
