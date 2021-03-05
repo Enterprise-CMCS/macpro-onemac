@@ -3,7 +3,7 @@
 
 module.exports = {
 
-    "@tags": ["fileUploadLimit", "test1", "smoke"],
+    "@tags": ["fileUploadLimit", "smoke"],
 
     before : function(browser) {
         console.log('Setting up the browser instance...');
@@ -14,6 +14,7 @@ module.exports = {
     },
 
     after : function(browser) {
+        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
         console.log("Stopping test executions...")
         console.log('Closing down the browser instance...');
         browser.end();
