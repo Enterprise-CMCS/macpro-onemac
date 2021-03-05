@@ -27,7 +27,7 @@ module.exports = {
 
     "Click on Respond to 1915(b) Waiver RAI" : function (browser, testData = {
         selector: "@respondWaiver",
-        subUrl: '/waiver'
+        subUrl: '/waiverrai'
     }) {
         new_waiver["Click on 'Submit new Waiver'"](browser, testData);
     },
