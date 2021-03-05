@@ -1,6 +1,7 @@
-import * as debug from "./debug-lib";
+const debug = require('./debug-lib');
+//import * as debug from "./debug-lib";
 
-export default function handler(lambda) {
+module.exports = function handler(lambda) {
   return async function (event, context) {
     let body, statusCode;
 

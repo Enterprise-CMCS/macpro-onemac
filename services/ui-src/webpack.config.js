@@ -2,12 +2,11 @@ const ie11BabeLoader = {
     loader: 'babel-loader',
     options: {
         presets: [
-            [
-                '@babel/preset-env',
+            ['@babel/preset-env',
                 {
                     modules: 'false',
                     targets: {
-                        browsers: '> 1%, IE 11, not dead',
+                        browsers: '> 1%, IE 11, not dead'
                     },
                 }
             ]
@@ -15,8 +14,7 @@ const ie11BabeLoader = {
     }
 };
 
-module.exports = [
-    {
+module.exports = {
         mode: 'development',
         entry: {
             'index': [
@@ -80,5 +78,7 @@ module.exports = [
                 { from: 'node_modules/@webcomponents/webcomponentsjs/bundles', to: 'bundles', toType: 'dir' }
             ])
         ]
-    },
 }
+
+
+

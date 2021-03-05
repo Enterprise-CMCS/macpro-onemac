@@ -123,7 +123,7 @@ module.exports = {
         alert_banner: "[id*=alert_]",
         alert_text: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
-        waiverAuthority: '#waiverAuthority',
+        waiverAuthority: '[id=waiverAuthority]',
         devLoginButton : '[id=devloginBtn]',
         devPassField : '[id=password]',
         devSubmitBtn : 'input[type=submit]',

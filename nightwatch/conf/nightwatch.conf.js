@@ -102,7 +102,13 @@ module.exports = {
 
         "unit-test" : {
             unit_tests_mode : true,
-            filter: "./nightwatch/unit"
+            test_runner : {
+                type : "mocha",
+                options : {
+                    ui : "tdd",
+                }
+            },
+            filter: "./nightwatch/tests/unit"
         }
     }
 };

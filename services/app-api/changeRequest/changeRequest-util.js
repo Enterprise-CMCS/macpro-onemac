@@ -3,9 +3,15 @@ import SPARAI from "./SPARAI";
 import Waiver from "./Waiver";
 import WaiverRAI from "./WaiverRAI";
 import WaiverExtension from "./WaiverExtension";
-import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
-import { territoryList } from "../libs/territoryLib";
+import {territoryList} from "../libs/territoryLib";
 import {DateTime} from "luxon";
+const CHANGE_REQUEST_TYPES = {
+    SPA: 'spa',
+    SPA_RAI: 'sparai',
+    WAIVER: 'waiver',
+    WAIVER_RAI: 'waiverrai',
+    WAIVER_EXTENSION: 'waiverextension'
+};
 
 /**
  * Get a singleton object that overloads the getCMSEmail and getStateEmail
@@ -16,30 +22,15 @@ import {DateTime} from "luxon";
  */
 
 export default function getChangeRequestFunctions(type) {
-  let retval = {};
+  const availableTypes = [
+      {type: CHANGE_REQUEST_TYPES.SPA, val: SPA},
+      {type: CHANGE_REQUEST_TYPES.SPA_RAI, val: SPARAI},
+      {type: CHANGE_REQUEST_TYPES.WAIVER, val: Waiver},
+      {type: CHANGE_REQUEST_TYPES.WAIVER_RAI, val: WaiverRAI},
+      {type: CHANGE_REQUEST_TYPES.WAIVER_EXTENSION, val: WaiverExtension},
+  ];
 
-    switch(type) {
-        case CHANGE_REQUEST_TYPES.WAIVER:
-            retval = Waiver;
-            break;
-        case CHANGE_REQUEST_TYPES.SPA:
-            retval = SPA;
-            break;
-        case CHANGE_REQUEST_TYPES.SPA_RAI:
-            retval = SPARAI;
-            break;
-        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-            retval = WaiverRAI;
-            break;
-        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-            retval = WaiverExtension;
-            break;
-        default:
-            retval = undefined;
-            break;
-    }
-
-    return retval;
+  return availableTypes.find(request => request.type === type).val;
 }
 
 /**
@@ -48,15 +39,11 @@ export default function getChangeRequestFunctions(type) {
  * @returns {String} HTML with the document links.
  */
 export function getLinksHtml(uploads) {
-    let html = "";
-    if(Array.isArray(uploads) && uploads.length > 0) {
-        html = "<ul>";
-        uploads.forEach(async (upload) => {
-        if (upload) html += "<li>" + upload.title + ": <a href=\"" + upload.url +"\">" + upload.filename + "</a></li>";
-        });
-    html += "</ul>";
-    }
-    return html;
+    let list = Array.from(uploads).map(upload => {
+        let {title, url, filename} = upload;
+        return `<li>${title}: <a href="${url}">${filename}</a></li>`
+    });
+    return `<ul>${list}</ul>`
 }
 
 /**
@@ -72,14 +59,11 @@ export function getCMSDateFormat(theTimestamp) {
 
 /**
  * Validate Field Territory/State Code
- * @param {value} Transmittal Number Field Entered on Change Event.
+ * @param {Object} fieldValue Transmittal Number Field Entered on Change Event.
  */
 export function hasValidStateCode(fieldValue) {
-
-    const result = territoryList.some(
-        state => state['value'] === fieldValue.substring(0,2)
+    return territoryList.some(
+        state => state['value'] === fieldValue.substring(0, 2)
     );
-
-    return result;
 
 };

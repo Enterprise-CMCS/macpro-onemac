@@ -1,4 +1,4 @@
-//const SPA = require('../../../services/app-api/changeRequest/SPA');
+const SPA = require('../../../services/app-api/changeRequest/SPA');
 
 module.exports = {
     "@tags": ["integration", "unit"],
