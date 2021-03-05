@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const Services ={}; loadServices();
+const env_var = path.join(process.cwd(), "services");
 
 module.exports = {
     // An array of folders (excluding subfolders) where your nightwatch are located;
@@ -102,13 +103,13 @@ module.exports = {
 
         "unit-test" : {
             unit_tests_mode : true,
-            test_runner : {
-                type : "mocha",
+            test_runner: {
+                type: "mocha",
                 options : {
-                    ui : "tdd",
+                    ui : "tdd"
                 }
             },
-            filter: "./nightwatch/tests/unit"
+            filter: path.join(env_var, "unit-tests"),
         }
     }
 };

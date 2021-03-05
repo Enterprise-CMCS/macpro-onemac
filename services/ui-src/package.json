@@ -30,13 +30,15 @@
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^2.2.2",
     "react-scripts": "3.4.3",
-    "react-select": "^3.1.0"
+    "react-select": "^3.1.0",
+    "react-test-render": "^1.1.2"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "build:staging": "env-cmd -f .env.staging npm run build",
     "test": "react-scripts test",
+    "test-watch": "npm test -- --watchAll=false",
+    "coverage": "npm test -- --coverage --watchAll=false",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -58,9 +60,12 @@
     ]
   },
   "devDependencies": {
-    "@babel/cli": "^7.12.1",
-    "@babel/core": "^7.12.7",
-    "@babel/preset-env": "^7.12.1",
+    "@babel/cli": "^7.13.0",
+    "@babel/core": "^7.13.8",
+    "@babel/preset-env": "^7.13.9",
+    "@babel/register": "^7.13.8",
+    "react-addons-test-utils": "^15.6.2",
+    "react-dev-utils": "^11.0.3",
     "serverless-cloudfront-invalidate": "^1.5.0",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-s3-sync": "^1.14.4"
