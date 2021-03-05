@@ -1,9 +1,10 @@
-
+// Updated by: Guli 
+// Date      : 03/04/2021
 
 module.exports = {
-    "@tags": ["formatTest1", "test1", "smoke"],
-    
-    before : function(browser) {
+    "@tags": ["formTest", "test1", "smoke"],
+
+    before: function (browser) {
         console.log('Setting up the browser instance...');
         console.log('Opening the browser...')
         console.log('Maximizing the browser window size...');
@@ -11,13 +12,13 @@ module.exports = {
         browser.waitForElementPresent('body');
     },
 
-    after : function(browser) {
+    after: function (browser) {
         console.log("Stopping test executions...")
         console.log('Closing down the browser instance...');
         browser.end();
-    }, 
+    },
 
-    'Login to Medicaid as Regular User' : function(browser) {
+    'Login to Medicaid as Regular User': function (browser) {
         // Test Data 
         const username = browser.globals.user;
         const password = browser.globals.pass;
@@ -33,10 +34,10 @@ module.exports = {
 
         // Test Assertion
         browser.verify.containsText('h1', spaPageTitle);
-    }, 
+    },
 
-    'Verify the SPA ID format check on Submit New SPA' : function(browser) {
-                let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
+    'Verify the SPA ID format check on Submit New SPA': function (browser) {
+        let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
         let spa_id_input = "[name='transmittalNumber']";
 
         // Enter valid SPA ID 1
@@ -61,9 +62,9 @@ module.exports = {
         browser.clearValue('css selector', spa_id_input);
 
         browser.back();  // go back to previous page
-    }, 
+    },
 
-    'Verify the SPA ID format check on Respond to SPA RAI' : function(browser) {
+    'Verify the SPA ID format check on Respond to SPA RAI': function (browser) {
         browser.click("button#spaRaiBtn");  // clicking the "Respond to SPA RAI" link
 
         let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
@@ -83,13 +84,13 @@ module.exports = {
 
         // Enter invalid SPA ID and make sure error message is displayed 
         let invalid_id = "20-VA-1234";
-        browser.setValue(spa_id_input, invalid_id);
-        browser.expect.element(error_msg_element).to.be.visible;
+        browser.setValue(spa_id_input, invalid_id).pause(1000);
+        browser.expect.element('div#transmittalNumberErrorMsg').to.be.visible;
 
         browser.back();  // go back to previous page
-    }, 
+    },
 
-    'Verify the Waiver Number format on Submit New Waiver Action': function(browser) {
+    'Verify the Waiver Number format on Submit New Waiver Action': function (browser) {
         browser.click("button#waiverBtn");
 
         let error_msg_element = 'div#waiverTransmittalNumberErrorMsg';
@@ -110,12 +111,12 @@ module.exports = {
         // Enter invalid SPA ID and make sure error message is displayed 
         let invalid_num = "SS.##.R##.M##";
         browser.setValue(waiver_num_input, invalid_num);
-        browser.expect.element(error_msg_element).to.be.visible;
+        browser.expect.element('div#transmittalNumberErrorMsg').to.be.visible;
 
         browser.back();  // go back to previous page
-    }, 
+    },
 
-    'Verify the Waiver Number format on Respond to 1915(c) Waiver RAI': function(browser) {
+    'Verify the Waiver Number format on Respond to 1915(c) Waiver RAI': function (browser) {
         browser.click("button#waiverRaiBtn");
 
         let error_msg_element = 'div#spaTransmittalNumberErrorMsg';
@@ -136,12 +137,12 @@ module.exports = {
         // Enter invalid SPA ID and make sure error message is displayed 
         let invalid_num = "SS.##.R##.M##";
         browser.setValue(waiver_num_input, invalid_num);
-        browser.expect.element(error_msg_element).to.be.visible;
+        browser.expect.element('div#transmittalNumberErrorMsg').to.be.visible;
 
         browser.back();  // go back to previous page
-    }, 
+    },
 
-    'Verify the Waiver Number format on Reuqest Temporary Extension form - 1915(b) and 1915(c)': function(browser) {
+    'Verify the Waiver Number format on Reuqest Temporary Extension form - 1915(b) and 1915(c)': function (browser) {
         browser.click("button#waiverExtBtn");
 
         let error_msg_element = 'div#waiverTransmittalNumberErrorMsg';
@@ -162,7 +163,7 @@ module.exports = {
         // Enter invalid SPA ID and make sure error message is displayed 
         let invalid_num = "SS.##.R##.M##";
         browser.setValue(waiver_num_input, invalid_num);
-        browser.expect.element(error_msg_element).to.be.visible;
+        browser.expect.element('div#transmittalNumberErrorMsg').to.be.visible;
 
         browser.back();  // go back to previous page
     }

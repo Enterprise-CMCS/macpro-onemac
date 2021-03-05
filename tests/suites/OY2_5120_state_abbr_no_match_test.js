@@ -1,3 +1,5 @@
+// Updated by: Guli 
+// Date      : 03/04/2021
 
 module.exports = {
     "@tags": ["abbrVerify", "test1", "smoke"],
@@ -37,7 +39,8 @@ module.exports = {
     'Verify that there are no state abbribiation option' : function(browser) {
         browser.click('button#spaSubmitBtn');
         let state_territory = "//*[contains(text(), 'State/Territory')]";
-        browser.expect.element(state_territory).to.be.not.present;
+        browser.useXpath().expect.element(state_territory).to.be.not.present;
+        browser.useCss();
         
         // Enter illegal State abbribiation 
         let abbr = 'QA';

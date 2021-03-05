@@ -1,3 +1,8 @@
+// Updated by: Guli 
+// Date      : 03/04/2021
+
+const login = require('../cases/OY2-1494_Test_SPA_Login');
+
 module.exports = {
 
     "@tags": ["FAQ", "smoke"],
@@ -9,6 +14,7 @@ module.exports = {
         console.log('Maximizing the browser window size...');
         browser.windowMaximize().url(browser.launch_url);
         browser.waitForElementPresent('body');
+        login["Login to Medicaid as Regular User"](browser);
     },
 
     // After all the test case executions, clear out the browser
@@ -27,26 +33,6 @@ module.exports = {
         browser.verify.containsText(pageBanner, expectedBannerText).pause(500);
         browser.back();  // go back to previous page
     },
-
-    // 1st: Logins to the test site 
-    'Login to Medicaid as Regular User': function (browser) {
-        // Test Data 
-        const username = browser.globals.user;
-        const password = browser.globals.pass;
-        let spaPageTitle = 'SPA and Waiver Dashboard';
-
-        // Test Stesp
-        browser.click('.nav-right > [type]');  // click the login button
-        browser.setValue('#okta-signin-username', username);
-        browser.setValue('#okta-signin-password', password);
-        browser.click('#tandc');
-        browser.click('#okta-signin-submit');
-        browser.waitForElementPresent('body');
-
-        // Test Assertion
-        browser.verify.containsText('h1', spaPageTitle);
-    },
-
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = '.nav-left > a:nth-of-type(3)';

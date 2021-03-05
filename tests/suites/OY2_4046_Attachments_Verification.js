@@ -1,6 +1,8 @@
+// Updated by: Guli 
+// Date      : 03/04/2021
 
 module.exports = {
-    "@tags": ["attachementTest", "test1", "smoke"],
+    "@tags": ["fileUploadVisbilityTest", "test1", "smoke"],
 
     before : function(browser) {
         console.log('Setting up the browser instance...');

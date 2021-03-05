@@ -1,7 +1,10 @@
-let spaID = '';
+// Updated by: Guli 
+// Date      : 03/04/2021
+
+let spaID ;
 
 module.exports = {
-   "@tags": ["waive", "test1", "smoke"],
+   "@tags": ["waiverFormValidation", "test1", "smoke"],
 
    // Opens the browser, goes to the test site
     before : function(browser) {
