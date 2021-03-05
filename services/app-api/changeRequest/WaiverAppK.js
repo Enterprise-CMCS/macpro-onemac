@@ -1,6 +1,5 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * Waiver Appendix K Amendment specific functions.
@@ -15,7 +14,6 @@ class WaiverAppK {
  */
 async fieldsValid(data) {
     let areFieldsValid=true;
-    let idExists = null;
     let whyNot = "";
 
       const params = {
@@ -33,10 +31,8 @@ async fieldsValid(data) {
 
         if (result.Item) {
           console.log("the Item exists", result);
-          idExists = true;
         } else {
           console.log("result.Item does not exist");
-          idExists = false;
         }
       } catch (error) {
         console.log("packageExists got an error: ", error);
