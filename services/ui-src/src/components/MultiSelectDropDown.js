@@ -39,9 +39,11 @@ const MultiSelectDropDown = ({options, header, subheader, cancelFn, submitFn}) =
                     />
 
                 </div>
+                <div className="component-submit-solid">
                 <button onClick={submitFn(value)} className="multi-select-dropdown-submit-button" type="button">
                     Submit
                 </button>
+                </div>
             </div>
         </>
     )
