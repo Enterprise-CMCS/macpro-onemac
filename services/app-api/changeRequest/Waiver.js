@@ -72,7 +72,7 @@ async fieldsValid(data) {
             <br><b>Waiver Authority</b>: ${data.waiverAuthority}
         </p>
         <p>
-            <b>Summary</b>:
+            <b>Additional Information</b>:
             <br>${data.summary}
         </p>
         <p>
@@ -108,7 +108,7 @@ async fieldsValid(data) {
             <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
         </p>
         <p>
-            <b>Summary</b>:<br>
+            <b>Additional Information</b>:<br>
             ${data.summary}
         </p>
         <br>

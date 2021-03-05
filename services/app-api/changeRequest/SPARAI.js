@@ -64,7 +64,7 @@ async fieldsValid(data) {
             <br><b>SPA ID</b>: ${data.transmittalNumber}
         </p>
         <p>
-            <b>Summary</b>:
+            <b>Additional Information</b>:
             <br>${data.summary}
         </p>
         <p>
@@ -99,7 +99,7 @@ async fieldsValid(data) {
             <br><b>Submitter email</b>: ${data.user.email}
         </p>
         <p>
-            <b>Summary</b>:<br>
+            <b>Additional Information</b>:<br>
             ${data.summary}
         </p>
         <br>
