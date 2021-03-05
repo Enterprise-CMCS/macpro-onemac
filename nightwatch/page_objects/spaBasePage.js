@@ -45,7 +45,8 @@ const commands = {
         const randomBaseNumLengthOption = baseNumLengthOptions[Math.floor(Math.random() * baseNumLengthOptions.length)]
         let group = [state, getRandomNumberString(randomBaseNumLengthOption), `R${getRandomNumberString(2)}`, getRandomNumberString(2)];
         let id = group.join(".");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        const waiverFile = path.join(__dirname, "waiver.txt");
+        fs.writeFileSync(waiverFile, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
 

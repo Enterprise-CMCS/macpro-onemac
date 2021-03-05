@@ -42,13 +42,8 @@ async fieldsValid(data) {
         console.log("packageExists got an error: ", error);
       }
 
-      // all Amendment K Waiver Actions require an existing ID
-      if (data.waiverAuthority === "1915(c)" && !idExists) {
-        areFieldsValid = false;
-        whyNot = RESPONSE_CODE.WAIVER_NEED_ID_FOR_K;
-      }
       // NEW action type should have NEW IDs
-      else if (data.actionType === "new" && idExists) {
+      if (data.actionType === "new" && idExists) {
         areFieldsValid = false;
         whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
       }

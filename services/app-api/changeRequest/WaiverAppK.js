@@ -42,11 +42,6 @@ async fieldsValid(data) {
         console.log("packageExists got an error: ", error);
       }
 
-      if (!idExists) {
-        areFieldsValid = false;
-        whyNot = RESPONSE_CODE.WAIVER_NEED_ID_FOR_K;
-      }
-
       return { areFieldsValid, whyNot };
   }
 

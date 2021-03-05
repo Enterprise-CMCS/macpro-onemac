@@ -41,10 +41,8 @@ module.exports = {
         spa.setValue(selector, spa_id);
         spa.expect.element(selector).value.to.equals(spa_id);
     },
-
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(2).pause(500);
+        new_spa["Upload Documents"](browser, 1);
     },
 
     "Enter Comments": function (browser) {

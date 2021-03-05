@@ -1,6 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
+import { ROUTES } from "../Routes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 
@@ -18,11 +19,17 @@ const WaiverAppK = () => {
     detailsHeader: "1915(c) Appendix K Amendment",
     requiredUploads: ["Appendix K Template"],
     optionalUploads: ["Other"],
-    idType: "waiverappk",
-    idLabel: "base waiver number",
-    idFormat: "SS.####.R##.## or SS.#####.R##.##",
-    idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
-    idMustExist: () => true,
+    transmittalNumber: {
+      idType: "waiverappk",
+      idLabel: "Waiver Number",
+      idFAQLink: ROUTES.FAQ_WAIVER_ID,
+      idHintText: "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)",
+      idFormat: "SS.####.R##.## or SS.#####.R##.##",
+      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
+      idMustExist: true,  
+      errorLevel: "warn",
+      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+    },
   };
 
   if (id) {
