@@ -4,7 +4,7 @@ let generatedSPAID;
 let generatedWaiverID;
 
 module.exports = {
-    "@tags": ["smoke"],
+    "@tags": ["smoke", "regression"],
 
     before: function (browser) {
         console.log('Setting up the browser instance...');

@@ -4,7 +4,7 @@
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
-    "@tags": ["formTest", "smoke"],
+    "@tags": ["formTest", "smoke", "regression"],
 
     before: function (browser) {
         console.log('Setting up the browser instance...');

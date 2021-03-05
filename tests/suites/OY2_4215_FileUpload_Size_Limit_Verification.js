@@ -5,7 +5,7 @@
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 module.exports = {
 
-    "@tags": ["fileUploadLimit", "smoke"],
+    "@tags": ["fileUploadLimit", "smoke", "regression"],
 
     before: function (browser) {
         console.log('Setting up the browser instance...');
