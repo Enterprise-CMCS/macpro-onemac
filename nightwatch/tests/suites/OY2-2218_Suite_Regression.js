@@ -10,6 +10,11 @@ module.exports = {
         browser.pause(timeout * 5);
     },
 
+    afterEach: function (browser) {
+        let spa = browser.page.spaBasePage();
+        spa.click('@dashboardLink').waitForElementPresent('body');
+    },
+
     after: function (browser) {
         login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);

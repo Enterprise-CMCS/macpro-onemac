@@ -124,6 +124,7 @@ module.exports = {
         alert_text: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
+        dashboardLink: '[id=dashboardLink]',
         devLoginButton : '[id=devloginBtn]',
         devPassField : '[id=password]',
         devSubmitBtn : 'input[type=submit]',

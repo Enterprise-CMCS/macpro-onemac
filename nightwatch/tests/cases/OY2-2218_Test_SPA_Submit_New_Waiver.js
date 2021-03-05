@@ -65,7 +65,6 @@ module.exports = {
     },
 
     "Submit Waiver": function (browser) {
-        browser.pause(timeout)
         new_spa["Submit SPA"](browser);
     }
 

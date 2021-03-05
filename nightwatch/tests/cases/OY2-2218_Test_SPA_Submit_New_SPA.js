@@ -85,23 +85,13 @@ module.exports = {
         spa.verify.containsText(selector, entered_text)
     },
 
-    'Submit SPA' : function (browser, testData = [
-        {selector: '@alert_banner', msg: "Submission Completed"},
-        {selector: '@alert_text', msg: "Your submission has been received."},
-    ]) {
+    'Submit SPA' : function (
+        browser,
+        testData = { selector: '@alert_banner' }
+    ) {
         spa = browser.page.spaBasePage();
-        browser.url(function (current) {
-            browser.pause(timeout);
-            browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.pause(timeout * 5);
-            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
-        });
-
-        Array.from(testData).forEach(obj => {
-            spa.verify.elementPresent(obj.selector);
-            spa.verify.containsText(obj.selector, obj.msg);
-            browser.pause(timeout / 2);
-        });
+        browser.click('[type="submit"]');
+        spa.expect.element(testData.selector).to.be.visible.before(timeout * 20);
     },
 
 };
