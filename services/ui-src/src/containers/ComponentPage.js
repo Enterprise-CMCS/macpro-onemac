@@ -25,8 +25,8 @@ export default function ComponentPage() {
             <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
             <div><MultiSelectDropDown
                 options={options}
-                header="State Affiliation"
-                subheader="Select your State Affiliation "
+                header="Passed In Value when used."
+                subheader="Passed In Value when used."
                 submitFn={val => setValue(val)}
                 cancelFn={handleCancel}
             /></div>

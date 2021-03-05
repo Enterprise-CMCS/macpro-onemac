@@ -598,15 +598,10 @@ margin: 60px;
     z-index: 9;
 }
 
-.react-dropdown-select-item-selected {
- background: #0071BC;
-     background-color: #0071BC;
-}
 .react-dropdown-select-item[aria-selected="true"]  {
      background: #0071BC !important;;
      background-color: #0071BC !important;;
 }
-
 
 .multi-select-dropdown-buttons {
     display: flex;
@@ -644,12 +639,18 @@ element.style {
 .css-wmw4vi-ReactDropdownSelect {
    background-color: #ffffff;
    box-sizing: border-box;
+   border: #000000;
 }
 
 .css-148o527-ItemComponent {
     padding: 5px 10px;
     cursor: pointer;
     border-bottom: 1px solid #fff;
+     font-family: Open Sans !important;
+        font-style: normal !important;
+        font-weight: bold !important;
+        font-size: 14px !important;
+        line-height: 22px !important;
 }
 
 .css-v1jrxw-ContentComponent {
@@ -668,17 +669,15 @@ element.style {
 .css-w3djcp-OptionComponent  {
     background: #0071BC !important;
     top: -60px;
-    height: 22px;
-    width: 82;
+    height: 22px !important;
+    width: 82 !important;
     position: relative;
     border-radius: nullpx;
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: bold;
-    font-size: 12px;
-    line-height: 22px;
-    /* identical to box height */
-
+    font-family: Open Sans !important;
+    font-style: normal !important;
+    font-weight: bold !important;
+    font-size: 14px !important;
+    line-height: 22px !important;
     display: flex;
     align-items: center;
 }
@@ -712,6 +711,9 @@ letter-spacing: 0px;
 text-align: left;
 }
 
+.div {
+  border: #000000 !important;
+}
 .search {display: inline-block;}
 
 .search input {
