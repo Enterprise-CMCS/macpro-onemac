@@ -180,7 +180,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       try {
         if (transmittalNumberDetails.existenceRegex !== undefined) {
           newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
-          console.log("new trans number: ", newTransmittalNumber);
         } 
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
