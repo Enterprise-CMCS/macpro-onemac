@@ -80,7 +80,7 @@ module.exports = {
         const renewWaiver = require('../cases/OY2-5866_Submit_Renewal_Waiver');
         steps.forEach(step => renewWaiver[step](browser));
     },
-/*
+
     "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser, steps = [
         "Click on Respond to 1915(b) Waiver RAI",
         "Enter Waiver Number",
@@ -102,5 +102,4 @@ module.exports = {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
         steps.forEach(step => tempExt[step](browser));
     },
-    */
 };
