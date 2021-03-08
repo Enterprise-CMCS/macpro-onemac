@@ -91,7 +91,7 @@ module.exports = {
         const waiverRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_1915b_Waiver_RAI');
         steps.forEach(step => waiverRAI[step](browser));
     },
-
+/*
     "Submit a Temporary Request Extension": function (browser, steps = [
         "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'",
         "Enter Waiver Number",
