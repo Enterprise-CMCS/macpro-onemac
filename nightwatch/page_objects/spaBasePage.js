@@ -1,35 +1,43 @@
 const fs = require('fs');
 const path = require('path');
-let spaVar;
 const commands = {
 
     // SS-YY-NNNN-xxxx or SS-YY-NNNN
     getTransmitNumber: function (optional = true, state = "VA") {
-        let rand = () => this.props.getRandomNumber(0, 10000);
-        let group = [state, this.props.getRandomNumber(), rand()];
+        let rand = (min = 0, max = 10000) => this.props.getRandomNumber(min, max);
+        let group = [state, rand(0, 100), rand()];
         if (optional) {
             group.push(rand());
         }
         let id = group.join("-");
-        spaVar = path.join(__dirname, "spa.txt");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        const spaFile = path.join(__dirname, "spa.txt");
+        fs.writeFileSync(spaFile, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
 
-    // 1915(b) SS.##.R##.M##
-    // 1915(c) SS.##.R##.##
-    getWaiverNumber: function (isWaiverB = true, state = "VA") {
-        let rand = () => this.props.getRandomNumber();
-        let group = (isWaiverB) ? [state, rand(), `R${rand()}`, `M${rand()}`] : [state, rand(), `R${rand()}`, `M${rand()}`];
+    // 1915(b) ID based on waiverAction
+    // new - SS.#### or SS.#####
+    // amendment - SS.####.R##.M## or SS.#####.R##.M##
+    // renewal - SS.####.R## or SS.#####.R##
+    getWaiverNumber: function (waiverAction = 'new',state = 'VA', option = false) {
+        let rand = (min = 0, max = 100000) => this.props.getRandomNumber(min, max);
+        let group = (waiverAction === 'new' && option === true) ? [state, rand()] : [state, rand(0, 10000)];
+
+        if(waiverAction === 'renewal' || waiverAction === 'amendment') {
+            group.push(`R${rand(0, 100)}`);
+        }
+        if (waiverAction === 'amendment') {
+            group.push(`M${rand(0, 100)}`);
+        }
+
         let id = group.join(".");
-        spaVar = path.join(__dirname, "waiver.txt");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
+        const waiverFile = path.join(__dirname, "waiver.txt");
+        fs.writeFileSync(waiverFile, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
 
-    getID: function (spa = true) {
-        spaVar = (spa) ? path.join(__dirname, 'spa.txt') : path.join(__dirname, 'waiver.txt');
-        return fs.readFileSync(spaVar, 'utf8');
+    getID: function (file = 'spa.txt') {
+        return fs.readFileSync(path.join(__dirname, file),'utf8');
     },
 
     enterComments: function (selector, text) {
@@ -63,34 +71,35 @@ const commands = {
         this.api.click(this.elements.logout);
     },
 
-    uploadDocs: function (type = '.pdf',requiredOnly= true, uploadValidation) {
+    uploadDocs: function (type = '.pdf',required = 0, validateUpload) {
         const dir = path.join(__dirname, 'files');
         const testFile = fs.readdirSync(dir).find(file => {
-            const regEx = `^.*(${type})$`
+            const regEx = `^.*(${type})$`;
             return file.match(new RegExp(regEx));
         });
-        const eachElement = (result) => {
-            let selector = `[id=${result.value}]`;
-            let filePath = path.resolve(dir, testFile);
-            this.api.setValue(selector, filePath);
-            uploadValidation(selector, testFile);
-        }
 
-        const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', eachElement);
-
-        this.api.elements('css selector', this.elements.uploadFields, function (result) {
-            let elements = Array.from(result.value);
-            if (requiredOnly) {
-                elements = elements.slice(0, 2);
-            }
-
-            elements.forEach(obj => {
-                let webElementId = obj["ELEMENT"];
-                uploadElement(webElementId);
-            });
+        const setValueTo = (selector, filePath) => this.api.setValue(selector, filePath);
+        const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', function (result) {
+            let selector = `[id=${result.value}]`, filePath = path.resolve(dir, testFile);
+            setValueTo(selector, filePath);
+            validateUpload(selector, testFile);
         });
 
+        let eachElement = function (result) {
+            let elements = Array.from(result.value);
+
+            elements.forEach((obj, index) => {
+                if(index < required && index < elements.length) {
+                    let webElementId = obj["ELEMENT"];
+                    uploadElement(webElementId);
+                }
+            });
+        }
+
+        this.api.elements('css selector', this.elements.uploadFields, eachElement);
+
     },
+
     /*
     uploadFiles: function (total) {
         const fs = require('fs');
@@ -115,6 +124,7 @@ module.exports = {
         alert_text: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
+        dashboardLink: '[id=dashboardLink]',
         devLoginButton : '[id=devloginBtn]',
         devPassField : '[id=password]',
         devSubmitBtn : 'input[type=submit]',
@@ -141,15 +151,16 @@ module.exports = {
 
     props : {
         pauseAction: 1000,
-        getRandomNumber(inclusive = 0, exclusive= 100) {
-            let min = Math.ceil(inclusive), max = Math.floor(exclusive);
-            let randomNum = Math.floor(Math.random() * (max - min) + min);
-            let randNumStr = randomNum.toString(), size = max.toString().length;
-            while (randNumStr.length < size - 1) {
-                randNumStr = "0".concat(randNumStr);
+        getRandomNumber(inclusive, exclusive) {
+            let range = { min: Math.ceil(inclusive), max: Math.floor(exclusive) };
+            let randomNum = Math.floor(Math.random() * (range.max - range.min) + range.min).toString();
+            let size = range.max.toString().length;
+            while (randomNum.length < size - 1) {
+                randomNum = "0".concat(randomNum);
             }
-            return randNumStr;
-        }
+            console.log(randomNum);
+            return randomNum;
+        },
     }
 };
 

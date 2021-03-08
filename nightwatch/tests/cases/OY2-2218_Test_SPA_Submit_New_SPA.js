@@ -30,7 +30,6 @@ module.exports = {
         spa.assert.elementPresent(testData.selector);
         spa.click(testData.selector).waitForElementPresent('body');
         browser.assert.urlContains(testData.subUrl);
-        browser.pause(timeout);
     },
     /*
     "Enter SPA State/Territory Information" : function (browser) {
@@ -49,22 +48,21 @@ module.exports = {
 
     */
 
-    "Enter SPA ID" : function (browser, spa_id = "") {
-        let selector = '@transmittal';
-        let id = (spa_id.length !== 0) ? spa_id : spa.getTransmitNumber(false);
+    "Enter SPA ID" : function (browser, spa_id) {
         spa = browser.page.spaBasePage();
+        let selector = '@transmittal';
+        let id = (spa_id) ? spa_id : spa.getTransmitNumber(false, "AK");
         spa.expect.element(selector).to.be.visible.before(timeout * 10);
-        const enterValue = async function (result) {
-            console.log(result.value);
-            await spa.setValue(selector, id);
+        spa.setValue(selector, id, () => {
+            browser.keys([browser.Keys.TAB]);
             spa.expect.element(selector).value.to.contain(id);
-        };
-        spa.click(selector, enterValue);
+        });
+
     },
 
     "Enter SPA ID (Optional)" : function (browser) {
         spa = browser.page.spaBasePage();
-        this["Enter ID"](browser, spa.getTransmitNumber(true));
+        this["Enter ID"](browser, spa.getTransmitNumber(true, "ND"));
     },
 /*
 
@@ -74,7 +72,7 @@ module.exports = {
     },
 */
 
-    "Upload Documents": function (browser, type = 'pdf', required = true) {
+    "Upload Documents": function (browser, required = 2, type = 'pdf') {
         let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
         spa = browser.page.spaBasePage();
         spa.uploadDocs(type, required, validate);
@@ -87,23 +85,13 @@ module.exports = {
         spa.verify.containsText(selector, entered_text)
     },
 
-    'Submit SPA' : function (browser, testData = [
-        {selector: '@alert_banner', msg: "Submission Completed"},
-        {selector: '@alert_text', msg: "Your submission has been received."},
-    ]) {
+    'Submit SPA' : function (
+        browser,
+        testData = { selector: '@alert_banner' }
+    ) {
         spa = browser.page.spaBasePage();
-        browser.url(function (current) {
-            browser.pause(timeout);
-            browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.pause(timeout * 5);
-            browser.expect.url().to.not.equals(current.value).before(timeout * 20);
-        });
-
-        Array.from(testData).forEach(obj => {
-            spa.verify.elementPresent(obj.selector);
-            spa.verify.containsText(obj.selector, obj.msg);
-            browser.pause(timeout / 2);
-        });
+        browser.click('[type="submit"]');
+        spa.expect.element(testData.selector).to.be.visible.before(timeout * 20);
     },
 
 };
