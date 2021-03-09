@@ -95,6 +95,7 @@ const Dashboard = () => {
         case CHANGE_REQUEST_TYPES.SPA:
           type = "SPA";
           break;
+
         case CHANGE_REQUEST_TYPES.WAIVER:
           type = "Waiver";
           break;
@@ -109,6 +110,10 @@ const Dashboard = () => {
 
         case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
           type = "Temporary Extension Request";
+          break;
+
+        case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
+          type = "1915(c) Appendix K Amendment";
           break;
 
         default:
@@ -174,6 +179,13 @@ const Dashboard = () => {
             onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
           >
             Request Temporary Extension form - 1915(b) and 1915(c)
+          </Button>
+          <Button
+            id="waiverAppKBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_APP_K)}
+          >
+            Submit 1915(c) Appendix K Amendment
           </Button>
         </div>
         <div className="dashboard-right-col">

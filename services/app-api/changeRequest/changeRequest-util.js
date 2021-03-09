@@ -3,6 +3,7 @@ import SPARAI from "./SPARAI";
 import Waiver from "./Waiver";
 import WaiverRAI from "./WaiverRAI";
 import WaiverExtension from "./WaiverExtension";
+import WaiverAppK from "./WaiverAppK";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import { territoryList } from "../libs/territoryLib";
 import {DateTime} from "luxon";
@@ -33,6 +34,9 @@ export default function getChangeRequestFunctions(type) {
             break;
         case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
             retval = WaiverExtension;
+            break;
+        case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
+            retval = WaiverAppK;
             break;
         default:
             retval = undefined;

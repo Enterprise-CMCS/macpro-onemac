@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+import { ROUTES } from "../Routes";
 
 /**
  * WaiverRai acts as a wrapper around RaiTemplate to render custom RAI form for a Waiver RAI
@@ -24,11 +25,17 @@ const WaiverRai = () => {
       "1915(b) waiver",
       "Other",
     ],
-    idType: "waiver",
-    idLabel: "Waiver Number",
-    idFormat: "SS.##.R##.M##",
-    idRegex: "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)",
-    idMustExist: (changeRequest) => {return true;},
+
+    transmittalNumber: {
+      idType: "waiver",
+      idLabel: "Waiver Number",
+      idFAQLink: ROUTES.FAQ_WAIVER_ID,  
+      idHintText: "Please use the exact Waiver Number sent with the RAI",
+      idFormat: "the Number format sent with the RAI",
+      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$)",
+      idMustExist: true,  
+    },
+
   };
 
   if (id) {

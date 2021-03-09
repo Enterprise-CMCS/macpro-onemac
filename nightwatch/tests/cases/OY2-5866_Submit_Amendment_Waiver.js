@@ -1,7 +1,7 @@
 /*
-    Test Scenario: New Waiver Action
+    Test Scenario: Create Amendment Waiver Action
     Description: This will login to the application, click the link to start the Waiver process,
-    enter the required Waiver information for a NEW waiver action, and upload documents using files
+    enter the required Waiver information for the Amend Action, and upload documents using files
     located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
 
  */
@@ -10,7 +10,7 @@ const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
 const timeout = 2000;
-const waiverAction = "new";
+const waiverAction = "amendment";
 
 module.exports = {
 
@@ -35,7 +35,7 @@ module.exports = {
 
     "Enter Action Type": function (browser, testData = {
         selector: '@actionType',
-        text: "New waiver",
+        text: "Waiver amendment",
     }) {
         spa = browser.page.spaBasePage();
         spa.expect.element(testData.selector).to.be.visible.after(timeout * 5);
@@ -43,21 +43,24 @@ module.exports = {
         spa.verify.containsText(testData.selector, testData.text);
     },
 
-    "Enter Waiver Authority": function (browser, text = "All other 1915(b) Waivers") {
+    "Enter Waiver Authority": function (browser) {
         const testData = {
             selector: '@waiverAuthority',
-            text: text,
-        };
-        this["Enter Action Type"](browser, testData);
+            authority: "All other 1915(b) Waivers",
+        }
+        spa = browser.page.spaBasePage();
+        spa.expect.element(testData.selector).to.be.visible;
+        spa.setValue(testData.selector, testData.authority).pause(500);
+        spa.expect.element(testData.selector).text.to.contain(testData.authority);
     },
 
-    "Enter Waiver Number": function (browser, waiverAction = 'new', state = "KS") {
+    "Enter Waiver Number": function (browser, waiverAction = 'amendment', state = "IL") {
         spa = browser.page.spaBasePage();
         new_spa["Enter SPA ID"](browser, spa.getWaiverNumber(waiverAction, state));
     },
 
     "Upload Documents": function (browser) {
-        new_spa["Upload Documents"](browser, 1);
+        new_spa["Upload Documents"](browser);
     },
 
     "Enter Comments": function (browser) {
@@ -65,6 +68,7 @@ module.exports = {
     },
 
     "Submit Waiver": function (browser) {
+        browser.pause(timeout)
         new_spa["Submit SPA"](browser);
     }
 

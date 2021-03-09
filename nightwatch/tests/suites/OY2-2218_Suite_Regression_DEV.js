@@ -9,6 +9,11 @@ module.exports = {
         browser.pause(timeout * 5);
     },
 
+    afterEach: function (browser) {
+        let spa = browser.page.spaBasePage();
+        spa.click('@dashboardLink').waitForElementPresent('body');
+    },
+
     after: function (browser) {
         regression.after(browser);
     },
@@ -17,8 +22,16 @@ module.exports = {
         regression["Submit a SPA Report"](browser);
     },
 
-    "Submit a SPA Waiver ": function (browser) {
-        regression["Submit a SPA Waiver "](browser);
+    "Submit a Waiver ": function (browser) {
+        regression["Submit a New Waiver Action"](browser);
+    },
+
+    "Submit an Amendment Waiver Action": function (browser) {
+        regression["Submit an Amendment Waiver Action"](browser);
+    },
+
+    "Submit a Renewal Waiver Action": function (browser) {
+        regression["Submit a Renewal Waiver Action"](browser);
     },
 
     "Submit a SPA RAI Response": function (browser) {
@@ -32,4 +45,8 @@ module.exports = {
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
     },
+
+    "Submit a 1915(c) Appendix K Amendment": function (browser) {
+        regression["Submit a 1915(c) Appendix K Amendment"](browser);
+    }
 };

@@ -8,6 +8,7 @@ import ComponentPage from "./containers/ComponentPage";
 import Spa from "./changeRequest/Spa";
 import SpaRai from "./changeRequest/SpaRai";
 import Waiver from "./changeRequest/Waiver";
+import WaiverAppK from "./changeRequest/WaiverAppK";
 import WaiverRai from "./changeRequest/WaiverRai";
 import WaiverExtension from "./changeRequest/WaiverExtension";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
@@ -32,7 +33,8 @@ export const ROUTES = {
     COMPONENT_PAGE: '/componentpage', // temporary placeholder for the developers to house components //
     WAIVER: '/waiver',
     WAIVER_RAI: '/waiverrai',
-    WAIVER_EXTENSION: '/waiverextension'
+    WAIVER_EXTENSION: '/waiverextension',
+    WAIVER_APP_K: '/waiverappk'
 }
 
 export default function Routes() {
@@ -67,6 +69,9 @@ export default function Routes() {
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
                 <WaiverExtension />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?`}>
+                <WaiverAppK />
             </AuthenticatedRoute>
             <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
                 <Metrics/>

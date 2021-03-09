@@ -1,20 +1,19 @@
-import { getLinksHtml } from "./changeRequest-util";
+import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
- * SPA RAI submission specific email generation functions.
+ * Waiver Appendix K Amendment specific functions.
  * @class
  */
-class SPARAI {
+class WaiverAppK {
 
 /**
- * SPA RAI Submissions require that the Package ID is in the system.
+ * Appendix K Amendment Submissions require that the Package ID exists.
  * @param {Object} data the received data
  * @returns {String} any errors
  */
 async fieldsValid(data) {
-    let areFieldsValid = false;
+    let areFieldsValid=true;
     let whyNot = "";
 
       const params = {
@@ -32,36 +31,33 @@ async fieldsValid(data) {
 
         if (result.Item) {
           console.log("the Item exists", result);
-          areFieldsValid = true;
         } else {
           console.log("result.Item does not exist");
-          areFieldsValid = false;
-          whyNot = RESPONSE_CODE.ID_NOT_FOUND;
         }
-
       } catch (error) {
         console.log("packageExists got an error: ", error);
       }
 
-    return { areFieldsValid, whyNot };
+      return { areFieldsValid, whyNot };
   }
 
-  /**
-   * SPA RAI submission email to CMS details wrapped in generic function name.
-   * @param {Object} data from the form submission.
+   /**
+   * Appendix K Amendment submission email to CMS details wrapped in generic function name.
+    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
    */
     getCMSEmail(data) {
         const cmsEmail = {};
 
         cmsEmail.ToAddresses = [process.env.reviewerEmail];
-        cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
+        cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
         cmsEmail.HTML = `
-        <p>The Submission Portal received a SPA RAI Submission:</p>
+        <p>The Submission Portal received a 1915(b) waiver/1915(c) Appendix K Amendment Submission:</p>
         <p>
+            <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>SPA ID</b>: ${data.transmittalNumber}
+            <br><b>Waiver #</b>: ${data.transmittalNumber}
         </p>
         <p>
             <b>Additional Information</b>:
@@ -80,7 +76,7 @@ async fieldsValid(data) {
     }
 
     /**
-     * SPA RAI submission confimation email to State User wrapped in
+     * Appendix K Amendment submission confimation email to State User wrapped in
      * generic function name.
      * @param {Object} data from the form submission.
      * @returns {Object} email parameters in generic format.
@@ -89,14 +85,15 @@ async fieldsValid(data) {
         const stateEmail = {};
 
         stateEmail.ToAddresses = [data.user.email];
-        stateEmail.Subject =
-            "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
+        stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
         stateEmail.HTML = `
-        <p>This response confirms the receipt of your SPA RAI submission:</p>
+        <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
         <p>
-            <br><b>SPA ID</b>: ${data.transmittalNumber}
+            <br><b>State or territory</b>: ${data.territory}
+            <br><b>Waiver #</b>: ${data.transmittalNumber}
             <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Submitter email</b>: ${data.user.email}
+            <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
         </p>
         <p>
             <b>Additional Information</b>:<br>
@@ -104,13 +101,12 @@ async fieldsValid(data) {
         </p>
         <br>
         <p>
-            This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
-            You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
-            as day zero. The 90th day will be 90 calendar days from that date.
+            This response confirms the receipt of your Waiver request. 
+            You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
         </p>
         <p>
-            This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 
-            submitted SPAs only.  Any other correspondence will be disregarded.
+            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, responses to Requests for Additional 
+            Information (RAI) on Waivers, and extension requests on Waivers only.  Any other correspondence will be disregarded. 
         </p>
         <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>
         <p>Thank you!</p>
@@ -120,6 +116,6 @@ async fieldsValid(data) {
     }
 }
 
-const instance = new SPARAI();
+const instance = new WaiverAppK();
 Object.freeze(instance);
 export default instance;
