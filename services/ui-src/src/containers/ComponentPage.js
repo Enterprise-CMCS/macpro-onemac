@@ -24,7 +24,10 @@ export default function ComponentPage() {
     return (<>
         <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
         <div>
-            <CardButton type='spa'></CardButton>
+            <div style={{ position: "relative" }}>
+                <div><h2>SPA Card Button</h2></div>
+                <CardButton type='spa'></CardButton>
+            </div>
         </div>
 
         <div>
