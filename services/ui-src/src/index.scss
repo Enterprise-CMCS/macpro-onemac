@@ -709,3 +709,33 @@ line-height: 30px;
 color: #000000;
 
 }
+
+.multi-select-header-profile {
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 24px;
+
+color: #212121;
+
+}
+
+.multi-select-dropdown-cancel-button {
+@extend .ds-c-button;
+@extend .ds-c-button--transparent;
+position: relative;
+top: 10px;
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height, or 130% */
+
+text-align: center;
+text-decoration-line: underline;
+
+color: #0872B9;
+
+}
