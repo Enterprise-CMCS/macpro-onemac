@@ -657,7 +657,7 @@ text-align: left;
     border-width: 1px;
     padding: 15px;
     width: 575px;
-    height: 480px;
+    height: 520px;
     margin: auto;
 
 }
@@ -695,4 +695,17 @@ text-align: left;
   height: 1px;
   width: 485px;
   position: relative;
+}
+
+.multicardtitle {
+position: relative;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 30px;
+
+color: #000000;
+
 }
