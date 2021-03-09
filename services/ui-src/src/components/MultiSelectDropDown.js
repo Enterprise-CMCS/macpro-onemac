@@ -8,7 +8,7 @@ import Select from "react-dropdown-select";
 
 */
 
-const MultiSelectDropDown = ({options, title, header, subheader, cancelFn, submitFn}) => {
+const MultiSelectDropDown = ({options, type, title, header, subheader, cancelFn, submitFn}) => {
 
     const [value, setValue] = useState([])
 
@@ -45,7 +45,7 @@ const MultiSelectDropDown = ({options, title, header, subheader, cancelFn, submi
 
     const textSection = () => {
 
-        if (subheader) {
+        if (type === "selectstate") {
             return (<>
                     <p className="multicardtitle">{title}</p>
                     <p className="multi-select-title">{header}
@@ -63,6 +63,7 @@ const MultiSelectDropDown = ({options, title, header, subheader, cancelFn, submi
                     <p className="multicardtitle">{title}</p>
 
                     <p className="multi-select-header-profile">{header}</p>
+                    <p className="multi-select-header"></p>
                 </>
             )
 
@@ -71,7 +72,7 @@ const MultiSelectDropDown = ({options, title, header, subheader, cancelFn, submi
 
     return (
         <>
-            <div className="multi-select-dropdown-container">
+            <div className="multi-select-dropdown-container" type={type}>
                 {textSection()}
                 <svg className="multi-search-icon" width="15" height="14" viewBox="0 0 15 14" fill="none"
                      xmlns="http://www.w3.org/2000/svg">
