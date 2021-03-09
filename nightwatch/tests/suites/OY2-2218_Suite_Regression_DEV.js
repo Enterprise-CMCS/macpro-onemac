@@ -45,4 +45,8 @@ module.exports = {
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
     },
+
+    "Submit a 1915(c) Appendix K Amendment": function (browser) {
+        regression["Submit a 1915(c) Appendix K Amendment"](browser);
+    }
 };

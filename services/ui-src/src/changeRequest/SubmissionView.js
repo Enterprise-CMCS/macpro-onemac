@@ -108,7 +108,7 @@ const SubmissionView = ({ formInfo, id }) => {
         <div className="summary-box">
           <TextField
             name="summary"
-            label="Summary"
+            label="Additional Information"
             fieldClassName="summary-field"
             multiline
             disabled

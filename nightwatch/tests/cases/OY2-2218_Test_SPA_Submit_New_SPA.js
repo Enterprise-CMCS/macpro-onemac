@@ -1,7 +1,7 @@
 /*
     Test Scenario: Create a new SPA
     Description: This will login to the application, enter the required SPA information, and upload documents using files
-    located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
+    located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
 
 
  */

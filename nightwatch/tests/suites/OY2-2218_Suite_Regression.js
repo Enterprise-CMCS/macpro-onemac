@@ -102,4 +102,13 @@ module.exports = {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
         steps.forEach(step => tempExt[step](browser));
     },
+
+    "Submit a 1915(c) Appendix K Amendment": function (browser) {
+        const appK = require('../cases/OY2-5832_Test_SPA_Submit_Appendix_K_Amendment');
+        appK["Click on 'Submit 1915(c) Appendix K Amendment'"](browser);
+        appK["Enter Waiver Number"](browser);
+        appK["Upload Documents"](browser);
+        appK["Enter Comments"](browser);
+        appK["Submit Form"](browser);
+    },
 };
