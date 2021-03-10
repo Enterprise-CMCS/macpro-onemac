@@ -23,9 +23,7 @@ export default function ComponentPage() {
                     <CardButton type='waiver'></CardButton>
                 </div>
             </div>
-        </section>
-            <section>
-                <div style={{position: "relative"}}>
+                <div>
                     <div><h2>MultiSelect State Example Component</h2></div>
                     <MultiSelectDropDown
                         options={options}
