@@ -437,11 +437,6 @@ input[type="file"] {
     @extend .ds-u-padding-left--0;
     @extend .ds-u-margin-left--0;
   }
-  .empty-list {
-    @extend .ds-u-margin--0;
-    @extend .ds-u-padding--4;
-    text-align: center;
-  }
   .list-group-item {
     @extend .ds-u-text-decoration--none;
   }
@@ -455,6 +450,13 @@ input[type="file"] {
         color: $color-gray;
     }
   }
+}
+
+.empty-list {
+  @extend .ds-u-margin--0;
+  @extend .ds-u-padding--4;
+  text-align: center;
+  align-self: center;
 }
 
 .submissions-table {
