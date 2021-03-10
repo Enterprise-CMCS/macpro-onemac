@@ -1,19 +1,11 @@
 import React, { useState } from "react";
 import CardButton from "../components/cardButton";
 import MultiSelectDropDown from "../components/MultiSelectDropDown";
+import {territoryList} from "../libs/territoryLib";
 
 export default function ComponentPage() {
 
-    const options = [
-        { label: 'Maryland', value: 'MD' },
-        { label: 'Alabama', value: 'AL' },
-        { label: 'Texas', value: 'TX' },
-        { label: 'Oregon', value: 'OR' },
-        { label: 'Option 1', value: 'option_1' },
-        { label: 'Option 2', value: 'option_2' },
-        { label: 'Option 3', value: 'option_3' },
-        { label: 'Option 4', value: 'option_4' },
-    ]
+    const options = territoryList;
 
     const [value, setValue] = useState([])
 
@@ -29,16 +21,29 @@ export default function ComponentPage() {
                 <CardButton type='spa'></CardButton>
             </div>
         </div>
-
-        <div>
-            <div style={{ position: "relative" }}>
-                <div><h2>MultiSelect Component</h2></div>
-                <MultiSelectDropDown
-                    options={options}
-                    header="Passed In Value when used."
-                    subheader="Passed In Value when used."
-                    submitFn={val => setValue(val)}
-                    cancelFn={handleCancel} />
+            <div>
+                <div style={{position: "relative"}}>
+                    <div><h2>MultiSelect State Example Component</h2></div>
+                    <MultiSelectDropDown
+                        options={options}
+                        type="selectstate"
+                        title="User Role"
+                        header="State Submitter"
+                        subheader="Select your State Access"
+                        submitFn={val => setValue(val)}
+                        cancelFn={handleCancel}/>
+                </div>
+                <div style={{position: "relative"}}>
+                    <div><h2>Profile Example MultiSelect Component</h2></div>
+                    <MultiSelectDropDown
+                        options={options}
+                        type="selectprofile"
+                        title="Choose State Access"
+                        header="Select your State Access"
+                        submitFn={val => setValue(val)}
+                        cancelFn={handleCancel}/>
+                </div>
+                <hr/>
             </div>
         </div>
     </>

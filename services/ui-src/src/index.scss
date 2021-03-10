@@ -705,7 +705,7 @@ text-align: left;
    xborder: none !important;
    box-shadow: none !important;
 }
-.multi-select-dropdown-container {
+.multi-select-dropdown-container[type="selectstate"] {
     position: relative;
     align-items: left;
     background-color: #ffffff;
@@ -715,7 +715,22 @@ text-align: left;
     border-width: 1px;
     padding: 15px;
     width: 575px;
-    height: 480px;
+    height: 520px;
+    margin: auto;
+
+}
+
+.multi-select-dropdown-container[type="selectprofile"] {
+    position: relative;
+    align-items: left;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border-color: #d6d7d9;
+    border-style: solid;
+    border-width: 1px;
+    padding: 15px;
+    width: 575px;
+    height: 475px;
     margin: auto;
 
 }
@@ -753,4 +768,47 @@ text-align: left;
   height: 1px;
   width: 485px;
   position: relative;
+}
+
+.multicardtitle {
+position: relative;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 30px;
+
+color: #000000;
+
+}
+
+.multi-select-header-profile {
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 24px;
+
+color: #212121;
+
+}
+
+.multi-select-dropdown-cancel-button {
+@extend .ds-c-button;
+@extend .ds-c-button--transparent;
+position: relative;
+top: 10px;
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height, or 130% */
+
+text-align: center;
+text-decoration-line: underline;
+
+color: #0872B9;
+
 }
