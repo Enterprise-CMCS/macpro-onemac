@@ -1,20 +1,20 @@
 export default {
-    MAX_ATTACHMENT_SIZE: 5000000,
-    ALLOW_DEV_LOGIN: "true",
-    METRICS_USERS: "user1@cms.hhs.local,zlewis@clarityinnovates.com",
+    MAX_ATTACHMENT_SIZE_MB: 80,
+    ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
+    METRICS_USERS: window._env_.METRICS_USERS,
     s3: {
-        REGION: "us-east-1",
-        BUCKET: "uploads-develop-attachmentsbucket-10wg5kiraihu1"
+        REGION: window._env_.S3_ATTACHMENTS_BUCKET_REGION,
+        BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME
     },
     apiGateway: {
-        REGION: "us-east-1",
-        URL: "https://ydz865dugc.execute-api.us-east-1.amazonaws.com/develop"
+        REGION: window._env_.API_REGION,
+        URL: window._env_.API_URL
     },
     cognito: {
-        REGION: "us-east-1",
-        USER_POOL_ID: "us-east-1_KDU39SsRi",
-        APP_CLIENT_ID: "51g7i130aruj9gugt31mosvfj1",
-        APP_CLIENT_DOMAIN: "develop-login-51g7i130aruj9gugt31mosvfj1.auth.us-east-1.amazoncognito.com",
-        IDENTITY_POOL_ID: "us-east-1:0209bcbc-4eb4-40c9-8a2f-bef3c123c4ec",
+        REGION: window._env_.COGNITO_REGION,
+        USER_POOL_ID: window._env_.COGNITO_USER_POOL_ID,
+        APP_CLIENT_ID: window._env_.COGNITO_USER_POOL_CLIENT_ID,
+        APP_CLIENT_DOMAIN: window._env_.COGNITO_USER_POOL_CLIENT_DOMAIN,
+        IDENTITY_POOL_ID: window._env_.COGNITO_IDENTITY_POOL_ID,
     }
 };
