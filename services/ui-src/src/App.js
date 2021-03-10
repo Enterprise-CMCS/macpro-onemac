@@ -18,12 +18,14 @@ function App() {
   async function onLoad() {
     let userAuthenticationStatus = false;
     let isDev = false;
-    let userProfile;
+    let tmpUserProfile = {email:"", userData: ""};
 
     try {
       const authUser = await Auth.currentAuthenticatedUser();
+      tmpUserProfile.email = authUser.signInUserSession.idToken.payload.email;
       userAuthenticationStatus = true;
       const userData = await ChangeRequestDataApi.userProfile(authUser.signInUserSession.idToken.payload.email);
+      tmpUserProfile.userData = userData;
       console.log("authUser is :", authUser);
       console.log("userData is :", userData);
       if (userData.isDev === "true") isDev=true;
@@ -36,8 +38,8 @@ function App() {
         );
       }
     }
-    setUserProfile(userProfile);
-    userHasAuthenticated(true);
+    setUserProfile(tmpUserProfile);
+    userHasAuthenticated(userAuthenticationStatus);
     setIsAuthenticating(false);
     developerLoggedIn(isDev);
   }

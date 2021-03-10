@@ -38,6 +38,8 @@ function logout() {
 function Header(props) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
+  const { isLoggedInAsDeveloper } = useAppContext();
+  const { isAuthenticated } = useAppContext();
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -106,7 +108,6 @@ function Header(props) {
             Dashboard
           </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
-          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
       </div>
@@ -118,7 +119,7 @@ function Header(props) {
    */
   function renderAccountButtons() {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
-    if (props.isAuthenticated) {
+    if (isAuthenticated) {
       return (
         <div className="nav-right" ref={wrapperRef}>
           <button className="dropdown" id="myAccountLink" onClick={() => setShowMenu(!showMenu)}>
@@ -153,6 +154,12 @@ function Header(props) {
                 </svg>
                 &nbsp; Manage account
               </Link>
+              {isLoggedInAsDeveloper && <Link
+                to={ROUTES.COMPONENT_PAGE}
+                id="componentPageLink"
+              >
+               Component Page
+              </Link>}
               <Link
                 to={ROUTES.HOME}
                 id="logoutLink"
@@ -202,7 +209,6 @@ function Header(props) {
       );
     }
   }
-  const { isLoggedInAsDeveloper } = useAppContext();
 
   return (
     <div>
