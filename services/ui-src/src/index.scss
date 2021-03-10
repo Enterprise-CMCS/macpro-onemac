@@ -438,9 +438,9 @@ input[type="file"] {
     @extend .ds-u-margin-left--0;
   }
   .empty-list {
-    @extend .ds-u-border--1;
     @extend .ds-u-margin--0;
     @extend .ds-u-padding--4;
+    text-align: center;
   }
   .list-group-item {
     @extend .ds-u-text-decoration--none;

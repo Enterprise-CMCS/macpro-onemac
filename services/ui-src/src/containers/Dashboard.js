@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
@@ -206,7 +207,7 @@ const Dashboard = () => {
                   <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
                 </table>
               ) : (
-                <div className="empty-list">You have no submissions yet</div>
+                <EmptyList message="You have no submissions yet." />
               )}
             </div>
           </LoadingScreen>
