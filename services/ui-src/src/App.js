@@ -24,12 +24,10 @@ function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       tmpUserProfile.email = authUser.signInUserSession.idToken.payload.email;
       userAuthenticationStatus = true;
-      const userData = await ChangeRequestDataApi.userProfile(authUser.signInUserSession.idToken.payload.email);
+      const userData = await ChangeRequestDataApi.userProfile(tmpUserProfile.email);
       tmpUserProfile.userData = userData;
-      console.log("authUser is :", authUser);
-      console.log("userData is :", userData);
-      if (userData.isDev === "true") isDev=true;
-      userHasAuthenticated(true);
+      if (userData.id === "user4@cms.hhs.local") isDev=true;
+      userAuthenticationStatus = true;
     } catch (error) {
       if (error !== "not authenticated") {
         console.log(
