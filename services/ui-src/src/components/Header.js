@@ -108,6 +108,7 @@ function Header(props) {
             Dashboard
           </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
+          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
       </div>
@@ -154,12 +155,6 @@ function Header(props) {
                 </svg>
                 &nbsp; Manage account
               </Link>
-              {isLoggedInAsDeveloper && <Link
-                to={ROUTES.COMPONENT_PAGE}
-                id="componentPageLink"
-              >
-               Component Page
-              </Link>}
               <Link
                 to={ROUTES.HOME}
                 id="logoutLink"
