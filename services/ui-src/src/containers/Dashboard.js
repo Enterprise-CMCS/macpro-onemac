@@ -8,6 +8,7 @@ import { ROUTES } from "../Routes";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import getUserData from "../utils/UserDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
 
@@ -18,6 +19,7 @@ const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState();
+  const [userData, setUserData] = useState();
 
   const history = useHistory();
   const location = useLocation();
@@ -31,6 +33,7 @@ const Dashboard = () => {
       try {
         if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
         if (mounted) setIsLoading(false);
+        if (mounted) setUserData(await getUserData.getUserData());
       } catch (error) {
         console.log("Error while fetching user's list.", error);
         newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
@@ -140,6 +143,7 @@ const Dashboard = () => {
   // Render the dashboard
   return (
     <div className="dashboard-white">
+      {console.log(userData)}
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       {renderAlert(alert)}
       <div className="dashboard-container">
