@@ -25,7 +25,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
         console.log('Login as: ', testData.username);
         spa.devLogin(testData);
-        spa.verify.visible('@loginTitle');
+        spa.verify.visible('@titleBar');
         browser.verify.elementPresent('h1');
         browser.verify.containsText('h1', testData.spaPageTitle);
     },
@@ -37,7 +37,7 @@ module.exports = {
     }) {
         spa = browser.page.spaBasePage();
         spa.login(testData);
-        spa.verify.visible('@loginTitle');
+        spa.verify.visible('@titleBar');
         browser.verify.containsText('h1', testData.spaPageTitle);
     },
 

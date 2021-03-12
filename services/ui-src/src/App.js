@@ -39,6 +39,7 @@ function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       userAuthenticationStatus = true;
       tempUserProfile = {
+        cmsRoles: authUser.signInUserSession.idToken.payload["custom:cms_roles"],
         email: authUser.signInUserSession.idToken.payload.email,
         firstName: authUser.signInUserSession.idToken.payload.given_name,
         lastName: authUser.signInUserSession.idToken.payload.family_name,

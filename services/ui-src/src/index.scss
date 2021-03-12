@@ -373,6 +373,7 @@ input[type="file"] {
   justify-content: center;
 }
 .card-button {
+  @extend .ds-u-padding-right--3;
   display:flex; flex-direction:row;
   position: relative;
   height: 224px;
@@ -413,7 +414,7 @@ input[type="file"] {
   bottom: 24px;
 }
 .card-button-select {
-  width: 101px;
+  min-width: 101px;
   height: 37px;
   background: #FFFFFF;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
@@ -425,6 +426,21 @@ input[type="file"] {
   line-height: 32px;
   display: flex;
   align-items: center;
+}
+.signup-container {
+  @extend .app-bar;
+  background-color: $color-white;
+  @extend .ds-u-padding-top--3;
+  @extend .ds-u-padding-bottom--3;
+  display: block;
+
+  &.state-signup {
+    min-height: 550px;
+  }
+
+  .signup-prompt {
+    margin-bottom: 20px;
+  }
 }
 .dashboard-container {
   @extend .app-bar;
@@ -704,10 +720,14 @@ font-weight: 400;
 line-height: 28px;
 letter-spacing: 0px;
 text-align: left;
+
+  svg {
+    margin: 0 1ch;
+  }
 }
 
 .multi-select-header {
-margin-bottom: 60px;
+margin-bottom: 40px;
 bottom: 20px;
 font-family: Open Sans;
 font-size: 24px;
@@ -743,10 +763,6 @@ text-align: left;
     position: relative;
     align-items: left;
     background-color: #ffffff;
-    border-radius: 3px;
-    border-color: #d6d7d9;
-    border-style: solid;
-    border-width: 1px;
     padding: 15px;
     width: 575px;
     height: 520px;
@@ -796,11 +812,9 @@ text-align: left;
 }
 
 .component-submit-solid {
-  background: #D6D7D9 !important;
-  border: 2px solid #D6D7D9;
+  @extend .ds-u-padding-top--2;
+  border-top: 3px solid #D6D7D9;
   top: 210px;
-  height: 1px;
-  width: 485px;
   position: relative;
 }
 

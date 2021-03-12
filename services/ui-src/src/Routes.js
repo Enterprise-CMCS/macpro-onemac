@@ -2,6 +2,8 @@ import React from "react";
 import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
+import { Signup } from "./containers/Signup";
+import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
 import UserPage from "./containers/UserPage";
 import NotFound from "./containers/NotFound";
@@ -29,6 +31,8 @@ export const ROUTES = {
     PROFILE: '/profile',
     METRICS: '/metrics',
     DEVLOGIN: '/devlogin',
+    SIGNUP: '/signup',
+    STATE_SIGNUP: '/signup/state',
     SPA: '/spa',
     SPA_RAI: '/sparai',
     COMPONENT_PAGE: '/componentpage', // temporary placeholder for the developers to house components //
@@ -53,6 +57,12 @@ export default function Routes() {
             <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
                 <DevLogin />
             </UnauthenticatedRoute>
+            <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
+              <Signup />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
+              <StateSignup />
+            </AuthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
             </AuthenticatedRoute>

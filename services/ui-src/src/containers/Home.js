@@ -1,7 +1,9 @@
 import React from "react";
-import PageTitleBar from "../components/PageTitleBar";
 import { HashLink } from "react-router-hash-link";
+
 import { ROUTES } from "../Routes";
+import { AlertBar } from "../components/AlertBar";
+import PageTitleBar from "../components/PageTitleBar";
 import StepCard from "../components/StepCard";
 
 /**
@@ -34,6 +36,7 @@ export default function Home() {
 
   return (
     <>
+        <AlertBar />
         <PageTitleBar 
         heading= "CMS State Plan Amendment and Waiver Submission Platform" 
         text="Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers." />
