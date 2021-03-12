@@ -22,7 +22,11 @@ function App() {
 
     try {
       const authUser = await Auth.currentAuthenticatedUser();
-      tmpUserProfile.email = authUser.signInUserSession.idToken.payload.email;
+      Object.assign(tmpUserProfile, {
+        email: authUser.signInUserSession.idToken.payload.email,
+        firstName: authUser.signInUserSession.idToken.payload.given_name,
+        lastName: authUser.signInUserSession.idToken.payload.family_name
+      });
       userAuthenticationStatus = true;
       const userData = await ChangeRequestDataApi.userProfile(tmpUserProfile.email);
       tmpUserProfile.userData = userData;
