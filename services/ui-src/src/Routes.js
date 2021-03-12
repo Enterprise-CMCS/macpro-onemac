@@ -5,6 +5,7 @@ import FAQ from "./containers/FAQ"
 import Dashboard from "./containers/Dashboard";
 import NotFound from "./containers/NotFound";
 import ComponentPage from "./containers/ComponentPage";
+import DeveloperOnlyRoute from "./components/DeveloperOnlyRoute";
 import Spa from "./changeRequest/Spa";
 import SpaRai from "./changeRequest/SpaRai";
 import Waiver from "./changeRequest/Waiver";
