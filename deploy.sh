@@ -100,8 +100,10 @@ then
           aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $TEST_USER_PASSWORD --permanent
           set -e
       done
-      #./loadTestUsers.sh $stage
-      ./loadExistingUsers.sh $stage
+      ./loadTestUsers.sh $stage
+      
+      # Only Run Once or Manaully 
+      #  ./loadExistingUsers.sh $stage
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
       exit 1
