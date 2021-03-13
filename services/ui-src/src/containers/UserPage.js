@@ -1,6 +1,7 @@
 import React from "react";
 import { Review } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
+import { userTypes } from "../libs/userTypes";
 import PageTitleBar from "../components/PageTitleBar";
 
 /**
@@ -8,7 +9,12 @@ import PageTitleBar from "../components/PageTitleBar";
  */
 const UserPage = () => {
   const { userProfile } = useAppContext();
-  const { email, firstName, lastName } = userProfile;
+  const { email, firstName, lastName, userData } = userProfile;
+
+  let userType = 'user'
+  if (userData && userData.type) {
+    userType = userTypes[userData.type]
+  }
 
   /**
    * Formats first name and last name into single full name
@@ -16,32 +22,28 @@ const UserPage = () => {
    * @returns string of numbers
    */
   function getFullName() {
-    let names = [firstName, lastName]
-    names = names.filter(name => name)
+    let names = [firstName, lastName];
+    names = names.filter(name => name);
 
-    const fullName = names.join(' ')
+    const fullName = names.join(' ');
 
-    return fullName
-  };
+    return fullName;
+  }
+
+  console.log(userData);
 
   return (
     <div>
       <PageTitleBar heading="Account Management" />
       <div className="profile-container">
         <div className="subheader-message">
-          This page contains Profile Information for the State Submitter. The
-          information cannot be changed in the portal. However, the State
-          Submitter can change their contact phone number in their account.
+          This page contains Profile Information for the {userType}. The information
+          cannot be changed in the portal. However, the {userType} can change their
+          contact phone number in their account.
         </div>
         <h3>Profile Information</h3>
-        <div>
-          <Review heading="Full Name">
-            {getFullName()}
-          </Review>
-          <Review heading="Email">
-            {email}
-          </Review>
-        </div>
+        <Review heading="Full Name">{getFullName()}</Review>
+        <Review heading="Email">{email}</Review>
       </div>
     </div>
   );
