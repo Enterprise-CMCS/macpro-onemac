@@ -30,8 +30,6 @@ const UserPage = () => {
     return fullName;
   }
 
-  console.log(userData);
-
   return (
     <div>
       <PageTitleBar heading="Account Management" />
