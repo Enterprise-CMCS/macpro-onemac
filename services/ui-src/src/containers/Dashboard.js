@@ -10,6 +10,7 @@ import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * Component containing dashboard
@@ -18,8 +19,7 @@ const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState();
-  const [userProfile, setUserProfile] = useState();
-
+  const { userProfile } = useAppContext();
   const history = useHistory();
   const location = useLocation();
 
@@ -32,7 +32,6 @@ const Dashboard = () => {
       try {
         if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
         if (mounted) setIsLoading(false);
-        if (mounted) setUserProfile(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
         newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
