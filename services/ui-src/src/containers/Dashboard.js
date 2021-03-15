@@ -8,6 +8,7 @@ import { ROUTES } from "../Routes";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import UserDataApi from "../utils/UserDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
 
@@ -30,6 +31,8 @@ const Dashboard = () => {
     async function onLoad() {
       try {
         if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
+        const userList = await UserDataApi.getMyUserList("sabrina.mccrae@cms.hhs.gov");
+        console.log("User List is: ", userList);
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
