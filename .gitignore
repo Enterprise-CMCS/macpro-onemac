@@ -16,3 +16,4 @@ node_modules/*
 /.github/
 /nightwatch/page_objects/spa.txt
 /nightwatch/page_objects/waiver.txt
+/nightwatch/screenshots
