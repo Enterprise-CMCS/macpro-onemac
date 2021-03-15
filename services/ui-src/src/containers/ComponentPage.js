@@ -1,34 +1,15 @@
-import React, {useState} from "react";
+import React  from "react";
 import CardButton from "../components/cardButton";
-import {territoryList} from "../libs/territoryLib";
 import PortalTable from "../components/PortalTable";
-import TablePopover from "../components/PopOver";
-import PopOver from "../components/PopOver";
+import PopupMenu from "../components/PopupMenu";
 
 export default function ComponentPage() {
-    const options = territoryList;
-    const [value, setValue] = useState([])
 
-    const handleCancel = () => {
-        console.log("handledCancel Called ... Value: " + value)
-    }
     const columns = [
         {
             field: 'stateUser',
             headerName: 'State User',
-            width: 150,
-            renderCell: (params) => (
-                <>
-                    <div className="portalTable">
-                        {params.value}
-                    </div>
-                </>
-            ),
-        },
-        {
-            field: 'stateUser',
-            headerName: 'State User',
-            width: 150,
+            width: 250,
             renderCell: (params) => (
                 <>
                     <div className="portalTable">
@@ -40,7 +21,7 @@ export default function ComponentPage() {
         {
             field: 'email',
             headerName: 'Email Address',
-            width: 150,
+            width: 350,
             renderCell: (params) => (
                 <>
                     <div className="portalTable">
@@ -80,7 +61,7 @@ export default function ComponentPage() {
             disableColumnSelector: false,
             renderCell: (params) => (
                 <>
-                    <PopOver selectedRow={params.value}/>
+                    <PopupMenu selectedRow={params.value}/>
                 </>
             ),
         },
@@ -119,24 +100,25 @@ export default function ComponentPage() {
 
 
     return (<>
-            <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
-            <section class="ds-l-container preview__grid">
-                <div class="ds-l-row">
-                    <div className="ds-l-col--6">
-                        <div><h2>SPA Card Button</h2></div>
-                        <CardButton type='spa'></CardButton>
-                    </div>
-                    <div className="ds-l-col--6">
-                        <div><h2>Waiver Card Button</h2></div>
-                        <CardButton type='waiver'></CardButton>
-                    </div>
+        <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
+        <section class="ds-l-container preview__grid">
+            <div class="ds-l-row">
+                <div className="ds-l-col--6">
+                    <div><h2>SPA Card Button</h2></div>
+                    <CardButton type='spa'></CardButton>
                 </div>
-                <div className="ds-l-row">
-                    <div className="ds-l-col--12">
-                        <PortalTable className="portalTable" rows={rows} columns={columns}/>
-                    </div>
+                <div className="ds-l-col--6">
+                    <div><h2>Waiver Card Button</h2></div>
+                    <CardButton type='waiver'></CardButton>
                 </div>
+            </div>
+            <h1> Portal Table Component Demo</h1>
+            <div className="ds-l-row">
+                <div className="ds-l-col--12">
+                    <PortalTable className="portalTable" rows={rows} columns={columns}/>
+                </div>
+            </div>
             </section>
-        </>
+    </>
     );
 }
