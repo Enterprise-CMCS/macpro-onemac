@@ -83,6 +83,5 @@ module.exports = {
             .assert.containsText(alert_selector, alert_msg)
             .assert.containsText(p_selector, msg)
             .pause(1000);
-    },
-
+    }
 };
