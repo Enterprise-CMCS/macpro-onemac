@@ -1,13 +1,13 @@
 const login = require("./OY2-1494_Test_SPA_Login");
 
 const timeout = 1000;
-let pageObjects;
+let spa;
 
 module.exports = {
   before: function (browser) {
     login.before(browser);
     login["Login to SPA and Waiver Dashboard"](browser);
-    pageObjects = browser.page.spaBasePage();
+    spa = browser.page.spaBasePage();
     browser.pause(timeout * 3);
   },
 
@@ -25,8 +25,8 @@ module.exports = {
       pageTitle: "Account Management"
     }
   ) {
-    pageObjects.click(testData.myAccountLink).waitForElementPresent(testData.manageAccountLink);
-    pageObjects.click(testData.myAccountLink).waitForElementPresent("body");
+    spa.click(testData.myAccountLink).waitForElementPresent(testData.manageAccountLink);
+    spa.click(testData.myAccountLink).waitForElementPresent("body");
     browser.assert.urlContains(testData.subUrl);
     browser.verify.containsText('h1', testData.pageTitle);
   },
