@@ -52,13 +52,10 @@ export const main = handler(async (event, context) => {
   const scanParams = {
     TableName: process.env.userTableName,
     FilterExpression: "#ty = :userType",
-    ExpressionAttributeNames: {
-      "#ty": "type",
-    },
-    ExpressionAttributeValues: {
-      ":userType": { scanFor },
-    },
+    ExpressionAttributeNames: {"#ty" : "type" },
+    ExpressionAttributeValues: {":userType": scanFor },
   };
+
   const userResult = await dynamoDb.scan(scanParams);
 
   console.log("Sending back result:", JSON.stringify(userResult));
