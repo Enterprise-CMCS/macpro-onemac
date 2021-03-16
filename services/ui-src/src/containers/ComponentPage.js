@@ -5,6 +5,8 @@ import PopupMenu from "../components/PopupMenu";
 
 export default function ComponentPage() {
 
+    const menuItems = [{label: "Approve Access", value: "approved"}, {label: "Deny Access", value: "deny"}]
+
     const columns = [
         {
             field: 'stateUser',
@@ -61,7 +63,8 @@ export default function ComponentPage() {
             disableColumnSelector: false,
             renderCell: (params) => (
                 <>
-                    <PopupMenu selectedRow={params.value}/>
+                    <PopupMenu selectedRow={params.value} menuItems={menuItems}
+                               handleSelected={(row,value) => console.log("Seleccted:(" + row + " : " + value + ")") } />
                 </>
             ),
         },
@@ -101,8 +104,8 @@ export default function ComponentPage() {
 
     return (<>
         <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
-        <section class="ds-l-container preview__grid">
-            <div class="ds-l-row">
+        <section className="ds-l-container preview__grid">
+            <div className="ds-l-row">
                 <div className="ds-l-col--6">
                     <div><h2>SPA Card Button</h2></div>
                     <CardButton type='spa'></CardButton>
