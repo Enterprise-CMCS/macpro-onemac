@@ -71,6 +71,8 @@ const Dashboard = () => {
     }
   };
 
+  const isPending = (attribute) => attribute.status==="pending";
+
   /**
    * Render the list of change requests.
    * @param {Array} changeRequests
@@ -139,9 +141,18 @@ const Dashboard = () => {
   }
 
   // Render the dashboard
+  // if(userProfile.userData.attributes[0].status=="pending"&&userProfile.type=="stateuser"){
+  //   <EmptyList message="Your system access is pending approval. Contact your State System Admin with any questions." />
+  // }
+
   return (
     <div className="dashboard-white">
-      {console.log(userProfile)}
+      {console.log(userProfile.userData.attributes.every(isPending))}
+      {console.log(userProfile.userData.type)}
+      {/* <EmptyList message="Your system access is pending approval. Contact your State System Admin with any questions." />
+      <EmptyList message="Your system access is pending approval." />
+      <EmptyList message="Your system access is pending approval. Contact the CMS System Admin with any questions." /> */}
+
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       {renderAlert(alert)}
       <div className="dashboard-container">
