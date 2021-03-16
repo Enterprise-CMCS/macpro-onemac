@@ -151,11 +151,6 @@ const Dashboard = () => {
     <div className="dashboard-white">
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       {renderAlert(alert)}
-      {userProfile.userData.attributes.every(isPending) ?
-        ( <div className="dashboard-container">
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-          </div>
-        ) : (
           <div className="dashboard-container">
             <div className="dashboard-left-col">
               <div className="action-title">SPAs</div>
@@ -204,6 +199,10 @@ const Dashboard = () => {
           </Button>
             </div>
             <div className="dashboard-right-col">
+            {userProfile.userData.attributes.every(isPending) ?
+        (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        ) : (<div>
               <div className="action-title">Submissions List</div>
               <LoadingScreen isLoading={isLoading}>
                 <div>
@@ -225,10 +224,10 @@ const Dashboard = () => {
                     )}
                 </div>
               </LoadingScreen>
+              </div>
+        )}
             </div>
           </div>
-        )
-      }
     </div>
   );
 };
