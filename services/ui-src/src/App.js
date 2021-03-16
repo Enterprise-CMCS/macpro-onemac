@@ -3,7 +3,7 @@ import Routes from "./Routes";
 import Header from "./components/Header";
 import { AppContext } from "./libs/contextLib";
 import { Auth } from "aws-amplify";
-import ChangeRequestDataApi from "./utils/ChangeRequestDataApi";
+import UserDataApi from "./utils/UserDataApi";
 
 function App() {
   const [isAuthenticating, setIsAuthenticating] = useState(true);
@@ -24,7 +24,7 @@ function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       tmpUserProfile.email = authUser.signInUserSession.idToken.payload.email;
       userAuthenticationStatus = true;
-      const userData = await ChangeRequestDataApi.userProfile(tmpUserProfile.email);
+      const userData = await UserDataApi.userProfile(tmpUserProfile.email);
       tmpUserProfile.userData = userData;
       if (userData.id === "user4@cms.hhs.local") isDev=true;
       userAuthenticationStatus = true;

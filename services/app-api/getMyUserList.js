@@ -59,9 +59,9 @@ export const main = handler(async (event, context) => {
       ":userType": { scanFor },
     },
   };
-  const result = await dynamoDb.scan(scanParams);
+  const userResult = await dynamoDb.scan(scanParams);
 
-  console.log("Sending back result:", JSON.stringify(result));
+  console.log("Sending back result:", JSON.stringify(userResult));
   // Return the retrieved item
-  return result.Items;
+  return userResult.Items;
 });
