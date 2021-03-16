@@ -118,12 +118,11 @@ const populateUserData = (input, selectedUser) => {
                     history: [{ date: getCMSDateFormat(Date.now), status: item.status }]
                 });
             }
-            // Todo: add dynamic date
         });
     }
     else {  // CMSApprover & systemadmin
         input.attributes.forEach(item => {
-            selectedUser.attributes.push({ date: item.date, status: item.status });
+            selectedUser.attributes.push({ date: getCMSDateFormat(Date.now), status: item.status });
         });
     }
     return selectedUser;
