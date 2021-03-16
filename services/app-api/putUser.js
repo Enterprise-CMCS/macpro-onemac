@@ -1,7 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { getCMSDateFormat } from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
 import { isEmpty } from 'lodash';
@@ -113,7 +112,7 @@ const getUser = async userEmail => {
 };
 
 const populateUserData = (input, selectedUser) => {
-    const currentTimestamp = getCMSDateFormat(Math.floor(Date.now() / 1000));
+    const currentTimestamp = Math.floor(new Date().getTime() / 1000);
     if (input.type === 'stateuser' || input.type === 'stateadmin') {
         input.attributes.forEach(item => {
             const index = selectedUser.attributes.findIndex(attr => attr.stateCode === item.stateCode);
@@ -141,16 +140,16 @@ const createUserObject = data => {
         type: data.type,
         attributes: [],
     };
-    data.attributes.forEach(item => {
-        if (data.type === 'stateuser' || data.type === 'stateadmin') {
-            user.attributes.push({
-                stateCode: item.stateCode,
-                history: [item]
-            });
-        } else {
-            user.attributes.push(item);
-        }
-    });
+    // data.attributes.forEach(item => {
+    //     if (data.type === 'stateuser' || data.type === 'stateadmin') {
+    //         user.attributes.push({
+    //             stateCode: item.stateCode,
+    //             history: [item]
+    //         });
+    //     } else {
+    //         user.attributes.push(item);
+    //     }
+    // });
     return user;
 };
 
