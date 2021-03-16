@@ -18,6 +18,14 @@ function App() {
     setUserInfo();
   }, []);
 
+  /**
+   * Gets authentication status for user,
+   * gets user names and email from cognito
+   * and associated user data from dynamo user table,
+   * checks if user is a developer.
+   * Then sets all these values in their corresponding state variables.
+   * @param {Boolean} isDeveloper indicates if the user is a developer
+   */
   async function setUserInfo(isDeveloper = false) {
     let userAuthenticationStatus = false;
     let isDev = false;
