@@ -5,7 +5,6 @@
     'files' folder. Lastly, comments will be entered in the Summary and then submitted.
 
  */
-
 const timeout = 1000;
 const login = require('./OY2-1494_Test_SPA_Login');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');

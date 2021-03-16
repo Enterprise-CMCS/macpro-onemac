@@ -102,5 +102,4 @@ module.exports = {
             .assert.containsText(testData.confirm.selector, testData.confirm.msg)
             .pause(timeout * 3);
     },
-
 };

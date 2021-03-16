@@ -27,6 +27,25 @@ module.exports = {
         spa.verify.visible('@loginTitle');
     },
 
+    // 1st: Logins to the test site 
+    'Login to Medicaid as Regular User': function (browser) {
+        // Test Data 
+        const username = browser.globals.user;
+        const password = browser.globals.pass;
+        let spaPageTitle = 'SPA and Waiver Dashboard';
+
+        // Test Stesp
+        browser.click('.nav-right > [type]');  // click the login button
+        browser.setValue('#okta-signin-username', username);
+        browser.setValue('#okta-signin-password', password);
+        browser.click('#tandc');
+        browser.click('#okta-signin-submit');
+        browser.waitForElementPresent('body');
+
+        // Test Assertion
+        browser.verify.containsText('h1', spaPageTitle);
+    },
+
     'Login to SPA and Waiver Dashboard via Okta' : function(browser) {
         const testData = {
             username: browser.globals.user,
@@ -42,4 +61,18 @@ module.exports = {
         spa.verify.not.containsText('h1', title);
         browser.pause(timeout);
     },
+
+    
+    'Verify logout from SPA and Wavier Dashboard as Regular User': function (browser) {
+        // elements 
+        let logout_banner_text = "CMS State Plan Amendment and Waiver Submission Platform";
+
+        // logout from SPA and Wavier Dashboard page
+        browser.click('button#myAccountLink');
+        browser.click('a#logoutLink');
+        browser.waitForElementPresent('h1');
+
+        // Verify the successful logout 
+        browser.verify.containsText('h1', logout_banner_text);
+    }
 };
