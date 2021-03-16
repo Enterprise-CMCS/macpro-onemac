@@ -7,10 +7,12 @@ import Routes from "./Routes";
 import Header from "./components/Header";
 
 function App() {
-  const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
-  const [isLoggedInAsDeveloper, setIsLoggedInAsDeveloper] = useState(false);
-  const [userProfile, setUserProfile] = useState();
+  const [authState, setAuthState] = useState({
+    isAuthenticating: true,
+    isAuthenticated: false,
+    isLoggedInAsDeveloper: false,
+    userProfile: null
+  });
 
   useEffect(() => {
     // On initial load of the App, try to set the user info.
@@ -61,20 +63,20 @@ function App() {
       }
     }
 
-    setIsAuthenticating(false);
-    userHasAuthenticated(userAuthenticationStatus);
-    setIsLoggedInAsDeveloper(isDev);
-    setUserProfile(tempUserProfile);
+    setAuthState({
+      isAuthenticating: false,
+      isAuthenticated: userAuthenticationStatus,
+      isLoggedInAsDeveloper: isDev,
+      userProfile: tempUserProfile,
+    });
   }
 
   return (
-    !isAuthenticating && (
+    !authState.isAuthenticating && (
       <div>
         <AppContext.Provider
           value={{
-            isLoggedInAsDeveloper,
-            isAuthenticated,
-            userProfile,
+            ...authState,
             setUserInfo,
           }}
         >
