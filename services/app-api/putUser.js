@@ -4,7 +4,7 @@ import sendEmail from "./libs/email-lib";
 import { getCMSDateFormat } from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
-import { isEmpty } from 'lodash'
+import { isEmpty } from 'lodash';
 
 /**
  * Update a user
@@ -24,7 +24,7 @@ export const main = handler(async (event) => {
         return errorMessage;
     }
 
-    // retreive user item from DynamoDb 
+    // retreive user item from DynamoDb
     let user = await getUser(input.id);
 
     user = isEmpty(user) ? createUserObject(input) : user;
@@ -79,7 +79,7 @@ const validateUser = data => {
         return RESPONSE_CODE.VALIDATION_ERROR;
     }
     return "";
-}
+};
 
 const getUser = async userEmail => {
 
@@ -104,12 +104,12 @@ const getUser = async userEmail => {
 
     console.log(`The user details for ${userEmail}: ${result}`);
     return result.Item;
-}
+};
 
 const populateUserData = (input, selectedUser) => {
     if (input.type === 'stateuser' || input.type === 'stateadmin') {
         input.attributes.forEach(item => {
-            const index = selectedUser.attributes.findIndex(attr => attr.stateCode === item.stateCode)
+            const index = selectedUser.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             if (index !== -1) {
                 selectedUser.attributes[index].history.push({ date: item.date, status: item.status });
             } else {
@@ -127,7 +127,7 @@ const populateUserData = (input, selectedUser) => {
         });
     }
     return selectedUser;
-}
+};
 
 const createUserObject = data => {
     const user = {
@@ -142,7 +142,7 @@ const createUserObject = data => {
                 history: [item]
             });
         } else {
-            user.attributes.push(statusChange);
+            user.attributes.push(item);
         }
     })
     return user;
