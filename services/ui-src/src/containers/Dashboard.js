@@ -11,6 +11,7 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import UserDataApi from "../utils/UserDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * Component containing dashboard
@@ -19,6 +20,7 @@ const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState();
+  const { userProfile } = useAppContext();
 
   const history = useHistory();
   const location = useLocation();
@@ -31,8 +33,12 @@ const Dashboard = () => {
     async function onLoad() {
       try {
         if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
-        const userList = await UserDataApi.getMyUserList("sabrina.mccrae@cms.hhs.gov");
-        console.log("User List is: ", userList);
+        if (userProfile.email) {
+          const userList = await UserDataApi.getMyUserList(userProfile.email);
+          console.log("User List is: ", userList);
+        } else {
+          console.log("User profile? ", userProfile);
+        }
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
@@ -47,7 +53,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [location]);
+  }, [location, userProfile]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
