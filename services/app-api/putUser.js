@@ -113,22 +113,23 @@ const getUser = async userEmail => {
 };
 
 const populateUserData = (input, selectedUser) => {
+    const currentTimestamp = getCMSDateFormat(Math.floor(Date.now() / 1000));
     if (input.type === 'stateuser' || input.type === 'stateadmin') {
         input.attributes.forEach(item => {
             const index = selectedUser.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             if (index !== -1) {
-                selectedUser.attributes[index].history.push({ date: item.date, status: item.status });
+                selectedUser.attributes[index].history.push({ date: currentTimestamp, status: item.status });
             } else {
                 selectedUser.attributes.push({
                     stateCode: item.stateCode,
-                    history: [{ date: getCMSDateFormat(Math.floor(Date.now() / 1000)), status: item.status }]
+                    history: [{ date: currentTimestamp, status: item.status }]
                 });
             }
         });
     }
     else {  // CMSApprover & systemadmin
         input.attributes.forEach(item => {
-            selectedUser.attributes.push({ date: getCMSDateFormat(Date.now), status: item.status });
+            selectedUser.attributes.push({ date: currentTimestamp, status: item.status });
         });
     }
     return selectedUser;
