@@ -6,7 +6,7 @@ const sender = new AWS.SES({ region: "us-east-1" });
  * Transforms generic email details into the SES email parameter structure.
  * @param {Object} email generic email properties
  */
-function getSESEmailParams (email) {
+function getSESEmailParams (email, fromAddressSource) {
 
   let emailParams = {
       Destination: {
@@ -24,7 +24,7 @@ function getSESEmailParams (email) {
           Data: email.Subject
         },
       },
-      Source: process.env.emailSource,
+      Source: fromAddressSource? process.env[fromAddressSource] : process.env.emailSource,
     };
 
     return emailParams;
@@ -35,9 +35,9 @@ function getSESEmailParams (email) {
  * and "sends" the email.  Uses promises to capture sending details.
  * @param {Object} email the generic email properties
  */
-export default function sendEmail(email) {
+export default function sendEmail(email, fromAddressSource) {
 
-  let emailParams = getSESEmailParams(email);
+  let emailParams = getSESEmailParams(email,fromAddressSource);
 
   // If we are in offline mode just log the email message.
   if(process.env.IS_OFFLINE) {
