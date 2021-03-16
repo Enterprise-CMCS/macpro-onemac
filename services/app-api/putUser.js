@@ -73,7 +73,7 @@ export const main = handler(async (event) => {
 const validateUser = data => {
     const userSchema = Joi.object().keys({
         id: Joi.string().email().required(),
-        type: Joi.string().valid('cmsapprover', 'stateapprover', 'stateuser').required(),
+        type: Joi.string().valid('cmsapprover', 'stateadmin', 'stateuser').required(),
         attributes: Joi.array().required()
     });
     //Todo: Add deeper validation for types
@@ -140,16 +140,6 @@ const createUserObject = data => {
         type: data.type,
         attributes: [],
     };
-    // data.attributes.forEach(item => {
-    //     if (data.type === 'stateuser' || data.type === 'stateadmin') {
-    //         user.attributes.push({
-    //             stateCode: item.stateCode,
-    //             history: [item]
-    //         });
-    //     } else {
-    //         user.attributes.push(item);
-    //     }
-    // });
     return user;
 };
 
