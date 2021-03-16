@@ -46,6 +46,7 @@ export const main = handler(async (event) => {
             "Warning: There was an error saving user data to the database",
             error
         );
+        return RESPONSE_CODE.USER_SUBMISSION_FAILED;
     }
     console.log("Successfully submitted the request:", user);
 
@@ -59,7 +60,7 @@ export const main = handler(async (event) => {
     try {
         // send the User access request "reciept"
         await sendEmail(emailParams.email, emailParams.fromAddressSource);
-        return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
+        return RESPONSE_CODE.USER_SUBMITTED;
     } catch (error) {
         console.log(
             "Warning: There was an error sending the user access request acknowledgment email.",
