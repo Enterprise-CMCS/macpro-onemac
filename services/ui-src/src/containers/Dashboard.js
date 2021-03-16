@@ -152,8 +152,9 @@ const Dashboard = () => {
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       {renderAlert(alert)}
       {userProfile.userData.attributes.every(isPending) ?
-        (
-          <EmptyList message={pendingMessage[userProfile.type]} />
+        ( <div className="dashboard-container">
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+          </div>
         ) : (
           <div className="dashboard-container">
             <div className="dashboard-left-col">
