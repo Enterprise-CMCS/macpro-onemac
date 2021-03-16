@@ -16,7 +16,12 @@ export const main = handler(async (event) => {
         console.log("Warmed up!");
         return null;
     }
-    const input = JSON.parse(event.body);
+    let input;
+    try {
+        input = JSON.parse(event.body);
+    } catch (error) {
+        input = event.body;
+    }
 
     // do a pre-check for things that should stop us immediately
     const errorMessage = validateUser(input);
@@ -60,8 +65,8 @@ export const main = handler(async (event) => {
             "Warning: There was an error sending the user access request acknowledgment email.",
             error
         );
+        return RESPONSE_CODE.EMAIL_NOT_SENT;
     }
-    return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });
 
 
@@ -115,7 +120,7 @@ const populateUserData = (input, selectedUser) => {
             } else {
                 selectedUser.attributes.push({
                     stateCode: item.stateCode,
-                    history: [{ date: getCMSDateFormat(Date.now), status: item.status }]
+                    history: [{ date: getCMSDateFormat(Math.floor(Date.now() / 1000)), status: item.status }]
                 });
             }
         });
