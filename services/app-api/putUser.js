@@ -144,15 +144,15 @@ const createUserObject = data => {
         } else {
             user.attributes.push(item);
         }
-    })
+    });
     return user;
-}
+};
 
 const collectRecipientEmails = async input => {
     const recipients = [];
     if (input.type === 'stateadmin') {
         const states = input.attributes.map(item => item.stateCode);
-        console.log('selected states:', JSON.stringify(states))
+        console.log('selected states:', JSON.stringify(states));
         // get all stateAdmin email ids
         const stateAdmins = await getUsersByType('stateuser') || [];
         // fiter out by selected states with latest attribute status is active
@@ -160,7 +160,7 @@ const collectRecipientEmails = async input => {
             const attributes = admin.attributes;
             attributes.forEach(attr => {
                 states.includes(attr.stateCode) && isLatestAttributeActive(attr.history) ? recipients.push(admin.id) : null;
-            })
+            });
         });
     }
     else if (input.type === 'stateadmin') {
@@ -169,7 +169,7 @@ const collectRecipientEmails = async input => {
         const cmsApprovers = await getUsersByType('cmsapprover') || [];
         // check if recent attribute status is active and add email to recipient list
         cmsApprovers.forEach(approver => {
-            isLatestAttributeActive(approver.attributes) ? recipients.push(admin.id) : null;
+            isLatestAttributeActive(approver.attributes) ? recipients.push(approver.id) : null;
         });
 
     }
@@ -179,7 +179,7 @@ const collectRecipientEmails = async input => {
         systemadmins.forEach(sysadmin => recipients.push(sysadmin.id));
     }
     return recipients;
-}
+};
 
 const getUsersByType = async (type) => {
     const params = {
@@ -203,14 +203,14 @@ const getUsersByType = async (type) => {
         throw dbError;
     }
 
-}
+};
 
 const isLatestAttributeActive = (attr) => {
     const latestAttribute = attr.reduce(
         (latestItem, currentItem) => currentItem.date > latestItem.date ? currentItem : latestItem
-    )
+    );
     return latestAttribute.status === 'active';
-}
+};
 
 const constructEmailParams = (recipients, type) => {
     const email = {};
@@ -227,7 +227,7 @@ const constructEmailParams = (recipients, type) => {
         case 'cmsapprover':
             typeText = 'CMS Approver';
             break;
-    }
+    };
     email.Subject = `New OneMAC Portal ${typeText} Access Request`;
     email.HTML = `
         <p>Hello,</p>
@@ -235,4 +235,4 @@ const constructEmailParams = (recipients, type) => {
         Please log into your User Management Dashboard to see the pending request.</p>
         <p>Thank you!</p>`;
     return { email, fromAddressSource };
-}
+};
