@@ -70,8 +70,8 @@ const Dashboard = () => {
       );
     }
   };
-
-  const isPending = (attribute) => attribute.status === "pending";
+  const isPending = (state) => state.status === "pending";
+  const isStatePending = (attribute) => attribute.history.every(isPending)
   const pendingMessage = {
     "stateuser": "Your system access is pending approval. Contact your State System Admin with any questions.",
     "stateadmin": "Your system access is pending approval.",
@@ -199,7 +199,7 @@ const Dashboard = () => {
           </Button>
             </div>
             <div className="dashboard-right-col">
-            {userProfile.userData.attributes.every(isPending) ?
+            {userProfile && userProfile.userData && userProfile.userData.attributes && userProfile.userData.attributes.every(isStatePending) ?
         (
           <EmptyList message={pendingMessage[userProfile.userData.type]} />
         ) : (<div>
