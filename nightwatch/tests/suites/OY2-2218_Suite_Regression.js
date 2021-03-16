@@ -76,5 +76,5 @@ module.exports = {
     ]) {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
         steps.forEach(step => tempExt[step](browser));
-    },
+    }
 };

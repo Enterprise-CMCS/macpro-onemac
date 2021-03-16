@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <CORSConfiguration>
  <CORSRule>
    <AllowedOrigin>*</AllowedOrigin>
@@ -11,4 +12,19 @@
    <ExposeHeader>x-amz-request-id</ExposeHeader>
    <ExposeHeader>x-amz-id-2</ExposeHeader>
  </CORSRule>
+=======
+<CORSConfiguration>
+ <CORSRule>
+   <AllowedOrigin>*</AllowedOrigin>
+   <AllowedMethod>PUT</AllowedMethod>
+   <AllowedMethod>POST</AllowedMethod>
+   <AllowedMethod>GET</AllowedMethod>
+   <AllowedHeader>*</AllowedHeader>
+   <ExposeHeader>Access-Control-Allow-Origin</ExposeHeader>
+   <ExposeHeader>ETag</ExposeHeader>
+   <ExposeHeader>x-amz-server-side-encryption</ExposeHeader>
+   <ExposeHeader>x-amz-request-id</ExposeHeader>
+   <ExposeHeader>x-amz-id-2</ExposeHeader>
+ </CORSRule>
+>>>>>>> develop
 </CORSConfiguration>

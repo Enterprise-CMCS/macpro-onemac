@@ -93,7 +93,11 @@ const SubmissionView = ({ formInfo, id }) => {
             </Review>
           )}
           {changeRequest.transmittalNumber && (
+<<<<<<< HEAD
             <Review heading={formInfo.idLabel}>
+=======
+            <Review heading={formInfo.transmittalNumber.idLabel}>
+>>>>>>> develop
               {changeRequest.transmittalNumber}
             </Review>
           )}
@@ -108,7 +112,11 @@ const SubmissionView = ({ formInfo, id }) => {
         <div className="summary-box">
           <TextField
             name="summary"
+<<<<<<< HEAD
             label="Summary"
+=======
+            label="Additional Information"
+>>>>>>> develop
             fieldClassName="summary-field"
             multiline
             disabled

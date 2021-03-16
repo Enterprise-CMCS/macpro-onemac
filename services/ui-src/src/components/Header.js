@@ -8,6 +8,7 @@ import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -37,6 +38,8 @@ function logout() {
 function Header(props) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
+  const { isLoggedInAsDeveloper } = useAppContext();
+  const { isAuthenticated } = useAppContext();
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -96,7 +99,7 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar() {
+  function renderNavBar(isLoggedInAsDeveloper) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
@@ -105,6 +108,7 @@ function Header(props) {
             Dashboard
           </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
+          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
       </div>
@@ -116,7 +120,7 @@ function Header(props) {
    */
   function renderAccountButtons() {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
-    if (props.isAuthenticated) {
+    if (isAuthenticated) {
       return (
         <div className="nav-right" ref={wrapperRef}>
           <button className="dropdown" id="myAccountLink" onClick={() => setShowMenu(!showMenu)}>
@@ -213,7 +217,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar()}
+      {renderNavBar(isLoggedInAsDeveloper)}
     </div>
   );
 }

@@ -1,6 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+<<<<<<< HEAD
+=======
+import { EmptyList } from "../components/EmptyList";
+>>>>>>> develop
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
@@ -95,6 +99,10 @@ const Dashboard = () => {
         case CHANGE_REQUEST_TYPES.SPA:
           type = "SPA";
           break;
+<<<<<<< HEAD
+=======
+
+>>>>>>> develop
         case CHANGE_REQUEST_TYPES.WAIVER:
           type = "Waiver";
           break;
@@ -111,6 +119,13 @@ const Dashboard = () => {
           type = "Temporary Extension Request";
           break;
 
+<<<<<<< HEAD
+=======
+        case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
+          type = "1915(c) Appendix K Amendment";
+          break;
+
+>>>>>>> develop
         default:
           type = "";
       }
@@ -175,6 +190,16 @@ const Dashboard = () => {
           >
             Request Temporary Extension form - 1915(b) and 1915(c)
           </Button>
+<<<<<<< HEAD
+=======
+          <Button
+            id="waiverAppKBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_APP_K)}
+          >
+            Submit 1915(c) Appendix K Amendment
+          </Button>
+>>>>>>> develop
         </div>
         <div className="dashboard-right-col">
           <div className="action-title">Submissions List</div>
@@ -194,7 +219,11 @@ const Dashboard = () => {
                   <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
                 </table>
               ) : (
+<<<<<<< HEAD
                 <div className="empty-list">You have no submissions yet</div>
+=======
+                <EmptyList message="You have no submissions yet." />
+>>>>>>> develop
               )}
             </div>
           </LoadingScreen>

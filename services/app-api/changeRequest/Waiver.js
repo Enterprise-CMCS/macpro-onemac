@@ -1,6 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_MSG } from "../libs/error-messages";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * Waiver submission specific email generation functions.
@@ -42,47 +42,13 @@ async fieldsValid(data) {
         console.log("packageExists got an error: ", error);
       }
 
-      switch (data.actionType) {
-
-        // renewals all needs an existing ID
-        case "renewal":
-          if (!idExists && data.waiverAuthority !=="1915(c)")  {
-            areFieldsValid = false;
-            whyNot = ERROR_MSG.WAIVER_RENEWAL_ID;
-          } else if (!idExists) {
-              areFieldsValid = false;
-              whyNot = ERROR_MSG.WAIVER_AMENDMENT_ON_K;
-          }
-          break;
-
-        // amend modify existing IDs EXCEPT for Amendment Ks, Ks do not have restriction
-        case "amendment":
-          if (!idExists && data.waiverAuthority !== "1915(c)" ) {
-            areFieldsValid = false;
-            whyNot = ERROR_MSG.WAIVER_AMENDMENT_NO_ID;
-          }
-          break;
-
-        // New waiver actions... only Amendment Ks should have existing IDs
-        case "new":
-          if (data.waiverAuthority==="1915(c)" && !idExists) {
-            areFieldsValid = false;
-            whyNot = ERROR_MSG.WAIVER_NEW_ON_K;
-          } else if (idExists && data.waiverAuthority !=="1915(c)"  ) {
-            areFieldsValid = false;
-            whyNot = ERROR_MSG.WAIVER_NEW_NOT_K;
-          }
-          break;
-
-        // if we get here... we don't know the action type
-        default:
-          areFieldsValid = false;
-          whyNot = ERROR_MSG.WAIVER_ACTION_UNKNOWN;
-          break;
-
+      // NEW action type should have NEW IDs
+      if (data.actionType === "new" && idExists) {
+        areFieldsValid = false;
+        whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
       }
 
-    return { areFieldsValid, whyNot };
+      return { areFieldsValid, whyNot };
   }
 
    /**
@@ -106,7 +72,7 @@ async fieldsValid(data) {
             <br><b>Waiver Authority</b>: ${data.waiverAuthority}
         </p>
         <p>
-            <b>Summary</b>:
+            <b>Additional Information</b>:
             <br>${data.summary}
         </p>
         <p>
@@ -142,7 +108,7 @@ async fieldsValid(data) {
             <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
         </p>
         <p>
-            <b>Summary</b>:<br>
+            <b>Additional Information</b>:<br>
             ${data.summary}
         </p>
         <br>

@@ -3,7 +3,11 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
+<<<<<<< HEAD
 import {validateWaiverId} from "../utils/form-utils";
+=======
+import { ROUTES } from "../Routes";
+>>>>>>> develop
 
 /**
  * WaiverExtension acts as a wrapper around SubmissionForm to render the Waiver Extension Form
@@ -22,9 +26,24 @@ const WaiverExtension = () => {
         "Independent Assessment Reports",
         "Other"
     ],
+<<<<<<< HEAD
     idType : "waiver",
     idValidationFn : validateWaiverId,
     idLabel : "Waiver Number",
+=======
+
+    transmittalNumber: {
+      idType: "waiver",
+      idLabel: "Waiver Number",
+      idFAQLink: ROUTES.FAQ_WAIVER_ID,  
+      idHintText: "Must follow the format SS.#### or SS.#####",
+      idFormat: "SS.#### or SS.#####",
+      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}$)",
+      idMustExist: true,
+      errorLevel: "error",
+    },
+    
+>>>>>>> develop
   };
 
   if (id) {

@@ -2,8 +2,10 @@ import * as uuid from "uuid";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getChangeRequestFunctions, { hasValidStateCode } from "./changeRequest/changeRequest-util";
-import { ERROR_MSG } from "./libs/error-messages";
+import getChangeRequestFunctions, {
+  hasValidStateCode,
+} from "./changeRequest/changeRequest-util";
+import { RESPONSE_CODE } from "./libs/response-codes";
 import { DateTime } from "luxon";
 
 /**
@@ -18,8 +20,6 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-  let errorMessage = '';
-
   // If this invocation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -28,41 +28,27 @@ export const main = handler(async (event) => {
   const data = JSON.parse(event.body);
 
   // do a pre-check for things that should stop us immediately
-  errorMessage = runInitialCheck(data);
+  const errorMessage = runInitialCheck(data);
   if (errorMessage) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "runInitialCheck",
-      message: errorMessage
-    });
+    return errorMessage;
   }
 
   // map the changeRequest functions from the data.type
   const crFunctions = getChangeRequestFunctions(data.type);
   if (!crFunctions) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "getChangeRequestFunctions",
-      message: "crFunctions object not created."
-    });
+    return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
-  const crVerifyTransmittalIdStateCode = hasValidStateCode(data.transmittalNumber);
+  const crVerifyTransmittalIdStateCode = hasValidStateCode(
+    data.transmittalNumber
+  );
   if (!crVerifyTransmittalIdStateCode) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "isValidStateCode",
-      message: ERROR_MSG.TRANSMITTAL_ID_TERRITORY_NOT_VALID
-    });
+    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
   }
 
   const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
   if (!crVerifyTerritoryStateCode) {
-    return buildAppropriateResponse({
-      type: "logicError",
-      from: "isValidStateCode",
-      message: ERROR_MSG.TERRITORY_NOT_VALID
-    });
+    return RESPONSE_CODE.TERRITORY_NOT_VALID;
   }
 
   // Add required data to the record before storing.
@@ -83,15 +69,11 @@ export const main = handler(async (event) => {
   try {
     // check for submission-specific validation (uses database)
     const validationResponse = await crFunctions.fieldsValid(data);
-    console.log("validation Response: ",validationResponse);
+    console.log("validation Response: ", validationResponse);
 
-    if (validationResponse.areFieldsValid===false) {
-      console.log("Message from fieldsValid: ",validationResponse);
-      return buildAppropriateResponse({
-        type: "logicError",
-        from: "fieldsValid",
-        message: validationResponse.whyNot,
-      });
+    if (validationResponse.areFieldsValid === false) {
+      console.log("Message from fieldsValid: ", validationResponse);
+      return validationResponse.whyNot;
     }
 
     await dynamoDb.put({
@@ -103,17 +85,59 @@ export const main = handler(async (event) => {
     const packageParams = {
       TableName: process.env.spaIdTableName,
       Item: {
-        "id": data.transmittalNumber,
+        id: data.transmittalNumber,
         [data.id]: data.userId,
-      }
+      },
     };
     await dynamoDb.put(packageParams);
-
   } catch (dbError) {
     console.log("This error is: " + dbError);
     throw dbError;
   }
   console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+  // if the ID is a waiver, store all the possibilities for package checking
+  // if this is an id type where we want better searching, do that now
+  // 122 is 1915b (123 is 1915c appendix k)
+  if (data.type === "waiver" || data.type === "waiverappk") {
+    let sliceEnd = data.transmittalNumber.lastIndexOf(".");
+    let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
+    let params;
+    let numIterations = 5;
+    let planType;
+
+    if (data.type === "waiver") {
+      planType = 122;
+    }
+    if (data.type === "waiverappk") {
+      planType = 123;
+    }
+
+    while (smallerID.length > 2 && numIterations-- > 0) {
+      try {
+        params = {
+          TableName: process.env.spaIdTableName,
+          Item: {
+            id: smallerID,
+            planType: planType,
+            originalID: data.transmittalNumber,
+          },
+          ConditionExpression: "attribute_not_exists(id)",
+        };
+        console.log("params are: ", params);
+        await dynamoDb.put(params);
+      } catch (error) {
+        if (error.code != "ConditionalCheckFailedException")
+          console.log("Error is: ", error);
+        else
+          console.log(
+            "ID " + smallerID + " exists in " + process.env.spaIdTableName
+          );
+      }
+      sliceEnd = smallerID.lastIndexOf(".");
+      smallerID = smallerID.slice(0, sliceEnd); // one layer removed
+    }
+  }
 
   // Now send the CMS email
   await sendEmail(crFunctions.getCMSEmail(data));
@@ -126,7 +150,10 @@ export const main = handler(async (event) => {
   // 90 days is current CMS review period and it is based on CMS time!!
   // UTC is 4-5 hours ahead, convert first to get the correct start day
   // AND use plus days function b/c DST days are 23 or 25 hours!!
-  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt).setZone('America/New_York').plus({ days: 90 }).toMillis();
+  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt)
+    .setZone("America/New_York")
+    .plus({ days: 90 })
+    .toMillis();
   await dynamoDb.put({
     TableName: process.env.tableName,
     Item: data,
@@ -145,11 +172,7 @@ export const main = handler(async (event) => {
 
   console.log("Successfully submitted amendment:", data);
 
-  return buildAppropriateResponse({
-    type: "success",
-    from: "submit",
-    message: "Submission successfull!"
-  });
+  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });
 
 /**
@@ -158,42 +181,9 @@ export const main = handler(async (event) => {
  * @returns {String} any error messages triggered
  */
 function runInitialCheck(data) {
-  let errorMessages = "";
+  if (!data.user) return RESPONSE_CODE.VALIDATION_ERROR;
+  if (!data.uploads) return RESPONSE_CODE.ATTACHMENT_ERROR;
+  if (!data.type) return RESPONSE_CODE.SYSTEM_ERROR;
 
-  if (!data.user) errorMessages += "ERROR: Missing user info data. ";
-  if (!data.uploads) errorMessages += "ERROR: Missing attachments. ";
-  if (!data.type) errorMessages += "ERROR: Missing record type. ";
-  return errorMessages;
-}
-
-/**
- * We consolidate the response building into a function so that we can change
- * verbosity based on requestor... devs get debug info, users get helpful info,
- * and hackers get no response (or a faked one, oh, and trigger alarms!)
- * @param {Object} details what happened to trigger the response
- * @returns {Object} response contains a statusCode and a body
- */
-function buildAppropriateResponse(details) {
-  let actualResponse;
-
-  switch (details.type) {
-
-    case "logicError":
-      actualResponse = {
-        error: details.message,
-      };
-      break;
-
-    case "success":
-      actualResponse = details.message;
-      break;
-
-    default:
-      actualResponse = {
-        statusCode: 500,
-        body: "Don't know this response type??" + JSON.stringify(details),
-      };
-  }
-
-  return actualResponse;
+  return "";
 }

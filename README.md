@@ -1,7 +1,13 @@
+[macstack-spa-submission-form](https://github.com/CMSgov/macstack-spa-submission-form) [![Maintainability](https://api.codeclimate.com/v1/badges/4ad566f3e59e2a003451/maintainability)](https://codeclimate.com/repos/60413fbab8e5b05d5101a9f6/maintainability)
+
 # macstack-spa-submission-form
 #
-
 An official submission system for email-based state plan amendments (SPAs) and section 1915 waivers.
+
+Automated Testing Framework using Nightwatch.js
+## Table of Contents
+
+![Architecture Diagram](./.images/architecture.svg?raw=true)
 
 ### Application Configuration
 The following environment variables can be set to change the configuration of the application (reference [build_vars.sh](./.github/build_vars.sh)):
@@ -21,74 +27,3 @@ Lengend: R = Required, O = Optional
 * STAGE_PREFIX
 * (R) OKTA_METADATA_URL - The OKTA URL to authenticate at
 * METRICS_USERS - A comma separated list of emails of the users that are allowed access to the metrics page
-
-Automated Testing Framework using Nightwatch.js
-## Table of Contents
-
-1. Overview
-1. Installation
-1. Configuration
-1. Running Tests
-    1. Automated Test Writing Guides
-    1. Nightwatch Test Writing Guides
-1. Other Notes
- 
----
-### Overview
-
-NightwatchJS is an end-to-end (e2e) automated test framework, written 100% in JavaScript/ECMAScript, designed 
-to provide a singe source location for testing, from unit tests to full regression workflows.
-
-### Installation
-
-Pre-requisite: 
-
-- Node.js 12.x or higher
-
-
-From the root directory folder, use node package manager `npm`:
-
-`npm install`
-   
-### Configuration
-
-Location of the NightWatch configuration: ``` conf/nightwatch.conf.js```
-
-[Structure and configuration details](conf/README.md)
-
-### Running Tests 
-
-To run tests:
-    
-`node nightwatch -c conf/nightwatch.conf.js # runs all tests`
-
-\*New Commands\*
-To run tests (by browser type):
-
-For Chrome:
-    - Windows: `npm run chrome-win`
-    - Linux/Mac: `npm run chrome`
-    
-For Firefox:
-    - Windows: `npm run firefox-win`
-    - Linux/Mac: `npm run firefox-chrome`
-
-To update packages: 
-    `npm run update`
-
-see [Running Tests in Nightwatch](https://nightwatchjs.org/guide/running-tests/nightwatch-runner.html)
-
-A test_runner script will be updated and provided soon.
-
-### Automated Test Writing Guides
-
-[Best Practices for writing automated tests](tests/README.md)
-
-### Nightwatch Test Writing Guides
-
-### Other Notes/Bugs
-
-- 13 November 2020: Bug Impact (Low) There is a (possible) bug in chromedriver, when running tests headless(without a browser).
-Description: When attempting to perform an action on a clickable element, chromedriver reports an error, 
-falsely identifying the element as a non-clickable element`[size of the element is zero]`. Until this is resolved,
-avoid running headless tests in chromedriver. 

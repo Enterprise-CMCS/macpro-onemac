@@ -1,6 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_MSG } from "../libs/error-messages";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * SPA submission specific functions.
@@ -33,7 +33,7 @@ async fieldsValid(data) {
       if (result.Item) {
         console.log("the Item exists", result);
         areFieldsValid = false;
-        whyNot = ERROR_MSG.DUPLICATE_ID;
+        whyNot = RESPONSE_CODE.DUPLICATE_ID;
       } else {
         console.log("result.Item does not exist");
         areFieldsValid = true;
@@ -65,7 +65,7 @@ getCMSEmail(data) {
         <br><b>SPA ID</b>: ${data.transmittalNumber}
       </p>
       <p>
-        <b>Summary</b>:
+        <b>Additional Information</b>:
         <br>${data.summary}
       </p>
       <p>
@@ -102,7 +102,7 @@ getStateEmail(data) {
         <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
-        <b>Summary</b>:<br>
+        <b>Additional Information</b>:<br>
         ${data.summary}
       </p>
       <br>

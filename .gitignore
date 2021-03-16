@@ -14,6 +14,6 @@ reports/screenshots/
 node_modules/*
 /nightwatch/log/webDriver.log.txt
 /.github/
-/nightwatch/page_objects/spa.txt
-/nightwatch/page_objects/waiver.txt
-/nightwatch/screenshots
+/nightwatch/screenshots/*
+/nightwatch/page_objects/*.txt
+/.nyc_output/*

@@ -1,5 +1,7 @@
 #!/bin/bash
 
+
+
 echo $branch_name
 
 if [ "$branch_name" ==  "develop" ]  || [ "$branch_name" = "master" ]

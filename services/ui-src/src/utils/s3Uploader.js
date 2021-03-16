@@ -74,7 +74,7 @@ export async function uploadFile(file) {
     }).then((response) => {
       if (response.status !== 200) {
         retPromise = Promise.reject(
-          "ERROR while uploading file: Could not Verify"
+          "File verification failed"
         );
       } else {
         retPromise = Promise.resolve(result);

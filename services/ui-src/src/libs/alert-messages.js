@@ -49,47 +49,42 @@ export const ALERTS_MSG = {
   SUBMISSION_DUPLICATE_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Duplicate ID",
-    text: "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.",
+    text: "According to our records, this ID already exists. Please check the ID and try entering it again.",
   },
   SUBMISSION_TERRITORY_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Territory Error",
-    text: "The Transmittal ID Territory/State is not Valid Please check the  Transmittal ID and try entering it again.",
+    text: "The Transmittal ID Territory/State is not Valid Please check the Transmittal ID and try entering it again.",
   },
   SUBMISSION_ID_NOT_FOUND: {
     type: ALERT_TYPES.ERROR,
     heading: "ID Not Found",
     text: "We could not find that ID in our system, please try again.",
   },
-  WAIVER_RENEWAL_ID: {
+  WAIVER_RENEWAL_NO_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
     text: "Waiver Renewal Action requires existing ID",
   },
-  WAIVER_AMENDMENT_ON_K: {
-    type: ALERT_TYPES.ERROR,
-    heading: "Waiver Action Error",
-    text:"Waiver Amendment Ks need new ID for amendment action",
-  },
   WAIVER_AMENDMENT_NO_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"Waiver Amendment actions (other than Amendment Ks) require existing ID",
+    text: "Waiver Amendment actions require existing ID",
   },
-  WAIVER_NEW_ON_K: {
+  WAIVER_NEED_ID_FOR_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"New Amendment K actions must have existing IDs",
+    text: "Amendment K actions must have existing IDs",
   },
   WAIVER_NEW_NOT_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"New Waiver Actions (other than Amendment Ks) require new IDs",
+    text: "New Waiver Actions (other than Amendment Ks) require new IDs",
   },
   WAIVER_ACTION_UNKNOWN: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"This Waiver Action cannot be validated",
+    text: "This Waiver Action cannot be validated",
   },
   SUBMISSION_INCOMPLETE: {
     type: ALERT_TYPES.ERROR,
@@ -115,5 +110,10 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.WARNING,
     heading: "Login Required",
     text: "You need to be signed in to your account to access this page.  Please login and try again.",
+  },
+  CONTACT_HELP_DESK: {
+    type: ALERT_TYPES.ERROR,
+    heading: "System Submission  Error",
+    text: "Please contact the Helpdesk MACPro_HelpDesk@cms.hhs.gov or (833) 228-2540 for additional support.",
   }
 };

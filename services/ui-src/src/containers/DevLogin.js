@@ -9,6 +9,10 @@ import { Alert } from "@cmsgov/design-system";
 
 export default function DevLogin() {
   const { userHasAuthenticated } = useAppContext();
+<<<<<<< HEAD
+=======
+  const { developerLoggedIn } = useAppContext();
+>>>>>>> develop
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
   const [alert, setAlert] = useState();
   const [fields, handleFieldChange] = useFormFields({
@@ -47,6 +51,10 @@ export default function DevLogin() {
     try {
       await Auth.signIn(fields.email, fields.password);
       userHasAuthenticated(true);
+<<<<<<< HEAD
+=======
+      developerLoggedIn(true);
+>>>>>>> develop
     } catch (error) {
       console.log("Error while logging in.", error);
       newAlert = ALERTS_MSG.LOGIN_ERROR;
