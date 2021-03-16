@@ -101,7 +101,7 @@ export default function ComponentPage() {
         },
     ];
 
-    const portalTableStyle = { height: "200px", width: "100%"}
+    const portalTableStyle = { height: "400px", width: "100%"}
 
     return (<>
         <div id="title_bar" className="page-title-bar"><h1>Component Page</h1></div>
