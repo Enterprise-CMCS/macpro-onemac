@@ -71,7 +71,12 @@ const Dashboard = () => {
     }
   };
 
-  const isPending = (attribute) => attribute.status==="pending";
+  const isPending = (attribute) => attribute.status === "pending";
+  const pendingMessage = {
+    "stateuser": "Your system access is pending approval. Contact your State System Admin with any questions.",
+    "stateadmin": "Your system access is pending approval.",
+    "cmsapprover": "Your system access is pending approval. Contact the CMS System Admin with any questions."
+  }
 
   /**
    * Render the list of change requests.
@@ -141,91 +146,88 @@ const Dashboard = () => {
   }
 
   // Render the dashboard
-  // if(userProfile.userData.attributes[0].status=="pending"&&userProfile.type=="stateuser"){
-  //   <EmptyList message="Your system access is pending approval. Contact your State System Admin with any questions." />
-  // }
 
   return (
     <div className="dashboard-white">
-      {console.log(userProfile.userData.attributes.every(isPending))}
-      {console.log(userProfile.userData.type)}
-      {/* <EmptyList message="Your system access is pending approval. Contact your State System Admin with any questions." />
-      <EmptyList message="Your system access is pending approval." />
-      <EmptyList message="Your system access is pending approval. Contact the CMS System Admin with any questions." /> */}
-
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       {renderAlert(alert)}
-      <div className="dashboard-container">
-        <div className="dashboard-left-col">
-          <div className="action-title">SPAs</div>
-          <Button
-            id="spaSubmitBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.SPA)}
-          >
-            Submit new SPA
+      {userProfile.userData.attributes.every(isPending) ?
+        (
+          <EmptyList message={pendingMessage[userProfile.type]} />
+        ) : (
+          <div className="dashboard-container">
+            <div className="dashboard-left-col">
+              <div className="action-title">SPAs</div>
+              <Button
+                id="spaSubmitBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.SPA)}
+              >
+                Submit new SPA
           </Button>
-          <Button
-            id="spaRaiBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.SPA_RAI)}
-          >
-            Respond to SPA RAI
+              <Button
+                id="spaRaiBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.SPA_RAI)}
+              >
+                Respond to SPA RAI
           </Button>
-          <div className="action-title">Waivers</div>
-          <Button
-            id="waiverBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER)}
-          >
-            Submit new Waiver
+              <div className="action-title">Waivers</div>
+              <Button
+                id="waiverBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER)}
+              >
+                Submit new Waiver
           </Button>
-          <Button
-            id={"waiverRaiBtn"}
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_RAI)}
-          >
-            Respond to 1915(b) Waiver RAI
+              <Button
+                id={"waiverRaiBtn"}
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER_RAI)}
+              >
+                Respond to 1915(b) Waiver RAI
           </Button>
-          <Button
-            id="waiverExtBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-          >
-            Request Temporary Extension form - 1915(b) and 1915(c)
+              <Button
+                id="waiverExtBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+              >
+                Request Temporary Extension form - 1915(b) and 1915(c)
           </Button>
-          <Button
-            id="waiverAppKBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_APP_K)}
-          >
-            Submit 1915(c) Appendix K Amendment
+              <Button
+                id="waiverAppKBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER_APP_K)}
+              >
+                Submit 1915(c) Appendix K Amendment
           </Button>
-        </div>
-        <div className="dashboard-right-col">
-          <div className="action-title">Submissions List</div>
-          <LoadingScreen isLoading={isLoading}>
-            <div>
-              {changeRequestList.length > 0 ? (
-                <table className="submissions-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">SPA ID/Waiver Number</th>
-                      <th scope="col">Type</th>
-                      <th className="date-submitted-column" scope="col">
-                        Date Submitted
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
-                </table>
-              ) : (
-                <EmptyList message="You have no submissions yet." />
-              )}
             </div>
-          </LoadingScreen>
-        </div>
-      </div>
+            <div className="dashboard-right-col">
+              <div className="action-title">Submissions List</div>
+              <LoadingScreen isLoading={isLoading}>
+                <div>
+                  {changeRequestList.length > 0 ? (
+                    <table className="submissions-table">
+                      <thead>
+                        <tr>
+                          <th scope="col">SPA ID/Waiver Number</th>
+                          <th scope="col">Type</th>
+                          <th className="date-submitted-column" scope="col">
+                            Date Submitted
+                      </th>
+                        </tr>
+                      </thead>
+                      <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
+                    </table>
+                  ) : (
+                      <EmptyList message="You have no submissions yet." />
+                    )}
+                </div>
+              </LoadingScreen>
+            </div>
+          </div>
+        )
+      }
     </div>
   );
 };
