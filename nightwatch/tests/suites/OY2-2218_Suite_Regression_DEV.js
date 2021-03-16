@@ -1,11 +1,13 @@
 const regression = require('./OY2-2218_Suite_Regression');
+const login = require('../cases/OY2-1494_Test_SPA_Login_Dev');
 const timeout = 1000;
 
 module.exports = {
     "@tags": ["regression", "devEnv"],
 
     before: function (browser) {
-        regression.before(browser, "Login to SPA and Waiver Dashboard");
+        login.before(browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
         browser.pause(timeout * 5);
     },
 

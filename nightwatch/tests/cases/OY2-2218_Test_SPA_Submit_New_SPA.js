@@ -7,7 +7,7 @@
  */
 
 const timeout = 1000;
-const login = require('./OY2-1494_Test_SPA_Login');
+const login = require('./OY2-1494_Test_SPA_Login_Dev');
 let spa;
 module.exports = {
 

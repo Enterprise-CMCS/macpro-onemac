@@ -1,6 +1,6 @@
 
 const locator = '(//*[@disabled])';
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../cases/OY2-1494_Test_SPA_Login_Dev');
 
 module.exports = {
     "@tags": ["smoke"],

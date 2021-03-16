@@ -8,7 +8,7 @@
 
 const timeout = 1000;
 
-const login =require('./OY2-1494_Test_SPA_Login');
+const login =require('./OY2-1494_Test_SPA_Login_Dev');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 let spa;
 module.exports = {

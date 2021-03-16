@@ -1,4 +1,4 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../cases/OY2-1494_Test_SPA_Login_Dev');
 const timeout = 1000;
 
 module.exports = {

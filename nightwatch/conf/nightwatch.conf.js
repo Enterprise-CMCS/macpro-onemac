@@ -57,7 +57,7 @@ module.exports = {
                         args: [
                             '--window-size=1024,768',
                             '-verbose',
-                            //'-headless',
+                            '-headless',
                             // '-verbose'
                         ],
                     }
@@ -83,6 +83,7 @@ module.exports = {
                     args: [
                         "--log-level=3",
                         "--window-size=1024,768",
+                        '--headless'
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',

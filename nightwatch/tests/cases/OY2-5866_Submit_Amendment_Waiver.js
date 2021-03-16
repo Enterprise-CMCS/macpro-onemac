@@ -6,7 +6,7 @@
 
  */
 
-const login =require('./OY2-1494_Test_SPA_Login');
+const login =require('./OY2-1494_Test_SPA_Login_Dev');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
 const timeout = 2000;
