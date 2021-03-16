@@ -79,10 +79,11 @@
 </table>
 
 {{#each results.modules}}
-    <h2>{{@key}}</h2>
+<!-- <h2>{{@key}}</h2> -->
 
     {{#each this.completed}}
         <h3>{{@key}}</h3>
+        <!--
         <ul class="assertions">
             {{#each this.assertions}}
                 <li>
@@ -107,7 +108,7 @@
                 </li>
             {{/each}}
         </ul>
-
+        -->
         <p>
             {{#if this.failed}}
                 <span class="error"><strong>FAILED:</strong></span>

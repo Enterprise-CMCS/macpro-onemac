@@ -114,21 +114,6 @@ const commands = {
 
     },
 
-    /*
-    uploadFiles: function (total) {
-        const fs = require('fs');
-        const path = require('path');
-        let dir = path.join(__dirname, 'files');
-        let files = fs.readdirSync(dir, 'utf8');
-        for (let i = 0; i < total; i++) {
-            let selector = 'input[id="uploader-input-' + i + '"]';
-            this.api.assert.elementPresent(selector);
-            let file = require('path').resolve(dir, files[i]);
-            this.api.setValue(selector, file);
-        }
-        return this.api;
-    }
-    */
 }
 
 /**
@@ -188,7 +173,6 @@ module.exports = {
             while (randomNum.length < size - 1) {
                 randomNum = "0".concat(randomNum);
             }
-            console.log(randomNum);
             return randomNum;
         },
     }

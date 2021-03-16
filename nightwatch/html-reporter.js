@@ -20,42 +20,48 @@ const scrubReportData = function (regex, results, replaceVal= " ") {
     return JSON.parse(str);
 }
 
-const scrubbedResults = function (results, options, regex, summary = false) {
+const scrubbedResults = function (results, options, regex, templateFile, summary = false) {
     return {
-        file: path.join(options.output_folder, getReportName(results, options, summary)),
-        data: scrubReportData(regex, results)
+        file: path.join(process.cwd(), options.output_folder, getReportName(results, options, summary)),
+        data: scrubReportData(regex, results),
+        templateFile: templateFile,
     };
 }
 
 module.exports = {
+
     write : function(results, options, done) {
-        const hbs = path.join(rootDir, 'html-reporter.hbs'); // Filepath to template
-        const regexNoANSI = /\\u001b\[\d+[0-9|;]*m/g, regexNoTags = /<[\D]+|[\d]*>/g; // Removes all ANSI encoding and tags
+        const opts = {encoding: "utf8"};
 
-        const reports = [scrubbedResults(results, options, regexNoANSI)];
-        reports.push(scrubbedResults(reports[0].data, options, regexNoTags, true));
+        // Filepath to templates
+        const templateFiles = fs.readdirSync(path.join(rootDir), opts).filter(path => path.match("^.*\.hbs$"));
 
-        // read the html template
-        fs.readFile(hbs, function(err, data) {
-            if (err) throw err;
-            const template = data.toString();
+        // Removes all ANSI encoding
+        const regexNoANSI = /\\u001b\[\d+[0-9|;]*m/g, regexNoTags = /<[\D]+|[\d]*>/g; //removes tags
 
-            // merge the template with the test results data
-            reports.forEach(report => {
-                let html = handlebars.compile(template)({
-                    results   : report.data,
-                    options   : options,
-                    timestamp : new Date().toString(),
-                    browser   : options.filename_prefix.split('_').join(' ')
-                });
-                // write the html to a file
+        const [summary, full] = templateFiles;
+        const reports = [];
 
-                fs.writeFile(report.file, html, function(err) {
-                    if (err) throw err;
-                    console.log('Report generated: ' + report.file);
-                });
-            })
-        })
+        reports.push(scrubbedResults(results, options, regexNoANSI, full));
+        reports.push(scrubbedResults(reports[0].data, options, regexNoTags, summary, true));
+
+        // merge the template with the test results data
+        reports.forEach(report => {
+            let html = handlebars.compile(report.templateFile)({
+                results: report.data,
+                options: options,
+                timestamp: new Date().toString(),
+                browser: options.filename_prefix.split('_').join(' ')
+            });
+            // write the html to a file
+            try {
+                opts.flag = "w+";
+                fs.writeFileSync(report.file, html, opts);
+                console.log('Report generated: ' + report.file);
+            }catch (err) {
+                throw err;
+            }
+        });
         done();
     }
 };
