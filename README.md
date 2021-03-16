@@ -1,3 +1,5 @@
+[macstack-spa-submission-form](https://github.com/CMSgov/macstack-spa-submission-form) [![Maintainability](https://api.codeclimate.com/v1/badges/4ad566f3e59e2a003451/maintainability)](https://codeclimate.com/repos/60413fbab8e5b05d5101a9f6/maintainability)
+
 # macstack-spa-submission-form
 #
 An official submission system for email-based state plan amendments (SPAs) and section 1915 waivers.

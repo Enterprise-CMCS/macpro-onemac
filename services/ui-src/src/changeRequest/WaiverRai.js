@@ -30,10 +30,9 @@ const WaiverRai = () => {
       idType: "waiver",
       idLabel: "Waiver Number",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,  
-      idHintText: "Must follow the format SS.##.R##.M## or SS.##.R##.##",
-      idFormat: "SS.##.R##.M##",
-      idRegex: "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)",
-      idShouldTest: true,
+      idHintText: "Please use the exact Waiver Number sent with the RAI",
+      idFormat: "the Number format sent with the RAI",
+      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$)",
       idMustExist: true,  
     },
 
