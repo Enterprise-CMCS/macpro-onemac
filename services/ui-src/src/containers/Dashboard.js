@@ -75,7 +75,7 @@ const Dashboard = () => {
     if(attribute.history){
       attribute.history.every(isPending)
     }else{
-      attribute.status === "pending";
+      attribute.every(isPending)
     }
   }
   const pendingMessage = {
