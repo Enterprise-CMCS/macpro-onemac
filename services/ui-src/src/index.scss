@@ -162,6 +162,41 @@ input.form-control {
 input[type="file"] {
   width: 100%;
 }
+
+// Expansion for the CMS Review component
+// styled to look like a read only textbox
+.cms-review-read-only-textbox-body {
+  background-color: $color-gray-lighter;
+  width: 460px;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.profile-container {
+  @extend .app-bar;
+  @extend .ds-u-margin-left--7;
+  @extend .ds-u-margin-right--7;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
+
+  h3 {
+    @extend .ds-u-margin-top--7;
+  }
+  .ds-c-review {
+    @extend .ds-u-border-bottom--0;
+  }
+  .ds-c-review__heading {
+    @extend .ds-u-margin-top--1;
+  }
+  .ds-c-review__body {
+    @extend .cms-review-read-only-textbox-body;
+  }
+
+  .subheader-message {
+    padding-top: 40px;
+  }
+}
+
 .form-container {
   @extend .app-bar;
   @extend .ds-u-margin-left--7;
@@ -182,11 +217,8 @@ input[type="file"] {
     @extend .ds-u-margin-top--1;
   }
   .ds-c-review__body {
-    background-color: $color-gray-lighter;
-    width: 460px;
-    padding: 8px;
+    @extend .cms-review-read-only-textbox-body;
     border: 2px solid #aeb0b5;
-    border-radius: 3px;
   }
   .form-card {
     background-color: $color-white;

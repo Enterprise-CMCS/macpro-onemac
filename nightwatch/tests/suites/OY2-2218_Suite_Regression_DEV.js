@@ -1,14 +1,17 @@
 const regression = require('./OY2-2218_Suite_Regression');
-const login = require('../cases/OY2-1494_Test_SPA_Login_Dev');
 const timeout = 1000;
 
 module.exports = {
     "@tags": ["regression", "devEnv"],
 
     before: function (browser) {
-        login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        regression.before(browser, "Login to SPA and Waiver Dashboard");
         browser.pause(timeout * 5);
+    },
+
+    afterEach: function (browser) {
+        let spa = browser.page.spaBasePage();
+        spa.click('@dashboardLink').waitForElementPresent('body');
     },
 
     after: function (browser) {
@@ -34,7 +37,7 @@ module.exports = {
     "Submit a SPA RAI Response": function (browser) {
         regression["Submit a SPA RAI Response"](browser);
     },
-/*
+
     "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser) {
         regression["Submit a 'Respond to 1915(b) Waiver RAI'"](browser);
     },
@@ -42,5 +45,12 @@ module.exports = {
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
     },
-    */
+
+    "Submit a 1915(c) Appendix K Amendment": function (browser) {
+        regression["Submit a 1915(c) Appendix K Amendment"](browser);
+    },
+
+    "View My Account Page": function (browser) {
+        regression["View My Account Page"](browser);
+    },
 };

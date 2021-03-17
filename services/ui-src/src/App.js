@@ -1,22 +1,59 @@
 import React, { useState, useEffect } from "react";
+import { Auth } from "aws-amplify";
+import { AppContext } from "./libs/contextLib";
+import { devUsers } from "./libs/devUsers";
+import ChangeRequestDataApi from "./utils/ChangeRequestDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
-import { AppContext } from "./libs/contextLib";
-import { Auth } from "aws-amplify";
 
 function App() {
-  const [isAuthenticating, setIsAuthenticating] = useState(true);
-  const [isAuthenticated, userHasAuthenticated] = useState(false);
-  const [isLoggedInAsDeveloper, developerLoggedIn] = useState(false);
+  const [authState, setAuthState] = useState({
+    isAuthenticating: true,
+    isAuthenticated: false,
+    isLoggedInAsDeveloper: false,
+    userProfile: null
+  });
 
   useEffect(() => {
-    onLoad();
+    // On initial load of the App, try to set the user info.
+    // It will capture info if they are logged in from a previous session.
+    setUserInfo();
   }, []);
 
-  async function onLoad() {
+  /**
+   * Gets authentication status for user,
+   * gets user names and email from cognito
+   * and associated user data from dynamo user table,
+   * checks if user is a developer.
+   * Then sets all these values in their corresponding state variables.
+   * @param {Boolean} isDeveloper indicates if the user is a developer
+   */
+  async function setUserInfo(isDeveloper = false) {
+    let userAuthenticationStatus = false;
+    let isDev = false;
+    let tempUserProfile;
+
     try {
-      await Auth.currentAuthenticatedUser();
-      userHasAuthenticated(true);
+      // Get authenticated user's info from cognito
+      // and set portion of the user profile.
+      const authUser = await Auth.currentAuthenticatedUser();
+      userAuthenticationStatus = true;
+      tempUserProfile = {
+        email: authUser.signInUserSession.idToken.payload.email,
+        firstName: authUser.signInUserSession.idToken.payload.given_name,
+        lastName: authUser.signInUserSession.idToken.payload.family_name,
+      };
+
+      // Get user data from the user table
+      // and add to the user profile.
+      // Note that userData comes back as an empty object if there is none.
+      const userData = await ChangeRequestDataApi.userProfile(tempUserProfile.email);
+      tempUserProfile.userData = userData;
+
+      // Set isDev for dev users.
+      if (isDeveloper || devUsers.includes(tempUserProfile.email)) {
+        isDev = true;
+      }
     } catch (error) {
       if (error !== "not authenticated") {
         console.log(
@@ -25,15 +62,25 @@ function App() {
         );
       }
     }
-    setIsAuthenticating(false);
+
+    setAuthState({
+      isAuthenticating: false,
+      isAuthenticated: userAuthenticationStatus,
+      isLoggedInAsDeveloper: isDev,
+      userProfile: tempUserProfile,
+    });
   }
 
   return (
-    !isAuthenticating && (
+    !authState.isAuthenticating && (
       <div>
         <AppContext.Provider
-          value={{ isLoggedInAsDeveloper, developerLoggedIn, isAuthenticated, userHasAuthenticated }}>
-          <Header isAuthenticated={isAuthenticated} />
+          value={{
+            ...authState,
+            setUserInfo,
+          }}
+        >
+          <Header />
           <Routes />
         </AppContext.Provider>
       </div>

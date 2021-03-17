@@ -132,6 +132,7 @@ module.exports = {
         loginBtn: 'div.nav-right > button',
         loginTitle : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
+        manageAccountLink: "[id=manageAccountLink]",
         logout : '[id=logoutLink]',
         passField : '[id=okta-signin-password]',
         newSPA: "[id=spaSubmitBtn]",

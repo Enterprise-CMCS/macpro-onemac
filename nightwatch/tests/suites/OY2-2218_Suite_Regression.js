@@ -1,4 +1,4 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login_Dev');
+const login = require('../cases/OY2-1494_Test_SPA_Login');
 const timeout = 1000;
 
 module.exports = {
@@ -8,6 +8,11 @@ module.exports = {
         login.before(browser);
         login[loginType](browser);
         browser.pause(timeout * 5);
+    },
+
+    afterEach: function (browser) {
+        let spa = browser.page.spaBasePage();
+        spa.click('@dashboardLink').waitForElementPresent('body');
     },
 
     after: function (browser) {
@@ -75,7 +80,7 @@ module.exports = {
         const renewWaiver = require('../cases/OY2-5866_Submit_Renewal_Waiver');
         steps.forEach(step => renewWaiver[step](browser));
     },
-/*
+
     "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser, steps = [
         "Click on Respond to 1915(b) Waiver RAI",
         "Enter Waiver Number",
@@ -97,5 +102,18 @@ module.exports = {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
         steps.forEach(step => tempExt[step](browser));
     },
-    */
+
+    "Submit a 1915(c) Appendix K Amendment": function (browser) {
+        const appK = require('../cases/OY2-5832_Test_SPA_Submit_Appendix_K_Amendment');
+        appK["Click on 'Submit 1915(c) Appendix K Amendment'"](browser);
+        appK["Enter Waiver Number"](browser);
+        appK["Upload Documents"](browser);
+        appK["Enter Comments"](browser);
+        appK["Submit Form"](browser);
+    },
+
+    "View My Account Page": function (browser) {
+        const account = require('../cases/OY2_5196_Test_View_User_Profile');
+        account["Navigate to the Manage Account page"](browser);
+    },
 };

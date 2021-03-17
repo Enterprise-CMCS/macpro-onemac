@@ -138,7 +138,7 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
-              <Link to={ROUTES.FAQ} id="manageAccountLink" onClick={() => setShowMenu(false)}>
+              <Link to={ROUTES.PROFILE} id="manageAccountLink" onClick={() => setShowMenu(false)}>
                 <svg
                   width="14"
                   height="15"
