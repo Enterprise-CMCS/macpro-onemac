@@ -36,9 +36,13 @@ const UserPage = () => {
       <div className="profile-container">
         <div className="subheader-message">
           Below is the account information for your role as a {userType}. Your
-          Profile name and email cannot be edited in OneMAC. It can be changed
-          in your IDM profile. If you have questions, please contact the MACPro
-          Help Desk.
+          name and email cannot be edited in OneMAC. It can be changed in your
+          IDM profile. If you have questions, please contact the MACPro Help
+          Desk at{" "}
+          <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">
+            MACPro_HelpDesk@cms.hhs.gov
+          </a>{" "}
+          or call (833) 228-2540.
         </div>
         <h3>Profile Information</h3>
         <Review heading="Full Name">{getFullName()}</Review>
