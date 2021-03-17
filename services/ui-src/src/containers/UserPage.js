@@ -11,9 +11,9 @@ const UserPage = () => {
   const { userProfile } = useAppContext();
   const { email, firstName, lastName, userData } = userProfile;
 
-  let userType = 'user'
+  let userType = "user";
   if (userData && userData.type) {
-    userType = userTypes[userData.type]
+    userType = userTypes[userData.type];
   }
 
   /**
@@ -23,9 +23,9 @@ const UserPage = () => {
    */
   function getFullName() {
     let names = [firstName, lastName];
-    names = names.filter(name => name);
+    names = names.filter((name) => name);
 
-    const fullName = names.join(' ');
+    const fullName = names.join(" ");
 
     return fullName;
   }
@@ -35,9 +35,10 @@ const UserPage = () => {
       <PageTitleBar heading="Account Management" />
       <div className="profile-container">
         <div className="subheader-message">
-          This page contains Profile Information for the {userType}. The information
-          cannot be changed in the portal. However, the {userType} can change their
-          contact phone number in their account.
+          Below is the account information for your role as a {userType}. Your
+          Profile name and email cannot be edited in OneMAC. It can be changed
+          in your IDM profile. If you have questions, please contact the MACPro
+          Help Desk.
         </div>
         <h3>Profile Information</h3>
         <Review heading="Full Name">{getFullName()}</Review>
