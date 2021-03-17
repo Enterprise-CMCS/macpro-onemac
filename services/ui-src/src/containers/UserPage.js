@@ -2,6 +2,7 @@ import React from "react";
 import { Review } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userTypes";
+import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
 
 /**
@@ -39,10 +40,10 @@ const UserPage = () => {
           name and email cannot be edited in OneMAC. It can be changed in your
           IDM profile. If you have questions, please contact the MACPro Help
           Desk at{" "}
-          <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">
-            MACPro_HelpDesk@cms.hhs.gov
+          <a href={`mailto:${helpDeskContact.email}`}>
+            {helpDeskContact.email}
           </a>{" "}
-          or call (833) 228-2540.
+          or call {helpDeskContact.phone}.
         </div>
         <h3>Profile Information</h3>
         <Review heading="Full Name">{getFullName()}</Review>

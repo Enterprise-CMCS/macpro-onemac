@@ -1,5 +1,6 @@
 import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
+import { helpDeskContact } from "../libs/helpDeskContact";
 
 const FAQ = () => {
   
@@ -11,11 +12,11 @@ const FAQ = () => {
       <div className="form-card">
         <h2>Help Desk Contact Information</h2>
         <p>
-            For assistance, please email the MACPro Help Desk at{" "}
-            <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">
-              MACPro_HelpDesk@cms.hhs.gov
-            </a>{" "}
-            or call (833) 228-2540.
+          For assistance, please email the MACPro Help Desk at{" "}
+          <a href={`mailto:${helpDeskContact.email}`}>
+            {helpDeskContact.email}
+          </a>{" "}
+          or call {helpDeskContact.phone}.
         </p>
         <h2>Frequently Asked Questions</h2>
         <h4>What browsers can I use to access the system?</h4>
@@ -109,8 +110,10 @@ const FAQ = () => {
         <h4>What should we do if we don’t receive a confirmation email?</h4>
         <p>
           Refresh your inbox, check your SPAM filters, then contact the MACPro
-          Help Desk (MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540 or
-          contact your state lead.
+          Help Desk <a href={`mailto:${helpDeskContact.email}`}>
+            {helpDeskContact.email}
+          </a>{" "}
+          or call {helpDeskContact.phone} or contact your state lead.
         </p>
         <h4>Is this considered the official state submission?</h4>
         <p>

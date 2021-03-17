@@ -1,4 +1,5 @@
 import config from "../utils/config";
+import { helpDeskContact } from "./helpDeskContact"
 
 /**
  * Alert types
@@ -114,6 +115,6 @@ export const ALERTS_MSG = {
   CONTACT_HELP_DESK: {
     type: ALERT_TYPES.ERROR,
     heading: "System Submission Error",
-    text: "Please contact the Helpdesk MACPro_HelpDesk@cms.hhs.gov or (833) 228-2540 for additional support.",
+    text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
   }
 };
