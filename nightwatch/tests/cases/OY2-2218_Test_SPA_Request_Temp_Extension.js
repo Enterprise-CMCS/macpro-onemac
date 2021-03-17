@@ -2,7 +2,7 @@
     Test Scenario: Create Request Temporary Extension form - 1915(b) and 1915(c)
     Description: This will login to the application, click the link to start the "Request Temporary Extension form -
     1915(b) and 1915(c)" process, enter the required information, and upload documents using files located in the
-    'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
+    'files' folder. Lastly, comments will be entered in the Summary and then submitted.
 
  */
 

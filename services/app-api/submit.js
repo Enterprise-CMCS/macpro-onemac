@@ -98,20 +98,13 @@ export const main = handler(async (event) => {
 
   // if the ID is a waiver, store all the possibilities for package checking
   // if this is an id type where we want better searching, do that now
-  // 122 is 1915b (123 is 1915c appendix k)
-  if (data.type === "waiver" || data.type === "waiverappk") {
+  // 122 is 1915b (123 is 1915c)
+  if (data.type === "waiver") {
+    let planType = 122;
     let sliceEnd = data.transmittalNumber.lastIndexOf(".");
     let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
     let params;
     let numIterations = 5;
-    let planType;
-
-    if (data.type === "waiver") {
-      planType = 122;
-    }
-    if (data.type === "waiverappk") {
-      planType = 123;
-    }
 
     while (smallerID.length > 2 && numIterations-- > 0) {
       try {

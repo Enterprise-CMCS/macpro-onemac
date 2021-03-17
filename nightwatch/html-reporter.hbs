@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <title>Test Results - {{browser}}</title>
 
@@ -12,12 +12,7 @@
 
         body { padding: 10px 40px; }
 
-        table {
-            width: 100%; margin-bottom: 20px;
-            border: 0 solid black;
-            border-spacing: 0;
-        }
-
+        table { width: 100%; margin-bottom: 20px; }
 
         td {
             padding: 7px;
@@ -36,7 +31,7 @@
         tr:first-child td   { border-top: 1px black solid; }
         td:last-child       { border-right: 1px black solid; }
 
-        tr.overview td      { padding-bottom: 0; border-bottom: none; }
+        tr.overview td      { padding-bottom: 0px; border-bottom: none; }
         tr.overview.last td { padding-bottom: 3px; }
 
         ul.assertions   { list-style-type: none; }
@@ -61,7 +56,7 @@
 <body>
 <h1>Test Results</h1>
 
-<table>
+<table border="0" cellpadding="0" cellspacing="0">
     <tr class="overview">
         <td colspan="3" title="{{browser}}"><strong>Browser:</strong> {{browser}}</td>
     </tr>
@@ -101,7 +96,7 @@
                     {{#if this.stacktrace}}
                         <div class="stacktrace">
                             <a href="#">view stacktrace</a>
-                            <code>{{this.stacktrace}}</code>
+                            <code><pre>{{this.stacktrace}}</pre></code>
                         </div>
                     {{/if}}
                 </li>
@@ -112,7 +107,7 @@
             {{#if this.failed}}
                 <span class="error"><strong>FAILED:</strong></span>
                 <span class="error"><strong>{{this.failed}}</strong></span> assertions failed and
-                <span class="success"><strong>{{this.passed}}</strong></span> passed. ({{this.time}}s)
+                <span class="success"><strong>{{this.passed}}</span></strong> passed. ({{this.time}}s)
             {{else}}
                 <span class="success"><strong>OK.</strong></span>
                 <span class="success"><strong>{{this.passed}}</strong></span> assertions passed. ({{this.time}}s)
@@ -140,8 +135,8 @@
         $('div.stacktrace').on('click', 'a', function(evt) {
             evt.preventDefault();
 
-            const $link = $(this);
-            const $code = $link.parent().find('code');
+            var $link = $(this);
+            var $code = $link.parent().find('code');
 
             $code.is(':visible') ? $link.text('hide stacktrace'):
                     $link.text('view stacktrace');

@@ -2,7 +2,7 @@
     Test Scenario: New Waiver Action
     Description: This will login to the application, click the link to start the Waiver process,
     enter the required Waiver information for a NEW waiver action, and upload documents using files
-    located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
+    located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
 
  */
 
@@ -65,6 +65,7 @@ module.exports = {
     },
 
     "Submit Waiver": function (browser) {
+        browser.pause(timeout)
         new_spa["Submit SPA"](browser);
     }
 

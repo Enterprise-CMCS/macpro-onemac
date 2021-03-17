@@ -38,8 +38,6 @@ function logout() {
 function Header(props) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
-  const { isLoggedInAsDeveloper } = useAppContext();
-  const { isAuthenticated } = useAppContext();
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -120,7 +118,7 @@ function Header(props) {
    */
   function renderAccountButtons() {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
-    if (isAuthenticated) {
+    if (props.isAuthenticated) {
       return (
         <div className="nav-right" ref={wrapperRef}>
           <button className="dropdown" id="myAccountLink" onClick={() => setShowMenu(!showMenu)}>
@@ -204,6 +202,7 @@ function Header(props) {
       );
     }
   }
+  const { isLoggedInAsDeveloper } = useAppContext();
 
   return (
     <div>
