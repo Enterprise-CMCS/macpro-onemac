@@ -4,7 +4,8 @@
   "version": "1.0.0",
   "main": "handler.js",
   "scripts": {
-    "test": "serverless-bundle test"
+    "test": "serverless-bundle test",
+    "test-backend": "node node_modules/mocha/bin/mocha"
   },
   "author": "",
   "license": "CC0-1.0",
@@ -13,9 +14,11 @@
     "url": "https://github.com/AnomalyInnovations/serverless-nodejs-starter.git"
   },
   "devDependencies": {
+    "@babel/core": "^7.13.10",
+    "@babel/register": "^7.13.8",
     "aws-sdk": "^2.752.0",
     "enzyme": "^3.11.0",
-    "mocha": "^8.3.0",
+    "mocha": "^8.3.2",
     "serverless-associate-waf": "^1.2.1",
     "serverless-bundle": "^3.1.0",
     "serverless-dotenv-plugin": "^3.0.0",
@@ -26,6 +29,7 @@
     "date-fns": "^2.16.1",
     "hapi": "^18.1.0",
     "luxon": "^1.25.0",
+    "regenerator-runtime": "^0.13.7",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
   }

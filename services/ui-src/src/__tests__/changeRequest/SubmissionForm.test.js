@@ -1,9 +1,9 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import AlertBar from "../../components/AlertBar";
+import SubmissionForm from "../../changeRequest/SubmissionForm";
 
 
 test("renders without crashing", () => {
     const div = document.createElement('div');
-    ReactDOM.render(<AlertBar />, div);
+    ReactDOM.render(<SubmissionForm  changeRequestType={}/>, div);
 });
