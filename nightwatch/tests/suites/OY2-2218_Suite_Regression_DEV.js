@@ -48,5 +48,9 @@ module.exports = {
 
     "Submit a 1915(c) Appendix K Amendment": function (browser) {
         regression["Submit a 1915(c) Appendix K Amendment"](browser);
-    }
+    },
+
+    "View My Account Page": function (browser) {
+        regression["View My Account Page"](browser);
+    },
 };

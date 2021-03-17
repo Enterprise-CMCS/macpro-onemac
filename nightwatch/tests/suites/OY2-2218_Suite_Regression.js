@@ -111,4 +111,9 @@ module.exports = {
         appK["Enter Comments"](browser);
         appK["Submit Form"](browser);
     },
+
+    "View My Account Page": function (browser) {
+        const account = require('../cases/OY2_5196_Test_View_User_Profile');
+        account["Navigate to the Manage Account page"](browser);
+    },
 };
