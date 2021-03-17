@@ -71,7 +71,13 @@ const Dashboard = () => {
     }
   };
   const isPending = (state) => state.status === "pending";
-  const isStatePending = (attribute) => attribute.history.every(isPending)
+  const isStatePending = (attribute) => {
+    if(attribute.history){
+      attribute.history.every(isPending)
+    }else{
+      attribute.status === "pending";
+    }
+  }
   const pendingMessage = {
     "stateuser": "Your system access is pending approval. Contact your State System Admin with any questions.",
     "stateadmin": "Your system access is pending approval.",
