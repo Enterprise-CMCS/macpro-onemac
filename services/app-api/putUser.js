@@ -238,8 +238,11 @@ const constructEmailParams = (recipients, type) => {
     email.Subject = `New OneMAC Portal ${typeText} Access Request`;
     email.HTML = `
         <p>Hello,</p>
-        <p>There is a new OneMAC Portal ${typeText} access request waiting for your review. 
-        Please log into your User Management Dashboard to see the pending request.</p>
+        
+        <p>You have a new role request awaiting review. Please log into OneMAC and check your 
+        Account Management dashboard to review pending requests. If you have questions, 
+        please contact the MACPro Help Desk.</p>
+
         <p>Thank you!</p>`;
     return { email, fromAddressSource };
 };
