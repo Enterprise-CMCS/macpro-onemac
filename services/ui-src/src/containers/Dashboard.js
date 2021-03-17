@@ -72,10 +72,10 @@ const Dashboard = () => {
   };
   const isPending = (state) => state.status === "pending";
   const isStatePending = (attribute) => {
-    if(attribute.history){
-      attribute.history.every(isPending)
-    }else{
-      attribute.every(isPending)
+    if (attribute.history) {
+      attribute.history.every(isPending);
+    } else {
+      return attribute.status === "pending";
     }
   }
   const pendingMessage = {
@@ -157,58 +157,58 @@ const Dashboard = () => {
     <div className="dashboard-white">
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       {renderAlert(alert)}
-          <div className="dashboard-container">
-            <div className="dashboard-left-col">
-              <div className="action-title">SPAs</div>
-              <Button
-                id="spaSubmitBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.SPA)}
-              >
-                Submit new SPA
+      <div className="dashboard-container">
+        <div className="dashboard-left-col">
+          <div className="action-title">SPAs</div>
+          <Button
+            id="spaSubmitBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA)}
+          >
+            Submit new SPA
           </Button>
-              <Button
-                id="spaRaiBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.SPA_RAI)}
-              >
-                Respond to SPA RAI
+          <Button
+            id="spaRaiBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.SPA_RAI)}
+          >
+            Respond to SPA RAI
           </Button>
-              <div className="action-title">Waivers</div>
-              <Button
-                id="waiverBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER)}
-              >
-                Submit new Waiver
+          <div className="action-title">Waivers</div>
+          <Button
+            id="waiverBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER)}
+          >
+            Submit new Waiver
           </Button>
-              <Button
-                id={"waiverRaiBtn"}
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER_RAI)}
-              >
-                Respond to 1915(b) Waiver RAI
+          <Button
+            id={"waiverRaiBtn"}
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_RAI)}
+          >
+            Respond to 1915(b) Waiver RAI
           </Button>
-              <Button
-                id="waiverExtBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-              >
-                Request Temporary Extension form - 1915(b) and 1915(c)
+          <Button
+            id="waiverExtBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+          >
+            Request Temporary Extension form - 1915(b) and 1915(c)
           </Button>
-              <Button
-                id="waiverAppKBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER_APP_K)}
-              >
-                Submit 1915(c) Appendix K Amendment
+          <Button
+            id="waiverAppKBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.WAIVER_APP_K)}
+          >
+            Submit 1915(c) Appendix K Amendment
           </Button>
-            </div>
-            <div className="dashboard-right-col">
-            {userProfile && userProfile.userData && userProfile.userData.attributes && userProfile.userData.attributes.every(isStatePending) ?
-        (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        ) : (<div>
+        </div>
+        <div className="dashboard-right-col">
+          {userProfile && userProfile.userData && userProfile.userData.attributes && userProfile.userData.attributes.every(isStatePending) ?
+            (
+              <EmptyList message={pendingMessage[userProfile.userData.type]} />
+            ) : (<div>
               <div className="action-title">Submissions List</div>
               <LoadingScreen isLoading={isLoading}>
                 <div>
@@ -230,10 +230,10 @@ const Dashboard = () => {
                     )}
                 </div>
               </LoadingScreen>
-              </div>
-        )}
             </div>
-          </div>
+            )}
+        </div>
+      </div>
     </div>
   );
 };
