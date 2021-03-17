@@ -114,7 +114,7 @@ const getUser = async userEmail => {
         return result;
     }
 
-    console.log(`The user details for ${userEmail}: ${result}`);
+    console.log(`Selected User ${userEmail}: ${JSON.stringify(result)}`);
     return result.Item;
 };
 
