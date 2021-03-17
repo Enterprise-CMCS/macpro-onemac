@@ -31,7 +31,7 @@ export const main = handler(async (event) => {
     // retreive user item from DynamoDb
     let user = await getUser(input.id);
     // Check if type is not different
-    if (!isEmpty(user) && user.type !== input.type){
+    if (!isEmpty(user) && user.type !== input.type) {
         console.log(
             "Warning: The supplied user exists but the type requested is different than what is already registered in the database"
         );
@@ -57,23 +57,30 @@ export const main = handler(async (event) => {
     console.log("Successfully submitted the request:", user);
 
     // Collect recipients email ids
-    const recipients = collectRecipientEmails(input) || [];
+    const recipients = await collectRecipientEmails(input);
+    //recipients = (isEmpty(recipients)) ? [] : recipients;
+    if (recipients.length > 0) {
+        // construct email parameters
+        const emailParams = constructEmailParams(recipients, input.type);
 
-    // construct email parameters
-    const emailParams = constructEmailParams(recipients, input.type);
-
-    // Send email
-    try {
-        // send the User access request "reciept"
-        await sendEmail(emailParams.email, emailParams.fromAddressSource);
-        return RESPONSE_CODE.USER_SUBMITTED;
-    } catch (error) {
+        // Send email
+        try {
+            // send the User access request "reciept"
+            await sendEmail(emailParams.email, emailParams.fromAddressSource);
+            return RESPONSE_CODE.USER_SUBMITTED;
+        } catch (error) {
+            console.log(
+                "Warning: There was an error sending the user access request acknowledgment email.",
+                error
+            );
+            return RESPONSE_CODE.EMAIL_NOT_SENT;
+        }
+    } else {
         console.log(
-            "Warning: There was an error sending the user access request acknowledgment email.",
-            error
-        );
+            `Warning: There is no recipient email address present for input ${JSON.stringify(input)}`);
         return RESPONSE_CODE.EMAIL_NOT_SENT;
     }
+
 });
 
 const validateUser = data => {
@@ -177,6 +184,7 @@ const collectRecipientEmails = async input => {
         const systemadmins = await getUsersByType('systemadmin') || [];
         systemadmins.forEach(sysadmin => recipients.push(sysadmin.id));
     }
+    console.log('Email recipients,', recipients);
     return recipients;
 };
 
