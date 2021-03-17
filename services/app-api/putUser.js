@@ -30,9 +30,8 @@ export const main = handler(async (event) => {
 
     // retreive user item from DynamoDb
     let user = await getUser(input.id);
-
     // Check if type is not different
-    if (user.type !== input.type){
+    if (!isEmpty(user) && user.type !== input.type){
         console.log(
             "Warning: The supplied user exists but the type requested is different than what is already registered in the database"
         );
@@ -155,9 +154,9 @@ const collectRecipientEmails = async input => {
     if (input.type === 'stateuser') {
         const states = input.attributes.map(item => item.stateCode);
         // get all stateAdmin email ids
-        const stateAdmins = await getUsersByType('stateuser') || [];
+        const stateAdmins = await getUsersByType('stateadmin') || [];
         // fiter out by selected states with latest attribute status is active
-        stateAdmins.foreach(admin => {
+        stateAdmins.map(admin => {
             const attributes = admin.attributes;
             attributes.forEach(attr => {
                 states.includes(attr.stateCode) && isLatestAttributeActive(attr.history) ? recipients.push(admin.id) : null;
@@ -214,7 +213,7 @@ const isLatestAttributeActive = (attr) => {
 
 const constructEmailParams = (recipients, type) => {
     const email = {};
-    let typeText = 'User ';
+    let typeText = 'User';
     const fromAddressSource = 'userAccessEmailSource';
     email.ToAddresses = recipients;
     switch (type) {
