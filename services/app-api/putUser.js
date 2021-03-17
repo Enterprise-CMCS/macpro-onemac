@@ -4,7 +4,6 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
 import { isEmpty } from 'lodash';
-import { use } from "chai";
 
 /**
  * Update a user
