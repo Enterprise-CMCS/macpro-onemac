@@ -8,8 +8,7 @@ import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { Alert } from "@cmsgov/design-system";
 
 export default function DevLogin() {
-  const { userHasAuthenticated } = useAppContext();
-  const { developerLoggedIn } = useAppContext();
+  const { setUserInfo } = useAppContext();
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
   const [alert, setAlert] = useState();
   const [fields, handleFieldChange] = useFormFields({
@@ -47,8 +46,7 @@ export default function DevLogin() {
 
     try {
       await Auth.signIn(fields.email, fields.password);
-      userHasAuthenticated(true);
-      developerLoggedIn(true);
+      setUserInfo(true);
     } catch (error) {
       console.log("Error while logging in.", error);
       newAlert = ALERTS_MSG.LOGIN_ERROR;

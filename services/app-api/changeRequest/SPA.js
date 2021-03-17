@@ -65,7 +65,7 @@ getCMSEmail(data) {
         <br><b>SPA ID</b>: ${data.transmittalNumber}
       </p>
       <p>
-        <b>Additional Information</b>:
+        <b>Summary</b>:
         <br>${data.summary}
       </p>
       <p>
@@ -102,7 +102,7 @@ getStateEmail(data) {
         <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
-        <b>Additional Information</b>:<br>
+        <b>Summary</b>:<br>
         ${data.summary}
       </p>
       <br>

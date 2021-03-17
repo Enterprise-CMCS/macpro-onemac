@@ -49,7 +49,7 @@ export const ALERTS_MSG = {
   SUBMISSION_DUPLICATE_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Duplicate ID",
-    text: "According to our records, this ID already exists. Please check the ID and try entering it again.",
+    text: "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.",
   },
   SUBMISSION_TERRITORY_ERROR: {
     type: ALERT_TYPES.ERROR,
@@ -113,7 +113,7 @@ export const ALERTS_MSG = {
   },
   CONTACT_HELP_DESK: {
     type: ALERT_TYPES.ERROR,
-    heading: "System Submission  Error",
+    heading: "System Submission Error",
     text: "Please contact the Helpdesk MACPro_HelpDesk@cms.hhs.gov or (833) 228-2540 for additional support.",
   }
 };

@@ -36,20 +36,6 @@ const commands = {
         return id;
     },
 
-    // 1915(c) Appendix K valid options:
-    // Note that the base waiver number is the first set of numbers which can be either 4 or 5 digits
-    // SS.####.R##.##
-    // SS.#####.R##.##
-    getWaiverAppKNumber: function (state = "VA") {
-        const baseNumLengthOptions = [4, 5];
-        const randomBaseNumLengthOption = baseNumLengthOptions[Math.floor(Math.random() * baseNumLengthOptions.length)]
-        let group = [state, getRandomNumberString(randomBaseNumLengthOption), `R${getRandomNumberString(2)}`, getRandomNumberString(2)];
-        let id = group.join(".");
-        const waiverFile = path.join(__dirname, "waiver.txt");
-        fs.writeFileSync(waiverFile, id, {encoding: "utf8", flag: 'w'});
-        return id;
-    },
-
     getID: function (file = 'spa.txt') {
         return fs.readFileSync(path.join(__dirname, file),'utf8');
     },
@@ -114,22 +100,22 @@ const commands = {
 
     },
 
-}
+    /*
+    uploadFiles: function (total) {
+        const fs = require('fs');
+        const path = require('path');
+        let dir = path.join(__dirname, 'files');
+        let files = fs.readdirSync(dir, 'utf8');
 
-/**
- * Returns a random string of numbers to a specified number of digits
- * allowing for leading zeros
- * @param {Number} numDigits
- * @returns string of numbers
- */
-function getRandomNumberString(numDigits) {
-    const maxNum = Math.pow(10, numDigits);
-    const randomNum = Math.floor(Math.random() * Math.floor(maxNum));
-    let randomNumString = randomNum.toString();
-    if (randomNumString.length < numDigits) {
-        randomNumString = randomNumString.padStart(numDigits, '0');
+        for (let i = 0; i < total; i++) {
+            let selector = 'input[id="uploader-input-' + i + '"]';
+            this.api.assert.elementPresent(selector);
+            let file = require('path').resolve(dir, files[i]);
+            this.api.setValue(selector, file);
+        }
+        return this.api;
     }
-    return randomNumString;
+    */
 }
 
 module.exports = {
@@ -137,8 +123,7 @@ module.exports = {
         alert_banner: "[id*=alert_]",
         alert_text: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
-        waiverAuthority: '#waiverAuthority',
-        dashboardLink: '[id=dashboardLink]',
+        waiverAuthority: '[id=waiverAuthority]',
         devLoginButton : '[id=devloginBtn]',
         devPassField : '[id=password]',
         devSubmitBtn : 'input[type=submit]',
@@ -147,6 +132,7 @@ module.exports = {
         loginBtn: 'div.nav-right > button',
         loginTitle : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
+        manageAccountLink: "[id=manageAccountLink]",
         logout : '[id=logoutLink]',
         passField : '[id=okta-signin-password]',
         newSPA: "[id=spaSubmitBtn]",
@@ -154,7 +140,6 @@ module.exports = {
         newWaiver: "[id=waiverBtn]",
         respondWaiver: "[id=waiverRaiBtn]",
         requestTemp: "[id=waiverExtBtn]",
-        submitAppK: "[id=waiverAppKBtn]",
         submitBtn: "[id=okta-signin-submit]",
         tandc: "[id=tandc]",
         territory : "#territory",
@@ -177,3 +162,4 @@ module.exports = {
         },
     }
 };
+

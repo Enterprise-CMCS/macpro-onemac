@@ -14,14 +14,14 @@ export const main = handler(async (event, context) => {
     // 'Key' defines the partition key and sort key of the item to be retrieved
     // - 'userId': Identity Pool identity id of the authenticated user
     Key: {
-      id: event.queryStringParameters.email,
+      userId: event.requestContext.identity.cognitoIdentityId,
     },
   };
 
   const result = await dynamoDb.get(params);
 
   if (!result.Item) {
-    console.log("The user does not exists in this table.", params);
+    console.log("The user does not exists in this table.");
     // The result is an empty object {} in this case
     return result;
   }

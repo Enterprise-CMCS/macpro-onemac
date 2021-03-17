@@ -17,4 +17,3 @@ node_modules/*
 /nightwatch/screenshots/*
 /nightwatch/page_objects/*.txt
 /.nyc_output/*
-/tests_output/**

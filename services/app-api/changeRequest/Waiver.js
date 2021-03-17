@@ -42,8 +42,13 @@ async fieldsValid(data) {
         console.log("packageExists got an error: ", error);
       }
 
+      // all Amendment K Waiver Actions require an existing ID
+      if (data.waiverAuthority === "1915(c)" && !idExists) {
+        areFieldsValid = false;
+        whyNot = RESPONSE_CODE.WAIVER_NEED_ID_FOR_K;
+      }
       // NEW action type should have NEW IDs
-      if (data.actionType === "new" && idExists) {
+      else if (data.actionType === "new" && idExists) {
         areFieldsValid = false;
         whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
       }
@@ -72,7 +77,7 @@ async fieldsValid(data) {
             <br><b>Waiver Authority</b>: ${data.waiverAuthority}
         </p>
         <p>
-            <b>Additional Information</b>:
+            <b>Summary</b>:
             <br>${data.summary}
         </p>
         <p>
@@ -108,7 +113,7 @@ async fieldsValid(data) {
             <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
         </p>
         <p>
-            <b>Additional Information</b>:<br>
+            <b>Summary</b>:<br>
             ${data.summary}
         </p>
         <br>
