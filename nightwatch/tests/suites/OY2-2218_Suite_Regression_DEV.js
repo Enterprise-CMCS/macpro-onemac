@@ -8,12 +8,10 @@ module.exports = {
     before: function (browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 5);
     },
 
     afterEach: function (browser) {
-        let spa = browser.page.spaBasePage();
-        spa.click('@dashboardLink').waitForElementPresent('body');
+        browser.click('link text', "Dashboard").waitForElementPresent('body');
     },
 
     after: function (browser) {
@@ -28,16 +26,16 @@ module.exports = {
         regression["Submit a New Waiver Action"](browser);
     },
 
+    "Submit a SPA RAI Response": function (browser) {
+        regression["Submit a SPA RAI Response"](browser);
+    },
+
     "Submit an Amendment Waiver Action": function (browser) {
         regression["Submit an Amendment Waiver Action"](browser);
     },
 
     "Submit a Renewal Waiver Action": function (browser) {
         regression["Submit a Renewal Waiver Action"](browser);
-    },
-
-    "Submit a SPA RAI Response": function (browser) {
-        regression["Submit a SPA RAI Response"](browser);
     },
 
     "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser) {
@@ -47,8 +45,11 @@ module.exports = {
     "Submit a Temporary Request Extension": function (browser) {
         regression["Submit a Temporary Request Extension"](browser);
     },
+/*
 
     "Submit a 1915(c) Appendix K Amendment": function (browser) {
         regression["Submit a 1915(c) Appendix K Amendment"](browser);
-    }
+    },
+*/
+
 };

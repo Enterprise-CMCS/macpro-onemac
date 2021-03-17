@@ -3,63 +3,54 @@ const path = require('path');
 const handlebars = require('handlebars');
 
 const rootDir = path.join(process.cwd(), 'nightwatch');
+const templates = [
+    "html-reporter.hbs",
+    "html-reporter-summary.hbs"
+];
 
-const getReportName = (results, options, summary) => {
-    const {modules} = results;
-    const [title,] = Object.entries(modules).pop(), [dir, file] = title.split("\\");
-    const fileName = (summary)
-        ? `${options.filename_prefix}${file.concat('.html')}`
-        : `${options.filename_prefix}${file.concat('_summary.html')}`
+const ReportUtils = {
+    scrubReport: function (results) {
+        const regex = /\\u001b\[\d+[0-9|;]*m/g;
+        const str = JSON.stringify(results).replace(regex, " ");
+        return JSON.parse(str);
+    },
 
-    return path.join(dir, fileName);
-}
+    getOutputFileName: function (results, options) {
+        const {modules} = results;
+        const [dir, file] = Object.keys(modules).pop().split("\\");
+        const fileName = String(options.filename_prefix).concat(file);
+        return path.join(options.output_folder, dir, fileName);
+    },
 
-const scrubReportData = function (regex, results, replaceVal= " ") {
-    const re = new RegExp(regex);
-    const str = JSON.stringify(results).replace(re, replaceVal);
-    return JSON.parse(str);
-}
-
-const scrubbedResults = function (results, options, regex, templateFile, summary = false) {
-    return {
-        file: path.join(process.cwd(), options.output_folder, getReportName(results, options, summary)),
-        data: scrubReportData(regex, results),
-        templateFile: templateFile,
-    };
-}
+    getTemplate: function (results, options, template) {
+        return handlebars.compile(template)({
+            results: this.scrubReport(results),
+            options: options,
+            timestamp: new Date().toString(),
+            browser: options.filename_prefix.split('_').join(' ')
+        });
+    },
+};
 
 module.exports = {
-
     write : function(results, options, done) {
-        const opts = {encoding: "utf8"};
 
-        // Filepath to templates
-        const templateFiles = fs.readdirSync(path.join(rootDir), opts).filter(path => path.match("^.*\.hbs$"));
-
-        // Removes all ANSI encoding
-        const regexNoANSI = /\\u001b\[\d+[0-9|;]*m/g, regexNoTags = /<[\D]+|[\d]*>/g; //removes tags
-
-        const [summary, full] = templateFiles;
-        const reports = [];
-
-        reports.push(scrubbedResults(results, options, regexNoANSI, full));
-        reports.push(scrubbedResults(reports[0].data, options, regexNoTags, summary, true));
-
-        // merge the template with the test results data
-        reports.forEach(report => {
-            let html = handlebars.compile(report.templateFile)({
-                results: report.data,
-                options: options,
-                timestamp: new Date().toString(),
-                browser: options.filename_prefix.split('_').join(' ')
-            });
-            // write the html to a file
+        // Read in the templateFiles
+        templates.forEach(file => {
             try {
-                opts.flag = "w+";
-                fs.writeFileSync(report.file, html, opts);
-                console.log('Report generated: ' + report.file);
-            }catch (err) {
-                throw err;
+                const reportFilename = ReportUtils.getOutputFileName(results, options);
+                const templatePath = path.join(rootDir, file), template = fs.readFileSync(templatePath, "utf8");
+
+                // merge the template with the test results data
+                const html = ReportUtils.getTemplate(results, options, template);
+
+                const outputFile = file.match(/^.*(summary).*$/g)
+                    ? reportFilename.concat("-summary.html") : reportFilename.concat(".html");
+                fs.writeFileSync(outputFile, html, 'utf8');
+                console.log('Report generated: ' + outputFile);
+
+            }catch (e) {
+                console.error(`File ${file} not found! \n Error: ${e}`);
             }
         });
         done();
