@@ -4,6 +4,7 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
 import { isEmpty } from 'lodash';
+import { it } from "date-fns/locale";
 
 /**
  * Update a user
@@ -87,7 +88,8 @@ const validateUser = data => {
     const userSchema = Joi.object().keys({
         id: Joi.string().email().required(),
         type: Joi.string().valid('cmsapprover', 'stateadmin', 'stateuser').required(),
-        attributes: Joi.array().required()
+        systemAdminEmail: Joi.string().email().optional(),
+        attributes: Joi.array().required(),
     });
     //Todo: Add deeper validation for types
     const result = userSchema.validate(data);
@@ -130,22 +132,24 @@ const populateUserData = (input, selectedUser) => {
         input.attributes.forEach(item => {
             const index = selectedUser.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             if (index !== -1) {
-                selectedUser.attributes[index].history.push({ date: currentTimestamp, status: item.status });
+                selectedUser.attributes[index].history.push(generateAttribute(item));
             } else {
                 selectedUser.attributes.push({
                     stateCode: item.stateCode,
-                    history: [{ date: currentTimestamp, status: item.status }]
+                    history: [generateAttribute(item)]
                 });
             }
         });
     }
     else {  // CMSApprover & systemadmin
         input.attributes.forEach(item => {
-            selectedUser.attributes.push({ date: currentTimestamp, status: item.status });
+            selectedUser.attributes.push(generateAttribute(item));
         });
     }
     return selectedUser;
 };
+
+const generateAttribute = item => { date: currentTimestamp, status: item.status, doneBy: item.doneBy }
 
 const createUserObject = data => {
     const user = {
@@ -180,9 +184,15 @@ const collectRecipientEmails = async input => {
 
     }
     else if (input.type === 'cmsapprover') {
-        // get all system admins emails
-        const systemadmins = await getUsersByType('systemadmin') || [];
-        systemadmins.forEach(sysadmin => recipients.push(sysadmin.id));
+        let systemadmins = [];
+        // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db
+        if (input.systemAdminEmail) {
+            systemadmins.push(input.systemAdminEmail);
+        } else {
+            // get all system admins emails
+            systemadmins = await getUsersByType('systemadmin') || [];
+            systemadmins.forEach(sysadmin => recipients.push(sysadmin.id));
+        }
     }
     console.log('Email recipients,', recipients);
     return recipients;
@@ -238,7 +248,7 @@ const constructEmailParams = (recipients, type) => {
     email.Subject = `New OneMAC Portal ${typeText} Access Request`;
     email.HTML = `
         <p>Hello,</p>
-        
+
         <p>You have a new role request awaiting review. Please log into OneMAC and check your 
         Account Management dashboard to review pending requests. If you have questions, 
         please contact the MACPro Help Desk.</p>
