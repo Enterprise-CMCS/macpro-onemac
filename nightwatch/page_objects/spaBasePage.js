@@ -158,7 +158,6 @@ module.exports = {
             while (randomNum.length < size - 1) {
                 randomNum = "0".concat(randomNum);
             }
-            console.log(randomNum);
             return randomNum;
         },
     }

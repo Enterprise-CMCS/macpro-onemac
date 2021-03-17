@@ -18,7 +18,7 @@
     "unit-test-nowatch": "cd services/ui-src && npm run test-nowatch",
     "coverage": "cd services/ui-src && npm run coverage",
     "regression": "npm run chrome -- --tag regression --skiptags unit,integration,devEnv",
-    "regression-dev": "npm run chrome -- --tag regression,devEnv --skiptags unit,integration",
+    "regression-dev": "npm run chrome -- --tag devEnv --skiptags unit,integration",
     "smoke": "npm run chrome -- --tag smoke --skiptags unit,integration,regression",
     "update": "npx npm-check-updates -u && npm install",
     "integration": "npm test -- -e unit-test --tag integration --skiptags unit"

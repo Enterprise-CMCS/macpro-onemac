@@ -2,7 +2,6 @@
 <html lang="en">
 <head>
     <title>Test Results - {{browser}}</title>
-
     <style>
         html, body {
             font-family: Arial,sans-serif;
@@ -34,11 +33,11 @@
         tr.overview td      { padding-bottom: 0; border-bottom: none; }
         tr.overview.last td { padding-bottom: 3px; }
 
-        ul.assertions   { list-style-type: none; }
+        /* ul.assertions   { list-style-type: none; } */
         span.error      { color: #AD2B2B; }
         span.success    { color: #53891E; }
 
-        .stacktrace { display: inline; }
+        /* .stacktrace { display: inline; } */
         .stacktrace code { display: none; }
 
         #nightwatch-logo {
@@ -58,7 +57,7 @@
 
 <table>
     <tr class="overview">
-        <td colspan="3" title="{{browser}}"><strong>Browser:</strong> {{browser}}</td>
+        <td colspan="3" title="{{browser}}">{{!-- <strong>Browser:</strong>{{browser}}--}}</td>
     </tr>
     <tr class="overview">
         <td colspan="3"><strong>Timestamp:</strong> {{timestamp}}</td>
@@ -74,57 +73,57 @@
 </table>
 
 {{#each results.modules}}
-    <h2>{{@key}}</h2>
-
+    {{!--<h2>{{@key}}</h2>--}}
     {{#each this.completed}}
         <h3>{{@key}}</h3>
         <ul class="assertions">
-            {{#each this.assertions}}
-                <li>
-                    {{#if failure}}
-                        <span class="error">&#10006;</span>
-                    {{else}}
-                        <span class="success">&#10004;</span>
-                    {{/if}}
+    {{!--
+        {{#each this.assertions}}
+            <li>
+                {{#if failure}}
+                    <span class="error">&#10006;</span>
+                {{else}}
+                    <span class="success">&#10004;</span>
+                {{/if}}
 
-                    {{this.message}}
+                {{this.message}}
 
-                    {{#if this.failure}}
-                        {{this.failure}}
-                    {{/if}}
+                {{#if this.failure}}
+                    {{this.failure}}
+                {{/if}}
 
-                    {{#if this.stacktrace}}
-                        <div class="stacktrace">
-                            <a href="#">view stacktrace</a>
-                            <code>{{this.stacktrace}}</code>
-                        </div>
-                    {{/if}}
-                </li>
-            {{/each}}
-        </ul>
-        <p>
-            {{#if this.failed}}
-                <span class="error"><strong>FAILED:</strong></span>
-                <span class="error"><strong>{{this.failed}}</strong></span> assertions failed and
-                <span class="success"><strong>{{this.passed}}</strong></span> passed. ({{this.time}}s)
-            {{else}}
-                <span class="success"><strong>OK.</strong></span>
-                <span class="success"><strong>{{this.passed}}</strong></span> assertions passed. ({{this.time}}s)
-            {{/if}}
-        </p>
+                {{#if this.stacktrace}}
+                    <div class="stacktrace">
+                        <a href="#">view stacktrace</a>
+                        <code><pre>{{this.stacktrace}}</pre></code>
+                    </div>
+                {{/if}}
+            </li>
+    --}}
+    </ul>
     {{/each}}
-
-    {{#if this.skipped}}
-        <h4>skipped</h4>
-        <ul>
-            {{#each this.skipped}}
-                <li>{{this}}</li>
-            {{/each}}
-        </ul>
-    {{/if}}
-
-    <hr>
+    <p>
+        {{#if this.failed}}
+            <span class="error"><strong>FAILED:</strong></span>
+            <span class="error"><strong>{{this.failed}}</strong></span> assertions failed and
+            <span class="success"><strong>{{this.passed}}</strong></span> passed. ({{this.time}}s)
+        {{else}}
+            <span class="success"><strong>OK.</strong></span>
+            <span class="success"><strong>{{this.passed}}</strong></span> assertions passed. ({{this.time}}s)
+        {{/if}}
+    </p>
 {{/each}}
+
+{{#if this.skipped}}
+    <h4>skipped</h4>
+    <ul>
+        {{#each this.skipped}}
+            <li>{{this}}</li>
+        {{/each}}
+    </ul>
+{{/if}}
+
+<hr>
 
 <div id="nightwatch-logo"></div>
 

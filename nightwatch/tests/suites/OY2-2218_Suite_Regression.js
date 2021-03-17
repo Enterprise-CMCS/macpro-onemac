@@ -4,19 +4,17 @@ const timeout = 1000;
 module.exports = {
     "@tags": ["regression"],
 
-    before: function (browser, loginType = "Login to SPA and Waiver Dashboard via Okta") {
+    before: function (browser) {
         login.before(browser);
-        login[loginType](browser);
+        login["Login to SPA and Waiver Dashboard via Okta"](browser);
         browser.pause(timeout * 5);
     },
 
     afterEach: function (browser) {
-        let spa = browser.page.spaBasePage();
-        spa.click('@dashboardLink').waitForElementPresent('body');
+       login["Logout of SPA and Waiver Dashboard"](browser);
     },
 
     after: function (browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
     },
 
@@ -102,7 +100,7 @@ module.exports = {
         const tempExt = require('../cases/OY2-2218_Test_SPA_Request_Temp_Extension');
         steps.forEach(step => tempExt[step](browser));
     },
-
+/*
     "Submit a 1915(c) Appendix K Amendment": function (browser) {
         const appK = require('../cases/OY2-5832_Test_SPA_Submit_Appendix_K_Amendment');
         appK["Click on 'Submit 1915(c) Appendix K Amendment'"](browser);
@@ -110,10 +108,6 @@ module.exports = {
         appK["Upload Documents"](browser);
         appK["Enter Comments"](browser);
         appK["Submit Form"](browser);
-    },
+    },*/
 
-    "View My Account Page": function (browser) {
-        const account = require('../cases/OY2_5196_Test_View_User_Profile');
-        account["Navigate to the Manage Account page"](browser);
-    },
 };
