@@ -4,6 +4,7 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
 import { isEmpty } from 'lodash';
+import { use } from "chai";
 
 /**
  * Update a user
@@ -30,6 +31,14 @@ export const main = handler(async (event) => {
 
     // retreive user item from DynamoDb
     let user = await getUser(input.id);
+
+    // Check if type is not different
+    if (user.type !== input.type){
+        console.log(
+            "Warning: The supplied user exists but the type requested is different than what is already registered in the database"
+        );
+        return RESPONSE_CODE.USER_TYPE_MISMATCH_ERROR;
+    }
 
     user = isEmpty(user) ? createUserObject(input) : user;
 
@@ -68,7 +77,6 @@ export const main = handler(async (event) => {
         return RESPONSE_CODE.EMAIL_NOT_SENT;
     }
 });
-
 
 const validateUser = data => {
     const userSchema = Joi.object().keys({
@@ -145,9 +153,8 @@ const createUserObject = data => {
 
 const collectRecipientEmails = async input => {
     const recipients = [];
-    if (input.type === 'stateadmin') {
+    if (input.type === 'stateuser') {
         const states = input.attributes.map(item => item.stateCode);
-        console.log('selected states:', JSON.stringify(states));
         // get all stateAdmin email ids
         const stateAdmins = await getUsersByType('stateuser') || [];
         // fiter out by selected states with latest attribute status is active
@@ -158,8 +165,7 @@ const collectRecipientEmails = async input => {
             });
         });
     }
-    else if (input.type === 'stateadmin') {
-        // get all cms approvers emails
+    else if (input.type === 'stateadmin') {  // get all cms approvers emails
         // query all cms approvers
         const cmsApprovers = await getUsersByType('cmsapprover') || [];
         // check if recent attribute status is active and add email to recipient list
