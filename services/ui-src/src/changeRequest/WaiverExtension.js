@@ -26,14 +26,14 @@ const WaiverExtension = () => {
     transmittalNumber: {
       idType: "waiver",
       idLabel: "Waiver Number",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,  
+      idFAQLink: ROUTES.FAQ_WAIVER_ID,
       idHintText: "Must follow the format SS.#### or SS.#####",
       idFormat: "SS.#### or SS.#####",
       idRegex: "(^[A-Z]{2}[.][0-9]{4,5}$)",
       idMustExist: true,
       errorLevel: "error",
     },
-    
+
   };
 
   if (id) {

@@ -31,7 +31,7 @@ const Waiver = () => {
   const baseTransmittalNumber = {
     idType: "waiver",
     idLabel: "Waiver Number",
-    idFAQLink: ROUTES.FAQ_WAIVER_ID,  
+    idFAQLink: ROUTES.FAQ_WAIVER_ID,
   };
 
   const formInfo = {
@@ -64,7 +64,7 @@ const Waiver = () => {
       idHintText: "Must follow the format required by the Action Type",
       idFormat: "the Action Type.  Please select an Action Type first.",
       idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
-      idMustExist: false,  
+      idMustExist: false,
       errorLevel: "error",
     },
     newTransmittalNumber: {
