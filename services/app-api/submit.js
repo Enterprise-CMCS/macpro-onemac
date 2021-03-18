@@ -80,7 +80,6 @@ export const main = handler(async (event) => {
       TableName: process.env.tableName,
       Item: data,
     });
-  }
 
     // create the (package) ID data
     const packageParams = {
