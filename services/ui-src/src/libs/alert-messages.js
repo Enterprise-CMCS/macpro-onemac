@@ -12,16 +12,6 @@ export const ALERT_TYPES = {
 };
 
 /**
- * Alert types
- */
-export const ALERT_TYPES = {
-  INFO: null, // Per CMS Design System
-  WARNING: "warn",
-  ERROR: "error",
-  SUCCESS: "success",
-};
-
-/**
  * List of alert messages for the application.
  */
 export const ALERTS_MSG = {
