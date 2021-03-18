@@ -66,7 +66,7 @@ export const main = handler(async (event) => {
         // Send email
         try {
             // send the User access request "reciept"
-            await sendEmail(emailParams.email, emailParams.fromAddressSource);
+            await sendEmail(emailParams.email);
             return RESPONSE_CODE.USER_SUBMITTED;
         } catch (error) {
             console.log(
@@ -77,8 +77,7 @@ export const main = handler(async (event) => {
         }
     } else {
         console.log(
-            `Warning: There is no recipient email address present for input ${JSON.stringify(input)}`);
-        return RESPONSE_CODE.EMAIL_NOT_SENT;
+            `Warning: No emails sent. There is no recipient email address present for input ${JSON.stringify(input)}`);
     }
 });
 
@@ -88,19 +87,19 @@ const validateUser = data => {
         type: Joi.string().valid('cmsapprover', 'stateadmin', 'stateuser').required(),
         systemAdminEmail: Joi.string().email().optional(),
         attributes: Joi.array()
-        .when('type', {
-            is: Joi.string().valid('stateuser','stateadmin'),
-            then: Joi.array().items(Joi.object({
-                stateCode: Joi.string().regex(/^[A-Z]{2}$/).label('State code must be valid and ').required(),
-                status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
-                doneBy: Joi.string().email().required()
-            })),
-            otherwise:Joi.array().items(Joi.object({
-                status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
-                doneBy: Joi.string().email().required()
-            })),
+            .when('type', {
+                is: Joi.string().valid('stateuser', 'stateadmin'),
+                then: Joi.array().items(Joi.object({
+                    stateCode: Joi.string().regex(/^[A-Z]{2}$/).label('State code must be valid and ').required(),
+                    status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
+                    doneBy: Joi.string().email().required()
+                })),
+                otherwise: Joi.array().items(Joi.object({
+                    status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
+                    doneBy: Joi.string().email().required()
+                })),
 
-        })
+            })
     });
     //Todo: Add deeper validation for types
     const result = userSchema.validate(data);
@@ -199,7 +198,7 @@ const collectRecipientEmails = async input => {
         let systemadmins = [];
         // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db
         if (input.systemAdminEmail) {
-            systemadmins.push(input.systemAdminEmail);
+            recipients.push(input.systemAdminEmail);
         } else {
             // get all system admins emails
             systemadmins = await getUsersByType('systemadmin') || [];
@@ -242,10 +241,12 @@ const isLatestAttributeActive = (attr) => {
 };
 
 const constructEmailParams = (recipients, type) => {
-    const email = {};
+    const email = {
+        fromAddressSource: 'userAccessEmailSource',
+        ToAddresses: recipients
+    };
     let typeText = 'User';
-    const fromAddressSource = 'userAccessEmailSource';
-    email.ToAddresses = recipients;
+
     switch (type) {
         case 'stateuser':
             typeText = 'State User';
@@ -266,5 +267,5 @@ const constructEmailParams = (recipients, type) => {
         please contact the MACPro Help Desk.</p>
 
         <p>Thank you!</p>`;
-    return { email, fromAddressSource };
+    return { email };
 };
