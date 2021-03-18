@@ -1,14 +1,17 @@
-/*
-    Test Scenario: Create SPA Waiver
-    Description: This will login to the application, click the link to start the SPA Waiver process,
-    enter the required SPA Waiver information, and upload documents using files
-    located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
+ß/*
+    Test Scenario: New Waiver Action
+    Description: This will login to the application, click the link to start the Waiver process,
+    enter the required Waiver information for a NEW waiver action, and upload documents using files
+    located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
 
- */
+ 
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
+const timeout = 2000;
+const waiverAction = "new";
+
 module.exports = {
 
     before: function (browser) {
@@ -23,62 +26,45 @@ module.exports = {
         login.after(browser);
     },
 
-    "Click on 'Submit new Waiver'": function (browser) {
-        let testData = {
-            selector: "@newWaiver",
-            subUrl: '/waiver'
-        };
+    "Click on 'Submit new Waiver'": function (browser, testData = {
+        selector: "@newWaiver",
+        subUrl: '/waiver'
+    }) {
+        new_spa["Click on 'Start a new SPA'"](browser, testData);
+    },
+
+    "Enter Action Type": function (browser, testData = {
+        selector: '@actionType',
+        text: "New waiver",
+    }) {
         spa = browser.page.spaBasePage();
-        spa.assert.elementPresent(testData.selector);
-        spa.click(testData.selector);
-        browser.expect.url().to.contain(testData.subUrl).before(5000);
+        spa.expect.element(testData.selector).to.be.visible.after(timeout * 5);
+        spa.setValue(testData.selector, testData.text);
+        spa.verify.containsText(testData.selector, testData.text);
     },
 
-    "Enter SPA State/Territory Information": function(browser) {
-        new_spa["Enter SPA State/Territory Information"](browser);
-    },
-
-    "Enter Action Type": function (browser) {
-        spa = browser.page.spaBasePage();
-        let testData = {
-            selector: '@actionType',
-            value: 'N',
-            action_type: 'New waiver'
-        }
-        spa.expect.element(testData.selector).to.be.visible;
-        spa.setValue(testData.selector, testData.value);
-        spa.verify.containsText(testData.selector, testData.action_type);
-    },
-
-    "Enter Waiver Authority": function (browser) {
+    "Enter Waiver Authority": function (browser, text = "All other 1915(b) Waivers") {
         const testData = {
             selector: '@waiverAuthority',
-            authority: "All other 1915(b) Waivers",
-        }
-        spa = browser.page.spaBasePage();
-        spa.expect.element(testData.selector).to.be.visible;
-        spa.setValue(testData.selector, testData.authority).pause(500);
-        spa.expect.element(testData.selector).text.to.contain(testData.authority);
+            text: text,
+        };
+        this["Enter Action Type"](browser, testData);
     },
 
-    "Enter Waiver Number": function (browser, spa_id = spa.getWaiverNumber()) {
-        let selector = '@transmittal';
+    "Enter Waiver Number": function (browser, waiverAction = 'new', state = "KS") {
         spa = browser.page.spaBasePage();
-        spa.click(selector);
-        spa.setValue(selector, spa_id);
-        spa.expect.element(selector).value.to.equals(spa_id);
+        new_spa["Enter SPA ID"](browser, spa.getWaiverNumber(waiverAction, state));
     },
 
     "Upload Documents": function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(7).pause(500);
+        new_spa["Upload Documents"](browser, 1);
     },
 
     "Enter Comments": function (browser) {
         new_spa["Enter Comments"](browser);
     },
 
-    "Submit SPA Waiver": function (browser) {
+    "Submit Waiver": function (browser) {
         new_spa["Submit SPA"](browser);
     }
 

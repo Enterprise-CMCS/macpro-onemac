@@ -8,6 +8,7 @@ import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -37,6 +38,8 @@ function logout() {
 function Header(props) {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
+  const { isLoggedInAsDeveloper } = useAppContext();
+  const { isAuthenticated } = useAppContext();
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
@@ -96,7 +99,7 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar() {
+  function renderNavBar(isLoggedInAsDeveloper) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
@@ -105,6 +108,7 @@ function Header(props) {
             Dashboard
           </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
+          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
       </div>
@@ -116,7 +120,7 @@ function Header(props) {
    */
   function renderAccountButtons() {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
-    if (props.isAuthenticated) {
+    if (isAuthenticated) {
       return (
         <div className="nav-right" ref={wrapperRef}>
           <button className="dropdown" id="myAccountLink" onClick={() => setShowMenu(!showMenu)}>
@@ -136,6 +140,21 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
+              <Link to={ROUTES.PROFILE} id="manageAccountLink" onClick={() => setShowMenu(false)}>
+                <svg
+                  width="14"
+                  height="15"
+                  viewBox="0 0 14 15"
+                  fill="none"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M13.6663 14.9999H0.333008V12.3332H13.6663V14.9999ZM7.70634 2.45988L10.2063 4.95988L4.16634 10.9999H1.66634V8.49987L7.70634 2.45988ZM10.9197 4.24654L8.41968 1.74654L9.63968 0.526543C9.89968 0.266543 10.3197 0.266543 10.5797 0.526543L12.1397 2.08654C12.3997 2.34654 12.3997 2.76654 12.1397 3.02654L10.9197 4.24654Z"
+                    fill="white"
+                  />
+                </svg>
+                &nbsp; Manage account
+              </Link>
               <Link
                 to={ROUTES.HOME}
                 id="logoutLink"
@@ -198,7 +217,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar()}
+      {renderNavBar(isLoggedInAsDeveloper)}
     </div>
   );
 }

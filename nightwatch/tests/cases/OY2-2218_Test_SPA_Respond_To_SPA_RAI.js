@@ -2,19 +2,24 @@
     Test Scenario: Create SPA Waiver
     Description: This will login to the application, click the link to start the SPA Waiver process,
     enter the required SPA Waiver information, and upload documents using files
-    located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
+    located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
 
  */
 
 const login =require('./OY2-1494_Test_SPA_Login');
 const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 let spa;
+const timeout = 1000;
 module.exports = {
 
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(2000);
+        browser.pause(timeout * 2);
+    },
+
+    beforeEach: function (browser) {
+        spa = browser.page.spaBasePage();
     },
 
     after : function(browser) {
@@ -25,26 +30,18 @@ module.exports = {
     "Click on 'Respond to SPA RAI'": function (browser) {
         let link = '[id=spaRaiBtn]'
         let subDir = "/sparai";
-        spa = browser.page.spaBasePage();
         browser.assert.elementPresent(link);
         browser.click(link);
-        browser.expect.url().to.contain(subDir).before(5000);
+        browser.expect.url().to.contain(subDir).before(timeout * 5);
     },
 
-    "Enter SPA ID" : async function (browser) {
+    "Enter SPA ID" : function (browser) {
         spa = browser.page.spaBasePage();
-        let selector = "#transmittalNumber";
-        let transmitNumber = spa.getSPA();
-        console.log(transmitNumber);
-        browser.setValue(selector, transmitNumber);
-        browser.pause(1000);
-        browser.expect.element(selector).value.to.equal(transmitNumber);
-
+        new_spa["Enter SPA ID"](browser, spa.getID());
     },
 
     "Upload Documents" : function (browser) {
-        spa = browser.page.spaBasePage();
-        spa.uploadFiles(10);
+        new_spa["Upload Documents"](browser);
     },
 
     "Enter Comments" : function(browser) {

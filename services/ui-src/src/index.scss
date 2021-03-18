@@ -162,6 +162,41 @@ input.form-control {
 input[type="file"] {
   width: 100%;
 }
+
+// Expansion for the CMS Review component
+// styled to look like a read only textbox
+.cms-review-read-only-textbox-body {
+  background-color: $color-gray-lighter;
+  width: 460px;
+  padding: 8px;
+  border-radius: 3px;
+}
+
+.profile-container {
+  @extend .app-bar;
+  @extend .ds-u-margin-left--7;
+  @extend .ds-u-margin-right--7;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
+
+  h3 {
+    @extend .ds-u-margin-top--7;
+  }
+  .ds-c-review {
+    @extend .ds-u-border-bottom--0;
+  }
+  .ds-c-review__heading {
+    @extend .ds-u-margin-top--1;
+  }
+  .ds-c-review__body {
+    @extend .cms-review-read-only-textbox-body;
+  }
+
+  .subheader-message {
+    padding-top: 40px;
+  }
+}
+
 .form-container {
   @extend .app-bar;
   @extend .ds-u-margin-left--7;
@@ -182,12 +217,14 @@ input[type="file"] {
     @extend .ds-u-margin-top--1;
   }
   .ds-c-review__body {
-    background-color: $color-gray-lighter;
-    width: 460px;
-    padding: 8px;
+    @extend .cms-review-read-only-textbox-body;
     border: 2px solid #aeb0b5;
-    border-radius: 3px;
   }
+
+  .form-subheader-message {
+    padding-top: 40px;
+  }
+
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
@@ -335,7 +372,60 @@ input[type="file"] {
   flex-wrap: wrap;
   justify-content: center;
 }
-
+.card-button {
+  display:flex; flex-direction:row;
+  position: relative;
+  height: 224px;
+  width: 240px;
+  background-repeat: no-repeat;
+  border-radius: 16px;
+}
+.card-button-image-box{
+  position: absolute;
+  left: -17.08%;
+  right: 52.08%;
+  top: 15.62%;
+  bottom: 7.14%;
+  background: rgba(255, 255, 255, 0.2);
+}
+.card-button-content{
+  flex-direction: column;
+  align-items: center;
+  width: 222px;
+  height: 132px;
+  padding: 24px 0 0 16px;
+  font-family: Open Sans;
+  font-style: normal;
+  color: #FFFFFF;
+  line-height: 32px;
+  .card-button-title {
+    font-weight: bold;
+    font-size: 26px;
+  }
+  .card-button-description {
+    font-weight:400;
+    font-size: 18px;
+  }
+}
+.card-button-select-container {
+  position: absolute;
+  right:16px;
+  bottom: 24px;
+}
+.card-button-select {
+  width: 101px;
+  height: 37px;
+  background: #FFFFFF;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
+  border-radius: 8px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 32px;
+  display: flex;
+  align-items: center;
+}
 .dashboard-container {
   @extend .app-bar;
   background-color: $color-white;
@@ -379,11 +469,6 @@ input[type="file"] {
     @extend .ds-u-padding-left--0;
     @extend .ds-u-margin-left--0;
   }
-  .empty-list {
-    @extend .ds-u-border--1;
-    @extend .ds-u-margin--0;
-    @extend .ds-u-padding--4;
-  }
   .list-group-item {
     @extend .ds-u-text-decoration--none;
   }
@@ -397,6 +482,13 @@ input[type="file"] {
         color: $color-gray;
     }
   }
+}
+
+.empty-list {
+  @extend .ds-u-margin--0;
+  @extend .ds-u-padding--4;
+  text-align: center;
+  align-self: center;
 }
 
 .submissions-table {
@@ -446,18 +538,18 @@ input[type="file"] {
     a {
       color: $color-white;
       font-weight: bold;
-      border: none;    
+      border: none;
       padding-right: 50px;
-  
+
      &:hover {
         color: rgba($color-base-inverse, 0.8);
       }
-  
+
       &:active {
         color: rgba($color-base-inverse, 0.6);
-      }  
+      }
     }
-  
+
   }
 
   .nav-right {
@@ -479,10 +571,10 @@ input[type="file"] {
       &:hover {
         color: rgba($color-base-inverse, 0.8);
       }
-  
+
       &:active {
         color: rgba($color-base-inverse, 0.6);
-      }  
+      }
     }
     button {
       background-color: $color-primary;
@@ -557,4 +649,257 @@ input[type="file"] {
 
 .dropdown-content a:hover {
   color: rgba($color-base-inverse, 0.8);
+}
+
+.react-dropdown-select {
+    -webkit-text-size-adjust: 100%;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    font-family: "Open Sans", Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: #212121;
+    box-sizing: none;
+}
+
+.multi-search-icon {
+   position: relative;
+   top: 33px;
+   left: 16px
+}
+
+
+.css-1aarvou-DropdownHandleComponent.e1vudypg0 {
+   color: #ffffff !important;
+}
+
+.react-dropdown-select {
+ height: 22px !important;
+}
+.react-dropdown-select-input {
+   position: absolute !important;
+   left: 25px;
+   top: 8px;
+}
+
+.css-w3djcp-OptionComponent  {
+  left: -10px;
+
+  position: relative !important;
+  top: -65px;
+  background: #0071BC !important;
+  height: 22px !important;
+  width: 82 !important;
+  font-family: Open Sans !important;
+  font-style: normal !important;
+  font-weight: bold !important;
+  font-size: 14px !important;
+  line-height: 22px !important;
+}
+
+.multi-select-title {
+ font-family: Open Sans;
+font-size: 21px;
+font-style: italic;
+font-weight: 400;
+line-height: 28px;
+letter-spacing: 0px;
+text-align: left;
+}
+
+.multi-select-header {
+margin-bottom: 60px;
+bottom: 20px;
+font-family: Open Sans;
+font-size: 24px;
+font-style: normal;
+font-weight: 700;
+line-height: 30px;
+letter-spacing: 0px;
+text-align: left;
+}
+
+
+.css-w3djcp-OptionComponent {
+ background: #0071BC !important;
+     background-color: #0071BC !important;
+       height: 22px !important;
+       width: 82 !important;
+       position: relative;
+       border-radius: nullpx;
+       font-family: Open Sans !important;
+       font-style: normal !important;
+       font-weight: bold !important;
+       font-size: 14px !important;
+       line-height: 22px !important;
+       display: flex;
+       align-items: center;
+}
+
+.react-dropdown-select-dropdown {
+   xborder: none !important;
+   box-shadow: none !important;
+}
+.multi-select-dropdown-container[type="selectstate"] {
+    position: relative;
+    align-items: left;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border-color: #d6d7d9;
+    border-style: solid;
+    border-width: 1px;
+    padding: 15px;
+    width: 575px;
+    height: 520px;
+    margin: auto;
+
+}
+
+.multi-select-dropdown-container[type="selectprofile"] {
+    position: relative;
+    align-items: left;
+    background-color: #ffffff;
+    border-radius: 3px;
+    border-color: #d6d7d9;
+    border-style: solid;
+    border-width: 1px;
+    padding: 15px;
+    width: 575px;
+    height: 475px;
+    margin: auto;
+
+}
+
+
+.react-dropdown-select-item[aria-selected="true"]  {
+     background: #0071BC !important;
+     background-color: #0071BC !important;
+}
+
+
+.multi-select-dropdown-submit-button {
+      position: relative;
+      background-color: #0071bc;
+      color: #fff;
+      border-radius: 3px;
+      align-self: center;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: bold;
+      font-size: 16px;
+      line-height: 24px;
+      height: 42px;
+      width: 119px;
+      left: 0px;
+      border-radius: 3px;
+      border: none;
+      top: 10px;
+}
+
+.component-submit-solid {
+  background: #D6D7D9 !important;
+  border: 2px solid #D6D7D9;
+  top: 210px;
+  height: 1px;
+  width: 485px;
+  position: relative;
+}
+
+.multicardtitle {
+position: relative;
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 24px;
+line-height: 30px;
+
+color: #000000;
+
+}
+
+.multi-select-header-profile {
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 24px;
+
+color: #212121;
+
+}
+
+.multi-select-dropdown-cancel-button {
+@extend .ds-c-button;
+@extend .ds-c-button--transparent;
+position: relative;
+top: 10px;
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height, or 130% */
+
+text-align: center;
+text-decoration-line: underline;
+
+color: #0872B9;
+
+}
+
+.portalTable {
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 24px;
+
+color: #0071BC;
+
+}
+
+.MuiDataGrid-row Mui-odd {
+/* Line 3 */
+
+position: absolute;
+
+border: 1px solid #E1E4E9;
+
+}
+
+.MuiDataGrid-colCellTitle {
+
+font-family: Open Sans;
+font-style: normal;
+font-weight: 600;
+font-size: 14px;
+line-height: 20px;
+/* identical to box height, or 143% */
+display: flex;
+align-items: center;
+
+color: #212121;
+
+}
+
+.MuiPopover-paper {
+ background: #0071BC !important;
+ color: #ffffff !important;
+
+
+}
+.MuiListItem-button	 {
+  font-family: Open Sans !important;
+  font-style: normal !important;
+  font-weight: 600 !important;
+  font-size: 12px !important;
+  background: #0071BC !important;
+  color: #ffffff !important;
+
+}
+
+.MuiPopover-paper {
+  position: relative;
+  margin: 30px;
 }

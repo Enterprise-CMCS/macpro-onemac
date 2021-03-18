@@ -1,7 +1,9 @@
 import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
+import { helpDeskContact } from "../libs/helpDeskContact";
 
 const FAQ = () => {
+
 
   return (
     <div>
@@ -10,8 +12,11 @@ const FAQ = () => {
       <div className="form-card">
         <h2>Help Desk Contact Information</h2>
         <p>
-          For assistance, please email the MACPro Help Desk at
-          MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540.
+          For assistance, please email the MACPro Help Desk at{" "}
+          <a href={`mailto:${helpDeskContact.email}`}>
+            {helpDeskContact.email}
+          </a>{" "}
+          or call {helpDeskContact.phone}.
         </p>
         <h2>Frequently Asked Questions</h2>
         <h4>What browsers can I use to access the system?</h4>
@@ -66,32 +71,33 @@ const FAQ = () => {
         <h4 id="waiver-id-format">
           What format is used to enter a 1915(b) waiver number?
         </h4>
-        <p>Waiver number must follow the format SS.##.R##.M## to include:</p>
+        <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
-          <li>SS= 2 character state abbreviation</li>
-          <li>##= 2 digit waiver base number</li>
-          <li>R## = renewal number (R01, R02, ...)</li>
+          <li>SS = 2 character state abbreviation</li>
+          <li>##### = 4 or 5 digit waiver base number</li>
+          <li>R## = renewal number (R01, R02, ...) (Use R00 for waivers without renewals)</li>
           <li>M## = amendment number, prefixed with a capital M (M01)</li>
         </ul>
         <p>
           All separated by periods (.). For example, the waiver number
-          KY.03.R02.M02 is a waiver for the state of Kentucky, with a base
-          waiver number of 03, a second renewal (R02) and a second amendment
-          (02).
+          KY.0003.R02.M02 is a waiver for the state of Kentucky, with a base
+          waiver number of 0003, a second renewal (R02) and a second amendment
+          (02). Base waivers without renewals should use “R00” as their renewal number.
         </p>
         <h4>What format is used to enter a 1915(c) waiver number?</h4>
-        <p>Waiver number must follow the format SS.##.R##.## to include:</p>
+        <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
-          <li>SS= 2 character state abbreviation</li>
-          <li>## = 2 digit waiver base number</li>
-          <li>R## = renewal number (R01, R02, ...)</li>
+          <li>SS = 2 character state abbreviation</li>
+          <li>##### = 4 or 5 digit waiver base number</li>
+          <li>R## = renewal number (R01, R02, ...) (Use R00 for waivers without renewals)</li>
           <li>## = appendix K amendment number (01)</li>
         </ul>
         <p>
           All separated by periods (.). For example, the waiver number
           KY.0003.R02.02 is a waiver for the state of Kentucky, with a base
           waiver number of 0003, the second renewal (R02) and the second
-          appendix K amendment (02).
+          appendix K amendment (02). Base waivers without renewals should use
+          “R00” as their renewal number.
         </p>
         <h4>
           What attachments are needed to submit 1915(b) and 1915(c) waivers?
@@ -104,8 +110,10 @@ const FAQ = () => {
         <h4>What should we do if we don’t receive a confirmation email?</h4>
         <p>
           Refresh your inbox, check your SPAM filters, then contact the MACPro
-          Help Desk (MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540 or
-          contact your state lead.
+          Help Desk <a href={`mailto:${helpDeskContact.email}`}>
+            {helpDeskContact.email}
+          </a>{" "}
+          or call {helpDeskContact.phone} or contact your state lead.
         </p>
         <h4>Is this considered the official state submission?</h4>
         <p>

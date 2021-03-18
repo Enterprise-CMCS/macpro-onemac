@@ -54,6 +54,7 @@ custom:
         fi
       deploy:finalize: |
         serverless invoke --stage ${self:custom.stage} --function configureConnectors
+
 provider:
   name: aws
   runtime: nodejs12.x

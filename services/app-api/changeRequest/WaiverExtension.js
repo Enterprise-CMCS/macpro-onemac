@@ -1,6 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_MSG } from "../libs/error-messages";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * Waiver Extension submission specific email generation functions.
@@ -34,7 +34,7 @@ class WaiverExtension {
       } else {
         console.log("result.Item does not exist");
         areFieldsValid = false;
-        whyNot = ERROR_MSG.ID_NOT_FOUND;
+        whyNot = RESPONSE_CODE.ID_NOT_FOUND;
       }
     } catch (error) {
       console.log("packageExists got an error: ", error);
@@ -62,7 +62,7 @@ class WaiverExtension {
             <br><b>Waiver #</b>: ${data.transmittalNumber}
         </p>
         <p>
-            <b>Summary</b>:
+            <b>Additional Information</b>:
             <br>${data.summary}
         </p>
         <p>
@@ -99,13 +99,13 @@ class WaiverExtension {
             <br><b>Submitter email</b>: ${data.user.email}
         </p>
         <p>
-            <b>Summary</b>:<br>
+            <b>Additional Information</b>:<br>
             ${data.summary}
         </p>
         <br>
         <p>
-            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, 
-            responses to Requests for Additional Information (RAI), and extension requests on Waivers only. 
+            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers,
+            responses to Requests for Additional Information (RAI), and extension requests on Waivers only.
             Any other correspondence will be disregarded.
         </p>
         <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>

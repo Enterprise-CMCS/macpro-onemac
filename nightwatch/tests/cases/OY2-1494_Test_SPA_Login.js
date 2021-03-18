@@ -5,6 +5,7 @@ module.exports = {
 
     before : function(browser) {
         console.log('Setting up...');
+        console.log('url is: ', browser.launch_url);
         spa = browser.page.spaBasePage();
         browser.maximizeWindow()
             .url(browser.launch_url)
@@ -16,26 +17,29 @@ module.exports = {
         browser.end();
     },
 
-    'Login to SPA and Waiver Dashboard' : function(browser) {
-        const testData = {
-            username: browser.globals.user,
-            password: browser.globals.pass,
-            userSelector: '//*[@id="email"]'
-        };
-
-        spa.devLogin(testData.username, testData.password);
+    'Login to SPA and Waiver Dashboard' : function(browser, testData = {
+        username: browser.globals.user,
+        password: browser.globals.pass,
+        spaPageTitle: 'SPA and Waiver Dashboard',
+    }) {
+        spa = browser.page.spaBasePage();
+        console.log('Login as: ', testData.username);
+        spa.devLogin(testData);
         spa.verify.visible('@loginTitle');
+        browser.verify.elementPresent('h1');
+        browser.verify.containsText('h1', testData.spaPageTitle);
     },
 
-    'Login to SPA and Waiver Dashboard via Okta' : function(browser) {
-        const testData = {
-            username: browser.globals.user,
-            password: browser.globals.pass
-        };
-        spa.login(testData.username, testData.password);
+    'Login to SPA and Waiver Dashboard via Okta' : function(browser, testData = {
+        username: browser.globals.user,
+        password: browser.globals.pass,
+        spaPageTitle: 'SPA and Waiver Dashboard',
+    }) {
+        spa = browser.page.spaBasePage();
+        spa.login(testData);
         spa.verify.visible('@loginTitle');
+        browser.verify.containsText('h1', testData.spaPageTitle);
     },
-
 
     'Logout of SPA and Waiver Dashboard' : function (browser) {
         let title = 'SPA and Waiver Dashboard'

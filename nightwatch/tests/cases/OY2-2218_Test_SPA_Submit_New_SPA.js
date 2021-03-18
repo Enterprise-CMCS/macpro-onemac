@@ -1,7 +1,7 @@
 /*
     Test Scenario: Create a new SPA
     Description: This will login to the application, enter the required SPA information, and upload documents using files
-    located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
+    located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
 
 
  */
@@ -14,7 +14,7 @@ module.exports = {
     before : function(browser) {
         login.before(browser);
         login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 2);
+        browser.pause(timeout * 3);
     },
 
     after : function(browser) {
@@ -22,14 +22,16 @@ module.exports = {
         login.after(browser);
     },
 
-    "Click on 'Start a new SPA'": function (browser) {
+    "Click on 'Start a new SPA'": function (browser, testData = {
+        selector: '@newSPA',
+        subUrl: '/spa',
+    }) {
         spa = browser.page.spaBasePage();
-        spa.assert.elementPresent('@newSPA');
-        spa.click('@newSPA').waitForElementPresent('body');
-        browser.expect.url().to.contain('/spa').before(timeout * 5);
-        browser.pause(timeout);
+        spa.assert.elementPresent(testData.selector);
+        spa.click(testData.selector).waitForElementPresent('body');
+        browser.assert.urlContains(testData.subUrl);
     },
-
+    /*
     "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
         let testData = {
@@ -44,47 +46,52 @@ module.exports = {
         spa.pause(timeout);
     },
 
-    'Enter SPA ID' : function (browser, spa_id = spa.getTransmitNumber()) {
-        let testData = {
-            selector: '@transmittal',
-            spa_id: spa_id,
-        };
+    */
 
-        spa.click(testData.selector);
-        spa.setValue(testData.selector, testData.spa_id);
-        browser.pause(timeout / 2);
-        spa.expect.element(testData.selector).value.to.contain(testData.spa_id);
+    "Enter SPA ID" : function (browser, spa_id) {
+        spa = browser.page.spaBasePage();
+        let selector = '@transmittal';
+        let id = (spa_id) ? spa_id : spa.getTransmitNumber(false, "AK");
+        spa.expect.element(selector).to.be.visible.before(timeout * 10);
+        spa.setValue(selector, id, () => {
+            browser.keys([browser.Keys.TAB]);
+            spa.expect.element(selector).value.to.contain(id);
+        });
 
     },
 
-    'Upload Documents' : function (browser) {
+    "Enter SPA ID (Optional)" : function (browser) {
         spa = browser.page.spaBasePage();
-        spa.uploadFiles(9);
+        this["Enter ID"](browser, spa.getTransmitNumber(true, "ND"));
+    },
+/*
+
+    'Upload Documents Number' : function (browser, numOfFiles = 9) {
+        spa = browser.page.spaBasePage();
+        spa.uploadFiles(numOfFiles);
+    },
+*/
+
+    "Upload Documents": function (browser, required = 2, type = 'pdf') {
+        let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
+        spa = browser.page.spaBasePage();
+        spa.uploadDocs(type, required, validate);
     },
 
     'Enter Comments' : function (browser, selector = 'textarea',
                                  entered_text = "Relax. This is only a test") {
         spa = browser.page.spaBasePage();
         spa.enterComments(selector, entered_text);
-        spa.assert.containsText(selector, entered_text)
+        spa.verify.containsText(selector, entered_text)
     },
 
-    'Submit SPA' : function (browser) {
-        let alert_selector = "[id*=alert_]";
-        let p_selector = "p[class=ds-c-alert__text]"
-        let alert_msg = "Submission Completed";
-        let msg = "Your submission has been received.";
-
-        browser.url(function (current) {
-            browser.click('[type="submit"]').waitForElementPresent('body');
-            browser.expect.url().to.not.equals(current.value).before(timeout * 10);
-        });
-        browser
-            .assert.elementPresent(alert_selector)
-            .assert.elementPresent(p_selector)
-            .assert.containsText(alert_selector, alert_msg)
-            .assert.containsText(p_selector, msg)
-            .pause(timeout);
+    'Submit SPA' : function (
+        browser,
+        testData = { selector: '@alert_banner' }
+    ) {
+        spa = browser.page.spaBasePage();
+        browser.click('[type="submit"]');
+        spa.expect.element(testData.selector).to.be.visible.before(timeout * 20);
     },
 
 };

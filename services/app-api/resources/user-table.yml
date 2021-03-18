@@ -3,13 +3,13 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: ${self:custom.userTableName}
-      AttributeDefinitions: 
-        - AttributeName: userId
+      AttributeDefinitions:
+        - AttributeName: id
           AttributeType: S
     # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
       KeySchema:
-        - AttributeName: userId
+        - AttributeName: id
           KeyType: HASH
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES

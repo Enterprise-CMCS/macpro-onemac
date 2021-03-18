@@ -1,6 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { ERROR_MSG } from "../libs/error-messages";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * SPA submission specific functions.
@@ -33,7 +33,7 @@ async fieldsValid(data) {
       if (result.Item) {
         console.log("the Item exists", result);
         areFieldsValid = false;
-        whyNot = ERROR_MSG.DUPLICATE_ID;
+        whyNot = RESPONSE_CODE.DUPLICATE_ID;
       } else {
         console.log("result.Item does not exist");
         areFieldsValid = true;
@@ -65,7 +65,7 @@ getCMSEmail(data) {
         <br><b>SPA ID</b>: ${data.transmittalNumber}
       </p>
       <p>
-        <b>Summary</b>:
+        <b>Additional Information</b>:
         <br>${data.summary}
       </p>
       <p>
@@ -102,16 +102,16 @@ getStateEmail(data) {
         <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
-        <b>Summary</b>:<br>
+        <b>Additional Information</b>:<br>
         ${data.summary}
       </p>
       <br>
       <p>
-        This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
+        This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)).
         You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
       </p>
       <p>
-        This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 
+        This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on
         submitted SPAs only.  Any other correspondence will be disregarded.
       </p>
       <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a></p>

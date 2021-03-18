@@ -1,23 +1,57 @@
 const fs = require('fs');
 const path = require('path');
-const spaVar = path.join(__dirname, "spaVar.txt");
-
 const commands = {
 
-    getTransmitNumber: function (optionNumber = true, state = "VA") {
-        return idNumbers.transmitNumber(optionNumber, state);
+    // SS-YY-NNNN-xxxx or SS-YY-NNNN
+    getTransmitNumber: function (optional = true, state = "VA") {
+        let rand = (min = 0, max = 10000) => this.props.getRandomNumber(min, max);
+        let group = [state, rand(0, 100), rand()];
+        if (optional) {
+            group.push(rand());
+        }
+        let id = group.join("-");
+        const spaFile = path.join(__dirname, "spa.txt");
+        fs.writeFileSync(spaFile, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
 
-    getWaiverNumber: function (isWaiverB = true, state = "VA") {
-        return idNumbers.waiver1915B(isWaiverB, state);
+    // 1915(b) ID based on waiverAction
+    // new - SS.#### or SS.#####
+    // amendment - SS.####.R##.M## or SS.#####.R##.M##
+    // renewal - SS.####.R## or SS.#####.R##
+    getWaiverNumber: function (waiverAction = 'new',state = 'VA', option = false) {
+        let rand = (min = 0, max = 100000) => this.props.getRandomNumber(min, max);
+        let group = (waiverAction === 'new' && option === true) ? [state, rand()] : [state, rand(0, 10000)];
+
+        if(waiverAction === 'renewal' || waiverAction === 'amendment') {
+            group.push(`R${rand(0, 100)}`);
+        }
+        if (waiverAction === 'amendment') {
+            group.push(`M${rand(0, 100)}`);
+        }
+
+        let id = group.join(".");
+        const waiverFile = path.join(__dirname, "waiver.txt");
+        fs.writeFileSync(waiverFile, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
 
-    getSPA: function () {
-        return idNumbers.getSpaID();
+    // 1915(c) Appendix K valid options:
+    // Note that the base waiver number is the first set of numbers which can be either 4 or 5 digits
+    // SS.####.R##.##
+    // SS.#####.R##.##
+    getWaiverAppKNumber: function (state = "VA") {
+        const baseNumLengthOptions = [4, 5];
+        const randomBaseNumLengthOption = baseNumLengthOptions[Math.floor(Math.random() * baseNumLengthOptions.length)]
+        let group = [state, getRandomNumberString(randomBaseNumLengthOption), `R${getRandomNumberString(2)}`, getRandomNumberString(2)];
+        let id = group.join(".");
+        const waiverFile = path.join(__dirname, "waiver.txt");
+        fs.writeFileSync(waiverFile, id, {encoding: "utf8", flag: 'w'});
+        return id;
     },
 
-    getWaiver: function () {
-        return idNumbers.getWaiverID();
+    getID: function (file = 'spa.txt') {
+        return fs.readFileSync(path.join(__dirname, file),'utf8');
     },
 
     enterComments: function (selector, text) {
@@ -29,18 +63,20 @@ const commands = {
         this.api.pause(3000);
     },
 
-    login: function (user, pass) {
+
+    login: function (testData) {
         this.onDashBoard();
-        this.api.setValue(this.elements.userField, user).pause(100);
-        this.api.setValue(this.elements.passField, pass).pause(100);
+        this.api.setValue(this.elements.userField, testData.username).pause(100);
+        this.api.setValue(this.elements.passField, testData.password).pause(100);
         this.api.click(this.elements.tandc).pause(100);
         this.api.click(this.elements.submitBtn).waitForElementNotPresent(this.elements.submitBtn);
+
     },
 
-    devLogin: function (user, pass) {
+    devLogin: function (testData) {
         this.onDashBoard(this.elements.devLoginButton);
-        this.api.setValue(this.elements.devUserField, user).pause(100);
-        this.api.setValue(this.elements.devPassField, pass).pause(100);
+        this.api.setValue(this.elements.devUserField, testData.username).pause(100);
+        this.api.setValue(this.elements.devPassField, testData.password).pause(100);
         this.api.click(this.elements.devSubmitBtn).waitForElementNotPresent(this.elements.devSubmitBtn);
     },
 
@@ -49,12 +85,41 @@ const commands = {
         this.api.click(this.elements.logout);
     },
 
+    uploadDocs: function (type = '.pdf',required = 0, validateUpload) {
+        const dir = path.join(__dirname, 'files');
+        const testFile = fs.readdirSync(dir).find(file => {
+            const regEx = `^.*(${type})$`;
+            return file.match(new RegExp(regEx));
+        });
+
+        const setValueTo = (selector, filePath) => this.api.setValue(selector, filePath);
+        const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', function (result) {
+            let selector = `[id=${result.value}]`, filePath = path.resolve(dir, testFile);
+            setValueTo(selector, filePath);
+            validateUpload(selector, testFile);
+        });
+
+        let eachElement = function (result) {
+            let elements = Array.from(result.value);
+
+            elements.forEach((obj, index) => {
+                if(index < required && index < elements.length) {
+                    let webElementId = obj["ELEMENT"];
+                    uploadElement(webElementId);
+                }
+            });
+        }
+
+        this.api.elements('css selector', this.elements.uploadFields, eachElement);
+
+    },
+
+    /*
     uploadFiles: function (total) {
         const fs = require('fs');
         const path = require('path');
         let dir = path.join(__dirname, 'files');
         let files = fs.readdirSync(dir, 'utf8');
-
         for (let i = 0; i < total; i++) {
             let selector = 'input[id="uploader-input-' + i + '"]';
             this.api.assert.elementPresent(selector);
@@ -63,12 +128,32 @@ const commands = {
         }
         return this.api;
     }
+    */
+}
+
+/**
+ * Returns a random string of numbers to a specified number of digits
+ * allowing for leading zeros
+ * @param {Number} numDigits
+ * @returns string of numbers
+ */
+function getRandomNumberString(numDigits) {
+    const maxNum = Math.pow(10, numDigits);
+    const randomNum = Math.floor(Math.random() * Math.floor(maxNum));
+    let randomNumString = randomNum.toString();
+    if (randomNumString.length < numDigits) {
+        randomNumString = randomNumString.padStart(numDigits, '0');
+    }
+    return randomNumString;
 }
 
 module.exports = {
     elements: {
+        alert_banner: "[id*=alert_]",
+        alert_text: "p[class=ds-c-alert__text]",
         actionType: '#actionType',
         waiverAuthority: '#waiverAuthority',
+        dashboardLink: '[id=dashboardLink]',
         devLoginButton : '[id=devloginBtn]',
         devPassField : '[id=password]',
         devSubmitBtn : 'input[type=submit]',
@@ -77,6 +162,7 @@ module.exports = {
         loginBtn: 'div.nav-right > button',
         loginTitle : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
+        manageAccountLink: "[id=manageAccountLink]",
         logout : '[id=logoutLink]',
         passField : '[id=okta-signin-password]',
         newSPA: "[id=spaSubmitBtn]",
@@ -84,63 +170,27 @@ module.exports = {
         newWaiver: "[id=waiverBtn]",
         respondWaiver: "[id=waiverRaiBtn]",
         requestTemp: "[id=waiverExtBtn]",
+        submitAppK: "[id=waiverAppKBtn]",
         submitBtn: "[id=okta-signin-submit]",
         tandc: "[id=tandc]",
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
+        uploadFields: '[id*=uploader-input]'
     },
 
     commands : [commands],
 
     props : {
         pauseAction: 1000,
+        getRandomNumber(inclusive, exclusive) {
+            let range = { min: Math.ceil(inclusive), max: Math.floor(exclusive) };
+            let randomNum = Math.floor(Math.random() * (range.max - range.min) + range.min).toString();
+            let size = range.max.toString().length;
+            while (randomNum.length < size - 1) {
+                randomNum = "0".concat(randomNum);
+            }
+            console.log(randomNum);
+            return randomNum;
+        },
     }
 };
-
-
-/**
-    Description: Utilities for random number generation and other trivial operations.
-**/
-const idNumbers = {
-
-    // SS-YY-NNNN-xxxx
-    transmitNumber: (optional, state) => {
-        let rand = getRandomNumber(8);
-        let requiredFour = rand.slice(0, 4);   // 4 digit number (required)
-        let opt = rand.slice(4, 8);
-        let st = state;                      // 2 character state
-        let yrAbbr = new Date().getFullYear()     // 2 character year
-            .toString()
-            .slice(2);
-        let group = [st, yrAbbr, requiredFour]
-        let id = (optional) ? group.join("-") : [group, opt].flat().join("-");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8"});
-        return id;
-    },
-
-    // 1915(b) SS.##.R##.M##
-    // 1915(c) SS.##.R##.##
-    waiver1915B: (isWaiverB, state) => {
-        let rand = getRandomNumber(6);
-        let groupX = rand.slice(0, 2), groupY = "R".concat(rand.slice(2, 4)), groupZ = rand.slice(4);
-        let group = (isWaiverB) ? [state, groupX, groupY, ["M", groupZ].join('')] : [state, groupX, groupY, groupZ];
-        let id = group.join(".");
-        fs.writeFileSync(spaVar, id, {encoding: "utf8", flag: 'w'});
-        return id;
-    },
-
-    getSpaID: () => {
-        return fs.readFileSync(spaVar, 'utf8');
-    },
-
-    getWaiverID: () => {
-        return fs.readFileSync(spaVar, 'utf8');
-    }
-}
-
-function getRandomNumber(numberOfDigits) {
-    const _ = require('lodash');
-    let lower = Math.pow(10, numberOfDigits - 1);
-    let upper = Math.pow(10, numberOfDigits) - 1;
-    return _.random(lower,upper).toString();
-}
