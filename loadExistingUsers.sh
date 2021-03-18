@@ -53,7 +53,7 @@ while IFS= read -r line; do
        then
           states=${states}","
        fi
-       states=${states}' { "M":  { "stateCode": { "S": "'${territory}'" }, "status": { "S": "approved" }, "date": { "N": "'${createddate}'" } } }'
+       states=${states}' { "M":  { "stateCode": { "S": "'${territory}'" }, "history": [ { "L": [ "M":  { "status": { "S": "approved" }, "effectiveDate": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } ] }'
 
   priorEmail=$email
 
