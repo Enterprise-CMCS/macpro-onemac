@@ -20,7 +20,6 @@ const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState();
-  const { userProfile } = useAppContext();
 
   const history = useHistory();
   const location = useLocation();
@@ -33,12 +32,6 @@ const Dashboard = () => {
     async function onLoad() {
       try {
         if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
-        if (userProfile.email) {
-          const userList = await UserDataApi.getMyUserList(userProfile.email);
-          console.log("User List is: ", userList);
-        } else {
-          console.log("User profile? ", userProfile);
-        }
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
