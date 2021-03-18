@@ -38,7 +38,7 @@ while IFS= read -r line; do
       if [ "${priorEmail}" != "" ]
       then
 
-        echo '{  "id": { "S": "'${priorEmail}'" }, "type": { "S": "stateuser" }, "attributes": { "L": ['${states}' ] } } ' > user.json
+        echo '{  "id": { "S": "'${priorEmail}'" }, "type": { "S": "stateuser" }, "attributes": { "L": [ '${states}' ] } } ' > user.json
         cat user.json
 
         aws dynamodb put-item --table-name $userTable --item file://user.json
@@ -53,7 +53,7 @@ while IFS= read -r line; do
        then
           states=${states}","
        fi
-       states=${states}' { "M":  { "stateCode": { "S": "'${territory}'" }, "history": [ { "L": [ "M":  { "status": { "S": "approved" }, "effectiveDate": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } ] }'
+         states=${states}' { "M":  { "stateCode": { "S": "'${territory}'" }, "history": { "L": [ { "M": { "status": { "S": "approved" }, "effectiveDate": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } }'
 
   priorEmail=$email
 
