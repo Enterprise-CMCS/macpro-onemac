@@ -235,7 +235,7 @@ const Dashboard = () => {
           </Button>
         </div>
         <div className="dashboard-right-col">
-          {userProfile && userProfile.userData && userProfile.userData.attributes && isPending(userProfile.userData)?
+          {userProfile && userProfile.userData && userProfile.userData.attributes && userProfile.userData.attributes.length!==0 && isPending(userProfile.userData)?
             (
               <EmptyList message={pendingMessage[userProfile.userData.type]} />
             ) : (<div>
