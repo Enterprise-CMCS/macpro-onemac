@@ -8,10 +8,8 @@ import { ROUTES } from "../Routes";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import UserDataApi from "../utils/UserDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
-import { useAppContext } from "../libs/contextLib";
 
 /**
  * Component containing dashboard
@@ -46,7 +44,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [location, userProfile]);
+  }, [location]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
