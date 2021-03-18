@@ -70,10 +70,10 @@ const Dashboard = () => {
       );
     }
   };
-  const isPending = (historyPerState) => historyPerState.status === "pending";
   const isStatePending = (attribute) => {
     if (attribute.history) {
-      return attribute.history.every(isPending);
+      attribute.history.sort((a,b)=>{return b.effectiveDate-a.effectiveDate})
+      return attribute.history[0].status==="pending";
     } else {
       return attribute.status === "pending";
     }
