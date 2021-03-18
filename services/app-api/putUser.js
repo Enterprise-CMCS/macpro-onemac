@@ -4,13 +4,12 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
 import { isEmpty } from 'lodash';
-import { it } from "date-fns/locale";
 
 /**
  * Update a user
  */
 export const main = handler(async (event) => {
-    //    const main = async (event) => {
+    // const main = async (event) => {
     // If this invocation is a prewarm, do nothing and return.
     if (event.source == "serverless-plugin-warmup") {
         console.log("Warmed up!");
@@ -81,7 +80,6 @@ export const main = handler(async (event) => {
             `Warning: There is no recipient email address present for input ${JSON.stringify(input)}`);
         return RESPONSE_CODE.EMAIL_NOT_SENT;
     }
-
 });
 
 const validateUser = data => {
@@ -89,7 +87,20 @@ const validateUser = data => {
         id: Joi.string().email().required(),
         type: Joi.string().valid('cmsapprover', 'stateadmin', 'stateuser').required(),
         systemAdminEmail: Joi.string().email().optional(),
-        attributes: Joi.array().required(),
+        attributes: Joi.array()
+        .when('type', {
+            is: Joi.string().valid('stateuser','stateadmin'),
+            then: Joi.array().items(Joi.object({
+                stateCode: Joi.string().regex(/^[A-Z]{2}$/).label('State code must be valid and ').required(),
+                status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
+                doneBy: Joi.string().email().required()
+            })),
+            otherwise:Joi.array().items(Joi.object({
+                status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
+                doneBy: Joi.string().email().required()
+            })),
+
+        })
     });
     //Todo: Add deeper validation for types
     const result = userSchema.validate(data);
@@ -102,7 +113,6 @@ const validateUser = data => {
 };
 
 const getUser = async userEmail => {
-
     const params = {
         TableName: process.env.userTableName, // Todo : check for existance
         Key: {
@@ -127,7 +137,6 @@ const getUser = async userEmail => {
 };
 
 const populateUserData = (input, selectedUser) => {
-    const currentTimestamp = Math.floor(new Date().getTime() / 1000);
     if (input.type === 'stateuser' || input.type === 'stateadmin') {
         input.attributes.forEach(item => {
             const index = selectedUser.attributes.findIndex(attr => attr.stateCode === item.stateCode);
@@ -149,7 +158,10 @@ const populateUserData = (input, selectedUser) => {
     return selectedUser;
 };
 
-const generateAttribute = item => { date: currentTimestamp, status: item.status, doneBy: item.doneBy }
+const generateAttribute = item => {
+    const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+    return { date: currentTimestamp, status: item.status, doneBy: item.doneBy };
+};
 
 const createUserObject = data => {
     const user = {
