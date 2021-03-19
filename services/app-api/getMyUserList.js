@@ -46,6 +46,7 @@ export const main = handler(async (event, context) => {
   };
 
   let userRows = [];
+  let i=1;
   const userResult = await dynamoDb.scan(scanParams);
   console.log("results:", JSON.stringify(userResult));
 
@@ -63,28 +64,34 @@ export const main = handler(async (event, context) => {
             }
           });
           userRows.push({
+            id: i,
             email: oneUser.id,
             firstName: oneUser.firstName,
             lastName: oneUser.lastName,
             state: oneAttribute.stateCode,
             status: currentStatus,
           });
+          i++;
         } else {
           userRows.push({
+            id: i,
             email: oneUser.id,
             firstName: oneUser.firstName,
             lastName: oneUser.lastName,
             state: oneAttribute.stateCode,
             status: oneAttribute.status,
           });
+          i++;
         }
       });
     } else {
       userRows.push({
+        id: i,
         email: oneUser.id,
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
       });
+      i++;
     }
   });
 
