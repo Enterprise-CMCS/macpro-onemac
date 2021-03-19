@@ -24,7 +24,7 @@ function getSESEmailParams (email) {
           Data: email.Subject
         },
       },
-      Source: process.env.emailSource,
+      Source: email.fromAddressSource? process.env[email.fromAddressSource] : process.env.emailSource,
     };
 
     return emailParams;

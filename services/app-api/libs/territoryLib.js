@@ -237,3 +237,4 @@ export const territoryList = [
         "label": "Wyoming",
         "value": "WY"
     }];
+export const territoryCodeList = territoryList.map(item => item.value);
