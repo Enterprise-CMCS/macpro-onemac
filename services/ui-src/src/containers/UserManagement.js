@@ -123,13 +123,14 @@ const UserManagement = () => {
   useEffect(() => {
     let mounted = true;
     let newAlert = ALERTS_MSG.NONE;
-    let tmpUserList;
 
     async function onLoad() {
+
       try {
-        tmpUserList = await UserDataApi.getMyUserList(userProfile.email);
+        const tmpUserList = await UserDataApi.getMyUserList(userProfile.email);
         console.log("Response is: ", tmpUserList);
         if (mounted) setIsLoading(false);
+        return tmpUserList;
       } catch (error) {
         console.log("Error while fetching user's list.", error);
         newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
@@ -137,8 +138,7 @@ const UserManagement = () => {
     }
 
     if (location.state) newAlert = location.state.showAlert;
-    if (mounted && userProfile.email) onLoad();
-    if (mounted) setUserList(tmpUserList);
+    if (mounted && userProfile.email) setUserList(onLoad());
     if (mounted) setAlert(newAlert);
 
     return function cleanup() {
