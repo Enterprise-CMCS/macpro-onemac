@@ -121,29 +121,21 @@ const UserManagement = () => {
 
   // Load the data from the backend.
   useEffect(() => {
-    let mounted = true;
+
     let newAlert = ALERTS_MSG.NONE;
-
-    async function onLoad() {
-
-      try {
-        const tmpUserList = await UserDataApi.getMyUserList(userProfile.email);
-        console.log("Response is: ", tmpUserList);
-        if (mounted) setIsLoading(false);
-        return tmpUserList;
-      } catch (error) {
-        console.log("Error while fetching user's list.", error);
-        newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
-      }
-    }
-
     if (location.state) newAlert = location.state.showAlert;
-    if (mounted && userProfile.email) setUserList(onLoad());
-    if (mounted) setAlert(newAlert);
+    setAlert(newAlert);
 
-    return function cleanup() {
-      mounted = false;
-    };
+    UserDataApi.getMyUserList(userProfile.email)
+      .then((ul) => {
+        console.log("user List: ", ul);
+        setUserList(ul);
+      })
+      .then(setIsLoading(false))
+      .catch((error) => {
+        console.log("Error while fetching user's list.", error);
+        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR)});
+
   }, [location, userProfile]);
 
   const jumpToPageTitle = () => {
@@ -177,7 +169,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {userList ? (
+          {userList && userList !== "UR001" ? (
             <PortalTable
               className="portalTable"
               style={portalTableStyle}

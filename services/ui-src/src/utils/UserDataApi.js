@@ -22,6 +22,8 @@ class UserDataApi {
    * @return {Array} a list of users
    */
    async getMyUserList(userEmail) {
+     if (!userEmail) return [];
+
     try {
       return await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
     } catch (error) {
