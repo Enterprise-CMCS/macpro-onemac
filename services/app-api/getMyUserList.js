@@ -56,11 +56,26 @@ export const main = handler(async (event, context) => {
     ExpressionAttributeValues: { ":userType": scanFor },
   };
 
+  let userResponse=[];
   const userResult = await dynamoDb.scan(scanParams);
-  let userResponse = userResult.map((oneUser) => {
-    return {
-      email: oneUser.id,
-    };
+  userResult.Items.forEach((oneUser) => {
+    oneUser.attributes.forEach((oneAttribute) => {
+      let currentStatus;
+      let mostRecentTime=0;
+      oneAttribute.history.forEach( (attributeHistory) => {
+        if (attributeHistory.date>mostRecentTime) {
+          currentStatus = attributeHistory.status;
+          mostRecentTime = attributeHistory.date;
+        }
+      });
+      userResponse.push( {
+        email: oneUser.id,
+        firstName: oneUser.firstName,
+        lastName: oneUser.lastName,
+        state: oneAttribute.stateCode,
+        status: currentStatus,
+      });
+    });
   });
 
   console.log("results:", JSON.stringify(userResult));
