@@ -1,4 +1,4 @@
-import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
+import {getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
 import { RESPONSE_CODE } from "../libs/response-codes";
 
@@ -65,7 +65,7 @@ getCMSEmail(data) {
         <br><b>SPA ID</b>: ${data.transmittalNumber}
       </p>
       <p>
-        <b>Additional Information</b>:
+        <b>Summary</b>:
         <br>${data.summary}
       </p>
       <p>
@@ -102,7 +102,7 @@ getStateEmail(data) {
         <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
-        <b>Additional Information</b>:<br>
+        <b>Summary</b>:<br>
         ${data.summary}
       </p>
       <br>
@@ -124,4 +124,4 @@ getStateEmail(data) {
 
 const instance = new SPA();
 Object.freeze(instance);
-export default instance;
+module.exports = instance;

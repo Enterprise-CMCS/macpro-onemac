@@ -62,7 +62,7 @@ class WaiverExtension {
             <br><b>Waiver #</b>: ${data.transmittalNumber}
         </p>
         <p>
-            <b>Additional Information</b>:
+            <b>Summary</b>:
             <br>${data.summary}
         </p>
         <p>
@@ -99,7 +99,7 @@ class WaiverExtension {
             <br><b>Submitter email</b>: ${data.user.email}
         </p>
         <p>
-            <b>Additional Information</b>:<br>
+            <b>Summary</b>:<br>
             ${data.summary}
         </p>
         <br>

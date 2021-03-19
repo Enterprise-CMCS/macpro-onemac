@@ -1,13 +1,13 @@
 /*
     Test Scenario: Create a new SPA
     Description: This will login to the application, enter the required SPA information, and upload documents using files
-    located in the 'files' folder. Lastly, comments will be entered in the Additional Information field and then submitted.
+    located in the 'files' folder. Lastly, comments will be entered in the Summary and then submitted.
 
 
  */
 
 const timeout = 1000;
-const login = require('./OY2-1494_Test_SPA_Login');
+const login = require('./OY2-1494_Test_SPA_Login_Dev');
 let spa;
 module.exports = {
 
@@ -85,13 +85,19 @@ module.exports = {
         spa.verify.containsText(selector, entered_text)
     },
 
-    'Submit SPA' : function (
-        browser,
-        testData = { selector: '@alert_banner' }
-    ) {
+    'Submit SPA' : function (browser, testData = [
+        {selector: '@alert_banner', msg: "Submission Completed"},
+        {selector: '@alert_text', msg: "Your submission has been received."},
+    ]) {
         spa = browser.page.spaBasePage();
-        browser.click('[type="submit"]');
-        spa.expect.element(testData.selector).to.be.visible.before(timeout * 20);
+
+        browser.click('[type="submit"]').waitForElementPresent('body');
+
+        Array.from(testData).forEach(obj => {
+            spa.verify.elementPresent(obj.selector);
+            //spa.verify.containsText(obj.selector, obj.msg);
+            browser.pause(timeout / 2);
+        });
     },
 
 };

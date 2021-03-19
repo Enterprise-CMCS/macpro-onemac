@@ -180,6 +180,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       try {
         if (transmittalNumberDetails.existenceRegex !== undefined) {
           newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
+          console.log("new trans number: ", newTransmittalNumber);
         } 
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
@@ -407,7 +408,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <PageTitleBar heading={formInfo.pageTitle} text="" />
       {renderAlert(alert)}
       <div className="form-container">
-        {formInfo.subheaderMessage && <div className="form-subheader-message">{formInfo.subheaderMessage}</div>}
         <form
           onSubmit={handleSubmit}
           noValidate
@@ -458,7 +458,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           <div className="summary-box">
             <TextField
               name="summary"
-              label="Additional Information"
+              label="Summary"
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}

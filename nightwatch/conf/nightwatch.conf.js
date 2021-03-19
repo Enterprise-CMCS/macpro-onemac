@@ -3,6 +3,7 @@
 const fs = require('fs');
 const path = require('path');
 const Services ={}; loadServices();
+const env_var = path.join(process.cwd(), "services");
 
 module.exports = {
     // An array of folders (excluding subfolders) where your nightwatch are located;
@@ -82,10 +83,11 @@ module.exports = {
                     args: [
                         "--log-level=3",
                         "--window-size=1024,768",
+                        '--headless'
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        '--headless'
+                        //'--headless'
                     ]
                 }
             },
@@ -102,7 +104,13 @@ module.exports = {
 
         "unit-test" : {
             unit_tests_mode : true,
-            filter: "./nightwatch/unit"
+            test_runner: {
+                type: "mocha",
+                options : {
+                    ui : "tdd"
+                }
+            },
+            filter: path.join(env_var, "unit-tests"),
         }
     }
 };
