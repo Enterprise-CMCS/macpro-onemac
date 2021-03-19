@@ -4,6 +4,7 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from '@hapi/joi';
 import { isEmpty } from 'lodash';
+import { territoryCodeList } from "./libs/territoryLib";
 
 /**
  * Update a user
@@ -90,7 +91,7 @@ const validateUser = data => {
             .when('type', {
                 is: Joi.string().valid('stateuser', 'stateadmin'),
                 then: Joi.array().items(Joi.object({
-                    stateCode: Joi.string().regex(/^[A-Z]{2}$/).label('State code must be valid and ').required(),
+                    stateCode: Joi.string().valid(...territoryCodeList).required(),
                     status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
                     doneBy: Joi.string().email().required()
                 })),
