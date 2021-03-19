@@ -129,7 +129,6 @@ const UserManagement = () => {
       try {
         tmpUserList = await UserDataApi.getMyUserList(userProfile.email);
         console.log("Response is: ", tmpUserList);
-        tmpUserList=null;
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);

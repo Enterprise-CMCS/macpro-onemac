@@ -1,7 +1,7 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
-import { USER_TYPES } from "./user/userTypes";
+import getUserFunctions from "./user/user-util";
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event, context) => {
@@ -30,24 +30,13 @@ export const main = handler(async (event, context) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
-  let scanFor;
-
-  // what users they see depends on what role they are
-  switch (result.Item.type) {
-    case USER_TYPES.STATE_USER:
-      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
-    case USER_TYPES.STATE_ADMIN:
-      scanFor = USER_TYPES.STATE_USER;
-      break;
-    case USER_TYPES.CMS_APPROVER:
-      scanFor = USER_TYPES.STATE_ADMIN;
-      break;
-    case USER_TYPES.CMS_SYSTEM_ADMIN:
-      scanFor = USER_TYPES.CMS_APPROVER;
-      break;
-    default:
-      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+  // map the user functions from the type pulled in from tne current user
+  const uFunctions = getUserFunctions(result.Item.type);
+  if (!uFunctions) {
+    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
+
+  let scanFor = uFunctions.getScanFor();
 
   const scanParams = {
     TableName: process.env.userTableName,
@@ -56,32 +45,53 @@ export const main = handler(async (event, context) => {
     ExpressionAttributeValues: { ":userType": scanFor },
   };
 
-  let userResponse=[];
+  let userRows = [];
   const userResult = await dynamoDb.scan(scanParams);
+  console.log("results:", JSON.stringify(userResult));
+
   userResult.Items.forEach((oneUser) => {
-    oneUser.attributes.forEach((oneAttribute) => {
-      let currentStatus;
-      let mostRecentTime=0;
-      oneAttribute.history.forEach( (attributeHistory) => {
-        if (attributeHistory.date>mostRecentTime) {
-          currentStatus = attributeHistory.status;
-          mostRecentTime = attributeHistory.date;
+    if (oneUser.attributes) {
+      oneUser.attributes.forEach((oneAttribute) => {
+        if (oneAttribute.history) {
+          let currentStatus;
+          let mostRecentTime = 0;
+
+          oneAttribute.history.forEach((attributeHistory) => {
+            if (attributeHistory.date > mostRecentTime) {
+              currentStatus = attributeHistory.status;
+              mostRecentTime = attributeHistory.date;
+            }
+          });
+          userRows.push({
+            email: oneUser.id,
+            firstName: oneUser.firstName,
+            lastName: oneUser.lastName,
+            state: oneAttribute.stateCode,
+            status: currentStatus,
+          });
+        } else {
+          userRows.push({
+            email: oneUser.id,
+            firstName: oneUser.firstName,
+            lastName: oneUser.lastName,
+            state: oneAttribute.stateCode,
+            status: oneAttribute.status,
+          });
         }
       });
-      userResponse.push( {
+    } else {
+      userRows.push({
         email: oneUser.id,
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
-        state: oneAttribute.stateCode,
-        status: currentStatus,
       });
-    });
+    }
   });
 
   console.log("results:", JSON.stringify(userResult));
-  console.log("Response:", userResponse);
+  console.log("Response:", userRows);
   // Return the retrieved item
-  return userResponse;
+  return userRows;
 });
 
 /*

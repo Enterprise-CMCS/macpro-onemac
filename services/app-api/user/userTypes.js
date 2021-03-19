@@ -5,5 +5,5 @@
     STATE_USER: 'stateuser',
     STATE_ADMIN: 'stateadmin',
     CMS_APPROVER: 'cmsapprover',
-    CMS_SYSTEM_ADMIN: 'systemadmin',
+    SYSTEM_ADMIN: 'systemadmin',
 };
