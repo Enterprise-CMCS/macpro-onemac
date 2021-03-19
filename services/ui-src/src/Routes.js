@@ -3,6 +3,7 @@ import { Route, Switch } from "react-router-dom";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
 import Dashboard from "./containers/Dashboard";
+import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import NotFound from "./containers/NotFound";
 import ComponentPage from "./containers/ComponentPage";
@@ -21,6 +22,7 @@ import Metrics from "./containers/Metrics";
 
 export const ROUTES = {
     DASHBOARD: '/dashboard',
+    USER_MANAGEMENT: '/usermanagement',
     FAQ: '/FAQ',
     FAQ_TOP: '/FAQ/#top',
     FAQ_SPA_ID: '/FAQ#spa-id-format',
@@ -55,6 +57,9 @@ export default function Routes() {
             </UnauthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
+            </AuthenticatedRoute>
+            <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+                <UserManagement />
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.PROFILE}>
                 <UserPage />

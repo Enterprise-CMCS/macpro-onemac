@@ -107,6 +107,9 @@ function Header(props) {
           <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
             Dashboard
           </Link>
+          <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
+            User Management
+          </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
           {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
