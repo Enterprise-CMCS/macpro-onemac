@@ -7,7 +7,7 @@ const Services ={}; loadServices();
 module.exports = {
     // An array of folders (excluding subfolders) where your nightwatch are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
-    src_folders: ["./nightwatch/tests"],
+    src_folders: ["./nightwatch/tests/"],
 
     // See https://nightwatchjs.org/guide/working-with-page-objects/
     page_objects_path: './nightwatch/page_objects',
@@ -85,7 +85,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        '--headless'
+                        //'--headless'
                     ]
                 }
             },
