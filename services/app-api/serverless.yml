@@ -17,6 +17,7 @@ custom:
   userTableName: cms-spa-form-${self:custom.stage}-user-profiles
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
+  userAccessEmailSource:  ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
   warmupEnabled:
     production: true
@@ -54,6 +55,7 @@ provider:
     spaIdTableName: ${self:custom.spaIdTableName}
     userTableName: ${self:custom.userTableName}
     emailSource: ${self:custom.emailSource}
+    userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
 
 functions:
@@ -113,6 +115,16 @@ functions:
       - http:
           path: getUser
           method: get
+          cors: true
+          authorizer: aws_iam
+
+  putUser:
+    handler: putUser.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: putUser
+          method: put
           cors: true
           authorizer: aws_iam
 
