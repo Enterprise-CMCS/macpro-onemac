@@ -169,7 +169,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {userList && userList !== "UR001" ? (
+          {userList && userList !== "UR040" ? (
             <PortalTable
               className="portalTable"
               style={portalTableStyle}

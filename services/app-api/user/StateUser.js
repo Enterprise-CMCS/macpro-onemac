@@ -14,6 +14,19 @@ class StateUser {
   getScanFor() {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
+
+  /**
+   * takes the raw user data and transforms into
+   * what to send to front end.
+   *
+   * State Users should not get this far
+   *
+   * @param {userResult} Array of User Objects from database
+   * @returns {userRows} the list of users
+   */
+  transformUserList(userResult) {
+    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+  }
 }
 
 const instance = new StateUser();

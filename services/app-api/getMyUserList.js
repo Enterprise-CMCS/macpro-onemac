@@ -2,6 +2,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import getUserFunctions from "./user/user-util";
+import getUser from "./utils/getUser";
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event, context) => {
@@ -11,27 +12,15 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
-  // get this user's details so we know what to send back
-  const params = {
-    TableName: process.env.userTableName,
-    // 'Key' defines the partition key and sort key of the item to be retrieved
-    // - 'userId': Identity Pool identity id of the authenticated user
-    Key: {
-      id: event.queryStringParameters.email,
-    },
-  };
+  // get the rest of the details about the current user
+  const userItem = await getUser(event.queryStringParameters.email);
 
-  const result = await dynamoDb.get(params);
-
-  // if the calling user is not in database, return error
-  if (!result.Item) {
-    console.log("The user does not exists in this table.", params);
-    // The result is an empty object {} in this case
+  if (!userItem) {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
   // map the user functions from the type pulled in from tne current user
-  const uFunctions = getUserFunctions(result.Item.type);
+  const uFunctions = getUserFunctions(userItem.type);
   if (!uFunctions) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
