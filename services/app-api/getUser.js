@@ -1,5 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
+import { ROLE_ACL  } from "cmscommonacl";
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event, context) => {
@@ -18,6 +19,7 @@ export const main = handler(async (event, context) => {
     },
   };
 
+  const allowedRoutes = JSON.stringify(ROLE_ACL);
   const result = await dynamoDb.get(params);
 
   if (!result.Item) {
@@ -28,5 +30,7 @@ export const main = handler(async (event, context) => {
 
   console.log("Sending back result:", JSON.stringify(result));
   // Return the retrieved item
+
+  result.Item.validRoutes = allowedRoutes;
   return result.Item;
 });

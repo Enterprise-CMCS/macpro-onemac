@@ -15,6 +15,7 @@
     "@testing-library/user-event": "^7.2.1",
     "aws-amplify": "^3.0.23",
     "bootstrap": "^3.3.7",
+    "cmscommonacl": "file:../common",
     "core-js": "^3.7.0",
     "date-fns": "^2.16.1",
     "formik": "^2.2.5",

@@ -1,0 +1,11 @@
+{
+  "name": "cmscommonacl",
+  "version": "1.0.0",
+  "description": "Common Access Control Utils for CMS",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT"
+}

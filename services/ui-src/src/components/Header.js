@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES } from "../Routes";
+import { ROUTES } from "cmscommonacl";
 import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";

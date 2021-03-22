@@ -1,9 +1,8 @@
 import React, {useEffect, useState} from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
-import { ROUTES } from "../Routes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import {isAllowedRoleRoute} from "../utils/UserDataApi"
+import { ROUTES, ROLE_ACL  } from "cmscommonacl";
 
 export default function AuthenticatedRoute({ children, ...rest }) {
   const { isAuthenticated, userProfile } = useAppContext();
@@ -18,7 +17,7 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     console.log("User Profile:(" + JSON.stringify(userProfile) + ")")
     console.log("User EMAIL:(" + JSON.stringify(email) + ")")
     console.log("User ROLE: " + JSON.stringify(userData.type))
-    setAllowedRoute(isAllowedRoleRoute(userData.type,document.location.pathname))
+    setAllowedRoute(ROLE_ACL[userData.type].includes(document.location.pathname))
   }
 
   useEffect(() => {

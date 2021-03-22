@@ -14,7 +14,7 @@ import * as serviceWorker from './serviceWorker';
 import { BrowserRouter as Router } from 'react-router-dom';
 import { Amplify } from 'aws-amplify';
 import config from './utils/config';
-import { ROUTES } from "./Routes";
+import { ROUTES } from "cmscommonacl";
 import "core-js/stable";
 
 let amplifyConfig = {
