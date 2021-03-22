@@ -1,5 +1,5 @@
 import { USER_TYPES } from "./userTypes";
-import getStatusDetails from "./user-util";
+import { getStatusDetails } from "./user-util";
 
 /**
  * State Admin specific functions.

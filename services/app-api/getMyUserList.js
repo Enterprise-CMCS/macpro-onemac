@@ -1,7 +1,7 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
-import getUserFunctions from "./user/user-util";
+import { getUserFunctions } from "./user/user-util";
 import getUser from "./utils/getUser";
 
 // Gets owns user data from User DynamoDB table

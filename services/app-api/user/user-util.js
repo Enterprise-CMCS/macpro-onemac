@@ -13,7 +13,7 @@ import { USER_STATUS } from "./userStatus";
  * to let developer know the emails haven't been set for that type.
  */
 
-export function getUserFunctions(type) {
+export const getUserFunctions = type => {
   let retval = {};
 
     // what users they see depends on what role they are
@@ -38,7 +38,7 @@ export function getUserFunctions(type) {
     return retval;
 }
 
-export const getStatusDetails = (statusList) =>  {
+export const getStatusDetails = statusList =>  {
 
     let currentStatus;
     let mostRecentTime = 0;
