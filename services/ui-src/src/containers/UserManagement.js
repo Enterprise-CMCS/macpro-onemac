@@ -147,7 +147,7 @@ const UserManagement = () => {
     },
   ];
 */
-//  const portalTableStyle = { height: "400px", width: "100%" };
+  const portalTableStyle = { height: "400px", width: "100%" };
 
   // Load the data from the backend.
   useEffect(() => {
@@ -204,6 +204,7 @@ const UserManagement = () => {
               disableColumnMenu="false" 
               disableSelectionOnClick="false"
               className="portalTable"
+              style={portalTableStyle}
               width="100%"
               rows={userList}
               columns={columns}

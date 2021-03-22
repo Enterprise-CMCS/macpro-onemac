@@ -13,7 +13,7 @@ import { USER_STATUS } from "./userStatus";
  * to let developer know the emails haven't been set for that type.
  */
 
-export default function getUserFunctions(type) {
+export function getUserFunctions(type) {
   let retval = {};
 
     // what users they see depends on what role they are
