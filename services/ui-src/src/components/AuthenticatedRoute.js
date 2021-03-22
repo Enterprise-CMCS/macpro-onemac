@@ -1,11 +1,13 @@
-import React, { useEffect } from "react";
+import React, {useEffect, useState} from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
 import { ROUTES } from "../Routes";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import {isAllowedRoleRoute} from "../utils/UserDataApi"
 
 export default function AuthenticatedRoute({ children, ...rest }) {
   const { isAuthenticated, userProfile } = useAppContext();
+  const [allowedRoute, setAllowedRoute] = useState({ });
   const { email } = userProfile;
   const history = useHistory();
 
@@ -16,19 +18,7 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     console.log("User Profile:(" + JSON.stringify(userProfile) + ")")
     console.log("User EMAIL:(" + JSON.stringify(email) + ")")
     console.log("User ROLE: " + JSON.stringify(userData.type))
-    if (userData.type === "stateadmin") {
-        console.log("validateUserRoute:(" + document.location + ") for Role: STATE ADMIN")
-    } else if (userData.type === "stateuser") {
-      console.log("validateUserRoute:(" + document.location + ") for ROLE STATE USER")
-    } else if (userData.type === "cmsapprover") {
-      console.log("validateUserRoute:(" + document.location + ") for ROLE  STATE CMS APPROVER")
-    } else if (userData.type === "systemadmin") {
-      console.log("validateUserRoute:(" + document.location + ") for ROLE  SYSTEM ADMIN")
-    } else if (userData.type === "unknown") {
-      console.log("validateUserRoute:(" + document.location + ") for ROLE UKNOWN")
-      history.push(ROUTES.HOME);
-    }
-
+    setAllowedRoute(isAllowedRoleRoute(userData.type,document.location.pathname))
   }
 
   useEffect(() => {
@@ -48,5 +38,5 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     }
   });
 
-  return <Route {...rest}>{isAuthenticated ? children : <div></div>}</Route>;
+  return <Route {...rest}>{isAuthenticated && allowedRoute ? children : <div></div>}</Route>;
 }
