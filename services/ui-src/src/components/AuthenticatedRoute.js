@@ -17,7 +17,7 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     console.log("User Profile:(" + JSON.stringify(userProfile) + ")")
     console.log("User EMAIL:(" + JSON.stringify(email) + ")")
     console.log("User ROLE: " + JSON.stringify(userData.type))
-    setAllowedRoute(ROLE_ACL[userData.type].includes(document.location.pathname))
+    setAllowedRoute(ROLE_ACL[userData.validRoutes].includes(document.location.pathname))
   }
 
   useEffect(() => {
