@@ -57,7 +57,7 @@ class CMSApprover {
         }
 
         userRows.push({
-          rowId: i,
+          id: i,
           email: oneUser.id,
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,

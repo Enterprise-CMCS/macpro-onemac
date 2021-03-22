@@ -34,60 +34,10 @@ export const main = handler(async (event, context) => {
     ExpressionAttributeValues: { ":userType": scanFor },
   };
 
-  let userRows = [];
-  let i=1;
   const userResult = await dynamoDb.scan(scanParams);
   console.log("results:", JSON.stringify(userResult));
 
-  userResult.Items.forEach((oneUser) => {
-    if (oneUser.attributes) {
-      oneUser.attributes.forEach((oneAttribute) => {
-        if (oneAttribute.history) {
-          let currentStatus;
-          let mostRecentTime = 0;
-
-          oneAttribute.history.forEach((attributeHistory) => {
-            if (attributeHistory.date > mostRecentTime) {
-              currentStatus = attributeHistory.status;
-              mostRecentTime = attributeHistory.date;
-            }
-          });
-          userRows.push({
-            id: i,
-            email: oneUser.id,
-            firstName: oneUser.firstName,
-            lastName: oneUser.lastName,
-            state: oneAttribute.stateCode,
-            status: currentStatus,
-          });
-          i++;
-        } else {
-          userRows.push({
-            id: i,
-            email: oneUser.id,
-            firstName: oneUser.firstName,
-            lastName: oneUser.lastName,
-            state: oneAttribute.stateCode,
-            status: oneAttribute.status,
-          });
-          i++;
-        }
-      });
-    } else {
-      userRows.push({
-        id: i,
-        email: oneUser.id,
-        firstName: oneUser.firstName,
-        lastName: oneUser.lastName,
-      });
-      i++;
-    }
-  });
-
-  console.log("results:", JSON.stringify(userResult));
-  console.log("Response:", userRows);
-  // Return the retrieved item
-  return userRows;
+  return uFunctions.transformUserList(userResult);
 });
 
 /*

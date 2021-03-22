@@ -31,6 +31,11 @@ const UserManagement = () => {
       field: "fullname",
       headerName: "State User",
       width: 250,
+      renderCell: (params) => (
+        <>
+          <div className="portalTable">{params.value}</div>
+        </>
+      ),
     },
     {
       field: "email",
@@ -93,7 +98,7 @@ const UserManagement = () => {
       ),
     },
     {
-      field: "rowId",
+      field: "id",
       headerName: "Personnel Actions",
       width: 150,
       disableColumnSelector: false,
