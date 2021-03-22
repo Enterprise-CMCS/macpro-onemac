@@ -1,5 +1,5 @@
-import { RESPONSE_CODE } from "../libs/response-codes";
 import { USER_TYPES } from "./userTypes";
+import getStatusDetails from "./user-util";
 
 /**
  * CMS Approver specific functions.
@@ -28,6 +28,8 @@ class CMSApprover {
    */
   transformUserList(userResult) {
     let userRows = [];
+    let errorList = [];
+    let i=1;
 
     console.log("results:", JSON.stringify(userResult));
 
@@ -36,36 +38,39 @@ class CMSApprover {
 
     userResult.Items.forEach((oneUser) => {
       // State Admins must have the attribute section
-      if (!oneUser.attributes) return RESPONSE_CODE.USER_FORMAT_MISMATCH;
+      if (!oneUser.attributes) {
+        errorList.push(
+          "Attributes data required for this role, but not found ",
+          oneUser
+        );
+        return;
+      }
 
       oneUser.attributes.forEach((oneAttribute) => {
         // State Admins must have the history section
-        if (!oneAttribute.history) return RESPONSE_CODE.USER_FORMAT_MISMATCH;
+        if (!oneAttribute.history) {
+          errorList.push(
+            "History data required for this role, but not found ",
+            oneUser
+          );
+          return;
+        }
 
-        let currentStatus;
-        let mostRecentTime = 0;
-        let i = 1;
-
-        oneAttribute.history.forEach((attributeHistory) => {
-          if (attributeHistory.date > mostRecentTime) {
-            currentStatus = attributeHistory.status;
-            mostRecentTime = attributeHistory.date;
-          }
-        });
         userRows.push({
-          id: i,
+          rowId: i,
           email: oneUser.id,
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
+          phone: oneUser.phone,
           state: oneAttribute.stateCode,
-          status: currentStatus,
+          ...getStatusDetails(oneAttribute.history),
         });
         i++;
       });
     });
 
     console.log("Response:", userRows);
-    // Return the retrieved item
+
     return userRows;
   }
 }

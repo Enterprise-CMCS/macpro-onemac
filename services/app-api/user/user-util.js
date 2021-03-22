@@ -3,6 +3,7 @@ import StateAdmin from "./StateAdmin";
 import CMSApprover from "./CMSApprover";
 import SystemAdmin from "./SystemAdmin";
 import { USER_TYPES } from "./userTypes";
+import { USER_STATUS } from "./userStatus";
 
 /**
  * Get a singleton object that overloads user functions
@@ -36,3 +37,33 @@ export default function getUserFunctions(type) {
 
     return retval;
 }
+
+export const getStatusDetails = (statusList) =>  {
+
+    let currentStatus;
+    let mostRecentTime = 0;
+    let actionDate = 0;
+    let mostRecentPending = 0; // most recent pending date is request date
+
+    statusList.forEach((oneStatus) => {
+      if (oneStatus.date > mostRecentTime) {
+        currentStatus = oneStatus.status;
+        mostRecentTime = oneStatus.date;
+      }
+      if (
+        oneStatus.status === USER_STATUS.PENDING &&
+        oneStatus.date > mostRecentPending
+      ) {
+        mostRecentPending = oneStatus.date;
+      }
+    });
+    if (currentStatus !== USER_STATUS.PENDING) {
+      actionDate = mostRecentTime;
+    }
+    return {
+      status: currentStatus,
+      requestDate: mostRecentPending,
+      actionDate: actionDate,
+    };
+
+};

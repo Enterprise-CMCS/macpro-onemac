@@ -1,4 +1,5 @@
 import { USER_TYPES } from "./userTypes";
+import getStatusDetails from "./user-util";
 
 /**
  * System Admin specific functions.
@@ -25,6 +26,7 @@ class SystemAdmin {
   transformUserList(userResult) {
     let userRows = [];
     let errorList = [];
+    let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
 
@@ -41,22 +43,13 @@ class SystemAdmin {
         return;
       }
 
-      let currentStatus;
-      let mostRecentTime = 0;
-      let i = 1;
-      oneUser.attributes.forEach((oneAttribute) => {
-        if (oneAttribute.date > mostRecentTime) {
-          currentStatus = oneAttribute.status;
-          mostRecentTime = oneAttribute.date;
-        }
-      });
-
       userRows.push({
-        id: i,
+        rowId: i,
         email: oneUser.id,
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
-        status: currentStatus,
+        phone: oneUser.phone,
+        ...getStatusDetails(oneUser.attributes),
       });
       i++;
     });

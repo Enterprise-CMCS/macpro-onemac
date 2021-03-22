@@ -1,4 +1,5 @@
 import { USER_TYPES } from "./userTypes";
+import getStatusDetails from "./user-util";
 
 /**
  * State Admin specific functions.
@@ -32,6 +33,7 @@ class StateAdmin {
   transformUserList(userResult, stateList) {
     let userRows = [];
     let errorList = [];
+    let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
 
@@ -61,23 +63,14 @@ class StateAdmin {
         // skip states not on the Admin's list, not an error
         if (!stateList.includes(oneAttribute.stateCode)) return;
 
-        let currentStatus;
-        let mostRecentTime = 0;
-        let i = 1;
-
-        oneAttribute.history.forEach((attributeHistory) => {
-          if (attributeHistory.date > mostRecentTime) {
-            currentStatus = attributeHistory.status;
-            mostRecentTime = attributeHistory.date;
-          }
-        });
         userRows.push({
-          id: i,
+          rowId: i,
           email: oneUser.id,
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
+          phone: oneUser.phone,
           state: oneAttribute.stateCode,
-          status: currentStatus,
+          ...getStatusDetails(oneAttribute.history),
         });
         i++;
       });

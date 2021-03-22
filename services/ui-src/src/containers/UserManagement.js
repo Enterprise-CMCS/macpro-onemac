@@ -7,7 +7,7 @@ import { useLocation } from "react-router-dom";
 import UserDataApi from "../utils/UserDataApi";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
-import PortalTable from "../components/PortalTable";
+import { DataGrid } from '@material-ui/data-grid';
 import PopupMenu from "../components/PopupMenu";
 
 /**
@@ -21,21 +21,16 @@ const UserManagement = () => {
 
   const location = useLocation();
 
-  const menuItems = [
+  const menuItems =  [
     { label: "Approve Access", value: "approved" },
     { label: "Deny Access", value: "deny" },
   ];
 
   const columns = [
     {
-      field: "stateUser",
+      field: "fullname",
       headerName: "State User",
       width: 250,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
     },
     {
       field: "email",
@@ -48,7 +43,17 @@ const UserManagement = () => {
       ),
     },
     {
-      field: "stateCode",
+      field: "phone",
+      headerName: "Phone Number",
+      width: 250,
+      renderCell: (params) => (
+        <>
+          <div className="portalTable">{params.value}</div>
+        </>
+      ),
+    },
+    {
+      field: "state",
       headerName: "State",
       width: 100,
       renderCell: (params) => (
@@ -68,7 +73,27 @@ const UserManagement = () => {
       ),
     },
     {
-      field: "id",
+      field: "requestdate",
+      headerName: "Request Date",
+      width: 100,
+      renderCell: (params) => (
+        <>
+          <div className="portalTable">{params.value}</div>
+        </>
+      ),
+    },
+    {
+      field: "actiondate",
+      headerName: "Date Responded",
+      width: 100,
+      renderCell: (params) => (
+        <>
+          <div className="portalTable">{params.value}</div>
+        </>
+      ),
+    },
+    {
+      field: "rowId",
       headerName: "Personnel Actions",
       width: 150,
       disableColumnSelector: false,
@@ -117,7 +142,7 @@ const UserManagement = () => {
     },
   ];
 */
-  const portalTableStyle = { height: "400px", width: "100%" };
+//  const portalTableStyle = { height: "400px", width: "100%" };
 
   // Load the data from the backend.
   useEffect(() => {
@@ -170,9 +195,10 @@ const UserManagement = () => {
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
           {userList && userList !== "UR040" ? (
-            <PortalTable
+            <DataGrid
+              disableColumnMenu="false" 
+              disableSelectionOnClick="false"
               className="portalTable"
-              style={portalTableStyle}
               width="100%"
               rows={userList}
               columns={columns}
