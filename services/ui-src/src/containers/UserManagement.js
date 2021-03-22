@@ -116,12 +116,15 @@ const UserManagement = () => {
     },
   ];
 
-  /*  const rows = [
+ /*  const rows = [
     {
-      stateUser: "Elliot Alderson",
+      fullname: "Elliot Alderson",
       email: "elliot.alderson@state.state.gov",
-      stateCode: "MD",
+      phone: "555-1212",
+      state: "MD",
       status: "pending",
+      requestdate: 16727234092,
+      actiondate: 1248198329,
       id: 1,
     },
     {
@@ -198,13 +201,13 @@ const UserManagement = () => {
       <PageTitleBar heading="Account Management" text="" />
       {renderAlert(alert)}
       <div className="dashboard-container">
+        <div style={portalTableStyle}>
         <LoadingScreen isLoading={isLoading}>
           {userList && userList !== "UR040" ? (
             <DataGrid
               disableColumnMenu="false" 
               disableSelectionOnClick="false"
               className="portalTable"
-              style={portalTableStyle}
               width="100%"
               rows={userList}
               columns={columns}
@@ -213,6 +216,7 @@ const UserManagement = () => {
             <EmptyList message="You have no submissions yet." />
           )}
         </LoadingScreen>
+        </div>
       </div>
     </div>
   );
