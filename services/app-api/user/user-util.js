@@ -36,7 +36,7 @@ export const getUserFunctions = type => {
       }
 
     return retval;
-}
+};
 
 export const getStatusDetails = statusList =>  {
 
