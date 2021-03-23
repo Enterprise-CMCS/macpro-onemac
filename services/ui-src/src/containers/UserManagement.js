@@ -121,7 +121,6 @@ const UserManagement = () => {
         console.log("user List: ", ul);
         setUserList(ul);
       })
-      .then(setIsLoading(false))
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
         setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
@@ -132,6 +131,18 @@ const UserManagement = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
     if (elmnt) elmnt.scrollIntoView();
   };
+
+  useEffect(() => {
+    let newIsLoading=true;
+    let mounted=true;
+    if (userList) newIsLoading=false;
+
+    if (mounted) setIsLoading(newIsLoading);
+
+    return function cleanup() {
+      mounted = false;
+    };
+  }, [userList] );
 
   useEffect(() => {
     if (alert && alert.heading && alert.heading !== "") {
@@ -153,9 +164,9 @@ const UserManagement = () => {
   };
 
   /**
-   * Render the list of change requests.
-   * @param {Array} changeRequests
-   * @returns the change requests
+   * Render the list of users
+   * @param {Array} userList
+   * @returns the table JSX
    */
   function renderUserList(users) {
     //Now generate the list
@@ -177,10 +188,10 @@ const UserManagement = () => {
           <td>{user.stateCode}</td>
           <td>{user.status}</td>
           <td className="date-submitted-column">
-            {user.requestdate ? format(user.requestdate, "MMM d, yyyy") : "" }
+            {user.requestDate ? format(user.requestDate, "MMM d, yyyy") : "" }
           </td>
           <td className="date-submitted-column">
-          {user.actiondate ? format(user.actiondate, "MMM d, yyyy") : "" }
+          {user.actionDate ? format(user.actionDate, "MMM d, yyyy") : "" }
           </td>
           <td>
             <PopupMenu
@@ -205,7 +216,6 @@ const UserManagement = () => {
       <div className="dashboard-container">
         <div style={portalTableStyle}>
           <LoadingScreen isLoading={isLoading}>
-            <div>
               {userList && userList !== "UR040" ? (
                 <table className="user-table">
                   <thead>
@@ -229,7 +239,6 @@ const UserManagement = () => {
               ) : (
                 <EmptyList message="You have no users yet." />
               )}
-            </div>
           </LoadingScreen>
         </div>
       </div>
