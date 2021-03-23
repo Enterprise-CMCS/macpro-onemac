@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
@@ -72,17 +72,17 @@ const UserManagement = () => {
 
   const rows = [
     {
-      fullname: "Elliot Alderson",
+      fullName: "Elliot Alderson",
       email: "elliot.alderson@state.state.gov",
       phone: "555-1212",
       stateCode: "MD",
       status: "pending",
-      requestdate: 1616462069507,
-      actiondate: 1616462083507,
+      requestDate: 1616462069507,
+      actionDate: 1616462083507,
       id: 1,
     },
     {
-      stateUser: "Angela Moss",
+      fullName: "Angela Moss",
       email: "angela.moss@state.state.gov",
       stateCode: "NY",
       status: "active",
@@ -106,11 +106,7 @@ const UserManagement = () => {
 */
   const portalTableStyle = { width: "100%" };
 
-  // Load the data from the backend.
-  useEffect(() => {
-    let newAlert = ALERTS_MSG.NONE;
-    if (location.state) newAlert = location.state.showAlert;
-    setAlert(newAlert);
+  const loadUsers = useCallback( () => {
 
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
@@ -121,7 +117,18 @@ const UserManagement = () => {
         console.log("Error while fetching user's list.", error);
         setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       });
-  }, [location, userProfile]);
+
+  }, [userProfile] );
+
+  // Load the data from the backend.
+  useEffect(() => {
+    let newAlert = ALERTS_MSG.NONE;
+    if (location.state) newAlert = location.state.showAlert;
+    setAlert(newAlert);
+
+    loadUsers();
+
+  }, [location, loadUsers]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
@@ -214,10 +221,13 @@ const UserManagement = () => {
           <td>
             <PopupMenu
               selectedRow={i}
+              userEmail={user.email}
               menuItems={menuItems}
-              handleSelected={(row, value) =>
-                console.log("Seleccted:(" + row + " : " + value + ")")
-              }
+              handleSelected={(row, value) => {
+                UserDataApi.setUserStatus(userProfile.email, user.email, value);
+                loadUsers();
+                console.log("Seleccted:(" + row + " : " + value + ") userEmail : " + user.email + " doneBy " + userProfile.email);
+              } }
             />
           </td>
         </tr>

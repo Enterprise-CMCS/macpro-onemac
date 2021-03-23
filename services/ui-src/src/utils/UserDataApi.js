@@ -4,18 +4,6 @@ import { API } from "aws-amplify";
  * Singleton class to perform operations with the user tables backend.
  */
 class UserDataApi {
-  /**
-   * Fetch a specific record from the backend.
-   * @return {Array} a list of change requests
-   */
-  async getUserData() {
-    try {
-      return await API.get("userDataAPI", `/getUser`);
-    } catch (error) {
-      console.log(`There was an error fetching data for the user.`, error);
-      throw error;
-    }
-  }
 
   /**
    * Fetch the list of users appropriate for this User
@@ -33,9 +21,10 @@ class UserDataApi {
   }
 
   /**
-   * Check to see if an user exists in the back end
-   * @param {string} id the ID to check
-   * @return {Boolean} true if the user  exists in the back end
+   * Get the User details for a given email address
+   * Throws an exception if the API throws an exception
+   * @param {string} userEmail the ID to check
+   * @return {Object} the returned user item
    */
   async userProfile(userEmail) {
     if (!userEmail) {
@@ -54,6 +43,36 @@ class UserDataApi {
       throw error;
     }
   }
+
+  /**
+   * Tell the back end to update the status of a given user
+   * Throws an exception if the API throws an exception
+   * @param {string} doneBy email of the user making the change
+   * @param {string} userEmail email of the user to be updated
+   * @param {string} newStatus the new status for the user
+   * @return {string} the response code
+   */
+   async setUserStatus(doneBy, userEmail, newStatus) {
+    if (!doneBy || !userEmail || !newStatus) {
+      console.log("setUserStatus called without neccessary params ", doneBy, userEmail, newStatus);
+      throw new Error("setUserStatus API call required parameters missing");
+    }
+
+    console.log("setUserStatus called! ", doneBy, userEmail, newStatus);
+   /* try {
+      let answer = await API.post(
+        "userDataAPI",
+        "/setUserStatus", { body: { "doneBy": doneBy, 
+        "userEmail": userEmail,
+        "status": newStatus }});
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking user ${userEmail}.`, error);
+      throw error;
+    }
+    */
+  }
+
 }
 
 const instance = new UserDataApi();
