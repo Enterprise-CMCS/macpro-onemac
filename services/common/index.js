@@ -26,6 +26,7 @@ export const ROUTES = {
 
 
     const STATEUSER_ALLOWED_ROUTES = [
+        ROUTES.HOME,
         ROUTES.COMPONENT_PAGE,
         ROUTES.DASHBOARD,
         ROUTES.METRICS,
@@ -39,6 +40,7 @@ export const ROUTES = {
     ];
 
     const STATEADMIN_ALLOWED_ROUTES = [
+        ROUTES.HOME,
         ROUTES.COMPONENT_PAGE,
         ROUTES.DASHBOARD,
         ROUTES.METRICS,
@@ -46,6 +48,7 @@ export const ROUTES = {
     ];
 
     const CMSAPPROVER_ALLOWED_ROUTES = [
+        ROUTES.HOME,
         ROUTES.COMPONENT_PAGE,
         ROUTES.DASHBOARD,
         ROUTES.METRICS,
@@ -53,6 +56,7 @@ export const ROUTES = {
     ];
 
     const SYSTEMADMIN_ALLOWED_ROUTES = [
+        ROUTES.HOME,
         ROUTES.COMPONENT_PAGE,
         ROUTES.DASHBOARD,
         ROUTES.METRICS,
@@ -64,7 +68,6 @@ export const ROUTES = {
         "stateadmin": STATEADMIN_ALLOWED_ROUTES,
         "cmsapprover": CMSAPPROVER_ALLOWED_ROUTES,
         "systemadmin": SYSTEMADMIN_ALLOWED_ROUTES
-
     };
 
 

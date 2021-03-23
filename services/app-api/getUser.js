@@ -19,9 +19,8 @@ export const main = handler(async (event, context) => {
     },
   };
 
-  const allowedRoutes = JSON.stringify(ROLE_ACL);
+  const allowedRoutes = ROLE_ACL;
   const result = await dynamoDb.get(params);
-
   if (!result.Item) {
     console.log("The user does not exists in this table.", params);
     // The result is an empty object {} in this case
@@ -31,6 +30,7 @@ export const main = handler(async (event, context) => {
   console.log("Sending back result:", JSON.stringify(result));
   // Return the retrieved item
 
-  result.Item.validRoutes = allowedRoutes;
+  result.Item.validRoutes = allowedRoutes[result.Item.type];
+
   return result.Item;
 });
