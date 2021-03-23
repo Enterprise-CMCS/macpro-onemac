@@ -847,32 +847,27 @@ color: #0872B9;
 
 }
 
-.portalTable {
+.MuiDataGrid-cell {
 
 font-family: Open Sans;
 font-style: normal;
 font-weight: normal;
 font-size: 16px;
 line-height: 24px;
-
 color: #0071BC;
-
 }
-
-.MuiDataGrid-row Mui-odd {
-/* Line 3 */
-
-position: absolute;
-
-border: 1px solid #E1E4E9;
-
+.MuiDataGrid-root {
+  font-family: "Open Sans";
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;  
 }
 
 .MuiDataGrid-colCellTitle {
 
-font-family: Open Sans;
-font-style: normal;
-font-weight: 600;
+font-family: "Open Sans";
+font-weight: 800;
 font-size: 14px;
 line-height: 20px;
 /* identical to box height, or 143% */

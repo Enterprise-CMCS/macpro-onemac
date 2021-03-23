@@ -7,8 +7,8 @@ import { useLocation } from "react-router-dom";
 import UserDataApi from "../utils/UserDataApi";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
-import { DataGrid } from '@material-ui/data-grid';
 import PopupMenu from "../components/PopupMenu";
+import { format } from "date-fns";
 
 /**
  * User Management "Dashboard"
@@ -21,81 +21,39 @@ const UserManagement = () => {
 
   const location = useLocation();
 
-  const menuItems =  [
+  const menuItems = [
     { label: "Approve Access", value: "approved" },
     { label: "Deny Access", value: "deny" },
   ];
-
+  /*
   const columns = [
     {
       field: "fullname",
-      headerName: "State User",
-      width: 250,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "State User"
     },
     {
       field: "email",
-      headerName: "Email Address",
-      width: 350,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "Email Address"
     },
     {
       field: "phone",
-      headerName: "Phone Number",
-      width: 250,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "Phone Number"
     },
     {
       field: "state",
-      headerName: "State",
-      width: 100,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "State"
     },
     {
       field: "status",
-      headerName: "Status",
-      width: 100,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "Status"
     },
     {
       field: "requestdate",
-      headerName: "Request Date",
-      width: 100,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "Request Date"
     },
     {
       field: "actiondate",
-      headerName: "Date Responded",
-      width: 100,
-      renderCell: (params) => (
-        <>
-          <div className="portalTable">{params.value}</div>
-        </>
-      ),
+      headerName: "Date Responded"
     },
     {
       field: "id",
@@ -116,15 +74,15 @@ const UserManagement = () => {
     },
   ];
 
- /*  const rows = [
+  const rows = [
     {
       fullname: "Elliot Alderson",
       email: "elliot.alderson@state.state.gov",
       phone: "555-1212",
-      state: "MD",
+      stateCode: "MD",
       status: "pending",
-      requestdate: 16727234092,
-      actiondate: 1248198329,
+      requestdate: 1616462069507,
+      actiondate: 1616462083507,
       id: 1,
     },
     {
@@ -150,11 +108,10 @@ const UserManagement = () => {
     },
   ];
 */
-  const portalTableStyle = { height: "400px", width: "100%" };
+  const portalTableStyle = { width: "100%" };
 
   // Load the data from the backend.
   useEffect(() => {
-
     let newAlert = ALERTS_MSG.NONE;
     if (location.state) newAlert = location.state.showAlert;
     setAlert(newAlert);
@@ -167,8 +124,8 @@ const UserManagement = () => {
       .then(setIsLoading(false))
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR)});
-
+        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+      });
   }, [location, userProfile]);
 
   const jumpToPageTitle = () => {
@@ -195,6 +152,51 @@ const UserManagement = () => {
     }
   };
 
+  /**
+   * Render the list of change requests.
+   * @param {Array} changeRequests
+   * @returns the change requests
+   */
+  function renderUserList(users) {
+    //Now generate the list
+    return users.map((user, i) => {
+      let popup;
+
+      switch (user.status) {
+        default:
+          popup = "pop!pop!";
+      }
+
+      return (
+        <tr key={i}>
+          <td>
+            {user.firstName} {user.lastName}
+          </td>
+          <td>{user.email}</td>
+          <td>{user.phone}</td>
+          <td>{user.stateCode}</td>
+          <td>{user.status}</td>
+          <td className="date-submitted-column">
+            {user.requestdate ? format(user.requestdate, "MMM d, yyyy") : "" }
+          </td>
+          <td className="date-submitted-column">
+          {user.actiondate ? format(user.actiondate, "MMM d, yyyy") : "" }
+          </td>
+          <td>
+            <PopupMenu
+              selectedRow={i}
+              menuItems={menuItems}
+              handleSelected={(row, value) =>
+                console.log("Seleccted:(" + row + " : " + value + ")")
+              }
+            />
+            {popup}
+          </td>
+        </tr>
+      );
+    });
+  }
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
@@ -202,20 +204,33 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <div style={portalTableStyle}>
-        <LoadingScreen isLoading={isLoading}>
-          {userList && userList !== "UR040" ? (
-            <DataGrid
-              disableColumnMenu="false" 
-              disableSelectionOnClick="false"
-              className="portalTable"
-              width="100%"
-              rows={userList}
-              columns={columns}
-            />
-          ) : (
-            <EmptyList message="You have no submissions yet." />
-          )}
-        </LoadingScreen>
+          <LoadingScreen isLoading={isLoading}>
+            <div>
+              {userList && userList !== "UR040" ? (
+                <table className="user-table">
+                  <thead>
+                    <tr>
+                      <th scope="col">State User</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Phone</th>
+                      <th scope="col">State</th>
+                      <th scope="col">Status</th>
+                      <th className="date-submitted-column" scope="col">
+                        Request Date
+                      </th>
+                      <th className="date-submitted-column" scope="col">
+                        Action Date
+                      </th>
+                      <th scope="col">Personnel Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>{renderUserList(userList)}</tbody>
+                </table>
+              ) : (
+                <EmptyList message="You have no users yet." />
+              )}
+            </div>
+          </LoadingScreen>
         </div>
       </div>
     </div>
