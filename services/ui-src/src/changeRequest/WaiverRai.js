@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
-import { ROUTES } from "cmscommonacl";
+import { ROUTES } from "cmscommonlib";
 
 /**
  * WaiverRai acts as a wrapper around RaiTemplate to render custom RAI form for a Waiver RAI

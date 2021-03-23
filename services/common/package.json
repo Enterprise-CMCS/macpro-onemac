@@ -1,5 +1,5 @@
 {
-  "name": "cmscommonacl",
+  "name": "cmscommonlib",
   "version": "1.0.0",
   "description": "Common Access Control Utils for CMS",
   "main": "index.js",

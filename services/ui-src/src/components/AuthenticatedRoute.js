@@ -2,22 +2,24 @@ import React, {useEffect, useState} from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ROUTES, ROLE_ACL  } from "cmscommonacl";
+import { ROUTES, ROLE_ACL  } from "cmscommonlib";
+import Home from "../containers/Home";
 
 export default function AuthenticatedRoute({ children, ...rest }) {
   const { isAuthenticated, userProfile } = useAppContext();
   const [allowedRoute, setAllowedRoute] = useState({ });
-  const { email } = userProfile;
   const history = useHistory();
 
   async function validateUserRoute() {
+    const { email } = userProfile;
     const userData = await ChangeRequestDataApi.userProfile(email);
 
     console.log("User Data: " + JSON.stringify(userData))
     console.log("User Profile:(" + JSON.stringify(userProfile) + ")")
     console.log("User EMAIL:(" + JSON.stringify(email) + ")")
     console.log("User ROLE: " + JSON.stringify(userData.type))
-    setAllowedRoute(ROLE_ACL[userData.validRoutes].includes(document.location.pathname))
+    console.log("ValidRoute:" + JSON.stringify(ROLE_ACL[userData.type]))
+    setAllowedRoute(ROLE_ACL[userData.type].includes(document.location.pathname))
   }
 
   useEffect(() => {
@@ -37,5 +39,9 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     }
   });
 
-  return <Route {...rest}>{isAuthenticated && allowedRoute ? children : <div></div>}</Route>;
+  if (allowedRoute) {
+    return <Route {...rest}>{isAuthenticated ? children : <div></div>}</Route>;
+  } else {
+    return <Route {...rest}><Home /></Route>
+  }
 }

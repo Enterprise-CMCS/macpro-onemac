@@ -1,7 +1,7 @@
 import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { HashLink } from "react-router-hash-link";
-import { ROUTES } from "cmscommonacl";
+import { ROUTES } from "cmscommonlib";
 import StepCard from "../components/StepCard";
 
 /**

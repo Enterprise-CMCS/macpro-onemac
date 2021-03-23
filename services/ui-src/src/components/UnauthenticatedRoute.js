@@ -1,6 +1,6 @@
 import React from "react";
 import { Route, Redirect } from "react-router-dom";
-import { ROUTES  } from "cmscommonacl";
+import { ROUTES  } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 
 function querystring(name, url = window.location.href) {

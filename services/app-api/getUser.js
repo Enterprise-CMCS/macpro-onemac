@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { ROLE_ACL  } from "cmscommonacl";
+import { ROLE_ACL  } from "cmscommonlib";
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event, context) => {

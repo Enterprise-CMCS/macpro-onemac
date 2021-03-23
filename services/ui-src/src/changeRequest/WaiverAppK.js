@@ -1,7 +1,7 @@
 import React from "react";
 import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
-import { ROUTES } from "cmscommonacl";
+import { ROUTES } from "cmscommonlib";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 
