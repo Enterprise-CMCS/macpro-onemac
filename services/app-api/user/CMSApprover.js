@@ -62,7 +62,7 @@ class CMSApprover {
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
           phone: oneUser.phone,
-          state: oneAttribute.stateCode,
+          stateCode: oneAttribute.stateCode,
           ...getStatusDetails(oneAttribute.history),
         });
         i++;

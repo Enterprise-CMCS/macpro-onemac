@@ -21,10 +21,6 @@ const UserManagement = () => {
 
   const location = useLocation();
 
-  const menuItems = [
-    { label: "Approve Access", value: "approved" },
-    { label: "Deny Access", value: "deny" },
-  ];
   /*
   const columns = [
     {
@@ -171,11 +167,33 @@ const UserManagement = () => {
   function renderUserList(users) {
     //Now generate the list
     return users.map((user, i) => {
-      let popup;
+
+      let menuItems = [];
 
       switch (user.status) {
+        case "pending":
+          menuItems = [
+            { label: "Approve Access", value: "approved" },
+            { label: "Deny Access", value: "deny" },
+          ];
+          break;
+        case "active":
+          menuItems = [
+            { label: "Revoke Access", value: "revoke" },
+          ];
+          break;
+        case "denied":
+          menuItems = [
+            { label: "Grant Access", value: "grant" },
+          ];
+          break;
+        case "revoked":
+          menuItems = [
+            { label: "Grant Access", value: "grant" },
+          ];
+          break;
         default:
-          popup = "pop!pop!";
+          break;
       }
 
       return (
