@@ -219,7 +219,6 @@ const UserManagement = () => {
                 console.log("Seleccted:(" + row + " : " + value + ")")
               }
             />
-            {popup}
           </td>
         </tr>
       );
