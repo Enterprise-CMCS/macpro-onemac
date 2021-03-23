@@ -17,7 +17,7 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
 import Metrics from "./containers/Metrics";
-import { ROUTES } from "cmscommonacl";
+import { ROUTES } from "cmscommonlib";
 
 export default function Routes() {
     return (
