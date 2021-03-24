@@ -41,9 +41,9 @@ export default function getChangeRequestFunctions(type) {
 export function getLinksHtml(uploads) {
     let list = Array.from(uploads).map(upload => {
         let {title, url, filename} = upload;
-        return `<li>${title}: <a href="${url}">${filename}</a></li>`
+        return `<li>${title}: <a href="${url}">${filename}</a></li>`;
     });
-    return `<ul>${list}</ul>`
+    return `<ul>${list}</ul>`;
 }
 
 /**
