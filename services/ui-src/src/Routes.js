@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useState} from "react";
 import {Route, Switch} from "react-router-dom";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
@@ -18,9 +18,12 @@ import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
 import Metrics from "./containers/Metrics";
 import {ROUTES} from "cmscommonlib";
+import {useAppContext} from "./libs/contextLib";
 
 export default function Routes() {
+    const { userProfile } = useAppContext();
 
+    console.log(JSON.stringify(userProfile.userData.type))
     return (
         <Switch>
             <Route exact path={ROUTES.HOME}>
@@ -42,25 +45,25 @@ export default function Routes() {
                 <UserPage/>
             </AuthenticatedRoute>
             <AuthenticatedRoute  path={`${ROUTES.SPA}/:id?`}>
-               <Spa/>
+                { userProfile.userData.type === "stateuser" ? <Spa/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute  path={`${ROUTES.WAIVER}/:id?`}>
-                <Waiver/>
+                { userProfile.userData.type === "stateuser" ? <Waiver/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.SPA_RAI}/:id?`}>
-                <SpaRai/>
+                { userProfile.userData.type === "stateuser" ? <SpaRai/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER_RAI}/:id?`}>
-                <WaiverRai/>
+                { userProfile.userData.type === "stateuser" ? <WaiverRai/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
-                <WaiverExtension/>
+                { userProfile.userData.type === "stateuser" ? <WaiverExtension/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?`}>
-                <WaiverAppK/>
+                { userProfile.userData.type === "stateuser" ? <WaiverAppK/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.METRICS}`}>
-                <Metrics/>
+                { userProfile.userData.type === "stateuser" ? <Metrics/> : <NotFound/> }
             </AuthenticatedRoute>
             <Route>
                 <NotFound/>

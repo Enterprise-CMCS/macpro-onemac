@@ -5,6 +5,7 @@ import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 import {ROLE_ACL, ROUTES} from "cmscommonlib";
 import {useAppContext} from "../libs/contextLib";
+import NotFound from "../containers/NotFound";
 /**
  * WaiverExtension acts as a wrapper around SubmissionForm to render the Waiver Extension Form
  */
@@ -39,15 +40,20 @@ const WaiverExtension = () => {
 
   };
 
-  if (id) {
+  if (allowedRoutes[userProfile.userData.type].includes(currentPath)) {
+
+    if (id) {
     return <SubmissionView formInfo={formInfo} id={id} />;
   } else {
-    return (
-      <SubmissionForm
-        formInfo={formInfo}
-        changeRequestType={CHANGE_REQUEST_TYPES.WAIVER_EXTENSION}
-      />
-    );
+      return (
+          <SubmissionForm
+              formInfo={formInfo}
+              changeRequestType={CHANGE_REQUEST_TYPES.WAIVER_EXTENSION}
+          />
+      );
+    }
+  } else {
+    return <NotFound/>
   }
 }
 
