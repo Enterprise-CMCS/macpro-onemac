@@ -11,16 +11,11 @@ const FAQ = () => {
       <div className="form-card">
         <h2>Help Desk Contact Information</h2>
         <p>
-<<<<<<< HEAD
           For assistance, please email the MACPro Help Desk at{" "}
           <a href={`mailto:${helpDeskContact.email}`}>
             {helpDeskContact.email}
           </a>{" "}
           or call {helpDeskContact.phone}.
-=======
-          For assistance, please email the MACPro Help Desk at
-          MACPro_HelpDesk@cms.hhs.gov or call (833) 228-2540.
->>>>>>> skipci-nw-coverage
         </p>
         <h2>Frequently Asked Questions</h2>
         <h4>What browsers can I use to access the system?</h4>
