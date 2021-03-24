@@ -696,8 +696,46 @@ input[type="file"] {
   line-height: 22px !important;
 }
 
+.footer-top-container {
+  @extend .brand-bar;
+  background: #F0FAFE;
+  padding-left: 8rem;
+  padding-right: 8rem;
+}
+.footer-bottom-container {
+  background: #0071BC; 
+  color: #FFFFFF; 
+  margin: 0;
+  width: 100%;
+  max-width: none;
+}
+.footer-medicaid-container {
+  padding-top: 0;
+  padding-bottom: 6px;
+  padding-left: 60px;
+  margin: auto;
+}
+.footer-fed-gov-container {
+  @extend .ds-l-col--2;
+  min-width: 80px;
+}
+.footer-bottom-container {
+  @extend .ds-l-row ;
+  @extend .ds-u-padding--1;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 2.1;
+  letter-spacing: 0;
+  text-align: left;  
+}
+.footer-email-container{
+  padding-left: 11.5rem;
+  @extend .ds-l-col--8;
+}
 .multi-select-title {
- font-family: Open Sans;
+font-family: Open Sans;
 font-size: 21px;
 font-style: italic;
 font-weight: 400;
