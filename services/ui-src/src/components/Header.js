@@ -74,7 +74,7 @@ function Header(props) {
     return (
       <div className="usa-bar">
         <img src={flagIcon} alt="united states flag" />
-        An offical website of the United States government
+        An official website of the United States government
       </div>
     );
   }
