@@ -79,6 +79,7 @@ function Header(props) {
       </div>
     );
   }
+
   /**
    * Renders a navigation bar
    */
@@ -86,7 +87,7 @@ function Header(props) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
-          <img id ="oneMacLogo" src={oneMacLogo} />
+          <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
           <Link to={ROUTES.HOME}>About</Link>
           <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
             Dashboard
