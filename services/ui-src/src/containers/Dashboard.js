@@ -10,6 +10,7 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
+import EmptyList from "../components/EmptyList"
 
 /**
  * Component containing dashboard
@@ -72,8 +73,8 @@ const Dashboard = () => {
 
   /**
    * Sort history of userData in descending order.
-   * @param {Object} a object of history instance 
-   * @param {Object} b object of history instance 
+   * @param {Object} a object of history instance
+   * @param {Object} b object of history instance
    * @return {Number} the order of which instance should come 1st based on greater value of effectiveDate
    */
 
@@ -84,17 +85,17 @@ const Dashboard = () => {
   const stateStatusSet = new Set()
   /**
    * get the status of the sorted history array's 1st element and put them in a set.
-   * @param {Object} attribute object of history instance 
+   * @param {Object} attribute object of history instance
    */
 
   const getStateStatus = (attribute) => {
       attribute.history.sort(sortDescendingOrder);
-      stateStatusSet.add(attribute.history[0].status); 
+      stateStatusSet.add(attribute.history[0].status);
   }
-  
+
   /**
    * Determine the type of userData and sort corresponding arrays per state if needed.
-   * @param {Object} userData object of history instance 
+   * @param {Object} userData object of history instance
    * @return {Boolean} a boolean on status pending
    */
 
