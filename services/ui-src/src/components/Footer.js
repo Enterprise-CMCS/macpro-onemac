@@ -31,7 +31,7 @@ function Footer() {
             <div>
                 <div className="footer-bottom-container">
                     <div className="footer-email-container">
-                        Email sample@cms.gov for help or feedback.
+                        Email <a href="sample@cms.gov" style={{color: "#ffffff"}}>sample@cms.gov</a> for help or feedback.
                         </div>
                     <div className="ds-l-col--3">
                         7500 Security Boulevard Baltimore, MD 21244
