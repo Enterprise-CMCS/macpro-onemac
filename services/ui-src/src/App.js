@@ -5,6 +5,7 @@ import { devUsers } from "./libs/devUsers";
 import ChangeRequestDataApi from "./utils/ChangeRequestDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -83,6 +84,7 @@ function App() {
           <Header />
           <Routes />
         </AppContext.Provider>
+        <Footer />
       </div>
     )
   );
