@@ -48,8 +48,9 @@ function App() {
       // Get user data from the user table
       // and add to the user profile.
       // Note that userData comes back as an empty object if there is none.
+      console.log("ZAC")
       const userData = await ChangeRequestDataApi.userProfile(tempUserProfile.email);
-      if ( userData.validRoutes === undefined ) {
+      if ( userData.type === undefined ) {
         userAuthenticationStatus = false;
         throw new Error("Error Missing Required  User Data Fields")
       }

@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {Route, Switch} from "react-router-dom";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ"
@@ -22,8 +22,9 @@ import {useAppContext} from "./libs/contextLib";
 
 export default function Routes() {
     const { userProfile } = useAppContext();
+    let currentUserRole = "N/A"
+    if (userProfile !== undefined) currentUserRole = userProfile.userData.type;
 
-    console.log(JSON.stringify(userProfile.userData.type))
     return (
         <Switch>
             <Route exact path={ROUTES.HOME}>
@@ -45,25 +46,25 @@ export default function Routes() {
                 <UserPage/>
             </AuthenticatedRoute>
             <AuthenticatedRoute  path={`${ROUTES.SPA}/:id?`}>
-                { userProfile.userData.type === "stateuser" ? <Spa/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <Spa/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute  path={`${ROUTES.WAIVER}/:id?`}>
-                { userProfile.userData.type === "stateuser" ? <Waiver/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <Waiver/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.SPA_RAI}/:id?`}>
-                { userProfile.userData.type === "stateuser" ? <SpaRai/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <SpaRai/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER_RAI}/:id?`}>
-                { userProfile.userData.type === "stateuser" ? <WaiverRai/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <WaiverRai/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
-                { userProfile.userData.type === "stateuser" ? <WaiverExtension/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <WaiverExtension/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?`}>
-                { userProfile.userData.type === "stateuser" ? <WaiverAppK/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <WaiverAppK/> : <NotFound/> }
             </AuthenticatedRoute>
             <AuthenticatedRoute exact path={`${ROUTES.METRICS}`}>
-                { userProfile.userData.type === "stateuser" ? <Metrics/> : <NotFound/> }
+                { currentUserRole === "stateuser" ? <Metrics/> : <NotFound/> }
             </AuthenticatedRoute>
             <Route>
                 <NotFound/>
