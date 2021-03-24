@@ -19,7 +19,13 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     if ( currentPath === "/") {
       setAllowedRoute(true)
     } else {
-      setAllowedRoute(userData.validRoutes.includes(currentPath))
+      if ( userData.validRoutes === undefined ) {
+        window.location.reload()
+      }
+
+      const isValidRoute = userData.validRoutes.includes(currentPath)
+      setAllowedRoute(isValidRoute)
+      if ( ! isValidRoute )  window.location.reload()
     }
   }
 
@@ -29,24 +35,14 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     // Drop to home if user not logged in
     if (!isAuthenticated && mounted) {
       history.push(ROUTES.HOME);
-    } else {
-      validateUserRoute();
     }
-      // Get user data from the user table
-      // and add to the user profile.
-      // Note that userData comes back as an empty object if there is none.
-
 
     return function cleanup() {
       mounted = false;
-      validateUserRoute()
+      validateUserRoute(mounted)
     }
   });
 
-    if (allowedRoute) {
-      return <Route {...rest}>{isAuthenticated && allowedRoute ? children : <div></div>}</Route>;
-    } else {
-      return  <Route {...rest}><NotFound/></Route>
-    }
+  return <Route {...rest}>{isAuthenticated && allowedRoute ? children : <div></div>}</Route>;
 
 }
