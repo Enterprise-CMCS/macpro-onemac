@@ -496,15 +496,47 @@ input[type="file"] {
   @extend .ds-c-table--borderless;
   width: 100%;
   color: $color-gray;
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
 
   th {
     border-color: $color-gray-lightest;
     background-color: $color-white;
     color: $color-black;
+    font-weight: 600;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    text-align: left;  
   }
 
   td {
     border-color: $color-gray-lightest;
+    color: $color-primary;
+    font-weight: 400;
+    padding-left: 0px;
+    padding-top: 20px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    text-align: left;  
+  }
+  .user-state {
+    color: $color-black;
+  }
+  .user-status {
+    font-weight: 700;
+    text-transform: capitalize;
+    color: $color-black;
+  }
+  th:last-child, td:last-child {
+    text-align: right;
+  }
+
+  button {
+    text-align: right !important;
   }
 
   a {
@@ -549,7 +581,6 @@ input[type="file"] {
         color: rgba($color-base-inverse, 0.6);
       }
     }
-
   }
 
   .nav-right {
@@ -567,6 +598,7 @@ input[type="file"] {
       font-weight: bold;
       border: none;
       outline: none;
+      padding-right: 0px;
       background-color: $color-primary;
       &:hover {
         color: rgba($color-base-inverse, 0.8);

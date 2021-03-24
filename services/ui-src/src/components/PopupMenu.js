@@ -33,7 +33,7 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
     return (
         <>
             <Button aria-haspopup="true" onClick={handleClick}>
-                {tablePopupIcon()}
+                &nbsp;{tablePopupIcon()}
             </Button>
             <Menu
                 id="simple-menu"

@@ -1,5 +1,5 @@
 import { USER_TYPES } from "./userTypes";
-import { getStatusDetails } from "./user-util";
+import { getCurrentStatus } from "./user-util";
 
 /**
  * State Admin specific functions.
@@ -68,9 +68,8 @@ class StateAdmin {
           email: oneUser.id,
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
-          phone: oneUser.phone,
           stateCode: oneAttribute.stateCode,
-          ...getStatusDetails(oneAttribute.history),
+          status: getCurrentStatus(oneAttribute.history),
         });
         i++;
       });

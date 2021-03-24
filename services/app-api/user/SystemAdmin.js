@@ -1,5 +1,5 @@
 import { USER_TYPES } from "./userTypes";
-import { getStatusDetails } from "./user-util";
+import { getCurrentStatus } from "./user-util";
 
 /**
  * System Admin specific functions.
@@ -48,8 +48,7 @@ class SystemAdmin {
         email: oneUser.id,
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
-        phone: oneUser.phone,
-        ...getStatusDetails(oneUser.attributes),
+        status: getCurrentStatus(oneUser.attributes),
       });
       i++;
     });

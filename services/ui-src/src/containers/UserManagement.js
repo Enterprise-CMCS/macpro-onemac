@@ -8,7 +8,6 @@ import UserDataApi from "../utils/UserDataApi";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
-import { format } from "date-fns";
 
 /**
  * User Management "Dashboard"
@@ -32,24 +31,12 @@ const UserManagement = () => {
       headerName: "Email Address"
     },
     {
-      field: "phone",
-      headerName: "Phone Number"
-    },
-    {
       field: "state",
       headerName: "State"
     },
     {
       field: "status",
       headerName: "Status"
-    },
-    {
-      field: "requestdate",
-      headerName: "Request Date"
-    },
-    {
-      field: "actiondate",
-      headerName: "Date Responded"
     },
     {
       field: "id",
@@ -69,41 +56,42 @@ const UserManagement = () => {
       ),
     },
   ];
-
+*/
   const rows = [
     {
-      fullName: "Elliot Alderson",
+      firstName: "Elliot",
+      lastName: "Alderson",
       email: "elliot.alderson@state.state.gov",
-      phone: "555-1212",
       stateCode: "MD",
       status: "pending",
-      requestDate: 1616462069507,
-      actionDate: 1616462083507,
       id: 1,
     },
     {
-      fullName: "Angela Moss",
+      firstName: "Angela",
+      lastName: "Moss",
       email: "angela.moss@state.state.gov",
       stateCode: "NY",
-      status: "active",
+      status: "granted",
       id: 2,
     },
     {
-      stateUser: "Tyrell Wellick",
+      firstName: "Tyrell",
+      lastName: "Wellick",
       email: "tyrell.wellick@state.state.gov",
       stateCode: "MD",
-      status: "revoked",
+      status: "denied",
       id: 3,
     },
     {
-      stateUser: "Philip Price",
+      firstName: "Philip",
+      lastName: "Price",
       email: "philip.price@state.state.gov",
       stateCode: "NM",
-      status: "active",
+      status: "revoked",
       id: 4,
     },
   ];
-*/
+
   const portalTableStyle = { width: "100%" };
 
   const loadUsers = useCallback( () => {
@@ -209,15 +197,8 @@ const UserManagement = () => {
             {user.firstName} {user.lastName}
           </td>
           <td>{user.email}</td>
-          <td>{user.phone}</td>
-          <td>{user.stateCode}</td>
-          <td>{user.status}</td>
-          <td className="date-submitted-column">
-            {user.requestDate ? format(user.requestDate, "MMM d, yyyy") : "" }
-          </td>
-          <td className="date-submitted-column">
-          {user.actionDate ? format(user.actionDate, "MMM d, yyyy") : "" }
-          </td>
+          <td className="user-state">{user.stateCode}</td>
+          <td className="user-status">{user.status}</td>
           <td>
             <PopupMenu
               selectedRow={i}
@@ -243,25 +224,18 @@ const UserManagement = () => {
       <div className="dashboard-container">
         <div style={portalTableStyle}>
           <LoadingScreen isLoading={isLoading}>
-              {userList && userList !== "UR040" ? (
+              {rows ? ( // {userList && userList !== "UR040" ? (
                 <table className="user-table">
                   <thead>
                     <tr>
-                      <th scope="col">State User</th>
+                      <th scope="col">Name</th>
                       <th scope="col">Email</th>
-                      <th scope="col">Phone</th>
                       <th scope="col">State</th>
                       <th scope="col">Status</th>
-                      <th className="date-submitted-column" scope="col">
-                        Request Date
-                      </th>
-                      <th className="date-submitted-column" scope="col">
-                        Action Date
-                      </th>
                       <th scope="col">Personnel Actions</th>
                     </tr>
                   </thead>
-                  <tbody>{renderUserList(userList)}</tbody>
+                  <tbody>{renderUserList(rows)}</tbody>
                 </table>
               ) : (
                 <EmptyList message="You have no users yet." />
