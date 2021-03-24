@@ -10,7 +10,7 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
-import EmptyList from "../components/EmptyList"
+import { EmptyList } from "../components/EmptyList"
 
 /**
  * Component containing dashboard
