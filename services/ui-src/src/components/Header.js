@@ -3,7 +3,6 @@ import { Link, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "../Routes";
-import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
