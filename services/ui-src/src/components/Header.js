@@ -9,6 +9,7 @@ import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
+import oneMacLogo from "../images/OneMAC_logoLight1.svg"
 
 /**
  * Get the sign in URL used with OKTA.
@@ -103,6 +104,7 @@ function Header(props) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
+          <img id ="oneMacLogo" src={oneMacLogo} />
           <Link to={ROUTES.HOME}>About</Link>
           <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
             Dashboard
@@ -208,7 +210,7 @@ function Header(props) {
   return (
     <div>
       {renderUSABar()}
-      {renderBrandBar()}
+      {/* {renderBrandBar()} */}
       {isIE && (
         <Alert variation="error" heading="Internet Explorer Browser Issues">
           Please consider upgrading to a recommended browser. Internet Explorer

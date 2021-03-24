@@ -532,6 +532,10 @@ input[type="file"] {
   background-color: $color-primary;
   min-height: 70px;
 
+  #oneMacLogo{
+    padding-right: 50px
+  }
+
   .nav-left {
     @extend .ds-u-display--flex;
     @extend .ds-u-flex-wrap--wrap;
@@ -540,6 +544,7 @@ input[type="file"] {
       font-weight: bold;
       border: none;
       padding-right: 50px;
+      height: fit-content;
 
      &:hover {
         color: rgba($color-base-inverse, 0.8);
