@@ -120,7 +120,7 @@ const validateUser = (data) => {
   const result = userSchema.validate(data);
 
   if (result.error) {
-    console.log("Validation error:", result.error);
+    console.log("Validation error encountered:", result);
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
   return "";
