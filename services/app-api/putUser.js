@@ -20,7 +20,8 @@ export const main = handler(async (event) => {
   try {
     input = JSON.parse(event.body);
   } catch (error) {
-    input = event.body;
+    console.error("Could not parse input JSON:", error);
+    return RESPONSE_CODE.DATA_PARSING_ERROR;
   }
 
   // do a pre-check for things that should stop us immediately
