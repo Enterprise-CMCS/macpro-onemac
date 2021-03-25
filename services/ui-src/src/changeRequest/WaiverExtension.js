@@ -3,9 +3,8 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
-import {ROLE_ACL, ROUTES} from "cmscommonlib";
-import {useAppContext} from "../libs/contextLib";
-import NotFound from "../containers/NotFound";
+import { ROUTES } from "cmscommonlib";
+
 /**
  * WaiverExtension acts as a wrapper around SubmissionForm to render the Waiver Extension Form
  */
@@ -13,9 +12,6 @@ const WaiverExtension = () => {
 
   // Optional ID parameter from the URL
   const { id } = useParams();
-  const allowedRoutes = ROLE_ACL;
-  const {userProfile} = useAppContext();
-  const currentPath = ROUTES.WAIVER_EXTENSION
 
   const formInfo = {
     pageTitle : "Request Waiver Temporary Extension",
@@ -40,20 +36,15 @@ const WaiverExtension = () => {
 
   };
 
-  if (allowedRoutes[userProfile.userData.type].includes(currentPath)) {
-
-    if (id) {
+  if (id) {
     return <SubmissionView formInfo={formInfo} id={id} />;
   } else {
-      return (
-          <SubmissionForm
-              formInfo={formInfo}
-              changeRequestType={CHANGE_REQUEST_TYPES.WAIVER_EXTENSION}
-          />
-      );
-    }
-  } else {
-    return <NotFound/>
+    return (
+      <SubmissionForm
+        formInfo={formInfo}
+        changeRequestType={CHANGE_REQUEST_TYPES.WAIVER_EXTENSION}
+      />
+    );
   }
 }
 
