@@ -1,5 +1,5 @@
 // Updated by: Guli 
-// Date      : 03/04/2021
+// Date      : 03/23/2021
 
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 let spaID;
@@ -48,11 +48,12 @@ module.exports = {
         browser.setValue('textarea#textfield_1', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']");
+        browser.click("[value='Submit']").pause(3000);
 
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
         browser.useCss();
+        return spaID;
     },
 
     // -----------------------------------------New Waiver----------------------------------------------------------------------------
@@ -69,8 +70,8 @@ module.exports = {
         browser.keys([browser.Keys.TAB]);
 
         // Verify that duplicate error message
-        let expected = "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.";
-        browser.verify.containsText('div#transmittalNumberStatusMsg', expected).pause(50000);
+        let expected = "this Waiver Number already exists";
+        browser.verify.containsText('div#transmittalNumberStatusMsg', expected).pause(3000);
         browser.back();  // go back to previous page
     },
 
@@ -88,24 +89,8 @@ module.exports = {
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
         // Verify that duplicate error message
-        let expected = "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.";
+        let expected = "this Waiver Number already exists";
         browser.verify.containsText('div#transmittalNumberStatusMsg', expected);
-        browser.back();  // go back to previous page
-    },
-
-    'Validate Waiver Form Logic for New Waiver and Apendex K Waiver': function (browser) {
-        browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(c)']");   // ----- dropdown value
-        browser.click('input#transmittalNumber');
-        browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
-        browser.keys([browser.Keys.TAB]);
-        //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
-
-        // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberStatusMsg').to.be.not.present;
         browser.back();  // go back to previous page
     },
 
@@ -118,12 +103,12 @@ module.exports = {
         browser.click('select#waiverAuthority'); // Click Waiver Authority
         browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
         browser.click('input#transmittalNumber');
-        browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+        browser.setValue('input#transmittalNumber', "MD.3772 "); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
-        //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
         // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberStatusMsg').to.be.not.present;
+        let expected = "this Waiver Number already exists";
+        browser.expect.element('div#transmittalNumberStatusMsg').text.to.not.equal(expected);
         browser.back();  // go back to previous page
     },
 
@@ -139,26 +124,10 @@ module.exports = {
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
         // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberStatusMsg').to.be.not.present;
+        let expected = "this Waiver Number already exists";
+        browser.expect.element('div#transmittalNumberStatusMsg').text.to.not.equal(expected);
         browser.back();  // go back to previous page
     },
-
-    'Validate Waiver Form Logic for Waiver Amendment and Apendex K Waiver': function (browser) {
-        browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='amendment']");  // Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(c)']");   // ----- dropdown value
-        browser.click('input#transmittalNumber');
-        browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
-        browser.keys([browser.Keys.TAB]);
-        //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
-
-        // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberStatusMsg').to.be.not.present;
-        browser.back();  // go back to previous page
-    },
-
 
     // -----------------------------------------Request for Waiver Renewal----------------------------------------------------
     'Validate Waiver Form Logic for Waiver Renewal and 1915(b)': function (browser) {
@@ -173,7 +142,8 @@ module.exports = {
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
         // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberErrorMsg').to.be.not.present;
+        let expected = "this Waiver Number already exists";
+        browser.expect.element('div#transmittalNumberStatusMsg').text.to.not.equal(expected);
         browser.back();  // go back to previous page
     },
 
@@ -189,22 +159,8 @@ module.exports = {
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
         // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberErrorMsg').to.be.not.present;
-        browser.back();  // go back to previous page
-    },
-
-    'Validate Waiver Form Logic for Waiver Renewal and Apendex K Waiver': function (browser) {
-        browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.click('select#actionType');   // click action type
-        browser.click("[value='renewal']");  // Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(c)']");   // ----- dropdown value
-        browser.click('input#transmittalNumber');
-        browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
-        browser.keys([browser.Keys.TAB]);
-
-        // Verify that duplicate error message
-        browser.expect.element('div#transmittalNumberErrorMsg').to.be.not.present;
+        let expected = "this Waiver Number already exists";
+        browser.expect.element('div#transmittalNumberStatusMsg').text.to.not.equal(expected);
         browser.back();  // go back to previous page
     }
 }

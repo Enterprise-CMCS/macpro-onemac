@@ -75,7 +75,7 @@ module.exports = {
         // logout from SPA and Wavier Dashboard page
         browser.click('button#myAccountLink');
         browser.click('a#logoutLink');
-        browser.waitForElementPresent('h1');
+        browser.waitForElementPresent('h1').pause(1000);
 
         // Verify the successful logout 
         browser.verify.containsText('h1', logout_banner_text);

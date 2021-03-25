@@ -29,12 +29,8 @@ module.exports = {
 
     'Submission List Verification > Submit new SPA': function (browser) {
         // Submit a SPA Report 
-        const newSPA = require('../cases/OY2-2218_Test_SPA_Submit_New_SPA');
-        newSPA["Click on 'Start a new SPA'"](browser);
-        generatedSPAID = newSPA["Enter SPA ID"](browser);
-        newSPA["Upload Documents"](browser);
-        newSPA["Enter Comments"](browser);
-        newSPA["Submit SPA"](browser);
+        const newSPA = require('../suites/OY2-3636_Suite_Smoke.js');
+        generatedSPAID = newSPA['Verify error message > Submit new SPA'](browser);
 
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -47,12 +43,15 @@ module.exports = {
 
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
+        browser.pause(1000);
         browser.useXpath().assert.containsText(submittedType, "SPA");
 
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss();
     },
 
+    /*
 
     'Submission List Verification > Respond to SPA RAI': function (browser) {
         const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
@@ -173,4 +172,5 @@ module.exports = {
         browser.useXpath().expect.element(submittedDate).to.be.visible;
         browser.useCss();
     }
+    */
 }

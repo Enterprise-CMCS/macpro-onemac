@@ -3,7 +3,7 @@ const locator = '(//*[@disabled])';
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
-    "@tags": ["smoke"],
+    "@tags": ["smoke","smoke2"],
 
     before : function(browser) {
         console.log('Setting up...');
