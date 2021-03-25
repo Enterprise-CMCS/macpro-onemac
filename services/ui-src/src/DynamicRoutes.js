@@ -18,7 +18,7 @@ export default function DynamicRoutes() {
     if ( userProfile ) {
         if (userProfile.userData) {
             const userType = userProfile.userData.type
-            console.log("userType: " + userType)
+
             if (userType === ROLES.STATE_USER) {
                 return (<>
                     <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
