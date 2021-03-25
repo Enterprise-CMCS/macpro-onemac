@@ -11,6 +11,23 @@ import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 
 /**
+ * Clear on Logout
+ */
+function emptyCache(){
+  if('caches' in window){
+    caches.keys().then((names) => {
+      // Delete all the cache files
+      names.forEach(name => {
+        caches.delete(name);
+      })
+    });
+
+    // Makes sure the page reloads. Changes are only visible after you refresh.
+    window.location.reload(true);
+  }
+}
+
+/**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
  */
@@ -26,9 +43,11 @@ function getSignInUrl() {
  * Logout the user.
  */
 function logout() {
+  emptyCache();
   const authConfig = Auth.configure();
   Auth.signOut();
   window.location.href = authConfig.oauth.redirectSignOut;
+  document.location.reload()
 }
 
 /**

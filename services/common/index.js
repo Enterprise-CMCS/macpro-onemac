@@ -61,6 +61,12 @@ const SYSTEMADMIN_ALLOWED_ROUTES = [
     ROUTES.METRICS,
 ].concat(ALL_USERS_ROUTES);
 
+export const ROLES = {
+    STATE_USER: "stateuser",
+    STATE_ADMIN: "stateadmin",
+    CMS_APPROVER: "cmsapprover",
+    SYSTEM_ADMIN: "systemadmin"
+}
 
 export const ROLE_ACL = {
     "stateuser": STATEUSER_ALLOWED_ROUTES,
