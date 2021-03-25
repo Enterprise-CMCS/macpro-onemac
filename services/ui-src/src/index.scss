@@ -142,7 +142,7 @@ ul {
   }
 }
 
-.alert-bar {
+.alert-bar:not(:empty) {
   padding-top: 2rem;
   padding-left: 14rem;
   padding-right: 14rem;
@@ -429,10 +429,17 @@ input[type="file"] {
 }
 .signup-container {
   @extend .app-bar;
+  @extend .ds-u-padding-y--3;
   background-color: $color-white;
-  @extend .ds-u-padding-top--3;
-  @extend .ds-u-padding-bottom--3;
-  display: block;
+  justify-content: center;
+
+  .signup-center {
+    max-width: 750px;
+
+    .signup-collapse-padding {
+      padding: 0;
+    }
+  }
 
   &.state-signup {
     min-height: 550px;
