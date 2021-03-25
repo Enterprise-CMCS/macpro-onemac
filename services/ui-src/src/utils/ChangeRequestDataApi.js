@@ -117,7 +117,7 @@ class ChangeRequestDataApi {
   async updateUser(userRecord) {
     try {
       return await API.put("changeRequestAPI", "/putUser", {
-        body: JSON.stringify(userRecord),
+        body: userRecord,
       });
     } catch (error) {
       console.error("Could not save user profile data:", error);
