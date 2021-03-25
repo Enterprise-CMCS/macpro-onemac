@@ -3,12 +3,12 @@ import { Link, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "../Routes";
-import medicaidLogo from "../images/medicaidLogo.png";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
+import oneMacLogo from "../images/OneMAC_logoLight1.svg"
 
 /**
  * Get the sign in URL used with OKTA.
@@ -74,24 +74,7 @@ function Header(props) {
     return (
       <div className="usa-bar">
         <img src={flagIcon} alt="united states flag" />
-        An offical website of the United States government
-      </div>
-    );
-  }
-
-  /**
-   * Renders a branding bar
-   */
-  function renderBrandBar() {
-    return (
-      <div className="brand-bar">
-        <a
-          href="https://www.medicaid.gov/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy" />
-        </a>
+        An official website of the United States government
       </div>
     );
   }
@@ -103,6 +86,7 @@ function Header(props) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
+          <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
           <Link to={ROUTES.HOME}>About</Link>
           <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
             Dashboard
@@ -208,7 +192,6 @@ function Header(props) {
   return (
     <div>
       {renderUSABar()}
-      {renderBrandBar()}
       {isIE && (
         <Alert variation="error" heading="Internet Explorer Browser Issues">
           Please consider upgrading to a recommended browser. Internet Explorer
