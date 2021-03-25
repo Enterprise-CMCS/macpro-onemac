@@ -8,12 +8,15 @@ import UserDataApi from "../utils/UserDataApi";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
+import pendingCircle from "../images/PendingCircle.svg";
+
+const PENDING_CIRCLE_IMAGE = <img alt="" src={pendingCircle} />;
 
 /**
  * User Management "Dashboard"
  */
 const UserManagement = () => {
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState();
   const [isLoading, setIsLoading] = useState(true);
   const [alert, setAlert] = useState();
   const { userProfile } = useAppContext();
@@ -172,7 +175,7 @@ const UserManagement = () => {
             { label: "Deny Access", value: "deny" },
           ];
           break;
-        case "active":
+        case "granted":
           menuItems = [
             { label: "Revoke Access", value: "revoke" },
           ];
@@ -198,7 +201,7 @@ const UserManagement = () => {
           </td>
           <td>{user.email}</td>
           <td className="user-state">{user.stateCode}</td>
-          <td className="user-status">{user.status}</td>
+          <td className="user-status">{user.status==="pending" && PENDING_CIRCLE_IMAGE} {user.status}</td>
           <td>
             <PopupMenu
               selectedRow={i}
@@ -219,7 +222,7 @@ const UserManagement = () => {
   // Render the dashboard
   return (
     <div className="dashboard-white">
-      <PageTitleBar heading="Account Management" text="" />
+      <PageTitleBar heading="User Management" text="" />
       {renderAlert(alert)}
       <div className="dashboard-container">
         <div style={portalTableStyle}>
@@ -228,11 +231,11 @@ const UserManagement = () => {
                 <table className="user-table">
                   <thead>
                     <tr>
-                      <th scope="col">Name</th>
-                      <th scope="col">Email</th>
-                      <th scope="col">State</th>
-                      <th scope="col">Status</th>
-                      <th scope="col">Personnel Actions</th>
+                      <th scope="col" width="20%" id="nameColHeader">Name</th>
+                      <th scope="col" width="30%" id="emailColHeader">Email</th>
+                      <th scope="col" width="20%" id="stateColHeader">State</th>
+                      <th scope="col" width="15%" id="statusColHeader">Status</th>
+                      <th scope="col" width="15%" id="personnelActionsColHeader">Personnel Actions</th>
                     </tr>
                   </thead>
                   <tbody>{renderUserList(rows)}</tbody>
