@@ -1,4 +1,13 @@
+/**
+ * Common Shares Libs for the CMS Submissions Application.
+ * This will contain static items needed by both the frontend and backend.
+ */
 
+
+/**
+ * Routing Control Shared List
+ *
+ */
 export const ROUTES = {
     DASHBOARD: '/dashboard',
     FAQ: '/FAQ',
@@ -18,57 +27,47 @@ export const ROUTES = {
     WAIVER_APP_K: '/waiverappk'
 }
 
-/**
- * Fetch a valid routes for a role from the backend if route is undefined.
- * Return true or false if role has access to a route when route provided.
- * @return {Array} a list routes or a boolean true/false;
- */
+const ALL_USERS_ROUTES = [
+    ROUTES.HOME,
+    ROUTES.COMPONENT_PAGE,
+    ROUTES.PROFILE,
+    ROUTES.DEVLOGIN,
+    ROUTES.FAQ
+];
+
+const STATEUSER_ALLOWED_ROUTES = [
+    ROUTES.DASHBOARD,
+    ROUTES.SPA,
+    ROUTES.SPA_RAI,
+    ROUTES.WAIVER,
+    ROUTES.WAIVER_APP_K,
+    ROUTES.WAIVER_EXTENSION,
+    ROUTES.WAIVER_RAI
+].concat(ALL_USERS_ROUTES);
 
 
-    const STATEUSER_ALLOWED_ROUTES = [
-        ROUTES.HOME,
-        ROUTES.COMPONENT_PAGE,
-        ROUTES.DASHBOARD,
-        ROUTES.METRICS,
-        ROUTES.PROFILE,
-        ROUTES.SPA,
-        ROUTES.SPA_RAI,
-        ROUTES.WAIVER,
-        ROUTES.WAIVER_APP_K,
-        ROUTES.WAIVER_EXTENSION,
-        ROUTES.WAIVER_RAI
-    ];
+const STATEADMIN_ALLOWED_ROUTES = [
+    ROUTES.DASHBOARD,
+    ROUTES.METRICS
+].concat(ALL_USERS_ROUTES);
+;
 
-    const STATEADMIN_ALLOWED_ROUTES = [
-        ROUTES.HOME,
-        ROUTES.COMPONENT_PAGE,
-        ROUTES.DASHBOARD,
-        ROUTES.METRICS,
-        ROUTES.PROFILE
-    ];
+const CMSAPPROVER_ALLOWED_ROUTES = [
+    ROUTES.METRICS,
+].concat(ALL_USERS_ROUTES);
+;
 
-    const CMSAPPROVER_ALLOWED_ROUTES = [
-        ROUTES.HOME,
-        ROUTES.COMPONENT_PAGE,
-        ROUTES.DASHBOARD,
-        ROUTES.METRICS,
-        ROUTES.PROFILE
-    ];
+const SYSTEMADMIN_ALLOWED_ROUTES = [
+    ROUTES.METRICS,
+].concat(ALL_USERS_ROUTES);
 
-    const SYSTEMADMIN_ALLOWED_ROUTES = [
-        ROUTES.HOME,
-        ROUTES.COMPONENT_PAGE,
-        ROUTES.DASHBOARD,
-        ROUTES.METRICS,
-        ROUTES.PROFILE
-    ];
 
- export  const ROLE_ACL = {
-        "stateuser": STATEUSER_ALLOWED_ROUTES,
-        "stateadmin": STATEADMIN_ALLOWED_ROUTES,
-        "cmsapprover": CMSAPPROVER_ALLOWED_ROUTES,
-        "systemadmin": SYSTEMADMIN_ALLOWED_ROUTES
-    };
+export const ROLE_ACL = {
+    "stateuser": STATEUSER_ALLOWED_ROUTES,
+    "stateadmin": STATEADMIN_ALLOWED_ROUTES,
+    "cmsapprover": CMSAPPROVER_ALLOWED_ROUTES,
+    "systemadmin": SYSTEMADMIN_ALLOWED_ROUTES
+};
 
 
 
