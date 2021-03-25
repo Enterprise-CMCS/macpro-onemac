@@ -1,10 +1,12 @@
 // Updated by: Guli 
 // Date      : 03/19/2021
+// The automated UI test scripts that belongs to this module has 
+// element location related problem, we will be disabling this test 
+// until these issues are refactored and resolved. 3/25/2021
 
-
-const login = require('../cases/OY2-1494_Test_SPA_Login');
-module.exports = {
-
+//const login = require('../cases/OY2-1494_Test_SPA_Login');
+//module.exports = {
+/*
     "@tags": ["fileUploadLimit", "smoke", "regression"],
 
     before: function (browser) {
@@ -45,5 +47,5 @@ module.exports = {
         browser.assert.elementPresent(errorMsgElement);
         browser.verify.containsText(errorMsgElement, expectedErrorMsg);
     }
-    */
-}
+
+}*/

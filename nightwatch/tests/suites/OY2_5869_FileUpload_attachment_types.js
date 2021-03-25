@@ -1,6 +1,10 @@
 // Updated by: Guli
 // Date      :03/09/2021
+// The automated UI test scripts that belongs to this module has 
+// element location related problem, we will be disabling this test 
+// until these issues are refactored and resolved. 3/25/2021
 
+/*
 const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
 const submitWaiver = require('../suites/OY2_4807_Validate_Waiver_Form_Logic');
 let pdfElement = "//span[text()='adobe.pdf']";

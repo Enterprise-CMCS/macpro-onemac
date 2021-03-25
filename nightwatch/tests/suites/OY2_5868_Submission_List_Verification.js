@@ -1,6 +1,10 @@
 // Updated by: Guli 
 // Date      : 03/04/2021
+// The automated UI test scripts that belongs to this module has 
+// element location related problem, we will be disabling this test 
+// until these issues are refactored and resolved. 3/25/2021
 
+/*
 let generatedSPAID;
 let generatedWaiverID;
 const login = require('../cases/OY2-1494_Test_SPA_Login');
@@ -173,4 +177,4 @@ module.exports = {
         browser.useCss();
     }
     */
-}
+
