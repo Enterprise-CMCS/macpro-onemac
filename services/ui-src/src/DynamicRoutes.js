@@ -15,51 +15,55 @@ import {ROLES} from "cmscommonlib";
 export default function DynamicRoutes() {
     const {userProfile} = useAppContext();
 
-    if ( userProfile ) {
+    if (userProfile) {
         if (userProfile.userData) {
-            const userType = userProfile.userData.type
-
-            if (userType === ROLES.STATE_USER) {
-                return (<>
-                    <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
-                        <Dashboard/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
-                        <Spa/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
-                        <Waiver/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
-                        <SpaRai/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
-                        <WaiverRai/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
-                        <WaiverExtension/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?`}>
-                        <WaiverAppK/>
-                    </AuthenticatedRoute>
-                    <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
-                        <Metrics/>
-                    </AuthenticatedRoute>
-                </>)
-            } else if (userType === ROLES.STATE_ADMIN) {
-                return (<>
+            console.log(JSON.stringify(userProfile.userData))
+            switch (userProfile.userData.type) {
+                case ROLES.STATE_USER:
+                    return (<>
                         <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                             <Dashboard/>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
+                            <Spa/>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
+                            <Waiver/>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
+                            <SpaRai/>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
+                            <WaiverRai/>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
+                            <WaiverExtension/>
+                        </AuthenticatedRoute>
+                        <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?`}>
+                            <WaiverAppK/>
                         </AuthenticatedRoute>
                         <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
                             <Metrics/>
                         </AuthenticatedRoute>
-                    </>
-                )
-            } else if (userType === ROLES.CMS_APPROVER) {
-                return <></>
-            } else if (userType === ROLES.SYSTEM_ADMIN) {
-                return <></>
+                    </>)
+                    break;
+                case ROLES.STATE_ADMIN:
+                    return (<>
+                            <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+                                <Dashboard/>
+                            </AuthenticatedRoute>
+                            <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+                                <Metrics/>
+                            </AuthenticatedRoute>
+                        </>
+                    )
+                    break;
+                case ROLES.CMS_APPROVER:
+                    return <></>
+                    break;
+                case ROLES.SYSTEM_ADMIN:
+                    return <></>
+                    break;
             }
         }
     }

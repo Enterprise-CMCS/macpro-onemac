@@ -50,10 +50,6 @@ function App() {
       // Note that userData comes back as an empty object if there is none.
 
       const userData = await ChangeRequestDataApi.userProfile(tempUserProfile.email);
-      if ( userData.type === undefined ) {
-        userAuthenticationStatus = false;
-        throw new Error("Error Missing Required  User Data Fields")
-      }
       tempUserProfile.userData = userData;
 
       // Set isDev for dev users.
