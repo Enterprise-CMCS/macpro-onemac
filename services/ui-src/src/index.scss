@@ -729,6 +729,7 @@ input[type="file"] {
 }
 .footer-fed-gov-text{
   padding-top: 5px;
+  padding-bottom: 15px;
   font-family: Open Sans;
   font-size: 14px;
   font-style: normal;
@@ -754,6 +755,9 @@ input[type="file"] {
 .footer-email-container{
   padding-left: 11.5rem;
   @extend .ds-l-col--8;
+}
+footer-address {
+  text-align: right;
 }
 .multi-select-title {
 font-family: Open Sans;

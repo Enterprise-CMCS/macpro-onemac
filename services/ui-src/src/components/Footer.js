@@ -33,7 +33,7 @@ function Footer() {
                     <div className="footer-email-container">
                         Email <a href="sample@cms.gov" className="footer-email">{footerEmail}</a> for help or feedback.
                         </div>
-                    <div className="ds-l-col--3">
+                    <div className="ds-l-col--3 footer-address">
                         7500 Security Boulevard Baltimore, MD 21244
                         </div>
                 </div>
