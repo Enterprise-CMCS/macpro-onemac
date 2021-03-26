@@ -55,7 +55,7 @@ const UserManagement = () => {
     systemadmin: "Need content",
   };
 
-  
+  /*
   const rows = [
     {
       firstName: "Elliot",
@@ -90,13 +90,13 @@ const UserManagement = () => {
       id: 4,
     },
   ];
-
+*/
   const loadUsers = useCallback(() => {
     if (
       !userProfile ||
-      !userProfile.userData // ||
-    //  !userProfile.userData.attributes //||
-     // userProfile.userData.type === "stateuser"
+      !userProfile.userData ||
+      !userProfile.userData.attributes ||
+      userProfile.userData.type === "stateuser"
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -267,7 +267,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {rows ? ( // {userList && userList !== "UR040" ? (
+          {userList && userList !== "UR040" ? (
             <table className="user-table">
               <thead>
                 <tr>
@@ -290,7 +290,7 @@ const UserManagement = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>{renderUserList(rows)}</tbody>
+              <tbody>{renderUserList(userList)}</tbody>
             </table>
           ) : (
             <EmptyList message={pendingMessage} />
