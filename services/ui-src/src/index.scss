@@ -2,6 +2,8 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
+$primary-color-lightest: #F0FAFE;
+$primary-color: #0071BC;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -704,13 +706,13 @@ input[type="file"] {
 
 .footer-top-container {
   @extend .brand-bar;
-  background: #F0FAFE;
+  background: $primary-color-lightest;
   padding-left: 8rem;
   padding-right: 8rem;
 }
 .footer-bottom-container {
-  background: #0071BC; 
-  color: #FFFFFF; 
+  background: $primary-color; 
+  color: white; 
   margin: 0;
   width: 100%;
   max-width: none;
@@ -721,9 +723,22 @@ input[type="file"] {
   padding-left: 60px;
   margin: auto;
 }
-.footer-fed-gov-container {
+.footer-fed-gov-logo {
   @extend .ds-l-col--2;
   min-width: 80px;
+}
+.footer-fed-gov-text{
+  padding-top: 5px;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: left;
+}
+.footer-email {
+  color: white;
 }
 .footer-bottom-container {
   @extend .ds-l-row ;

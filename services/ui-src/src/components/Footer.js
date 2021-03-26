@@ -1,5 +1,5 @@
 import React from "react";
-
+import { footerEmail } from '../libs/appContent';
 
 function Footer() {
 
@@ -18,7 +18,7 @@ function Footer() {
                                     <img src="/assets/images/footer/depthealthhumanservices_usa.svg"
                                         alt="Department of Health and Human Services logo"></img>
                                 </div>
-                                <div className="ds-l-col--10">
+                                <div className="ds-l-col--10 footer-fed-gov-text">
                                     A federal government website managed and paid for by the
                                     U.S. Centers for Medicare and Medicaid Services and part of
                                     the MACPro suite.
@@ -31,7 +31,7 @@ function Footer() {
             <div>
                 <div className="footer-bottom-container">
                     <div className="footer-email-container">
-                        Email <a href="sample@cms.gov" style={{color: "#ffffff"}}>sample@cms.gov</a> for help or feedback.
+                        Email <a href="sample@cms.gov" className="footer-email">{footerEmail}</a> for help or feedback.
                         </div>
                     <div className="ds-l-col--3">
                         7500 Security Boulevard Baltimore, MD 21244
