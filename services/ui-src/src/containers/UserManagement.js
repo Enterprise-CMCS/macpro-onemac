@@ -10,7 +10,7 @@ import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
 
-const PENDING_CIRCLE_IMAGE = <img alt="" src={pendingCircle} />;
+const PENDING_CIRCLE_IMAGE = <img alt="" className="pending-circle" src={pendingCircle} />;
 
 /**
  * User Management "Dashboard"
@@ -23,43 +23,24 @@ const UserManagement = () => {
 
   const location = useLocation();
 
-  /*
-  const columns = [
-    {
-      field: "fullname",
-      headerName: "State User"
-    },
-    {
-      field: "email",
-      headerName: "Email Address"
-    },
-    {
-      field: "state",
-      headerName: "State"
-    },
-    {
-      field: "status",
-      headerName: "Status"
-    },
-    {
-      field: "id",
-      headerName: "Personnel Actions",
-      width: 150,
-      disableColumnSelector: false,
-      renderCell: (params) => (
-        <>
-          <PopupMenu
-            selectedRow={params.value}
-            menuItems={menuItems}
-            handleSelected={(row, value) =>
-              console.log("Seleccted:(" + row + " : " + value + ")")
-            }
-          />
-        </>
-      ),
-    },
-  ];
-*/
+  const pendingMessage = {
+    "stateadmin": "Your system access is pending approval.",
+    "cmsapprover": "Your system access is pending approval. Contact the CMS System Admin with any questions.",
+    "systemadmin": "Your system access is pending approval. Contact the CMS System Admin with any questions.",
+  }
+
+  const approveConfirm = {
+    "stateadmin": "Your system access is pending approval.",
+    "cmsapprover": "Warning!\n\nThis will activate the selected user’s account for State Systems Administrator access. This role approves State Submitters. A notifcation will be emailed to the user.\n\nAre you sure you want to proceed?",
+    "systemadmin": "Your system access is pending approval. Contact the CMS System Admin with any questions.",
+  }
+
+  const denyConfirm = {
+    "stateadmin": "Your system access is pending approval.",
+    "cmsapprover": "Your system access is pending approval. Contact the CMS System Admin with any questions.",
+    "systemadmin": "Your system access is pending approval. Contact the CMS System Admin with any questions.",
+  }
+/*
   const rows = [
     {
       firstName: "Elliot",
@@ -94,9 +75,7 @@ const UserManagement = () => {
       id: 4,
     },
   ];
-
-  const portalTableStyle = { width: "100%" };
-
+*/
   const loadUsers = useCallback( () => {
 
     UserDataApi.getMyUserList(userProfile.email)
@@ -168,11 +147,11 @@ const UserManagement = () => {
 
       let menuItems = [];
 
-      switch (user.status) {
+     switch (user.status) {
         case "pending":
           menuItems = [
-            { label: "Approve Access", value: "approved" },
-            { label: "Deny Access", value: "deny" },
+            { label: "Approve Access", value: "approved", confirmMessage: approveConfirm[userProfile.userData.type] },
+            { label: "Deny Access", value: "deny", confirmMessage: denyConfirm[userProfile.userData.type] },
           ];
           break;
         case "granted":
@@ -182,7 +161,7 @@ const UserManagement = () => {
           break;
         case "denied":
           menuItems = [
-            { label: "Grant Access", value: "grant" },
+            { label: "Grant Access", value: "grant", confirmMessage: "<b>Warning!</b><p>This will activate the selected user’s account for State Systems Administrator access. This role approves State Submitters. A notifcation will be emailed to the user.</p><p>Are you sure you want to proceed?</p>" },
           ];
           break;
         case "revoked":
@@ -202,18 +181,18 @@ const UserManagement = () => {
           <td>{user.email}</td>
           <td className="user-state">{user.stateCode}</td>
           <td className="user-status">{user.status==="pending" && PENDING_CIRCLE_IMAGE} {user.status}</td>
-          <td>
-            <PopupMenu
+          <td className="actions">
+          <PopupMenu
               selectedRow={i}
               userEmail={user.email}
               menuItems={menuItems}
               handleSelected={(row, value) => {
                 UserDataApi.setUserStatus(userProfile.email, user.email, value);
                 loadUsers();
-                console.log("Seleccted:(" + row + " : " + value + ") userEmail : " + user.email + " doneBy " + userProfile.email);
+                console.log("Selected:(" + row + " : " + value + ") userEmail : " + user.email + " doneBy " + userProfile.email);
               } }
             />
-          </td>
+</td>
         </tr>
       );
     });
@@ -225,9 +204,8 @@ const UserManagement = () => {
       <PageTitleBar heading="User Management" text="" />
       {renderAlert(alert)}
       <div className="dashboard-container">
-        <div style={portalTableStyle}>
           <LoadingScreen isLoading={isLoading}>
-              {rows ? ( // {userList && userList !== "UR040" ? (
+             {userList && userList !== "UR040" ? (
                 <table className="user-table">
                   <thead>
                     <tr>
@@ -238,13 +216,12 @@ const UserManagement = () => {
                       <th scope="col" width="15%" id="personnelActionsColHeader">Personnel Actions</th>
                     </tr>
                   </thead>
-                  <tbody>{renderUserList(rows)}</tbody>
+                  <tbody>{renderUserList(userList)}</tbody>
                 </table>
               ) : (
-                <EmptyList message="You have no users yet." />
+                <EmptyList message={pendingMessage[userProfile.userData.type]} />
               )}
           </LoadingScreen>
-        </div>
       </div>
     </div>
   );
