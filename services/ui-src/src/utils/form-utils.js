@@ -1,58 +1,26 @@
-import React from "react";
-
-/**
- * Generates options based on an array of objects with label and value for each option.
- * For example:
- * const options = [
- *   { "label": "New waiver", "value": "New waiver" },
- *   { "label": "Waiver amendment", "value": "Waiver amendment" },
- *   { "label": "Request for waiver renewal", "value": "Request for waiver renewal" }
- * ];
- * @param {Array} optionsList array of objects with label and value for each option
- */
-export function renderOptionsList(optionsList) {
-
-  if (!optionsList || !Array.isArray(optionsList)) {
-    throw new Error("Options list must be an array of items.");
-  }
-
-  let retval = optionsList.map((item, i) => {
-    return (
-      <option key={i} value={item.value}>
-        {item.label}
-      </option>
-    );
-  });
-  return retval;
-}
-
-/**
- * Validate that the State/Territory has been selected
- * @param {value} String The Territory/State Code Selected
- */
-export function validateTerritory(value) {
-  let errorMessage = "";
-
-  if (!value) errorMessage = "Please select a State or Territory.";
-
-  return errorMessage;
-}
+import { territoryList } from "../libs/territoryLib";
+import {CHANGE_REQUEST_TYPES} from "../changeRequest/changeRequestTypes";
 
 /**
  * Validate SPA Id Transmittal Number Format
  * @return
  *
  */
-export function validateSpaId(spaId) {
-
+export function validateSpaId(spaID, isExistingSpaId, formInfo) {
     let errorMessage = undefined
     let SpaTransmittalNumberFormatErrorMessage = "SS-YY-NNNN or SS-YY-NNNN-xxxx"
     let RegexFormatString = "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)"
 
-    if (!spaId) {
+    if (!spaID) {
         errorMessage = 'SPA ID Required !';
-    } else if (!isValidFieldFormat(spaId, RegexFormatString)) {
+    }  else if (!hasValidStateCode(spaID)) {
+        errorMessage = `The SPA ID must contain valid Territory/State Code`
+    }  else if (!isValidFieldFormat(spaID, RegexFormatString)) {
         errorMessage = `The SPA ID must be in the format of ${SpaTransmittalNumberFormatErrorMessage} !`;
+    }  else if (isExistingSpaId && formInfo.type === CHANGE_REQUEST_TYPES.SPA ) {
+        errorMessage = "According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.";
+    }  else if (!isExistingSpaId && formInfo.type === CHANGE_REQUEST_TYPES.SPA_RAI ) {
+        errorMessage = "According to our records, this SPA ID does not exist. Please check the SPA ID and try entering it again.";
     }
     return errorMessage
 }
@@ -61,17 +29,47 @@ export function validateSpaId(spaId) {
  * Validate Waiver Id Transmittal Number Format
  * @return
  */
-export function validateWaiverId(waiverId) {
+
+export function validateWaiverId(waiverId, isExistingWaiverId, formFields, formInfo) {
 
     let errorMessage = undefined
-    let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4}[.]R[0-9]{2}[.][0-9]{2}$)"
+    let RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$)"
+    let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M##"
+    if (formFields["actionType"] !== "Waiver Action") {
+        RegexFormatString = RegexFormatString + "|(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
+        WaiverTransmittalNumberFormatErrorMessage = WaiverTransmittalNumberFormatErrorMessage + " or SS.##.R##.##"
+    } else {
 
-    let WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.M## or SS.####.R##.##"
+        if (formFields["waiverAuthority"] === "1915(c)") {
+            WaiverTransmittalNumberFormatErrorMessage = "SS.##.R##.##"
+            RegexFormatString = "(^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$)"
+        }
+    }
 
     if (!waiverId) {
         errorMessage = 'Waiver Number Required !';
+    }  else if (!hasValidStateCode(waiverId)) {
+        errorMessage = `The Waiver Number must contain valid Territory/State Code`
     } else if (!isValidFieldFormat(waiverId, RegexFormatString)) {
         errorMessage = `The Waiver Number must be in the format of ${WaiverTransmittalNumberFormatErrorMessage} !`;
+    } else if ( isExistingWaiverId === undefined) {
+        errorMessage = "";
+    } else if ( formInfo.idType === CHANGE_REQUEST_TYPES.WAIVER)
+    {
+
+        if (formFields["waiverAuthority"] === "1915(c)" ) {
+          if (formFields["actionType"] !== "amendment" && !isExistingWaiverId) {
+            errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
+          }
+        } else if (formFields["waiverAuthority"] !== "1915(c)"
+            && formFields["actionType"] !== "new" && !isExistingWaiverId) {
+             errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
+        } else if (formFields["actionType"] === "new" && isExistingWaiverId) {
+             errorMessage =
+                "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.";
+        }
+    } else if (!isExistingWaiverId && formFields["actionType"] !== "new") {
+        errorMessage = "According to our records, this Waiver Number does not exist. Please check the Waiver Number and try entering it again.";
     }
     return errorMessage
 }
@@ -90,6 +88,21 @@ export function isValidFieldFormat(fieldValue, regexFormatString) {
     } else {
         result = false
     }
+
+    return result;
+
+};
+
+
+/**
+ * Validate Field Territory/State Code
+ * @param {value} Transmittal Number Field Entered on Change Event.
+ */
+export function hasValidStateCode(fieldValue) {
+
+    const result = territoryList.some(
+        state => state['value'] === fieldValue.substring(0,2)
+    )
 
     return result;
 

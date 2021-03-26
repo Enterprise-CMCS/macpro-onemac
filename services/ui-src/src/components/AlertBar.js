@@ -5,7 +5,7 @@ import {TITLE_BAR_ID} from "./PageTitleBar";
 /**
  * Alert types
  */
-export const ALERT_TYPES = {
+/*export const ALERT_TYPES = {
   INFO: null, // Per CMS Design System
   WARNING: "warn",
   ERROR: "error",
