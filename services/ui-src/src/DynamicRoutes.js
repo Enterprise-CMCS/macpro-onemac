@@ -46,7 +46,6 @@ export default function DynamicRoutes() {
                             <Metrics/>
                         </AuthenticatedRoute>
                     </>)
-                    break;
                 case ROLES.STATE_ADMIN:
                     return (<>
                             <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
@@ -57,13 +56,12 @@ export default function DynamicRoutes() {
                             </AuthenticatedRoute>
                         </>
                     )
-                    break;
                 case ROLES.CMS_APPROVER:
                     return <></>
-                    break;
                 case ROLES.SYSTEM_ADMIN:
                     return <></>
-                    break;
+                default:
+                    return <></>
             }
         }
     }
