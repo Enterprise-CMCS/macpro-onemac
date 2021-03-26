@@ -565,15 +565,21 @@ input[type="file"] {
   background-color: $color-primary;
   min-height: 70px;
 
+  #oneMacLogo{
+    padding-right: 50px;
+    display:flex;
+  }
+
   .nav-left {
     @extend .ds-u-display--flex;
     @extend .ds-u-flex-wrap--wrap;
+    align-items: center;
+
     a {
       color: $color-white;
       font-weight: bold;
       border: none;
       padding-right: 50px;
-
      &:hover {
         color: rgba($color-base-inverse, 0.8);
       }
