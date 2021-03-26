@@ -91,7 +91,7 @@ const UserManagement = () => {
     },
   ];
 */
-  const loadUsers = useCallback(() => {
+  const loadUsers = async () => {
     if (
       !userProfile ||
       !userProfile.userData ||
@@ -117,7 +117,7 @@ const UserManagement = () => {
         console.log("Error while fetching user's list.", error);
         setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       });
-  }, [userProfile, history, pendingMessageLookup]);
+  };
 
   // Load the data from the backend.
   useEffect(() => {
@@ -126,7 +126,7 @@ const UserManagement = () => {
     setAlert(newAlert);
 
     loadUsers();
-  }, [location, loadUsers]);
+  }, [location, userProfile]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
@@ -267,7 +267,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {userList && userList !== "UR040" ? (
+          {(userList && userList.length() !== 0 && userList !== "UR040") ? (
             <table className="user-table">
               <thead>
                 <tr>
