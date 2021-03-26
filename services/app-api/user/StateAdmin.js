@@ -15,11 +15,9 @@ class StateAdmin {
     return USER_TYPES.STATE_USER;
   }
 
-  /**
-   * Returns the list of active States for this user.
-   * @returns {Object} the User json
-   */
-  getAuthorizedStateList(user) {}
+  shouldICheckState() {
+    return true;
+  }
 
   /**
    * takes the raw user data and transforms into

@@ -17,6 +17,10 @@ class CMSApprover {
     return USER_TYPES.STATE_ADMIN;
   }
 
+  shouldICheckState() {
+    return false;
+  }
+
   /**
    * takes the raw user data and transforms into
    * what to send to front end.

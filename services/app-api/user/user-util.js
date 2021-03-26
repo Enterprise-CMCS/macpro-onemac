@@ -51,3 +51,22 @@ export const getCurrentStatus = statusList =>  {
     return currentStatus;
 
 };
+
+const isLatestAttributeActive = attr => {
+  const latestAttribute = attr.reduce(
+      (latestItem, currentItem) => currentItem.date > latestItem.date ? currentItem : latestItem
+  );
+  return latestAttribute.status === 'active';
+};
+
+export const getAuthorizedStateList = user => {
+    let tempStateList = [];
+
+    if (!user.attributes) return tempStateList;
+
+    user.attributes.forEach((attribute) => {
+      isLatestAttributeActive(attribute.history) ? tempStateList.push(attribute.stateCode) : null;
+    });
+
+    return tempStateList;
+  };

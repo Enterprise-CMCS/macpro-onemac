@@ -15,6 +15,10 @@ class StateUser {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
+  shouldICheckState() {
+    return true;
+  }
+
   /**
    * takes the raw user data and transforms into
    * what to send to front end.

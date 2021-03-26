@@ -14,6 +14,10 @@ class SystemAdmin {
     return USER_TYPES.CMS_APPROVER;
   }
 
+  shouldICheckState() {
+    return false;
+  }
+
   /**
    * takes the raw user data and transforms into
    * what to send to front end.
