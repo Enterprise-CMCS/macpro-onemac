@@ -11,9 +11,7 @@ import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
 
-const PENDING_CIRCLE_IMAGE = (
-  <img alt="" className="pending-circle" src={pendingCircle} />
-);
+const PENDING_CIRCLE_IMAGE = <img alt="" className="pending-circle" src={pendingCircle} />;
 
 /**
  * User Management "Dashboard"
@@ -57,7 +55,7 @@ const UserManagement = () => {
     systemadmin: "Need content",
   };
 
-  /*
+  
   const rows = [
     {
       firstName: "Elliot",
@@ -92,13 +90,13 @@ const UserManagement = () => {
       id: 4,
     },
   ];
-*/
+
   const loadUsers = useCallback(() => {
     if (
       !userProfile ||
-      !userProfile.userData ||
-      !userProfile.userData.attributes ||
-      userProfile.userData.type === "stateuser"
+      !userProfile.userData // ||
+    //  !userProfile.userData.attributes //||
+     // userProfile.userData.type === "stateuser"
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -179,7 +177,7 @@ const UserManagement = () => {
 
       switch (user.status) {
         case "pending":
-          statusLabel = PENDING_CIRCLE_IMAGE + "Pending";
+          statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;
           menuItems = [
             {
               label: "Approve Access",
@@ -269,7 +267,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {userList && userList !== "UR040" ? (
+          {rows ? ( // {userList && userList !== "UR040" ? (
             <table className="user-table">
               <thead>
                 <tr>
@@ -292,7 +290,7 @@ const UserManagement = () => {
                   </th>
                 </tr>
               </thead>
-              <tbody>{renderUserList(userList)}</tbody>
+              <tbody>{renderUserList(rows)}</tbody>
             </table>
           ) : (
             <EmptyList message={pendingMessage} />
