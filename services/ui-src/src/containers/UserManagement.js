@@ -4,13 +4,13 @@ import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
-//import { useLocation, useHistory } from "react-router-dom";
-import { useHistory } from "react-router-dom";
+import { useLocation, useHistory } from "react-router-dom";
 import UserDataApi from "../utils/UserDataApi";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
+import { pendingMessage, grantConfirmMessage, denyConfirmMessage, revokeConfirmMessage } from "../libs/userLib";
 
 const PENDING_CIRCLE_IMAGE = <img alt="" className="pending-circle" src={pendingCircle} />;
 
@@ -24,42 +24,12 @@ const UserManagement = () => {
   const { userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
-  //const location = useLocation();
-  const [pendingMessage, setPendingMessage] = useState(
-    "There is nothing to show here yet!"
-  );
-
-  const pendingMessageLookup = {
-    stateadmin: "Your system access is pending approval.",
-    cmsapprover:
-      "Your system access is pending approval. Contact the CMS System Admin with any questions.",
-    systemadmin:
-      "Your system access is pending approval. Contact the CMS System Admin with any questions.",
-  };
-
-  const grantConfirm = {
-    stateadmin: "Need content",
-    cmsapprover:
-      "Warning!\n\nThis will activate the selected user’s account for State Systems Administrator access. This role approves State Submitters. A notifcation will be emailed to the user.\n\nAre you sure you want to proceed?",
-    systemadmin: "Need content",
-  };
-
-  const denyConfirm = {
-    stateadmin: "Need content",
-    cmsapprover: "Need content",
-    systemadmin: "Need content",
-  };
-
-  const revokeConfirm = {
-    stateadmin: "Need content",
-    cmsapprover: "Need content",
-    systemadmin: "Need content",
-  };
+  const location = useLocation();
 
   // Load the data from the backend.
   useEffect(() => {
     let mounted=true;
-   /* if (
+   if (
       !userProfile ||
       !userProfile.userData ||
       !userProfile.userData.attributes ||
@@ -72,14 +42,12 @@ const UserManagement = () => {
     if (location.state) newAlert = location.state.showAlert;
     if (mounted) setAlert(newAlert);
 
-    if (mounted) setPendingMessage(pendingMessageLookup[userProfile.userData.type]);
-
     let shouldState = true;
     if (userProfile.userData.type === "stateadmin") {
       shouldState = false;
     }
     if (mounted) setIncludeStateCode(shouldState);
-*/
+
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         console.log("user List: ", ul);
@@ -93,7 +61,7 @@ const UserManagement = () => {
       return function cleanup() {
         mounted = false;
       };  
-  }, [userProfile]); //[location, userProfile, pendingMessageLookup, history]);
+  }, [location, userProfile, history]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
@@ -149,12 +117,12 @@ const UserManagement = () => {
             {
               label: "Approve Access",
               value: "approved",
-              confirmMessage: grantConfirm[userProfile.userData.type],
+              confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
             {
               label: "Deny Access",
               value: "deny",
-              confirmMessage: denyConfirm[userProfile.userData.type],
+              confirmMessage: denyConfirmMessage[userProfile.userData.type],
             },
           ];
           break;
@@ -165,7 +133,7 @@ const UserManagement = () => {
             {
               label: "Revoke Access",
               value: "revoke",
-              confirmMessage: revokeConfirm[userProfile.userData.type],
+              confirmMessage: revokeConfirmMessage[userProfile.userData.type],
             },
           ];
           break;
@@ -175,7 +143,7 @@ const UserManagement = () => {
             {
               label: "Grant Access",
               value: "grant",
-              confirmMessage: grantConfirm[userProfile.userData.type],
+              confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
           ];
           break;
@@ -185,7 +153,7 @@ const UserManagement = () => {
             {
               label: "Grant Access",
               value: "grant",
-              confirmMessage: grantConfirm[userProfile.userData.type],
+              confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
           ];
           break;
