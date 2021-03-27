@@ -523,23 +523,6 @@ input[type="file"] {
     padding-bottom: 20px;
     text-align: left;  
   }
-  .user-state {
-    color: $color-black;
-  }
-  .user-status {
-    font-weight: 700;
-    text-transform: capitalize;
-    color: $color-black;
-  }
-  th:last-child, td:last-child {
-    text-align: right;
-    margin: 0px;
-  }
-
-  td.actions button{
-    float:right
-  }
-
   a {
     font-weight: bold;
   }
@@ -553,6 +536,26 @@ input[type="file"] {
     font-weight: bold;
     background-color: $color-primary-alt-lightest;
     color: $color-gray;
+  }
+}
+.user-table {
+
+  .user-state {
+    color: $color-black;
+  }
+  .user-status {
+    font-weight: 700;
+    text-transform: capitalize;
+    color: $color-black;
+  }
+
+  th:last-child, td:last-child {
+    text-align: right;
+    margin: 0px;
+  }
+
+  td.actions button{
+    float:right
   }
 }
 

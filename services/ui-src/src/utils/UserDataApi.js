@@ -13,7 +13,46 @@ class UserDataApi {
      if (!userEmail) return [];
 
     try {
-      return await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
+      const theReturn =  await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
+      console.log("the return from getMyUserList is: ", theReturn);
+
+      const rows = [
+        {
+          firstName: "Elliot",
+          lastName: "Alderson",
+          email: "elliot.alderson@state.state.gov",
+          stateCode: "MD",
+          status: "pending",
+          id: 1,
+        },
+        {
+          firstName: "Angela",
+          lastName: "Moss",
+          email: "angela.moss@state.state.gov",
+          stateCode: "NY",
+          status: "granted",
+          id: 2,
+        },
+        {
+          firstName: "Tyrell",
+          lastName: "Wellick",
+          email: "tyrell.wellick@state.state.gov",
+          stateCode: "MD",
+          status: "denied",
+          id: 3,
+        },
+        {
+          firstName: "Philip",
+          lastName: "Price",
+          email: "philip.price@state.state.gov",
+          stateCode: "NM",
+          status: "revoked",
+          id: 4,
+        },
+      ];
+      if (theReturn === "UR040") return rows;
+      else return theReturn;
+
     } catch (error) {
       console.log(`There was an error fetching data for the user.`, error);
       throw error;

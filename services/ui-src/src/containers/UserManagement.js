@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from "react";
+import React, { useState, useEffect } from "react";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
@@ -55,78 +55,44 @@ const UserManagement = () => {
     systemadmin: "Need content",
   };
 
-  /*
-  const rows = [
-    {
-      firstName: "Elliot",
-      lastName: "Alderson",
-      email: "elliot.alderson@state.state.gov",
-      stateCode: "MD",
-      status: "pending",
-      id: 1,
-    },
-    {
-      firstName: "Angela",
-      lastName: "Moss",
-      email: "angela.moss@state.state.gov",
-      stateCode: "NY",
-      status: "granted",
-      id: 2,
-    },
-    {
-      firstName: "Tyrell",
-      lastName: "Wellick",
-      email: "tyrell.wellick@state.state.gov",
-      stateCode: "MD",
-      status: "denied",
-      id: 3,
-    },
-    {
-      firstName: "Philip",
-      lastName: "Price",
-      email: "philip.price@state.state.gov",
-      stateCode: "NM",
-      status: "revoked",
-      id: 4,
-    },
-  ];
-*/
-  const loadUsers = async () => {
+  // Load the data from the backend.
+  useEffect(() => {
+    let mounted=true;
     if (
       !userProfile ||
       !userProfile.userData ||
       !userProfile.userData.attributes ||
       userProfile.userData.type === "stateuser"
     ) {
-      history.push(ROUTES.DASHBOARD);
+       history.push(ROUTES.DASHBOARD);
     }
-    setPendingMessage(pendingMessageLookup[userProfile.userData.type]);
+
+    let newAlert = ALERTS_MSG.NONE;
+    if (location.state) newAlert = location.state.showAlert;
+    if (mounted) setAlert(newAlert);
+
+    if (mounted) setPendingMessage(pendingMessageLookup[userProfile.userData.type]);
 
     let shouldState = true;
     if (userProfile.userData.type === "stateadmin") {
       shouldState = false;
     }
-    setIncludeStateCode(shouldState);
+    if (mounted) setIncludeStateCode(shouldState);
 
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         console.log("user List: ", ul);
-        setUserList(ul);
+        if (mounted) setUserList(ul);
       })
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        if (mounted) setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       });
-  };
 
-  // Load the data from the backend.
-  useEffect(() => {
-    let newAlert = ALERTS_MSG.NONE;
-    if (location.state) newAlert = location.state.showAlert;
-    setAlert(newAlert);
-
-    loadUsers();
-  }, [location, userProfile]);
+      return function cleanup() {
+        mounted = false;
+      };  
+  }, [location, userProfile, pendingMessageLookup, history]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
@@ -241,7 +207,14 @@ const UserManagement = () => {
               menuItems={menuItems}
               handleSelected={(row, value) => {
                 UserDataApi.setUserStatus(userProfile.email, user.email, value);
-                loadUsers();
+                history.push({
+                  pathname: ROUTES.USER_MANAGEMENT,
+                  query: "?query=abc",
+                  state: {
+                    showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
+                  },
+                });
+    
                 console.log(
                   "Selected:(" +
                     row +
@@ -267,7 +240,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {(userList && userList.length() !== 0 && userList !== "UR040") ? (
+          {(userList && userList.length !== 0 && userList !== "UR040") ? (
             <table className="user-table">
               <thead>
                 <tr>
