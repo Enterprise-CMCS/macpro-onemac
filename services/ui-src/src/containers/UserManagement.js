@@ -4,7 +4,8 @@ import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
-import { useLocation, useHistory } from "react-router-dom";
+//import { useLocation, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import UserDataApi from "../utils/UserDataApi";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
@@ -23,7 +24,7 @@ const UserManagement = () => {
   const { userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
-  const location = useLocation();
+  //const location = useLocation();
   const [pendingMessage, setPendingMessage] = useState(
     "There is nothing to show here yet!"
   );
@@ -58,7 +59,7 @@ const UserManagement = () => {
   // Load the data from the backend.
   useEffect(() => {
     let mounted=true;
-    if (
+   /* if (
       !userProfile ||
       !userProfile.userData ||
       !userProfile.userData.attributes ||
@@ -78,7 +79,7 @@ const UserManagement = () => {
       shouldState = false;
     }
     if (mounted) setIncludeStateCode(shouldState);
-
+*/
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         console.log("user List: ", ul);
@@ -92,7 +93,7 @@ const UserManagement = () => {
       return function cleanup() {
         mounted = false;
       };  
-  }, [location, userProfile, pendingMessageLookup, history]);
+  }, [userProfile]); //[location, userProfile, pendingMessageLookup, history]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);
