@@ -10,9 +10,16 @@ import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
-import { pendingMessage, grantConfirmMessage, denyConfirmMessage, revokeConfirmMessage } from "../libs/userLib";
+import {
+  pendingMessage,
+  grantConfirmMessage,
+  denyConfirmMessage,
+  revokeConfirmMessage,
+} from "../libs/userLib";
 
-const PENDING_CIRCLE_IMAGE = <img alt="" className="pending-circle" src={pendingCircle} />;
+const PENDING_CIRCLE_IMAGE = (
+  <img alt="" className="pending-circle" src={pendingCircle} />
+);
 
 /**
  * User Management "Dashboard"
@@ -28,14 +35,14 @@ const UserManagement = () => {
 
   // Load the data from the backend.
   useEffect(() => {
-    let mounted=true;
-   if (
+    let mounted = true;
+    if (
       !userProfile ||
       !userProfile.userData ||
       !userProfile.userData.attributes ||
       userProfile.userData.type === "stateuser"
     ) {
-       history.push(ROUTES.DASHBOARD);
+      history.push(ROUTES.DASHBOARD);
     }
 
     let newAlert = ALERTS_MSG.NONE;
@@ -58,9 +65,9 @@ const UserManagement = () => {
         if (mounted) setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       });
 
-      return function cleanup() {
-        mounted = false;
-      };  
+    return function cleanup() {
+      mounted = false;
+    };
   }, [location, userProfile, history]);
 
   const jumpToPageTitle = () => {
@@ -183,7 +190,7 @@ const UserManagement = () => {
                     showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
                   },
                 });
-    
+
                 console.log(
                   "Selected:(" +
                     row +
@@ -209,7 +216,7 @@ const UserManagement = () => {
       {renderAlert(alert)}
       <div className="dashboard-container">
         <LoadingScreen isLoading={isLoading}>
-          {(userList && userList.length !== 0 && userList !== "UR040") ? (
+          {userList && userList.length !== 0 && userList !== "UR040" ? (
             <table className="user-table">
               <thead>
                 <tr>
@@ -235,7 +242,7 @@ const UserManagement = () => {
               <tbody>{renderUserList(userList)}</tbody>
             </table>
           ) : (
-            <EmptyList message={pendingMessage} />
+            <EmptyList message={pendingMessage[userProfile.userData.type]} />
           )}
         </LoadingScreen>
       </div>
