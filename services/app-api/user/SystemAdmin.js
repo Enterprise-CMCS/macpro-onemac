@@ -23,6 +23,14 @@ class SystemAdmin {
   }
 
   /**
+   * System Admins can do everything
+   * @returns {String} null if ok to go, the response code if not
+   */
+  canIRequestThis(doneBy) {
+    return undefined;
+  }
+
+  /**
    * takes the raw user data and transforms into
    * what to send to front end.
    *

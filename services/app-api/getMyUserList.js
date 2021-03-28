@@ -25,10 +25,8 @@ export const main = handler(async (event, context) => {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
-  /*  FIGURE THIS OUT - gotta check for PENDING status on types that have status
-  if (uFunctions.checkTypeSpecificRules(doneBy) !== null) {
-
-  } */
+  let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
+  if (reasonWhyNot)  return reasonWhyNot;
 
   let scanFor = uFunctions.getScanFor();
   let stateList = [];

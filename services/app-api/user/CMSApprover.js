@@ -1,5 +1,7 @@
 import { USER_TYPES } from "./userTypes";
 import { getCurrentStatus } from "./user-util";
+import { RESPONSE_CODE } from "../libs/response-codes";
+import { USER_STATUS } from "./userStatus";
 
 /**
  * CMS Approver specific functions.
@@ -26,6 +28,23 @@ class CMSApprover {
   }
 
   /**
+   * CMS Approvers have to be active to see user lists
+   * @returns {String} null if ok to go, the response code if not
+   */
+  canIRequestThis(doneBy) {
+    let myCurrentStatus = getCurrentStatus(doneBy.attributes);
+    switch (myCurrentStatus) {
+      case USER_STATUS.PENDING:
+        return RESPONSE_CODE.CALLING_USER_PENDING;
+      case USER_STATUS.REVOKED:
+        return RESPONSE_CODE.CALLING_USER_REVOKED;
+      case USER_STATUS.DENIED:
+        return RESPONSE_CODE.CALLING_USER_DENIED;
+    }
+    return undefined;
+  }
+
+  /**
    * takes the raw user data and transforms into
    * what to send to front end.
    *
@@ -37,7 +56,7 @@ class CMSApprover {
   transformUserList(userResult) {
     let userRows = [];
     let errorList = [];
-    let i=1;
+    let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
 

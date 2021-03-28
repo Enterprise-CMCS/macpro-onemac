@@ -1,5 +1,7 @@
 import { USER_TYPES } from "./userTypes";
 import { getCurrentStatus } from "./user-util";
+import { RESPONSE_CODE } from "../libs/response-codes";
+import { USER_STATUS } from "./userStatus";
 
 /**
  * State Admin specific functions.
@@ -13,6 +15,23 @@ class StateAdmin {
    */
   getScanFor() {
     return USER_TYPES.STATE_USER;
+  }
+
+  /**
+   * State Admins have to have one active state
+   * @returns {String} null if ok to go, the response code if not
+   */
+   canIRequestThis(doneBy) {
+    let myCurrentStatus = getCurrentStatus(doneBy.attributes[0].history);
+    switch (myCurrentStatus) {
+      case USER_STATUS.PENDING:
+        return RESPONSE_CODE.CALLING_USER_PENDING;
+      case USER_STATUS.REVOKED:
+        return RESPONSE_CODE.CALLING_USER_REVOKED;
+      case USER_STATUS.DENIED:
+        return RESPONSE_CODE.CALLING_USER_DENIED;
+    }
+    return undefined;
   }
 
   /**
