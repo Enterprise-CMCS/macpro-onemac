@@ -39,8 +39,9 @@ const UserManagement = () => {
     if (
       !userProfile ||
       !userProfile.userData ||
-      !userProfile.userData.attributes ||
-      userProfile.userData.type === "stateuser"
+      (userProfile.userData.type !== "systemadmin" &&
+        (!userProfile.userData.attributes ||
+          userProfile.userData.type === "stateuser"))
     ) {
       history.push(ROUTES.DASHBOARD);
     }
