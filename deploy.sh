@@ -22,14 +22,16 @@ TEST_USERS=('user1@cms.hhs.local'
   'stateuserpending@cms.hhs.local'
   'stateuserdenied@cms.hhs.local'
   'stateuserrevoked@cms.hhs.local'
-  'stateadminactive@cms.hhs.local'
+  'stateadminactiveMI@cms.hhs.local'
+  'stateadminactiveVA@cms.hhs.local'
   'stateadminpending@cms.hhs.local'
   'stateadmindenied@cms.hhs.local'
   'stateadminrevoked@cms.hhs.local'
   'cmsapproveractive@cms.hhs.local'
   'cmsapproverpending@cms.hhs.local'
   'cmsapproverdenied@cms.hhs.local'
-  'cmsapproverrevoked@cms.hhs.local')
+  'cmsapproverrevoked@cms.hhs.local'
+  'systemadmintest@cms.hhs.local')
 
 TEST_USER_PASSWORD="Passw0rd!"
 
