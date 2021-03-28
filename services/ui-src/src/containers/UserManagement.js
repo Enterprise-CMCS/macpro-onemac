@@ -15,6 +15,7 @@ import {
   grantConfirmMessage,
   denyConfirmMessage,
   revokeConfirmMessage,
+  isPending,
 } from "../libs/userLib";
 
 const PENDING_CIRCLE_IMAGE = (
@@ -216,36 +217,44 @@ const UserManagement = () => {
       <PageTitleBar heading="User Management" text="" />
       {renderAlert(alert)}
       <div className="dashboard-container">
-        <LoadingScreen isLoading={isLoading}>
-          {userList && userList.length !== 0 && userList !== "UR040" ? (
-            <table className="user-table">
-              <thead>
-                <tr>
-                  <th scope="col" width="20%" id="nameColHeader">
-                    Name
-                  </th>
-                  <th scope="col" width="30%" id="emailColHeader">
-                    Email
-                  </th>
-                  {includeStateCode && (
-                    <th scope="col" width="20%" id="stateColHeader">
-                      State
+        {userProfile &&
+        userProfile.userData &&
+        userProfile.userData.attributes &&
+        userProfile.userData.attributes.length !== 0 &&
+        isPending(userProfile.userData) ? (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        ) : (
+          <LoadingScreen isLoading={isLoading}>
+            {userList && userList.length !== 0 && userList !== "UR040" ? (
+              <table className="user-table">
+                <thead>
+                  <tr>
+                    <th scope="col" width="20%" id="nameColHeader">
+                      Name
                     </th>
-                  )}
-                  <th scope="col" width="15%" id="statusColHeader">
-                    Status
-                  </th>
-                  <th scope="col" width="15%" id="personnelActionsColHeader">
-                    Personnel Actions
-                  </th>
-                </tr>
-              </thead>
-              <tbody>{renderUserList(userList)}</tbody>
-            </table>
-          ) : (
-            <EmptyList message={pendingMessage[userProfile.userData.type]} />
-          )}
-        </LoadingScreen>
+                    <th scope="col" width="30%" id="emailColHeader">
+                      Email
+                    </th>
+                    {includeStateCode && (
+                      <th scope="col" width="20%" id="stateColHeader">
+                        State
+                      </th>
+                    )}
+                    <th scope="col" width="15%" id="statusColHeader">
+                      Status
+                    </th>
+                    <th scope="col" width="15%" id="personnelActionsColHeader">
+                      Personnel Actions
+                    </th>
+                  </tr>
+                </thead>
+                <tbody>{renderUserList(userList)}</tbody>
+              </table>
+            ) : (
+              <EmptyList message="You have no Users to manage at this time." />
+            )}
+          </LoadingScreen>
+        )}
       </div>
     </div>
   );

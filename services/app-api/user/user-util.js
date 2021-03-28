@@ -12,61 +12,52 @@ import { USER_TYPES } from "./userTypes";
  * to let developer know the emails haven't been set for that type.
  */
 
-export const getUserFunctions = type => {
+export const getUserFunctions = (doneBy) => {
   let retval = {};
 
-    // what users they see depends on what role they are
-    switch (type) {
-        case USER_TYPES.STATE_USER:
-            retval = StateUser;
-            break;
-        case USER_TYPES.STATE_ADMIN:
-            retval = StateAdmin;
-            break;
-        case USER_TYPES.CMS_APPROVER:
-            retval = CMSApprover;
-            break;
-        case USER_TYPES.SYSTEM_ADMIN:
-            retval = SystemAdmin;
-            break;
-        default:
-            retval = undefined;
-            break;
-      }
+  // what users they see depends on what role they are
+  switch (doneBy.type) {
+    case USER_TYPES.STATE_USER:
+      retval = StateUser;
+      break;
+    case USER_TYPES.STATE_ADMIN:
+      retval = StateAdmin;
+      break;
+    case USER_TYPES.CMS_APPROVER:
+      retval = CMSApprover;
+      break;
+    case USER_TYPES.SYSTEM_ADMIN:
+      retval = SystemAdmin;
+      break;
+    default:
+      retval = undefined;
+      break;
+  }
 
-    return retval;
+  return retval;
 };
 
-export const getCurrentStatus = statusList =>  {
-
-    let currentStatus;
-    let mostRecentTime = 0;
-
-    statusList.forEach((oneStatus) => {
-      if (oneStatus.date > mostRecentTime) {
-        currentStatus = oneStatus.status;
-        mostRecentTime = oneStatus.date;
-      }
-    });
-    return currentStatus;
-
-};
-
-const isLatestAttributeActive = attr => {
-  const latestAttribute = attr.reduce(
-      (latestItem, currentItem) => currentItem.date > latestItem.date ? currentItem : latestItem
+export const getCurrentStatus = (attr) => {
+  const latestAttribute = attr.reduce((latestItem, currentItem) =>
+    currentItem.date > latestItem.date ? currentItem : latestItem
   );
-  return latestAttribute.status === 'active';
+  return latestAttribute.status;
 };
 
-export const getAuthorizedStateList = user => {
-    let tempStateList = [];
+const isLatestAttributeActive = (attr) => {
+  return getCurrentStatus(attr) === "active";
+};
 
-    if (!user.attributes) return tempStateList;
+export const getAuthorizedStateList = (user) => {
+  let tempStateList = [];
 
-    user.attributes.forEach((attribute) => {
-      isLatestAttributeActive(attribute.history) ? tempStateList.push(attribute.stateCode) : null;
-    });
+  if (!user.attributes) return tempStateList;
 
-    return tempStateList;
-  };
+  user.attributes.forEach((attribute) => {
+    isLatestAttributeActive(attribute.history)
+      ? tempStateList.push(attribute.stateCode)
+      : null;
+  });
+
+  return tempStateList;
+};
