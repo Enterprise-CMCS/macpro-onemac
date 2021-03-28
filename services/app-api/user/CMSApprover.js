@@ -10,13 +10,17 @@ import { getCurrentStatus } from "./user-util";
  */
 class CMSApprover {
   /**
-   * Returns the managed user role
+   * CMS Approvers manage the State Admins
    * @returns {String} the User Role
    */
   getScanFor() {
     return USER_TYPES.STATE_ADMIN;
   }
 
+  /**
+   * CMS Approvers do NOT have a state
+   * @returns {Boolean} false because we do not check if the states match
+   */
   shouldICheckState() {
     return false;
   }
@@ -72,6 +76,8 @@ class CMSApprover {
       });
     });
 
+    console.log("error List is ", errorList);
+
     console.log("Response:", userRows);
 
     return userRows;
@@ -81,17 +87,3 @@ class CMSApprover {
 const instance = new CMSApprover();
 Object.freeze(instance);
 export default instance;
-
-/*
-{  "id": { "S": "'${testuser}'" },
- "type": { "S": "cmsapprover" },
- "attributes": { "L": [
-   { "M": {
-     "status": { "S": "active" },
-     "date": { "N": "'${createddate}'" },
-     "doneBy": { "S": "systemsadmin@cms.hhs.local"
-    }
-    }
-  } ]
-}
-*/

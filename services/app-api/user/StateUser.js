@@ -15,6 +15,10 @@ class StateUser {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
+  /**
+   * State Users have state associations
+   * @returns {true} check state for State Users
+   */
   shouldICheckState() {
     return true;
   }

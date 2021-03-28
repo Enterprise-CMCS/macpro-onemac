@@ -14,6 +14,10 @@ class SystemAdmin {
     return USER_TYPES.CMS_APPROVER;
   }
 
+  /**
+   * System Admins are not restricted by state
+   * @returns {false} do not check state for System Admins
+   */
   shouldICheckState() {
     return false;
   }
@@ -60,7 +64,7 @@ class SystemAdmin {
     console.log("error List is ", errorList);
 
     console.log("Response:", userRows);
-    // Return the retrieved item
+
     return userRows;
   }
 }

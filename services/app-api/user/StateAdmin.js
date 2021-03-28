@@ -15,7 +15,11 @@ class StateAdmin {
     return USER_TYPES.STATE_USER;
   }
 
-  shouldICheckState() {
+  /**
+   * State Admins can only manage their approved state
+   * @returns {true} check state for State Admins
+   */
+   shouldICheckState() {
     return true;
   }
 
@@ -76,7 +80,7 @@ class StateAdmin {
     console.log("error List is ", errorList);
 
     console.log("Response:", userRows);
-    // Return the retrieved item
+
     return userRows;
   }
 }
@@ -84,28 +88,3 @@ class StateAdmin {
 const instance = new StateAdmin();
 Object.freeze(instance);
 export default instance;
-
-/*
-{
-  "id": { "S": "'${userEmail}'" },
-  "type": { "S": "stateadmin" },
-  "attributes": { "L": [
-    { "M":  {
-      "stateCode": { "S": "{stateCode}" },
-      "history": { "L": [
-        { "M": {
-          "status": { "S": "pending" },
-          "date": { "N": "'${createddate}'" },
-          "doneBy": { "S": "systemsadmin@cms.hhs.local"
-        }
-      }
-    },
-   ]
-  }
-}
-
-partition key is email
-sort key is state.status
-extra fields: firstName, lastName, congnito?, Okta?
-
-*/

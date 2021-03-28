@@ -87,9 +87,6 @@ const validateUser = data => {
     const userSchema = Joi.object().keys({
         id: Joi.string().email().required(),
         type: Joi.string().valid('cmsapprover', 'stateadmin', 'stateuser').required(),
-        firstName: Joi.string(),
-        lastName: Joi.string(),
-        phone: Joi.string(),
         systemAdminEmail: Joi.string().email().optional(),
         attributes: Joi.array()
             .when('type', {

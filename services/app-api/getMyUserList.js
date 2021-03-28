@@ -42,7 +42,3 @@ export const main = handler(async (event, context) => {
 
   return uFunctions.transformUserList(userResult, stateList);
 });
-
-/*
-"body": "[{\"id\":\"stateadmindenied@cms.hhs.local\",\"attributes\":[{\"date\":1616075077,\"stateCode\":\"MI\",\"status\":\"denied\"},{\"date\":1616075077,\"stateCode\":\"VA\",\"status\":\"denied\"}],\"type\":\"stateadmin\"},{\"id\":\"stateadminactive@cms.hhs.local\",\"attributes\":[{\"date\":1616075077,\"stateCode\":\"MI\",\"status\":\"active\"},{\"date\":1616075077,\"stateCode\":\"VA\",\"status\":\"active\"}],\"type\":\"stateadmin\"},{\"id\":\"stateadminpending@cms.hhs.local\",\"attributes\":[{\"date\":1616075077,\"stateCode\":\"MI\",\"status\":\"pending\"},{\"date\":1616075077,\"stateCode\":\"VA\",\"status\":\"pending\"}],\"type\":\"stateadmin\"},{\"id\":\"stateadminrevoked@cms.hhs.local\",\"attributes\":[{\"date\":1616075077,\"stateCode\":\"MI\",\"status\":\"revoked\"},{\"date\":1616075077,\"stateCode\":\"VA\",\"status\":\"revoked\"}],\"type\":\"stateadmin\"}]",
-*/
