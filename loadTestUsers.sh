@@ -19,8 +19,8 @@ else
  
  #EPOCH Unix Timestamp
  createddate=`date '+%s'`
- # subtract 7 days to get last week date for Pendings
- lastweekdate=createddate-(60*60*24*7);
+ # prior pendings should be older
+ lastweekdate=`date --date='7 days ago' '+%s'`
  #
  # Check if Table already Loaded, Do not load a second time
  #
