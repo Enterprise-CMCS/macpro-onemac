@@ -50,8 +50,9 @@ export function useSignupCallback(userType, processAttributes) {
       } catch (error) {
         console.error("Could not create new user:", error);
 
-        destination = location.pathname;
+        destination = { ...location, state: undefined };
         messageState = {
+          ...location.state,
           showAlert: ALERTS_MSG.SUBMISSION_ERROR,
         };
       } finally {
@@ -62,7 +63,7 @@ export function useSignupCallback(userType, processAttributes) {
     [
       email,
       history,
-      location.pathname,
+      location,
       processAttributes,
       setUserInfo,
       userType,

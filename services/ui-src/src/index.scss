@@ -443,6 +443,7 @@ input[type="file"] {
 
   &.state-signup {
     min-height: 550px;
+    flex-direction: column;
   }
 
   .signup-prompt {

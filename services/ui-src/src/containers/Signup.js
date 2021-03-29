@@ -67,16 +67,23 @@ export function Signup() {
   }, [history, type]);
 
   return (
-    <div className="signup-container">
-      <AlertBar />
-      <div className="signup-center">
-        <p className="signup-prompt">
-          Select the user role you're registering for.
-        </p>
-        <section className="signup-collapse-padding ds-l-container">
-          <div className="signup-collapse-padding ds-l-row">{signupOptions}</div>
-        </section>
+    <>
+      <div className="page-title-bar" id="title_bar">
+        <h2>Registration: User Role</h2>
       </div>
-    </div>
+      <div className="signup-container">
+        <AlertBar />
+        <div className="signup-center">
+          <p className="signup-prompt">
+            Select the user role you're registering for.
+          </p>
+          <section className="signup-collapse-padding ds-l-container">
+            <div className="signup-collapse-padding ds-l-row">
+              {signupOptions}
+            </div>
+          </section>
+        </div>
+      </div>
+    </>
   );
 }
