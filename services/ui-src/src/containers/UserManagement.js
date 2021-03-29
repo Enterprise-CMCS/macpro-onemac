@@ -129,8 +129,8 @@ const UserManagement = () => {
           statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;
           menuItems = [
             {
-              label: "Approve Access",
-              value: "approved",
+              label: "Grant Access",
+              value: "grant",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
             {
