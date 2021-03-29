@@ -62,7 +62,11 @@ export default function DynamicRoutes() {
             </>
           );
         case ROLES.CMS_APPROVER:
-          return <></>;
+          return (
+            <>
+              <Redirect to={ROUTES.HOME} />
+            </>
+          );
         case ROLES.SYSTEM_ADMIN:
           return <></>;
         default:
