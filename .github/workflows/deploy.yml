@@ -80,6 +80,22 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+      - name: Get default link for register button
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: /default/ui-src/REGISTER_LINK
+          env_variable_name: REGISTER_LINK
+        continue-on-error: true
+      - name: Get branch specific link for register button, if exists
+        uses: "marvinpinto/action-inject-ssm-secrets@latest"
+        env:
+          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
+        with:
+          ssm_parameter: /${{ env.branch_name }}/ui-src/REGISTER_LINK
+          env_variable_name: REGISTER_LINK
+        continue-on-error: true
       - name: Get default test user name
         uses: "marvinpinto/action-inject-ssm-secrets@latest"
         env:
