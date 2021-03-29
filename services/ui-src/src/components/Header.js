@@ -170,6 +170,9 @@ function Header(props) {
     } else {
       return (
         <div className="nav-right">
+          <Button onClick={() => (window.location = config.REGISTER_LINK)} inversed className="no-border">
+            Register
+          </Button>
           <Button onClick={() => (window.location = getSignInUrl())} inversed>
             Login
           </Button>
@@ -188,6 +191,8 @@ function Header(props) {
       );
     }
   }
+
+  console.log('CONFIG---- ', config);
 
   return (
     <div>

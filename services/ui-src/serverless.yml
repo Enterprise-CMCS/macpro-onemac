@@ -20,6 +20,7 @@ custom:
   application_endpoint_url: ${cf:ui-${self:custom.stage}.CloudFrontEndpointUrl}
   cognito_user_pool_client_id: ${cf:ui-auth-${self:custom.stage}.UserPoolClientId}
   cognito_user_pool_client_domain: ${cf:ui-auth-${self:custom.stage}.UserPoolClientDomain}
+  register_link: ${ssm:/${self:custom.stage}/ui-src/REGISTER_LINK, ssm:/default/ui-src/REGISTER_LINK}
 
   s3Sync:
     - bucketName: ${self:custom.ui_s3_bucket_name}
@@ -48,6 +49,7 @@ custom:
         export COGNITO_REDIRECT_SIGNOUT=${self:custom.application_endpoint_url}
         export S3_ATTACHMENTS_BUCKET_REGION=${self:custom.s3_attachments_bucket_region}
         export S3_ATTACHMENTS_BUCKET_NAME=${self:custom.s3_attachments_bucket_name}
+        export REGISTER_LINK=${self:custom.register_link}
         ./env.sh
         cp public/env-config.js build/env-config.js
 
