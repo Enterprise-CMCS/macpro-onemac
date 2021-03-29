@@ -20,7 +20,7 @@ export const main = handler(async (event, context) => {
   }
 
   // map the user functions from the type pulled in from tne current user
-  const uFunctions = getUserFunctions(doneBy.type);
+  const uFunctions = getUserFunctions(doneBy);
   if (!uFunctions) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }

@@ -6,6 +6,7 @@ import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "../Routes";
 import { useLocation, useHistory } from "react-router-dom";
 import UserDataApi from "../utils/UserDataApi";
+import { getAlert } from "../libs/error-mappings";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
@@ -60,6 +61,10 @@ const UserManagement = () => {
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         console.log("user List: ", ul);
+        if (typeof ul === 'string') {
+          if (mounted) setAlert(getAlert(ul));
+          ul = [];
+        }
         if (mounted) setUserList(ul);
       })
       .catch((error) => {
