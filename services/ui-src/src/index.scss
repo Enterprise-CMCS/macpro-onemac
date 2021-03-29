@@ -2,8 +2,7 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
-$primary-color-lightest: #F0FAFE;
-$primary-color: #0071BC;
+$footer-darker-blue: #0071BC;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -706,12 +705,12 @@ input[type="file"] {
 
 .footer-top-container {
   @extend .brand-bar;
-  background: $primary-color-lightest;
+  background: $color-primary-alt-lightest;
   padding-left: 8rem;
   padding-right: 8rem;
 }
 .footer-bottom-container {
-  background: $primary-color; 
+  background: $footer-darker-blue; 
   color: white; 
   margin: 0;
   width: 100%;
@@ -756,7 +755,7 @@ input[type="file"] {
   padding-left: 11.5rem;
   @extend .ds-l-col--8;
 }
-footer-address {
+.footer-address {
   text-align: right;
 }
 .multi-select-title {
@@ -829,7 +828,6 @@ text-align: left;
     width: 575px;
     height: 475px;
     margin: auto;
-
 }
 
 
