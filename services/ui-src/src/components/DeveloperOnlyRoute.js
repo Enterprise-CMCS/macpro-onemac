@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
-import { ROUTES } from "../Routes";
+import { ROUTES } from "cmscommonlib";
 
 export default function DeveloperOnlyRoute({ children, ...rest }) {
   const { isLoggedInAsDeveloper } = useAppContext();
