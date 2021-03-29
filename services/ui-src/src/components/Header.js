@@ -23,6 +23,23 @@ function getSignInUrl() {
 }
 
 /**
+ * Get the register URL depending on the current domain.
+ * @returns the register URL
+ */
+function getRegisterUrl() {
+  const currentDomain = window.location
+  let registerUrl = 'https://test.home.idm.cms.gov/'
+
+  if (currentDomain === 'spa.cms.gov') {
+    registerUrl = 'https://home.idm.cms.gov/'
+  } else if (currentDomain === 'spa-val.cms.gov') {
+    registerUrl = 'https://impl.home.idm.cms.gov/'
+  }
+
+  return registerUrl
+}
+
+/**
  * Logout the user.
  */
 function logout() {
@@ -170,7 +187,7 @@ function Header(props) {
     } else {
       return (
         <div className="nav-right">
-          <Button onClick={() => (window.location = config.REGISTER_LINK)} inversed className="no-border">
+          <Button onClick={() => (window.location = getRegisterUrl())} inversed className="no-border">
             Register
           </Button>
           <Button onClick={() => (window.location = getSignInUrl())} inversed>
@@ -191,8 +208,6 @@ function Header(props) {
       );
     }
   }
-
-  console.log('CONFIG---- ', config);
 
   return (
     <div>
