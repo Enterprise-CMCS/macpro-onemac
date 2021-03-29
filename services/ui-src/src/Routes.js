@@ -11,7 +11,6 @@ import DeveloperOnlyRoute from "./components/DeveloperOnlyRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
 import DynamicRoutes from "./DynamicRoutes";
-import UserPage from "./containers/UserPage";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 
 
