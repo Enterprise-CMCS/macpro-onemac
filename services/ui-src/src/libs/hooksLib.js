@@ -41,7 +41,8 @@ export function useSignupCallback(userType, processAttributes) {
           type: userType,
           attributes: payload,
         });
-        if (answer) throw answer;
+        // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
+        if (answer && answer !== "UR000") throw answer;
 
         await setUserInfo();
 
