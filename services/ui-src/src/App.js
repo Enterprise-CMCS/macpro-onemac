@@ -11,7 +11,8 @@ function App() {
     isAuthenticating: true,
     isAuthenticated: false,
     isLoggedInAsDeveloper: false,
-    userProfile: null
+    userProfile: null,
+    isValidRoute: false
   });
 
   useEffect(() => {
@@ -48,6 +49,7 @@ function App() {
       // Get user data from the user table
       // and add to the user profile.
       // Note that userData comes back as an empty object if there is none.
+
       const userData = await ChangeRequestDataApi.userProfile(tempUserProfile.email);
       tempUserProfile.userData = userData;
 
