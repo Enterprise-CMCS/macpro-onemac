@@ -1,5 +1,5 @@
 import React from "react";
-import { footerEmail } from '../libs/appContent';
+import { helpDeskContact } from "../libs/helpDeskContact";
 
 function Footer() {
 
@@ -31,8 +31,8 @@ function Footer() {
             <div>
                 <div className="footer-bottom-container">
                     <div className="footer-email-container">
-                        Email <a href="sample@cms.gov" className="footer-email">{footerEmail}</a> for help or feedback.
-                        </div>
+                        Email <a className="footer-email" href={`mailto:${helpDeskContact.email}`}> {helpDeskContact.email}</a> for help or feedback.
+                    </div>
                     <div className="ds-l-col--3 footer-address">
                         7500 Security Boulevard Baltimore, MD 21244
                         </div>
