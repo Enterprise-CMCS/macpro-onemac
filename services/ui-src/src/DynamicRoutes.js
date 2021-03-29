@@ -17,7 +17,6 @@ export default function DynamicRoutes() {
 
     if (userProfile) {
         if (userProfile.userData) {
-            console.log(JSON.stringify(userProfile.userData))
             switch (userProfile.userData.type) {
                 case ROLES.STATE_USER:
                     return (<>
