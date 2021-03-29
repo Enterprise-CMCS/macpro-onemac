@@ -41,7 +41,6 @@ export const main = handler(async (event, context) => {
   };
 
   const userResult = await dynamoDb.scan(scanParams);
-  console.log("results:", JSON.stringify(userResult));
 
   return uFunctions.transformUserList(userResult, stateList);
 });

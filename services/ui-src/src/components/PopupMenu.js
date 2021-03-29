@@ -29,7 +29,6 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
 
     const handleClose = (value) => {
         setAnchorEl(null);
-        handleSelected(selectedRow, value)
     };
 
     return (
@@ -48,7 +47,7 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
                 {menuItems.map((item, i) => (
                     <React.Fragment key={item.value}>
                         {i !== 0  && <hr/>}
-                        <MenuItem className={classes.root} onClick={() => {if (window.confirm(item.confirmMessage)) {alert("confirmed");}handleClose(item.value)}}>{item.label}</MenuItem>
+                        <MenuItem className={classes.root} onClick={() => {if (window.confirm(item.confirmMessage)) {alert("confirmed, inspect console for details");handleSelected(selectedRow, item.value)}handleClose(item.value)}}>{item.label}</MenuItem>
                     </React.Fragment>))}
                 </div>
 
@@ -56,18 +55,3 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
         </>
     );
 }
-/*
-
-           <PopupMenu
-              selectedRow={i}
-              userEmail={user.email}
-              menuItems={menuItems}
-              handleSelected={(row, value) => {
-                UserDataApi.setUserStatus(userProfile.email, user.email, value);
-                loadUsers();
-                console.log("Seleccted:(" + row + " : " + value + ") userEmail : " + user.email + " doneBy " + userProfile.email);
-              } }
-            />
-
-
-            */
