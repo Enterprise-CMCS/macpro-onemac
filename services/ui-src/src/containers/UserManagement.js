@@ -209,7 +209,6 @@ const UserManagement = () => {
                     userProfile.email
                 );
               }}
-              renderAlert={renderAlert()}
             />
           </td>
         </tr>

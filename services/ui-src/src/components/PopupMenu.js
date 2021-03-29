@@ -4,7 +4,6 @@ import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {makeStyles} from '@material-ui/core/styles';
 import tripleDots from "../images/TripleDots.svg";
-import { ALERTS_MSG } from "../libs/alert-messages";
 
 const TRIPLE_DOTS_IMAGE = <img alt="" className="triple-dots" src={tripleDots} />;
 
@@ -20,7 +19,7 @@ const useStyles = makeStyles((theme) => ({
 }));
 
 
-export default function PopupMenu({selectedRow, menuItems, handleSelected, renderAlert }) {
+export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
     const classes = useStyles();
     const [anchorEl, setAnchorEl] = React.useState(null);
 
@@ -48,7 +47,7 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected, rende
                 {menuItems.map((item, i) => (
                     <React.Fragment key={item.value}>
                         {i !== 0  && <hr/>}
-                        <MenuItem className={classes.root} onClick={() => {renderAlert(ALERTS_MSG.NONE);if (window.confirm(item.confirmMessage)) {alert("confirmed, inspect console for details");handleSelected(selectedRow, item.value)}handleClose(item.value)}}>{item.label}</MenuItem>
+                        <MenuItem className={classes.root} onClick={() => {if (window.confirm(item.confirmMessage)) {alert("confirmed, inspect console for details");handleSelected(selectedRow, item.value)}handleClose(item.value)}}>{item.label}</MenuItem>
                     </React.Fragment>))}
                 </div>
 
