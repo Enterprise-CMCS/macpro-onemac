@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES } from "../Routes";
+import { ROUTES } from "cmscommonlib";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../images/OneMAC_logoLight1.svg"
+
 
 /**
  * Get the sign in URL used with OKTA.
@@ -29,6 +30,7 @@ function logout() {
   const authConfig = Auth.configure();
   Auth.signOut();
   window.location.href = authConfig.oauth.redirectSignOut;
+  document.location.reload(true)
 }
 
 /**

@@ -11,7 +11,8 @@ function App() {
     isAuthenticating: true,
     isAuthenticated: false,
     isLoggedInAsDeveloper: false,
-    userProfile: null
+    userProfile: null,
+    isValidRoute: false
   });
 
   useEffect(() => {

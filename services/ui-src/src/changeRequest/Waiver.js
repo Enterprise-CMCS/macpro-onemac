@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
-import { ROUTES } from "../Routes";
+import { ROUTES } from "cmscommonlib";
 
 /**
  * Waiver acts as a wrapper around SubmissionForm to render custom Waiver form
@@ -31,7 +31,7 @@ const Waiver = () => {
   const baseTransmittalNumber = {
     idType: "waiver",
     idLabel: "Waiver Number",
-    idFAQLink: ROUTES.FAQ_WAIVER_ID,  
+    idFAQLink: ROUTES.FAQ_WAIVER_ID,
   };
 
   const formInfo = {
@@ -64,7 +64,7 @@ const Waiver = () => {
       idHintText: "Must follow the format required by the Action Type",
       idFormat: "the Action Type.  Please select an Action Type first.",
       idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
-      idMustExist: false,  
+      idMustExist: false,
       errorLevel: "error",
     },
     newTransmittalNumber: {

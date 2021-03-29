@@ -21,6 +21,7 @@
     "serverless-plugin-warmup": "^4.9.0"
   },
   "dependencies": {
+    "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "hapi": "^18.1.0",
     "luxon": "^1.25.0",

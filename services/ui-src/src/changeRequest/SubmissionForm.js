@@ -4,7 +4,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ROUTES } from "../Routes";
+import { ROUTES } from "cmscommonlib";
 import PropTypes from "prop-types";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
@@ -180,7 +180,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       try {
         if (transmittalNumberDetails.existenceRegex !== undefined) {
           newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
-        } 
+        }
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
         );
