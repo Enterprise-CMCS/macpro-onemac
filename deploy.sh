@@ -13,23 +13,21 @@ services=(
 )
 
 # These test users are only available in DEV environments.
-TEST_USERS=('user1@cms.hhs.local'
-  'user2@cms.hhs.local'
-  'user3@cms.hhs.local'
-  'user4@cms.hhs.local'
-  'user5@cms.hhs.local'
-  'stateuseractive@cms.hhs.local'
+TEST_USERS=('stateuseractive@cms.hhs.local'
   'stateuserpending@cms.hhs.local'
   'stateuserdenied@cms.hhs.local'
   'stateuserrevoked@cms.hhs.local'
+  'stateuserunregistered@cms.hhs.local'
   'stateadminactive@cms.hhs.local'
   'stateadminpending@cms.hhs.local'
   'stateadmindenied@cms.hhs.local'
   'stateadminrevoked@cms.hhs.local'
+  'stateadminunregistered@cms.hhs.local'
   'cmsapproveractive@cms.hhs.local'
   'cmsapproverpending@cms.hhs.local'
   'cmsapproverdenied@cms.hhs.local'
-  'cmsapproverrevoked@cms.hhs.local')
+  'cmsapproverrevoked@cms.hhs.local'
+  'cmsapproverunregistered@cms.hhs.local')
 
 TEST_USER_PASSWORD="Passw0rd!"
 
@@ -93,10 +91,22 @@ then
   then
       for user in ${TEST_USERS[@]}
       do
+          case $user in
+            cms*)
+              cms_role=onemac-cms-user
+              ;;
+            state*)
+              cms_role=onemac-state-user
+              ;;
+            *)
+              cms_role=
+              ;;
+          esac
+
           # We ignore all the errors if the user exists.
           set +e
           aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user \
-          --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName
+          --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName Name=custom:cms_roles,Value=$cms_role
           aws cognito-idp admin-set-user-password --user-pool-id $cognito_user_pool_id --username $user --password $TEST_USER_PASSWORD --permanent
           set -e
       done

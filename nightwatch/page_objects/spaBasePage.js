@@ -160,7 +160,7 @@ module.exports = {
         devUserField : '[id=email]',
         userField : '[id=okta-signin-username]',
         loginBtn: 'div.nav-right > button',
-        loginTitle : 'div[id=title_bar]',
+        titleBar : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
         manageAccountLink: "[id=manageAccountLink]",
         logout : '[id=logoutLink]',
