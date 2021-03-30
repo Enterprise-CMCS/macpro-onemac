@@ -24,6 +24,25 @@ function getSignInUrl() {
 }
 
 /**
+ * Get the register URL depending on the current domain.
+ * @returns the register URL
+ */
+function getRegisterUrl() {
+  const currentDomain = window.location.hostname
+  let registerUrl = 'https://test.home.idm.cms.gov/'
+
+  // TODO remove the 'spa.cms.gov' and 'spa-val.cms.gov' as options
+  // after the rebrand has changed the domain to onemac
+  if (currentDomain === 'onemac.cms.gov' || currentDomain === 'spa.cms.gov') {
+    registerUrl = 'https://home.idm.cms.gov/'
+  } else if (currentDomain === 'onemacval.cms.gov' || currentDomain === 'spa-val.cms.gov') {
+    registerUrl = 'https://impl.home.idm.cms.gov/'
+  }
+
+  return registerUrl
+}
+
+/**
  * Logout the user.
  */
 function logout() {
@@ -172,7 +191,10 @@ function Header(props) {
     } else {
       return (
         <div className="nav-right">
-          <Button onClick={() => (window.location = getSignInUrl())} inversed>
+          <Button href={getRegisterUrl()} inversed className="register-link">
+            Register
+          </Button>
+          <Button href={getSignInUrl()} inversed>
             Login
           </Button>
           {showDevLogin && (

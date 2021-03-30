@@ -593,6 +593,7 @@ input[type="file"] {
       margin-right: 2rem;
       margin-top: 0px;
     }
+
     button.dropdown {
       color: $color-white;
       font-weight: bold;
@@ -607,8 +608,20 @@ input[type="file"] {
         color: rgba($color-base-inverse, 0.6);
       }
     }
+
     button {
       background-color: $color-primary;
+    }
+
+    a {
+      background-color: $color-primary;
+      &:hover {
+        text-decoration: none;
+      }
+    }
+
+    .register-link {
+      border-style: none;
     }
 
     .dev-login {
