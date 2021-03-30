@@ -26,8 +26,8 @@ class ChangeRequestDataApi {
       data.uploads = uploadsList;
 
       return await API.post("changeRequestAPI", "/submit", {
-          body: data,
-        });
+        body: data,
+      });
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
@@ -88,7 +88,7 @@ class ChangeRequestDataApi {
 
   /**
    * Fetch a specific record from the backend.
-   * @return {Array} a list of change requests
+   * @return {Promise<Array>} a list of change requests
    */
   async getAll() {
     try {
@@ -110,14 +110,10 @@ class ChangeRequestDataApi {
     try {
       return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
-      console.log(
-          `There was an error fetching all change requests`,
-          error
-      );
+      console.log(`There was an error fetching all change requests`, error);
       throw error;
     }
   }
-
 }
 
 const instance = new ChangeRequestDataApi();

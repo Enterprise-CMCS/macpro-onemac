@@ -1,4 +1,9 @@
+import React from "react";
+import { Redirect } from "react-router-dom";
+import { ROLES, ROUTES } from "cmscommonlib";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
+import { Signup } from "./containers/Signup";
+import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
 import UserManagement from "./containers/UserManagement";
 import Spa from "./changeRequest/Spa";
@@ -8,10 +13,7 @@ import WaiverRai from "./changeRequest/WaiverRai";
 import WaiverExtension from "./changeRequest/WaiverExtension";
 import WaiverAppK from "./changeRequest/WaiverAppK";
 import Metrics from "./containers/Metrics";
-import React from "react";
-import { ROUTES } from "./Routes";
 import { useAppContext } from "./libs/contextLib";
-import { ROLES } from "cmscommonlib";
 
 export default function DynamicRoutes() {
   const { userProfile } = useAppContext();
@@ -86,5 +88,16 @@ export default function DynamicRoutes() {
       }
     }
   }
-  return <></>;
+  return (
+    <>
+      <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
+        <Signup />
+      </AuthenticatedRoute>
+      <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
+        <StateSignup />
+      </AuthenticatedRoute>
+      <Redirect to={ROUTES.SIGNUP} />
+    </>
+  );
+  
 }

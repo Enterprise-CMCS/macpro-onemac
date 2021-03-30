@@ -5,6 +5,7 @@ import { devUsers } from "./libs/devUsers";
 import UserDataApi from "./utils/UserDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
+import Footer from "./components/Footer";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -40,6 +41,7 @@ function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       userAuthenticationStatus = true;
       tempUserProfile = {
+        cmsRoles: authUser.signInUserSession.idToken.payload["custom:cms_roles"],
         email: authUser.signInUserSession.idToken.payload.email,
         firstName: authUser.signInUserSession.idToken.payload.given_name,
         lastName: authUser.signInUserSession.idToken.payload.family_name,
@@ -84,6 +86,7 @@ function App() {
           <Header />
           <Routes />
         </AppContext.Provider>
+        <Footer />
       </div>
     )
   );

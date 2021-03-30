@@ -19,6 +19,8 @@ export const ROUTES = {
     PROFILE: '/profile',
     METRICS: '/metrics',
     DEVLOGIN: '/devlogin',
+    SIGNUP: "/signup",
+    STATE_SIGNUP: "/signup/state",
     SPA: '/spa',
     SPA_RAI: '/sparai',
     COMPONENT_PAGE: '/componentpage', // temporary placeholder for the developers to house components //

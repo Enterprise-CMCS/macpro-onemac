@@ -43,6 +43,21 @@ class UserDataApi {
       throw error;
     }
   }
+/**
+   * Create or update a user's profile
+   * @param {Object} User record to create or update in Dynamo
+   * @return {Promise<string>} An error code, or nothing at all if it succeeds
+   */
+ async updateUser(userRecord) {
+  try {
+    return await API.put("changeRequestAPI", "/putUser", {
+      body: userRecord,
+    });
+  } catch (error) {
+    console.error("Could not save user profile data:", error);
+    throw error;
+  }
+}
 
   /**
    * Tell the back end to update the status of a given user

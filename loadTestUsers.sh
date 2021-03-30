@@ -123,35 +123,6 @@ aws dynamodb put-item --table-name $userTable --item file://user.json
 
 
  
- #
- # Legacy Test Users
- #
-   stateuser="user1@cms.hhs.local"
-   stateuserattributes='"attributes": { "L": [ { "M":  { "stateCode": { "S": "MI" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } },{ "M":  { "stateCode": { "S": "VA" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } } ] }'
-   echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
-   aws dynamodb put-item --table-name $userTable --item file://user.json
- 
-   stateuser="user2@cms.hhs.local"
-   stateuserattributes='"attributes": { "L": [ { "M":  { "stateCode": { "S": "MI" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } },{ "M":  { "stateCode": { "S": "VA" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } } ] }'
-   echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
-   aws dynamodb put-item --table-name $userTable --item file://user.json
- 
-   stateuser="user3@cms.hhs.local"
-   stateuserattributes='"attributes": { "L": [ { "M":  { "stateCode": { "S": "MI" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } },{ "M":  { "stateCode": { "S": "VA" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } } ] }'
-   echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
-   aws dynamodb put-item --table-name $userTable --item file://user.json
- 
-   stateuser="user4@cms.hhs.local"
-   stateuserattributes='"attributes": { "L": [ { "M":  { "stateCode": { "S": "MI" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } },{ "M":  { "stateCode": { "S": "VA" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } } ] }'
-   echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
-   aws dynamodb put-item --table-name $userTable --item file://user.json
- 
- 
-   stateuser="user5@cms.hhs.local"
-   stateuserattributes='"attributes": { "L": [ { "M":  { "stateCode": { "S": "MI" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } },{ "M":  { "stateCode": { "S": "VA" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } } ] }'
-   echo '{  "id": { "S": "'${stateuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
-   aws dynamodb put-item --table-name $userTable --item file://user.json
-  
  fi
  
  aws dynamodb scan --table-name $userTable
