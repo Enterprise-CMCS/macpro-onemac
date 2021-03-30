@@ -62,7 +62,7 @@ const UserManagement = () => {
       .then((ul) => {
         console.log("user List: ", ul);
         if (typeof ul === 'string') {
-          if (mounted) setAlert(getAlert(ul));
+          if (mounted && !isPending(userProfile.userData)) setAlert(getAlert(ul));
           ul = [];
         }
         if (mounted) setUserList(ul);

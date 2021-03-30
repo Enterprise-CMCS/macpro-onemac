@@ -1,5 +1,6 @@
 import { useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
+import { ROLES, ROUTES } from "cmscommonlib";
 
 import UserDataApi from "../utils/UserDataApi";
 import { ALERTS_MSG } from "./alert-messages";
@@ -46,7 +47,10 @@ export function useSignupCallback(userType, processAttributes) {
 
         await setUserInfo();
 
-        destination = "/dashboard";
+        destination =
+          userType === ROLES.STATE_USER
+            ? ROUTES.DASHBOARD
+            : ROUTES.USER_MANAGEMENT;
         messageState = { showAlert: ALERTS_MSG.SUBMISSION_SUCCESS };
       } catch (error) {
         console.error("Could not create new user:", error);
@@ -61,14 +65,7 @@ export function useSignupCallback(userType, processAttributes) {
         history.replace(destination, messageState);
       }
     },
-    [
-      email,
-      history,
-      location,
-      processAttributes,
-      setUserInfo,
-      userType,
-    ]
+    [email, history, location, processAttributes, setUserInfo, userType]
   );
 
   return [loading, signupUser];
