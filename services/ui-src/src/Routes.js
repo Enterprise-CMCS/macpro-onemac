@@ -49,12 +49,6 @@ export default function Routes() {
             <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
                 <DevLogin />
             </UnauthenticatedRoute>
-            <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
-                <Dashboard />
-            </AuthenticatedRoute>
-            <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
-                <UserManagement />
-            </AuthenticatedRoute>
             <AuthenticatedRoute exact path={ROUTES.PROFILE}>
                 <UserPage/>
             </AuthenticatedRoute>
