@@ -84,7 +84,7 @@ export default function DynamicRoutes() {
             </>
           );
         default:
-          return <></>;
+          break;
       }
     }
   }
