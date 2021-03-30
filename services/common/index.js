@@ -10,6 +10,7 @@
  */
 export const ROUTES = {
     DASHBOARD: '/dashboard',
+    USER_MANAGEMENT: '/usermanagement',
     FAQ: '/FAQ',
     FAQ_TOP: '/FAQ/#top',
     FAQ_SPA_ID: '/FAQ#spa-id-format',
@@ -47,17 +48,19 @@ const STATEUSER_ALLOWED_ROUTES = [
 
 
 const STATEADMIN_ALLOWED_ROUTES = [
-    ROUTES.DASHBOARD,
+    ROUTES.USER_MANAGEMENT,
     ROUTES.METRICS
 ].concat(ALL_USERS_ROUTES);
 ;
 
 const CMSAPPROVER_ALLOWED_ROUTES = [
+    ROUTES.USER_MANAGEMENT,
     ROUTES.METRICS,
 ].concat(ALL_USERS_ROUTES);
 ;
 
 const SYSTEMADMIN_ALLOWED_ROUTES = [
+    ROUTES.USER_MANAGEMENT,
     ROUTES.METRICS,
 ].concat(ALL_USERS_ROUTES);
 
