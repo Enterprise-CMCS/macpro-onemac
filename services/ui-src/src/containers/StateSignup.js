@@ -3,7 +3,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { userTypes } from "../libs/userTypes";
+import { userTypes } from "../libs/userLib";
 import { AlertBar } from "../components/AlertBar";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import { territoryList } from "../libs/territoryLib";

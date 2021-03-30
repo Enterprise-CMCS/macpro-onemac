@@ -5,6 +5,7 @@ import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from "@hapi/joi";
 import { isEmpty } from "lodash";
 import { territoryCodeList } from "./libs/territoryLib";
+import getUser from "./utils/getUser";
 
 /**
  * Update a user
@@ -124,32 +125,6 @@ const validateUser = (data) => {
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
   return "";
-};
-
-const getUser = async (userEmail) => {
-  const params = {
-    TableName: process.env.userTableName, // Todo : check for existance
-    Key: {
-      id: userEmail,
-    },
-  };
-  let result;
-  try {
-    result = await dynamoDb.get(params);
-  } catch (dbError) {
-    console.log(`Error happened while reading from DB:  ${dbError}`);
-    throw dbError;
-  }
-
-  if (!result.Item) {
-    console.log(
-      `The user does not exist with the id: ${userEmail} in the User table`
-    );
-    return result;
-  }
-
-  console.log(`Selected User ${userEmail}: ${JSON.stringify(result)}`);
-  return result.Item;
 };
 
 const populateUserData = (input, selectedUser) => {

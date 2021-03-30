@@ -3,6 +3,8 @@ export const devUsers = [
   'stateuserpending@cms.hhs.local',
   'stateuserdenied@cms.hhs.local',
   'stateuserrevoked@cms.hhs.local',
+  'stateadminactiveMI@cms.hhs.local',
+  'stateadminactiveVA@cms.hhs.local',
   'stateuserunregistered@cms.hhs.local',
   'stateadminactive@cms.hhs.local',
   'stateadminpending@cms.hhs.local',
@@ -13,5 +15,6 @@ export const devUsers = [
   'cmsapproverpending@cms.hhs.local',
   'cmsapproverdenied@cms.hhs.local',
   'cmsapproverrevoked@cms.hhs.local',
+  'systemadmintest@cms.hhs.local',
   'cmsapproverunregistered@cms.hhs.local',
 ];

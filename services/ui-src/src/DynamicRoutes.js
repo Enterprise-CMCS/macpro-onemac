@@ -1,11 +1,11 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
 import { ROLES, ROUTES } from "cmscommonlib";
-
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
+import UserManagement from "./containers/UserManagement";
 import Spa from "./changeRequest/Spa";
 import Waiver from "./changeRequest/Waiver";
 import SpaRai from "./changeRequest/SpaRai";
@@ -53,8 +53,8 @@ export default function DynamicRoutes() {
         case ROLES.STATE_ADMIN:
           return (
             <>
-              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
-                <Dashboard />
+              <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+                <UserManagement />
               </AuthenticatedRoute>
               <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
                 <Metrics />
@@ -64,17 +64,30 @@ export default function DynamicRoutes() {
         case ROLES.CMS_APPROVER:
           return (
             <>
-              <Redirect to={ROUTES.HOME} />
+              <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+                <UserManagement />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+                <Metrics />
+              </AuthenticatedRoute>
             </>
           );
         case ROLES.SYSTEM_ADMIN:
-          return <></>;
+          return (
+            <>
+              <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+                <UserManagement />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+                <Metrics />
+              </AuthenticatedRoute>
+            </>
+          );
         default:
-          break;
+          return <></>;
       }
     }
   }
-
   return (
     <>
       <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
@@ -86,4 +99,5 @@ export default function DynamicRoutes() {
       <Redirect to={ROUTES.SIGNUP} />
     </>
   );
+  
 }

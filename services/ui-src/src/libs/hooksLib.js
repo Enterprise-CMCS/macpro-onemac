@@ -1,7 +1,7 @@
 import { useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import UserDataApi from "../utils/ChangeRequestDataApi";
 import { ALERTS_MSG } from "./alert-messages";
 import { useAppContext } from "./contextLib";
 
@@ -36,7 +36,7 @@ export function useSignupCallback(userType, processAttributes) {
           payload = processAttributes(payload);
         }
 
-        let answer = await ChangeRequestDataApi.updateUser({
+        let answer = await UserDataApi.updateUser({
           id: email,
           type: userType,
           attributes: payload,

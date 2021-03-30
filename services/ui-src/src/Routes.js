@@ -1,7 +1,6 @@
 import React from "react";
 import { Route, Switch } from "react-router-dom";
 import { ROUTES } from "cmscommonlib";
-
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ";
 import NotFound from "./containers/NotFound";
