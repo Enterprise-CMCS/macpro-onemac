@@ -10,11 +10,11 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
-  let userItem = await getUser(event.queryStringParameters.email);
+  const userItem = await getUser(event.queryStringParameters.email);
 
   const allowedRoutes = ROLE_ACL;
 
-  userItem.Item.validRoutes = allowedRoutes[userItem.Item.type];
+  userItem.validRoutes = allowedRoutes[userItem.type];
 
-  return userItem.Item;
+  return userItem;
 });
