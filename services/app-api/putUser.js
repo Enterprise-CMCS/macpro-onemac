@@ -137,9 +137,9 @@ const createUserObject = input => {
 const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {}) => {
     if (input.type === 'stateuser' || input.type === 'stateadmin') {
         input.attributes.forEach(item => {
-            const index = user.attributes.findIndex(attr => attr.stateCode === item.state);
+            const index = user.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             // Ensure the DoneBy user has permission to execute the requested actions
-            ensureDonebyHasPrivilage(doneByUser, input.type, item.state);
+            ensureDonebyHasPrivilage(doneByUser, input.type, item.stateCode);
             // Check if the there is type mismatch between the request and current type of the user
             checkTypeMismatch(input.type, user.type);
             if (index !== -1) {
@@ -153,7 +153,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
                 ensurePendingStatus(item);
 
                 user.attributes.push({
-                    stateCode: item.state,
+                    stateCode: item.stateCode,
                     history: [generateAttribute(item, input.doneBy)]
                 });
             }
