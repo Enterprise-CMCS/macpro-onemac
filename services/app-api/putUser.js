@@ -25,7 +25,7 @@ export const main = handler(async (event) => {
         await processEmail(input);
         return RESPONSE_CODE.USER_SUBMITTED;
     } catch (e) {
-        //console.log(`Error : ${e}`);
+        console.log(`Error executing lambda: ${JSON.stringify(e)}`);
         return JSON.stringify(e);
     }
 });
