@@ -8,7 +8,7 @@ import { isEmpty } from 'lodash';
 import { territoryCodeList } from "./libs/territoryLib";
 
 /**
- * Update a user
+ * Create / Update a user or change User status
  */
 export const main = handler(async (event) => {
     try {
@@ -18,7 +18,9 @@ export const main = handler(async (event) => {
         validateInput(input);
 
         let { user, doneByUser } = await retreiveUsers(input);
+        // Populate user type info into the input params for further processing
         input.type = input.type ? input.type : user.type;
+        // populate user atributes after ensuring data validity
         user = populateUserAttributes(input, user, doneByUser);
         // PUT user in db
         await putUser(process.env.userTableName, user);
@@ -46,6 +48,7 @@ const validateInput = input => {
                     status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
                 })),
             })
+            // New user status can only be pending
             .when('isPutUser', {
                 is: Joi.valid(true),
                 then: Joi.array().items(Joi.object({
@@ -53,7 +56,7 @@ const validateInput = input => {
                 }))
             }),
         isPutUser: Joi.boolean().optional(),
-        // if isPutUser is true then first and last names, type are required
+        // if isPutUser is true then first and last names and type are required
         firstName: Joi.when('isPutUser', { is: true, then: Joi.required() }),
         lastName: Joi.when('isPutUser', { is: true, then: Joi.required() }),
         type: Joi.when('isPutUser', {
@@ -96,9 +99,9 @@ const getUser = async userEmail => {
 };
 
 const retreiveUsers = async input => {
-    // retreive user item from DynamoDb
+    // retreive user and doneByUser from DynamoDb
     let user = await getUser(input.userEmail);
-
+    // get user details from the db
     if (isEmpty(user)) {
         if (!input.isPutUser) {
             console.log(`Warning: The user record does not exist with the id ${input.userEmail} in the db.
@@ -108,7 +111,7 @@ const retreiveUsers = async input => {
             user = createUserObject(input);
         }
     }
-
+    // get doneBy user details from the db
     const doneByUser = await getUser(input.doneBy);
     if (!doneByUser || isEmpty(doneByUser)) {
         console.log(`Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`);
@@ -117,6 +120,7 @@ const retreiveUsers = async input => {
     return { user, doneByUser };
 };
 
+// Create the user object for new users
 const createUserObject = input => {
     const user = {
         id: input.userEmail,
@@ -126,11 +130,14 @@ const createUserObject = input => {
     return user;
 };
 
+// populate user atributes after ensuring data validity
 const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {}) => {
     if (input.type === 'stateuser' || input.type === 'stateadmin') {
         input.attributes.forEach(item => {
             const index = user.attributes.findIndex(attr => attr.stateCode === item.state);
+            // Ensure the DoneBy user has permission to execute the requested actions
             ensureDonebyHasPrivilage(doneByUser, input.type, item.state);
+            // Check if the there is type mismatch between the request and current type of the user
             checkTypeMismatch(input.type, user.type);
             if (index !== -1) {
                 const userAttribs = user.attributes[index].history;
@@ -139,6 +146,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
                 // isOkToChange(item, userAttribs, doneByUser)
                 userAttribs.push(generateAttribute(item, input.doneBy));
             } else {
+                // ensure if the item is pending
                 ensurePendingStatus(item);
 
                 user.attributes.push({
@@ -158,6 +166,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
     return user;
 };
 
+// Ensure the DoneBy user has permission to execute the requested actions
 const ensureDonebyHasPrivilage = (doneByUser, userType, userState) => {
     if (userType === 'stateuser') {
         if (doneByUser.type !== 'stateadmin') {
@@ -189,6 +198,7 @@ const ensureDonebyHasPrivilage = (doneByUser, userType, userState) => {
     return true;
 };
 
+// Ensure the status changes are legal
 const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
     if (userAttribs.length === 0) {
         if (inputAttrib.status !== 'pending') {
@@ -214,6 +224,7 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
     }
 };
 
+// Check if the there is type mismatch between the request and current type of the user
 const checkTypeMismatch = (inputType, userType) => {
     if (inputType && userType && (inputType !== userType)) {
         console.log(`Warning: Typw mismatch. Current user type is ${userType} and requested type is ${inputType}`);
@@ -221,6 +232,8 @@ const checkTypeMismatch = (inputType, userType) => {
     }
     return true;
 };
+
+// ensure if the item is pending
 const ensurePendingStatus = attrib => { // Todo: better logging by providing state
     if (attrib.status !== 'pending') {
         console.log(`Warning: The status is: ${attrib.status}, 
@@ -230,11 +243,13 @@ const ensurePendingStatus = attrib => { // Todo: better logging by providing sta
     return true;
 };
 
+// generate the user attribute object using the provided details
 const generateAttribute = (item, doneBy) => {
     const currentTimestamp = Math.floor(new Date().getTime() / 1000);
     return { date: currentTimestamp, status: item.status, doneBy: doneBy };
 };
 
+// Insert or modify an user record in the db
 const putUser = async (tableName, user) => {
     try {
         await dynamoDb.put({
@@ -252,6 +267,7 @@ const putUser = async (tableName, user) => {
     }
 };
 
+// Preparing and sending confirmation email
 const processEmail = async input => {
     // Collect recipients email ids
     const recipients = await collectRecipientEmails(input);
@@ -278,6 +294,7 @@ const processEmail = async input => {
     }
 };
 
+// Collect recipient email addresses to send out confirmation emails to
 const collectRecipientEmails = async input => {
     const recipients = [];
     if (input.type === 'stateuser') {
@@ -340,15 +357,18 @@ const getUsersByType = async (type) => {
 
 };
 
+// check if the latest attribute from an array of attributes is active
 const isLatestAttributeActive = (attribs) => {
     const latestAttribute = getLatestAttribute(attribs);
     return latestAttribute.status === 'active';
 };
 
+// Get if the latest attribute from an array of attributes
 const getLatestAttribute = (attribs) => attribs.reduce(
     (latestItem, currentItem) => currentItem.date > latestItem.date ? currentItem : latestItem
 );
 
+// Construct the email with all needed properties
 const constructEmailParams = (recipients, type) => {
     const email = {
         fromAddressSource: 'userAccessEmailSource',
