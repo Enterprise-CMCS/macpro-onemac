@@ -14,6 +14,7 @@ export const main = handler(async (event) => {
     try {
         lambdaWarmup(event);
         let input = event.body;
+        console.log('PutUser Lambda call for: ', JSON.stringify(input));
         // do a pre-check for things that should stop us immediately
         validateInput(input);
 
@@ -72,6 +73,7 @@ const validateInput = input => {
         console.log('Validation error:', result.error);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
+    console.log('Validation successful:');
     return;
 };
 
@@ -117,6 +119,7 @@ const retreiveUsers = async input => {
         console.log(`Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`);
         throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
     }
+    console.log('Successfully retreived user and doneBy user details from the db');
     return { user, doneByUser };
 };
 
@@ -163,6 +166,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
             user.attributes.push(generateAttribute(item, input.doneBy));
         });
     }
+    console.log('Successfully ensured privilages, status change rules and populated user attributes');
     return user;
 };
 
@@ -230,6 +234,7 @@ const checkTypeMismatch = (inputType, userType) => {
         console.log(`Warning: Typw mismatch. Current user type is ${userType} and requested type is ${inputType}`);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
+    console.log('No type mismatches');
     return true;
 };
 
@@ -240,6 +245,7 @@ const ensurePendingStatus = attrib => { // Todo: better logging by providing sta
             must be a pending for a new user or first attribute for the state`);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
+    console.log('Pending status ensured');
     return true;
 };
 
@@ -277,7 +283,7 @@ const processEmail = async input => {
         const emailParams = constructEmailParams(recipients, input.type);
         // Send email
         try {
-            // send the User access request "reciept"
+            // Start sending  the User access request "reciept"
             await sendEmail(emailParams.email);
             return RESPONSE_CODE.USER_SUBMITTED;
         } catch (error) {
