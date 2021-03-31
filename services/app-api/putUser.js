@@ -26,7 +26,7 @@ export const main = handler(async (event) => {
         return RESPONSE_CODE.USER_SUBMITTED;
     } catch (e) {
         console.log(`Error executing lambda: ${JSON.stringify(e)}`);
-        return JSON.stringify(e);
+        return RESPONSE_CODE.USER_SUBMISSION_FAILED;
     }
 });
 
