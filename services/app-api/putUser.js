@@ -13,8 +13,7 @@ import { territoryCodeList } from "./libs/territoryLib";
 export const main = handler(async (event) => {
     try {
         lambdaWarmup(event);
-        console.log('event:', JSON.stringify(event));
-        let input = JSON.parse(event.body);
+        let input = event.body;
         // do a pre-check for things that should stop us immediately
         validateInput(input);
 
