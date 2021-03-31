@@ -105,5 +105,3 @@ Resources:
                 Action:
                   - lambda:InvokeFunction
                 Resource: '*'
-
-

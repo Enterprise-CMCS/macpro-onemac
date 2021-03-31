@@ -114,8 +114,8 @@ then
           set -e
       done
       ./loadTestUsers.sh $stage
-      
-      # Only Run Once or Manaully 
+
+      # Only Run Once or Manaully
       #  ./loadExistingUsers.sh $stage
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
