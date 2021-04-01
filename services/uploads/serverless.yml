@@ -10,6 +10,7 @@ service: uploads
 plugins:
   - serverless-s3-local
   - serverless-offline
+  - serverless-plugin-scripts
 provider:
   name: aws
   runtime: nodejs12.x
@@ -18,17 +19,67 @@ provider:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
+  scripts:
+    hooks:
+      # This script is run locally when running 'serverless deploy'
+      package:initialize: |
+        set -e
+        curl -L --output lambda_layer.zip https://github.com/CMSgov/lambda-clamav-layer/releases/download/0.5/lambda_layer.zip
+      deploy:finalize: |
+        rm lambda_layer.zip
+        serverless invoke --stage ${self:custom.stage} --function avDownloadDefinitions -t Event
   # S3 offline configuration
   s3:
     host: localhost
     directory: /tmp
     cors: resources/local-cors-policy.xml
 
+layers:
+  clamDefs:
+    package:
+      artifact: lambda_layer.zip
+
+functions:
+  avScan:
+    handler: src/antivirus.lambdaHandleEvent
+    name: ${self:service.name}-${self:custom.stage}-avScan
+    role: BucketAVScanRole
+    timeout: 300 # 300 seconds = 5 minutes. Average scan is 25 seconds.
+    memorySize: 3008
+    layers:
+      - !Ref ClamDefsLambdaLayer
+    environment:
+      CLAMAV_BUCKET_NAME: !Ref ClamDefsBucket
+      PATH_TO_AV_DEFINITIONS: 'lambda/s3-antivirus/av-definitions'
+  avDownloadDefinitions:
+    handler: src/download-definitions.lambdaHandleEvent
+    events:
+      - schedule: cron(0 */6 * * ? *)
+    role: BucketAVDownloadRole
+    timeout: 300 # 300 seconds = 5 minutes
+    memorySize: 1024
+    layers:
+      - !Ref ClamDefsLambdaLayer
+    environment:
+      CLAMAV_BUCKET_NAME: !Ref ClamDefsBucket
+      PATH_TO_AV_DEFINITIONS: 'lambda/s3-antivirus/av-definitions'
+
+
+
 resources:
+  Conditions:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
+          - ""
+          - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
     AttachmentsBucket:
       Type: AWS::S3::Bucket
       Properties:
+        BucketName: !Sub ${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}
         # Set the CORS policy
         CorsConfiguration:
           CorsRules:
@@ -46,25 +97,30 @@ resources:
               ExposedHeaders:
                 - ETag
               MaxAge: 3000
+        NotificationConfiguration:
+          LambdaConfigurations:
+            - Event: s3:ObjectCreated:Put
+              Function: !GetAtt AvScanLambdaFunction.Arn
         #Set at rest encryption
         BucketEncryption:
             ServerSideEncryptionConfiguration:
               - ServerSideEncryptionByDefault:
                   SSEAlgorithm: AES256
+      DependsOn: LambdaInvokePermission
     # Policy to allow public read access to all attachments
     S3CMSReadBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
-        Bucket: 
+        Bucket:
           Ref: AttachmentsBucket
         PolicyDocument:
           Statement:
             - Effect: 'Allow'
-              Action: 
+              Action:
                 - 's3:GetObject'
               Principal: '*'
-              Resource: 
-                Fn::Join: 
+              Resource:
+                Fn::Join:
                   - ''
                   -
                     - 'arn:aws:s3:::'
