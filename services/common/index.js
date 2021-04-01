@@ -9,6 +9,7 @@
  *
  */
 export const ROUTES = {
+    CHIP_SPA: '/chipspa',
     DASHBOARD: '/dashboard',
     USER_MANAGEMENT: '/usermanagement',
     FAQ: '/FAQ',

@@ -165,6 +165,14 @@ const Dashboard = () => {
           >
             Submit 1915(c) Appendix K Amendment
           </Button>
+          <div className="action-title">CHIP SPAs</div>
+          <Button
+              id="chipSpaBtn"
+              variation="transparent"
+              onClick={() => history.push(ROUTES.CHIP_SPA)}
+          >
+            Submit new CHIP SPA
+          </Button>
         </div>
         <div className="dashboard-right-col">
           {userProfile &&
