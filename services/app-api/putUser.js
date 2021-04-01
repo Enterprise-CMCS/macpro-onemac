@@ -318,8 +318,8 @@ const collectRecipientEmails = async input => {
     else if (input.type === 'cmsapprover') {
         let systemadmins = [];
         // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
-        if (process.env.sysadminEmail) {
-            recipients.push(process.env.sysadminEmail);
+        if (process.env.systemAdminEmail) {
+            recipients.push(process.env.systemAdminEmail);
         } else {
             // get all system admins emails //
             systemadmins = await getUsersByType('systemadmin') || [];
