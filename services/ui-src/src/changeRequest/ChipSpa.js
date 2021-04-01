@@ -14,8 +14,8 @@ const ChipSpa = () => {
 
   const formInfo = {
     pageTitle: "Submit New CHIP SPA",
-    readOnlyPageTitle: "SPA Submission Details",
-    detailsHeader: "SPA",
+    readOnlyPageTitle: "CHIP SPA Submission Details",
+    detailsHeader: "CHIP SPA",
     requiredUploads: ["Current State Plan", "Revised Amended State Plan Language"],
     optionalUploads: [
       "Cover Letter",
@@ -27,7 +27,7 @@ const ChipSpa = () => {
       "Other",
     ],
     transmittalNumber: {
-      idType: "spa",
+      idType: "chipspa",
       idLabel: "SPA ID",
       idHintText: "Must follow the format SS-YY-NNNN-xxxx",
       idFAQLink: ROUTES.FAQ_SPA_ID,
