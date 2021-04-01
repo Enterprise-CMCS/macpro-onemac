@@ -196,7 +196,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           } else {
             newMessage.statusMessage =
             transmittalNumberDetails.idLabel +
-            " not found. You can still proceed with the submission but please ensure you have the correct " +
+            " not found. You can still proceed with the submission, but please ensure you have the correct " +
             transmittalNumberDetails.idLabel +
             ". Contact the MACPro Help Desk (code: OMP002) if you need support.";
           }
