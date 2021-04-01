@@ -58,6 +58,7 @@ provider:
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
+    systemAdminEmail: ${self:custom.systemAdminEmail}
 
 functions:
   submit:
