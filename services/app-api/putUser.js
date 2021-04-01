@@ -67,7 +67,7 @@ const validateInput = input => {
         console.log('Validation error:', result.error);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
-    console.log('Validation successful:');
+    console.log('Initial validation successful.');
     return;
 };
 
@@ -89,8 +89,6 @@ const getUser = async userEmail => {
     if (!result.Item) {
         return {};
     }
-
-    console.log(`Selected User ${userEmail}: ${JSON.stringify(result)}`);
     return result.Item;
 };
 
@@ -117,7 +115,9 @@ const retreiveUsers = async input => {
         console.log(`Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`);
         throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
     }
-    console.log('Successfully retreived user and doneBy user details from the db');
+    console.log(`Successfully retreived user (created if doesn't exist) and doneBy user details from the db.
+        User: ${JSON.stringify(user,null,2)}
+        doneByUser: ${JSON.stringify(doneByUser,null,2)}`);
     return { user, doneByUser };
 };
 
