@@ -214,7 +214,7 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
         || (currentStatus === 'active') && (targetStatus === 'denied') // active status cannot be changed to denied
         || (currentStatus === 'pending') && (targetStatus === 'revoked') // pending cannot be changed to revoved
         || (targetStatus === 'pending')  // Existing user attribute cannot be changed to pending
-        || (currentStatus === targetStatus)
+        || (currentStatus === targetStatus)  // status change vale must be different than the existing one
     ) {
         console.log(`Warning: Illegal status change request from ${currentStatus}, to ${targetStatus}`);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
