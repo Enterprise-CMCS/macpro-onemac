@@ -66,6 +66,7 @@ Resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:Scan
+                - dynamodb:PutItem
               Resource: arn:aws:dynamodb:*:*:table/${self:custom.userTableName}
   LambdaWarmupRole:
     Type: 'AWS::IAM::Role'

@@ -1,5 +1,6 @@
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import getUser from "./utils/getUser";
+import { ROLE_ACL  } from "cmscommonlib";
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event, context) => {
@@ -9,24 +10,11 @@ export const main = handler(async (event, context) => {
     return null;
   }
 
-  const params = {
-    TableName: process.env.userTableName,
-    // 'Key' defines the partition key and sort key of the item to be retrieved
-    // - 'userId': Identity Pool identity id of the authenticated user
-    Key: {
-      id: event.queryStringParameters.email,
-    },
-  };
+  const userItem = await getUser(event.queryStringParameters.email);
 
-  const result = await dynamoDb.get(params);
+  const allowedRoutes = ROLE_ACL;
 
-  if (!result.Item) {
-    console.log("The user does not exists in this table.", params);
-    // The result is an empty object {} in this case
-    return result;
-  }
+  userItem.validRoutes = allowedRoutes[userItem.type];
 
-  console.log("Sending back result:", JSON.stringify(result));
-  // Return the retrieved item
-  return result.Item;
+  return userItem;
 });
