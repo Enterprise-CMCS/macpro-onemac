@@ -70,6 +70,9 @@ const Dashboard = () => {
       let type;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
+        case CHANGE_REQUEST_TYPES.CHIP_SPA:
+          type = "CHIP SPA";
+          break;
         case CHANGE_REQUEST_TYPES.SPA:
           type = "SPA";
           break;
