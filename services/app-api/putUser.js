@@ -19,8 +19,6 @@ export const main = handler(async (event) => {
         validateInput(input);
 
         let { user, doneByUser } = await retreiveUsers(input);
-        // Populate user type info into the input params for further processing //
-        input.type = input.type ? input.type : user.type;
         // populate user atributes after ensuring data validity //
         user = populateUserAttributes(input, user, doneByUser);
         // PUT user in db
