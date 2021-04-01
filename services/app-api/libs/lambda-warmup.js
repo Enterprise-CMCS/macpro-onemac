@@ -1,8 +1,5 @@
-const lambdaWarmup = (event) => {
+const isLambdaWarmup = (event) => {
     // If this invocation is a prewarm, do nothing and return.
-    if (event.source == "serverless-plugin-warmup") {
-        console.log("Warmed up!");
-        return null;
-    }
+    return event.source == "serverless-plugin-warmup";
 };
-export default lambdaWarmup;
+export default isLambdaWarmup;

@@ -12,7 +12,7 @@ import { territoryCodeList } from "./libs/territoryLib";
  */
 export const main = handler(async (event) => {
     try {
-        lambdaWarmup(event);
+        if (isLambdaWarmup(event)) return null;
         let input = (isObject(event.body)) ? event.body : JSON.parse(event.body);
         console.log('PutUser Lambda call for: ', JSON.stringify(input));
         // do a pre-check for things that should stop us immediately //
@@ -110,8 +110,8 @@ const retreiveUsers = async input => {
         throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
     }
     console.log(`Successfully retreived user (created if doesn't exist) and doneBy user details from the db.
-        User: ${JSON.stringify(user,null,2)}
-        doneByUser: ${JSON.stringify(doneByUser,null,2)}`);
+        User: ${JSON.stringify(user, null, 2)}
+        doneByUser: ${JSON.stringify(doneByUser, null, 2)}`);
     return { user, doneByUser };
 };
 
