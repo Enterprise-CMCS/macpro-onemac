@@ -27,7 +27,7 @@ const ChipSpa = () => {
       "Other",
     ],
     transmittalNumber: {
-      idType: "chipspa",
+      idType: "spa",
       idLabel: "SPA ID",
       idHintText: "Must follow the format SS-YY-NNNN-xxxx",
       idFAQLink: ROUTES.FAQ_SPA_ID,
@@ -45,7 +45,7 @@ const ChipSpa = () => {
     return (
       <SubmissionForm
         formInfo={formInfo}
-        changeRequestType={CHANGE_REQUEST_TYPES.SPA}
+        changeRequestType={CHANGE_REQUEST_TYPES.CHIP_SPA}
       />
     );
   }
