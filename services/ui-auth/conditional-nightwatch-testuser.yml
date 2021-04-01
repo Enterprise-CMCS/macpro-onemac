@@ -48,7 +48,7 @@ resources:
              - WYSESPA1
           - Fn::Not:
              - isValOrDev
-             - user1@cms.hhs.local
+             - stateuseractive@cms.hhs.local
           - Fn::GetAtt:
                  - NightWatchUser
                  - Outputs.NightWatchUser

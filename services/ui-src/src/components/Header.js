@@ -2,13 +2,14 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES } from "../Routes";
+import { ROUTES } from "cmscommonlib";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../images/OneMAC_logoLight1.svg"
+
 
 /**
  * Get the sign in URL used with OKTA.
@@ -23,12 +24,32 @@ function getSignInUrl() {
 }
 
 /**
+ * Get the register URL depending on the current domain.
+ * @returns the register URL
+ */
+function getRegisterUrl() {
+  const currentDomain = window.location.hostname
+  let registerUrl = 'https://test.home.idm.cms.gov/'
+
+  // TODO remove the 'spa.cms.gov' and 'spa-val.cms.gov' as options
+  // after the rebrand has changed the domain to onemac
+  if (currentDomain === 'onemac.cms.gov' || currentDomain === 'spa.cms.gov') {
+    registerUrl = 'https://home.idm.cms.gov/'
+  } else if (currentDomain === 'onemacval.cms.gov' || currentDomain === 'spa-val.cms.gov') {
+    registerUrl = 'https://impl.home.idm.cms.gov/'
+  }
+
+  return registerUrl
+}
+
+/**
  * Logout the user.
  */
 function logout() {
   const authConfig = Auth.configure();
   Auth.signOut();
   window.location.href = authConfig.oauth.redirectSignOut;
+  document.location.reload(true)
 }
 
 /**
@@ -90,6 +111,9 @@ function Header(props) {
           <Link to={ROUTES.HOME}>About</Link>
           <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
             Dashboard
+          </Link>
+          <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
+            User Management
           </Link>
           <Link to={ROUTES.FAQ}>FAQ</Link>
           {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
@@ -170,7 +194,10 @@ function Header(props) {
     } else {
       return (
         <div className="nav-right">
-          <Button onClick={() => (window.location = getSignInUrl())} inversed>
+          <Button href={getRegisterUrl()} inversed className="register-link">
+            Register
+          </Button>
+          <Button href={getSignInUrl()} inversed>
             Login
           </Button>
           {showDevLogin && (

@@ -1,5 +1,5 @@
 import handler from "./libs/handler-lib";
-import lambdaWarmup from "./libs/lambda-warmup";
+import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
@@ -94,7 +94,7 @@ const retreiveUsers = async input => {
         if (!input.isPutUser) {
             console.log(`Warning: The user record does not exist with the id ${input.userEmail} in the db.
             So user status change cannot be performed`);
-            throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
+            throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
         } else {
             if (!input.firstName || !input.lastName) {
                 console.log(`Warning: First name and last name are required to create a new user record.`);

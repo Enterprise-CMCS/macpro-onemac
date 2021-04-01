@@ -3,7 +3,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 
 const FAQ = () => {
-  
+
 
   return (
     <div>

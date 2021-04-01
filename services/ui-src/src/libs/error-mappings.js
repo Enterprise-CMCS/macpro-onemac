@@ -17,6 +17,15 @@ export const getAlert = (errorCode) => {
       break;
     // app-api/response-codes.js    VALIDATION_ERROR: "VA000",
     case "VA000":
+    case "UR040":
+    case "UR041":
+    case "UR042":
+    case "UR043":
+    case "UR044":
+    case "UR045":
+    case "UR000":
+    case "UR001":
+    case "UR002":
       returnAlert = ALERTS_MSG.SUBMISSION_ERROR;
       break;
     // app-api/response-codes.js    ATTACHMENT_ERROR: "AT000",
