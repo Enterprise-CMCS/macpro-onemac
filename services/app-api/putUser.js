@@ -54,11 +54,7 @@ const validateInput = input => {
         // if isPutUser is true then first and last names and type are required //
         firstName: Joi.string().optional(),
         lastName: Joi.string().optional(),
-        type: Joi.when('isPutUser', {
-            is: true,
-            then: Joi.valid('stateuser', 'stateadmin', 'cmsapprover').required(),
-            otherwise: Joi.valid('stateuser', 'stateadmin', 'cmsapprover').optional(),
-        }),
+        type: Joi.valid('stateuser', 'stateadmin', 'cmsapprover').required()
     });
     //Todo: Add deeper validation for types //
     const result = userSchema.validate(input);
