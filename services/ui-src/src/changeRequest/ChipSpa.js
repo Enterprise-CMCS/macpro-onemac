@@ -23,8 +23,6 @@ const ChipSpa = () => {
       "Budget Documents",
       "Public Notice",
       "Tribal Consultation",
-      "Public Notice",
-      "Tribal Consultation",
       "Other",
     ],
     transmittalNumber: {
