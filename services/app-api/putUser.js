@@ -275,7 +275,10 @@ const processEmail = async input => {
         // Send email //
         try {
             // Start sending  the User access request "reciept" //
-            await sendEmail(emailParams.email);
+            const emailStatus = await sendEmail(emailParams.email);
+            if (emailStatus instanceof Error){
+                console.log('Warning: Email not sent');
+            }
             return RESPONSE_CODE.USER_SUBMITTED;
         } catch (error) {
             console.log(
