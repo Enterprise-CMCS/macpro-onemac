@@ -1,9 +1,62 @@
 import React from "react";
 import { Review } from "@cmsgov/design-system";
+import { ROLES } from "cmscommonlib";
+
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
+
+const accesses = [
+  {
+    state: "Maryland",
+    status: "Access Granted",
+    contacts: [
+      {
+        name: "Rick Genstry",
+        email: "rick@example.com",
+      },
+      {
+        name: "Pending Polly",
+        email: "pendingpolly@example.com",
+      },
+    ],
+  },
+  {
+    state: "Nebraska",
+    status: "Pending",
+    contacts: [
+      {
+        name: "Approving Alice",
+        email: "alice@example.com",
+      },
+    ],
+  },
+];
+
+const ROLE_TO_APPROVER_LABEL = {
+  [ROLES.STATE_USER]: "State Admin",
+  [ROLES.STATE_ADMIN]: "CMS Role Approver",
+  [ROLES.CMS_APPROVER]: "CMS System Admin",
+};
+
+const ContactList = ({ contacts, userType }) => {
+  let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
+
+  if (contacts.length > 1) label += "s";
+
+  return (
+    <p>
+      <b>{label}:</b>{" "}
+      {contacts.map(({ name, email }, idx) => (
+        <React.Fragment key={email}>
+          <a href={`mailto:${email}`}>{name}</a>
+          {idx < contacts.length - 1 && ", "}
+        </React.Fragment>
+      ))}
+    </p>
+  );
+};
 
 /**
  * Component housing data belonging to a particular user
@@ -45,9 +98,29 @@ const UserPage = () => {
           </a>{" "}
           or call {helpDeskContact.phone}.
         </div>
-        <h3>Profile Information</h3>
-        <Review heading="Full Name">{getFullName()}</Review>
-        <Review heading="Email">{email}</Review>
+        <div className="ds-l-row">
+          <div className="ds-l-col--6">
+            <h3>Profile Information</h3>
+            <Review heading="Full Name">{getFullName()}</Review>
+            <Review heading="Email">{email}</Review>
+          </div>
+          <div className="ds-l-col--6">
+            <h3>State Access Management</h3>
+            <dl className="state-access-cards">
+              {accesses.map(({ state, status, contacts }) => (
+                <div className="state-access-card" key={state}>
+                  <dt>{state}</dt>
+                  <dd>
+                    <em>{status}</em>
+                    <br />
+                    <br />
+                    <ContactList contacts={contacts} type={userType} />
+                  </dd>
+                </div>
+              ))}
+            </dl>
+          </div>
+        </div>
       </div>
     </div>
   );

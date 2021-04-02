@@ -182,9 +182,12 @@ input[type="file"] {
 
   h3 {
     @extend .ds-u-margin-top--7;
+    @extend .ds-u-margin-bottom--3;
   }
   .ds-c-review {
     @extend .ds-u-border-bottom--0;
+    @extend .ds-u-margin-top--3;
+    padding: 0 !important;
   }
   .ds-c-review__heading {
     @extend .ds-u-margin-top--1;
@@ -1030,4 +1033,33 @@ color: #212121;
 
 .MuiButton-text {
   text-align: right;
+}
+
+dl.state-access-cards {
+  .state-access-card {
+    @extend .ds-u-border--1;
+    @extend .ds-u-padding--3;
+    @extend .ds-u-fill--white;
+
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+
+    &:not(:last-child) {
+      @extend .ds-u-margin-bottom--3;
+    }
+
+    dt {
+      @extend .ds-u-font-size--h3;
+      @extend .ds-u-font-weight--normal;
+
+      margin-bottom: 5px;
+
+    }
+
+    dd {
+      a {
+        @extend .ds-u-font-weight--bold;
+        @extend .ds-u-text-decoration--none;
+      }
+    }
+  }
 }
