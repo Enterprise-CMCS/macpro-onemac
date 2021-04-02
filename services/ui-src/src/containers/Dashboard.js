@@ -74,7 +74,7 @@ const Dashboard = () => {
           type = "CHIP SPA";
           break;
         case CHANGE_REQUEST_TYPES.SPA:
-          type = "SPA";
+          type = "Medicaid SPA";
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER:
@@ -124,13 +124,13 @@ const Dashboard = () => {
       <AlertBar />
       <div className="dashboard-container">
         <div className="dashboard-left-col">
-          <div className="action-title">SPAs</div>
+          <div className="action-title">Medicaid SPAs</div>
           <Button
             id="spaSubmitBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >
-            Submit new SPA
+            Submit new Medicaid SPA
           </Button>
           <Button
             id="spaRaiBtn"
@@ -145,7 +145,7 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER)}
           >
-            Submit new Waiver
+            Submit new Submit 1915(b) Waiver Action form
           </Button>
           <Button
             id={"waiverRaiBtn"}
@@ -174,7 +174,7 @@ const Dashboard = () => {
               variation="transparent"
               onClick={() => history.push(ROUTES.CHIP_SPA)}
           >
-            Submit new CHIP SPA
+            Submit New CHIP SPA
           </Button>
         </div>
         <div className="dashboard-right-col">

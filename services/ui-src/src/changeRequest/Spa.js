@@ -15,7 +15,7 @@ const Spa = () => {
   const formInfo = {
     pageTitle: "Submit New SPA",
     readOnlyPageTitle: "SPA Submission Details",
-    detailsHeader: "SPA",
+    detailsHeader: "Medicaid SPA",
     requiredUploads: ["CMS Form 179", "SPA Pages"],
     optionalUploads: [
       "Cover Letter",
