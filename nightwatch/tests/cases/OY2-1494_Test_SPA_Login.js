@@ -25,7 +25,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
         console.log('Login as: ', testData.username);
         spa.devLogin(testData);
-        spa.verify.visible('@loginTitle');
+        spa.verify.visible('@titleBar');
         browser.verify.elementPresent('h1');
         browser.verify.containsText('h1', testData.spaPageTitle);
     },
@@ -37,7 +37,7 @@ module.exports = {
     }) {
         spa = browser.page.spaBasePage();
         spa.login(testData);
-        spa.verify.visible('@loginTitle');
+        spa.verify.visible('@titleBar');
         browser.verify.containsText('h1', testData.spaPageTitle);
     },
 
@@ -67,7 +67,7 @@ module.exports = {
         spa.verify.not.containsText('h1', title);
         browser.pause(timeout);
     },
-       
+  
     'Verify logout from SPA and Wavier Dashboard as Regular User': function (browser) {
         // elements 
         let logout_banner_text = "CMS State Plan Amendment and Waiver Submission Platform";
@@ -81,3 +81,4 @@ module.exports = {
         browser.verify.containsText('h1', logout_banner_text);
     }
 };
+

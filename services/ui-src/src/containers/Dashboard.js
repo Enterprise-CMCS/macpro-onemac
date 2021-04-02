@@ -1,16 +1,17 @@
 import React, { useState, useEffect } from "react";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import PageTitleBar from "../components/PageTitleBar";
+import { AlertBar } from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES } from "../Routes";
+import { ROUTES  } from "cmscommonlib";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
-import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
+import { pendingMessage, isPending } from "../libs/userLib";
 
 /**
  * Component containing dashboard
@@ -18,101 +19,33 @@ import { useAppContext } from "../libs/contextLib";
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [alert, setAlert] = useState();
-  const { userProfile } = useAppContext();
+  const { userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
 
-  // Load the data from the backend.
+  // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
-    let mounted = true;
-    let newAlert = ALERTS_MSG.NONE;
+    if (!userData?.type || !userData?.attributes) {
+      history.replace("/signup", location.state);
+      return;
+    }
 
-    async function onLoad() {
+    let mounted = true;
+
+    (async function onLoad() {
       try {
         if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
+        history.replace("/dashboard", { showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR })
       }
-    }
-
-    if (location.state) newAlert = location.state.showAlert;
-    if (mounted) onLoad();
-    if (mounted) setAlert(newAlert);
+    })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [location]);
-
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
-
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-  }, [alert]);
-
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
-
-  /**
-   * Sort history of userData in descending order.
-   * @param {Object} a object of history instance 
-   * @param {Object} b object of history instance 
-   * @return {Number} the order of which instance should come 1st based on greater value of effectiveDate
-   */
-
-  const sortDescendingOrder=(a,b)=>{
-    return b.effectiveDate-a.effectiveDate
-  }
-
-  const stateStatusSet = new Set()
-  /**
-   * get the status of the sorted history array's 1st element and put them in a set.
-   * @param {Object} attribute object of history instance 
-   */
-
-  const getStateStatus = (attribute) => {
-      attribute.history.sort(sortDescendingOrder);
-      stateStatusSet.add(attribute.history[0].status); 
-  }
-  
-  /**
-   * Determine the type of userData and sort corresponding arrays per state if needed.
-   * @param {Object} userData object of history instance 
-   * @return {Boolean} a boolean on status pending
-   */
-
-  const isPending=(userData)=>{
-    if(userData.type==="cmsapprover"){
-      userData.attributes.sort(sortDescendingOrder)
-      return userData.attributes[0].status==="pending"
-    }else{
-      userData.attributes.forEach(getStateStatus)
-      return !stateStatusSet.has("active") && stateStatusSet.has("pending")
-    }
-  }
-  const pendingMessage = {
-    "stateuser": "Your system access is pending approval. Contact your State System Admin with any questions.",
-    "stateadmin": "Your system access is pending approval.",
-    "cmsapprover": "Your system access is pending approval. Contact the CMS System Admin with any questions."
-  }
+  }, [history, location, userData]);
 
   /**
    * Render the list of change requests.
@@ -182,11 +115,10 @@ const Dashboard = () => {
   }
 
   // Render the dashboard
-
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
-      {renderAlert(alert)}
+      <AlertBar />
       <div className="dashboard-container">
         <div className="dashboard-left-col">
           <div className="action-title">SPAs</div>
@@ -235,10 +167,14 @@ const Dashboard = () => {
           </Button>
         </div>
         <div className="dashboard-right-col">
-          {userProfile && userProfile.userData && userProfile.userData.attributes && userProfile.userData.attributes.length!==0 && isPending(userProfile.userData)?
-            (
-              <EmptyList message={pendingMessage[userProfile.userData.type]} />
-            ) : (<div>
+          {userProfile &&
+          userProfile.userData &&
+          userProfile.userData.attributes &&
+          userProfile.userData.attributes.length !== 0 &&
+          isPending(userProfile.userData) ? (
+            <EmptyList message={pendingMessage[userProfile.userData.type]} />
+          ) : (
+            <div>
               <div className="action-title">Submissions List</div>
               <LoadingScreen isLoading={isLoading}>
                 <div>
@@ -250,18 +186,20 @@ const Dashboard = () => {
                           <th scope="col">Type</th>
                           <th className="date-submitted-column" scope="col">
                             Date Submitted
-                      </th>
+                          </th>
                         </tr>
                       </thead>
-                      <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
+                      <tbody>
+                        {renderChangeRequestList(changeRequestList)}
+                      </tbody>
                     </table>
                   ) : (
-                      <EmptyList message="You have no submissions yet." />
-                    )}
+                    <EmptyList message="You have no submissions yet." />
+                  )}
                 </div>
               </LoadingScreen>
             </div>
-            )}
+          )}
         </div>
       </div>
     </div>

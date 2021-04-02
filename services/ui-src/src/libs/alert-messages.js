@@ -45,7 +45,7 @@ export const ALERTS_MSG = {
   SUBMISSION_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Submission Error",
-    text: "There was an issue submitting your request.  Please try again.",
+    text: "There was an issue submitting your request. Please try again.",
   },
   SUBMISSION_DUPLICATE_ID: {
     type: ALERT_TYPES.ERROR,
@@ -100,7 +100,7 @@ export const ALERTS_MSG = {
   LOGIN_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Login Error",
-    text: "We were unable to log you in with the credentials you provided.  Please try to login again.",
+    text: "We were unable to log you in with the credentials you provided. Please try to login again.",
   },
   ATTACHMENT_TOO_LARGE: {
     type: ALERT_TYPES.ERROR,
@@ -110,7 +110,7 @@ export const ALERTS_MSG = {
   NOT_AUTHENTICATED: {
     type: ALERT_TYPES.WARNING,
     heading: "Login Required",
-    text: "You need to be signed in to your account to access this page.  Please login and try again.",
+    text: "You need to be signed in to your account to access this page. Please login and try again.",
   },
   CONTACT_HELP_DESK: {
     type: ALERT_TYPES.ERROR,

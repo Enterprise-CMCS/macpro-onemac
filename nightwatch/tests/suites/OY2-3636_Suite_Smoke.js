@@ -338,4 +338,6 @@ module.exports = {
         browser.pause(5000);
     }
 
+oy2-5226-nightwatch-new
 }*/
+

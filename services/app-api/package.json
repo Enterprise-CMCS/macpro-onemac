@@ -17,10 +17,11 @@
     "serverless-associate-waf": "^1.2.1",
     "serverless-bundle": "^3.1.0",
     "serverless-dotenv-plugin": "^3.0.0",
-    "serverless-offline": "^6.8.0",
+    "serverless-offline": "^6.9.0",
     "serverless-plugin-warmup": "^4.9.0"
   },
   "dependencies": {
+    "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "hapi": "^18.1.0",
     "luxon": "^1.25.0",
