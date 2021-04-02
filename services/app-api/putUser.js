@@ -18,7 +18,7 @@ export const main = handler(async (event) => {
         // do a pre-check for things that should stop us immediately //
         validateInput(input);
 
-        let { user, doneByUser } = await retreiveUsers(input);
+        let { user, doneByUser } = await retrieveUsers(input);
         // populate user atributes after ensuring data validity //
         user = populateUserAttributes(input, user, doneByUser);
         // PUT user in db
@@ -86,8 +86,8 @@ const getUser = async userEmail => {
     return result.Item;
 };
 
-const retreiveUsers = async input => {
-    // retreive user and doneByUser from DynamoDb //
+const retrieveUsers = async input => {
+    // retrieve user and doneByUser from DynamoDb //
     let user = await getUser(input.userEmail);
     // get user details from the db
     if (isEmpty(user)) {
@@ -109,7 +109,7 @@ const retreiveUsers = async input => {
         console.log(`Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`);
         throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
     }
-    console.log(`Successfully retreived user (created if doesn't exist) and doneBy user details from the db.
+    console.log(`Successfully retrieved user (created if doesn't exist) and doneBy user details from the db.
         User: ${JSON.stringify(user, null, 2)}
         doneByUser: ${JSON.stringify(doneByUser, null, 2)}`);
     return { user, doneByUser };
@@ -131,7 +131,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
         input.attributes.forEach(item => {
             const index = user.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             // Ensure the DoneBy user has permission to execute the requested actions //
-            ensureDonebyHasPrivilage(doneByUser, input.type, item.stateCode);
+            ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
             // Check if the there is type mismatch between the request and current type of the user //
             checkTypeMismatch(input.type, user.type);
             if (index !== -1) {
@@ -153,17 +153,17 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
     }
     else {  // CMSApprover & systemadmin //
         input.attributes.forEach(item => {
-            ensureDonebyHasPrivilage(doneByUser, input.type);
+            ensureDonebyHasPrivilege(doneByUser, input.type);
             ensureLegalStatusChange(user.attributes, item, input.isPutUser);
             user.attributes.push(generateAttribute(item, input.doneBy));
         });
     }
-    console.log('Successfully ensured privilages, status change rules and populated user attributes');
+    console.log('Successfully ensured Privileges, status change rules and populated user attributes');
     return user;
 };
 
 // Ensure the DoneBy user has permission to execute the requested actions //
-const ensureDonebyHasPrivilage = (doneByUser, userType, userState) => {
+const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
     if (userType === 'stateuser') {
         if (doneByUser.type !== 'stateadmin') {
             console.log(`Warning: The doneBy user ${doneByUser.id} must be a stateadmin for the state ${userState}`);
@@ -191,7 +191,6 @@ const ensureDonebyHasPrivilage = (doneByUser, userType, userState) => {
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
     }
-    return true;
 };
 
 // Ensure the status changes are legal //
