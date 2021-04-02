@@ -130,7 +130,7 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >
-            Submit new Medicaid SPA
+            Submit New Medicaid SPA
           </Button>
           <Button
             id="spaRaiBtn"
@@ -152,7 +152,7 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER)}
           >
-            Submit new Submit 1915(b) Waiver Action form
+            Submit 1915(b) Waiver Action
           </Button>
           <Button
             id={"waiverRaiBtn"}
