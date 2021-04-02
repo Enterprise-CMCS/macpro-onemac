@@ -1,12 +1,12 @@
-import handler from "./libs/handler-lib";
-import isLambdaWarmup from "./libs/lambda-warmup";
-import dynamoDb from "./libs/dynamodb-lib";
-import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "./libs/response-codes";
+import handler from './libs/handler-lib';
+import isLambdaWarmup from './libs/lambda-warmup';
+import dynamoDb from './libs/dynamodb-lib';
+import sendEmail from './libs/email-lib';
+import { RESPONSE_CODE } from './libs/response-codes';
 import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
-import { territoryCodeList } from "./libs/territoryLib";
-
+import { territoryCodeList } from './libs/territoryLib';
+import {USER_TYPE, USER_STATUS} from './libs/user-lib';
 /**
  * Create / Update a user or change User status
  */
@@ -38,13 +38,13 @@ const validateInput = input => {
         attributes: Joi.array()
             // When type is state then state attribute is required and must be valid //
             .when('type', {
-                is: Joi.string().valid('stateuser', 'stateadmin'),
+                is: Joi.string().valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN),
                 then: Joi.array().items(Joi.object({
                     stateCode: Joi.string().valid(...territoryCodeList).required(),
-                    status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
+                    status: Joi.string().valid(USER_STATUS.PENDING, USER_STATUS.DENIED, USER_STATUS.REVOKED, USER_STATUS.ACTIVE).required(),
                 })),
                 otherwise: Joi.array().items(Joi.object({
-                    status: Joi.string().valid('pending', 'denied', 'revoked', 'active').required(),
+                    status: Joi.string().valid(USER_STATUS.PENDING, USER_STATUS.DENIED, USER_STATUS.REVOKED, USER_STATUS.ACTIVE).required(),
                     stateCode: Joi.string().optional()
                 })),
             }),
@@ -52,10 +52,10 @@ const validateInput = input => {
         // if isPutUser is true then first and last names and type are required //
         firstName: Joi.string().optional(),
         lastName: Joi.string().optional(),
-        type: Joi.valid('stateuser', 'stateadmin', 'cmsapprover').required()
+        type: Joi.valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN, USER_TYPE.CMS_APPROVER).required()
     });
     //Todo: Add deeper validation for types //
-    const result = userSchema.validate(input);
+    const result = isEmpty(input) ? { error: 'Lambda body is missing' } : userSchema.validate(input);
 
     if (result.error) {
         console.log('Validation error:', result.error);
@@ -127,7 +127,7 @@ const createUserObject = input => {
 
 // populate user atributes after ensuring data validity //
 const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {}) => {
-    if (input.type === 'stateuser' || input.type === 'stateadmin') {
+    if (input.type === USER_TYPE.STATE_USER || input.type === USER_TYPE.STATE_ADMIN) {
         input.attributes.forEach(item => {
             const index = user.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             // Ensure the DoneBy user has permission to execute the requested actions //
@@ -164,8 +164,8 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
 
 // Ensure the DoneBy user has permission to execute the requested actions //
 const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
-    if (userType === 'stateuser') {
-        if (doneByUser.type !== 'stateadmin') {
+    if (userType === USER_TYPE.STATE_USER) {
+        if (doneByUser.type !== USER_TYPE.STATE_ADMIN) {
             console.log(`Warning: The doneBy user ${doneByUser.id} must be a stateadmin for the state ${userState}`);
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
@@ -175,8 +175,8 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
     }
-    if (userType === 'stateadmin') {
-        if (doneByUser.type !== 'cmsapprover') {
+    if (userType === USER_TYPE.STATE_ADMIN) {
+        if (doneByUser.type !== USER_TYPE.CMS_APPROVER) {
             console.log(`Warning: The doneBy user : ${doneByUser.id}, must be a cmsapprover`);
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
@@ -185,8 +185,8 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
     }
-    if (userType === 'cmsapprover') {
-        if (doneByUser.type !== 'systemadmin') {
+    if (userType === USER_TYPE.CMS_APPROVER) {
+        if (doneByUser.type !== USER_TYPE.SYSTEM_ADMIN) {
             console.log(`Warning: The doneBy user : ${doneByUser.id}, must be a systemadmin`);
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
@@ -196,9 +196,9 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
 // Ensure the status changes are legal //
 const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
     if (userAttribs.length === 0) {
-        if (inputAttrib.status !== 'pending') {
+        if (inputAttrib.status !== USER_STATUS.PENDING) {
             console.log(`Warning: Illegal status change request ${inputAttrib.status}, 
-                Only legally allowed status for the first attribute is 'pending'`);
+                Only legally allowed status for the first attribute is USER_STATUS.PENDING`);
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
         if (!isPutUser) {
@@ -209,10 +209,10 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
     const currentStatus = userAttribs.length > 0 ? getLatestAttribute(userAttribs).status : null;
     const targetStatus = inputAttrib.status;
 
-    if ((currentStatus === 'denied') && (targetStatus === 'revoked') // denied status cannot be changed to revoked
-        || (currentStatus === 'active') && (targetStatus === 'denied') // active status cannot be changed to denied
-        || (currentStatus === 'pending') && (targetStatus === 'revoked') // pending cannot be changed to revoved
-        || (currentStatus !== null) && (targetStatus === 'pending')  // Existing user attribute cannot be changed to pending
+    if ((currentStatus === USER_STATUS.DENIED) && (targetStatus === USER_STATUS.REVOKED) // denied status cannot be changed to revoked
+        || (currentStatus === USER_STATUS.ACTIVE) && (targetStatus === USER_STATUS.DENIED) // active status cannot be changed to denied
+        || (currentStatus === USER_STATUS.PENDING) && (targetStatus === USER_STATUS.REVOKED) // pending cannot be changed to revoved
+        || (currentStatus !== null) && (targetStatus === USER_STATUS.PENDING)  // Existing user attribute cannot be changed to pending
         || (currentStatus === targetStatus)  // status change vale must be different than the existing one
     ) {
         console.log(`Warning: Illegal status change request from ${currentStatus}, to ${targetStatus}`);
@@ -232,7 +232,7 @@ const checkTypeMismatch = (inputType, userType) => {
 
 // ensure if the item is pending
 const ensurePendingStatus = attrib => { // Todo: better logging by providing state //
-    if (attrib.status !== 'pending') {
+    if (attrib.status !== USER_STATUS.PENDING) {
         console.log(`Warning: The status is: ${attrib.status}, 
             must be a pending for a new user or first attribute for the state`);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
@@ -254,11 +254,11 @@ const putUser = async (tableName, user) => {
             TableName: tableName,
             Item: user,
         });
-        console.log("Successfully submitted the request:", user);
+        console.log('Successfully submitted the request: ', user);
         return true;
     } catch (error) {
         console.log(
-            "Warning: There was an error saving user data to the database",
+            'Warning: There was an error saving user data to the database',
             error
         );
         throw new Error(RESPONSE_CODE.USER_SUBMISSION_FAILED);
@@ -274,15 +274,15 @@ const processEmail = async input => {
         const emailParams = constructEmailParams(recipients, input.type);
         // Send email //
         try {
-            // Start sending  the User access request "reciept" //
+            // Start sending  the User access request 'reciept' //
             const emailStatus = await sendEmail(emailParams.email);
-            if (emailStatus instanceof Error){
+            if (emailStatus instanceof Error) {
                 console.log('Warning: Email not sent');
             }
             return RESPONSE_CODE.USER_SUBMITTED;
         } catch (error) {
             console.log(
-                "Warning: There was an error sending the user access request acknowledgment email.",
+                'Warning: There was an error sending the user access request acknowledgment email.',
                 error
             );
             return RESPONSE_CODE.EMAIL_NOT_SENT;
@@ -297,10 +297,10 @@ const processEmail = async input => {
 // Collect recipient email addresses to send out confirmation emails to //
 const collectRecipientEmails = async input => {
     const recipients = [];
-    if (input.type === 'stateuser') {
+    if (input.type === USER_TYPE.STATE_USER) {
         const states = input.attributes.map(item => item.stateCode);
         // get all stateAdmin email ids
-        const stateAdmins = await getUsersByType('stateadmin') || [];
+        const stateAdmins = await getUsersByType(USER_TYPE.STATE_ADMIN) || [];
         // fiter out by selected states with latest attribute status is active //
         stateAdmins.map(admin => {
             const attributes = admin.attributes;
@@ -309,23 +309,23 @@ const collectRecipientEmails = async input => {
             });
         });
     }
-    else if (input.type === 'stateadmin') {  // get all cms approvers emails //
+    else if (input.type === USER_TYPE.STATE_ADMIN) {  // get all cms approvers emails //
         // query all cms approvers
-        const cmsApprovers = await getUsersByType('cmsapprover') || [];
+        const cmsApprovers = await getUsersByType(USER_TYPE.CMS_APPROVER) || [];
         // check if recent attribute status is active and add email to recipient list //
         cmsApprovers.forEach(approver => {
             isLatestAttributeActive(approver.attributes) ? recipients.push(approver.id) : null;
         });
 
     }
-    else if (input.type === 'cmsapprover') {
+    else if (input.type === USER_TYPE.CMS_APPROVER) {
         let systemadmins = [];
         // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
         if (process.env.systemAdminEmail) {
             recipients.push(process.env.systemAdminEmail);
         } else {
             // get all system admins emails //
-            systemadmins = await getUsersByType('systemadmin') || [];
+            systemadmins = await getUsersByType(USER_TYPE.SYSTEM_ADMIN) || [];
             systemadmins.forEach(sysadmin => recipients.push(sysadmin.id));
         }
     }
@@ -336,7 +336,7 @@ const collectRecipientEmails = async input => {
 const getUsersByType = async (type) => {
     const params = {
         TableName: process.env.userTableName,
-        ProjectionExpression: (type === 'systemadmin') ? 'id' : 'id,attributes',
+        ProjectionExpression: (type === USER_TYPE.SYSTEM_ADMIN) ? 'id' : 'id,attributes',
         FilterExpression: '#type = :userType',
         ExpressionAttributeNames: {
             '#type': 'type',
@@ -360,7 +360,7 @@ const getUsersByType = async (type) => {
 // check if the latest attribute from an array of attributes is active //
 const isLatestAttributeActive = (attribs) => {
     const latestAttribute = getLatestAttribute(attribs);
-    return latestAttribute.status === 'active';
+    return latestAttribute.status === USER_STATUS.ACTIVE;
 };
 
 // Get if the latest attribute from an array of attributes //
@@ -377,13 +377,13 @@ const constructEmailParams = (recipients, type) => {
     let typeText = 'User';
 
     switch (type) {
-        case 'stateuser':
+        case USER_TYPE.STATE_USER:
             typeText = 'State User';
             break;
-        case 'stateadmin':
+        case USER_TYPE.STATE_ADMIN:
             typeText = 'State Admin';
             break;
-        case 'cmsapprover':
+        case USER_TYPE.CMS_APPROVER:
             typeText = 'CMS Approver';
             break;
     };
