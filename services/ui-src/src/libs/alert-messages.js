@@ -29,6 +29,13 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
+  // Success
+  SUBMISSION_SUCCESS_WITH_SURVEY: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Submission Completed",
+    text: <>"Your submission has been received."</>,
+  },
+
   // Errors and warnings
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
