@@ -124,7 +124,7 @@ const Dashboard = () => {
       <AlertBar />
       <div className="dashboard-container">
         <div className="dashboard-left-col">
-          <div className="action-title">Medicaid SPAs</div>
+          <div className="action-title">SPAs</div>
           <Button
             id="spaSubmitBtn"
             variation="transparent"
@@ -138,6 +138,13 @@ const Dashboard = () => {
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
             Respond to SPA RAI
+          </Button>
+          <Button
+              id="chipSpaBtn"
+              variation="transparent"
+              onClick={() => history.push(ROUTES.CHIP_SPA)}
+          >
+            Submit New CHIP SPA
           </Button>
           <div className="action-title">Waivers</div>
           <Button
@@ -167,14 +174,6 @@ const Dashboard = () => {
             onClick={() => history.push(ROUTES.WAIVER_APP_K)}
           >
             Submit 1915(c) Appendix K Amendment
-          </Button>
-          <div className="action-title">CHIP SPAs</div>
-          <Button
-              id="chipSpaBtn"
-              variation="transparent"
-              onClick={() => history.push(ROUTES.CHIP_SPA)}
-          >
-            Submit New CHIP SPA
           </Button>
         </div>
         <div className="dashboard-right-col">
