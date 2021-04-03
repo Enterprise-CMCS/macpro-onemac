@@ -48,8 +48,17 @@ module.exports = {
         browser.pause(timeout);
     },
 };
-<<<<<<< HEAD
 
+    'Verify logout from SPA and Wavier Dashboard as Regular User': function (browser) {
+        // elements
+        let logout_banner_text = "CMS State Plan Amendment and Waiver Submission Platform";
+
+        // logout from SPA and Wavier Dashboard page
+        browser.click('button#myAccountLink');
+        browser.click('a#logoutLink');
+        browser.waitForElementPresent('h1').pause(1000);
+
+        // Verify the successful logout
+        browser.verify.containsText('h1', logout_banner_text);
+    }
 };
-=======
->>>>>>> parent of 354749e (Merge pull request #177 from CMSgov/oy2-5226-nightwatch-new)
