@@ -334,12 +334,5 @@ module.exports = {
         browser.pause(5000);
     }
 
-<<<<<<< HEAD
-<<<<<<< HEAD
 };
-=======
-}*/
->>>>>>> parent of ead3825 (Merge branch 'develop' into oy2-5226-nightwatch-new)
-=======
-};
->>>>>>> parent of 354749e (Merge pull request #177 from CMSgov/oy2-5226-nightwatch-new)
+}
