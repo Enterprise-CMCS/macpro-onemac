@@ -48,5 +48,8 @@ module.exports = {
         browser.pause(timeout);
     },
 };
+<<<<<<< HEAD
 
 };
+=======
+>>>>>>> parent of 354749e (Merge pull request #177 from CMSgov/oy2-5226-nightwatch-new)

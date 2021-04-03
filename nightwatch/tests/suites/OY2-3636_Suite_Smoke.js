@@ -335,4 +335,3 @@ module.exports = {
     }
 
 };
-}
