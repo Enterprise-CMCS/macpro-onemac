@@ -1,13 +1,9 @@
-// The automated UI test scripts that belongs to this module has 
-// element location related problem, we will be disabling this test 
-// until these issues are refactored and resolved. 3/25/2021
 
-/*
 const locator = '(//*[@disabled])';
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
-    "@tags": ["smoke","smoke2"],
+    "@tags": ["smoke"],
 
     before : function(browser) {
         console.log('Setting up...');
@@ -338,6 +334,4 @@ module.exports = {
         browser.pause(5000);
     }
 
-oy2-5226-nightwatch-new
-}*/
-
+};
