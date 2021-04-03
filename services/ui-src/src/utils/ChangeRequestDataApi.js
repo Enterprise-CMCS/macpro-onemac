@@ -25,10 +25,9 @@ class ChangeRequestDataApi {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
-      console.log(JSON.stringify(data))
       return await API.post("changeRequestAPI", "/submit", {
-        body: data,
-      });
+          body: data,
+        });
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
@@ -88,8 +87,28 @@ class ChangeRequestDataApi {
   }
 
   /**
+   * Check to see if an user exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the user  exists in the back end
+   */
+  async userProfile(userEmail) {
+    if (!userEmail) {
+      console.log("user Email was not specified for userProfile API call");
+      throw new Error("user Email was not specified for userProfile API call");
+    }
+
+    try {
+      let answer = await API.get("changeRequestAPI", `/getUser?email=${userEmail}`);
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking user ${userEmail}.`, error);
+      throw error;
+    }
+  }
+
+  /**
    * Fetch a specific record from the backend.
-   * @return {Promise<Array>} a list of change requests
+   * @return {Array} a list of change requests
    */
   async getAll() {
     try {
@@ -111,10 +130,14 @@ class ChangeRequestDataApi {
     try {
       return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
-      console.log(`There was an error fetching all change requests`, error);
+      console.log(
+          `There was an error fetching all change requests`,
+          error
+      );
       throw error;
     }
   }
+
 }
 
 const instance = new ChangeRequestDataApi();

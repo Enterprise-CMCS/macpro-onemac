@@ -1,49 +1,102 @@
-import React, { useEffect, useRef } from "react";
+import React, { Component } from "react";
 import { Alert } from "@cmsgov/design-system";
-import { useHistory, useLocation } from "react-router-dom";
+import {TITLE_BAR_ID} from "./PageTitleBar";
 
-export const AlertBar = () => {
-  const location = useLocation();
-  const { state: { showAlert: alert } = {} } = location;
-  const history = useHistory();
-
-  // keep a handle on the alert bar's container
-  const divRef = useRef();
-
-  // track alert from global state (history) in a local mutable ref
-  const alertRef = useRef(alert);
-
-  // every time the alert from the browser location changes...
-  useEffect(() => {
-    // scroll the user up to the bar
-    if (alertRef.current && divRef.current) {
-      divRef.current.scrollIntoView();
-    }
-
-    // if the alert has changed to something other than null / false / etc.
-    if (alert) {
-      // update our local copy if it's different
-      if (alert !== alertRef.current) alertRef.current = alert;
-
-      // clear it out of the browser's location so we do not see it again on refresh
-      history.replace({ ...location, state: undefined }, {
-        ...location.state,
-        showAlert: null,
-      });
-    }
-  }, [alert, history, location]);
-
-  return (
-    <div className="alert-bar" ref={divRef}>
-      {alertRef.current && alertRef.current.heading && (
-        <Alert
-          variation={alertRef.current.type}
-          heading={alertRef.current.heading}
-        >
-          <p className="ds-c-alert__text">{alertRef.current.text}</p>
-        </Alert>
-      )}
-    </div>
-  );
+/**
+ * Alert types
+ */
+export const ALERT_TYPES = {
+  INFO: null, // Per CMS Design System
+  WARNING: "warn",
+  ERROR: "error",
+  SUCCESS: "success",
 };
 
+/**
+ * Singleton Alert bar to display notifications to the user.  Note you can only add this
+ * component once as it is a singleton.  Example usage:
+ *   AlertBar.alert(ALERTS_MSG.MY_ALERT)
+ */
+export default class AlertBar extends Component {
+  /**
+   * Reference to the component instance.
+   */
+  static __singletonRef;
+
+  /**
+   * Constructor.
+   */
+  constructor() {
+    super();
+    if (!AlertBar.__singletonRef) {
+      AlertBar.__singletonRef = this;
+    } else {
+      throw new Error(
+        "You can only use the AlertBar once in your application."
+      );
+    }
+    this.state = { isShown: false, heading: "", text: "", type: "" };
+  }
+
+  /**
+   * Displays an alert.
+   * @param {Object} alertMsg the alert message object with type, heading and text
+   */
+  static alert(alertMsg) {
+    if (alertMsg) {
+      AlertBar.__singletonRef.__alert(
+        alertMsg.type,
+        alertMsg.heading,
+        alertMsg.text
+      );
+    } else {
+      throw new Error("Must specify an alert message object.");
+    }
+  }
+
+  /**
+   * Dismisses/hides the alert.
+   */
+  static dismiss() {
+    AlertBar.__singletonRef.__dismiss();
+  }
+
+  /**
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.dismiss().
+   * Dismisses/hides the alert.
+   */
+  __dismiss() {
+    this.setState({ isShown: false });
+  }
+
+  /**
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.alert().
+   * Displays an informational alert.
+   * @param {string} type the type of alert
+   * @param {string} heading the alert heading
+   * @param {string} text the alert text
+   */
+  __alert(type, heading, text) {
+    // Going to the anchor must happen first of the alert will not show.
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    elmnt.scrollIntoView();
+    this.setState({ isShown: true, type, heading, text });
+  }
+
+  /**
+   * Render the component.
+   */
+  render() {
+    return (
+      <div>
+        {this.state.isShown && (
+          <div className="alert-bar">
+            <Alert variation={this.state.type} heading={this.state.heading}>
+              <p className="ds-c-alert__text">{this.state.text}</p>
+            </Alert>
+          </div>
+        )}
+      </div>
+    );
+  }
+}

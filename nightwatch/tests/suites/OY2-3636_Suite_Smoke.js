@@ -334,4 +334,8 @@ module.exports = {
         browser.pause(5000);
     }
 
+<<<<<<< HEAD
 };
+=======
+}*/
+>>>>>>> parent of ead3825 (Merge branch 'develop' into oy2-5226-nightwatch-new)
