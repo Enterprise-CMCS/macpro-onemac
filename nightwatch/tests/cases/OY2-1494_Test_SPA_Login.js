@@ -47,7 +47,6 @@ module.exports = {
         spa.verify.not.containsText('h1', title);
         browser.pause(timeout);
     },
-};
 
     'Verify logout from SPA and Wavier Dashboard as Regular User': function (browser) {
         // elements
