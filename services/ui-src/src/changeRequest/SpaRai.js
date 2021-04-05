@@ -3,7 +3,7 @@ import { useParams } from "react-router-dom";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
-import { ROUTES } from "cmscommonlib";
+import { ROUTES } from "../Routes";
 
 /**
  * SpaRai acts as a wrapper around RaiTemplate to render custom RAI form for a SPA RAI

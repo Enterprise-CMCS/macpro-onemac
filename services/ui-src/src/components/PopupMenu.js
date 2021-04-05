@@ -3,9 +3,7 @@ import Button from '@material-ui/core/Button';
 import Menu from '@material-ui/core/Menu';
 import MenuItem from '@material-ui/core/MenuItem';
 import {makeStyles} from '@material-ui/core/styles';
-import tripleDots from "../images/TripleDots.svg";
-
-const TRIPLE_DOTS_IMAGE = <img alt="" className="triple-dots" src={tripleDots} />;
+import {tablePopupIcon} from '../images/common'
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -29,12 +27,13 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
 
     const handleClose = (value) => {
         setAnchorEl(null);
+        handleSelected(selectedRow, value)
     };
 
     return (
         <>
             <Button aria-haspopup="true" onClick={handleClick}>
-                &nbsp;{TRIPLE_DOTS_IMAGE}
+                {tablePopupIcon()}
             </Button>
             <Menu
                 id="simple-menu"
@@ -47,7 +46,7 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
                 {menuItems.map((item, i) => (
                     <React.Fragment key={item.value}>
                         {i !== 0  && <hr/>}
-                        <MenuItem className={classes.root} onClick={() => {if (window.confirm(item.confirmMessage)) {alert("confirmed, inspect console for details");handleSelected(selectedRow, item.value)}handleClose(item.value)}}>{item.label}</MenuItem>
+                        <MenuItem className={classes.root} onClick={() => handleClose(item.value)}>{item.label}</MenuItem>
                     </React.Fragment>))}
                 </div>
 

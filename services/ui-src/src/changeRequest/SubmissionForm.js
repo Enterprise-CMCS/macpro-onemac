@@ -4,7 +4,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ROUTES } from "cmscommonlib";
+import { ROUTES } from "../Routes";
 import PropTypes from "prop-types";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
@@ -180,7 +180,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       try {
         if (transmittalNumberDetails.existenceRegex !== undefined) {
           newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
-        }
+        } 
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
         );
@@ -196,9 +196,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           } else {
             newMessage.statusMessage =
             transmittalNumberDetails.idLabel +
-            " not found. You can still proceed with the submission, but please ensure you have the correct " +
+            " not found. Please ensure you have the correct " +
             transmittalNumberDetails.idLabel +
-            ". Contact the MACPro Help Desk (code: OMP002) if you need support.";
+            " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
           }
         } else if (dupID && !transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
