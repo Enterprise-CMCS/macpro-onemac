@@ -430,6 +430,7 @@ const dispatchEmail = async email => {
         if (emailStatus instanceof Error) {
             console.log('Warning: Email not sent');
         }
+        console.log('Email successfully sent');
         return RESPONSE_CODE.USER_SUBMITTED;
     } catch (error) {
         console.log(
