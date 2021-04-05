@@ -223,7 +223,7 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
 // Check if the there is type mismatch between the request and current type of the user //
 const checkTypeMismatch = (inputType, userType) => {
     if (inputType && userType && (inputType !== userType)) {
-        console.log(`Warning: Typw mismatch. Current user type is ${userType} and requested type is ${inputType}`);
+        console.log(`Warning: Type mismatch. Current user type is ${userType} and requested type is ${inputType}`);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
     console.log('No type mismatches');
