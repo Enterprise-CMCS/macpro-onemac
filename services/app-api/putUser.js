@@ -6,7 +6,7 @@ import { RESPONSE_CODE } from './libs/response-codes';
 import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
 import { territoryCodeList } from './libs/territoryLib';
-import {USER_TYPE, USER_STATUS} from './libs/user-lib';
+import { USER_TYPE, USER_STATUS } from './libs/user-lib';
 /**
  * Create / Update a user or change User status
  */
@@ -198,7 +198,7 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
     if (userAttribs.length === 0) {
         if (inputAttrib.status !== USER_STATUS.PENDING) {
             console.log(`Warning: Illegal status change request ${inputAttrib.status}, 
-                Only legally allowed status for the first attribute is USER_STATUS.PENDING`);
+                Only legally allowed status for the first attribute is pending`);
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
         if (!isPutUser) {
@@ -267,35 +267,24 @@ const putUser = async (tableName, user) => {
 
 // Preparing and sending confirmation email //
 const processEmail = async input => {
-    // Collect recipients email ids
-    const recipients = await collectRecipientEmails(input);
-    if (recipients.length > 0) {
+    // Collect the emails of the authorized user who can make the requested role changes to //
+    const roleAdminEmails = await collectRoleAdminEmailIds(input);
+    // Construct and send email acknowledgement to the requesting user //
+    const userEmail = await constructUserEmail(input.userEmail);
+    await dispatchEmail(userEmail.email);
+    if (roleAdminEmails.length > 0) {
         // construct email parameters
-        const emailParams = constructEmailParams(recipients, input.type);
-        // Send email //
-        try {
-            // Start sending  the User access request 'reciept' //
-            const emailStatus = await sendEmail(emailParams.email);
-            if (emailStatus instanceof Error) {
-                console.log('Warning: Email not sent');
-            }
-            return RESPONSE_CODE.USER_SUBMITTED;
-        } catch (error) {
-            console.log(
-                'Warning: There was an error sending the user access request acknowledgment email.',
-                error
-            );
-            return RESPONSE_CODE.EMAIL_NOT_SENT;
-        }
+        const emailParams = constructRoleAdminEmails(roleAdminEmails, input.type, 'doneBy');
+        await dispatchEmail(emailParams.email);
     } else {
         console.log(
-            `Warning: No emails sent. There is no recipient email address present for input ${JSON.stringify(input)}`);
+            `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`);
         return RESPONSE_CODE.EMAIL_NOT_SENT;
     }
 };
 
 // Collect recipient email addresses to send out confirmation emails to //
-const collectRecipientEmails = async input => {
+const collectRoleAdminEmailIds = async input => {
     const recipients = [];
     if (input.type === USER_TYPE.STATE_USER) {
         const states = input.attributes.map(item => item.stateCode);
@@ -329,7 +318,7 @@ const collectRecipientEmails = async input => {
             systemadmins.forEach(sysadmin => recipients.push(sysadmin.id));
         }
     }
-    console.log('Email recipients,', recipients);
+    console.log('Role admin email recipients,', recipients);
     return recipients;
 };
 
@@ -351,7 +340,7 @@ const getUsersByType = async (type) => {
         result = await dynamoDb.scan(params);
         return result.Items;
     } catch (dbError) {
-        console.log(`Error happened while reading from DB:  ${dbError}`);
+        console.log(`Error happened while reading from DB: ${dbError}`);
         throw dbError;
     }
 
@@ -368,15 +357,15 @@ const getLatestAttribute = (attribs) => attribs.reduce(
     (latestItem, currentItem) => currentItem.date > latestItem.date ? currentItem : latestItem
 );
 
-// Construct the email with all needed properties //
-const constructEmailParams = (recipients, type) => {
+// Construct email to the authorities with the role request info //
+const constructRoleAdminEmails = (recipients, userType) => {
     const email = {
         fromAddressSource: 'userAccessEmailSource',
         ToAddresses: recipients
     };
     let typeText = 'User';
 
-    switch (type) {
+    switch (userType) {
         case USER_TYPE.STATE_USER:
             typeText = 'State User';
             break;
@@ -387,6 +376,7 @@ const constructEmailParams = (recipients, type) => {
             typeText = 'CMS Approver';
             break;
     };
+
     email.Subject = `New OneMAC Portal ${typeText} Access Request`;
     email.HTML = `
         <p>Hello,</p>
@@ -396,5 +386,56 @@ const constructEmailParams = (recipients, type) => {
         please contact the MACPro Help Desk.</p>
 
         <p>Thank you!</p>`;
+
     return { email };
+};
+
+// Construct the email with all needed properties //
+const constructUserEmail = (userEmailId, userType) => {
+    const email = {
+        fromAddressSource: 'userAccessEmailSource',
+        ToAddresses: [userEmailId]
+    };
+    let typeText = 'User';
+
+    switch (userType) {
+        case USER_TYPE.STATE_USER:
+            typeText = 'State User';
+            break;
+        case USER_TYPE.STATE_ADMIN:
+            typeText = 'State Admin';
+            break;
+        case USER_TYPE.CMS_APPROVER:
+            typeText = 'CMS Approver';
+            break;
+    };
+
+    email.Subject = `Your OneMAC Portal ${typeText} Access Request has been received`;
+    email.HTML = `
+        <p>Hello,</p>
+
+        <p>Your new role request has been received. Please log into OneMAC and check your 
+        Account Management dashboard to the status of your requests. If you have questions, 
+        please contact the MACPro Help Desk.</p>
+
+        <p>Thank you!</p>`;
+
+    return { email };
+};
+
+// Send email //
+const dispatchEmail = async email => {
+    try {
+        const emailStatus = await sendEmail(email);
+        if (emailStatus instanceof Error) {
+            console.log('Warning: Email not sent');
+        }
+        return RESPONSE_CODE.USER_SUBMITTED;
+    } catch (error) {
+        console.log(
+            'Warning: There was an error sending the user access request acknowledgment email.',
+            error
+        );
+        return RESPONSE_CODE.EMAIL_NOT_SENT;
+    }
 };
