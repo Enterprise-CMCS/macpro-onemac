@@ -7,6 +7,7 @@ import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
 import { territoryCodeList } from './libs/territoryLib';
 import { USER_TYPE, USER_STATUS } from './libs/user-lib';
+
 /**
  * Create / Update a user or change User status
  */
@@ -376,7 +377,6 @@ const constructRoleAdminEmails = (recipients, userType) => {
             typeText = 'CMS Approver';
             break;
     };
-
     email.Subject = `New OneMAC Portal ${typeText} Access Request`;
     email.HTML = `
         <p>Hello,</p>
@@ -386,7 +386,6 @@ const constructRoleAdminEmails = (recipients, userType) => {
         please contact the MACPro Help Desk.</p>
 
         <p>Thank you!</p>`;
-
     return { email };
 };
 

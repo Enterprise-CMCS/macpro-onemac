@@ -1,72 +1,28 @@
 {
-  "spa": {
-    "title": "SPA",
-    "desc": "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
-    "navigateTo": "/",
-    "imageAttributes": {
-      "fileName": "spa",
-      "bgColor": "#046B99",
-      "width": "156",
-      "height": "173",
-      "top": "35",
-      "left": "-41"
-    }
-  },
-  "waiver": {
-    "title": "Waiver",
-    "desc": "Submit Waivers, Amendments, Renewals, RAI or Temp Extensions",
-    "navigateTo": "/",
-    "imageAttributes": {
-      "fileName": "waiver",
-      "bgColor": "#4C2C92",
-      "width": "159",
-      "height": "136",
-      "top": "40",
-      "left": "-42"
-    }
-  },
-  "stateuser": {
-    "title": "State Submitter",
-    "desc": "Responsible for submitting plans",
-    "navigateTo": "/signup/state",
-    "pushState": {
-      "role": "stateuser"
+    "spa": {
+        "title": "SPA",
+        "desc": "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
+        "navigateTo": "/",
+        "imageAttributes": {
+            "fileName": "spa",
+            "bgColor": "#046B99",
+            "width": "156",
+            "height": "173",
+            "top": "35",
+            "left": "-41"
+        }
     },
-    "imageAttributes": {
-      "fileName": "addUser",
-      "bgColor": "#2E8540",
-      "width": "165",
-      "height": "120",
-      "top": "-17",
-      "left": "123"
+    "waiver": {
+        "title": "Waiver",
+        "desc": "Submit Waivers, Amendments, Renewals, RAI or Temp Extensions",
+        "navigateTo": "/",
+        "imageAttributes": {
+            "fileName": "waiver",
+            "bgColor": "#4C2C92",
+            "width": "159",
+            "height": "136",
+            "top": "40",
+            "left": "-42"
+        }
     }
-  },
-  "stateadmin": {
-    "title": "State System Administrator",
-    "desc": "Approves State Submitters",
-    "navigateTo": "/signup/state",
-    "pushState": {
-      "role": "stateadmin"
-    },
-    "imageAttributes": {
-      "fileName": "addUser",
-      "bgColor": "#046B99",
-      "width": "165",
-      "height": "120",
-      "top": "122",
-      "left": "-42"
-    }
-  },
-  "cmsapprover": {
-    "title": "CMS Role Approver",
-    "desc": "Responsible for managing State System Admins.",
-    "imageAttributes": {
-      "fileName": "addUser",
-      "bgColor": "#2E8540",
-      "width": "165",
-      "height": "120",
-      "top": "-17",
-      "left": "123"
-    }
-  }
 }

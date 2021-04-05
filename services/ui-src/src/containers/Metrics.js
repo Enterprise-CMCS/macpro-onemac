@@ -47,8 +47,8 @@ export default function Metrics() {
     return (
         <div>
             <LoadingScreen isLoading={isLoading}>
-                <div className="ds-l-row ds-u-justify-content--center ds-u-padding--1">
-                    <table className="ds-c-table">
+                <div class="ds-l-row ds-u-justify-content--center ds-u-padding--1">
+                    <table class="ds-c-table">
                         <tr><td>Total Submissions</td>
                             <td>{JSON.stringify(metrics.totalSubmissions)}</td>
                         </tr>

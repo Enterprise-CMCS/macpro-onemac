@@ -18,21 +18,11 @@ The application provides a set of test users for the DEV environment that you ca
 The following are the available static test users:
 
 ```
-stateuserpending@cms.hhs.local
-stateuseractive@cms.hhs.local
-stateuserdenied@cms.hhs.local
-stateuserrevoked@cms.hhs.local
-stateuserunregistered@cms.hhs.local
-stateadminpending@cms.hhs.local
-stateadminactive@cms.hhs.local
-stateadmindenied@cms.hhs.local
-stateadminrevoked@cms.hhs.local
-stateadminunregistered@cms.hhs.local
-cmsapproverpending@cms.hhs.local
-cmsapproveractive@cms.hhs.local
-cmsapproverdenied@cms.hhs.local
-cmsapproverrevoked@cms.hhs.local
-cmsapproverunregistered@cms.hhs.local
+ user1@cms.hhs.local
+ user2@cms.hhs.local
+ user3@cms.hhs.local
+ user4@cms.hhs.local
+ user5@cms.hhs.local
 ```
 
 For every build, a dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application.  Developers need to setup their correct email in the Git configuration and have already committed changes to the repo.  To see the list of emails added run the following command in the Git repository. 

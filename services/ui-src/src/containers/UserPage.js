@@ -1,7 +1,7 @@
 import React from "react";
 import { Review } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
-import { userTypes } from "../libs/userLib";
+import { userTypes } from "../libs/userTypes";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
 
