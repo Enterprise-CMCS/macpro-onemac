@@ -414,7 +414,7 @@ const constructUserEmail = (userEmailId, userType) => {
         <p>Hello,</p>
 
         <p>Your new role request has been received. Please log into OneMAC and check your 
-        Account Management dashboard to the status of your requests. If you have questions, 
+        Account Management dashboard to see the status of your requests. If you have questions, 
         please contact the MACPro Help Desk.</p>
 
         <p>Thank you!</p>`;
