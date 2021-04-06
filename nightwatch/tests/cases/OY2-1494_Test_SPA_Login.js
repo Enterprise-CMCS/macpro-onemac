@@ -3,7 +3,7 @@ let spa;
 const timeout = 1000;
 module.exports = {
 
-    before : function(browser) {
+    before: function (browser) {
         console.log('Setting up...');
         console.log('url is: ', browser.launch_url);
         spa = browser.page.spaBasePage();
@@ -12,12 +12,12 @@ module.exports = {
             .waitForElementPresent('body');
     },
 
-    after : function(browser) {
+    after: function (browser) {
         console.log('Closing down...');
         browser.end();
     },
 
-    'Login to SPA and Waiver Dashboard' : function(browser, testData = {
+    'Login to SPA and Waiver Dashboard': function (browser, testData = {
         username: browser.globals.user,
         password: browser.globals.pass,
         spaPageTitle: 'SPA and Waiver Dashboard',
@@ -30,7 +30,7 @@ module.exports = {
         browser.verify.containsText('h1', testData.spaPageTitle);
     },
 
-    'Login to SPA and Waiver Dashboard via Okta' : function(browser, testData = {
+    'Login to SPA and Waiver Dashboard via Okta': function (browser, testData = {
         username: browser.globals.user,
         password: browser.globals.pass,
         spaPageTitle: 'SPA and Waiver Dashboard',
@@ -41,7 +41,7 @@ module.exports = {
         browser.verify.containsText('h1', testData.spaPageTitle);
     },
 
-    'Logout of SPA and Waiver Dashboard' : function (browser) {
+    'Logout of SPA and Waiver Dashboard': function (browser) {
         let title = 'SPA and Waiver Dashboard'
         spa.logout();
         spa.verify.not.containsText('h1', title);
@@ -49,16 +49,16 @@ module.exports = {
     },
 };
 
-    'Verify logout from SPA and Wavier Dashboard as Regular User': function (browser) {
-        // elements
-        let logout_banner_text = "CMS State Plan Amendment and Waiver Submission Platform";
+'Verify logout from SPA and Wavier Dashboard as Regular User': function (browser) {
+    // elements
+    let logout_banner_text = "CMS State Plan Amendment and Waiver Submission Platform";
 
-        // logout from SPA and Wavier Dashboard page
-        browser.click('button#myAccountLink');
-        browser.click('a#logoutLink');
-        browser.waitForElementPresent('h1').pause(1000);
+    // logout from SPA and Wavier Dashboard page
+    browser.click('button#myAccountLink');
+    browser.click('a#logoutLink');
+    browser.waitForElementPresent('h1').pause(1000);
 
-        // Verify the successful logout
-        browser.verify.containsText('h1', logout_banner_text);
-    }
+    // Verify the successful logout
+    browser.verify.containsText('h1', logout_banner_text);
+}
 };
