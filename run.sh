@@ -5,7 +5,6 @@
 echo $branch_name
 
 #Non Nightwatch Branch Ignore:
-merge_branch=`git log --merges -n 1 | tail -3 | head -1 | cut -d"/" -f2`
 
  if [ "$branch_name" ==  "develop" ]  || [ "$branch_name" = "master" ]
  then
