@@ -70,8 +70,11 @@ const Dashboard = () => {
       let type;
       let link = "/" + changeRequest.type + "/" + changeRequest.id;
       switch (changeRequest.type) {
+        case CHANGE_REQUEST_TYPES.CHIP_SPA:
+          type = "CHIP SPA";
+          break;
         case CHANGE_REQUEST_TYPES.SPA:
-          type = "SPA";
+          type = "Medicaid SPA";
           break;
 
         case CHANGE_REQUEST_TYPES.WAIVER:
@@ -127,7 +130,7 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA)}
           >
-            Submit new SPA
+            Submit New Medicaid SPA
           </Button>
           <Button
             id="spaRaiBtn"
@@ -136,13 +139,20 @@ const Dashboard = () => {
           >
             Respond to SPA RAI
           </Button>
+          <Button
+              id="chipSpaBtn"
+              variation="transparent"
+              onClick={() => history.push(ROUTES.CHIP_SPA)}
+          >
+            Submit New CHIP SPA
+          </Button>
           <div className="action-title">Waivers</div>
           <Button
             id="waiverBtn"
             variation="transparent"
             onClick={() => history.push(ROUTES.WAIVER)}
           >
-            Submit new Waiver
+            Submit 1915(b) Waiver Action
           </Button>
           <Button
             id={"waiverRaiBtn"}

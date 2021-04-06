@@ -14,6 +14,7 @@ import WaiverExtension from "./changeRequest/WaiverExtension";
 import WaiverAppK from "./changeRequest/WaiverAppK";
 import Metrics from "./containers/Metrics";
 import { useAppContext } from "./libs/contextLib";
+import ChipSpa from "./changeRequest/ChipSpa";
 
 export default function DynamicRoutes() {
   const { userProfile } = useAppContext();
@@ -24,6 +25,9 @@ export default function DynamicRoutes() {
         case ROLES.STATE_USER:
           return (
             <>
+              <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?`}>
+                    <ChipSpa />
+              </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
               </AuthenticatedRoute>
@@ -99,5 +103,5 @@ export default function DynamicRoutes() {
       <Redirect to={ROUTES.SIGNUP} />
     </>
   );
-  
+
 }

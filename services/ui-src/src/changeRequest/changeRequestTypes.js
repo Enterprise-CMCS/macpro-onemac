@@ -2,6 +2,7 @@
  * Record types.
  */
 export const CHANGE_REQUEST_TYPES = {
+    CHIP_SPA: 'chipspa',
     SPA: 'spa',
     SPA_RAI: 'sparai',
     WAIVER: 'waiver',
