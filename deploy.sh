@@ -13,7 +13,7 @@ services=(
 )
 
 # These test users are only available in DEV environments.
-TEST_USERS=('stateuseractive@cms.hhs.local'
+DEV_USERS=('stateuseractive@cms.hhs.local'
   'stateuserpending@cms.hhs.local'
   'stateuserdenied@cms.hhs.local'
   'stateuserrevoked@cms.hhs.local'
@@ -86,13 +86,13 @@ then
   # Lets first get the emails of developers that have committed to the repo, so we can add the emails as test users.
   # This will also result in adding any new developers in the branch (cumulative).
   dev_emails=`git log --pretty=format:'%ae' | grep -v github.com | sort -u`
-  TEST_USERS+=("${dev_emails[@]}")
+  DEV_USERS+=("${dev_emails[@]}")
   echo "INFO: Creating the following test users as needed..."
-  echo ${TEST_USERS[@]}
+  echo ${DEV_USERS[@]}
   cognito_user_pool_id=`./services/output.sh services/ui-auth UserPoolId $stage`
   if [ ! -z "$cognito_user_pool_id" ]
   then
-      for user in ${TEST_USERS[@]}
+      for user in ${DEV_USERS[@]}
       do
           case $user in
             cms*)

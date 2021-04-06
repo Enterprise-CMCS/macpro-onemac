@@ -28,11 +28,9 @@ else
  if [ $lineCount -gt -6 ]
  then
  
- 
    #
    # Test state users
    #
- 
  
    testuser="stateuseractive@cms.hhs.local"
  
@@ -55,6 +53,11 @@ else
    echo '{  "id": { "S": "'${testuser}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
    aws dynamodb put-item --table-name $userTable --item file://user.json
  
+   # OKTA credentials
+   stateuserattributes='"attributes": { "L": [ { "M":  { "stateCode": { "S": "MI" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } },{ "M":  { "stateCode": { "S": "VA" }, "history": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] } } } ] }'
+   echo '{  "id": { "S": "'${TEST_USERS}'" }, "type": { "S": "stateuser" }, '${stateuserattributes}' } ' > user.json
+   aws dynamodb put-item --table-name $userTable --item file://user.json
+
  #
  # Test State Admins
  #
@@ -88,8 +91,6 @@ else
  # Test CMS Approvers
  #
  
- 
- 
    testuser="cmsapproveractive@cms.hhs.local"
    cmsapproverattributes='"attributes": { "L": [ { "M": { "status": { "S": "active" }, "date": { "N": "'${createddate}'" }, "doneBy": { "S": "systemsadmin@cms.hhs.local" } } } ] }'
    echo '{  "id": { "S": "'${testuser}'" }, "type": { "S": "cmsapprover" }, '${cmsapproverattributes}' } ' > user.json
@@ -117,11 +118,9 @@ else
   echo '{  "id": { "S": "'${testuser}'" },  "type": { "S": "systemadmin" } }' > user.json
   aws dynamodb put-item --table-name $userTable --item file://user.json
 
-echo '{  "id": { "S": "sabrina.mccrae@cms.hhs.gov" },  "type": { "S": "systemadmin" } }' > user.json
-userTable=cms-spa-form-${stage}-user-profiles
-aws dynamodb put-item --table-name $userTable --item file://user.json
-
-
+  echo '{  "id": { "S": "sabrina.mccrae@cms.hhs.gov" },  "type": { "S": "systemadmin" } }' > user.json
+  userTable=cms-spa-form-${stage}-user-profiles
+  aws dynamodb put-item --table-name $userTable --item file://user.json
  
  fi
  
