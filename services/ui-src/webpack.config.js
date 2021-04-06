@@ -79,7 +79,6 @@ module.exports = [
                 { from: 'node_modules/@webcomponents/webcomponentsjs/webcomponents-bundle.js', to: '', toType: 'dir' },
                 { from: 'node_modules/@webcomponents/webcomponentsjs/bundles', to: 'bundles', toType: 'dir' }
             ]),
-            new CopyWebpackPlugin([{ from: '_warmup', to: '_warmup' }])
             ],
         ]
     },
