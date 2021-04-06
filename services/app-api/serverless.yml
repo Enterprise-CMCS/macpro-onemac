@@ -19,6 +19,7 @@ custom:
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   userAccessEmailSource:  ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
+  systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   warmupEnabled:
     production: true
     development: false
@@ -38,14 +39,6 @@ custom:
     start:
       inMemory: true
       migrate: true
-      seed: true
-    seed:
-      domain:
-        sources:
-        - table: ${self:custom.spaIdTableName}
-          sources: [./spa-ids-seed.json]
-        - table: ${self:custom.userTableName}
-          sources: [./user-profiles-seed.json]
   serverless-offline:
     allowCache: true
 associateWaf:
@@ -65,6 +58,7 @@ provider:
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
+    systemAdminEmail: ${self:custom.systemAdminEmail}
 
 functions:
   submit:
@@ -122,16 +116,6 @@ functions:
     events:
       - http:
           path: getUser
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getMyUserList:
-    handler: getMyUserList.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getMyUserList
           method: get
           cors: true
           authorizer: aws_iam
