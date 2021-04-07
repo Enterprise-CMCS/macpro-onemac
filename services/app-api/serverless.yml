@@ -1,8 +1,5 @@
 service: app-api
 
-package:
-  individually: true
-
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
