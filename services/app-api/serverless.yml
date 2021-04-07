@@ -22,7 +22,7 @@ custom:
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   warmupEnabled:
     production: true
-    development: false
+    development: true
   warmup:
     enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
     role: LambdaWarmupRole
