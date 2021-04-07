@@ -1,38 +1,17 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Review } from "@cmsgov/design-system";
-import { ROLES } from "cmscommonlib";
+import { ROLES, latestAccessStatus } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
+import UserDataAPI from "../utils/UserDataApi";
 
-const accesses = [
-  {
-    state: "Maryland",
-    status: "Access Granted",
-    contacts: [
-      {
-        name: "Rick Genstry",
-        email: "rick@example.com",
-      },
-      {
-        name: "Pending Polly",
-        email: "pendingpolly@example.com",
-      },
-    ],
-  },
-  {
-    state: "Nebraska",
-    status: "Pending",
-    contacts: [
-      {
-        name: "Approving Alice",
-        email: "alice@example.com",
-      },
-    ],
-  },
-];
+/**
+  * Formats multi-part name into single full name
+  */
+const getFullName = (...names) => names.filter(Boolean).join(" ");
 
 const ROLE_TO_APPROVER_LABEL = {
   [ROLES.STATE_USER]: "State Admin",
@@ -43,19 +22,38 @@ const ROLE_TO_APPROVER_LABEL = {
 const ContactList = ({ contacts, userType }) => {
   let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
 
+  if (!contacts) return null;
   if (contacts.length > 1) label += "s";
 
   return (
     <p>
       <b>{label}:</b>{" "}
-      {contacts.map(({ name, email }, idx) => (
+      {contacts.map(({ firstName, lastName, email }, idx) => (
         <React.Fragment key={email}>
-          <a href={`mailto:${email}`}>{name}</a>
+          <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
           {idx < contacts.length - 1 && ", "}
         </React.Fragment>
       ))}
     </p>
   );
+};
+
+const transformAccesses = (user = {}) => {
+  switch (user.type) {
+    case ROLES.STATE_USER:
+    case ROLES.STATE_ADMIN:
+      return user.attributes?.map(({ stateCode }) => ({
+        state: stateCode,
+        status: latestAccessStatus(user, stateCode),
+      }));
+
+    case ROLES.CMS_ROLE_APPROVER:
+    case ROLES.SYSTEM_ADMIN:
+      return [];
+
+    default:
+      return [];
+  }
 };
 
 /**
@@ -65,24 +63,31 @@ const UserPage = () => {
   const { userProfile } = useAppContext();
   const { email, firstName, lastName, userData } = userProfile;
 
+  const [accesses, setAccesses] = useState(transformAccesses(userData));
+
   let userType = "user";
   if (userData && userData.type) {
     userType = userTypes[userData.type];
   }
 
-  /**
-   * Formats first name and last name into single full name
-   * @param {Number} numDigits
-   * @returns string of numbers
-   */
-  function getFullName() {
-    let names = [firstName, lastName];
-    names = names.filter((name) => name);
+  useEffect(() => {
+    (async () => {
+      try {
+        const adminsByState = await UserDataAPI.getStateAdmins(
+          userData.attributes.map(({ stateCode }) => stateCode).filter(Boolean)
+        );
 
-    const fullName = names.join(" ");
-
-    return fullName;
-  }
+        setAccesses(
+          transformAccesses(userData).map((access) => ({
+            ...access,
+            contacts: adminsByState[access.state],
+          }))
+        );
+      } catch (e) {
+        console.error(e);
+      }
+    })();
+  }, [userData]);
 
   return (
     <div>
@@ -101,7 +106,7 @@ const UserPage = () => {
         <div className="ds-l-row">
           <div className="ds-l-col--6">
             <h3>Profile Information</h3>
-            <Review heading="Full Name">{getFullName()}</Review>
+            <Review heading="Full Name">{getFullName(firstName, lastName)}</Review>
             <Review heading="Email">{email}</Review>
           </div>
           <div className="ds-l-col--6">
