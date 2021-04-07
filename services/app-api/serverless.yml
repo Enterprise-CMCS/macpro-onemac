@@ -116,7 +116,15 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-
+  getMyUserList:
+    handler: getMyUserList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getMyUserList
+          method: get
+          cors: true
+          authorizer: aws_iam
   putUser:
     handler: putUser.main
     role: LambdaApiRole
