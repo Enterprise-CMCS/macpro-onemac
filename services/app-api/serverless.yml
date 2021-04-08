@@ -36,6 +36,7 @@ custom:
   dynamodb:
     stages:
       - dev
+      - ${env:BRANCH}
     start:
       inMemory: true
       migrate: true

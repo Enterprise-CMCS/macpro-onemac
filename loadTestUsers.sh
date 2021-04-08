@@ -7,19 +7,19 @@
 if [ -z "$1" ]; then
     echo "usage:  loadTestUsers <github branch name>"
 else
-  stage=$1
-  #userList=$2
-
   #
   # Check if Table already Loaded, Do not load a second time
   #
-  userTable=cms-spa-form-${stage}-user-profiles
-  lineCount=`aws dynamodb scan --table-name $userTable | wc -l`
+  userTable="cms-spa-form-${1}-user-profiles"
+  lineCount=`aws dynamodb scan --table-name $userTable | jq '.Items | length'`
 
-  if [ $lineCount -lt -6 ]; then
+  if [ $lineCount -eq 0 ]; then
+    echo "populating User table in DynamoDB"
     pushd services/app-api
-    serverless dynamodb seed --online --seed=domain
+    SLS_DEBUG=true BRANCH="$1" serverless dynamodb seed --stage="$1" --region="${AWS_REGION:-$AWS_DEFAULT_REGION}" --seed=domain --online
     popd
+  else
+    echo "User table is already populated"
   fi
  
   aws dynamodb scan --table-name $userTable
