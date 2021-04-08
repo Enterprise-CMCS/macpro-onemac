@@ -51,6 +51,7 @@ install_deps() {
 }
 
 deploy() {
+  export SLS_DEBUG=true
   service=$1
   pushd services/$service
   install_deps
@@ -114,6 +115,7 @@ then
           set -e
       done
       ./loadTestUsers.sh $stage
+
 
       # Only Run Once or Manaully
       #  ./loadExistingUsers.sh $stage
