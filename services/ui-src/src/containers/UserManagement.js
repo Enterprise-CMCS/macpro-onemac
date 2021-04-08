@@ -5,7 +5,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "cmscommonlib";
 import { useLocation, useHistory } from "react-router-dom";
-import UserDataApi from "../utils/UserDataApi";
+import UserDataApi, { validateInput, getAdminTypeByRole} from "../utils/UserDataApi";
 import { getAlert } from "../libs/error-mappings";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
@@ -123,19 +123,19 @@ const UserManagement = () => {
     return users.map((user, i) => {
       let menuItems = [];
       let statusLabel;
-
+      console.log("DEBUG: STATUS:", user.email, user.status)
       switch (user.status) {
         case "pending":
           statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;
           menuItems = [
             {
               label: "Grant Access",
-              value: "grant",
+              value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
             {
               label: "Deny Access",
-              value: "deny",
+              value: "denied",
               confirmMessage: denyConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -146,7 +146,7 @@ const UserManagement = () => {
           menuItems = [
             {
               label: "Revoke Access",
-              value: "revoke",
+              value: "revoked",
               confirmMessage: revokeConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -156,7 +156,7 @@ const UserManagement = () => {
           menuItems = [
             {
               label: "Grant Access",
-              value: "grant",
+              value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -166,7 +166,7 @@ const UserManagement = () => {
           menuItems = [
             {
               label: "Grant Access",
-              value: "grant",
+              value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -189,7 +189,17 @@ const UserManagement = () => {
               userEmail={user.email}
               menuItems={menuItems}
               handleSelected={(row, value) => {
-                UserDataApi.setUserStatus(userProfile.email, user.email, value);
+                const updateStatusRequest = {
+                    "userEmail": userList[row].email,
+                    "doneBy": userProfile.userData.id,
+                    "attributes": [{
+                      "stateCode": userList[row].stateCode,  // required for state user and state admin
+                      "status": value
+                    }],
+                    "type":  getAdminTypeByRole(userProfile.userData.type)
+                  }
+                validateInput(updateStatusRequest)
+                UserDataApi.setUserStatus(updateStatusRequest);
                 history.push({
                   pathname: ROUTES.USER_MANAGEMENT,
                   query: "?query=abc",
@@ -197,17 +207,6 @@ const UserManagement = () => {
                     showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
                   },
                 });
-
-                console.log(
-                  "Selected:(" +
-                    row +
-                    " : " +
-                    value +
-                    ") userEmail : " +
-                    user.email +
-                    " doneBy " +
-                    userProfile.email
-                );
               }}
             />
           </td>

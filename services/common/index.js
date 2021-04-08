@@ -1,8 +1,309 @@
+
 /**
  * Common Shares Libs for the CMS Submissions Application.
  * This will contain static items needed by both the frontend and backend.
  */
 
+// NOTE: In Future this may come from SeaTool or Backend Process.
+export const territoryList = [
+    {
+        "label": "Alabama",
+        "value": "AL"
+    },
+    {
+        "label": "Alaska",
+        "value": "AK"
+    },
+    {
+        "label": "American Samoa",
+        "value": "AS"
+    },
+    {
+        "label": "Arizona",
+        "value": "AZ"
+    },
+    {
+        "label": "Arkansas",
+        "value": "AR"
+    },
+    {
+        "label": "California",
+        "value": "CA"
+    },
+    {
+        "label": "Colorado",
+        "value": "CO"
+    },
+    {
+        "label": "Connecticut",
+        "value": "CT"
+    },
+    {
+        "label": "Delaware",
+        "value": "DE"
+    },
+    {
+        "label": "District Of Columbia",
+        "value": "DC"
+    },
+    {
+        "label": "Federated States Of Micronesia",
+        "value": "FM"
+    },
+    {
+        "label": "Florida",
+        "value": "FL"
+    },
+    {
+        "label": "Georgia",
+        "value": "GA"
+    },
+    {
+        "label": "Guam",
+        "value": "GU"
+    },
+    {
+        "label": "Hawaii",
+        "value": "HI"
+    },
+    {
+        "label": "Idaho",
+        "value": "ID"
+    },
+    {
+        "label": "Illinois",
+        "value": "IL"
+    },
+    {
+        "label": "Indiana",
+        "value": "IN"
+    },
+    {
+        "label": "Iowa",
+        "value": "IA"
+    },
+    {
+        "label": "Kansas",
+        "value": "KS"
+    },
+    {
+        "label": "Kentucky",
+        "value": "KY"
+    },
+    {
+        "label": "Louisiana",
+        "value": "LA"
+    },
+    {
+        "label": "Maine",
+        "value": "ME"
+    },
+    {
+        "label": "Marshall Islands",
+        "value": "MH"
+    },
+    {
+        "label": "Maryland",
+        "value": "MD"
+    },
+    {
+        "label": "Massachusetts",
+        "value": "MA"
+    },
+    {
+        "label": "Michigan",
+        "value": "MI"
+    },
+    {
+        "label": "Minnesota",
+        "value": "MN"
+    },
+    {
+        "label": "Mississippi",
+        "value": "MS"
+    },
+    {
+        "label": "Missouri",
+        "value": "MO"
+    },
+    {
+        "label": "Montana",
+        "value": "MT"
+    },
+    {
+        "label": "Nebraska",
+        "value": "NE"
+    },
+    {
+        "label": "Nevada",
+        "value": "NV"
+    },
+    {
+        "label": "New Hampshire",
+        "value": "NH"
+    },
+    {
+        "label": "New Jersey",
+        "value": "NJ"
+    },
+    {
+        "label": "New Mexico",
+        "value": "NM"
+    },
+    {
+        "label": "New York",
+        "value": "NY"
+    },
+    {
+        "label": "North Carolina",
+        "value": "NC"
+    },
+    {
+        "label": "North Dakota",
+        "value": "ND"
+    },
+    {
+        "label": "Northern Mariana Islands",
+        "value": "MP"
+    },
+    {
+        "label": "Ohio",
+        "value": "OH"
+    },
+    {
+        "label": "Oklahoma",
+        "value": "OK"
+    },
+    {
+        "label": "Oregon",
+        "value": "OR"
+    },
+    {
+        "label": "Palau",
+        "value": "PW"
+    },
+    {
+        "label": "Pennsylvania",
+        "value": "PA"
+    },
+    {
+        "label": "Puerto Rico",
+        "value": "PR"
+    },
+    {
+        "label": "Rhode Island",
+        "value": "RI"
+    },
+    {
+        "label": "South Carolina",
+        "value": "SC"
+    },
+    {
+        "label": "South Dakota",
+        "value": "SD"
+    },
+    {
+        "label": "Tennessee",
+        "value": "TN"
+    },
+    {
+        "label": "Texas",
+        "value": "TX"
+    },
+    {
+        "label": "Utah",
+        "value": "UT"
+    },
+    {
+        "label": "Vermont",
+        "value": "VT"
+    },
+    {
+        "label": "Virgin Islands",
+        "value": "VI"
+    },
+    {
+        "label": "Virginia",
+        "value": "VA"
+    },
+    {
+        "label": "Washington",
+        "value": "WA"
+    },
+    {
+        "label": "West Virginia",
+        "value": "WV"
+    },
+    {
+        "label": "Wisconsin",
+        "value": "WI"
+    },
+    {
+        "label": "Wyoming",
+        "value": "WY"
+    }];
+export const territoryCodeList = territoryList.map(item => item.value);
+
+
+/**
+ * Codes to send to front end
+ */
+export const RESPONSE_CODE = {
+    NONE: "",
+    SUCCESSFULLY_SUBMITTED: "SC000",
+    VALIDATION_ERROR: "VA000",
+    DATA_PARSING_ERROR: "VA001",
+    ATTACHMENT_ERROR: "AT000",
+    EMAIL_NOT_SENT: "EM000",
+    SYSTEM_ERROR: "SY000",
+    TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
+    DUPLICATE_ID: "ID002",
+    ID_NOT_FOUND: "ID000",
+    WAIVER_RENEWAL_NO_ID: "ID020",
+    WAIVER_NEED_ID_FOR_K: "ID031",
+    WAIVER_AMENDMENT_NO_ID: "ID022",
+    WAIVER_NEW_NOT_K: "ID023",
+    WAIVER_ACTION_UNKNOWN: "WA000",
+    USER_NOT_AUTHORIZED: "UR040",
+    USER_NOT_FOUND: "UR041",
+    USER_SUBMITTED: "UR000",
+    USER_SUBMISSION_FAILED: "UR001",
+    USER_TYPE_MISMATCH_ERROR: "UR002",
+    USER_FORMAT_MISMATCH: "UR042",
+    CALLING_USER_PENDING: "UR043",
+    CALLING_USER_REVOKED: "UR044",
+    CALLING_USER_DENIED: "UR045",
+
+};
+
+export const USER_ADMIN_PERMISSION= {
+    STATE_USER: 'none',
+    STATE_ADMIN: 'stateuser',
+    CMS_APPROVER: 'stateadmin'
+};
+
+
+
+
+/**
+ * Possible user types
+ */
+export const USER_TYPE = {
+    STATE_USER: 'stateuser',
+    STATE_ADMIN: 'stateadmin',
+    CMS_APPROVER: 'cmsapprover',
+    SYSTEM_ADMIN: 'systemadmin'
+};
+
+/**
+ * Possible user status
+ */
+export const USER_STATUS = {
+    PENDING: 'pending',
+    DENIED: 'denied',
+    REVOKED: 'revoked',
+    ACTIVE: 'active',
+};
 
 /**
  * Routing Control Shared List
