@@ -51,6 +51,7 @@ install_deps() {
 }
 
 deploy() {
+  export SLS_DEBUG=true
   service=$1
   pushd services/$service
   install_deps
@@ -115,7 +116,8 @@ then
       done
       ./loadTestUsers.sh $stage
 
-      # Only Run Once or Manaully
+      # Only Run Once or Manually
+
       #  ./loadExistingUsers.sh $stage
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."
