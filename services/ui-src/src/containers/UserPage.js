@@ -38,6 +38,13 @@ const ContactList = ({ contacts, userType }) => {
   );
 };
 
+const ACCESS_LABELS = {
+  active: "Access Granted",
+  pending: "Pending Access",
+  denied: "Access Denied",
+  revoked: "Access Revoked",
+};
+
 const transformAccesses = (user = {}) => {
   switch (user.type) {
     case ROLES.STATE_USER:
@@ -116,7 +123,7 @@ const UserPage = () => {
                 <div className="state-access-card" key={state}>
                   <dt>{state}</dt>
                   <dd>
-                    <em>{status}</em>
+                    <em>{ACCESS_LABELS[status] || status}</em>
                     <br />
                     <br />
                     <ContactList contacts={contacts} type={userType} />
