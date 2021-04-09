@@ -60,7 +60,6 @@ const UserManagement = () => {
 
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
-        console.log("user List: ", ul);
         if (typeof ul === 'string') {
           if (mounted && !isPending(userProfile.userData)) setAlert(getAlert(ul));
           ul = [];
@@ -123,7 +122,6 @@ const UserManagement = () => {
     return users.map((user, i) => {
       let menuItems = [];
       let statusLabel;
-      console.log("DEBUG: STATUS:", user.email, user.status)
       switch (user.status) {
         case "pending":
           statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;

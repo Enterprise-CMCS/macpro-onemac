@@ -19,7 +19,7 @@ export const getAdminTypeByRole = role => {
 }
 
 export const validateInput = input => {
-    console.log("DEBUG VALIDATE:", input)
+
     const userSchema = Joi.object().keys({
         userEmail: Joi.string().email().required(),
         doneBy: Joi.string().email().required(),
