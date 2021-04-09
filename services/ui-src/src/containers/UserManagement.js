@@ -35,6 +35,27 @@ const UserManagement = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const updateList = (mounted) => {
+    let shouldState = true;
+    if (userProfile.userData.type === "stateadmin") {
+      shouldState = false;
+    }
+    setIncludeStateCode(shouldState)
+    UserDataApi.getMyUserList(userProfile.email)
+        .then((ul) => {
+          console.log("user List: ", ul);
+          if (typeof ul === 'string') {
+            if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
+            ul = [];
+          }
+          setUserList(ul);
+        })
+        .catch((error) => {
+          console.log("Error while fetching user's list.", error);
+          setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        });
+  }
+
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
@@ -58,18 +79,7 @@ const UserManagement = () => {
     }
     if (mounted) setIncludeStateCode(shouldState);
 
-    UserDataApi.getMyUserList(userProfile.email)
-      .then((ul) => {
-        if (typeof ul === 'string') {
-          if (mounted && !isPending(userProfile.userData)) setAlert(getAlert(ul));
-          ul = [];
-        }
-        if (mounted) setUserList(ul);
-      })
-      .catch((error) => {
-        console.log("Error while fetching user's list.", error);
-        if (mounted) setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
-      });
+    updateList(mounted)
 
     return function cleanup() {
       mounted = false;
@@ -205,6 +215,7 @@ const UserManagement = () => {
                     showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
                   },
                 });
+                updateList(true);
               }}
             />
           </td>
