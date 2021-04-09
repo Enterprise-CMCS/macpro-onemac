@@ -11,12 +11,15 @@ export const getAdminTypeByRole = role => {
             return USER_TYPE.STATE_USER;
         case USER_TYPE.CMS_APPROVER:
             return USER_TYPE.STATE_ADMIN;
+        case USER_TYPE.SYSTEM_ADMIN:
+            return USER_TYPE.CMS_APPROVER;
         default:
             return undefined;
     }
 }
 
 export const validateInput = input => {
+    console.log("DEBUG VALIDATE:", input)
     const userSchema = Joi.object().keys({
         userEmail: Joi.string().email().required(),
         doneBy: Joi.string().email().required(),
@@ -37,7 +40,7 @@ export const validateInput = input => {
         // if isPutUser is true then first and last names and type are required //
         firstName: Joi.string().optional(),
         lastName: Joi.string().optional(),
-        type: Joi.valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN, USER_TYPE.CMS_APPROVER).required()
+        type: Joi.valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN, USER_TYPE.CMS_APPROVER, USER_TYPE.SYSTEM_ADMIN).required()
     });
     //Todo: Add deeper validation for types //
     const result = isEmpty(input) ? { error: 'Lambda body is missing' } : userSchema.validate(input);
