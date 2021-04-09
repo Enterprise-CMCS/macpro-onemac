@@ -188,12 +188,18 @@ input[type="file"] {
     @extend .ds-u-border-bottom--0;
     @extend .ds-u-margin-top--3;
     padding: 0 !important;
+
+    > div {
+      flex: 1;
+    }
   }
   .ds-c-review__heading {
     @extend .ds-u-margin-top--1;
   }
   .ds-c-review__body {
     @extend .cms-review-read-only-textbox-body;
+    width: initial;
+    max-width: 460px;
   }
 
   .subheader-message {
