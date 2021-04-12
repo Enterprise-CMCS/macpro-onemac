@@ -159,7 +159,7 @@ module.exports = {
         devSubmitBtn : 'input[type=submit]',
         devUserField : '[id=email]',
         userField : '[id=okta-signin-username]',
-        loginBtn: 'div.nav-right > button',
+        loginBtn: '[id=devloginBtn]',
         titleBar : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
         manageAccountLink: "[id=manageAccountLink]",
