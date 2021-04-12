@@ -10,7 +10,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
     
             <p>Thank you!</p>`
         },
-        granted: {
+        active: {
             subjectLine: "Your OneMAC Portal State access for [insert state] has been granted!",
             bodyHTML: `
             <p>Hello,</p>
@@ -52,7 +52,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
     
             <p>Thank you!</p>`
         },
-        granted: {
+        active: {
             subjectLine: "Your OneMAC Portal State access for [insert state] has been granted!",
             bodyHTML: `
             <p>Hello,</p>
@@ -94,7 +94,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
     
             <p>Thank you!</p>`
         },
-        granted: {
+        active: {
             subjectLine: "Your OneMAC Portal CMS access has been granted!",
             bodyHTML: `
             <p>Hello,</p>
