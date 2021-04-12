@@ -88,7 +88,6 @@ class UserDataApi {
     */
   }
 
-
   /**
    * Get all active state system administrators' contact info for a list of states.
   */
@@ -98,6 +97,13 @@ class UserDataApi {
       params.append("state", state);
     }
     return await API.get("userDataAPI", `/getStateAdmins?${params.toString()}`);
+  }
+
+  /**
+   * Get all active state system administrators' contact info for a list of states.
+  */
+  async getCmsApprovers() {
+    return await API.get("userDataAPI", "/getCmsApprovers");
   }
 }
 

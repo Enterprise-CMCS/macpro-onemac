@@ -149,6 +149,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getCmsApproverList:
+    handler: getCmsApproverList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getCmsApprovers
+          method: get
+          cors: true
+          authorizer: aws_iam
+
 resources:
   - ${file(resources/base.yml)}
 

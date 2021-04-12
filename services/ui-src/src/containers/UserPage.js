@@ -9,8 +9,8 @@ import PageTitleBar from "../components/PageTitleBar";
 import UserDataAPI from "../utils/UserDataApi";
 
 /**
-  * Formats multi-part name into single full name
-  */
+ * Formats multi-part name into single full name
+ */
 const getFullName = (...names) => names.filter(Boolean).join(" ");
 
 const ROLE_TO_APPROVER_LABEL = {
@@ -72,39 +72,56 @@ const UserPage = () => {
 
   const [accesses, setAccesses] = useState(transformAccesses(userData));
 
-  let userType = "user";
-  if (userData && userData.type) {
-    userType = userTypes[userData.type];
-  }
+  let userType = userData?.type ?? "user";
 
   useEffect(() => {
     (async () => {
       try {
-        const adminsByState = await UserDataAPI.getStateAdmins(
-          userData.attributes.map(({ stateCode }) => stateCode).filter(Boolean)
-        );
+        switch (userType) {
+          case ROLES.STATE_USER: {
+            const adminsByState = await UserDataAPI.getStateAdmins(
+              userData.attributes
+                .map(({ stateCode }) => stateCode)
+                .filter(Boolean)
+            );
+            setAccesses(
+              transformAccesses(userData).map((access) => ({
+                ...access,
+                contacts: adminsByState[access.state],
+              }))
+            );
+            break;
+          }
 
-        setAccesses(
-          transformAccesses(userData).map((access) => ({
-            ...access,
-            contacts: adminsByState[access.state],
-          }))
-        );
+          case ROLES.STATE_ADMIN: {
+            const contacts = await UserDataAPI.getCmsApprovers();
+            setAccesses(
+              transformAccesses(userData).map((access) => ({
+                ...access,
+                contacts,
+              }))
+            );
+            break;
+          }
+
+          default:
+            break;
+        }
       } catch (e) {
         console.error(e);
       }
     })();
-  }, [userData]);
+  }, [userData, userType]);
 
   return (
     <div>
       <PageTitleBar heading="Account Management" />
       <div className="profile-container">
         <div className="subheader-message">
-          Below is the account information for your role as a {userType}. Your
-          name and email cannot be edited in OneMAC. It can be changed in your
-          IDM profile. If you have questions, please contact the MACPro Help
-          Desk at{" "}
+          Below is the account information for your role as a{" "}
+          {userTypes[userType] ?? userType}. Your name and email cannot be
+          edited in OneMAC. It can be changed in your IDM profile. If you have
+          questions, please contact the MACPro Help Desk at{" "}
           <a href={`mailto:${helpDeskContact.email}`}>
             {helpDeskContact.email}
           </a>{" "}
@@ -113,25 +130,30 @@ const UserPage = () => {
         <div className="ds-l-row">
           <div className="ds-l-col--6">
             <h3>Profile Information</h3>
-            <Review heading="Full Name">{getFullName(firstName, lastName)}</Review>
+            <Review heading="Full Name">
+              {getFullName(firstName, lastName)}
+            </Review>
             <Review heading="Email">{email}</Review>
           </div>
-          <div className="ds-l-col--6">
-            <h3>State Access Management</h3>
-            <dl className="state-access-cards">
-              {accesses.map(({ state, status, contacts }) => (
-                <div className="state-access-card" key={state}>
-                  <dt>{state}</dt>
-                  <dd>
-                    <em>{ACCESS_LABELS[status] || status}</em>
-                    <br />
-                    <br />
-                    <ContactList contacts={contacts} type={userType} />
-                  </dd>
-                </div>
-              ))}
-            </dl>
-          </div>
+          {userType === ROLES.STATE_USER ||
+            (userType === ROLES.STATE_ADMIN && (
+              <div className="ds-l-col--6">
+                <h3>State Access Management</h3>
+                <dl className="state-access-cards">
+                  {accesses.map(({ state, status, contacts }) => (
+                    <div className="state-access-card" key={state}>
+                      <dt>{state}</dt>
+                      <dd>
+                        <em>{ACCESS_LABELS[status] || status}</em>
+                        <br />
+                        <br />
+                        <ContactList contacts={contacts} userType={userType} />
+                      </dd>
+                    </div>
+                  ))}
+                </dl>
+              </div>
+            ))}
         </div>
       </div>
     </div>
