@@ -399,7 +399,11 @@ const constructUserEmail = (userEmailId, input) => {
     };
     const updatedStatus = input.attributes[0].status;
     const userType = input.type;
-    email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine;
+    input.attributes[0].stateCode ?
+        email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine.replace('[insert state]',input.attributes[0].stateCode)
+        :
+        email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine;
+
     input.attributes[0].stateCode ?
         email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML.replace('[insert state]',input.attributes[0].stateCode)
         :
