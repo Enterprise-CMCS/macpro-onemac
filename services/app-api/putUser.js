@@ -30,7 +30,7 @@ export const main = handler(async (event) => {
         return RESPONSE_CODE.USER_SUBMITTED;
     } catch (e) {
         console.log(`Error executing lambda: ${JSON.stringify(e)}`);
-        return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+        return RESPONSE_CODE.USER_SUBMISSION_FAILED  + `Error executing lambda: ${JSON.stringify(e)}`;
     }
 });
 
@@ -273,7 +273,7 @@ const processEmail = async input => {
     // Collect the emails of the authorized user who can make the requested role changes to //
     const roleAdminEmails = await collectRoleAdminEmailIds(input);
     // Construct and send email acknowledgement to the requesting user //
-    const userEmail = await constructUserEmail(input.userEmail);
+    const userEmail = await constructUserEmail(input.userEmail, input);
     await dispatchEmail(userEmail.email);
     if (roleAdminEmails.length > 0) {
         // construct email parameters
