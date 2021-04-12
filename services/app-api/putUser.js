@@ -7,7 +7,7 @@ import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
 import { territoryCodeList } from './libs/territoryLib';
 import { USER_TYPE, USER_STATUS } from './libs/user-lib';
-import {ACCESS_CONFIRMATION_EMAILS} from './libs/email-template-lib'
+import {ACCESS_CONFIRMATION_EMAILS} from './libs/email-template-lib';
 
 /**
  * Create / Update a user or change User status
@@ -363,7 +363,6 @@ const getLatestAttribute = (attribs) => attribs.reduce(
 // Construct email to the authorities with the role request info //
 const constructRoleAdminEmails = (recipients, input) => {
     const userType = input.type;
-    const updatedStatus = input.attributes[0].status
     const email = {
         fromAddressSource: 'userAccessEmailSource',
         ToAddresses: recipients
@@ -393,29 +392,18 @@ const constructRoleAdminEmails = (recipients, input) => {
 };
 
 // Construct the email with all needed properties //
-const constructUserEmail = (userEmailId, userType) => {
+const constructUserEmail = (userEmailId, input) => {
     const email = {
         fromAddressSource: 'userAccessEmailSource',
         ToAddresses: [userEmailId]
     };
-    let typeText = 'User';
-
-    switch (userType) {
-        case USER_TYPE.STATE_USER:
-            typeText = 'State User';
-            break;
-        case USER_TYPE.STATE_ADMIN:
-            typeText = 'State Admin';
-            break;
-        case USER_TYPE.CMS_APPROVER:
-            typeText = 'CMS Approver';
-            break;
-    };
-    email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine
+    const updatedStatus = input.attributes[0].status;
+    const userType = input.attributes[0].status;
+    email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine;
     input.attributes[0].stateCode ?
         email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML.replace('[insert state]',input.attributes[0].stateCode)
         :
-        email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML
+        email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML;
     return { email };
 };
 
