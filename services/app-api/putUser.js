@@ -7,6 +7,7 @@ import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
 import { territoryCodeList } from './libs/territoryLib';
 import { USER_TYPE, USER_STATUS } from './libs/user-lib';
+import {ACCESS_CONFIRMATION_EMAILS} from './libs/email-template-lib'
 
 /**
  * Create / Update a user or change User status
@@ -25,6 +26,7 @@ export const main = handler(async (event) => {
         // PUT user in db
         await putUser(process.env.userTableName, user);
         await processEmail(input);
+        //
         return RESPONSE_CODE.USER_SUBMITTED;
     } catch (e) {
         console.log(`Error executing lambda: ${JSON.stringify(e)}`);
@@ -275,7 +277,7 @@ const processEmail = async input => {
     await dispatchEmail(userEmail.email);
     if (roleAdminEmails.length > 0) {
         // construct email parameters
-        const emailParams = constructRoleAdminEmails(roleAdminEmails, input.type, 'doneBy');
+        const emailParams = constructRoleAdminEmails(roleAdminEmails, input, 'doneBy');
         await dispatchEmail(emailParams.email);
     } else {
         console.log(
@@ -359,13 +361,14 @@ const getLatestAttribute = (attribs) => attribs.reduce(
 );
 
 // Construct email to the authorities with the role request info //
-const constructRoleAdminEmails = (recipients, userType) => {
+const constructRoleAdminEmails = (recipients, input) => {
+    const userType = input.type;
+    const updatedStatus = input.attributes[0].status
     const email = {
         fromAddressSource: 'userAccessEmailSource',
         ToAddresses: recipients
     };
     let typeText = 'User';
-
     switch (userType) {
         case USER_TYPE.STATE_USER:
             typeText = 'State User';
@@ -408,17 +411,11 @@ const constructUserEmail = (userEmailId, userType) => {
             typeText = 'CMS Approver';
             break;
     };
-
-    email.Subject = `Your OneMAC Portal ${typeText} Access Request has been received`;
-    email.HTML = `
-        <p>Hello,</p>
-
-        <p>Your new role request has been received. Please log into OneMAC and check your 
-        Account Management dashboard to see the status of your requests. If you have questions, 
-        please contact the MACPro Help Desk.</p>
-
-        <p>Thank you!</p>`;
-
+    email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine
+    input.attributes[0].stateCode ?
+        email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML.replace('[insert state]',input.attributes[0].stateCode)
+        :
+        email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML
     return { email };
 };
 
