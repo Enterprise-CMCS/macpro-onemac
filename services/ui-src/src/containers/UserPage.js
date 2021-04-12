@@ -135,25 +135,25 @@ const UserPage = () => {
             </Review>
             <Review heading="Email">{email}</Review>
           </div>
-          {userType === ROLES.STATE_USER ||
-            (userType === ROLES.STATE_ADMIN && (
-              <div className="ds-l-col--6">
-                <h3>State Access Management</h3>
-                <dl className="state-access-cards">
-                  {accesses.map(({ state, status, contacts }) => (
-                    <div className="state-access-card" key={state}>
-                      <dt>{state}</dt>
-                      <dd>
-                        <em>{ACCESS_LABELS[status] || status}</em>
-                        <br />
-                        <br />
-                        <ContactList contacts={contacts} userType={userType} />
-                      </dd>
-                    </div>
-                  ))}
-                </dl>
-              </div>
-            ))}
+          {(userType === ROLES.STATE_USER ||
+            userType === ROLES.STATE_ADMIN) && (
+            <div className="ds-l-col--6">
+              <h3>State Access Management</h3>
+              <dl className="state-access-cards">
+                {accesses.map(({ state, status, contacts }) => (
+                  <div className="state-access-card" key={state}>
+                    <dt>{state}</dt>
+                    <dd>
+                      <em>{ACCESS_LABELS[status] || status}</em>
+                      <br />
+                      <br />
+                      <ContactList contacts={contacts} userType={userType} />
+                    </dd>
+                  </div>
+                ))}
+              </dl>
+            </div>
+          )}
         </div>
       </div>
     </div>
