@@ -535,6 +535,11 @@ input[type="file"] {
   font-size: 14px;
   line-height: 20px;
 
+  th:last-child, td:last-child {
+    text-align: right;
+    margin: 0px;
+  }
+
   th {
     border-color: $color-gray-lightest;
     background-color: $color-white;
@@ -561,10 +566,6 @@ input[type="file"] {
     font-weight: bold;
   }
 
-  .date-submitted-column {
-    text-align: center;
-  }
-
   .type-badge {
     @extend .ds-c-badge;
     font-weight: bold;
@@ -581,11 +582,6 @@ input[type="file"] {
     font-weight: 700;
     text-transform: capitalize;
     color: $color-black;
-  }
-
-  th:last-child, td:last-child {
-    text-align: right;
-    margin: 0px;
   }
 
   td.actions button{

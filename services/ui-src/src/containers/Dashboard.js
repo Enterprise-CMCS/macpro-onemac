@@ -109,7 +109,10 @@ const Dashboard = () => {
           <td>
             <span className="type-badge">{type}</span>
           </td>
-          <td className="date-submitted-column">
+          <td>
+            <span>{changeRequest.territory}</span>
+          </td>
+          <td>
             {format(changeRequest.submittedAt, "MMM d, yyyy")}
           </td>
         </tr>
@@ -194,9 +197,8 @@ const Dashboard = () => {
                         <tr>
                           <th scope="col">SPA ID/Waiver Number</th>
                           <th scope="col">Type</th>
-                          <th className="date-submitted-column" scope="col">
-                            Date Submitted
-                          </th>
+                          <th scope="col">State</th>
+                          <th scope="col">Date Submitted</th>
                         </tr>
                       </thead>
                       <tbody>
