@@ -35,10 +35,7 @@ export const main = handler(async (event, context) => {
   });
 
   // resolve promises from all queries
-  const results = await Promise.all(promises).catch((error) => {
-    console.log("Error querying DynamoDB: ", error);
-    throw error;
-  });
+  const results = await Promise.all(promises);
 
   // extracts items from each of the results
   let items = [];
