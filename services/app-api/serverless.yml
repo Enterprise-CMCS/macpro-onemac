@@ -33,6 +33,7 @@ custom:
   dynamodb:
     stages:
       - dev
+      - ${env:BRANCH}
     start:
       inMemory: true
       migrate: true
@@ -140,6 +141,26 @@ functions:
       - http:
           path: putUser
           method: put
+          cors: true
+          authorizer: aws_iam
+
+  getStateAdminList:
+    handler: getStateAdminList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getStateAdmins
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getCmsApproverList:
+    handler: getCmsApproverList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getCmsApprovers
+          method: get
           cors: true
           authorizer: aws_iam
 
