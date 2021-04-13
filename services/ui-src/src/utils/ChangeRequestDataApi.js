@@ -87,15 +87,18 @@ class ChangeRequestDataApi {
   }
 
   /**
-   * Fetch a specific record from the backend.
+   * Fetch all change requests that correspond to the user's active access to states/territories
+   * @param {string} email the user's email
    * @return {Promise<Array>} a list of change requests
    */
-  async getAll() {
+  async getAllByAuthorizedTerritories(userEmail) {
+    if (!userEmail) return [];
+
     try {
-      return await API.get("changeRequestAPI", `/get`);
+      return await API.get("changeRequestAPI", `/getAllByAuthorizedTerritories?email=${userEmail}`);
     } catch (error) {
       console.log(
-        `There was an error fetching all change requests for the user.`,
+        `There was an error fetching change requests for the states/territories.`,
         error
       );
       throw error;

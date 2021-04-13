@@ -34,7 +34,7 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
+        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAllByAuthorizedTerritories(userProfile.email));
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
