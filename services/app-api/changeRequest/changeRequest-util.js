@@ -6,7 +6,7 @@ import WaiverExtension from "./WaiverExtension";
 import WaiverAppK from "./WaiverAppK";
 import CHIPSPA from "./CHIPSPA";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
-import { territoryList } from "../libs/territoryLib";
+import { territoryList } from "cmscommonlib";
 import {DateTime} from "luxon";
 
 /**

@@ -1047,6 +1047,7 @@ dl.state-access-cards {
     @extend .ds-u-padding--3;
     @extend .ds-u-fill--white;
 
+    border-radius: 3px;
     box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
 
     &:not(:last-child) {

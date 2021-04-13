@@ -140,6 +140,25 @@
             "history": [
               {
                 "date": 1617149287,
+                "doneBy": "stateadminpending@cms.hhs.local",
+                "status": "pending"
+              }
+            ],
+            "stateCode": "DE"
+          }
+        ],
+        "id": "stateadminpending@cms.hhs.local",
+        "firstName": "Patricia",
+        "lastName": "Pending",
+        "type": "stateadmin"
+      },
+
+      {
+        "attributes": [
+          {
+            "history": [
+              {
+                "date": 1617149287,
                 "doneBy": "systemsadmin@cms.hhs.local",
                 "status": "denied"
               }

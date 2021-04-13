@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Review } from "@cmsgov/design-system";
-import { ROLES, latestAccessStatus } from "cmscommonlib";
+import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
@@ -142,7 +142,7 @@ const UserPage = () => {
               <dl className="state-access-cards">
                 {accesses.map(({ state, status, contacts }) => (
                   <div className="state-access-card" key={state}>
-                    <dt>{state}</dt>
+                    <dt>{territoryMap[state] || state}</dt>
                     <dd>
                       <em>{ACCESS_LABELS[status] || status}</em>
                       <br />
