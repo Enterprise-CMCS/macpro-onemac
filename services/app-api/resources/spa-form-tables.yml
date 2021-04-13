@@ -21,7 +21,7 @@ Resources:
           KeyType: HASH
         - AttributeName: id
           KeyType: RANGE
-      # GlobalSecondaryIndex allows territory to act as a sort key
+      # GlobalSecondaryIndex on the territory with submittedAt as the sort key
       GlobalSecondaryIndexes:
         - IndexName: territory-submittedAt-index
           KeySchema:
