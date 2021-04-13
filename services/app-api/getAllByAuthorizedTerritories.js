@@ -1,5 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
+import { RESPONSE_CODE } from "./libs/response-codes";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
 
@@ -15,6 +16,10 @@ export const main = handler(async (event, context) => {
   }
 
   const user = await getUser(event.queryStringParameters.email);
+  if (!user) {
+    return RESPONSE_CODE.USER_NOT_FOUND;
+  }
+
   const territories = getAuthorizedStateList(user);
 
   // query dynamodb for each territory in the territiories array

@@ -89,7 +89,7 @@ class ChangeRequestDataApi {
   /**
    * Fetch all change requests that correspond to the user's active access to states/territories
    * @param {string} email the user's email
-   * @return {Promise<Array>} a list of change requests
+   * @return {Array} a list of change requests
    */
   async getAllByAuthorizedTerritories(userEmail) {
     if (!userEmail) return [];
