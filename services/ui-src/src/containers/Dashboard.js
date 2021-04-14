@@ -68,7 +68,7 @@ const Dashboard = () => {
     //Now generate the list
     return sortedChangeRequests.map((changeRequest, i) => {
       let type;
-      let link = "/" + changeRequest.type + "/" + changeRequest.id;
+      let link = "/" + changeRequest.type + "/" + changeRequest.id+ "/" + changeRequest.userId;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.CHIP_SPA:
           type = "CHIP SPA";

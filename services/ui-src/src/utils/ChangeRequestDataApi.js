@@ -37,16 +37,17 @@ class ChangeRequestDataApi {
   /**
    * Fetch a specific record from the backend.
    * @param {string} id the ID of the change request to fetch
+   * * @param {string} userId the ID of the user that created the change request
    * @return {Object} a change request
    */
-  async get(id) {
-    if (!id) {
-      console.log("ID was not specified for get API call");
-      throw new Error("ID was not specified for get API call");
+  async get(id, userId) {
+    if (!id || !userId) {
+      console.log("ID or user ID was not specified for get API call");
+      throw new Error("ID or user ID was not specified for get API call");
     }
 
     try {
-      let changeRequest = await API.get("changeRequestAPI", `/get/${id}`);
+      let changeRequest = await API.get("changeRequestAPI", `/get/${id}/${userId}`);
       // Get temporary URLs to the S3 bucket
       if (changeRequest.uploads) {
         let i;

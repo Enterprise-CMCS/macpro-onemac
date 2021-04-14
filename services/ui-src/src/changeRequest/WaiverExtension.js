@@ -11,7 +11,7 @@ import { ROUTES } from "cmscommonlib";
 const WaiverExtension = () => {
 
   // Optional ID parameter from the URL
-  const { id } = useParams();
+  const { id, userId } = useParams();
 
   const formInfo = {
     pageTitle : "Request Waiver Temporary Extension",
@@ -36,8 +36,8 @@ const WaiverExtension = () => {
 
   };
 
-  if (id) {
-    return <SubmissionView formInfo={formInfo} id={id} />;
+  if (id && userId) {
+    return <SubmissionView formInfo={formInfo} id={id} userId={userId} />;
   } else {
     return (
       <SubmissionForm
