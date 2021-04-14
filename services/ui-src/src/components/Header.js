@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "cmscommonlib";
@@ -108,15 +108,15 @@ function Header(props) {
       <div className="nav-bar">
         <div className="nav-left">
           <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-          <Link to={ROUTES.HOME}>About</Link>
-          <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
+          <NavLink to={ROUTES.HOME} exact activeClassName="activeNavLink">Home</NavLink>
+          <NavLink id="dashboardNavLink" to={ROUTES.DASHBOARD} activeClassName="activeNavLink">
             Dashboard
-          </Link>
-          <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
+          </NavLink>
+          <NavLink id="userManagementNavLink" to={ROUTES.USER_MANAGEMENT} activeClassName="activeNavLink">
             User Management
-          </Link>
-          <Link to={ROUTES.FAQ}>FAQ</Link>
-          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
+          </NavLink>
+          <NavLink to={ROUTES.FAQ} activeClassName="activeNavLink">FAQ</NavLink>
+          {isLoggedInAsDeveloper? <NavLink to={ROUTES.COMPONENT_PAGE} activeClassName="activeNavLink">Component Page</NavLink> : null}
         </div>
         {renderAccountButtons()}
       </div>
@@ -148,7 +148,7 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
-              <Link to={ROUTES.PROFILE} id="manageAccountLink" onClick={() => setShowMenu(false)}>
+              <NavLink to={ROUTES.PROFILE} id="manageAccountLink" activeClassName="activeNavLink" onClick={() => setShowMenu(false)}>
                 <svg
                   width="14"
                   height="15"
@@ -162,14 +162,15 @@ function Header(props) {
                   />
                 </svg>
                 &nbsp; Manage account
-              </Link>
-              <Link
+              </NavLink>
+              <NavLink
                 to={ROUTES.HOME}
                 id="logoutLink"
                 onClick={() => {
                   setShowMenu(false);
                   logout();
                 }}
+                activeClassName="activeNavLink"
               >
                 <svg
                   width="17"
@@ -186,7 +187,7 @@ function Header(props) {
                   />
                 </svg>
                 &nbsp; Log out
-              </Link>
+              </NavLink>
             </div>
           )}
         </div>
