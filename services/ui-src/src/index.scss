@@ -2,7 +2,8 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
-$footer-darker-blue: #0071BC;
+$lochmara: #0071BC;
+$matisse: #205493;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -665,7 +666,12 @@ input[type="file"] {
     }
   }
 }
-
+.activeNavLink {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-color: white;
+  text-decoration-thickness: 4px;
+}
 .usa-bar {
   @extend .app-bar;
   background-color: $color-gray-lightest;
@@ -783,7 +789,7 @@ input[type="file"] {
   padding-right: 8rem;
 }
 .footer-bottom-container {
-  background: $footer-darker-blue; 
+  background: $lochmara; 
   color: white; 
   margin: 0;
   width: 100%;
@@ -830,6 +836,52 @@ input[type="file"] {
 }
 .footer-address {
   text-align: right;
+}
+.home-header {
+  height: 500px;
+  background: linear-gradient(180deg,$lochmara 0%, $matisse 100%);
+  position: relative;
+}
+.home-header-text{
+  position: absolute;
+  top: 97px;
+  height: 234px;
+  width: 560px;
+  font-family: Open Sans;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 47px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: white;
+}
+.home-header-image-box{
+  position: absolute;
+  left: 140px;
+  top: 134px;
+  width: 464px;
+  height: 161px;
+  background-image:url('/assets/images/OneMAC_logoLight.svg');
+  background-repeat:no-repeat;
+}
+.home-header-angle-box {  
+  border-top: 120px solid transparent;
+  border-left: 100vw solid white;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+.home-footer-container {
+  background: $color-primary-alt-lightest;
+  height: 295px;
+}
+.home-footer-angle-box {  
+  height: 117px;
+  border-top: 120px solid white;
+  border-right: 100vw solid transparent;
+  bottom: 0;
+  left: 0;
 }
 .multi-select-title {
 font-family: Open Sans;
