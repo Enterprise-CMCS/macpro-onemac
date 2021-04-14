@@ -57,6 +57,9 @@ export default function DynamicRoutes() {
         case ROLES.STATE_ADMIN:
           return (
             <>
+              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+                <UserManagement />
+              </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
                 <UserManagement />
               </AuthenticatedRoute>
@@ -68,6 +71,9 @@ export default function DynamicRoutes() {
         case ROLES.CMS_APPROVER:
           return (
             <>
+              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+                <UserManagement />
+              </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
                 <UserManagement />
               </AuthenticatedRoute>
@@ -79,6 +85,9 @@ export default function DynamicRoutes() {
         case ROLES.SYSTEM_ADMIN:
           return (
             <>
+              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+                <UserManagement />
+              </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
                 <UserManagement />
               </AuthenticatedRoute>
