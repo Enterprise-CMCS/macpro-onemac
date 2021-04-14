@@ -128,6 +128,7 @@ jobs:
           popd
           ./run.sh
       - name: Store test reults
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test_results
