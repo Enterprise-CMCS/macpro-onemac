@@ -75,13 +75,6 @@ export const ROLE_ACL = {
   systemadmin: SYSTEMADMIN_ALLOWED_ROUTES,
 };
 
-export const ROLE_LANDING_PAGE = {
-  stateuser: ROUTES.DASHBOARD,
-  stateadmin: ROUTES.USER_MANAGEMENT,
-  cmsapprover: ROUTES.USER_MANAGEMENT,
-  systemadmin: ROUTES.USER_MANAGEMENT,
-};
-
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
 /**
