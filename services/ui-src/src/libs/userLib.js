@@ -61,7 +61,7 @@ export const revokeConfirmMessage = {
 };
 
 /**
-   * is this user currently active?
+   * is this CMS Approver active or does State User / State Admin user have any active territories?
    * @param {Object} userData object of history instance
    * @return {Boolean} a boolean on status pending
    */
@@ -90,6 +90,7 @@ export const isActive = (userData) => {
   /**
    * get the status of the sorted history array's 1st element and put them in a set.
    * @param {Object} attribute object of history instance
+   * @return {Array} the most recent status values for each state
    */
 
   const getStateStatus = (attribute) => {

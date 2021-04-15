@@ -228,12 +228,12 @@ const UserManagement = () => {
         userProfile.userData &&
         userProfile.userData.attributes &&
         userProfile.userData.attributes.length !== 0 &&
-        !isActive(userProfile.userData)} ? 
-          ({isPending(userProfile.userData) ?
+        !isActive(userProfile.userData) ? 
+          (isPending(userProfile.userData) ?
             <EmptyList message={pendingMessage[userProfile.userData.type]} />
             :
             <EmptyList message={deniedOrRevokedMessage[userProfile.userData.type]} />
-          })
+          )
          : (
           <LoadingScreen isLoading={isLoading}>
             {userList && userList.length !== 0 && userList !== "UR040" ? (
@@ -265,7 +265,7 @@ const UserManagement = () => {
               <EmptyList message="You have no Users to manage at this time." />
             )}
           </LoadingScreen>
-        )
+        )}
       </div>
     </div>
   );
