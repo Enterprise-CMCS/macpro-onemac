@@ -14,7 +14,7 @@ export const main = handler(async (event, context) => {
     // - 'userId': Identity Pool identity id of the authenticated user
     // - 'id': change request ID
     Key: {
-      userId: event.requestContext.identity.cognitoIdentityId,
+      userId: event.pathParameters.userId,
       id: event.pathParameters.id
     }
   };
