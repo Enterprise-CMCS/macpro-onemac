@@ -57,7 +57,7 @@ getCMSEmail(data) {
   cmsEmail.ToAddresses = [process.env.reviewerCHIPEmail];
   cmsEmail.Subject = `New CHIP SPA ${data.transmittalNumber} submitted`;
   cmsEmail.HTML = `
-      <p>The Submission Portal received a State Plan Amendment:</p>
+      <p>The Submission Portal received a CHIP State Plan Amendment:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
         <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -93,13 +93,12 @@ getStateEmail(data) {
   stateEmail.Subject =
     "Your CHIP SPA " + data.transmittalNumber + " has been submitted to CMS";
   stateEmail.HTML = `
-      <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
+      <p>This is confirmation that you submitted a CHIP State Plan Amendment to CMS for review:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
         <br><b>SPA ID</b>: ${data.transmittalNumber}
         <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
         <br><b>Submitter email</b>: ${data.user.email}
-        <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
       </p>
       <p>
         <b>Additional Information</b>:<br>
@@ -107,14 +106,10 @@ getStateEmail(data) {
       </p>
       <br>
       <p>
-        This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)).
-        You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(data.ninetyDayClockEnd)}.
+        This response confirms the receipt of your CHIP State Plan Amendment (CHIP SPA or your response to a SPA Request for Additional Information (RAI)).
+        You can expect a formal response to your submittal from CMS at a later date.
       </p>
-      <p>
-        This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on
-        submitted SPAs only.  Any other correspondence will be disregarded.
-      </p>
-      <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a></p>
+      <p>If you have questions or did not expect this email, please contact <a href="mailto:CHIPSPASubmissionMailBox@CMS.HHS.gov">CHIPSPASubmissionMailBox@CMS.HHS.gov</a></p>
       <p>Thank you!</p>
     `;
 
