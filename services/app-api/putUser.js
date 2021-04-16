@@ -395,7 +395,7 @@ const constructRoleAdminEmails = (recipients, input) => {
 const constructUserEmail = (userEmailId, input) => {
     const email = {
         fromAddressSource: 'userAccessEmailSource',
-        ToAddresses: [userEmailId]
+        ToAddresses: [userEmailId, 'reviewerEmail']
     };
     const updatedStatus = input.attributes[0].status;
     const userType = input.type;
