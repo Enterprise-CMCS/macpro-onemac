@@ -12,6 +12,7 @@ export const getAlert = (errorCode) => {
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
       break;
     // app-api/response-codes.js    SUCCESSFULLY_SUBMITTED: "SC000",
+    case "UR000":
     case "SC000":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
       break;
@@ -23,7 +24,6 @@ export const getAlert = (errorCode) => {
     case "UR043":
     case "UR044":
     case "UR045":
-    case "UR000":
     case "UR001":
     case "UR002":
       returnAlert = ALERTS_MSG.SUBMISSION_ERROR;
