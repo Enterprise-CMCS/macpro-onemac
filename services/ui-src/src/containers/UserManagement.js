@@ -209,7 +209,6 @@ const UserManagement = () => {
                 try {
                   validateInput(updateStatusRequest)
                   Promise.resolve(UserDataApi.setUserStatus(updateStatusRequest)).then(function (returnCode) {
-                    console.log(returnCode)
                     if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
                       history.push({
                         pathname: ROUTES.USER_MANAGEMENT,
