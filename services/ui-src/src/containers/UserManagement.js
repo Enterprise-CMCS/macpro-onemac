@@ -208,18 +208,19 @@ const UserManagement = () => {
                 }
                 try {
                   validateInput(updateStatusRequest)
-                  const returnCode = UserDataApi.setUserStatus(updateStatusRequest);
-                  console.log(returnCode)
-                  if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
-                    history.push({
-                      pathname: ROUTES.USER_MANAGEMENT,
-                      query: "?query=abc",
-                      state: {
-                        showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
-                      },
-                    });
-                    updateList(true);
-                  }
+                  Promise.resolve(UserDataApi.setUserStatus(updateStatusRequest)).then(function (returnCode) {
+                    console.log(returnCode)
+                    if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+                      history.push({
+                        pathname: ROUTES.USER_MANAGEMENT,
+                        query: "?query=abc",
+                        state: {
+                          showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
+                        },
+                      });
+                      updateList(true);
+                    }
+                  })
                 } catch (err) {
                   history.push({
                     pathname: ROUTES.USER_MANAGEMENT,
