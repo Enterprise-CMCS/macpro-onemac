@@ -208,7 +208,8 @@ const UserManagement = () => {
                 }
                 try {
                   validateInput(updateStatusRequest)
-                  const returnCode = await UserDataApi.setUserStatus(updateStatusRequest);
+                  const returnCode = UserDataApi.setUserStatus(updateStatusRequest);
+                  console.log(returnCode)
                   if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
                     history.push({
                       pathname: ROUTES.USER_MANAGEMENT,
