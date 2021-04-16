@@ -666,11 +666,12 @@ input[type="file"] {
     }
   }
 }
-.activeNavLink {
+.activeLink, .activeLink:hover, .activeLink:focus {
   text-decoration: underline;
   text-decoration-style: solid;
   text-decoration-color: white;
   text-decoration-thickness: 4px;
+  text-decoration-skip-ink: none;
 }
 .usa-bar {
   @extend .app-bar;
