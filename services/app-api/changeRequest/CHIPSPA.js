@@ -1,4 +1,4 @@
-import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
+import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
 import { RESPONSE_CODE } from "../libs/response-codes";
 
