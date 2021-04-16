@@ -22,6 +22,10 @@ module.exports = {
         regression["Submit a SPA Report"](browser);
     },
 
+    "Submit a CHIP SPA Report": function (browser) {
+        regression["Submit a CHIP SPA Report"](browser);
+    },
+
     "Submit a Waiver ": function (browser) {
         regression["Submit a New Waiver Action"](browser);
     },
@@ -36,6 +40,10 @@ module.exports = {
 
     "Submit a SPA RAI Response": function (browser) {
         regression["Submit a SPA RAI Response"](browser);
+    },
+
+    "Submit a CHIP SPA RAI Response": function (browser) {
+        regression["Submit a CHIP SPA RAI Response"](browser);
     },
 
     "Submit a 'Respond to 1915(b) Waiver RAI'": function (browser) {
