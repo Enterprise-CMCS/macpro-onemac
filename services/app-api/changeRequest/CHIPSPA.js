@@ -54,7 +54,7 @@ async fieldsValid(data) {
 getCMSEmail(data) {
   const cmsEmail = {};
 
-  cmsEmail.ToAddresses = [process.env.reviewerEmail];
+  cmsEmail.ToAddresses = [process.env.reviewerCHIPEmail];
   cmsEmail.Subject = `New CHIP SPA ${data.transmittalNumber} submitted`;
   cmsEmail.HTML = `
       <p>The Submission Portal received a State Plan Amendment:</p>
