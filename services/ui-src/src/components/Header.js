@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "cmscommonlib";
+import { getCurrentRoute } from "../utils/routeUtils";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../images/OneMAC_logoLight1.svg"
-
-
+import { ROUTES as RouteList } from "cmscommonlib";
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
@@ -103,26 +103,33 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar(isLoggedInAsDeveloper) {
+  function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated) {
     return (
       <div className="nav-bar">
         <div className="nav-left">
           <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-          <NavLink to={ROUTES.HOME} exact activeClassName="activeNavLink">Home</NavLink>
-          <NavLink id="dashboardNavLink" to={ROUTES.DASHBOARD} activeClassName="activeNavLink">
-            Dashboard
-          </NavLink>
-          <NavLink id="userManagementNavLink" to={ROUTES.USER_MANAGEMENT} activeClassName="activeNavLink">
-            User Management
-          </NavLink>
-          <NavLink to={ROUTES.FAQ} activeClassName="activeNavLink">FAQ</NavLink>
-          {isLoggedInAsDeveloper? <NavLink to={ROUTES.COMPONENT_PAGE} activeClassName="activeNavLink">Component Page</NavLink> : null}
+          <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
+          {isAuthenticated && (
+            <>
+              <Link id="dashboardLink" to={ROUTES.DASHBOARD} className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
+              Dashboard
+              </Link>
+              <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT} className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
+              User Management
+              </Link>
+            </>
+            )}
+          <Link to={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ)}>FAQ</Link>
+          {isLoggedInAsDeveloper ? <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
       </div>
     );
   }
-
+ 
+  function getActiveClass(currentRoute, targetRoute) {
+    return currentRoute === (targetRoute.split('/')[1]).toUpperCase() ? 'activeLink' : 'ds-u-text-decoration--none';
+  }
   /**
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
@@ -148,7 +155,7 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
-              <NavLink to={ROUTES.PROFILE} id="manageAccountLink" activeClassName="activeNavLink" onClick={() => setShowMenu(false)}>
+              <Link to={ROUTES.PROFILE} id="manageAccountLink" onClick={() => setShowMenu(false)}>
                 <svg
                   width="14"
                   height="15"
@@ -162,15 +169,14 @@ function Header(props) {
                   />
                 </svg>
                 &nbsp; Manage account
-              </NavLink>
-              <NavLink
+              </Link>
+              <Link
                 to={ROUTES.HOME}
                 id="logoutLink"
                 onClick={() => {
                   setShowMenu(false);
                   logout();
                 }}
-                activeClassName="activeNavLink"
               >
                 <svg
                   width="17"
@@ -187,7 +193,7 @@ function Header(props) {
                   />
                 </svg>
                 &nbsp; Log out
-              </NavLink>
+              </Link>
             </div>
           )}
         </div>
@@ -228,7 +234,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar(isLoggedInAsDeveloper)}
+      {renderNavBar(isLoggedInAsDeveloper, getCurrentRoute(useLocation().pathname), isAuthenticated)}
     </div>
   );
 }
