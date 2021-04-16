@@ -198,24 +198,36 @@ const UserManagement = () => {
               menuItems={menuItems}
               handleSelected={(row, value) => {
                 const updateStatusRequest = {
-                    "userEmail": userList[row].email,
-                    "doneBy": userProfile.userData.id,
-                    "attributes": [{
-                      "stateCode": userList[row].stateCode,  // required for state user and state admin
-                      "status": value
-                    }],
-                    "type":  getAdminTypeByRole(userProfile.userData.type)
+                  "userEmail": userList[row].email,
+                  "doneBy": userProfile.userData.id,
+                  "attributes": [{
+                    "stateCode": userList[row].stateCode,  // required for state user and state admin
+                    "status": value
+                  }],
+                  "type": getAdminTypeByRole(userProfile.userData.type)
+                }
+                try {
+                  validateInput(updateStatusRequest)
+                  const returnCode = await UserDataApi.setUserStatus(updateStatusRequest);
+                  if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+                    history.push({
+                      pathname: ROUTES.USER_MANAGEMENT,
+                      query: "?query=abc",
+                      state: {
+                        showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
+                      },
+                    });
+                    updateList(true);
                   }
-                validateInput(updateStatusRequest)
-                UserDataApi.setUserStatus(updateStatusRequest);
-                history.push({
-                  pathname: ROUTES.USER_MANAGEMENT,
-                  query: "?query=abc",
-                  state: {
-                    showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
-                  },
-                });
-                updateList(true);
+                } catch (err) {
+                  history.push({
+                    pathname: ROUTES.USER_MANAGEMENT,
+                    query: "?query=abc",
+                    state: {
+                      showAlert: ALERTS_MSG.SUBMISSION_ERROR,
+                    },
+                  });
+                }
               }}
             />
           </td>

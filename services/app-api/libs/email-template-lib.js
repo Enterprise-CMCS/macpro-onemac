@@ -67,7 +67,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             bodyHTML: `
             <p>Hello,</p>
     
-            <p>You have been denied access as a State System Admin for [insert state]. 
+            <p>Your access to the information as a State System Admin for [insert state] has been denied. 
             If you have any questions, please reach out to your CMS Role Approver.</p>
     
             <p>Thank you!</p>`
@@ -109,7 +109,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             bodyHTML: `
             <p>Hello,</p>
     
-            <p>You have been denied access as a CMS Role Approver. 
+            <p>Your access as a CMS Role Approver has been denied. 
             If you have any questions, please reach out to your CMS Administrator.</p>
     
             <p>Thank you!</p>`
