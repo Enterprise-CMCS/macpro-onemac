@@ -1,5 +1,8 @@
 service: app-api
 
+package:
+  individually: true
+
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
@@ -13,13 +16,13 @@ custom:
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   userTableName: cms-spa-form-${self:custom.stage}-user-profiles
   iamPath: ${env:IAM_PATH, "/"}
-  emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
+  emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "OneMAC@cms.hhs.gov"}
   userAccessEmailSource:  ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
-  reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "zlewis@clarityinnovates.com"}
+  reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   warmupEnabled:
     production: true
-    development: true
+    development: false
   warmup:
     enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
     role: LambdaWarmupRole
@@ -33,18 +36,9 @@ custom:
   dynamodb:
     stages:
       - dev
-      - ${env:BRANCH}
     start:
       inMemory: true
       migrate: true
-      seed: true
-    seed:
-      domain:
-        sources:
-        - table: ${self:custom.spaIdTableName}
-          sources: [./spa-ids-seed.json]
-        - table: ${self:custom.userTableName}
-          sources: [./user-profiles-seed.json]
   serverless-offline:
     allowCache: true
 associateWaf:
@@ -74,6 +68,15 @@ functions:
       - http:
           path: submit
           method: post
+          cors: true
+          authorizer: aws_iam
+  getMyUserList:
+    handler: getMyUserList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getMyUserList
+          method: get
           cors: true
           authorizer: aws_iam
 
@@ -125,15 +128,7 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
-  getMyUserList:
-    handler: getMyUserList.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getMyUserList
-          method: get
-          cors: true
-          authorizer: aws_iam
+
   putUser:
     handler: putUser.main
     role: LambdaApiRole
@@ -141,26 +136,6 @@ functions:
       - http:
           path: putUser
           method: put
-          cors: true
-          authorizer: aws_iam
-
-  getStateAdminList:
-    handler: getStateAdminList.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getStateAdmins
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getCmsApproverList:
-    handler: getCmsApproverList.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getCmsApprovers
-          method: get
           cors: true
           authorizer: aws_iam
 
