@@ -29,7 +29,7 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.click("select#waiverAuthority > option[value='1915(b)(4) FFS Selective Contracting waivers']");
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         // SS.#####
@@ -57,7 +57,7 @@ module.exports = {
     },
 
     // -----------------------------------------New Waiver----------------------------------------------------------------------------
-
+    /*
     'Validate Waiver Form Logic for New Waiver and 1915(c)': function (browser) {
         // Submit Waiver again
         browser.click('button#waiverBtn');    // click Submit New Waiver
@@ -163,4 +163,5 @@ module.exports = {
         browser.expect.element('div#transmittalNumberStatusMsg').text.to.not.equal(expected);
         browser.back();  // go back to previous page
     }
+    */
 }
