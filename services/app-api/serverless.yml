@@ -67,7 +67,6 @@ provider:
     systemAdminEmail: ${self:custom.systemAdminEmail}
 
 functions:
-  # For DynamoDB Change Requests Table
   submit:
     handler: submit.main
     role: LambdaApiRole
@@ -83,17 +82,7 @@ functions:
     role: LambdaApiRole
     events:
       - http:
-          path: get/{id}/{userId}
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getAllByAuthorizedTerritories:
-    handler: getAllByAuthorizedTerritories.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getAllByAuthorizedTerritories
+          path: get/{id}
           method: get
           cors: true
           authorizer: aws_iam
@@ -127,7 +116,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  # For DynamoDB User Table
   getUser:
     handler: getUser.main
     role: LambdaApiRole
