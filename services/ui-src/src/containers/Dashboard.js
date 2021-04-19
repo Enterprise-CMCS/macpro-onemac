@@ -34,7 +34,7 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
+        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAllByAuthorizedTerritories(userProfile.email));
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
@@ -68,7 +68,7 @@ const Dashboard = () => {
     //Now generate the list
     return sortedChangeRequests.map((changeRequest, i) => {
       let type;
-      let link = "/" + changeRequest.type + "/" + changeRequest.id;
+      let link = "/" + changeRequest.type + "/" + changeRequest.id+ "/" + changeRequest.userId;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.CHIP_SPA:
           type = "CHIP SPA";
@@ -109,7 +109,10 @@ const Dashboard = () => {
           <td>
             <span className="type-badge">{type}</span>
           </td>
-          <td className="date-submitted-column">
+          <td>
+            <span>{changeRequest.territory}</span>
+          </td>
+          <td>
             {format(changeRequest.submittedAt, "MMM d, yyyy")}
           </td>
         </tr>
@@ -194,9 +197,8 @@ const Dashboard = () => {
                         <tr>
                           <th scope="col">SPA ID/Waiver Number</th>
                           <th scope="col">Type</th>
-                          <th className="date-submitted-column" scope="col">
-                            Date Submitted
-                          </th>
+                          <th scope="col">State</th>
+                          <th scope="col">Date Submitted</th>
                         </tr>
                       </thead>
                       <tbody>

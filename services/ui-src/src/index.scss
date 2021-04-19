@@ -183,15 +183,24 @@ input[type="file"] {
 
   h3 {
     @extend .ds-u-margin-top--7;
+    @extend .ds-u-margin-bottom--3;
   }
   .ds-c-review {
     @extend .ds-u-border-bottom--0;
+    @extend .ds-u-margin-top--3;
+    padding: 0 !important;
+
+    > div {
+      flex: 1;
+    }
   }
   .ds-c-review__heading {
     @extend .ds-u-margin-top--1;
   }
   .ds-c-review__body {
     @extend .cms-review-read-only-textbox-body;
+    width: initial;
+    max-width: 460px;
   }
 
   .subheader-message {
@@ -527,6 +536,11 @@ input[type="file"] {
   font-size: 14px;
   line-height: 20px;
 
+  th:last-child, td:last-child {
+    text-align: right;
+    margin: 0px;
+  }
+
   th {
     border-color: $color-gray-lightest;
     background-color: $color-white;
@@ -553,10 +567,6 @@ input[type="file"] {
     font-weight: bold;
   }
 
-  .date-submitted-column {
-    text-align: center;
-  }
-
   .type-badge {
     @extend .ds-c-badge;
     font-weight: bold;
@@ -573,11 +583,6 @@ input[type="file"] {
     font-weight: 700;
     text-transform: capitalize;
     color: $color-black;
-  }
-
-  th:last-child, td:last-child {
-    text-align: right;
-    margin: 0px;
   }
 
   td.actions button{
@@ -1083,4 +1088,34 @@ color: #212121;
 
 .MuiButton-text {
   text-align: right;
+}
+
+dl.state-access-cards {
+  .state-access-card {
+    @extend .ds-u-border--1;
+    @extend .ds-u-padding--3;
+    @extend .ds-u-fill--white;
+
+    border-radius: 3px;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+
+    &:not(:last-child) {
+      @extend .ds-u-margin-bottom--3;
+    }
+
+    dt {
+      @extend .ds-u-font-size--h3;
+      @extend .ds-u-font-weight--normal;
+
+      margin-bottom: 5px;
+
+    }
+
+    dd {
+      a {
+        @extend .ds-u-font-weight--bold;
+        @extend .ds-u-text-decoration--none;
+      }
+    }
+  }
 }

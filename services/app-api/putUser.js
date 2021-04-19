@@ -5,7 +5,7 @@ import sendEmail from './libs/email-lib';
 import { RESPONSE_CODE } from './libs/response-codes';
 import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
-import { territoryCodeList } from './libs/territoryLib';
+import { territoryCodeList } from 'cmscommonlib';
 import { USER_TYPE, USER_STATUS } from './libs/user-lib';
 
 /**

@@ -2,7 +2,7 @@ const login = require('../cases/OY2-1494_Test_SPA_Login');
 const timeout = 1000;
 
 module.exports = {
-    "@tags": ["regression"],
+    "@tags": ["regression","regression2"],
 
     before: function (browser, loginType = "Login to SPA and Waiver Dashboard via Okta") {
         login.before(browser);
