@@ -10,7 +10,7 @@ import SubmissionView from "./SubmissionView";
  */
 const WaiverAppK = () => {
   // Optional ID parameter from the URL
-  const { id } = useParams();
+  const { id, userId } = useParams();
 
   const formInfo = {
     pageTitle: "Submit 1915(c) Appendix K Amendment",
@@ -32,8 +32,8 @@ const WaiverAppK = () => {
     },
   };
 
-  if (id) {
-    return <SubmissionView formInfo={formInfo} id={id} />;
+  if (id && userId) {
+    return <SubmissionView formInfo={formInfo} id={id} userId={userId} />;
   } else {
     return (
       <SubmissionForm

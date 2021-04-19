@@ -54,7 +54,7 @@ module.exports = {
     let spaPageTitle = "SPA and Waiver Dashboard";
 
     // Test Stesp
-    browser.useXPath().click("//a[text()='Login']"); // click the login button
+    browser.useXpath().click("//a[text()='Login']"); // click the login button
     browser.useCss().setValue("#okta-signin-username", username);
     browser.setValue("#okta-signin-password", password);
     browser.click("#tandc");

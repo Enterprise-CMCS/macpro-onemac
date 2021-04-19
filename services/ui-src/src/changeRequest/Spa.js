@@ -10,7 +10,7 @@ import { ROUTES } from "cmscommonlib";
  */
 const Spa = () => {
   // Optional ID parameter from the URL
-  const { id } = useParams();
+  const { id, userId } = useParams();
 
   const formInfo = {
     pageTitle: "Submit New SPA",
@@ -39,8 +39,8 @@ const Spa = () => {
 
   };
 
-  if (id) {
-    return <SubmissionView formInfo={formInfo} id={id} />;
+  if (id && userId) {
+    return <SubmissionView formInfo={formInfo} id={id} userId={userId} />;
   } else {
     return (
       <SubmissionForm

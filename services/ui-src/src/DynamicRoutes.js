@@ -25,28 +25,28 @@ export default function DynamicRoutes() {
         case ROLES.STATE_USER:
           return (
             <>
-              <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?`}>
-                    <ChipSpa />
+              <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
+                <ChipSpa />
               </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
               </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.SPA}/:id?`}>
+              <AuthenticatedRoute path={`${ROUTES.SPA}/:id?/:userId?`}>
                 <Spa />
               </AuthenticatedRoute>
-              <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?`}>
+              <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?/:userId?`}>
                 <Waiver />
               </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?`}>
+              <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?/:userId?`}>
                 <SpaRai />
               </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?`}>
+              <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?/:userId?`}>
                 <WaiverRai />
               </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?`}>
+              <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?/:userId?`}>
                 <WaiverExtension />
               </AuthenticatedRoute>
-              <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?`}>
+              <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?/:userId?`}>
                 <WaiverAppK />
               </AuthenticatedRoute>
               <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
