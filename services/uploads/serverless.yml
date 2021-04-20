@@ -129,7 +129,7 @@ resources:
             - Effect: Allow
               Action: 's3:PutObject'
               Principal: '*'
-              NotResource: !Join
+              Resource: !Join
                 - ''
                 - - 'arn:aws:s3:::'
                   - !Ref AttachmentsBucket
