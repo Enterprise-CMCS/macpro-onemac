@@ -131,7 +131,7 @@ resources:
               NotResource: !Join
                 - ''
                 - - 'arn:aws:s3:::'
-                  - !Ref S3Bucket
+                  - !Ref AttachmentsBucket
                   - /*.pdf
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
