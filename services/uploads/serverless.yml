@@ -130,10 +130,18 @@ resources:
               Action: 's3:PutObject'
               Principal: '*'
               Resource: 
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.docx                
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.xlsx                
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.pptx                
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.doc                
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.docx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.xlsx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.pptx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.doc
+            - Effect: Deny
+              Action: 's3:PutObject'
+              Principal: '*'
+              NotResource: 
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.txt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.pdf
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.html
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.rtf
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
