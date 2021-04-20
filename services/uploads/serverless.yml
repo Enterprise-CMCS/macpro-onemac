@@ -126,22 +126,30 @@ resources:
                     - 'arn:aws:s3:::'
                     - Ref: AttachmentsBucket
                     - '/protected/*'
-            - Effect: Allow
-              Action: 's3:PutObject'
-              Principal: '*'
-              Resource: 
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.docx
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.xlsx
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.pptx
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.doc
             - Effect: Deny
               Action: 's3:PutObject'
               Principal: '*'
               NotResource: 
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.txt
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.pdf
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.html
-                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.rtf
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.bmp
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.csv
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.doc
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.docx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.gif
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.jpg
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.jpeg
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.odp
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.ods
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.odt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.png
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.pdf
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.ppt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.pptx
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.rtf
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.tif
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.tiff
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.txt
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xls
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xlsx
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
