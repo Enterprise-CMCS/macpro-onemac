@@ -21,13 +21,14 @@ module.exports = {
     'Check Dashboard link presence via Dev Login' : function(browser, testData = {
         username: browser.globals.user,
         password: browser.globals.pass,
-        spaPageTitle: 'SPA and Waiver Dashboard',
+        spaPageTitle: 'SPA and Waiver Home',
     }) {
         spa = browser.page.spaBasePage();
-        login["Logout of SPA and Waiver Dashboard"](browser);
         browser.pause(timeout * 3);
-        console.log('Login as: ', testData.username);
+        console.log('Log out from Okta login session');
         browser.verify.not.elementPresent(spa.elements.dashboardLink);
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        console.log('Login as Dev user: ', testData.username);
         spa.devLogin(testData);
         browser.verify.elementPresent(spa.elements.dashboardLink);
     },
@@ -35,14 +36,13 @@ module.exports = {
     'Check Dashboard link presence via Okta Login' : function(browser, testData = {
         username: browser.globals.user,
         password: browser.globals.pass,
-        spaPageTitle: 'SPA and Waiver Dashboard',
+        spaPageTitle: 'SPA and Waiver Home',
     }) {
 
         spa = browser.page.spaBasePage();
+        browser.verify.elementPresent(spa.elements.dashboardLink);
         login["Logout of SPA and Waiver Dashboard"](browser);
         browser.pause(timeout * 3);
         browser.verify.not.elementPresent(spa.elements.dashboardLink);
-        spa.login(testData);
-        browser.verify.elementPresent(spa.elements.dashboardLink);
     }
 }

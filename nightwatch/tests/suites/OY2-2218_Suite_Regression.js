@@ -20,8 +20,9 @@ module.exports = {
         login.after(browser);
     },
     "Check for Dashboard Link before and after Login": function (browser) {
-        const account = require('../cases/OY2-7281_Header_Footer');
-        account["Check for Dashboard Link before and after Login"](browser);
+        const home = require('../cases/OY2-7281_Header_Footer');
+        home["Check Dashboard link presence via Okta Login"](browser);
+        home["Check Dashboard link presence via Dev Login"](browser);
     },
     "Submit a SPA Report": function (browser, steps = [
         "Click on 'Start a new SPA'",
@@ -114,7 +115,10 @@ module.exports = {
         appK["Enter Comments"](browser);
         appK["Submit Form"](browser);
     },
-
+    "View My Account Page": function (browser) {
+        const account = require('../cases/OY2_5196_Test_View_User_Profile');
+        account["Navigate to the Manage Account page"](browser);
+    },
     "Check for Dashboard Link": function (browser) {
         const account = require('../cases/OY2_5196_Test_View_User_Profile');
         account["Check for dashboard Link before and afer Login"](browser);
