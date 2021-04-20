@@ -2,10 +2,10 @@
   "attributes": [
     {
       "date": 1618857318,
-      "doneBy": "zlewis@collabralink.com",
+      "doneBy": "[REPLACE TEST EMAIL FOR SYSTEM ADMIN]",
       "status": "pending"
     }
   ],
-  "id": "zlewis@clarityinnovates.com",
+  "id": "[REPLACE TEST EMAIL FOR CMS APPROVER]",
   "type": "cmsapprover"
 }
