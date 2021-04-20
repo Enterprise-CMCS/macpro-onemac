@@ -68,6 +68,7 @@ resources:
                   - S3CanonicalUserId
             - Effect: Deny
               Action: 's3:PutObject'
+              Principal: '*'
               NotResource: !Join
                 - ''
                 - - 'arn:aws:s3:::'
