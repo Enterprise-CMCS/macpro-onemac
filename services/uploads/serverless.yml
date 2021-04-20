@@ -134,6 +134,14 @@ resources:
                 - - 'arn:aws:s3:::'
                   - !Ref AttachmentsBucket
                   - /*.pdf
+            - Effect: Allow
+              Action: 's3:PutObject'
+              Principal: '*'
+              NotResource: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref AttachmentsBucket
+                  - /*.docx
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
