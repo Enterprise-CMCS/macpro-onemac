@@ -66,14 +66,6 @@ resources:
                   Fn::GetAtt:
                   - CloudFrontOriginAccessIdentity
                   - S3CanonicalUserId
-            - Effect: Allow
-              Action: 's3:PutObject'
-              Principal: '*'
-              Resource: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref S3Bucket
-                  - /*.docx
         Bucket: !Ref S3Bucket
     CloudFrontWebAcl:
       Type: AWS::WAFv2::WebACL

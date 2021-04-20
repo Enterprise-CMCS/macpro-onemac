@@ -129,11 +129,11 @@ resources:
             - Effect: Allow
               Action: 's3:PutObject'
               Principal: '*'
-              Resource: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref AttachmentsBucket
-                  - /*.docx
+              Resource: 
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.docx                
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.xlsx                
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.pptx                
+                - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/protected/*.doc                
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
