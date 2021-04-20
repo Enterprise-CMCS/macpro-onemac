@@ -523,7 +523,7 @@ input[type="file"] {
   @extend .ds-u-margin--0;
   @extend .ds-u-padding--4;
   text-align: center;
-  align-self: center;
+  flex: auto;
 }
 
 .submissions-table, .user-table {
