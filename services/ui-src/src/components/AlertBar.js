@@ -49,7 +49,7 @@ export const AlertBar = () => {
     if (userData.type==="stateuser" && alertRef.current.type==="success") {
       return (<>{surveyText}{surveyLink}</>)
     } else{
-      return (alert.current.text);
+      return (alertRef.current.text);
     }
   }
 
