@@ -118,9 +118,5 @@ module.exports = {
     "View My Account Page": function (browser) {
         const account = require('../cases/OY2_5196_Test_View_User_Profile');
         account["Navigate to the Manage Account page"](browser);
-    },
-    "Check for Dashboard Link": function (browser) {
-        const account = require('../cases/OY2_5196_Test_View_User_Profile');
-        account["Check for dashboard Link before and afer Login"](browser);
-    },
+    }
 };
