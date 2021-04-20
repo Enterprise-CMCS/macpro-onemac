@@ -1,9 +1,8 @@
-const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 const timeout = 1000;
 
 module.exports = {
-
+    "@tags": ["regression", "devEnv"],
     before : function(browser) {
         console.log('Setting up...');
         console.log('url is: ', browser.launch_url);
@@ -24,13 +23,13 @@ module.exports = {
         spaPageTitle: 'SPA and Waiver Home',
     }) {
         spa = browser.page.spaBasePage();
-        browser.pause(timeout * 3);
-        console.log('Log out from Okta login session');
         browser.verify.not.elementPresent(spa.elements.dashboardLink);
-        login["Logout of SPA and Waiver Dashboard"](browser);
         console.log('Login as Dev user: ', testData.username);
         spa.devLogin(testData);
+        browser.pause(timeout * 3);
         browser.verify.elementPresent(spa.elements.dashboardLink);
+        spa.logout();
+        browser.pause(timeout * 3);
     },
 
     'Check Dashboard link presence via Okta Login' : function(browser, testData = {
@@ -38,11 +37,12 @@ module.exports = {
         password: browser.globals.pass,
         spaPageTitle: 'SPA and Waiver Home',
     }) {
-
         spa = browser.page.spaBasePage();
-        browser.verify.elementPresent(spa.elements.dashboardLink);
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 3);
         browser.verify.not.elementPresent(spa.elements.dashboardLink);
+        spa.login(testData);
+        browser.pause(timeout * 3);
+        browser.verify.elementPresent(spa.elements.dashboardLink);
+        spa.logout();
+        browser.pause(timeout * 3);
     }
 }
