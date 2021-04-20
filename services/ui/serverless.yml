@@ -66,6 +66,13 @@ resources:
                   Fn::GetAtt:
                   - CloudFrontOriginAccessIdentity
                   - S3CanonicalUserId
+            - Effect: Deny
+              Action: 's3:PutObject'
+              NotResource: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3Bucket
+                  - /*.pdf
         Bucket: !Ref S3Bucket
     CloudFrontWebAcl:
       Type: AWS::WAFv2::WebACL

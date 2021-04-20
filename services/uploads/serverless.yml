@@ -126,6 +126,13 @@ resources:
                     - 'arn:aws:s3:::'
                     - Ref: AttachmentsBucket
                     - '/protected/*'
+            - Effect: Deny
+              Action: 's3:PutObject'
+              NotResource: !Join
+                - ''
+                - - 'arn:aws:s3:::'
+                  - !Ref S3Bucket
+                  - /*.pdf
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
