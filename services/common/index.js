@@ -4,246 +4,6 @@
  * This will contain static items needed by both the frontend and backend.
  */
 
-// NOTE: In Future this may come from SeaTool or Backend Process.
-export const territoryList = [
-    {
-        "label": "Alabama",
-        "value": "AL"
-    },
-    {
-        "label": "Alaska",
-        "value": "AK"
-    },
-    {
-        "label": "American Samoa",
-        "value": "AS"
-    },
-    {
-        "label": "Arizona",
-        "value": "AZ"
-    },
-    {
-        "label": "Arkansas",
-        "value": "AR"
-    },
-    {
-        "label": "California",
-        "value": "CA"
-    },
-    {
-        "label": "Colorado",
-        "value": "CO"
-    },
-    {
-        "label": "Connecticut",
-        "value": "CT"
-    },
-    {
-        "label": "Delaware",
-        "value": "DE"
-    },
-    {
-        "label": "District Of Columbia",
-        "value": "DC"
-    },
-    {
-        "label": "Federated States Of Micronesia",
-        "value": "FM"
-    },
-    {
-        "label": "Florida",
-        "value": "FL"
-    },
-    {
-        "label": "Georgia",
-        "value": "GA"
-    },
-    {
-        "label": "Guam",
-        "value": "GU"
-    },
-    {
-        "label": "Hawaii",
-        "value": "HI"
-    },
-    {
-        "label": "Idaho",
-        "value": "ID"
-    },
-    {
-        "label": "Illinois",
-        "value": "IL"
-    },
-    {
-        "label": "Indiana",
-        "value": "IN"
-    },
-    {
-        "label": "Iowa",
-        "value": "IA"
-    },
-    {
-        "label": "Kansas",
-        "value": "KS"
-    },
-    {
-        "label": "Kentucky",
-        "value": "KY"
-    },
-    {
-        "label": "Louisiana",
-        "value": "LA"
-    },
-    {
-        "label": "Maine",
-        "value": "ME"
-    },
-    {
-        "label": "Marshall Islands",
-        "value": "MH"
-    },
-    {
-        "label": "Maryland",
-        "value": "MD"
-    },
-    {
-        "label": "Massachusetts",
-        "value": "MA"
-    },
-    {
-        "label": "Michigan",
-        "value": "MI"
-    },
-    {
-        "label": "Minnesota",
-        "value": "MN"
-    },
-    {
-        "label": "Mississippi",
-        "value": "MS"
-    },
-    {
-        "label": "Missouri",
-        "value": "MO"
-    },
-    {
-        "label": "Montana",
-        "value": "MT"
-    },
-    {
-        "label": "Nebraska",
-        "value": "NE"
-    },
-    {
-        "label": "Nevada",
-        "value": "NV"
-    },
-    {
-        "label": "New Hampshire",
-        "value": "NH"
-    },
-    {
-        "label": "New Jersey",
-        "value": "NJ"
-    },
-    {
-        "label": "New Mexico",
-        "value": "NM"
-    },
-    {
-        "label": "New York",
-        "value": "NY"
-    },
-    {
-        "label": "North Carolina",
-        "value": "NC"
-    },
-    {
-        "label": "North Dakota",
-        "value": "ND"
-    },
-    {
-        "label": "Northern Mariana Islands",
-        "value": "MP"
-    },
-    {
-        "label": "Ohio",
-        "value": "OH"
-    },
-    {
-        "label": "Oklahoma",
-        "value": "OK"
-    },
-    {
-        "label": "Oregon",
-        "value": "OR"
-    },
-    {
-        "label": "Palau",
-        "value": "PW"
-    },
-    {
-        "label": "Pennsylvania",
-        "value": "PA"
-    },
-    {
-        "label": "Puerto Rico",
-        "value": "PR"
-    },
-    {
-        "label": "Rhode Island",
-        "value": "RI"
-    },
-    {
-        "label": "South Carolina",
-        "value": "SC"
-    },
-    {
-        "label": "South Dakota",
-        "value": "SD"
-    },
-    {
-        "label": "Tennessee",
-        "value": "TN"
-    },
-    {
-        "label": "Texas",
-        "value": "TX"
-    },
-    {
-        "label": "Utah",
-        "value": "UT"
-    },
-    {
-        "label": "Vermont",
-        "value": "VT"
-    },
-    {
-        "label": "Virgin Islands",
-        "value": "VI"
-    },
-    {
-        "label": "Virginia",
-        "value": "VA"
-    },
-    {
-        "label": "Washington",
-        "value": "WA"
-    },
-    {
-        "label": "West Virginia",
-        "value": "WV"
-    },
-    {
-        "label": "Wisconsin",
-        "value": "WI"
-    },
-    {
-        "label": "Wyoming",
-        "value": "WY"
-    }];
-export const territoryCodeList = territoryList.map(item => item.value);
-
 
 /**
  * Codes to send to front end
@@ -282,9 +42,6 @@ export const USER_ADMIN_PERMISSION= {
     CMS_APPROVER: 'stateadmin'
 };
 
-
-
-
 /**
  * Possible user types
  */
@@ -310,78 +67,345 @@ export const USER_STATUS = {
  *
  */
 export const ROUTES = {
-    CHIP_SPA: '/chipspa',
-    DASHBOARD: '/dashboard',
-    USER_MANAGEMENT: '/usermanagement',
-    FAQ: '/FAQ',
-    FAQ_TOP: '/FAQ/#top',
-    FAQ_SPA_ID: '/FAQ#spa-id-format',
-    FAQ_WAIVER_ID: '/FAQ#waiver-id-format',
-    HOME: '/',
-    PROFILE: '/profile',
-    METRICS: '/metrics',
-    DEVLOGIN: '/devlogin',
-    SIGNUP: "/signup",
-    STATE_SIGNUP: "/signup/state",
-    SPA: '/spa',
-    SPA_RAI: '/sparai',
-    COMPONENT_PAGE: '/componentpage', // temporary placeholder for the developers to house components //
-    WAIVER: '/waiver',
-    WAIVER_RAI: '/waiverrai',
-    WAIVER_EXTENSION: '/waiverextension',
-    WAIVER_APP_K: '/waiverappk'
-}
+  CHIP_SPA: "/chipspa",
+  DASHBOARD: "/dashboard",
+  USER_MANAGEMENT: "/usermanagement",
+  FAQ: "/FAQ",
+  FAQ_TOP: "/FAQ/#top",
+  FAQ_SPA_ID: "/FAQ#spa-id-format",
+  FAQ_WAIVER_ID: "/FAQ#waiver-id-format",
+  HOME: "/",
+  PROFILE: "/profile",
+  METRICS: "/metrics",
+  DEVLOGIN: "/devlogin",
+  SIGNUP: "/signup",
+  STATE_SIGNUP: "/signup/state",
+  SPA: "/spa",
+  SPA_RAI: "/sparai",
+  COMPONENT_PAGE: "/componentpage", // temporary placeholder for the developers to house components //
+  WAIVER: "/waiver",
+  WAIVER_RAI: "/waiverrai",
+  WAIVER_EXTENSION: "/waiverextension",
+  WAIVER_APP_K: "/waiverappk",
+};
 
 const ALL_USERS_ROUTES = [
-    ROUTES.HOME,
-    ROUTES.COMPONENT_PAGE,
-    ROUTES.PROFILE,
-    ROUTES.DEVLOGIN,
-    ROUTES.FAQ
+  ROUTES.HOME,
+  ROUTES.COMPONENT_PAGE,
+  ROUTES.PROFILE,
+  ROUTES.DEVLOGIN,
+  ROUTES.FAQ,
 ];
 
 const STATEUSER_ALLOWED_ROUTES = [
-    ROUTES.DASHBOARD,
-    ROUTES.SPA,
-    ROUTES.SPA_RAI,
-    ROUTES.WAIVER,
-    ROUTES.WAIVER_APP_K,
-    ROUTES.WAIVER_EXTENSION,
-    ROUTES.WAIVER_RAI
+  ROUTES.DASHBOARD,
+  ROUTES.SPA,
+  ROUTES.SPA_RAI,
+  ROUTES.WAIVER,
+  ROUTES.WAIVER_APP_K,
+  ROUTES.WAIVER_EXTENSION,
+  ROUTES.WAIVER_RAI,
 ].concat(ALL_USERS_ROUTES);
-
 
 const STATEADMIN_ALLOWED_ROUTES = [
-    ROUTES.USER_MANAGEMENT,
-    ROUTES.METRICS
+  ROUTES.USER_MANAGEMENT,
+  ROUTES.METRICS,
 ].concat(ALL_USERS_ROUTES);
-;
-
 const CMSAPPROVER_ALLOWED_ROUTES = [
-    ROUTES.USER_MANAGEMENT,
-    ROUTES.METRICS,
+  ROUTES.USER_MANAGEMENT,
+  ROUTES.METRICS,
 ].concat(ALL_USERS_ROUTES);
-;
-
 const SYSTEMADMIN_ALLOWED_ROUTES = [
-    ROUTES.USER_MANAGEMENT,
-    ROUTES.METRICS,
+  ROUTES.USER_MANAGEMENT,
+  ROUTES.METRICS,
 ].concat(ALL_USERS_ROUTES);
 
 export const ROLES = {
-    STATE_USER: "stateuser",
-    STATE_ADMIN: "stateadmin",
-    CMS_APPROVER: "cmsapprover",
-    SYSTEM_ADMIN: "systemadmin"
-}
-
-export const ROLE_ACL = {
-    "stateuser": STATEUSER_ALLOWED_ROUTES,
-    "stateadmin": STATEADMIN_ALLOWED_ROUTES,
-    "cmsapprover": CMSAPPROVER_ALLOWED_ROUTES,
-    "systemadmin": SYSTEMADMIN_ALLOWED_ROUTES
+  STATE_USER: "stateuser",
+  STATE_ADMIN: "stateadmin",
+  CMS_APPROVER: "cmsapprover",
+  SYSTEM_ADMIN: "systemadmin",
 };
 
+export const ROLE_ACL = {
+  stateuser: STATEUSER_ALLOWED_ROUTES,
+  stateadmin: STATEADMIN_ALLOWED_ROUTES,
+  cmsapprover: CMSAPPROVER_ALLOWED_ROUTES,
+  systemadmin: SYSTEMADMIN_ALLOWED_ROUTES,
+};
 
+const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
+/**
+ * Finds a user's most recent approval status. For state users and admins, it takes an optional state code to search for.
+ * @param {Object} user - The user object to inspect.
+ * @param {string} user.type - The user role in our system.
+ * @param {Object[]} user.attributes - The user's access specifications.
+ * @param {string} [state] - A two-letter territory code to search for (only for state users and admins).
+ */
+export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
+  switch (type) {
+    case ROLES.STATE_USER:
+    case ROLES.STATE_ADMIN: {
+      const stateObj = attributes.find(({ stateCode }) => stateCode === state);
+      if (!stateObj) return null;
 
+      return stateObj.history.sort(datesDescending)[0].status;
+    }
+
+    case ROLES.CMS_APPROVER:
+    case ROLES.SYSTEM_ADMIN: {
+      return attributes.sort(datesDescending)[0].status;
+    }
+
+    default:
+      return null;
+  }
+};
+
+// NOTE: In Future this may come from SeaTool or Backend Process.
+export const territoryList = [
+  {
+    label: "Alabama",
+    value: "AL",
+  },
+  {
+    label: "Alaska",
+    value: "AK",
+  },
+  {
+    label: "American Samoa",
+    value: "AS",
+  },
+  {
+    label: "Arizona",
+    value: "AZ",
+  },
+  {
+    label: "Arkansas",
+    value: "AR",
+  },
+  {
+    label: "California",
+    value: "CA",
+  },
+  {
+    label: "Colorado",
+    value: "CO",
+  },
+  {
+    label: "Connecticut",
+    value: "CT",
+  },
+  {
+    label: "Delaware",
+    value: "DE",
+  },
+  {
+    label: "District Of Columbia",
+    value: "DC",
+  },
+  {
+    label: "Federated States Of Micronesia",
+    value: "FM",
+  },
+  {
+    label: "Florida",
+    value: "FL",
+  },
+  {
+    label: "Georgia",
+    value: "GA",
+  },
+  {
+    label: "Guam",
+    value: "GU",
+  },
+  {
+    label: "Hawaii",
+    value: "HI",
+  },
+  {
+    label: "Idaho",
+    value: "ID",
+  },
+  {
+    label: "Illinois",
+    value: "IL",
+  },
+  {
+    label: "Indiana",
+    value: "IN",
+  },
+  {
+    label: "Iowa",
+    value: "IA",
+  },
+  {
+    label: "Kansas",
+    value: "KS",
+  },
+  {
+    label: "Kentucky",
+    value: "KY",
+  },
+  {
+    label: "Louisiana",
+    value: "LA",
+  },
+  {
+    label: "Maine",
+    value: "ME",
+  },
+  {
+    label: "Marshall Islands",
+    value: "MH",
+  },
+  {
+    label: "Maryland",
+    value: "MD",
+  },
+  {
+    label: "Massachusetts",
+    value: "MA",
+  },
+  {
+    label: "Michigan",
+    value: "MI",
+  },
+  {
+    label: "Minnesota",
+    value: "MN",
+  },
+  {
+    label: "Mississippi",
+    value: "MS",
+  },
+  {
+    label: "Missouri",
+    value: "MO",
+  },
+  {
+    label: "Montana",
+    value: "MT",
+  },
+  {
+    label: "Nebraska",
+    value: "NE",
+  },
+  {
+    label: "Nevada",
+    value: "NV",
+  },
+  {
+    label: "New Hampshire",
+    value: "NH",
+  },
+  {
+    label: "New Jersey",
+    value: "NJ",
+  },
+  {
+    label: "New Mexico",
+    value: "NM",
+  },
+  {
+    label: "New York",
+    value: "NY",
+  },
+  {
+    label: "North Carolina",
+    value: "NC",
+  },
+  {
+    label: "North Dakota",
+    value: "ND",
+  },
+  {
+    label: "Northern Mariana Islands",
+    value: "MP",
+  },
+  {
+    label: "Ohio",
+    value: "OH",
+  },
+  {
+    label: "Oklahoma",
+    value: "OK",
+  },
+  {
+    label: "Oregon",
+    value: "OR",
+  },
+  {
+    label: "Palau",
+    value: "PW",
+  },
+  {
+    label: "Pennsylvania",
+    value: "PA",
+  },
+  {
+    label: "Puerto Rico",
+    value: "PR",
+  },
+  {
+    label: "Rhode Island",
+    value: "RI",
+  },
+  {
+    label: "South Carolina",
+    value: "SC",
+  },
+  {
+    label: "South Dakota",
+    value: "SD",
+  },
+  {
+    label: "Tennessee",
+    value: "TN",
+  },
+  {
+    label: "Texas",
+    value: "TX",
+  },
+  {
+    label: "Utah",
+    value: "UT",
+  },
+  {
+    label: "Vermont",
+    value: "VT",
+  },
+  {
+    label: "Virgin Islands",
+    value: "VI",
+  },
+  {
+    label: "Virginia",
+    value: "VA",
+  },
+  {
+    label: "Washington",
+    value: "WA",
+  },
+  {
+    label: "West Virginia",
+    value: "WV",
+  },
+  {
+    label: "Wisconsin",
+    value: "WI",
+  },
+  {
+    label: "Wyoming",
+    value: "WY",
+  },
+];
+
+export const territoryMap = territoryList.reduce(
+  (acc, { label, value }) => ({ ...acc, [value]: label }),
+  {}
+);
+
+export const territoryCodeList = territoryList.map((item) => item.value);

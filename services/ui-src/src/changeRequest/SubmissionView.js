@@ -13,8 +13,9 @@ import { Alert, Review } from "@cmsgov/design-system";
  * RAI Form template to allow rendering for different types of RAI's.
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} id - the id of the change request data element to view
+ * @param {String} userId - the id of the user who created the change request
  */
-const SubmissionView = ({ formInfo, id }) => {
+const SubmissionView = ({ formInfo, id, userId }) => {
   // for setting the alert
   const [alert, setAlert] = useState(ALERTS_MSG.NONE);
 
@@ -32,10 +33,10 @@ const SubmissionView = ({ formInfo, id }) => {
     console.log("called and id is: " + id);
 
     async function fetchChangeRequest() {
-      if (!id) return true;
+      if (!id || !userId) return true;
 
       try {
-        const fetchedChangeRequest = await ChangeRequestDataApi.get(id);
+        const fetchedChangeRequest = await ChangeRequestDataApi.get(id, userId);
         if (mounted) setChangeRequest(fetchedChangeRequest);
         return false;
       } catch (error) {
@@ -50,7 +51,7 @@ const SubmissionView = ({ formInfo, id }) => {
     return function cleanup() {
       mounted = false;
     };
-  }, [id]);
+  }, [id, userId]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);

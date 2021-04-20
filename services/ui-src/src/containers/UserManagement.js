@@ -13,10 +13,12 @@ import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
 import {
   pendingMessage,
+  deniedOrRevokedMessage,
   grantConfirmMessage,
   denyConfirmMessage,
   revokeConfirmMessage,
   isPending,
+  isActive,
 } from "../libs/userLib";
 
 const PENDING_CIRCLE_IMAGE = (
@@ -235,9 +237,13 @@ const UserManagement = () => {
         userProfile.userData &&
         userProfile.userData.attributes &&
         userProfile.userData.attributes.length !== 0 &&
-        isPending(userProfile.userData) ? (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        ) : (
+        !isActive(userProfile.userData) ? 
+          (isPending(userProfile.userData) ?
+            <EmptyList message={pendingMessage[userProfile.userData.type]} />
+            :
+            <EmptyList message={deniedOrRevokedMessage[userProfile.userData.type]} />
+          )
+         : (
           <LoadingScreen isLoading={isLoading}>
             {userList && userList.length !== 0 && userList !== "UR040" ? (
               <table className="user-table">

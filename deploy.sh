@@ -13,24 +13,8 @@ services=(
 )
 
 # These test users are only available in DEV environments.
-TEST_USERS=('stateuseractive@cms.hhs.local'
-  'stateuserpending@cms.hhs.local'
-  'stateuserdenied@cms.hhs.local'
-  'stateuserrevoked@cms.hhs.local'
-  'stateadminactiveMI@cms.hhs.local'
-  'stateadminactiveVA@cms.hhs.local'
-  'stateuserunregistered@cms.hhs.local'
-  'stateadminactive@cms.hhs.local'
-  'stateadminpending@cms.hhs.local'
-  'stateadmindenied@cms.hhs.local'
-  'stateadminrevoked@cms.hhs.local'
-  'stateadminunregistered@cms.hhs.local'
-  'cmsapproveractive@cms.hhs.local'
-  'cmsapproverpending@cms.hhs.local'
-  'cmsapproverdenied@cms.hhs.local'
-  'cmsapproverrevoked@cms.hhs.local'
-  'systemadmintest@cms.hhs.local'
-  'cmsapproverunregistered@cms.hhs.local')
+IFS=$'\n' read -r -d '' -a TEST_USERS < <(jq -r '.[] | .id' <'services/app-api/user-profiles-seed.json' && printf '\0' )
+TEST_USERS+=("stateuserunregistered@cms.hhs.local" "stateadminunregistered@cms.hhs.local" "cmsapproverunregistered@cms.hhs.local")
 
 TEST_USER_PASSWORD="Passw0rd!"
 
@@ -51,10 +35,11 @@ install_deps() {
 }
 
 deploy() {
+  export SLS_DEBUG=true
   service=$1
   pushd services/$service
   install_deps
-  serverless deploy  --stage $stage
+  serverless deploy --stage $stage
   popd
 }
 
@@ -107,6 +92,7 @@ then
           esac
 
           # We ignore all the errors if the user exists.
+          echo "creating user with id $user"
           set +e
           aws cognito-idp admin-create-user --user-pool-id $cognito_user_pool_id --message-action SUPPRESS --username $user \
           --user-attributes Name=given_name,Value=TestFirstName Name=family_name,Value=TestLastName Name=custom:cms_roles,Value=$cms_role
@@ -114,8 +100,8 @@ then
           set -e
       done
       ./loadTestUsers.sh $stage
-      
-      # Only Run Once or Manaully 
+
+      # Only Run Once or Manually
       #  ./loadExistingUsers.sh $stage
   else
       echo "ERROR: There was an error obtaining AWS resource information to create users."

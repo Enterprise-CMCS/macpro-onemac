@@ -15,6 +15,16 @@ export const pendingMessage = {
     "Your system access is pending approval. Contact the Help Desk with any questions.",
 };
 
+export const deniedOrRevokedMessage = {
+  stateuser:
+    "Sorry, you don't have access. Please contact the State System Admin with any questions.",
+  stateadmin: "Sorry, you don't have access. Please contact the CMS Role Approver with any questions.",
+  cmsapprover:
+    "Sorry, you don't have access. Please contact the CMS System Admin with any questions.",
+  systemadmin:
+    "There is something wrong. Contact the Help Desk.",
+};
+
 export const grantConfirmMessage = {
   stateadmin: "stateadmin Grant Acccess Action Confirmation - Need content",
   cmsapprover:
@@ -50,6 +60,21 @@ export const revokeConfirmMessage = {
   }
 };
 
+/**
+   * is this CMS Approver active or does State User / State Admin user have any active territories?
+   * @param {Object} userData object of history instance
+   * @return {Boolean} a boolean on status pending
+   */
+
+export const isActive = (userData) => {
+  if (userData.type === "cmsapprover") {
+    userData.attributes.sort(sortDescendingOrder);
+    return userData.attributes[0].status === "active";
+  } else {
+    userData.attributes.forEach(getStateStatus);
+    return stateStatusSet.has("active");
+  }
+}
   /**
    * Sort history of userData in descending order.
    * @param {Object} a object of history instance
@@ -65,6 +90,7 @@ export const revokeConfirmMessage = {
   /**
    * get the status of the sorted history array's 1st element and put them in a set.
    * @param {Object} attribute object of history instance
+   * @return {Array} the most recent status values for each state
    */
 
   const getStateStatus = (attribute) => {

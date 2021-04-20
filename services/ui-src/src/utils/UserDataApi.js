@@ -135,6 +135,23 @@ class UserDataApi {
     }
   }
 
+  /**
+   * Get all active state system administrators' contact info for a list of states.
+  */
+  async getStateAdmins(states) {
+    const params = new URLSearchParams();
+    for (const state of states) {
+      params.append("state", state);
+    }
+    return await API.get("userDataAPI", `/getStateAdmins?${params.toString()}`);
+  }
+
+  /**
+   * Get all active state system administrators' contact info for a list of states.
+  */
+  async getCmsApprovers() {
+    return await API.get("userDataAPI", "/getCmsApprovers");
+  }
 }
 
 const instance = new UserDataApi();

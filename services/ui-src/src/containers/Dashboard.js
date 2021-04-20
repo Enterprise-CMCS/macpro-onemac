@@ -5,13 +5,13 @@ import { AlertBar } from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES  } from "cmscommonlib";
+import { ROUTES } from "cmscommonlib";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
 import { useAppContext } from "../libs/contextLib";
-import { pendingMessage, isPending } from "../libs/userLib";
+import { pendingMessage, deniedOrRevokedMessage, isPending, isActive } from "../libs/userLib";
 
 /**
  * Component containing dashboard
@@ -34,11 +34,13 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
+        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAllByAuthorizedTerritories(userProfile.email));
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        history.replace("/dashboard", { showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR })
+        history.replace("/dashboard", {
+          showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
+        });
       }
     })();
 
@@ -68,7 +70,7 @@ const Dashboard = () => {
     //Now generate the list
     return sortedChangeRequests.map((changeRequest, i) => {
       let type;
-      let link = "/" + changeRequest.type + "/" + changeRequest.id;
+      let link = "/" + changeRequest.type + "/" + changeRequest.id+ "/" + changeRequest.userId;
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.CHIP_SPA:
           type = "CHIP SPA";
@@ -109,7 +111,10 @@ const Dashboard = () => {
           <td>
             <span className="type-badge">{type}</span>
           </td>
-          <td className="date-submitted-column">
+          <td>
+            <span>{changeRequest.territory}</span>
+          </td>
+          <td>
             {format(changeRequest.submittedAt, "MMM d, yyyy")}
           </td>
         </tr>
@@ -140,9 +145,9 @@ const Dashboard = () => {
             Respond to SPA RAI
           </Button>
           <Button
-              id="chipSpaBtn"
-              variation="transparent"
-              onClick={() => history.push(ROUTES.CHIP_SPA)}
+            id="chipSpaBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.CHIP_SPA)}
           >
             Submit New CHIP SPA
           </Button>
@@ -181,8 +186,14 @@ const Dashboard = () => {
           userProfile.userData &&
           userProfile.userData.attributes &&
           userProfile.userData.attributes.length !== 0 &&
-          isPending(userProfile.userData) ? (
-            <EmptyList message={pendingMessage[userProfile.userData.type]} />
+          !isActive(userProfile.userData) ? (
+            isPending(userProfile.userData) ? (
+              <EmptyList message={pendingMessage[userProfile.userData.type]} />
+            ) : (
+              <EmptyList
+                message={deniedOrRevokedMessage[userProfile.userData.type]}
+              />
+            )
           ) : (
             <div>
               <div className="action-title">Submissions List</div>
@@ -194,9 +205,8 @@ const Dashboard = () => {
                         <tr>
                           <th scope="col">SPA ID/Waiver Number</th>
                           <th scope="col">Type</th>
-                          <th className="date-submitted-column" scope="col">
-                            Date Submitted
-                          </th>
+                          <th scope="col">State</th>
+                          <th scope="col">Date Submitted</th>
                         </tr>
                       </thead>
                       <tbody>
