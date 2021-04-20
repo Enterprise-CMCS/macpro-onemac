@@ -66,14 +66,6 @@ resources:
                   Fn::GetAtt:
                   - CloudFrontOriginAccessIdentity
                   - S3CanonicalUserId
-            - Effect: Deny
-              Action: 's3:PutObject'
-              Principal: '*'
-              NotResource: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref S3Bucket
-                  - /*.pdf
             - Effect: Allow
               Action: 's3:PutObject'
               Principal: '*'

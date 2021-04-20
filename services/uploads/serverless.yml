@@ -126,14 +126,6 @@ resources:
                     - 'arn:aws:s3:::'
                     - Ref: AttachmentsBucket
                     - '/protected/*'
-            - Effect: Deny
-              Action: 's3:PutObject'
-              Principal: '*'
-              NotResource: !Join
-                - ''
-                - - 'arn:aws:s3:::'
-                  - !Ref AttachmentsBucket
-                  - /*.pdf
             - Effect: Allow
               Action: 's3:PutObject'
               Principal: '*'
