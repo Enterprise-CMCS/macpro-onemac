@@ -217,6 +217,7 @@ export default class FileUploader extends Component {
                 type="file"
                 id={"uploader-input-" + index}
                 name={"uploader-input-" + index}
+                accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
                 multiple
                 style={{
                   width: "0.1px",
