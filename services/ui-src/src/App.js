@@ -6,8 +6,6 @@ import UserDataApi from "./utils/UserDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import FAQ from "./containers/FAQ";
-import { ROUTES } from "cmscommonlib";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -76,29 +74,22 @@ function App() {
     });
   }
 
-  switch (document.location.pathname) {
-    case ROUTES.FAQ:
-    case ROUTES.FAQ + "/":
-      return (<FAQ/>);
-    default:
-      return (
-          !authState.isAuthenticating && (
-              <div>
-                <AppContext.Provider
-                    value={{
-                      ...authState,
-                      setUserInfo,
-                    }}
-                >
-                  <Header/>
-                  <Routes/>
-                </AppContext.Provider>
-                <Footer/>
-              </div>
-          )
-      );
-  }
-
+  return (
+      !authState.isAuthenticating && (
+          <div>
+            <AppContext.Provider
+                value={{
+                  ...authState,
+                  setUserInfo,
+                }}
+            >
+              <Header />
+              <Routes />
+            </AppContext.Provider>
+            <Footer />
+          </div>
+      )
+  );
 }
 
 export default App;

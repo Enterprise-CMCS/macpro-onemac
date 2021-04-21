@@ -104,23 +104,36 @@ function Header(props) {
    * Renders a navigation bar
    */
   function renderNavBar(isLoggedInAsDeveloper) {
-    return (
-      <div className="nav-bar">
-        <div className="nav-left">
-          <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-          <Link to={ROUTES.HOME}>About</Link>
-          <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
-            Dashboard
-          </Link>
-          <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
-            User Management
-          </Link>
-          <a target="_blank" rel="noopener noreferrer" href={ROUTES.FAQ}>FAQ</a>
-          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
-        </div>
-        {renderAccountButtons()}
-      </div>
-    );
+
+    switch (document.location.pathname) {
+      case ROUTES.FAQ:
+      case ROUTES.FAQ + "/":
+        return ( <div className="nav-bar">
+
+          <div className="nav-left">
+            <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+          </div>
+        </div>);
+      default:
+        return (
+            <div className="nav-bar">
+
+              <div className="nav-left">
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+                <Link to={ROUTES.HOME}>About</Link>
+                <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
+                  Dashboard
+                </Link>
+                <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
+                  User Management
+                </Link>
+                <a target="_blank" rel="noopener noreferrer" href={ROUTES.FAQ}>FAQ</a>
+                {isLoggedInAsDeveloper ? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
+              </div>
+              {renderAccountButtons()}
+            </div>
+        );
+    }
   }
 
   /**
