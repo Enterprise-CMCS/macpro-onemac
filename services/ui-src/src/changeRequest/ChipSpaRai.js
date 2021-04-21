@@ -15,6 +15,8 @@ const ChipSpaRai = () => {
   const formInfo = {
     pageTitle: "Respond to CHIP SPA RAI",
     readOnlyPageTitle: "CHIP SPA RAI Response Details",
+    subheaderMessage:
+      "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
     detailsHeader: "CHIP SPA RAI",
     requiredUploads: ["Official Response to RAI", "Revised Amended State Plan"],
     optionalUploads: [
@@ -30,7 +32,8 @@ const ChipSpaRai = () => {
       idHintText: "Must follow the format SS-YY-NNNN-xxxx",
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idRegex:
+        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
       idMustExist: true,
       errorLevel: "error",
     },
