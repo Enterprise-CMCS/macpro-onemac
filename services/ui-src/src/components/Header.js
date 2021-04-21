@@ -204,7 +204,7 @@ function Header(props) {
           <Button href={getRegisterUrl()} inversed className="register-link">
             Register
           </Button>
-          <Button href={getSignInUrl()} 
+          <Button href={getSignInUrl()}
             id="loginBtn"
             inversed>
             Login
