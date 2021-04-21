@@ -115,7 +115,7 @@ function Header(props) {
           <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
             User Management
           </Link>
-          <Link to={ROUTES.FAQ}>FAQ</Link>
+          <a target="_blank" rel="noopener noreferrer" href={ROUTES.FAQ}>FAQ</a>
           {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
         </div>
         {renderAccountButtons()}
@@ -197,7 +197,7 @@ function Header(props) {
           <Button href={getRegisterUrl()} inversed className="register-link">
             Register
           </Button>
-          <Button href={getSignInUrl()} 
+          <Button href={getSignInUrl()}
             id="loginBtn"
             inversed>
             Login
