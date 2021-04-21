@@ -142,6 +142,7 @@ const UserPage = () => {
               <dl className="state-access-cards">
                 {accesses.map(({ state, status, contacts }) => (
                   <div className="state-access-card" key={state}>
+                    <a className="close-button">X</a>
                     <dt>{territoryMap[state] || state}</dt>
                     <dd>
                       <em>{ACCESS_LABELS[status] || status}</em>
