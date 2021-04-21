@@ -29,7 +29,7 @@ module.exports = {
         browser.click('select#actionType');   // click action type
         browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
         browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4) FFS Selective Contracting waivers']");
+        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         // SS.#####
@@ -38,14 +38,14 @@ module.exports = {
 
         // upload the file 
         let fileUploadElem = "[name='uploader-input-0']";
-        browser.assert.elementPresent(fileUploadElem);
+        browser.assert.elementPresent(fileUploadElem).pause(4000);
         let filePath = require('path').resolve(__dirname + '/files/file.docx')
         console.log("FILE PAHT: " + filePath);
-        browser.setValue(fileUploadElem, filePath);
+        browser.setValue(fileUploadElem, filePath).pause(4000);
 
         // write the Summary 
         let phrase = "This is a test, test, test";
-        browser.setValue('textarea#textfield_1', phrase);
+        browser.setValue('textarea#textfield_1', phrase).pause(4000);
 
         // Submit the new SPA 
         browser.click("[value='Submit']").pause(3000);

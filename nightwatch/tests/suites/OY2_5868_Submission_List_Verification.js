@@ -19,6 +19,7 @@ module.exports = {
         browser.waitForElementPresent('body');
         login["Login to Medicaid as Regular User"](browser);
     },
+    
     // After all the test case executions, clear out the browser
     after: function (browser) {
         login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
@@ -26,6 +27,7 @@ module.exports = {
         console.log('Closing down the browser instance...');
         browser.end();
     },
+
     'Submission List Verification > Submit new SPA': function (browser) {
         // Submit a SPA Report 
         const newSPA = require('../suites/OY2-3636_Suite_Smoke.js');

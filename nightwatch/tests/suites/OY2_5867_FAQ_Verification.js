@@ -13,7 +13,6 @@ module.exports = {
         console.log('Maximizing the browser window size...');
         browser.windowMaximize().url(browser.launch_url);
         browser.waitForElementPresent('body');
-        login["Login to Medicaid as Regular User"](browser);
     },
 
     // After all the test case executions, clear out the browser
@@ -25,8 +24,8 @@ module.exports = {
     },
 
     'User can go to the FAQ without logging into the application': function (browser) {
-        let fqaLink = '.nav-left > a:nth-of-type(3)';
-        browser.click(fqaLink).pause(500);
+        let fqaLink = "//a[text()='FAQ']";
+        browser.useXpath().click(fqaLink).pause(500);
         let pageBanner = 'div#title_bar > h1';
         let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
         browser.useCss().expect.element(pageBanner).to.be.visible;
@@ -34,9 +33,13 @@ module.exports = {
         browser.back();  // go back to previous page
     },
 
+    'User logs into Medicaid as Regular user': function(browser) {
+        login["Login to Medicaid as Regular User"](browser);
+    },
+
     'User can go to the FAQ with logging into the application': function (browser) {
-        let fqaLink = '.nav-left > a:nth-of-type(3)';
-        browser.click(fqaLink);
+        let fqaLink = "//a[text()='FAQ']";
+        browser.useXpath().click(fqaLink).pause(500);
         let pageBanner = 'div#title_bar > h1';
         let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
         browser.useCss().expect.element(pageBanner).to.be.visible;
