@@ -80,7 +80,6 @@ function App() {
     case ROUTES.FAQ:
     case ROUTES.FAQ + "/":
       return (<FAQ/>);
-      break;
     default:
       return (
           !authState.isAuthenticating && (
