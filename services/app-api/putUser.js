@@ -286,11 +286,17 @@ const putUser = async (tableName, user) => {
 
 // Preparing and sending confirmation email //
 const processEmail = async input => {
+    // Construct and send email acknowledgement to the requesting user //
+    const userEmail = constructUserEmail(input.userEmail);
+    await dispatchEmail(userEmail.email);
+
+    // only email approvers if user is acting on their own status
+    if (input.userEmail !== input.doneBy) {
+      return RESPONSE_CODE.EMAIL_NOT_SENT;
+    }
+
     // Collect the emails of the authorized user who can make the requested role changes to //
     const roleAdminEmails = await collectRoleAdminEmailIds(input);
-    // Construct and send email acknowledgement to the requesting user //
-    const userEmail = await constructUserEmail(input.userEmail);
-    await dispatchEmail(userEmail.email);
     if (roleAdminEmails.length > 0) {
         // construct email parameters
         const emailParams = constructRoleAdminEmails(roleAdminEmails, input.type, 'doneBy');
