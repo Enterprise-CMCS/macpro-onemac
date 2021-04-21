@@ -47,7 +47,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData]);
+  }, [history, location, userData, userProfile]);
 
   /**
    * Render the list of change requests.
