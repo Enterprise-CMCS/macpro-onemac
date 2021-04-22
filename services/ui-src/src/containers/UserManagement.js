@@ -5,7 +5,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "cmscommonlib";
 import { useLocation, useHistory } from "react-router-dom";
-import UserDataApi, { validateInput, getAdminTypeByRole} from "../utils/UserDataApi";
+import UserDataApi, {getAdminTypeByRole} from "../utils/UserDataApi";
 import { getAlert } from "../libs/error-mappings";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
@@ -209,11 +209,12 @@ const UserManagement = () => {
                   "type": getAdminTypeByRole(userProfile.userData.type)
                 }
                 try {
-                  validateInput(updateStatusRequest)
-                  Promise.resolve(UserDataApi.setUserStatus(updateStatusRequest)).then(function (returnCode) {
+                  UserDataApi.setUserStatus(updateStatusRequest).then(function (returnCode) {
                     if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
-                      setAlert(ALERTS_MSG.SUBMISSION_SUCCESS)
+                      setAlert(returnCode)
                       updateList(true);
+                    }else{
+                      setAlert(returnCode)
                     }
                   })
                 } catch (err) {

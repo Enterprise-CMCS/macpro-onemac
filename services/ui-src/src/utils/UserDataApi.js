@@ -1,9 +1,4 @@
 import { API } from "aws-amplify";
-import Joi from '@hapi/joi';
-import {USER_STATUS, USER_TYPE} from "cmscommonlib";
-import {territoryCodeList} from "cmscommonlib";
-import {RESPONSE_CODE} from "cmscommonlib";
-import {isEmpty} from "@aws-amplify/core";
 
 export const getAdminTypeByRole = role => {
     switch (role) {
@@ -17,40 +12,6 @@ export const getAdminTypeByRole = role => {
             return undefined;
     }
 }
-
-export const validateInput = input => {
-
-    const userSchema = Joi.object().keys({
-        userEmail: Joi.string().email().required(),
-        doneBy: Joi.string().email().required(),
-        attributes: Joi.array()
-            // When type is state then state attribute is required and must be valid //
-            .when('type', {
-                is: Joi.string().valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN),
-                then: Joi.array().items(Joi.object({
-                    stateCode: Joi.string().valid(...territoryCodeList).required(),
-                    status: Joi.string().valid(USER_STATUS.PENDING, USER_STATUS.DENIED, USER_STATUS.REVOKED, USER_STATUS.ACTIVE).required(),
-                })),
-                otherwise: Joi.array().items(Joi.object({
-                    status: Joi.string().valid(USER_STATUS.PENDING, USER_STATUS.DENIED, USER_STATUS.REVOKED, USER_STATUS.ACTIVE).required(),
-                    stateCode: Joi.string().optional()
-                })),
-            }),
-        isPutUser: Joi.boolean().optional(),
-        // if isPutUser is true then first and last names and type are required //
-        firstName: Joi.string().optional(),
-        lastName: Joi.string().optional(),
-        type: Joi.valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN, USER_TYPE.CMS_APPROVER, USER_TYPE.SYSTEM_ADMIN).required()
-    });
-    //Todo: Add deeper validation for types //
-    const result = isEmpty(input) ? { error: 'Lambda body is missing' } : userSchema.validate(input);
-
-    if (result.error) {
-        console.log('Validation error:', result.error);
-        throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-    return;
-};
 
 /**
  * Singleton class to perform operations with the user tables backend.
