@@ -1,4 +1,4 @@
-const login = require("./OY2-1494_Test_SPA_Login");
+const login = require("../cases/OY2-1494_Test_SPA_Login");
 
 const timeout = 1000;
 let pageObjects;
