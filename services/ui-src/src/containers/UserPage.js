@@ -7,6 +7,11 @@ import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
 import UserDataAPI from "../utils/UserDataApi";
+import closingX from "../images/ClosingX.svg";
+
+const CLOSING_X_IMAGE = (
+  <img alt="" className="closing-x" src={closingX} />
+);
 
 /**
  * Formats multi-part name into single full name
@@ -62,6 +67,10 @@ const transformAccesses = (user = {}) => {
       return [];
   }
 };
+
+const selfRevoke = (state) => {
+  alert("self-revoke called!");
+}
 
 /**
  * Component housing data belonging to a particular user
@@ -142,7 +151,31 @@ const UserPage = () => {
               <dl className="state-access-cards">
                 {accesses.map(({ state, status, contacts }) => (
                   <div className="state-access-card" key={state}>
-                    <a className="close-button">X</a>
+                    {(status === "active" || status === "pending") && (
+                      <button 
+                        className="close-button"
+                        onClick={(state) => {
+                          if (
+                            window.confirm(
+                              "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
+                            )
+                          ) {
+                            alert("confirmed, inspect console for details");
+                            selfRevoke(state);
+                          }
+
+                          console.log(
+                            "Selected:(" +
+                              state +
+                              " is now revoked" +
+                              " doneBy " +
+                              userProfile.email
+                          );
+                        }}
+                      >
+                       {CLOSING_X_IMAGE}
+                      </button>
+                    )}
                     <dt>{territoryMap[state] || state}</dt>
                     <dd>
                       <em>{ACCESS_LABELS[status] || status}</em>
