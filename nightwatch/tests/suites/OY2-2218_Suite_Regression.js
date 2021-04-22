@@ -42,6 +42,28 @@ module.exports = {
         steps.forEach(step => spaRAI[step](browser));
     },
 
+    "Submit a CHIP SPA Report": function (browser, steps = [
+        "Click on 'Start a new CHIP SPA'",
+        "Enter SPA ID",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit SPA"
+    ]) {
+        const newCHIPSPA = require('../cases/OY2-5835_Submit_New_CHIP_SPA');
+        steps.forEach(step => newCHIPSPA[step](browser));
+    },
+
+    "Submit a CHIP SPA RAI Response": function (browser, steps = [
+        "Click on 'Respond to CHIP SPA RAI'",
+        "Enter SPA ID",
+        "Upload Documents",
+        "Enter Comments",
+        "Submit Response",
+    ]) {
+        const chipSpaRAI = require('../cases/OY2-5835_Respond_To_CHIP_SPA_RAI');
+        steps.forEach(step => chipSpaRAI[step](browser));
+    },
+
     "Submit a New Waiver Action": function (browser, steps = [
         "Click on 'Submit new Waiver'",
         "Enter Action Type",
