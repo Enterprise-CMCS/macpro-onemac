@@ -19,11 +19,7 @@ module.exports = {
         login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
     },
-    "Check for Dashboard Link before and after Login": function (browser) {
-        const home = require('../cases/OY2-7281_Header_Footer');
-        home["Check Dashboard link presence via Okta Login"](browser);
-        home["Check Dashboard link presence via Dev Login"](browser);
-    },
+    
     "Submit a SPA Report": function (browser, steps = [
         "Click on 'Start a new SPA'",
         "Enter SPA ID",
