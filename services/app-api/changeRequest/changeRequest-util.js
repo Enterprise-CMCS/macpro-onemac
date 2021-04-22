@@ -5,6 +5,7 @@ import WaiverRAI from "./WaiverRAI";
 import WaiverExtension from "./WaiverExtension";
 import WaiverAppK from "./WaiverAppK";
 import CHIPSPA from "./CHIPSPA";
+import CHIPSPARAI from "./CHIPSPARAI";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import { territoryList } from "cmscommonlib";
 import {DateTime} from "luxon";
@@ -23,6 +24,9 @@ export default function getChangeRequestFunctions(type) {
     switch(type) {
         case CHANGE_REQUEST_TYPES.CHIP_SPA:
             retval = CHIPSPA;
+            break;
+        case CHANGE_REQUEST_TYPES.CHIP_SPA_RAI:
+            retval = CHIPSPARAI;
             break;
         case CHANGE_REQUEST_TYPES.WAIVER:
             retval = Waiver;
