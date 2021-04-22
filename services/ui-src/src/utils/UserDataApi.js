@@ -1,4 +1,5 @@
 import { API } from "aws-amplify";
+import {USER_TYPE} from "cmscommonlib";
 
 export const getAdminTypeByRole = role => {
     switch (role) {
