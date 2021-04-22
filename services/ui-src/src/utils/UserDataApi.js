@@ -13,7 +13,6 @@ export const getAdminTypeByRole = role => {
             return undefined;
     }
 }
-
 /**
  * Singleton class to perform operations with the user tables backend.
  */
