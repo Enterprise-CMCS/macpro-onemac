@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Review } from "@cmsgov/design-system";
 import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
 
@@ -54,10 +54,10 @@ const transformAccesses = (user = {}) => {
         status: latestAccessStatus(user, stateCode),
       }));
 
-    case ROLES.CMS_ROLE_APPROVER:
-    case ROLES.SYSTEM_ADMIN:
-      return [];
+    case ROLES.CMS_APPROVER:
+      return user.attributes ?? [];
 
+    case ROLES.SYSTEM_ADMIN:
     default:
       return [];
   }
@@ -74,9 +74,48 @@ const UserPage = () => {
 
   let userType = userData?.type ?? "user";
 
+  const accessList = useMemo(() => {
+    let heading;
+
+    switch (userType) {
+      case ROLES.STATE_USER:
+      case ROLES.STATE_ADMIN:
+        heading = "State Access Management";
+        break;
+      case ROLES.CMS_APPROVER:
+        heading = "Status";
+        break;
+      default:
+        // CMS System Admins do not see this section at all
+        return null;
+    }
+
+    return (
+      <div className="ds-l-col--6">
+        <h3>{heading}</h3>
+        <dl className="state-access-cards">
+          {accesses.map(({ state, status, contacts }) => (
+            <div className="state-access-card" key={state ?? "only-one"}>
+              {!!state && <dt>{territoryMap[state] || state}</dt>}
+              <dd>
+                <em>{ACCESS_LABELS[status] || status}</em>
+                <br />
+                <br />
+                <ContactList contacts={contacts} userType={userType} />
+              </dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    );
+  }, [accesses, userType]);
+
   useEffect(() => {
     (async () => {
       try {
+        let contacts = [],
+          getContacts = () => contacts;
+
         switch (userType) {
           case ROLES.STATE_USER: {
             const adminsByState = await UserDataAPI.getStateAdmins(
@@ -84,29 +123,30 @@ const UserPage = () => {
                 .map(({ stateCode }) => stateCode)
                 .filter(Boolean)
             );
-            setAccesses(
-              transformAccesses(userData).map((access) => ({
-                ...access,
-                contacts: adminsByState[access.state],
-              }))
-            );
+            getContacts = ({ state }) => adminsByState[state];
             break;
           }
 
           case ROLES.STATE_ADMIN: {
-            const contacts = await UserDataAPI.getCmsApprovers();
-            setAccesses(
-              transformAccesses(userData).map((access) => ({
-                ...access,
-                contacts,
-              }))
-            );
+            contacts = await UserDataAPI.getCmsApprovers();
+            break;
+          }
+
+          case ROLES.CMS_APPROVER: {
+            contacts = await UserDataAPI.getCmsSystemAdmins();
             break;
           }
 
           default:
-            break;
+            return;
         }
+
+        setAccesses(
+          transformAccesses(userData).map((access) => ({
+            ...access,
+            contacts: getContacts(access),
+          }))
+        );
       } catch (e) {
         console.error(e);
       }
@@ -135,25 +175,7 @@ const UserPage = () => {
             </Review>
             <Review heading="Email">{email}</Review>
           </div>
-          {(userType === ROLES.STATE_USER ||
-            userType === ROLES.STATE_ADMIN) && (
-            <div className="ds-l-col--6">
-              <h3>State Access Management</h3>
-              <dl className="state-access-cards">
-                {accesses.map(({ state, status, contacts }) => (
-                  <div className="state-access-card" key={state}>
-                    <dt>{territoryMap[state] || state}</dt>
-                    <dd>
-                      <em>{ACCESS_LABELS[status] || status}</em>
-                      <br />
-                      <br />
-                      <ContactList contacts={contacts} userType={userType} />
-                    </dd>
-                  </div>
-                ))}
-              </dl>
-            </div>
-          )}
+            {accessList}
         </div>
       </div>
     </div>
