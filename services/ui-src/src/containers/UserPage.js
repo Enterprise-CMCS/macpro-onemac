@@ -1,6 +1,7 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { Review } from "@cmsgov/design-system";
 import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
+import { useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
@@ -8,10 +9,12 @@ import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
 import UserDataAPI from "../utils/UserDataApi";
 import closingX from "../images/ClosingX.svg";
+import UserDataApi from "../utils/UserDataApi";
+import { getAlert } from "../libs/error-mappings";
+import { ALERTS_MSG } from "../libs/alert-messages";
+import { ROUTES } from "cmscommonlib";
 
-const CLOSING_X_IMAGE = (
-  <img alt="" className="closing-x" src={closingX} />
-);
+const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
 /**
  * Formats multi-part name into single full name
@@ -68,16 +71,13 @@ const transformAccesses = (user = {}) => {
   }
 };
 
-const selfRevoke = (state) => {
-  alert("self-revoke called!");
-}
-
 /**
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
   const { userProfile } = useAppContext();
   const { email, firstName, lastName, userData } = userProfile;
+  const history = useHistory();
 
   const [accesses, setAccesses] = useState(transformAccesses(userData));
 
@@ -122,6 +122,52 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
+  const xClicked = useCallback(
+    (stateCode) => {
+
+      if (
+        window.confirm(
+          "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
+        )
+      ) {
+        alert("confirmed, inspect console for details");
+        const updateStatusRequest = {
+          userEmail: email,
+          doneBy: email,
+          attributes: [
+            {
+              stateCode: stateCode, // required for state user and state admin
+              status: "revoked",
+            },
+          ],
+          type: userType,
+        };
+        try {
+          UserDataApi.setUserStatus(updateStatusRequest).then(function (
+            returnCode
+          ) {
+            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+              history.push({
+                pathname: ROUTES.USER_PAGE,
+                query: "?query=abc",
+                state: {
+                  showAlert: ALERTS_MSG.NONE,
+                },
+              });
+            } else {
+              console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
+            }
+          });
+        } catch (err) {
+          console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
+        }
+      }
+
+      console.log("Selected:(" + stateCode + " is now revoked doneBy " + email);
+    },
+    [email, history, userType]
+  );
+
   return (
     <div>
       <PageTitleBar heading="Account Management" />
@@ -152,28 +198,11 @@ const UserPage = () => {
                 {accesses.map(({ state, status, contacts }) => (
                   <div className="state-access-card" key={state}>
                     {(status === "active" || status === "pending") && (
-                      <button 
+                      <button
                         className="close-button"
-                        onClick={(state) => {
-                          if (
-                            window.confirm(
-                              "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
-                            )
-                          ) {
-                            alert("confirmed, inspect console for details");
-                            selfRevoke(state);
-                          }
-
-                          console.log(
-                            "Selected:(" +
-                              state +
-                              " is now revoked" +
-                              " doneBy " +
-                              userProfile.email
-                          );
-                        }}
+                        onClick={() => xClicked(state)}
                       >
-                       {CLOSING_X_IMAGE}
+                        {CLOSING_X_IMAGE}
                       </button>
                     )}
                     <dt>{territoryMap[state] || state}</dt>
