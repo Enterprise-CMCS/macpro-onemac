@@ -47,7 +47,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData]);
+  }, [history, location, userData, userProfile]);
 
   /**
    * Render the list of change requests.
@@ -74,6 +74,9 @@ const Dashboard = () => {
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.CHIP_SPA:
           type = "CHIP SPA";
+          break;
+        case CHANGE_REQUEST_TYPES.CHIP_SPA_RAI:
+          type = "CHIP SPA RAI";
           break;
         case CHANGE_REQUEST_TYPES.SPA:
           type = "Medicaid SPA";
@@ -142,7 +145,7 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
-            Respond to SPA RAI
+            Respond to Medicaid SPA RAI
           </Button>
           <Button
             id="chipSpaBtn"
@@ -150,6 +153,13 @@ const Dashboard = () => {
             onClick={() => history.push(ROUTES.CHIP_SPA)}
           >
             Submit New CHIP SPA
+          </Button>
+          <Button
+            id="chipSpaRaiBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
+          >
+            Respond to CHIP SPA RAI
           </Button>
           <div className="action-title">Waivers</div>
           <Button

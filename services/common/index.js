@@ -68,6 +68,7 @@ export const USER_STATUS = {
  */
 export const ROUTES = {
   CHIP_SPA: "/chipspa",
+  CHIP_SPA_RAI: "/chipsparai",
   DASHBOARD: "/dashboard",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
@@ -101,6 +102,8 @@ const STATEUSER_ALLOWED_ROUTES = [
   ROUTES.DASHBOARD,
   ROUTES.SPA,
   ROUTES.SPA_RAI,
+  ROUTES.CHIP_SPA,
+  ROUTES.CHIP_SPA_RAI,
   ROUTES.WAIVER,
   ROUTES.WAIVER_APP_K,
   ROUTES.WAIVER_EXTENSION,

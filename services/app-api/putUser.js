@@ -34,10 +34,12 @@ export const main = handler(async (event) => {
     }
 });
 
+const EMAIL_SCHEMA = { tlds: { allow: false } };
+
 const validateInput = input => {
     const userSchema = Joi.object().keys({
-        userEmail: Joi.string().email().required(),
-        doneBy: Joi.string().email().required(),
+        userEmail: Joi.string().email(EMAIL_SCHEMA).required(),
+        doneBy: Joi.string().email(EMAIL_SCHEMA).required(),
         attributes: Joi.array()
             // When type is state then state attribute is required and must be valid //
             .when('type', {
@@ -52,10 +54,17 @@ const validateInput = input => {
                 })),
             }),
         isPutUser: Joi.boolean().optional(),
-        // if isPutUser is true then first and last names and type are required //
-        firstName: Joi.string().optional(),
-        lastName: Joi.string().optional(),
-        type: Joi.valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN, USER_TYPE.CMS_APPROVER).required()
+        firstName: Joi.any().when('isPutUser', {
+          is: true,
+          then: Joi.string().required(),
+          otherwise: Joi.string().optional(),
+        }),
+        lastName: Joi.any().when('isPutUser', {
+          is: true,
+          then: Joi.string().required(),
+          otherwise: Joi.string().optional(),
+        }),
+        type: Joi.valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN, USER_TYPE.CMS_APPROVER).required(),
     });
     //Todo: Add deeper validation for types //
     const result = isEmpty(input) ? { error: 'Lambda body is missing' } : userSchema.validate(input);
@@ -91,27 +100,32 @@ const getUser = async userEmail => {
 
 const retrieveUsers = async input => {
     // retrieve user and doneByUser from DynamoDb //
-    let user = await getUser(input.userEmail);
+    let [user, doneByUser] = await Promise.all([getUser(input.userEmail), getUser(input.doneBy)]);
+
     // get user details from the db
-    if (isEmpty(user)) {
-        if (!input.isPutUser) {
-            console.log(`Warning: The user record does not exist with the id ${input.userEmail} in the db.
-            So user status change cannot be performed`);
-            throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
-        } else {
+    if (!user || isEmpty(user)) {
+        if (input.isPutUser) {
             if (!input.firstName || !input.lastName) {
                 console.log(`Warning: First name and last name are required to create a new user record.`);
                 throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
             }
             user = createUserObject(input);
+        } else {
+            console.log(`Warning: The user record does not exist with the id ${input.userEmail} in the db.
+            So user status change cannot be performed`);
+            throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
         }
     }
-    // get doneBy user details from the db //
-    const doneByUser = await getUser(input.doneBy);
+
     if (!doneByUser || isEmpty(doneByUser)) {
-        console.log(`Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`);
-        throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
+        if (input.isPutUser) {
+            doneByUser = null;
+        } else {
+            console.log(`Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`);
+            throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
+        }
     }
+
     console.log(`Successfully retrieved user (created if doesn't exist) and doneBy user details from the db.
         User: ${JSON.stringify(user, null, 2)}
         doneByUser: ${JSON.stringify(doneByUser, null, 2)}`);
@@ -134,7 +148,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
         input.attributes.forEach(item => {
             const index = user.attributes.findIndex(attr => attr.stateCode === item.stateCode);
             // Ensure the DoneBy user has permission to execute the requested actions //
-            ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
+            if (!input.isPutUser) ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
             // Check if the there is type mismatch between the request and current type of the user //
             checkTypeMismatch(input.type, user.type);
             if (index !== -1) {
@@ -156,7 +170,7 @@ const populateUserAttributes = (input, user = { attributes: [] }, doneByUser = {
     }
     else {  // CMSApprover & systemadmin //
         input.attributes.forEach(item => {
-            ensureDonebyHasPrivilege(doneByUser, input.type);
+            if (!input.isPutUser) ensureDonebyHasPrivilege(doneByUser, input.type);
             ensureLegalStatusChange(user.attributes, item, input.isPutUser);
             user.attributes.push(generateAttribute(item, input.doneBy));
         });
@@ -196,6 +210,14 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
     }
 };
 
+// transition chart of allowed next states based on current state
+const ALLOWED_NEXT_STATES = {
+  [USER_STATUS.PENDING]: [USER_STATUS.ACTIVE, USER_STATUS.DENIED],
+  [USER_STATUS.ACTIVE]: [USER_STATUS.REVOKED],
+  [USER_STATUS.DENIED]: [USER_STATUS.ACTIVE],
+  [USER_STATUS.REVOKED]: [USER_STATUS.ACTIVE],
+};
+
 // Ensure the status changes are legal //
 const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
     if (userAttribs.length === 0) {
@@ -208,18 +230,14 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
             console.log(`Warning: User attributes are request for status change request`);
             throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
         }
-    }
-    const currentStatus = userAttribs.length > 0 ? getLatestAttribute(userAttribs).status : null;
-    const targetStatus = inputAttrib.status;
+    } else {
+      // if existing attributes present, check if the latest entry is allowed to transition into the requested one
+      const currentStatus = getLatestAttribute(userAttribs).status;
 
-    if ((currentStatus === USER_STATUS.DENIED) && (targetStatus === USER_STATUS.REVOKED) // denied status cannot be changed to revoked
-        || (currentStatus === USER_STATUS.ACTIVE) && (targetStatus === USER_STATUS.DENIED) // active status cannot be changed to denied
-        || (currentStatus === USER_STATUS.PENDING) && (targetStatus === USER_STATUS.REVOKED) // pending cannot be changed to revoved
-        || (currentStatus !== null) && (targetStatus === USER_STATUS.PENDING)  // Existing user attribute cannot be changed to pending
-        || (currentStatus === targetStatus)  // status change vale must be different than the existing one
-    ) {
-        console.log(`Warning: Illegal status change request from ${currentStatus}, to ${targetStatus}`);
+      if (!ALLOWED_NEXT_STATES[currentStatus].includes(inputAttrib.status)) {
+        console.log(`Warning: Illegal status change request from ${currentStatus}, to ${inputAttrib.status}`);
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+      }
     }
 };
 
@@ -270,11 +288,18 @@ const putUser = async (tableName, user) => {
 
 // Preparing and sending confirmation email //
 const processEmail = async input => {
-    // Collect the emails of the authorized user who can make the requested role changes to //
-    const roleAdminEmails = await collectRoleAdminEmailIds(input);
     // Construct and send email acknowledgement to the requesting user //
     const userEmail = await constructUserEmail(input.userEmail, input);
+
     await dispatchEmail(userEmail.email);
+
+    // only email approvers if user is acting on their own status
+    if (input.userEmail !== input.doneBy) {
+      return RESPONSE_CODE.EMAIL_NOT_SENT;
+    }
+
+    // Collect the emails of the authorized user who can make the requested role changes to //
+    const roleAdminEmails = await collectRoleAdminEmailIds(input);
     if (roleAdminEmails.length > 0) {
         // construct email parameters
         const emailParams = constructRoleAdminEmails(roleAdminEmails, input, 'doneBy');

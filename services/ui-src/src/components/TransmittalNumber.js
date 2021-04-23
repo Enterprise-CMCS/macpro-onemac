@@ -1,6 +1,5 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { HashLink } from "react-router-hash-link";
 
 /**
  * Returns the ID specific form element
@@ -38,7 +37,7 @@ const TransmittalNumber = ({
           </label>
         </div>
         <div className="label-rcol">
-          <HashLink to={idFAQLink}>What is my {idLabel}?</HashLink>
+          <a target="_blank" rel="noopener noreferrer" href={idFAQLink}>What is my {idLabel}?</a>
         </div>
         <p className="field-hint">{hintText}</p>
       </div>
