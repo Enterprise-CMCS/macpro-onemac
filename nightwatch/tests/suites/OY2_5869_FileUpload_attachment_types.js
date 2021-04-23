@@ -91,13 +91,13 @@ module.exports = {
         submitWaiver["Verify that user can submit a New Waiver"](browser);
         let waiverNumber = '//tbody/tr[1]/td/a';
         let attachementElement = ".form-container a[target='_blank']";
-        browser.useXpath().click(waiverNumber);
+        browser.useXpath().click(waiverNumber).pause(4000);
         browser.useCss().expect.element(attachementElement).to.be.visible;
         browser.back();
     },
 
     'Verify “No file chosen” case': function (browser) {
-        browser.useCss().click("button#spaSubmitBtn");
+        browser.useCss().click("button#spaSubmitBtn").pause(4000);
         browser.verify.containsText("tr:nth-of-type(1) > td:nth-of-type(3)", "No file chosen"); 
         browser.back();
     }

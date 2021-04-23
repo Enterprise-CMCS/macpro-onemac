@@ -33,22 +33,22 @@ module.exports = {
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         // SS.#####
-        spaID = 'MD.' + num1 + '' + num2;
+        spaID = 'VA.' + num1 + '' + num2;
         browser.setValue('input#transmittalNumber', spaID);
 
         // upload the file 
         let fileUploadElem = "[name='uploader-input-0']";
-        browser.assert.elementPresent(fileUploadElem).pause(4000);
+        browser.assert.elementPresent(fileUploadElem).pause(2000);
         let filePath = require('path').resolve(__dirname + '/files/file.docx')
         console.log("FILE PAHT: " + filePath);
-        browser.setValue(fileUploadElem, filePath).pause(4000);
+        browser.setValue(fileUploadElem, filePath).pause(2000);
 
         // write the Summary 
         let phrase = "This is a test, test, test";
-        browser.setValue('textarea#textfield_1', phrase).pause(4000);
+        browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(3000);
+        browser.click("[value='Submit']").pause(2000);
 
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
@@ -57,7 +57,7 @@ module.exports = {
     },
 
     // -----------------------------------------New Waiver----------------------------------------------------------------------------
-    /*
+    
     'Validate Waiver Form Logic for New Waiver and 1915(c)': function (browser) {
         // Submit Waiver again
         browser.click('button#waiverBtn');    // click Submit New Waiver
@@ -163,5 +163,5 @@ module.exports = {
         browser.expect.element('div#transmittalNumberStatusMsg').text.to.not.equal(expected);
         browser.back();  // go back to previous page
     }
-    */
+    
 }
