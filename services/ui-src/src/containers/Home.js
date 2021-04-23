@@ -2,6 +2,8 @@ import React from "react";
 import { ROUTES } from "cmscommonlib";
 
 import { AlertBar } from "../components/AlertBar";
+import HomeHeader from "../components/HomeHeader";
+import HomeFooter from "../components/HomeFooter";
 import PageTitleBar from "../components/PageTitleBar";
 import StepCard from "../components/StepCard";
 
@@ -36,6 +38,7 @@ export default function Home() {
   return (
     <>
       <AlertBar />
+      <HomeHeader/>
       <PageTitleBar
         heading="CMS State Plan Amendment and Waiver Submission Platform"
         text="Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers."
@@ -72,6 +75,7 @@ export default function Home() {
           </div>
         </div>
       </div>
+      <HomeFooter/>
     </>
   );
 }
