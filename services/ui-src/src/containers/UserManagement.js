@@ -5,7 +5,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "cmscommonlib";
 import { useLocation, useHistory } from "react-router-dom";
-import UserDataApi from "../utils/UserDataApi";
+import UserDataApi, {getAdminTypeByRole} from "../utils/UserDataApi";
 import { getAlert } from "../libs/error-mappings";
 import { Alert } from "@cmsgov/design-system";
 import { useAppContext } from "../libs/contextLib";
@@ -37,6 +37,27 @@ const UserManagement = () => {
   const history = useHistory();
   const location = useLocation();
 
+  const updateList = (mounted) => {
+    let shouldState = true;
+    if (userProfile.userData.type === "stateadmin") {
+      shouldState = false;
+    }
+    setIncludeStateCode(shouldState)
+    UserDataApi.getMyUserList(userProfile.email)
+        .then((ul) => {
+          console.log("user List: ", ul);
+          if (typeof ul === 'string') {
+            if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
+            ul = [];
+          }
+          setUserList(ul);
+        })
+        .catch((error) => {
+          console.log("Error while fetching user's list.", error);
+          setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        });
+  }
+
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
@@ -60,19 +81,7 @@ const UserManagement = () => {
     }
     if (mounted) setIncludeStateCode(shouldState);
 
-    UserDataApi.getMyUserList(userProfile.email)
-      .then((ul) => {
-        console.log("user List: ", ul);
-        if (typeof ul === 'string') {
-          if (mounted && !isPending(userProfile.userData)) setAlert(getAlert(ul));
-          ul = [];
-        }
-        if (mounted) setUserList(ul);
-      })
-      .catch((error) => {
-        console.log("Error while fetching user's list.", error);
-        if (mounted) setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
-      });
+    updateList(mounted)
 
     return function cleanup() {
       mounted = false;
@@ -125,19 +134,18 @@ const UserManagement = () => {
     return users.map((user, i) => {
       let menuItems = [];
       let statusLabel;
-
       switch (user.status) {
         case "pending":
           statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;
           menuItems = [
             {
               label: "Grant Access",
-              value: "grant",
+              value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
             {
               label: "Deny Access",
-              value: "deny",
+              value: "denied",
               confirmMessage: denyConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -148,7 +156,7 @@ const UserManagement = () => {
           menuItems = [
             {
               label: "Revoke Access",
-              value: "revoke",
+              value: "revoked",
               confirmMessage: revokeConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -158,7 +166,7 @@ const UserManagement = () => {
           menuItems = [
             {
               label: "Grant Access",
-              value: "grant",
+              value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -168,7 +176,7 @@ const UserManagement = () => {
           menuItems = [
             {
               label: "Grant Access",
-              value: "grant",
+              value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
             },
           ];
@@ -191,25 +199,23 @@ const UserManagement = () => {
               userEmail={user.email}
               menuItems={menuItems}
               handleSelected={(row, value) => {
-                UserDataApi.setUserStatus(userProfile.email, user.email, value);
-                history.push({
-                  pathname: ROUTES.USER_MANAGEMENT,
-                  query: "?query=abc",
-                  state: {
-                    showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
-                  },
-                });
-
-                console.log(
-                  "Selected:(" +
-                    row +
-                    " : " +
-                    value +
-                    ") userEmail : " +
-                    user.email +
-                    " doneBy " +
-                    userProfile.email
-                );
+                const updateStatusRequest = {
+                  "userEmail": userList[row].email,
+                  "doneBy": userProfile.userData.id,
+                  "attributes": [{
+                    "stateCode": userList[row].stateCode,  // required for state user and state admin
+                    "status": value
+                  }],
+                  "type": getAdminTypeByRole(userProfile.userData.type)
+                }
+                try {
+                  UserDataApi.setUserStatus(updateStatusRequest).then(function (returnCode) {
+                    setAlert(getAlert(returnCode))
+                    updateList(true);
+                  })
+                } catch (err) {
+                  setAlert(ALERTS_MSG.SUBMISSION_ERROR)
+                }
               }}
             />
           </td>

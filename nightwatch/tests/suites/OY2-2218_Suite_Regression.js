@@ -19,7 +19,7 @@ module.exports = {
         login["Logout of SPA and Waiver Dashboard"](browser);
         login.after(browser);
     },
-
+    
     "Submit a SPA Report": function (browser, steps = [
         "Click on 'Start a new SPA'",
         "Enter SPA ID",
@@ -133,9 +133,8 @@ module.exports = {
         appK["Enter Comments"](browser);
         appK["Submit Form"](browser);
     },
-
     "View My Account Page": function (browser) {
         const account = require('../cases/OY2_5196_Test_View_User_Profile');
         account["Navigate to the Manage Account page"](browser);
-    },
+    }
 };
