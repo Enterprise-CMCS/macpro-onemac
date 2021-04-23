@@ -210,12 +210,8 @@ const UserManagement = () => {
                 }
                 try {
                   UserDataApi.setUserStatus(updateStatusRequest).then(function (returnCode) {
-                    if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
-                      setAlert(returnCode)
-                      updateList(true);
-                    }else{
-                      setAlert(returnCode)
-                    }
+                    setAlert(getAlert(returnCode))
+                    updateList(true);
                   })
                 } catch (err) {
                   setAlert(ALERTS_MSG.SUBMISSION_ERROR)
