@@ -15,6 +15,7 @@ import WaiverAppK from "./changeRequest/WaiverAppK";
 import Metrics from "./containers/Metrics";
 import { useAppContext } from "./libs/contextLib";
 import ChipSpa from "./changeRequest/ChipSpa";
+import ChipSpaRai from "./changeRequest/ChipSpaRai";
 
 export default function DynamicRoutes() {
   const { userProfile } = useAppContext();
@@ -27,6 +28,9 @@ export default function DynamicRoutes() {
             <>
               <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
                 <ChipSpa />
+              </AuthenticatedRoute>
+              <AuthenticatedRoute path={`${ROUTES.CHIP_SPA_RAI}/:id?/:userId?`}>
+                <ChipSpaRai />
               </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
                 <Dashboard />
@@ -55,30 +59,13 @@ export default function DynamicRoutes() {
             </>
           );
         case ROLES.STATE_ADMIN:
-          return (
-            <>
-              <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
-                <UserManagement />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
-                <Metrics />
-              </AuthenticatedRoute>
-            </>
-          );
         case ROLES.CMS_APPROVER:
-          return (
-            <>
-              <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
-                <UserManagement />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
-                <Metrics />
-              </AuthenticatedRoute>
-            </>
-          );
         case ROLES.SYSTEM_ADMIN:
           return (
             <>
+              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+                <UserManagement />
+              </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
                 <UserManagement />
               </AuthenticatedRoute>

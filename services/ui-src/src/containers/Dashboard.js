@@ -5,13 +5,13 @@ import { AlertBar } from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES  } from "cmscommonlib";
+import { ROUTES } from "cmscommonlib";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
 import { useAppContext } from "../libs/contextLib";
-import { pendingMessage, isPending } from "../libs/userLib";
+import { pendingMessage, deniedOrRevokedMessage, isPending, isActive } from "../libs/userLib";
 
 /**
  * Component containing dashboard
@@ -38,14 +38,16 @@ const Dashboard = () => {
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        history.replace("/dashboard", { showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR })
+        history.replace("/dashboard", {
+          showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
+        });
       }
     })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData]);
+  }, [history, location, userData, userProfile]);
 
   /**
    * Render the list of change requests.
@@ -72,6 +74,9 @@ const Dashboard = () => {
       switch (changeRequest.type) {
         case CHANGE_REQUEST_TYPES.CHIP_SPA:
           type = "CHIP SPA";
+          break;
+        case CHANGE_REQUEST_TYPES.CHIP_SPA_RAI:
+          type = "CHIP SPA RAI";
           break;
         case CHANGE_REQUEST_TYPES.SPA:
           type = "Medicaid SPA";
@@ -140,14 +145,21 @@ const Dashboard = () => {
             variation="transparent"
             onClick={() => history.push(ROUTES.SPA_RAI)}
           >
-            Respond to SPA RAI
+            Respond to Medicaid SPA RAI
           </Button>
           <Button
-              id="chipSpaBtn"
-              variation="transparent"
-              onClick={() => history.push(ROUTES.CHIP_SPA)}
+            id="chipSpaBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.CHIP_SPA)}
           >
             Submit New CHIP SPA
+          </Button>
+          <Button
+            id="chipSpaRaiBtn"
+            variation="transparent"
+            onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
+          >
+            Respond to CHIP SPA RAI
           </Button>
           <div className="action-title">Waivers</div>
           <Button
@@ -184,8 +196,14 @@ const Dashboard = () => {
           userProfile.userData &&
           userProfile.userData.attributes &&
           userProfile.userData.attributes.length !== 0 &&
-          isPending(userProfile.userData) ? (
-            <EmptyList message={pendingMessage[userProfile.userData.type]} />
+          !isActive(userProfile.userData) ? (
+            isPending(userProfile.userData) ? (
+              <EmptyList message={pendingMessage[userProfile.userData.type]} />
+            ) : (
+              <EmptyList
+                message={deniedOrRevokedMessage[userProfile.userData.type]}
+              />
+            )
           ) : (
             <div>
               <div className="action-title">Submissions List</div>

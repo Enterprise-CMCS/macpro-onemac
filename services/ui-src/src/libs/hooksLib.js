@@ -24,7 +24,8 @@ export function useSignupCallback(userType, processAttributes) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation();
-  const { userProfile: { email } = {}, setUserInfo } = useAppContext() ?? {};
+  const { userProfile: { email, firstName, lastName } = {}, setUserInfo } =
+    useAppContext() ?? {};
 
   const signupUser = useCallback(
     async (payload) => {
@@ -38,7 +39,10 @@ export function useSignupCallback(userType, processAttributes) {
         }
 
         let answer = await UserDataApi.updateUser({
-          id: email,
+          userEmail: email,
+          doneBy: email,
+          firstName,
+          lastName,
           type: userType,
           attributes: payload,
         });
@@ -65,7 +69,7 @@ export function useSignupCallback(userType, processAttributes) {
         history.replace(destination, messageState);
       }
     },
-    [email, history, location, processAttributes, setUserInfo, userType]
+    [email, firstName, history, lastName, location, processAttributes, setUserInfo, userType]
   );
 
   return [loading, signupUser];

@@ -1,8 +1,9 @@
 import React from "react";
-import { HashLink } from "react-router-hash-link";
 import { ROUTES } from "cmscommonlib";
 
 import { AlertBar } from "../components/AlertBar";
+import HomeHeader from "../components/HomeHeader";
+import HomeFooter from "../components/HomeFooter";
 import PageTitleBar from "../components/PageTitleBar";
 import StepCard from "../components/StepCard";
 
@@ -37,6 +38,7 @@ export default function Home() {
   return (
     <>
       <AlertBar />
+      <HomeHeader/>
       <PageTitleBar
         heading="CMS State Plan Amendment and Waiver Submission Platform"
         text="Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers."
@@ -69,10 +71,11 @@ export default function Home() {
         <div className="section section-support">
           <div className="section-title-center white-text">
             {"Do you have questions or need support? "}
-            <HashLink to={ROUTES.FAQ_TOP}>Please read the FAQ page.</HashLink>
+            <a target="_blank" rel="noopener noreferrer" href={ROUTES.FAQ_TOP}>Please read the FAQ page.</a>
           </div>
         </div>
       </div>
+      <HomeFooter/>
     </>
   );
 }

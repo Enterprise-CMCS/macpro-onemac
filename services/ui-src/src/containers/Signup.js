@@ -7,14 +7,9 @@ import { useSignupCallback } from "../libs/hooksLib";
 import { AlertBar } from "../components/AlertBar";
 import CardButton from "../components/cardButton";
 
+const createAttribute = () => [{ status: "pending" }];
+
 function CMSSignup() {
-  const { userProfile: { email } = {} } = useAppContext() ?? {};
-
-  const createAttribute = useCallback(
-    () => [{ status: "pending", doneBy: email }],
-    [email]
-  );
-
   const [loading, onClickCMS] = useSignupCallback(
     "cmsapprover",
     createAttribute
