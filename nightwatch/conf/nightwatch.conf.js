@@ -85,7 +85,7 @@ module.exports = {
                         //'--no-suites',
                         //'--ignore-certificate-errors',
                         //'--allow-insecure-localhost',
-                        //'--headless'
+                        '--headless'
                     ]
                 }
             },
