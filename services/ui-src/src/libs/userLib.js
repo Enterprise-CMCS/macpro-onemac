@@ -83,7 +83,7 @@ export const isActive = (userData) => {
    */
 
    const sortDescendingOrder = (a, b) => {
-    return b.effectiveDate - a.effectiveDate;
+    return b.date - a.date;
   };
 
   const stateStatusSet = new Set();
