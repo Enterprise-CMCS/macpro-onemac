@@ -7,6 +7,7 @@ import Joi from '@hapi/joi';
 import { isEmpty, isObject } from 'lodash';
 import { territoryCodeList } from 'cmscommonlib';
 import { USER_TYPE, USER_STATUS } from './libs/user-lib';
+import {ACCESS_CONFIRMATION_EMAILS} from './libs/email-template-lib';
 
 /**
  * Create / Update a user or change User status
@@ -25,6 +26,7 @@ export const main = handler(async (event) => {
         // PUT user in db
         await putUser(process.env.userTableName, user);
         await processEmail(input);
+        //
         return RESPONSE_CODE.USER_SUBMITTED;
     } catch (e) {
         console.log(`Error executing lambda: ${JSON.stringify(e)}`);
@@ -287,7 +289,8 @@ const putUser = async (tableName, user) => {
 // Preparing and sending confirmation email //
 const processEmail = async input => {
     // Construct and send email acknowledgement to the requesting user //
-    const userEmail = constructUserEmail(input.userEmail);
+    const userEmail = await constructUserEmail(input.userEmail, input);
+
     await dispatchEmail(userEmail.email);
 
     // only email approvers if user is acting on their own status
@@ -299,7 +302,7 @@ const processEmail = async input => {
     const roleAdminEmails = await collectRoleAdminEmailIds(input);
     if (roleAdminEmails.length > 0) {
         // construct email parameters
-        const emailParams = constructRoleAdminEmails(roleAdminEmails, input.type, 'doneBy');
+        const emailParams = constructRoleAdminEmails(roleAdminEmails, input, 'doneBy');
         await dispatchEmail(emailParams.email);
     } else {
         console.log(
@@ -383,13 +386,13 @@ const getLatestAttribute = (attribs) => attribs.reduce(
 );
 
 // Construct email to the authorities with the role request info //
-const constructRoleAdminEmails = (recipients, userType) => {
+const constructRoleAdminEmails = (recipients, input) => {
+    const userType = input.type;
     const email = {
         fromAddressSource: 'userAccessEmailSource',
         ToAddresses: recipients
     };
     let typeText = 'User';
-
     switch (userType) {
         case USER_TYPE.STATE_USER:
             typeText = 'State User';
@@ -414,35 +417,22 @@ const constructRoleAdminEmails = (recipients, userType) => {
 };
 
 // Construct the email with all needed properties //
-const constructUserEmail = (userEmailId, userType) => {
+const constructUserEmail = (userEmailId, input) => {
     const email = {
         fromAddressSource: 'userAccessEmailSource',
-        ToAddresses: [userEmailId]
+        ToAddresses: [userEmailId, process.env.reviewerEmail]
     };
-    let typeText = 'User';
+    const updatedStatus = input.attributes[0].status;
+    const userType = input.type;
+    input.attributes[0].stateCode ?
+        email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine.replace('[insert state]',input.attributes[0].stateCode)
+        :
+        email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine;
 
-    switch (userType) {
-        case USER_TYPE.STATE_USER:
-            typeText = 'State User';
-            break;
-        case USER_TYPE.STATE_ADMIN:
-            typeText = 'State Admin';
-            break;
-        case USER_TYPE.CMS_APPROVER:
-            typeText = 'CMS Approver';
-            break;
-    };
-
-    email.Subject = `Your OneMAC Portal ${typeText} Access Request has been received`;
-    email.HTML = `
-        <p>Hello,</p>
-
-        <p>Your new role request has been received. Please log into OneMAC and check your 
-        Account Management dashboard to see the status of your requests. If you have questions, 
-        please contact the MACPro Help Desk.</p>
-
-        <p>Thank you!</p>`;
-
+    input.attributes[0].stateCode ?
+        email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML.replace('[insert state]',input.attributes[0].stateCode)
+        :
+        email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML;
     return { email };
 };
 
