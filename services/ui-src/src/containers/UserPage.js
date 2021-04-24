@@ -1,7 +1,6 @@
 import React, { useEffect, useState, useCallback } from "react";
 import { Review } from "@cmsgov/design-system";
 import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
-import { useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
@@ -12,7 +11,6 @@ import closingX from "../images/ClosingX.svg";
 import UserDataApi from "../utils/UserDataApi";
 import { getAlert } from "../libs/error-mappings";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES } from "cmscommonlib";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -76,8 +74,8 @@ const transformAccesses = (user = {}) => {
  */
 const UserPage = () => {
   const { userProfile } = useAppContext();
+  const { setUserInfo } = useAppContext();
   const { email, firstName, lastName, userData } = userProfile;
-  const history = useHistory();
 
   const [accesses, setAccesses] = useState(transformAccesses(userData));
 
@@ -130,7 +128,6 @@ const UserPage = () => {
           "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
         )
       ) {
-        alert("confirmed, inspect console for details");
         const updateStatusRequest = {
           userEmail: email,
           doneBy: email,
@@ -143,29 +140,22 @@ const UserPage = () => {
           type: userType,
         };
         try {
+          console.log("updateStatusRequest", updateStatusRequest);
           UserDataApi.setUserStatus(updateStatusRequest).then(function (
             returnCode
           ) {
             if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
-              history.push({
-                pathname: ROUTES.USER_PAGE,
-                query: "?query=abc",
-                state: {
-                  showAlert: ALERTS_MSG.NONE,
-                },
-              });
+              setUserInfo();
             } else {
-              console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
+              console.log("Returned: ", returnCode);
             }
           });
         } catch (err) {
           console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
         }
       }
-
-      console.log("Selected:(" + stateCode + " is now revoked doneBy " + email);
     },
-    [email, history, userType]
+    [email, userType, setUserInfo]
   );
 
   return (

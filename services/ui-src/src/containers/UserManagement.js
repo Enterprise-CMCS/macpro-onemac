@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
@@ -37,7 +37,7 @@ const UserManagement = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const updateList = (mounted) => {
+  const updateList = useCallback((mounted) => {
     let shouldState = true;
     if (userProfile.userData.type === "stateadmin") {
       shouldState = false;
@@ -56,7 +56,7 @@ const UserManagement = () => {
           console.log("Error while fetching user's list.", error);
           setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
         });
-  }
+  },[userProfile]);
 
   // Load the data from the backend.
   useEffect(() => {
@@ -86,7 +86,7 @@ const UserManagement = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [location, userProfile, history]);
+  }, [location, userProfile, history, updateList]);
 
   const jumpToPageTitle = () => {
     var elmnt = document.getElementById(TITLE_BAR_ID);

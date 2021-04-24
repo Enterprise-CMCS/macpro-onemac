@@ -8,7 +8,7 @@ function HomeHeader() {
                     <div className="ds-l-col" style={{ position: "relative" }}>
                         <div className="home-header-image-box"></div>
                     </div>
-                    <div class="ds-l-col" style={{ position: "relative" }}>
+                    <div className="ds-l-col" style={{ position: "relative" }}>
                         <div className="home-header-text">
                             Welcome to the official submission system for <br />
                             paper-based state plan amendments (SPAs) and section 1915 waivers.
