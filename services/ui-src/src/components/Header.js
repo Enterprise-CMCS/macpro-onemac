@@ -105,7 +105,7 @@ function Header(props) {
    */
   function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated) {
     return (
-      <div className="nav-bar">
+      <div className="nav-bar ds-u-padding--8">
         <div className="nav-left">
           <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
           <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
