@@ -122,7 +122,6 @@ const UserPage = () => {
 
   const xClicked = useCallback(
     (stateCode) => {
-
       if (
         window.confirm(
           "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
@@ -187,14 +186,15 @@ const UserPage = () => {
               <dl className="state-access-cards">
                 {accesses.map(({ state, status, contacts }) => (
                   <div className="state-access-card" key={state}>
-                    {(status === "active" || status === "pending") && (
-                      <button
-                        className="close-button"
-                        onClick={() => xClicked(state)}
-                      >
-                        {CLOSING_X_IMAGE}
-                      </button>
-                    )}
+                    {userType === ROLES.STATE_USER &&
+                      (status === "active" || status === "pending") && (
+                        <button
+                          className="close-button"
+                          onClick={() => xClicked(state)}
+                        >
+                          {CLOSING_X_IMAGE}
+                        </button>
+                      )}
                     <dt>{territoryMap[state] || state}</dt>
                     <dd>
                       <em>{ACCESS_LABELS[status] || status}</em>

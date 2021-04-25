@@ -279,7 +279,11 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
 
 // transition chart of allowed next states based on current state
 const ALLOWED_NEXT_STATES = {
-  [USER_STATUS.PENDING]: [USER_STATUS.ACTIVE, USER_STATUS.DENIED, USER_STATUS.REVOKED],
+  [USER_STATUS.PENDING]: [
+    USER_STATUS.ACTIVE,
+    USER_STATUS.DENIED,
+    USER_STATUS.REVOKED,
+  ],
   [USER_STATUS.ACTIVE]: [USER_STATUS.REVOKED],
   [USER_STATUS.DENIED]: [USER_STATUS.ACTIVE],
   [USER_STATUS.REVOKED]: [USER_STATUS.ACTIVE],
@@ -474,10 +478,37 @@ const constructRoleAdminEmails = (recipients, input) => {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: recipients,
   };
+  email.HTML = `
+  <p>Hello,</p>
+
+  <p>You have a new role request awaiting review. Please log into OneMAC and check your 
+  Account Management dashboard to review pending requests. If you have questions, 
+  please contact the MACPro Help Desk.</p>
+
+  <p>Thank you!</p>`;
+
   let typeText = "User";
+  let newSubject = "";
+
   switch (userType) {
     case USER_TYPE.STATE_USER:
       typeText = "State User";
+
+      if (input.userEmail === input.doneBy) {
+        newSubject =
+          `OneMAC Portal State access for ` +
+          input.attributes[0].stateCode +
+          ` Access self-revoked by the user`;
+        email.HTML =
+          `
+      <p>Hello,</p>
+
+      The OneMAC Portal State access for ` +
+          input.attributes[0].stateCode +
+          ` has been self-revoked by the user. Please log into your User Management Dashboard to see the updated access.
+
+      <p>Thank you!</p>`;
+      }
       break;
     case USER_TYPE.STATE_ADMIN:
       typeText = "State Admin";
@@ -486,15 +517,9 @@ const constructRoleAdminEmails = (recipients, input) => {
       typeText = "CMS Approver";
       break;
   }
-  email.Subject = `New OneMAC Portal ${typeText} Access Request`;
-  email.HTML = `
-        <p>Hello,</p>
+  if (newSubject) email.Subject = newSubject;
+  else email.Subject = `New OneMAC Portal ${typeText} Access Request`;
 
-        <p>You have a new role request awaiting review. Please log into OneMAC and check your 
-        Account Management dashboard to review pending requests. If you have questions, 
-        please contact the MACPro Help Desk.</p>
-
-        <p>Thank you!</p>`;
   return { email };
 };
 
