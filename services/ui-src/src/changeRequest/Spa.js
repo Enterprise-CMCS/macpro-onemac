@@ -16,7 +16,10 @@ const Spa = () => {
     pageTitle: "Submit New SPA",
     readOnlyPageTitle: "SPA Submission Details",
     detailsHeader: "Medicaid SPA",
-    requiredUploads: ["CMS Form 179", "SPA Pages"],
+    requiredUploads: [
+      { title: "CMS Form 179", allowMultiple: false },
+      "SPA Pages",
+    ],
     optionalUploads: [
       "Cover Letter",
       "Existing State Plan Page(s)",
@@ -36,7 +39,6 @@ const Spa = () => {
       idMustExist: false,
       errorLevel: "error",
     },
-
   };
 
   if (id && userId) {

@@ -36,8 +36,12 @@ const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX
 
 export default class FileUploader extends Component {
   static propTypes = {
-    requiredUploads: PropTypes.arrayOf(PropTypes.string),
-    optionalUploads: PropTypes.arrayOf(PropTypes.string),
+    requiredUploads: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    ),
+    optionalUploads: PropTypes.arrayOf(
+      PropTypes.oneOfType([PropTypes.string, PropTypes.object])
+    ),
     showRequiredFieldErrors: PropTypes.bool,
   };
 
@@ -53,22 +57,48 @@ export default class FileUploader extends Component {
     // Initialization of the uploaders
     let uploaders = [];
     if (props.requiredUploads) {
-      const requiredUploaders = props.requiredUploads.map((title) => {
-        return {
-          title,
+      const requiredUploaders = props.requiredUploads.map((uploadDetails) => {
+        let uploadCriteria = {
           isRequired: true,
           hasFile: false,
+          allowMultiple: true,
+          title: "",
         };
+
+        // Most 'uploadDetails' are strings which map to the uploadCriteria 'title'
+        // but this also handles when we need additional customization
+        // for the case when 'uploadDetails' is an object with 'title' and 'allowMultiple' keys
+        if (typeof uploadDetails === "string") {
+          uploadCriteria.title = uploadDetails;
+        } else if (typeof uploadDetails === "object") {
+          uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
+          uploadCriteria.title = uploadDetails.title;
+        }
+
+        return uploadCriteria;
       });
       uploaders = uploaders.concat(requiredUploaders);
     }
     if (props.optionalUploads) {
-      const optionalUploaders = props.optionalUploads.map((title) => {
-        return {
-          title,
+      const optionalUploaders = props.optionalUploads.map((uploadDetails) => {
+        let uploadCriteria = {
           isRequired: false,
           hasFile: false,
+          allowMultiple: true,
+          title: "",
         };
+
+        // Most 'uploadDetails' are strings which map to the uploadCriteria 'title'
+        // but this also handles when we need additional customization
+        // for the case when 'uploadDetails' is an object with 'title' and 'allowMultiple' keys
+        if (typeof uploadDetails === "string") {
+          uploadCriteria.title = uploadDetails;
+        } else if (typeof uploadDetails === "object") {
+          uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
+          uploadCriteria.title = uploadDetails.title;
+        }
+
+        return uploadCriteria;
       });
       uploaders = uploaders.concat(optionalUploaders);
     }
@@ -217,7 +247,9 @@ export default class FileUploader extends Component {
                 type="file"
                 id={"uploader-input-" + index}
                 name={"uploader-input-" + index}
-                multiple
+                multiple={uploader.allowMultiple}
+                // disable the button for types that only allow a single file for upload and a file is already selected
+                disabled={uploader.allowMultiple === false && uploader.hasFile}
                 style={{
                   width: "0.1px",
                   height: "0.1px",
