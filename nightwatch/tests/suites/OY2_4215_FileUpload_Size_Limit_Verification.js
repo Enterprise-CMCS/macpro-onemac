@@ -36,7 +36,7 @@
         // 2. Click first ["Choose File"] button 
         //    and upload the file 
         browser.assert.elementPresent(fileUploadElem).pause(2000);
-        let filePath = require('path').resolve(__dirname + '/files/Data_Larger_80mb.csv')
+        let filePath = require('path').resolve(__dirname + '/files/sData_Larger_80mb.cv')
         console.log("FILE PAHT: " + filePath);
         browser.setValue(fileUploadElem, filePath).pause(2000);
         // 3. Capture the error message displayed
