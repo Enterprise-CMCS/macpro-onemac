@@ -8,6 +8,17 @@ $matisse: #205493;
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
+table, th, td {
+  border: 1px solid black;
+}
+
+col {
+width: 340.0px;
+}
+
+th {
+ text-align: center;
+}
 body {
   @extend .ds-base;
   background-color: $color-gray-lightest;
@@ -554,7 +565,7 @@ input[type="file"] {
     padding-top: 0px;
     padding-right: 0px;
     padding-bottom: 20px;
-    text-align: left;  
+    text-align: left;
   }
 
   td {
@@ -565,7 +576,7 @@ input[type="file"] {
     padding-top: 20px;
     padding-right: 0px;
     padding-bottom: 20px;
-    text-align: left;  
+    text-align: left;
   }
   a {
     font-weight: bold;
@@ -799,8 +810,8 @@ input[type="file"] {
   padding-right: 8rem;
 }
 .footer-bottom-container {
-  background: $lochmara; 
-  color: white; 
+  background: $lochmara;
+  color: white;
   margin: 0;
   width: 100%;
   max-width: none;
@@ -838,7 +849,7 @@ input[type="file"] {
   font-weight: 400;
   line-height: 2.1;
   letter-spacing: 0;
-  text-align: left;  
+  text-align: left;
 }
 .footer-email-container{
   padding-left: 11.5rem;
@@ -875,7 +886,7 @@ input[type="file"] {
   background-image:url('/assets/images/OneMAC_logoLight.svg');
   background-repeat:no-repeat;
 }
-.home-header-angle-box {  
+.home-header-angle-box {
   border-top: 120px solid transparent;
   border-left: 100vw solid white;
   bottom: 0;
@@ -886,7 +897,7 @@ input[type="file"] {
   background: $color-primary-alt-lightest;
   height: 295px;
 }
-.home-footer-angle-box {  
+.home-footer-angle-box {
   height: 117px;
   border-top: 120px solid white;
   border-right: 100vw solid transparent;

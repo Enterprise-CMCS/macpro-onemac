@@ -38,8 +38,9 @@ const FAQ = () => {
           </a>{" "}
           or call {helpDeskContact.phone}.
         </p>
-        <h2>Frequently Asked Questions</h2>
+        <h2>General</h2>
         <h4>What browsers can I use to access the system?</h4>
+        <br/>
         <p>
           The submission portal works best on Google Chrome, Firefox, Edge, and
           Safari. We do not recommend using Internet Explorer due to potential
@@ -49,21 +50,21 @@ const FAQ = () => {
         <h4 ref={spaIdRef} id="spa-id-format">What format is used to enter a SPA ID?</h4>
         <p>
           Enter the State Plan Amendment transmittal number. Assign consecutive
-          numbers on a calendar year basis (e.g., 20-0001.xxxx, 20-0002.xxxx,
+          numbers on a calendar year basis (e.g., 20-0001-xxxx, 20-0002-xxxx,
           etc.).
         </p>
         <p>
           The Official Submission package SPA ID must follow the format
-          SS-YY-NNNN OR SS-YY-NNNN-xxxx to include:
+          SS-YY-#### OR SS-YY-####-xxxx to include:
         </p>
         <ul>
           <li>SS = 2 alpha character (State Abbreviation)</li>
           <li>YY = 2 numeric digits (Year)</li>
-          <li>NNNN = 4 numeric digits (Serial number)</li>
-          <li>xxxx = OPTIONAL 4 character alpha/numeric modifier (Suffix)</li>
+          <li>#### = 4 numeric digits (Serial number)</li>
+          <li>xxxx = OPTIONAL 1 to 4 characters alpha/numeric modifier (Suffix)</li>
         </ul>
 
-        <h4>What attachments do we need to submit a new SPA?</h4>
+        <h4>What are the attachments for a Medicaid SPA?</h4>
         <p>
           SPA submission requirements can be found in regulation&nbsp;
           <a
@@ -73,20 +74,112 @@ const FAQ = () => {
           >
             42 C.F.R. §430.12.
           </a>
-          . Required attachments for form completion are:
         </p>
-        <ul>
-          <li>
-            Digitized Transmittal and Notice of Approval of State Plan Material
-            (CMS 179) form{" "}
-          </li>
-          <li>SPA Pages</li>
-        </ul>
-        <p>
-          In this system, you can submit other optional files. If submitting a
-          cover letter, please address the cover letter to: Center for Medicaid
-          &amp; CHIP Services (CMCS).
-        </p>
+          <p>Note: “*” indicates a required attachment.</p>
+        <table>
+          <colgroup>
+            <col />
+            <col />
+          </colgroup>
+          <tbody>
+          <tr>
+            <th className="confluenceTh">
+              <p><strong><span>Attachment Name</span></strong></p>
+            </th>
+            <th className="confluenceTh">
+              <p><strong><span>Description</span></strong></p>
+            </th>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>CMS Form 179*</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>CMS-179 template that contains specific information for SPA
+                            submission</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>SPA Pages*</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Clean versions of the State Plan pages being amended</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Cover Letter</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Cover letter to CMS that could outline SPA submission.
+                            Please address the cover letter to: Center for Medicaid &amp; CHIP Services (CMCS)</span>
+              </p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Document Demonstrating Good-Faith Tribal Engagement</span>
+              </p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Emails forwarding tribal notice to tribal leaders and tribal
+                            contacts; and/or tribal face-to-face meeting agendas indicating SPA discussion</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Existing State Plan Page(s)</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Current approved SPA page, could include track changes to
+                            reflect changes</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Public Notice</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Notice to stakeholders and interested parties that outlines
+                            the changes being proposed by SPA, feedback received from PN, and copies of websites-
+                            notices, state register notices, or newspaper notices that includes the date notice was
+                            posted</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Standard Funding Questions (SFQs)</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Word document of the funding questions required to be
+                            submitted with reimbursement SPAs</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Tribal Consultation</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>Document that outline the changes SPA is making and the
+                            impact that tribes can expect from the SPA</span></p>
+            </td>
+          </tr>
+          <tr>
+            <td className="confluenceTd">
+              <p><span>Other</span></p>
+            </td>
+            <td className="confluenceTd">
+              <p><span>UPLs, reimbursement methodology spreadsheet, Copies of
+                            legislation, any document that will assist in the review of SPA</span></p>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+
+
+        <zac></zac>
         <h3>Waivers</h3>
         <h4 ref={waiverIdRef} id="waiver-id-format">
           What format is used to enter a 1915(b) waiver number?
