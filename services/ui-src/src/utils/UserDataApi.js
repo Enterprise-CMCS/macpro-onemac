@@ -108,10 +108,17 @@ class UserDataApi {
   }
 
   /**
-   * Get all active state system administrators' contact info for a list of states.
+   * Get all active CMS role approvers' contact info.
   */
   async getCmsApprovers() {
     return await API.get("userDataAPI", "/getCmsApprovers");
+  }
+
+  /**
+   * Get all active CMS system admins' contact info.
+  */
+  async getCmsSystemAdmins() {
+    return await API.get("userDataAPI", "/getCmsSystemAdmins");
   }
 }
 

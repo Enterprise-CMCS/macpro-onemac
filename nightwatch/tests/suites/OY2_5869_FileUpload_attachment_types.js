@@ -4,7 +4,7 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 
-/*
+
 const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
 const submitWaiver = require('../suites/OY2_4807_Validate_Waiver_Form_Logic');
 let pdfElement = "//span[text()='adobe.pdf']";
@@ -22,12 +22,14 @@ module.exports = {
         browser.waitForElementPresent('body');
         loginModule["Login to Medicaid as Regular User"](browser);
     },
+    
     after: function (browser) {
         loginModule["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
         console.log("Stopping test executions...")
         console.log('Closing down the browser instance...');
         browser.end();
     },
+
     'Verify the attachment types for SPA': function (browser) {
         browser.click("button#spaSubmitBtn");
         let fileUploadElem = "[name='uploader-input-0']";
@@ -83,21 +85,24 @@ module.exports = {
         browser.useXpath().expect.element(textElement).to.be.visible;
         browser.back();
     },
+
     'Verify the uploaded attachment in the submission lists for the submitted SPA/Waiver': function (browser) {
         browser.useCss();
         submitWaiver["Verify that user can submit a New Waiver"](browser);
         let waiverNumber = '//tbody/tr[1]/td/a';
         let attachementElement = ".form-container a[target='_blank']";
-        browser.useXpath().click(waiverNumber);
+        browser.useXpath().click(waiverNumber).pause(4000);
         browser.useCss().expect.element(attachementElement).to.be.visible;
         browser.back();
     },
+
     'Verify “No file chosen” case': function (browser) {
-        browser.useCss().click("button#spaSubmitBtn");
+        browser.useCss().click("button#spaSubmitBtn").pause(4000);
         browser.verify.containsText("tr:nth-of-type(1) > td:nth-of-type(3)", "No file chosen"); 
         browser.back();
     }
 }
+
 /*
 # Test Case Location:
 ---------------------------------------------------------------------------------------
