@@ -81,7 +81,7 @@ export default class FileUploader extends Component {
         uploadCriteria.title = uploadDetails;
       } else if (typeof uploadDetails === "object") {
         uploadCriteria.title = uploadDetails.title;
-        if (uploadDetails.allowMultiple === false) {
+        if (typeof uploadDetails.allowMultiple === "boolean") {
           uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
         }
       }
