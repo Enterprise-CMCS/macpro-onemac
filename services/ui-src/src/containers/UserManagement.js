@@ -38,10 +38,8 @@ const UserManagement = () => {
   const location = useLocation();
 
   const updateList = useCallback((mounted) => {
-    let shouldState = true;
-    if (userProfile.userData.type === "stateadmin") {
-      shouldState = false;
-    }
+    let shouldState = (userProfile.userData.type !== "cmsapprover");
+
     setIncludeStateCode(shouldState)
     UserDataApi.getMyUserList(userProfile.email)
         .then((ul) => {
@@ -74,12 +72,6 @@ const UserManagement = () => {
     let newAlert = ALERTS_MSG.NONE;
     if (location.state) newAlert = location.state.showAlert;
     if (mounted) setAlert(newAlert);
-
-    let shouldState = true;
-    if (userProfile.userData.type === "stateadmin") {
-      shouldState = false;
-    }
-    if (mounted) setIncludeStateCode(shouldState);
 
     updateList(mounted)
 
