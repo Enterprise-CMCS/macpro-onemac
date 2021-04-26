@@ -75,13 +75,15 @@ export default class FileUploader extends Component {
       };
 
       // Most 'uploadDetails' are strings which map to the uploadCriteria 'title'
-      // but this also handles when we need additional customization
-      // for the case when 'uploadDetails' is an object with 'title' and 'allowMultiple' keys
+      // but this also handles when 'uploadDetails' is an object with 'title' and 'allowMultiple' keys
+      // for additional customization in restricting multiple files
       if (typeof uploadDetails === "string") {
         uploadCriteria.title = uploadDetails;
       } else if (typeof uploadDetails === "object") {
-        uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
         uploadCriteria.title = uploadDetails.title;
+        if (uploadDetails.allowMultiple) {
+          uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
+        }
       }
 
       return uploadCriteria;
