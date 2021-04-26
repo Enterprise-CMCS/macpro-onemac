@@ -54,12 +54,9 @@ export default class FileUploader extends Component {
     this.allUploadsComplete = false;
     this.readyCallback = props.readyCallback;
 
-    // Initialization of the uploaders
-    let uploaders = [];
-    if (props.requiredUploads) {
-      const requiredUploaders = props.requiredUploads.map((uploadDetails) => {
+    function initializeUploader (uploadDetails, isRequired) {
         let uploadCriteria = {
-          isRequired: true,
+          isRequired,
           hasFile: false,
           allowMultiple: true,
           title: "",
@@ -76,30 +73,17 @@ export default class FileUploader extends Component {
         }
 
         return uploadCriteria;
-      });
+    }
+
+    let uploaders = [];
+
+    if (props.requiredUploads) {
+      const requiredUploaders = props.requiredUploads.map((uploadDetails) => initializeUploader(uploadDetails, true));
       uploaders = uploaders.concat(requiredUploaders);
     }
+
     if (props.optionalUploads) {
-      const optionalUploaders = props.optionalUploads.map((uploadDetails) => {
-        let uploadCriteria = {
-          isRequired: false,
-          hasFile: false,
-          allowMultiple: true,
-          title: "",
-        };
-
-        // Most 'uploadDetails' are strings which map to the uploadCriteria 'title'
-        // but this also handles when we need additional customization
-        // for the case when 'uploadDetails' is an object with 'title' and 'allowMultiple' keys
-        if (typeof uploadDetails === "string") {
-          uploadCriteria.title = uploadDetails;
-        } else if (typeof uploadDetails === "object") {
-          uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
-          uploadCriteria.title = uploadDetails.title;
-        }
-
-        return uploadCriteria;
-      });
+      const optionalUploaders = props.optionalUploads.map((uploadDetails) => initializeUploader(uploadDetails, false));
       uploaders = uploaders.concat(optionalUploaders);
     }
 
