@@ -130,11 +130,22 @@ ul {
   .uploader-input-label {
     // Make the label look like a button
     @extend .ds-c-button;
-    @extend .ds-c-button--primary;
-    @extend .ds-u-radius;
     font-weight: 400;
     font-size: 14px;
     margin-top: 0px;
+  }
+
+  .uploader-input-label-active {
+    @extend .uploader-input-label;
+    @extend .ds-c-button--primary;
+  }
+
+  .uploader-input-label-disabled{
+    @extend .uploader-input-label;
+    background-color: $color-gray-lighter;
+    border-color: transparent;
+    color: $color-gray-dark;
+    pointer-events: none;
   }
 
   .uploader-clear-button {

@@ -231,6 +231,9 @@ export default class FileUploader extends Component {
     let reqControls = [];
     let optControls = [];
     this.state.uploaders.forEach((uploader, index) => {
+      // disabled flag for types that only allow a single file for upload and a file is already selected
+      let isDisabled = uploader.allowMultiple === false && uploader.hasFile
+
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
         <tr key={index}>
@@ -241,15 +244,14 @@ export default class FileUploader extends Component {
             </div>
           </td>
           <td className="uploader-input-cell">
-            <label className="uploader-input-label">
+            <label className={isDisabled ? "uploader-input-label-disabled" : "uploader-input-label-active"}>
               Add File
               <input
                 type="file"
                 id={"uploader-input-" + index}
                 name={"uploader-input-" + index}
                 multiple={uploader.allowMultiple}
-                // disable the button for types that only allow a single file for upload and a file is already selected
-                disabled={uploader.allowMultiple === false && uploader.hasFile}
+                disabled={isDisabled}
                 style={{
                   width: "0.1px",
                   height: "0.1px",
