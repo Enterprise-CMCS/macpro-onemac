@@ -1,11 +1,7 @@
 import React from "react";
-import { useHistory } from "react-router-dom";
-import { HashLink } from "react-router-hash-link";
-import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "cmscommonlib";
 
 function HomeFooter() {
-    const history = useHistory();
     return (
         <>
             <section className="home-footer-container">
@@ -15,10 +11,10 @@ function HomeFooter() {
                         Do you have questions or need support?
                         </div>
                     <div className="ds-l-col--3 ds-u-margin-left--auto">
-                        <HashLink to={ROUTES.FAQ_TOP} 
+                        <a target="new" href={ROUTES.FAQ_TOP}
                             className="ds-c-button ds-c-button--primary ds-u-text-decoration--none">
                             View FAQ
-                        </HashLink>
+                        </a>
                     </div>
                 </div>
             </section>

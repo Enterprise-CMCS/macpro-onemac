@@ -1,11 +1,31 @@
-import React from "react";
+import React, {useEffect, useRef} from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 
 const FAQ = () => {
-  
 
-  return (
+    const waiverIdRef= useRef(document.location.hash);
+    const spaIdRef= useRef(document.location.hash);
+
+    function scrollToSection() {
+      switch (window.location.hash) {
+        case "#waiver-id-format":
+          waiverIdRef.current.scrollIntoView();
+          waiverIdRef.current.focus();
+          break;
+        case "#spa-id-format":
+          spaIdRef.current.scrollIntoView();
+          spaIdRef.current.focus();
+          break;
+        default:
+
+      }
+    }
+
+    useEffect( () => scrollToSection(), [] )
+
+
+    return (
     <div>
     <PageTitleBar heading="SPA and Waiver Frequently Asked Questions" text="" />
     <div className="form-container" id="top">
@@ -26,7 +46,7 @@ const FAQ = () => {
           functionality issues.
         </p>
         <h3>State Plan Amendments (SPAs)</h3>
-        <h4 id="spa-id-format">What format is used to enter a SPA ID?</h4>
+        <h4 ref={spaIdRef} id="spa-id-format">What format is used to enter a SPA ID?</h4>
         <p>
           Enter the State Plan Amendment transmittal number. Assign consecutive
           numbers on a calendar year basis (e.g., 20-0001.xxxx, 20-0002.xxxx,
@@ -68,7 +88,7 @@ const FAQ = () => {
           &amp; CHIP Services (CMCS).
         </p>
         <h3>Waivers</h3>
-        <h4 id="waiver-id-format">
+        <h4 ref={waiverIdRef} id="waiver-id-format">
           What format is used to enter a 1915(b) waiver number?
         </h4>
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
