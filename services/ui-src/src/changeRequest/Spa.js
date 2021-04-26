@@ -32,7 +32,7 @@ const Spa = () => {
       idHintText: "Must follow the format SS-YY-NNNN-xxxx",
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
       idMustExist: false,
       errorLevel: "error",
     },
