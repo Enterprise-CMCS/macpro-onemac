@@ -1,11 +1,11 @@
 import { latestAccessStatus } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import { USER_TYPES } from "./user/userTypes";
+import { queryForUserType } from "./libs/user-table-lib";
 
 // Gets active state admins by state code
-export const main = handler(async (event, context) => {
+export const main = handler(async (event) => {
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -20,26 +20,22 @@ export const main = handler(async (event, context) => {
     return {};
   }
 
-  const { Items: allAdmins = [] } = await dynamoDb.scan({
-    TableName: process.env.userTableName,
-    FilterExpression: "#ty = :userType",
-    ExpressionAttributeNames: { "#ty": "type" },
-    ExpressionAttributeValues: { ":userType": USER_TYPES.STATE_ADMIN },
-  });
+  return (await queryForUserType(USER_TYPES.STATE_ADMIN)).reduce(
+    (output, admin) => {
+      for (const state of states) {
+        if (latestAccessStatus(admin, state) === "active") {
+          if (!output[state]) output[state] = [];
 
-  return allAdmins.reduce((output, admin) => {
-    for (const state of states) {
-      if (latestAccessStatus(admin, state) === "active") {
-        if (!output[state]) output[state] = [];
-
-        output[state].push({
-          email: admin.id,
-          firstName: admin.firstName,
-          lastName: admin.lastName,
-        });
+          output[state].push({
+            email: admin.id,
+            firstName: admin.firstName,
+            lastName: admin.lastName,
+          });
+        }
       }
-    }
 
-    return output;
-  }, {});
+      return output;
+    },
+    {}
+  );
 });

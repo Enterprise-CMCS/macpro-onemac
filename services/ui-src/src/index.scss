@@ -213,6 +213,10 @@ input[type="file"] {
 
   .subheader-message {
     padding-top: 40px;
+
+    a {
+      white-space: nowrap;
+    }
   }
 }
 
