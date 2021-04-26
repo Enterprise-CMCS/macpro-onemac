@@ -130,7 +130,7 @@ function Header(props) {
                       </Link>
                     </>
                 )}
-                <a href={ROUTES.FAQ} target="new">FAQ</a>
+                <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ_TOP)} target="new">FAQ</a>
                 {isLoggedInAsDeveloper ?
                     <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
                       Page</Link> : null}
