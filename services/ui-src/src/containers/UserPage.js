@@ -165,7 +165,8 @@ const UserPage = () => {
           <a href={`mailto:${helpDeskContact.email}`}>
             {helpDeskContact.email}
           </a>{" "}
-          or call {helpDeskContact.phone}.
+          or call{" "}
+          <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
         </div>
         <div className="ds-l-row">
           <div className="ds-l-col--6">
@@ -175,7 +176,7 @@ const UserPage = () => {
             </Review>
             <Review heading="Email">{email}</Review>
           </div>
-            {accessList}
+          {accessList}
         </div>
       </div>
     </div>
