@@ -68,7 +68,8 @@ module.exports = {
   "Logout of SPA and Waiver Dashboard": function (browser) {
     let title = "SPA and Waiver Dashboard";
     spa.logout();
-    spa.verify.not.containsText("h1", title);
+    browser.pause(timeout*3);
+    spa.verify.visible("@homeHeader");
     browser.pause(timeout);
   },
 
@@ -76,16 +77,12 @@ module.exports = {
   "Verify logout from SPA and Wavier Dashboard as Regular User": function (
     browser
   ) {
-    // elements
-    let logout_banner_text =
-      "CMS State Plan Amendment and Waiver Submission Platform";
-
     // logout from SPA and Wavier Dashboard page
     browser.click("button#myAccountLink");
     browser.click("a#logoutLink");
-    browser.waitForElementPresent("h1").pause(1000);
+    browser.pause(timeout*5);
 
     // Verify the successful logout
-    browser.verify.containsText("h1", logout_banner_text);
+    spa.verify.visible("@homeHeader");
   },
 };

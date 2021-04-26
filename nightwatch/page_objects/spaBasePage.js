@@ -175,7 +175,8 @@ module.exports = {
         tandc: "[id=tandc]",
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
-        uploadFields: '[id*=uploader-input]'
+        uploadFields: '[id*=uploader-input]',
+        homeHeader: '[class=home-header-angle-box]'
     },
 
     commands : [commands],

@@ -4,6 +4,9 @@ $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
 $lochmara: #0071BC;
 $matisse: #205493;
+$iron: #D6D7D9;
+$shuttle-gray: #5B616B;
+$mine-shaft: #212121;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -87,6 +90,11 @@ label {
 
 ul {
   @extend .ds-c-list;
+}
+
+.ds-u-padding--8 {
+  padding-left: 70px !important;
+  padding-right: 70px !important;
 }
 
 .uploader {
@@ -684,6 +692,7 @@ input[type="file"] {
 }
 .usa-bar {
   @extend .app-bar;
+  @extend .ds-u-padding--8;
   background-color: $color-gray-lightest;
   font-size: 14px;
   min-height: 20px;
@@ -855,7 +864,7 @@ input[type="file"] {
 .home-header-text{
   position: absolute;
   top: 97px;
-  height: 234px;
+  height: 234px; 
   width: 560px;
   font-family: Open Sans;
   font-size: 36px;
@@ -868,7 +877,7 @@ input[type="file"] {
 }
 .home-header-image-box{
   position: absolute;
-  left: 140px;
+  left: 70px;
   top: 134px;
   width: 464px;
   height: 161px;
@@ -893,14 +902,76 @@ input[type="file"] {
   bottom: 0;
   left: 0;
 }
+.home-content-box {
+  background-color: white;
+  padding-top: 80px;
+  // Reusable styles
+  @mixin title-font($size, $lineHeight, $weight) {
+    font-family: Open Sans;
+    font-size: $size;
+    font-style: normal;
+    font-weight: $weight;
+    line-height: $lineHeight;
+    letter-spacing: 0px;
+    text-align: left;
+  }
+  .title {
+    @include title-font(24px, 30px, 700); 
+    padding-top: 32px;
+    padding-bottom: 36px;
+    color: $mine-shaft;
+    width: 100%;
+  }
+  .vertical-line {
+    border-left: 2px solid $iron;
+    margin-left: 11px;
+  }
+  .sub-title{
+    @include title-font(18px, 24px, 700); 
+    color: $shuttle-gray;
+  }
+  .text {
+    @include title-font(16px, 24px, 400); 
+    width: 352px;
+    color: $mine-shaft;
+    width: 100%;
+  }
+  .home-content-left-box {
+    margin-left: 55px;
+    width: 464px;
+    border: 1px solid $iron;
+    border-radius:4px;
+    @include title-font(24px, 30px, 700); // params: font size, line height
+    .vertical-line-64 {
+      @extend .vertical-line;
+      height: 64px;
+      margin-top: 8.6px;
+      margin-bottom: 14.6px;
+    }
+    .vertical-line-96 {
+      @extend .vertical-line;
+      height: 96px;
+      margin-top: 12.3px;
+      margin-bottom: 13.33px;
+    }
+  }
+  .home-content-right-box {
+    width: 560px;
+    li {
+      list-style-position: inside;
+      padding-bottom: 24px;
+    }
+  }
+}
+
 .multi-select-title {
-font-family: Open Sans;
-font-size: 21px;
-font-style: italic;
-font-weight: 400;
-line-height: 28px;
-letter-spacing: 0px;
-text-align: left;
+  font-family: Open Sans;
+  font-size: 21px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: left;
 
   svg {
     margin: 0 1ch;
@@ -908,17 +979,16 @@ text-align: left;
 }
 
 .multi-select-header {
-margin-bottom: 40px;
-bottom: 20px;
-font-family: Open Sans;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: 30px;
-letter-spacing: 0px;
-text-align: left;
+  margin-bottom: 40px;
+  bottom: 20px;
+  font-family: Open Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0px;
+  text-align: left;
 }
-
 
 .css-w3djcp-OptionComponent {
  background: #0071BC !important;
@@ -948,7 +1018,6 @@ text-align: left;
     width: 575px;
     height: 520px;
     margin: auto;
-
 }
 
 .multi-select-dropdown-container[type="selectprofile"] {
