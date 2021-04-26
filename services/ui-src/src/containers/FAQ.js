@@ -61,7 +61,7 @@ const FAQ = () => {
           <li>SS = 2 alpha character (State Abbreviation)</li>
           <li>YY = 2 numeric digits (Year)</li>
           <li>#### = 4 numeric digits (Serial number)</li>
-          <li>xxxx = OPTIONAL 1 to 4 characters alpha/numeric modifier (Suffix)</li>
+          <li>xxxx = OPTIONAL, 1 to 4 characters alpha/numeric modifier (Suffix)</li>
         </ul>
 
         <h4>What are the attachments for a Medicaid SPA?</h4>
