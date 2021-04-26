@@ -1171,6 +1171,7 @@ dl.state-access-cards {
 
     border-radius: 3px;
     box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+    position: relative;
 
     &:not(:last-child) {
       @extend .ds-u-margin-bottom--3;
@@ -1189,6 +1190,14 @@ dl.state-access-cards {
         @extend .ds-u-font-weight--bold;
         @extend .ds-u-text-decoration--none;
       }
+    }
+
+    button {
+      position: absolute;
+      background: inherit;
+      top: 26px;
+      right: 26px;
+      border: none;
     }
   }
 }

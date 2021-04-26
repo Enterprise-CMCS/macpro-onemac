@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Review } from "@cmsgov/design-system";
 import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
 
@@ -7,6 +7,12 @@ import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import PageTitleBar from "../components/PageTitleBar";
 import UserDataAPI from "../utils/UserDataApi";
+import closingX from "../images/ClosingX.svg";
+import UserDataApi from "../utils/UserDataApi";
+import { getAlert } from "../libs/error-mappings";
+import { ALERTS_MSG } from "../libs/alert-messages";
+
+const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
 /**
  * Formats multi-part name into single full name
@@ -68,6 +74,7 @@ const transformAccesses = (user = {}) => {
  */
 const UserPage = () => {
   const { userProfile } = useAppContext();
+  const { setUserInfo } = useAppContext();
   const { email, firstName, lastName, userData } = userProfile;
 
   const [accesses, setAccesses] = useState(transformAccesses(userData));
@@ -96,6 +103,15 @@ const UserPage = () => {
         <dl className="state-access-cards">
           {accesses.map(({ state, status, contacts }) => (
             <div className="state-access-card" key={state ?? "only-one"}>
+              {userType === ROLES.STATE_USER &&
+                (status === "active" || status === "pending") && (
+                  <button
+                    className="close-button"
+                    onClick={() => xClicked(state)}
+                  >
+                    {CLOSING_X_IMAGE}
+                  </button>
+                )}
               {!!state && <dt>{territoryMap[state] || state}</dt>}
               <dd>
                 <em>{ACCESS_LABELS[status] || status}</em>
@@ -152,6 +168,43 @@ const UserPage = () => {
       }
     })();
   }, [userData, userType]);
+
+  const xClicked = useCallback(
+    (stateCode) => {
+      if (
+        window.confirm(
+          "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
+        )
+      ) {
+        const updateStatusRequest = {
+          userEmail: email,
+          doneBy: email,
+          attributes: [
+            {
+              stateCode: stateCode, // required for state user and state admin
+              status: "revoked",
+            },
+          ],
+          type: userType,
+        };
+        try {
+          console.log("updateStatusRequest", updateStatusRequest);
+          UserDataApi.setUserStatus(updateStatusRequest).then(function (
+            returnCode
+          ) {
+            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+              setUserInfo();
+            } else {
+              console.log("Returned: ", returnCode);
+            }
+          });
+        } catch (err) {
+          console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
+        }
+      }
+    },
+    [email, userType, setUserInfo]
+  );
 
   return (
     <div>
