@@ -73,19 +73,16 @@ module.exports = {
   },
 
   // from Guli's PR 177
-  "Verify logout from SPA and Wavier Dashboard as Regular User": function (
-    browser
-  ) {
+  "Verify logout from SPA and Wavier Dashboard as Regular User": function (browser) {
     // elements
-    let logout_banner_text =
-      "CMS State Plan Amendment and Waiver Submission Platform";
+    let logout_banner_text = "Welcome to the official submission system for ";
 
     // logout from SPA and Wavier Dashboard page
     browser.click("button#myAccountLink");
     browser.click("a#logoutLink");
-    browser.waitForElementPresent("h1").pause(1000);
+    browser.waitForElementPresent(".home-header-text").pause(1000);
 
     // Verify the successful logout
-    browser.verify.containsText("h1", logout_banner_text);
+    browser.verify.containsText(".home-header-text", logout_banner_text);
   },
 };
