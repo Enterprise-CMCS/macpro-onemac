@@ -11,6 +11,7 @@ $mine-shaft: #212121;
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
+.faq-table {
 table, th, td {
   border: 1px solid black;
 }
@@ -25,6 +26,8 @@ width: 400.0px;
 
 th {
  text-align: center;
+}
+
 }
 body {
   @extend .ds-base;
@@ -890,7 +893,7 @@ input[type="file"] {
 .home-header-text{
   position: absolute;
   top: 97px;
-  height: 234px; 
+  height: 234px;
   width: 560px;
   font-family: Open Sans;
   font-size: 36px;
@@ -942,7 +945,7 @@ input[type="file"] {
     text-align: left;
   }
   .title {
-    @include title-font(24px, 30px, 700); 
+    @include title-font(24px, 30px, 700);
     padding-top: 32px;
     padding-bottom: 36px;
     color: $mine-shaft;
@@ -953,11 +956,11 @@ input[type="file"] {
     margin-left: 11px;
   }
   .sub-title{
-    @include title-font(18px, 24px, 700); 
+    @include title-font(18px, 24px, 700);
     color: $shuttle-gray;
   }
   .text {
-    @include title-font(16px, 24px, 400); 
+    @include title-font(16px, 24px, 400);
     width: 352px;
     color: $mine-shaft;
     width: 100%;
