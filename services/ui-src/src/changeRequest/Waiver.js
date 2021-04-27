@@ -38,12 +38,13 @@ const Waiver = () => {
     pageTitle: "Submit New Waiver Action",
     readOnlyPageTitle: "Waiver Action Details",
     detailsHeader: "Waiver Action",
-    requiredUploads: ["Required Upload (per Waiver Authority)"],
+    requiredUploads: [],
     optionalUploads: [
-      "1915(b)(4) waiver application",
-      "Cost effectiveness spreadsheets",
-      "Tribal Consultation",
-      "1915(b) waiver",
+      "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+      "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+      "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+      "Tribal Consultation (Initial, Renewal, Amendment)",
       "Other",
     ],
 

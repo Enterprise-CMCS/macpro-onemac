@@ -13,19 +13,11 @@ const SpaRai = () => {
   const { id, userId } = useParams();
 
   const formInfo = {
-    pageTitle: "Respond to SPA RAI",
-    readOnlyPageTitle: "SPA RAI Response Details",
-    detailsHeader: "SPA RAI",
+    pageTitle: "Respond to Medicaid SPA RAI",
+    readOnlyPageTitle: "Medicaid SPA RAI Response Details",
+    detailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
     optionalUploads: [
-      "CMS Form 179",
-      "SPA Pages",
-      "Cover Letter",
-      "Existing State Plan Page(s)",
-      "Document Demonstrating Good-Faith Tribal Engagement",
-      "Tribal Consultation",
-      "Public Notice",
-      "Standard Funding Questions (SFQs)",
       "Other",
     ],
 
