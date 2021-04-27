@@ -75,7 +75,7 @@ module.exports = {
   // from Guli's PR 177
   "Verify logout from SPA and Wavier Dashboard as Regular User": function (browser) {
     // elements
-    let logout_banner_text = "Welcome to the official submission system for ";
+    let logout_banner_text = "paper-based state plan amendments (SPAs) and section 1915 waivers.";
 
     // logout from SPA and Wavier Dashboard page
     browser.click("button#myAccountLink");

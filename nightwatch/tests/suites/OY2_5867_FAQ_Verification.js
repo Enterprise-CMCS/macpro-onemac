@@ -44,17 +44,13 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-
-
-
-        //browser.useCss().expect.element(pageBanner).to.be.visible;
-        //browser.verify.containsText(pageBanner, expectedBannerText).pause(500);
-       // browser.back();  // go back to previous page
     },
+
 
     'User logs into Medicaid as Regular user': function(browser) {
         login["Login to Medicaid as Regular User"](browser);
     },
+
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = "//a[text()='FAQ']";
@@ -77,13 +73,6 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-
-
-        // let pageBanner = 'div#title_bar > h1';
-        // let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
-        // browser.useCss().expect.element(pageBanner).to.be.visible;
-        // browser.verify.containsText(pageBanner, expectedBannerText);
-        // browser.back();  // go back to previous page
     },
 
     
@@ -111,14 +100,7 @@ module.exports = {
             browser.switchWindow(handle);
             //browser.back().pause(3000);
         });
-
         browser.back().pause(3000);
-
-        // browser.useCss().expect.element(fqaHeader).to.be.visible;
-        // let expectedText = 'What format is used to enter a SPA ID?';
-        // browser.verify.containsText(fqaHeader, expectedText);
-        //browser.back();  // go back to previous page
-        // browser.back();  // go back to previous page
 
         
         // Respond to SPA RAI
@@ -142,15 +124,7 @@ module.exports = {
             browser.switchWindow(handle);
             //browser.back().pause(3000);
         });
-
         browser.back().pause(3000);
-
-
-        // browser.useCss().expect.element(fqaHeader).to.be.visible;
-        // browser.verify.containsText(fqaHeader, expectedText);
-        // browser.back();  // go back to previous page
-        // browser.back();  // go back to previous page
-        
     },
 
     
@@ -178,13 +152,7 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-
-        //browser.useCss().expect.element(fqaHeader).to.be.visible;
-        //let expectedText = 'What format is used to enter a 1915(b) waiver number?';
-        //browser.verify.containsText(fqaHeader, expectedText);
         browser.back().pause(3000);
-        //browser.back();
-
         
         // Respond to 1915(b) Waiver RAI
         browser.click('button#waiverRaiBtn');
@@ -206,10 +174,6 @@ module.exports = {
             browser.switchWindow(handle);
         });
 
-
-        // browser.useCss().expect.element(fqaHeader).to.be.visible;
-        // browser.verify.containsText(fqaHeader, expectedText);
-        // browser.back();
         browser.back();
 
         // Request Waiver Temporary Extension
@@ -225,22 +189,9 @@ module.exports = {
         // Verify the new window 
         browser.useCss().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
-        //browser.closeWindow(); // Close tab
-        // Switch to main window
-        // browser.windowHandles(function (result) {
-        //     // 0 == current main window, 1 == new tab
-        //     var handle = result.value[0];
-        //     browser.switchWindow(handle);
-        // });
-
-        // browser.back();
-        
-        // browser.useCss().expect.element(fqaHeader).to.be.visible;
-        // browser.verify.containsText(fqaHeader, expectedText);
-
-        
     },
 
+    
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         let linkInFAQ = '.form-card [target]';
         browser.click(linkInFAQ);
