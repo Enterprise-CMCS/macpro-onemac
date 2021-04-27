@@ -721,7 +721,6 @@ input[type="file"] {
 }
 .usa-bar {
   @extend .app-bar;
-  @extend .ds-u-padding--8;
   background-color: $color-gray-lightest;
   font-size: 14px;
   min-height: 20px;
@@ -906,7 +905,7 @@ input[type="file"] {
 }
 .home-header-image-box{
   position: absolute;
-  left: 70px;
+  left: 140px;
   top: 134px;
   width: 464px;
   height: 161px;
@@ -966,7 +965,7 @@ input[type="file"] {
     width: 100%;
   }
   .home-content-left-box {
-    margin-left: 55px;
+    margin-left: 125px;
     width: 464px;
     border: 1px solid $iron;
     border-radius:4px;
