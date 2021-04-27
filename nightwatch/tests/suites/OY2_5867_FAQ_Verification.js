@@ -46,15 +46,10 @@ module.exports = {
         });
     },
 
-<<<<<<< HEAD
-
-=======
->>>>>>> develop
     'User logs into Medicaid as Regular user': function(browser) {
         login["Login to Medicaid as Regular User"](browser);
     },
 
-<<<<<<< HEAD
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = "//a[text()='FAQ']";
@@ -66,11 +61,6 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-=======
-    'User can go to the FAQ with logging into the application': function (browser) {
-        let fqaLink = "//a[text()='FAQ']";
-        browser.useXpath().click(fqaLink).pause(500);
->>>>>>> develop
         let pageBanner = 'div#title_bar > h1';
         let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
         browser.useCss().expect.element(pageBanner).to.be.visible;
