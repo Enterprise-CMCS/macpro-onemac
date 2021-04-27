@@ -718,7 +718,6 @@ input[type="file"] {
 }
 .usa-bar {
   @extend .app-bar;
-  @extend .ds-u-padding--8;
   background-color: $color-gray-lightest;
   font-size: 14px;
   min-height: 20px;
@@ -903,7 +902,7 @@ input[type="file"] {
 }
 .home-header-image-box{
   position: absolute;
-  left: 70px;
+  left: 140px;
   top: 134px;
   width: 464px;
   height: 161px;
