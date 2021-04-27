@@ -104,29 +104,43 @@ function Header(props) {
    * Renders a navigation bar
    */
   function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated) {
-    return (
-      <div className="nav-bar">
-        <div className="nav-left">
-          <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-          <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
-          {isAuthenticated && (
-            <>
-              <Link id="dashboardLink" to={ROUTES.DASHBOARD} className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
-              Dashboard
-              </Link>
-              <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT} className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
-              User Management
-              </Link>
-            </>
-            )}
-          <Link to={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ)}>FAQ</Link>
-          {isLoggedInAsDeveloper ? <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component Page</Link> : null}
-        </div>
-        {renderAccountButtons()}
-      </div>
-    );
+    switch (document.location.pathname) {
+      case ROUTES.FAQ:
+      case ROUTES.FAQ + "/":
+        return (<div className="nav-bar">
+          <div className="nav-left">
+            <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+          </div>
+        </div>);
+      default:
+        return (
+            <div className="nav-bar">
+              <div className="nav-left">
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+                <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
+                {isAuthenticated && (
+                    <>
+                      <Link id="dashboardLink" to={ROUTES.DASHBOARD}
+                            className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
+                        Dashboard
+                      </Link>
+                      <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
+                            className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
+                        User Management
+                      </Link>
+                    </>
+                )}
+                <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ_TOP)} target="new">FAQ</a>
+                {isLoggedInAsDeveloper ?
+                    <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
+                      Page</Link> : null}
+              </div>
+              {renderAccountButtons()}
+            </div>
+        );
+    }
   }
- 
+
   function getActiveClass(currentRoute, targetRoute) {
     return currentRoute === (targetRoute.split('/')[1]).toUpperCase() ? 'activeLink' : 'ds-u-text-decoration--none';
   }

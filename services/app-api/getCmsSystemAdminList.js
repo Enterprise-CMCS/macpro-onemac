@@ -1,5 +1,3 @@
-import { latestAccessStatus } from "cmscommonlib";
-
 import handler from "./libs/handler-lib";
 import { USER_TYPES } from "./user/userTypes";
 import { queryForUserType } from "./libs/user-table-lib";
@@ -12,7 +10,11 @@ export const main = handler(async (event) => {
     return null;
   }
 
-  return (await queryForUserType(USER_TYPES.CMS_APPROVER))
-    .filter((admin) => latestAccessStatus(admin) === "active")
-    .map(({ id, firstName, lastName }) => ({ email: id, firstName, lastName }));
+  return (await queryForUserType(USER_TYPES.SYSTEM_ADMIN)).map(
+    ({ id, firstName, lastName }) => ({
+      email: id,
+      firstName,
+      lastName,
+    })
+  );
 });

@@ -30,6 +30,12 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
     const handleClose = (value) => {
         setAnchorEl(null);
     };
+    const confirmStatusChange = (item) => {
+        if (window.confirm(item.confirmMessage)) {
+            handleSelected(selectedRow, item.value)
+        }
+        handleClose(item.value)
+    };
 
     return (
         <>
@@ -47,7 +53,7 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
                 {menuItems.map((item, i) => (
                     <React.Fragment key={item.value}>
                         {i !== 0  && <hr/>}
-                        <MenuItem className={classes.root} onClick={() => {if (window.confirm(item.confirmMessage)) {alert("confirmed, inspect console for details");handleSelected(selectedRow, item.value)}handleClose(item.value)}}>{item.label}</MenuItem>
+                        <MenuItem className={classes.root} onClick={()=>confirmStatusChange(item)}>{item.label}</MenuItem>
                     </React.Fragment>))}
                 </div>
 

@@ -68,11 +68,13 @@ module.exports = {
   "Logout of SPA and Waiver Dashboard": function (browser) {
     let title = "SPA and Waiver Dashboard";
     spa.logout();
-    spa.verify.not.containsText("h1", title);
+    browser.pause(timeout*3);
+    spa.verify.visible("@homeHeader");
     browser.pause(timeout);
   },
 
   // from Guli's PR 177
+
   "Verify logout from SPA and Wavier Dashboard as Regular User": function (browser) {
     // elements
     let logout_banner_text = "paper-based state plan amendments (SPAs) and section 1915 waivers.";
@@ -84,5 +86,6 @@ module.exports = {
 
     // Verify the successful logout
     browser.verify.containsText(".home-header-text", logout_banner_text);
+
   },
 };

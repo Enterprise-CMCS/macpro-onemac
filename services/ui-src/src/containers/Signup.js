@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useMemo } from "react";
+import React, { useEffect, useMemo } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 import { ALERTS_MSG } from "../libs/alert-messages";

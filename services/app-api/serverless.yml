@@ -79,7 +79,6 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-
   get:
     handler: get.main
     role: LambdaApiRole
@@ -174,6 +173,16 @@ functions:
     events:
       - http:
           path: getCmsApprovers
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getCmsSystemAdminList:
+    handler: getCmsSystemAdminList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getCmsSystemAdmins
           method: get
           cors: true
           authorizer: aws_iam
