@@ -13,7 +13,7 @@ const Spa = () => {
   const { id, userId } = useParams();
 
   const formInfo = {
-    pageTitle: "Submit New SPA",
+    pageTitle: "Submit New Medicaid SPA",
     readOnlyPageTitle: "SPA Submission Details",
     detailsHeader: "Medicaid SPA",
     requiredUploads: [

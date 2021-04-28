@@ -13,9 +13,9 @@ const SpaRai = () => {
   const { id, userId } = useParams();
 
   const formInfo = {
-    pageTitle: "Respond to SPA RAI",
+    pageTitle: "Respond to Medicaid SPA RAI",
     readOnlyPageTitle: "SPA RAI Response Details",
-    detailsHeader: "SPA RAI",
+    detailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
     optionalUploads: [
       "CMS Form 179",
