@@ -99,6 +99,32 @@ module.exports = {
             }
         },
 
+        chromeHeadless: {
+            desiredCapabilities : {
+                browserName : 'chrome',
+                'goog:chromeOptions': {
+                    // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
+                    // w3c: false,
+                    // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
+                    args: [
+                        "--log-level=3",
+                        "--window-size=1024,768",
+                        //'--no-suites',
+                        //'--ignore-certificate-errors',
+                        //'--allow-insecure-localhost',
+                        '--headless'
+                    ]
+                }
+            },
+
+            webdriver: {
+                port: 9515,
+                server_path: Services.chromedriver.path,
+                cli_args: [
+                    // --verbose
+                ]
+            }
+        },
 
         "unit-test" : {
             unit_tests_mode : true,
