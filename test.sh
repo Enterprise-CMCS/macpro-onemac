@@ -11,6 +11,6 @@ case $1 in
 
 *)
   echo "Testing the new Suites first"
-  (npm install && npm run regression-soon >&1) || (npm install && npm run regression >&1) || exit 1
+  (npm install && npm run regression-soon >&1) || (npm install && npm run regression-master >&1) || exit 1
   ;;
 esac

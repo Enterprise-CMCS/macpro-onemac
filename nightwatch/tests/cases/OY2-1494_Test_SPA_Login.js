@@ -74,15 +74,18 @@ module.exports = {
   },
 
   // from Guli's PR 177
-  "Verify logout from SPA and Wavier Dashboard as Regular User": function (
-    browser
-  ) {
+
+  "Verify logout from SPA and Wavier Dashboard as Regular User": function (browser) {
+    // elements
+    let logout_banner_text = "paper-based state plan amendments (SPAs) and section 1915 waivers.";
+
     // logout from SPA and Wavier Dashboard page
     browser.click("button#myAccountLink");
     browser.click("a#logoutLink");
-    browser.pause(timeout*5);
+    browser.waitForElementPresent(".home-header-text").pause(1000);
 
     // Verify the successful logout
-    spa.verify.visible("@homeHeader");
+    browser.verify.containsText(".home-header-text", logout_banner_text);
+
   },
 };
