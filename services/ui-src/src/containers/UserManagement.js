@@ -1,14 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { ROUTES } from "cmscommonlib";
+import { useLocation, useHistory } from "react-router-dom";
 import { Alert } from "@cmsgov/design-system";
-import { useSortBy, useTable } from "react-table";
+import { ROUTES } from "cmscommonlib";
 
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { useLocation, useHistory } from "react-router-dom";
 import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
 import { getAlert } from "../libs/error-mappings";
 import { useAppContext } from "../libs/contextLib";

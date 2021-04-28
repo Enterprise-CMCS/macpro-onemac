@@ -1,6 +1,5 @@
 import React  from "react";
 import CardButton from "../components/cardButton";
-import PopupMenu from "../components/PopupMenu";
 
 export default function ComponentPage() {
 

@@ -1,17 +1,24 @@
-import React, { useState, useEffect } from "react";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { format } from "date-fns";
+import { Button } from "@cmsgov/design-system";
+import { ROUTES } from "cmscommonlib";
+
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
+import PortalTable from "../components/PortalTable";
 import { AlertBar } from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES } from "cmscommonlib";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { format } from "date-fns";
 import { useAppContext } from "../libs/contextLib";
-import { pendingMessage, deniedOrRevokedMessage, isPending, isActive } from "../libs/userLib";
+import {
+  pendingMessage,
+  deniedOrRevokedMessage,
+  isPending,
+  isActive,
+} from "../libs/userLib";
 
 /**
  * Component containing dashboard
@@ -34,7 +41,12 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAllByAuthorizedTerritories(userProfile.email));
+        if (mounted)
+          setChangeRequestList(
+            await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+              userProfile.email
+            )
+          );
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
@@ -49,81 +61,72 @@ const Dashboard = () => {
     };
   }, [history, location, userData, userProfile]);
 
-  /**
-   * Render the list of change requests.
-   * @param {Array} changeRequests
-   * @returns the change requests
-   */
-  function renderChangeRequestList(changeRequests) {
-    // First sort the list with the lastest record first.
-    let sortedChangeRequests = changeRequests.sort(function (a, b) {
-      let retVal = 0;
-      if (a && b && a.submittedAt && b.submittedAt) {
-        let aDate = new Date(a.submittedAt);
-        let bDate = new Date(b.submittedAt);
-        if (aDate < bDate) retVal = 1;
-        else if (aDate > bDate) retVal = -1;
-      }
-      return retVal;
-    });
+  const renderId = useCallback(
+    ({ row, value }) => (
+      <Link
+        to={`/${row.original.type}/${row.original.id}/${row.original.userId}`}
+      >
+        {value}
+      </Link>
+    ),
+    []
+  );
 
-    //Now generate the list
-    return sortedChangeRequests.map((changeRequest, i) => {
-      let type;
-      let link = "/" + changeRequest.type + "/" + changeRequest.id+ "/" + changeRequest.userId;
-      switch (changeRequest.type) {
-        case CHANGE_REQUEST_TYPES.CHIP_SPA:
-          type = "CHIP SPA";
-          break;
-        case CHANGE_REQUEST_TYPES.CHIP_SPA_RAI:
-          type = "CHIP SPA RAI";
-          break;
-        case CHANGE_REQUEST_TYPES.SPA:
-          type = "Medicaid SPA";
-          break;
+  const getType = useCallback(
+    ({ type }) =>
+      ({
+        [CHANGE_REQUEST_TYPES.CHIP_SPA]: "CHIP SPA",
+        [CHANGE_REQUEST_TYPES.CHIP_SPA_RAI]: "CHIP SPA RAI",
+        [CHANGE_REQUEST_TYPES.SPA]: "Medicaid SPA",
+        [CHANGE_REQUEST_TYPES.WAIVER]: "Waiver",
+        [CHANGE_REQUEST_TYPES.SPA_RAI]: "SPA RAI",
+        [CHANGE_REQUEST_TYPES.WAIVER_RAI]: "Waiver RAI",
+        [CHANGE_REQUEST_TYPES.WAIVER_EXTENSION]: "Temporary Extension Request",
+        [CHANGE_REQUEST_TYPES.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+      }[type] ?? []),
+    []
+  );
 
-        case CHANGE_REQUEST_TYPES.WAIVER:
-          type = "Waiver";
-          break;
+  const renderType = useCallback(
+    ({ value }) => <span className="type-badge">{value}</span>,
+    []
+  );
 
-        case CHANGE_REQUEST_TYPES.SPA_RAI:
-          type = "SPA RAI";
-          break;
+  const renderDate = useCallback(
+    ({ value }) => format(value, "MMM d, yyyy"),
+    []
+  );
 
-        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          type = "Waiver RAI";
-          break;
+  const columns = useMemo(
+    () => [
+      {
+        Header: "SPA ID/Waiver Number",
+        accessor: "transmittalNumber",
+        Cell: renderId,
+      },
+      {
+        Header: "Type",
+        accessor: getType,
+        id: "type",
+        Cell: renderType,
+      },
+      {
+        Header: "State",
+        accessor: "territory",
+      },
+      {
+        Header: "Date Submitted",
+        accessor: "submittedAt",
+        Cell: renderDate,
+      },
+    ],
+    [getType, renderDate, renderId, renderType]
+  );
 
-        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-          type = "Temporary Extension Request";
-          break;
-
-        case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
-          type = "1915(c) Appendix K Amendment";
-          break;
-
-        default:
-          type = "";
-      }
-
-      return (
-        <tr key={i}>
-          <td>
-            <Link to={link}>{changeRequest.transmittalNumber}</Link>
-          </td>
-          <td>
-            <span className="type-badge">{type}</span>
-          </td>
-          <td>
-            <span>{changeRequest.territory}</span>
-          </td>
-          <td>
-            {format(changeRequest.submittedAt, "MMM d, yyyy")}
-          </td>
-        </tr>
-      );
-    });
-  }
+  const initialTableState = useMemo(
+    () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
+    []
+  );
 
   // Render the dashboard
   return (
@@ -210,19 +213,11 @@ const Dashboard = () => {
               <LoadingScreen isLoading={isLoading}>
                 <div>
                   {changeRequestList.length > 0 ? (
-                    <table className="submissions-table">
-                      <thead>
-                        <tr>
-                          <th scope="col">SPA ID/Waiver Number</th>
-                          <th scope="col">Type</th>
-                          <th scope="col">State</th>
-                          <th scope="col">Date Submitted</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        {renderChangeRequestList(changeRequestList)}
-                      </tbody>
-                    </table>
+                    <PortalTable
+                      columns={columns}
+                      data={changeRequestList}
+                      initialState={initialTableState}
+                    />
                   ) : (
                     <EmptyList message="You have no submissions yet." />
                   )}
