@@ -1,7 +1,7 @@
  #
  # Load DynamoDB User Table with User Status and Roles for Existing Submissions
  #
- 
+
  #set -x
 
  if [ -z "$1" ]
@@ -38,7 +38,7 @@
  #
  while IFS= read -r line; do
     email=`echo $line | cut -f1 -d:`
-    territory=`echo $line | cut -f2 -d:`
+    territory=`echo $line | cut -f2 -d: | cut -d\; -f1`
     if [ "${priorEmail}" != "${email}" ]
     then
        if [ "${priorEmail}" != "" ]
