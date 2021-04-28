@@ -15,7 +15,8 @@ custom:
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   userAccessEmailSource:  ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
-  reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "spa-reply@cms.hhs.gov"}
+  reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
+  reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   warmupEnabled:
     production: true
@@ -33,6 +34,7 @@ custom:
   dynamodb:
     stages:
       - dev
+      - ${env:BRANCH}
     start:
       inMemory: true
       migrate: true
@@ -63,9 +65,11 @@ provider:
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
+    reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
     systemAdminEmail: ${self:custom.systemAdminEmail}
 
 functions:
+  # For DynamoDB Change Requests Table 
   submit:
     handler: submit.main
     role: LambdaApiRole
@@ -75,13 +79,22 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-
   get:
     handler: get.main
     role: LambdaApiRole
     events:
       - http:
-          path: get/{id}
+          path: get/{id}/{userId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getAllByAuthorizedTerritories:
+    handler: getAllByAuthorizedTerritories.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getAllByAuthorizedTerritories
           method: get
           cors: true
           authorizer: aws_iam
@@ -115,6 +128,7 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  # For DynamoDB User Table 
   getUser:
     handler: getUser.main
     role: LambdaApiRole
@@ -140,6 +154,36 @@ functions:
       - http:
           path: putUser
           method: put
+          cors: true
+          authorizer: aws_iam
+
+  getStateAdminList:
+    handler: getStateAdminList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getStateAdmins
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getCmsApproverList:
+    handler: getCmsApproverList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getCmsApprovers
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getCmsSystemAdminList:
+    handler: getCmsSystemAdminList.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getCmsSystemAdmins
+          method: get
           cors: true
           authorizer: aws_iam
 

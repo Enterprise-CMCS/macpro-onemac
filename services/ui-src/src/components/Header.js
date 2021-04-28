@@ -1,16 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "cmscommonlib";
+import { getCurrentRoute } from "../utils/routeUtils";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../images/OneMAC_logoLight1.svg"
-
-
+import { ROUTES as RouteList } from "cmscommonlib";
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
@@ -103,26 +103,47 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar(isLoggedInAsDeveloper) {
-    return (
-      <div className="nav-bar">
-        <div className="nav-left">
-          <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-          <Link to={ROUTES.HOME}>About</Link>
-          <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
-            Dashboard
-          </Link>
-          <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}>
-            User Management
-          </Link>
-          <Link to={ROUTES.FAQ}>FAQ</Link>
-          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
-        </div>
-        {renderAccountButtons()}
-      </div>
-    );
+  function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated) {
+    switch (document.location.pathname) {
+      case ROUTES.FAQ:
+      case ROUTES.FAQ + "/":
+        return (<div className="nav-bar">
+          <div className="nav-left">
+            <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+          </div>
+        </div>);
+      default:
+        return (
+            <div className="nav-bar">
+              <div className="nav-left">
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+                <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
+                {isAuthenticated && (
+                    <>
+                      <Link id="dashboardLink" to={ROUTES.DASHBOARD}
+                            className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
+                        Dashboard
+                      </Link>
+                      <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
+                            className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
+                        User Management
+                      </Link>
+                    </>
+                )}
+                <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ_TOP)} target="new">FAQ</a>
+                {isLoggedInAsDeveloper ?
+                    <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
+                      Page</Link> : null}
+              </div>
+              {renderAccountButtons()}
+            </div>
+        );
+    }
   }
 
+  function getActiveClass(currentRoute, targetRoute) {
+    return currentRoute === (targetRoute.split('/')[1]).toUpperCase() ? 'activeLink' : 'ds-u-text-decoration--none';
+  }
   /**
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
@@ -197,7 +218,9 @@ function Header(props) {
           <Button href={getRegisterUrl()} inversed className="register-link">
             Register
           </Button>
-          <Button href={getSignInUrl()} inversed>
+          <Button href={getSignInUrl()}
+            id="loginBtn"
+            inversed>
             Login
           </Button>
           {showDevLogin && (
@@ -227,7 +250,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar(isLoggedInAsDeveloper)}
+      {renderNavBar(isLoggedInAsDeveloper, getCurrentRoute(useLocation().pathname), isAuthenticated)}
     </div>
   );
 }

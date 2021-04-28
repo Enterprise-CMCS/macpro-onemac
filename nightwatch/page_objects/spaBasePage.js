@@ -3,14 +3,14 @@ const path = require('path');
 const commands = {
 
     // SS-YY-NNNN-xxxx or SS-YY-NNNN
-    getTransmitNumber: function (optional = true, state = "VA") {
+    getTransmitNumber: function (optional = true, state = "VA", file = "spa.txt") {
         let rand = (min = 0, max = 10000) => this.props.getRandomNumber(min, max);
         let group = [state, rand(0, 100), rand()];
         if (optional) {
             group.push(rand());
         }
         let id = group.join("-");
-        const spaFile = path.join(__dirname, "spa.txt");
+        const spaFile = path.join(__dirname, file);
         fs.writeFileSync(spaFile, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
@@ -159,7 +159,7 @@ module.exports = {
         devSubmitBtn : 'input[type=submit]',
         devUserField : '[id=email]',
         userField : '[id=okta-signin-username]',
-        loginBtn: 'div.nav-right > button',
+        loginBtn: '[id=loginBtn]',
         titleBar : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
         manageAccountLink: "[id=manageAccountLink]",
@@ -175,7 +175,8 @@ module.exports = {
         tandc: "[id=tandc]",
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
-        uploadFields: '[id*=uploader-input]'
+        uploadFields: '[id*=uploader-input]',
+        homeHeader: '[class=home-header-angle-box]'
     },
 
     commands : [commands],

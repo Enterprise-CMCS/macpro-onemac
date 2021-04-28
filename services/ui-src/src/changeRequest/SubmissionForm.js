@@ -4,7 +4,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ROUTES } from "cmscommonlib";
+import { ROUTES, territoryList } from "cmscommonlib";
 import PropTypes from "prop-types";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
@@ -12,7 +12,6 @@ import { Alert } from "@cmsgov/design-system";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import { getAlert } from "../libs/error-mappings";
-import { territoryList } from "../libs/territoryLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.

@@ -10,7 +10,7 @@ import { ROUTES } from "cmscommonlib";
  */
 const ChipSpa = () => {
   // Optional ID parameter from the URL
-  const { id } = useParams();
+  const { id, userId } = useParams();
 
   const formInfo = {
     pageTitle: "Submit New CHIP SPA",
@@ -30,15 +30,15 @@ const ChipSpa = () => {
       idHintText: "Must follow the format SS-YY-NNNN-xxxx",
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
       idMustExist: false,
       errorLevel: "error",
     },
 
   };
 
-  if (id) {
-    return <SubmissionView formInfo={formInfo} id={id} />;
+  if (id && userId) {
+    return <SubmissionView formInfo={formInfo} id={id} userId={userId} />;
   } else {
     return (
       <SubmissionForm

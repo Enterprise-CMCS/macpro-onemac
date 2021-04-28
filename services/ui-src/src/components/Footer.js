@@ -7,7 +7,7 @@ function Footer() {
         <>
             <div>
                 <section className="footer-top-container">
-                    <div class="ds-l-row">
+                    <div className="ds-l-row">
                         <div className="ds-l-col--7 footer-medicaid-container">
                             <img src="/assets/images/footer/logo-MedicaidGov.svg"
                                 alt="Medicaid.gov logo" />

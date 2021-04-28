@@ -12,18 +12,24 @@ export const getAlert = (errorCode) => {
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
       break;
     // app-api/response-codes.js    SUCCESSFULLY_SUBMITTED: "SC000",
+    case "UR000":
     case "SC000":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
+      break;
+    // app-api/response-codes.js    CALLING_USER_PENDING: "UR043",
+    // app-api/response-codes.js    CALLING_USER_REVOKED: "UR044",
+    // app-api/response-codes.js    CALLING_USER_DENIED: "UR045",
+    // we return these, but Front End currently does not respond with an alert
+    case "UR043":
+    case "UR044":
+    case "UR045":
+      returnAlert = ALERTS_MSG.NONE;
       break;
     // app-api/response-codes.js    VALIDATION_ERROR: "VA000",
     case "VA000":
     case "UR040":
     case "UR041":
     case "UR042":
-    case "UR043":
-    case "UR044":
-    case "UR045":
-    case "UR000":
     case "UR001":
     case "UR002":
       returnAlert = ALERTS_MSG.SUBMISSION_ERROR;
