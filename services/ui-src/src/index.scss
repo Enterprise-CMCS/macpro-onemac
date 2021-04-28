@@ -615,7 +615,27 @@ input[type="file"] {
     color: $color-gray;
   }
 }
+
 .user-table {
+  #nameColHeader {
+    width: 20%;
+  }
+
+  #emailColHeader {
+    min-width: 30%;
+  }
+
+  #stateColHeader {
+    width: 75px;
+  }
+
+  #statusColHeader {
+    width: 15%;
+  }
+
+  #personnelActionsColHeader {
+    width: 150px;
+  }
 
   .user-state {
     color: $color-black;
