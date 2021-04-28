@@ -1,6 +1,8 @@
 import * as React from "react";
 import { useSortBy, useTable } from "react-table";
 
+import Expand from "../images/Expand.svg";
+
 export default function PortalTable({ ...props }) {
   const {
     getTableProps,
@@ -27,7 +29,21 @@ export default function PortalTable({ ...props }) {
               >
                 {column.render("Header")}
                 <span>
-                  {column.isSorted ? (column.isSortedDesc ? " 🔽" : " 🔼") : ""}
+                  {column.isSorted ? (
+                    column.isSortedDesc ? (
+                      <>
+                        {" "}
+                        <img src={Expand} alt="🔽" />
+                      </>
+                    ) : (
+                      <>
+                        {" "}
+                        <img src={Expand} alt="🔼" style={{ transform: "rotate(180deg)" }} />
+                      </>
+                    )
+                  ) : (
+                    ""
+                  )}
                 </span>
               </th>
             ))}
