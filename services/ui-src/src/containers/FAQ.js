@@ -76,17 +76,17 @@ const FAQ = () => {
           </a>
         </p>
           <p>Note: “*” indicates a required attachment.</p>
-        <table>
+        <table className="faq-table">
           <colgroup>
             <col />
             <col />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -180,17 +180,17 @@ const FAQ = () => {
         <h4><span>What are the attachments for a Medicaid response to Request for Additional
             Information (RAI)?</span></h4>
         <p><span>Note: “*” indicates a required attachment.</span></p>
-        <table >
+        <table className="faq-table" >
           <colgroup>
             <col />
             <col />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -216,17 +216,17 @@ const FAQ = () => {
         </table>
         <h4><span>What are the attachments for a CHIP SPA?</span></h4>
         <p><span>Note: “*” indicates a required attachment.</span></p>
-        <table data-layout="default" className="confluenceTable">
+        <table className="faq-table">
           <colgroup>
             <col />
             <col />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -301,17 +301,17 @@ const FAQ = () => {
         <h4><span>What are the attachments for a CHIP SPA response to Request for Additional
             Information (RAI)?</span></h4>
         <p><span>Note: “*” indicates a required attachment.</span></p>
-        <table data-layout="default" className="confluenceTable">
+        <table className="faq-table">
           <colgroup>
             <col />
             <col />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -415,17 +415,17 @@ const FAQ = () => {
         <h4><span>What attachments are needed to submit a 1915(b) waiver action?</span></h4>
         <p><span>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe
             the requirements for submitting section 1915(b) and 1915(c) waivers.</span></p>
-        <table data-layout="default" className="confluenceTable">
+        <table className="faq-table">
           <colgroup>
             <col/>
             <col />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -493,17 +493,17 @@ const FAQ = () => {
         </table>
         <h4>What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?</h4>
         <p><span>Note: “*” indicates a required attachment.</span></p>
-        <table data-layout="default" className="confluenceTable">
+        <table className="faq-table">
           <colgroup>
             <col  />
             <col  />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -531,17 +531,17 @@ const FAQ = () => {
         <h4><span>What are the attachments for a 1915(b) Waiver - Request for Temporary
             Extension?</span></h4>
         <p><span>Note: “*” indicates a required attachment.</span></p>
-        <table data-layout="default" className="confluenceTable">
+        <table className="faq-table">
           <colgroup>
             <col  />
             <col  />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
@@ -574,17 +574,17 @@ const FAQ = () => {
         <p><span>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe
             the requirements for submitting section 1915(b) and 1915(c) waivers.</span></p>
         <p><span>Note: “*” indicates a required attachment.</span></p>
-        <table data-layout="default" className="confluenceTable">
+        <table className="faq-table">
           <colgroup>
             <col  />
             <col  />
           </colgroup>
           <tbody>
           <tr>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Attachment Name</span></strong></p>
             </th>
-            <th className="confluenceTh">
+            <th >
               <p><strong><span>Description</span></strong></p>
             </th>
           </tr>
