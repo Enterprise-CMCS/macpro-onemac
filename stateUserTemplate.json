@@ -1,0 +1,36 @@
+{
+  "id": {
+    "S": <replace-email>
+  },
+  "type": {
+    "S": "stateuser"
+  },
+  "attributes": {
+    "L": [
+      {
+        "M": {
+          "stateCode": {
+            "S": <replace-territory>
+          },
+          "history": {
+            "L": [
+              {
+                "M": {
+                  "status": {
+                    "S": "active"
+                  },
+                  "date": {
+                    "N": <replace-date>
+                  },
+                  "doneBy": {
+                    "S": "sabrina.mccrae@cms.hhs.gov"
+                  }
+                }
+              }
+            ]
+          }
+        }
+      }
+    ]
+  }
+}
