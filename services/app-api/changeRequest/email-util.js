@@ -27,3 +27,9 @@ export function getCMSDateFormat(theTimestamp) {
 
     return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
+
+export function getCMSDateFormatNow(theTimestamp) {
+    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
+
+    return theDate.toFormat("DDDD '@' t ZZZZ");
+}

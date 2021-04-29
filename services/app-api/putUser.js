@@ -8,7 +8,7 @@ import { isEmpty, isObject } from "lodash";
 import { territoryCodeList } from "cmscommonlib";
 import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
-import { getCMSDateFormat } from "./changeRequest/changeRequest-util";
+import { getCMSDateFormatNow } from "./changeRequest/email-util";
 
 /**
  * Create / Update a user or change User status
@@ -182,7 +182,12 @@ const populateUserAttributes = (
   user = { attributes: [] },
   doneByUser = {}
 ) => {
-  let isSelfInflicted = user.id === doneByUser.id;
+  var isSelfInflicted;
+  if (doneByUser) {
+    isSelfInflicted = user.id === doneByUser.id;
+  } else {
+    isSelfInflicted = false;
+  }
   console.log("user is: ", user);
   console.log("user attributes: ", user.attributes);
   console.log("doneBy is: ", doneByUser);
@@ -541,11 +546,14 @@ const constructUserEmail = (userEmailId, input) => {
 
   input.attributes[0].stateCode
     ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
-        updatedStatus
-      ].bodyHTML.replace("[insert state]", input.attributes[0].stateCode))
-    : (email.HTML =
-        ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML);
-  email.HTML.replace("[insert date/time stamp]", getCMSDateFormat(Date.now()));
+      updatedStatus
+    ].bodyHTML
+      .replace("[insert state]", input.attributes[0].stateCode)
+      .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())))
+    : (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
+      updatedStatus
+    ].bodyHTML
+      .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())));
   return { email };
 };
 
