@@ -1,7 +1,6 @@
  #
  # Load DynamoDB User Table with User Status and Roles for Existing Submissions
  #
-
  #set -x
 
  if [ -z "$1" ]
