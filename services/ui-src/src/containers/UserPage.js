@@ -61,7 +61,7 @@ const transformAccesses = (user = {}) => {
       }));
 
     case ROLES.CMS_APPROVER:
-      return user.attributes ?? [];
+      return [{ status: latestAccessStatus(user) }];
 
     case ROLES.SYSTEM_ADMIN:
     default:
