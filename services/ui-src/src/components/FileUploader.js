@@ -246,6 +246,7 @@ export default class FileUploader extends Component {
             </div>
           </td>
           <td className="uploader-input-cell">
+            <div className="center">
             <label
               className={
                 isDisabled
@@ -273,6 +274,7 @@ export default class FileUploader extends Component {
                 }
               />
             </label>
+            </div>
           </td>
           <td>
             {uploader.hasFile
@@ -310,7 +312,7 @@ export default class FileUploader extends Component {
         <p className="req-message">
           Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
         </p>
-        {this.props.requiredUploads ?
+        {this.props.requiredUploads?.length > 0 ?
         <p className="req-message">
           <span className="required-mark">*</span> indicates required
           attachment.
