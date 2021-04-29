@@ -545,7 +545,7 @@ const constructUserEmail = (userEmailId, input) => {
       ].bodyHTML.replace("[insert state]", input.attributes[0].stateCode))
     : (email.HTML =
         ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML);
-  email.HTML.replace("[insert date/time stamp]", getCMSDateFormat(Date.now()))
+  email.HTML.replace("[insert date/time stamp]", getCMSDateFormat(Date.now()));
   return { email };
 };
 
