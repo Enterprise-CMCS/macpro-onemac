@@ -8,6 +8,7 @@ import { isEmpty, isObject } from "lodash";
 import { territoryCodeList } from "cmscommonlib";
 import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
+import { getCMSDateFormat } from "./changeRequest-util";
 
 /**
  * Create / Update a user or change User status
@@ -544,6 +545,7 @@ const constructUserEmail = (userEmailId, input) => {
       ].bodyHTML.replace("[insert state]", input.attributes[0].stateCode))
     : (email.HTML =
         ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML);
+  email.HTML.replace("[insert date/time stamp]", getCMSDateFormat(Date.now()))
   return { email };
 };
 
