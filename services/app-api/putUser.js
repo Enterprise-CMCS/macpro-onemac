@@ -8,7 +8,7 @@ import { isEmpty, isObject } from "lodash";
 import { territoryCodeList } from "cmscommonlib";
 import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
-import { getCMSDateFormat } from "./changeRequest-util";
+import { getCMSDateFormat } from "./changeRequest/changeRequest-util";
 
 /**
  * Create / Update a user or change User status
