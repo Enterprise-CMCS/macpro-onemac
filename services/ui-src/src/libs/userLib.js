@@ -26,22 +26,22 @@ export const deniedOrRevokedMessage = {
 };
 
 export const grantConfirmMessage = {
-  stateadmin: "stateadmin Grant Acccess Action Confirmation - Need content",
+  stateadmin: "Warning\n\nThis will activate the selected user’s account for state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
   cmsapprover:
-    "Warning!\n\nThis will activate the selected user’s account for State Systems Administrator access. This role approves State Submitters. A notifcation will be emailed to the user.\n\nAre you sure you want to proceed?",
-  systemadmin: "systemadmin Grant Acccess Action Confirmation - Need content",
+    "Warning\n\nThis will activate the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  systemadmin: "Warning\n\nThis will activate the selected user’s account for CMS Role Approver access.  This role approves State Systems Administrator. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 export const denyConfirmMessage = {
-  stateadmin: "stateadmin Deny Acccess Action Confirmation - Need content",
-  cmsapprover: "cmsapprover Deny Acccess Action Confirmation - Need content",
-  systemadmin: "systemadmin Deny Acccess Action Confirmation - Need content",
+  stateadmin: "Warning\n\nThis will deny the selected user’s account state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  cmsapprover: "Warning\n\nThis will deny the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  systemadmin: "Warning\n\nThis will deny the selected user’s account for CMS Role Approver access.  This role approves State Systems Administrator. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 export const revokeConfirmMessage = {
-  stateadmin: "stateadmin Revoke Acccess Action Confirmation - Need content",
-  cmsapprover: "cmsapprover Revoke Acccess Action Confirmation - Need content",
-  systemadmin: "systemadmin Revoke Acccess Action Confirmation - Need content",
+  stateadmin: "Warning\n\nThis will revoke the selected user’s account for state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  cmsapprover: "Warning\n\nThis will revoke the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  systemadmin: "Warning\n\nThis will revoke the selected user’s account for CMS Role Approver access.  This role approves State Systems Administrator. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 /**
