@@ -40,12 +40,8 @@ const UserManagement = () => {
   const location = useLocation();
 
   const updateList = useCallback(
-    (mounted) => {
-      let shouldState = true;
-      if (userProfile.userData.type !== "cmsapprover") {
-        shouldState = false;
-      }
-      setIncludeStateCode(shouldState);
+    () => {
+      setIncludeStateCode(userProfile.userData.type === "cmsapprover");
       UserDataApi.getMyUserList(userProfile.email)
         .then((ul) => {
           console.log("user List: ", ul);
@@ -80,13 +76,7 @@ const UserManagement = () => {
     if (location.state) newAlert = location.state.showAlert;
     if (mounted) setAlert(newAlert);
 
-    let shouldState = true;
-    if (userProfile.userData.type !== "cmsapprover") {
-      shouldState = false;
-    }
-    if (mounted) setIncludeStateCode(shouldState);
-
-    updateList(mounted);
+    if (mounted) updateList();
 
     return function cleanup() {
       mounted = false;
@@ -221,7 +211,7 @@ const UserManagement = () => {
                 returnCode
               ) {
                 setAlert(getAlert(returnCode));
-                updateList(true);
+                updateList();
               });
             } catch (err) {
               setAlert(ALERTS_MSG.SUBMISSION_ERROR);
