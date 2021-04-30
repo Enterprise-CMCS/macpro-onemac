@@ -1,19 +1,13 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
-$input-border-color: #AEB0B5;
 $input-border-radius: 3px;
-$lochmara: #0071BC;
-$matisse: #205493;
-$iron: #D6D7D9;
-$shuttle-gray: #5B616B;
-$mine-shaft: #212121;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .faq-table {
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid $color-black;
 }
 
 td {
@@ -99,7 +93,7 @@ label {
   @extend .ds-u-padding-bottom--2;
   font-weight: 400;
   background-color: $color-primary-darker;
-  color: #fff;
+  color: $color-white;
 
   h1 {
     font-size: 36px;
@@ -128,7 +122,7 @@ ul {
     }
     tr {
       height: 72px;
-      border-bottom: 1px solid #5B616B;
+      border-bottom: 1px solid $color-gray;
       vertical-align: text-top;
     }
     tr:nth-last-child(1) {
@@ -272,7 +266,7 @@ input[type="file"] {
   }
   .ds-c-review__body {
     @extend .cms-review-read-only-textbox-body;
-    border: 2px solid #aeb0b5;
+    border: 2px solid $color-gray-light;
   }
 
   .form-subheader-message {
@@ -282,7 +276,7 @@ input[type="file"] {
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
-    box-shadow: 2px 2px 4px #D6D7D9;
+    box-shadow: 2px 2px 4px $color-gray-lighter;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
@@ -451,7 +445,7 @@ input[type="file"] {
   padding: 24px 0 0 16px;
   font-family: Open Sans;
   font-style: normal;
-  color: #FFFFFF;
+  color: $color-white;
   line-height: 32px;
   .card-button-title {
     font-weight: bold;
@@ -470,7 +464,7 @@ input[type="file"] {
 .card-button-select {
   min-width: 101px;
   height: 37px;
-  background: #FFFFFF;
+  background: $color-white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
   border-radius: 8px;
   font-family: Open Sans;
@@ -744,7 +738,7 @@ input[type="file"] {
 .activeLink, .activeLink:hover, .activeLink:focus {
   text-decoration: underline;
   text-decoration-style: solid;
-  text-decoration-color: white;
+  text-decoration-color: $color-white;
   text-decoration-thickness: 4px;
   text-decoration-skip-ink: none;
 }
@@ -802,7 +796,7 @@ input[type="file"] {
 
 .dropdown-content a {
   float: none;
-  color: white;
+  color: $color-white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -819,7 +813,7 @@ input[type="file"] {
     font-family: "Open Sans", Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    color: #212121;
+    color: $color-base;
     box-sizing: none;
 }
 
@@ -830,7 +824,7 @@ input[type="file"] {
 }
 
 .css-1aarvou-DropdownHandleComponent.e1vudypg0 {
-   color: #ffffff !important;
+  color: $color-white !important;
 }
 
 .react-dropdown-select {
@@ -845,7 +839,7 @@ input[type="file"] {
   position: relative;
   left: -10px;
   top: -65px;
-  background-color: #0071BC !important;
+  background-color: $color-primary !important;
   height: 28px;
   font-family: Open Sans;
   font-style: normal;
@@ -866,8 +860,8 @@ input[type="file"] {
   @extend .app-bar;
   @extend .ds-u-display--flex;
   @extend .ds-u-justify-content--between;
-  background: $lochmara;
-  color: white;
+  background: $color-primary;
+  color: $color-white;
   margin: 0;
   width: 100%;
   max-width: none;
@@ -897,11 +891,11 @@ input[type="file"] {
   text-align: justify;
 }
 .footer-email {
-  color: white;
+  color: $color-white;
 }
 .home-header {
   height: 500px;
-  background: linear-gradient(180deg,$lochmara 0%, $matisse 100%);
+  background: linear-gradient(180deg, $color-primary 0%, $color-primary-darker 100%);
   position: relative;
 }
 .home-header-text{
@@ -916,7 +910,7 @@ input[type="file"] {
   line-height: 47px;
   letter-spacing: 0px;
   text-align: left;
-  color: white;
+  color: $color-white;
 }
 .home-header-image-box{
   position: absolute;
@@ -929,7 +923,7 @@ input[type="file"] {
 }
 .home-header-angle-box {
   border-top: 120px solid transparent;
-  border-left: 100vw solid white;
+  border-left: 100vw solid $color-white;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -940,13 +934,13 @@ input[type="file"] {
 }
 .home-footer-angle-box {
   height: 117px;
-  border-top: 120px solid white;
+  border-top: 120px solid $color-white;
   border-right: 100vw solid transparent;
   bottom: 0;
   left: 0;
 }
 .home-content-box {
-  background-color: white;
+  background-color: $color-white;
   padding-top: 80px;
   // Reusable styles
   @mixin title-font($size, $lineHeight, $weight) {
@@ -962,27 +956,27 @@ input[type="file"] {
     @include title-font(24px, 30px, 700);
     padding-top: 32px;
     padding-bottom: 36px;
-    color: $mine-shaft;
+    color: $color-base;
     width: 100%;
   }
   .vertical-line {
-    border-left: 2px solid $iron;
+    border-left: 2px solid $color-gray-lighter;
     margin-left: 11px;
   }
   .sub-title{
     @include title-font(18px, 24px, 700);
-    color: $shuttle-gray;
+    color: $color-gray;
   }
   .text {
     @include title-font(16px, 24px, 400);
     width: 352px;
-    color: $mine-shaft;
+    color: $color-base;
     width: 100%;
   }
   .home-content-left-box {
     margin-left: 125px;
     width: 464px;
-    border: 1px solid $iron;
+    border: 1px solid $color-gray-lighter;
     border-radius:4px;
     @include title-font(24px, 30px, 700); // params: font size, line height
     .vertical-line-64 {
@@ -1036,7 +1030,7 @@ input[type="file"] {
 .multi-select-dropdown-container[type="selectstate"] {
     position: relative;
     align-items: left;
-    background-color: #ffffff;
+    background-color: $color-white;
     padding: 15px;
     width: 575px;
     height: 540px;
@@ -1046,9 +1040,9 @@ input[type="file"] {
 .multi-select-dropdown-container[type="selectprofile"] {
     position: relative;
     align-items: left;
-    background-color: #ffffff;
+    background-color: $color-white;
     border-radius: 3px;
-    border-color: #d6d7d9;
+    border-color: $color-gray-lighter;
     border-style: solid;
     border-width: 1px;
     padding: 15px;
@@ -1058,13 +1052,13 @@ input[type="file"] {
 }
 
 .react-dropdown-select-item-selected {
-     background-color: #0071BC !important;
+     background-color: $color-primary !important;
 }
 
 .multi-select-dropdown-submit-button {
       position: relative;
-      background-color: #0071bc;
-      color: #fff;
+      background-color: $color-primary;
+      color: $color-white;
       border-radius: 3px;
       align-self: center;
       font-family: Open Sans;
@@ -1082,7 +1076,7 @@ input[type="file"] {
 
 .component-submit-solid {
   @extend .ds-u-padding-top--2;
-  border-top: 3px solid #D6D7D9;
+  border-top: 3px solid $color-gray-lighter;
   top: 210px;
   position: relative;
 }
@@ -1096,8 +1090,7 @@ font-weight: bold;
 font-size: 24px;
 line-height: 30px;
 
-color: #000000;
-
+color: $color-black;
 }
 
 .multi-select-header-profile {
@@ -1107,8 +1100,7 @@ font-weight: normal;
 font-size: 16px;
 line-height: 24px;
 
-color: #212121;
-
+color: $color-base;
 }
 
 .multi-select-dropdown-cancel-button {
@@ -1126,8 +1118,7 @@ line-height: 21px;
 text-align: center;
 text-decoration-line: underline;
 
-color: #0872B9;
-
+color: $color-primary;
 }
 
 .portalTable {
@@ -1137,11 +1128,10 @@ font-style: normal;
 font-weight: normal;
 font-size: 16px;
 line-height: 24px;
-color: #0071BC;
+color: $color-primary;
 }
 
 .MuiDataGrid-colCellTitle {
-
 font-family: Open Sans;
 font-style: normal;
 font-weight: 600;font-size: 14px;
@@ -1150,24 +1140,21 @@ line-height: 20px;
 display: flex;
 align-items: center;
 
-color: #212121;
-
+color: $color-base;
 }
 
 .MuiPopover-paper {
- background: #0071BC !important;
- color: #ffffff !important;
-
-
+ background: $color-primary !important;
+ color: $color-white !important;
 }
+
 .MuiListItem-button	 {
   font-family: Open Sans !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 12px !important;
-  background: #0071BC !important;
-  color: #ffffff !important;
-
+  background: $color-primary !important;
+  color: $color-white !important;
 }
 
 .MuiPopover-paper {
