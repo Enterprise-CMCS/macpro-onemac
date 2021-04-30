@@ -12,6 +12,11 @@ export default function PortalTable({ ...props }) {
     prepareRow,
   } = useTable(
     {
+      // don't revert to original sort state when `data` prop changes
+      autoResetSortBy: false,
+      // once a column has been sorted, only toggle between sort orders - do
+      // not go to original state
+      disableSortRemove: true,
       ...props,
     },
     useSortBy
@@ -33,12 +38,16 @@ export default function PortalTable({ ...props }) {
                     column.isSortedDesc ? (
                       <>
                         {" "}
-                        <img src={Expand} alt="🔽" />
+                        <img
+                          src={Expand}
+                          alt="🔼"
+                          style={{ transform: "rotate(180deg)" }}
+                        />
                       </>
                     ) : (
                       <>
                         {" "}
-                        <img src={Expand} alt="🔼" style={{ transform: "rotate(180deg)" }} />
+                        <img src={Expand} alt="🔽" />
                       </>
                     )
                   ) : (
