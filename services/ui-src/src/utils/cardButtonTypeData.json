@@ -27,7 +27,7 @@
   },
   "stateuser": {
     "title": "State Submitter",
-    "desc": "Responsible for submitting plans",
+    "desc": "Responsible for submitting packages",
     "navigateTo": "/signup/state",
     "pushState": {
       "role": "stateuser"
