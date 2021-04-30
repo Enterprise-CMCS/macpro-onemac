@@ -1,6 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { ERROR_MSG } from "../libs/error-messages";
 
 /**
  * SPA RAI submission specific email generation functions.
@@ -36,7 +36,7 @@ async fieldsValid(data) {
         } else {
           console.log("result.Item does not exist");
           areFieldsValid = false;
-          whyNot = RESPONSE_CODE.ID_NOT_FOUND;
+          whyNot = ERROR_MSG.ID_NOT_FOUND;
         }
 
       } catch (error) {
@@ -64,15 +64,14 @@ async fieldsValid(data) {
             <br><b>SPA ID</b>: ${data.transmittalNumber}
         </p>
         <p>
-            <b>Additional Information</b>:
+            <b>Summary</b>:
             <br>${data.summary}
         </p>
         <p>
             <b>Files</b>:
             ${getLinksHtml(data.uploads)}
         </p>
-        <br>
-        <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
+        <p><br>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
         <p>Thank you!</p>
     `;
 
@@ -99,11 +98,11 @@ async fieldsValid(data) {
             <br><b>Submitter email</b>: ${data.user.email}
         </p>
         <p>
-            <b>Additional Information</b>:<br>
-            ${data.summary}
+            <b>Summary</b>:
+            <br>${data.summary}
         </p>
-        <br>
         <p>
+            <br>
             This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
             You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
             as day zero. The 90th day will be 90 calendar days from that date.
