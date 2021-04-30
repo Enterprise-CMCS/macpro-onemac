@@ -102,6 +102,7 @@ const Dashboard = () => {
       {
         Header: "SPA ID/Waiver Number",
         accessor: "transmittalNumber",
+        disableSortBy: true,
         Cell: renderId,
       },
       {
