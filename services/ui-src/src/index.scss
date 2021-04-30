@@ -823,16 +823,18 @@ input[type="file"] {
    left: 16px
 }
 
-.css-1aarvou-DropdownHandleComponent.e1vudypg0 {
-  color: $color-white !important;
+.react-dropdown-select-dropdown-handle {
+  color: $color-white;
 }
 
 .react-dropdown-select {
- height: 22px !important;
+  height: 22px;
 }
+
 .react-dropdown-select-input {
-   left: 25px;
-   top: 8px;
+  position: absolute;
+  left: 30px;
+  top: 8px;
 }
 
 .react-dropdown-select-option {
