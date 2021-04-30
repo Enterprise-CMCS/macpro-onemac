@@ -246,7 +246,6 @@ export default class FileUploader extends Component {
             </div>
           </td>
           <td className="uploader-input-cell">
-            <div className="center">
             <label
               className={
                 isDisabled
@@ -274,7 +273,6 @@ export default class FileUploader extends Component {
                 }
               />
             </label>
-            </div>
           </td>
           <td>
             {uploader.hasFile
