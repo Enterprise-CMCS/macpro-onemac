@@ -151,7 +151,7 @@ const retrieveUsers = async (input) => {
 
   if (!doneByUser || isEmpty(doneByUser)) {
     if (input.isPutUser) {
-      doneByUser = null;
+      doneByUser = user;
     } else {
       console.log(
         `Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`
@@ -182,12 +182,7 @@ const populateUserAttributes = (
   user = { attributes: [] },
   doneByUser = {}
 ) => {
-  var isSelfInflicted;
-  if (doneByUser) {
-    isSelfInflicted = user.id === doneByUser.id;
-  } else {
-    isSelfInflicted = false;
-  }
+  let isSelfInflicted = user.id === doneByUser.id;
   console.log("user is: ", user);
   console.log("user attributes: ", user.attributes);
   console.log("doneBy is: ", doneByUser);
