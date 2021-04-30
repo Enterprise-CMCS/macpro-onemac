@@ -857,59 +857,49 @@ input[type="file"] {
 }
 
 .footer-top-container {
-  @extend .brand-bar;
+  @extend .app-bar;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-align-items--center;
+  @extend .ds-u-justify-content--between;
+  @extend .ds-u-padding-bottom--3;
   background: $color-primary-alt-lightest;
-  padding-left: 8rem;
-  padding-right: 8rem;
 }
 .footer-bottom-container {
+  @extend .app-bar;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
   background: $lochmara;
   color: white;
   margin: 0;
   width: 100%;
   max-width: none;
-}
-.footer-medicaid-container {
-  padding-top: 0;
-  padding-bottom: 6px;
-  padding-left: 60px;
-  margin: auto;
-}
-.footer-fed-gov-logo {
-  @extend .ds-l-col--2;
-  min-width: 80px;
-}
-.footer-fed-gov-text{
-  padding-top: 5px;
-  padding-bottom: 15px;
-  font-family: Open Sans;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-align: left;
-}
-.footer-email {
-  color: white;
-}
-.footer-bottom-container {
-  @extend .ds-l-row ;
-  @extend .ds-u-padding--1;
   font-family: Open Sans;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 2.1;
   letter-spacing: 0;
-  text-align: left;
 }
-.footer-email-container{
-  padding-left: 11.5rem;
-  @extend .ds-l-col--8;
+.footer-government-blurb {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-align-items--center;
+  max-width: 480px;
 }
-.footer-address {
-  text-align: right;
+.footer-fed-gov-logo {
+  min-width: 80px;
+}
+.footer-fed-gov-text{
+  padding-left: 10px;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: justify;
+}
+.footer-email {
+  color: white;
 }
 .home-header {
   height: 500px;
