@@ -10,11 +10,14 @@
   "scripts": {
     "test": "node nightwatch -c ./nightwatch/conf/nightwatch.conf.js",
     "chrome": "npm test -- -e chrome",
+    "chromeHeadless": "npm test -- -e chromeHeadless",
     "cross-browser": "npm test -- -e chrome,firefox",
     "firefox": "npm test -- -e firefox",
     "unit": "npm test -- -e unit-test --skiptags=smoke,regression,integration",
     "regression": "npm run chrome -- --tag regression --skiptags unit,integration,devEnv",
-    "regression-dev": "npm run chrome -- --tag regression,devEnv --skiptags unit,integration",
+    "regression-dev": "npm run chromeHeadless -- --tag regression,devEnv --skiptags unit,integration",
+    "regression-soon": "npm run chrome -- --tag regression-soon --skiptags unit,integration,devEnv,regression",
+    "regression-master": "npm run chromeHeadless -- --tag regression-soon --skiptags unit,integration,devEnv,regression",
     "smoke-test": "npm run chrome -- --tag smokeTest --skiptags unit,integration,regression",
     "update": "npx npm-check-updates -u && npm install",
     "integration": "npm test -- -e unit-test --tag integration --skiptags unit"
@@ -32,7 +35,7 @@
   "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "chromedriver": ">=88.0.0",
+    "chromedriver": "^90.0.0",
     "dotenv": "^8.2.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "geckodriver": "^1.21.1",

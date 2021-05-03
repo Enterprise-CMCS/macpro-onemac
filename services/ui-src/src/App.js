@@ -75,20 +75,20 @@ function App() {
   }
 
   return (
-    !authState.isAuthenticating && (
-      <div>
-        <AppContext.Provider
-          value={{
-            ...authState,
-            setUserInfo,
-          }}
-        >
-          <Header />
-          <Routes />
-        </AppContext.Provider>
-        <Footer />
-      </div>
-    )
+      !authState.isAuthenticating && (
+          <div>
+            <AppContext.Provider
+                value={{
+                  ...authState,
+                  setUserInfo,
+                }}
+            >
+              <Header />
+              <Routes />
+            </AppContext.Provider>
+            <Footer />
+          </div>
+      )
   );
 }
 

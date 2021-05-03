@@ -1,0 +1,16 @@
+{
+  "attributes": [
+    {
+      "history": [
+        {
+          "date": 1617983752,
+          "doneBy": "[REPLACE TEST EMAIL FOR CMS APPROVER]",
+          "status": "pending"
+        }
+      ],
+      "stateCode": "MI"
+    }
+  ],
+  "id": "[REPLACE TEST EMAIL FOR STATE ADMIN]",
+  "type": "stateadmin"
+}

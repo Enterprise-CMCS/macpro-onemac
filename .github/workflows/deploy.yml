@@ -1,11 +1,10 @@
-
 name: Deploy
 
 on:
   push:
     branches:
-      - '*'
-      - '!skipci*'
+      - "*"
+      - "!skipci*"
 
 jobs:
   deploy:
@@ -48,6 +47,7 @@ jobs:
           INFRASTRUCTURE_TYPE: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_INFRASTRUCTURE_TYPE] || secrets.INFRASTRUCTURE_TYPE || 'development' }}
           CMS_SPA_FORM_FROM_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_SPA_FORM_FROM_EMAIL] || secrets.CMS_SPA_FORM_FROM_EMAIL }}
           CMS_SPA_FORM_CMS_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_SPA_FORM_CMS_EMAIL] || secrets.CMS_SPA_FORM_CMS_EMAIL }}
+          CMS_CHIP_FORM_CMS_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_CHIP_FORM_CMS_EMAIL] || secrets.CMS_CHIP_FORM_CMS_EMAIL }}
           BIGMAC_NAME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_BIGMAC_NAME] || secrets.BIGMAC_NAME }}
           ROUTE_53_HOSTED_ZONE_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ROUTE_53_HOSTED_ZONE_ID] }}
           ROUTE_53_DOMAIN_NAME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ROUTE_53_DOMAIN_NAME] }}
@@ -64,7 +64,7 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v1
         with:
-          node-version: '12.x'
+          node-version: "12.x"
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
@@ -127,7 +127,14 @@ jobs:
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           popd
           ./run.sh
+      - name: Endpoint
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "Application endpoint: $APPLICATION_ENDPOINT"
+          popd
       - name: Store test reults
+        if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test_results

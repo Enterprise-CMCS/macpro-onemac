@@ -36,8 +36,24 @@ const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX
 
 export default class FileUploader extends Component {
   static propTypes = {
-    requiredUploads: PropTypes.arrayOf(PropTypes.string),
-    optionalUploads: PropTypes.arrayOf(PropTypes.string),
+    requiredUploads: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          allowMultiple: PropTypes.bool,
+        }),
+      ])
+    ),
+    optionalUploads: PropTypes.arrayOf(
+      PropTypes.oneOfType([
+        PropTypes.string,
+        PropTypes.shape({
+          title: PropTypes.string.isRequired,
+          allowMultiple: PropTypes.bool,
+        }),
+      ])
+    ),
     showRequiredFieldErrors: PropTypes.bool,
   };
 
@@ -50,26 +66,42 @@ export default class FileUploader extends Component {
     this.allUploadsComplete = false;
     this.readyCallback = props.readyCallback;
 
-    // Initialization of the uploaders
+    function initializeUploader(uploadDetails, isRequired) {
+      let uploadCriteria = {
+        isRequired,
+        hasFile: false,
+        allowMultiple: true,
+        title: "",
+      };
+
+      // Most 'uploadDetails' are strings which map to the uploadCriteria 'title'
+      // but this also handles when 'uploadDetails' is an object with 'title' and 'allowMultiple' keys
+      // for additional customization in restricting multiple files
+      if (typeof uploadDetails === "string") {
+        uploadCriteria.title = uploadDetails;
+      } else if (typeof uploadDetails === "object") {
+        uploadCriteria.title = uploadDetails.title;
+        if (typeof uploadDetails.allowMultiple === "boolean") {
+          uploadCriteria.allowMultiple = uploadDetails.allowMultiple;
+        }
+      }
+
+      return uploadCriteria;
+    }
+
     let uploaders = [];
+
     if (props.requiredUploads) {
-      const requiredUploaders = props.requiredUploads.map((title) => {
-        return {
-          title,
-          isRequired: true,
-          hasFile: false,
-        };
-      });
+      const requiredUploaders = props.requiredUploads.map((uploadDetails) =>
+        initializeUploader(uploadDetails, true)
+      );
       uploaders = uploaders.concat(requiredUploaders);
     }
+
     if (props.optionalUploads) {
-      const optionalUploaders = props.optionalUploads.map((title) => {
-        return {
-          title,
-          isRequired: false,
-          hasFile: false,
-        };
-      });
+      const optionalUploaders = props.optionalUploads.map((uploadDetails) =>
+        initializeUploader(uploadDetails, false)
+      );
       uploaders = uploaders.concat(optionalUploaders);
     }
 
@@ -201,6 +233,9 @@ export default class FileUploader extends Component {
     let reqControls = [];
     let optControls = [];
     this.state.uploaders.forEach((uploader, index) => {
+      // disabled flag for types that only allow a single file for upload and a file is already selected
+      let isDisabled = uploader.allowMultiple === false && uploader.hasFile;
+
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
         <tr key={index}>
@@ -211,14 +246,22 @@ export default class FileUploader extends Component {
             </div>
           </td>
           <td className="uploader-input-cell">
-            <label className="uploader-input-label">
+            <label
+              className={
+                isDisabled
+                  ? "uploader-input-label-disabled"
+                  : "uploader-input-label-active"
+              }
+            >
               Add File
               <input
                 type="file"
                 id={"uploader-input-" + index}
                 name={"uploader-input-" + index}
                 accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
-                multiple
+                multiple={uploader.allowMultiple}
+                disabled={isDisabled}
+
                 style={{
                   width: "0.1px",
                   height: "0.1px",

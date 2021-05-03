@@ -2,11 +2,33 @@ $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-color: #AEB0B5;
 $input-border-radius: 3px;
-$footer-darker-blue: #0071BC;
+$lochmara: #0071BC;
+$matisse: #205493;
+$iron: #D6D7D9;
+$shuttle-gray: #5B616B;
+$mine-shaft: #212121;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
+.faq-table {
+table, th, td {
+  border: 1px solid black;
+}
+
+td {
+padding: 5px;
+}
+
+col {
+width: 400.0px;
+}
+
+th {
+ text-align: center;
+}
+
+}
 body {
   @extend .ds-base;
   background-color: $color-gray-lightest;
@@ -88,6 +110,11 @@ ul {
   @extend .ds-c-list;
 }
 
+.ds-u-padding--8 {
+  padding-left: 70px !important;
+  padding-right: 70px !important;
+}
+
 .uploader {
   table {
     border-collapse: collapse;
@@ -129,11 +156,22 @@ ul {
   .uploader-input-label {
     // Make the label look like a button
     @extend .ds-c-button;
-    @extend .ds-c-button--primary;
-    @extend .ds-u-radius;
     font-weight: 400;
     font-size: 14px;
     margin-top: 0px;
+  }
+
+  .uploader-input-label-active {
+    @extend .uploader-input-label;
+    @extend .ds-c-button--primary;
+  }
+
+  .uploader-input-label-disabled{
+    @extend .uploader-input-label;
+    background-color: $color-gray-lighter;
+    border-color: transparent;
+    color: $color-gray-dark;
+    pointer-events: none;
   }
 
   .uploader-clear-button {
@@ -182,19 +220,32 @@ input[type="file"] {
 
   h3 {
     @extend .ds-u-margin-top--7;
+    @extend .ds-u-margin-bottom--3;
   }
   .ds-c-review {
     @extend .ds-u-border-bottom--0;
+    @extend .ds-u-margin-top--3;
+    padding: 0 !important;
+
+    > div {
+      flex: 1;
+    }
   }
   .ds-c-review__heading {
     @extend .ds-u-margin-top--1;
   }
   .ds-c-review__body {
     @extend .cms-review-read-only-textbox-body;
+    width: initial;
+    max-width: 460px;
   }
 
   .subheader-message {
     padding-top: 40px;
+
+    a {
+      white-space: nowrap;
+    }
   }
 }
 
@@ -513,7 +564,7 @@ input[type="file"] {
   @extend .ds-u-margin--0;
   @extend .ds-u-padding--4;
   text-align: center;
-  align-self: center;
+  flex: auto;
 }
 
 .submissions-table, .user-table {
@@ -526,6 +577,11 @@ input[type="file"] {
   font-size: 14px;
   line-height: 20px;
 
+  th:last-child, td:last-child {
+    text-align: right;
+    margin: 0px;
+  }
+
   th {
     border-color: $color-gray-lightest;
     background-color: $color-white;
@@ -535,7 +591,7 @@ input[type="file"] {
     padding-top: 0px;
     padding-right: 0px;
     padding-bottom: 20px;
-    text-align: left;  
+    text-align: left;
   }
 
   td {
@@ -546,14 +602,10 @@ input[type="file"] {
     padding-top: 20px;
     padding-right: 0px;
     padding-bottom: 20px;
-    text-align: left;  
+    text-align: left;
   }
   a {
     font-weight: bold;
-  }
-
-  .date-submitted-column {
-    text-align: center;
   }
 
   .type-badge {
@@ -572,11 +624,6 @@ input[type="file"] {
     font-weight: 700;
     text-transform: capitalize;
     color: $color-black;
-  }
-
-  th:last-child, td:last-child {
-    text-align: right;
-    margin: 0px;
   }
 
   td.actions button{
@@ -665,7 +712,13 @@ input[type="file"] {
     }
   }
 }
-
+.activeLink, .activeLink:hover, .activeLink:focus {
+  text-decoration: underline;
+  text-decoration-style: solid;
+  text-decoration-color: white;
+  text-decoration-thickness: 4px;
+  text-decoration-skip-ink: none;
+}
 .usa-bar {
   @extend .app-bar;
   background-color: $color-gray-lightest;
@@ -783,8 +836,8 @@ input[type="file"] {
   padding-right: 8rem;
 }
 .footer-bottom-container {
-  background: $footer-darker-blue; 
-  color: white; 
+  background: $lochmara;
+  color: white;
   margin: 0;
   width: 100%;
   max-width: none;
@@ -822,7 +875,7 @@ input[type="file"] {
   font-weight: 400;
   line-height: 2.1;
   letter-spacing: 0;
-  text-align: left;  
+  text-align: left;
 }
 .footer-email-container{
   padding-left: 11.5rem;
@@ -831,14 +884,122 @@ input[type="file"] {
 .footer-address {
   text-align: right;
 }
+.home-header {
+  height: 500px;
+  background: linear-gradient(180deg,$lochmara 0%, $matisse 100%);
+  position: relative;
+}
+.home-header-text{
+  position: absolute;
+  top: 97px;
+  height: 234px;
+  width: 560px;
+  font-family: Open Sans;
+  font-size: 36px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 47px;
+  letter-spacing: 0px;
+  text-align: left;
+  color: white;
+}
+.home-header-image-box{
+  position: absolute;
+  left: 140px;
+  top: 134px;
+  width: 464px;
+  height: 161px;
+  background-image:url('/assets/images/OneMAC_logoLight.svg');
+  background-repeat:no-repeat;
+}
+.home-header-angle-box {
+  border-top: 120px solid transparent;
+  border-left: 100vw solid white;
+  bottom: 0;
+  left: 0;
+  position: absolute;
+}
+.home-footer-container {
+  background: $color-primary-alt-lightest;
+  height: 295px;
+}
+.home-footer-angle-box {
+  height: 117px;
+  border-top: 120px solid white;
+  border-right: 100vw solid transparent;
+  bottom: 0;
+  left: 0;
+}
+.home-content-box {
+  background-color: white;
+  padding-top: 80px;
+  // Reusable styles
+  @mixin title-font($size, $lineHeight, $weight) {
+    font-family: Open Sans;
+    font-size: $size;
+    font-style: normal;
+    font-weight: $weight;
+    line-height: $lineHeight;
+    letter-spacing: 0px;
+    text-align: left;
+  }
+  .title {
+    @include title-font(24px, 30px, 700);
+    padding-top: 32px;
+    padding-bottom: 36px;
+    color: $mine-shaft;
+    width: 100%;
+  }
+  .vertical-line {
+    border-left: 2px solid $iron;
+    margin-left: 11px;
+  }
+  .sub-title{
+    @include title-font(18px, 24px, 700);
+    color: $shuttle-gray;
+  }
+  .text {
+    @include title-font(16px, 24px, 400);
+    width: 352px;
+    color: $mine-shaft;
+    width: 100%;
+  }
+  .home-content-left-box {
+    margin-left: 125px;
+    width: 464px;
+    border: 1px solid $iron;
+    border-radius:4px;
+    @include title-font(24px, 30px, 700); // params: font size, line height
+    .vertical-line-64 {
+      @extend .vertical-line;
+      height: 64px;
+      margin-top: 8.6px;
+      margin-bottom: 14.6px;
+    }
+    .vertical-line-96 {
+      @extend .vertical-line;
+      height: 96px;
+      margin-top: 12.3px;
+      margin-bottom: 13.33px;
+    }
+  }
+  .home-content-right-box {
+    width: 560px;
+    li {
+      list-style-position: inside;
+      padding-bottom: 24px;
+    }
+  }
+}
+
 .multi-select-title {
-font-family: Open Sans;
-font-size: 21px;
-font-style: italic;
-font-weight: 400;
-line-height: 28px;
-letter-spacing: 0px;
-text-align: left;
+  font-family: Open Sans;
+  font-size: 21px;
+  font-style: italic;
+  font-weight: 400;
+  line-height: 28px;
+  letter-spacing: 0px;
+  text-align: left;
 
   svg {
     margin: 0 1ch;
@@ -846,17 +1007,16 @@ text-align: left;
 }
 
 .multi-select-header {
-margin-bottom: 40px;
-bottom: 20px;
-font-family: Open Sans;
-font-size: 24px;
-font-style: normal;
-font-weight: 700;
-line-height: 30px;
-letter-spacing: 0px;
-text-align: left;
+  margin-bottom: 40px;
+  bottom: 20px;
+  font-family: Open Sans;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: 30px;
+  letter-spacing: 0px;
+  text-align: left;
 }
-
 
 .css-w3djcp-OptionComponent {
  background: #0071BC !important;
@@ -886,7 +1046,6 @@ text-align: left;
     width: 575px;
     height: 520px;
     margin: auto;
-
 }
 
 .multi-select-dropdown-container[type="selectprofile"] {
@@ -1030,4 +1189,43 @@ color: #212121;
 
 .MuiButton-text {
   text-align: right;
+}
+
+dl.state-access-cards {
+  .state-access-card {
+    @extend .ds-u-border--1;
+    @extend .ds-u-padding--3;
+    @extend .ds-u-fill--white;
+
+    border-radius: 3px;
+    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+    position: relative;
+
+    &:not(:last-child) {
+      @extend .ds-u-margin-bottom--3;
+    }
+
+    dt {
+      @extend .ds-u-font-size--h3;
+      @extend .ds-u-font-weight--normal;
+
+      margin-bottom: 5px;
+
+    }
+
+    dd {
+      a {
+        @extend .ds-u-font-weight--bold;
+        @extend .ds-u-text-decoration--none;
+      }
+    }
+
+    button {
+      position: absolute;
+      background: inherit;
+      top: 26px;
+      right: 26px;
+      border: none;
+    }
+  }
 }

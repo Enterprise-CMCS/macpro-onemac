@@ -1,5 +1,18 @@
 import { API } from "aws-amplify";
+import {USER_TYPE} from "cmscommonlib";
 
+export const getAdminTypeByRole = role => {
+    switch (role) {
+        case USER_TYPE.STATE_ADMIN:
+            return USER_TYPE.STATE_USER;
+        case USER_TYPE.CMS_APPROVER:
+            return USER_TYPE.STATE_ADMIN;
+        case USER_TYPE.SYSTEM_ADMIN:
+            return USER_TYPE.CMS_APPROVER;
+        default:
+            return undefined;
+    }
+}
 /**
  * Singleton class to perform operations with the user tables backend.
  */
@@ -51,7 +64,7 @@ class UserDataApi {
  async updateUser(userRecord) {
   try {
     return await API.put("changeRequestAPI", "/putUser", {
-      body: userRecord,
+      body: { ...userRecord, isPutUser: true },
     });
   } catch (error) {
     console.error("Could not save user profile data:", error);
@@ -67,27 +80,46 @@ class UserDataApi {
    * @param {string} newStatus the new status for the user
    * @return {string} the response code
    */
-   async setUserStatus(doneBy, userEmail, newStatus) {
-    if (!doneBy || !userEmail || !newStatus) {
-      console.log("setUserStatus called without neccessary params ", doneBy, userEmail, newStatus);
+   async setUserStatus(updateStatusRequest) {
+
+      if (!updateStatusRequest ) {
       throw new Error("setUserStatus API call required parameters missing");
     }
 
-    console.log("setUserStatus called! ", doneBy, userEmail, newStatus);
-   /* try {
-      let answer = await API.post(
-        "userDataAPI",
-        "/setUserStatus", { body: { "doneBy": doneBy, 
-        "userEmail": userEmail,
-        "status": newStatus }});
-      return answer;
+    try {
+          return await API.put("changeRequestAPI", "/putUser", {
+              body: updateStatusRequest,
+          });
     } catch (error) {
-      console.log(`There was an error checking user ${userEmail}.`, error);
-      throw error;
+          console.error("Could not update user profile data:", error);
+          throw error;
     }
-    */
   }
 
+  /**
+   * Get all active state system administrators' contact info for a list of states.
+  */
+  async getStateAdmins(states) {
+    const params = new URLSearchParams();
+    for (const state of states) {
+      params.append("state", state);
+    }
+    return await API.get("userDataAPI", `/getStateAdmins?${params.toString()}`);
+  }
+
+  /**
+   * Get all active CMS role approvers' contact info.
+  */
+  async getCmsApprovers() {
+    return await API.get("userDataAPI", "/getCmsApprovers");
+  }
+
+  /**
+   * Get all active CMS system admins' contact info.
+  */
+  async getCmsSystemAdmins() {
+    return await API.get("userDataAPI", "/getCmsSystemAdmins");
+  }
 }
 
 const instance = new UserDataApi();

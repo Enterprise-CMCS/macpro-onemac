@@ -10,7 +10,7 @@ import { ROUTES } from "cmscommonlib";
  */
 const Waiver = () => {
   // Optional ID parameter from the URL
-  const { id } = useParams();
+  const { id, userId } = useParams();
 
   const actionTypeOptions = [
     { label: "New waiver", value: "new" },
@@ -96,8 +96,8 @@ const Waiver = () => {
 
   };
 
-  if (id) {
-    return <SubmissionView formInfo={formInfo} id={id} />;
+  if (id && userId) {
+    return <SubmissionView formInfo={formInfo} id={id} userId={userId} />;
   } else {
     return (
       <SubmissionForm

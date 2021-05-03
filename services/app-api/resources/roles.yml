@@ -43,6 +43,11 @@ Resources:
                 - dynamodb:PutItem
               Resource:
                 - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
+            - Effect: Allow
+              Action:
+                - dynamodb:Query
+              Resource:
+                - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
             - Effect: 'Allow'
               Action:
                 - logs:CreateLogStream
