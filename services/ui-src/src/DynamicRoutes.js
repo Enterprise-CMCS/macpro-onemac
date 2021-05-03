@@ -64,7 +64,7 @@ export default function DynamicRoutes() {
           return (
             <>
               <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
-                <UserManagement />
+                <Redirect to={ROUTES.USER_MANAGEMENT} />
               </AuthenticatedRoute>
               <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
                 <UserManagement />
