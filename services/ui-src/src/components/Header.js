@@ -10,7 +10,7 @@ import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../images/OneMAC_logoLight1.svg"
-import { ROUTES as RouteList } from "cmscommonlib";
+
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
@@ -117,22 +117,22 @@ function Header(props) {
           <div className="nav-bar">
             <div className="nav-left">
               <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-              <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
+              <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, ROUTES.HOME)}>Home</Link>
               {isAuthenticated && (
                 <>
                   {userType === ROLES.STATE_USER && <Link id="dashboardLink" to={ROUTES.DASHBOARD}
-                    className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
+                    className={getActiveClass(currentRoute, ROUTES.DASHBOARD)}>
                     Dashboard
                   </Link>}
                   {userType !== ROLES.STATE_USER && <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
-                    className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
+                    className={getActiveClass(currentRoute, ROUTES.USER_MANAGEMENT)}>
                     User Management
                   </Link>}
                 </>
               )}
-              <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ_TOP)} target="new">FAQ</a>
+              <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, ROUTES.FAQ_TOP)} target="new">FAQ</a>
               {isLoggedInAsDeveloper ?
-                <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
+                <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, ROUTES.COMPONENT_PAGE)}>Component
                       Page</Link> : null}
             </div>
             {renderAccountButtons()}

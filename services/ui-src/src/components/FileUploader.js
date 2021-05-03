@@ -261,6 +261,7 @@ export default class FileUploader extends Component {
                 accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
                 multiple={uploader.allowMultiple}
                 disabled={isDisabled}
+
                 style={{
                   width: "0.1px",
                   height: "0.1px",
