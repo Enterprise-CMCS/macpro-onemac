@@ -597,7 +597,7 @@ input[type="file"] {
 
   td {
     border-color: $color-gray-lightest;
-    color: $color-primary;
+    color: $color-base;
     font-weight: 400;
     padding-left: 0px;
     padding-top: 20px;
@@ -635,7 +635,7 @@ input[type="file"] {
   }
 
   #personnelActionsColHeader {
-    width: 150px;
+    width: 125px;
   }
 
   .user-state {
