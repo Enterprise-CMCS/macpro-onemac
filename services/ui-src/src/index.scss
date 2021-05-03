@@ -565,7 +565,7 @@ input[type="file"] {
   flex: auto;
 }
 
-.submissions-table, .user-table {
+.custom-table {
   @extend .ds-c-table;
   @extend .ds-c-table--borderless;
   width: 100%;
@@ -574,11 +574,6 @@ input[type="file"] {
   font-style: normal;
   font-size: 14px;
   line-height: 20px;
-
-  th:last-child, td:last-child {
-    text-align: right;
-    margin: 0px;
-  }
 
   th {
     border-color: $color-gray-lightest;
@@ -603,6 +598,7 @@ input[type="file"] {
     padding-bottom: 20px;
     text-align: left;
   }
+
   a {
     font-weight: bold;
   }
@@ -615,7 +611,25 @@ input[type="file"] {
   }
 }
 
+.submissions-table {
+  @extend .custom-table;
+
+  th:last-child, td:last-child {
+    white-space: nowrap;
+  }
+
+  th:last-child {
+    width: auto; // last column width is sized to the content it contains
+  }
+
+  th {
+    width: 33.3%; // remaining 3 columns' width evenly take up the remaining space (not including last 4th column, which is auto sized)
+  }
+}
+
 .user-table {
+  @extend .custom-table;
+
   #nameColHeader {
     width: 20%;
   }
@@ -640,13 +654,19 @@ input[type="file"] {
     font-weight: normal;
     text-decoration: none;
   }
+
   .user-state {
     color: $color-black;
   }
+
   .user-status {
     font-weight: 700;
     text-transform: capitalize;
     color: $color-black;
+  }
+
+  th:last-child {
+    text-align: right;
   }
 
   td.actions button{
