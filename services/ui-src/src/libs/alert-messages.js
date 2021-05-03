@@ -1,3 +1,5 @@
+import React from "react";
+
 import config from "../utils/config";
 import { helpDeskContact } from "./helpDeskContact"
 
@@ -27,6 +29,14 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.SUCCESS,
     heading: "Submission Completed",
     text: "Your submission has been received.",
+  },
+
+  // Success woth Survey Link
+  SUBMISSION_SUCCESS_SURVEY: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Submission Completed",
+    text: <>Thanks for your submission. We truly value your feedback. Please consider taking our <a href="https://forms.gle/qcsWMaDroBkhT7rs6" target="_blank" rel="noopener noreferrer">Post-Submission Survey.</a></>,
+//    text: `Thanks for your submission. We truly value your feedback. Please consider taking our <a href="https://forms.gle/qcsWMaDroBkhT7rs6" target="_blank" rel="noopener noreferrer">Post-Submission Survey.</a>`,
   },
 
   // Errors and warnings

@@ -6,7 +6,7 @@ import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import { ROUTES } from "cmscommonlib";
-import { Link, useHistory, useLocation } from "react-router-dom";
+import { Link, useHistory, useLocation, useParams } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { format } from "date-fns";
@@ -19,9 +19,12 @@ import { pendingMessage, deniedOrRevokedMessage, isPending, isActive } from "../
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userProfile: { userData } = {} } = useAppContext();
+  const { setCurrentAlert, userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
+  const successfulSubmission = useParams();
+
+  console.log("query",successfulSubmission);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
@@ -38,9 +41,7 @@ const Dashboard = () => {
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        history.replace("/dashboard", {
-          showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
-        });
+        setCurrentAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
     })();
 

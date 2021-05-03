@@ -1,4 +1,4 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -7,11 +7,12 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { ROUTES, territoryList } from "cmscommonlib";
 import PropTypes from "prop-types";
 import { ALERTS_MSG } from "../libs/alert-messages";
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
-import { Alert } from "@cmsgov/design-system";
+import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import { getAlert } from "../libs/error-mappings";
+import { AlertBar } from "../components/AlertBar";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -20,7 +21,8 @@ import { getAlert } from "../libs/error-mappings";
  */
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
-  const [alert, setAlert] = useState(ALERTS_MSG.NONE);
+  const { currentAlert } = useAppContext();
+  const { setCurrentAlert } = useAppContext();
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
@@ -72,35 +74,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   function uploadsReadyCallbackFunction(state) {
     setAreUploadsReady(state);
   }
-
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
-
-  useEffect(() => {
-    let mounted = true;
-    if (mounted && alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, [alert]);
-
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
 
   /**
    * Validate Field
@@ -178,7 +151,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       newMessage.statusLevel = transmittalNumberDetails.errorLevel;
       try {
         if (transmittalNumberDetails.existenceRegex !== undefined) {
-          newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
+          newTransmittalNumber = newTransmittalNumber.match(
+            transmittalNumberDetails.existenceRegex
+          )[0];
         }
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
@@ -187,17 +162,17 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         if (!dupID && transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
             newMessage.statusMessage =
-            "According to our records, this " +
-            transmittalNumberDetails.idLabel +
-            " does not exist. Please check the " +
-            transmittalNumberDetails.idLabel +
-            " and try entering it again.";
+              "According to our records, this " +
+              transmittalNumberDetails.idLabel +
+              " does not exist. Please check the " +
+              transmittalNumberDetails.idLabel +
+              " and try entering it again.";
           } else {
             newMessage.statusMessage =
-            transmittalNumberDetails.idLabel +
-            " not found. Please ensure you have the correct " +
-            transmittalNumberDetails.idLabel +
-            " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
+              transmittalNumberDetails.idLabel +
+              " not found. Please ensure you have the correct " +
+              transmittalNumberDetails.idLabel +
+              " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
           }
         } else if (dupID && !transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
@@ -371,12 +346,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
           if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
             mounted = false;
+            setCurrentAlert(ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY);
             history.push({
               pathname: ROUTES.DASHBOARD,
-              query: "?query=abc",
-              state: {
-                showAlert: ALERTS_MSG.SUBMISSION_SUCCESS,
-              },
+              query: "?submission=success",
             });
           }
         } catch (err) {
@@ -390,13 +363,11 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     // now set the state variables to show the error messages
-    if (mounted)
-      setTransmittalNumberStatusMessage(newMessage);
+    if (mounted) setTransmittalNumberStatusMessage(newMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-    if (mounted) setAlert(newAlert);
+    if (mounted) setCurrentAlert(newAlert);
     if (mounted) setIsLoading(false);
-    if (mounted) jumpToPageTitle();
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -404,9 +375,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.pageTitle} text="" />
-      {renderAlert(alert)}
+      <AlertBar />
       <div className="form-container">
-        {formInfo.subheaderMessage && <div className="form-subheader-message">{formInfo.subheaderMessage}</div>}
+        {formInfo.subheaderMessage && (
+          <div className="form-subheader-message">
+            {formInfo.subheaderMessage}
+          </div>
+        )}
         <form
           onSubmit={handleSubmit}
           noValidate
