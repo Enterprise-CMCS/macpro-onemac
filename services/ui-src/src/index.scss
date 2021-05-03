@@ -638,6 +638,10 @@ input[type="file"] {
     width: 125px;
   }
 
+  .user-email {
+    font-weight: normal;
+    text-decoration: none;
+  }
   .user-state {
     color: $color-black;
   }

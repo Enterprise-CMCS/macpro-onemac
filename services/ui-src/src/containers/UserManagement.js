@@ -39,25 +39,22 @@ const UserManagement = () => {
   const history = useHistory();
   const location = useLocation();
 
-  const updateList = useCallback(
-    () => {
-      setIncludeStateCode(userProfile.userData.type === "cmsapprover");
-      UserDataApi.getMyUserList(userProfile.email)
-        .then((ul) => {
-          console.log("user List: ", ul);
-          if (typeof ul === "string") {
-            if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
-            ul = [];
-          }
-          setUserList(ul);
-        })
-        .catch((error) => {
-          console.log("Error while fetching user's list.", error);
-          setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
-        });
-    },
-    [userProfile.email, userProfile.userData]
-  );
+  const updateList = useCallback(() => {
+    setIncludeStateCode(userProfile.userData.type === "cmsapprover");
+    UserDataApi.getMyUserList(userProfile.email)
+      .then((ul) => {
+        console.log("user List: ", ul);
+        if (typeof ul === "string") {
+          if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
+          ul = [];
+        }
+        setUserList(ul);
+      })
+      .catch((error) => {
+        console.log("Error while fetching user's list.", error);
+        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+      });
+  }, [userProfile.email, userProfile.userData]);
 
   // Load the data from the backend.
   useEffect(() => {
@@ -126,19 +123,34 @@ const UserManagement = () => {
   );
 
   const renderStatus = useCallback(({ value }) => {
+    let content = value;
     switch (value) {
       case "pending":
-        return <>{PENDING_CIRCLE_IMAGE} Pending</>;
+        content = <>{PENDING_CIRCLE_IMAGE} Pending</>;
+        break;
       case "active":
-        return "Granted";
+        content = "Granted";
+        break;
       case "denied":
-        return "Denied";
+        content = "Denied";
+        break;
       case "revoked":
-        return "Revoked";
-      default:
-        return value;
+        content = "Revoked";
+        break;
+      // no default
     }
+
+    return <span className="user-status">{content}</span>;
   }, []);
+
+  const renderEmail = useCallback(
+    ({ value }) => (
+      <a className="user-email" href={`mailto:${value}`}>
+        {value}
+      </a>
+    ),
+    []
+  );
 
   const sortStatus = useCallback((rowA, rowB, columnId, desc) => {
     let orig;
@@ -235,6 +247,7 @@ const UserManagement = () => {
         {
           Header: "Email",
           accessor: "email",
+          Cell: renderEmail,
         },
         includeStateCode
           ? {
@@ -263,7 +276,14 @@ const UserManagement = () => {
           id: "personnelActions",
         },
       ].filter(Boolean),
-    [getName, includeStateCode, renderStatus, sortStatus, renderActions]
+    [
+      getName,
+      includeStateCode,
+      renderEmail,
+      renderStatus,
+      sortStatus,
+      renderActions,
+    ]
   );
 
   const initialTableState = useMemo(
