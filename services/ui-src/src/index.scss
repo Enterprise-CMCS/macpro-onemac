@@ -592,11 +592,12 @@ input[type="file"] {
     padding-right: 0px;
     padding-bottom: 20px;
     text-align: left;
+    user-select: none;
   }
 
   td {
     border-color: $color-gray-lightest;
-    color: $color-primary;
+    color: $color-base;
     font-weight: 400;
     padding-left: 0px;
     padding-top: 20px;
@@ -615,8 +616,32 @@ input[type="file"] {
     color: $color-gray;
   }
 }
-.user-table {
 
+.user-table {
+  #nameColHeader {
+    width: 20%;
+  }
+
+  #emailColHeader {
+    min-width: 30%;
+  }
+
+  #stateColHeader {
+    width: 75px;
+  }
+
+  #statusColHeader {
+    width: 15%;
+  }
+
+  #personnelActionsColHeader {
+    width: 125px;
+  }
+
+  .user-email {
+    font-weight: normal;
+    text-decoration: none;
+  }
   .user-state {
     color: $color-black;
   }

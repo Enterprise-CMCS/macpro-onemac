@@ -32,7 +32,7 @@ class CMSApprover {
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
-    let myCurrentStatus = getCurrentStatus(doneBy.attributes);
+    let myCurrentStatus = getCurrentStatus(doneBy.attributes).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
         return RESPONSE_CODE.CALLING_USER_PENDING;
@@ -89,7 +89,7 @@ class CMSApprover {
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
           stateCode: oneAttribute.stateCode,
-          status: getCurrentStatus(oneAttribute.history),
+          latest: getCurrentStatus(oneAttribute.history),
         });
         i++;
       });

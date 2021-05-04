@@ -64,7 +64,7 @@ class SystemAdmin {
         email: oneUser.id,
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
-        status: getCurrentStatus(oneUser.attributes),
+        latest: getCurrentStatus(oneUser.attributes),
       });
       i++;
     });
