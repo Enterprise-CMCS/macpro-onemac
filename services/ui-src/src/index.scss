@@ -1,19 +1,13 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
-$input-border-color: #AEB0B5;
 $input-border-radius: 3px;
-$lochmara: #0071BC;
-$matisse: #205493;
-$iron: #D6D7D9;
-$shuttle-gray: #5B616B;
-$mine-shaft: #212121;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
 .faq-table {
 table, th, td {
-  border: 1px solid black;
+  border: 1px solid $color-black;
 }
 
 td {
@@ -99,7 +93,7 @@ label {
   @extend .ds-u-padding-bottom--2;
   font-weight: 400;
   background-color: $color-primary-darker;
-  color: #fff;
+  color: $color-white;
 
   h1 {
     font-size: 36px;
@@ -128,7 +122,7 @@ ul {
     }
     tr {
       height: 72px;
-      border-bottom: 1px solid #5B616B;
+      border-bottom: 1px solid $color-gray;
       vertical-align: text-top;
     }
     tr:nth-last-child(1) {
@@ -272,7 +266,7 @@ input[type="file"] {
   }
   .ds-c-review__body {
     @extend .cms-review-read-only-textbox-body;
-    border: 2px solid #aeb0b5;
+    border: 2px solid $color-gray-light;
   }
 
   .form-subheader-message {
@@ -282,7 +276,7 @@ input[type="file"] {
   .form-card {
     background-color: $color-white;
     @extend .ds-l-col--auto;
-    box-shadow: 2px 2px 4px #D6D7D9;
+    box-shadow: 2px 2px 4px $color-gray-lighter;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
@@ -451,7 +445,7 @@ input[type="file"] {
   padding: 24px 0 0 16px;
   font-family: Open Sans;
   font-style: normal;
-  color: #FFFFFF;
+  color: $color-white;
   line-height: 32px;
   .card-button-title {
     font-weight: bold;
@@ -470,7 +464,7 @@ input[type="file"] {
 .card-button-select {
   min-width: 101px;
   height: 37px;
-  background: #FFFFFF;
+  background: $color-white;
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.07);
   border-radius: 8px;
   font-family: Open Sans;
@@ -502,6 +496,8 @@ input[type="file"] {
 
   .signup-prompt {
     margin-bottom: 20px;
+    font-size: 21px;
+    font-weight: 700;
   }
 }
 .dashboard-container {
@@ -569,7 +565,7 @@ input[type="file"] {
   flex: auto;
 }
 
-.submissions-table, .user-table {
+@mixin custom-table {
   @extend .ds-c-table;
   @extend .ds-c-table--borderless;
   width: 100%;
@@ -578,11 +574,6 @@ input[type="file"] {
   font-style: normal;
   font-size: 14px;
   line-height: 20px;
-
-  th:last-child, td:last-child {
-    text-align: right;
-    margin: 0px;
-  }
 
   th {
     border-color: $color-gray-lightest;
@@ -607,6 +598,7 @@ input[type="file"] {
     padding-bottom: 20px;
     text-align: left;
   }
+
   a {
     font-weight: bold;
   }
@@ -619,7 +611,25 @@ input[type="file"] {
   }
 }
 
+.submissions-table {
+  @include custom-table;
+
+  th:last-child, td:last-child {
+    white-space: nowrap;
+  }
+
+  th:last-child {
+    width: auto; // last column width is sized to the content it contains
+  }
+
+  th {
+    width: 33.3%; // remaining 3 columns' width evenly take up the remaining space (not including last 4th column, which is auto sized)
+  }
+}
+
 .user-table {
+  @include custom-table;
+
   #nameColHeader {
     width: 20%;
   }
@@ -644,13 +654,19 @@ input[type="file"] {
     font-weight: normal;
     text-decoration: none;
   }
+
   .user-state {
     color: $color-black;
   }
+
   .user-status {
     font-weight: 700;
     text-transform: capitalize;
     color: $color-black;
+  }
+
+  th:last-child {
+    text-align: right;
   }
 
   td.actions button{
@@ -742,7 +758,7 @@ input[type="file"] {
 .activeLink, .activeLink:hover, .activeLink:focus {
   text-decoration: underline;
   text-decoration-style: solid;
-  text-decoration-color: white;
+  text-decoration-color: $color-white;
   text-decoration-thickness: 4px;
   text-decoration-skip-ink: none;
 }
@@ -800,7 +816,7 @@ input[type="file"] {
 
 .dropdown-content a {
   float: none;
-  color: white;
+  color: $color-white;
   padding: 12px 16px;
   text-decoration: none;
   display: block;
@@ -817,7 +833,7 @@ input[type="file"] {
     font-family: "Open Sans", Helvetica, sans-serif;
     font-size: 16px;
     line-height: 1.5;
-    color: #212121;
+    color: $color-base;
     box-sizing: none;
 }
 
@@ -827,93 +843,81 @@ input[type="file"] {
    left: 16px
 }
 
-
-.css-1aarvou-DropdownHandleComponent.e1vudypg0 {
-   color: #ffffff !important;
+.react-dropdown-select-dropdown-handle {
+  color: $color-white;
 }
 
 .react-dropdown-select {
- height: 22px !important;
+  height: 22px;
 }
+
 .react-dropdown-select-input {
-   position: absolute !important;
-   left: 25px;
-   top: 8px;
+  position: absolute;
+  left: 30px;
+  top: 8px;
 }
 
-.css-w3djcp-OptionComponent  {
+.react-dropdown-select-option {
+  position: relative;
   left: -10px;
-
-  position: relative !important;
   top: -65px;
-  background: #0071BC !important;
-  height: 22px !important;
-  width: 82 !important;
-  font-family: Open Sans !important;
-  font-style: normal !important;
-  font-weight: bold !important;
-  font-size: 14px !important;
-  line-height: 22px !important;
+  background-color: $color-primary !important;
+  height: 28px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  padding: 8px !important;
+  align-items: center;
 }
 
 .footer-top-container {
-  @extend .brand-bar;
+  @extend .app-bar;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-align-items--center;
+  @extend .ds-u-justify-content--between;
+  @extend .ds-u-padding-bottom--3;
   background: $color-primary-alt-lightest;
-  padding-left: 8rem;
-  padding-right: 8rem;
 }
 .footer-bottom-container {
-  background: $lochmara;
-  color: white;
+  @extend .app-bar;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
+  background: $color-primary;
+  color: $color-white;
   margin: 0;
   width: 100%;
   max-width: none;
-}
-.footer-medicaid-container {
-  padding-top: 0;
-  padding-bottom: 6px;
-  padding-left: 60px;
-  margin: auto;
-}
-.footer-fed-gov-logo {
-  @extend .ds-l-col--2;
-  min-width: 80px;
-}
-.footer-fed-gov-text{
-  padding-top: 5px;
-  padding-bottom: 15px;
-  font-family: Open Sans;
-  font-size: 14px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 21px;
-  letter-spacing: 0px;
-  text-align: left;
-}
-.footer-email {
-  color: white;
-}
-.footer-bottom-container {
-  @extend .ds-l-row ;
-  @extend .ds-u-padding--1;
   font-family: Open Sans;
   font-size: 14px;
   font-style: normal;
   font-weight: 400;
   line-height: 2.1;
   letter-spacing: 0;
-  text-align: left;
 }
-.footer-email-container{
-  padding-left: 11.5rem;
-  @extend .ds-l-col--8;
+.footer-government-blurb {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-align-items--center;
+  max-width: 480px;
 }
-.footer-address {
-  text-align: right;
+.footer-fed-gov-logo {
+  min-width: 80px;
+}
+.footer-fed-gov-text{
+  padding-left: 10px;
+  font-family: Open Sans;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 21px;
+  letter-spacing: 0px;
+  text-align: justify;
+}
+.footer-email {
+  color: $color-white;
 }
 .home-header {
   height: 500px;
-  background: linear-gradient(180deg,$lochmara 0%, $matisse 100%);
+  background: linear-gradient(180deg, $color-primary 0%, $color-primary-darker 100%);
   position: relative;
 }
 .home-header-text{
@@ -928,7 +932,7 @@ input[type="file"] {
   line-height: 47px;
   letter-spacing: 0px;
   text-align: left;
-  color: white;
+  color: $color-white;
 }
 .home-header-image-box{
   position: absolute;
@@ -941,7 +945,7 @@ input[type="file"] {
 }
 .home-header-angle-box {
   border-top: 120px solid transparent;
-  border-left: 100vw solid white;
+  border-left: 100vw solid $color-white;
   bottom: 0;
   left: 0;
   position: absolute;
@@ -952,13 +956,13 @@ input[type="file"] {
 }
 .home-footer-angle-box {
   height: 117px;
-  border-top: 120px solid white;
+  border-top: 120px solid $color-white;
   border-right: 100vw solid transparent;
   bottom: 0;
   left: 0;
 }
 .home-content-box {
-  background-color: white;
+  background-color: $color-white;
   padding-top: 80px;
   // Reusable styles
   @mixin title-font($size, $lineHeight, $weight) {
@@ -974,27 +978,27 @@ input[type="file"] {
     @include title-font(24px, 30px, 700);
     padding-top: 32px;
     padding-bottom: 36px;
-    color: $mine-shaft;
+    color: $color-base;
     width: 100%;
   }
   .vertical-line {
-    border-left: 2px solid $iron;
+    border-left: 2px solid $color-gray-lighter;
     margin-left: 11px;
   }
   .sub-title{
     @include title-font(18px, 24px, 700);
-    color: $shuttle-gray;
+    color: $color-gray;
   }
   .text {
     @include title-font(16px, 24px, 400);
     width: 352px;
-    color: $mine-shaft;
+    color: $color-base;
     width: 100%;
   }
   .home-content-left-box {
     margin-left: 125px;
     width: 464px;
-    border: 1px solid $iron;
+    border: 1px solid $color-gray-lighter;
     border-radius:4px;
     @include title-font(24px, 30px, 700); // params: font size, line height
     .vertical-line-64 {
@@ -1034,7 +1038,7 @@ input[type="file"] {
 }
 
 .multi-select-header {
-  margin-bottom: 40px;
+  margin-bottom: 60px;
   bottom: 20px;
   font-family: Open Sans;
   font-size: 24px;
@@ -1045,42 +1049,22 @@ input[type="file"] {
   text-align: left;
 }
 
-.css-w3djcp-OptionComponent {
- background: #0071BC !important;
-     background-color: #0071BC !important;
-       height: 22px !important;
-       width: 82 !important;
-       position: relative;
-       border-radius: nullpx;
-       font-family: Open Sans !important;
-       font-style: normal !important;
-       font-weight: bold !important;
-       font-size: 14px !important;
-       line-height: 22px !important;
-       display: flex;
-       align-items: center;
-}
-
-.react-dropdown-select-dropdown {
-   xborder: none !important;
-   box-shadow: none !important;
-}
 .multi-select-dropdown-container[type="selectstate"] {
     position: relative;
     align-items: left;
-    background-color: #ffffff;
+    background-color: $color-white;
     padding: 15px;
     width: 575px;
-    height: 520px;
+    height: 540px;
     margin: auto;
 }
 
 .multi-select-dropdown-container[type="selectprofile"] {
     position: relative;
     align-items: left;
-    background-color: #ffffff;
+    background-color: $color-white;
     border-radius: 3px;
-    border-color: #d6d7d9;
+    border-color: $color-gray-lighter;
     border-style: solid;
     border-width: 1px;
     padding: 15px;
@@ -1089,17 +1073,14 @@ input[type="file"] {
     margin: auto;
 }
 
-
-.react-dropdown-select-item[aria-selected="true"]  {
-     background: #0071BC !important;
-     background-color: #0071BC !important;
+.react-dropdown-select-item-selected {
+     background-color: $color-primary !important;
 }
-
 
 .multi-select-dropdown-submit-button {
       position: relative;
-      background-color: #0071bc;
-      color: #fff;
+      background-color: $color-primary;
+      color: $color-white;
       border-radius: 3px;
       align-self: center;
       font-family: Open Sans;
@@ -1117,7 +1098,7 @@ input[type="file"] {
 
 .component-submit-solid {
   @extend .ds-u-padding-top--2;
-  border-top: 3px solid #D6D7D9;
+  border-top: 3px solid $color-gray-lighter;
   top: 210px;
   position: relative;
 }
@@ -1131,8 +1112,7 @@ font-weight: bold;
 font-size: 24px;
 line-height: 30px;
 
-color: #000000;
-
+color: $color-black;
 }
 
 .multi-select-header-profile {
@@ -1142,8 +1122,7 @@ font-weight: normal;
 font-size: 16px;
 line-height: 24px;
 
-color: #212121;
-
+color: $color-base;
 }
 
 .multi-select-dropdown-cancel-button {
@@ -1161,8 +1140,7 @@ line-height: 21px;
 text-align: center;
 text-decoration-line: underline;
 
-color: #0872B9;
-
+color: $color-primary;
 }
 
 .portalTable {
@@ -1172,11 +1150,10 @@ font-style: normal;
 font-weight: normal;
 font-size: 16px;
 line-height: 24px;
-color: #0071BC;
+color: $color-primary;
 }
 
 .MuiDataGrid-colCellTitle {
-
 font-family: Open Sans;
 font-style: normal;
 font-weight: 600;font-size: 14px;
@@ -1185,24 +1162,21 @@ line-height: 20px;
 display: flex;
 align-items: center;
 
-color: #212121;
-
+color: $color-base;
 }
 
 .MuiPopover-paper {
- background: #0071BC !important;
- color: #ffffff !important;
-
-
+ background: $color-primary !important;
+ color: $color-white !important;
 }
+
 .MuiListItem-button	 {
   font-family: Open Sans !important;
   font-style: normal !important;
   font-weight: 600 !important;
   font-size: 12px !important;
-  background: #0071BC !important;
-  color: #ffffff !important;
-
+  background: $color-primary !important;
+  color: $color-white !important;
 }
 
 .MuiPopover-paper {

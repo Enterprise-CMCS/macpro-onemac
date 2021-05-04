@@ -23,7 +23,7 @@ export default function PortalTable({ ...props }) {
   );
 
   return (
-    <table className="user-table" {...getTableProps()}>
+    <table className={props.className} {...getTableProps()}>
       <thead>
         {headerGroups.map((headerGroup) => (
           <tr {...headerGroup.getHeaderGroupProps()}>
