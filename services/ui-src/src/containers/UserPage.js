@@ -80,6 +80,43 @@ const UserPage = () => {
   const [accesses, setAccesses] = useState(transformAccesses(userData));
 
   let userType = userData?.type ?? "user";
+  
+  const xClicked = useCallback(
+    (stateCode) => {
+      if (
+        window.confirm(
+          "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
+        )
+      ) {
+        const updateStatusRequest = {
+          userEmail: email,
+          doneBy: email,
+          attributes: [
+            {
+              stateCode: stateCode, // required for state user and state admin
+              status: "revoked",
+            },
+          ],
+          type: userType,
+        };
+        try {
+          console.log("updateStatusRequest", updateStatusRequest);
+          UserDataApi.setUserStatus(updateStatusRequest).then(function (
+            returnCode
+          ) {
+            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+              setUserInfo();
+            } else {
+              console.log("Returned: ", returnCode);
+            }
+          });
+        } catch (err) {
+          console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
+        }
+      }
+    },
+    [email, userType, setUserInfo]
+  );
 
   const accessList = useMemo(() => {
     let heading;
@@ -124,7 +161,7 @@ const UserPage = () => {
         </dl>
       </div>
     );
-  }, [accesses, userType]);
+  }, [accesses, userType, xClicked]);
 
   useEffect(() => {
     (async () => {
@@ -168,43 +205,6 @@ const UserPage = () => {
       }
     })();
   }, [userData, userType]);
-
-  const xClicked = useCallback(
-    (stateCode) => {
-      if (
-        window.confirm(
-          "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
-        )
-      ) {
-        const updateStatusRequest = {
-          userEmail: email,
-          doneBy: email,
-          attributes: [
-            {
-              stateCode: stateCode, // required for state user and state admin
-              status: "revoked",
-            },
-          ],
-          type: userType,
-        };
-        try {
-          console.log("updateStatusRequest", updateStatusRequest);
-          UserDataApi.setUserStatus(updateStatusRequest).then(function (
-            returnCode
-          ) {
-            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
-              setUserInfo();
-            } else {
-              console.log("Returned: ", returnCode);
-            }
-          });
-        } catch (err) {
-          console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
-        }
-      }
-    },
-    [email, userType, setUserInfo]
-  );
 
   return (
     <div>

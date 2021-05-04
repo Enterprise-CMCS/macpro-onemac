@@ -14,7 +14,7 @@ const Spa = () => {
 
   const formInfo = {
     pageTitle: "Submit New Medicaid SPA",
-    readOnlyPageTitle: "SPA Submission Details",
+    readOnlyPageTitle: "Medicaid SPA Submission Details",
     detailsHeader: "Medicaid SPA",
     requiredUploads: [
       { title: "CMS Form 179", allowMultiple: false },
@@ -22,11 +22,11 @@ const Spa = () => {
     ],
     optionalUploads: [
       "Cover Letter",
-      "Existing State Plan Page(s)",
       "Document Demonstrating Good-Faith Tribal Engagement",
-      "Tribal Consultation",
+      "Existing State Plan Page(s)",
       "Public Notice",
       "Standard Funding Questions (SFQs)",
+      "Tribal Consultation",
       "Other",
     ],
     transmittalNumber: {
