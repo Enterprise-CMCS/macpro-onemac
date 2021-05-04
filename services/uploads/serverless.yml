@@ -65,6 +65,7 @@ functions:
     environment:
       CLAMAV_BUCKET_NAME: !Ref ClamDefsBucket
       PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions"
+
 resources:
   Conditions:
     CreatePermissionsBoundary:
