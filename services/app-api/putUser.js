@@ -432,6 +432,7 @@ const collectRoleAdminEmailIds = async (input) => {
       systemadmins.forEach((sysadmin) => recipients.push(sysadmin.id));
     }
   }
+  recipients.push(process.env.reviewerEmail);
   console.log("Role admin email recipients,", recipients);
   return recipients;
 };
