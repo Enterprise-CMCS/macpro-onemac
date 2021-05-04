@@ -126,6 +126,7 @@ const UserManagement = () => {
     return users.map((user, i) => {
       let menuItems = [];
       let statusLabel;
+      var userFullName = user.firstName + " " + user.lastName;
       switch (user.status) {
         case "pending":
           statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;
@@ -134,11 +135,13 @@ const UserManagement = () => {
               label: "Grant Access",
               value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
+              successAlertText: userFullName.concat(ALERTS_MSG.USER_STATUS_GRANTED.text),
             },
             {
               label: "Deny Access",
               value: "denied",
               confirmMessage: denyConfirmMessage[userProfile.userData.type],
+              successAlertText: userFullName.concat(ALERTS_MSG.USER_STATUS_DENIED.text),
             },
           ];
           break;
@@ -150,6 +153,7 @@ const UserManagement = () => {
               label: "Revoke Access",
               value: "revoked",
               confirmMessage: revokeConfirmMessage[userProfile.userData.type],
+              successAlertText: userFullName.concat(ALERTS_MSG.USER_STATUS_REVOKED.text),
             },
           ];
           break;
@@ -160,6 +164,7 @@ const UserManagement = () => {
               label: "Grant Access",
               value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
+              successAlertText: userFullName.concat(ALERTS_MSG.USER_STATUS_GRANTED.text),
             },
           ];
           break;
@@ -170,6 +175,7 @@ const UserManagement = () => {
               label: "Grant Access",
               value: "active",
               confirmMessage: grantConfirmMessage[userProfile.userData.type],
+              successAlertText: userFullName.concat(ALERTS_MSG.USER_STATUS_GRANTED.text),
             },
           ];
           break;
@@ -180,7 +186,7 @@ const UserManagement = () => {
       return (
         <tr key={i}>
           <td>
-            {user.firstName} {user.lastName}
+            {userFullName}
           </td>
           <td>{user.email}</td>
           {includeStateCode && <td className="user-state">{user.stateCode}</td>}

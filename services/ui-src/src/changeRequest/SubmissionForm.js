@@ -1,18 +1,19 @@
 import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
+import PropTypes from "prop-types";
+
+import { ROUTES, territoryList } from "cmscommonlib";
+import { useAppContext } from "../libs/contextLib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ROUTES, territoryList } from "cmscommonlib";
-import PropTypes from "prop-types";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import { getAlert } from "../libs/error-mappings";
 import { AlertBar } from "../components/AlertBar";
-import { useAppContext } from "../libs/contextLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -21,7 +22,6 @@ import { useAppContext } from "../libs/contextLib";
  */
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
-  const { currentAlert } = useAppContext();
   const { setCurrentAlert } = useAppContext();
 
   // True when the required attachments have been selected.
@@ -348,8 +348,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             mounted = false;
             setCurrentAlert(ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY);
             history.push({
-              pathname: ROUTES.DASHBOARD,
-              query: "?submission=success",
+              pathname: ROUTES.DASHBOARD.concat("/:success"),
             });
           }
         } catch (err) {

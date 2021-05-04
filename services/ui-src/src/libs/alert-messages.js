@@ -126,5 +126,20 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "System Submission Error",
     text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
+  },
+  USER_STATUS_GRANTED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: ` has been granted access, a notification has been sent to their email.`,
+  },
+  USER_STATUS_DENIED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: ` has been denied access, a notification has been sent to their email.`,
+  },
+  USER_STATUS_REVOKED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `'s access has been revoked, a notification has been sent to their email.`,
   }
 };
