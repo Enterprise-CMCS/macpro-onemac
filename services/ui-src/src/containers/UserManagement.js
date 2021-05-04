@@ -1,14 +1,14 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { Alert } from "@cmsgov/design-system";
 import { ROUTES } from "cmscommonlib";
 
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
+import { AlertBar } from "../components/AlertBar";
 import { getAlert } from "../libs/error-mappings";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
@@ -33,8 +33,7 @@ const PENDING_CIRCLE_IMAGE = (
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [alert, setAlert] = useState();
-  const { userProfile } = useAppContext();
+  const { setCurrentAlert, userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
@@ -45,16 +44,16 @@ const UserManagement = () => {
       .then((ul) => {
         console.log("user List: ", ul);
         if (typeof ul === "string") {
-          if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
+          if (!isPending(userProfile.userData)) setCurrentAlert(getAlert(ul));
           ul = [];
         }
         setUserList(ul);
       })
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setCurrentAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       });
-  }, [userProfile.email, userProfile.userData]);
+  }, [setCurrentAlert, userProfile.email, userProfile.userData]);
 
   // Load the data from the backend.
   useEffect(() => {
@@ -71,19 +70,14 @@ const UserManagement = () => {
 
     let newAlert = ALERTS_MSG.NONE;
     if (location.state) newAlert = location.state.showAlert;
-    if (mounted) setAlert(newAlert);
+    if (mounted) setCurrentAlert(newAlert);
 
     if (mounted) updateList();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [location, userProfile, history, updateList]);
-
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
+  }, [location, setCurrentAlert, userProfile, history, updateList]);
 
   useEffect(() => {
     let newIsLoading = true;
@@ -96,25 +90,6 @@ const UserManagement = () => {
       mounted = false;
     };
   }, [userList]);
-
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-  }, [alert]);
-
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
 
   const getName = useCallback(
     ({ firstName, lastName }) =>
@@ -177,8 +152,6 @@ const UserManagement = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      let userFullname = getName(row.values.firstName,row.values.lastName);
-      console.log("User Full Name: ", userFullName);
       const grant = {
           label: "Grant Access",
           value: "active",
@@ -203,18 +176,27 @@ const UserManagement = () => {
           revoked: [grant],
         }[row.values.status] ?? [];
 
+        const alertMessages = 
+        {
+          active: ALERTS_MSG.USER_STATUS_GRANTED,
+          denied: ALERTS_MSG.USER_STATUS_DENIED,
+          revoked: ALERTS_MSG.USER_STATUS_REVOKED,
+        };
+
       return (
         <PopupMenu
-          selectedRow={row.values.id}
+          selectedRow={row.id}
           userEmail={row.values.email}
           menuItems={menuItems}
-          handleSelected={(row, value) => {
+          handleSelected={(rowNum, value) => {
+            let newAlert = alertMessages[value];
+
             const updateStatusRequest = {
-              userEmail: userList[row].email,
+              userEmail: userList[rowNum].email,
               doneBy: userProfile.userData.id,
               attributes: [
                 {
-                  stateCode: userList[row].stateCode, // required for state user and state admin
+                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
                   status: value,
                 },
               ],
@@ -224,17 +206,22 @@ const UserManagement = () => {
               UserDataApi.setUserStatus(updateStatusRequest).then(function (
                 returnCode
               ) {
-                setAlert(getAlert(returnCode));
+                if (returnCode === "UR000") {
+                  newAlert.text = userList[rowNum].firstName + " " + userList[rowNum].lastName + newAlert.text;
+                } else {
+                  newAlert = getAlert(returnCode);
+                }
                 updateList();
               });
             } catch (err) {
-              setAlert(ALERTS_MSG.SUBMISSION_ERROR);
+              newAlert = ALERTS_MSG.SUBMISSION_ERROR;
             }
+            setCurrentAlert(newAlert);
           }}
         />
       );
     },
-    [updateList, userList, userProfile]
+    [ setCurrentAlert, updateList, userList, userProfile]
   );
 
   const columns = useMemo(
@@ -300,7 +287,7 @@ const UserManagement = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="User Management" text="" />
-      {renderAlert(alert)}
+      <AlertBar />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&

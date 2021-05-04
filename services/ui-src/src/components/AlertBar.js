@@ -30,5 +30,3 @@ export const AlertBar = () => {
   </div>
   );
 };
-
-

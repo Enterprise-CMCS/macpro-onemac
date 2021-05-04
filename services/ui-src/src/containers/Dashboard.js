@@ -60,7 +60,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData, userProfile]);
+  }, [history, location, setCurrentAlert, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
