@@ -215,6 +215,7 @@ const Dashboard = () => {
                 <div>
                   {changeRequestList.length > 0 ? (
                     <PortalTable
+                      className="submissions-table"
                       columns={columns}
                       data={changeRequestList}
                       initialState={initialTableState}

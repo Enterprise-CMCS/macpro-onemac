@@ -565,7 +565,7 @@ input[type="file"] {
   flex: auto;
 }
 
-.custom-table {
+@mixin custom-table {
   @extend .ds-c-table;
   @extend .ds-c-table--borderless;
   width: 100%;
@@ -612,7 +612,7 @@ input[type="file"] {
 }
 
 .submissions-table {
-  @extend .custom-table;
+  @include custom-table;
 
   th:last-child, td:last-child {
     white-space: nowrap;
@@ -628,7 +628,7 @@ input[type="file"] {
 }
 
 .user-table {
-  @extend .custom-table;
+  @include custom-table;
 
   #nameColHeader {
     width: 20%;

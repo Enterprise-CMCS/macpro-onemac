@@ -316,6 +316,7 @@ const UserManagement = () => {
           <LoadingScreen isLoading={isLoading}>
             {userList && userList.length !== 0 && userList !== "UR040" ? (
               <PortalTable
+                className="user-table"
                 columns={columns}
                 data={userList}
                 initialState={initialTableState}
