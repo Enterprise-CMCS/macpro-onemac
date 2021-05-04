@@ -41,11 +41,11 @@ export const getCurrentStatus = (attr) => {
   const latestAttribute = attr.reduce((latestItem, currentItem) =>
     currentItem.date > latestItem.date ? currentItem : latestItem
   );
-  return latestAttribute.status;
+  return latestAttribute;
 };
 
 const isLatestAttributeActive = (attr) => {
-  return getCurrentStatus(attr) === "active";
+  return getCurrentStatus(attr).status === "active";
 };
 
 export const getAuthorizedStateList = (user) => {

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES } from "cmscommonlib";
+import { ROUTES, ROLES } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
@@ -103,40 +103,40 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated) {
+  function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated, userType) {
     switch (document.location.pathname) {
       case ROUTES.FAQ:
       case ROUTES.FAQ + "/":
         return (<div className="nav-bar">
           <div className="nav-left">
-            <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
+            <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
           </div>
         </div>);
       default:
         return (
-            <div className="nav-bar">
-              <div className="nav-left">
-                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo}/>
-                <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
-                {isAuthenticated && (
-                    <>
-                      <Link id="dashboardLink" to={ROUTES.DASHBOARD}
-                            className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
-                        Dashboard
-                      </Link>
-                      <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
-                            className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
-                        User Management
-                      </Link>
-                    </>
-                )}
-                <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ_TOP)} target="new">FAQ</a>
-                {isLoggedInAsDeveloper ?
-                    <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
+          <div className="nav-bar">
+            <div className="nav-left">
+              <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+              <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
+              {isAuthenticated && (
+                <>
+                  {userType === ROLES.STATE_USER && <Link id="dashboardLink" to={ROUTES.DASHBOARD}
+                    className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
+                    Dashboard
+                  </Link>}
+                  {userType !== ROLES.STATE_USER && <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
+                    className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
+                    User Management
+                  </Link>}
+                </>
+              )}
+              <a href={ROUTES.FAQ} className={getActiveClass(currentRoute, RouteList.FAQ_TOP)} target="new">FAQ</a>
+              {isLoggedInAsDeveloper ?
+                <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
                       Page</Link> : null}
-              </div>
-              {renderAccountButtons()}
             </div>
+            {renderAccountButtons()}
+          </div>
         );
     }
   }
@@ -239,6 +239,9 @@ function Header(props) {
     }
   }
 
+  const { userData } = useAppContext().userProfile || {};
+  let userType = userData?.type ?? "user";
+
   return (
     <div>
       {renderUSABar()}
@@ -250,7 +253,7 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar(isLoggedInAsDeveloper, getCurrentRoute(useLocation().pathname), isAuthenticated)}
+      {renderNavBar(isLoggedInAsDeveloper, getCurrentRoute(useLocation().pathname), isAuthenticated, userType)}
     </div>
   );
 }
