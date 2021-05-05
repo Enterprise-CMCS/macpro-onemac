@@ -189,7 +189,7 @@ const UserManagement = () => {
           userEmail={row.values.email}
           menuItems={menuItems}
           handleSelected={(rowNum, value) => {
-            let newAlert = alertMessages[value];
+            let newAlert = {...alertMessages[value]};
 
             const updateStatusRequest = {
               userEmail: userList[rowNum].email,
@@ -202,22 +202,23 @@ const UserManagement = () => {
               ],
               type: getAdminTypeByRole(userProfile.userData.type),
             };
-            try {
               UserDataApi.setUserStatus(updateStatusRequest).then(function (
                 returnCode
               ) {
                 if (returnCode === "UR000") {
-                  newAlert.text = userList[rowNum].firstName + " " + userList[rowNum].lastName + newAlert.text;
+                  console.log("alert: ", newAlert);
+                  newAlert.text = `${userList[rowNum].firstName} ${userList[rowNum].lastName}${newAlert.text}`;
                 } else {
                   newAlert = getAlert(returnCode);
                 }
                 updateList();
+              }).then( () => (setCurrentAlert(newAlert)) )
+              .catch((error) => {
+                console.log("Error while fetching user's list.", error);
+                setCurrentAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
               });
-            } catch (err) {
-              newAlert = ALERTS_MSG.SUBMISSION_ERROR;
-            }
-            setCurrentAlert(newAlert);
-          }}
+        
+                      }}
         />
       );
     },
