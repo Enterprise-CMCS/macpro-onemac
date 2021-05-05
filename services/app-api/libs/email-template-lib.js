@@ -5,7 +5,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             bodyHTML: `
             <p>Hello,</p>
     
-            <p>We received your request as a [insert role requested] on [insert date/time stamp]. 
+            <p>We received your request as a State User on [insert date/time stamp]. 
             Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
     
             <p>Thank you!</p>`
@@ -47,7 +47,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             bodyHTML: `
             <p>Hello,</p>
     
-            <p>We received your request as a [insert role requested] on [insert date/time stamp]. 
+            <p>We received your request as a State System Administrator on [insert date/time stamp]. 
             Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
     
             <p>Thank you!</p>`
@@ -89,7 +89,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             bodyHTML: `
             <p>Hello,</p>
     
-            <p>We received your request as a [insert role requested] on [insert date/time stamp]. 
+            <p>We received your request as a CMS Role Approver on [insert date/time stamp]. 
             Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
     
             <p>Thank you!</p>`
