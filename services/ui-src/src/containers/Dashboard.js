@@ -135,99 +135,96 @@ const Dashboard = () => {
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
       <AlertBar />
       <div className="dashboard-container">
-        <div className="dashboard-left-col">
-          <div className="action-title">SPAs</div>
-          <Button
-            id="spaSubmitBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.SPA)}
-          >
-            Submit New Medicaid SPA
-          </Button>
-          <Button
-            id="spaRaiBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.SPA_RAI)}
-          >
-            Respond to Medicaid SPA RAI
-          </Button>
-          <Button
-            id="chipSpaBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.CHIP_SPA)}
-          >
-            Submit New CHIP SPA
-          </Button>
-          <Button
-            id="chipSpaRaiBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
-          >
-            Respond to CHIP SPA RAI
-          </Button>
-          <div className="action-title">Waivers</div>
-          <Button
-            id="waiverBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER)}
-          >
-            Submit 1915(b) Waiver Action
-          </Button>
-          <Button
-            id={"waiverRaiBtn"}
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_RAI)}
-          >
-            Respond to 1915(b) Waiver RAI
-          </Button>
-          <Button
-            id="waiverExtBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-          >
-            Request Temporary Extension form - 1915(b) and 1915(c)
-          </Button>
-          <Button
-            id="waiverAppKBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_APP_K)}
-          >
-            Submit 1915(c) Appendix K Amendment
-          </Button>
-        </div>
-        <div className="dashboard-right-col">
-          {userProfile &&
-          userProfile.userData &&
-          userProfile.userData.attributes &&
-          userProfile.userData.attributes.length !== 0 &&
-          !isActive(userProfile.userData) ? (
-            isPending(userProfile.userData) ? (
-              <EmptyList message={pendingMessage[userProfile.userData.type]} />
-            ) : (
-              <EmptyList
-                message={deniedOrRevokedMessage[userProfile.userData.type]}
-              />
-            )
-          ) : (
-            <div>
-              <div className="action-title">Submissions List</div>
-              <LoadingScreen isLoading={isLoading}>
-                <div>
-                  {changeRequestList.length > 0 ? (
-                    <PortalTable
-                      className="submissions-table"
-                      columns={columns}
-                      data={changeRequestList}
-                      initialState={initialTableState}
-                    />
-                  ) : (
-                    <EmptyList message="You have no submissions yet." />
-                  )}
-                </div>
-              </LoadingScreen>
+        {!!userProfile?.userData?.attributes &&
+        isActive(userProfile?.userData) ? (
+          <>
+            <div className="dashboard-left-col">
+              <div className="action-title">SPAs</div>
+              <Button
+                id="spaSubmitBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.SPA)}
+              >
+                Submit New Medicaid SPA
+              </Button>
+              <Button
+                id="spaRaiBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.SPA_RAI)}
+              >
+                Respond to Medicaid SPA RAI
+              </Button>
+              <Button
+                id="chipSpaBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.CHIP_SPA)}
+              >
+                Submit New CHIP SPA
+              </Button>
+              <Button
+                id="chipSpaRaiBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
+              >
+                Respond to CHIP SPA RAI
+              </Button>
+              <div className="action-title">Waivers</div>
+              <Button
+                id="waiverBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER)}
+              >
+                Submit 1915(b) Waiver Action
+              </Button>
+              <Button
+                id={"waiverRaiBtn"}
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER_RAI)}
+              >
+                Respond to 1915(b) Waiver RAI
+              </Button>
+              <Button
+                id="waiverExtBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+              >
+                Request Temporary Extension form - 1915(b) and 1915(c)
+              </Button>
+              <Button
+                id="waiverAppKBtn"
+                variation="transparent"
+                onClick={() => history.push(ROUTES.WAIVER_APP_K)}
+              >
+                Submit 1915(c) Appendix K Amendment
+              </Button>
             </div>
-          )}
-        </div>
+            <div className="dashboard-right-col">
+              <div>
+                <div className="action-title">Submissions List</div>
+                <LoadingScreen isLoading={isLoading}>
+                  <div>
+                    {changeRequestList.length > 0 ? (
+                      <PortalTable
+                        className="submissions-table"
+                        columns={columns}
+                        data={changeRequestList}
+                        initialState={initialTableState}
+                      />
+                    ) : (
+                      <EmptyList message="You have no submissions yet." />
+                    )}
+                  </div>
+                </LoadingScreen>
+              </div>
+            </div>
+          </>
+        ) : isPending(userProfile.userData) ? (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        ) : (
+          <EmptyList
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        )}
       </div>
     </div>
   );
