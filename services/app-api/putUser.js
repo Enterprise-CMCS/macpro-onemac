@@ -8,6 +8,7 @@ import { isEmpty, isObject } from "lodash";
 import { territoryCodeList } from "cmscommonlib";
 import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
+import { getCMSDateFormatNow } from "./changeRequest/email-util";
 
 /**
  * Create / Update a user or change User status
@@ -150,7 +151,7 @@ const retrieveUsers = async (input) => {
 
   if (!doneByUser || isEmpty(doneByUser)) {
     if (input.isPutUser) {
-      doneByUser = null;
+      doneByUser = user;
     } else {
       console.log(
         `Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`
@@ -431,6 +432,7 @@ const collectRoleAdminEmailIds = async (input) => {
       systemadmins.forEach((sysadmin) => recipients.push(sysadmin.id));
     }
   }
+  recipients.push(process.env.reviewerEmail);
   console.log("Role admin email recipients,", recipients);
   return recipients;
 };
@@ -540,10 +542,14 @@ const constructUserEmail = (userEmailId, input) => {
 
   input.attributes[0].stateCode
     ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
-        updatedStatus
-      ].bodyHTML.replace("[insert state]", input.attributes[0].stateCode))
-    : (email.HTML =
-        ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML);
+      updatedStatus
+    ].bodyHTML
+      .replace("[insert state]", input.attributes[0].stateCode)
+      .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())))
+    : (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
+      updatedStatus
+    ].bodyHTML
+      .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())));
   return { email };
 };
 
