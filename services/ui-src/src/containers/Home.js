@@ -94,9 +94,9 @@ export default function Home() {
     return (
       <ul className="ds-u-padding--0">
         {
-          renderSubmissionSteps.map( (item, i) =>
-            <li className="text" key={i.toString}>
-              {i} {item.text}
+          renderSubmissionSteps.map( item =>
+            <li className="text" >
+              {item.text}
             </li>
           )
         }

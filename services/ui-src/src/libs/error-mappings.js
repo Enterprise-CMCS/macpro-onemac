@@ -11,10 +11,13 @@ export const getAlert = (errorCode) => {
     case "":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
       break;
-    // app-api/response-codes.js    SUCCESSFULLY_SUBMITTED: "SC000",
+    // app-api/response-codes.js    USER_SUBMITTED: "UR000",
     case "UR000":
-    case "SC000":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
+      break;
+    // app-api/response-codes.js    SUCCESSFULLY_SUBMITTED: "SC000",
+    case "SC000":
+      returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY;
       break;
     // app-api/response-codes.js    CALLING_USER_PENDING: "UR043",
     // app-api/response-codes.js    CALLING_USER_REVOKED: "UR044",

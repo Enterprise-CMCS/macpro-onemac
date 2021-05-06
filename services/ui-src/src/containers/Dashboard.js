@@ -1,5 +1,5 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
-import { Link, useHistory, useLocation, useParams } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES } from "cmscommonlib";
@@ -10,7 +10,7 @@ import PortalTable from "../components/PortalTable";
 import { AlertBar } from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { ALERTS_MSG, ALERT_TYPES } from "../libs/alert-messages";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
 import {
@@ -26,12 +26,9 @@ import {
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { setCurrentAlert, userProfile, userProfile: { userData } = {} } = useAppContext();
+  const { currentAlert, setCurrentAlert, userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
-  const successfulSubmission = useParams();
-
-  console.log("query",successfulSubmission);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
@@ -60,7 +57,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, setCurrentAlert, userData, userProfile]);
+  }, [currentAlert.type, history, location, setCurrentAlert, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (

@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import PropTypes from "prop-types";
 
@@ -8,7 +8,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { ALERTS_MSG, ALERT_TYPES } from "../libs/alert-messages";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
@@ -22,7 +22,7 @@ import { AlertBar } from "../components/AlertBar";
  */
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
-  const { setCurrentAlert } = useAppContext();
+  const { currentAlert, setCurrentAlert } = useAppContext();
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
@@ -344,11 +344,11 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           );
           newAlert = getAlert(returnCode);
 
-          if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS) {
+          if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY) {
             mounted = false;
             setCurrentAlert(ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY);
             history.push({
-              pathname: ROUTES.DASHBOARD.concat("/:success"),
+              pathname: ROUTES.DASHBOARD,
             });
           }
         } catch (err) {

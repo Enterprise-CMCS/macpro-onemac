@@ -9,7 +9,7 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 export const AlertBar = () => {
   const { currentAlert, setCurrentAlert } = useAppContext();
 
-  const jumpToPageTitle = () => {
+  const jumpToAlert = () => {
     var elmnt = document.getElementById("alert-bar");
     if (elmnt) elmnt.scrollIntoView();
   };
@@ -22,14 +22,13 @@ export const AlertBar = () => {
       currentAlert.heading &&
       currentAlert.heading !== ""
     ) {
-      jumpToPageTitle();
-      console.log("current Alert: ", currentAlert);
+      jumpToAlert();
     }
 
     return function cleanup() {
       mounted = false;
     };
-  }, [currentAlert]);
+  }, [ currentAlert ]);
 
   if (!currentAlert.heading) return null;
   return (
