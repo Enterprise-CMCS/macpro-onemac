@@ -396,6 +396,8 @@ const FAQ = () => {
           waiver number of 0003, a second renewal (R02) and a second amendment
           (02). Base waivers without renewals should use “R00” as their renewal number.
         </p>
+        <h4>Who can I contact to help me figure out the correct 1915(b) Waiver Number?</h4>
+        <p>Email <a href="mailto:MCOGDMCOActions@cms.hhs.gov">MCOGDMCOActions@cms.hhs.gov</a> to get support with determining the correct 1915(b) Waiver Number.</p>
         <h4>What format is used to enter a 1915(c) waiver number?</h4>
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
