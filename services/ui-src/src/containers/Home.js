@@ -1,5 +1,4 @@
 import React from "react";
-import { AlertBar } from "../components/AlertBar";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
 
@@ -94,8 +93,8 @@ export default function Home() {
     return (
       <ul className="ds-u-padding--0">
         {
-          renderSubmissionSteps.map( item =>
-            <li className="text" >
+          renderSubmissionSteps.map( (item, i) =>
+            <li key={i} className="text" >
               {item.text}
             </li>
           )
@@ -106,7 +105,6 @@ export default function Home() {
 
   return (
     <>
-      <AlertBar />
       <HomeHeader />
       <div className="home-content-box">
         <div className="container-fluid ds-u-margin--0">

@@ -1,19 +1,15 @@
-import React, { useRef, useState, useEffect } from "react";
+import React, { useRef, useState } from "react";
 import { useHistory } from "react-router-dom";
-import PropTypes from "prop-types";
-
-import { ROUTES, territoryList } from "cmscommonlib";
-import { useAppContext } from "../libs/contextLib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { ALERTS_MSG, ALERT_TYPES } from "../libs/alert-messages";
+import { RESPONSE_CODE, ROUTES, territoryList } from "cmscommonlib";
+import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
-import { getAlert } from "../libs/error-mappings";
-import { AlertBar } from "../components/AlertBar";
+import KristinAlertBar from "../components/KristinAlertBar";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -22,7 +18,7 @@ import { AlertBar } from "../components/AlertBar";
  */
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
-  const { currentAlert, setCurrentAlert } = useAppContext();
+  const [alertCode, setAlertCode] = useState("NONE");
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
@@ -151,9 +147,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       newMessage.statusLevel = transmittalNumberDetails.errorLevel;
       try {
         if (transmittalNumberDetails.existenceRegex !== undefined) {
-          newTransmittalNumber = newTransmittalNumber.match(
-            transmittalNumberDetails.existenceRegex
-          )[0];
+          newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
         }
         const dupID = await ChangeRequestDataApi.packageExists(
           newTransmittalNumber
@@ -162,17 +156,17 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         if (!dupID && transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
             newMessage.statusMessage =
-              "According to our records, this " +
-              transmittalNumberDetails.idLabel +
-              " does not exist. Please check the " +
-              transmittalNumberDetails.idLabel +
-              " and try entering it again.";
+            "According to our records, this " +
+            transmittalNumberDetails.idLabel +
+            " does not exist. Please check the " +
+            transmittalNumberDetails.idLabel +
+            " and try entering it again.";
           } else {
             newMessage.statusMessage =
-              transmittalNumberDetails.idLabel +
-              " not found. Please ensure you have the correct " +
-              transmittalNumberDetails.idLabel +
-              " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
+            transmittalNumberDetails.idLabel +
+            " not found. Please ensure you have the correct " +
+            transmittalNumberDetails.idLabel +
+            " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
           }
         } else if (dupID && !transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
@@ -282,7 +276,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // because this is an asynchronous function, you can't trust that the
     let actionTypeMessage = "";
     let waiverAuthorityMessage = "";
-    let newAlert = null;
+    let newAlertCode = "NONE";
     let mounted = true;
     const uploadRef = uploader.current;
     let newMessage = {
@@ -306,10 +300,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         );
         if (!dupID && transmittalNumberDetails.idMustExist) {
           newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-          newAlert = ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+          newAlertCode = RESPONSE_CODE.ID_NOT_FOUND;   // ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
         } else if (dupID && !transmittalNumberDetails.idMustExist) {
           newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-          newAlert = ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+          newAlertCode = RESPONSE_CODE.DUPLICATE_ID;  // ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
         }
       } catch (err) {
         console.log("There was an error submitting a request.", err);
@@ -331,9 +325,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       actionTypeMessage ||
       waiverAuthorityMessage
     ) {
-      if (!newAlert) newAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
+      if (newAlertCode === "NONE") newAlertCode = RESPONSE_CODE.VALIDATION_ERROR;  // ALERTS_MSG.SUBMISSION_INCOMPLETE;
     } else if (!areUploadsReady) {
-      newAlert = ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
+      newAlertCode = RESPONSE_CODE.ATTACHMENT_ERROR; // ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
     } else {
       try {
         const uploadedList = await uploadRef.uploadFiles();
@@ -342,30 +336,35 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             changeRequest,
             uploadedList
           );
-          newAlert = getAlert(returnCode);
+          newAlertCode = returnCode;
 
-          if (newAlert === ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY) {
+          if (newAlertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
             mounted = false;
-            setCurrentAlert(ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY);
             history.push({
               pathname: ROUTES.DASHBOARD,
+              query: "?query=abc",
+              state: {
+                showAlertCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
+              },
             });
           }
         } catch (err) {
-          newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+          newAlertCode = RESPONSE_CODE.SYSTEM_ERROR;
           console.log("submit caught error: ", err);
         }
       } catch (err) {
-        newAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+        newAlertCode = RESPONSE_CODE.SYSTEM_ERROR;
         console.log("uploadFiles() caught error: ", err);
       }
     }
 
+    console.log("new alert code: ", newAlertCode);
     // now set the state variables to show the error messages
-    if (mounted) setTransmittalNumberStatusMessage(newMessage);
+    if (mounted)
+      setTransmittalNumberStatusMessage(newMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-    if (mounted) setCurrentAlert(newAlert);
+    if (mounted) setAlertCode(newAlertCode);
     if (mounted) setIsLoading(false);
   }
 
@@ -374,13 +373,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.pageTitle} text="" />
-      <AlertBar />
+      <KristinAlertBar alertCode={alertCode} />
       <div className="form-container">
-        {formInfo.subheaderMessage && (
-          <div className="form-subheader-message">
-            {formInfo.subheaderMessage}
-          </div>
-        )}
+        {formInfo.subheaderMessage && <div className="form-subheader-message">{formInfo.subheaderMessage}</div>}
         <form
           onSubmit={handleSubmit}
           noValidate
