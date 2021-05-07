@@ -339,7 +339,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               pathname: ROUTES.DASHBOARD,
               query: "?query=abc",
               state: {
-                showAlertCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
+                passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
               },
             });
           }

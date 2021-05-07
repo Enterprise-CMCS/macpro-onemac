@@ -4,21 +4,18 @@ import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PropTypes from "prop-types";
-import { ALERTS_MSG } from "../libs/alert-messages";
 import { formatDate } from "../utils/date-utils";
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
-import { Alert, Review } from "@cmsgov/design-system";
+import PageTitleBar from "../components/PageTitleBar";
+import { Review } from "@cmsgov/design-system";
 
 /**
- * RAI Form template to allow rendering for different types of RAI's.
+ * Given an id and the relevant submission type forminfo, show the details
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} id - the id of the change request data element to view
  * @param {String} userId - the id of the user who created the change request
  */
 const SubmissionView = ({ formInfo, id, userId }) => {
-  // for setting the alert
-  const [alert, setAlert] = useState(ALERTS_MSG.NONE);
-
+  
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
@@ -27,10 +24,7 @@ const SubmissionView = ({ formInfo, id, userId }) => {
 
   useEffect(() => {
     let mounted = true;
-    let innerAlert = ALERTS_MSG.NONE;
     let innerLoading = true;
-
-    console.log("called and id is: " + id);
 
     async function fetchChangeRequest() {
       if (!id || !userId) return true;
@@ -40,47 +34,26 @@ const SubmissionView = ({ formInfo, id, userId }) => {
         if (mounted) setChangeRequest(fetchedChangeRequest);
         return false;
       } catch (error) {
-        console.log("Error while fetching submission.", error);
+        history.push({
+          pathname: ROUTES.DASHBOARD,
+          state: {
+            passCode: RESPONSE_CODE.SYSTEM_ERROR,
+          },
+        });
       }
     }
 
     innerLoading = fetchChangeRequest();
     if (mounted) setIsLoading(!innerLoading);
-    if (mounted) setAlert(innerAlert);
 
     return function cleanup() {
       mounted = false;
     };
   }, [id, userId]);
 
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
-
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-  }, [alert]);
-
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
-
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.readOnlyPageTitle} text="" />
-      {renderAlert(alert)}
       {changeRequest && (
       <div className="form-container">
         <h3>{formInfo.detailsHeader} Details</h3>

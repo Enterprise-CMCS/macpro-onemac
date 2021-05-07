@@ -28,7 +28,7 @@ const Dashboard = () => {
   const { userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
-  const [alertCode, setAlertCode] = useState(location?.state?.showAlertCode);
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {

@@ -13,7 +13,7 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * @param {String} changeRequestType - the type of change request
  */
 const KristinAlertBar = ({ alertCode, personalizedString = "" }) => {
-    const [alert, setAlert] = useState(getAlert(alertCode));
+  const [alert, setAlert] = useState(getAlert(alertCode));
 
   useEffect(() => {
     let mounted = true;
@@ -43,7 +43,7 @@ const KristinAlertBar = ({ alertCode, personalizedString = "" }) => {
     alertCode && alert && alert.heading && alert.heading !== "" ?
     <div className="alert-bar" id="alert-bar">
       <Alert variation={alert.type} heading={alert.heading}>
-        <p className="ds-c-alert__text">{alert.text.replace("$personalize$", personalizedString)}</p>
+        <p className="ds-c-alert__text" dangerouslySetInnerHTML={{__html: alert.text.replace("$personalize$", personalizedString)}}></p>
         <button
           className="close-button"
           onClick={() => setAlert(ALERTS_MSG.NONE)}

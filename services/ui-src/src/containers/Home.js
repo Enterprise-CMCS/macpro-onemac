@@ -1,11 +1,15 @@
 import React from "react";
+import { useLocation } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
+import KristinAlertBar from "../components/KristinAlertBar";
 
 /**
  * Displays information about the usage of the webform
  */
 export default function Home() {
+  const location = useLocation();
+
   const submissionTitle ='How to create a submission';
   const submissionsList = [
     {
@@ -59,9 +63,9 @@ export default function Home() {
    */
   const renderSubmissionSteps = submissionsList => {
     return (
-      submissionsList.map(item => {
+      submissionsList.map((item,i) => {
         return (
-          <>
+          <div key={i} >
             <div className="ds-l-row">
               <div className="ds-l-col--1 ds-u-padding--0">
                 <img src={`/assets/images/icons/${item.image}.svg`} alt={item.subTitle} />
@@ -79,7 +83,7 @@ export default function Home() {
                 {item.text}
               </div>
             </div>
-          </>)
+          </div>)
       })
     );
   }
@@ -106,6 +110,7 @@ export default function Home() {
   return (
     <>
       <HomeHeader />
+      <KristinAlertBar alertCode={location?.state?.passCode} />
       <div className="home-content-box">
         <div className="container-fluid ds-u-margin--0">
           <div className="ds-l-row">

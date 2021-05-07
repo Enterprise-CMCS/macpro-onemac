@@ -35,7 +35,7 @@ const UserManagement = () => {
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
-  const [alertCode, setAlertCode] = useState(location?.state?.showAlertCode);
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
   const updateList = useCallback(() => {
@@ -65,12 +65,12 @@ const UserManagement = () => {
         (!userProfile.userData.attributes ||
           userProfile.userData.type === "stateuser"))
     ) {
-      location.state.showAlertCode=null;
+      location.state.passCode=null;
       history.push(ROUTES.DASHBOARD);
     }
 
     let newAlertCode = "NONE";
-    if (location.state) newAlertCode = location.state.showAlertCode;
+    if (location.state) newAlertCode = location.state.passCode;
     if (mounted) setAlertCode(newAlertCode);
 
     if (mounted) updateList();

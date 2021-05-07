@@ -6,10 +6,8 @@ import UserDataApi from "./utils/UserDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
-import { ALERTS_MSG } from "./libs/alert-messages";
 
 function App() {
-  const [currentAlert, setCurrentAlert ] = useState(ALERTS_MSG.NONE);
   const [authState, setAuthState] = useState({
     isAuthenticating: true,
     isAuthenticated: false,
@@ -83,8 +81,6 @@ function App() {
                 value={{
                   ...authState,
                   setUserInfo,
-                  currentAlert,
-                  setCurrentAlert,
                 }}
             >
               <Header />
