@@ -28,10 +28,9 @@ const FAQ = () => {
 
     return (
     <div>
-    <PageTitleBar heading="SPA and Waiver Frequently Asked Questions" text="" />
+    <PageTitleBar heading="Frequently Asked Questions" text="" />
     <div className="form-container" id="top">
       <div className="form-card">
-        <h2>Help Desk Contact Information</h2>
         <div className="faq-info-box">
           <hr className="faq-info-box-top-border"/>
           <p className="faq-info-box-title">MACPRO HELP DESK CONTACT INFO</p>
@@ -43,15 +42,8 @@ const FAQ = () => {
           <b>Email</b><br/>
           <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">MACPro_HelpDesk@cms.hhs.gov</a>
         </div>
-        <p>
-          For assistance, please email the MACPro Help Desk at{" "}
-          <a href={`mailto:${helpDeskContact.email}`}>
-            {helpDeskContact.email}
-          </a>{" "}
-          or call {helpDeskContact.phone}.
-        </p>
+        <div className="faq-left-column">
         <h2>General</h2>
-
         <Collapsible triggerWhenOpen="&#x2212;  What browsers can I use to access the system?"
                      trigger="&#x2b;  What browsers can I use to access the system?">
         <br/>
@@ -660,6 +652,7 @@ const FAQ = () => {
           submissions, please contact your state lead or your state’s CMS lead
           for HCBS or managed care.
         </p>
+      </div>
       </div>
 
     </div>

@@ -1250,8 +1250,11 @@ dl.state-access-cards {
   color: black !important;
 
 }
-
+.faq-left-column {
+  width: 550px;
+}
 .faq-info-box {
+  position: fixed;
   float: right;
   width: 368px;
   right: 230px;
