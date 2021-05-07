@@ -86,6 +86,10 @@ then
             state*)
               cms_role=onemac-state-user
               ;;
+                          ;;
+            helpdesk*)
+              cms_role=onemac-helpdesk-user
+              ;;
             *)
               cms_role=
               ;;
