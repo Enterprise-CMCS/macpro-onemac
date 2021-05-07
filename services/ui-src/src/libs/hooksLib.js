@@ -65,11 +65,14 @@ export function useSignupCallback(userType, processAttributes) {
           showAlert: ALERTS_MSG.SUBMISSION_ERROR,
         };
       } finally {
-        setLoading(false);
-        history.replace(destination, messageState);
+        if(userType!=="helpdesk"){
+          setLoading(false);
+          history.replace(destination, messageState);
+        }else{
+          history.replace("/", messageState);
+        }
       }
-    },
-    [email, firstName, history, lastName, location, processAttributes, setUserInfo, userType]
+    },[email, firstName, history, lastName, location, processAttributes, setUserInfo, userType]
   );
 
   return [loading, signupUser];

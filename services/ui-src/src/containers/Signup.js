@@ -20,11 +20,19 @@ function CMSSignup() {
   );
 }
 
+function HelpDeskSignup(){
+  const [loading, onClickCMS] = useSignupCallback("helpdesk",createAttribute);
+
+ return <CardButton loading={loading} onClick={onClickCMS} type="helpdesk" />
+}
+
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
 const isCmsUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-cms-user");
+const isHelpdeskUser = (cmsRoles) =>
+  !!cmsRoles.split(",").includes("onemac-helpdesk-user");
 
 export function Signup() {
   const history = useHistory();
@@ -45,6 +53,10 @@ export function Signup() {
       ) : isCmsUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <CMSSignup />
+        </div>
+      ) : isHelpdeskUser(cmsRoles) ? (
+        <div className="ds-l-col--auto ds-u-margin-x--auto">
+         <HelpDeskSignup />
         </div>
       ) : (
         <Redirect

@@ -19,6 +19,10 @@ export default function CardButton({ loading = false, onClick, type }) {
     if (navigateTo) history.push(navigateTo, pushState);
   }, [history, navigateTo, onClick, pushState]);
 
+
+  if(type==="helpdesk"){
+    if (onClick) onClick();
+  }
   return (
     <div
       className="card-button"
