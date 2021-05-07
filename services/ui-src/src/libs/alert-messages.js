@@ -129,16 +129,16 @@ export const ALERTS_MSG = {
   USER_STATUS_GRANTED: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",
-    text: ` has been granted access, a notification has been sent to their email.`,
+    text: `$personalize$ has been granted access, a notification has been sent to their email.`,
   },
   USER_STATUS_DENIED: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",
-    text: ` has been denied access, a notification has been sent to their email.`,
+    text: `$personalize$ has been denied access, a notification has been sent to their email.`,
   },
   USER_STATUS_REVOKED: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",
-    text: `'s access has been revoked, a notification has been sent to their email.`,
+    text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
   }
 };

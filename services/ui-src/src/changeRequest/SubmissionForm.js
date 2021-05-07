@@ -124,12 +124,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    * Handle changes to the ID.
    * @param {Object} event the event
    */
-  async function handleTransmittalNumberChange(event) {
-    if (!event || !event.target) return;
+  async function handleTransmittalNumberChange(newTransmittalNumber) {
 
-    let newTransmittalNumber = event.target.value.toUpperCase();
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-    updatedRecord[event.target.name] = newTransmittalNumber;
+    updatedRecord["transmittalNumber"] = newTransmittalNumber;
     updatedRecord["territory"] = newTransmittalNumber
       .toString()
       .substring(0, 2);
@@ -229,6 +227,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
     setActionTypeErrorMessage(actionTypeMessage);
     setTransmittalNumberDetails(transmittalNumberInfo);
+    handleTransmittalNumberChange(updatedRecord["transmittalNumber"]);
   };
 
   /**
@@ -246,10 +245,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (!firstTimeThrough) {
       if (formInfo.waiverAuthority && !updatedRecord.waiverAuthority)
         waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-    }
-
-    if (event.target.name !== "summary") {
-      updatedRecord["transmittalNumber"] = "";
     }
 
     // state set functions have to be at top level
@@ -325,9 +320,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       actionTypeMessage ||
       waiverAuthorityMessage
     ) {
-      if (newAlertCode === "NONE") newAlertCode = RESPONSE_CODE.VALIDATION_ERROR;  // ALERTS_MSG.SUBMISSION_INCOMPLETE;
+      if (newAlertCode === "NONE") newAlertCode = RESPONSE_CODE.DATA_MISSING;
     } else if (!areUploadsReady) {
-      newAlertCode = RESPONSE_CODE.ATTACHMENT_ERROR; // ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
+      newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
       try {
         const uploadedList = await uploadRef.uploadFiles();
@@ -412,7 +407,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={transmittalNumberStatusMessage.statusMessage}
               value={changeRequest.transmittalNumber}
-              onChange={handleTransmittalNumberChange}
+              onChange={event => handleTransmittalNumberChange(event.target.value.toUpperCase())}
             />
           </div>
           <h3>Attachments</h3>

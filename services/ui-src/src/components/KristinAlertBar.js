@@ -12,13 +12,13 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-const KristinAlertBar = ({ alertCode }) => {
+const KristinAlertBar = ({ alertCode, personalizedString = "" }) => {
     const [alert, setAlert] = useState(getAlert(alertCode));
 
   useEffect(() => {
     let mounted = true;
 
-    if (mounted) setAlert(getAlert(alertCode));
+    if (alertCode && mounted) setAlert(getAlert(alertCode));
 
     return function cleanup() {
       mounted = false;
@@ -37,16 +37,13 @@ const KristinAlertBar = ({ alertCode }) => {
     };
   }, [ alert ]);
 
-  console.log(" alert Code is: ", alertCode);
-  console.log("alert is: ", alert);
-  console.log("alert should be: ", getAlert(alertCode));
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
-    alert && alert.heading && alert.heading !== "" &&
+    alertCode && alert && alert.heading && alert.heading !== "" ?
     <div className="alert-bar" id="alert-bar">
       <Alert variation={alert.type} heading={alert.heading}>
-        <p className="ds-c-alert__text">{alert.text}</p>
+        <p className="ds-c-alert__text">{alert.text.replace("$personalize$", personalizedString)}</p>
         <button
           className="close-button"
           onClick={() => setAlert(ALERTS_MSG.NONE)}
@@ -55,11 +52,13 @@ const KristinAlertBar = ({ alertCode }) => {
         </button>
       </Alert>
     </div>
+    : null
   );
 };
 
 KristinAlertBar.propTypes = {
-  code: PropTypes.string,
+  alertCode: PropTypes.string,
+  personalizedString: PropTypes.string,
 };
 
 export default KristinAlertBar;

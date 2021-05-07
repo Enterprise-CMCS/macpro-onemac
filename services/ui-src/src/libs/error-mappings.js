@@ -8,6 +8,7 @@ export const getAlert = (errorCode) => {
 
   switch (errorCode) {
     case "NONE":
+    case undefined:
       returnAlert = ALERTS_MSG.NONE;
       break;
     // app-api/response-codes.js    NONE: ""
@@ -80,6 +81,19 @@ export const getAlert = (errorCode) => {
     case "WA000":
       returnAlert = ALERTS_MSG.WAIVER_ACTION_UNKNOWN;
       break;
+    //  SUCCESS_USER_GRANTED: "UR046",
+    case "UR046":
+      returnAlert = ALERTS_MSG.USER_STATUS_GRANTED;
+      break;
+    //  SUCCESS_USER_REVOKED: "UR047",
+    case "UR047":
+      returnAlert = ALERTS_MSG.USER_STATUS_REVOKED;
+      break;
+    //  SUCCESS_USER_DENIED: "UR048",
+    case "UR048":
+      returnAlert = ALERTS_MSG.USER_STATUS_DENIED;
+      break;
+  
     default:
       console.log("Not sure what this error is", errorCode);
       returnAlert = ALERTS_MSG.SUBMISSION_ERROR;

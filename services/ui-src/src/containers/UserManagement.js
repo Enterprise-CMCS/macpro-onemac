@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
 import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
-import { AlertBar } from "../components/AlertBar";
-import { getAlert } from "../libs/error-mappings";
+import KristinAlertBar from "../components/KristinAlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
@@ -33,10 +31,12 @@ const PENDING_CIRCLE_IMAGE = (
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { setCurrentAlert, userProfile } = useAppContext();
+  const { userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.showAlertCode);
+  const [doneToName, setDoneToName] = useState("");
 
   const updateList = useCallback(() => {
     setIncludeStateCode(userProfile.userData.type === "cmsapprover");
@@ -51,9 +51,9 @@ const UserManagement = () => {
       })
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setCurrentAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
       });
-  }, [setCurrentAlert, userProfile.email, userProfile.userData]);
+  }, [userProfile.email, userProfile.userData]);
 
   // Load the data from the backend.
   useEffect(() => {
@@ -65,19 +65,20 @@ const UserManagement = () => {
         (!userProfile.userData.attributes ||
           userProfile.userData.type === "stateuser"))
     ) {
+      location.state.showAlertCode=null;
       history.push(ROUTES.DASHBOARD);
     }
 
-    let newAlert = ALERTS_MSG.NONE;
-    if (location.state) newAlert = location.state.showAlert;
-    if (mounted) setCurrentAlert(newAlert);
+    let newAlertCode = "NONE";
+    if (location.state) newAlertCode = location.state.showAlertCode;
+    if (mounted) setAlertCode(newAlertCode);
 
     if (mounted) updateList();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [location, setCurrentAlert, userProfile, history, updateList]);
+  }, [location, userProfile, history, updateList]);
 
   useEffect(() => {
     let newIsLoading = true;
@@ -176,11 +177,11 @@ const UserManagement = () => {
           revoked: [grant],
         }[row.values.status] ?? [];
 
-        const alertMessages = 
+        const alertCodes = 
         {
-          active: ALERTS_MSG.USER_STATUS_GRANTED,
-          denied: ALERTS_MSG.USER_STATUS_DENIED,
-          revoked: ALERTS_MSG.USER_STATUS_REVOKED,
+          active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+          denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+          revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
         };
 
       return (
@@ -189,7 +190,8 @@ const UserManagement = () => {
           userEmail={row.values.email}
           menuItems={menuItems}
           handleSelected={(rowNum, value) => {
-            let newAlert = {...alertMessages[value]};
+            let newAlertCode = alertCodes[value];
+            let newPersonalized = "Chester Tester";
 
             const updateStatusRequest = {
               userEmail: userList[rowNum].email,
@@ -206,23 +208,23 @@ const UserManagement = () => {
                 returnCode
               ) {
                 if (returnCode === "UR000") {
-                  console.log("alert: ", newAlert);
-                  newAlert.text = `${userList[rowNum].firstName} ${userList[rowNum].lastName}${newAlert.text}`;
+                  console.log("alert: ", newAlertCode);
+                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
                 } else {
-                  newAlert = getAlert(returnCode);
+                  newAlertCode = returnCode;
                 }
                 updateList();
-              }).then( () => (setCurrentAlert(newAlert)) )
+              }).then( () => {setAlertCode(newAlertCode);setDoneToName(newPersonalized);} )
               .catch((error) => {
                 console.log("Error while fetching user's list.", error);
-                setCurrentAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+                setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
               });
         
                       }}
         />
       );
     },
-    [ setCurrentAlert, updateList, userList, userProfile]
+    [ updateList, userList, userProfile]
   );
 
   const columns = useMemo(
@@ -288,7 +290,7 @@ const UserManagement = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="User Management" text="" />
-      <AlertBar />
+      <KristinAlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&
