@@ -35,10 +35,13 @@ const FAQ = () => {
         <div className="faq-info-box">
           <hr className="faq-info-box-top-border"/>
           <p className="faq-info-box-title">MACPRO HELP DESK CONTACT INFO</p>
-          <h4>Phone Number</h4>
+          <b>Phone Number</b>
+          <br/>
           <a href="phone:8322282540">(832) 228-2540</a>
-          <h4>Email</h4>
-          MACPro_HelpDesk@cms.hhs.gov
+          <br/>
+          <br/>
+          <b>Email</b><br/>
+          <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">MACPro_HelpDesk@cms.hhs.gov</a>
         </div>
         <p>
           For assistance, please email the MACPro Help Desk at{" "}
