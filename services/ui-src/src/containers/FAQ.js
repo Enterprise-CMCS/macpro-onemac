@@ -1,6 +1,7 @@
 import React, {useEffect, useRef} from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
+import Collapsible from 'react-collapsible';
 
 const FAQ = () => {
 
@@ -31,6 +32,14 @@ const FAQ = () => {
     <div className="form-container" id="top">
       <div className="form-card">
         <h2>Help Desk Contact Information</h2>
+        <div className="faq-info-box">
+          <hr className="faq-info-box-top-border"/>
+          <p className="faq-info-box-title">MACPRO HELP DESK CONTACT INFO</p>
+          <h4>Phone Number</h4>
+          <a href="phone:8322282540">(832) 228-2540</a>
+          <h4>Email</h4>
+          MACPro_HelpDesk@cms.hhs.gov
+        </div>
         <p>
           For assistance, please email the MACPro Help Desk at{" "}
           <a href={`mailto:${helpDeskContact.email}`}>
@@ -39,32 +48,37 @@ const FAQ = () => {
           or call {helpDeskContact.phone}.
         </p>
         <h2>General</h2>
-        <h4>What browsers can I use to access the system?</h4>
+
+        <Collapsible triggerWhenOpen="&#x2212;  What browsers can I use to access the system?"
+                     trigger="&#x2b;  What browsers can I use to access the system?">
         <br/>
-        <p>
           The submission portal works best on Google Chrome, Firefox, Edge, and
           Safari. We do not recommend using Internet Explorer due to potential
           functionality issues.
-        </p>
+        </Collapsible>
         <h3>State Plan Amendments (SPAs)</h3>
-        <h4 ref={spaIdRef} id="spa-id-format">What format is used to enter a SPA ID?</h4>
-        <p>
+        <div  ref={spaIdRef} id="spa-id-format">
+        <Collapsible trigger="&#x2b; What format is used to enter a SPA ID?"
+                     triggerWhenOpen="&#x2212; What format is used to enter a SPA ID?" >
+        <br/>
           Enter the State Plan Amendment transmittal number. Assign consecutive
           numbers on a calendar year basis (e.g., 20-0001-xxxx, 20-0002-xxxx,
           etc.).
-        </p>
-        <p>
+        <br/>
           The Official Submission package SPA ID must follow the format
           SS-YY-#### OR SS-YY-####-xxxx to include:
-        </p>
         <ul>
           <li>SS = 2 alpha character (State Abbreviation)</li>
           <li>YY = 2 numeric digits (Year)</li>
           <li>#### = 4 numeric digits (Serial number)</li>
           <li>xxxx = OPTIONAL, 1 to 4 characters alpha/numeric modifier (Suffix)</li>
         </ul>
-
-        <h4>What are the attachments for a Medicaid SPA?</h4>
+        </Collapsible>
+        </div>
+        <br/>
+        <div>
+        <Collapsible trigger="&#x2b; What are the attachments for a Medicaid SPA?"
+                     triggerWhenOpen="&#x2212; What are the attachments for a Medicaid SPA?" >
         <p>
           SPA submission requirements can be found in regulation&nbsp;
           <a
@@ -377,12 +391,12 @@ const FAQ = () => {
         <p><strong><span  >Can I submit SPAs relating to the Public Health Emergency (PHE) in
                 OneMAC?</span></strong><br /><span  >Yes, all PHE-related SPAs should be
             submitted through OneMAC by completing the Medicaid SPA form.</span></p>
-
-
+        </Collapsible>
+      </div>
         <h3>Waivers</h3>
-        <h4 ref={waiverIdRef} id="waiver-id-format">
-          What format is used to enter a 1915(b) waiver number?
-        </h4>
+        <div  ref={waiverIdRef} id="waiver-id-format">
+          <Collapsible trigger="&#x2b; What format is used to enter a 1915(b) waiver number?"
+                       triggerWhenOpen="&#x2212; What format is used to enter a 1915(b) waiver number?" >
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
           <li>SS = 2 character state abbreviation</li>
@@ -398,7 +412,11 @@ const FAQ = () => {
         </p>
         <h4>Who can I contact to help me figure out the correct 1915(b) Waiver Number?</h4>
         <p>Email <a href="mailto:MCOGDMCOActions@cms.hhs.gov">MCOGDMCOActions@cms.hhs.gov</a> to get support with determining the correct 1915(b) Waiver Number.</p>
-        <h4>What format is used to enter a 1915(c) waiver number?</h4>
+          </Collapsible>
+          <br/>
+          <Collapsible trigger="&#x2b; What format is used to enter a 1915(c) waiver number?"
+                       triggerWhenOpen="&#x2212; What format is used to enter a 1915(c) waiver number?" >
+
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
           <li>SS = 2 character state abbreviation</li>
@@ -413,8 +431,11 @@ const FAQ = () => {
           appendix K amendment (02). Base waivers without renewals should use
           “R00” as their renewal number.
         </p>
-
-        <h4><span>What attachments are needed to submit a 1915(b) waiver action?</span></h4>
+          </Collapsible>
+        </div>
+        <br/>
+        <Collapsible trigger="&#x2b; What attachments are needed to submit a 1915(b) waiver action?"
+                     triggerWhenOpen="&#x2212; What attachments are needed to submit a 1915(b) waiver action?" >
         <p><span>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe
             the requirements for submitting section 1915(b) and 1915(c) waivers.</span></p>
         <table className="faq-table">
@@ -493,7 +514,10 @@ const FAQ = () => {
           </tr>
           </tbody>
         </table>
-        <h4>What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?</h4>
+        </Collapsible>
+        <br/>
+        <Collapsible trigger="&#x2b; What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"
+                     triggerWhenOpen="&#x2212; What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?" >
         <p><span>Note: “*” indicates a required attachment.</span></p>
         <table className="faq-table">
           <colgroup>
@@ -530,8 +554,10 @@ const FAQ = () => {
           </tr>
           </tbody>
         </table>
-        <h4><span>What are the attachments for a 1915(b) Waiver - Request for Temporary
-            Extension?</span></h4>
+        </Collapsible>
+        <br/>
+        <Collapsible trigger="&#x2b; What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"
+                     triggerWhenOpen="&#x2212; What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?" >
         <p><span>Note: “*” indicates a required attachment.</span></p>
         <table className="faq-table">
           <colgroup>
@@ -610,7 +636,8 @@ const FAQ = () => {
           </tr>
           </tbody>
         </table>
-
+        </Collapsible>
+        <br/>
         <h4>What should we do if we don’t receive a confirmation email?</h4>
         <p>
           Refresh your inbox, check your SPAM filters, then contact the MACPro
@@ -631,6 +658,7 @@ const FAQ = () => {
           for HCBS or managed care.
         </p>
       </div>
+
     </div>
     </div>
   );
