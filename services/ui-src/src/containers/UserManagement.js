@@ -44,7 +44,7 @@ const UserManagement = () => {
       .then((ul) => {
         console.log("user List: ", ul);
         if (typeof ul === "string") {
-          if (!isPending(userProfile.userData)) setCurrentAlert(getAlert(ul));
+          if (!isPending(userProfile.userData)) setAlertCode(ul);
           ul = [];
         }
         setUserList(ul);
