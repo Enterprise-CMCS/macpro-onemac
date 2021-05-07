@@ -1,4 +1,7 @@
 import React, { useState, useEffect } from "react";
+import { useHistory } from "react-router-dom";
+
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -16,6 +19,9 @@ import { Review } from "@cmsgov/design-system";
  */
 const SubmissionView = ({ formInfo, id, userId }) => {
   
+  // The browser history, so we can redirect to the home page
+  const history = useHistory();
+
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
@@ -49,7 +55,7 @@ const SubmissionView = ({ formInfo, id, userId }) => {
     return function cleanup() {
       mounted = false;
     };
-  }, [id, userId]);
+  }, [id, userId, history]);
 
   return (
     <LoadingScreen isLoading={isLoading}>

@@ -32,6 +32,7 @@ const Dashboard = () => {
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
+    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
     if (!userData?.type || !userData?.attributes) {
       history.replace("/signup", location.state);
       return;

@@ -58,6 +58,7 @@ const UserManagement = () => {
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
+    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
     if (
       !userProfile ||
       !userProfile.userData ||
@@ -65,13 +66,8 @@ const UserManagement = () => {
         (!userProfile.userData.attributes ||
           userProfile.userData.type === "stateuser"))
     ) {
-      location.state.passCode=null;
       history.push(ROUTES.DASHBOARD);
     }
-
-    let newAlertCode = "NONE";
-    if (location.state) newAlertCode = location.state.passCode;
-    if (mounted) setAlertCode(newAlertCode);
 
     if (mounted) updateList();
 
