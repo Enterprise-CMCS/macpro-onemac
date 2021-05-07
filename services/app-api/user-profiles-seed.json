@@ -12,6 +12,19 @@
         "id": "cmsapproveractive@cms.hhs.local",
         "type": "cmsapprover"
       },
+      {
+        "attributes": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemsadmin@cms.hhs.local",
+            "status": "active"
+          }
+        ],
+        "firstName": "Helping",
+        "lastName": "Hands",
+        "id": "helpinghands@cms.hhs.local",
+        "type": "helpdesk"
+      },
 
       {
         "attributes": [
