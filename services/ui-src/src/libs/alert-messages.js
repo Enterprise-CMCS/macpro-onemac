@@ -33,7 +33,9 @@ export const ALERTS_MSG = {
   SUBMISSION_SUCCESS_SURVEY: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Submission Completed",
-    text: "Thanks for your submission. We truly value your feedback. Please consider taking our <a href=\"https://forms.gle/qcsWMaDroBkhT7rs6\" target=\"_blank\" rel=\"noopener noreferrer\">Post-Submission Survey.</a>",
+    text: "Thanks for your submission. We truly value your feedback. Please consider taking our $Link$.",
+    linkURL: "https://forms.gle/qcsWMaDroBkhT7rs6",
+    linkText: "Post-Submission Survey",
   },
 
   // Errors and warnings

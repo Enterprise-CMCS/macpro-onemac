@@ -18,7 +18,6 @@ import { Review } from "@cmsgov/design-system";
  * @param {String} userId - the id of the user who created the change request
  */
 const SubmissionView = ({ formInfo, id, userId }) => {
-  
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -30,27 +29,24 @@ const SubmissionView = ({ formInfo, id, userId }) => {
 
   useEffect(() => {
     let mounted = true;
-    let innerLoading = true;
 
-    async function fetchChangeRequest() {
-      if (!id || !userId) return true;
+    if (!id || !userId) return;
 
-      try {
-        const fetchedChangeRequest = await ChangeRequestDataApi.get(id, userId);
+    ChangeRequestDataApi.get(id, userId)
+      .then((fetchedChangeRequest) => {
         if (mounted) setChangeRequest(fetchedChangeRequest);
-        return false;
-      } catch (error) {
+      })
+      .then(() => {
+        if (mounted) setIsLoading(false);
+      })
+      .catch(() => {
         history.push({
           pathname: ROUTES.DASHBOARD,
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },
         });
-      }
-    }
-
-    innerLoading = fetchChangeRequest();
-    if (mounted) setIsLoading(!innerLoading);
+      });
 
     return function cleanup() {
       mounted = false;
@@ -61,41 +57,42 @@ const SubmissionView = ({ formInfo, id, userId }) => {
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.readOnlyPageTitle} text="" />
       {changeRequest && (
-      <div className="form-container">
-        <h3>{formInfo.detailsHeader} Details</h3>
-        <div className="form-card">
-          {changeRequest.actionType && (
-            <Review heading="Action Type">{changeRequest.actionType}</Review>
-          )}
-          {changeRequest.waiverAuthority && (
-            <Review heading="Waiver Authority">
-              {changeRequest.waiverAuthority}
-            </Review>
-          )}
-          {changeRequest.transmittalNumber && (
-            <Review heading={formInfo.transmittalNumber.idLabel}>
-              {changeRequest.transmittalNumber}
-            </Review>
-          )}
-          {changeRequest.submittedAt && (
-            <Review heading="Submitted On">
-              {formatDate(changeRequest.submittedAt)}
-            </Review>
-          )}
+        <div className="form-container">
+          <h3>{formInfo.detailsHeader} Details</h3>
+          <div className="form-card">
+            {changeRequest.actionType && (
+              <Review heading="Action Type">{changeRequest.actionType}</Review>
+            )}
+            {changeRequest.waiverAuthority && (
+              <Review heading="Waiver Authority">
+                {changeRequest.waiverAuthority}
+              </Review>
+            )}
+            {changeRequest.transmittalNumber && (
+              <Review heading={formInfo.transmittalNumber.idLabel}>
+                {changeRequest.transmittalNumber}
+              </Review>
+            )}
+            {changeRequest.submittedAt && (
+              <Review heading="Submitted On">
+                {formatDate(changeRequest.submittedAt)}
+              </Review>
+            )}
+          </div>
+          <h3>Attachments</h3>
+          <FileList uploadList={changeRequest.uploads}></FileList>
+          <div className="summary-box">
+            <TextField
+              name="summary"
+              label="Additional Information"
+              fieldClassName="summary-field"
+              multiline
+              disabled
+              value={changeRequest.summary}
+            ></TextField>
+          </div>
         </div>
-        <h3>Attachments</h3>
-        <FileList uploadList={changeRequest.uploads}></FileList>
-        <div className="summary-box">
-          <TextField
-            name="summary"
-            label="Additional Information"
-            fieldClassName="summary-field"
-            multiline
-            disabled
-            value={changeRequest.summary}
-          ></TextField>
-        </div>
-      </div>)}
+      )}
     </LoadingScreen>
   );
 };

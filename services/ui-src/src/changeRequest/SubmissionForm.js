@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
@@ -88,12 +88,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     return result;
   }
 
-  function validateTransmittalNumber(newTransmittalNumber) {
+  const validateTransmittalNumber = useCallback((newTransmittalNumber) => {
     let errorMessage = "";
 
     // Must have a value
     if (!newTransmittalNumber) {
-      errorMessage = transmittalNumberDetails.idLabel + " Required";
+      if (!firstTimeThrough) errorMessage = transmittalNumberDetails.idLabel + " Required";
     }
     // must have a valid state code as the first two characters
     else if (
@@ -118,7 +118,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     return errorMessage;
-  }
+  },[transmittalNumberDetails, firstTimeThrough]);
 
   /**
    * Handle changes to the ID.
@@ -131,25 +131,86 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     updatedRecord["territory"] = newTransmittalNumber
       .toString()
       .substring(0, 2);
+    setChangeRequest(updatedRecord);
+  }
+
+  /**
+   * Handle changes to the action type.
+   * @param {Object} event the event
+   */
+  const handleActionTypeChange = (event) => {
+    if (!event || !event.target) return;
+
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
+    updatedRecord[event.target.name] = event.target.value;
+
+    let transmittalNumberInfo;
+
+    switch (updatedRecord.actionType) {
+      case "new":
+        transmittalNumberInfo = formInfo.newTransmittalNumber;
+        break;
+      case "amendment":
+        transmittalNumberInfo = formInfo.amendmentTransmittalNumber;
+        break;
+      case "renewal":
+        transmittalNumberInfo = formInfo.renewalTransmittalNumber;
+        break;
+      default:
+        transmittalNumberInfo = formInfo.transmittalNumber;
+        break;
+    }
+
+    setTransmittalNumberDetails(transmittalNumberInfo);
+    setChangeRequest(updatedRecord);
+  };
+
+  /**
+   * Handle changes to the form.
+   * @param {Object} event the event
+   */
+  const handleInputChange = (event) => {
+    if (!event || !event.target) return;
+
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
+    updatedRecord[event.target.name] = event.target.value;
+
+    setChangeRequest(updatedRecord);
+  };
+
+  useEffect(() => {
+    let waiverAuthorityMessage = "";
+    let actionTypeMessage = "";
+
+    if (!firstTimeThrough) {
+      if (formInfo.actionType && !changeRequest.actionType)
+        actionTypeMessage = formInfo.actionType.errorMessage;
+
+      if (formInfo.waiverAuthority && !changeRequest.waiverAuthority)
+        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
+    }
 
     // validate that the ID is in correct format
     let newMessage = {
       statusLevel: "error",
       statusMessage: "",
     };
+    let checkingNumber = changeRequest.transmittalNumber;
 
-    newMessage.statusMessage = validateTransmittalNumber(newTransmittalNumber);
+    newMessage.statusMessage = validateTransmittalNumber(changeRequest.transmittalNumber);
 
     // if the ID is valid, check if exists/not exist in data
-    if (newMessage.statusMessage === "") {
+    if (newMessage.statusMessage === "" && checkingNumber !== "") {
       newMessage.statusLevel = transmittalNumberDetails.errorLevel;
-      try {
+
         if (transmittalNumberDetails.existenceRegex !== undefined) {
-          newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
+          checkingNumber = changeRequest.transmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
         }
-        const dupID = await ChangeRequestDataApi.packageExists(
-          newTransmittalNumber
-        );
+        ChangeRequestDataApi.packageExists(
+          checkingNumber
+        ).then(dupID => {
 
         if (!dupID && transmittalNumberDetails.idMustExist) {
           if (transmittalNumberDetails.errorLevel === "error") {
@@ -181,78 +242,16 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               " before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.";
           }
         }
-      } catch (error) {
+      }).catch( error =>  {
         console.log("There was an error submitting a request.", error);
-      }
+      });
     }
 
-    setChangeRequest(updatedRecord);
-    setTransmittalNumberStatusMessage(newMessage);
-  }
-
-  /**
-   * Handle changes to the action type.
-   * @param {Object} event the event
-   */
-  const handleActionTypeChange = (event) => {
-    if (!event || !event.target) return;
-
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-
-    updatedRecord[event.target.name] = event.target.value;
-    let actionTypeMessage = "";
-
-    if (!firstTimeThrough) {
-      if (formInfo.actionType && !updatedRecord.actionType)
-        actionTypeMessage = formInfo.actionType.errorMessage;
-    }
-
-    let transmittalNumberInfo;
-
-    switch (updatedRecord.actionType) {
-      case "new":
-        transmittalNumberInfo = formInfo.newTransmittalNumber;
-        break;
-      case "amendment":
-        transmittalNumberInfo = formInfo.amendmentTransmittalNumber;
-        break;
-      case "renewal":
-        transmittalNumberInfo = formInfo.renewalTransmittalNumber;
-        break;
-      default:
-        transmittalNumberInfo = formInfo.transmittalNumber;
-        break;
-    }
-
-    setChangeRequest(updatedRecord);
-    setActionTypeErrorMessage(actionTypeMessage);
-    setTransmittalNumberDetails(transmittalNumberInfo);
-    handleTransmittalNumberChange(updatedRecord["transmittalNumber"]);
-  };
-
-  /**
-   * Handle changes to the form.
-   * @param {Object} event the event
-   */
-  const handleInputChange = (event) => {
-    if (!event || !event.target) return;
-
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-
-    updatedRecord[event.target.name] = event.target.value;
-    let waiverAuthorityMessage = "";
-
-    if (!firstTimeThrough) {
-      if (formInfo.waiverAuthority && !updatedRecord.waiverAuthority)
-        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-    }
-
-    // state set functions have to be at top level
-    // because we can't trust they got set, can't use them in the function
-
-    setChangeRequest(updatedRecord);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-  };
+    setActionTypeErrorMessage(actionTypeMessage);
+    setTransmittalNumberStatusMessage(newMessage);
+
+  },[changeRequest, firstTimeThrough, formInfo, transmittalNumberDetails, validateTransmittalNumber]);
 
   /**
    * Submit the new change request.
@@ -263,6 +262,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // in case form validation takes a while (external validation)
     setIsLoading(true);
+    setAlertCode("NONE"); //clear the alert
 
     // once Submit is clicked, show error messages
     setFirstTimeThrough(false);
@@ -287,7 +287,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // warnings are allowed to submit
     if (
       newMessage.statusMessage === "" &&
-      transmittalNumberDetails.errorLevel === "error"
+      transmittalNumberDetails.errorLevel === "error" 
     ) {
       try {
         const dupID = await ChangeRequestDataApi.packageExists(

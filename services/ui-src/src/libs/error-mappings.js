@@ -25,7 +25,7 @@ export const getAlert = (errorCode) => {
       break;
     //     DATA_MISSING: "SC001",
     case "SC001":
-      returnAlert = ALERTS_MSG.SUBMISSION_ERROR;
+      returnAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
       break;
     // app-api/response-codes.js    CALLING_USER_PENDING: "UR043",
     // app-api/response-codes.js    CALLING_USER_REVOKED: "UR044",
