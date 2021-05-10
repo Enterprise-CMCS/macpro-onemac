@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES, ROLES } from "cmscommonlib";
+import { ROUTES, ROLES, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
@@ -104,6 +104,7 @@ function Header(props) {
    * Renders a navigation bar
    */
   function renderNavBar(isLoggedInAsDeveloper, currentRoute, isAuthenticated, userType) {
+    const userObj = getUserRoleObj(userType);
     switch (document.location.pathname) {
       case ROUTES.FAQ:
       case ROUTES.FAQ + "/":
@@ -120,11 +121,11 @@ function Header(props) {
               <Link to={ROUTES.HOME} className={getActiveClass(currentRoute, RouteList.HOME)}>Home</Link>
               {isAuthenticated && (
                 <>
-                  {userType === ROLES.STATE_USER && <Link id="dashboardLink" to={ROUTES.DASHBOARD}
+                  {userObj.canAccessDashboard && <Link id="dashboardLink" to={ROUTES.DASHBOARD}
                     className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
                     Dashboard
                   </Link>}
-                  {userType !== ROLES.STATE_USER && <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
+                  {userObj.canAccessUserManagement && <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
                     className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
                     User Management
                   </Link>}
