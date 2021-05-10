@@ -51,6 +51,7 @@ const FAQ = () => {
           Safari. We do not recommend using Internet Explorer due to potential
           functionality issues.
         </Collapsible>
+          <hr/>
         <h3>State Plan Amendments (SPAs)</h3>
         <div  ref={spaIdRef} id="spa-id-format">
         <Collapsible trigger="&#x2b; What format is used to enter a SPA ID?"
@@ -69,6 +70,7 @@ const FAQ = () => {
           <li>xxxx = OPTIONAL, 1 to 4 characters alpha/numeric modifier (Suffix)</li>
         </ul>
         </Collapsible>
+          <hr/>
         </div>
         <br/>
         <div>
@@ -387,6 +389,7 @@ const FAQ = () => {
                 OneMAC?</span></strong><br /><span  >Yes, all PHE-related SPAs should be
             submitted through OneMAC by completing the Medicaid SPA form.</span></p>
         </Collapsible>
+          <hr/>
       </div>
         <h3>Waivers</h3>
         <div  ref={waiverIdRef} id="waiver-id-format">
@@ -408,6 +411,7 @@ const FAQ = () => {
         <h4>Who can I contact to help me figure out the correct 1915(b) Waiver Number?</h4>
         <p>Email <a href="mailto:MCOGDMCOActions@cms.hhs.gov">MCOGDMCOActions@cms.hhs.gov</a> to get support with determining the correct 1915(b) Waiver Number.</p>
           </Collapsible>
+          <hr/>
           <br/>
           <Collapsible trigger="&#x2b; What format is used to enter a 1915(c) waiver number?"
                        triggerWhenOpen="&#x2212; What format is used to enter a 1915(c) waiver number?" >
@@ -427,6 +431,7 @@ const FAQ = () => {
           “R00” as their renewal number.
         </p>
           </Collapsible>
+        <hr/>
         </div>
         <br/>
         <Collapsible trigger="&#x2b; What attachments are needed to submit a 1915(b) waiver action?"
@@ -510,6 +515,7 @@ const FAQ = () => {
           </tbody>
         </table>
         </Collapsible>
+          <hr/>
         <br/>
         <Collapsible trigger="&#x2b; What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"
                      triggerWhenOpen="&#x2212; What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?" >
@@ -550,6 +556,7 @@ const FAQ = () => {
           </tbody>
         </table>
         </Collapsible>
+          <hr/>
         <br/>
         <Collapsible trigger="&#x2b; What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"
                      triggerWhenOpen="&#x2212; What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?" >
@@ -632,6 +639,7 @@ const FAQ = () => {
           </tbody>
         </table>
         </Collapsible>
+          <hr/>
         <br/>
         <h4>What should we do if we don’t receive a confirmation email?</h4>
         <p>
