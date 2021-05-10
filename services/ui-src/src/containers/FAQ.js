@@ -2,7 +2,7 @@ import React, {useEffect, useRef} from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import Collapsible from 'react-collapsible';
-
+import TriggerCB from "../components/TriggerCB"
 const FAQ = () => {
 
     const waiverIdRef= useRef(document.location.hash);
@@ -44,8 +44,8 @@ const FAQ = () => {
         </div>
         <div className="faq-left-column">
         <h2>General</h2>
-        <Collapsible triggerWhenOpen="&#x2212;  What browsers can I use to access the system?"
-                     trigger="&#x2b;  What browsers can I use to access the system?">
+        <Collapsible triggerWhenOpen={<TriggerCB isOpen={false} text="What browsers can I use to access the system?"/>}
+                     trigger={<TriggerCB isOpen={true} text="  What browsers can I use to access the system?"/>} >
         <br/>
           The submission portal works best on Google Chrome, Firefox, Edge, and
           Safari. We do not recommend using Internet Explorer due to potential
@@ -54,8 +54,8 @@ const FAQ = () => {
           <hr/>
         <h3>State Plan Amendments (SPAs)</h3>
         <div  ref={spaIdRef} id="spa-id-format">
-        <Collapsible trigger="&#x2b; What format is used to enter a SPA ID?"
-                     triggerWhenOpen="&#x2212; What format is used to enter a SPA ID?" >
+        <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a SPA ID?"/>}
+                     triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a SPA ID?"/>} >
         <br/>
           Enter the State Plan Amendment transmittal number. Assign consecutive
           numbers on a calendar year basis (e.g., 20-0001-xxxx, 20-0002-xxxx,
@@ -74,8 +74,8 @@ const FAQ = () => {
         </div>
         <br/>
         <div>
-        <Collapsible trigger="&#x2b; What are the attachments for a Medicaid SPA?"
-                     triggerWhenOpen="&#x2212; What are the attachments for a Medicaid SPA?" >
+        <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a Medicaid SPA?"/>}
+                     triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a Medicaid SPA?"/>} >
         <p>
           SPA submission requirements can be found in regulation&nbsp;
           <a
@@ -393,8 +393,8 @@ const FAQ = () => {
       </div>
         <h3>Waivers</h3>
         <div  ref={waiverIdRef} id="waiver-id-format">
-          <Collapsible trigger="&#x2b; What format is used to enter a 1915(b) waiver number?"
-                       triggerWhenOpen="&#x2212; What format is used to enter a 1915(b) waiver number?" >
+          <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(b) waiver number?"/>}
+                       triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(b) waiver number?"/>} >
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
           <li>SS = 2 character state abbreviation</li>
@@ -413,8 +413,8 @@ const FAQ = () => {
           </Collapsible>
           <hr/>
           <br/>
-          <Collapsible trigger="&#x2b; What format is used to enter a 1915(c) waiver number?"
-                       triggerWhenOpen="&#x2212; What format is used to enter a 1915(c) waiver number?" >
+          <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(c) waiver number?"/>}
+                       triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(c) waiver number?"/>} >
 
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
@@ -434,8 +434,8 @@ const FAQ = () => {
         <hr/>
         </div>
         <br/>
-        <Collapsible trigger="&#x2b; What attachments are needed to submit a 1915(b) waiver action?"
-                     triggerWhenOpen="&#x2212; What attachments are needed to submit a 1915(b) waiver action?" >
+        <Collapsible trigger={<TriggerCB isOpen={true} text="What attachments are needed to submit a 1915(b) waiver action?"/>}
+                     triggerWhenOpen={<TriggerCB isOpen={false} text="What attachments are needed to submit a 1915(b) waiver action?"/>} >
         <p><span>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe
             the requirements for submitting section 1915(b) and 1915(c) waivers.</span></p>
         <table className="faq-table">
@@ -516,9 +516,8 @@ const FAQ = () => {
         </table>
         </Collapsible>
           <hr/>
-        <br/>
-        <Collapsible trigger="&#x2b; What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"
-                     triggerWhenOpen="&#x2212; What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?" >
+        <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"/>}
+                     triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"/>} >
         <p><span>Note: “*” indicates a required attachment.</span></p>
         <table className="faq-table">
           <colgroup>
@@ -557,9 +556,8 @@ const FAQ = () => {
         </table>
         </Collapsible>
           <hr/>
-        <br/>
-        <Collapsible trigger="&#x2b; What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"
-                     triggerWhenOpen="&#x2212; What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?" >
+        <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"/>}
+                     triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"/>} >
         <p><span>Note: “*” indicates a required attachment.</span></p>
         <table className="faq-table">
           <colgroup>
@@ -640,9 +638,8 @@ const FAQ = () => {
         </table>
         </Collapsible>
           <hr/>
-        <br/>
         <h4>What should we do if we don’t receive a confirmation email?</h4>
-        <p>
+       <p>
           Refresh your inbox, check your SPAM filters, then contact the MACPro
           Help Desk <a href={`mailto:${helpDeskContact.email}`}>
             {helpDeskContact.email}

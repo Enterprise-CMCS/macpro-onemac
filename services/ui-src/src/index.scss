@@ -1251,7 +1251,7 @@ dl.state-access-cards {
 
 }
 .faq-left-column {
-  width: 550px;
+  width: 675px;
 }
 .faq-info-box {
   position: fixed;
@@ -1295,3 +1295,16 @@ border-radius: 3px 3px 0px 0px;
 margin-left: -1px;
 
 }
+
+.vert-line-svg {
+position: absolute;
+left: 6.17%;
+right: 92.58%;
+top: 25.47%;
+bottom: 74.38%;
+
+background: #0071BC;
+transform: rotate(-90deg);
+}
+
+
