@@ -2,7 +2,7 @@ import React from "react";
 import { useLocation } from "react-router-dom";
 import HomeHeader from "../components/HomeHeader";
 import HomeFooter from "../components/HomeFooter";
-import KristinAlertBar from "../components/KristinAlertBar";
+import AlertBar from "../components/AlertBar";
 
 /**
  * Displays information about the usage of the webform
@@ -110,7 +110,7 @@ export default function Home() {
   return (
     <>
       <HomeHeader />
-      <KristinAlertBar alertCode={location?.state?.passCode} />
+      <AlertBar alertCode={location?.state?.passCode} />
       <div className="home-content-box">
         <div className="container-fluid ds-u-margin--0">
           <div className="ds-l-row">

@@ -7,7 +7,7 @@ import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
-import KristinAlertBar from "../components/KristinAlertBar";
+import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
@@ -132,7 +132,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
-      <KristinAlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} />
       <div className="dashboard-container">
         {!!userProfile?.userData?.attributes &&
         isActive(userProfile?.userData) ? (

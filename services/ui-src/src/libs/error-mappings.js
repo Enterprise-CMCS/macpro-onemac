@@ -27,6 +27,10 @@ export const getAlert = (errorCode) => {
     case "SC001":
       returnAlert = ALERTS_MSG.SUBMISSION_INCOMPLETE;
       break;
+    //    ATTACHMENTS_MISSING: "SC002",
+    case "SC002":
+      returnAlert = ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
+      break;
     // app-api/response-codes.js    CALLING_USER_PENDING: "UR043",
     // app-api/response-codes.js    CALLING_USER_REVOKED: "UR044",
     // app-api/response-codes.js    CALLING_USER_DENIED: "UR045",

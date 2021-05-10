@@ -9,7 +9,7 @@ import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
-import KristinAlertBar from "../components/KristinAlertBar";
+import AlertBar from "../components/AlertBar";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -88,44 +88,39 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     return result;
   }
 
-  const validateTransmittalNumber = useCallback((newTransmittalNumber) => {
-    let errorMessage = "";
+  const validateTransmittalNumber = useCallback(
+    (newTransmittalNumber) => {
+      let errorMessage = "";
 
-    // Must have a value
-    if (!newTransmittalNumber) {
-      if (!firstTimeThrough) errorMessage = transmittalNumberDetails.idLabel + " Required";
-    }
-    // must have a valid state code as the first two characters
-    else if (
-      !territoryList.some(
-        (state) => state["value"] === newTransmittalNumber.substring(0, 2)
-      )
-    ) {
-      errorMessage =
-        `The ` +
-        transmittalNumberDetails.idLabel +
-        ` must contain valid Territory/State Code`;
-    }
-    // must match the associated Regex string for format
-    else if (
-      !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
-    ) {
-      errorMessage =
-        `The ` +
-        transmittalNumberDetails.idLabel +
-        ` must be in the format of ` +
-        transmittalNumberDetails.idFormat;
-    }
+      // Must have a value
+      if (!newTransmittalNumber) {
+        if (!firstTimeThrough) errorMessage = `${transmittalNumberDetails.idLabel} Required`;
+      }
+      // must have a valid state code as the first two characters
+      else if (
+        !territoryList.some(
+          (state) => state["value"] === newTransmittalNumber.substring(0, 2)
+        )
+      ) {
+        errorMessage = `The ${transmittalNumberDetails.idLabel} must contain valid Territory/State Code`;
+      }
+      // must match the associated Regex string for format
+      else if (
+        !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
+      ) {
+        errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
+      }
 
-    return errorMessage;
-  },[transmittalNumberDetails, firstTimeThrough]);
+      return errorMessage;
+    },
+    [transmittalNumberDetails, firstTimeThrough]
+  );
 
   /**
    * Handle changes to the ID.
    * @param {Object} event the event
    */
   async function handleTransmittalNumberChange(newTransmittalNumber) {
-
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
     updatedRecord["transmittalNumber"] = newTransmittalNumber;
     updatedRecord["territory"] = newTransmittalNumber
@@ -199,59 +194,50 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     };
     let checkingNumber = changeRequest.transmittalNumber;
 
-    newMessage.statusMessage = validateTransmittalNumber(changeRequest.transmittalNumber);
+    newMessage.statusMessage = validateTransmittalNumber(
+      changeRequest.transmittalNumber
+    );
 
     // if the ID is valid, check if exists/not exist in data
     if (newMessage.statusMessage === "" && checkingNumber !== "") {
       newMessage.statusLevel = transmittalNumberDetails.errorLevel;
 
-        if (transmittalNumberDetails.existenceRegex !== undefined) {
-          checkingNumber = changeRequest.transmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
-        }
-        ChangeRequestDataApi.packageExists(
-          checkingNumber
-        ).then(dupID => {
-
-        if (!dupID && transmittalNumberDetails.idMustExist) {
-          if (transmittalNumberDetails.errorLevel === "error") {
-            newMessage.statusMessage =
-            "According to our records, this " +
-            transmittalNumberDetails.idLabel +
-            " does not exist. Please check the " +
-            transmittalNumberDetails.idLabel +
-            " and try entering it again.";
-          } else {
-            newMessage.statusMessage =
-            transmittalNumberDetails.idLabel +
-            " not found. Please ensure you have the correct " +
-            transmittalNumberDetails.idLabel +
-            " before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.";
+      if (transmittalNumberDetails.existenceRegex !== undefined) {
+        checkingNumber = changeRequest.transmittalNumber.match(
+          transmittalNumberDetails.existenceRegex
+        )[0];
+      }
+      ChangeRequestDataApi.packageExists(checkingNumber)
+        .then((dupID) => {
+          if (!dupID && transmittalNumberDetails.idMustExist) {
+            if (transmittalNumberDetails.errorLevel === "error") {
+              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+            }
+          } else if (dupID && !transmittalNumberDetails.idMustExist) {
+            if (transmittalNumberDetails.errorLevel === "error") {
+              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+            }
           }
-        } else if (dupID && !transmittalNumberDetails.idMustExist) {
-          if (transmittalNumberDetails.errorLevel === "error") {
-            newMessage.statusMessage =
-              "According to our records, this " +
-              transmittalNumberDetails.idLabel +
-              " already exists. Please check the " +
-              transmittalNumberDetails.idLabel +
-              " and try entering it again.";
-          } else {
-            newMessage.statusMessage =
-              "Please ensure you have the correct " +
-              transmittalNumberDetails.idLabel +
-              " before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.";
-          }
-        }
-      }).catch( error =>  {
-        console.log("There was an error submitting a request.", error);
-      });
+        })
+        .catch((error) => {
+          console.log("There was an error submitting a request.", error);
+        });
     }
 
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setActionTypeErrorMessage(actionTypeMessage);
     setTransmittalNumberStatusMessage(newMessage);
-
-  },[changeRequest, firstTimeThrough, formInfo, transmittalNumberDetails, validateTransmittalNumber]);
+  }, [
+    changeRequest,
+    firstTimeThrough,
+    formInfo,
+    transmittalNumberDetails,
+    validateTransmittalNumber,
+  ]);
 
   /**
    * Submit the new change request.
@@ -283,11 +269,17 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       changeRequest.transmittalNumber
     );
 
+    // its too soon for the firstTimeThrough to be set for validate function
+    if (!changeRequest.transmittalNumber) {
+      newMessage.statusMessage = "ID Required";
+    }
+
     // if the ID is valid, check if exists/not exist in data
     // warnings are allowed to submit
     if (
+      changeRequest.transmittalNumber &&
       newMessage.statusMessage === "" &&
-      transmittalNumberDetails.errorLevel === "error" 
+      transmittalNumberDetails.errorLevel === "error"
     ) {
       try {
         const dupID = await ChangeRequestDataApi.packageExists(
@@ -295,10 +287,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         );
         if (!dupID && transmittalNumberDetails.idMustExist) {
           newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-          newAlertCode = RESPONSE_CODE.ID_NOT_FOUND;   // ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
+          newAlertCode = RESPONSE_CODE.ID_NOT_FOUND; // ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
         } else if (dupID && !transmittalNumberDetails.idMustExist) {
           newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-          newAlertCode = RESPONSE_CODE.DUPLICATE_ID;  // ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
+          newAlertCode = RESPONSE_CODE.DUPLICATE_ID; // ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
         }
       } catch (err) {
         console.log("There was an error submitting a request.", err);
@@ -337,7 +329,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             mounted = false;
             history.push({
               pathname: ROUTES.DASHBOARD,
-              query: "?query=abc",
               state: {
                 passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
               },
@@ -353,10 +344,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       }
     }
 
-    console.log("new alert code: ", newAlertCode);
     // now set the state variables to show the error messages
-    if (mounted)
-      setTransmittalNumberStatusMessage(newMessage);
+    if (mounted) setTransmittalNumberStatusMessage(newMessage);
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlertCode(newAlertCode);
@@ -368,9 +357,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.pageTitle} text="" />
-      <KristinAlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} />
       <div className="form-container">
-        {formInfo.subheaderMessage && <div className="form-subheader-message">{formInfo.subheaderMessage}</div>}
+        {formInfo.subheaderMessage && (
+          <div className="form-subheader-message">
+            {formInfo.subheaderMessage}
+          </div>
+        )}
         <form
           onSubmit={handleSubmit}
           noValidate
@@ -407,7 +400,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={transmittalNumberStatusMessage.statusMessage}
               value={changeRequest.transmittalNumber}
-              onChange={event => handleTransmittalNumberChange(event.target.value.toUpperCase())}
+              onChange={(event) =>
+                handleTransmittalNumberChange(event.target.value.toUpperCase())
+              }
             />
           </div>
           <h3>Attachments</h3>

@@ -7,7 +7,7 @@ import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
-import KristinAlertBar from "../components/KristinAlertBar";
+import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
@@ -42,7 +42,6 @@ const UserManagement = () => {
     setIncludeStateCode(userProfile.userData.type === "cmsapprover");
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
-        console.log("user List: ", ul);
         if (typeof ul === "string") {
           if (!isPending(userProfile.userData)) setAlertCode(ul);
           ul = [];
@@ -203,8 +202,8 @@ const UserManagement = () => {
               UserDataApi.setUserStatus(updateStatusRequest).then(function (
                 returnCode
               ) {
+                // alert already set per status change, only check for success here
                 if (returnCode === "UR000") {
-                  console.log("alert: ", newAlertCode);
                   newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
                 } else {
                   newAlertCode = returnCode;
@@ -286,7 +285,7 @@ const UserManagement = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="User Management" text="" />
-      <KristinAlertBar alertCode={alertCode} personalizedString={doneToName} />
+      <AlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&
