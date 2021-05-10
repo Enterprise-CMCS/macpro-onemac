@@ -1,70 +1,75 @@
-import React, { useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
+import PropTypes from "prop-types";
+import { ALERTS_MSG } from "../libs/alert-messages";
 import { Alert } from "@cmsgov/design-system";
-import { useHistory, useLocation } from "react-router-dom";
-import { useAppContext } from "../libs/contextLib";
+import { getAlert } from "../libs/error-mappings";
+import closingX from "../images/AlertClosingX.svg";
 
+const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
-export const AlertBar = () => {
-  const location = useLocation();
-  const { state: { showAlert: alert } = {} } = location;
-  const history = useHistory();
+/**
+ * RAI Form template to allow rendering for different types of RAI's.
+ * @param {Object} formInfo - all the change request details specific to this submission
+ * @param {String} changeRequestType - the type of change request
+ */
+const AlertBar = ({ alertCode, personalizedString = "" }) => {
+  const [alert, setAlert] = useState(getAlert(alertCode));
 
-  // keep a handle on the alert bar's container
-  const divRef = useRef();
-
-  // track alert from global state (history) in a local mutable ref
-  const alertRef = useRef(alert);
-  const { userProfile: { userData } = {} } = useAppContext();
-  const surveyLink = (
-    <a href="https://forms.gle/qcsWMaDroBkhT7rs6" target="_blank" rel="noopener noreferrer">Post-Submission Survey.</a>
-  );
-  const surveyText =(
-    <>Thanks for your submission. We truly value your feedback. Please consider taking our </>
-  );
-  // every time the alert from the browser location changes...
   useEffect(() => {
-    // scroll the user up to the bar
-    if (alertRef.current && divRef.current) {
-      divRef.current.scrollIntoView();
+    let mounted = true;
+
+    if (alertCode && mounted) setAlert(getAlert(alertCode));
+
+    return function cleanup() {
+      mounted = false;
+    };
+  }, [ alertCode ] );
+
+  useEffect(() => {
+    let mounted = true;
+    if (mounted && alert && alert.heading && alert.heading !== "") {
+        var elmnt = document.getElementById("alert-bar");
+        if (elmnt) elmnt.scrollIntoView({behavior: 'smooth'});    
     }
 
-    // if the alert has changed to something other than null / false / etc.
-    if (alert) {
-      // update our local copy if it's different
-      if (alert !== alertRef.current) alertRef.current = alert;
-      // clear it out of the browser's location so we do not see it again on refresh
-      history.replace({ ...location, state: undefined }, {
-        ...location.state,
-        showAlert: null,
-      });
-    }
-  }, [alert, history, location]);
-
-  /**
-   * Check if alert is successful and a stateuser then change text to have survey link else return regular text
-   * @returns the text for a given alert
-   */
+    return function cleanup() {
+      mounted = false;
+    };
+  }, [ alert, personalizedString ]);
 
   const renderText=()=>{
-    if (userData.type==="stateuser" && alertRef.current.type==="success") {
-      return (<>{surveyText}{surveyLink}</>)
+    let newText = alert.text.replace("$personalize$", personalizedString);
+    if (alert?.linkURL && alert?.linkText) {
+      let parts = newText.split("$Link$");
+      let theLink = (<a href={alert.linkURL} target="_blank" rel="noopener noreferrer">{alert.linkText}</a>);
+      return <>{parts[0].toString()}{theLink}{parts[1].toString()}</>;
     } else{
-      return (alertRef.current.text);
+      return newText;
     }
   }
 
+  // Render the component conditionally when NOT in read only mode
+  // OR in read only mode when change request data was successfully retrieved
   return (
-    <div className="alert-bar" ref={divRef}>
-      {alertRef.current && alertRef.current.heading && (
-        <Alert
-          variation={alertRef.current.type}
-          heading={alertRef.current.heading}
+    alertCode && alert && alert.heading && alert.heading !== "" ?
+    <div className="alert-bar" id="alert-bar">
+      <Alert variation={alert.type} heading={alert.heading}>
+        <p className="ds-c-alert__text" >{renderText()}</p>
+        <button
+          className="close-button"
+          onClick={() => setAlert(ALERTS_MSG.NONE)}
         >
-          <p className="ds-c-alert__text">{renderText()}</p>
-        </Alert>
-      )}
+          {CLOSING_X_IMAGE}
+        </button>
+      </Alert>
     </div>
+    : null
   );
 };
 
+AlertBar.propTypes = {
+  alertCode: PropTypes.string,
+  personalizedString: PropTypes.string,
+};
 
+export default AlertBar;

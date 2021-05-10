@@ -29,6 +29,15 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
+  // Success woth Survey Link
+  SUBMISSION_SUCCESS_SURVEY: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Submission Completed",
+    text: "Thanks for your submission. We truly value your feedback. Please consider taking our $Link$.",
+    linkURL: "https://forms.gle/qcsWMaDroBkhT7rs6",
+    linkText: "Post-Submission Survey",
+  },
+
   // Errors and warnings
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
@@ -116,5 +125,20 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "System Submission Error",
     text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
+  },
+  USER_STATUS_GRANTED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `$personalize$ has been granted access, a notification has been sent to their email.`,
+  },
+  USER_STATUS_DENIED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `$personalize$ has been denied access, a notification has been sent to their email.`,
+  },
+  USER_STATUS_REVOKED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
   }
 };
