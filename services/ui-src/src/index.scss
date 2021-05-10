@@ -1251,7 +1251,7 @@ dl.state-access-cards {
 
 }
 .faq-left-column {
-  width: 675px;
+  width: calc(100% - 400px);
 }
 .faq-info-box {
   position: fixed;
