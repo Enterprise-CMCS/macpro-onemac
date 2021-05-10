@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo ,useCallback} from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 import { ALERTS_MSG } from "../libs/alert-messages";
@@ -19,11 +19,12 @@ function CMSSignup() {
     <CardButton loading={loading} onClick={onClickCMS} type="cmsapprover" />
   );
 }
-
-function HelpDeskSignup(){
-  const [loading, onClickCMS] = useSignupCallback("helpdesk",createAttribute);
-
- return <CardButton loading={loading} onClick={onClickCMS} type="helpdesk" />
+function HelpdeskSignup() {
+  const [_,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
+  useEffect(() => {
+    if(onLoadHelpdesk)onLoadHelpdesk();
+  },[onLoadHelpdesk]);
+  return null
 }
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
@@ -56,7 +57,7 @@ export function Signup() {
         </div>
       ) : isHelpdeskUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
-         <HelpDeskSignup />
+         <HelpdeskSignup/>
         </div>
       ) : (
         <Redirect

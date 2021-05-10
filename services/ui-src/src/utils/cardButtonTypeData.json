@@ -68,16 +68,5 @@
       "top": "-17",
       "left": "123"
     }
-  },"helpdesk": {
-    "title": "Helpdesk User",
-    "desc": "Read Only",
-    "imageAttributes": {
-      "fileName": "addUser",
-      "bgColor": "#2E8540",
-      "width": "165",
-      "height": "120",
-      "top": "-17",
-      "left": "123"
-    }
   }
 }

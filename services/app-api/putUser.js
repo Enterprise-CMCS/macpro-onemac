@@ -88,7 +88,8 @@ const validateInput = (input) => {
     type: Joi.valid(
       USER_TYPE.STATE_USER,
       USER_TYPE.STATE_ADMIN,
-      USER_TYPE.CMS_APPROVER
+      USER_TYPE.CMS_APPROVER,
+      USER_TYPE.HELPDESK_USER,
     ).required(),
   });
   //Todo: Add deeper validation for types //

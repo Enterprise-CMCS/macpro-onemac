@@ -7,11 +7,11 @@ import { getCurrentStatus } from "./user-util";
  */
 class SystemAdmin {
   /**
-   * System Admin "scan for" returns CMS Approvers
-   * @returns {String} the User Role
+   * System Admin "scan for" returns CMS Approvers and Helpdesk Users
+   * @returns {Array} Array of User Roles
    */
   getScanFor() {
-    return USER_TYPES.CMS_APPROVER;
+    return [USER_TYPES.CMS_APPROVER,USER_TYPES.HELPDESK_USER];
   }
 
   /**
