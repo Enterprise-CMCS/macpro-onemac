@@ -4,7 +4,6 @@ import { territoryList } from "cmscommonlib";
 
 import { useSignupCallback } from "../libs/hooksLib";
 import { userTypes } from "../libs/userLib";
-import { AlertBar } from "../components/AlertBar";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 
 export function StateSignup() {
@@ -27,7 +26,6 @@ export function StateSignup() {
         <h2>Registration: State Access</h2>
       </div>
       <div className="signup-container state-signup">
-        <AlertBar />
         <MultiSelectDropDown
           errorMessage="Please select at least one state."
           header={userTypes[role] ?? role}
