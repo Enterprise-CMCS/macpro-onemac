@@ -1230,3 +1230,81 @@ dl.state-access-cards {
     }
   }
 }
+
+.Collapsible {
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 16px;
+  line-height: 24px;
+  /* identical to box height, or 150% */
+
+  /* Primary / Default */
+  color: #0071BC;
+}
+
+.Collapsible__contentInner {
+
+  font-size: 14px !important;
+  font-weight: normal;
+  color: black !important;
+
+}
+.faq-left-column {
+  width: calc(100% - 400px);
+}
+.faq-info-box {
+  position: fixed;
+  float: right;
+  width: 368px;
+  right: 230px;
+  padding: 10px;
+  background: #FFFFFF;
+  /* Text/Background/Gray - Lighter */
+  border: 1px solid #D6D7D9;
+  box-sizing: border-box;
+  border-radius: 3px;
+
+}
+
+.faq-info-box-title {
+top: -30px;
+position: relative;
+font-family: Open Sans;
+font-style: normal;
+font-weight: normal;
+font-size: 16px;
+line-height: 20px;
+/* identical to box height, or 125% */
+text-transform: uppercase;
+/* Text / Default - Light */
+color: #5B616B;
+
+}
+
+.faq-info-box-top-border {
+
+top: -32px;
+right: 10px;
+position: relative;
+width: 368px;
+height: 8px;
+
+background: linear-gradient(90.11deg, #0071BC 49.91%, #02BFE7 66.06%);
+border-radius: 3px 3px 0px 0px;
+margin-left: -1px;
+
+}
+
+.vert-line-svg {
+position: absolute;
+left: 6.17%;
+right: 92.58%;
+top: 25.47%;
+bottom: 74.38%;
+
+background: #0071BC;
+transform: rotate(-90deg);
+}
+
+
