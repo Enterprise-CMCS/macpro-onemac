@@ -371,7 +371,7 @@ const processEmail = async (input) => {
   // Construct and send email acknowledgement to the requesting user //
   const userEmail = await constructUserEmail(input.userEmail, input);
 
-  await dispatchEmail(userEmail.email);
+  await dispatchEmail(userEmail.email,input);
 
   // only email approvers if user is acting on their own status
   if (input.userEmail !== input.doneBy) {
@@ -387,7 +387,7 @@ const processEmail = async (input) => {
       input,
       "doneBy"
     );
-    await dispatchEmail(emailParams.email);
+    await dispatchEmail(emailParams.email,input);
   } else {
     console.log(
       `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`
@@ -492,7 +492,6 @@ const constructRoleAdminEmails = (recipients, input) => {
 
   let typeText = "User";
   let newSubject = "";
-  console.log(input);
 
   switch (userType) {
     case USER_TYPE.STATE_USER:
@@ -567,14 +566,14 @@ const constructUserEmail = (userEmailId, input) => {
 };
 
 // Send email //
-const dispatchEmail = async (email) => {
+const dispatchEmail = async (email,input) => {
   try {
     const emailStatus = await sendEmail(email);
     if (emailStatus instanceof Error) {
       console.log("Warning: Email not sent");
     }
     console.log("Email successfully sent");
-    if (input.type === "helpdesk") {
+    if (input.type === "helpdesk" && input.isPutUser) {
       return RESPONSE_CODE.HELPDESK_USER_SUBMITEED;
     } else {
       return RESPONSE_CODE.USER_SUBMITTED;
