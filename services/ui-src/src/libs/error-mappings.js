@@ -16,6 +16,9 @@ export const getAlert = (errorCode) => {
     case "SC000":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
       break;
+    case "HU000":
+      returnAlert = ALERTS_MSG.HELPDESK_SUBMISSION_SUCCESS;
+      break;
     // app-api/response-codes.js    CALLING_USER_PENDING: "UR043",
     // app-api/response-codes.js    CALLING_USER_REVOKED: "UR044",
     // app-api/response-codes.js    CALLING_USER_DENIED: "UR045",

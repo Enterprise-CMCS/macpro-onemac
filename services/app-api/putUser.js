@@ -422,7 +422,7 @@ const collectRoleAdminEmailIds = async (input) => {
         ? recipients.push(approver.id)
         : null;
     });
-  } else if (input.type === USER_TYPE.CMS_APPROVER) {
+  } else if (input.type === USER_TYPE.CMS_APPROVER||input.type === USER_TYPE.HELPDESK_USER) {
     let systemadmins = [];
     // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
     if (process.env.systemAdminEmail) {
@@ -492,6 +492,7 @@ const constructRoleAdminEmails = (recipients, input) => {
 
   let typeText = "User";
   let newSubject = "";
+  console.log(input);
 
   switch (userType) {
     case USER_TYPE.STATE_USER:
@@ -518,6 +519,17 @@ const constructRoleAdminEmails = (recipients, input) => {
       break;
     case USER_TYPE.CMS_APPROVER:
       typeText = "CMS Approver";
+      break;
+    case USER_TYPE.HELPDESK_USER:
+      typeText = "Helpdesk User";
+      email.HTML =
+        `
+  <p>Hello,</p>
+
+  There is a new OneMAC Portal Helpdesk access request from ${input.firstName} ${input.lastName} waiting 
+  for your review. Please log into your User Management Dashboard to see the pending request.
+
+  <p>Thank you!</p>`;
       break;
   }
   if (newSubject) email.Subject = newSubject;
@@ -562,7 +574,11 @@ const dispatchEmail = async (email) => {
       console.log("Warning: Email not sent");
     }
     console.log("Email successfully sent");
-    return RESPONSE_CODE.USER_SUBMITTED;
+    if (input.type === "helpdesk") {
+      return RESPONSE_CODE.HELPDESK_USER_SUBMITEED;
+    } else {
+      return RESPONSE_CODE.USER_SUBMITTED;
+    }
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user access request acknowledgment email.",
