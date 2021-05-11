@@ -25,7 +25,6 @@ th {
 }
 body {
   @extend .ds-base;
-  background-color: $color-gray-lightest;
 }
 
 h1 {
@@ -262,7 +261,6 @@ input[type="file"] {
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-justify-content--center;
   @extend .ds-l-col--auto;
-  background-color: $color-gray-lightest;
 
   h3 {
     @extend .ds-u-margin-top--7;
@@ -283,9 +281,7 @@ input[type="file"] {
   }
 
   .form-card {
-    background-color: $color-white;
     @extend .ds-l-col--auto;
-    box-shadow: 2px 2px 4px $color-gray-lighter;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
@@ -323,11 +319,7 @@ input[type="file"] {
 }
 
 .upload-card {
-  background-color: $color-white;
   @extend .ds-l-col--auto;
-  @extend .ds-u-border-right--2;
-  @extend .ds-u-border-bottom--2;
-  @extend .ds-u-padding-left--2;
   div {
     padding-top: 1rem;
     padding-bottom: 1rem;
