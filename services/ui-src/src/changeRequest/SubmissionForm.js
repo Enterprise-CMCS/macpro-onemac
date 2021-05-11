@@ -96,13 +96,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       if (!newTransmittalNumber) {
         if (!firstTimeThrough) errorMessage = `${transmittalNumberDetails.idLabel} Required`;
       }
-      // must have a valid state code as the first two characters
+      // state code must be on the User's active state list
       else if (
         !territoryList.some(
           (state) => state["value"] === newTransmittalNumber.substring(0, 2)
         )
       ) {
-        errorMessage = `The ${transmittalNumberDetails.idLabel} must contain valid Territory/State Code`;
+        errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
       // must match the associated Regex string for format
       else if (
