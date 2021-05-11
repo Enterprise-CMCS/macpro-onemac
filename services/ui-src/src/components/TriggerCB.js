@@ -6,8 +6,8 @@ export default function TriggerCB({text, isOpen}) {
 
     return (
         isOpen ?
-        <><img src={plusSign} alt="+" />&nbsp;&nbsp;&nbsp; {text}  </>
+            <><h4><img src={plusSign} alt="+" />&nbsp;&nbsp;&nbsp; {text}  </h4></>
             :
-        <><img src={negativeSign} alt="-" /> &nbsp;&nbsp;&nbsp; {text}  </>
+            <><h4><img src={negativeSign} alt="-" /> &nbsp;&nbsp;&nbsp; {text}  </h4></>
             )
 }
