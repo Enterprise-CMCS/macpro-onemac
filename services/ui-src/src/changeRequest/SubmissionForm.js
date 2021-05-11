@@ -4,12 +4,13 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { RESPONSE_CODE, ROUTES, territoryList } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -19,6 +20,7 @@ import AlertBar from "../components/AlertBar";
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
+  const { userProfile: { userData: {userAttributes} = {} } } = useAppContext();
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
@@ -63,6 +65,31 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     waiverAuthority: "",
   });
 
+  const getCurrentStatus = (attr) => {
+    const latestAttribute = attr.reduce((latestItem, currentItem) =>
+      currentItem.date > latestItem.date ? currentItem : latestItem
+    );
+    return latestAttribute;
+  };
+  
+  const isLatestAttributeActive = (attr) => {
+    return getCurrentStatus(attr).status === "active";
+  };
+  
+  const getAuthorizedStateList = () => {
+    let tempStateList = [];
+  
+    if (!userAttributes) return tempStateList;
+  
+    userAttributes.forEach((attribute) => {
+      return isLatestAttributeActive(attribute.history) ? tempStateList.push(attribute.stateCode) : null
+    });
+  
+    return tempStateList;
+  };
+  
+  const stateList = getAuthorizedStateList();
+  
   /**
    * Callback for the uploader to set if the upload requirements are met.
    * @param {Boolean} state true if the required uploads have been specified
@@ -98,8 +125,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       }
       // state code must be on the User's active state list
       else if (
-        !territoryList.some(
-          (state) => state["value"] === newTransmittalNumber.substring(0, 2)
+        newTransmittalNumber.length >= 2 && !stateList.find(
+          (state) => state === newTransmittalNumber.substring(0, 2)
         )
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
@@ -113,7 +140,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       return errorMessage;
     },
-    [transmittalNumberDetails, firstTimeThrough]
+    [transmittalNumberDetails, firstTimeThrough, stateList]
   );
 
   /**
