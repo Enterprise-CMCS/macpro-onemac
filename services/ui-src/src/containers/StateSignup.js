@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useLocation } from "react-router-dom";
-import { territoryList } from "cmscommonlib";
+import { territoryList, USER_TYPE } from "cmscommonlib";
 
 import { useSignupCallback } from "../libs/hooksLib";
 import { userTypes } from "../libs/userLib";
@@ -27,9 +27,14 @@ export function StateSignup() {
       </div>
       <div className="signup-container state-signup">
         <MultiSelectDropDown
-          errorMessage="Please select at least one state."
+          errorMessage={
+            role === USER_TYPE.STATE_USER
+              ? "Please select at least one state."
+              : "Please select one state."
+          }
           header={userTypes[role] ?? role}
           loading={loading}
+          onlyOne={role === USER_TYPE.STATE_ADMIN}
           options={territoryList}
           required
           subheader="Select your State Access"
