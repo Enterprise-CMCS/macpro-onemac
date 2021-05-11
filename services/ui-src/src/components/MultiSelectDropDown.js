@@ -13,6 +13,7 @@ export const MultiSelectDropDown = ({
   errorMessage = "",
   header,
   loading = false,
+  onlyOne = false,
   options,
   required = false,
   subheader,
@@ -21,6 +22,9 @@ export const MultiSelectDropDown = ({
   type,
 }) => {
   const [value, setValue] = useState([]);
+
+  const invalid =
+    (required && value.length === 0) || (onlyOne && value.length > 1);
 
   return (
     <>
@@ -69,8 +73,8 @@ export const MultiSelectDropDown = ({
         <Select
           className="fa fa-search"
           placeholder=""
+          disabled={loading}
           dropdownHeight="185px"
-          isDisabled={loading}
           searchable="true"
           searchBy="label"
           multi="true"
@@ -79,13 +83,13 @@ export const MultiSelectDropDown = ({
           options={options}
         />
         <div className="component-submit-solid">
-          {required && value.length === 0 && (
+          {invalid && (
             <div className="field-error-message ds-u-padding-bottom--1">
               {errorMessage}
             </div>
           )}
           <button
-            disabled={loading || (required && value.length === 0)}
+            disabled={loading || invalid}
             onClick={() => submitFn(value)}
             className="ds-c-button ds-c-button--primary"
             type="button"
