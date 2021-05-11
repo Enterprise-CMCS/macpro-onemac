@@ -183,7 +183,16 @@ ul {
   padding-right: 14rem;
   padding-bottom: 2rem;
 }
-
+.alert-bar button {
+    position: absolute;
+    background: inherit;
+    top: 26px;
+    right: 26px;
+    border: none;
+}
+.alert-bar path {
+  fill: black;
+}
 .required-mark {
   color: red;
 }
@@ -1300,6 +1309,7 @@ margin-left: -1px;
 .faq-collapsible-trigger {
    cursor: pointer;
 }
+
 .vert-line-svg {
 position: absolute;
 left: 6.17%;
