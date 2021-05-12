@@ -8,10 +8,16 @@ import { getCurrentStatus } from "./user-util";
 class SystemAdmin {
   /**
    * System Admin "scan for" returns CMS Approvers and Helpdesk Users
-   * @returns {Array} Array of User Roles
+   * @returns {Object} Object of Scan Parameters for DynamnoDB Scan
    */
-  getScanFor() {
-    return [USER_TYPES.CMS_APPROVER,USER_TYPES.HELPDESK_USER];
+  getScanParams(){
+    const scanParams = {
+      TableName: process.env.userTableName,
+      FilterExpression: "#ty = :userType0 or #ty = :userType1",
+      ExpressionAttributeNames: { "#ty": "type" },
+      ExpressionAttributeValues: {":userType0": USER_TYPES.CMS_APPROVER,":userType1": USER_TYPES.HELPDESK_USER },
+    };
+    return scanParams;
   }
 
   /**

@@ -28,30 +28,12 @@ export const main = handler(async (event, context) => {
   let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
   if (reasonWhyNot)  return reasonWhyNot;
 
-  let scanFor = uFunctions.getScanFor();
+  let scanParams = uFunctions.getScanParams();
   let stateList = [];
   if (uFunctions.shouldICheckState()) {
     stateList = getAuthorizedStateList(doneBy);
   }
-  var userResult;
-  var scanParams;
-  if (Array.isArray(scanFor)) {
-       scanParams = {
-        TableName: process.env.userTableName,
-        FilterExpression: "#ty = :userType1 or #ty = :userType2",
-        ExpressionAttributeNames: { "#ty": "type" },
-        ExpressionAttributeValues: {":userType1": scanFor[0],":userType2": scanFor[1] },
-      };
-    userResult=await dynamoDb.scan(scanParams);
-  } else {
-     scanParams = {
-      TableName: process.env.userTableName,
-      FilterExpression: "#ty = :userType",
-      ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType": scanFor },
-    };
-    userResult = await dynamoDb.scan(scanParams);
-  }
+  var userResult = await dynamoDb.scan(scanParams);
 
   return uFunctions.transformUserList(userResult, stateList);
 });
