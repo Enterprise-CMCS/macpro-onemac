@@ -6,4 +6,5 @@
     STATE_ADMIN: 'stateadmin',
     CMS_APPROVER: 'cmsapprover',
     SYSTEM_ADMIN: 'systemadmin',
+    HELPDESK: 'helpdesk',
 };

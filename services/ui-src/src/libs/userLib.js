@@ -51,7 +51,7 @@ export const revokeConfirmMessage = {
    */
 
  export const isPending = (userData) => {
-  if (userData.type === "cmsapprover") {
+  if (userData.type === "cmsapprover" || userData.type === "helpdesk" ) {
     userData.attributes.sort(sortDescendingOrder);
     return userData.attributes[0].status === "pending";
   } else {
@@ -67,7 +67,7 @@ export const revokeConfirmMessage = {
    */
 
 export const isActive = (userData) => {
-  if (userData.type === "cmsapprover") {
+  if (userData.type === "cmsapprover" || userData.type === "helpdesk") {
     userData.attributes.sort(sortDescendingOrder);
     return userData.attributes[0].status === "active";
   } else {

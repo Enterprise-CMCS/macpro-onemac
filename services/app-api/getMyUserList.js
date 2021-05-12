@@ -26,7 +26,7 @@ export const main = handler(async (event, context) => {
   }
 
   let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
-  if (reasonWhyNot)  return reasonWhyNot;
+  if (reasonWhyNot) return reasonWhyNot;
 
   let scanFor = uFunctions.getScanFor();
   let stateList = [];
@@ -35,11 +35,11 @@ export const main = handler(async (event, context) => {
   }
   const scanParams = {
     TableName: process.env.userTableName,
-    FilterExpression: "#ty = :userType",
+    FilterExpression: (doneBy.type !== 'helpdesk') ? "#ty = :userType" : "#ty <> :userType",
     ExpressionAttributeNames: { "#ty": "type" },
-    ExpressionAttributeValues: { ":userType": scanFor },
+    ExpressionAttributeValues: (doneBy.type !== 'helpdesk') ? { ":userType": scanFor } : { ":userType": "systemadmin" },
   };
-
+  
   const userResult = await dynamoDb.scan(scanParams);
 
   return uFunctions.transformUserList(userResult, stateList);

@@ -2,6 +2,7 @@ import StateUser from "./StateUser";
 import StateAdmin from "./StateAdmin";
 import CMSApprover from "./CMSApprover";
 import SystemAdmin from "./SystemAdmin";
+import Helpdesk from "./Helpdesk";
 import { USER_TYPES } from "./userTypes";
 
 /**
@@ -14,7 +15,7 @@ import { USER_TYPES } from "./userTypes";
 
 export const getUserFunctions = (doneBy) => {
   let retval = {};
-
+  
   // what users they see depends on what role they are
   switch (doneBy.type) {
     case USER_TYPES.STATE_USER:
@@ -28,6 +29,9 @@ export const getUserFunctions = (doneBy) => {
       break;
     case USER_TYPES.SYSTEM_ADMIN:
       retval = SystemAdmin;
+      break;
+    case USER_TYPES.HELPDESK:
+      retval = Helpdesk;
       break;
     default:
       retval = undefined;

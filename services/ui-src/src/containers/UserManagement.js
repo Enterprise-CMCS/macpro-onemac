@@ -39,7 +39,10 @@ const UserManagement = () => {
   const [doneToName, setDoneToName] = useState("");
 
   const updateList = useCallback(() => {
-    setIncludeStateCode(userProfile.userData.type === "cmsapprover");
+    setIncludeStateCode(
+      userProfile.userData.type === "cmsapprover"
+      || userProfile.userData.type === "helpdesk"
+    );
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         if (typeof ul === "string") {
@@ -57,7 +60,7 @@ const UserManagement = () => {
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
-    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
+    if (location?.state?.passCode !== undefined) location.state.passCode = null;
     if (
       !userProfile ||
       !userProfile.userData ||
@@ -149,10 +152,10 @@ const UserManagement = () => {
   const renderActions = useCallback(
     ({ row }) => {
       const grant = {
-          label: "Grant Access",
-          value: "active",
-          confirmMessage: grantConfirmMessage[userProfile.userData.type],
-        },
+        label: "Grant Access",
+        value: "active",
+        confirmMessage: grantConfirmMessage[userProfile.userData.type],
+      },
         deny = {
           label: "Deny Access",
           value: "denied",
@@ -172,12 +175,12 @@ const UserManagement = () => {
           revoked: [grant],
         }[row.values.status] ?? [];
 
-        const alertCodes = 
-        {
-          active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
-          denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
-          revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
-        };
+      const alertCodes =
+      {
+        active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+        denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+        revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
+      };
 
       return (
         <PopupMenu
@@ -199,27 +202,27 @@ const UserManagement = () => {
               ],
               type: getAdminTypeByRole(userProfile.userData.type),
             };
-              UserDataApi.setUserStatus(updateStatusRequest).then(function (
-                returnCode
-              ) {
-                // alert already set per status change, only check for success here
-                if (returnCode === "UR000") {
-                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
-                } else {
-                  newAlertCode = returnCode;
-                }
-                updateList();
-              }).then( () => {setAlertCode(newAlertCode);setDoneToName(newPersonalized);} )
+            UserDataApi.setUserStatus(updateStatusRequest).then(function (
+              returnCode
+            ) {
+              // alert already set per status change, only check for success here
+              if (returnCode === "UR000") {
+                newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
+              } else {
+                newAlertCode = returnCode;
+              }
+              updateList();
+            }).then(() => { setAlertCode(newAlertCode); setDoneToName(newPersonalized); })
               .catch((error) => {
                 console.log("Error while fetching user's list.", error);
                 setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
               });
-        
-                      }}
+
+          }}
         />
       );
     },
-    [ updateList, userList, userProfile]
+    [updateList, userList, userProfile]
   );
 
   const columns = useMemo(
@@ -238,11 +241,11 @@ const UserManagement = () => {
         },
         includeStateCode
           ? {
-              Header: "State",
-              accessor: "stateCode",
-              defaultCanSort: true,
-              id: "state",
-            }
+            Header: "State",
+            accessor: "stateCode",
+            defaultCanSort: true,
+            id: "state",
+          }
           : null,
         {
           accessor: "latest.date",
@@ -288,10 +291,10 @@ const UserManagement = () => {
       <AlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&
-        userProfile.userData &&
-        userProfile.userData.attributes &&
-        userProfile.userData.attributes.length !== 0 &&
-        !isActive(userProfile.userData) ? (
+          userProfile.userData &&
+          userProfile.userData.attributes &&
+          userProfile.userData.attributes.length !== 0 &&
+          !isActive(userProfile.userData) ? (
           isPending(userProfile.userData) ? (
             <EmptyList message={pendingMessage[userProfile.userData.type]} />
           ) : (
