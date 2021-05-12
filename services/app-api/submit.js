@@ -7,6 +7,8 @@ import getChangeRequestFunctions, {
 } from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import { DateTime } from "luxon";
+import getUser from "./utils/getUser";
+import { latestAccessStatus, USER_STATUS } from "cmscommonlib";
 
 /**
  * Submission states for the change requests.
@@ -27,9 +29,26 @@ export const main = handler(async (event) => {
   }
   const data = JSON.parse(event.body);
 
+  // Add required data to the record before storing.
+  data.id = uuid.v1();
+  data.createdAt = Date.now();
+  data.state = SUBMISSION_STATES.CREATED;
+
+  //Normalize the user data.
+  data.user = {
+    id: event.requestContext.identity.cognitoIdentityId,
+    authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
+    email: data.user.signInUserSession.idToken.payload.email,
+    firstName: data.user.signInUserSession.idToken.payload.given_name,
+    lastName: data.user.signInUserSession.idToken.payload.family_name,
+  };
+  data.userId = event.requestContext.identity.cognitoIdentityId;
+
   // do a pre-check for things that should stop us immediately
-  const errorMessage = runInitialCheck(data);
-  if (errorMessage) {
+  try {
+    runInitialCheck(data);
+  } catch (errorMessage) {
+    // don't throw these messages because they are 200 level responses
     return errorMessage;
   }
 
@@ -50,21 +69,6 @@ export const main = handler(async (event) => {
   if (!crVerifyTerritoryStateCode) {
     return RESPONSE_CODE.TERRITORY_NOT_VALID;
   }
-
-  // Add required data to the record before storing.
-  data.id = uuid.v1();
-  data.createdAt = Date.now();
-  data.state = SUBMISSION_STATES.CREATED;
-
-  //Normalize the user data.
-  data.user = {
-    id: event.requestContext.identity.cognitoIdentityId,
-    authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
-    email: data.user.signInUserSession.idToken.payload.email,
-    firstName: data.user.signInUserSession.idToken.payload.given_name,
-    lastName: data.user.signInUserSession.idToken.payload.family_name,
-  };
-  data.userId = event.requestContext.identity.cognitoIdentityId;
 
   try {
     // check for submission-specific validation (uses database)
@@ -184,6 +188,25 @@ function runInitialCheck(data) {
   if (!data.user) return RESPONSE_CODE.VALIDATION_ERROR;
   if (!data.uploads) return RESPONSE_CODE.ATTACHMENT_ERROR;
   if (!data.type) return RESPONSE_CODE.SYSTEM_ERROR;
+
+  console.log("data is : ", data);
+
+  // get the rest of the details about the current user
+  getUser(data.user.email)
+    .then((doneBy) => {
+      console.log("done by: ", doneBy);
+      if (!doneBy) {
+        throw RESPONSE_CODE.USER_NOT_FOUND;
+      }
+
+      // user must be an active state user for the submitted state
+      if (
+        latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
+      ) {
+        throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
+      }
+    })
+    .catch(error => { throw error; });
 
   return "";
 }

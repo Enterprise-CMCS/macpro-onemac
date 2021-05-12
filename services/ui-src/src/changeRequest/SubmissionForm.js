@@ -4,7 +4,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { latestAccessStatus, RESPONSE_CODE, ROUTES, USER_STATUS } from "cmscommonlib";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
@@ -20,7 +20,9 @@ import { useAppContext } from "../libs/contextLib";
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
-  const { userProfile: { userData: {userAttributes} = {} } } = useAppContext();
+  const {
+    userProfile: { userData },
+  } = useAppContext();
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
@@ -29,17 +31,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
-  const [
-    waiverAuthorityErrorMessage,
-    setWaiverAuthorityErrorMessage,
-  ] = useState("");
-  const [
-    transmittalNumberStatusMessage,
-    setTransmittalNumberStatusMessage,
-  ] = useState({
-    statusLevel: "error",
-    statusMessage: "",
-  });
+  const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
+    useState("");
+  const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
+    useState({
+      statusLevel: "error",
+      statusMessage: "",
+    });
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(false);
@@ -65,31 +63,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     waiverAuthority: "",
   });
 
-  const getCurrentStatus = (attr) => {
-    const latestAttribute = attr.reduce((latestItem, currentItem) =>
-      currentItem.date > latestItem.date ? currentItem : latestItem
-    );
-    return latestAttribute;
-  };
-  
-  const isLatestAttributeActive = (attr) => {
-    return getCurrentStatus(attr).status === "active";
-  };
-  
-  const getAuthorizedStateList = () => {
-    let tempStateList = [];
-  
-    if (!userAttributes) return tempStateList;
-  
-    userAttributes.forEach((attribute) => {
-      return isLatestAttributeActive(attribute.history) ? tempStateList.push(attribute.stateCode) : null
-    });
-  
-    return tempStateList;
-  };
-  
-  const stateList = getAuthorizedStateList();
-  
   /**
    * Callback for the uploader to set if the upload requirements are met.
    * @param {Boolean} state true if the required uploads have been specified
@@ -121,13 +94,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       // Must have a value
       if (!newTransmittalNumber) {
-        if (!firstTimeThrough) errorMessage = `${transmittalNumberDetails.idLabel} Required`;
+        if (!firstTimeThrough)
+          errorMessage = `${transmittalNumberDetails.idLabel} Required`;
       }
       // state code must be on the User's active state list
       else if (
-        newTransmittalNumber.length >= 2 && !stateList.find(
-          (state) => state === newTransmittalNumber.substring(0, 2)
-        )
+        newTransmittalNumber.length >= 2 &&
+        latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
+          USER_STATUS.ACTIVE
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
@@ -140,7 +114,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       return errorMessage;
     },
-    [transmittalNumberDetails, firstTimeThrough, stateList]
+    [transmittalNumberDetails, firstTimeThrough, userData]
   );
 
   /**
