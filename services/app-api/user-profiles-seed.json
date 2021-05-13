@@ -332,5 +332,60 @@
         "firstName": "Teresa",
         "lastName": "Test",
         "type": "systemadmin"
+      },
+      {
+        "attributes": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemsadmin@cms.hhs.local",
+            "status": "active"
+          }
+        ],
+        "firstName": "Arthur",
+        "lastName": "Active",
+        "id": "helpdeskactive@cms.hhs.local",
+        "type": "helpdesk"
+      },
+
+      {
+        "attributes": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemsadmin@cms.hhs.local",
+            "status": "denied"
+          }
+        ],
+        "firstName": "David",
+        "lastName": "Denied",
+        "id": "helpdeskdenied@cms.hhs.local",
+        "type": "helpdesk"
+      },
+
+      {
+        "attributes": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemsadmin@cms.hhs.local",
+            "status": "pending"
+          }
+        ],
+        "firstName": "Perry",
+        "lastName": "Pending",
+        "id": "helpdeskpending@cms.hhs.local",
+        "type": "helpdesk"
+      },
+
+      {
+        "attributes": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemsadmin@cms.hhs.local",
+            "status": "revoked"
+          }
+        ],
+        "firstName": "Raymond",
+        "lastName": "Revoked",
+        "id": "helpdeskrevoked@cms.hhs.local",
+        "type": "helpdesk"
       }
 ]
