@@ -1233,6 +1233,7 @@ dl.state-access-cards {
 }
 
 .Collapsible {
+
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -1295,6 +1296,10 @@ background: linear-gradient(90.11deg, #0071BC 49.91%, #02BFE7 66.06%);
 border-radius: 3px 3px 0px 0px;
 margin-left: -1px;
 
+}
+
+.faq-collapsible-trigger {
+   cursor: pointer;
 }
 
 .vert-line-svg {

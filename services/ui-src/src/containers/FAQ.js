@@ -36,7 +36,7 @@ const FAQ = () => {
           <p className="faq-info-box-title">MACPRO HELP DESK CONTACT INFO</p>
           <b>Phone Number</b>
           <br/>
-          <a href="phone:8322282540">(832) 228-2540</a>
+          <a href="phone:8332282540">(833) 228-2540</a>
           <br/>
           <br/>
           <b>Email</b><br/>
