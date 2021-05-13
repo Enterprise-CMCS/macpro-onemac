@@ -111,6 +111,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       ) {
         errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
       }
+      console.log("latest access status ",latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)));
 
       return errorMessage;
     },
@@ -251,9 +252,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setIsLoading(true);
     setAlertCode("NONE"); //clear the alert
 
-    // once Submit is clicked, show error messages
-    setFirstTimeThrough(false);
-
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the
     let actionTypeMessage = "";
@@ -350,6 +348,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlertCode(newAlertCode);
+    if (mounted) setFirstTimeThrough(false);
     if (mounted) setIsLoading(false);
   }
 

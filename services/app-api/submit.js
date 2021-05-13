@@ -8,7 +8,7 @@ import getChangeRequestFunctions, {
 import { RESPONSE_CODE } from "./libs/response-codes";
 import { DateTime } from "luxon";
 import getUser from "./utils/getUser";
-import { latestAccessStatus, USER_STATUS } from "cmscommonlib";
+import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
 
 /**
  * Submission states for the change requests.
@@ -45,11 +45,27 @@ export const main = handler(async (event) => {
   data.userId = event.requestContext.identity.cognitoIdentityId;
 
   // do a pre-check for things that should stop us immediately
-  try {
-    runInitialCheck(data);
-  } catch (errorMessage) {
-    // don't throw these messages because they are 200 level responses
+  const errorMessage = runInitialCheck(data);
+  if (errorMessage) {
     return errorMessage;
+  }
+
+  try {
+    // get the rest of the details about the current user
+    const doneBy = await getUser(data.user.email);
+    console.log("done by: ", doneBy);
+    if (!doneBy) {
+      return RESPONSE_CODE.USER_NOT_FOUND;
+    }
+
+    if (
+      doneBy.type != USER_TYPE.STATE_USER ||
+      latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
+    ) {
+      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    }
+  } catch (error) {
+    throw error;
   }
 
   // map the changeRequest functions from the data.type
@@ -188,25 +204,6 @@ function runInitialCheck(data) {
   if (!data.user) return RESPONSE_CODE.VALIDATION_ERROR;
   if (!data.uploads) return RESPONSE_CODE.ATTACHMENT_ERROR;
   if (!data.type) return RESPONSE_CODE.SYSTEM_ERROR;
-
-  console.log("data is : ", data);
-
-  // get the rest of the details about the current user
-  getUser(data.user.email)
-    .then((doneBy) => {
-      console.log("done by: ", doneBy);
-      if (!doneBy) {
-        throw RESPONSE_CODE.USER_NOT_FOUND;
-      }
-
-      // user must be an active state user for the submitted state
-      if (
-        latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
-      ) {
-        throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
-      }
-    })
-    .catch(error => { throw error; });
 
   return "";
 }
