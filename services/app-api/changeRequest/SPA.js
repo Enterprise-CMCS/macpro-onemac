@@ -17,7 +17,7 @@ async fieldsValid(data) {
   let areFieldsValid = false;
   let whyNot = "";
 
-    let params = {
+    const params = {
       TableName: process.env.spaIdTableName,
       // 'Key' defines the partition key and sort key of the item to be retrieved
       // - 'id': change request ID
