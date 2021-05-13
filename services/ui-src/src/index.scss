@@ -1313,4 +1313,18 @@ background: #0071BC;
 transform: rotate(-90deg);
 }
 
+.submission-form-cancel-button {
+@extend .ds-c-button;
+@extend .ds-c-button--transparent;
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height, or 130% */
 
+text-align: center;
+text-decoration-line: underline;
+
+color: $color-primary;
+}

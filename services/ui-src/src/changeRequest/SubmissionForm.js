@@ -240,6 +240,18 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   ]);
 
   /**
+   * Cancel Form.
+   * @param {Object} event the click event
+   */
+  async function handleCancel(event) {
+    event.preventDefault();
+    const cancel = window.confirm("If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?")
+    if (cancel === true) {
+      history.goBack();
+    }
+  }
+
+  /**
    * Submit the new change request.
    * @param {Object} event the click event
    */
@@ -424,6 +436,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             ></TextField>
           </div>
           <input type="submit" className="form-submit" value="Submit" />
+          <button
+              onClick={handleCancel}
+              className="submission-form-cancel-button"
+              type="button"
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </LoadingScreen>
