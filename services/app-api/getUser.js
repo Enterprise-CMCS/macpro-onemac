@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import getUser from "./utils/getUser";
-import { ROLE_ACL  } from "cmscommonlib";
+import { getUserRoleObj } from "cmscommonlib";
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event, context) => {
@@ -11,10 +11,7 @@ export const main = handler(async (event, context) => {
   }
 
   const userItem = await getUser(event.queryStringParameters.email);
-
-  const allowedRoutes = ROLE_ACL;
-
-  userItem.validRoutes = allowedRoutes[userItem.type];
+  userItem.validRoutes = getUserRoleObj(userItem.type).getAccesses();
 
   return userItem;
 });

@@ -1,11 +1,10 @@
 import React, { useEffect, useMemo ,useCallback} from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
-import { ALERTS_MSG } from "../libs/alert-messages";
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { AlertBar } from "../components/AlertBar";
 import CardButton from "../components/cardButton";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 const createAttribute = () => [{ status: "pending" }];
 
@@ -63,7 +62,7 @@ export function Signup() {
         <Redirect
           to={{
             pathname: "/",
-            state: { showAlert: ALERTS_MSG.CONTACT_HELP_DESK },
+            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR },  // ALERTS_MSG.CONTACT_HELP_DESK },
           }}
         />
       ),
@@ -80,7 +79,6 @@ export function Signup() {
         <h2>Registration: User Role</h2>
       </div>
       <div className="signup-container">
-        <AlertBar />
         <div className="signup-center">
           <p className="signup-prompt">
             Select the user role you're registering for.

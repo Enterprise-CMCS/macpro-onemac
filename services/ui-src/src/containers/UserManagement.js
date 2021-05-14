@@ -1,15 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { Alert } from "@cmsgov/design-system";
-import { ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
 import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
-import { getAlert } from "../libs/error-mappings";
+import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
@@ -33,32 +31,33 @@ const PENDING_CIRCLE_IMAGE = (
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [alert, setAlert] = useState();
   const { userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
+  const [doneToName, setDoneToName] = useState("");
 
   const updateList = useCallback(() => {
     setIncludeStateCode(userProfile.userData.type === "cmsapprover");
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
-        console.log("user List: ", ul);
         if (typeof ul === "string") {
-          if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
+          if (!isPending(userProfile.userData)) setAlertCode(ul);
           ul = [];
         }
         setUserList(ul);
       })
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
       });
   }, [userProfile.email, userProfile.userData]);
 
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
+    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
     if (
       !userProfile ||
       !userProfile.userData ||
@@ -69,21 +68,12 @@ const UserManagement = () => {
       history.push(ROUTES.DASHBOARD);
     }
 
-    let newAlert = ALERTS_MSG.NONE;
-    if (location.state) newAlert = location.state.showAlert;
-    if (mounted) setAlert(newAlert);
-
     if (mounted) updateList();
 
     return function cleanup() {
       mounted = false;
     };
   }, [location, userProfile, history, updateList]);
-
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
 
   useEffect(() => {
     let newIsLoading = true;
@@ -96,25 +86,6 @@ const UserManagement = () => {
       mounted = false;
     };
   }, [userList]);
-
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-  }, [alert]);
-
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
 
   const getName = useCallback(
     ({ firstName, lastName }) =>
@@ -201,38 +172,54 @@ const UserManagement = () => {
           revoked: [grant],
         }[row.values.status] ?? [];
 
+        const alertCodes = 
+        {
+          active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+          denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+          revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
+        };
+
       return (
         <PopupMenu
-          selectedRow={row.values.id}
+          selectedRow={row.id}
           userEmail={row.values.email}
           menuItems={menuItems}
-          handleSelected={(row, value) => {
+          handleSelected={(rowNum, value) => {
+            let newAlertCode = alertCodes[value];
+            let newPersonalized = "Chester Tester";
+
             const updateStatusRequest = {
-              userEmail: userList[row].email,
+              userEmail: userList[rowNum].email,
               doneBy: userProfile.userData.id,
               attributes: [
                 {
-                  stateCode: userList[row].stateCode, // required for state user and state admin
+                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
                   status: value,
                 },
               ],
               type: getAdminTypeByRole(userProfile.userData.type),
             };
-            try {
               UserDataApi.setUserStatus(updateStatusRequest).then(function (
                 returnCode
               ) {
-                setAlert(getAlert(returnCode));
+                // alert already set per status change, only check for success here
+                if (returnCode === "UR000") {
+                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
+                } else {
+                  newAlertCode = returnCode;
+                }
                 updateList();
+              }).then( () => {setAlertCode(newAlertCode);setDoneToName(newPersonalized);} )
+              .catch((error) => {
+                console.log("Error while fetching user's list.", error);
+                setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
               });
-            } catch (err) {
-              setAlert(ALERTS_MSG.SUBMISSION_ERROR);
-            }
-          }}
+        
+                      }}
         />
       );
     },
-    [updateList, userList, userProfile]
+    [ updateList, userList, userProfile]
   );
 
   const columns = useMemo(
@@ -298,7 +285,7 @@ const UserManagement = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="User Management" text="" />
-      {renderAlert(alert)}
+      <AlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&
