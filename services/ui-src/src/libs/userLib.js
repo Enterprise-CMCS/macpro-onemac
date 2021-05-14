@@ -2,6 +2,7 @@ export const userTypes = {
   stateuser: 'State Submitter',
   stateadmin: 'State Admin',
   cmsapprover: 'CMS Role Approver',
+  helpdesk:'Helpdesk User',
   systemadmin: 'CMS System Admin'
 }
 
