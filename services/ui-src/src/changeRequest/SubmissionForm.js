@@ -250,7 +250,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     event.preventDefault();
 
     confirmAlert({
-      title: 'Confirm cancel submissions form',
+      title: 'Confirm Cancel',
       message: 'If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?',
       buttons: [
         {
