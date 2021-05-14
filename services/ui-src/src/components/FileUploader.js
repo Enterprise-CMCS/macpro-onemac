@@ -119,8 +119,7 @@ export default class FileUploader extends Component {
     // Make sure we only continue if the property has changed value to stop cascading calls.
     // If the showRequiredFieldErrors flag is true then show a missing required field error if needed.
     if (
-      this.props.showRequiredFieldErrors !==
-        prevProps.showRequiredFieldErrors &&
+      this.props.showRequiredFieldErrors &&
       this.state.errorMessages.length === 0
     ) {
       // Checks if all required uploaders have a file
