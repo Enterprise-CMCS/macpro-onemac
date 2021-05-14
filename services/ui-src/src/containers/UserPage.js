@@ -23,7 +23,7 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.STATE_USER]: "State Admin",
   [ROLES.STATE_ADMIN]: "CMS Role Approver",
   [ROLES.CMS_APPROVER]: "CMS System Admin",
-  [ROLES.HELPDESK_USER]: "CMS System Admin",
+  [ROLES.HELPDESK]: "CMS System Admin",
 };
 
 const ContactList = ({ contacts, userType }) => {
@@ -61,7 +61,7 @@ const transformAccesses = (user = {}) => {
       }));
     
     case ROLES.CMS_APPROVER:
-    case ROLES.HELPDESK_USER:
+    case ROLES.HELPDESK:
       return [{ status: latestAccessStatus(user) }];
 
     case ROLES.SYSTEM_ADMIN:
@@ -127,7 +127,7 @@ const UserPage = () => {
         heading = "State Access Management";
         break;
       case ROLES.CMS_APPROVER:
-      case ROLES.HELPDESK_USER:
+      case ROLES.HELPDESK:
         heading = "Status";
         break;
       default:
@@ -185,7 +185,7 @@ const UserPage = () => {
             contacts = await UserDataAPI.getCmsApprovers();
             break;
           }
-          case ROLES.HELPDESK_USER:
+          case ROLES.HELPDESK:
           case ROLES.CMS_APPROVER: {
             contacts = await UserDataAPI.getCmsSystemAdmins();
             break;
