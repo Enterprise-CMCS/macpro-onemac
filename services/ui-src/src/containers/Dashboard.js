@@ -2,15 +2,14 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
-import { AlertBar } from "../components/AlertBar";
+import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
 import {
@@ -29,9 +28,11 @@ const Dashboard = () => {
   const { userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
+    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
     if (!userData?.type || !userData?.attributes) {
       history.replace("/signup", location.state);
       return;
@@ -50,16 +51,14 @@ const Dashboard = () => {
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        history.replace("/dashboard", {
-          showAlert: ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
-        });
+        setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);   // ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
     })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData, userProfile]);
+  }, [ history, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -133,7 +132,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
-      <AlertBar />
+      <AlertBar alertCode={alertCode} />
       <div className="dashboard-container">
         {!!userProfile?.userData?.attributes &&
         isActive(userProfile?.userData) ? (

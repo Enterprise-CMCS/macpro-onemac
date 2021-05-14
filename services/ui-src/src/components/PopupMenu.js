@@ -53,7 +53,7 @@ export default function PopupMenu({selectedRow, menuItems, handleSelected }) {
                 {menuItems.map((item, i) => (
                     <React.Fragment key={item.value}>
                         {i !== 0  && <hr/>}
-                        <MenuItem className={classes.root} onClick={()=>confirmStatusChange(item)}>{item.label}</MenuItem>
+                        <MenuItem key={item.value} className={classes.root} onClick={()=>confirmStatusChange(item)}>{item.label}</MenuItem>
                     </React.Fragment>))}
                 </div>
 

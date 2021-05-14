@@ -1,9 +1,8 @@
 import { useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { ROLES, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROLES, ROUTES } from "cmscommonlib";
 
 import UserDataApi from "../utils/UserDataApi";
-import { ALERTS_MSG } from "./alert-messages";
 import { useAppContext } from "./contextLib";
 
 export function useFormFields(initialState) {
@@ -47,7 +46,7 @@ export function useSignupCallback(userType, processAttributes) {
           attributes: payload,
         });
         // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
-        if (answer && answer !== "UR000") throw answer;
+        if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED ) throw answer;
 
         await setUserInfo();
 
@@ -55,13 +54,13 @@ export function useSignupCallback(userType, processAttributes) {
           (userType === ROLES.STATE_USER||userType === ROLES.HELPDESK_USER)
             ? ROUTES.DASHBOARD
             : ROUTES.USER_MANAGEMENT;
-        messageState = { showAlert: ALERTS_MSG.SUBMISSION_SUCCESS };
+        messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };    //ALERTS_MSG.SUBMISSION_SUCCESS };
       } catch (error) {
         console.error("Could not create new user:", error);
         destination = { ...location, state: undefined };
         messageState = {
           ...location.state,
-          showAlert: ALERTS_MSG.SUBMISSION_ERROR,
+          passCode: error, // ALERTS_MSG.SUBMISSION_ERROR,
         };
         if(userType==="helpdesk"){
           destination.pathname="/";

@@ -1,65 +1,71 @@
-
 /**
  * Common Shares Libs for the CMS Submissions Application.
  * This will contain static items needed by both the frontend and backend.
  */
 
-
 /**
  * Codes to send to front end
  */
 export const RESPONSE_CODE = {
-    NONE: "",
-    SUCCESSFULLY_SUBMITTED: "SC000",
-    VALIDATION_ERROR: "VA000",
-    DATA_PARSING_ERROR: "VA001",
-    ATTACHMENT_ERROR: "AT000",
-    EMAIL_NOT_SENT: "EM000",
-    SYSTEM_ERROR: "SY000",
-    TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
-    DUPLICATE_ID: "ID002",
-    ID_NOT_FOUND: "ID000",
-    WAIVER_RENEWAL_NO_ID: "ID020",
-    WAIVER_NEED_ID_FOR_K: "ID031",
-    WAIVER_AMENDMENT_NO_ID: "ID022",
-    WAIVER_NEW_NOT_K: "ID023",
-    WAIVER_ACTION_UNKNOWN: "WA000",
-    USER_NOT_AUTHORIZED: "UR040",
-    USER_NOT_FOUND: "UR041",
-    USER_SUBMITTED: "UR000",
-    USER_SUBMISSION_FAILED: "UR001",
-    USER_TYPE_MISMATCH_ERROR: "UR002",
-    USER_FORMAT_MISMATCH: "UR042",
-    CALLING_USER_PENDING: "UR043",
-    CALLING_USER_REVOKED: "UR044",
-    CALLING_USER_DENIED: "UR045",
-
+  NONE: "",
+  SUCCESSFULLY_SUBMITTED: "SC000",
+  DATA_MISSING: "SC001",
+  ATTACHMENTS_MISSING: "SC002",
+  VALIDATION_ERROR: "VA000",
+  DATA_PARSING_ERROR: "VA001",
+  ATTACHMENT_ERROR: "AT000",
+  EMAIL_NOT_SENT: "EM000",
+  SYSTEM_ERROR: "SY000",
+  TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
+  DUPLICATE_ID: "ID002",
+  ID_NOT_FOUND: "ID000",
+  WAIVER_RENEWAL_NO_ID: "ID020",
+  WAIVER_NEED_ID_FOR_K: "ID031",
+  WAIVER_AMENDMENT_NO_ID: "ID022",
+  WAIVER_NEW_NOT_K: "ID023",
+  WAIVER_ACTION_UNKNOWN: "WA000",
+  USER_NOT_AUTHORIZED: "UR040",
+  USER_NOT_FOUND: "UR041",
+  USER_SUBMITTED: "UR000",
+  USER_SUBMISSION_FAILED: "UR001",
+  USER_TYPE_MISMATCH_ERROR: "UR002",
+  USER_FORMAT_MISMATCH: "UR042",
+  CALLING_USER_PENDING: "UR043",
+  CALLING_USER_REVOKED: "UR044",
+  CALLING_USER_DENIED: "UR045",
+  SUCCESS_USER_GRANTED: "UR046",
+  SUCCESS_USER_REVOKED: "UR047",
+  SUCCESS_USER_DENIED: "UR048",
+  DASHBOARD_RETRIEVAL_ERROR: "DB000",
 };
 
-export const USER_ADMIN_PERMISSION= {
-    STATE_USER: 'none',
-    STATE_ADMIN: 'stateuser',
-    CMS_APPROVER: 'stateadmin'
+export const USER_ADMIN_PERMISSION = {
+  STATE_USER: "none",
+  STATE_ADMIN: "stateuser",
+  CMS_APPROVER: "stateadmin",
 };
 
 /**
  * Possible user types
  */
 export const USER_TYPE = {
-    STATE_USER: 'stateuser',
-    STATE_ADMIN: 'stateadmin',
-    CMS_APPROVER: 'cmsapprover',
-    SYSTEM_ADMIN: 'systemadmin'
+  STATE_USER: "stateuser",
+  STATE_ADMIN: "stateadmin",
+  CMS_APPROVER: "cmsapprover",
+  SYSTEM_ADMIN: "systemadmin",
+  HELPDESK: "helpdesk",
 };
+
+export const ROLES = USER_TYPE;
 
 /**
  * Possible user status
  */
 export const USER_STATUS = {
-    PENDING: 'pending',
-    DENIED: 'denied',
-    REVOKED: 'revoked',
-    ACTIVE: 'active',
+  PENDING: "pending",
+  DENIED: "denied",
+  REVOKED: "revoked",
+  ACTIVE: "active",
 };
 
 /**
@@ -98,30 +104,16 @@ const ALL_USERS_ROUTES = [
   ROUTES.FAQ,
 ];
 
-const STATEUSER_ALLOWED_ROUTES = [
-  ROUTES.DASHBOARD,
-  ROUTES.SPA,
-  ROUTES.SPA_RAI,
-  ROUTES.CHIP_SPA,
-  ROUTES.CHIP_SPA_RAI,
-  ROUTES.WAIVER,
-  ROUTES.WAIVER_APP_K,
-  ROUTES.WAIVER_EXTENSION,
-  ROUTES.WAIVER_RAI,
-].concat(ALL_USERS_ROUTES);
+export class Role {
+  constructor() {
+    this.canAccessDashboard = false;
+    this.canAccessForms = false;
+    this.canAccessUserManagement = false;
+    this.canAccessMetrics = false;
+  }
 
-const STATEADMIN_ALLOWED_ROUTES = [
-  ROUTES.USER_MANAGEMENT,
-  ROUTES.METRICS,
-].concat(ALL_USERS_ROUTES);
-const CMSAPPROVER_ALLOWED_ROUTES = [
-  ROUTES.USER_MANAGEMENT,
-  ROUTES.METRICS,
-].concat(ALL_USERS_ROUTES);
-const SYSTEMADMIN_ALLOWED_ROUTES = [
-  ROUTES.USER_MANAGEMENT,
-  ROUTES.METRICS,
-].concat(ALL_USERS_ROUTES);
+  getAccesses() {
+    const accesses = [...ALL_USERS_ROUTES];
 
 export const ROLES = {
   STATE_USER: "stateuser",
@@ -130,22 +122,83 @@ export const ROLES = {
   HELPDESK_USER:"helpdesk",
   SYSTEM_ADMIN: "systemadmin",
 };
+    if (this.canAccessDashboard) accesses.push(ROUTES.DASHBOARD);
+    if (this.canAccessForms) {
+      accesses.push(
+        ROUTES.DASHBOARD,
+        ROUTES.SPA,
+        ROUTES.SPA_RAI,
+        ROUTES.CHIP_SPA,
+        ROUTES.CHIP_SPA_RAI,
+        ROUTES.WAIVER,
+        ROUTES.WAIVER_APP_K,
+        ROUTES.WAIVER_EXTENSION,
+        ROUTES.WAIVER_RAI
+      );
+    }
+    if (this.canAccessUserManagement) accesses.push(ROUTES.USER_MANAGEMENT);
+    if (this.canAccessMetrics) accesses.push(ROUTES.METRICS);
 
-export const ROLE_ACL = {
-  stateuser: STATEUSER_ALLOWED_ROUTES,
-  stateadmin: STATEADMIN_ALLOWED_ROUTES,
-  cmsapprover: CMSAPPROVER_ALLOWED_ROUTES,
-  systemadmin: SYSTEMADMIN_ALLOWED_ROUTES,
-};
+    return accesses;
+  }
+}
+
+class StateSubmitter extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+    this.canAccessForms = true;
+  }
+}
+
+class StateAdmin extends Role {
+  constructor() {
+    super();
+    this.canAccessUserManagement = true;
+    this.canAccessMetrics = true;
+  }
+}
+
+class CmsApprover extends Role {
+  constructor() {
+    super();
+    this.canAccessUserManagement = true;
+    this.canAccessMetrics = true;
+  }
+}
+
+class SystemAdmin extends Role {
+  constructor() {
+    super();
+    this.canAccessUserManagement = true;
+    this.canAccessMetrics = true;
+  }
+}
+
+class Helpdesk extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+    this.canAccessUserManagement = true;
+    this.canAccessMetrics = true;
+  }
+}
+
+export const getUserRoleObj = (role) =>
+  new ({
+    [USER_TYPE.STATE_USER]: StateSubmitter,
+    [USER_TYPE.STATE_ADMIN]: StateAdmin,
+    [USER_TYPE.CMS_APPROVER]: CmsApprover,
+    [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
+    [USER_TYPE.HELPDESK]: Helpdesk,
+  }[role] || Role)();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
 /**
  * Finds a user's most recent approval status. For state users and admins, it takes an optional state code to search for.
- * @param {Object} user - The user object to inspect.
- * @param {string} user.type - The user role in our system.
- * @param {Object[]} user.attributes - The user's access specifications.
- * @param {string} [state] - A two-letter territory code to search for (only for state users and admins).
+ * @param user - The user object to inspect.
+ * @param [state] - A two-letter territory code to search for (only for state users and admins).
  */
 export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
   switch (type) {
@@ -163,9 +216,10 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
       return attributes.sort(datesDescending)[0].status;
     }
 
-    default:
-      return null;
+    attributes = stateObj.history;
   }
+
+  return attributes.sort(datesDescending)[0].status;
 };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
