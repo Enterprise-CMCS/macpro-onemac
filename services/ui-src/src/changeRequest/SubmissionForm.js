@@ -10,7 +10,6 @@ import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
-import {confirmAlert} from "react-confirm-alert";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -248,24 +247,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    */
   async function handleCancel(event) {
     event.preventDefault();
-
-    confirmAlert({
-      title: 'Confirm Cancel',
-      message: 'If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?',
-      buttons: [
-        {
-          label: 'Yes',
-          onClick: () => {
-            history.goBack();
-          }
-
-        },
-        {
-          label: 'No',
-          onClick: () => {  }
-        }
-      ]
-    });
+    const cancel = window.confirm("If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?")
+    if (cancel === true) {
+      history.goBack();
+    }
   }
 
   /**
