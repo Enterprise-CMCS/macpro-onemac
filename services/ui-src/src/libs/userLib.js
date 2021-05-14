@@ -5,7 +5,7 @@ export const userTypes = {
   [USER_TYPE.STATE_ADMIN]: "State Admin",
   [USER_TYPE.CMS_APPROVER]: "CMS Role Approver",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
-  [USER_TYPE.HELPDESK]: "Help Desk User",
+  [USER_TYPE.HELPDESK]: "Helpdesk User",
 };
 
 export const pendingMessage = {
