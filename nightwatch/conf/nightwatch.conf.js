@@ -30,6 +30,8 @@ module.exports = {
             globals: {
                 user: `${process.env.TEST_USERS}`,
                 pass: `${process.env.TEST_USER_PASSWORD}`,
+                devuser: `stateuseractive@cms.hhs.local`,
+                devpass: `Passw0rd!`,
             },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],

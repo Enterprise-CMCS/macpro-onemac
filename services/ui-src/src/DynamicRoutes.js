@@ -1,6 +1,6 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { ROLES, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, getUserRoleObj } from "cmscommonlib";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
