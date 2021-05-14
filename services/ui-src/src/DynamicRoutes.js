@@ -45,7 +45,7 @@ export default function DynamicRoutes() {
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         )}
       </AuthenticatedRoute>
-      {userRoleObj.canAccessForms && (
+      {userRoleObj.canAccessDashboard && (
         <>
           <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
             <ChipSpa />

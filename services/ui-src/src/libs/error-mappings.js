@@ -21,6 +21,7 @@ export const getAlert = (errorCode) => {
       break;
     case "HU000":
       returnAlert = ALERTS_MSG.HELPDESK_SUBMISSION_SUCCESS;
+      break;
     // app-api/response-codes.js    SUCCESSFULLY_SUBMITTED: "SC000",
     case "SC000":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY;
