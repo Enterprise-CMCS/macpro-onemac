@@ -1,12 +1,19 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import Collapsible from 'react-collapsible';
 import TriggerCB from "../components/TriggerCB"
+
 const FAQ = () => {
+
+    const [contactBoxClassName, setContactBoxClassName] = useState("faq-info-box")
+    const [faqBoxClassName, setFaqBoxClassName] = useState("faq-left-column")
 
     const waiverIdRef= useRef(document.location.hash);
     const spaIdRef= useRef(document.location.hash);
+    const contactBoxRef = useRef(document.location.hash)
+    const faqWidthRef = useRef(document.location.hash)
+
 
     function scrollToSection() {
       switch (window.location.hash) {
@@ -23,15 +30,35 @@ const FAQ = () => {
       }
     }
 
-    useEffect( () => scrollToSection(), [] )
+
+
+    useEffect( () => {
+
+      function checkWidth() {
+        if (faqWidthRef.current.clientWidth > 1000) {
+          setContactBoxClassName("faq-info-box")
+          setFaqBoxClassName("faq-left-column")
+
+        } else {
+          setContactBoxClassName("faq-info-box-small")
+          setFaqBoxClassName("faq-left-column-small")
+
+        }
+      }
+
+      scrollToSection()
+
+      checkWidth();
+      window.addEventListener('resize', checkWidth)
+    }, [] )
 
 
     return (
     <div>
     <PageTitleBar heading="Frequently Asked Questions" text="" />
-    <div className="form-container" id="top">
+    <div ref={faqWidthRef} className="form-container" id="top">
       <div className="form-card">
-        <div className="faq-info-box">
+        <div ref={contactBoxRef} className={contactBoxClassName}>
           <hr className="faq-info-box-top-border"/>
           <p className="faq-info-box-title">MACPRO HELP DESK CONTACT INFO</p>
           <b>Phone Number</b>
@@ -42,7 +69,7 @@ const FAQ = () => {
           <b>Email</b><br/>
           <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">MACPro_HelpDesk@cms.hhs.gov</a>
         </div>
-        <div className="faq-left-column">
+        <div className={faqBoxClassName}>
         <h2>General</h2>
         <Collapsible triggerWhenOpen={<TriggerCB isOpen={false} text="What browsers can I use to access the system?"/>}
                      trigger={<TriggerCB isOpen={true} text="  What browsers can I use to access the system?"/>} >

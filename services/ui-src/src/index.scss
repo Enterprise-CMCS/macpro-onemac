@@ -1255,6 +1255,10 @@ dl.state-access-cards {
 .faq-left-column {
   width: calc(100% - 200px);
 }
+.faq-left-column-small {
+  width: calc(100%);
+}
+
 .faq-info-box {
   position: fixed;
   float: right;
@@ -1263,6 +1267,17 @@ dl.state-access-cards {
   padding: 10px;
   background: #FFFFFF;
   /* Text/Background/Gray - Lighter */
+  border: 1px solid #D6D7D9;
+  box-sizing: border-box;
+  border-radius: 3px;
+
+}
+
+.faq-info-box-small {
+padding: 10px;
+  width: 368px;
+  background: #FFFFFF;
+
   border: 1px solid #D6D7D9;
   box-sizing: border-box;
   border-radius: 3px;
