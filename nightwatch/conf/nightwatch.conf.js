@@ -26,10 +26,25 @@ module.exports = {
     test_settings: {
         default: {
             launch_url: `${process.env.APPLICATION_ENDPOINT}`,
+            //For val environment
+            launch_val_url: `${process.env.APPLICATION_ENDPOINT_VAL}`,
 
             globals: {
                 user: `${process.env.TEST_USERS}`,
                 pass: `${process.env.TEST_USER_PASSWORD}`,
+
+                //credentials for val environment 
+                //state user username and password
+                state_user: `${process.env.TEST_STATE_USERS}`,
+                state_user_pass: `${process.env.TEST_STATE_USER_PASSWORD}`,
+
+                //state admin user username and password
+                state_admin_user: `${process.env.TEST_STATE_ADMIN_USERS}`,
+                state_admin_user_pass: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+
+                //CMS approver user username and password
+                cms_approver_user: `${process.env.TEST_CMS_APPROVER_USERS}`,
+                cms_approver_pass: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
             },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
