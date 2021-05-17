@@ -111,17 +111,16 @@ export default class FileUploader extends Component {
     };
   }
 
+  componentDidUpdate(prevprops) {
+    if (this.props.showRequiredFieldErrors && !prevprops.showRequiredFieldErrors) {
+      this.filesUpdated();
+    }
+  }
+
   /**
-   * Track updates to the showRequiredFieldErrors property.
-   * @param {*} prevProps the previous property state
+   * Track updates to the file list and set flags and errors accordingly
    */
-  componentDidUpdate(prevProps) {
-    // Make sure we only continue if the property has changed value to stop cascading calls.
-    // If the showRequiredFieldErrors flag is true then show a missing required field error if needed.
-    if (
-      this.props.showRequiredFieldErrors &&
-      this.state.errorMessages.length === 0
-    ) {
+  filesUpdated() {
       // Checks if all required uploaders have a file
       let areAllComplete = true;
       this.state.uploaders.forEach((uploader) => {
@@ -130,10 +129,16 @@ export default class FileUploader extends Component {
         }
       });
 
-      if (!areAllComplete) {
-        this.setState({ errorMessages: [MISSING_REQUIRED_MESSAGE] });
+      this.allUploadsComplete = areAllComplete;
+      if (this.readyCallback) {
+        this.readyCallback(this.allUploadsComplete);
       }
-    }
+  
+      if (!areAllComplete && this.props.showRequiredFieldErrors) {
+        this.setState({ errorMessages: [MISSING_REQUIRED_MESSAGE] });
+      } else {
+        this.setState({ errorMessages: [] });
+      }
   }
 
   /**
@@ -170,7 +175,7 @@ export default class FileUploader extends Component {
     }
 
     // Set the overall completeness of the input, so the overall form knows the required files are selected.
-    let areAllComplete = true;
+   /* let areAllComplete = true;
     this.state.uploaders.forEach((uploader) => {
       if (uploader.isRequired && !uploader.hasFile) {
         areAllComplete = false;
@@ -181,13 +186,14 @@ export default class FileUploader extends Component {
     if (!areAllComplete && this.props.showRequiredFieldErrors) {
       errorMessages.push(MISSING_REQUIRED_MESSAGE);
     }
-
-    this.allUploadsComplete = areAllComplete;
+*/  
+    this.filesUpdated();
+/*    this.allUploadsComplete = areAllComplete;
     if (this.readyCallback) {
       this.readyCallback(this.allUploadsComplete);
     }
 
-    this.setState({ errorMessages: errorMessages });
+    this.setState({ errorMessages: errorMessages }); */
   }
 
   /**
@@ -195,7 +201,7 @@ export default class FileUploader extends Component {
    * @param {Object} uploader the uploader that the file is associated with
    * @param {Object} file the event that triggered this action
    */
-  handleRemoveFile(uploader, file) {
+  handleRemoveFile(uploader, file, index) {
     const fileIndex = uploader.files.indexOf(file);
     uploader.files.splice(fileIndex, 1);
 
@@ -204,6 +210,12 @@ export default class FileUploader extends Component {
     if (!uploader.files || uploader.files.length === 0) {
       uploader.hasFile = false;
     }
+
+    // remove the file list from the input so you can choose the same file again
+    var elmnt = document.getElementById("uploader-input-" + index);
+    if (elmnt) elmnt.value = null;
+
+    this.filesUpdated();
   }
 
   /**
@@ -284,7 +296,7 @@ export default class FileUploader extends Component {
                         type="button"
                         className="uploader-clear-button"
                         title="Remove file"
-                        onClick={() => this.handleRemoveFile(uploader, file)}
+                        onClick={() => this.handleRemoveFile(uploader, file, index)}
                       >
                         <FontAwesomeIcon icon={faTimes} size="2x" />
                       </button>
