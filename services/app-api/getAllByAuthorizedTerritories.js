@@ -1,3 +1,4 @@
+import { USER_TYPE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
@@ -20,30 +21,34 @@ export const main = handler(async (event, context) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
-  const territories = getAuthorizedStateList(user);
-
-  // query dynamodb for each territory in the territiories array
-  const promises = territories.map((territory) => {
-    const params = {
-      TableName: process.env.tableName,
-      IndexName: "territory-submittedAt-index",
-      KeyConditionExpression:
-        "territory = :v_territory and submittedAt > :v_submittedAt",
-      ExpressionAttributeValues: {
-        ":v_territory": territory,
-        ":v_submittedAt": 0,
-      },
-      ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
-    };
-
-    return dynamoDb.query(params);
-  });
+  let promises;
+  if (user.type === USER_TYPE.HELPDESK) {
+    promises = [dynamoDb.scan({ TableName: process.env.tableName })];
+  } else {
+    // query dynamodb for each territory in the territiories array
+    promises = getAuthorizedStateList(user).map((territory) =>
+      dynamoDb.query({
+        TableName: process.env.tableName,
+        IndexName: "territory-submittedAt-index",
+        KeyConditionExpression:
+          "territory = :v_territory and submittedAt > :v_submittedAt",
+        ExpressionAttributeValues: {
+          ":v_territory": territory,
+          ":v_submittedAt": 0,
+        },
+        ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
+      })
+    );
+  }
 
   // resolve promises from all queries
-  const results = await Promise.all(promises).catch((error) => {
-    console.log("Error querying DynamoDB: ", error);
+  let results;
+  try {
+    results = await Promise.all(promises);
+  } catch (error) {
+    console.error("Could not fetch results from Dynamo:", error);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
-  });
+  }
 
   // extracts items from each of the results
   let items = [];

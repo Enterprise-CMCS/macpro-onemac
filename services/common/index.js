@@ -115,13 +115,6 @@ export class Role {
   getAccesses() {
     const accesses = [...ALL_USERS_ROUTES];
 
-export const ROLES = {
-  STATE_USER: "stateuser",
-  STATE_ADMIN: "stateadmin",
-  CMS_APPROVER: "cmsapprover",
-  HELPDESK_USER:"helpdesk",
-  SYSTEM_ADMIN: "systemadmin",
-};
     if (this.canAccessDashboard) accesses.push(ROUTES.DASHBOARD);
     if (this.canAccessForms) {
       accesses.push(
@@ -211,7 +204,7 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
     }
 
     case ROLES.CMS_APPROVER:
-    case ROLES.HELPDESK_USER:
+    case ROLES.HELPDESK:
     case ROLES.SYSTEM_ADMIN: {
       return attributes.sort(datesDescending)[0].status;
     }

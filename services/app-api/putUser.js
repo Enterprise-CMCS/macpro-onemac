@@ -89,7 +89,7 @@ const validateInput = (input) => {
       USER_TYPE.STATE_USER,
       USER_TYPE.STATE_ADMIN,
       USER_TYPE.CMS_APPROVER,
-      USER_TYPE.HELPDESK_USER,
+      USER_TYPE.HELPDESK,
     ).required(),
   });
   //Todo: Add deeper validation for types //
@@ -422,7 +422,7 @@ const collectRoleAdminEmailIds = async (input) => {
         ? recipients.push(approver.id)
         : null;
     });
-  } else if (input.type === USER_TYPE.CMS_APPROVER||input.type === USER_TYPE.HELPDESK_USER) {
+  } else if (input.type === USER_TYPE.CMS_APPROVER||input.type === USER_TYPE.HELPDESK) {
     let systemadmins = [];
     // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
     if (process.env.systemAdminEmail) {
@@ -519,7 +519,7 @@ const constructRoleAdminEmails = (recipients, input) => {
     case USER_TYPE.CMS_APPROVER:
       typeText = "CMS Approver";
       break;
-    case USER_TYPE.HELPDESK_USER:
+    case USER_TYPE.HELPDESK:
       typeText = "Helpdesk User";
       email.HTML =
         `

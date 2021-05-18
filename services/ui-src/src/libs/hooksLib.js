@@ -51,7 +51,7 @@ export function useSignupCallback(userType, processAttributes) {
         await setUserInfo();
 
         destination =
-          (userType === ROLES.STATE_USER||userType === ROLES.HELPDESK_USER)
+          (userType === ROLES.STATE_USER||userType === ROLES.HELPDESK)
             ? ROUTES.DASHBOARD
             : ROUTES.USER_MANAGEMENT;
         messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };    //ALERTS_MSG.SUBMISSION_SUCCESS };
