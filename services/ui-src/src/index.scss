@@ -1253,14 +1253,23 @@ dl.state-access-cards {
 
 }
 .faq-left-column {
-  width: calc(100% - 400px);
+ @media only screen
+   and (min-width: 1200px) {
+    width: calc(100% - 300px);
+ }
+
 }
+
 .faq-info-box {
+
+@media only screen
+  and (min-width: 1200px) {
   position: fixed;
   float: right;
+  }
   width: 368px;
-  right: 230px;
-  padding: 10px;
+  right: 72px;
+  padding: 16px;
   background: #FFFFFF;
   /* Text/Background/Gray - Lighter */
   border: 1px solid #D6D7D9;
@@ -1286,8 +1295,8 @@ color: #5B616B;
 
 .faq-info-box-top-border {
 
-top: -32px;
-right: 10px;
+top: -35px;
+right: 16px;
 position: relative;
 width: 368px;
 height: 8px;
