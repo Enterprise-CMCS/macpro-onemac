@@ -122,11 +122,11 @@ function Header(props) {
               {isAuthenticated && (
                 <>
                   {userObj.canAccessDashboard && <Link id="dashboardLink" to={ROUTES.DASHBOARD}
-                    className={getActiveClass(currentRoute, RouteList.DASHBOARD)}>
+                    className={getActiveClass(currentRoute, ROUTES.DASHBOARD)}>
                     Dashboard
                   </Link>}
                   {userObj.canAccessUserManagement && <Link id="userManagementLink" to={ROUTES.USER_MANAGEMENT}
-                    className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}>
+                    className={getActiveClass(currentRoute, ROUTES.USER_MANAGEMENT)}>
                     User Management
                   </Link>}
                 </>
