@@ -128,64 +128,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     updatedRecord["territory"] = newTransmittalNumber
       .toString()
       .substring(0, 2);
-<<<<<<< HEAD
-
-    // validate that the ID is in correct format
-    let newMessage = {
-      statusLevel: "error",
-      statusMessage: "",
-    };
-
-    newMessage.statusMessage = validateTransmittalNumber(newTransmittalNumber);
-
-    // if the ID is valid, check if exists/not exist in data
-    if (newMessage.statusMessage === "") {
-      newMessage.statusLevel = transmittalNumberDetails.errorLevel;
-      try {
-        if (transmittalNumberDetails.existenceRegex !== undefined) {
-          newTransmittalNumber = newTransmittalNumber.match(transmittalNumberDetails.existenceRegex)[0];
-        }
-        const dupID = await ChangeRequestDataApi.packageExists(
-          newTransmittalNumber
-        );
-
-        if (!dupID && transmittalNumberDetails.idMustExist) {
-          if (transmittalNumberDetails.errorLevel === "error") {
-            newMessage.statusMessage =
-            "According to our records, this " +
-            transmittalNumberDetails.idLabel +
-            " does not exist. Please check the " +
-            transmittalNumberDetails.idLabel +
-            " and try entering it again.";
-          } else {
-            newMessage.statusMessage =
-            transmittalNumberDetails.idLabel +
-            " not found. You can still proceed with the submission, but please ensure you have the correct " +
-            transmittalNumberDetails.idLabel +
-            ". Contact the MACPro Help Desk (code: OMP002) if you need support.";
-          }
-        } else if (dupID && !transmittalNumberDetails.idMustExist) {
-          if (transmittalNumberDetails.errorLevel === "error") {
-            newMessage.statusMessage =
-              "According to our records, this " +
-              transmittalNumberDetails.idLabel +
-              " already exists. Please check the " +
-              transmittalNumberDetails.idLabel +
-              " and try entering it again.";
-          } else {
-            newMessage.statusMessage =
-              "Please ensure you have the correct " +
-              transmittalNumberDetails.idLabel +
-              " before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.";
-          }
-        }
-      } catch (error) {
-        console.log("There was an error submitting a request.", error);
-      }
-    }
-
-=======
->>>>>>> origin/develop
     setChangeRequest(updatedRecord);
   }
 
