@@ -18,11 +18,6 @@ const WaiverRai = () => {
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],
     optionalUploads: [
-      "1915(b)(4) waiver application",
-      "Cost effectiveness spreadsheets",
-      "Tribal Consultation",
-      "1915(c) Appendix K amendment waiver template",
-      "1915(b) waiver",
       "Other",
     ],
 

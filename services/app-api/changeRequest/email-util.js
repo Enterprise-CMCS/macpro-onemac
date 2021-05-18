@@ -27,3 +27,14 @@ export function getCMSDateFormat(theTimestamp) {
 
     return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
+
+/**
+ * takes a UTC timestamp, converts to CMS TimeZone, and formats it in the CMS email way
+ * @param {Number} theTimestamp the Unix timestamp to be used as the date
+ * @returns {String} CMS approved date format without the 90 day deadline set to 11:59.
+ */
+export function getCMSDateFormatNow(theTimestamp) {
+    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
+
+    return theDate.toFormat("DDDD '@' t ZZZZ");
+}

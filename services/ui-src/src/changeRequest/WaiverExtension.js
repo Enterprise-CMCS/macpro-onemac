@@ -19,7 +19,6 @@ const WaiverExtension = () => {
     detailsHeader : "Request Temporary Extension",
     requiredUploads : ["Waiver Extension Request"],
     optionalUploads : [
-        "Independent Assessment Reports",
         "Other"
     ],
 

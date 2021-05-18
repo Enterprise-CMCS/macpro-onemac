@@ -22,7 +22,7 @@ class StateAdmin {
    * @returns {String} null if ok to go, the response code if not
    */
    canIRequestThis(doneBy) {
-    let myCurrentStatus = getCurrentStatus(doneBy.attributes[0].history);
+    let myCurrentStatus = getCurrentStatus(doneBy.attributes[0].history).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
         return RESPONSE_CODE.CALLING_USER_PENDING;
@@ -90,7 +90,7 @@ class StateAdmin {
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
           stateCode: oneAttribute.stateCode,
-          status: getCurrentStatus(oneAttribute.history),
+          latest: getCurrentStatus(oneAttribute.history),
         });
         i++;
       });
