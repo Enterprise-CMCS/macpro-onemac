@@ -111,7 +111,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       ) {
         errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
       }
-      console.log("latest access status ",latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)));
 
       return errorMessage;
     },
@@ -247,75 +246,32 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    */
   async function handleSubmit(event) {
     event.preventDefault();
+    let mounted = true;
+    let newAlertCode = "NONE";
 
     // in case form validation takes a while (external validation)
-    setIsLoading(true);
-    setAlertCode("NONE"); //clear the alert
-
-    // validate the form fields and set the messages
-    // because this is an asynchronous function, you can't trust that the
-    let actionTypeMessage = "";
-    let waiverAuthorityMessage = "";
-    let newAlertCode = "NONE";
-    let mounted = true;
-    const uploadRef = uploader.current;
-    let newMessage = {
-      statusLevel: "error",
-      statusMessage: "",
-    };
-
-    newMessage.statusMessage = validateTransmittalNumber(
-      changeRequest.transmittalNumber
-    );
+    if (mounted) setIsLoading(true);
+    if (mounted) setAlertCode(newAlertCode); //clear the alert
+    if (mounted) setFirstTimeThrough(false);
 
     // its too soon for the firstTimeThrough to be set for validate function
-    if (!changeRequest.transmittalNumber) {
-      newMessage.statusMessage = "ID Required";
-    }
+  //  if (!changeRequest.transmittalNumber) {
+   //   newMessage.statusMessage = "ID Required";
+   // }
 
-    // if the ID is valid, check if exists/not exist in data
-    // warnings are allowed to submit
     if (
-      changeRequest.transmittalNumber &&
-      newMessage.statusMessage === "" &&
-      transmittalNumberDetails.errorLevel === "error"
-    ) {
-      try {
-        const dupID = await ChangeRequestDataApi.packageExists(
-          changeRequest.transmittalNumber
-        );
-        if (!dupID && transmittalNumberDetails.idMustExist) {
-          newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-          newAlertCode = RESPONSE_CODE.ID_NOT_FOUND; // ALERTS_MSG.SUBMISSION_ID_NOT_FOUND;
-        } else if (dupID && !transmittalNumberDetails.idMustExist) {
-          newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-          newAlertCode = RESPONSE_CODE.DUPLICATE_ID; // ALERTS_MSG.SUBMISSION_DUPLICATE_ID;
-        }
-      } catch (err) {
-        console.log("There was an error submitting a request.", err);
-      }
-    }
+      ( transmittalNumberStatusMessage.statusLevel === "error" &&
+      transmittalNumberStatusMessage.statusMessage )  ||
+      actionTypeErrorMessage ||
+      waiverAuthorityErrorMessage
+    ) 
+      newAlertCode = RESPONSE_CODE.DATA_MISSING;
 
-    if (formInfo.actionType && !changeRequest.actionType) {
-      actionTypeMessage = formInfo.actionType.errorMessage;
-    }
-
-    if (formInfo.waiverAuthority && !changeRequest.waiverAuthority) {
-      waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-    }
-
-    // check which alert to show.  Fields first, than attachments
-    // if all passes, submit the form and return to dashboard
-    if (
-      newMessage.statusMessage ||
-      actionTypeMessage ||
-      waiverAuthorityMessage
-    ) {
-      if (newAlertCode === "NONE") newAlertCode = RESPONSE_CODE.DATA_MISSING;
-    } else if (!areUploadsReady) {
+    else if (!areUploadsReady) {
       newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
       try {
+        const uploadRef = uploader.current;
         const uploadedList = await uploadRef.uploadFiles();
         try {
           const returnCode = await ChangeRequestDataApi.submit(
@@ -344,11 +300,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     // now set the state variables to show the error messages
-    if (mounted) setTransmittalNumberStatusMessage(newMessage);
-    if (mounted) setActionTypeErrorMessage(actionTypeMessage);
-    if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+  //  if (mounted) setTransmittalNumberStatusMessage(newMessage);
+  //  if (mounted) setActionTypeErrorMessage(actionTypeMessage);
+  //  if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlertCode(newAlertCode);
-    if (mounted) setFirstTimeThrough(false);
     if (mounted) setIsLoading(false);
   }
 
@@ -379,7 +334,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               <RequiredChoice
                 fieldInfo={formInfo.actionType}
                 label="Action Type"
-                errorMessage={actionTypeErrorMessage}
+                errorMessage={!firstTimeThrough ? actionTypeErrorMessage : ""}
                 value={changeRequest.actionType}
                 onChange={handleActionTypeChange}
               />
@@ -388,7 +343,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               <RequiredChoice
                 fieldInfo={formInfo.waiverAuthority}
                 label="Waiver Authority"
-                errorMessage={waiverAuthorityErrorMessage}
+                errorMessage={!firstTimeThrough ? waiverAuthorityErrorMessage : ""}
                 value={changeRequest.waiverAuthority}
                 onChange={handleInputChange}
               />

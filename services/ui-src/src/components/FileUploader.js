@@ -174,26 +174,7 @@ export default class FileUploader extends Component {
       uploader.files = filesToUpload;
     }
 
-    // Set the overall completeness of the input, so the overall form knows the required files are selected.
-   /* let areAllComplete = true;
-    this.state.uploaders.forEach((uploader) => {
-      if (uploader.isRequired && !uploader.hasFile) {
-        areAllComplete = false;
-      }
-    });
-
-    // Clear any error messages if everything is ready.
-    if (!areAllComplete && this.props.showRequiredFieldErrors) {
-      errorMessages.push(MISSING_REQUIRED_MESSAGE);
-    }
-*/  
     this.filesUpdated();
-/*    this.allUploadsComplete = areAllComplete;
-    if (this.readyCallback) {
-      this.readyCallback(this.allUploadsComplete);
-    }
-
-    this.setState({ errorMessages: errorMessages }); */
   }
 
   /**
@@ -203,8 +184,13 @@ export default class FileUploader extends Component {
    */
   handleRemoveFile(uploader, file, index) {
     const fileIndex = uploader.files.indexOf(file);
+    console.log("uploader.files 1", uploader.files);
     uploader.files.splice(fileIndex, 1);
 
+    console.log("fileIndex",fileIndex);
+    console.log("uploader.files 2", uploader.files);
+
+    console.log("uploaders: ", this.state.uploaders);
     this.setState({ uploaders: this.state.uploaders });
 
     if (!uploader.files || uploader.files.length === 0) {
