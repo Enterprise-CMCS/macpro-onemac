@@ -19,8 +19,8 @@ module.exports = {
   "Login to SPA and Waiver Dashboard": function (
     browser,
     testData = {
-      username: browser.globals.user,
-      password: browser.globals.pass,
+      username: browser.globals.devuser,
+      password: browser.globals.devpass,
       spaPageTitle: "SPA and Waiver Dashboard",
     }
   ) {

@@ -1,13 +1,13 @@
-import React, { useState, useEffect, useCallback } from "react";
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import React, { useCallback, useEffect, useMemo, useState } from "react";
+import { useLocation, useHistory } from "react-router-dom";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+
+import PageTitleBar from "../components/PageTitleBar";
+import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES } from "cmscommonlib";
-import { useLocation, useHistory } from "react-router-dom";
-import UserDataApi, {getAdminTypeByRole} from "../utils/UserDataApi";
-import { getAlert } from "../libs/error-mappings";
-import { Alert } from "@cmsgov/design-system";
+import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
+import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
@@ -29,36 +29,35 @@ const PENDING_CIRCLE_IMAGE = (
  * User Management "Dashboard"
  */
 const UserManagement = () => {
-  const [userList, setUserList] = useState();
+  const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [alert, setAlert] = useState();
   const { userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
+  const [doneToName, setDoneToName] = useState("");
 
-  const updateList = useCallback((mounted) => {
-    let shouldState = (userProfile.userData.type !== "cmsapprover");
-
-    setIncludeStateCode(shouldState)
+  const updateList = useCallback(() => {
+    setIncludeStateCode(userProfile.userData.type === "cmsapprover");
     UserDataApi.getMyUserList(userProfile.email)
-        .then((ul) => {
-          console.log("user List: ", ul);
-          if (typeof ul === 'string') {
-            if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
-            ul = [];
-          }
-          setUserList(ul);
-        })
-        .catch((error) => {
-          console.log("Error while fetching user's list.", error);
-          setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
-        });
-  },[userProfile]);
+      .then((ul) => {
+        if (typeof ul === "string") {
+          if (!isPending(userProfile.userData)) setAlertCode(ul);
+          ul = [];
+        }
+        setUserList(ul);
+      })
+      .catch((error) => {
+        console.log("Error while fetching user's list.", error);
+        setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
+      });
+  }, [userProfile.email, userProfile.userData]);
 
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
+    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
     if (
       !userProfile ||
       !userProfile.userData ||
@@ -69,21 +68,12 @@ const UserManagement = () => {
       history.push(ROUTES.DASHBOARD);
     }
 
-    let newAlert = ALERTS_MSG.NONE;
-    if (location.state) newAlert = location.state.showAlert;
-    if (mounted) setAlert(newAlert);
-
-    updateList(mounted)
+    if (mounted) updateList();
 
     return function cleanup() {
       mounted = false;
     };
   }, [location, userProfile, history, updateList]);
-
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
 
   useEffect(() => {
     let newIsLoading = true;
@@ -97,168 +87,227 @@ const UserManagement = () => {
     };
   }, [userList]);
 
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
+  const getName = useCallback(
+    ({ firstName, lastName }) =>
+      [firstName, lastName].filter(Boolean).join(" "),
+    []
+  );
+
+  const renderStatus = useCallback(({ value }) => {
+    let content = value;
+    switch (value) {
+      case "pending":
+        content = <>{PENDING_CIRCLE_IMAGE} Pending</>;
+        break;
+      case "active":
+        content = "Granted";
+        break;
+      case "denied":
+        content = "Denied";
+        break;
+      case "revoked":
+        content = "Revoked";
+        break;
+      // no default
     }
-  }, [alert]);
 
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
+    return <span className="user-status">{content}</span>;
+  }, []);
+
+  const renderEmail = useCallback(
+    ({ value }) => (
+      <a className="user-email" href={`mailto:${value}`}>
+        {value}
+      </a>
+    ),
+    []
+  );
+
+  const sortStatus = useCallback((rowA, rowB, columnId, desc) => {
+    let orig;
+    switch (rowA.values.status) {
+      case "pending":
+        orig = -1;
+        break;
+      case "active":
+        orig = rowB.values.status === "pending" ? 1 : -1;
+        break;
+      case "denied":
+        orig = rowB.values.status === "revoked" ? -1 : 1;
+        break;
+      case "revoked":
+        orig = 1;
+        break;
+      default:
+        orig = 1;
+        break;
     }
-  };
 
-  /**
-   * Render the list of users
-   * @param {Array} userList
-   * @returns the table JSX
-   */
-  function renderUserList(users) {
-    //Now generate the list
-    return users.map((user, i) => {
-      let menuItems = [];
-      let statusLabel;
-      switch (user.status) {
-        case "pending":
-          statusLabel = <>{PENDING_CIRCLE_IMAGE} Pending</>;
-          menuItems = [
-            {
-              label: "Grant Access",
-              value: "active",
-              confirmMessage: grantConfirmMessage[userProfile.userData.type],
-            },
-            {
-              label: "Deny Access",
-              value: "denied",
-              confirmMessage: denyConfirmMessage[userProfile.userData.type],
-            },
-          ];
-          break;
-        case "granted":
-        case "active":
-          statusLabel = "Granted";
-          menuItems = [
-            {
-              label: "Revoke Access",
-              value: "revoked",
-              confirmMessage: revokeConfirmMessage[userProfile.userData.type],
-            },
-          ];
-          break;
-        case "denied":
-          statusLabel = "Denied";
-          menuItems = [
-            {
-              label: "Grant Access",
-              value: "active",
-              confirmMessage: grantConfirmMessage[userProfile.userData.type],
-            },
-          ];
-          break;
-        case "revoked":
-          statusLabel = "Revoked";
-          menuItems = [
-            {
-              label: "Grant Access",
-              value: "active",
-              confirmMessage: grantConfirmMessage[userProfile.userData.type],
-            },
-          ];
-          break;
-        default:
-          break;
-      }
+    return orig;
+  }, []);
+
+  const renderActions = useCallback(
+    ({ row }) => {
+      const grant = {
+          label: "Grant Access",
+          value: "active",
+          confirmMessage: grantConfirmMessage[userProfile.userData.type],
+        },
+        deny = {
+          label: "Deny Access",
+          value: "denied",
+          confirmMessage: denyConfirmMessage[userProfile.userData.type],
+        },
+        revoke = {
+          label: "Revoke Access",
+          value: "revoked",
+          confirmMessage: revokeConfirmMessage[userProfile.userData.type],
+        };
+
+      const menuItems =
+        {
+          pending: [grant, deny],
+          active: [revoke],
+          denied: [grant],
+          revoked: [grant],
+        }[row.values.status] ?? [];
+
+        const alertCodes = 
+        {
+          active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+          denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+          revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
+        };
 
       return (
-        <tr key={i}>
-          <td>
-            {user.firstName} {user.lastName}
-          </td>
-          <td>{user.email}</td>
-          {includeStateCode && <td className="user-state">{user.stateCode}</td>}
-          <td className="user-status">{statusLabel}</td>
-          <td className="actions">
-            <PopupMenu
-              selectedRow={i}
-              userEmail={user.email}
-              menuItems={menuItems}
-              handleSelected={(row, value) => {
-                const updateStatusRequest = {
-                  "userEmail": userList[row].email,
-                  "doneBy": userProfile.userData.id,
-                  "attributes": [{
-                    "stateCode": userList[row].stateCode,  // required for state user and state admin
-                    "status": value
-                  }],
-                  "type": getAdminTypeByRole(userProfile.userData.type)
+        <PopupMenu
+          selectedRow={row.id}
+          userEmail={row.values.email}
+          menuItems={menuItems}
+          handleSelected={(rowNum, value) => {
+            let newAlertCode = alertCodes[value];
+            let newPersonalized = "Chester Tester";
+
+            const updateStatusRequest = {
+              userEmail: userList[rowNum].email,
+              doneBy: userProfile.userData.id,
+              attributes: [
+                {
+                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
+                  status: value,
+                },
+              ],
+              type: getAdminTypeByRole(userProfile.userData.type),
+            };
+              UserDataApi.setUserStatus(updateStatusRequest).then(function (
+                returnCode
+              ) {
+                // alert already set per status change, only check for success here
+                if (returnCode === "UR000") {
+                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
+                } else {
+                  newAlertCode = returnCode;
                 }
-                try {
-                  UserDataApi.setUserStatus(updateStatusRequest).then(function (returnCode) {
-                    setAlert(getAlert(returnCode))
-                    updateList(true);
-                  })
-                } catch (err) {
-                  setAlert(ALERTS_MSG.SUBMISSION_ERROR)
-                }
-              }}
-            />
-          </td>
-        </tr>
+                updateList();
+              }).then( () => {setAlertCode(newAlertCode);setDoneToName(newPersonalized);} )
+              .catch((error) => {
+                console.log("Error while fetching user's list.", error);
+                setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
+              });
+        
+                      }}
+        />
       );
-    });
-  }
+    },
+    [ updateList, userList, userProfile]
+  );
+
+  const columns = useMemo(
+    () =>
+      [
+        {
+          Header: "Name",
+          accessor: getName,
+          defaultCanSort: true,
+          id: "name",
+        },
+        {
+          Header: "Email",
+          accessor: "email",
+          Cell: renderEmail,
+        },
+        includeStateCode
+          ? {
+              Header: "State",
+              accessor: "stateCode",
+              defaultCanSort: true,
+              id: "state",
+            }
+          : null,
+        {
+          accessor: "latest.date",
+          defaultCanSort: true,
+          id: "date",
+        },
+        {
+          Header: "Status",
+          accessor: "latest.status",
+          id: "status",
+          sortType: sortStatus,
+          Cell: renderStatus,
+        },
+        {
+          Header: "Personnel Actions",
+          disableSortBy: true,
+          Cell: renderActions,
+          id: "personnelActions",
+        },
+      ].filter(Boolean),
+    [
+      getName,
+      includeStateCode,
+      renderEmail,
+      renderStatus,
+      sortStatus,
+      renderActions,
+    ]
+  );
+
+  const initialTableState = useMemo(
+    () => ({
+      hiddenColumns: ["date"],
+      sortBy: [{ id: "status" }, { id: "date" }],
+    }),
+    []
+  );
 
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar heading="User Management" text="" />
-      {renderAlert(alert)}
+      <AlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&
         userProfile.userData.attributes &&
         userProfile.userData.attributes.length !== 0 &&
-        !isActive(userProfile.userData) ? 
-          (isPending(userProfile.userData) ?
+        !isActive(userProfile.userData) ? (
+          isPending(userProfile.userData) ? (
             <EmptyList message={pendingMessage[userProfile.userData.type]} />
-            :
-            <EmptyList message={deniedOrRevokedMessage[userProfile.userData.type]} />
+          ) : (
+            <EmptyList
+              message={deniedOrRevokedMessage[userProfile.userData.type]}
+            />
           )
-         : (
+        ) : (
           <LoadingScreen isLoading={isLoading}>
             {userList && userList.length !== 0 && userList !== "UR040" ? (
-              <table className="user-table">
-                <thead>
-                  <tr>
-                    <th scope="col" width="20%" id="nameColHeader">
-                      Name
-                    </th>
-                    <th scope="col" width="30%" id="emailColHeader">
-                      Email
-                    </th>
-                    {includeStateCode && (
-                      <th scope="col" width="20%" id="stateColHeader">
-                        State
-                      </th>
-                    )}
-                    <th scope="col" width="15%" id="statusColHeader">
-                      Status
-                    </th>
-                    <th scope="col" width="15%" id="personnelActionsColHeader">
-                      Personnel Actions
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>{renderUserList(userList)}</tbody>
-              </table>
+              <PortalTable
+                className="user-table"
+                columns={columns}
+                data={userList}
+                initialState={initialTableState}
+              />
             ) : (
               <EmptyList message="You have no Users to manage at this time." />
             )}

@@ -261,7 +261,6 @@ export default class FileUploader extends Component {
                 accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
                 multiple={uploader.allowMultiple}
                 disabled={isDisabled}
-
                 style={{
                   width: "0.1px",
                   height: "0.1px",
@@ -312,10 +311,14 @@ export default class FileUploader extends Component {
         <p className="req-message">
           Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
         </p>
+        {this.props.requiredUploads?.length > 0 ?
         <p className="req-message">
           <span className="required-mark">*</span> indicates required
           attachment.
         </p>
+        : <p className="req-message">
+          <span className="required-mark">*</span> At least one attachment is required.
+      </p>}
         <div className="ds-u-color--error">
           {this.state.errorMessages.map((message, index) => (
             <div key={index}>{message}</div>
