@@ -4,7 +4,12 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { latestAccessStatus, RESPONSE_CODE, ROUTES, USER_STATUS } from "cmscommonlib";
+import {
+  latestAccessStatus,
+  RESPONSE_CODE,
+  ROUTES,
+  USER_STATUS,
+} from "cmscommonlib";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
@@ -208,6 +213,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           transmittalNumberDetails.existenceRegex
         )[0];
       }
+
       ChangeRequestDataApi.packageExists(checkingNumber)
         .then((dupID) => {
           if (!dupID && transmittalNumberDetails.idMustExist) {
@@ -223,15 +229,17 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
             }
           }
+          setTransmittalNumberStatusMessage(newMessage);
         })
         .catch((error) => {
           console.log("There was an error submitting a request.", error);
         });
+    } else {
+      setTransmittalNumberStatusMessage(newMessage);
     }
 
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setActionTypeErrorMessage(actionTypeMessage);
-    setTransmittalNumberStatusMessage(newMessage);
   }, [
     changeRequest,
     firstTimeThrough,
@@ -251,22 +259,15 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // in case form validation takes a while (external validation)
     if (mounted) setIsLoading(true);
-    if (mounted) setAlertCode(newAlertCode); //clear the alert
     if (mounted) setFirstTimeThrough(false);
 
-    // its too soon for the firstTimeThrough to be set for validate function
-  //  if (!changeRequest.transmittalNumber) {
-   //   newMessage.statusMessage = "ID Required";
-   // }
-
     if (
-      ( transmittalNumberStatusMessage.statusLevel === "error" &&
-      transmittalNumberStatusMessage.statusMessage )  ||
+      (transmittalNumberStatusMessage.statusLevel === "error" &&
+        transmittalNumberStatusMessage.statusMessage) ||
       actionTypeErrorMessage ||
       waiverAuthorityErrorMessage
-    ) 
+    )
       newAlertCode = RESPONSE_CODE.DATA_MISSING;
-
     else if (!areUploadsReady) {
       newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
@@ -299,12 +300,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       }
     }
 
-    // now set the state variables to show the error messages
-  //  if (mounted) setTransmittalNumberStatusMessage(newMessage);
-  //  if (mounted) setActionTypeErrorMessage(actionTypeMessage);
-  //  if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlertCode(newAlertCode);
     if (mounted) setIsLoading(false);
+
+    // if the same alert persists, AlertBar doesn't know to assert itself
+    var elmnt = document.getElementById("alert-bar");
+    if (elmnt) elmnt.scrollIntoView({ behavior: "smooth" });
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -343,7 +344,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               <RequiredChoice
                 fieldInfo={formInfo.waiverAuthority}
                 label="Waiver Authority"
-                errorMessage={!firstTimeThrough ? waiverAuthorityErrorMessage : ""}
+                errorMessage={
+                  !firstTimeThrough ? waiverAuthorityErrorMessage : ""
+                }
                 value={changeRequest.waiverAuthority}
                 onChange={handleInputChange}
               />

@@ -181,6 +181,9 @@ export default class FileUploader extends Component {
       uploader.files = filesToUpload;
     }
 
+    // remove the file list from the input so you can choose the same file again
+    event.target.value = null;
+
     this.filesUpdated();
   }
 
@@ -189,24 +192,15 @@ export default class FileUploader extends Component {
    * @param {Object} uploader the uploader that the file is associated with
    * @param {Object} file the event that triggered this action
    */
-  handleRemoveFile(uploader, file, index) {
+  handleRemoveFile(uploader, file ) {
     const fileIndex = uploader.files.indexOf(file);
-    console.log("uploader.files 1", uploader.files);
     uploader.files.splice(fileIndex, 1);
 
-    console.log("fileIndex",fileIndex);
-    console.log("uploader.files 2", uploader.files);
-
-    console.log("uploaders: ", this.state.uploaders);
     this.setState({ uploaders: this.state.uploaders });
 
     if (!uploader.files || uploader.files.length === 0) {
       uploader.hasFile = false;
     }
-
-    // remove the file list from the input so you can choose the same file again
-    var elmnt = document.getElementById("uploader-input-" + index);
-    if (elmnt) elmnt.value = null;
 
     this.filesUpdated();
   }
@@ -289,7 +283,7 @@ export default class FileUploader extends Component {
                         type="button"
                         className="uploader-clear-button"
                         title="Remove file"
-                        onClick={() => this.handleRemoveFile(uploader, file, index)}
+                        onClick={() => this.handleRemoveFile(uploader, file)}
                       >
                         <FontAwesomeIcon icon={faTimes} size="2x" />
                       </button>
