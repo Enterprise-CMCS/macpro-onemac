@@ -123,13 +123,20 @@ export default class FileUploader extends Component {
   filesUpdated() {
       // Checks if all required uploaders have a file
       let areAllComplete = true;
+      let hasAtLeastOne = false;
+
       this.state.uploaders.forEach((uploader) => {
+        if (uploader.hasFile) hasAtLeastOne=true;
         if (uploader.isRequired && !uploader.hasFile) {
           areAllComplete = false;
         }
       });
 
+      if (this.props.requiredUploads.length === 0) {
+        areAllComplete = hasAtLeastOne;        
+      }
       this.allUploadsComplete = areAllComplete;
+      
       if (this.readyCallback) {
         this.readyCallback(this.allUploadsComplete);
       }
