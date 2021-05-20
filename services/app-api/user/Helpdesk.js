@@ -1,8 +1,5 @@
 import { USER_TYPES } from "./userTypes";
 import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "../libs/response-codes";
-import { USER_STATUS } from "./userStatus";
-import { el } from "date-fns/locale";
 
 /**
  * Helpdesk User specific functions.
@@ -65,7 +62,6 @@ class Helpdesk {
         return;
       }
       if (oneUser.type !== 'cmsapprover' && oneUser.type !== 'helpdesk'){
-        console.log('current type 1:',oneUser.type);
         oneUser.attributes.forEach((oneAttribute) => {
           // State Admins and State Users must have the history section
           if (!oneAttribute.history) {
@@ -81,7 +77,8 @@ class Helpdesk {
             email: oneUser.id,
             firstName: oneUser.firstName,
             lastName: oneUser.lastName,
-            stateCode: 'N/A',
+            stateCode: oneAttribute.stateCode,
+            role: oneUser.type,
             latest: getCurrentStatus(oneAttribute.history),
           });
           i++;
@@ -95,6 +92,7 @@ class Helpdesk {
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
           stateCode: 'N/A',
+          role: oneUser.type,
           latest: getCurrentStatus(oneUser.attributes),
         });
         i++;

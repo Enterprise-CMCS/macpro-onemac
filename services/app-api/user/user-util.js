@@ -15,7 +15,7 @@ import { USER_TYPES } from "./userTypes";
 
 export const getUserFunctions = (doneBy) => {
   let retval = {};
-  
+
   // what users they see depends on what role they are
   switch (doneBy.type) {
     case USER_TYPES.STATE_USER:
