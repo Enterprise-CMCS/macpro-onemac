@@ -33,7 +33,7 @@ export const main = handler(async (event, context) => {
   if (uFunctions.shouldICheckState()) {
     stateList = getAuthorizedStateList(doneBy);
   }
-  
+
   let scanParams = {
     TableName: process.env.userTableName,
     FilterExpression: (doneBy.type !== 'helpdesk') ? "#ty = :userType" : "#ty <> :userType",
