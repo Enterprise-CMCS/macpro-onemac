@@ -3,12 +3,11 @@ const timeout = 1000;
 module.exports = {
   before: function (browser) {
     console.log("Setting up...");
-    console.log("url is: ", browser.launch_url);
+    console.log("url is: ", process.env.APPLICATION_ENDPOINT);
    // let myArgs = process.argv.slice
     spa = browser.page.spaBasePage();
-    browser
-      .maximizeWindow()
-     // .url(browser.launch_url)
+    browser.maximizeWindow();
+    browser.url(process.env.APPLICATION_ENDPOINT)
       .waitForElementPresent("body");
   },
 
@@ -20,12 +19,17 @@ module.exports = {
   "Login to SPA and Waiver Dashboard": function (
     browser,
     testData = {
-      username: browser.globals.user,
-      password: browser.globals.pass,
-      spaPageTitle: "SPA and Waiver Dashboard",
+      // username: process.env.TEST_USERS,
+      // password: process.env.TEST_USER_PASSWORD,
+      username: process.env.TEST_STATE_USERS,
+      password: process.env.TEST_STATE_USER_PASSWORD,
+     
     }
   ) {
+    testData.spaPageTitle= "SPA and Waiver Dashboard",
     spa = browser.page.spaBasePage();
+    //click on button
+    browser.useCss().click("#loginBtn");
     console.log("Login as: ", testData.username);
     spa.devLogin(testData);
     spa.verify.visible("@titleBar");
@@ -36,8 +40,12 @@ module.exports = {
   "Login to SPA and Waiver Dashboard via Okta": function (
     browser,
     testData = {
-      username: browser.globals.user,
-      password: browser.globals.pass,
+      //username: browser.globals.user,
+      //password: browser.globals.pass,
+      // username: process.env.TEST_USERS,
+      // password: process.env.TEST_USER_PASSWORD,
+      username: process.env.TEST_STATE_USERS,
+      password: process.env.TEST_STATE_USER_PASSWORD,
       spaPageTitle: "SPA and Waiver Dashboard",
     }
   ) {

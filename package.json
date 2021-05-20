@@ -8,7 +8,7 @@
   },
   "private": "true",
   "scripts": {
-    "test": "node nightwatch -c ./nightwatch/conf/nightwatch.conf.js",
+    "test": "node nightwatch.js",
     "chrome": "npm test -- -e chrome",
     "chromeHeadless": "npm test -- -e chromeHeadless",
     "cross-browser": "npm test -- -e chrome,firefox",

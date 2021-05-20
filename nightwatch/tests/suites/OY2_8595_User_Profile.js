@@ -4,19 +4,20 @@ module.exports = {
     "@tags": ["profile", "smoke", "regression-soon"],
 
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        console.log("VAL SITE URL CHECK: " + browser.launch_val_url);
-        browser.windowMaximize().url(browser.launch_val_url);
-        browser.waitForElementPresent('body');
-        login["Login to Medicaid as State User in val environment"](browser);
+        const testData = {
+            username: process.env.TEST_STATE_USERS,
+            password: process.env.TEST_STATE_USER_PASSWORD,
+          }
+          login.before(browser);
+          //click on button
+          //browser.useCss().click("#loginBtn");
+        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
     },
 
     after: function (browser) {
         login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
+        console.info("Stopping test executions...")
+        console.info('Closing down the browser instance...');
         browser.end();
     },
 
