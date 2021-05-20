@@ -8,7 +8,7 @@ import getUser from "./utils/getUser";
 export const main = handler(async (event, context) => {
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
+    console.log()("Warmed up!");
     return null;
   }
 
@@ -33,14 +33,49 @@ export const main = handler(async (event, context) => {
   if (uFunctions.shouldICheckState()) {
     stateList = getAuthorizedStateList(doneBy);
   }
-  const scanParams = {
+  
+  let scanParams = {
     TableName: process.env.userTableName,
     FilterExpression: (doneBy.type !== 'helpdesk') ? "#ty = :userType" : "#ty <> :userType",
     ExpressionAttributeNames: { "#ty": "type" },
     ExpressionAttributeValues: (doneBy.type !== 'helpdesk') ? { ":userType": scanFor } : { ":userType": "systemadmin" },
   };
-  
-  const userResult = await dynamoDb.scan(scanParams);
 
-  return uFunctions.transformUserList(userResult, stateList);
+  const userResult = await dynamoDb.scan(scanParams);
+  const transformedUserList = uFunctions.transformUserList(userResult, stateList);
+  // Collect the unique doneBy user's email ids
+  const doneByEmails = [...new Set(transformedUserList.map(user => user.latest.doneBy))];
+  let filterAttributeNames = '';
+  const filterAttribValues = {};
+  // Generate filter expression attribute names and values for retreving the doneBy user names
+  doneByEmails.map((email, i) => {
+    filterAttributeNames += `:email${i}${i < doneByEmails.length - 1 ? ',' : ''}`;
+    filterAttribValues[`:email${i}`] = email;
+  });
+
+  scanParams = {
+    TableName: process.env.userTableName,
+    ProjectionExpression: 'id, firstName, lastName',
+    FilterExpression: `id IN (${filterAttributeNames})`,
+    ExpressionAttributeValues: filterAttribValues
+  };
+  let userNames;
+  try {
+    userNames = await dynamoDb.scan(scanParams);
+  } catch (dbError) {
+    console.log(`Error happened while reading from DB:  ${dbError}`);
+    throw dbError;
+  }
+  // Populate doneBy Name
+  const result = transformedUserList.map(user => {
+     const doneBy = userNames.Items.find(item => item.id === user.latest.doneBy);
+     if (!doneBy){
+       console.log(`User id: ${user.email} has the doneBy id as ${user.latest.doneBy}, which does not have a user record of it's own in the DB`);
+       user.latest.doneByName = '';
+       return user;
+     }
+     user.latest.doneByName = `${doneBy.firstName} ${doneBy.lastName}`;
+     return user;
+  });
+  return result;
 });
