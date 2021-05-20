@@ -25,7 +25,6 @@ th {
 }
 body {
   @extend .ds-base;
-  background-color: $color-gray-lightest;
 }
 
 h1 {
@@ -262,7 +261,6 @@ input[type="file"] {
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-justify-content--center;
   @extend .ds-l-col--auto;
-  background-color: $color-gray-lightest;
 
   h3 {
     @extend .ds-u-margin-top--7;
@@ -283,9 +281,7 @@ input[type="file"] {
   }
 
   .form-card {
-    background-color: $color-white;
     @extend .ds-l-col--auto;
-    box-shadow: 2px 2px 4px $color-gray-lighter;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
     @extend .ds-u-padding-left--2;
@@ -323,11 +319,7 @@ input[type="file"] {
 }
 
 .upload-card {
-  background-color: $color-white;
   @extend .ds-l-col--auto;
-  @extend .ds-u-border-right--2;
-  @extend .ds-u-border-bottom--2;
-  @extend .ds-u-padding-left--2;
   div {
     padding-top: 1rem;
     padding-bottom: 1rem;
@@ -1243,6 +1235,7 @@ dl.state-access-cards {
 }
 
 .Collapsible {
+
   font-family: Open Sans;
   font-style: normal;
   font-weight: bold;
@@ -1262,14 +1255,23 @@ dl.state-access-cards {
 
 }
 .faq-left-column {
-  width: calc(100% - 400px);
+ @media only screen
+   and (min-width: 1200px) {
+    width: calc(100% - 300px);
+ }
+
 }
+
 .faq-info-box {
+
+@media only screen
+  and (min-width: 1200px) {
   position: fixed;
   float: right;
+  }
   width: 368px;
-  right: 230px;
-  padding: 10px;
+  right: 72px;
+  padding: 16px;
   background: #FFFFFF;
   /* Text/Background/Gray - Lighter */
   border: 1px solid #D6D7D9;
@@ -1295,8 +1297,8 @@ color: #5B616B;
 
 .faq-info-box-top-border {
 
-top: -32px;
-right: 10px;
+top: -35px;
+right: 16px;
 position: relative;
 width: 368px;
 height: 8px;
@@ -1305,6 +1307,10 @@ background: linear-gradient(90.11deg, #0071BC 49.91%, #02BFE7 66.06%);
 border-radius: 3px 3px 0px 0px;
 margin-left: -1px;
 
+}
+
+.faq-collapsible-trigger {
+   cursor: pointer;
 }
 
 .vert-line-svg {
@@ -1319,3 +1325,18 @@ transform: rotate(-90deg);
 }
 
 
+.submission-form-cancel-button {
+@extend .ds-c-button;
+@extend .ds-c-button--transparent;
+font-family: Open Sans;
+font-style: normal;
+font-weight: bold;
+font-size: 16px;
+line-height: 21px;
+/* identical to box height, or 130% */
+
+text-align: center;
+text-decoration-line: underline;
+
+color: $color-primary;
+}

@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES, ROLES, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";

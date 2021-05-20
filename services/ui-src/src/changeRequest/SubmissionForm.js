@@ -4,12 +4,13 @@ import LoadingScreen from "../components/LoadingScreen";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { RESPONSE_CODE, ROUTES, territoryList } from "cmscommonlib";
+import { latestAccessStatus, RESPONSE_CODE, ROUTES, USER_STATUS } from "cmscommonlib";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
+import { useAppContext } from "../libs/contextLib";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -19,6 +20,9 @@ import AlertBar from "../components/AlertBar";
 const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
+  const {
+    userProfile: { userData },
+  } = useAppContext();
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
@@ -27,17 +31,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
-  const [
-    waiverAuthorityErrorMessage,
-    setWaiverAuthorityErrorMessage,
-  ] = useState("");
-  const [
-    transmittalNumberStatusMessage,
-    setTransmittalNumberStatusMessage,
-  ] = useState({
-    statusLevel: "error",
-    statusMessage: "",
-  });
+  const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
+    useState("");
+  const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
+    useState({
+      statusLevel: "error",
+      statusMessage: "",
+    });
 
   // True if we are currently submitting the form or on inital load of the form
   const [isLoading, setIsLoading] = useState(false);
@@ -94,15 +94,16 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       // Must have a value
       if (!newTransmittalNumber) {
-        if (!firstTimeThrough) errorMessage = `${transmittalNumberDetails.idLabel} Required`;
+        if (!firstTimeThrough)
+          errorMessage = `${transmittalNumberDetails.idLabel} Required`;
       }
-      // must have a valid state code as the first two characters
+      // state code must be on the User's active state list
       else if (
-        !territoryList.some(
-          (state) => state["value"] === newTransmittalNumber.substring(0, 2)
-        )
+        newTransmittalNumber.length >= 2 &&
+        latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
+          USER_STATUS.ACTIVE
       ) {
-        errorMessage = `The ${transmittalNumberDetails.idLabel} must contain valid Territory/State Code`;
+        errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
       // must match the associated Regex string for format
       else if (
@@ -110,10 +111,11 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       ) {
         errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
       }
+      console.log("latest access status ",latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)));
 
       return errorMessage;
     },
-    [transmittalNumberDetails, firstTimeThrough]
+    [transmittalNumberDetails, firstTimeThrough, userData]
   );
 
   /**
@@ -240,6 +242,20 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   ]);
 
   /**
+   * Cancel Form.
+   * @param {Object} event the click event
+   *
+   * confirm dialog with a Yes No Buttons
+   */
+  async function handleCancel(event) {
+    event.preventDefault();
+    const cancel = window.confirm("If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?")
+    if (cancel === true) {
+      history.goBack();
+    }
+  }
+
+  /**
    * Submit the new change request.
    * @param {Object} event the click event
    */
@@ -249,9 +265,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // in case form validation takes a while (external validation)
     setIsLoading(true);
     setAlertCode("NONE"); //clear the alert
-
-    // once Submit is clicked, show error messages
-    setFirstTimeThrough(false);
 
     // validate the form fields and set the messages
     // because this is an asynchronous function, you can't trust that the
@@ -349,6 +362,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     if (mounted) setAlertCode(newAlertCode);
+    if (mounted) setFirstTimeThrough(false);
     if (mounted) setIsLoading(false);
   }
 
@@ -424,6 +438,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             ></TextField>
           </div>
           <input type="submit" className="form-submit" value="Submit" />
+          <button
+              onClick={handleCancel}
+              className="submission-form-cancel-button"
+              type="button"
+          >
+            Cancel
+          </button>
         </form>
       </div>
     </LoadingScreen>

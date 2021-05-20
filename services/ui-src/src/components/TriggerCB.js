@@ -6,8 +6,9 @@ export default function TriggerCB({text, isOpen}) {
 
     return (
         isOpen ?
-        <><img src={plusSign} alt="+" />&nbsp;&nbsp;&nbsp; {text}  </>
+            <><h4 className="faq-collapsible-trigger"><img src={plusSign} alt="+" />&nbsp;&nbsp;&nbsp; {text}  </h4></>
             :
-        <><img src={negativeSign} alt="-" /> &nbsp;&nbsp;&nbsp; {text}  </>
+            <><h4 className="faq-collapsible-trigger"><img src={negativeSign} alt="-" /> &nbsp;&nbsp;&nbsp; {text}  </h4></>
+
             )
 }
