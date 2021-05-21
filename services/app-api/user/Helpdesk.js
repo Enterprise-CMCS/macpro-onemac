@@ -13,8 +13,14 @@ class Helpdesk {
    * CMS Approvers manage the State Admins
    * @returns {String} the User Role
    */
-  getScanFor() {
-    return USER_TYPES.HELPDESK;
+   getScanParams() {
+    let scanParams = {
+      TableName: process.env.userTableName,
+      FilterExpression: (doneBy.type !== 'helpdesk') ? "#ty = :userType" : "#ty <> :userType",
+      ExpressionAttributeNames: { "#ty": "type" },
+      ExpressionAttributeValues: (doneBy.type !== 'helpdesk') ? { ":userType": USER_TYPES.HELPDESK } : { ":userType": "systemadmin" },
+    };
+     return scanParams;
   }
 
   /**

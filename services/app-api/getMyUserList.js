@@ -45,7 +45,6 @@ export const main = handler(async (event, context) => {
     filterAttributeNames += `:email${i}${i < doneByEmails.length - 1 ? ',' : ''}`;
     filterAttribValues[`:email${i}`] = email;
   });
- 
   scanParams = {
     TableName: process.env.userTableName,
     ProjectionExpression: 'id, firstName, lastName',
