@@ -18,7 +18,7 @@ class Helpdesk {
       TableName: process.env.userTableName,
       FilterExpression:  "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType": "systemadmin" },
+      ExpressionAttributeValues: { ":userType": USER_TYPES.SYSTEM_ADMIN },
     };
      return scanParams;
   }
