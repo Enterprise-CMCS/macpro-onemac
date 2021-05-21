@@ -1,0 +1,25 @@
+{
+  "UserAttributes": [
+    {
+      "Name": "sub",
+      "Value": "e9f48d37-5986-4c56-817f-8973631cba01"
+    },
+    {
+      "Name": "custom:cms_roles",
+      "Value": "onemac-state-user"
+    },
+    {
+      "Name": "given_name",
+      "Value": "TestFirstName"
+    },
+    {
+      "Name": "family_name",
+      "Value": "TestLastName"
+    },
+    {
+      "Name": "email",
+      "Value": "stateuseractive@cms.hhs.local"
+    }
+  ],
+  "Username": "e9f48d37-5986-4c56-817f-8973631cba01"
+}

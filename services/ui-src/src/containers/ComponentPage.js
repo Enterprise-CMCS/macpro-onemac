@@ -1,5 +1,6 @@
 import React  from "react";
 import CardButton from "../components/cardButton";
+import Waiver from "../changeRequest/Waiver";
 
 export default function ComponentPage() {
 
@@ -16,6 +17,7 @@ return (<>
                     <CardButton type='waiver'></CardButton>
                 </div>
             </div>
+            <div><Waiver/></div>
             </section>
     </>
     );

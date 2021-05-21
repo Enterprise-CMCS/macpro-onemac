@@ -5,7 +5,7 @@ export const TITLE_BAR_ID = "title_bar";
 /**
  * PageTitleBar contains supplemental information for the user in the form of a
  * title (usually describes the page) and an optional description (see About page)
-*/  
+*/
 const PageTitleBar = ({ heading, text }) => {
 
     return (

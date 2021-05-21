@@ -1,0 +1,30 @@
+{
+  "transmittalNumber": "VA.30206.R06.21",
+  "summary": "Relax. This is only a test",
+  "createdAt": 1620676999886,
+  "user": {
+    "authProvider": "cognito-idp.us-east-1.amazonaws.com/us-east-1_9Hbhbo4yC,cognito-idp.us-east-1.amazonaws.com/us-east-1_9Hbhbo4yC:CognitoSignIn:e9f48d37-5986-4c56-817f-8973631cba01",
+    "firstName": "TestFirstName",
+    "lastName": "TestLastName",
+    "id": "us-east-1:789129fb-f9f5-4c86-abfd-af30792a6d7a",
+    "email": "stateuseractive@cms.hhs.local"
+  },
+  "submittedAt": 1620677000232,
+  "state": "submitted",
+  "uploads": [
+    {
+      "s3Key": "1620676999777/plain.pdf",
+      "filename": "plain.pdf",
+      "title": "1915(c) Appendix K Amendment Waiver Template",
+      "contentType": "application/pdf",
+      "url": null
+    }
+  ],
+  "waiverAuthority": "",
+  "userId": "us-east-1:789129fb-f9f5-4c86-abfd-af30792a6d7a",
+  "territory": "VA",
+  "actionType": "",
+  "ninetyDayClockEnd": 1628453000232,
+  "id": "c43e4ee0-b1ca-11eb-8287-fdab8352cfd6",
+  "type": "waiverappk"
+}
