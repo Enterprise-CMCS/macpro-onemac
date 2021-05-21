@@ -12,6 +12,7 @@ import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
 import { roleLabels } from "../libs/roleLib";
+import { USER_TYPE } from "cmscommonlib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
@@ -39,11 +40,11 @@ const UserManagement = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole = userProfile.userData.type === "systemadmin" || userProfile.userData.type === "helpdesk";
+  const showUserRole = userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN || userProfile.userData.type === USER_TYPE.HELPDESK;
   const updateList = useCallback(() => {
     setIncludeStateCode(
-      userProfile.userData.type === "cmsapprover"
-      || userProfile.userData.type === "helpdesk"
+      userProfile.userData.type === USER_TYPE.CMS_APPROVER
+      || userProfile.userData.type === USER_TYPE.HELPDESK
     );
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
@@ -66,9 +67,9 @@ const UserManagement = () => {
     if (
       !userProfile ||
       !userProfile.userData ||
-      (userProfile.userData.type !== "systemadmin" &&
+      (userProfile.userData.type !== USER_TYPE.SYSTEM_ADMIN &&
         (!userProfile.userData.attributes ||
-          userProfile.userData.type === "stateuser"))
+          userProfile.userData.type === USER_TYPE.STATE_USER))
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -267,13 +268,6 @@ const columns = useMemo(
         sortType: sortStatus,
         Cell: renderStatus,
       },
-      (userProfile.userData.type !== 'helpdesk')
-      ? {
-        Header: "Personnel Actions",
-        disableSortBy: true,
-        Cell: renderActions,
-        id: "personnelActions",
-      } : null,
       showUserRole
         ? {
           Header: "Role",
@@ -288,14 +282,20 @@ const columns = useMemo(
           Cell: renderDate,
           id: "lastModified",
           disableSortBy: true,
-
         },
         {
           Header: "Modified By",
           accessor: "latest.doneByName",
           disableSortBy: true,
           id: "doneByName",
-        }
+        },
+        (userProfile.userData.type !== USER_TYPE.HELPDESK)
+        ? {
+          Header: "Personnel Actions",
+          disableSortBy: true,
+          Cell: renderActions,
+          id: "personnelActions",
+        } : null
     ];
 
     return columnList.filter(Boolean);
