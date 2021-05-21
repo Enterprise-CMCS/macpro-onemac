@@ -135,7 +135,7 @@ const renderEmail = useCallback(
 
 const renderDate = useCallback(
   ({ value }) => 
-    format(value, "MMM d, yyyy HH:mm a"),
+    format(new Date(value * 1000), "MMM d, yyyy hh:mm a"),
   []
 );
 
