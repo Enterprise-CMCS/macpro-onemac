@@ -117,14 +117,12 @@ jobs:
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
       - name: Unit Test
         run: |
-          for d in services/*; do
-            if [ -d $d ]; then
-              pushd $d
-              if [ "`jq '.scripts.test' <package.json`" != null ]; then
-                npm clean-install-test
-              fi
-              popd
+          for d in services/*/; do
+            pushd $d
+            if [ "`jq '.scripts.test' <package.json`" != null ]; then
+              npm clean-install-test
             fi
+            popd
           done
       - name: deploy
         run: |
