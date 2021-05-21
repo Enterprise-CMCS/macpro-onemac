@@ -29,6 +29,12 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
+  HELPDESK_SUBMISSION_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Submission Complete",
+    text: "Thank you. The CMS System Admin will verify your access and credentials.  Please check your email for details on access.",
+  },
+
   // Success woth Survey Link
   SUBMISSION_SUCCESS_SURVEY: {
     type: ALERT_TYPES.SUCCESS,

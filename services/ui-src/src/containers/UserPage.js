@@ -23,11 +23,11 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.STATE_USER]: "State Admin",
   [ROLES.STATE_ADMIN]: "CMS Role Approver",
   [ROLES.CMS_APPROVER]: "CMS System Admin",
+  [ROLES.HELPDESK]: "CMS System Admin",
 };
 
 const ContactList = ({ contacts, userType }) => {
   let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
-
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
 
@@ -59,8 +59,9 @@ const transformAccesses = (user = {}) => {
         state: stateCode,
         status: latestAccessStatus(user, stateCode),
       }));
-
+    
     case ROLES.CMS_APPROVER:
+    case ROLES.HELPDESK:
       return [{ status: latestAccessStatus(user) }];
 
     case ROLES.SYSTEM_ADMIN:
@@ -80,7 +81,6 @@ const UserPage = () => {
   const [accesses, setAccesses] = useState(transformAccesses(userData));
 
   let userType = userData?.type ?? "user";
-  
   const xClicked = useCallback(
     (stateCode) => {
       if (
@@ -127,6 +127,7 @@ const UserPage = () => {
         heading = "State Access Management";
         break;
       case ROLES.CMS_APPROVER:
+      case ROLES.HELPDESK:
         heading = "Status";
         break;
       default:
@@ -184,7 +185,7 @@ const UserPage = () => {
             contacts = await UserDataAPI.getCmsApprovers();
             break;
           }
-
+          case ROLES.HELPDESK:
           case ROLES.CMS_APPROVER: {
             contacts = await UserDataAPI.getCmsSystemAdmins();
             break;
@@ -206,6 +207,19 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
+  const helpdeskMessage=(userType)=>{
+    if (userType !== "helpdesk") {
+      return <>If you have
+          questions, please contact the MACPro Help Desk at{" "}
+        <a href={`mailto:${helpDeskContact.email}`}>
+          {helpDeskContact.email}
+        </a>{" "}
+          or call{" "}
+        <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
+      </>
+    }
+  };
+
   return (
     <div>
       <PageTitleBar heading="Account Management" />
@@ -213,13 +227,7 @@ const UserPage = () => {
         <div className="subheader-message">
           Below is the account information for your role as a{" "}
           {userTypes[userType] ?? userType}. Your name and email cannot be
-          edited in OneMAC. It can be changed in your IDM profile. If you have
-          questions, please contact the MACPro Help Desk at{" "}
-          <a href={`mailto:${helpDeskContact.email}`}>
-            {helpDeskContact.email}
-          </a>{" "}
-          or call{" "}
-          <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
+          edited in OneMAC. It can be changed in your IDM profile.{helpdeskMessage(userType)}
         </div>
         <div className="ds-l-row">
           <div className="ds-l-col--6">

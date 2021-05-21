@@ -28,18 +28,11 @@ export const main = handler(async (event, context) => {
   let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
   if (reasonWhyNot) return reasonWhyNot;
 
-  let scanFor = uFunctions.getScanFor();
+  let scanParams = uFunctions.getScanParams();
   let stateList = [];
   if (uFunctions.shouldICheckState()) {
     stateList = getAuthorizedStateList(doneBy);
   }
-
-  let scanParams = {
-    TableName: process.env.userTableName,
-    FilterExpression: (doneBy.type !== 'helpdesk') ? "#ty = :userType" : "#ty <> :userType",
-    ExpressionAttributeNames: { "#ty": "type" },
-    ExpressionAttributeValues: (doneBy.type !== 'helpdesk') ? { ":userType": scanFor } : { ":userType": "systemadmin" },
-  };
 
   const userResult = await dynamoDb.scan(scanParams);
   const transformedUserList = uFunctions.transformUserList(userResult, stateList);
@@ -52,7 +45,7 @@ export const main = handler(async (event, context) => {
     filterAttributeNames += `:email${i}${i < doneByEmails.length - 1 ? ',' : ''}`;
     filterAttribValues[`:email${i}`] = email;
   });
-
+ 
   scanParams = {
     TableName: process.env.userTableName,
     ProjectionExpression: 'id, firstName, lastName',

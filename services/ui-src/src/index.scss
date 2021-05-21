@@ -615,16 +615,16 @@ input[type="file"] {
 .submissions-table {
   @include custom-table;
 
-  th:last-child, td:last-child {
+  th, td {
     white-space: nowrap;
+
+    &:not(:last-child) {
+      padding-right: 2ch;
+    }
   }
 
-  th:last-child {
-    width: auto; // last column width is sized to the content it contains
-  }
-
-  th {
-    width: 33.3%; // remaining 3 columns' width evenly take up the remaining space (not including last 4th column, which is auto sized)
+  th:first-child {
+    white-space: initial;
   }
 }
 

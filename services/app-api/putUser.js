@@ -88,7 +88,8 @@ const validateInput = (input) => {
     type: Joi.valid(
       USER_TYPE.STATE_USER,
       USER_TYPE.STATE_ADMIN,
-      USER_TYPE.CMS_APPROVER
+      USER_TYPE.CMS_APPROVER,
+      USER_TYPE.HELPDESK,
     ).required(),
   });
   //Todo: Add deeper validation for types //
@@ -370,7 +371,7 @@ const processEmail = async (input) => {
   // Construct and send email acknowledgement to the requesting user //
   const userEmail = await constructUserEmail(input.userEmail, input);
 
-  await dispatchEmail(userEmail.email);
+  await dispatchEmail(userEmail.email,input);
 
   // only email approvers if user is acting on their own status
   if (input.userEmail !== input.doneBy) {
@@ -386,7 +387,7 @@ const processEmail = async (input) => {
       input,
       "doneBy"
     );
-    await dispatchEmail(emailParams.email);
+    await dispatchEmail(emailParams.email,input);
   } else {
     console.log(
       `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`
@@ -421,7 +422,7 @@ const collectRoleAdminEmailIds = async (input) => {
         ? recipients.push(approver.id)
         : null;
     });
-  } else if (input.type === USER_TYPE.CMS_APPROVER) {
+  } else if (input.type === USER_TYPE.CMS_APPROVER||input.type === USER_TYPE.HELPDESK) {
     let systemadmins = [];
     // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
     if (process.env.systemAdminEmail) {
@@ -518,6 +519,17 @@ const constructRoleAdminEmails = (recipients, input) => {
     case USER_TYPE.CMS_APPROVER:
       typeText = "CMS Approver";
       break;
+    case USER_TYPE.HELPDESK:
+      typeText = "Helpdesk User";
+      email.HTML =
+        `
+  <p>Hello,</p>
+
+  There is a new OneMAC Portal Helpdesk access request from ${input.firstName} ${input.lastName} waiting 
+  for your review. Please log into your User Management Dashboard to see the pending request.
+
+  <p>Thank you!</p>`;
+      break;
   }
   if (newSubject) email.Subject = newSubject;
   else email.Subject = `New OneMAC Portal ${typeText} Access Request`;
@@ -554,14 +566,18 @@ const constructUserEmail = (userEmailId, input) => {
 };
 
 // Send email //
-const dispatchEmail = async (email) => {
+const dispatchEmail = async (email,input) => {
   try {
     const emailStatus = await sendEmail(email);
     if (emailStatus instanceof Error) {
       console.log("Warning: Email not sent");
     }
     console.log("Email successfully sent");
-    return RESPONSE_CODE.USER_SUBMITTED;
+    if (input.type === "helpdesk" && input.isPutUser) {
+      return RESPONSE_CODE.HELPDESK_USER_SUBMITEED;
+    } else {
+      return RESPONSE_CODE.USER_SUBMITTED;
+    }
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user access request acknowledgment email.",
