@@ -18,7 +18,7 @@ export function renderWithProviders(
     let setUserInfo;
     let authState = {userProfile: { userData: UserData }, userData: UserData };
 
-    console.log(JSON.stringify(authState))
+    console.log("DEBUG [CurrentUserData]:" + JSON.stringify(authState))
     return {
         ...render(
             <AppContext.Provider
