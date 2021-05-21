@@ -28,7 +28,7 @@ export const main = handler(async (event, context) => {
   let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
   if (reasonWhyNot) return reasonWhyNot;
 
-  let scanParams = uFunctions.getScanParams();
+  let scanParams = uFunctions.getScanParams(doneBy);
   let stateList = [];
   if (uFunctions.shouldICheckState()) {
     stateList = getAuthorizedStateList(doneBy);

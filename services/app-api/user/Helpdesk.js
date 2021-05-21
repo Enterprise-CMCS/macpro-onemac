@@ -13,7 +13,7 @@ class Helpdesk {
    * CMS Approvers manage the State Admins
    * @returns {String} the User Role
    */
-   getScanParams() {
+   getScanParams(doneBy) {
     let scanParams = {
       TableName: process.env.userTableName,
       FilterExpression: (doneBy.type !== 'helpdesk') ? "#ty = :userType" : "#ty <> :userType",
