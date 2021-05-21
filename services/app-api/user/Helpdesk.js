@@ -1,4 +1,4 @@
-import { USER_TYPES } from "./userTypes";
+import { USER_TYPE } from "cmscommonlib";
 import { getCurrentStatus } from "./user-util";
 
 /**
@@ -18,7 +18,7 @@ class Helpdesk {
       TableName: process.env.userTableName,
       FilterExpression:  "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType": USER_TYPES.SYSTEM_ADMIN },
+      ExpressionAttributeValues: { ":userType": USER_TYPE.SYSTEM_ADMIN },
     };
      return scanParams;
   }
