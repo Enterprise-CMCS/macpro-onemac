@@ -42,7 +42,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cp src/mockjson/mockconfig.js src/utils/config.js && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" ",
+    "test": "cp src/mockjson/mockconfig.js src/utils/config.js && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" && cp src/mockjson/origconfig.js src/utils/config.js",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
