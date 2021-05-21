@@ -115,6 +115,17 @@ jobs:
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: Unit Test
+        run: |
+          for d in services/*; do
+            if [ -d $d ]; then
+              pushd $d
+              if [ "`jq '.scripts.test' <package.json`" != null ]; then
+                npm clean-install-test
+              fi
+              popd
+            fi
+          done
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
