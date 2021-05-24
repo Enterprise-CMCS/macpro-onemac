@@ -90,9 +90,13 @@ label {
   @extend .ds-u-align-items--center;
   @extend .ds-u-padding-top--2;
   @extend .ds-u-padding-bottom--2;
-  font-weight: 400;
-  background-color: $color-primary-darker;
-  color: $color-white;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 24px;
+  line-height: 30px;
+  background-color: #F0FAFE;;
+  color: #212121;
 
   h1 {
     font-size: 36px;
