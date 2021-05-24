@@ -45,6 +45,10 @@ module.exports = {
         //CMS approver user username and password
         cms_approver_user: `${process.env.TEST_CMS_APPROVER_USERS}`,
         cms_approver_pass: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+
+        //CMS System Admin username and password
+        cms_system_admin_user: `${process.env.TEST_CMS_SYSTEM_ADMIN_USERS}`,
+        cms_system_admin_user_password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
     },
 
     screenshots : {
