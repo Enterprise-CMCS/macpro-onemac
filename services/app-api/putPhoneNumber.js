@@ -1,6 +1,6 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { isEmpty, isObject } from "lodash";
-import Joi from "@hapi/joi";
+import Joi from "joi";
 
 import handler from "./libs/handler-lib";
 import isLambdaWarmup from "./libs/lambda-warmup";
