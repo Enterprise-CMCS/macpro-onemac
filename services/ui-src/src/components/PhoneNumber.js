@@ -39,8 +39,10 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
     <form className="phone-number-edit-form" onSubmit={onSubmitFn}>
       <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
       <input
+        autoFocus
         id="phoneNumber"
         onChange={({ target: { value } }) => dispatch(value)}
+        onFocus={e => e.currentTarget.select()}
         value={value}
       />
       <Button type="submit" variation="success">

@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Review } from "@cmsgov/design-system";
-import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  ROLES,
+  latestAccessStatus,
+  territoryMap,
+} from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
@@ -75,9 +80,12 @@ const transformAccesses = (user = {}) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile: { email, firstName, lastName, userData }, setUserInfo } = useAppContext();
+  const {
+    userProfile: { email, firstName, lastName, userData },
+    setUserInfo,
+  } = useAppContext();
   const [accesses, setAccesses] = useState(transformAccesses(userData));
-  const [alert, setAlert] = useState(null);
+  const [alertCode, setAlertCode] = useState(null);
 
   let userType = userData?.type ?? "user";
 
@@ -85,10 +93,10 @@ const UserPage = () => {
     async (newNumber) => {
       try {
         const result = await UserDataApi.updatePhoneNumber(email, newNumber);
-        setAlert(result);
+        setAlertCode(result);
       } catch (e) {
         console.error("Error updating phone number", e);
-        setAlert(ALERTS_MSG.SUBMISSION_ERROR);
+        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
       }
     },
     [email]
@@ -121,11 +129,11 @@ const UserPage = () => {
               setUserInfo();
             } else {
               console.log("Returned: ", returnCode);
-              setAlert(returnCode);
+              setAlertCode(returnCode);
             }
           });
         } catch (err) {
-          setAlert(ALERTS_MSG.SUBMISSION_ERROR);
+          setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
         }
       }
     },
@@ -223,7 +231,7 @@ const UserPage = () => {
   return (
     <div>
       <PageTitleBar heading="Account Management" />
-      <AlertBar alertCode={alert} />
+      <AlertBar alertCode={alertCode} />
       <div className="profile-container">
         <div className="subheader-message">
           Below is the account information for your role as a{" "}
