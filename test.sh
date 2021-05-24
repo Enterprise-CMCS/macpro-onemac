@@ -5,9 +5,6 @@ set -e
 
 case $1 in
 '--dev')
- echo "Running Unit Test"
- ./runUnitTest.sh
- echo "Running Nightwatch Test"
   npm install && npm run regression-dev >&1 || exit 1
   sleep 3
   ;;
