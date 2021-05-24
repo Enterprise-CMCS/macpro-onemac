@@ -76,7 +76,13 @@
     ]
   },
   "jest": {
-    "globalSetup": "./JestSetup.js",
-    "globalTeardown": "./JestTearDown.js"
+    "collectCoverageFrom": [
+      "src/**/*.{js,jsx,ts,tsx}",
+      "./JestSetup.js",
+      "./JestTearDown.js",
+      "!<rootDir>/node_modules/"
+    ],
+    "globalSetup": "<rootDir>/JestSetup.js",
+    "globalTeardown": "<rootDir>/JestTearDown.js"
   }
 }
