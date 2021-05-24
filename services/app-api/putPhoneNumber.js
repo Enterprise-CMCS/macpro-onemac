@@ -1,4 +1,6 @@
 import { RESPONSE_CODE } from "cmscommonlib";
+import { isEmpty, isObject } from "lodash";
+import Joi from "@hapi/joi";
 
 import handler from "./libs/handler-lib";
 import isLambdaWarmup from "./libs/lambda-warmup";
@@ -10,18 +12,19 @@ import dynamoDb from "./libs/dynamodb-lib";
 export const main = handler(async (event) => {
   if (isLambdaWarmup(event)) return null;
 
-  if (!validatePhoneNumber(event) || !validateUserId(event)) {
+  let input = event.body;
+  if (!isObject(input)) input = JSON.parse(input);
+
+  if (!validateInput(input)) {
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
   try {
     await dynamoDb.update({
       TableName: process.env.userTableName,
-      Key: { id: event.queryStringParameters.id },
+      Key: { id: input.id },
       UpdateExpression: "SET phoneNumber = :phoneNumber",
-      // the reason for the default value is that lambda interprets the empty
-      // string in a request body as `null`
-      ExpressionAttributeValues: { ":phoneNumber": event.body ?? "" },
+      ExpressionAttributeValues: { ":phoneNumber": input.phoneNumber },
     });
 
     return RESPONSE_CODE.USER_SUBMITTED;
@@ -31,14 +34,21 @@ export const main = handler(async (event) => {
   }
 });
 
-const validatePhoneNumber = ({ body }) => {
-  if (typeof body === "string" || body === null) return true;
+const validateInput = (input) => {
+  const schema = Joi.object().keys({
+    id: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
+    phoneNumber: Joi.string().required().allow(""),
+  });
 
-  console.error("User submitted a phone number that was not a string", body);
-};
+  const result = isEmpty(input)
+    ? { error: "No request body sent" }
+    : schema.validate(input);
 
-const validateUserId = ({ queryStringParameters: { id } }) => {
-  if (id) return true;
+  if (!result.error) {
+    return true;
+  }
 
-  console.error("ID to update was not provided");
+  console.log("Validation error:", result.error);
 };

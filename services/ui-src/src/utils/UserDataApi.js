@@ -79,10 +79,10 @@ class UserDataApi {
    * @param {string} Updated phone number
    * @return {Promise<string>} An error code, or nothing at all if it succeeds
   */
-  async updatePhoneNumber(userID, phoneNumber) {
+  async updatePhoneNumber(id, phoneNumber) {
     try {
-      return await API.put("changeRequestAPI", `/phoneNumber?id=${userID}`, {
-        body: phoneNumber,
+      return await API.put("changeRequestAPI", "/phoneNumber", {
+        body: { id, phoneNumber },
       });
     } catch (error) {
       console.error("Could not save user phone number:", error);
