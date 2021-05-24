@@ -2,8 +2,8 @@ import React from "react";
 import { createMemoryHistory } from "history";
 import { Router, Route } from "react-router-dom";
 import { render } from "@testing-library/react";
-import {AppContext, useAppContext} from "../libs/contextLib";
-import UserData from "../mockjson/getUser.json"
+import {AppContext} from "../libs/contextLib";
+import UserData from "../utils/getUser.json"
 
 export function renderWithProviders(
     ui,

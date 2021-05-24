@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "cp src/mockjson/mockconfig.js src/utils/config.js && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" && cp src/mockjson/origconfig.js src/utils/config.js",
+    "test": "react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" ",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -74,5 +74,9 @@
     "presets": [
       "react-app"
     ]
+  },
+  "jest": {
+    "globalSetup": "<rootDir>/JestSetup.js",
+    "globalTeardown": "<rootDir>/JestTearDown.js"
   }
 }
