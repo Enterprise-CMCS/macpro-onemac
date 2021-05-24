@@ -67,7 +67,7 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
       }
       heading="Phone Number"
     >
-      {value || <br />}
+      {value?.trim() || <br />}
     </Review>
   );
 };
