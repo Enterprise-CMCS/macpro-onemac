@@ -16,7 +16,6 @@
     "core-js": "^3.7.0",
     "date-fns": "^2.16.1",
     "formik": "^2.2.5",
-    "hapi": "^18.1.0",
     "isomorphic-fetch": "^3.0.0",
     "node-sass": "^4.14.1",
     "promise-polyfill": "8.2.0",
@@ -31,7 +30,7 @@
     "react-router-bootstrap": "^0.25.0",
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^2.2.2",
-    "react-scripts": "3.4.3",
+    "react-scripts": "^4.0.3",
     "react-select": "^3.1.0",
     "react-table": "^7.7.0"
   },
