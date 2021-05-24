@@ -7,6 +7,10 @@ import {
   territoryMap,
 } from "cmscommonlib";
 
+import { territoryList } from "cmscommonlib";
+import { useSignupCallback } from "../libs/hooksLib";
+import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
+
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
@@ -14,10 +18,11 @@ import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { PhoneNumber } from "../components/PhoneNumber";
 import UserDataAPI from "../utils/UserDataApi";
-import closingX from "../images/ClosingX.svg";
 import UserDataApi from "../utils/UserDataApi";
 import { getAlert } from "../libs/error-mappings";
 import { ALERTS_MSG } from "../libs/alert-messages";
+import closingX from "../images/ClosingX.svg";
+import addStateButton from "../images/addStateButton.svg";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -84,8 +89,21 @@ const UserPage = () => {
     userProfile: { email, firstName, lastName, userData },
     setUserInfo,
   } = useAppContext();
+
+  const expandStatesToAttributes = useCallback((values) => {
+    return values.map(({ value }) => ({
+      stateCode: value,
+      status: "pending",
+    }));
+  }, []);
+
   const [accesses, setAccesses] = useState(transformAccesses(userData));
+  const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [alertCode, setAlertCode] = useState(null);
+  const [loading, onSubmit] = useSignupCallback(
+    "stateuser",
+    expandStatesToAttributes
+  );
 
   let userType = userData?.type ?? "user";
 
@@ -140,6 +158,37 @@ const UserPage = () => {
     [email, userType, setUserInfo]
   );
 
+  const renderSelectStateAccess = () => {
+    return (
+      <div className="profile-signup-container">
+        <MultiSelectDropDown
+          errorMessage="Please select at least one state."
+          loading={loading}
+          options={territoryList}
+          required
+          showCancelButton
+          subtitle="Select your State Access."
+          submitFn={onSubmit}
+          cancelFn={() => setIsStateSelectorVisible(false)}
+          title="Choose State Access"
+          placeholder="select state here"
+          type="selectprofile"
+        />
+      </div>
+    );
+  };
+
+  const renderAddStateButton = () => {
+    return (
+      <button
+        onClick={() => setIsStateSelectorVisible(true)}
+        className="add-state-button"
+      >
+        <img src={addStateButton} alt="add state or territiory" />
+      </button>
+    )
+  }
+
   const accessList = useMemo(() => {
     let heading;
 
@@ -181,9 +230,14 @@ const UserPage = () => {
             </div>
           ))}
         </dl>
+        <div className="add-access-container">
+          {isStateSelectorVisible
+            ? renderSelectStateAccess()
+            : renderAddStateButton()}
+        </div>
       </div>
     );
-  }, [accesses, userType, xClicked]);
+  }, [accesses, userType, xClicked, isStateSelectorVisible]);
 
   useEffect(() => {
     (async () => {

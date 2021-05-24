@@ -5,6 +5,7 @@ import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
 import CardButton from "../components/cardButton";
 import { RESPONSE_CODE } from "cmscommonlib";
+import PageTitleBar from "../components/PageTitleBar";
 
 const createAttribute = () => [{ status: "pending" }];
 
@@ -62,9 +63,7 @@ export function Signup() {
 
   return (
     <>
-      <div className="page-title-bar" id="title_bar">
-        <h2>Registration: User Role</h2>
-      </div>
+      <PageTitleBar heading="Registration: User Role" />
       <div className="signup-container">
         <div className="signup-center">
           <p className="signup-prompt">
