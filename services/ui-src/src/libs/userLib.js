@@ -38,7 +38,7 @@ export const grantConfirmMessage = {
   [USER_TYPE.CMS_APPROVER]:
     "Warning\n\nThis will activate the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
   [USER_TYPE.SYSTEM_ADMIN]:
-    "Warning\n\nThis will activate the selected user’s account for CMS Role Approver access.  This role approves State Systems Administrator. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+    "Warning\n\nThis will activate the selected user’s account. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 export const denyConfirmMessage = {
@@ -47,7 +47,7 @@ export const denyConfirmMessage = {
   [USER_TYPE.CMS_APPROVER]:
     "Warning\n\nThis will deny the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
   [USER_TYPE.SYSTEM_ADMIN]:
-    "Warning\n\nThis will deny the selected user’s account for CMS Role Approver access.  This role approves State Systems Administrator. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+    "Warning\n\nThis will deny the selected user’s account for access. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 export const revokeConfirmMessage = {
@@ -56,7 +56,7 @@ export const revokeConfirmMessage = {
   [USER_TYPE.CMS_APPROVER]:
     "Warning\n\nThis will revoke the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
   [USER_TYPE.SYSTEM_ADMIN]:
-    "Warning\n\nThis will revoke the selected user’s account for CMS Role Approver access.  This role approves State Systems Administrator. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+    "Warning\n\nThis will revoke the selected user’s account for access. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 /**
