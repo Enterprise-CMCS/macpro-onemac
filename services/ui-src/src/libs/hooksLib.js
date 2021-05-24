@@ -54,7 +54,7 @@ export function useSignupCallback(userType, processAttributes) {
           (userType === ROLES.STATE_USER||userType === ROLES.HELPDESK)
             ? ROUTES.DASHBOARD
             : ROUTES.USER_MANAGEMENT;
-        messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };    //ALERTS_MSG.SUBMISSION_SUCCESS };
+        messageState = (userType === ROLES.HELPDESK)?{ passCode: RESPONSE_CODE.HELPDESK_USER_SUBMITTED }:{ passCode: RESPONSE_CODE.USER_SUBMITTED };    //ALERTS_MSG.SUBMISSION_SUCCESS };
       } catch (error) {
         console.error("Could not create new user:", error);
         destination = { ...location, state: undefined };
@@ -62,7 +62,7 @@ export function useSignupCallback(userType, processAttributes) {
           ...location.state,
           passCode: error, // ALERTS_MSG.SUBMISSION_ERROR,
         };
-        if(userType==="helpdesk"){
+        if(userType===ROLES.HELPDESK){
           destination.pathname="/";
         }
       } finally {

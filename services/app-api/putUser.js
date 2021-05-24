@@ -573,11 +573,7 @@ const dispatchEmail = async (email,input) => {
       console.log("Warning: Email not sent");
     }
     console.log("Email successfully sent");
-    if (input.type === "helpdesk" && input.isPutUser) {
-      return RESPONSE_CODE.HELPDESK_USER_SUBMITEED;
-    } else {
-      return RESPONSE_CODE.USER_SUBMITTED;
-    }
+return RESPONSE_CODE.USER_SUBMITTED;
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user access request acknowledgment email.",
