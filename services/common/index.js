@@ -171,7 +171,7 @@ class SystemAdmin extends Role {
 class Helpdesk extends Role {
   constructor() {
     super();
-    this.canAccessDashboard = true;
+    this.canAccessDashboard = false;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
   }

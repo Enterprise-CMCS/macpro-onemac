@@ -71,6 +71,7 @@ class SystemAdmin {
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
         latest: getCurrentStatus(oneUser.attributes),
+        role: oneUser.type,
       });
       i++;
     });
