@@ -76,7 +76,7 @@
     ]
   },
   "jest": {
-    "globalSetup": "<rootDir>/JestSetup.js",
-    "globalTeardown": "<rootDir>/JestTearDown.js"
+    "globalSetup": "./JestSetup.js",
+    "globalTeardown": "./JestTearDown.js"
   }
 }
