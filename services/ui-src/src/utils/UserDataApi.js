@@ -56,21 +56,39 @@ class UserDataApi {
       throw error;
     }
   }
-/**
-   * Create or update a user's profile
-   * @param {Object} User record to create or update in Dynamo
-   * @return {Promise<string>} An error code, or nothing at all if it succeeds
-   */
- async updateUser(userRecord) {
-  try {
-    return await API.put("changeRequestAPI", "/putUser", {
-      body: { ...userRecord, isPutUser: true },
-    });
-  } catch (error) {
-    console.error("Could not save user profile data:", error);
-    throw error;
+
+  /**
+    * Create or update a user's profile
+    * @param {Object} User record to create or update in Dynamo
+    * @return {Promise<string>} An error code, or nothing at all if it succeeds
+    */
+  async updateUser(userRecord) {
+    try {
+      return await API.put("changeRequestAPI", "/putUser", {
+        body: { ...userRecord, isPutUser: true },
+      });
+    } catch (error) {
+      console.error("Could not save user profile data:", error);
+      throw error;
+    }
   }
-}
+
+  /**
+   * Update a user's phone number
+   * @param {string} User ID to update
+   * @param {string} Updated phone number
+   * @return {Promise<string>} An error code, or nothing at all if it succeeds
+  */
+  async updatePhoneNumber(id, phoneNumber) {
+    try {
+      return await API.put("changeRequestAPI", "/phoneNumber", {
+        body: { id, phoneNumber },
+      });
+    } catch (error) {
+      console.error("Could not save user phone number:", error);
+      throw error;
+    }
+  }
 
   /**
    * Tell the back end to update the status of a given user

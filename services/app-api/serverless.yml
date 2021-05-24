@@ -156,6 +156,15 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam
+  setUserPhoneNumber:
+    handler: putPhoneNumber.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: phoneNumber
+          method: put
+          cors: true
+          authorizer: aws_iam
 
   getStateAdminList:
     handler: getStateAdminList.main
