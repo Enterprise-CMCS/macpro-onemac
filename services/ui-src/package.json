@@ -90,6 +90,6 @@
       "!<rootDir>/node_modules/"
     ],
     "globalSetup": "<rootDir>/src/JestSetup.js",
-    "globalTeardown": "<rootDir>/src/JestTearDown.js"
+    "globalTeardown": "<rootDir>/src/JestTeardown.js"
   }
 }
