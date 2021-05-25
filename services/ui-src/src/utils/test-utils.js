@@ -14,11 +14,9 @@ export function renderWithProviders(
     apolloMocks
 ) {
 
-    console.log("I am route inside renderWithProviders Wrapper:", route);
     let setUserInfo;
     let authState = {userProfile: { userData: UserData }, userData: UserData };
 
-    console.log("DEBUG [CurrentUserData]:" + JSON.stringify(authState))
     return {
         ...render(
             <AppContext.Provider

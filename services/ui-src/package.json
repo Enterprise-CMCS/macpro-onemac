@@ -41,8 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "set && export PATH=$PATH:./src && react-scripts test --watchAll=false ",
-    "oldtest": "cp ../common/mockconfig.js src/utils/config.js && cp ../common/getUser.json src/utils && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" && cp ../common/origconfig.js src/utils/config.js && rm src/utils/getUser.json",
+    "test": "react-scripts test --watchAll=false ",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -85,11 +84,11 @@
     "collectCoverageFrom": [
       "{!(./**/polyfill*/)",
       "./**/*.{js,jsx,ts,tsx}",
-      "./src/JestSetup.js",
-      "./src/JestTearDown.js",
+      "./JestSetup.js",
+      "./JestTeardown.js",
       "!<rootDir>/node_modules/"
     ],
-    "globalSetup": "<rootDir>/src/JestSetup.js",
-    "globalTeardown": "<rootDir>/src/JestTeardown.js"
+    "globalSetup": "<rootDir>/JestSetup.js",
+    "globalTeardown": "<rootDir>/JestTeardown.js"
   }
 }
