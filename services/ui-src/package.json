@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" ",
+    "test": "set && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" ",
     "oldtest": "cp ../common/mockconfig.js src/utils/config.js && cp ../common/getUser.json src/utils && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" && cp ../common/origconfig.js src/utils/config.js && rm src/utils/getUser.json",
     "eject": "react-scripts eject"
   },
@@ -80,12 +80,10 @@
   },
   "jest": {
     "collectCoverageFrom": [
-      "src/**/*.{js,jsx,ts,tsx}",
-      "<rootDir>/src/JestSetup.js",
-      "<rootDir>/src/JestTearDown.js",
+      "./**/*.{js,jsx,ts,tsx}",
       "!<rootDir>/node_modules/"
     ],
-    "globalSetup": "<rootDir>/src/JestSetup.js",
-    "globalTeardown": "<rootDir>/src/JestTearDown.js"
+    "globalSetup": "./src/JestSetup.js",
+    "globalTeardown": "./src/JestTearDown.js"
   }
 }
