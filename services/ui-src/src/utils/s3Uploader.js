@@ -1,11 +1,11 @@
-import "promise-polyfill/src/polyfill";
-import "core-js/es/typed-array/uint32-array";
-import "core-js/es/array/find";
-import "core-js/es/object/assign";
-import "core-js/es/object/entries";
-import "core-js/es/array";
-import "core-js/es/object";
-import "isomorphic-fetch";
+// import "promise-polyfill/src/polyfill";
+//import "core-js/es/typed-array/uint32-array";
+//import "core-js/es/array/find";
+//import "core-js/es/object/assign";
+//import "core-js/es/object/entries";
+//import "core-js/es/array";
+//import "core-js/es/object";
+//import "isomorphic-fetch";
 import { Storage } from "aws-amplify";
 
 /**
