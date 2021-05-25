@@ -1,26 +1,25 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Review } from "@cmsgov/design-system";
+import { useLocation } from "react-router-dom";
+import { Button, Review } from "@cmsgov/design-system";
+
 import {
   RESPONSE_CODE,
   ROLES,
   latestAccessStatus,
   territoryMap,
+  territoryList,
 } from "cmscommonlib";
-
-import { territoryList } from "cmscommonlib";
-import { useSignupCallback } from "../libs/hooksLib";
-import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
-
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
+import { getAlert } from "../libs/error-mappings";
+import { ALERTS_MSG } from "../libs/alert-messages";
+import UserDataApi from "../utils/UserDataApi";
+
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { PhoneNumber } from "../components/PhoneNumber";
-import UserDataAPI from "../utils/UserDataApi";
-import UserDataApi from "../utils/UserDataApi";
-import { getAlert } from "../libs/error-mappings";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 
@@ -89,21 +88,11 @@ const UserPage = () => {
     userProfile: { email, firstName, lastName, userData },
     setUserInfo,
   } = useAppContext();
-
-  const expandStatesToAttributes = useCallback((values) => {
-    return values.map(({ value }) => ({
-      stateCode: value,
-      status: "pending",
-    }));
-  }, []);
-
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
-  const [alertCode, setAlertCode] = useState(null);
-  const [loading, onSubmit] = useSignupCallback(
-    "stateuser",
-    expandStatesToAttributes
-  );
 
   let userType = userData?.type ?? "user";
 
@@ -118,6 +107,47 @@ const UserPage = () => {
       }
     },
     [email]
+  );
+
+  const signupUser = useCallback(
+    async (payload) => {
+      try {
+        setLoading(true);
+
+        payload = payload.map(({ value }) => ({
+          stateCode: value,
+          status: "pending",
+        }));
+
+        let answer = await UserDataApi.updateUser({
+          userEmail: email,
+          doneBy: email,
+          firstName,
+          lastName,
+          type: userType,
+          attributes: payload,
+        });
+
+        if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
+        setAlertCode(RESPONSE_CODE.USER_SUBMITTED);
+        setIsStateSelectorVisible(false);
+        setUserInfo();
+      } catch (error) {
+        console.error("Could not create new user:", error);
+        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [
+      email,
+      firstName,
+      lastName,
+      userType,
+      setIsStateSelectorVisible,
+      setLoading,
+      setUserInfo,
+    ]
   );
 
   const xClicked = useCallback(
@@ -158,38 +188,38 @@ const UserPage = () => {
     [email, userType, setUserInfo]
   );
 
-  const renderSelectStateAccess = () => {
+  const renderSelectStateAccess = useMemo(() => {
     return (
       <div className="profile-signup-container">
         <MultiSelectDropDown
+          cancelFn={() => setIsStateSelectorVisible(false)}
           errorMessage="Please select at least one state."
           loading={loading}
           options={territoryList}
+          placeholder="select state here"
           required
           showCancelButton
           subtitle="Select your State Access."
-          submitFn={onSubmit}
-          cancelFn={() => setIsStateSelectorVisible(false)}
+          submitFn={signupUser}
           title="Choose State Access"
-          placeholder="select state here"
           type="selectprofile"
         />
       </div>
     );
-  };
+  }, [loading, signupUser, setIsStateSelectorVisible]);
 
-  const renderAddStateButton = () => {
+  const renderAddStateButton = useMemo(() => {
     return (
-      <button
-        onClick={() => setIsStateSelectorVisible(true)}
+      <Button
         className="add-state-button"
+        onClick={() => setIsStateSelectorVisible(true)}
       >
         <img src={addStateButton} alt="add state or territiory" />
-      </button>
-    )
-  }
+      </Button>
+    );
+  }, [setIsStateSelectorVisible]);
 
-  const accessList = useMemo(() => {
+  const accessSection = useMemo(() => {
     let heading;
 
     switch (userType) {
@@ -230,14 +260,23 @@ const UserPage = () => {
             </div>
           ))}
         </dl>
-        <div className="add-access-container">
-          {isStateSelectorVisible
-            ? renderSelectStateAccess()
-            : renderAddStateButton()}
-        </div>
+        {userType === ROLES.STATE_USER && (
+          <div className="add-access-container">
+            {isStateSelectorVisible
+              ? renderSelectStateAccess
+              : renderAddStateButton}
+          </div>
+        )}
       </div>
     );
-  }, [accesses, userType, xClicked, isStateSelectorVisible]);
+  }, [
+    accesses,
+    userType,
+    xClicked,
+    isStateSelectorVisible,
+    renderSelectStateAccess,
+    renderAddStateButton,
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -247,7 +286,7 @@ const UserPage = () => {
 
         switch (userType) {
           case ROLES.STATE_USER: {
-            const adminsByState = await UserDataAPI.getStateAdmins(
+            const adminsByState = await UserDataApi.getStateAdmins(
               userData.attributes
                 .map(({ stateCode }) => stateCode)
                 .filter(Boolean)
@@ -257,12 +296,12 @@ const UserPage = () => {
           }
 
           case ROLES.STATE_ADMIN: {
-            contacts = await UserDataAPI.getCmsApprovers();
+            contacts = await UserDataApi.getCmsApprovers();
             break;
           }
 
           case ROLES.CMS_APPROVER: {
-            contacts = await UserDataAPI.getCmsSystemAdmins();
+            contacts = await UserDataApi.getCmsSystemAdmins();
             break;
           }
 
@@ -310,7 +349,7 @@ const UserPage = () => {
               onSubmit={onPhoneNumberEdit}
             />
           </div>
-          {accessList}
+          {accessSection}
         </div>
       </div>
     </div>

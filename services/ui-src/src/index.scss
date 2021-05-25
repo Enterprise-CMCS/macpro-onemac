@@ -954,12 +954,6 @@ input[type="file"] {
 }
 
 .state-dropdown-select {
-  // override style for position of placeholder text in input box react-dropdown-select component
-  .react-dropdown-select-input {
-    position: relative;
-    left: 25px;
-  }
-
   // override style for input box of selected content in react-dropdown-select component
   .react-dropdown-select-content {
     overflow-y: auto;
@@ -982,6 +976,14 @@ input[type="file"] {
   .react-dropdown-select-dropdown .react-dropdown-select-item-selected {
     background-color: $color-primary;
     font-weight: 700;
+  }
+
+  &.state-dropdown-select-no-selection {
+    // override style for position of placeholder text in input box react-dropdown-select component
+    .react-dropdown-select-input {
+      position: relative;
+      left: 25px;
+    }
   }
 }
 

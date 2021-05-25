@@ -55,6 +55,7 @@ export function StateSignup() {
             loading={loading}
             onlyOne={role === USER_TYPE.STATE_ADMIN}
             options={territoryList}
+            placeholder="select state here"
             required
             submitFn={onSubmit}
             title="Select your State Access"

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Select from "react-dropdown-select";
+import classNames from "classnames";
 
 /*
    Simple Multi Select Component
@@ -19,11 +20,15 @@ export const MultiSelectDropDown = ({
   submitFn,
   title,
 }) => {
-
   const [value, setValue] = useState([]);
 
   const invalid =
     (required && value.length === 0) || (onlyOne && value.length > 1);
+
+  const selectClassName = classNames({
+    'state-dropdown-select': true,
+    'state-dropdown-select-no-selection': value.length === 0 && true,
+  });
 
   return (
     <div className="multi-select-dropdown-container">
@@ -43,10 +48,10 @@ export const MultiSelectDropDown = ({
       </svg>
       <div className="multi-select-bottom-section profile-multi-select">
         {errorMessage && invalid ? (
-          <div className="multi-select-error-message">
-            {errorMessage}
-          </div>
-        ) : <div className="no-error-offset" aria-hidden="true" />}
+          <div className="multi-select-error-message">{errorMessage}</div>
+        ) : (
+          <div className="no-error-offset" aria-hidden="true" />
+        )}
         <div className="multi-select-button-container">
           <button
             disabled={loading || invalid}
@@ -79,7 +84,7 @@ export const MultiSelectDropDown = ({
         </div>
       </div>
       <Select
-        className="state-dropdown-select"
+        className={selectClassName}
         placeholder={placeholder}
         disabled={loading}
         dropdownHeight="185px"
