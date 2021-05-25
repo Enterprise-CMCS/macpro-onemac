@@ -1,4 +1,4 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo ,useCallback} from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
@@ -18,12 +18,21 @@ function CMSSignup() {
     <CardButton loading={loading} onClick={onClickCMS} type="cmsapprover" />
   );
 }
+function HelpdeskSignup() {
+  const [_,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
+  useEffect(() => {
+    if(onLoadHelpdesk)onLoadHelpdesk();
+  },[onLoadHelpdesk]);
+  return null
+}
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
 const isCmsUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-cms-user");
+const isHelpdeskUser = (cmsRoles) =>
+  !!cmsRoles.split(",").includes("onemac-helpdesk-user");
 
 export function Signup() {
   const history = useHistory();
@@ -44,6 +53,10 @@ export function Signup() {
       ) : isCmsUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <CMSSignup />
+        </div>
+      ) : isHelpdeskUser(cmsRoles) ? (
+        <div className="ds-l-col--auto ds-u-margin-x--auto">
+         <HelpdeskSignup/>
         </div>
       ) : (
         <Redirect

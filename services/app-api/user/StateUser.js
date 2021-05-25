@@ -11,7 +11,7 @@ class StateUser {
    * the User Management Dashboard
    * @returns {String} the User Role
    */
-  getScanFor() {
+  getScanParams() {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 

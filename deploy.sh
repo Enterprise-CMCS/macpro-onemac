@@ -14,7 +14,8 @@ services=(
 
 # These test users are only available in DEV environments.
 IFS=$'\n' read -r -d '' -a TEST_USERS < <(jq -r '.[] | .id' <'services/app-api/user-profiles-seed.json' && printf '\0' )
-TEST_USERS+=("stateuserunregistered@cms.hhs.local" "stateadminunregistered@cms.hhs.local" "cmsapproverunregistered@cms.hhs.local")
+
+TEST_USERS+=("stateuserunregistered@cms.hhs.local" "stateadminunregistered@cms.hhs.local" "cmsapproverunregistered@cms.hhs.local" "helpdeskunregistered@cms.hhs.local")
 
 TEST_USER_PASSWORD="Passw0rd!"
 
@@ -82,6 +83,9 @@ then
           case $user in
             cms*)
               cms_role=onemac-cms-user
+              ;;
+            helpdesk*)
+              cms_role=onemac-helpdesk-user
               ;;
             state*)
               cms_role=onemac-state-user
