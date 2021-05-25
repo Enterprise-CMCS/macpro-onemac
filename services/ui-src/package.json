@@ -41,7 +41,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "set && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" ",
+    "test": "cp ../common/mockconfig.js src/utils/config.js && cp ../common/getUser.json src/utils && react-scripts test --watchAll=false --transformIgnorePatterns \"node_modules/(?!@codemirror)/\" && cp ../common/origconfig.js src/utils/config.js && rm src/utils/getUser.json",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
