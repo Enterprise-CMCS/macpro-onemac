@@ -1,11 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Review } from "@cmsgov/design-system";
-import { ROLES, latestAccessStatus, territoryMap } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  ROLES,
+  latestAccessStatus,
+  territoryMap,
+} from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
+import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
+import { PhoneNumber } from "../components/PhoneNumber";
 import UserDataAPI from "../utils/UserDataApi";
 import closingX from "../images/ClosingX.svg";
 import UserDataApi from "../utils/UserDataApi";
@@ -74,13 +81,28 @@ const transformAccesses = (user = {}) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile } = useAppContext();
-  const { setUserInfo } = useAppContext();
-  const { email, firstName, lastName, userData } = userProfile;
-
+  const {
+    userProfile: { email, firstName, lastName, userData },
+    setUserInfo,
+  } = useAppContext();
   const [accesses, setAccesses] = useState(transformAccesses(userData));
+  const [alertCode, setAlertCode] = useState(null);
 
   let userType = userData?.type ?? "user";
+
+  const onPhoneNumberEdit = useCallback(
+    async (newNumber) => {
+      try {
+        const result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        setAlertCode(result);
+      } catch (e) {
+        console.error("Error updating phone number", e);
+        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+      }
+    },
+    [email]
+  );
+
   const xClicked = useCallback(
     (stateCode) => {
       if (
@@ -108,10 +130,11 @@ const UserPage = () => {
               setUserInfo();
             } else {
               console.log("Returned: ", returnCode);
+              setAlertCode(returnCode);
             }
           });
         } catch (err) {
-          console.log("setAlert(ALERTS_MSG.SUBMISSION_ERROR)");
+          setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
         }
       }
     },
@@ -223,6 +246,7 @@ const UserPage = () => {
   return (
     <div>
       <PageTitleBar heading="Account Management" />
+      <AlertBar alertCode={alertCode} />
       <div className="profile-container">
         <div className="subheader-message">
           Below is the account information for your role as a{" "}
@@ -236,6 +260,10 @@ const UserPage = () => {
               {getFullName(firstName, lastName)}
             </Review>
             <Review heading="Email">{email}</Review>
+            <PhoneNumber
+              initialValue={userData.phoneNumber}
+              onSubmit={onPhoneNumberEdit}
+            />
           </div>
           {accessList}
         </div>

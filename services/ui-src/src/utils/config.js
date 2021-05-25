@@ -1,3 +1,4 @@
+// eslint-disable-next-line import/no-anonymous-default-export
 export default {
     MAX_ATTACHMENT_SIZE_MB: 80,
     ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
