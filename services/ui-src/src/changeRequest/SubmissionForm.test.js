@@ -1,20 +1,61 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 
+import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import { SubmissionForm } from "./SubmissionForm";
 
 it("does not clear inputs if submit fails.", async () => {
-  const requiredList = ["Required File 1", "Required File 2"],
-    optionalList = ["Optional File 1", "Optional File 2"];
+  const testFormInfo = {
+    pageTitle: "Testing Submission Form",
+    readOnlyPageTitle: "Read Only Title - Test",
+    detailsHeader: "Testing Header",
+    subheaderMessage: "This text should never show, it is in place for unit testing.",
+    requiredUploads: ["Required File 1", "Required File with a really long title 2", "Required File 3"],
+    optionalUploads: [
+      "Optional file upload type 1",
+      "Optional file upload type with a really long title 2",
+      "O3",
+      "Optional file upload type 4",
+    ],
+    transmittalNumber: {
+      idType: "chipspa",
+      idLabel: "Transmittal Number",
+      idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+      idFAQLink: ROUTES.FAQ_SPA_ID,
+      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
+      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idMustExist: false,
+      errorLevel: "error",
+    },
+
+  };
+
+  const testValues = {
+    transmittalNumber: "MI-12-1122-CHIP",
+  };
 
   render(
     <SubmissionForm
-      requiredUploads={requiredList}
-      optionalUploads={optionalList}
+    formInfo={testFormInfo}
+    changeRequestType={CHANGE_REQUEST_TYPES.CHIP_SPA}
     ></SubmissionForm>
   );
 
-  // there should be a row for each entry
+  // fields should start out empty
+  expect(screen.queryByLabelText(testFormInfo.transmittalNumber.idLabel)).toBeNull();
+
+  // Add the value to the transmittal number
+  fireEvent.change(screen.getByLabelText(testFormInfo.transmittalNumber.idLabel), {
+    target: { value: testValues.transmittalNumber },
+  });
+  
+  // click the submit button
+  fireEvent.click(screen.getByText("Submit", { selector: "button" }));
+
+  // the transmittal number still contains the value
+  expect(screen.getByText(testFormInfo.transmittalNumber.idLabel).parentNode).toHaveTextContent(
+    testValues.transmittalNumber
+  );
 
 
 });
