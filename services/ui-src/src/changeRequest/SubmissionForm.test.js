@@ -3,13 +3,6 @@ import { renderWithProviders } from "../utils/test-utils";
 
 import {render, screen} from '@testing-library/react';
 import FormInfoText, {FORM_INFO_TEXT_ID} from "../components/FormInfoText";
-import 'core-js/es/typed-array/uint32-array';
-import 'core-js/es/array/find';
-import 'core-js/es/object/assign';
-import 'core-js/es/object/entries';
-import 'core-js/es/array';
-import 'core-js/es/object';
-import "isomorphic-fetch";
 import Waiver from "./Waiver";
 
 
