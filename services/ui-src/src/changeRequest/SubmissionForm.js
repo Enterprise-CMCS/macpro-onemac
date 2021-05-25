@@ -22,7 +22,7 @@ import { useAppContext } from "../libs/contextLib";
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-const SubmissionForm = ({ formInfo, changeRequestType }) => {
+export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
   const {
