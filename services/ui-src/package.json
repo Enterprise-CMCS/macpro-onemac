@@ -37,7 +37,7 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
-    "test": "react-scripts test",
+    "test": "react-scripts test --watchAll=false ",
     "eject": "react-scripts eject"
   },
   "eslintConfig": {
@@ -65,6 +65,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.35",
     "@fortawesome/free-solid-svg-icons": "^5.15.3",
     "@fortawesome/react-fontawesome": "^0.1.14",
+    "global-jsdom": "^8.1.0",
+    "jsdom": "^16.6.0",
     "serverless-cloudfront-invalidate": "1.5.0",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-s3-sync": "^1.14.4"
@@ -73,5 +75,19 @@
     "presets": [
       "react-app"
     ]
+  },
+  "jest": {
+    "transformIgnorePatterns": [
+      "./poly*.js"
+    ],
+    "collectCoverageFrom": [
+      "{!(./**/polyfill*/)",
+      "./**/*.{js,jsx,ts,tsx}",
+      "./JestSetup.js",
+      "./JestTeardown.js",
+      "!<rootDir>/node_modules/"
+    ],
+    "globalSetup": "<rootDir>/JestSetup.js",
+    "globalTeardown": "<rootDir>/JestTeardown.js"
   }
 }

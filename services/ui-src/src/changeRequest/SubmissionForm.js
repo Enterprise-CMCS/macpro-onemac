@@ -16,6 +16,7 @@ import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
+import FormInfoText from "../components/FormInfoText";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -329,6 +330,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <PageTitleBar heading={formInfo.pageTitle} text="" />
       <AlertBar alertCode={alertCode} />
       <div className="form-container">
+        <FormInfoText text="Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email."/>
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
             {formInfo.subheaderMessage}
