@@ -82,8 +82,6 @@
       "src/**/*.{js,jsx,ts,tsx}",
       "./JestSetup.js",
       "!<rootDir>/node_modules/"
-    ],
-    "globalSetup": "<rootDir>/JestSetup.js",
-    "globalTeardown": "<rootDir>/JestTearDown.js"
+    ]
   }
 }
