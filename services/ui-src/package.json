@@ -66,6 +66,8 @@
     "@babel/cli": "^7.12.1",
     "@babel/core": "^7.12.7",
     "@babel/preset-env": "^7.12.1",
+    "global-jsdom": "^8.1.0",
+    "jsdom": "^16.6.0",
     "serverless-cloudfront-invalidate": "^1.5.0",
     "serverless-plugin-scripts": "^1.0.2",
     "serverless-s3-sync": "^1.14.4"
@@ -78,8 +80,7 @@
   "jest": {
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
-      "JestSetup.js",
-      "JestTearDown.js",
+      "./JestSetup.js",
       "!<rootDir>/node_modules/"
     ],
     "globalSetup": "<rootDir>/JestSetup.js",

@@ -1,4 +1,4 @@
-const JEST_ENV = join(ROOT, '__jest_env__')
+
 
 module.exports = function (api) {
     api.cache(false);
