@@ -10,7 +10,7 @@ let spaID;
 let generatedWaiverID;
 
 module.exports = {
-    "@tags": ["smoke", "smoke2"],
+    "@tags": ["smoke"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {

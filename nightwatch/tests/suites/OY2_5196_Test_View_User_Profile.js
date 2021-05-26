@@ -4,6 +4,8 @@ const timeout = 1000;
 let pageObjects;
 
 module.exports = {
+  "@tags": ["smoke", "regression-soon"],
+  
   before: function (browser) {
     login.before(browser);
     login["Login to SPA and Waiver Dashboard"](browser);

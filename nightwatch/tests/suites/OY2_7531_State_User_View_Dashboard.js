@@ -3,7 +3,7 @@ let generatedWaiverID;
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
-    "@tags": ["stateDashb", "smoke", "regression-soon"],
+    "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
         const testData = {

@@ -14,7 +14,7 @@ let fileElement = "//span[text()='file.docx']";
 let picElement = "//span[text()='picture.jpg']";
 let textElement = "//span[text()='textnotes.txt']";
 module.exports = {
-    "@tags": ["smoke", "attachmentType"],
+    "@tags": ["smoke", "regression-soon"],
     // before: function (browser) {
     //     console.log('Setting up the browser instance...');
     //     console.log('Opening the browser...')
