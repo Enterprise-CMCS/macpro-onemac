@@ -1,23 +1,27 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { Review } from "@cmsgov/design-system";
+import { useLocation } from "react-router-dom";
+import { Button, Review } from "@cmsgov/design-system";
+
 import {
   RESPONSE_CODE,
   ROLES,
   latestAccessStatus,
   territoryMap,
+  territoryList,
 } from "cmscommonlib";
-
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
 import { helpDeskContact } from "../libs/helpDeskContact";
+import { getAlert } from "../libs/error-mappings";
+import { ALERTS_MSG } from "../libs/alert-messages";
+import UserDataApi from "../utils/UserDataApi";
+
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
 import { PhoneNumber } from "../components/PhoneNumber";
-import UserDataAPI from "../utils/UserDataApi";
+import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
-import UserDataApi from "../utils/UserDataApi";
-import { getAlert } from "../libs/error-mappings";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import addStateButton from "../images/addStateButton.svg";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -85,8 +89,11 @@ const UserPage = () => {
     userProfile: { email, firstName, lastName, userData },
     setUserInfo,
   } = useAppContext();
+  const location = useLocation();
+  const [loading, setLoading] = useState(false);
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
-  const [alertCode, setAlertCode] = useState(null);
+  const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
 
   let userType = userData?.type ?? "user";
 
@@ -101,6 +108,47 @@ const UserPage = () => {
       }
     },
     [email]
+  );
+
+  const signupUser = useCallback(
+    async (payload) => {
+      try {
+        setLoading(true);
+
+        payload = payload.map(({ value }) => ({
+          stateCode: value,
+          status: "pending",
+        }));
+
+        let answer = await UserDataApi.updateUser({
+          userEmail: email,
+          doneBy: email,
+          firstName,
+          lastName,
+          type: userType,
+          attributes: payload,
+        });
+
+        if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
+        setAlertCode(RESPONSE_CODE.USER_SUBMITTED);
+        setIsStateSelectorVisible(false);
+        setUserInfo();
+      } catch (error) {
+        console.error("Could not create new user:", error);
+        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+      } finally {
+        setLoading(false);
+      }
+    },
+    [
+      email,
+      firstName,
+      lastName,
+      userType,
+      setIsStateSelectorVisible,
+      setLoading,
+      setUserInfo,
+    ]
   );
 
   const xClicked = useCallback(
@@ -141,7 +189,38 @@ const UserPage = () => {
     [email, userType, setUserInfo]
   );
 
-  const accessList = useMemo(() => {
+  const renderSelectStateAccess = useMemo(() => {
+    return (
+      <div className="profile-signup-container">
+        <MultiSelectDropDown
+          cancelFn={() => setIsStateSelectorVisible(false)}
+          errorMessage="Please select at least one state."
+          loading={loading}
+          options={territoryList}
+          placeholder="select state here"
+          required
+          showCancelButton
+          subtitle="Select your State Access."
+          submitFn={signupUser}
+          title="Choose State Access"
+          type="selectprofile"
+        />
+      </div>
+    );
+  }, [loading, signupUser, setIsStateSelectorVisible]);
+
+  const renderAddStateButton = useMemo(() => {
+    return (
+      <Button
+        className="add-state-button"
+        onClick={() => setIsStateSelectorVisible(true)}
+      >
+        <img src={addStateButton} alt="add state or territiory" />
+      </Button>
+    );
+  }, [setIsStateSelectorVisible]);
+
+  const accessSection = useMemo(() => {
     let heading;
 
     switch (userType) {
@@ -183,9 +262,23 @@ const UserPage = () => {
             </div>
           ))}
         </dl>
+        {userType === ROLES.STATE_USER && (
+          <div className="add-access-container">
+            {isStateSelectorVisible
+              ? renderSelectStateAccess
+              : renderAddStateButton}
+          </div>
+        )}
       </div>
     );
-  }, [accesses, userType, xClicked]);
+  }, [
+    accesses,
+    userType,
+    xClicked,
+    isStateSelectorVisible,
+    renderSelectStateAccess,
+    renderAddStateButton,
+  ]);
 
   useEffect(() => {
     (async () => {
@@ -195,7 +288,7 @@ const UserPage = () => {
 
         switch (userType) {
           case ROLES.STATE_USER: {
-            const adminsByState = await UserDataAPI.getStateAdmins(
+            const adminsByState = await UserDataApi.getStateAdmins(
               userData.attributes
                 .map(({ stateCode }) => stateCode)
                 .filter(Boolean)
@@ -205,12 +298,12 @@ const UserPage = () => {
           }
 
           case ROLES.STATE_ADMIN: {
-            contacts = await UserDataAPI.getCmsApprovers();
+            contacts = await UserDataApi.getCmsApprovers();
             break;
           }
           case ROLES.HELPDESK:
           case ROLES.CMS_APPROVER: {
-            contacts = await UserDataAPI.getCmsSystemAdmins();
+            contacts = await UserDataApi.getCmsSystemAdmins();
             break;
           }
 
@@ -265,7 +358,7 @@ const UserPage = () => {
               onSubmit={onPhoneNumberEdit}
             />
           </div>
-          {accessList}
+          {accessSection}
         </div>
       </div>
     </div>

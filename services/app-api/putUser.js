@@ -287,8 +287,8 @@ const ALLOWED_NEXT_STATES = {
     USER_STATUS.REVOKED,
   ],
   [USER_STATUS.ACTIVE]: [USER_STATUS.REVOKED],
-  [USER_STATUS.DENIED]: [USER_STATUS.ACTIVE],
-  [USER_STATUS.REVOKED]: [USER_STATUS.ACTIVE],
+  [USER_STATUS.DENIED]: [USER_STATUS.PENDING, USER_STATUS.ACTIVE],
+  [USER_STATUS.REVOKED]: [USER_STATUS.PENDING, USER_STATUS.ACTIVE],
 };
 
 // Ensure the status changes are legal //
@@ -497,20 +497,19 @@ const constructRoleAdminEmails = (recipients, input) => {
     case USER_TYPE.STATE_USER:
       typeText = "State User";
 
-      if (input.userEmail === input.doneBy) {
+      if (input.userEmail === input.doneBy && input.attributes[0].status === USER_STATUS.REVOKED) {
         newSubject =
           `OneMAC Portal State access for ` +
           input.attributes[0].stateCode +
           ` Access self-revoked by the user`;
         email.HTML =
-          `
-      <p>Hello,</p>
+          `<p>Hello,</p>
 
-      The OneMAC Portal State access for ` +
+          The OneMAC Portal State access for ` +
           input.attributes[0].stateCode +
           ` has been self-revoked by the user. Please log into your User Management Dashboard to see the updated access.
 
-      <p>Thank you!</p>`;
+          <p>Thank you!</p>`;
       }
       break;
     case USER_TYPE.STATE_ADMIN:
