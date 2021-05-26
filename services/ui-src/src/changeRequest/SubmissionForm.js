@@ -227,6 +227,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
             } else {
               newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+              let updatedRecord = { ...changeRequest };
+              updatedRecord["summary"] = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
+              setChangeRequest(updatedRecord);
             }
           }
           setTransmittalNumberStatusMessage(newMessage);

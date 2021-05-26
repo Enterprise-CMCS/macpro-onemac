@@ -110,8 +110,6 @@ async fieldsValid(data) {
         <p>
             <b>Additional Information</b>:<br>
             ${data.summary}
-            <br/>
-            ${data.renewalComments}
         </p>
         <br>
         <p>
