@@ -867,6 +867,10 @@ input[type="file"] {
   @extend .ds-u-margin-top--5;
 }
 
+.char-count{
+  text-align: right;
+}
+
 .LoaderButton, .form-submit {
   @extend .ds-u-margin-top--5;
   background-color: $color-primary;

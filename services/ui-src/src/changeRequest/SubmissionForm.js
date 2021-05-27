@@ -67,6 +67,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     transmittalNumber: "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
+    maxLength:"4000",
   });
 
   /**
@@ -395,7 +396,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               multiline
               onChange={handleInputChange}
               value={changeRequest.summary}
+              maxLength={changeRequest.maxLength}
             ></TextField>
+            <div className="char-count">{changeRequest.summary.length}/{changeRequest.maxLength}</div>
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button
