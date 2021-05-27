@@ -32,9 +32,8 @@ const TransmittalNumber = ({
     <div>
       <div className="label-container">
         <div className="label-lcol">
-          <label htmlFor="transmittalNumber">
+          <label htmlFor="transmittalNumber" className="required">
             {idLabel}
-            <span className="required-mark">*</span>
           </label>
         </div>
         <div className="label-rcol">

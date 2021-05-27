@@ -1,10 +1,17 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
 import { ROUTES } from "cmscommonlib";
 
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import { SubmissionForm } from "./SubmissionForm";
+
+import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+jest.mock("../utils/ChangeRequestDataApi");
+
+import { AppContext } from "../libs/contextLib";
+import { act } from "react-dom/test-utils";
 
 it("does not clear inputs if submit fails.", async () => {
   const testFormInfo = {
@@ -40,34 +47,105 @@ it("does not clear inputs if submit fails.", async () => {
   const testValues = {
     transmittalNumber: "MI-12-1122-CHIP",
   };
+  const initialAuthState = {
+    isAuthenticating: false,
+    isAuthenticated: true,
+    isLoggedInAsDeveloper: false,
+    isValidRoute: true,
+    userProfile: {
+      cmsRoles: "onemac-state-user",
+      email: "stateuseractive@cms.hhs.local",
+      firstName: "TestFirstName",
+      lastName: "TestLastName",
+      userData: {
+        firstName: "Angie",
+        lastName: "Active",
+        attributes: [
+          {
+            stateCode: "MI",
+            history: [
+              {
+                date: 1617149287,
+                doneBy: "systemsadmin@cms.hhs.local",
+                status: "active",
+              },
+            ],
+          },
+          {
+            stateCode: "VA",
+            history: [
+              {
+                date: 1617149287,
+                doneBy: "systemsadmin@cms.hhs.local",
+                status: "active",
+              },
+            ],
+          },
+        ],
+        id: "stateuseractive@cms.hhs.local",
+        type: "stateuser",
+        validRoutes: [
+          "/",
+          "/componentpage",
+          "/profile",
+          "/devlogin",
+          "/FAQ",
+          "/dashboard",
+          "/dashboard",
+          "/spa",
+          "/sparai",
+          "/chipspa",
+          "/chipsparai",
+          "/waiver",
+          "/waiverappk",
+          "/waiverextension",
+          "/waiverrai",
+        ],
+      },
+    },
+  };
+
+  window.HTMLElement.prototype.scrollIntoView = function () {};
+
+  // have to mock the package-exists call
+  ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
   render(
-    <SubmissionForm
-      formInfo={testFormInfo}
-      changeRequestType={CHANGE_REQUEST_TYPES.CHIP_SPA}
-    ></SubmissionForm>
+    <AppContext.Provider
+      value={{
+        ...initialAuthState,
+      }}
+    >
+      <SubmissionForm
+        formInfo={testFormInfo}
+        changeRequestType={CHANGE_REQUEST_TYPES.CHIP_SPA}
+      ></SubmissionForm>
+    </AppContext.Provider>
   );
 
-  // fields should start out empty
-  expect(
-    screen.queryByLabelText(testFormInfo.transmittalNumber.idLabel)
-  ).toBeNull();
-
-  // Add the value to the transmittal number
-  fireEvent.change(
-    screen.getByLabelText(testFormInfo.transmittalNumber.idLabel),
-    {
-      target: { value: testValues.transmittalNumber },
-    }
+  const transmittalNumberEl = screen.getByLabelText(
+    testFormInfo.transmittalNumber.idLabel
   );
 
-  // click the submit button
-  fireEvent.click(screen.getByText("Submit", { selector: "button" }));
+  // value starts out empty
+  expect(transmittalNumberEl.value).toBe("");
+
+  act(() => {
+    // Add the value to the transmittal number
+    userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+   //await waitForElementToBeRemoved(() => screen.getByText(/saving/i))
+  });
+
+  // the transmittal number contains the value
+  expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber); // testValues.transmittalNumber);
+
+  act(() => {
+    // click the submit button
+    userEvent.click(screen.getByText("Submit", { selector: "input" }));
+  });
 
   // the transmittal number still contains the value
-  expect(
-    screen.getByText(testFormInfo.transmittalNumber.idLabel).parentNode
-  ).toHaveTextContent(testValues.transmittalNumber);
+  expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 });
 /*
 // 8778 Regression Testing - Attachment is required message is not displayed if uploaded doc is deleted
