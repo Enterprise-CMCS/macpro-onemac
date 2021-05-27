@@ -157,6 +157,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         break;
       case "renewal":
         transmittalNumberInfo = formInfo.renewalTransmittalNumber;
+        updatedRecord["summary"] = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
         break;
       default:
         transmittalNumberInfo = formInfo.transmittalNumber;
