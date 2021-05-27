@@ -230,6 +230,11 @@ const populateUserAttributes = (
   console.log(
     "Successfully ensured Privileges, status change rules and populated user attributes"
   );
+
+  for (const attr of ["firstName", "lastName"]) {
+    if (input[attr]) user[attr] = input[attr];
+  }
+
   return user;
 };
 
