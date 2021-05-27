@@ -6,13 +6,13 @@ import FormInfoText, {FORM_INFO_TEXT_ID} from "../components/FormInfoText";
 import Waiver from "./Waiver";
 
 
-test('renders FormInfoText component', () => {
+test('oy2-6318 renders FormInfoText component', () => {
     const {getFormText} = render(<FormInfoText text="XYZ-Form-TEST-XYZ"/>);
     const textElement = screen.getByText(/XYZ-Form-TEST-XYZ/i);
     expect(textElement).toBeInTheDocument();
 });
 
-test('renders Waiver Form component', async () => {
+test('oy2-6318 renders Waiver Form component', async () => {
     const getWaiverForm = renderWithProviders(<Waiver/>,{
         route: "/wavier"
     });
