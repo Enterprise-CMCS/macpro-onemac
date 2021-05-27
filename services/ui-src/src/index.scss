@@ -546,22 +546,22 @@ input[type="file"] {
   .state-signup-container {
     @extend .ds-u-justify-content--center;
     width: 450px;
-  
+
     .signup-headings {
       @extend .ds-u-padding-bottom--2;
-  
+
       .role-header {
         font-family: Open Sans;
         font-weight: bold;
         font-size: 24px;
       }
-  
+
       .user-role {
         font-family: Open Sans;
         font-size: 21px;
         font-style: italic;
         font-weight: 400;
-  
+
         svg {
           margin: 0 1ch;
         }
@@ -930,18 +930,18 @@ input[type="file"] {
     @extend .ds-u-justify-content--end;
     border-top: 2px solid $color-gray-lighter;
     width: 100%;
-    
+
     &.profile-multi-select {
       position: absolute;
       top: 350px;
     }
-  
+
     .multi-select-error-message {
       @extend .ds-c-field__hint;
       height: 35px;
       color: $color-red;
     }
-    
+
     .no-error-offset {
       height: 35px;
     }
@@ -1246,7 +1246,7 @@ dl.state-access-cards {
 }
 
 .Collapsible__contentInner {
-
+  padding-left: 40px;
   font-size: 14px !important;
   font-weight: normal;
   color: black !important;
