@@ -41,6 +41,7 @@ Resources:
                 - dynamodb:Scan
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:UpdateItem
               Resource:
                 - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
             - Effect: Allow
@@ -66,12 +67,14 @@ Resources:
               Action:
                 - dynamodb:GetItem
                 - dynamodb:PutItem
+                - dynamodb:UpdateItem
               Resource: !GetAtt SpaIdTable.Arn
             - Effect: 'Allow'
               Action:
                 - dynamodb:GetItem
                 - dynamodb:Scan
                 - dynamodb:PutItem
+                - dynamodb:UpdateItem
               Resource: arn:aws:dynamodb:*:*:table/${self:custom.userTableName}
   LambdaWarmupRole:
     Type: 'AWS::IAM::Role'

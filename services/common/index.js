@@ -37,6 +37,7 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_REVOKED: "UR047",
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
+  HELPDESK_USER_SUBMITTED:"HU000",
 };
 
 export const USER_ADMIN_PERMISSION = {
@@ -194,9 +195,20 @@ const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
  * @param [state] - A two-letter territory code to search for (only for state users and admins).
  */
 export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
-  if (type === USER_TYPE.STATE_USER || type === USER_TYPE.STATE_ADMIN) {
-    const stateObj = attributes.find(({ stateCode }) => stateCode === state);
-    if (!stateObj) return null;
+  switch (type) {
+    case ROLES.STATE_USER:
+    case ROLES.STATE_ADMIN: {
+      const stateObj = attributes.find(({ stateCode }) => stateCode === state);
+      if (!stateObj) return null;
+
+      return stateObj.history.sort(datesDescending)[0].status;
+    }
+
+    case ROLES.CMS_APPROVER:
+    case ROLES.HELPDESK:
+    case ROLES.SYSTEM_ADMIN: {
+      return attributes.sort(datesDescending)[0].status;
+    }
 
     attributes = stateObj.history;
   }

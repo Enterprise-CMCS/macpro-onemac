@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
 
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
@@ -32,7 +32,7 @@ const Dashboard = () => {
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
-    if (location?.state?.passCode !== undefined)  location.state.passCode=null;
+    if (location?.state?.passCode !== undefined) location.state.passCode = null;
     if (!userData?.type || !userData?.attributes) {
       history.replace("/signup", location.state);
       return;
@@ -42,23 +42,24 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        if (mounted)
-          setChangeRequestList(
-            await ChangeRequestDataApi.getAllByAuthorizedTerritories(
-              userProfile.email
-            )
-          );
+        const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+          userProfile.email
+        );
+
+        if (typeof data === "string") throw data;
+
+        if (mounted) setChangeRequestList(data);
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);   // ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setAlertCode(RESPONSE_CODE.SYSTEM_ERROR); // ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
     })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [ history, location, userData, userProfile]);
+  }, [history, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -119,6 +120,12 @@ const Dashboard = () => {
         accessor: "submittedAt",
         Cell: renderDate,
       },
+      {
+        Header: "State Submitter",
+        accessor: ({ user: { firstName, lastName } = {} }) =>
+          [firstName, lastName].filter(Boolean).join(" "),
+        id: "submitter",
+      },
     ],
     [getType, renderDate, renderId, renderType]
   );
@@ -127,6 +134,8 @@ const Dashboard = () => {
     () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
     []
   );
+
+  const role = getUserRoleObj(userProfile.userData.type);
 
   // Render the dashboard
   return (
@@ -137,84 +146,88 @@ const Dashboard = () => {
         {!!userProfile?.userData?.attributes &&
         isActive(userProfile?.userData) ? (
           <>
-            <div className="dashboard-left-col">
-              <div className="action-title">SPAs</div>
-              <Button
-                id="spaSubmitBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.SPA)}
-              >
-                Submit New Medicaid SPA
-              </Button>
-              <Button
-                id="spaRaiBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.SPA_RAI)}
-              >
-                Respond to Medicaid SPA RAI
-              </Button>
-              <Button
-                id="chipSpaBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.CHIP_SPA)}
-              >
-                Submit New CHIP SPA
-              </Button>
-              <Button
-                id="chipSpaRaiBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
-              >
-                Respond to CHIP SPA RAI
-              </Button>
-              <div className="action-title">Waivers</div>
-              <Button
-                id="waiverBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER)}
-              >
-                Submit 1915(b) Waiver Action
-              </Button>
-              <Button
-                id={"waiverRaiBtn"}
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER_RAI)}
-              >
-                Respond to 1915(b) Waiver RAI
-              </Button>
-              <Button
-                id="waiverExtBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-              >
-                Request Temporary Extension form - 1915(b) and 1915(c)
-              </Button>
-              <Button
-                id="waiverAppKBtn"
-                variation="transparent"
-                onClick={() => history.push(ROUTES.WAIVER_APP_K)}
-              >
-                Submit 1915(c) Appendix K Amendment
-              </Button>
-            </div>
-            <div className="dashboard-right-col">
-              <div>
-                <div className="action-title">Submissions List</div>
-                <LoadingScreen isLoading={isLoading}>
-                  <div>
-                    {changeRequestList.length > 0 ? (
-                      <PortalTable
-                        className="submissions-table"
-                        columns={columns}
-                        data={changeRequestList}
-                        initialState={initialTableState}
-                      />
-                    ) : (
-                      <EmptyList message="You have no submissions yet." />
-                    )}
-                  </div>
-                </LoadingScreen>
+            {role.canAccessForms && (
+              <div className="dashboard-left-col">
+                <div className="action-title">SPAs</div>
+                <Button
+                  id="spaSubmitBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.SPA)}
+                >
+                  Submit New Medicaid SPA
+                </Button>
+                <Button
+                  id="spaRaiBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.SPA_RAI)}
+                >
+                  Respond to Medicaid SPA RAI
+                </Button>
+                <Button
+                  id="chipSpaBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.CHIP_SPA)}
+                >
+                  Submit New CHIP SPA
+                </Button>
+                <Button
+                  id="chipSpaRaiBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
+                >
+                  Respond to CHIP SPA RAI
+                </Button>
+                <div className="action-title">Waivers</div>
+                <Button
+                  id="waiverBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.WAIVER)}
+                >
+                  Submit 1915(b) Waiver Action
+                </Button>
+                <Button
+                  id={"waiverRaiBtn"}
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.WAIVER_RAI)}
+                >
+                  Respond to 1915(b) Waiver RAI
+                </Button>
+                <Button
+                  id="waiverExtBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
+                >
+                  Request Temporary Extension form - 1915(b) and 1915(c)
+                </Button>
+                <Button
+                  id="waiverAppKBtn"
+                  variation="transparent"
+                  onClick={() => history.push(ROUTES.WAIVER_APP_K)}
+                >
+                  Submit 1915(c) Appendix K Amendment
+                </Button>
               </div>
+            )}
+            <div
+              className={
+                role.canAccessForms ? "dashboard-right-col" : "ds-l-col--12"
+              }
+            >
+              <div className="action-title">Submissions List</div>
+              <LoadingScreen isLoading={isLoading}>
+                <div>
+                  {changeRequestList.length > 0 ? (
+                    <PortalTable
+                      className="submissions-table"
+                      columns={columns}
+                      data={changeRequestList}
+                      initialState={initialTableState}
+                    />
+                  ) : (
+                    <EmptyList message="You have no submissions yet." />
+                  )}
+                </div>
+              </LoadingScreen>
             </div>
           </>
         ) : isPending(userProfile.userData) ? (

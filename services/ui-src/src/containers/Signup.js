@@ -1,10 +1,11 @@
-import React, { useEffect, useMemo } from "react";
+import React, { useEffect, useMemo ,useCallback} from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
 import CardButton from "../components/cardButton";
 import { RESPONSE_CODE } from "cmscommonlib";
+import PageTitleBar from "../components/PageTitleBar";
 
 const createAttribute = () => [{ status: "pending" }];
 
@@ -18,12 +19,21 @@ function CMSSignup() {
     <CardButton loading={loading} onClick={onClickCMS} type="cmsapprover" />
   );
 }
+function HelpdeskSignup() {
+  const [_,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
+  useEffect(() => {
+    if(onLoadHelpdesk)onLoadHelpdesk();
+  },[onLoadHelpdesk]);
+  return null
+}
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
 const isCmsUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-cms-user");
+const isHelpdeskUser = (cmsRoles) =>
+  !!cmsRoles.split(",").includes("onemac-helpdesk-user");
 
 export function Signup() {
   const history = useHistory();
@@ -45,6 +55,10 @@ export function Signup() {
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <CMSSignup />
         </div>
+      ) : isHelpdeskUser(cmsRoles) ? (
+        <div className="ds-l-col--auto ds-u-margin-x--auto">
+         <HelpdeskSignup/>
+        </div>
       ) : (
         <Redirect
           to={{
@@ -62,9 +76,7 @@ export function Signup() {
 
   return (
     <>
-      <div className="page-title-bar" id="title_bar">
-        <h2>Registration: User Role</h2>
-      </div>
+      <PageTitleBar heading="Registration: User Role" />
       <div className="signup-container">
         <div className="signup-center">
           <p className="signup-prompt">

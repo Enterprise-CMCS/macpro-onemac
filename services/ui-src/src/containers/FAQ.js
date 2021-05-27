@@ -1,8 +1,9 @@
-import React, {useEffect, useRef} from "react";
+import React, {useEffect, useRef } from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import Collapsible from 'react-collapsible';
 import TriggerCB from "../components/TriggerCB"
+
 const FAQ = () => {
 
     const waiverIdRef= useRef(document.location.hash);
@@ -23,7 +24,11 @@ const FAQ = () => {
       }
     }
 
-    useEffect( () => scrollToSection(), [] )
+    useEffect( () => {
+
+      scrollToSection()
+
+    }, [] )
 
 
     return (
