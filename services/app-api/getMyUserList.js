@@ -59,15 +59,14 @@ export const main = handler(async (event, context) => {
     throw dbError;
   }
   // Populate doneBy Name
-  const result = transformedUserList.map(user => {
+  return transformedUserList.map(user => {
      const doneBy = userNames.Items.find(item => item.id === user.latest.doneBy);
-     if (!doneBy){
+     if (doneBy){
+        user.latest.doneByName = [doneBy.firstName, doneBy.lastName].filter(Boolean).join(" ");
+     } else {
        console.log(`User id: ${user.email} has the doneBy id as ${user.latest.doneBy}, which does not have a user record of it's own in the DB`);
        user.latest.doneByName = '';
-       return user;
      }
-     user.latest.doneByName = `${doneBy.firstName} ${doneBy.lastName}`;
      return user;
   });
-  return result;
 });
