@@ -291,9 +291,8 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     } else {
       try {
         const uploadRef = uploader.current;
-        const uploadedList = RESPONSE_CODE.SUCCESSFULLY_SUBMITTED; //await uploadRef.uploadFiles();
+        const uploadedList = await uploadRef.uploadFiles();
         try {
-          console.log("DEBUG: ss" + JSON.stringify(changeRequest))
           const returnCode = await ChangeRequestDataApi.submit(
             changeRequest,
             uploadedList
