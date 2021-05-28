@@ -60,6 +60,7 @@ class WaiverExtension {
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
             <br><b>Waiver #</b>: ${data.transmittalNumber}
+            <br/>${data.transmittalNumberWarningMessage}
         </p>
         <p>
             <b>Additional Information</b>:
