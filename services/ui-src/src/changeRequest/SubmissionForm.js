@@ -157,7 +157,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
         break;
       case "renewal":
         transmittalNumberInfo = formInfo.renewalTransmittalNumber;
-        updatedRecord["summary"] = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
         break;
       default:
         transmittalNumberInfo = formInfo.transmittalNumber;
@@ -228,9 +227,6 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
             } else {
               newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
-              let updatedRecord = { ...changeRequest };
-              updatedRecord["summary"] = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
-              setChangeRequest(updatedRecord);
             }
           }
           setTransmittalNumberStatusMessage(newMessage);
@@ -279,6 +275,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setIsLoading(true);
     if (mounted) setFirstTimeThrough(false);
 
+    if (transmittalNumberStatusMessage.statusLevel === "warn"
+    && transmittalNumberStatusMessage.statusMessage ) {
+      changeRequest.transmittalNumberWarningMessage = transmittalNumberStatusMessage.statusMessage;
+    }
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
         transmittalNumberStatusMessage.statusMessage) ||
@@ -291,8 +291,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     } else {
       try {
         const uploadRef = uploader.current;
-        const uploadedList = await uploadRef.uploadFiles();
+        const uploadedList = RESPONSE_CODE.SUCCESSFULLY_SUBMITTED; //await uploadRef.uploadFiles();
         try {
+          console.log("DEBUG: ss" + JSON.stringify(changeRequest))
           const returnCode = await ChangeRequestDataApi.submit(
             changeRequest,
             uploadedList

@@ -67,7 +67,7 @@ async fieldsValid(data) {
             <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}
+            <br><b>Waiver #</b>: ${data.transmittalNumber} ${data.transmittalNumberWarningMessage}
             <br><b>Action Type</b>: ${data.actionType}
             <br><b>Waiver Authority</b>: ${data.waiverAuthority}
         </p>
