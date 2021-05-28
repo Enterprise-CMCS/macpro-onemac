@@ -9,7 +9,6 @@ import { RESPONSE_CODE } from "./libs/response-codes";
 import { DateTime } from "luxon";
 import getUser from "./utils/getUser";
 import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
-import packageExists from "./utils/packageExists";
 
 /**
  * Submission states for the change requests.
@@ -129,16 +128,6 @@ export const main = handler(async (event) => {
 
     if (data.type === "waiver") {
       planType = 122;
-      if (data.actionType === "renewal") {
-         // Check if transmittal Exists
-        console.log("being Handled... id is: " + data.transmittalNumber);
-        const doesExist = await packageExists(data.transmittalNumber);
-        if ( doesExist === "false") {
-          data.renewalComments = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
-        } else {
-          data.renewalComments = "";
-        }
-      }
     }
     if (data.type === "waiverappk") {
       planType = 123;
