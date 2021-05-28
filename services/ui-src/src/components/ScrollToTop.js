@@ -1,11 +1,12 @@
 import React from 'react';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faCaretUp } from "@fortawesome/free-solid-svg-icons";
+import { faAngleUp } from "@fortawesome/free-solid-svg-icons";
 
 function ScrollToTop() {
     return (
-        <div className="scrolltop" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
-            <FontAwesomeIcon icon={faCaretUp} />
+        <div className="scrollToTop" onClick={() => window.scrollTo({ top: 0, behavior: 'smooth' })}>
+            <FontAwesomeIcon icon={faAngleUp} />
+            <span>Back to Top</span>
         </div>
     );
 }
