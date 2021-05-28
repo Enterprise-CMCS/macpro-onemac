@@ -1,5 +1,4 @@
 const login = require('../cases/OY2-1494_Test_SPA_Login');
-
 let spaCHIPId;
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
@@ -21,6 +20,7 @@ module.exports = {
         console.info('Closing down the browser instance...');
         browser.end();
     },
+
 
     'State user check the Submit New CHIP SPA form': function (browser) {
         // Go to Submit New CHIP SPA page
@@ -65,4 +65,41 @@ module.exports = {
         browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId);
         browser.useCss();
     },
+
+    'Verify that State User can enter Waiver number in RAI form with correct format': function (browser) {
+        browser.pause(1000);
+        browser.useXpath().click("//button[text()='Respond to CHIP SPA RAI']").pause(1000);
+        browser.useXpath().expect.element("//div[@class='form-subheader-message']").to.be.present;
+
+        browser.useCss().clearValue("input#transmittalNumber");
+        browser.useCss().setValue("input#transmittalNumber", "MD-89-1111-1111");
+        browser.useXpath().expect.element("//input[@id='transmittalNumber']").to.be.visible;
+        browser.pause(3000);
+        browser.useCss().clearValue("input#transmittalNumber");
+
+        // input the SPA ID number 
+        browser.useCss().setValue("input#transmittalNumber", spaCHIPId);
+
+        // Take care of the attachement. 
+        // First File Uplaoding 
+        let fileUploadElem = "[name='uploader-input-0']";
+        let filePath = require('path').resolve(__dirname + '/files/adobe.pdf')
+        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+
+        // Second File Uplaoding 
+        fileUploadElem = "[name='uploader-input-1']";
+        filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
+        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+
+        // Enter Additional Information 
+        browser.useXpath().moveToElement('//textarea', 10, 10).pause(500);
+        browser.useXpath().setValue('//textarea', 'This is a test, test, test');
+
+        // Click Submit 
+        browser.useCss().click("[value='Submit']").pause(1000);
+
+        // Verify the CHIP SPA was submitted 
+        browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId);
+        browser.useCss();
+    }
 }

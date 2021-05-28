@@ -68,7 +68,7 @@ module.exports = {
         browser.useXpath().assert.containsText(submittedType, "SPA").pause(1000);
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
-        browser.useXpath().assert.containsText("(//tbody/tr/td)[3]","VA");
+        browser.useXpath().assert.containsText("(//tbody/tr/td)[3]","MD");
         browser.useCss();
     },
 }
