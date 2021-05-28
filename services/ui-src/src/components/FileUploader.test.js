@@ -1,7 +1,7 @@
 import React from "react";
 import { render, fireEvent, screen } from "@testing-library/react";
 
-import { FileUploader } from "./FileUploader";
+import FileUploader from "./FileUploader";
 
 it("has an upload lane for each required and optional upload", async () => {
   const requiredList = ["Required File 1", "Required File 2"],
@@ -15,7 +15,6 @@ it("has an upload lane for each required and optional upload", async () => {
   );
 
   // there should be a row for each entry
-
 
 });
 

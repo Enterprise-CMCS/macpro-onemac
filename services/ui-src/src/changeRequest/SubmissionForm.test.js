@@ -130,19 +130,15 @@ it("does not clear inputs if submit fails.", async () => {
   // value starts out empty
   expect(transmittalNumberEl.value).toBe("");
 
-  act(() => {
-    // Add the value to the transmittal number
-    userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
-   //await waitForElementToBeRemoved(() => screen.getByText(/saving/i))
-  });
+  // Add the value to the transmittal number
+  userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
 
   // the transmittal number contains the value
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber); // testValues.transmittalNumber);
 
-  act(() => {
-    // click the submit button
-    userEvent.click(screen.getByText("Submit", { selector: "input" }));
-  });
+  // click the submit button
+  userEvent.click(screen.getByText("Submit", { selector: "input" }));
+  await screen.findByText("There was a problem submitting your form.");
 
   // the transmittal number still contains the value
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
