@@ -137,99 +137,53 @@ const Dashboard = () => {
 
   const role = getUserRoleObj(userProfile.userData.type);
 
+  const newSubmissionButton = (
+    <Button
+      className="page-title-bar-button"
+      onClick={() => history.push(ROUTES.NEW_SUBMISSION_SELECTION)}
+      inversed
+    >
+      New Submission{" "}
+      <svg
+        width="15"
+        height="16"
+        viewBox="0 0 15 16"
+        fill="none"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M7.29387 0.941406C3.26446 0.941406 -0.000244141 4.20611 -0.000244141 8.23552C-0.000244141 12.2649 3.26446 15.5296 7.29387 15.5296C11.3233 15.5296 14.588 12.2649 14.588 8.23552C14.588 4.20611 11.3233 0.941406 7.29387 0.941406ZM11.5292 9.05905C11.5292 9.25317 11.3703 9.412 11.1762 9.412H8.47034V12.1179C8.47034 12.312 8.31152 12.4708 8.1174 12.4708H6.47034C6.27623 12.4708 6.1174 12.312 6.1174 12.1179V9.412H3.41152C3.2174 9.412 3.05858 9.25317 3.05858 9.05905V7.412C3.05858 7.21788 3.2174 7.05905 3.41152 7.05905H6.1174V4.35317C6.1174 4.15905 6.27623 4.00023 6.47034 4.00023H8.1174C8.31152 4.00023 8.47034 4.15905 8.47034 4.35317V7.05905H11.1762C11.3703 7.05905 11.5292 7.21788 11.5292 7.412V9.05905Z"
+          fill="white"
+        />
+      </svg>
+    </Button>
+  );
+
+  const isUserActive =
+    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
-      <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
+      <PageTitleBar
+        heading="Submission List"
+        rightSideContent={isUserActive && newSubmissionButton}
+      />
       <AlertBar alertCode={alertCode} />
       <div className="dashboard-container">
-        {!!userProfile?.userData?.attributes &&
-        isActive(userProfile?.userData) ? (
-          <>
-            {role.canAccessForms && (
-              <div className="dashboard-left-col">
-                <div className="action-title">SPAs</div>
-                <Button
-                  id="spaSubmitBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.SPA)}
-                >
-                  Submit New Medicaid SPA
-                </Button>
-                <Button
-                  id="spaRaiBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.SPA_RAI)}
-                >
-                  Respond to Medicaid SPA RAI
-                </Button>
-                <Button
-                  id="chipSpaBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.CHIP_SPA)}
-                >
-                  Submit New CHIP SPA
-                </Button>
-                <Button
-                  id="chipSpaRaiBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.CHIP_SPA_RAI)}
-                >
-                  Respond to CHIP SPA RAI
-                </Button>
-                <div className="action-title">Waivers</div>
-                <Button
-                  id="waiverBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.WAIVER)}
-                >
-                  Submit 1915(b) Waiver Action
-                </Button>
-                <Button
-                  id={"waiverRaiBtn"}
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.WAIVER_RAI)}
-                >
-                  Respond to 1915(b) Waiver RAI
-                </Button>
-                <Button
-                  id="waiverExtBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-                >
-                  Request Temporary Extension form - 1915(b) and 1915(c)
-                </Button>
-                <Button
-                  id="waiverAppKBtn"
-                  variation="transparent"
-                  onClick={() => history.push(ROUTES.WAIVER_APP_K)}
-                >
-                  Submit 1915(c) Appendix K Amendment
-                </Button>
-              </div>
+        {isUserActive ? (
+          <LoadingScreen isLoading={isLoading}>
+            {changeRequestList.length > 0 ? (
+              <PortalTable
+                className="submissions-table"
+                columns={columns}
+                data={changeRequestList}
+                initialState={initialTableState}
+              />
+            ) : (
+              <EmptyList message="You have no submissions yet." />
             )}
-            <div
-              className={
-                role.canAccessForms ? "dashboard-right-col" : "ds-l-col--12"
-              }
-            >
-              <div className="action-title">Submissions List</div>
-              <LoadingScreen isLoading={isLoading}>
-                <div>
-                  {changeRequestList.length > 0 ? (
-                    <PortalTable
-                      className="submissions-table"
-                      columns={columns}
-                      data={changeRequestList}
-                      initialState={initialTableState}
-                    />
-                  ) : (
-                    <EmptyList message="You have no submissions yet." />
-                  )}
-                </div>
-              </LoadingScreen>
-            </div>
-          </>
+          </LoadingScreen>
         ) : isPending(userProfile.userData) ? (
           <EmptyList message={pendingMessage[userProfile.userData.type]} />
         ) : (

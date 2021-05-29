@@ -85,6 +85,7 @@ export const ROUTES = {
   HOME: "/",
   PROFILE: "/profile",
   METRICS: "/metrics",
+  NEW_SUBMISSION_SELECTION: "/new",
   DEVLOGIN: "/devlogin",
   SIGNUP: "/signup",
   STATE_SIGNUP: "/signup/state",
@@ -120,6 +121,7 @@ export class Role {
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,
+        ROUTES.NEW_SUBMISSION_SELECTION,
         ROUTES.SPA,
         ROUTES.SPA_RAI,
         ROUTES.CHIP_SPA,

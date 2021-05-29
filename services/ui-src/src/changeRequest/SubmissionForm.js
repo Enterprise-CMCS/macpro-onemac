@@ -331,7 +331,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={formInfo.pageTitle} text="" />
+      <PageTitleBar heading={formInfo.pageTitle} />
       <AlertBar alertCode={alertCode} />
       <div className="form-container">
         {formInfo.subheaderMessage && (

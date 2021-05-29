@@ -88,6 +88,8 @@ label {
 
 .page-title-bar {
   @extend .app-bar;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @extend .ds-u-padding-top--2;
   @extend .ds-u-padding-bottom--2;
@@ -97,6 +99,15 @@ label {
 
   h1 {
     font-size: 36px;
+    margin: 0px;
+  }
+
+  .page-title-bar-button {
+    background-color: $color-primary-darker;
+
+    &:hover {
+      text-decoration: none;
+    }
   }
 }
 
@@ -608,62 +619,34 @@ input[type="file"] {
   min-height: 485px;
 }
 
-.dashboard-container {
+.submission-selection-container {
   @extend .app-bar;
-  background-color: $color-white;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
   @extend .ds-u-padding-top--7;
   @extend .ds-u-padding-bottom--7;
 
-  .dashboard-title {
-    @extend .ds-l-col--12;
-    @extend .ds-h1;
-  }
-  .dashboard-left-col{
-    @extend .ds-u-margin-top--1;
-    @extend .ds-l-xl-col--3;
-    @extend .ds-l-lg-col--3;
-    @extend .ds-l-md-col--4;
-    @extend .ds-l-sm-col--12;
-    @extend .ds-l-col--12;
-    @extend .ds-u-border-right--2;
-    @extend .ds-u-text-align--left;
-    @extend .ds-u-padding-left--0;
-  }
-  .dashboard-right-col {
-    @extend .ds-u-margin-top--1;
-    @extend .ds-l-xl-col--9;
-    @extend .ds-l-lg-col--9;
-    @extend .ds-l-md-col--8;
-    @extend .ds-l-sm-col--12;
-    @extend .ds-l-col--12;
-    @extend .ds-u-align-items--start;
-    @extend .ds-u-padding-left--4;
-  }
   .action-title {
     @extend .ds-l-row;
     @extend .ds-h3;
     @extend .ds-u-text-align--left;
     @extend .ds-u-align-items--start;
   }
+
   Button {
     @extend .ds-l-row;
     @extend .ds-u-text-align--left;
     @extend .ds-u-padding-left--0;
     @extend .ds-u-margin-left--0;
   }
-  .list-group-item {
-    @extend .ds-u-text-decoration--none;
-  }
-  .submissions {
-    .h4 {
-        font-weight: 600;
-        line-height: 1.5;
-    }
+}
 
-    p {
-        color: $color-gray;
-    }
-  }
+.dashboard-container {
+  @extend .app-bar;
+  @extend .ds-u-flex-direction--column;
+  @extend .ds-u-padding-top--7;
+  @extend .ds-u-padding-bottom--7;
+  background-color: $color-white;
 }
 
 .empty-list {
