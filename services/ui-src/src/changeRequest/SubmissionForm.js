@@ -17,6 +17,7 @@ import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import FormInfoText from "../components/FormInfoText";
+import ScrollToTop from "../components/ScrollToTop";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -406,6 +407,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             Cancel
           </button>
         </form>
+        <ScrollToTop />
       </div>
     </LoadingScreen>
   );

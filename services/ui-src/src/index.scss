@@ -1337,3 +1337,12 @@ text-decoration-line: underline;
 
 color: $color-primary;
 }
+.scrollToTop {
+  @extend .portalTable;
+  margin: 0 auto;
+  padding: 8px 0 8px 0;
+  cursor: pointer;
+  span {
+    margin-left: 7.5px;
+  }
+}
