@@ -9,7 +9,7 @@ let generatedSPAID;
 let generatedWaiverID;
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 module.exports = {
-    "@tags": ["subList", "smoke", "regression"],
+    "@tags": ["smoke", "regression"],
     // Opens the browser, goes to the test site
     before: function (browser) {
         console.log('Setting up the browser instance...');

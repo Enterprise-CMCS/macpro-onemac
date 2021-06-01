@@ -10,7 +10,7 @@ let spaID;
 let generatedWaiverID;
 
 module.exports = {
-    "@tags": ["smoke", "smoke2"],
+    "@tags": ["smoke"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {
@@ -49,7 +49,8 @@ module.exports = {
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
         // SS-YY-NNNN
-        spaID = 'VA-' + num1 + '-' + num2 + '' + num3;
+        //changed the state to MD
+        spaID = 'MD-' + num1 + '-' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", spaID);
         // upload the first documents

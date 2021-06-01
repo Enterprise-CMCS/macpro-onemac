@@ -2,9 +2,10 @@
 // Refer to the online docs for more details: https://nightwatchjs.org/gettingstarted/configuration/
 const fs = require('fs');
 const path = require('path');
-const Services ={}; loadServices();
+const Services = {}; loadServices();
 
 module.exports = {
+<<<<<<< HEAD
     // An array of folders (excluding subfolders) where your nightwatch are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
     src_folders: ["./nightwatch/tests"],
@@ -131,33 +132,147 @@ module.exports = {
         "unit-test" : {
             unit_tests_mode : true,
             filter: "./nightwatch/unit"
+=======
+  // An array of folders (excluding subfolders) where your tests are located;
+  // if this is not specified, the test source must be passed as the second argument to the test runner.
+  src_folders: ['./nightwatch/tests/suites/'],
+
+  // See https://nightwatchjs.org/guide/working-with-page-objects/
+  page_objects_path: './nightwatch/page_objects',
+
+  // See https://nightwatchjs.org/guide/extending-nightwatch/#writing-custom-commands
+  custom_commands_path:  '',
+
+  // See https://nightwatchjs.org/guide/extending-nightwatch/#writing-custom-assertions
+  custom_assertions_path: '',
+
+  // See https://nightwatchjs.org/guide/#external-globals
+  globals_path: "",
+
+  webdriver: {},
+
+  test_settings: {
+   
+    default: {
+      disable_error_log: false,
+      launch_url: String(process.env.APPLICATION_ENDPOINT),
+
+      globals: {
+        user: `${process.env.TEST_USERS}`,
+        pass: `${process.env.TEST_USER_PASSWORD}`,
+
+        //credentials for val environment 
+        //state user username and password
+        state_user: `${process.env.TEST_STATE_USERS}`,
+        state_user_pass: `${process.env.TEST_STATE_USER_PASSWORD}`,
+
+        //state admin user username and password
+        state_admin_user: `${process.env.TEST_STATE_ADMIN_USERS}`,
+        state_admin_user_pass: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+
+        //CMS approver user username and password
+        cms_approver_user: `${process.env.TEST_CMS_APPROVER_USERS}`,
+        cms_approver_pass: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+
+        //CMS System Admin username and password
+        cms_system_admin_user: `${process.env.TEST_CMS_SYSTEM_ADMIN_USERS}`,
+        cms_system_admin_user_password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
+    },
+
+    screenshots : {
+      enabled : true,
+      on_failure: true,
+      on_error : true,
+      path : "./nightwatch/screenshots"
+  },
+
+    
+      webdriver: {
+        start_process: true,
+      }
+    },
+
+    
+
+    firefox: {
+      desiredCapabilities : {
+        browserName : 'firefox',
+        alwaysMatch: {
+          // Enable this if you encounter unexpected SSL certificate errors in Firefox
+          // acceptInsecureCerts: true,
+          'moz:firefoxOptions': {
+              args: [
+                  '--window-size=1024,768',
+                  '-verbose',
+                  '-headless',
+                  // '-verbose'
+              ],
+          }
+       }
+      },
+      webdriver: {
+        start_process: true,
+        port: 9516,
+        server_path: (Services.geckodriver ? Services.geckodriver.path : ''),
+        cli_args: [
+          // very verbose geckodriver logs
+          // '-vv'
+        ]
+      }
+    },
+
+    chrome: {
+      desiredCapabilities : {
+        browserName : 'chrome',
+        chromeOptions : {
+          // This tells Chromedriver to run using the legacy JSONWire protocol (not required in Chrome 78)
+          // w3c: false,
+          // More info on Chromedriver: https://sites.google.com/a/chromium.org/chromedriver/
+          args: [
+             "--log-level=3",
+             "--window-size=1024,768",
+            //'--no-sandbox',
+            //'--ignore-certificate-errors',
+            //'--allow-insecure-localhost',
+            //'--headless'
+          ]
+>>>>>>> 7651c674ac33c44e096689fac36ca134a7dbab8c
         }
-    }
+      },
+
+      webdriver: {
+        start_process: true,
+        port: 9515,
+        server_path: (Services.chromedriver ? Services.chromedriver.path : ''),
+        cli_args: [
+          // --verbose
+        ]
+      }
+    },
+    "unit-test" : {
+      unit_tests_mode : true,
+      filter: "./nightwatch/unit"
+  }
+
+  }
 };
 
 function loadServices() {
-    // Catches any general WebDriver Service Errors and writes to logFile
-    const logPath = path.join(process.cwd(), "nightwatch", "log");
-    const timeStamp = new Date().toString()
-    const serviceLog = path.join(logPath, "webDriver.log.txt");
-    fs.writeFileSync(serviceLog, timeStamp, 'utf8');
+  // Catches any general WebDriver Service Errors and writes to logFile
+  const logPath = path.join(process.cwd(), "nightwatch", "log");
+  const timeStamp = new Date().toString()
+  const serviceLog = path.join(logPath, "webDriver.log.txt");
+  fs.writeFileSync(serviceLog, timeStamp, 'utf8');
+  
+  try {
+    Services.seleniumServer = require('selenium-server');
+  } catch (err) {}
 
-    try {
-        Services.seleniumServer = require('selenium-server');
-    } catch (err) {
-        fs.appendFileSync(serviceLog, err);
-    }
+  try {
+    Services.chromedriver = require('chromedriver');
+  } catch (err) {}
 
-    try {
-        Services.chromedriver = require('chromedriver');
-    } catch (err) {
-        fs.appendFileSync(serviceLog, err);
-    }
-
-    try {
-        Services.geckodriver = require('geckodriver');
-    } catch (err) {
-        fs.appendFileSync(serviceLog, err);
-    }
-
+  try {
+    Services.geckodriver = require('geckodriver');
+  } catch (err) {}
 }

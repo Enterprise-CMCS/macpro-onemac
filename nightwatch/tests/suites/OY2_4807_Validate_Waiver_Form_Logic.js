@@ -4,7 +4,7 @@
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 let spaID;
 module.exports = {
-    "@tags": ["waiverFormValidation", "smoke", "regression-soon"],
+    "@tags": ["smoke", "regression-soon"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {
