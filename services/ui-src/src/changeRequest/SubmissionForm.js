@@ -16,7 +16,6 @@ import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
-import FormInfoText from "../components/FormInfoText";
 import ScrollToTop from "../components/ScrollToTop";
 
 /**
@@ -333,7 +332,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            <FormInfoText text={formInfo.subheaderMessage}/>
+            {formInfo.subheaderMessage}
           </div>
         )}
         <form
