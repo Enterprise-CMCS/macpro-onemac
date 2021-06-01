@@ -863,8 +863,17 @@ input[type="file"] {
 }
 
 .summary-box label {
-  @extend .ds-h3;
   @extend .ds-u-margin-top--5;
+  @extend .ds-u-margin-bottom--3;
+
+  span {
+    display: inline-block;
+
+    &:not(.ds-c-field__hint) {
+        @extend .ds-h3;
+        @extend .ds-u-margin-bottom--1;
+    }
+  }
 }
 
 .LoaderButton, .form-submit {

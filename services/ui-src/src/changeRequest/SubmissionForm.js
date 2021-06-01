@@ -391,6 +391,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
             <TextField
               name="summary"
               label="Additional Information"
+              hint="Add anything else that you would like to share with CMS."
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
