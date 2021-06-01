@@ -338,7 +338,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <PageTitleBar heading="Account Management" />
+      <PageTitleBar heading="User Profile" />
       <AlertBar alertCode={alertCode} />
       <div className="profile-container">
         <div className="subheader-message">
