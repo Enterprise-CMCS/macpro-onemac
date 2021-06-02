@@ -278,7 +278,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (transmittalNumberStatusMessage.statusLevel === "warn"
     && transmittalNumberStatusMessage.statusMessage ) {
       changeRequest.transmittalNumberWarningMessage = transmittalNumberStatusMessage.statusMessage;
+    } else {
+      changeRequest.transmittalNumberWarningMessage = "";
     }
+    
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
         transmittalNumberStatusMessage.statusMessage) ||
