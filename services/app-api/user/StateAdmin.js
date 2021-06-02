@@ -11,10 +11,16 @@ class StateAdmin {
   /**
    * State Admin "scan for" returns State Users
    *
-   * @returns {String} the User Role
+   * @returns {Object} Scan parameters for dynamodb
    */
-  getScanFor() {
-    return USER_TYPES.STATE_USER;
+   getScanParams(){
+    const scanParams = {
+      TableName: process.env.userTableName,
+      FilterExpression: "#ty = :userType0",
+      ExpressionAttributeNames: { "#ty": "type" },
+      ExpressionAttributeValues: {":userType0": USER_TYPES.STATE_USER},
+    };
+    return scanParams;
   }
 
   /**

@@ -29,9 +29,9 @@ export function useSignupCallback(userType, processAttributes) {
   const signupUser = useCallback(
     async (payload) => {
       let destination, messageState;
-
+    if(loading)return
       try {
-        setLoading(true);
+          setLoading(true);
 
         if (processAttributes) {
           payload = processAttributes(payload);
@@ -51,24 +51,25 @@ export function useSignupCallback(userType, processAttributes) {
         await setUserInfo();
 
         destination =
-          userType === ROLES.STATE_USER
+          (userType === ROLES.STATE_USER||userType === ROLES.HELPDESK)
             ? ROUTES.DASHBOARD
             : ROUTES.USER_MANAGEMENT;
-        messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };    //ALERTS_MSG.SUBMISSION_SUCCESS };
+        messageState = (userType === ROLES.HELPDESK)?{ passCode: RESPONSE_CODE.HELPDESK_USER_SUBMITTED }:{ passCode: RESPONSE_CODE.USER_SUBMITTED };    //ALERTS_MSG.SUBMISSION_SUCCESS };
       } catch (error) {
         console.error("Could not create new user:", error);
-
         destination = { ...location, state: undefined };
         messageState = {
           ...location.state,
           passCode: error, // ALERTS_MSG.SUBMISSION_ERROR,
         };
+        if(userType===ROLES.HELPDESK){
+          destination.pathname="/";
+        }
       } finally {
-        setLoading(false);
-        history.replace(destination, messageState);
+          setLoading(false);
+          history.replace(destination, messageState);
       }
-    },
-    [email, firstName, history, lastName, location, processAttributes, setUserInfo, userType]
+    },[email, firstName, history, lastName, location, processAttributes, setUserInfo, userType]
   );
 
   return [loading, signupUser];

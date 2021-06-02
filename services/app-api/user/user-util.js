@@ -2,7 +2,9 @@ import StateUser from "./StateUser";
 import StateAdmin from "./StateAdmin";
 import CMSApprover from "./CMSApprover";
 import SystemAdmin from "./SystemAdmin";
-import { USER_TYPES } from "./userTypes";
+import Helpdesk from "./Helpdesk";
+import { USER_TYPE } from "cmscommonlib";
+
 
 /**
  * Get a singleton object that overloads user functions
@@ -17,17 +19,20 @@ export const getUserFunctions = (doneBy) => {
 
   // what users they see depends on what role they are
   switch (doneBy.type) {
-    case USER_TYPES.STATE_USER:
+    case USER_TYPE.STATE_USER:
       retval = StateUser;
       break;
-    case USER_TYPES.STATE_ADMIN:
+    case USER_TYPE.STATE_ADMIN:
       retval = StateAdmin;
       break;
-    case USER_TYPES.CMS_APPROVER:
+    case USER_TYPE.CMS_APPROVER:
       retval = CMSApprover;
       break;
-    case USER_TYPES.SYSTEM_ADMIN:
+    case USER_TYPE.SYSTEM_ADMIN:
       retval = SystemAdmin;
+      break;
+    case USER_TYPE.HELPDESK:
+      retval = Helpdesk;
       break;
     default:
       retval = undefined;

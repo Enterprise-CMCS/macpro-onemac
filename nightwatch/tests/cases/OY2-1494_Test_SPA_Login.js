@@ -19,11 +19,17 @@ module.exports = {
   "Login to SPA and Waiver Dashboard": function (
     browser,
     testData = {
+<<<<<<< HEAD
+      username: browser.globals.devuser,
+      password: browser.globals.devpass,
+      spaPageTitle: "SPA and Waiver Dashboard",
+=======
       // username: process.env.TEST_USERS,
       // password: process.env.TEST_USER_PASSWORD,
       username: process.env.TEST_STATE_USERS,
       password: process.env.TEST_STATE_USER_PASSWORD,
 
+>>>>>>> 7651c674ac33c44e096689fac36ca134a7dbab8c
     }
   ) {
     testData.spaPageTitle = "SPA and Waiver Dashboard",

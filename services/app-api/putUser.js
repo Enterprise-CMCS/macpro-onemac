@@ -3,7 +3,7 @@ import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
-import Joi from "@hapi/joi";
+import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
 import { territoryCodeList } from "cmscommonlib";
 import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
@@ -88,7 +88,8 @@ const validateInput = (input) => {
     type: Joi.valid(
       USER_TYPE.STATE_USER,
       USER_TYPE.STATE_ADMIN,
-      USER_TYPE.CMS_APPROVER
+      USER_TYPE.CMS_APPROVER,
+      USER_TYPE.HELPDESK,
     ).required(),
   });
   //Todo: Add deeper validation for types //
@@ -229,6 +230,11 @@ const populateUserAttributes = (
   console.log(
     "Successfully ensured Privileges, status change rules and populated user attributes"
   );
+
+  for (const attr of ["firstName", "lastName"]) {
+    if (input[attr]) user[attr] = input[attr];
+  }
+
   return user;
 };
 
@@ -286,8 +292,8 @@ const ALLOWED_NEXT_STATES = {
     USER_STATUS.REVOKED,
   ],
   [USER_STATUS.ACTIVE]: [USER_STATUS.REVOKED],
-  [USER_STATUS.DENIED]: [USER_STATUS.ACTIVE],
-  [USER_STATUS.REVOKED]: [USER_STATUS.ACTIVE],
+  [USER_STATUS.DENIED]: [USER_STATUS.PENDING, USER_STATUS.ACTIVE],
+  [USER_STATUS.REVOKED]: [USER_STATUS.PENDING, USER_STATUS.ACTIVE],
 };
 
 // Ensure the status changes are legal //
@@ -370,7 +376,7 @@ const processEmail = async (input) => {
   // Construct and send email acknowledgement to the requesting user //
   const userEmail = await constructUserEmail(input.userEmail, input);
 
-  await dispatchEmail(userEmail.email);
+  await dispatchEmail(userEmail.email,input);
 
   // only email approvers if user is acting on their own status
   if (input.userEmail !== input.doneBy) {
@@ -386,7 +392,7 @@ const processEmail = async (input) => {
       input,
       "doneBy"
     );
-    await dispatchEmail(emailParams.email);
+    await dispatchEmail(emailParams.email,input);
   } else {
     console.log(
       `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`
@@ -421,7 +427,7 @@ const collectRoleAdminEmailIds = async (input) => {
         ? recipients.push(approver.id)
         : null;
     });
-  } else if (input.type === USER_TYPE.CMS_APPROVER) {
+  } else if (input.type === USER_TYPE.CMS_APPROVER||input.type === USER_TYPE.HELPDESK) {
     let systemadmins = [];
     // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
     if (process.env.systemAdminEmail) {
@@ -496,20 +502,19 @@ const constructRoleAdminEmails = (recipients, input) => {
     case USER_TYPE.STATE_USER:
       typeText = "State User";
 
-      if (input.userEmail === input.doneBy) {
+      if (input.userEmail === input.doneBy && input.attributes[0].status === USER_STATUS.REVOKED) {
         newSubject =
           `OneMAC Portal State access for ` +
           input.attributes[0].stateCode +
           ` Access self-revoked by the user`;
         email.HTML =
-          `
-      <p>Hello,</p>
+          `<p>Hello,</p>
 
-      The OneMAC Portal State access for ` +
+          The OneMAC Portal State access for ` +
           input.attributes[0].stateCode +
           ` has been self-revoked by the user. Please log into your User Management Dashboard to see the updated access.
 
-      <p>Thank you!</p>`;
+          <p>Thank you!</p>`;
       }
       break;
     case USER_TYPE.STATE_ADMIN:
@@ -517,6 +522,17 @@ const constructRoleAdminEmails = (recipients, input) => {
       break;
     case USER_TYPE.CMS_APPROVER:
       typeText = "CMS Approver";
+      break;
+    case USER_TYPE.HELPDESK:
+      typeText = "Helpdesk User";
+      email.HTML =
+        `
+  <p>Hello,</p>
+
+  There is a new OneMAC Portal Helpdesk access request from ${input.firstName} ${input.lastName} waiting 
+  for your review. Please log into your User Management Dashboard to see the pending request.
+
+  <p>Thank you!</p>`;
       break;
   }
   if (newSubject) email.Subject = newSubject;
@@ -554,14 +570,14 @@ const constructUserEmail = (userEmailId, input) => {
 };
 
 // Send email //
-const dispatchEmail = async (email) => {
+const dispatchEmail = async (email,input) => {
   try {
     const emailStatus = await sendEmail(email);
     if (emailStatus instanceof Error) {
       console.log("Warning: Email not sent");
     }
     console.log("Email successfully sent");
-    return RESPONSE_CODE.USER_SUBMITTED;
+return RESPONSE_CODE.USER_SUBMITTED;
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user access request acknowledgment email.",

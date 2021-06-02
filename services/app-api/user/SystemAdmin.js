@@ -7,11 +7,17 @@ import { getCurrentStatus } from "./user-util";
  */
 class SystemAdmin {
   /**
-   * System Admin "scan for" returns CMS Approvers
-   * @returns {String} the User Role
+   * System Admin "scan for" returns CMS Approvers and Helpdesk Users
+   * @returns {Object} Object of Scan Parameters for DynamnoDB Scan
    */
-  getScanFor() {
-    return USER_TYPES.CMS_APPROVER;
+  getScanParams(){
+    const scanParams = {
+      TableName: process.env.userTableName,
+      FilterExpression: "#ty = :userType0 or #ty = :userType1",
+      ExpressionAttributeNames: { "#ty": "type" },
+      ExpressionAttributeValues: {":userType0": USER_TYPES.CMS_APPROVER,":userType1": USER_TYPES.HELPDESK},
+    };
+    return scanParams;
   }
 
   /**
@@ -65,6 +71,7 @@ class SystemAdmin {
         firstName: oneUser.firstName,
         lastName: oneUser.lastName,
         latest: getCurrentStatus(oneUser.attributes),
+        role: oneUser.type,
       });
       i++;
     });
