@@ -259,7 +259,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     event.preventDefault();
     const cancel = window.confirm("If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?")
     if (cancel === true) {
-      history.goBack();
+      history.replace(ROUTES.DASHBOARD);
     }
   }
 
