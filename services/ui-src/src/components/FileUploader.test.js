@@ -1,12 +1,13 @@
 import React from "react";
-import { render, fireEvent, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 
-import FileUploader from "./FileUploader";
+import FileUploader, { MISSING_REQUIRED_MESSAGE } from "./FileUploader";
 
-it("has an upload lane for each required and optional upload", async () => {
-  const requiredList = ["Required File 1", "Required File 2"],
-    optionalList = ["Optional File 1", "Optional File 2"];
+const requiredList = ["Required File 1", "Required File 2"],
+  optionalList = ["Optional File 1", "Optional File 2"];
 
+it("has an upload lane for each required and optional upload", () => {
   render(
     <FileUploader
       requiredUploads={requiredList}
@@ -14,15 +15,17 @@ it("has an upload lane for each required and optional upload", async () => {
     ></FileUploader>
   );
 
-  // there should be a row for each entry
-
+  requiredList.map((attachmentTypeName) => {
+    expect(screen.getByText(attachmentTypeName)).toBeInTheDocument();
+  });
+  optionalList.map((attachmentTypeName) => {
+    expect(screen.getByText(attachmentTypeName)).toBeInTheDocument();
+  });
 });
 
 // 8778 Regression Testing - Attachment is required message is not displayed if uploaded doc is deleted
-it("displays required message after required file is deleted and in show error mode.", async () => {
-  const requiredList = ["Required File 1", "Required File 2"],
-    optionalList = ["Optional File 1", "Optional File 2"],
-    showErrorMode = true;
+it("displays required message in show error mode.", () => {
+  const showErrorMode = true;
 
   render(
     <FileUploader
@@ -32,16 +35,11 @@ it("displays required message after required file is deleted and in show error m
     ></FileUploader>
   );
 
-  // there should be a row for each entry
-
-
+  expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeInTheDocument();
 });
 
-// 8776 Regression Testing - Uploaded documents are deleted
-it("maintains file list information through failed submit", async () => {
-  const requiredList = ["Required File 1", "Required File 2"],
-    optionalList = ["Optional File 1", "Optional File 2"],
-    showErrorMode = true;
+it("removes required message when requirements met.", async () => {
+  const showErrorMode = true;
 
   render(
     <FileUploader
@@ -51,53 +49,23 @@ it("maintains file list information through failed submit", async () => {
     ></FileUploader>
   );
 
-  // there should be a row for each entry
+  expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeInTheDocument();
 
-
-});
-
-
-/*
-it("sets the label to the file name of the files to be uploaded", () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309";
-
-  render(<PhoneNumber initialValue={initial} />);
-
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  // change the value in the input
-  fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
+  let testFile0 = new File(["hello0"], "hello0.png", {
+    type: "image/png",
   });
-  // click Cancel button to revert changes
-  fireEvent.click(screen.getByText("Cancel", { selector: "button" }));
+  let uploadInput0 = screen.getByTestId("uploader-input-0");
+  userEvent.upload(uploadInput0, [testFile0]);
+  await screen.findByText(testFile0.name);
 
-  // input is no longer there
-  expect(screen.queryByLabelText("Phone Number")).toBeNull();
-  // the review component is back with the original value
-  expect(screen.getByText("Phone Number").parentNode).toHaveTextContent(
-    initial
-  );
-});
+  expect(screen.getByText(MISSING_REQUIRED_MESSAGE)).toBeInTheDocument();
 
-it("lets you submit your changes", () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309",
-    onSubmitFn = jest.fn();
-
-  render(<PhoneNumber initialValue={initial} onSubmit={onSubmitFn} />);
-
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  // change the value in the input
-  fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
+  let testFile1 = new File(["hello1"], "hello1.png", {
+    type: "image/png",
   });
-  // click Submit button to persist changes
-  fireEvent.click(screen.getByText("Submit", { selector: "button" }));
+  let uploadInput1 = screen.getByTestId("uploader-input-1");
+  userEvent.upload(uploadInput1, [testFile1]);
+  await screen.findByText(testFile1.name);
 
-  // check that submit handler was called
-  expect(onSubmitFn).toBeCalledWith(replacement);
+  expect(screen.queryByText(MISSING_REQUIRED_MESSAGE)).not.toBeInTheDocument();
 });
-*/
