@@ -331,10 +331,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <PageTitleBar heading={formInfo.pageTitle} text="" />
       <AlertBar alertCode={alertCode} />
       <div className="form-container">
-        <FormInfoText text="Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email."/>
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            {formInfo.subheaderMessage}
+            <FormInfoText text={formInfo.subheaderMessage}/>
           </div>
         )}
         <form
