@@ -50,7 +50,7 @@ class WaiverExtension {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    let transmittalNumberWarningMessage =  data.transmittalNumberWarningMessage ? "" :  `<br/>${data.transmittalNumberWarningMessage}`;
+    let transmittalNumberWarningMessage =  data.transmittalNumberWarningMessage ?  `<br/>${data.transmittalNumberWarningMessage}` : "";
 
 
     cmsEmail.ToAddresses = [process.env.reviewerEmail];

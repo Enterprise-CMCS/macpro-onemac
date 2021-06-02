@@ -84,7 +84,7 @@ async fieldsValid(data) {
      */
     getStateEmail(data) {
         const stateEmail = {};
-        let transmittalNumberWarningMessage =  data.transmittalNumberWarningMessage ? "" :  `<br/>${data.transmittalNumberWarningMessage}<br/>`;
+        let transmittalNumberWarningMessage =  data.transmittalNumberWarningMessage ?  `<br/>${data.transmittalNumberWarningMessage}<br/>` : "";
 
         stateEmail.ToAddresses = [data.user.email];
         stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
