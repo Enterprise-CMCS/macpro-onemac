@@ -92,9 +92,8 @@ async fieldsValid(data) {
         <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}` + transmittalNumberWarningMessage
-            +
-            `<b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
+            <br><b>Waiver #</b>: ${data.transmittalNumber}${transmittalNumberWarningMessage}
+            <b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Submitter email</b>: ${data.user.email}
             <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
         </p>
