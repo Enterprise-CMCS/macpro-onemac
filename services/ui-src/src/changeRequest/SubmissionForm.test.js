@@ -11,15 +11,101 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 jest.mock("../utils/ChangeRequestDataApi");
 
 import { AppContext } from "../libs/contextLib";
-import { act } from "react-dom/test-utils";
 
-it("does not clear inputs if submit fails.", async () => {
+const initialAuthState = {
+  isAuthenticating: false,
+  isAuthenticated: true,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "stateuseractive@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [
+        {
+          stateCode: "MI",
+          history: [
+            {
+              date: 1617149287,
+              doneBy: "systemsadmin@cms.hhs.local",
+              status: "active",
+            },
+          ],
+        },
+        {
+          stateCode: "VA",
+          history: [
+            {
+              date: 1617149287,
+              doneBy: "systemsadmin@cms.hhs.local",
+              status: "active",
+            },
+          ],
+        },
+      ],
+      id: "stateuseractive@cms.hhs.local",
+      type: "stateuser",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/dashboard",
+        "/dashboard",
+        "/spa",
+        "/sparai",
+        "/chipspa",
+        "/chipsparai",
+        "/waiver",
+        "/waiverappk",
+        "/waiverextension",
+        "/waiverrai",
+      ],
+    },
+  },
+};
+
+const actionTypeOptions = [
+  { label: "New waiver", value: "new" },
+  { label: "Waiver amendment", value: "amendment" },
+  {
+    label: "Request for waiver renewal",
+    value: "renewal",
+  },
+];
+const waiverAuthorityOptions = [
+  {
+    label: "1915(b)(4) FFS Selective Contracting waivers",
+    value: "1915(b)(4)",
+  },
+  { label: "All other 1915(b) Waivers", value: "1915(b)" },
+];
+
+// oy2-3734 -
+it("does not clear Transmittal Number if submit fails.", async () => {
   const testFormInfo = {
     pageTitle: "Testing Submission Form",
     readOnlyPageTitle: "Read Only Title - Test",
     detailsHeader: "Testing Header",
     subheaderMessage:
       "This text should never show, it is in place for unit testing.",
+    actionType: {
+      fieldName: "actionType",
+      errorMessage: "Please select the Action Type.",
+      optionsList: actionTypeOptions,
+      defaultItem: "an action type",
+    },
+    waiverAuthority: {
+      fieldName: "waiverAuthority",
+      errorMessage: "Please select the Waiver Authority.",
+      optionsList: waiverAuthorityOptions,
+      defaultItem: "a waiver authority",
+    },
     requiredUploads: [
       "Required File 1",
       "Required File with a really long title 2",
@@ -46,63 +132,8 @@ it("does not clear inputs if submit fails.", async () => {
 
   const testValues = {
     transmittalNumber: "MI-12-1122-CHIP",
-  };
-  const initialAuthState = {
-    isAuthenticating: false,
-    isAuthenticated: true,
-    isLoggedInAsDeveloper: false,
-    isValidRoute: true,
-    userProfile: {
-      cmsRoles: "onemac-state-user",
-      email: "stateuseractive@cms.hhs.local",
-      firstName: "TestFirstName",
-      lastName: "TestLastName",
-      userData: {
-        firstName: "Angie",
-        lastName: "Active",
-        attributes: [
-          {
-            stateCode: "MI",
-            history: [
-              {
-                date: 1617149287,
-                doneBy: "systemsadmin@cms.hhs.local",
-                status: "active",
-              },
-            ],
-          },
-          {
-            stateCode: "VA",
-            history: [
-              {
-                date: 1617149287,
-                doneBy: "systemsadmin@cms.hhs.local",
-                status: "active",
-              },
-            ],
-          },
-        ],
-        id: "stateuseractive@cms.hhs.local",
-        type: "stateuser",
-        validRoutes: [
-          "/",
-          "/componentpage",
-          "/profile",
-          "/devlogin",
-          "/FAQ",
-          "/dashboard",
-          "/dashboard",
-          "/spa",
-          "/sparai",
-          "/chipspa",
-          "/chipsparai",
-          "/waiver",
-          "/waiverappk",
-          "/waiverextension",
-          "/waiverrai",
-        ],
-      },
-    },
+    actionType: "amendment",
+    waiverAuthority: "1915(b)",
   };
 
   window.HTMLElement.prototype.scrollIntoView = function () {};
@@ -126,12 +157,26 @@ it("does not clear inputs if submit fails.", async () => {
   const transmittalNumberEl = screen.getByLabelText(
     testFormInfo.transmittalNumber.idLabel
   );
+  const actionTypeEl = screen.getByLabelText("Action Type");
+  const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
 
-  // value starts out empty
+  // values start out empty
   expect(transmittalNumberEl.value).toBe("");
+  expect(actionTypeEl.value).toBe("");
+  expect(waiverAuthorityEl.value).toBe("");
 
-  // Add the value to the transmittal number
+  // Add the values to the fields
   userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+
+  //userEvent.selectOptions(actionTypeEl, "amendment");
+  //await screen.findByText("Waiver amendment");
+  //expect(screen.getByText("New waiver").selected).toBe(false);
+  //expect(screen.getByText("Waiver amendment").selected).toBe(true);
+  //expect(screen.getByText("Request for waiver renewal").selected).toBe(false);
+
+  //userEvent.selectOptions(waiverAuthorityEl, "1915(b)");
+  //expect(screen.getByRole("option", { name: "1915(b)(4) FFS Selective Contracting waivers" }).selected).toBe(false);
+  //expect(screen.getByRole("option", { name: "All other 1915(b) Waivers" }).selected).toBe(true);
 
   // the transmittal number contains the value
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber); // testValues.transmittalNumber);
@@ -143,87 +188,3 @@ it("does not clear inputs if submit fails.", async () => {
   // the transmittal number still contains the value
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 });
-/*
-// 8778 Regression Testing - Attachment is required message is not displayed if uploaded doc is deleted
-it("displays required message after required file is deleted and in show error mode.", async () => {
-  const requiredList = ["Required File 1", "Required File 2"],
-    optionalList = ["Optional File 1", "Optional File 2"],
-    showErrorMode = true;
-
-  render(
-    <FileUploader
-      requiredUploads={requiredList}
-      optionalUploads={optionalList}
-      showRequiredFieldErrors={showErrorMode}
-    ></FileUploader>
-  );
-
-  // there should be a row for each entry
-
-
-});
-
-// 8776 Regression Testing - Uploaded documents are deleted
-it("maintains file list information through failed submit", async () => {
-  const requiredList = ["Required File 1", "Required File 2"],
-    optionalList = ["Optional File 1", "Optional File 2"],
-    showErrorMode = true;
-
-  render(
-    <FileUploader
-      requiredUploads={requiredList}
-      optionalUploads={optionalList}
-      showRequiredFieldErrors={showErrorMode}
-    ></FileUploader>
-  );
-
-  // there should be a row for each entry
-
-
-});
-
-
-/*
-it("sets the label to the file name of the files to be uploaded", () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309";
-
-  render(<PhoneNumber initialValue={initial} />);
-
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  // change the value in the input
-  fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
-  });
-  // click Cancel button to revert changes
-  fireEvent.click(screen.getByText("Cancel", { selector: "button" }));
-
-  // input is no longer there
-  expect(screen.queryByLabelText("Phone Number")).toBeNull();
-  // the review component is back with the original value
-  expect(screen.getByText("Phone Number").parentNode).toHaveTextContent(
-    initial
-  );
-});
-
-it("lets you submit your changes", () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309",
-    onSubmitFn = jest.fn();
-
-  render(<PhoneNumber initialValue={initial} onSubmit={onSubmitFn} />);
-
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  // change the value in the input
-  fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
-  });
-  // click Submit button to persist changes
-  fireEvent.click(screen.getByText("Submit", { selector: "button" }));
-
-  // check that submit handler was called
-  expect(onSubmitFn).toBeCalledWith(replacement);
-});
-*/

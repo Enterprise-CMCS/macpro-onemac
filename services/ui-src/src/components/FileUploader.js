@@ -255,6 +255,7 @@ export default class FileUploader extends Component {
               <input
                 type="file"
                 id={"uploader-input-" + index}
+                data-testid={"uploader-input-" + index}
                 name={"uploader-input-" + index}
                 accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
                 multiple={uploader.allowMultiple}

@@ -35,7 +35,9 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
+  const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
+    formInfo?.actionType?.errorMessage
+  );
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
     useState("");
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
@@ -99,8 +101,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       // Must have a value
       if (!newTransmittalNumber) {
-        if (!firstTimeThrough)
-          errorMessage = `${transmittalNumberDetails.idLabel} Required`;
+        errorMessage = `${transmittalNumberDetails.idLabel} Required`;
       }
       // state code must be on the User's active state list
       else if (
@@ -119,7 +120,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       return errorMessage;
     },
-    [transmittalNumberDetails, firstTimeThrough, userData]
+    [transmittalNumberDetails, userData]
   );
 
   /**
@@ -182,16 +183,12 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   };
 
   useEffect(() => {
-    let waiverAuthorityMessage = "";
-    let actionTypeMessage = "";
+    let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
+    let actionTypeMessage = formInfo?.actionType?.errorMessage;
 
-    if (!firstTimeThrough) {
-      if (formInfo.actionType && !changeRequest.actionType)
-        actionTypeMessage = formInfo.actionType.errorMessage;
+    if (changeRequest.actionType) actionTypeMessage = "";
 
-      if (formInfo.waiverAuthority && !changeRequest.waiverAuthority)
-        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-    }
+    if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
 
     // validate that the ID is in correct format
     let newMessage = {
@@ -256,7 +253,9 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
    */
   async function handleCancel(event) {
     event.preventDefault();
-    const cancel = window.confirm("If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?")
+    const cancel = window.confirm(
+      "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?"
+    );
     if (cancel === true) {
       history.goBack();
     }
@@ -280,9 +279,9 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         transmittalNumberStatusMessage.statusMessage) ||
       actionTypeErrorMessage ||
       waiverAuthorityErrorMessage
-    )
+    ) {
       newAlertCode = RESPONSE_CODE.DATA_MISSING;
-    else if (!areUploadsReady) {
+    } else if (!areUploadsReady) {
       newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
       try {
@@ -370,7 +369,13 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               hintText={transmittalNumberDetails.idHintText}
               idFAQLink={transmittalNumberDetails.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
-              statusMessage={transmittalNumberStatusMessage.statusMessage}
+              statusMessage={
+                !firstTimeThrough ||
+                transmittalNumberStatusMessage.statusMessage !==
+                  `${transmittalNumberDetails.idLabel} Required`
+                  ? transmittalNumberStatusMessage.statusMessage
+                  : ""
+              }
               value={changeRequest.transmittalNumber}
               onChange={(event) =>
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
@@ -397,9 +402,9 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button
-              onClick={handleCancel}
-              className="submission-form-cancel-button"
-              type="button"
+            onClick={handleCancel}
+            className="submission-form-cancel-button"
+            type="button"
           >
             Cancel
           </button>
