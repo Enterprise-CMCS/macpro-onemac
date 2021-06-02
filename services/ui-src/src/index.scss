@@ -93,21 +93,49 @@ label {
   @extend .ds-u-align-items--center;
   @extend .ds-u-padding-top--2;
   @extend .ds-u-padding-bottom--2;
-  font-weight: 400;
-  background-color: $color-primary-darker;
-  color: $color-white;
+  min-height: 70px;
 
   h1 {
-    font-size: 36px;
+    font-size: 24px;
+    font-weight: 700;
     margin: 0px;
   }
 
-  .page-title-bar-button {
-    background-color: $color-primary-darker;
+  .title-bar-left-content {
+    @extend .ds-u-display--flex;
+    @extend .ds-u-flex-direction--row;
+    @extend .ds-u-align-items--center;
+    flex-direction: row;
+  }
 
-    &:hover {
-      text-decoration: none;
+  &.title-bar-dark-theme {
+    background-color: $color-primary-darker;
+    color: $color-white;
+  }
+
+  &.title-bar-light-theme {
+    background-color: $color-primary-alt-lightest;
+    color: $color-base;
+    
+    .title-bar-back-button {
+      background-color: $color-primary-alt-lightest;
+      color: $color-base;
+      padding: 0 24px 0 0;
+      font-size: 24px;
+  
+      &:hover {
+        text-decoration: none;
+        color: $color-gray-dark;
+      }
     }
+  }
+}
+
+.new-submission-button {
+  background-color: $color-primary-darker;
+
+  &:hover {
+    text-decoration: none;
   }
 }
 

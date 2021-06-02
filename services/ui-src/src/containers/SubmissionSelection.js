@@ -9,7 +9,7 @@ const SubmissionSelection = () => {
 
   return (
     <>
-      <PageTitleBar heading="Submission Type" />
+      <PageTitleBar heading="Submission Type" enableBackNav />
       <div className="submission-selection-container">
         <div className="action-title">SPAs</div>
         <Button
