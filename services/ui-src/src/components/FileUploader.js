@@ -4,6 +4,7 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { formatList } from "../utils";
 
 const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
 
@@ -314,17 +315,7 @@ export default class FileUploader extends Component {
           multiple files per attachment type
           {singleFileControls.length > 0 && (
             <>
-              , except for the{" "}
-              {singleFileControls.reduce((s, c, i) => {
-                switch (i) {
-                  case 0:
-                    return c;
-                  case singleFileControls.length - 1:
-                    return `${s} and ${c}`;
-                  default:
-                    return `${s}, ${c}`;
-                }
-              }, "")}
+              , except for the {formatList(singleFileControls)}
             </>
           )}
           . Read the description for each of the attachment types on the FAQ
