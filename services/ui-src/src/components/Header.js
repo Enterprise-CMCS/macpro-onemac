@@ -183,7 +183,7 @@ function Header(props) {
                     fill="white"
                   />
                 </svg>
-                &nbsp; Manage account
+                &nbsp; Manage Profile
               </Link>
               <Link
                 to={ROUTES.HOME}
