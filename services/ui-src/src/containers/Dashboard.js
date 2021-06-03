@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
-import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
@@ -134,8 +134,6 @@ const Dashboard = () => {
     () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
     []
   );
-
-  const role = getUserRoleObj(userProfile.userData.type);
 
   const newSubmissionButton = (
     <Button

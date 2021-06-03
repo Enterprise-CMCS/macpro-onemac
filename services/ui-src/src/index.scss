@@ -119,13 +119,13 @@ label {
     
     .title-bar-back-button {
       background-color: $color-primary-alt-lightest;
-      color: $color-base;
+      color: $color-primary;
       padding: 0 24px 0 0;
       font-size: 24px;
   
       &:hover {
         text-decoration: none;
-        color: $color-gray-dark;
+        color: $color-primary-darker;
       }
     }
   }
