@@ -8,9 +8,6 @@ import userEvent from "@testing-library/user-event";
 import { AppContext } from "../libs/contextLib";
 import Waiver from "./Waiver";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { uploadFiles } from "../utils/s3Uploader";
-
-jest.mock("../utils/s3Uploader");
 jest.mock("../utils/ChangeRequestDataApi");
 
 window.HTMLElement.prototype.scrollIntoView = function () {};
@@ -132,32 +129,6 @@ describe("Effects of Failed Submit", () => {
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
     expect(actionTypeEl.value).toBe(testValues.actionType);
     expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
-  });
-
-  it("does not clear already uploaded file list if submit fails.", async () => {
-    const testFile = new File(["hello"], "hello.png", { type: "image/png" });
-
-    render(
-      <AppContext.Provider
-        value={{
-          ...initialAuthState,
-        }}
-      >
-        <Router history={history}>
-          <Waiver />
-        </Router>
-      </AppContext.Provider>
-    );
-  
-    // add the file via the upload widget
-    const uploadInput = screen.getByTestId("uploader-input-0");
-    userEvent.upload(uploadInput, [testFile]);
-    await screen.findByText(testFile.name);
-  
-    uploadFiles.mockResolvedValue();
-    userEvent.click(screen.getByText("Submit", { selector: "input" }));
-    await screen.findByText("There was a problem submitting your form.");
-    expect(screen.getByText(testFile.name)).toBeInTheDocument();
   });
 
 });
