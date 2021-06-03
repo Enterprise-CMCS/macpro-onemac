@@ -195,7 +195,11 @@ ul {
 .required-mark {
   color: red;
 }
-
+form label.required:after
+{
+    color: red;
+    content: "*";
+}
 select.form-control,
 textarea.form-control,
 input.form-control {
