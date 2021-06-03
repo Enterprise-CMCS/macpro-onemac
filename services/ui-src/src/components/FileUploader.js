@@ -289,7 +289,7 @@ export default class FileUploader extends Component {
                         title="Remove file"
                         onClick={() => this.handleRemoveFile(uploader, file)}
                       >
-                        <FontAwesomeIcon icon={faTimes} size="2x" />
+                        <FontAwesomeIcon icon={faTimes} />
                       </button>
                     </div>
                   );

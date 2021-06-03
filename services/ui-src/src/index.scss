@@ -120,10 +120,12 @@ ul {
       vertical-align: middle;
     }
     th {
-      padding: 12px 8px 8px;
+      @extend .ds-u-padding--1;
+      @extend .ds-u-padding-bottom--3;
     }
     td {
-      padding: 24px 8px;
+      @extend .ds-u-padding-x--1;
+      @extend .ds-u-padding-y--3;
     }
     tr {
       height: 72px;
@@ -156,10 +158,12 @@ ul {
   .uploader-input-label {
     // Make the label look like a button
     @extend .ds-c-button;
+    @extend .ds-u-padding-x--3;
     font-weight: 400;
     font-size: 14px;
     margin-top: 0px;
-    padding: 4px 24px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   .uploader-input-label-active {
@@ -178,7 +182,12 @@ ul {
   .uploader-clear-button {
     @extend .ds-c-button;
     @extend .ds-c-button--transparent;
+    @extend .ds-u-padding--0;
     color: $color-primary;
+
+    svg {
+      height: 1.5em;
+    }
   }
 }
 
@@ -296,7 +305,6 @@ input[type="file"] {
 .form-container {
   @extend .app-bar;
   @extend .ds-u-padding-top--5;
-  @extend .ds-u-margin-left--7;
   @extend .ds-u-margin-right--7;
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
@@ -322,10 +330,8 @@ input[type="file"] {
   }
 
   .form-card {
-    @extend .ds-l-col--auto;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
-    @extend .ds-u-padding-left--2;
 
     label {
       @extend .ds-u-margin-top--3;
@@ -1352,7 +1358,10 @@ color: $color-primary;
 }
 .scrollToTop {
   @extend .portalTable;
-  margin: 0 auto;
+  @extend .ds-u-margin-top--7;
+  @extend .ds-u-margin-bottom--3;
+  margin-left: auto;
+  margin-right: auto;
   padding: 8px 0 8px 0;
   cursor: pointer;
   span {
