@@ -45,8 +45,8 @@ const RequiredChoice = ({
 
   return (
     <>
-      <label htmlFor={fieldInfo.fieldName}>
-        {label}<span className="required-mark">*</span>
+      <label htmlFor={fieldInfo.fieldName} className="required">
+        {label}
       </label>
       {errorMessage && (
         <div id={errorMsgId} className="ds-u-color--error">

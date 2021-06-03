@@ -16,13 +16,15 @@ import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
+import FormInfoText from "../components/FormInfoText";
+import ScrollToTop from "../components/ScrollToTop";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-const SubmissionForm = ({ formInfo, changeRequestType }) => {
+export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
   const {
@@ -35,7 +37,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState("");
+  const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
+    formInfo?.actionType?.errorMessage
+  );
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
     useState("");
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
@@ -99,8 +103,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       // Must have a value
       if (!newTransmittalNumber) {
-        if (!firstTimeThrough)
-          errorMessage = `${transmittalNumberDetails.idLabel} Required`;
+        errorMessage = `${transmittalNumberDetails.idLabel} Required`;
       }
       // state code must be on the User's active state list
       else if (
@@ -119,7 +122,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
       return errorMessage;
     },
-    [transmittalNumberDetails, firstTimeThrough, userData]
+    [transmittalNumberDetails, userData]
   );
 
   /**
@@ -182,16 +185,12 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
   };
 
   useEffect(() => {
-    let waiverAuthorityMessage = "";
-    let actionTypeMessage = "";
+    let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
+    let actionTypeMessage = formInfo?.actionType?.errorMessage;
 
-    if (!firstTimeThrough) {
-      if (formInfo.actionType && !changeRequest.actionType)
-        actionTypeMessage = formInfo.actionType.errorMessage;
+    if (changeRequest.actionType) actionTypeMessage = "";
 
-      if (formInfo.waiverAuthority && !changeRequest.waiverAuthority)
-        waiverAuthorityMessage = formInfo.waiverAuthority.errorMessage;
-    }
+    if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
 
     // validate that the ID is in correct format
     let newMessage = {
@@ -256,7 +255,9 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
    */
   async function handleCancel(event) {
     event.preventDefault();
-    const cancel = window.confirm("If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?")
+    const cancel = window.confirm(
+      "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?"
+    );
     if (cancel === true) {
       history.goBack();
     }
@@ -275,14 +276,18 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setIsLoading(true);
     if (mounted) setFirstTimeThrough(false);
 
+    if (transmittalNumberStatusMessage.statusLevel === "warn"
+    && transmittalNumberStatusMessage.statusMessage ) {
+      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state." ;
+    }
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
         transmittalNumberStatusMessage.statusMessage) ||
       actionTypeErrorMessage ||
       waiverAuthorityErrorMessage
-    )
+    ) {
       newAlertCode = RESPONSE_CODE.DATA_MISSING;
-    else if (!areUploadsReady) {
+    } else if (!areUploadsReady) {
       newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
       try {
@@ -331,7 +336,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            {formInfo.subheaderMessage}
+            <FormInfoText text={formInfo.subheaderMessage}/>
           </div>
         )}
         <form
@@ -370,7 +375,13 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
               hintText={transmittalNumberDetails.idHintText}
               idFAQLink={transmittalNumberDetails.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
-              statusMessage={transmittalNumberStatusMessage.statusMessage}
+              statusMessage={
+                !firstTimeThrough ||
+                transmittalNumberStatusMessage.statusMessage !==
+                  `${transmittalNumberDetails.idLabel} Required`
+                  ? transmittalNumberStatusMessage.statusMessage
+                  : ""
+              }
               value={changeRequest.transmittalNumber}
               onChange={(event) =>
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
@@ -397,13 +408,14 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button
-              onClick={handleCancel}
-              className="submission-form-cancel-button"
-              type="button"
+            onClick={handleCancel}
+            className="submission-form-cancel-button"
+            type="button"
           >
             Cancel
           </button>
         </form>
+        <ScrollToTop />
       </div>
     </LoadingScreen>
   );
