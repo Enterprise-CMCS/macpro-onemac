@@ -108,7 +108,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       else if (
         newTransmittalNumber.length >= 2 &&
         latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
-          USER_STATUS.ACTIVE
+        USER_STATUS.ACTIVE
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
@@ -331,7 +331,7 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <PageTitleBar heading={formInfo.pageTitle} text="" />
       <AlertBar alertCode={alertCode} />
       <div className="form-container">
-        <FormInfoText text="Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email."/>
+        <FormInfoText text="Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email." />
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
             {formInfo.subheaderMessage}
@@ -400,14 +400,21 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button
-              onClick={handleCancel}
-              className="submission-form-cancel-button"
-              type="button"
+            onClick={handleCancel}
+            className="submission-form-cancel-button"
+            type="button"
           >
             Cancel
           </button>
         </form>
         <ScrollToTop />
+        <div className="faq-container">
+          <span>Do you have questions or need support?</span>
+          <a target="new" href={ROUTES.FAQ_TOP}
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto faq-button">
+            View FAQ
+                </a>
+        </div>
       </div>
     </LoadingScreen>
   );
