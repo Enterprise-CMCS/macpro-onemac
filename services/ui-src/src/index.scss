@@ -348,26 +348,16 @@ input[type="file"] {
     font-weight: 400;
   }
   .faq-container {
-    vertical-align: middle;
-    position: relative;
-    height: 124px;
-    line-height: 124px;
-    vertical-align: middle;
-    padding-left:97px;
     background-color: $color-primary-alt-lightest;
     margin-bottom: 57px;
     margin-top: 28px;
+    padding: 62px 0 62px 97px;
     span {
       font-family: Open Sans;
       font-style: normal;
       font-weight: normal;
       font-size: 24px;
-      line-height: 30px;
-    }
-    .faq-button {
-      right: 124px;
-      top:46px;
-      position: absolute;
+      padding-right: 235px;
     }
   }
 }

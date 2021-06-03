@@ -419,7 +419,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         <div className="faq-container">
           <span>Do you have questions or need support?</span>
           <a target="new" href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto faq-button">
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto">
             View FAQ
           </a>
         </div>
