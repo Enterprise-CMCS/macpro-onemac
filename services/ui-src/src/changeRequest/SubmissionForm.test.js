@@ -192,4 +192,3 @@ it("check for FAQ Callout button", async () => {
     expect(screen.getByText('View FAQ').closest('a')).toHaveAttribute('href', ROUTES.FAQ_TOP);
     expect(screen.getByText('View FAQ').closest('a')).toHaveAttribute('target', 'new');
   });
-

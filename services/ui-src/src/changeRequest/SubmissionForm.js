@@ -277,8 +277,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setFirstTimeThrough(false);
 
     if (transmittalNumberStatusMessage.statusLevel === "warn"
-    && transmittalNumberStatusMessage.statusMessage ) {
-      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state." ;
+      && transmittalNumberStatusMessage.statusMessage) {
+      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
     }
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
@@ -336,7 +336,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            <FormInfoText text={formInfo.subheaderMessage}/>
+            <FormInfoText text={formInfo.subheaderMessage} />
           </div>
         )}
         <form
@@ -377,7 +377,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
                 !firstTimeThrough ||
-                transmittalNumberStatusMessage.statusMessage !==
+                  transmittalNumberStatusMessage.statusMessage !==
                   `${transmittalNumberDetails.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
@@ -421,7 +421,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           <a target="new" href={ROUTES.FAQ_TOP}
             className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto faq-button">
             View FAQ
-                </a>
+          </a>
         </div>
       </div>
     </LoadingScreen>
