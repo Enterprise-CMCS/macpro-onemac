@@ -174,3 +174,22 @@ it("does not clear already uploaded file list if submit fails.", async () => {
   await screen.findByText("There was a problem submitting your form.");
   expect(screen.getByText(testFile.name)).toBeInTheDocument();
 });
+
+
+it("check for FAQ Callout button", async () => {  
+    render(
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+        }}
+      >
+        <SubmissionForm
+          formInfo={testFormInfo}
+          changeRequestType={CHANGE_REQUEST_TYPES.CHIP_SPA}
+        ></SubmissionForm>
+      </AppContext.Provider>
+    );
+    expect(screen.getByText('View FAQ').closest('a')).toHaveAttribute('href', ROUTES.FAQ_TOP);
+    expect(screen.getByText('View FAQ').closest('a')).toHaveAttribute('target', 'new');
+  });
+
