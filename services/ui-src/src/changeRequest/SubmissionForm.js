@@ -277,6 +277,10 @@ const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setIsLoading(true);
     if (mounted) setFirstTimeThrough(false);
 
+    if (transmittalNumberStatusMessage.statusLevel === "warn"
+    && transmittalNumberStatusMessage.statusMessage ) {
+      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state." ;
+    }
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
         transmittalNumberStatusMessage.statusMessage) ||
