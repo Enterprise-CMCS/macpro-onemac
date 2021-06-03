@@ -14,6 +14,7 @@
     "cross-browser": "npm test -- -e chrome,firefox",
     "firefox": "npm test -- -e firefox",
     "unit": "npm test -- -e unit-test --skiptags=smoke,regression,integration",
+    "login": "npm run chrome -- nightwatch/tests/cases/OY2-1494_Test_SPA_Login.js",
     "regression": "npm run chrome -- --tag regression --skiptags unit,integration,devEnv",
     "regression-dev": "npm run chromeHeadless -- --tag regression,devEnv --skiptags unit,integration",
     "regression-soon": "npm run chrome -- --tag regression-soon --skiptags unit,integration,devEnv,regression",

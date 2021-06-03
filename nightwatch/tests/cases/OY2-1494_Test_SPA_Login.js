@@ -1,42 +1,33 @@
 let spa;
 const timeout = 1000;
 module.exports = {
-  before: function (browser) {
+  beforeEach: function (browser) {
     console.log("Setting up...");
-    console.log("url is: ", process.env.APPLICATION_ENDPOINT);
-    // let myArgs = process.argv.slice
-    spa = browser.page.spaBasePage();
+    console.log("url is: ", browser.launch_url);
     browser.maximizeWindow();
-    browser.url(process.env.APPLICATION_ENDPOINT)
-      .waitForElementPresent("body");
+    browser.url(browser.launch_url);
+    browser.waitForElementPresent("body");
   },
 
-  after: function (browser) {
+  afterEach: function (browser) {
     console.log("Closing down...");
+    spa = browser.page.spaBasePage();
+    spa.click("@myAccountLink").pause(timeout/2);
+    spa.click("@logout").pause(timeout/2);
+
     browser.end();
   },
 
   "Login to SPA and Waiver Dashboard": function (
     browser,
     testData = {
-<<<<<<< HEAD
       username: browser.globals.devuser,
       password: browser.globals.devpass,
       spaPageTitle: "SPA and Waiver Dashboard",
-=======
-      // username: process.env.TEST_USERS,
-      // password: process.env.TEST_USER_PASSWORD,
-      username: process.env.TEST_STATE_USERS,
-      password: process.env.TEST_STATE_USER_PASSWORD,
-
->>>>>>> 7651c674ac33c44e096689fac36ca134a7dbab8c
     }
   ) {
-    testData.spaPageTitle = "SPA and Waiver Dashboard",
       spa = browser.page.spaBasePage();
     //click on button
-    browser.useCss().click("#loginBtn");
-    console.log("Login as: ", testData.username);
     spa.devLogin(testData);
     spa.verify.visible("@titleBar");
     browser.verify.elementPresent("h1");
@@ -46,12 +37,9 @@ module.exports = {
   "Login to SPA and Waiver Dashboard via Okta": function (
     browser,
     testData = {
-      //username: browser.globals.user,
-      //password: browser.globals.pass,
-      // username: process.env.TEST_USERS,
-      // password: process.env.TEST_USER_PASSWORD,
-      username: process.env.TEST_STATE_USERS,
-      password: process.env.TEST_STATE_USER_PASSWORD,
+      username: browser.globals.user.name,
+      password: browser.globals.user.pass,
+      
       spaPageTitle: "SPA and Waiver Dashboard",
     }
   ) {
@@ -64,32 +52,16 @@ module.exports = {
   // from Guli's PR 177
   // 1st: Logins to the test site
   "Login to Medicaid as Regular User": function (browser) {
-    // Test Data
-    const username = browser.globals.user;
-    const password = browser.globals.pass;
-    let spaPageTitle = "SPA and Waiver Dashboard";
-
-    // Test Stesp
-    browser.useXpath().click("//a[text()='Login']"); // click the login button
-    browser.useCss().setValue("#okta-signin-username", username);
-    browser.setValue("#okta-signin-password", password);
-    browser.click("#tandc");
-    browser.click("#okta-signin-submit");
-    browser.waitForElementPresent("body");
-
+    this["Login to SPA and Waiver Dashboard via Okta"](browser,{
+      username:browser.globals.user,password:browser.globals.pass})
     // Test Assertion
     browser.verify.containsText("h1", spaPageTitle);
   },
 
   // login as state user for val environment
   "Login to Medicaid as State User in val environment": function (browser) {
-    // Test Data
-    const username = browser.globals.state_user;
-    console.log("USERNAME CHECK: " + username);
-    const password = browser.globals.state_user_pass;
-    console.log("PASSWORD CHECK: " + password);
-    let spaPageTitle = "SPA and Waiver Dashboard";
-
+    this["Login to SPA and Waiver Dashboard via Okta"](browser,{
+      username:browser.globals.state_user,password:browser.globals.state_pass})
     // Test Stesp
     browser.useXpath().click("//a[text()='Login']"); // click the login button
     browser.useCss().setValue("#okta-signin-username", username);
@@ -140,7 +112,7 @@ module.exports = {
     browser.verify.containsText("h1", spaPageTitle);
   },
 
-  "Logout of SPA and Waiver Dashboard": function (browser) {
+ /* "Logout of SPA and Waiver Dashboard": function (browser) {
     let title = "SPA and Waiver Dashboard";
     spa.logout();
     browser.pause(timeout * 3);
@@ -161,6 +133,5 @@ module.exports = {
 
     // Verify the successful logout
     //browser.verify.containsText(".home-header-text", logout_banner_text);
-
-  },
+  },*/
 };

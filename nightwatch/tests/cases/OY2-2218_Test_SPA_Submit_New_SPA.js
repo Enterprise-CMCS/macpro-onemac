@@ -12,14 +12,13 @@ let spa;
 module.exports = {
 
     before : function(browser) {
-        login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        login.beforeEach(browser);
+        login['Login to SPA and Waiver Dashboard via Okta'](browser);
         browser.pause(timeout * 3);
     },
 
     after : function(browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        login.after(browser);
+        login.afterEach(browser);
     },
 
     "Click on 'Start a new SPA'": function (browser, testData = {
@@ -51,7 +50,7 @@ module.exports = {
     "Enter SPA ID" : function (browser, spa_id) {
         spa = browser.page.spaBasePage();
         let selector = '@transmittal';
-        let id = (spa_id) ? spa_id : spa.getTransmitNumber(false, "AK");
+        let id = (spa_id) ? spa_id : spa.getTransmitNumber(true, browser.globals.user.state);
         spa.expect.element(selector).to.be.visible.before(timeout * 10);
         spa.setValue(selector, id, () => {
             browser.keys([browser.Keys.TAB]);
@@ -60,10 +59,10 @@ module.exports = {
 
     },
 
-    "Enter SPA ID (Optional)" : function (browser) {
+   /* "Enter SPA ID (Optional)" : function (browser) {
         spa = browser.page.spaBasePage();
-        this["Enter ID"](browser, spa.getTransmitNumber(true, "ND"));
-    },
+        this['Enter SPA ID'](browser, spa.getTransmitNumber(true, "ND"));
+    },*/
 /*
 
     'Upload Documents Number' : function (browser, numOfFiles = 9) {
@@ -72,11 +71,17 @@ module.exports = {
     },
 */
 
-    "Upload Documents": function (browser, required = 2, type = 'pdf') {
-        let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
-        spa = browser.page.spaBasePage();
-        spa.uploadDocs(type, required, validate);
+    "Upload Documents": function (browser, required = 1, type = 'pdf') {
+        let validate = (fileName) => {
+           //browser.expect.element(`//*[contains(text(),"${fileName}")]`).text.contain(fileName);
+           browser.expect.element(`//*[contains(text(),"${fileName}")]`).to.be.present;
+        }
+             spa = browser.page.spaBasePage();
+        spa.uploadDocs(type);
     },
+   // "Upload another Documents": function (browser) {
+   //     this['Upload another Documents'](browser, 1, 'docx');
+   // },
 
     'Enter Comments' : function (browser, selector = 'textarea',
                                  entered_text = "Relax. This is only a test") {
@@ -92,6 +97,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
         browser.click('[type="submit"]');
         spa.expect.element(testData.selector).to.be.visible.before(timeout * 20);
+        browser.pause(3000);
     },
 
 };
