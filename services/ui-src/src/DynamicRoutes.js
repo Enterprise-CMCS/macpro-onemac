@@ -16,6 +16,9 @@ import Metrics from "./containers/Metrics";
 import { useAppContext } from "./libs/contextLib";
 import ChipSpa from "./changeRequest/ChipSpa";
 import ChipSpaRai from "./changeRequest/ChipSpaRai";
+import NewSubmission from "./changeRequest/NewSubmission";
+import NewSPA from "./changeRequest/NewSPA";
+import NewWaiver from "./changeRequest/NewWaiver";
 
 export default function DynamicRoutes() {
   const { userProfile: { userData: { type } = {} } = {} } = useAppContext();
@@ -47,6 +50,15 @@ export default function DynamicRoutes() {
       </AuthenticatedRoute>
       {userRoleObj.canAccessDashboard && (
         <>
+         <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
+            <NewSubmission />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path={`${ROUTES.NEW_SPA}`}>
+            <NewSPA />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
+            <NewWaiver />
+          </AuthenticatedRoute>
           <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
             <ChipSpa />
           </AuthenticatedRoute>
