@@ -16,7 +16,6 @@ import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
-import FormInfoText from "../components/FormInfoText";
 import ScrollToTop from "../components/ScrollToTop";
 
 /**
@@ -260,7 +259,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?"
     );
     if (cancel === true) {
-      history.goBack();
+      history.replace(ROUTES.DASHBOARD);
     }
   }
 
@@ -337,7 +336,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            <FormInfoText text={formInfo.subheaderMessage}/>
+            {formInfo.subheaderMessage}
           </div>
         )}
         <form
@@ -401,6 +400,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
             <TextField
               name="summary"
               label="Additional Information"
+              hint="Add anything else that you would like to share with CMS."
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
