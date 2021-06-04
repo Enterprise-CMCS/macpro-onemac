@@ -128,7 +128,7 @@ it("does not clear Transmittal Number if submit fails.", async () => {
   const transmittalNumberEl = screen.getByLabelText(
     testFormInfo.transmittalNumber.idLabel
   );
-  const summaryEl = screen.getByLabelText("Additional Information");
+  const summaryEl = screen.getByLabelText("Additional Information", {exact: false});
 
   expect(transmittalNumberEl.value).toBe("");
   expect(summaryEl.value).toBe("");
@@ -174,21 +174,3 @@ it("does not clear already uploaded file list if submit fails.", async () => {
   await screen.findByText("There was a problem submitting your form.");
   expect(screen.getByText(testFile.name)).toBeInTheDocument();
 });
-
-
-it("check for FAQ Callout button", async () => {  
-    render(
-      <AppContext.Provider
-        value={{
-          ...initialAuthState,
-        }}
-      >
-        <SubmissionForm
-          formInfo={testFormInfo}
-          changeRequestType={CHANGE_REQUEST_TYPES.CHIP_SPA}
-        ></SubmissionForm>
-      </AppContext.Provider>
-    );
-    expect(screen.getByText('View FAQ').closest('a')).toHaveAttribute('href', ROUTES.FAQ_TOP);
-    expect(screen.getByText('View FAQ').closest('a')).toHaveAttribute('target', 'new');
-  });
