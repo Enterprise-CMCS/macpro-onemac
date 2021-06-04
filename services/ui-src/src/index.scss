@@ -59,6 +59,7 @@ h4 {
 
 select, .field {
   @extend .ds-c-field;
+  border-color: $color-gray-light;
 }
 
 label {
@@ -116,25 +117,32 @@ ul {
     th,
     td {
       text-align: left;
-      padding: 12px 8px 8px 8px;
       vertical-align: middle;
+    }
+    th {
+      @extend .ds-u-padding--1;
+      @extend .ds-u-padding-bottom--3;
+    }
+    td {
+      @extend .ds-u-padding-x--1;
+      @extend .ds-u-padding-y--3;
     }
     tr {
       height: 72px;
-      border-bottom: 1px solid $color-gray;
+      border-bottom: 1px solid $color-gray-light;
       vertical-align: text-top;
     }
-    tr:nth-last-child(1) {
+    tr:last-child {
       border-bottom: none;
     }
   }
 
   .uploader-type-cell {
-    width: 40%;
+    width: 50%;
   }
 
   .uploader-input-cell {
-    width: 20%;
+    width: 175px;
   }
 
   .uploader-file-items {
@@ -150,10 +158,12 @@ ul {
   .uploader-input-label {
     // Make the label look like a button
     @extend .ds-c-button;
+    @extend .ds-u-padding-x--3;
     font-weight: 400;
     font-size: 14px;
     margin-top: 0px;
-    margin-left:20px;
+    padding-top: 4px;
+    padding-bottom: 4px;
   }
 
   .uploader-input-label-active {
@@ -172,7 +182,12 @@ ul {
   .uploader-clear-button {
     @extend .ds-c-button;
     @extend .ds-c-button--transparent;
+    @extend .ds-u-padding--0;
     color: $color-primary;
+
+    svg {
+      height: 1.5em;
+    }
   }
 }
 
@@ -293,7 +308,7 @@ input[type="file"] {
 
 .form-container {
   @extend .app-bar;
-  @extend .ds-u-margin-left--7;
+  @extend .ds-u-padding-top--5;
   @extend .ds-u-margin-right--7;
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
@@ -319,10 +334,8 @@ input[type="file"] {
   }
 
   .form-card {
-    @extend .ds-l-col--auto;
     @extend .ds-u-padding-top--1;
     @extend .ds-u-padding-bottom--3;
-    @extend .ds-u-padding-left--2;
 
     label {
       @extend .ds-u-margin-top--3;
@@ -367,14 +380,11 @@ input[type="file"] {
   font-size: 2rem;
   width: 100%;
   max-width: 100%;
+  border-color: $color-gray-light;
 }
 
 .upload-card {
-  @extend .ds-l-col--auto;
-  div {
-    padding-top: 1rem;
-    padding-bottom: 1rem;
-  }
+  @extend .ds-u-margin-top--4;
 }
 
 .loading-screen {
@@ -880,8 +890,17 @@ input[type="file"] {
 }
 
 .summary-box label {
-  @extend .ds-h3;
   @extend .ds-u-margin-top--5;
+  @extend .ds-u-margin-bottom--3;
+
+  span {
+    display: inline-block;
+
+    &:not(.ds-c-field__hint) {
+        @extend .ds-h3;
+        @extend .ds-u-margin-bottom--1;
+    }
+  }
 }
 
 .LoaderButton, .form-submit {
@@ -1356,7 +1375,10 @@ color: $color-primary;
 }
 .scrollToTop {
   @extend .portalTable;
-  margin: 0 auto;
+  @extend .ds-u-margin-top--7;
+  @extend .ds-u-margin-bottom--3;
+  margin-left: auto;
+  margin-right: auto;
   padding: 8px 0 8px 0;
   cursor: pointer;
   span {
