@@ -5,7 +5,7 @@ import ChoiceList from "../components/ChoiceList";
 
 const SUBMISSION_CHOICES = [{
   title: "State Plan Amendment (SPA)",
-  description: "Submit a new Medicaid &amp; CHIP State Plan Amendments or RAI",
+  description: "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
   linkTo: "/newspa",
 },{
   title: "Waiver Action",
@@ -19,7 +19,7 @@ const NewSubmission = () => {
     <>
       <PageTitleBar heading="Submission Type" text="" />
       <div className="choice-container">
-        <h3>Select a Submission Type.</h3>
+        <div className="choice-intro">Select a Submission Type.</div>
         <ChoiceList choices={SUBMISSION_CHOICES} />
       </div>
     </>
