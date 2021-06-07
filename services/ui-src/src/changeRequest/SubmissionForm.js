@@ -17,6 +17,7 @@ import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import ScrollToTop from "../components/ScrollToTop";
+import config from "../utils/config";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -404,7 +405,9 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               multiline
               onChange={handleInputChange}
               value={changeRequest.summary}
+              maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             ></TextField>
+            <div className="char-count">{changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}</div>
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button

@@ -380,6 +380,7 @@ input[type="file"] {
   font-size: 2rem;
   width: 100%;
   max-width: 100%;
+  resize: none;
   border-color: $color-gray-light;
 }
 
@@ -901,6 +902,10 @@ input[type="file"] {
         @extend .ds-u-margin-bottom--1;
     }
   }
+}
+
+.char-count{
+  text-align: right;
 }
 
 .LoaderButton, .form-submit {
