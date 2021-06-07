@@ -1445,14 +1445,20 @@ dl.state-access-cards {
   li {
     list-style-type: none;
     margin: 0px;
-    padding: 24px;
     position: relative;
     height: 110px;
-
+    h4 {
+      padding-left: 24px;
+      padding-top: 24px;
+      padding-right: 60px;
+    }
     p {
       color: #5b616b;
       font-size: 16px;
       font-weight: 600;
+      padding-left: 24px;
+      padding-bottom: 24px;
+      padding-right: 60px;
     }
     a {
       text-decoration: none;
