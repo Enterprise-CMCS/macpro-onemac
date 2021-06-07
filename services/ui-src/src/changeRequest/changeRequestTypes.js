@@ -11,23 +11,3 @@ export const CHANGE_REQUEST_TYPES = {
     WAIVER_EXTENSION: 'waiverextension',
     WAIVER_APP_K: 'waiverappk'
 }
-/*
-export const NEW_SUBMISSION_CHOICE_TREE = {
-    pageTitleBar: "Submission Type",
-    pageDescription: "Select a Submission Type.",
-    choices: [ {
-        itemTitle: "State Plan Amendment (SPA)",
-        itemDescription: "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
-        pageTitleBar: ""
-    SPA: {
-
-        choices: 
-        [{
-
-    }]
-},
-    WAIVER: [{
-
-    }]]
-}
-*/
