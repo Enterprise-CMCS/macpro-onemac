@@ -49,16 +49,16 @@ class ChangeRequestDataApi {
     try {
       let changeRequest = await API.get("changeRequestAPI", `/get/${id}/${userId}`);
       // Get temporary URLs to the S3 bucket
-      if (changeRequest.uploads) {
-        let i;
-        // Use a for loop instead of forEach to stay in the context of this async function.
-        for (i = 0; i < changeRequest.uploads.length; i++) {
-          changeRequest.uploads[i].url = await Storage.vault.get(
-            changeRequest.uploads[i].s3Key,
-            { level: "protected" }
-          );
-        }
-      }
+      // if (changeRequest.uploads) {
+      //   let i;
+      //   // Use a for loop instead of forEach to stay in the context of this async function.
+      //   for (i = 0; i < changeRequest.uploads.length; i++) {
+      //     changeRequest.uploads[i].url = await Storage.vault.get(
+      //       changeRequest.uploads[i].s3Key,
+      //       { level: "protected" }
+      //     );
+      //   }
+      // }
       return changeRequest;
     } catch (error) {
       console.log(`There was an error fetching ID ${id}.`, error);
