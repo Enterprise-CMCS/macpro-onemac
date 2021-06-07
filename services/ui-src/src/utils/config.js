@@ -1,6 +1,7 @@
 // eslint-disable-next-line import/no-anonymous-default-export
 export default {
     MAX_ATTACHMENT_SIZE_MB: 80,
+    MAX_ADDITIONAL_INFO_LENGTH:4000,
     ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
     METRICS_USERS: window._env_.METRICS_USERS,
     s3: {

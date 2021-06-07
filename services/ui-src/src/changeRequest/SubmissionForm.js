@@ -16,8 +16,8 @@ import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
-import FormInfoText from "../components/FormInfoText";
 import ScrollToTop from "../components/ScrollToTop";
+import config from "../utils/config";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -109,7 +109,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       else if (
         newTransmittalNumber.length >= 2 &&
         latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
-          USER_STATUS.ACTIVE
+        USER_STATUS.ACTIVE
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
@@ -259,7 +259,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?"
     );
     if (cancel === true) {
-      history.goBack();
+      history.replace(ROUTES.DASHBOARD);
     }
   }
 
@@ -277,8 +277,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setFirstTimeThrough(false);
 
     if (transmittalNumberStatusMessage.statusLevel === "warn"
-    && transmittalNumberStatusMessage.statusMessage ) {
-      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state." ;
+      && transmittalNumberStatusMessage.statusMessage) {
+      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
     }
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
@@ -336,7 +336,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            <FormInfoText text={formInfo.subheaderMessage}/>
+            {formInfo.subheaderMessage}
           </div>
         )}
         <form
@@ -377,7 +377,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
                 !firstTimeThrough ||
-                transmittalNumberStatusMessage.statusMessage !==
+                  transmittalNumberStatusMessage.statusMessage !==
                   `${transmittalNumberDetails.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
@@ -400,11 +400,14 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
             <TextField
               name="summary"
               label="Additional Information"
+              hint="Add anything else that you would like to share with CMS."
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
               value={changeRequest.summary}
+              maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             ></TextField>
+            <div className="char-count">{changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}</div>
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button
@@ -416,6 +419,13 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </button>
         </form>
         <ScrollToTop />
+        <div className="faq-container">
+          <span>Do you have questions or need support?</span>
+          <a target="new" href={ROUTES.FAQ_TOP}
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto">
+            View FAQ
+          </a>
+        </div>
       </div>
     </LoadingScreen>
   );

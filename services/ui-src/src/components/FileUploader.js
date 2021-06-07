@@ -4,6 +4,7 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { formatList } from "../utils";
 
 const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
 
@@ -233,9 +234,12 @@ export default class FileUploader extends Component {
     // Generate each file input control first.
     let reqControls = [];
     let optControls = [];
+    const singleFileControls = [];
     this.state.uploaders.forEach((uploader, index) => {
       // disabled flag for types that only allow a single file for upload and a file is already selected
       let isDisabled = uploader.allowMultiple === false && uploader.hasFile;
+
+      if (uploader.allowMultiple === false) singleFileControls.push(uploader.title);
 
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
@@ -289,7 +293,7 @@ export default class FileUploader extends Component {
                         title="Remove file"
                         onClick={() => this.handleRemoveFile(uploader, file)}
                       >
-                        <FontAwesomeIcon icon={faTimes} size="2x" />
+                        <FontAwesomeIcon icon={faTimes} />
                       </button>
                     </div>
                   );
@@ -311,7 +315,15 @@ export default class FileUploader extends Component {
     return (
       <div>
         <p className="req-message">
-          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
+          multiple files per attachment type
+          {singleFileControls.length > 0 && (
+            <>
+              , except for the {formatList(singleFileControls)}
+            </>
+          )}
+          . Read the description for each of the attachment types on the FAQ
+          Page.
         </p>
         {this.props.requiredUploads?.length > 0 ? (
           <p className="req-message">
