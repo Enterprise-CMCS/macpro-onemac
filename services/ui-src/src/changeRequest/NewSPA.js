@@ -3,23 +3,27 @@ import React from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
-const SPA_CHOICES = [{
-  title: "Medicaid SPA",
-  description: "Submit new Medicaid State Plan Amendment",
-  linkTo: "/spa",
-},{
-  title: "Respond to Medicaid SPA RAI",
-  description: "Submit additional information",
-  linkTo: "/sparai",
-},{
-  title: "CHIP SPA",
-  description: "Submit new CHIP State Plan Amendment",
-  linkTo: "/chipspa",
-},{
-  title: "Respond to CHIP SPA RAI",
-  description: "Submit additional information",
-  linkTo: "/chipsparai",
-},
+const SPA_CHOICES = [
+  {
+    title: "Medicaid SPA",
+    description: "Submit new Medicaid State Plan Amendment",
+    linkTo: "/spa",
+  },
+  {
+    title: "Respond to Medicaid SPA RAI",
+    description: "Submit additional information",
+    linkTo: "/sparai",
+  },
+  {
+    title: "CHIP SPA",
+    description: "Submit new CHIP State Plan Amendment",
+    linkTo: "/chipspa",
+  },
+  {
+    title: "Respond to CHIP SPA RAI",
+    description: "Submit additional information",
+    linkTo: "/chipsparai",
+  },
 ];
 
 const NewSPA = () => {
@@ -27,7 +31,9 @@ const NewSPA = () => {
     <>
       <PageTitleBar heading="SPA Type" text="" />
       <div className="choice-container">
-        <h3>Select a SPA type to start your submission.</h3>
+        <div className="choice-intro">
+          Select a SPA type to start your submission.
+        </div>
         <ChoiceList choices={SPA_CHOICES} />
       </div>
     </>
