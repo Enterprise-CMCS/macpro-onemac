@@ -109,7 +109,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       else if (
         newTransmittalNumber.length >= 2 &&
         latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
-          USER_STATUS.ACTIVE
+        USER_STATUS.ACTIVE
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
@@ -277,8 +277,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     if (mounted) setFirstTimeThrough(false);
 
     if (transmittalNumberStatusMessage.statusLevel === "warn"
-    && transmittalNumberStatusMessage.statusMessage ) {
-      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state." ;
+      && transmittalNumberStatusMessage.statusMessage) {
+      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
     }
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
@@ -377,7 +377,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
                 !firstTimeThrough ||
-                transmittalNumberStatusMessage.statusMessage !==
+                  transmittalNumberStatusMessage.statusMessage !==
                   `${transmittalNumberDetails.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
@@ -419,6 +419,13 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </button>
         </form>
         <ScrollToTop />
+        <div className="faq-container">
+          <span>Do you have questions or need support?</span>
+          <a target="new" href={ROUTES.FAQ_TOP}
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto">
+            View FAQ
+          </a>
+        </div>
       </div>
     </LoadingScreen>
   );

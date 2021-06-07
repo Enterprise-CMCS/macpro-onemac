@@ -360,6 +360,19 @@ input[type="file"] {
     text-align: right;
     font-weight: 400;
   }
+  .faq-container {
+    background-color: $color-primary-alt-lightest;
+    margin-bottom: 57px;
+    margin-top: 28px;
+    padding: 62px 0 62px 97px;
+    span {
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 24px;
+      padding-right: 235px;
+    }
+  }
 }
 
 .summary-field {
@@ -1377,3 +1390,4 @@ color: $color-primary;
     margin-left: 7.5px;
   }
 }
+

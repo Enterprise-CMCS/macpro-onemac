@@ -128,7 +128,8 @@ it("does not clear Transmittal Number if submit fails.", async () => {
   const transmittalNumberEl = screen.getByLabelText(
     testFormInfo.transmittalNumber.idLabel
   );
-  const summaryEl = screen.getByLabelText("Additional Information",{exact:false});
+
+  const summaryEl = screen.getByLabelText("Additional Information", {exact: false});
 
   expect(transmittalNumberEl.value).toBe("");
   expect(summaryEl.value).toBe("");
