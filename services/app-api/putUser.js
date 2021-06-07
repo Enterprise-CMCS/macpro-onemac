@@ -376,7 +376,7 @@ const processEmail = async (input) => {
   // Construct and send email acknowledgement to the requesting user //
   const userEmail = await constructUserEmail(input.userEmail, input);
 
-  await dispatchEmail(userEmail.email,input);
+  await dispatchEmail(userEmail.email, input);
 
   // only email approvers if user is acting on their own status
   if (input.userEmail !== input.doneBy) {
@@ -392,7 +392,7 @@ const processEmail = async (input) => {
       input,
       "doneBy"
     );
-    await dispatchEmail(emailParams.email,input);
+    await dispatchEmail(emailParams.email, input);
   } else {
     console.log(
       `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`
@@ -427,7 +427,7 @@ const collectRoleAdminEmailIds = async (input) => {
         ? recipients.push(approver.id)
         : null;
     });
-  } else if (input.type === USER_TYPE.CMS_APPROVER||input.type === USER_TYPE.HELPDESK) {
+  } else if (input.type === USER_TYPE.CMS_APPROVER || input.type === USER_TYPE.HELPDESK) {
     let systemadmins = [];
     // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
     if (process.env.systemAdminEmail) {
@@ -487,13 +487,12 @@ const constructRoleAdminEmails = (recipients, input) => {
     ToAddresses: recipients,
   };
   email.HTML = `
-  <p>Hello,</p>
+    <p>Hello,</p>
 
-  <p>You have a new role request awaiting review. Please log into OneMAC and check your 
-  Account Management dashboard to review pending requests. If you have questions, 
-  please contact the MACPro Help Desk.</p>
+    There is a new OneMAC Portal State Submitter access request waiting from ${input.firstName} ${input.lastName} for your review. 
+    Please log into your User Management Dashboard to see the pending request.
 
-  <p>Thank you!</p>`;
+    <p>Thank you!</p>`;
 
   let typeText = "User";
   let newSubject = "";
@@ -525,14 +524,6 @@ const constructRoleAdminEmails = (recipients, input) => {
       break;
     case USER_TYPE.HELPDESK:
       typeText = "Helpdesk User";
-      email.HTML =
-        `
-  <p>Hello,</p>
-
-  There is a new OneMAC Portal Helpdesk access request from ${input.firstName} ${input.lastName} waiting 
-  for your review. Please log into your User Management Dashboard to see the pending request.
-
-  <p>Thank you!</p>`;
       break;
   }
   if (newSubject) email.Subject = newSubject;
@@ -551,10 +542,10 @@ const constructUserEmail = (userEmailId, input) => {
   const userType = input.type;
   input.attributes[0].stateCode
     ? (email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][
-        updatedStatus
-      ].subjectLine.replace("[insert state]", input.attributes[0].stateCode))
+      updatedStatus
+    ].subjectLine.replace("[insert state]", input.attributes[0].stateCode))
     : (email.Subject =
-        ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine);
+      ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine);
 
   input.attributes[0].stateCode
     ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
@@ -570,14 +561,14 @@ const constructUserEmail = (userEmailId, input) => {
 };
 
 // Send email //
-const dispatchEmail = async (email,input) => {
+const dispatchEmail = async (email, input) => {
   try {
     const emailStatus = await sendEmail(email);
     if (emailStatus instanceof Error) {
       console.log("Warning: Email not sent");
     }
     console.log("Email successfully sent");
-return RESPONSE_CODE.USER_SUBMITTED;
+    return RESPONSE_CODE.USER_SUBMITTED;
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user access request acknowledgment email.",
