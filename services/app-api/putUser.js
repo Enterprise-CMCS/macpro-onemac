@@ -581,4 +581,4 @@ const dispatchEmail = async (email, input) => {
 export {
   main,
   constructRoleAdminEmails
-}
+};
