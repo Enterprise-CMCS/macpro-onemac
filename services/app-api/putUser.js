@@ -13,7 +13,7 @@ import { getCMSDateFormatNow } from "./changeRequest/email-util";
 /**
  * Create / Update a user or change User status
  */
-export const main = handler(async (event) => {
+const main = handler(async (event) => {
   try {
     if (isLambdaWarmup(event)) return null;
     let input = isObject(event.body) ? event.body : JSON.parse(event.body);
@@ -577,3 +577,8 @@ const dispatchEmail = async (email, input) => {
     return RESPONSE_CODE.EMAIL_NOT_SENT;
   }
 };
+
+export {
+  main,
+  constructRoleAdminEmails
+}
