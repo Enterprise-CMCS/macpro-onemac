@@ -40,7 +40,6 @@ it("shows the full list of choices", async () => {
 
   testChoices.map((choice) => {
     let choiceElement = screen.getByText(choice.title, { exact: false });
-    //console.log("choice Element is: ", choiceElement);
     expect(
       choiceElement
     ).toBeInTheDocument();

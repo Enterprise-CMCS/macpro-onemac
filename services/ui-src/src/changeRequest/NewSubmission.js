@@ -17,7 +17,7 @@ const SUBMISSION_CHOICES = [{
 const NewSubmission = () => {
   return (
     <>
-      <PageTitleBar heading="Submission Type" text="" />
+      <PageTitleBar heading="Submission Type" />
       <div className="choice-container">
         <div className="choice-intro">Select a Submission Type.</div>
         <ChoiceList choices={SUBMISSION_CHOICES} />
