@@ -29,7 +29,7 @@ const WAIVER_CHOICES = [
 const NewWaiver = () => {
   return (
     <>
-      <PageTitleBar heading="Waiver Action Type" />
+      <PageTitleBar heading="Waiver Action Type" enableBackNav />
       <div className="choice-container">
         <div className="choice-intro">
           Select a Waiver type to start your submission.

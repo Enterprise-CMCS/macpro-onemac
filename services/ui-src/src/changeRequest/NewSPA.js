@@ -29,7 +29,7 @@ const SPA_CHOICES = [
 const NewSPA = () => {
   return (
     <>
-      <PageTitleBar heading="SPA Type" />
+      <PageTitleBar heading="SPA Type" enableBackNav />
       <div className="choice-container">
         <div className="choice-intro">
           Select a SPA type to start your submission.
