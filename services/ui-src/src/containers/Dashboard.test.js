@@ -3,6 +3,7 @@ import { render, screen } from "@testing-library/react";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 
+import { ROUTES } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
 import { stateUserInitialAuthState } from "../libs/testDataAppContext";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
@@ -26,6 +27,6 @@ it("renders with a New Submission button", async () => {
   );
 
   const newSubmissionButton = screen.getByText("New Submission");
-  expect(newSubmissionButton.getAttribute("href")).toBe("/new");
+  expect(newSubmissionButton.getAttribute("href")).toBe(ROUTES.NEW_SUBMISSION_SELECTION);
   await act(() => promise);
 });

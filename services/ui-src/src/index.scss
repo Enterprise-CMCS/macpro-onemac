@@ -93,12 +93,11 @@ label {
   @extend .ds-u-align-items--center;
   @extend .ds-u-padding-top--2;
   @extend .ds-u-padding-bottom--2;
-  min-height: 70px;
+  min-height: 7rem;
 
   h1 {
-    font-size: 24px;
-    font-weight: 700;
-    margin: 0px;
+    @extend .ds-h2;
+    margin: 0;
   }
 
   .title-bar-left-content {
@@ -120,8 +119,8 @@ label {
     .title-bar-back-button {
       background-color: $color-primary-alt-lightest;
       color: $color-primary;
-      padding: 0 24px 0 0;
-      font-size: 24px;
+      padding: 0 2.4rem 0 0;
+      font-size: 2.4rem;
   
       &:hover {
         text-decoration: none;
@@ -132,7 +131,7 @@ label {
 }
 
 .new-submission-button {
-  background-color: $color-primary-darker;
+  background-color: transparent;
 
   &:hover {
     text-decoration: none;
