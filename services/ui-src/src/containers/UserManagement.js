@@ -323,7 +323,7 @@ const initialTableState = useMemo(
 // Render the dashboard
 return (
   <div className="dashboard-white">
-    <PageTitleBar heading="User Management" text="" />
+    <PageTitleBar heading="User Management" />
     <AlertBar alertCode={alertCode} personalizedString={doneToName} />
     <div className="dashboard-container">
       {userProfile &&

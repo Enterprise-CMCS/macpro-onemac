@@ -33,7 +33,7 @@ const FAQ = () => {
 
     return (
     <div>
-    <PageTitleBar heading="Frequently Asked Questions" text="" />
+    <PageTitleBar heading="Frequently Asked Questions" />
     <div className="form-container" id="top">
       <div className="form-card">
         <div className="faq-info-box">
