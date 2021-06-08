@@ -56,7 +56,7 @@ export default function DevLogin() {
 
   return (
     <div>
-    <PageTitleBar heading="Developer Login" text="" />
+    <PageTitleBar heading="Developer Login" />
     {renderAlert(alert)}
     <div className="form-container">
       {showDevLogin && (

@@ -19,6 +19,9 @@ import { useAppContext } from "../libs/contextLib";
 import ScrollToTop from "../components/ScrollToTop";
 import config from "../utils/config";
 
+const leavePageConfirmMessage =
+  "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?";
+
 /**
  * RAI Form template to allow rendering for different types of RAI's.
  * @param {Object} formInfo - all the change request details specific to this submission
@@ -255,10 +258,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
    */
   async function handleCancel(event) {
     event.preventDefault();
-    const cancel = window.confirm(
-      "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?"
-    );
-    if (cancel === true) {
+    const result = window.confirm(leavePageConfirmMessage);
+    if (result === true) {
       history.replace(ROUTES.DASHBOARD);
     }
   }
@@ -331,7 +332,11 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={formInfo.pageTitle} text="" />
+      <PageTitleBar
+        heading={formInfo.pageTitle}
+        enableBackNav
+        backNavConfirmationMessage={leavePageConfirmMessage}
+      />
       <AlertBar alertCode={alertCode} />
       <div className="form-container">
         {formInfo.subheaderMessage && (

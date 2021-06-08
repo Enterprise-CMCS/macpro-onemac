@@ -123,6 +123,7 @@ export class Role {
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,
+        ROUTES.NEW_SUBMISSION_SELECTION,
         ROUTES.SPA,
         ROUTES.SPA_RAI,
         ROUTES.CHIP_SPA,

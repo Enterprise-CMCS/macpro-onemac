@@ -21,7 +21,7 @@ module.exports = {
     testData = {
       username: browser.globals.devuser,
       password: browser.globals.devpass,
-      spaPageTitle: "SPA and Waiver Dashboard",
+      spaPageTitle: "Submission List",
     }
   ) {
     spa = browser.page.spaBasePage();
@@ -37,7 +37,7 @@ module.exports = {
     testData = {
       username: browser.globals.user,
       password: browser.globals.pass,
-      spaPageTitle: "SPA and Waiver Dashboard",
+      spaPageTitle: "Submission List",
     }
   ) {
     spa = browser.page.spaBasePage();
@@ -51,7 +51,7 @@ module.exports = {
     // Test Data
     const username = browser.globals.user;
     const password = browser.globals.pass;
-    let spaPageTitle = "SPA and Waiver Dashboard";
+    let spaPageTitle = "Submission List";
 
     // Test Stesp
     browser.useXpath().click("//a[text()='Login']"); // click the login button
@@ -66,7 +66,6 @@ module.exports = {
   },
 
   "Logout of SPA and Waiver Dashboard": function (browser) {
-    let title = "SPA and Waiver Dashboard";
     spa.logout();
     browser.pause(timeout*3);
     spa.verify.visible("@homeHeader");
