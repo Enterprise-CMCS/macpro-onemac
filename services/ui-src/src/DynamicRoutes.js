@@ -46,7 +46,7 @@ export default function DynamicRoutes() {
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         )}
       </AuthenticatedRoute>
-      {userRoleObj.canAccessDashboard && (
+      {userRoleObj.canAccessForms && (
         <>
           <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
             <SubmissionSelection />

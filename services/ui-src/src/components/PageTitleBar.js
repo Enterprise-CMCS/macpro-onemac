@@ -47,6 +47,7 @@ const PageTitleBar = ({
         {enableBackNav && (
           <Button
             id="back-button"
+            data-testid="back-button"
             className="title-bar-back-button"
             onClick={
               backNavConfirmationMessage ? handleBackWithConfirm : () => history.goBack()

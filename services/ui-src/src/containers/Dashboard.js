@@ -139,7 +139,7 @@ const Dashboard = () => {
     <Button
       id="new-submission-button"
       className="new-submission-button"
-      onClick={() => history.push(ROUTES.NEW_SUBMISSION_SELECTION)}
+      href={ROUTES.NEW_SUBMISSION_SELECTION}
       inversed
     >
       New Submission{" "}
