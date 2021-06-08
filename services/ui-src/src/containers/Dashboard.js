@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
 
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
@@ -29,6 +29,7 @@ const Dashboard = () => {
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
+  const userRoleObj = getUserRoleObj(userData.type);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
@@ -164,7 +165,7 @@ const Dashboard = () => {
     <div className="dashboard-white">
       <PageTitleBar
         heading="Submission List"
-        rightSideContent={isUserActive && newSubmissionButton}
+        rightSideContent={isUserActive && userRoleObj.canAccessForms && newSubmissionButton}
       />
       <AlertBar alertCode={alertCode} />
       <div className="dashboard-container">

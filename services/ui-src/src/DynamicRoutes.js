@@ -5,7 +5,6 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
-import SubmissionSelection from "./containers/SubmissionSelection";
 import UserManagement from "./containers/UserManagement";
 import Spa from "./changeRequest/Spa";
 import Waiver from "./changeRequest/Waiver";
@@ -59,7 +58,9 @@ export default function DynamicRoutes() {
           </AuthenticatedRoute>
           <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
             <NewWaiver />
-          </AuthenticatedRoute>
+          </AuthenticatedRoute></>)}
+      {userRoleObj.canAccessDashboard && (
+        <>
           <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
             <ChipSpa />
           </AuthenticatedRoute>

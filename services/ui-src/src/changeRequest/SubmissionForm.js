@@ -187,6 +187,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
   };
 
+  useEffect(()=>{  window.scrollTo({ top: 0 });}, []);
+
   useEffect(() => {
     let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
     let actionTypeMessage = formInfo?.actionType?.errorMessage;
