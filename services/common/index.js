@@ -89,9 +89,11 @@ export const ROUTES = {
   DEVLOGIN: "/devlogin",
   SIGNUP: "/signup",
   STATE_SIGNUP: "/signup/state",
+  NEW_SPA: "/newspa",
   SPA: "/spa",
   SPA_RAI: "/sparai",
   COMPONENT_PAGE: "/componentpage", // temporary placeholder for the developers to house components //
+  NEW_WAIVER: "/newwaiver",
   WAIVER: "/waiver",
   WAIVER_RAI: "/waiverrai",
   WAIVER_EXTENSION: "/waiverextension",

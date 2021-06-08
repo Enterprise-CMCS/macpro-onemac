@@ -5,7 +5,6 @@ import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
-import SubmissionSelection from "./containers/SubmissionSelection";
 import UserManagement from "./containers/UserManagement";
 import Spa from "./changeRequest/Spa";
 import Waiver from "./changeRequest/Waiver";
@@ -17,6 +16,9 @@ import Metrics from "./containers/Metrics";
 import { useAppContext } from "./libs/contextLib";
 import ChipSpa from "./changeRequest/ChipSpa";
 import ChipSpaRai from "./changeRequest/ChipSpaRai";
+import NewSubmission from "./changeRequest/NewSubmission";
+import NewSPA from "./changeRequest/NewSPA";
+import NewWaiver from "./changeRequest/NewWaiver";
 
 export default function DynamicRoutes() {
   const { userProfile: { userData: { type } = {} } = {} } = useAppContext();
@@ -48,9 +50,17 @@ export default function DynamicRoutes() {
       </AuthenticatedRoute>
       {userRoleObj.canAccessForms && (
         <>
-          <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
-            <SubmissionSelection />
+         <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
+            <NewSubmission />
           </AuthenticatedRoute>
+          <AuthenticatedRoute path={`${ROUTES.NEW_SPA}`}>
+            <NewSPA />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
+            <NewWaiver />
+          </AuthenticatedRoute></>)}
+      {userRoleObj.canAccessDashboard && (
+        <>
           <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
             <ChipSpa />
           </AuthenticatedRoute>
