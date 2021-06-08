@@ -22,14 +22,7 @@ export const main = handler(async (event, context) => {
   const result = await dynamoDb.get(params);
   if ( ! result.Item) {
     throw new Error("Item not found.");
-  } else {
-    //Clear out the s3 URLs.  The UI will generate a temp one.
-    // if(result.Item.uploads) {
-    //   result.Item.uploads.forEach((upload) => {
-    //     upload.url = null;
-    //   });
-    // }
-  }
+  } 
   console.log('Sending back result:', JSON.stringify(result,null,2));
   // Return the retrieved item
   return result.Item;
