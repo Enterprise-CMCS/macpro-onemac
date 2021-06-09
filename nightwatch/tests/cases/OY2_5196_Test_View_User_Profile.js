@@ -24,9 +24,11 @@ module.exports = {
   ) {
     pageObjects = browser.page.spaBasePage();
 
-    pageObjects.click(testData.myAccountLink).waitForElementPresent(testData.manageAccountLink);
-    pageObjects.click(testData.manageAccountLink).waitForElementPresent("body");
-    browser.assert.urlContains(testData.subUrl);
-    browser.verify.containsText('h1', testData.pageTitle);
+    pageObjects.click(testData.myAccountLink)
+    .waitForElementPresent(testData.manageAccountLink)
+    .click(testData.manageAccountLink)
+    .expect.url().to.contain(testData.subUrl);
+    //browser.waitForElementPresent('body');
+    //browser.expect.element('h1').text.to.contain(testData.pageTitle);
   },
 };

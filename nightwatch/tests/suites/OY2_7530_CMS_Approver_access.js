@@ -4,21 +4,12 @@ module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_CMS_APPROVER_USERS,
-            password: process.env.TEST_CMS_APPROVER_USER_PASSWORD,
-          }
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+        login.beforeEach(browser);
+        login['Login to SPA and Waiver Dashboard'](browser,browser.globals.)
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
 
 
