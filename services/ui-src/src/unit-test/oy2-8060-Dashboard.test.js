@@ -19,7 +19,9 @@ jest.mock("../utils/ChangeRequestDataApi");
 const stateUserRevokedDeniedMsg = "Sorry, you don't have access. Please contact the State System Admin with any questions or visit your user profile for more information.";
 const stateAdminRevokedDeniedMsg = "Sorry, you don't have access. Please contact the CMS Role Approver with any questions, or visit your user profile for more information.";
 const cmsApproverRevokedDeniedMsg = "Sorry, you don't have access. Please contact the CMS System Admin with any questions, or visit your user profile for more information.";
-it("renders state user Denied Message", async () => {
+
+
+it("renders State User Denied Message", async () => {
     const promise = Promise.resolve([{isLoading: false}]);
 
     render(
@@ -39,7 +41,7 @@ it("renders state user Denied Message", async () => {
 });
 
 
-it("renders state user Revoked Message", async () => {
+it("renders State User Revoked Message", async () => {
     const promise = Promise.resolve([{isLoading: false}]);
 
     render(
@@ -58,7 +60,7 @@ it("renders state user Revoked Message", async () => {
 
 });
 
-it("renders state Admin Revoked Message", async () => {
+it("renders State Admin Revoked Message", async () => {
     const promise = Promise.resolve([{isLoading: false}]);
 
     render(
@@ -78,7 +80,7 @@ it("renders state Admin Revoked Message", async () => {
 });
 
 
-it("renders state Admin Denied Message", async () => {
+it("renders State Admin Denied Message", async () => {
     const promise = Promise.resolve([{isLoading: false}]);
 
     render(
@@ -117,7 +119,7 @@ it("renders CMS Approver Denied Message", async () => {
 
 });
 
-it("renders CMS Approver Denied Message", async () => {
+it("renders CMS Approver Revoked Message", async () => {
     const promise = Promise.resolve([{isLoading: false}]);
 
     render(
