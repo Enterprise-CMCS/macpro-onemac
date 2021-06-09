@@ -1,4 +1,4 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
@@ -14,12 +14,14 @@ module.exports = {
 
 
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_CMS_APPROVER_USERS,
-            password: process.env.TEST_CMS_APPROVER_USER_PASSWORD,
-          }
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
+    },
 
-          login.before(browser);
+    after: function (browser) {
+        login.afterEach(browser);
+
+    },
           //click on button
           //browser.useCss().click("#loginBtn");
 

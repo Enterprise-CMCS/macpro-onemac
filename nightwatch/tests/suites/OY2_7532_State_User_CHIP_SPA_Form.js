@@ -1,19 +1,17 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
-    before: function (browser, testData = { 
-        name: browser.globals.devuser,
-        pass: browser.globals.devpass,
-        state: "MD"}) {
+    before: function (browser) {
         login.beforeEach(browser);
-        login['Login to SPA and Waiver Dashboard'](browser,testData);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-       login.afterEach(browser);
+        login.afterEach(browser);
+
     },
 
     'State user check the Submit New CHIP SPA form': function (browser) {

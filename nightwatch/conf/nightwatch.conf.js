@@ -34,19 +34,24 @@ module.exports = {
             //launch_url: "https://d2dr7dgo9g0124.cloudfront.net/",
 
             globals: {
-                user: {
+            /*     user: {
                     name: `${process.env.TEST_USERS}`,
                     pass: `${process.env.TEST_USER_PASSWORD}`,
                     state: "MD"
+                }, */
+                user:{
+                    username: `${process.env.DEV_STATE_USERS}`,
+                    password: `${process.env.DEV_STATE_USER_PASSWORD}`,
+                },                
+                cms_approvers: {
+                    username: `${process.env.TEST_CMS_APPROVER_USERS}`,
+                    password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
                 },
-                devuser: `${process.env.DEV_STATE_USERS}`,
-                devpass: `${process.env.DEV_STATE_USER_PASSWORD}`,
-                test_env: `${process.env.TESTING_ENV}`,
-                cms_approvers: `${process.env.TEST_CMS_APPROVER_USERS}`,
-                cms_approvers_pass: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
-                cms_system_admin: `${process.env.TEST_CMS_SYSTEM_ADMIN_USERS}`,
-                cms_system_admin_pass: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
-            },
+                cms_system_admin: {
+                    username: `${process.env.TEST_CMS_SYSTEM_ADMIN_USERS}`,
+                    password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
+                },
+           },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
             

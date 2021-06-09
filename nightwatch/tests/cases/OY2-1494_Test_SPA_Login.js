@@ -18,31 +18,14 @@ module.exports = {
     browser.end();
   },
 
-  "Login to SPA and Waiver Dashboard": function (
-    browser,
-    testData = {
-      username: browser.globals.devuser,
-      password: browser.globals.devpass,
-    }) 
-    {
+  "Login to SPA and Waiver Dashboard": function (browser, testData = browser.globals.user)
+      {
       spa = browser.page.spaBasePage();
       spa.devLogin(testData);
       spa.verify.visible("@titleBar");
-      browser.useXpath().click("//a[@id='new-submission-button']");
-      browser.pause(500);
-      browser.useXpath().click("(//h4)[1]");
-      browser.pause(500);
-      browser.useXpath().click("(//h4)[3]");
+      
     },
-    /* {
-      spa = browser.page.spaBasePage();
-    //click on button
-    spa.devLogin(testData);
-    spa.verify.visible("@titleBar");
-    browser.verify.elementPresent("h1");
-    browser.verify.containsText("h1", "SPA and Waiver Dashboard");
-  }, */
-
+    
   /*"Login to SPA and Waiver Dashboard via Okta": function (
     browser,
     testData = {

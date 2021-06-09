@@ -6,7 +6,7 @@
 
 
 //const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 const submitWaiver = require('../suites/OY2_4807_Validate_Waiver_Form_Logic');
 let pdfElement = "//span[text()='adobe.pdf']";
 let excelElement = "//span[text()='excel.xlsx']";
@@ -18,6 +18,7 @@ module.exports = {
   
     before: function (browser) {
         login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {

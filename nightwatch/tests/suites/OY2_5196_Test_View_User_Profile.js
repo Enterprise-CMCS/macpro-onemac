@@ -1,4 +1,4 @@
-const login = require("../cases/OY2-1494_Test_SPA_Login");
+const login = require('../suites/OY2_9999_Login');
 
 const timeout = 1000;
 let pageObjects;
@@ -8,6 +8,7 @@ module.exports = {
   
   before: function (browser) {
     login.beforeEach(browser);
+    login['Login with state user'](browser);
 },
 
 after: function (browser) {

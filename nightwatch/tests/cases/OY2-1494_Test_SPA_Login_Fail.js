@@ -12,7 +12,8 @@ module.exports = {
 
   'Enter Login Credentials' : function (browser) {
     const loginPage = browser.page.spaBasePage();
-    loginPage.click("@devLoginButton");
+    loginPage.verify.elementPresent("@devLoginButton")
+    .click("@devLoginButton");
     browser.waitForElementPresent('body');
     loginPage.setValue('@devUserField', 'automatedtester011@gmail.com');
     loginPage.setValue('@devPassField', 'badpassword');
