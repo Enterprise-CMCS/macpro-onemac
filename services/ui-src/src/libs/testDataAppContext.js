@@ -56,3 +56,81 @@ export const stateUserInitialAuthState = {
     },
   },
 };
+
+export const stateUserRevokedInitialAuthState = {
+  isAuthenticating: false,
+  isAuthenticated: true,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "stateuseractive@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [
+        {
+          stateCode: "VA",
+          history: [
+            {
+              date: 1617149287,
+              doneBy: "systemsadmin@cms.hhs.local",
+              status: "revoked",
+            },
+          ],
+        },
+      ],
+      id: "stateuseractive@cms.hhs.local",
+      type: "stateuser",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/dashboard"
+      ],
+    },
+  },
+};
+
+export const stateUserDeniedInitialAuthState = {
+  isAuthenticating: false,
+  isAuthenticated: true,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "stateuseractive@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [
+        {
+          stateCode: "VA",
+          history: [
+            {
+              date: 1617149287,
+              doneBy: "systemsadmin@cms.hhs.local",
+              status: "denied",
+            },
+          ],
+        },
+      ],
+      id: "stateuseractive@cms.hhs.local",
+      type: "stateuser",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/dashboard"
+      ],
+    },
+  },
+};
