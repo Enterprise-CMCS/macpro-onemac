@@ -7,7 +7,7 @@ const Services = {}; loadServices();
 module.exports = {
     // An array of folders (excluding subfolders) where your nightwatch are located;
     // if this is not specified, the test source must be passed as the second argument to the test runner.
-    src_folders: ["./nightwatch/tests"],
+    src_folders: ["./nightwatch/tests/cases", "./nightwatch/tests/suites"],
 
     // See https://nightwatchjs.org/guide/working-with-page-objects/
     page_objects_path: './nightwatch/page_objects',
@@ -141,7 +141,8 @@ module.exports = {
 
       "unit-test" : {
         unit_tests_mode : true,
-        filter: "./nightwatch/unit",
+        filter: "./nightwatch/tests/unit",
+        exclude: ["./nightwatch/tests/cases", "./nightwatch/tests/suites"],
       },
     }
   };

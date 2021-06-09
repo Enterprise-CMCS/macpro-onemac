@@ -1,13 +1,11 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+/* const login = require('../cases/OY2-1494_Test_SPA_Login');
 const timeout = 1000;
 
 module.exports = {
     "@tags": ["regression"],
 
     before: function (browser, loginType = "Login to SPA and Waiver Dashboard via Okta") {
-        login.before(browser);
-        login[loginType](browser);
-        browser.pause(timeout * 5);
+        login.beforeEach(browser);
     },
 
     afterEach: function (browser) {
@@ -16,8 +14,7 @@ module.exports = {
     },
 
     after: function (browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        login.after(browser);
+       login.afterEach(broswer);
     },
     
     "Submit a SPA Report": function (browser, steps = [
@@ -138,3 +135,4 @@ module.exports = {
         account["Navigate to the Manage Account page"](browser);
     }
 };
+ */

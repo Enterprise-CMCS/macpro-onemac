@@ -15,38 +15,13 @@ let picElement = "//span[text()='picture.jpg']";
 let textElement = "//span[text()='textnotes.txt']";
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
-    // before: function (browser) {
-    //     console.log('Setting up the browser instance...');
-    //     console.log('Opening the browser...')
-    //     console.log('Maximizing the browser window size...');
-    //     browser.windowMaximize().url(browser.launch_url);
-    //     browser.waitForElementPresent('body');
-    //     loginModule["Login to Medicaid as Regular User"](browser);
-    // },
-
+  
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_USERS,
-            password: process.env.TEST_STATE_USER_PASSWORD,
-          }
-        login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+        login.beforeEach(browser);
     },
- 
-    // after: function (browser) {
-    //     loginModule["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-    //     console.log("Stopping test executions...")
-    //     console.log('Closing down the browser instance...');
-    //     browser.end();
-    // },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
 
     'Verify the attachment types for SPA': function (browser) {

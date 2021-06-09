@@ -7,19 +7,12 @@ module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(browser.launch_url);
-        browser.waitForElementPresent('body');
-        login["Login to Medicaid as Regular User"](browser);
+       login.beforeEach(browser);
+       login['Login to SPA and Waiver Dashboard'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
 
     'Verify the SPA ID format check on Submit New SPA': function (browser) {
@@ -153,6 +146,6 @@ module.exports = {
         browser.expect.element('div#transmittalNumberStatusMsg').to.be.visible;
 
         browser.back();  // go back to previous page
-    }
+    },
 
 }

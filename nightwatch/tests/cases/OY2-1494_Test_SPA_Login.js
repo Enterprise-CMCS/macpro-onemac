@@ -23,18 +23,27 @@ module.exports = {
     testData = {
       username: browser.globals.devuser,
       password: browser.globals.devpass,
-      spaPageTitle: "SPA and Waiver Dashboard",
-    }
-  ) {
+    }) 
+    {
+      spa = browser.page.spaBasePage();
+      spa.devLogin(testData);
+      spa.verify.visible("@titleBar");
+      browser.useXpath().click("//a[@id='new-submission-button']");
+      browser.pause(500);
+      browser.useXpath().click("(//h4)[1]");
+      browser.pause(500);
+      browser.useXpath().click("(//h4)[3]");
+    },
+    /* {
       spa = browser.page.spaBasePage();
     //click on button
     spa.devLogin(testData);
     spa.verify.visible("@titleBar");
     browser.verify.elementPresent("h1");
-    browser.verify.containsText("h1", testData.spaPageTitle);
-  },
+    browser.verify.containsText("h1", "SPA and Waiver Dashboard");
+  }, */
 
-  "Login to SPA and Waiver Dashboard via Okta": function (
+  /*"Login to SPA and Waiver Dashboard via Okta": function (
     browser,
     testData = {
       username: browser.globals.user.name,
@@ -46,10 +55,10 @@ module.exports = {
     spa = browser.page.spaBasePage();
     spa.login(testData);
     //spa.verify.visible("@titleBar");
-    //browser.useXpath().verify.containsText("//h1", testData.spaPageTitle);
+    browser.useXpath().verify.containsText("//h1", "SPA and Waiver Dashboard");
     browser.useCss();
-  },
-  // from Guli's PR 177
+  },*/
+  /* from Guli's PR 177
   // 1st: Logins to the test site
   "Login to Medicaid as Regular User": function (browser) {
     this["Login to SPA and Waiver Dashboard via Okta"](browser,{

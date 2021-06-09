@@ -13,7 +13,7 @@ module.exports = {
 
     before : function(browser) {
         login.beforeEach(browser);
-        login['Login to SPA and Waiver Dashboard via Okta'](browser);
+        login['Login to SPA and Waiver Dashboard'](browser);
         browser.pause(timeout * 3);
     },
 

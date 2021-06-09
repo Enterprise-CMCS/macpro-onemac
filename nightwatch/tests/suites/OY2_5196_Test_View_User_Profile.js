@@ -7,16 +7,12 @@ module.exports = {
   "@tags": ["smoke", "regression-soon"],
   
   before: function (browser) {
-    login.before(browser);
-    login["Login to SPA and Waiver Dashboard"](browser);
-    pageObjects = browser.page.spaBasePage();
-    browser.pause(timeout * 3);
-  },
+    login.beforeEach(browser);
+},
 
-  after: function (browser) {
-    login["Logout of SPA and Waiver Dashboard"](browser);
-    login.after(browser);
-  },
+after: function (browser) {
+    login.afterEach(browser);
+},
 
   "Navigate to the Manage Account page": function (
     browser,

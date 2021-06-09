@@ -4,22 +4,16 @@ let spaCHIPId;
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
-    before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_USERS,
-            password: process.env.TEST_STATE_USER_PASSWORD,
-          }
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+    before: function (browser, testData = { 
+        name: browser.globals.devuser,
+        pass: browser.globals.devpass,
+        state: "MD"}) {
+        login.beforeEach(browser);
+        login['Login to SPA and Waiver Dashboard'](browser,testData);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+       login.afterEach(browser);
     },
 
     'State user check the Submit New CHIP SPA form': function (browser) {

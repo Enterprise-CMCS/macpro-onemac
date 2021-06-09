@@ -3,11 +3,11 @@ module.exports = {
   tags : ['smoke'],
 
   before : function(browser) {
-    login.before(browser);
+    login.beforeEach(browser);
   },
 
   after : function(browser) {
-    login.after(browser);
+    browser.end();
   },
 
   'Enter Login Credentials' : function (browser) {

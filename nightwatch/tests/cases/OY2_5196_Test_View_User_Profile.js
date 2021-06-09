@@ -5,15 +5,12 @@ let pageObjects;
 
 module.exports = {
   before: function (browser) {
-    login.before(browser);
+    login.beforeEach(browser);
     login["Login to SPA and Waiver Dashboard"](browser);
-    pageObjects = browser.page.spaBasePage();
-    browser.pause(timeout * 3);
   },
 
   after: function (browser) {
-    login["Logout of SPA and Waiver Dashboard"](browser);
-    login.after(browser);
+    login.afterEach(browser);
   },
 
   "Navigate to the Manage Account page": function (
@@ -22,7 +19,7 @@ module.exports = {
       myAccountLink: "@myAccountLink",
       manageAccountLink: "@manageAccountLink",
       subUrl: "/profile",
-      pageTitle: "Account Management"
+      pageTitle: "User Profile"
     }
   ) {
     pageObjects = browser.page.spaBasePage();

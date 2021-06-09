@@ -1,4 +1,4 @@
-const regression = require('./OY2-2218_Suite_Regression');
+/* const regression = require('./OY2-2218_Suite_Regression');
 const timeout = 1000;
 
 module.exports = {
@@ -62,3 +62,4 @@ module.exports = {
         regression["View My Account Page"](browser);
     },
 };
+ */
