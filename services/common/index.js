@@ -70,6 +70,16 @@ export const USER_STATUS = {
 };
 
 /**
+ * Possible user role labels
+ */
+export const roleLabels = {
+  stateuser: 'State Submitter',
+  stateadmin: 'State Admin',
+  cmsapprover: 'CMS Approver',
+  systemadin: 'CMS System Admin',
+  helpdesk: 'Help Desk',
+}
+/**
  * Routing Control Shared List
  *
  */
