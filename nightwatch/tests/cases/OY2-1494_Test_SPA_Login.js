@@ -35,16 +35,36 @@ module.exports = {
   "Login to SPA and Waiver Dashboard via Okta": function (
     browser,
     testData = {
-      username: browser.globals.user,
-      password: browser.globals.pass,
-      spaPageTitle: "Submission List",
+      // username: browser.globals.user,
+      // password: browser.globals.pass,
+      // spaPageTitle: "Submission List",
+      username: process.env.TEST_STATE_USERS,
+      password: process.env.TEST_STATE_USER_PASSWORD,
+      spaPageTitle: "SPA and Waiver Dashboard",
     }
   ) {
     spa = browser.page.spaBasePage();
     spa.login(testData);
-    spa.verify.visible("@titleBar");
-    browser.verify.containsText("h1", testData.spaPageTitle);
+    // spa.verify.visible("@titleBar");
+    // browser.verify.containsText("h1", testData.spaPageTitle);
+    browser.useCss();
   },
+
+
+  //Use development login in dev environment 6/8/2021
+  "Login to SPA and Waiver Dashboard via development login": function (
+    browser,
+    testData = {
+      username: process.env.TEST_STATE_USERS,
+      password: process.env.TEST_STATE_USER_PASSWORD,
+      spaPageTitle: "SPA and Waiver Dashboard",
+    }
+  ) {
+    spa = browser.page.spaBasePage();
+    spa.devLogin(testData);
+    browser.useCss();
+  },
+
   // from Guli's PR 177
   // 1st: Logins to the test site
   "Login to Medicaid as Regular User": function (browser) {
