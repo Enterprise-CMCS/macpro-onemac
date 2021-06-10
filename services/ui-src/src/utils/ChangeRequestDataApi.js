@@ -71,14 +71,25 @@ class ChangeRequestDataApi {
    * @param {string} id the ID to check
    * @return {Boolean} true if the ID exists in the back end
    */
-  async packageExists(id) {
+  async packageExists(id, changeRequest ) {
     if (!id) {
       console.log("ID was not specified for packageExists API call");
       throw new Error("ID was not specified for packageExists API call");
     }
 
     try {
+      let checkingNumber;
       let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
+
+      if ( changeRequest && changeRequest.actionType === "renewal" &&
+           changeRequest.type === "waiver") {
+        checkingNumber = id.substr(0,7)
+        let answer2 = await API.get("changeRequestAPI", `/package-exists/${checkingNumber}`);
+        if (answer)
+            return answer && answer2;
+        else
+            return answer;
+      }
 
       return answer;
     } catch (error) {

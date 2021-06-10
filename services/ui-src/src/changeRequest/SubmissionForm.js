@@ -218,26 +218,44 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         )[0];
       }
 
-      ChangeRequestDataApi.packageExists(checkingNumber)
-        .then((dupID) => {
-          if (!dupID && transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
-            }
-          } else if (dupID && !transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
-            }
-          }
-          setTransmittalNumberStatusMessage(newMessage);
-        })
-        .catch((error) => {
+      if (
+          changeRequest.actionType === "renewal" &&
+          changeRequest.type === "waiver") {
+
+        ChangeRequestDataApi.packageExists(changeRequest.transmittalNumber, changeRequest)
+            .then((dupRenewalId) => {
+              if (dupRenewalId ) {
+                newMessage.statusMessage = "This waiver renewal number already exists. Please ensure you have the correct Waiver Number before submitting it. Contact the MACPro Help Desk if you need support."
+                setTransmittalNumberStatusMessage(newMessage);
+              } else {
+                setTransmittalNumberStatusMessage("")
+              }
+            }).catch((error) => {
           console.log("There was an error submitting a request.", error);
         });
+      } else {
+
+        ChangeRequestDataApi.packageExists(checkingNumber)
+            .then((dupID) => {
+              if (!dupID && transmittalNumberDetails.idMustExist) {
+                if (transmittalNumberDetails.errorLevel === "error") {
+                  newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                } else {
+                  newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+                }
+              } else if (dupID && !transmittalNumberDetails.idMustExist) {
+                if (transmittalNumberDetails.errorLevel === "error") {
+                  newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                } else {
+                  newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+                }
+              }
+              setTransmittalNumberStatusMessage(newMessage);
+            })
+            .catch((error) => {
+              console.log("There was an error submitting a request.", error);
+            });
+      }
     } else {
       setTransmittalNumberStatusMessage(newMessage);
     }
