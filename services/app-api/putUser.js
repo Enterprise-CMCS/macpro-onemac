@@ -5,7 +5,7 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
-import { territoryCodeList } from "cmscommonlib";
+import { territoryCodeList, roleLabels } from "cmscommonlib";
 import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";
@@ -489,7 +489,7 @@ const constructRoleAdminEmails = (recipients, input) => {
   email.HTML = `
     <p>Hello,</p>
 
-    There is a new OneMAC Portal State Submitter access request waiting from ${input.firstName} ${input.lastName} for your review. 
+    There is a new OneMAC Portal ${roleLabels[input.type]} access request waiting from ${input.firstName} ${input.lastName} for your review. 
     Please log into your User Management Dashboard to see the pending request.
 
     <p>Thank you!</p>`;
