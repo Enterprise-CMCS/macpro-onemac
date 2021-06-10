@@ -111,6 +111,7 @@ it("does not clear Transmittal Number if submit fails.", async () => {
   };
 
   window.HTMLElement.prototype.scrollIntoView = function () {};
+  window.scrollTo = function () {};
 
   render(
     <AppContext.Provider
