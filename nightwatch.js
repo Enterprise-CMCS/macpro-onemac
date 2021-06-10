@@ -1,22 +1,17 @@
+#!/usr/bin/env node
 require('dotenv').config();
-const path = require('path');
-require('nightwatch/bin/runner');
-
-
+let msg = `Running in ${process.env.TESTING_ENV} environment`;
 switch (process.env.TESTING_ENV) {
     case 'dev':
-    default:
-        require('dotenv').config({path: `${process.cwd}/.env.dev`});
+        require('dotenv').config({path: '.env.dev'});
         break;
-    case 'val':
-        require('dotenv').config({path: path.resolve(process.cwd, './env.val')});
+    case 'uat':
+        require('dotenv').config({path: '.env.uat'});
         break;
     case 'test':
-        require('dotenv').config({path: path.join(process.cwd, './env.test')});
+    default:
+        require('dotenv').config({path: '.env.test'});
         break;
 }
-console.info(process.env.TESTING_ENV);
-
-console.log('Setting up the browser instance...');
-console.log('Opening the browser...')
-console.log('Maximizing the browser window size...');
+console.info(msg);
+require('nightwatch/bin/runner');

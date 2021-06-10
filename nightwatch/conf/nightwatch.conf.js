@@ -40,9 +40,15 @@ module.exports = {
                     state: "MD"
                 }, */
                 user:{
-                    username: `${process.env.DEV_STATE_USERS}`,
-                    password: `${process.env.DEV_STATE_USER_PASSWORD}`,
-                },                
+                    username: `${process.env.TEST_STATE_USERS}`,
+                    password: `${process.env.TEST_STATE_USER_PASSWORD}`,
+                },   
+
+                state_admin:{
+                    username: `${process.env.TEST_STATE_ADMIN_USERS}`,
+                    password: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+                }, 
+
                 cms_approvers: {
                     username: `${process.env.TEST_CMS_APPROVER_USERS}`,
                     password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,

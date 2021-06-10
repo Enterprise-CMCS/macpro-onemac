@@ -15,6 +15,10 @@ module.exports= {
         login['Login to SPA and Waiver Dashboard'](browser, testData);
     },
 
+    "Login with state admin user": function (browser) {
+        this['Login with state user'](browser, browser.globals.state_admin);
+    },
+
     "Login with cms_approvers": function (browser) {
         this['Login with state user'](browser, browser.globals.cms_approvers);
     },
