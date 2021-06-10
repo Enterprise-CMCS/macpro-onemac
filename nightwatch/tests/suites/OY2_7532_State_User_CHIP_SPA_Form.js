@@ -1,35 +1,22 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_USERS,
-            password: process.env.TEST_STATE_USER_PASSWORD,
-          }
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
+
     },
 
     'State user check the Submit New CHIP SPA form': function (browser) {
         // Go to Submit New CHIP SPA page
-        //browser.useCss().click("button#chipSpaBtn");
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[3]");
+        browser.useCss().click("button#chipSpaBtn");
         // Verify that Submit New CHIP SPA page is displayed 
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
 

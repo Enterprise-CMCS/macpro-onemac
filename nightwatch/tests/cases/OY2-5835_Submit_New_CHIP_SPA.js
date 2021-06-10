@@ -1,18 +1,19 @@
+const new_spa = require('./OY2-2218_Test_SPA_Submit_New_SPA');
 const timeout = 1000;
-const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 
 module.exports = {
 
     before : function(browser) {
-        login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
-        browser.pause(timeout * 3);
+        new_spa.before(browser);
+     },
+
+    beforeEach: function (browser) {
+        spa = browser.page.spaBasePage();
     },
 
     after : function(browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        login.after(browser);
+        new_spa.after(browser);
     },
 
     "Click on 'Start a new CHIP SPA'": function (browser, testData = {
@@ -39,20 +40,16 @@ module.exports = {
 
     "Enter SPA ID (Optional)" : function (browser) {
         spa = browser.page.spaBasePage();
-        this["Enter ID"](browser, spa.getTransmitNumber(true, "ND", "chipspa.txt"));
+        this['Enter SPA ID'](browser, spa.getTransmitNumber(true, "ND", "chipspa.txt"));
     },
 
     "Upload Documents": function (browser, required = 2, type = 'pdf') {
-        let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
-        spa = browser.page.spaBasePage();
-        spa.uploadDocs(type, required, validate);
+        new_spa['Upload Documents'](browser,required,type);
+        
     },
 
-    'Enter Comments' : function (browser, selector = 'textarea',
-                                 entered_text = "Relax. This is only a test") {
-        spa = browser.page.spaBasePage();
-        spa.enterComments(selector, entered_text);
-        spa.verify.containsText(selector, entered_text)
+    'Enter Comments' : function (browser) {
+        new_spa['Enter Comments'](browser);
     },
 
     'Submit SPA' : function (

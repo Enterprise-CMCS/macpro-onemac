@@ -1,77 +1,77 @@
 let spa;
 const timeout = 1000;
 module.exports = {
-  before: function (browser) {
+  beforeEach: function (browser) {
     console.log("Setting up...");
     console.log("url is: ", browser.launch_url);
-    spa = browser.page.spaBasePage();
-    browser
-      .maximizeWindow()
-      .url(browser.launch_url)
-      .waitForElementPresent("body");
+    browser.maximizeWindow();
+    browser.url(browser.launch_url);
+    browser.waitForElementPresent("body");
   },
 
-  after: function (browser) {
+  afterEach: function (browser) {
     console.log("Closing down...");
+    spa = browser.page.spaBasePage();
+    spa.click("@myAccountLink").pause(timeout/2);
+    spa.click("@logout").pause(timeout/2);
+
     browser.end();
   },
 
-  "Login to SPA and Waiver Dashboard": function (
+  "Login to SPA and Waiver Dashboard": function (browser, testData = browser.globals.user)
+      {
+      spa = browser.page.spaBasePage();
+      spa.devLogin(testData);
+      spa.verify.visible("@titleBar");
+      
+    },
+    
+  /*"Login to SPA and Waiver Dashboard via Okta": function (
     browser,
     testData = {
-      username: browser.globals.devuser,
-      password: browser.globals.devpass,
-      spaPageTitle: "Submission List",
-    }
-  ) {
-    spa = browser.page.spaBasePage();
-    console.log("Login as: ", testData.username);
-    spa.devLogin(testData);
-    spa.verify.visible("@titleBar");
-    browser.verify.elementPresent("h1");
-    browser.verify.containsText("h1", testData.spaPageTitle);
-  },
-
-  "Login to SPA and Waiver Dashboard via Okta": function (
-    browser,
-    testData = {
-      // username: browser.globals.user,
-      // password: browser.globals.pass,
-      // spaPageTitle: "Submission List",
-      username: process.env.TEST_STATE_USERS,
-      password: process.env.TEST_STATE_USER_PASSWORD,
+      username: browser.globals.user.name,
+      password: browser.globals.user.pass,
+      
       spaPageTitle: "SPA and Waiver Dashboard",
     }
   ) {
     spa = browser.page.spaBasePage();
     spa.login(testData);
-    // spa.verify.visible("@titleBar");
-    // browser.verify.containsText("h1", testData.spaPageTitle);
+    //spa.verify.visible("@titleBar");
+    browser.useXpath().verify.containsText("//h1", "SPA and Waiver Dashboard");
     browser.useCss();
-  },
-
-
-  //Use development login in dev environment 6/8/2021
-  "Login to SPA and Waiver Dashboard via development login": function (
-    browser,
-    testData = {
-      username: process.env.TEST_STATE_USERS,
-      password: process.env.TEST_STATE_USER_PASSWORD,
-      spaPageTitle: "SPA and Waiver Dashboard",
-    }
-  ) {
-    spa = browser.page.spaBasePage();
-    spa.devLogin(testData);
-    browser.useCss();
-  },
-
-  // from Guli's PR 177
+  },*/
+  /* from Guli's PR 177
   // 1st: Logins to the test site
   "Login to Medicaid as Regular User": function (browser) {
+    this["Login to SPA and Waiver Dashboard via Okta"](browser,{
+      username:browser.globals.user,password:browser.globals.pass})
+    // Test Assertion
+    browser.verify.containsText("h1", spaPageTitle);
+  },
+
+  // login as state user for val environment
+  "Login to Medicaid as State User in val environment": function (browser) {
+    this["Login to SPA and Waiver Dashboard via Okta"](browser,{
+      username:browser.globals.state_user,password:browser.globals.state_pass})
+    // Test Stesp
+    browser.useXpath().click("//a[text()='Login']"); // click the login button
+    browser.useCss().setValue("#okta-signin-username", username);
+    browser.setValue("#okta-signin-password", password);
+    browser.click("#tandc");
+    browser.click("#okta-signin-submit");
+    browser.waitForElementPresent("body");
+
+    // Test Assertion
+    browser.verify.containsText("h1", spaPageTitle);
+  },
+
+  // login as state admin user for val environment
+  "Login to Medicaid as State Admin User in val environment": function (browser) {
     // Test Data
-    const username = browser.globals.user;
-    const password = browser.globals.pass;
-    let spaPageTitle = "Submission List";
+    const username = browser.globals.state_admin_user;
+    const password = browser.globals.state_admin_user_pass;
+    let spaPageTitle = "SPA and Waiver Dashboard";
 
     // Test Stesp
     browser.useXpath().click("//a[text()='Login']"); // click the login button
@@ -85,9 +85,29 @@ module.exports = {
     browser.verify.containsText("h1", spaPageTitle);
   },
 
-  "Logout of SPA and Waiver Dashboard": function (browser) {
+  // login as cms approver user for val environment
+  "Login to Medicaid as CMS Approver User in val environment": function (browser) {
+    // Test Data
+    const username = browser.globals.cms_approver_user;
+    const password = browser.globals.cms_approver_pass;
+    let spaPageTitle = "SPA and Waiver Dashboard";
+
+    // Test Stesp
+    browser.useXpath().click("//a[text()='Login']"); // click the login button
+    browser.useCss().setValue("#okta-signin-username", username);
+    browser.setValue("#okta-signin-password", password);
+    browser.click("#tandc");
+    browser.click("#okta-signin-submit");
+    browser.waitForElementPresent("body");
+
+    // Test Assertion
+    browser.verify.containsText("h1", spaPageTitle);
+  },
+
+ /* "Logout of SPA and Waiver Dashboard": function (browser) {
+    let title = "SPA and Waiver Dashboard";
     spa.logout();
-    browser.pause(timeout*3);
+    browser.pause(timeout * 3);
     spa.verify.visible("@homeHeader");
     browser.pause(timeout);
   },
@@ -101,10 +121,9 @@ module.exports = {
     // logout from SPA and Wavier Dashboard page
     browser.click("button#myAccountLink");
     browser.click("a#logoutLink");
-    browser.waitForElementPresent(".home-header-text").pause(1000);
+   // browser.waitForElementPresent(".home-header-text").pause(1000);
 
     // Verify the successful logout
-    browser.verify.containsText(".home-header-text", logout_banner_text);
-
-  },
+    //browser.verify.containsText(".home-header-text", logout_banner_text);
+  },*/
 };

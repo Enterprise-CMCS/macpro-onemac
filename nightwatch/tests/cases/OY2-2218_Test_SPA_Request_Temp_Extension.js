@@ -19,8 +19,8 @@ module.exports = {
     after : function(browser) {
         waiverRAI.after(browser);
     },
-
-    "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'" : function (browser, testData = {
+    
+     "Click on 'Request Temporary Extension form - 1915(b) and 1915(c)'" : function (browser, testData = {
         selector: '@requestTemp',
         subUrl: '/waiverextension',
     }) {

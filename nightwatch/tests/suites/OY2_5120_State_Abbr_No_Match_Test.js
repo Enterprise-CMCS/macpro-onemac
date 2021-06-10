@@ -1,28 +1,19 @@
 // Updated by: Guli 
 // Date      : 03/19/2021
 
-const login = require('../cases/OY2-1494_Test_SPA_Login');
-
+const login = require('../suites/OY2_9999_Login');
 module.exports = {
 
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(browser.launch_url);
-        browser.waitForElementPresent('body');
-        login["Login to Medicaid as Regular User"](browser);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
-
     'Verify that there are no state abbribiation option': function (browser) {
         browser.click('#spaSubmitBtn');
         browser.click("[value='Submit']");

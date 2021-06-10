@@ -1,36 +1,23 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_USERS,
-            password: process.env.TEST_STATE_USER_PASSWORD,
-          }
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
 
+
     'State user check the SPA ID Format in New Medicaid SPA Link': function (browser) {
-        //let medicaid_SPA_Link = "//button[@id='spaSubmitBtn']";
+        let medicaid_SPA_Link = "//button[@id='spaSubmitBtn']";
         // Go to Submit New Medicaid SPA page
-        //browser.useXpath().click(medicaid_SPA_Link);
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
+        browser.useXpath().click(medicaid_SPA_Link);
         // Verify that Submit New Medicaid SPA page is displayed 
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
 
@@ -71,35 +58,24 @@ module.exports = {
         browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId);
 
         // Go to Submit New Medicaid SPA page
-        //browser.useXpath().click(medicaid_SPA_Link);
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
+        browser.useXpath().click(medicaid_SPA_Link);
         // Verify that Submit New Medicaid SPA page is displayed 
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
         YY = Math.floor(Math.random() * Math.floor(80)) + 10;
         NNNN = Math.floor(Math.random() * Math.floor(7999)) + 1000;
         //let xxxx = Math.floor(Math.random() * Math.floor(7999)) + 1000;
         // SS-YY-NNNN
-        spaCHIPId = 'MD-' + YY + '-' + NNNN + '-5555555555555';
+        spaCHIPId = 'MD-' + YY + '-' + NNNN + '-';
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", spaCHIPId);
-        browser.pause(1000);
         // verify the error message
         browser.useXpath().expect.element("//div[@id='transmittalNumberStatusMsg']").to.be.visible;
         browser.useCss();
     },
 
     'State user check the SPA ID Format in Respond to Medicaid SPA RAI': function (browser) {
-        //let dashboard_link ='//a[@id="dashboardLink"]';
-        //let medicaid_SPA_RAI_Link = "//button[@id='spaRaiBtn']";
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[2]");
+        let dashboard_link ='//a[@id="dashboardLink"]';
+        let medicaid_SPA_RAI_Link = "//button[@id='spaRaiBtn']";
         // Go to Submit New Medicaid SPA page
         browser.useXpath().click(dashboard_link);
         browser.useXpath().click(medicaid_SPA_RAI_Link);
@@ -118,13 +94,8 @@ module.exports = {
     },
 
     'State user check the SPA ID Format in New CHIP SPA Link': function (browser) {
-        //let dashboard_link ='//a[@id="dashboardLink"]';
-        //let submit_CHIP_SPA_Link = "//button[@id='chipSpaBtn']";
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[3]");
+        let dashboard_link ='//a[@id="dashboardLink"]';
+        let submit_CHIP_SPA_Link = "//button[@id='chipSpaBtn']";
         // Go to Submit New Medicaid SPA page
         browser.useXpath().click(dashboard_link);
         browser.useXpath().click(submit_CHIP_SPA_Link);
@@ -143,13 +114,8 @@ module.exports = {
     },
 
     'State user check the SPA ID Format in Respond to CHIP SPA RAI Link': function (browser) {
-        //let dashboard_link ='//a[@id="dashboardLink"]';
-        //let respond_CHIP_SPA_RAI_Link = "//button[@id='chipSpaRaiBtn']";
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[4]");
+        let dashboard_link ='//a[@id="dashboardLink"]';
+        let respond_CHIP_SPA_RAI_Link = "//button[@id='chipSpaRaiBtn']";
         // Go to Submit New Medicaid SPA page
         browser.useXpath().click(dashboard_link);
         browser.useXpath().click(respond_CHIP_SPA_RAI_Link);

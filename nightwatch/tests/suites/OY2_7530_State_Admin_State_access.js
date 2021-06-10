@@ -1,24 +1,16 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_ADMIN_USERS,
-            password: process.env.TEST_STATE_ADMIN_USER_PASSWORD,
-          }
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
+
     },
 
 
@@ -26,27 +18,22 @@ module.exports = {
         let name = '(//tr/th)[1]';
         let email = '(//tr/th)[2]';
         let status = '(//tr/th)[3]';
-        let last_modified = '(//tr/th)[4]';
-        let modified_by = '(//tr/th)[5]';
-        let personal_actions = '(//tr/th)[6]'; 
-        //let state_user_for_va_mi = '(//tr/td)[5]';
-        let first_name = '(//tr/td)[1]';
-        let second_name = '(//tr/td)[7]';
+        let personal_actions = '(//tr/th)[4]';
+        let state_user_for_va_mi = '(//tr/td)[5]';
         let first_email ='(//tr/td)[2]';
-        let second_email ='(//tr/td)[8]';
-        
+        let second_email ='(//tr/td)[6]';
+        let third_email ='(//tr/td)[10]';
+        let fourth_email ='(//tr/td)[14]';
         //check on name and email for four listed user
         browser.useXpath().expect.element(name).to.be.visible;
         browser.useXpath().expect.element(email).to.be.visible;
         browser.useXpath().expect.element(status).to.be.visible;
-        browser.useXpath().expect.element(last_modified).to.be.visible;
-        browser.useXpath().expect.element(modified_by).to.be.visible;
         browser.useXpath().expect.element(personal_actions).to.be.visible;
-        //browser.useXpath().expect.element(state_user_for_va_mi).to.be.visible;
-        browser.useXpath().expect.element(first_name).to.be.visible;
-        browser.useXpath().expect.element(second_name).to.be.visible;
+        browser.useXpath().expect.element(state_user_for_va_mi).to.be.visible;
         browser.useXpath().expect.element(first_email).to.be.visible;
         browser.useXpath().expect.element(second_email).to.be.visible;
+        browser.useXpath().expect.element(third_email).to.be.visible;
+        browser.useXpath().expect.element(fourth_email).to.be.visible;
     },
 
 
@@ -57,11 +44,10 @@ module.exports = {
         let profile_information = '(//div/h3)[1]';
         let full_name = '(//div/h3)[2]';
         let email = '(//div/h3)[3]';
-        let phone_number = '(//div/h3)[4]';
-        let state_access_management = '(//div/h3)[5]';
-        let test_one_mac_state = '(//div/div[@class="ds-c-review__body"])[1]';
-        let test_one_mac_state_email = '(//div/div[@class="ds-c-review__body"])[2]';
-        let maryland = '//div/dt';
+        let state_access_management = '(//div/h3)[4]';
+        let one_mac_approver_name = '(//div/div[@class="ds-c-review__body"])[1]';
+        let one_mac_approver_email = '(//div/div[@class="ds-c-review__body"])[2]';
+        let virginia = '//div/dt';
         let access_granted = '//div/dd/em';
         // Click on button My Account and get access to account management 
         browser.useCss().click(my_account_button); 
@@ -70,11 +56,10 @@ module.exports = {
         browser.useXpath().expect.element(profile_information).to.be.visible;
         browser.useXpath().expect.element(full_name).to.be.visible;
         browser.useXpath().expect.element(email).to.be.visible;
-        browser.useXpath().expect.element(phone_number).to.be.visible;
         browser.useXpath().expect.element(state_access_management).to.be.visible;
-        browser.useXpath().expect.element(test_one_mac_state).to.be.visible;
-        browser.useXpath().expect.element(test_one_mac_state_email).to.be.visible;
-        browser.useXpath().expect.element(maryland).to.be.visible;
+        browser.useXpath().expect.element(one_mac_approver_email).to.be.visible;
+        browser.useXpath().expect.element(one_mac_approver_name).to.be.visible;
+        browser.useXpath().expect.element(virginia).to.be.visible;
         browser.useXpath().expect.element(access_granted).to.be.visible;
         browser.useCss();
     },

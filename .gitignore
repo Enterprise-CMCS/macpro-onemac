@@ -9,8 +9,7 @@ scratch
 *.log
 *.xml
 .env
-.env.dev
-.env.val
+.env.*
 reports/
 reports/screenshots/
 node_modules/*

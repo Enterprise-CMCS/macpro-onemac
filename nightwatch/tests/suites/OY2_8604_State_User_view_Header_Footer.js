@@ -1,4 +1,4 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
