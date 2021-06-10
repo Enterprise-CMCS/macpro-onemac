@@ -1,10 +1,10 @@
-// Updated by: Guli,ZachLewis
+// Updated by: Guli 
 // Date      : 03/19/2021
 const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
 
-    "@tags": ["FAQ", "smoke", "regression-soon"],
+    "@tags": ["smoke", "regression-soon"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {
@@ -27,14 +27,14 @@ module.exports = {
         let fqaLink = "//a[text()='FAQ']";
         browser.useXpath().click(fqaLink).pause(500);
         let pageBanner = 'div#title_bar > h1';
-        let expectedBannerText = 'Frequently Asked Questions';
+        let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
         //Switch to new tab
          browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         browser.useCss().expect.element(pageBanner).to.be.visible;
         browser.verify.containsText(pageBanner, expectedBannerText).pause(500);
         browser.closeWindow(); // Close tab
@@ -60,7 +60,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         let pageBanner = 'div#title_bar > h1';
         let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
         browser.useCss().expect.element(pageBanner).to.be.visible;
@@ -74,7 +74,7 @@ module.exports = {
         });
     },
 
-
+    
     'For each section under SPAs, there is a link to open the corresponding question in the FAQ': function (browser) {
         // Submit a New SPA
         let newSPALink = 'button#spaSubmitBtn';
@@ -87,7 +87,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         browser.useCss().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a SPA ID?';
         browser.verify.containsText(fqaHeader, expectedText);
@@ -101,7 +101,7 @@ module.exports = {
         });
         browser.back().pause(3000);
 
-
+        
         // Respond to SPA RAI
         let respondToSAPRAI = 'button#spaRaiBtn';
         browser.click(respondToSAPRAI);
@@ -112,7 +112,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         browser.useCss().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
         browser.closeWindow(); // Close tab
@@ -126,10 +126,10 @@ module.exports = {
         browser.back().pause(3000);
     },
 
-
+    
 
     'For each section under Waivers, there is a link to open the corresponding question in the FAQ': function (browser) {
-        // Submit a new Waiver
+        // Submit a new Waiver 
         browser.click('button#waiverBtn');
         browser.click('.form-card a');
         let fqaHeader = 'h4#waiver-id-format';
@@ -140,7 +140,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         browser.useCss().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a 1915(b) waiver number?';
         browser.verify.containsText(fqaHeader, expectedText);
@@ -152,7 +152,7 @@ module.exports = {
             browser.switchWindow(handle);
         });
         browser.back().pause(3000);
-
+        
         // Respond to 1915(b) Waiver RAI
         browser.click('button#waiverRaiBtn');
         browser.click('.form-card a');
@@ -162,7 +162,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         browser.useCss().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
         browser.closeWindow(); // Close tab
@@ -185,12 +185,12 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        // Verify the new window 
         browser.useCss().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
     },
 
-
+    
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         let linkInFAQ = '.form-card [target]';
         browser.click(linkInFAQ);
@@ -201,7 +201,7 @@ module.exports = {
             var handle = result.value[2];
             browser.switchWindow(handle);
         });
-        //Verify the new window
+        //Verify the new window 
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;
         browser.verify.containsText(submittalAmendments, 'Submittal of State plans and plan amendments.');
         browser.closeWindow(); // Close tab

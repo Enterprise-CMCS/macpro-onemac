@@ -10,7 +10,7 @@ let spaID;
 let generatedWaiverID;
 
 module.exports = {
-    "@tags": ["smoke", "smoke2"],
+    "@tags": ["smoke"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {
@@ -43,13 +43,19 @@ module.exports = {
 
     // DONE 
     'Verify user can submit new SPA': function (browser) {
-        browser.useXpath().click("//button[text()='Submit New Medicaid SPA']");
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        //browser.useXpath().click("//button[text()='Submit New Medicaid SPA']");
         // create random SPA ID
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
         // SS-YY-NNNN
-        spaID = 'VA-' + num1 + '-' + num2 + '' + num3;
+        //changed the state to MD
+        spaID = 'MD-' + num1 + '-' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", spaID);
         // upload the first documents
