@@ -6,7 +6,7 @@
 3. Install NPM globaly
 4. Install serverless globally
 
-Install the serverless Dynamo DB offline package by running the following command:
+Install the Serverless Dynamo DB offline package by running the following command:
 
 ```
 npm install
