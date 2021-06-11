@@ -55,7 +55,7 @@ const SubmissionView = ({ formInfo, id, userId }) => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={formInfo.readOnlyPageTitle} text="" />
+      <PageTitleBar heading={formInfo.readOnlyPageTitle} enableBackNav />
       {changeRequest && (
         <div className="form-container">
           <h3>{formInfo.detailsHeader} Details</h3>

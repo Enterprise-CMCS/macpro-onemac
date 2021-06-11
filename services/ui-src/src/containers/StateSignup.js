@@ -24,7 +24,7 @@ export function StateSignup() {
 
   return (
     <>
-      <PageTitleBar heading="Registration: State Access" />
+      <PageTitleBar heading="Registration: State Access" enableBackNav />
       <div className="state-signup-page">
         <div className="state-signup-container">
           <div className="signup-headings">

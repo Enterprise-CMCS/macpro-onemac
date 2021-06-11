@@ -69,7 +69,7 @@ export function useSignupCallback(userType, processAttributes) {
           setLoading(false);
           history.replace(destination, messageState);
       }
-    },[email, firstName, history, lastName, location, processAttributes, setUserInfo, userType]
+    },[email, firstName, history, lastName, loading, location, processAttributes, setUserInfo, userType]
   );
 
   return [loading, signupUser];

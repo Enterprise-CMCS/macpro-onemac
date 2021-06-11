@@ -33,7 +33,7 @@ const FAQ = () => {
 
     return (
     <div>
-    <PageTitleBar heading="Frequently Asked Questions" text="" />
+    <PageTitleBar heading="Frequently Asked Questions" />
     <div className="form-container" id="top">
       <div className="form-card">
         <div className="faq-info-box">
@@ -52,9 +52,7 @@ const FAQ = () => {
         <Collapsible triggerWhenOpen={<TriggerCB isOpen={false} text="What browsers can I use to access the system?"/>}
                      trigger={<TriggerCB isOpen={true} text="  What browsers can I use to access the system?"/>} >
         <br/>
-          The submission portal works best on Google Chrome, Firefox, Edge, and
-          Safari. We do not recommend using Internet Explorer due to potential
-          functionality issues.
+          The submission portal works best on Google Chrome (Version 91.0.4472.77 or later), Firefox  (Version 89.0 or later).
         </Collapsible>
           <hr/>
         <h3>State Plan Amendments (SPAs)</h3>
