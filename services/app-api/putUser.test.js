@@ -44,14 +44,16 @@ const cmsApprover = {
 it("Should show the full name in the email message for CMSApprover", async()=>{
     const result = constructRoleAdminEmails([],cmsApprover).email.HTML;
     expect(result).toContain('John Doe');
+    expect(result).toContain('CMS Approver');
 });
 
 it("Should show the full name in the email message for State User", async()=>{
     const result = constructRoleAdminEmails([],stateUser).email.HTML;
-    expect(result).toContain('John Doe');
+    expect(result).toContain('State Submitter');
 });
 
 it("Should show the full name in the email message for State Admin", async()=>{
     const result = constructRoleAdminEmails([],stateAdmin).email.HTML;
     expect(result).toContain('John Doe');
+    expect(result).toContain('State Admin');
 });
