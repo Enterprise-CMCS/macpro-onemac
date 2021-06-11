@@ -81,14 +81,12 @@ class ChangeRequestDataApi {
       let checkingNumber;
       let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
 
-      if ( changeRequest && changeRequest.actionType === "renewal" &&
-           changeRequest.type === "waiver") {
+      if ( changeRequest && changeRequest.type === "waiver"
+        && ( changeRequest.actionType === "renewal" || changeRequest.actionType === "amendment" )
+           ) {
         checkingNumber = id.substr(0,7)
         let answer2 = await API.get("changeRequestAPI", `/package-exists/${checkingNumber}`);
-        if (answer)
-            return answer && answer2;
-        else
-            return answer;
+        return { "waiverIdExists": answer2 , "wavierAmendRenewalExists": answer}
       }
 
       return answer;
