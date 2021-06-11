@@ -224,17 +224,16 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
          ) {
         ChangeRequestDataApi.packageExists(changeRequest.transmittalNumber, changeRequest)
             .then((dupRenewalId) => {
+              
               if (dupRenewalId &&  ! dupRenewalId.waiverIdExists) {
                 newMessage.statusMessage = `The Waiver Base Number for ${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
                 setTransmittalNumberStatusMessage(newMessage);
-              } else if (
-                  dupRenewalId.waiverIdExists
-                  && dupRenewalId.wavierAmendRenewalExist) {
+              } else if (dupRenewalId.wavierAmendRenewalExists) {
                 newMessage.statusLevel = "error";
                 newMessage.statusMessage = "This waiver renewal number already exists."
                 setTransmittalNumberStatusMessage(newMessage);
               } else {
-                ;//setTransmittalNumberStatusMessage("")
+                setTransmittalNumberStatusMessage("")
               }
             }).catch((error) => {
           console.log("There was an error submitting a request.", error);
