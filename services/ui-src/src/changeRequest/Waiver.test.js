@@ -122,7 +122,7 @@ describe("Effects of Failed Submit", () => {
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
     // click the submit button
-    //userEvent.click(screen.getByText("Submit", { selector: "input" }));
+    userEvent.click(screen.getByText("Submit", { selector: "input" }));
     //await screen.findByText("Missing Required Attachments");
 
     // the transmittal number still contains the value
