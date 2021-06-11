@@ -1460,6 +1460,19 @@ dl.state-access-cards {
   }
 }
 
+.group-division-selection {
+  @extend .ds-u-margin-y--5;
+  @extend .ds-u-margin-x--auto;
+
+  max-width: 560px;
+
+  .ds-c-label,
+  .submit-buttons {
+    @extend .ds-u-margin-top--5;
+    @extend .ds-u-margin-bottom--1;
+  }
+}
+
 .choice-container {
   @extend .form-container;
   @extend .ds-u-padding-bottom--7;

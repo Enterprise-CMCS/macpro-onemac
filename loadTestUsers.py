@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 
 import argparse
+from itertools import cycle
 import json
 import os
 import subprocess
@@ -13,10 +14,28 @@ UNREGISTERED_USERS = [
     {
         "id": f"{user_type}unregistered@cms.hhs.local",
         "type": user_type,
-        "firstName": "Ulysses",
+        "firstName": name,
         "lastName": "Unregistered",
     }
-    for user_type in ["stateuser", "stateadmin", "cmsapprover", "helpdesk"]
+    for user_type, name in zip(
+        [
+            "stateuser",
+            "stateadmin",
+            "cmsapprover",
+            "cmsreviewer",
+            "helpdesk",
+        ],
+        # using a cycle here so we don't silently run out of names
+        cycle(
+            [
+                "Ulysses",
+                "Umberta",
+                "Unita",
+                "Upton",
+                "Ursula",
+            ]
+        ),
+    )
 ]
 
 

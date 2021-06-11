@@ -35,6 +35,12 @@ export const ALERTS_MSG = {
     text: "Thank you. The CMS System Admin will verify your access and credentials.  Please check your email for details on access.",
   },
 
+  CMS_REVIEWER_SUBMISSION_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Registration Complete",
+    text: "Thank you. The CMS Role Approver will verify your access and credentials.  Please check your email for details on access.",
+  },
+
   // Success woth Survey Link
   SUBMISSION_SUCCESS_SURVEY: {
     type: ALERT_TYPES.SUCCESS,

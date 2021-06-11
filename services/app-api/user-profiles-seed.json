@@ -70,6 +70,62 @@
   },
 
   {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "active"
+      }
+    ],
+    "firstName": "Amanda",
+    "lastName": "Active",
+    "id": "cmsrevieweractive@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "denied"
+      }
+    ],
+    "firstName": "Donny",
+    "lastName": "Denied",
+    "id": "cmsreviewerdenied@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "pending"
+      }
+    ],
+    "firstName": "Pamela",
+    "lastName": "Pending",
+    "id": "cmsreviewerpending@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "revoked"
+      }
+    ],
+    "firstName": "Ronald",
+    "lastName": "Revoked",
+    "id": "cmsreviewerrevoked@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
     "id": "sabrina.mccrae@cms.hhs.gov",
     "firstName": "Sabrina",
     "lastName": "McCrae",

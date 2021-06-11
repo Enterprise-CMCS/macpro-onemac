@@ -42,9 +42,7 @@ const UserManagement = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole =
-    userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN ||
-    userProfile.userData.type === USER_TYPE.HELPDESK;
+  const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
       userProfile.userData.type === USER_TYPE.CMS_APPROVER ||

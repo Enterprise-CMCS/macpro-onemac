@@ -1,4 +1,4 @@
-import { USER_TYPE } from "cmscommonlib";
+import { USER_TYPE, USER_STATUS } from "cmscommonlib";
 
 export const userTypes = {
   [USER_TYPE.STATE_USER]: "State Submitter",
@@ -14,6 +14,8 @@ export const pendingMessage = {
   [USER_TYPE.STATE_ADMIN]: "Your system access is pending approval.",
   [USER_TYPE.CMS_APPROVER]:
     "Your system access is pending approval. Contact the CMS System Admin with any questions.",
+  [USER_TYPE.CMS_REVIEWER]:
+    "Your system access is pending approval. Contact the CMS Role Approver with any questions.",
   [USER_TYPE.SYSTEM_ADMIN]:
     "Your system access is pending approval. Contact the Help Desk with any questions.",
   [USER_TYPE.HELPDESK]:
@@ -27,6 +29,8 @@ export const deniedOrRevokedMessage = {
     "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
   [USER_TYPE.CMS_APPROVER]:
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
+  [USER_TYPE.CMS_REVIEWER]:
+    "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
   [USER_TYPE.SYSTEM_ADMIN]: "There is something wrong. Contact the Help Desk.",
   [USER_TYPE.HELPDESK]:
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
@@ -67,14 +71,17 @@ export const revokeConfirmMessage = {
 
 export const isPending = (userData) => {
   if (
-    userData.type === USER_TYPE.CMS_APPROVER ||
-    userData.type === USER_TYPE.HELPDESK
+    userData.type === USER_TYPE.STATE_USER ||
+    userData.type === USER_TYPE.STATE_ADMIN
   ) {
-    userData.attributes.sort(sortDescendingOrder);
-    return userData.attributes[0].status === "pending";
-  } else {
     userData.attributes.forEach(getStateStatus);
-    return !stateStatusSet.has("active") && stateStatusSet.has("pending");
+    return (
+      !stateStatusSet.has(USER_STATUS.ACTIVE) &&
+      stateStatusSet.has(USER_STATUS.PENDING)
+    );
+  } else {
+    userData.attributes.sort(sortDescendingOrder);
+    return userData.attributes[0].status === USER_STATUS.PENDING;
   }
 };
 
@@ -86,15 +93,14 @@ export const isPending = (userData) => {
 
 export const isActive = (userData) => {
   if (
-    userData.type === USER_TYPE.CMS_APPROVER ||
-    userData.type === USER_TYPE.HELPDESK ||
-    userData.type === USER_TYPE.CMS_REVIEWER
+    userData.type === USER_TYPE.STATE_USER ||
+    userData.type === USER_TYPE.STATE_ADMIN
   ) {
-    userData.attributes.sort(sortDescendingOrder);
-    return userData.attributes[0].status === "active";
-  } else {
     userData.attributes.forEach(getStateStatus);
-    return stateStatusSet.has("active");
+    return stateStatusSet.has(USER_STATUS.ACTIVE);
+  } else {
+    userData.attributes.sort(sortDescendingOrder);
+    return userData.attributes[0].status === USER_STATUS.ACTIVE;
   }
 };
 /**

@@ -1,3 +1,4 @@
+import { RESPONSE_CODE } from "cmscommonlib";
 import { ALERTS_MSG } from "./alert-messages";
 
 /**
@@ -21,6 +22,9 @@ export const getAlert = (errorCode) => {
       break;
     case "HU000":
       returnAlert = ALERTS_MSG.HELPDESK_SUBMISSION_SUCCESS;
+      break;
+    case RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED:
+      returnAlert = ALERTS_MSG.CMS_REVIEWER_SUBMISSION_SUCCESS;
       break;
     // app-api/response-codes.js    SUCCESSFULLY_SUBMITTED: "SC000",
     case "SC000":
