@@ -16,7 +16,12 @@ module.exports = {
 
     'State user check the Submit New CHIP SPA form': function (browser) {
         // Go to Submit New CHIP SPA page
-        browser.useCss().click("button#chipSpaBtn");
+        //browser.useCss().click("button#chipSpaBtn");
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[3]");
         // Verify that Submit New CHIP SPA page is displayed 
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
 

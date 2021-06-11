@@ -24,17 +24,13 @@ module.exports = {
         browser.click(manage_account_link); 
         browser.pause(2000);
         //check on state access management for state user 
-        let state_access_management = "(//h3)[4]";
-        let virginia = "(//div[@class='state-access-card']/dt)[1]";
-        let virginia_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
-        let michigan = "(//div[@class='state-access-card']/dt)[2]";
-        let michigan_access_granted = "(//div[@class='state-access-card']/dd/em)[2]";
+        let state_access_management = "(//h3)[5]";
+        let maryland = "(//div[@class='state-access-card']/dt)[1]";
+        let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
         //check if each element is visible 
         browser.useXpath().expect.element(state_access_management).to.be.visible;
-        browser.useXpath().expect.element(virginia).to.be.visible;
-        browser.useXpath().expect.element(virginia_access_granted).to.be.visible;
-        browser.useXpath().expect.element(michigan).to.be.visible;
-        browser.useXpath().expect.element(michigan_access_granted).to.be.visible;
+        browser.useXpath().expect.element(maryland_access_granted).to.be.visible;
+        browser.useXpath().expect.element(maryland).to.be.visible;
         browser.useCss();
         let dashboard = "(//div[@class ='nav-left']/a)[2]";
         browser.pause(2000);
@@ -57,7 +53,7 @@ module.exports = {
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.pause(1000);
-        browser.useXpath().assert.containsText(submittedType, "SPA").pause(1000);
+        browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
         browser.useXpath().assert.containsText("(//tbody/tr/td)[3]","MD");

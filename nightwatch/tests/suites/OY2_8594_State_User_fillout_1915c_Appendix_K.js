@@ -18,7 +18,12 @@ module.exports = {
 
     'State user check the Submit 1915(c) Appendix K Amendment': function (browser) {
         // Go to Submit 1915(c) Appendix K Amendment
-        browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
+        //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[4]");
         // Verify that Submit 1915(c) Appendix K Amendment is displayed 
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
         // Verify that text "if your Appendix ..." shows up on the page
@@ -68,7 +73,12 @@ module.exports = {
 
     'State user check the Submit 1915(c) Appendix K Amendment error message on format and FAQ': function (browser) {
         // Go to Submit 1915(c) Appendix K Amendment
-        browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
+        //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[4]");
         // Verify that Submit 1915(c) Appendix K Amendment is displayed 
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
 
@@ -94,10 +104,10 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        let pageBanner = 'div#title_bar > h1';
+        let pageBanner = '//h1';
         let expectedBannerText = 'Frequently Asked Questions';
-        browser.useCss().moveToElement(pageBanner, 10, 10).pause(200);
-        browser.useCss().expect.element(pageBanner).to.be.visible;
+        browser.useXpath().moveToElement(pageBanner, 10, 10).pause(200);
+        browser.useXpath().expect.element(pageBanner).to.be.visible;
         browser.verify.containsText(pageBanner, expectedBannerText);
         browser.useXpath().click("(//h4[@class='faq-collapsible-trigger'])[5]").pause(200);
         let r_message = "((//div[@class='Collapsible__contentOuter']/div/ul)[3]/li)[3]";

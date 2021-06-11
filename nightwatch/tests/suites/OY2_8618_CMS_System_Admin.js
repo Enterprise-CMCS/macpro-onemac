@@ -5,7 +5,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with cms_system_admin'](browser);
     },
 
     after: function (browser) {

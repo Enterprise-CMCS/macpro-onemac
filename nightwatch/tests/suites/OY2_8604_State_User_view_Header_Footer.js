@@ -12,17 +12,8 @@ module.exports = {
     //     browser.useXpath().assert.containsText(us_official_banner, "An official website of the United States government");
     // },
 
-
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_USERS,
-            password: process.env.TEST_STATE_USER_PASSWORD,
-          }
-
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-
+        login.beforeEach(browser);
         let one_mac_logo = '(//img)[2]';
         let us_official_banner = '//div/div[@class="usa-bar"]';
         let medicaid_gov_logo = "(//div/img)[6]";
@@ -45,15 +36,12 @@ module.exports = {
         browser.useXpath().assert.containsText(email_footer, "Email MACPro_HelpDesk@cms.hhs.gov for help or feedback.");
         browser.useXpath().assert.containsText(address_footer, "7500 Security Boulevard Baltimore, MD 21244");
         browser.useCss();
-        
-        login["Login to SPA and Waiver Dashboard via Okta"](browser,testData);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
+
     },
 
     'state user verify header after login': function (browser) {

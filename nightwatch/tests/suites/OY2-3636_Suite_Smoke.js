@@ -1,4 +1,4 @@
-/* 
+
 // The automated UI test scripts that belongs to this module has 
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
@@ -61,13 +61,13 @@ module.exports = {
         // upload the first documents
         let fileUploadElem = "[name='uploader-input-0']";
         browser.assert.elementPresent(fileUploadElem);
-        let filePath = require('path').resolve(__dirname + '/files/file.docx')
+        let filePath = require('path').resolve(__dirname + '/files/file.docx');
         browser.setValue(fileUploadElem, filePath);
 
         // upload the second documents
         fileUploadElem = "[name='uploader-input-1']";
         browser.assert.elementPresent(fileUploadElem);
-        filePath = require('path').resolve(__dirname + '/files/file.docx')
+        filePath = require('path').resolve(__dirname + '/files/file.docx');
         browser.setValue(fileUploadElem, filePath);
 
         // write the Summary 
@@ -349,4 +349,4 @@ module.exports = {
         browser.back();  // go back to previous page
     }
 };
-//oy2-5226-nightwatch-new */
+//oy2-5226-nightwatch-new 

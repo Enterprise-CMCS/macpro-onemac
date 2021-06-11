@@ -1,25 +1,16 @@
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('./OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        const testData = {
-            username: process.env.TEST_STATE_USERS,
-            password: process.env.TEST_STATE_USER_PASSWORD,
-          }
-          login.before(browser);
-          //click on button
-          //browser.useCss().click("#loginBtn");
-        login["Login to SPA and Waiver Dashboard via development login"](browser,testData);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.info("Stopping test executions...")
-        console.info('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
     
 
@@ -105,15 +96,31 @@ module.exports = {
         browser.useXpath().expect.element(amendment_num).to.be.visible;
         browser.useXpath().expect.element(waiver_link_first_sentence2).to.be.visible;
         browser.useXpath().expect.element(waiver_link_first_sentence3).to.be.visible;
-        
-
-
-
-
-
-
-
-
+        browser.click(waivers_link_second);
+        let waiver_link_second_sentence1 = "(((//div[@class='Collapsible__contentInner'])[5]/p))[1]";
+        let waiver_ss_second = "((//div[@class='Collapsible__contentInner'])[5]/ul/li)[1]";
+        let waiver_base_num2 = "((//div[@class='Collapsible__contentInner'])[5]/ul/li)[2]";
+        let renewal_num2 = "((//div[@class='Collapsible__contentInner'])[5]/ul/li)[3]";
+        let appendix_num = "((//div[@class='Collapsible__contentInner'])[5]/ul/li)[4]";
+        let waiver_link_second_sentence2 = "(((//div[@class='Collapsible__contentInner'])[5]/p))[2]";
+        browser.useXpath().expect.element(waiver_link_second_sentence1).to.be.visible;
+        browser.useXpath().expect.element(waiver_ss_second).to.be.visible;
+        browser.useXpath().expect.element(waiver_base_num2).to.be.visible;
+        browser.useXpath().expect.element(renewal_num2).to.be.visible;
+        browser.useXpath().expect.element(appendix_num).to.be.visible;
+        browser.useXpath().expect.element(waiver_link_second_sentence2).to.be.visible;
+        browser.click(waivers_link_third);
+        browser.useXpath().expect.element("(//tbody)[5]").to.be.visible;
+        browser.click(waivers_link_fourth);
+        browser.useXpath().expect.element("(//tbody)[6]").to.be.visible;
+        browser.click(waivers_link_fifth);
+        browser.useXpath().expect.element("(//tbody)[7]").to.be.visible;
+        browser.useXpath().expect.element("((//div[@class='Collapsible__contentInner'])[8]/p)[1]").to.be.visible;
+        browser.useXpath().expect.element("((//div[@class='Collapsible__contentInner'])[8]/p)[2]").to.be.visible;
+        browser.useXpath().expect.element("((//div[@class='Collapsible__contentInner'])[8]/p)[3]").to.be.visible;
+        browser.useXpath().expect.element("((//div[@class='Collapsible__contentInner'])[8]/p)[4]").to.be.visible;
+        browser.useXpath().expect.element("((//div[@class='Collapsible__contentInner'])[8]/p)[5]").to.be.visible;
+        browser.useXpath().expect.element("(//tbody)[8]").to.be.visible;
 
         browser.closeWindow(); // Close tab
         // Switch to main window
