@@ -20,10 +20,11 @@ function CMSSignup() {
   );
 }
 function HelpdeskSignup() {
-  const [_,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
+  const [dummy,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
   useEffect(() => {
     if(onLoadHelpdesk)onLoadHelpdesk();
   },[onLoadHelpdesk]);
+  console.log("Dummy is: ",dummy);
   return null
 }
 

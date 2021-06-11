@@ -28,11 +28,11 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
   useEffect(() => {
     let mounted = true;
 
-/*    if (mounted && alert && alert.heading && alert.heading !== "") {
+    if (mounted && alert && alert.heading && alert.heading !== "") {
         var elmnt = document.getElementById("alert-bar");
         if (elmnt) elmnt.scrollIntoView({behavior: 'smooth'});    
     }
-*/
+
     return function cleanup() {
       mounted = false;
     };
@@ -58,7 +58,7 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
         <p className="ds-c-alert__text" >{renderText()}</p>
         <button
           className="close-button"
-          onClick={() => {if (closeCallback) closeCallback(); setAlert(ALERTS_MSG.NONE)} }
+          onClick={() => { setAlert(ALERTS_MSG.NONE); if (closeCallback) closeCallback(); } }
         >
           {CLOSING_X_IMAGE}
         </button>

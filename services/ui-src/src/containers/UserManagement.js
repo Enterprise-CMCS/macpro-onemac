@@ -305,10 +305,12 @@ const columns = useMemo(
     includeStateCode,
     renderEmail,
     renderStatus,
+    showUserRole,
     sortStatus,
     renderActions,
     getRoleLabel,
     renderDate,
+    userProfile.userData.type
   ]
 );
 

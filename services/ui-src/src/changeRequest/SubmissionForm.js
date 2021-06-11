@@ -323,8 +323,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     if (mounted) setAlertCode(newAlertCode);
-    if (mounted) window.scrollTo({ top: 0, behavior: 'smooth' });
     if (mounted) setIsLoading(false);
+    if (mounted) window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   function closedAlert () {
