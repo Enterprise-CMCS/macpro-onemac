@@ -343,7 +343,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            <FormInfoText text={formInfo.subheaderMessage}/>
+            {formInfo.subheaderMessage}
           </div>
         )}
         <form
