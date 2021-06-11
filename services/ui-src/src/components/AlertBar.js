@@ -12,7 +12,7 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-const AlertBar = ({ alertCode, personalizedString = "" }) => {
+const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
   const [alert, setAlert] = useState(getAlert(alertCode));
 
   useEffect(() => {
@@ -27,15 +27,16 @@ const AlertBar = ({ alertCode, personalizedString = "" }) => {
 
   useEffect(() => {
     let mounted = true;
-    if (mounted && alert && alert.heading && alert.heading !== "") {
+
+/*    if (mounted && alert && alert.heading && alert.heading !== "") {
         var elmnt = document.getElementById("alert-bar");
         if (elmnt) elmnt.scrollIntoView({behavior: 'smooth'});    
     }
-
+*/
     return function cleanup() {
       mounted = false;
     };
-  }, [ alert, personalizedString ]);
+  }, [ alert, personalizedString, closeCallback ]);
 
   const renderText=()=>{
     let newText = alert.text.replace("$personalize$", personalizedString);
@@ -57,7 +58,7 @@ const AlertBar = ({ alertCode, personalizedString = "" }) => {
         <p className="ds-c-alert__text" >{renderText()}</p>
         <button
           className="close-button"
-          onClick={() => setAlert(ALERTS_MSG.NONE)}
+          onClick={() => {if (closeCallback) closeCallback(); setAlert(ALERTS_MSG.NONE)} }
         >
           {CLOSING_X_IMAGE}
         </button>

@@ -323,11 +323,12 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
 
     if (mounted) setAlertCode(newAlertCode);
+    if (mounted) window.scrollTo({ top: 0, behavior: 'smooth' });
     if (mounted) setIsLoading(false);
+  }
 
-    // if the same alert persists, AlertBar doesn't know to assert itself
-    var elmnt = document.getElementById("alert-bar");
-    if (elmnt) elmnt.scrollIntoView({ behavior: "smooth" });
+  function closedAlert () {
+    setAlertCode("NONE");
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -339,7 +340,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
