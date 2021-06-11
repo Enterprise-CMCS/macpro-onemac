@@ -43,7 +43,7 @@
     "lodash": "^4.17.20",
     "nightwatch": "^1.5.1",
     "selenium-server": "^3.141.59",
-    "serverless": "^2.18.0",
+    "serverless": "2.19.0",
     "sinon": "^9.2.3"
   }
 }
