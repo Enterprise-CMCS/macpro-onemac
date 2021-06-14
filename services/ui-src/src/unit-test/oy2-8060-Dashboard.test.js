@@ -1,4 +1,4 @@
-import React, {useState} from "react";
+import React from "react";
 import {render, screen} from "@testing-library/react";
 import {act} from "react-dom/test-utils";
 import {MemoryRouter} from "react-router-dom";
@@ -18,86 +18,8 @@ jest.mock("../utils/ChangeRequestDataApi");
 
 const stateUserRevokedDeniedMsg = "Sorry, you don't have access. Please contact the State System Admin with any questions or visit your user profile for more information.";
 const stateAdminRevokedDeniedMsg = "Sorry, you don't have access. Please contact the CMS Role Approver with any questions, or visit your user profile for more information.";
-const cmsApproverRevokedDeniedMsg = "Sorry, you don't have access. Please contact the CMS System Admin with any questions, or visit your user profile for more information.";
-
-
-it("renders State User Denied Message", async () => {
-    const promise = Promise.resolve([{isLoading: false}]);
-
-    render(
-        <AppContext.Provider
-            value={{
-                ...stateUserDeniedInitialAuthState,
-            }}
-        >
-            <Dashboard/>
-        </AppContext.Provider>,
-        {wrapper: MemoryRouter}
-    );
-
-    screen.getByText(stateUserRevokedDeniedMsg);
-    await act(() => promise);
-
-});
-
-
-it("renders State User Revoked Message", async () => {
-    const promise = Promise.resolve([{isLoading: false}]);
-
-    render(
-        <AppContext.Provider
-            value={{
-                ...stateUserRevokedInitialAuthState,
-            }}
-        >
-            <Dashboard/>
-        </AppContext.Provider>,
-        {wrapper: MemoryRouter}
-    );
-
-    screen.getByText(stateUserRevokedDeniedMsg);
-    await act(() => promise);
-
-});
-
-it("renders State Admin Revoked Message", async () => {
-    const promise = Promise.resolve([{isLoading: false}]);
-
-    render(
-        <AppContext.Provider
-            value={{
-                ...stateAdminRevokedInitialAuthState,
-            }}
-        >
-            <Dashboard/>
-        </AppContext.Provider>,
-        {wrapper: MemoryRouter}
-    );
-
-    screen.getByText(stateAdminRevokedDeniedMsg);
-    await act(() => promise);
-
-});
-
-
-it("renders State Admin Denied Message", async () => {
-    const promise = Promise.resolve([{isLoading: false}]);
-
-    render(
-        <AppContext.Provider
-            value={{
-                ...stateAdminDeniedInitialAuthState,
-            }}
-        >
-            <Dashboard/>
-        </AppContext.Provider>,
-        {wrapper: MemoryRouter}
-    );
-
-    screen.getByText(stateAdminRevokedDeniedMsg);
-    await act(() => promise);
-
-});
+const cmsApproverRevokedDeniedMsg = "Sorry, you don't have access. Please contact the CMS System Admin with any questions"
+const cmsApproverRevokedDeniedMsgProfileLink = "href="
 
 
 it("renders CMS Approver Denied Message", async () => {
@@ -114,27 +36,8 @@ it("renders CMS Approver Denied Message", async () => {
         {wrapper: MemoryRouter}
     );
 
-    screen.getByText(cmsApproverRevokedDeniedMsg);
+    screen.getByText(cmsApproverRevokedDeniedMsg, { exact: false }).click();
+    
     await act(() => promise);
 
 });
-
-it("renders CMS Approver Revoked Message", async () => {
-    const promise = Promise.resolve([{isLoading: false}]);
-
-    render(
-        <AppContext.Provider
-            value={{
-                ...cmsApproverRevokedInitialAuthState,
-            }}
-        >
-            <Dashboard/>
-        </AppContext.Provider>,
-        {wrapper: MemoryRouter}
-    );
-
-    screen.getByText(cmsApproverRevokedDeniedMsg);
-    await act(() => promise);
-
-});
-

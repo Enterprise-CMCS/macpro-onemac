@@ -185,7 +185,7 @@ const Dashboard = () => {
         ) : isPending(userProfile.userData) ? (
           <EmptyList message={pendingMessage[userProfile.userData.type]} />
         ) : (
-          <EmptyList
+          <EmptyList showProfileLink="true"
             message={deniedOrRevokedMessage[userProfile.userData.type]}
           />
         )}
