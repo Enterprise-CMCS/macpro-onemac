@@ -46,11 +46,11 @@ function getRegisterUrl() {
  * Logout the user.
  */
 function logout(isLoggedInAsDeveloper) {
-  if(isLoggedInAsDeveloper) {
-    const authConfig = Auth.configure();
-    Auth.signOut();
+  const authConfig = Auth.configure();
+  Auth.signOut();
+  if (isLoggedInAsDeveloper) {
     window.location.href = authConfig.oauth.redirectSignOut;
-    document.location.reload(true)    
+    document.location.reload(true)
   } else {
     window.location.href = getRegisterUrl();
   }
