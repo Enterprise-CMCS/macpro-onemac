@@ -71,25 +71,34 @@ class ChangeRequestDataApi {
    * @param {string} id the ID to check
    * @return {Boolean} true if the ID exists in the back end
    */
-  async packageExists(id, changeRequest ) {
+  async packageExists(id, changeRequest) {
+
     if (!id) {
       console.log("ID was not specified for packageExists API call");
       throw new Error("ID was not specified for packageExists API call");
     }
 
     try {
-      let checkingNumber;
-      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
 
-      if ( changeRequest && changeRequest.type === "waiver"
-        && ( changeRequest.actionType === "renewal" || changeRequest.actionType === "amendment" )
-           ) {
-        checkingNumber = id.substr(0,7)
-        let answer2 = await API.get("changeRequestAPI", `/package-exists/${checkingNumber}`);
-        return { "waiverIdExists": answer2 , "wavierAmendRenewalExists": answer}
+      let answer;
+
+      if ( changeRequest ) {
+
+        let checkingRenewalWavierNumber = id.substr(0, 11 ) ;
+        let checkingBaseWavierNumber = id.substr(0, 7 ) ;
+        answer = await API.get("changeRequestAPI", `/package-exists/${checkingRenewalWavierNumber}`);
+        let answer2 = await API.get("changeRequestAPI", `/package-exists/${checkingBaseWavierNumber}`);
+        if (changeRequest.type === "waiver" && changeRequest.actionType === "renewal" )
+        {
+
+          return { "baseNumberExists": answer2 , "baseRenewalNumberExists": answer};
+
+        }
+      } else {
+        answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
+
+        return answer;
       }
-
-      return answer;
     } catch (error) {
       console.log(`There was an error checking ID ${id}.`, error);
       throw error;

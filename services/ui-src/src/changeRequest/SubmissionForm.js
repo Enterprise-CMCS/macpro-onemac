@@ -202,68 +202,67 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       statusLevel: "error",
       statusMessage: "",
     };
+
     let checkingNumber = changeRequest.transmittalNumber;
 
     newMessage.statusMessage = validateTransmittalNumber(
       changeRequest.transmittalNumber
     );
 
-    // if the ID is valid, check if exists/not exist in data
-    if (newMessage.statusMessage === "" && checkingNumber !== "") {
-      newMessage.statusLevel = transmittalNumberDetails.errorLevel;
 
-      if (transmittalNumberDetails.existenceRegex !== undefined) {
-        checkingNumber = changeRequest.transmittalNumber.match(
-          transmittalNumberDetails.existenceRegex
-        )[0];
-      }
+      // if the ID is valid, check if exists/not exist in data
+      if (newMessage.statusMessage === "" && checkingNumber !== "") {
+        newMessage.statusLevel = transmittalNumberDetails.errorLevel;
 
+        if (transmittalNumberDetails.existenceRegex !== undefined) {
+          checkingNumber = changeRequest.transmittalNumber.match(
+              transmittalNumberDetails.existenceRegex
+          )[0];
+        }
 
-      if (changeRequest.type === "waiver" &&
-          (changeRequest.actionType === "renewal" || changeRequest.actionType === "amendment" )
-         ) {
-        ChangeRequestDataApi.packageExists(changeRequest.transmittalNumber, changeRequest)
-            .then((dupRenewalId) => {
-              
-              if (dupRenewalId &&  ! dupRenewalId.waiverIdExists) {
-                newMessage.statusMessage = `The Waiver Base Number for ${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
-                setTransmittalNumberStatusMessage(newMessage);
-              } else if (dupRenewalId.wavierAmendRenewalExists) {
-                newMessage.statusLevel = "error";
-                newMessage.statusMessage = "This waiver renewal number already exists."
-                setTransmittalNumberStatusMessage(newMessage);
-              } else {
-                setTransmittalNumberStatusMessage("")
-              }
-            }).catch((error) => {
-          console.log("There was an error submitting a request.", error);
-        });
-      } else {
+        if (changeRequest.type === "waiver" &&
+            (changeRequest.actionType === "renewal")
+        ) {
+          ChangeRequestDataApi.packageExists(changeRequest.transmittalNumber, changeRequest)
+              .then((dupRenewalId) => {
 
-        ChangeRequestDataApi.packageExists(checkingNumber)
-            .then((dupID) => {
-              if (!dupID && transmittalNumberDetails.idMustExist) {
-                if (transmittalNumberDetails.errorLevel === "error") {
-                  newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                if (dupRenewalId.baseNumberExists ) {
+
+                  if (dupRenewalId.baseRenewalNumberExists ) {
+                      newMessage.statusMessage = `This waiver renewal number already exists. Please ensure you have the correct Waiver Number before submitting it. Contact the MACPro Help Desk if you need support.`;
+                  }
                 } else {
                   newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
                 }
-              } else if (dupID && !transmittalNumberDetails.idMustExist) {
-                if (transmittalNumberDetails.errorLevel === "error") {
-                  newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-                } else {
-                  newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+                setTransmittalNumberStatusMessage(newMessage);
+              });
+
+        } else {
+          ChangeRequestDataApi.packageExists(checkingNumber)
+              .then((dupID) => {
+
+                if (!dupID && transmittalNumberDetails.idMustExist) {
+                  if (transmittalNumberDetails.errorLevel === "error") {
+                    newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                  } else {
+                    newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+                  }
+                } else if (dupID && !transmittalNumberDetails.idMustExist) {
+                  if (transmittalNumberDetails.errorLevel === "error") {
+                    newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                  } else {
+                    newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+                  }
                 }
-              }
-              setTransmittalNumberStatusMessage(newMessage);
-            })
-            .catch((error) => {
-              console.log("There was an error submitting a request.", error);
-            });
+                setTransmittalNumberStatusMessage(newMessage);
+              })
+              .catch((error) => {
+                console.log("There was an error submitting a request.", error);
+              });
+        }
+      } else {
+        setTransmittalNumberStatusMessage(newMessage);
       }
-    } else {
-      setTransmittalNumberStatusMessage(newMessage);
-    }
 
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setActionTypeErrorMessage(actionTypeMessage);

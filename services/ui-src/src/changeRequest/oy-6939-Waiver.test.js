@@ -81,8 +81,8 @@ describe("Effects of Failed Submit", () => {
   // values after a failed Submit
   it("does not clear already completed form fields if submit fails. (oy2-3734)", async () => {
     const testValues = {
-      transmittalNumber: "MI.17234.R03.M22",
-      actionType: "amendment",
+      transmittalNumber: "MI.3233.R43",
+      actionType: "renewal",
       waiverAuthority: "1915(b)",
     };
 
@@ -114,10 +114,10 @@ describe("Effects of Failed Submit", () => {
     await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    ChangeRequestDataApi.packageExists.mockResolvedValue({ "baseNumberExists": true , "baseRenewalNumberExists": true});
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await screen.findByText(
-      "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support."
+      "This waiver renewal number already exists. Please ensure you have the correct Waiver Number before submitting it. Contact the MACPro Help Desk if you need support."
     );
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
