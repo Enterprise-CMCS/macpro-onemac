@@ -37,26 +37,24 @@ module.exports = {
         browser.useXpath().expect.element(home_link).to.be.visible;
         browser.useXpath().expect.element(my_account_button).to.be.visible;
         browser.click(my_account_button);
-        browser.pause(3000);
+        browser.pause(500);
         browser.useXpath().expect.element(management_profile_link).to.be.visible;
         browser.click(management_profile_link);
-        browser.pause(3000);
+        browser.pause(500);
         browser.click(dashboard_link);
         browser.useXpath().expect.element(new_submission_button).to.be.visible;
 
         //check on SPAs and Waivers links
         browser.click(new_submission_button);
-        browser.pause(3000);
-        console.log("here is one");
-        let select_submission_type = "";
+        browser.pause(500);
+        let select_submission_type = "//div[@class='choice-intro']";
         let state_plan_amendment_link = "(//h4)[1]";
         let waiver_action_link = "(//h4)[2]";
         browser.useXpath().expect.element(select_submission_type).to.be.visible;
         browser.useXpath().expect.element(state_plan_amendment_link).to.be.visible;
         browser.useXpath().expect.element(waiver_action_link).to.be.visible;
         browser.click(state_plan_amendment_link);
-        browser.pause(3000);
-        console.log("here is two");
+        browser.pause(500);
         let medicaid_spa_link = "(//h4)[1]";
         let respond_to_medicaid_spa_rai_link = "(//h4)[2]";
         let chip_spa_link = "(//h4)[3]";
@@ -66,12 +64,11 @@ module.exports = {
         browser.useXpath().expect.element(chip_spa_link).to.be.visible;
         browser.useXpath().expect.element(respond_to_chip_spa_rai_link).to.be.visible;
         browser.click(dashboard_link);
-        browser.pause(3000);
+        browser.pause(500);
         browser.click(new_submission_button);
-        browser.pause(3000);
+        browser.pause(500);
         browser.click(waiver_action_link);
-        browser.pause(3000);
-        console.log("here is three");
+        browser.pause(500);
         let waiver_action_link_second = "(//h4)[1]";
         let respond_to_waiver_rai_link = "(//h4)[2]";
         let request_temporary_extension_link = "(//h4)[3]";
