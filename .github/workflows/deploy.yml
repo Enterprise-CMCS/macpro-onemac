@@ -161,4 +161,5 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test_results
-          path: ./tests/nightwatch/tests_output
+          # path: ./tests/nightwatch/tests_output
+          path: ./tests_output
