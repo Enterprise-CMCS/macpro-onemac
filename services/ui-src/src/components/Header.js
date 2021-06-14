@@ -45,11 +45,15 @@ function getRegisterUrl() {
 /**
  * Logout the user.
  */
-function logout() {
-  const authConfig = Auth.configure();
-  Auth.signOut();
-  window.location.href = authConfig.oauth.redirectSignOut;
-  document.location.reload(true)
+function logout(isLoggedInAsDeveloper) {
+  if(isLoggedInAsDeveloper) {
+    const authConfig = Auth.configure();
+    Auth.signOut();
+    window.location.href = authConfig.oauth.redirectSignOut;
+    document.location.reload(true)    
+  } else {
+    window.location.href = getRegisterUrl();
+  }
 }
 
 /**
@@ -136,7 +140,7 @@ function Header(props) {
                 <Link to={ROUTES.COMPONENT_PAGE} className={getActiveClass(currentRoute, RouteList.COMPONENT_PAGE)}>Component
                       Page</Link> : null}
             </div>
-            {renderAccountButtons()}
+            {renderAccountButtons(isLoggedInAsDeveloper)}
           </div>
         );
     }
@@ -148,7 +152,7 @@ function Header(props) {
   /**
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
-  function renderAccountButtons() {
+  function renderAccountButtons(isLoggedInAsDeveloper) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (isAuthenticated) {
       return (
@@ -190,7 +194,7 @@ function Header(props) {
                 id="logoutLink"
                 onClick={() => {
                   setShowMenu(false);
-                  logout();
+                  logout(isLoggedInAsDeveloper);
                 }}
               >
                 <svg
