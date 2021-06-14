@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
@@ -51,8 +51,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       statusMessage: "",
     });
 
-  // True if we are currently submitting the form or on inital load of the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -112,7 +112,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       else if (
         newTransmittalNumber.length >= 2 &&
         latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
-        USER_STATUS.ACTIVE
+          USER_STATUS.ACTIVE
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
@@ -187,7 +187,9 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     setChangeRequest(updatedRecord);
   };
 
-  useEffect(()=>{  window.scrollTo({ top: 0 });}, []);
+  useEffect(() => {
+    window.scrollTo({ top: 0 });
+  }, []);
 
   useEffect(() => {
     let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
@@ -266,23 +268,56 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
   }
 
+  useEffect(() => {
+    let mounted = true;
+
+    const saveForm = async () => {
+      let uploadRef = uploader.current;
+      let transmittalNumberWarningMessage = "";
+
+      if (
+        transmittalNumberStatusMessage.statusLevel === "warn" &&
+        transmittalNumberStatusMessage.statusMessage
+      ) {
+        transmittalNumberWarningMessage = 
+          "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
+      }
+
+      uploadRef
+        .uploadFiles()
+        .then( (uploadedList) => {
+          ChangeRequestDataApi.submit({...changeRequest,transmittalNumberWarningMessage}, uploadedList).then((newAlertCode) => {
+            if (newAlertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
+              mounted = false;
+              history.push({
+                pathname: ROUTES.DASHBOARD,
+                state: {
+                  passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
+                },
+              });
+            }
+          });
+        }).catch((err) => {
+          console.log("error is: ", err);
+          setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+        });
+    };
+
+    if (isSubmitting) saveForm();
+
+  }, [isSubmitting, history, transmittalNumberStatusMessage, changeRequest, uploader]);
+
   /**
    * Submit the new change request.
    * @param {Object} event the click event
    */
   async function handleSubmit(event) {
     event.preventDefault();
-    let mounted = true;
+
     let newAlertCode = "NONE";
+    let readyToSubmit = false;
 
-    // in case form validation takes a while (external validation)
-    if (mounted) setIsLoading(true);
-    if (mounted) setFirstTimeThrough(false);
-
-    if (transmittalNumberStatusMessage.statusLevel === "warn"
-      && transmittalNumberStatusMessage.statusMessage) {
-      changeRequest.transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
-    }
+    setFirstTimeThrough(false);
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
         transmittalNumberStatusMessage.statusMessage) ||
@@ -293,48 +328,21 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     } else if (!areUploadsReady) {
       newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
-      try {
-        const uploadRef = uploader.current;
-        const uploadedList = await uploadRef.uploadFiles();
-        try {
-          const returnCode = await ChangeRequestDataApi.submit(
-            changeRequest,
-            uploadedList
-          );
-          newAlertCode = returnCode;
-
-          if (newAlertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
-            mounted = false;
-            history.push({
-              pathname: ROUTES.DASHBOARD,
-              state: {
-                passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
-              },
-            });
-          }
-        } catch (err) {
-          newAlertCode = RESPONSE_CODE.SYSTEM_ERROR;
-          console.log("submit caught error: ", err);
-        }
-      } catch (err) {
-        newAlertCode = RESPONSE_CODE.SYSTEM_ERROR;
-        console.log("uploadFiles() caught error: ", err);
-      }
+      readyToSubmit = true;
     }
 
-    if (mounted) setAlertCode(newAlertCode);
-    if (mounted) setIsLoading(false);
-    if (mounted) window.scrollTo({ top: 0, behavior: 'smooth' });
+    setAlertCode(newAlertCode);
+    setIsSubmitting(readyToSubmit);
   }
 
-  function closedAlert () {
+  function closedAlert() {
     setAlertCode("NONE");
   }
 
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
-    <LoadingScreen isLoading={isLoading}>
+    <LoadingOverlay isLoading={isSubmitting} >
       <PageTitleBar
         heading={formInfo.pageTitle}
         enableBackNav
@@ -385,7 +393,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
                 !firstTimeThrough ||
-                  transmittalNumberStatusMessage.statusMessage !==
+                transmittalNumberStatusMessage.statusMessage !==
                   `${transmittalNumberDetails.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
@@ -409,13 +417,16 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               name="summary"
               label="Additional Information"
               hint="Add anything else that you would like to share with CMS."
+              disabled={isSubmitting}
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
               value={changeRequest.summary}
               maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             ></TextField>
-            <div className="char-count">{changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}</div>
+            <div className="char-count">
+              {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
+            </div>
           </div>
           <input type="submit" className="form-submit" value="Submit" />
           <button
@@ -429,13 +440,16 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         <ScrollToTop />
         <div className="faq-container">
           <span>Do you have questions or need support?</span>
-          <a target="new" href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto">
+          <a
+            target="new"
+            href={ROUTES.FAQ_TOP}
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto"
+          >
             View FAQ
           </a>
         </div>
       </div>
-    </LoadingScreen>
+      </LoadingOverlay>
   );
 };
 

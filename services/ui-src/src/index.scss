@@ -440,6 +440,12 @@ input[type="file"] {
     height: 70px;
     width: 70px;
   }
+  width: 100%;
+  height: 40rem;
+}
+
+.loading-screen-hidden {
+  display: none;
 }
 
 .about {

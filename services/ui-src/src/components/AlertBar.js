@@ -36,7 +36,7 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
     return function cleanup() {
       mounted = false;
     };
-  }, [ alert, personalizedString, closeCallback ]);
+  }, [ alert, personalizedString ]);
 
   const renderText=()=>{
     let newText = alert.text.replace("$personalize$", personalizedString);
