@@ -64,12 +64,26 @@ TEST_SUCCESS_WITH_LINK: {
 
 jest.mock("../libs/error-mappings", () => {
   return {
-    getAlert: () => {
-      return {
-        type: "success",
-        heading: "Success",
-        text: "This is the $personalize$ success alert text.",
-      };
+    getAlert: (alertCode) => {
+      let returnAlert;
+
+      switch (alertCode) {
+        case "SIMPLE_ALERT":
+          returnAlert = {
+            type: "success",
+            heading: "Success",
+            text: "This is the success alert text.",
+          };
+          break;
+        case "PERSONALIZED_ALERT":
+          returnAlert = {
+            type: "success",
+            heading: "Success",
+            text: "This is the $personalize$ success alert text.",
+          };
+          break;
+      }
+      return returnAlert;
     },
   };
 });
@@ -77,27 +91,18 @@ jest.mock("../libs/error-mappings", () => {
 window.HTMLElement.prototype.scrollIntoView = function () {};
 
 it("shows a basic alert", () => {
-  render(<AlertBar alertCode="ANY" />);
+  let initialCode = "SIMPLE_ALERT";
+  render(<AlertBar alertCode={initialCode} />);
 
   expect(
-    screen.getByText("success alert text.",{exact: false})
+    screen.getByText("success alert text.", { exact: false })
   ).toBeInTheDocument();
 });
 
 it("shows a peronalized alert", () => {
-  jest.mock("../libs/error-mappings", () => {
-    return {
-      getAlert: () => {
-        return {
-          type: "success",
-          heading: "Success with Persomalization",
-          text: `Test Text before ...$personalize$... Test Text after.`,
-        };
-      },
-    };
-  });
+  let initialCode = "PERSONALIZED_ALERT";
   let testString = "Crazy DATA";
-  render(<AlertBar alertCode="ANY" personalizedString={testString} />);
+  render(<AlertBar alertCode={initialCode} personalizedString={testString} />);
   expect(screen.getByText(testString, { exact: false })).toBeInTheDocument();
 });
 

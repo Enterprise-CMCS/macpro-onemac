@@ -444,9 +444,10 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>
-          <input type="submit" className="form-submit" value="Submit" />
+          <input type="submit" disabled={isSubmitting} className="form-submit" value="Submit" />
           <button
             onClick={handleCancel}
+            disabled={isSubmitting}
             className="submission-form-cancel-button"
             type="button"
           >
