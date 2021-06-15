@@ -269,7 +269,6 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   }
 
   useEffect(() => {
-    let mounted = true;
 
     const saveForm = async () => {
       let uploadRef = uploader.current;
@@ -288,7 +287,6 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         .then( (uploadedList) => {
           ChangeRequestDataApi.submit({...changeRequest,transmittalNumberWarningMessage}, uploadedList).then((newAlertCode) => {
             if (newAlertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
-              mounted = false;
               history.push({
                 pathname: ROUTES.DASHBOARD,
                 state: {
@@ -330,6 +328,12 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     } else {
       readyToSubmit = true;
     }
+
+    // if we would get the same alert message, alert bar does not know to show itself
+    // have to do at submit, because when tried to get AlertBar to recognize situation
+    // it was showing itself on every form change (ie, selecting Waiver Authority)
+    if (newAlertCode === alertCode)
+      window.scrollTo({ top: 0 });
 
     setAlertCode(newAlertCode);
     setIsSubmitting(readyToSubmit);
