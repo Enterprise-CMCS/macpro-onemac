@@ -1,4 +1,6 @@
-import { USER_TYPE } from "cmscommonlib";
+import {ROUTES, USER_TYPE} from "cmscommonlib";
+import {Link} from "react-router-dom";
+import React from "react";
 
 export const userTypes = {
   [USER_TYPE.STATE_USER]: "State Submitter",
@@ -22,14 +24,14 @@ export const pendingMessage = {
 
 export const deniedOrRevokedMessage = {
   [USER_TYPE.STATE_USER]:
-    "Sorry, you don't have access. Please contact the State System Admin with any questions.",
+    "Sorry, you don't have access. Please contact the State System Admin with any questions",
   [USER_TYPE.STATE_ADMIN]:
-    "Sorry, you don't have access. Please contact the CMS Role Approver with any questions.",
+    "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
   [USER_TYPE.CMS_APPROVER]:
-    "Sorry, you don't have access. Please contact the CMS System Admin with any questions.",
+    "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
   [USER_TYPE.SYSTEM_ADMIN]: "There is something wrong. Contact the Help Desk.",
   [USER_TYPE.HELPDESK]:
-    "Sorry, you don't have access. Please contact the CMS System Admin with any questions.",
+  "Sorry, you don't have access. Please contact the CMS System Admin with any questions"
 };
 
 export const grantConfirmMessage = {
