@@ -150,7 +150,8 @@ jobs:
           # export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           # popd
           # ./run.sh
-          yarn run chrome suites
+          # yarn run chrome suites
+          npm test -- -e chrome nightwatch/tests/suites
       - name: Endpoint
         run: |
           pushd services
