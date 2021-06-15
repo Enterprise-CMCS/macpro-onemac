@@ -189,7 +189,16 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-  }, []);
+
+    if (alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
+      history.push({
+        pathname: ROUTES.DASHBOARD,
+        state: {
+          passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
+        },
+      });
+    }
+  }, [alertCode, history]);
 
   useEffect(() => {
     let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
@@ -269,7 +278,6 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   }
 
   useEffect(() => {
-
     const saveForm = async () => {
       let uploadRef = uploader.current;
       let transmittalNumberWarningMessage = "";
@@ -278,32 +286,37 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
         transmittalNumberStatusMessage.statusLevel === "warn" &&
         transmittalNumberStatusMessage.statusMessage
       ) {
-        transmittalNumberWarningMessage = 
+        transmittalNumberWarningMessage =
           "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
       }
 
       uploadRef
         .uploadFiles()
-        .then( (uploadedList) => {
-          ChangeRequestDataApi.submit({...changeRequest,transmittalNumberWarningMessage}, uploadedList).then((newAlertCode) => {
-            if (newAlertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
-              history.push({
-                pathname: ROUTES.DASHBOARD,
-                state: {
-                  passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
-                },
-              });
-            }
-          });
-        }).catch((err) => {
+        .then((uploadedList) => {
+          return ChangeRequestDataApi.submit(
+            { ...changeRequest, transmittalNumberWarningMessage },
+            uploadedList
+          );
+        }).then((returnCode) => {
+          setAlertCode(returnCode);
+        } )
+        .catch((err) => {
           console.log("error is: ", err);
           setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+        })
+        .finally(() => {
+          setIsSubmitting(false);
         });
     };
 
     if (isSubmitting) saveForm();
-
-  }, [isSubmitting, history, transmittalNumberStatusMessage, changeRequest, uploader]);
+  }, [
+    isSubmitting,
+    history,
+    transmittalNumberStatusMessage,
+    changeRequest,
+    uploader,
+  ]);
 
   /**
    * Submit the new change request.
@@ -332,8 +345,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     // if we would get the same alert message, alert bar does not know to show itself
     // have to do at submit, because when tried to get AlertBar to recognize situation
     // it was showing itself on every form change (ie, selecting Waiver Authority)
-    if (newAlertCode === alertCode)
-      window.scrollTo({ top: 0 });
+    if (newAlertCode === alertCode) window.scrollTo({ top: 0 });
 
     setAlertCode(newAlertCode);
     setIsSubmitting(readyToSubmit);
@@ -346,7 +358,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
-    <LoadingOverlay isLoading={isSubmitting} >
+    <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
         heading={formInfo.pageTitle}
         enableBackNav
@@ -453,7 +465,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </a>
         </div>
       </div>
-      </LoadingOverlay>
+    </LoadingOverlay>
   );
 };
 
