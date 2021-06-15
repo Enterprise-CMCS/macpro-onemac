@@ -6,16 +6,16 @@ import { Storage } from "aws-amplify";
  * @return {File} original file if extension is lowercase or a copy of the file with a lowercased file extension
  */
 export function ensureLowerCaseFileExtension(file) {
-  const extensionStartIndex = file.name.lastIndexOf(".")
-  const fileNameText = file.name.slice(0, extensionStartIndex)
-  const fileNameExtension = file.name.substring(extensionStartIndex)
-  const lowerCaseFileNameExtension = fileNameExtension.toLowerCase()
+  const extensionStartIndex = file.name.lastIndexOf(".");
+  const fileNameText = file.name.slice(0, extensionStartIndex);
+  const fileNameExtension = file.name.substring(extensionStartIndex);
+  const lowerCaseFileNameExtension = fileNameExtension.toLowerCase();
 
   if (fileNameExtension === lowerCaseFileNameExtension) {
-    return file
+    return file;
   } else {
-    const updatedFileName = fileNameText.concat(lowerCaseFileNameExtension)
-    const updatedFile = new File([file], updatedFileName, {type:file.type});
+    const updatedFileName = fileNameText.concat(lowerCaseFileNameExtension);
+    const updatedFile = new File([file], updatedFileName, { type: file.type });
     updatedFile.title = file.title;
     return updatedFile;
   }
@@ -60,7 +60,7 @@ export async function uploadFiles(fileArray) {
  * @returns metadata of the uploaded object which includes s3 key, filename, content type and url
  */
 export async function uploadFile(file) {
-  const fileToUpload = ensureLowerCaseFileExtension(file)
+  const fileToUpload = ensureLowerCaseFileExtension(file);
 
   let retPromise;
   const targetPathname = `${Date.now()}/${fileToUpload.name}`;
@@ -89,9 +89,7 @@ export async function uploadFile(file) {
       method: "HEAD",
     }).then((response) => {
       if (response.status !== 200) {
-        retPromise = Promise.reject(
-          "File verification failed"
-        );
+        retPromise = Promise.reject("File verification failed");
       } else {
         retPromise = Promise.resolve(result);
       }

@@ -1,5 +1,5 @@
 import config from "../utils/config";
-import { helpDeskContact } from "./helpDeskContact"
+import { helpDeskContact } from "./helpDeskContact";
 
 /**
  * Alert types
@@ -48,14 +48,12 @@ export const ALERTS_MSG = {
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Unable to Fetch Your Submissions",
-    text:
-      "There was an error fetching your list of submissions.  Please reload the page and try again.",
+    text: "There was an error fetching your list of submissions.  Please reload the page and try again.",
   },
   FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Data Retrieval Error",
-    text:
-      "We encountered an error while fetching your data.  Please reload the page and try again.",
+    text: "We encountered an error while fetching your data.  Please reload the page and try again.",
   },
   SUBMISSION_ERROR: {
     type: ALERT_TYPES.ERROR,
@@ -85,22 +83,22 @@ export const ALERTS_MSG = {
   WAIVER_AMENDMENT_NO_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"Waiver Amendment actions require existing ID",
+    text: "Waiver Amendment actions require existing ID",
   },
   WAIVER_NEED_ID_FOR_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"Amendment K actions must have existing IDs",
+    text: "Amendment K actions must have existing IDs",
   },
   WAIVER_NEW_NOT_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"New Waiver Actions (other than Amendment Ks) require new IDs",
+    text: "New Waiver Actions (other than Amendment Ks) require new IDs",
   },
   WAIVER_ACTION_UNKNOWN: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"This Waiver Action cannot be validated",
+    text: "This Waiver Action cannot be validated",
   },
   SUBMISSION_INCOMPLETE: {
     type: ALERT_TYPES.ERROR,
@@ -146,5 +144,5 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",
     text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
-  }
+  },
 };

@@ -1,0 +1,20 @@
+.DS_Store
+.idea/
+.vscode/
+
+/nightwatch/
+/.github/
+.webpack/
+.env
+.env.*
+node_modules/
+tests_output/
+reports/
+.serverless/
+.pnp.js
+env-config.js
+coverage/
+build/
+
+# contains invalid syntax
+stateUserTemplate.json

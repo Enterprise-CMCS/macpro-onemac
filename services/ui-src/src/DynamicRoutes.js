@@ -50,7 +50,7 @@ export default function DynamicRoutes() {
       </AuthenticatedRoute>
       {userRoleObj.canAccessForms && (
         <>
-         <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
+          <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
             <NewSubmission />
           </AuthenticatedRoute>
           <AuthenticatedRoute path={`${ROUTES.NEW_SPA}`}>
@@ -58,7 +58,9 @@ export default function DynamicRoutes() {
           </AuthenticatedRoute>
           <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
             <NewWaiver />
-          </AuthenticatedRoute></>)}
+          </AuthenticatedRoute>
+        </>
+      )}
       {userRoleObj.canAccessDashboard && (
         <>
           <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>

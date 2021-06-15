@@ -37,7 +37,7 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_REVOKED: "UR047",
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
-  HELPDESK_USER_SUBMITTED:"HU000",
+  HELPDESK_USER_SUBMITTED: "HU000",
 };
 
 export const USER_ADMIN_PERMISSION = {
@@ -73,12 +73,12 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  stateuser: 'State Submitter',
-  stateadmin: 'State Admin',
-  cmsapprover: 'CMS Approver',
-  systemadin: 'CMS System Admin',
-  helpdesk: 'Help Desk',
-}
+  stateuser: "State Submitter",
+  stateadmin: "State Admin",
+  cmsapprover: "CMS Approver",
+  systemadin: "CMS System Admin",
+  helpdesk: "Help Desk",
+};
 /**
  * Routing Control Shared List
  *
@@ -220,11 +220,12 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
 
     case ROLES.CMS_APPROVER:
     case ROLES.HELPDESK:
-    case ROLES.SYSTEM_ADMIN: {
-      return attributes.sort(datesDescending)[0].status;
-    }
+    case ROLES.SYSTEM_ADMIN:
+      {
+        return attributes.sort(datesDescending)[0].status;
+      }
 
-    attributes = stateObj.history;
+      attributes = stateObj.history;
   }
 
   return attributes.sort(datesDescending)[0].status;

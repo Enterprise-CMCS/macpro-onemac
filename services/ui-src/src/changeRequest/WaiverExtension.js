@@ -9,20 +9,17 @@ import { ROUTES } from "cmscommonlib";
  * WaiverExtension acts as a wrapper around SubmissionForm to render the Waiver Extension Form
  */
 const WaiverExtension = () => {
-
   // Optional ID parameter from the URL
   const { id, userId } = useParams();
 
   const formInfo = {
-    pageTitle : "Request Waiver Temporary Extension",
-    readOnlyPageTitle : "Waiver Temporary Extension Request Details",
+    pageTitle: "Request Waiver Temporary Extension",
+    readOnlyPageTitle: "Waiver Temporary Extension Request Details",
     subheaderMessage:
-        "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
-    detailsHeader : "Request Temporary Extension",
-    requiredUploads : ["Waiver Extension Request"],
-    optionalUploads : [
-        "Other"
-    ],
+      "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
+    detailsHeader: "Request Temporary Extension",
+    requiredUploads: ["Waiver Extension Request"],
+    optionalUploads: ["Other"],
 
     transmittalNumber: {
       idType: "waiver",
@@ -34,7 +31,6 @@ const WaiverExtension = () => {
       idMustExist: true,
       errorLevel: "error",
     },
-
   };
 
   if (id && userId) {
@@ -47,6 +43,6 @@ const WaiverExtension = () => {
       />
     );
   }
-}
+};
 
 export default WaiverExtension;

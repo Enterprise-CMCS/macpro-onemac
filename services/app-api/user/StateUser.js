@@ -19,7 +19,7 @@ class StateUser {
    * State Users may not see user lists
    * @returns {String} null if ok to go, the response code if not
    */
-   canIRequestThis(doneBy) {
+  canIRequestThis(doneBy) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 

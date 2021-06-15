@@ -89,7 +89,7 @@ const validateInput = (input) => {
       USER_TYPE.STATE_USER,
       USER_TYPE.STATE_ADMIN,
       USER_TYPE.CMS_APPROVER,
-      USER_TYPE.HELPDESK,
+      USER_TYPE.HELPDESK
     ).required(),
   });
   //Todo: Add deeper validation for types //
@@ -427,7 +427,10 @@ const collectRoleAdminEmailIds = async (input) => {
         ? recipients.push(approver.id)
         : null;
     });
-  } else if (input.type === USER_TYPE.CMS_APPROVER || input.type === USER_TYPE.HELPDESK) {
+  } else if (
+    input.type === USER_TYPE.CMS_APPROVER ||
+    input.type === USER_TYPE.HELPDESK
+  ) {
     let systemadmins = [];
     // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
     if (process.env.systemAdminEmail) {
@@ -489,7 +492,11 @@ const constructRoleAdminEmails = (recipients, input) => {
   email.HTML = `
     <p>Hello,</p>
 
-    There is a new OneMAC Portal ${roleLabels[input.type]} access request waiting from ${input.firstName} ${input.lastName} for your review. 
+    There is a new OneMAC Portal ${
+      roleLabels[input.type]
+    } access request waiting from ${input.firstName} ${
+    input.lastName
+  } for your review. 
     Please log into your User Management Dashboard to see the pending request.
 
     <p>Thank you!</p>`;
@@ -501,7 +508,10 @@ const constructRoleAdminEmails = (recipients, input) => {
     case USER_TYPE.STATE_USER:
       typeText = "State User";
 
-      if (input.userEmail === input.doneBy && input.attributes[0].status === USER_STATUS.REVOKED) {
+      if (
+        input.userEmail === input.doneBy &&
+        input.attributes[0].status === USER_STATUS.REVOKED
+      ) {
         newSubject =
           `OneMAC Portal State access for ` +
           input.attributes[0].stateCode +
@@ -542,21 +552,21 @@ const constructUserEmail = (userEmailId, input) => {
   const userType = input.type;
   input.attributes[0].stateCode
     ? (email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][
-      updatedStatus
-    ].subjectLine.replace("[insert state]", input.attributes[0].stateCode))
+        updatedStatus
+      ].subjectLine.replace("[insert state]", input.attributes[0].stateCode))
     : (email.Subject =
-      ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine);
+        ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine);
 
   input.attributes[0].stateCode
-    ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
-      updatedStatus
-    ].bodyHTML
-      .replace("[insert state]", input.attributes[0].stateCode)
-      .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())))
+    ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML
+        .replace("[insert state]", input.attributes[0].stateCode)
+        .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())))
     : (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
-      updatedStatus
-    ].bodyHTML
-      .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())));
+        updatedStatus
+      ].bodyHTML.replace(
+        "[insert date/time stamp]",
+        getCMSDateFormatNow(Date.now())
+      ));
   return { email };
 };
 
@@ -578,7 +588,4 @@ const dispatchEmail = async (email, input) => {
   }
 };
 
-export {
-  main,
-  constructRoleAdminEmails
-};
+export { main, constructRoleAdminEmails };

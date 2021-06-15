@@ -1,4 +1,3 @@
-
 service: stream-functions
 
 package:
@@ -114,11 +113,11 @@ resources:
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
-          - ""
-          - ${self:custom.iamPermissionsBoundaryPolicy}
+            - ""
+            - ${self:custom.iamPermissionsBoundaryPolicy}
   Resources:
     KafkaConnectWorkerLogGroup:
-      Type: 'AWS::Logs::LogGroup'
+      Type: "AWS::Logs::LogGroup"
       Properties:
         LogGroupName: /aws/fargate/${self:service}-${self:custom.stage}-kafka-connect
     KafkaConnectWorkerSecurityGroup:
@@ -127,63 +126,62 @@ resources:
         GroupDescription: Security Group for the Fargate Connect Workers.
         VpcId: ${self:custom.vpcId}
         SecurityGroupIngress:
-        - IpProtocol: tcp
-          FromPort: 8083
-          ToPort: 8083
-          SourceSecurityGroupId: !Sub '${LambdaConfigureConnectorsSecurityGroup}'
+          - IpProtocol: tcp
+            FromPort: 8083
+            ToPort: 8083
+            SourceSecurityGroupId: !Sub "${LambdaConfigureConnectorsSecurityGroup}"
     KafkaConnectWorkerRole:
-      Type: 'AWS::IAM::Role'
+      Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service:
-                - 'ecs.amazonaws.com'
-                - 'ecs-tasks.amazonaws.com'
-            Action: 'sts:AssumeRole'
+            - Effect: "Allow"
+              Principal:
+                Service:
+                  - "ecs.amazonaws.com"
+                  - "ecs-tasks.amazonaws.com"
+              Action: "sts:AssumeRole"
         Path: ${self:custom.iamPath}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
             - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - "${self:custom.iamPermissionsBoundaryPolicy}"
             - Ref: AWS::NoValue
         ManagedPolicyArns:
           - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
         Policies:
-          - PolicyName: 'LambdaRolePolicy'
+          - PolicyName: "LambdaRolePolicy"
             PolicyDocument:
-              Version: '2012-10-17'
+              Version: "2012-10-17"
               Statement:
-              - Effect: 'Allow'
-                Action:
-                - 'lambda:*'
-                Resource: !GetAtt
-                  - SinkMskToDynamoLambdaFunction
-                  - Arn
+                - Effect: "Allow"
+                  Action:
+                    - "lambda:*"
+                  Resource: !GetAtt
+                    - SinkMskToDynamoLambdaFunction
+                    - Arn
     KafkaConnectWorkerTaskDefinition:
-      Type: 'AWS::ECS::TaskDefinition'
+      Type: "AWS::ECS::TaskDefinition"
       Properties:
         ContainerDefinitions:
           - Name: ${self:service}-${self:custom.stage}-worker
-            Image: 'confluentinc/cp-kafka-connect:5.2.4'
+            Image: "confluentinc/cp-kafka-connect:5.2.4"
             Memory: 4096
             Cpu: 2048
             Command:
               - bash
               - "-c"
               - |
-                  export CONNECT_REST_HOST_NAME=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
-                  export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
-                  curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-lambda-1.2.2.jar "https://github.com/Nordstrom/kafka-connect-lambda/releases/download/v1.2.2/kafka-connect-lambda-1.2.2.jar" &&
-                  /etc/confluent/docker/run
+                export CONNECT_REST_HOST_NAME=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
+                export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
+                curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-lambda-1.2.2.jar "https://github.com/Nordstrom/kafka-connect-lambda/releases/download/v1.2.2/kafka-connect-lambda-1.2.2.jar" &&
+                /etc/confluent/docker/run
             Environment:
               - Name: CONNECT_BOOTSTRAP_SERVERS
                 Value: >-
@@ -223,8 +221,8 @@ resources:
             LogConfiguration:
               LogDriver: awslogs
               Options:
-                awslogs-region: !Sub '${AWS::Region}'
-                awslogs-group: !Sub '${KafkaConnectWorkerLogGroup}'
+                awslogs-region: !Sub "${AWS::Region}"
+                awslogs-group: !Sub "${KafkaConnectWorkerLogGroup}"
                 awslogs-stream-prefix: fargate
         Family: ${self:service}-${self:custom.stage}-kafka-connect-worker
         NetworkMode: awsvpc
@@ -239,25 +237,24 @@ resources:
         Memory: 4GB
         Cpu: 2048
     KafkaConnectCluster:
-      Type: 'AWS::ECS::Cluster'
+      Type: "AWS::ECS::Cluster"
     KafkaConnectService:
-      Type: 'AWS::ECS::Service'
+      Type: "AWS::ECS::Service"
       Properties:
-        Cluster: !Sub '${KafkaConnectCluster}'
+        Cluster: !Sub "${KafkaConnectCluster}"
         DeploymentConfiguration:
           MaximumPercent: 100
           MinimumHealthyPercent: 0
         LaunchType: FARGATE
         ServiceName: kafka-connect
         DesiredCount: 1
-        TaskDefinition: !Sub '${KafkaConnectWorkerTaskDefinition}'
+        TaskDefinition: !Sub "${KafkaConnectWorkerTaskDefinition}"
         NetworkConfiguration:
           AwsvpcConfiguration:
             AssignPublicIp: DISABLED
             SecurityGroups:
-              - !Sub '${KafkaConnectWorkerSecurityGroup}'
+              - !Sub "${KafkaConnectWorkerSecurityGroup}"
             Subnets: ${self:custom.dataSubnets}
-
 
     LambdaConfigureConnectorsSecurityGroup:
       Type: AWS::EC2::SecurityGroup
@@ -265,57 +262,52 @@ resources:
         GroupDescription: Security Group for configuring the connector.
         VpcId: ${self:custom.vpcId}
     LambdaConfigureConnectorsRole:
-      Type: 'AWS::IAM::Role'
+      Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-            Action: 'sts:AssumeRole'
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
         Path: ${self:custom.iamPath}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
             - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - "${self:custom.iamPermissionsBoundaryPolicy}"
             - Ref: AWS::NoValue
         Policies:
-          - PolicyName: 'LambdaRolePolicy'
+          - PolicyName: "LambdaRolePolicy"
             PolicyDocument:
-              Version: '2012-10-17'
+              Version: "2012-10-17"
               Statement:
-              - Effect: 'Allow'
-                Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                Resource: 'arn:aws:logs:*:*:*'
-              - Effect: 'Allow'
-                Action:
-                - ec2:CreateNetworkInterface
-                - ec2:DeleteNetworkInterface
-                - ec2:DetachNetworkInterface
-                - ec2:DescribeNetworkInterfaces
-                - ec2:DescribeSecurityGroups
-                - ec2:DescribeSubnets
-                - ec2:DescribeVpcs
-                Resource: '*'
-              - Effect: 'Allow'
-                Action:
-                - ecs:ListTasks
-                - ecs:DescribeTasks
-                Resource: '*'
-
-
-
-
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - ec2:CreateNetworkInterface
+                    - ec2:DeleteNetworkInterface
+                    - ec2:DetachNetworkInterface
+                    - ec2:DescribeNetworkInterfaces
+                    - ec2:DescribeSecurityGroups
+                    - ec2:DescribeSubnets
+                    - ec2:DescribeVpcs
+                  Resource: "*"
+                - Effect: "Allow"
+                  Action:
+                    - ecs:ListTasks
+                    - ecs:DescribeTasks
+                  Resource: "*"
 
     LambdaSecurityGroup:
       Type: AWS::EC2::SecurityGroup
@@ -323,163 +315,159 @@ resources:
         GroupDescription: Security Group for streaming functions.  Egress all is set by default.
         VpcId: ${self:custom.vpcId}
     LamdaSourceDynamoToMskRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
-      Type: 'AWS::IAM::Role'
+      Type: "AWS::IAM::Role"
       Properties:
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-            Action: 'sts:AssumeRole'
-        Path: ${self:custom.iamPath}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
-            - Ref: AWS::NoValue
-        Policies:
-          - PolicyName: 'LambdaRolePolicy'
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-              - Effect: 'Allow'
-                Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                Resource: 'arn:aws:logs:*:*:*'
-              - Effect: 'Allow'
-                Action:
-                - dynamodb:DescribeStream
-                - dynamodb:GetRecords
-                - dynamodb:GetShardIterator
-                - dynamodb:ListStreams
-                Resource: ${self:custom.tableStreamArn}
-              - Effect: 'Allow'
-                Action:
-                - "ec2:CreateNetworkInterface"
-                - "ec2:DescribeNetworkInterfaces"
-                - "ec2:DetachNetworkInterface"
-                - "ec2:DeleteNetworkInterface"
-                Resource: "*"
-    LamdaSinkMsktoLegacydbRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
-      Type: 'AWS::IAM::Role'
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-            Action: 'sts:AssumeRole'
-        Path: ${self:custom.iamPath}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
-            - Ref: AWS::NoValue
-        Policies:
-          - PolicyName: 'LambdaRolePolicy'
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-              - Effect: 'Allow'
-                Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                Resource: 'arn:aws:logs:*:*:*'
-              - Effect: 'Allow'
-                Action:
-                - "ec2:CreateNetworkInterface"
-                - "ec2:DescribeNetworkInterfaces"
-                - "ec2:DetachNetworkInterface"
-                - "ec2:DeleteNetworkInterface"
-                Resource: "*"
-    LamdaSinkMskToDynamoRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
-      Type: 'AWS::IAM::Role'
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-            Action: 'sts:AssumeRole'
-        Path: ${self:custom.iamPath}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
-            - Ref: AWS::NoValue
-        Policies:
-          - PolicyName: 'LambdaRolePolicy'
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-              - Effect: 'Allow'
-                Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                Resource: 'arn:aws:logs:*:*:*'
-              - Effect: 'Allow'
-                Action:
-                - "dynamodb:*"
-                Resource: ${self:custom.spaIdTableArn}
-    LambdaWarmupRole:
-      Type: 'AWS::IAM::Role'
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-            - Effect: 'Allow'
+            - Effect: "Allow"
               Principal:
-                Service: 'lambda.amazonaws.com'
-              Action: 'sts:AssumeRole'
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
         Path: ${self:custom.iamPath}
         PermissionsBoundary:
           Fn::If:
             - CreatePermissionsBoundary
             - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - "${self:custom.iamPermissionsBoundaryPolicy}"
             - Ref: AWS::NoValue
         Policies:
-          - PolicyName: 'Warmup'
+          - PolicyName: "LambdaRolePolicy"
             PolicyDocument:
-              Version: '2012-10-17'
+              Version: "2012-10-17"
               Statement:
-                - Effect: 'Allow'
+                - Effect: "Allow"
                   Action:
                     - logs:CreateLogGroup
                     - logs:CreateLogStream
                     - logs:PutLogEvents
-                  Resource: 'arn:aws:logs:*:*:*'
-                - Effect: 'Allow'
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - dynamodb:DescribeStream
+                    - dynamodb:GetRecords
+                    - dynamodb:GetShardIterator
+                    - dynamodb:ListStreams
+                  Resource: ${self:custom.tableStreamArn}
+                - Effect: "Allow"
+                  Action:
+                    - "ec2:CreateNetworkInterface"
+                    - "ec2:DescribeNetworkInterfaces"
+                    - "ec2:DetachNetworkInterface"
+                    - "ec2:DeleteNetworkInterface"
+                  Resource: "*"
+    LamdaSinkMsktoLegacydbRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - "${self:custom.iamPermissionsBoundaryPolicy}"
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - "ec2:CreateNetworkInterface"
+                    - "ec2:DescribeNetworkInterfaces"
+                    - "ec2:DetachNetworkInterface"
+                    - "ec2:DeleteNetworkInterface"
+                  Resource: "*"
+    LamdaSinkMskToDynamoRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - "${self:custom.iamPermissionsBoundaryPolicy}"
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: "LambdaRolePolicy"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
+                  Action:
+                    - "dynamodb:*"
+                  Resource: ${self:custom.spaIdTableArn}
+    LambdaWarmupRole:
+      Type: "AWS::IAM::Role"
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: "Allow"
+              Principal:
+                Service: "lambda.amazonaws.com"
+              Action: "sts:AssumeRole"
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - "${self:custom.iamPermissionsBoundaryPolicy}"
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: "Warmup"
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: "Allow"
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: "arn:aws:logs:*:*:*"
+                - Effect: "Allow"
                   Action:
                     - lambda:InvokeFunction
-                  Resource: '*'
+                  Resource: "*"
