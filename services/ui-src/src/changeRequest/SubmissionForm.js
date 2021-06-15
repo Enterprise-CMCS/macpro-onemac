@@ -190,11 +190,11 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
 
-    if (alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
+    if ( alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED ) {
       history.push({
         pathname: ROUTES.DASHBOARD,
         state: {
-          passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
+          passCode: alertCode,
         },
       });
     }
@@ -277,7 +277,10 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
   }
 
+  const limitSubmit = useRef(false);
+
   useEffect(() => {
+    
     const saveForm = async () => {
       let uploadRef = uploader.current;
       let transmittalNumberWarningMessage = "";
@@ -305,14 +308,17 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
         })
         .finally(() => {
+          limitSubmit.current = false;
           setIsSubmitting(false);
         });
     };
 
-    if (isSubmitting) saveForm();
+    if (isSubmitting && !limitSubmit.current) {
+      saveForm();
+      limitSubmit.current = true;
+    }
   }, [
     isSubmitting,
-    history,
     transmittalNumberStatusMessage,
     changeRequest,
     uploader,
