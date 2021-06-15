@@ -96,6 +96,7 @@ export const ROUTES = {
   PROFILE: "/profile",
   METRICS: "/metrics",
   NEW_SUBMISSION_SELECTION: "/new",
+  CSV_EXPORT: "/export",
   DEVLOGIN: "/devlogin",
   SIGNUP: "/signup",
   STATE_SIGNUP: "/signup/state",
