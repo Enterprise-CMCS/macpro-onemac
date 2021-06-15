@@ -1,7 +1,7 @@
 import { ensureLowerCaseFileExtension } from "./s3Uploader";
 
 describe("ensureLowerCaseFileExtension function", () => {
-  it("returns a copy of the file with a lowercase extension if the extension isn't lowercase", () => {
+  it("returns the original file if the extension is already lowercase", () => {
     const originalFile = new File(["I am a test file."], "test.txt", {
       type: "text/plain",
     });
@@ -10,7 +10,7 @@ describe("ensureLowerCaseFileExtension function", () => {
     expect(returnedFile).toBe(originalFile);
   });
 
-  it("returns the original file if the extension is already lowercase", () => {
+  it("returns a copy of the file with a lowercase extension if the extension isn't lowercase", () => {
     const originalFile = new File(["I am a test file."], "test.TXT", {
       type: "text/plain",
     });
