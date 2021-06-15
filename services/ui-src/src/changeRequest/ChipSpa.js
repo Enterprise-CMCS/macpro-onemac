@@ -4,6 +4,7 @@ import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 import { ROUTES } from "cmscommonlib";
+import { commonSubheaderMessage } from "../libs/formsLib"
 
 /**
  * Spa acts as a wrapper around SubmissionForm to render SPA-specific form
@@ -16,8 +17,7 @@ const ChipSpa = () => {
     pageTitle: "Submit New CHIP SPA",
     readOnlyPageTitle: "CHIP SPA Submission Details",
     detailsHeader: "CHIP SPA",
-    subheaderMessage:
-      "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
+    subheaderMessage: commonSubheaderMessage,
     requiredUploads: [
       "Current State Plan",
       "Amended State Plan Language",
