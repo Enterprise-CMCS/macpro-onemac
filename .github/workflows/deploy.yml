@@ -151,7 +151,7 @@ jobs:
           # popd
           # ./run.sh
           # yarn run chrome suites
-          npm test -- -e chrome nightwatch/tests/suites
+          npm install && npm test -- -e chrome nightwatch/tests/suites
       - name: Endpoint
         run: |
           pushd services
