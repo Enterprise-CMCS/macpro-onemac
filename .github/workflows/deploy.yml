@@ -147,7 +147,7 @@ jobs:
         if: env.branch_name != 'production'
         run: |
           # pushd services
-          # export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           # popd
           # ./run.sh
           # yarn run chrome suites
