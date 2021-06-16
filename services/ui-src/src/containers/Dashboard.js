@@ -18,6 +18,7 @@ import {
   isPending,
   isActive,
 } from "../libs/userLib";
+import {JSONToCSVConvertor} from "../utils/JSONToCSVConvertor";
 
 /**
  * Component containing dashboard
@@ -139,7 +140,10 @@ const Dashboard = () => {
         <Button
             id="new-submission-button"
             className="new-submission-button"
-            href={ROUTES.CSV_EXPORT}
+            onClick={(e) => {
+                e.preventDefault();
+                JSONToCSVConvertor(changeRequestList,"Demo",true)
+            }}
             inversed
         >
             Export Submission{" "}
