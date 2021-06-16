@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import {Link} from "@material-ui/core";
+import { Link } from "@material-ui/core";
 
 /**
  * Returns the ID specific form element
@@ -37,7 +37,9 @@ const TransmittalNumber = ({
           </label>
         </div>
         <div className="label-rcol">
-          <Link target="new" href={idFAQLink}>What is my {idLabel}?</Link>
+          <Link target="new" href={idFAQLink}>
+            What is my {idLabel}?
+          </Link>
         </div>
         <p className="field-hint">{hintText}</p>
       </div>

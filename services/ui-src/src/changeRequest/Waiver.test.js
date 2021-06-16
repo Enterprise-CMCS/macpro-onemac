@@ -130,7 +130,6 @@ describe("Effects of Failed Submit", () => {
     expect(actionTypeEl.value).toBe(testValues.actionType);
     expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
   });
-
 });
 
 describe("Effects of Failed Submit", () => {
