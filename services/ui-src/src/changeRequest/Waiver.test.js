@@ -132,3 +132,60 @@ describe("Effects of Failed Submit", () => {
   });
 
 });
+
+describe("Effects of Failed Submit", () => {
+  // oy2-3734 Part One - maintaining Action Type, Waiver Authority, and Transmittal Number
+  // values after a failed Submit
+  it("does not clear already completed form fields if submit fails. (oy2-3734)", async () => {
+    const testValues = {
+      transmittalNumber: "MI.3233.R43",
+      actionType: "renewal",
+      waiverAuthority: "1915(b)",
+    };
+
+    render(
+        <AppContext.Provider
+            value={{
+              ...initialAuthState,
+            }}
+        >
+          <Router history={history}>
+            <Waiver />
+          </Router>
+        </AppContext.Provider>
+    );
+
+    const transmittalNumberEl = screen.getByLabelText("Waiver Number");
+    const actionTypeEl = screen.getByLabelText("Action Type");
+    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+
+    // values start out empty
+    expect(transmittalNumberEl.value).toBe("");
+    expect(actionTypeEl.value).toBe("");
+    expect(waiverAuthorityEl.value).toBe("");
+
+    userEvent.selectOptions(actionTypeEl, testValues.actionType);
+    await screen.findByText("Waiver amendment");
+
+    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+    await screen.findByText("All other 1915(b) Waivers");
+
+    // Don't find the package
+    ChangeRequestDataApi.packageExists.mockResolvedValue({ "baseNumberExists": true , "baseRenewalNumberExists": true});
+    userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+    await screen.findByText(
+        "This waiver renewal number already exists. Please ensure you have the correct Waiver Number before submitting it. Contact the MACPro Help Desk if you need support."
+    );
+    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+
+    // click the submit button
+    userEvent.click(screen.getByText("Submit", { selector: "input" }));
+    await screen.findByText("Missing Required Attachments");
+
+    // the transmittal number still contains the value
+    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+    expect(actionTypeEl.value).toBe(testValues.actionType);
+    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+  });
+
+});
