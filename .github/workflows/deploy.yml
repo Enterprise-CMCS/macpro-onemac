@@ -119,7 +119,7 @@ jobs:
           popd
       - name: Run Nightwatch suite
         # do not run tests on val and production
-        if: !contains(fromJson('["master", "production"]'), env.branch_name)
+        if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
