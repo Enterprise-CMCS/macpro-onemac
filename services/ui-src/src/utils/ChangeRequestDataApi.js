@@ -85,7 +85,8 @@ class ChangeRequestDataApi {
       if ( changeRequest ) {
 
         let checkingRenewalWavierNumber = id.substr(0, 11 ) ;
-        let checkingBaseWavierNumber = id.substr(0, 7 ) ;
+        let checkingBaseWavierNumber = id.substr(0, (id.length - 4) ) ;
+
         answer = await API.get("changeRequestAPI", `/package-exists/${checkingRenewalWavierNumber}`);
         let answer2 = await API.get("changeRequestAPI", `/package-exists/${checkingBaseWavierNumber}`);
         if (changeRequest.type === "waiver" && changeRequest.actionType === "renewal" )

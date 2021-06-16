@@ -228,12 +228,16 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
                 if (dupRenewalId.baseNumberExists ) {
 
-                  if (dupRenewalId.baseRenewalNumberExists ) {
-                      newMessage.statusMessage = `This waiver renewal number already exists. Please ensure you have the correct Waiver Number before submitting it. Contact the MACPro Help Desk if you need support.`;
+                  if (dupRenewalId.baseRenewalNumberExists) {
+                    newMessage.statusMessage = `This waiver renewal number already exists. Please ensure you have the correct Waiver Number before submitting it. Contact the MACPro Help Desk if you need support.`;
+                  } else {
+                    newMessage.statusMessage = "";
                   }
+
                 } else {
-                  newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+                    newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
                 }
+
                 setTransmittalNumberStatusMessage(newMessage);
               });
 
