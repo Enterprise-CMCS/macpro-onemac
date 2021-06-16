@@ -5,7 +5,6 @@ custom:
   iamPath: ${env:IAM_PATH, "/"}
   wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN~true, ""}
 
-
 provider:
   name: aws
   runtime: nodejs12.x
@@ -17,28 +16,28 @@ resources:
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
-          - ""
-          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
+            - ""
+            - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
-          - Fn::Equals:
-            - ""
-            - ${env:ROUTE_53_HOSTED_ZONE_ID, ""}
+            - Fn::Equals:
+                - ""
+                - ${env:ROUTE_53_HOSTED_ZONE_ID, ""}
         - Fn::Not:
-          - Fn::Equals:
-            - ""
-            - ${env:ROUTE_53_DOMAIN_NAME, ""}
+            - Fn::Equals:
+                - ""
+                - ${env:ROUTE_53_DOMAIN_NAME, ""}
     CreateCustomCloudFrontDomain:
       Fn::And:
         - Fn::Not:
-          - Fn::Equals:
-            - ""
-            - ${env:CLOUDFRONT_CERTIFICATE_ARN, ""}
+            - Fn::Equals:
+                - ""
+                - ${env:CLOUDFRONT_CERTIFICATE_ARN, ""}
         - Fn::Not:
-          - Fn::Equals:
-            - ""
-            - ${env:CLOUDFRONT_DOMAIN_NAME, ""}
+            - Fn::Equals:
+                - ""
+                - ${env:CLOUDFRONT_DOMAIN_NAME, ""}
 
   Resources:
     S3Bucket:
@@ -52,20 +51,20 @@ resources:
       Type: AWS::S3::BucketPolicy
       Properties:
         PolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
             - Effect: Allow
-              Action: 's3:GetObject'
+              Action: "s3:GetObject"
               Resource: !Join
-                - ''
-                - - 'arn:aws:s3:::'
+                - ""
+                - - "arn:aws:s3:::"
                   - !Ref S3Bucket
                   - /*
               Principal:
                 CanonicalUser:
                   Fn::GetAtt:
-                  - CloudFrontOriginAccessIdentity
-                  - S3CanonicalUserId
+                    - CloudFrontOriginAccessIdentity
+                    - S3CanonicalUserId
         Bucket: !Ref S3Bucket
     CloudFrontWebAcl:
       Type: AWS::WAFv2::WebACL
@@ -109,28 +108,27 @@ resources:
           Aliases:
             Fn::If:
               - CreateCustomCloudFrontDomain
-              -
-                - ${env:CLOUDFRONT_DOMAIN_NAME, ""}
+              - - ${env:CLOUDFRONT_DOMAIN_NAME, ""}
               - Ref: AWS::NoValue
           Origins:
-          - DomainName:
-              Fn::GetAtt:
-                - S3Bucket
-                - DomainName
-            Id: S3Origin
-            S3OriginConfig:
-              OriginAccessIdentity:
-                Fn::Join:
-                - ''
-                - - origin-access-identity/cloudfront/
-                  - Ref: CloudFrontOriginAccessIdentity
+            - DomainName:
+                Fn::GetAtt:
+                  - S3Bucket
+                  - DomainName
+              Id: S3Origin
+              S3OriginConfig:
+                OriginAccessIdentity:
+                  Fn::Join:
+                    - ""
+                    - - origin-access-identity/cloudfront/
+                      - Ref: CloudFrontOriginAccessIdentity
           Enabled: true
-          HttpVersion: 'http2'
+          HttpVersion: "http2"
           DefaultRootObject: index.html
           DefaultCacheBehavior:
             AllowedMethods:
-            - GET
-            - HEAD
+              - GET
+              - HEAD
             Compress: true
             TargetOriginId: S3Origin
             ForwardedValues:
@@ -199,27 +197,25 @@ resources:
             - CreateCustomCloudFrontDomain
             - https://${env:CLOUDFRONT_DOMAIN_NAME, ""}
             - Fn::Join:
-                - ''
-                -
-                  - https://
+                - ""
+                - - https://
                   - Fn::GetAtt:
-                    - CloudFrontDistribution
-                    - DomainName
+                      - CloudFrontDistribution
+                      - DomainName
 
-    ##This code block enables logging on waf and sends all logs to s3 and shipped off to splunk.  
+    ##This code block enables logging on waf and sends all logs to s3 and shipped off to splunk.
     Firehose:
       Type: AWS::KinesisFirehose::DeliveryStream
       Properties:
-        DeliveryStreamName:
-          !Join
-            - ''
-            - - aws-waf-logs-
-              - !Ref AWS::StackName
+        DeliveryStreamName: !Join
+          - ""
+          - - aws-waf-logs-
+            - !Ref AWS::StackName
         ExtendedS3DestinationConfiguration:
           RoleARN: !GetAtt DeliveryRole.Arn
           BucketARN: !Join
-            - ''
-            - - '${self:custom.wafLoggingBucket}'
+            - ""
+            - - "${self:custom.wafLoggingBucket}"
           Prefix: AWSLogs/WAF/${self:custom.stage}/
           BufferingHints:
             IntervalInSeconds: 300
@@ -234,51 +230,49 @@ resources:
           Fn::If:
             - CreatePermissionsBoundary
             - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - ""
+                - - "arn:aws:iam::"
+                  - Ref: AWS::AccountId
+                  - ":policy"
+                  - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
             - Ref: AWS::NoValue
         AssumeRolePolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
-            - Sid: ''
+            - Sid: ""
               Effect: Allow
               Principal:
                 Service: firehose.amazonaws.com
-              Action: 'sts:AssumeRole'
+              Action: "sts:AssumeRole"
               Condition:
                 StringEquals:
-                  'sts:ExternalId': !Ref 'AWS::AccountId'
+                  "sts:ExternalId": !Ref "AWS::AccountId"
 
     DeliveryPolicy:
       Type: AWS::IAM::Policy
       Properties:
-        PolicyName: 'firehose_delivery_policy'
+        PolicyName: "firehose_delivery_policy"
         PolicyDocument:
-          Version: '2012-10-17'
+          Version: "2012-10-17"
           Statement:
             - Effect: Allow
               Action:
-                - 's3:AbortMultipartUpload'
-                - 's3:GetBucketLocation'
-                - 's3:GetObject'
-                - 's3:ListBucket'
-                - 's3:ListBucketMultipartUploads'
-                - 's3:PutObject'
+                - "s3:AbortMultipartUpload"
+                - "s3:GetBucketLocation"
+                - "s3:GetObject"
+                - "s3:ListBucket"
+                - "s3:ListBucketMultipartUploads"
+                - "s3:PutObject"
               Resource:
                 - !Join
-                  - ''
-                  - - '${self:custom.wafLoggingBucket}'
+                  - ""
+                  - - "${self:custom.wafLoggingBucket}"
                 - !Join
-                  - ''
-                  - - '${self:custom.wafLoggingBucket}'
-                    - '/*'
+                  - ""
+                  - - "${self:custom.wafLoggingBucket}"
+                    - "/*"
         Roles:
           - !Ref DeliveryRole
-
 
   Outputs:
     S3BucketName:
@@ -290,12 +284,11 @@ resources:
     CloudFrontEndpointUrl:
       Value:
         Fn::Join:
-          - ''
-          -
-            - https://
+          - ""
+          - - https://
             - Fn::GetAtt:
-              - CloudFrontDistribution
-              - DomainName
+                - CloudFrontDistribution
+                - DomainName
     CloudFrontWebAclArn:
       Value: !GetAtt CloudFrontWebAcl.Arn
     FirehoseArn:

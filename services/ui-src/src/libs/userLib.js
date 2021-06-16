@@ -1,5 +1,5 @@
-import {ROUTES, USER_TYPE} from "cmscommonlib";
-import {Link} from "react-router-dom";
+import { ROUTES, USER_TYPE } from "cmscommonlib";
+import { Link } from "react-router-dom";
 import React from "react";
 
 export const userTypes = {
@@ -31,7 +31,7 @@ export const deniedOrRevokedMessage = {
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
   [USER_TYPE.SYSTEM_ADMIN]: "There is something wrong. Contact the Help Desk.",
   [USER_TYPE.HELPDESK]:
-  "Sorry, you don't have access. Please contact the CMS System Admin with any questions"
+    "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
 };
 
 export const grantConfirmMessage = {
@@ -66,7 +66,6 @@ export const revokeConfirmMessage = {
  * @param {Object} userData object of history instance
  * @return {Boolean} a boolean on status pending
  */
-
 
 export const isPending = (userData) => {
   if (

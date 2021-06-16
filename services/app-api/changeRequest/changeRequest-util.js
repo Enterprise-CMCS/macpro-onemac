@@ -8,7 +8,7 @@ import CHIPSPA from "./CHIPSPA";
 import CHIPSPARAI from "./CHIPSPARAI";
 import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import { territoryList } from "cmscommonlib";
-import {DateTime} from "luxon";
+import { DateTime } from "luxon";
 
 /**
  * Get a singleton object that overloads the getCMSEmail and getStateEmail
@@ -21,37 +21,37 @@ import {DateTime} from "luxon";
 export default function getChangeRequestFunctions(type) {
   let retval = {};
 
-    switch(type) {
-        case CHANGE_REQUEST_TYPES.CHIP_SPA:
-            retval = CHIPSPA;
-            break;
-        case CHANGE_REQUEST_TYPES.CHIP_SPA_RAI:
-            retval = CHIPSPARAI;
-            break;
-        case CHANGE_REQUEST_TYPES.WAIVER:
-            retval = Waiver;
-            break;
-        case CHANGE_REQUEST_TYPES.SPA:
-            retval = SPA;
-            break;
-        case CHANGE_REQUEST_TYPES.SPA_RAI:
-            retval = SPARAI;
-            break;
-        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-            retval = WaiverRAI;
-            break;
-        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-            retval = WaiverExtension;
-            break;
-        case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
-            retval = WaiverAppK;
-            break;
-        default:
-            retval = undefined;
-            break;
-    }
+  switch (type) {
+    case CHANGE_REQUEST_TYPES.CHIP_SPA:
+      retval = CHIPSPA;
+      break;
+    case CHANGE_REQUEST_TYPES.CHIP_SPA_RAI:
+      retval = CHIPSPARAI;
+      break;
+    case CHANGE_REQUEST_TYPES.WAIVER:
+      retval = Waiver;
+      break;
+    case CHANGE_REQUEST_TYPES.SPA:
+      retval = SPA;
+      break;
+    case CHANGE_REQUEST_TYPES.SPA_RAI:
+      retval = SPARAI;
+      break;
+    case CHANGE_REQUEST_TYPES.WAIVER_RAI:
+      retval = WaiverRAI;
+      break;
+    case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
+      retval = WaiverExtension;
+      break;
+    case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
+      retval = WaiverAppK;
+      break;
+    default:
+      retval = undefined;
+      break;
+  }
 
-    return retval;
+  return retval;
 }
 
 /**
@@ -60,15 +60,23 @@ export default function getChangeRequestFunctions(type) {
  * @returns {String} HTML with the document links.
  */
 export function getLinksHtml(uploads) {
-    let html = "";
-    if(Array.isArray(uploads) && uploads.length > 0) {
-        html = "<ul>";
-        uploads.forEach(async (upload) => {
-        if (upload) html += "<li>" + upload.title + ": <a href=\"" + upload.url +"\">" + upload.filename + "</a></li>";
-        });
+  let html = "";
+  if (Array.isArray(uploads) && uploads.length > 0) {
+    html = "<ul>";
+    uploads.forEach(async (upload) => {
+      if (upload)
+        html +=
+          "<li>" +
+          upload.title +
+          ': <a href="' +
+          upload.url +
+          '">' +
+          upload.filename +
+          "</a></li>";
+    });
     html += "</ul>";
-    }
-    return html;
+  }
+  return html;
 }
 
 /**
@@ -77,9 +85,9 @@ export function getLinksHtml(uploads) {
  * @returns {String} CMS approved date format.
  */
 export function getCMSDateFormat(theTimestamp) {
-    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
+  const theDate = DateTime.fromMillis(theTimestamp).setZone("America/New_York");
 
-    return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
+  return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
 
 /**
@@ -87,11 +95,9 @@ export function getCMSDateFormat(theTimestamp) {
  * @param {value} Transmittal Number Field Entered on Change Event.
  */
 export function hasValidStateCode(fieldValue) {
+  const result = territoryList.some(
+    (state) => state["value"] === fieldValue.substring(0, 2)
+  );
 
-    const result = territoryList.some(
-        state => state['value'] === fieldValue.substring(0,2)
-    );
-
-    return result;
-
-};
+  return result;
+}

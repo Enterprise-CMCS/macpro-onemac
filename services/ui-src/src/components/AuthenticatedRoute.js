@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Route, useHistory } from "react-router-dom";
 import { useAppContext } from "../libs/contextLib";
 import { ROUTES } from "cmscommonlib";
-import {Auth} from "aws-amplify";
+import { Auth } from "aws-amplify";
 import UserDataApi from "../utils/UserDataApi";
 
 export default function AuthenticatedRoute({ children, ...rest }) {
@@ -16,20 +16,20 @@ export default function AuthenticatedRoute({ children, ...rest }) {
     const userData = await UserDataApi.userProfile(email);
 
     if (userData.type !== undefined && userData.validRoutes !== undefined) {
-      const roleRoutes = userData.validRoutes
+      const roleRoutes = userData.validRoutes;
 
       // Loop check for allowed route base path
       roleRoutes.forEach(checkBaseURLPath);
 
       function checkBaseURLPath(item) {
-        let currentPath = document.location.pathname.substring(0,item.length)
-        if ( item === currentPath) {
+        let currentPath = document.location.pathname.substring(0, item.length);
+        if (item === currentPath) {
           isValidURLPath = true;
         }
       }
-      if (! isValidURLPath ) {
+      if (!isValidURLPath) {
         history.push(ROUTES.HOME);
-        return
+        return;
       }
     }
   }
@@ -37,14 +37,14 @@ export default function AuthenticatedRoute({ children, ...rest }) {
   useEffect(() => {
     let mounted = true;
 
-    checkRoute()
+    checkRoute();
     // Drop to home if user not logged in
     if (!isAuthenticated && mounted) {
       history.push(ROUTES.HOME);
     }
     return function cleanup() {
       mounted = false;
-    }
+    };
   });
 
   return <Route {...rest}>{isAuthenticated ? children : <div></div>}</Route>;

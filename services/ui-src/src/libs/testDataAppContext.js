@@ -90,7 +90,7 @@ export const stateUserRevokedInitialAuthState = {
         "/profile",
         "/devlogin",
         "/FAQ",
-        "/dashboard"
+        "/dashboard",
       ],
     },
   },
@@ -129,12 +129,11 @@ export const stateUserDeniedInitialAuthState = {
         "/profile",
         "/devlogin",
         "/FAQ",
-        "/dashboard"
+        "/dashboard",
       ],
     },
   },
 };
-
 
 export const stateAdminRevokedInitialAuthState = {
   isAuthenticating: false,
@@ -169,7 +168,7 @@ export const stateAdminRevokedInitialAuthState = {
         "/profile",
         "/devlogin",
         "/FAQ",
-        "/dashboard"
+        "/dashboard",
       ],
     },
   },
@@ -208,7 +207,7 @@ export const stateAdminDeniedInitialAuthState = {
         "/profile",
         "/devlogin",
         "/FAQ",
-        "/dashboard"
+        "/dashboard",
       ],
     },
   },
@@ -227,57 +226,65 @@ export const cmsApproverDeniedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      "attributes":[
-          {
-              "date":1617149287,
-              "doneBy":"systemadmintest@cms.hhs.local",
-              "status":"denied"}],
-        "id":"cmsapproverrevoked@cms.hhs.local",
-        "firstName":"Rhonda",
-        "lastName":"Denied",
-        "type":"cmsapprover",
-        "validRoutes":["/",
-            "/componentpage",
-            "/profile",
-            "/devlogin",
-            "/FAQ",
-            "/usermanagement",
-            "/metrics"]
+      attributes: [
+        {
+          date: 1617149287,
+          doneBy: "systemadmintest@cms.hhs.local",
+          status: "denied",
         },
+      ],
+      id: "cmsapproverrevoked@cms.hhs.local",
+      firstName: "Rhonda",
+      lastName: "Denied",
+      type: "cmsapprover",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/usermanagement",
+        "/metrics",
+      ],
+    },
   },
 };
 
 export const cmsApproverRevokedInitialAuthState = {
-    isAuthenticating: false,
-    isAuthenticated: true,
-    isLoggedInAsDeveloper: false,
-    isValidRoute: true,
-    userProfile: {
-        cmsRoles: "onemac-state-user",
-        email: "stateuseractive@cms.hhs.local",
-        firstName: "Unit",
-        lastName: "Tester",
-        userData: {
-            firstName: "Unita",
-            lastName: "Goodcode",
-            "attributes":[
-                {
-                    "date":1617149287,
-                    "doneBy":"systemadmintest@cms.hhs.local",
-                    "status":"revoked"}],
-            "id":"cmsapproverrevoked@cms.hhs.local",
-            "firstName":"Rhonda",
-            "lastName":"Revoked",
-            "type":"cmsapprover",
-            "validRoutes":["/",
-                "/componentpage",
-                "/profile",
-                "/devlogin",
-                "/FAQ",
-                "/usermanagement",
-                "/metrics"]
+  isAuthenticating: false,
+  isAuthenticated: true,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "stateuseractive@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [
+        {
+          date: 1617149287,
+          doneBy: "systemadmintest@cms.hhs.local",
+          status: "revoked",
         },
+      ],
+      id: "cmsapproverrevoked@cms.hhs.local",
+      firstName: "Rhonda",
+      lastName: "Revoked",
+      type: "cmsapprover",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/usermanagement",
+        "/metrics",
+      ],
     },
+  },
 };
 export const helpDeskDeniedInitialAuthState = {
   isAuthenticating: false,
@@ -292,23 +299,25 @@ export const helpDeskDeniedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      "attributes":[
+      attributes: [
         {
-          "date":1617149287,
-          "doneBy":"systemadmintest@cms.hhs.local",
-          "status":"revoked"}],
-      "id":"cmsapproverrevoked@cms.hhs.local",
-      "firstName":"Rhonda",
-      "lastName":"Revoked",
-      "type":"helpdesk",
-      "validRoutes":[
+          date: 1617149287,
+          doneBy: "systemadmintest@cms.hhs.local",
+          status: "revoked",
+        },
+      ],
+      id: "cmsapproverrevoked@cms.hhs.local",
+      firstName: "Rhonda",
+      lastName: "Revoked",
+      type: "helpdesk",
+      validRoutes: [
         "/",
         "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
-        "/dashboard"
-      ]
+        "/dashboard",
+      ],
     },
   },
 };
@@ -326,23 +335,25 @@ export const helpDeskRevokedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      "attributes":[
+      attributes: [
         {
-          "date":1617149287,
-          "doneBy":"systemadmintest@cms.hhs.local",
-          "status":"denied"}],
-      "id":"cmsapproverrevoked@cms.hhs.local",
-      "firstName":"Rhonda",
-      "lastName":"Denied",
-      "type":"helpdesk",
-      "validRoutes":[
+          date: 1617149287,
+          doneBy: "systemadmintest@cms.hhs.local",
+          status: "denied",
+        },
+      ],
+      id: "cmsapproverrevoked@cms.hhs.local",
+      firstName: "Rhonda",
+      lastName: "Denied",
+      type: "helpdesk",
+      validRoutes: [
         "/",
         "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
-        "/dashboard"
-      ]
+        "/dashboard",
+      ],
     },
   },
 };

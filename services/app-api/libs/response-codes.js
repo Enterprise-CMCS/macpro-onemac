@@ -1,4 +1,3 @@
-
 /**
  * Codes to send to front end
  */
@@ -28,5 +27,5 @@ export const RESPONSE_CODE = {
   CALLING_USER_PENDING: "UR043",
   CALLING_USER_REVOKED: "UR044",
   CALLING_USER_DENIED: "UR045",
-  HELPDESK_USER_SUBMITEED:"HU000",
+  HELPDESK_USER_SUBMITEED: "HU000",
 };
