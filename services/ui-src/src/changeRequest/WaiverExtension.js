@@ -4,6 +4,7 @@ import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 import { ROUTES } from "cmscommonlib";
+import { commonSubheaderMessage } from "../libs/formsLib"
 
 /**
  * WaiverExtension acts as a wrapper around SubmissionForm to render the Waiver Extension Form
@@ -15,8 +16,7 @@ const WaiverExtension = () => {
   const formInfo = {
     pageTitle: "Request Waiver Temporary Extension",
     readOnlyPageTitle: "Waiver Temporary Extension Request Details",
-    subheaderMessage:
-      "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
+    subheaderMessage: commonSubheaderMessage,
     detailsHeader: "Request Temporary Extension",
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
