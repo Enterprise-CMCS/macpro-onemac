@@ -129,6 +129,42 @@ export const SubmissionForm = ({ changeRequestType }) => {
     [transmittalNumberDetails, userData]
   );
 
+  const validateIdExistence = useCallback(
+    (transmittalNumber) => {
+      let checkingNumber = transmittalNumber;
+      let statusMessage = "";
+
+      if (transmittalNumberDetails.existenceRegex !== undefined) {
+        checkingNumber = changeRequest.transmittalNumber.match(
+          transmittalNumberDetails.existenceRegex
+        )[0];
+      }
+
+      ChangeRequestDataApi.packageExists(checkingNumber)
+        .then((dupID) => {
+          if (!dupID && transmittalNumberDetails.idMustExist) {
+            if (transmittalNumberDetails.errorLevel === "error") {
+              statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+            }
+          } else if (dupID && !transmittalNumberDetails.idMustExist) {
+            if (transmittalNumberDetails.errorLevel === "error") {
+              statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+            }
+          }
+        })
+        .catch((error) => {
+          console.log("There was an error submitting a request.", error);
+        });
+
+      return statusMessage;
+    },
+    [transmittalNumberDetails, changeRequest]
+  );
+
   /**
    * Handle changes to the ID.
    * @param {Object} event the event
@@ -216,45 +252,17 @@ export const SubmissionForm = ({ changeRequestType }) => {
     };
     let checkingNumber = changeRequest.transmittalNumber;
 
-    newMessage.statusMessage = validateTransmittalNumber(
-      changeRequest.transmittalNumber
-    );
+    newMessage.statusMessage = validateTransmittalNumber(checkingNumber);
 
     // if the ID is valid, check if exists/not exist in data
     if (newMessage.statusMessage === "" && checkingNumber !== "") {
       if (transmittalNumberDetails.errorLevel)
         newMessage.statusLevel = transmittalNumberDetails.errorLevel;
 
-      if (transmittalNumberDetails.existenceRegex !== undefined) {
-        checkingNumber = changeRequest.transmittalNumber.match(
-          transmittalNumberDetails.existenceRegex
-        )[0];
-      }
-
-      ChangeRequestDataApi.packageExists(checkingNumber)
-        .then((dupID) => {
-          if (!dupID && transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
-            }
-          } else if (dupID && !transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
-            }
-          }
-          setTransmittalNumberStatusMessage(newMessage);
-        })
-        .catch((error) => {
-          console.log("There was an error submitting a request.", error);
-        });
-    } else {
-      setTransmittalNumberStatusMessage(newMessage);
+      newMessage.statusMessage = validateIdExistence(checkingNumber);
     }
 
+    setTransmittalNumberStatusMessage(newMessage);
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setActionTypeErrorMessage(actionTypeMessage);
   }, [
@@ -263,6 +271,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     formInfo,
     transmittalNumberDetails,
     validateTransmittalNumber,
+    validateIdExistence
   ]);
 
   /**
