@@ -142,11 +142,11 @@ const Dashboard = () => {
             className="new-submission-button"
             onClick={(e) => {
                 e.preventDefault();
-                JSONToCSVConvertor(changeRequestList,"Demo",true)
+                JSONToCSVConvertor(changeRequestList,"SubmissionList",true, columns)
             }}
             inversed
         >
-            Export Submission{" "}
+            Export to Excel(CSV){" "}
             <svg
                 width="15"
                 height="16"
@@ -189,7 +189,8 @@ const Dashboard = () => {
     <div className="dashboard-white">
       <PageTitleBar
         heading="Submission List"
-        rightSideContent={isUserActive && userRoleObj.canAccessForms && newSubmissionButton || userData.type === "helpdesk" && csvExportSubmissions }
+        rightSideContent={ ( isUserActive && userRoleObj.canAccessForms && newSubmissionButton)
+        || ( userData.type === "helpdesk" && csvExportSubmissions) }
 
       />
       <AlertBar alertCode={alertCode} />
