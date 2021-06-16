@@ -26,4 +26,16 @@ module.exports= {
     "Login with cms_system_admin": function (browser) {
         this['Login with state user'](browser, browser.globals.cms_system_admin);
     },
+
+    "Login with state pending user": function (browser) {
+        this['Login with state user'](browser, browser.globals.user_pending);
+    },
+
+    "Login with state admin pending user": function (browser) {
+        this['Login with state user'](browser, browser.globals.state_admin_pending);
+    },
+
+    "Login with cms_approvers pending user": function (browser) {
+        this['Login with state user'](browser, browser.globals.cms_approvers_pending);
+    },
 }

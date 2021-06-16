@@ -15,7 +15,13 @@ module.exports = {
         login.afterEach(browser);
     },
     'Verify that there are no state abbribiation option': function (browser) {
-        browser.click('#spaSubmitBtn');
+        //browser.click('#spaSubmitBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.useCss();
         browser.click("[value='Submit']");
         let state_territory = "//*[contains(text(), 'State/Territory')]";
         browser.useXpath().expect.element(state_territory).to.be.not.present;
@@ -24,7 +30,7 @@ module.exports = {
         // Enter illegal State abbribiation 
         let abbr = 'QA';
         browser.setValue('input#transmittalNumber', abbr);
-        let expectedErroMsg = "The SPA ID must contain valid Territory/State Code";
+        let expectedErroMsg = "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.";
         browser.verify.containsText('div#transmittalNumberStatusMsg', expectedErroMsg);
     }
 }

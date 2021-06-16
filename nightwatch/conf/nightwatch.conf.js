@@ -57,6 +57,21 @@ module.exports = {
                     username: `${process.env.TEST_CMS_SYSTEM_ADMIN_USERS}`,
                     password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
                 },
+
+                user_pending:{
+                    username: `${process.env.TEST_STATE_USERS_PENDING}`,
+                    password: `${process.env.TEST_STATE_USER_PASSWORD}`,
+                },
+
+                state_admin_pending:{
+                    username: `${process.env.TEST_STATE_ADMIN_USERS_PENDING}`,
+                    password: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+                },
+
+                cms_approvers_pending: {
+                    username: `${process.env.TEST_CMS_APPROVER_USERS_PENDING}`,
+                    password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+                },
            },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
