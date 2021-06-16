@@ -48,6 +48,7 @@ async fieldsValid(data) {
    */
     getCMSEmail(data) {
         const cmsEmail = {};
+        let transmittalNumberWarningMessage =  data.transmittalNumberWarningMessage ?  `<br/>${data.transmittalNumberWarningMessage}<br/>` : "";
 
         cmsEmail.ToAddresses = [process.env.reviewerEmail];
         cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
@@ -57,8 +58,7 @@ async fieldsValid(data) {
             <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}
-            
+            <br><b>Waiver #</b>: ${data.transmittalNumber}${transmittalNumberWarningMessage}
         </p>
         <p>
             <b>Additional Information</b>:
@@ -84,7 +84,6 @@ async fieldsValid(data) {
      */
     getStateEmail(data) {
         const stateEmail = {};
-        let transmittalNumberWarningMessage =  data.transmittalNumberWarningMessage ?  `<br/>${data.transmittalNumberWarningMessage}<br/>` : "";
 
         stateEmail.ToAddresses = [data.user.email];
         stateEmail.Subject = "Your Waiver " + data.transmittalNumber + " has been submitted to CMS";
@@ -92,7 +91,7 @@ async fieldsValid(data) {
         <p>This response confirms the receipt of your 1915(b) waiver/1915(c) Appendix K Amendment:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}${transmittalNumberWarningMessage}
+            <br><b>Waiver #</b>: ${data.transmittalNumber}
             <b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Submitter email</b>: ${data.user.email}
             <br><b>90th day deadline</b>: ${getCMSDateFormat(data.ninetyDayClockEnd)}
