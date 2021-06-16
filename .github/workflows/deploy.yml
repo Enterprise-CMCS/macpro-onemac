@@ -88,38 +88,6 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      # - name: Get default test user name
-      #   uses: "marvinpinto/action-inject-ssm-secrets@latest"
-      #   env:
-      #     AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      #   with:
-      #     ssm_parameter: /macstack/default/nightwatch/TEST_USERS
-      #     env_variable_name: TEST_USERS
-      #   continue-on-error: true
-      # - name: Get branch specific test user name, if exists
-      #   uses: "marvinpinto/action-inject-ssm-secrets@latest"
-      #   env:
-      #     AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      #   with:
-      #     ssm_parameter: /macstack/${{ env.branch_name }}/nightwatch/TEST_USERS
-      #     env_variable_name: TEST_USERS
-      #   continue-on-error: true
-      # - name: Get default test user password
-      #   uses: "marvinpinto/action-inject-ssm-secrets@latest"
-      #   env:
-      #     AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      #   with:
-      #     ssm_parameter: "/macstack/default/nightwatch/TEST_USER_PASSWORD"
-      #     env_variable_name: TEST_USER_PASSWORD
-      #   continue-on-error: true
-      # - name: Get branch specific test user password
-      #   uses: "marvinpinto/action-inject-ssm-secrets@latest"
-      #   env:
-      #     AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-      #   with:
-      #     ssm_parameter: "/macstack/${{ env.branch_name }}/nightwatch/TEST_USER_PASSWORD"
-      #     env_variable_name: "TEST_USER_PASSWORD"
-      #   continue-on-error: true
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -150,7 +118,8 @@ jobs:
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
       - name: Run Nightwatch suite
-        if: env.branch_name != 'production'
+        # do not run tests on val and production
+        if: !contains(fromJson('["master", "production"]'), env.branch_name)
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
@@ -161,5 +130,4 @@ jobs:
         uses: actions/upload-artifact@v2
         with:
           name: test_results
-          # path: ./tests/nightwatch/tests_output
           path: ./tests_output
