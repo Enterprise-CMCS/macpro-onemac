@@ -1,2 +1,2 @@
-require("dotenv").config();
-require("nightwatch/bin/nightwatch");
+require('dotenv').config();
+require('nightwatch/bin/nightwatch');

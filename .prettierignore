@@ -2,7 +2,6 @@
 .idea/
 .vscode/
 
-/nightwatch/
 /.github/
 .webpack/
 .env
@@ -15,6 +14,11 @@ reports/
 env-config.js
 coverage/
 build/
+
+# not ours to mess with
+/nightwatch/
+nightwatch.js
+/services/stream-functions/
 
 # contains invalid syntax
 stateUserTemplate.json
