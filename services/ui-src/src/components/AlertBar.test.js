@@ -5,63 +5,6 @@ import userEvent from "@testing-library/user-event";
 
 import AlertBar from "./AlertBar";
 
-/*
-TEST_SUCCESS_WITH_LINK: {
-    type: ALERT_TYPES.SUCCESS,
-    heading: "Success with Link",
-    text: "You achieved success! Now follow our $Link$.",
-    linkURL: "https://www.google.com",
-    linkText: "Test Link Text",
-  },
-
-  TEST_SUCCESS_WITH_PERSONALIZATION: {
-    type: ALERT_TYPES.SUCCESS,
-    heading: "Success with Persomalization",
-    text: `Test Text before ...$personalize$... Test Text after.`,
-  },
-
-  TEST_WARNING: {
-    type: ALERT_TYPES.WARNING,
-    heading: "Warning",
-    text: "This is the warning alert text.",
-  },
-
-  TEST_WARNING_WITH_LINK: {
-    type: ALERT_TYPES.WARNING,
-    heading: "Warning with Link",
-    text: "You need warning! Now follow our $Link$.",
-    linkURL: "https://www.google.com",
-    linkText: "Test Link Text",
-  },
-
-  TEST_WARNING_WITH_PERSONALIZATION: {
-    type: ALERT_TYPES.WARNING,
-    heading: "Warning with Persomalization",
-    text: `Test Text before ...$personalize$... Test Text after.`,
-  },
-
-  TEST_ERROR: {
-    type: ALERT_TYPES.ERROR,
-    heading: "Error",
-    text: "This is the error alert text.",
-  },
-
-  TEST_ERROR_WITH_LINK: {
-    type: ALERT_TYPES.ERROR,
-    heading: "Error with Link",
-    text: "You found an error! Now follow our $Link$.",
-    linkURL: "https://www.google.com",
-    linkText: "Test Link Text",
-  },
-
-  TEST_ERROR_WITH_PERSONALIZATION: {
-    type: ALERT_TYPES.ERROR,
-    heading: "Error with Persomalization",
-    text: `Test Text before ...$personalize$... Test Text after.`,
-  },
-};
-*/
-
 jest.mock("../libs/error-mappings", () => {
   return {
     getAlert: (alertCode) => {
@@ -69,20 +12,32 @@ jest.mock("../libs/error-mappings", () => {
 
       switch (alertCode) {
         case "SIMPLE_ALERT":
-          returnAlert = {
+          return {
             type: "success",
             heading: "Success",
             text: "This is the success alert text.",
           };
-          break;
         case "PERSONALIZED_ALERT":
-          returnAlert = {
+          return {
             type: "success",
             heading: "Success",
             text: "This is the $personalize$ success alert text.",
           };
-          break;
-      }
+        case "LINK_ALERT":
+          return {
+            type: "success",
+            heading: "Success with Link",
+            text: "You achieved success! Now follow our $Link$.",
+            linkURL: "https://www.google.com",
+            linkText: "Test Link Text",
+          };
+          case "NONE":
+            return {
+              type: "success",
+              heading: "",
+              text: "",
+            };
+        }
       return returnAlert;
     },
   };
@@ -106,8 +61,24 @@ it("shows a peronalized alert", () => {
   expect(screen.getByText(testString, { exact: false })).toBeInTheDocument();
 });
 
-it("shows an alert with a link", () => {});
+it("shows an alert with a link", () => {
+  let initialCode = "LINK_ALERT";
 
-it("goes away when closed", () => {});
+  render(<AlertBar alertCode={initialCode} />);
+  expect(screen.getByRole("link")).toBeInTheDocument();
+});
+
+it("goes away when closed", async () => {
+  let initialCode = "SIMPLE_ALERT";
+  render(<AlertBar alertCode={initialCode} />);
+
+  let alertEl = screen.getByText("success alert text.", { exact: false });
+  expect(alertEl).toBeInTheDocument();
+  expect( screen.getByRole("button") ).toBeInTheDocument();
+
+  // userEvent.click( screen.getByRole("button") );
+
+ // expect(alertEl).toBe("");
+});
 
 it("calls the closing callback", () => {});
