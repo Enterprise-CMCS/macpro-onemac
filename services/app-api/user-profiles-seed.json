@@ -401,5 +401,117 @@
     "lastName": "Revoked",
     "id": "helpdeskrevoked@cms.hhs.local",
     "type": "helpdesk"
+  },
+
+  {
+    "id": "systemadmin@nightwatch.test",
+    "firstName": "Systemadmin",
+    "lastName": "Nightwatch",
+    "type": "systemadmin"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmin@nightwatch.test",
+        "status": "active"
+      },
+      {
+        "date": 1617148287,
+        "doneBy": "cmsapprover@nightwatch.test",
+        "status": "pending"
+      }
+    ],
+    "firstName": "CMSApprover",
+    "lastName": "Nightwatch",
+    "id": "cmsapprover@nightwatch.test",
+    "type": "cmsapprover"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmin@nightwatch.test",
+        "status": "active"
+      },
+      {
+        "date": 1617148287,
+        "doneBy": "cmsreviewer@nightwatch.test",
+        "status": "pending"
+      }
+    ],
+    "firstName": "CMSReviewer",
+    "lastName": "Nightwatch",
+    "id": "cmsreviewer@nightwatch.test",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmin@nightwatch.test",
+        "status": "active"
+      },
+      {
+        "date": 1617148287,
+        "doneBy": "helpdesk@nightwatch.test",
+        "status": "pending"
+      }
+    ],
+    "firstName": "Helpdesk",
+    "lastName": "Nightwatch",
+    "id": "helpdesk@nightwatch.test",
+    "type": "helpdesk"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "cmsapprover@nightwatch.test",
+            "status": "active"
+          },
+          {
+            "date": 1617148287,
+            "doneBy": "stateadmin@nightwatch.test",
+            "status": "pending"
+          }
+        ],
+        "stateCode": "MD"
+      }
+    ],
+    "id": "stateadmin@nightwatch.test",
+    "firstName": "Stateadmin",
+    "lastName": "Nightwatch",
+    "type": "stateadmin"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "stateadmin@nightwatch.test",
+            "status": "active"
+          },
+          {
+            "date": 1617148287,
+            "doneBy": "statesubmitter@nightwatch.test",
+            "status": "pending"
+          }
+        ],
+        "stateCode": "MD"
+      }
+    ],
+    "id": "statesubmitter@nightwatch.test",
+    "firstName": "Statesubmitter",
+    "lastName": "Nightwatch",
+    "type": "stateuser"
   }
 ]

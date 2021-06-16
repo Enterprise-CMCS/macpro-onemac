@@ -1,4 +1,4 @@
-let spa;
+/*let spa;
 const timeout = 1000;
 
 module.exports = {
@@ -45,4 +45,4 @@ module.exports = {
         spa.logout();
         browser.pause(timeout * 3);
     }
-}
+}*/
