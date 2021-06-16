@@ -5,30 +5,39 @@
 
 
 const locator = '(//*[@disabled])';
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+//const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 let spaID;
 let generatedWaiverID;
 
 module.exports = {
     "@tags": ["smoke"],
 
-    // Opens the browser, goes to the test site
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(browser.launch_url);
-        browser.waitForElementPresent('body');
-        login["Login to Medicaid as Regular User"](browser);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
-    // After all the test case executions, clear out the browser
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
+    // Opens the browser, goes to the test site
+    // before: function (browser) {
+    //     console.log('Setting up the browser instance...');
+    //     console.log('Opening the browser...')
+    //     console.log('Maximizing the browser window size...');
+    //     browser.windowMaximize().url(browser.launch_url);
+    //     browser.waitForElementPresent('body');
+    //     login["Login to Medicaid as Regular User"](browser);
+    // },
+
+    // // After all the test case executions, clear out the browser
+    // after: function (browser) {
+    //     login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
+    //     console.log("Stopping test executions...")
+    //     console.log('Closing down the browser instance...');
+    //     browser.end();
+    // },
 
 
     // 'Login to Medicaid as Developer' : function(browser) {
