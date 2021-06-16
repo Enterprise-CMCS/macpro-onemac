@@ -4,7 +4,7 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 
-
+/*
 let generatedSPAID;
 let generatedWaiverID;
 const login = require('../suites/OY2_9999_Login');
@@ -167,3 +167,4 @@ module.exports = {
         browser.useCss();
     }
 }
+*/
