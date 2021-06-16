@@ -21,7 +21,6 @@ const PageTitleBar = ({
   enableBackNav,
   backNavConfirmationMessage,
 }) => {
-
   const history = useHistory();
 
   const titleBarClassName = classNames({
@@ -50,7 +49,9 @@ const PageTitleBar = ({
             data-testid="back-button"
             className="title-bar-back-button"
             onClick={
-              backNavConfirmationMessage ? handleBackWithConfirm : () => history.goBack()
+              backNavConfirmationMessage
+                ? handleBackWithConfirm
+                : () => history.goBack()
             }
             variation="transparent"
           >

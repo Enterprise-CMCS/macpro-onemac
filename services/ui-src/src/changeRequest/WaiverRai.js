@@ -16,12 +16,10 @@ const WaiverRai = () => {
     pageTitle: "Respond to Waiver RAI",
     readOnlyPageTitle: "Waiver RAI Response Details",
     subheaderMessage:
-        "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
+      "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],
-    optionalUploads: [
-      "Other",
-    ],
+    optionalUploads: ["Other"],
 
     transmittalNumber: {
       idType: "waiver",
@@ -29,10 +27,10 @@ const WaiverRai = () => {
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
       idHintText: "Please use the exact Waiver Number sent with the RAI",
       idFormat: "the Number format sent with the RAI",
-      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$)",
+      idRegex:
+        "(^[A-Z]{2}[.][0-9]{4,5}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$)",
       idMustExist: true,
     },
-
   };
 
   if (id && userId) {

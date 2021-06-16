@@ -1,396 +1,331 @@
 [
-    {
-        "attributes": [
-          {
-            "date": 1617149287,
-            "doneBy": "systemadmintest@cms.hhs.local",
-            "status": "active"
-          }
-        ],
-        "firstName": "Arnold",
-        "lastName": "Active",
-        "id": "cmsapproveractive@cms.hhs.local",
-        "type": "cmsapprover"
-      },
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "active"
+      }
+    ],
+    "firstName": "Arnold",
+    "lastName": "Active",
+    "id": "cmsapproveractive@cms.hhs.local",
+    "type": "cmsapprover"
+  },
 
+  {
+    "attributes": [
       {
-        "attributes": [
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "active"
+      }
+    ],
+    "firstName": "Helping",
+    "lastName": "Hands",
+    "id": "helpinghands@cms.hhs.local",
+    "type": "helpdesk"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "denied"
+      }
+    ],
+    "firstName": "Debbie",
+    "lastName": "Denied",
+    "id": "cmsapproverdenied@cms.hhs.local",
+    "type": "cmsapprover"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "pending"
+      }
+    ],
+    "firstName": "Peter",
+    "lastName": "Pending",
+    "id": "cmsapproverpending@cms.hhs.local",
+    "type": "cmsapprover"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "revoked"
+      }
+    ],
+    "firstName": "Rhonda",
+    "lastName": "Revoked",
+    "id": "cmsapproverrevoked@cms.hhs.local",
+    "type": "cmsapprover"
+  },
+
+  {
+    "id": "sabrina.mccrae@cms.hhs.gov",
+    "firstName": "Sabrina",
+    "lastName": "McCrae",
+    "type": "systemadmin"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
             "status": "active"
+          },
+          {
+            "date": 1616544487,
+            "doneBy": "stateadminMI@cms.hhs.local",
+            "status": "pending"
           }
         ],
-        "firstName": "Helping",
-        "lastName": "Hands",
-        "id": "helpinghands@cms.hhs.local",
-        "type": "helpdesk"
-      },
-      
+        "stateCode": "MI"
+      }
+    ],
+    "id": "stateadminactiveMI@cms.hhs.local",
+    "firstName": "Abby",
+    "lastName": "Active",
+    "type": "stateadmin"
+  },
+
+  {
+    "attributes": [
       {
-        "attributes": [
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "active"
+          },
+          {
+            "date": 1616544487,
+            "doneBy": "stateadminactiveMI2@cms.hhs.local",
+            "status": "pending"
+          }
+        ],
+        "stateCode": "MI"
+      }
+    ],
+    "id": "stateadminactiveMI2@cms.hhs.local",
+    "firstName": "Anthony",
+    "lastName": "Active",
+    "type": "stateadmin"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "active"
+          },
+          {
+            "date": 1616544487,
+            "doneBy": "stateadminactiveVA2@cms.hhs.local",
+            "status": "pending"
+          }
+        ],
+        "stateCode": "VA"
+      }
+    ],
+    "id": "stateadminactiveVA2@cms.hhs.local",
+    "firstName": "Arlene",
+    "lastName": "Active",
+    "type": "stateadmin"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "stateadminpending@cms.hhs.local",
+            "status": "pending"
+          }
+        ],
+        "stateCode": "DE"
+      }
+    ],
+    "id": "stateadminpending@cms.hhs.local",
+    "firstName": "Patricia",
+    "lastName": "Pending",
+    "type": "stateadmin"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
             "status": "denied"
           }
         ],
-        "firstName": "Debbie",
-        "lastName": "Denied",
-        "id": "cmsapproverdenied@cms.hhs.local",
-        "type": "cmsapprover"
+        "stateCode": "MI"
       },
-
       {
-        "attributes": [
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
-            "status": "pending"
+            "status": "denied"
           }
         ],
-        "firstName": "Peter",
-        "lastName": "Pending",
-        "id": "cmsapproverpending@cms.hhs.local",
-        "type": "cmsapprover"
-      },
+        "stateCode": "VA"
+      }
+    ],
+    "id": "stateadmindenied@cms.hhs.local",
+    "firstName": "Daniel",
+    "lastName": "Denied",
+    "type": "stateadmin"
+  },
 
+  {
+    "attributes": [
       {
-        "attributes": [
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
             "status": "revoked"
           }
         ],
-        "firstName": "Rhonda",
-        "lastName": "Revoked",
-        "id": "cmsapproverrevoked@cms.hhs.local",
-        "type": "cmsapprover"
+        "stateCode": "MI"
       },
-
       {
-        "id": "sabrina.mccrae@cms.hhs.gov",
-        "firstName": "Sabrina",
-        "lastName": "McCrae",
-        "type": "systemadmin"
-      },
-
-      {
-        "attributes": [
+        "history": [
           {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "active"
-              },
-              {
-                "date": 1616544487,
-                "doneBy": "stateadminMI@cms.hhs.local",
-                "status": "pending"
-              }
-            ],
-            "stateCode": "MI"
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "revoked"
           }
         ],
-        "id": "stateadminactiveMI@cms.hhs.local",
-        "firstName": "Abby",
-        "lastName": "Active",
-        "type": "stateadmin"
-      },
+        "stateCode": "VA"
+      }
+    ],
+    "id": "stateadminrevoked@cms.hhs.local",
+    "firstName": "Ricky",
+    "lastName": "Revoked",
+    "type": "stateadmin"
+  },
 
+  {
+    "attributes": [
       {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "active"
-              },
-              {
-                "date": 1616544487,
-                "doneBy": "stateadminactiveMI2@cms.hhs.local",
-                "status": "pending"
-              }
-            ],
-            "stateCode": "MI"
-          }
-        ],
-        "id": "stateadminactiveMI2@cms.hhs.local",
-        "firstName": "Anthony",
-        "lastName": "Active",
-        "type": "stateadmin"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "active"
-              },
-              {
-                "date": 1616544487,
-                "doneBy": "stateadminactiveVA2@cms.hhs.local",
-                "status": "pending"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateadminactiveVA2@cms.hhs.local",
-        "firstName": "Arlene",
-        "lastName": "Active",
-        "type": "stateadmin"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "stateadminpending@cms.hhs.local",
-                "status": "pending"
-              }
-            ],
-            "stateCode": "DE"
-          }
-        ],
-        "id": "stateadminpending@cms.hhs.local",
-        "firstName": "Patricia",
-        "lastName": "Pending",
-        "type": "stateadmin"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "denied"
-              }
-            ],
-            "stateCode": "MI"
-          },
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "denied"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateadmindenied@cms.hhs.local",
-        "firstName": "Daniel",
-        "lastName": "Denied",
-        "type": "stateadmin"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "revoked"
-              }
-            ],
-            "stateCode": "MI"
-          },
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "revoked"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateadminrevoked@cms.hhs.local",
-        "firstName": "Ricky",
-        "lastName": "Revoked",
-        "type": "stateadmin"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "active"
-              }
-            ],
-            "stateCode": "MI"
-          },
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "active"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateuseractive@cms.hhs.local",
-        "firstName": "Angie",
-        "lastName": "Active",
-        "type": "stateuser"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "denied"
-              }
-            ],
-            "stateCode": "MI"
-          },
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "denied"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateuserdenied@cms.hhs.local",
-        "firstName": "Darrell",
-        "lastName": "Denied",
-        "type": "stateuser"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "pending"
-              }
-            ],
-            "stateCode": "MI"
-          },
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "pending"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateuserpending@cms.hhs.local",
-        "firstName": "Pauline",
-        "lastName": "Pending",
-        "type": "stateuser"
-      },
-
-      {
-        "attributes": [
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "revoked"
-              }
-            ],
-            "stateCode": "MI"
-          },
-          {
-            "history": [
-              {
-                "date": 1617149287,
-                "doneBy": "systemadmintest@cms.hhs.local",
-                "status": "revoked"
-              }
-            ],
-            "stateCode": "VA"
-          }
-        ],
-        "id": "stateuserrevoked@cms.hhs.local",
-        "firstName": "Randy",
-        "lastName": "Revoked",
-        "type": "stateuser"
-      },
-
-      {
-        "id": "systemadmintest@cms.hhs.local",
-        "firstName": "Teresa",
-        "lastName": "Test",
-        "type": "systemadmin"
-      },
-      {
-        "attributes": [
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
             "status": "active"
           }
         ],
-        "firstName": "Arthur",
-        "lastName": "Active",
-        "id": "helpdeskactive@cms.hhs.local",
-        "type": "helpdesk"
+        "stateCode": "MI"
       },
-
       {
-        "attributes": [
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "active"
+          }
+        ],
+        "stateCode": "VA"
+      }
+    ],
+    "id": "stateuseractive@cms.hhs.local",
+    "firstName": "Angie",
+    "lastName": "Active",
+    "type": "stateuser"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
             "status": "denied"
           }
         ],
-        "firstName": "David",
-        "lastName": "Denied",
-        "id": "helpdeskdenied@cms.hhs.local",
-        "type": "helpdesk"
+        "stateCode": "MI"
       },
-
       {
-        "attributes": [
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "denied"
+          }
+        ],
+        "stateCode": "VA"
+      }
+    ],
+    "id": "stateuserdenied@cms.hhs.local",
+    "firstName": "Darrell",
+    "lastName": "Denied",
+    "type": "stateuser"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
             "status": "pending"
           }
         ],
-        "firstName": "Perry",
-        "lastName": "Pending",
-        "id": "helpdeskpending@cms.hhs.local",
-        "type": "helpdesk"
+        "stateCode": "MI"
       },
-
       {
-        "attributes": [
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "pending"
+          }
+        ],
+        "stateCode": "VA"
+      }
+    ],
+    "id": "stateuserpending@cms.hhs.local",
+    "firstName": "Pauline",
+    "lastName": "Pending",
+    "type": "stateuser"
+  },
+
+  {
+    "attributes": [
+      {
+        "history": [
+          {
+            "date": 1617149287,
+            "doneBy": "systemadmintest@cms.hhs.local",
+            "status": "revoked"
+          }
+        ],
+        "stateCode": "MI"
+      },
+      {
+        "history": [
           {
             "date": 1617149287,
             "doneBy": "systemadmintest@cms.hhs.local",
@@ -514,4 +449,10 @@
         "lastName": "Nightwatch",
         "type": "stateuser"
       }
+    ],
+    "firstName": "Raymond",
+    "lastName": "Revoked",
+    "id": "helpdeskrevoked@cms.hhs.local",
+    "type": "helpdesk"
+  }
 ]

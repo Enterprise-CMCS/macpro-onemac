@@ -56,50 +56,49 @@ export default function DevLogin() {
 
   return (
     <div>
-    <PageTitleBar heading="Developer Login" />
-    {renderAlert(alert)}
-    <div className="form-container">
-      {showDevLogin && (
-        <div className="form-container">
-          <form onSubmit={handleSubmit}>
-            <h3>Developer Login</h3>
-            <div className="form-card">
-              <label
-                className="ds-c-label"
-                htmlFor="email"
-              >
-                Email<span className="required-mark">*</span>
-              </label>
-              <input
-                className="field"
-                type="email"
-                id="email"
-                name="email"
-                value={fields.email}
-                onChange={handleFieldChange}
-                required
-              ></input>
-              <label
-                className="ds-c-label"
-                htmlFor="password"
-              >
-                Password<span className="required-mark">*</span>
-              </label>
-              <input
-                className="field"
-                type="password"
-                id="password"
-                name="password"
-                value={fields.password}
-                onChange={handleFieldChange}
-                required
-              ></input>
-              <input id="loginDevUserBtn"
-                type="submit" className="form-submit" value="Login" />
-            </div>
-          </form>
-        </div>
-      )}
-    </div></div>
+      <PageTitleBar heading="Developer Login" />
+      {renderAlert(alert)}
+      <div className="form-container">
+        {showDevLogin && (
+          <div className="form-container">
+            <form onSubmit={handleSubmit}>
+              <h3>Developer Login</h3>
+              <div className="form-card">
+                <label className="ds-c-label" htmlFor="email">
+                  Email<span className="required-mark">*</span>
+                </label>
+                <input
+                  className="field"
+                  type="email"
+                  id="email"
+                  name="email"
+                  value={fields.email}
+                  onChange={handleFieldChange}
+                  required
+                ></input>
+                <label className="ds-c-label" htmlFor="password">
+                  Password<span className="required-mark">*</span>
+                </label>
+                <input
+                  className="field"
+                  type="password"
+                  id="password"
+                  name="password"
+                  value={fields.password}
+                  onChange={handleFieldChange}
+                  required
+                ></input>
+                <input
+                  id="loginDevUserBtn"
+                  type="submit"
+                  className="form-submit"
+                  value="Login"
+                />
+              </div>
+            </form>
+          </div>
+        )}
+      </div>
+    </div>
   );
 }

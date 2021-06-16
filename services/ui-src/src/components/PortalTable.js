@@ -4,23 +4,18 @@ import { useSortBy, useTable } from "react-table";
 import Expand from "../images/Expand.svg";
 
 export default function PortalTable({ ...props }) {
-  const {
-    getTableProps,
-    getTableBodyProps,
-    headerGroups,
-    rows,
-    prepareRow,
-  } = useTable(
-    {
-      // don't revert to original sort state when `data` prop changes
-      autoResetSortBy: false,
-      // once a column has been sorted, only toggle between sort orders - do
-      // not go to original state
-      disableSortRemove: true,
-      ...props,
-    },
-    useSortBy
-  );
+  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
+    useTable(
+      {
+        // don't revert to original sort state when `data` prop changes
+        autoResetSortBy: false,
+        // once a column has been sorted, only toggle between sort orders - do
+        // not go to original state
+        disableSortRemove: true,
+        ...props,
+      },
+      useSortBy
+    );
 
   return (
     <table className={props.className} {...getTableProps()}>

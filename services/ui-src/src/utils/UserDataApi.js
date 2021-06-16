@@ -1,29 +1,28 @@
 import { API } from "aws-amplify";
-import {USER_TYPE} from "cmscommonlib";
+import { USER_TYPE } from "cmscommonlib";
 
-export const getAdminTypeByRole = role => {
-    switch (role) {
-        case USER_TYPE.STATE_ADMIN:
-            return USER_TYPE.STATE_USER;
-        case USER_TYPE.CMS_APPROVER:
-            return USER_TYPE.STATE_ADMIN;
-        case USER_TYPE.SYSTEM_ADMIN:
-            return USER_TYPE.CMS_APPROVER;
-        default:
-            return undefined;
-    }
-}
+export const getAdminTypeByRole = (role) => {
+  switch (role) {
+    case USER_TYPE.STATE_ADMIN:
+      return USER_TYPE.STATE_USER;
+    case USER_TYPE.CMS_APPROVER:
+      return USER_TYPE.STATE_ADMIN;
+    case USER_TYPE.SYSTEM_ADMIN:
+      return USER_TYPE.CMS_APPROVER;
+    default:
+      return undefined;
+  }
+};
 /**
  * Singleton class to perform operations with the user tables backend.
  */
 class UserDataApi {
-
   /**
    * Fetch the list of users appropriate for this User
    * @return {Array} a list of users
    */
-   async getMyUserList(userEmail) {
-     if (!userEmail) return [];
+  async getMyUserList(userEmail) {
+    if (!userEmail) return [];
 
     try {
       return await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
@@ -46,10 +45,7 @@ class UserDataApi {
     }
 
     try {
-      let answer = await API.get(
-        "userDataAPI",
-        `/getUser?email=${userEmail}`
-      );
+      let answer = await API.get("userDataAPI", `/getUser?email=${userEmail}`);
       return answer;
     } catch (error) {
       console.log(`There was an error checking user ${userEmail}.`, error);
@@ -58,10 +54,10 @@ class UserDataApi {
   }
 
   /**
-    * Create or update a user's profile
-    * @param {Object} User record to create or update in Dynamo
-    * @return {Promise<string>} An error code, or nothing at all if it succeeds
-    */
+   * Create or update a user's profile
+   * @param {Object} User record to create or update in Dynamo
+   * @return {Promise<string>} An error code, or nothing at all if it succeeds
+   */
   async updateUser(userRecord) {
     try {
       return await API.put("changeRequestAPI", "/putUser", {
@@ -78,7 +74,7 @@ class UserDataApi {
    * @param {string} User ID to update
    * @param {string} Updated phone number
    * @return {Promise<string>} An error code, or nothing at all if it succeeds
-  */
+   */
   async updatePhoneNumber(id, phoneNumber) {
     try {
       return await API.put("changeRequestAPI", "/phoneNumber", {
@@ -98,25 +94,24 @@ class UserDataApi {
    * @param {string} newStatus the new status for the user
    * @return {string} the response code
    */
-   async setUserStatus(updateStatusRequest) {
-
-      if (!updateStatusRequest ) {
+  async setUserStatus(updateStatusRequest) {
+    if (!updateStatusRequest) {
       throw new Error("setUserStatus API call required parameters missing");
     }
 
     try {
-          return await API.put("changeRequestAPI", "/putUser", {
-              body: updateStatusRequest,
-          });
+      return await API.put("changeRequestAPI", "/putUser", {
+        body: updateStatusRequest,
+      });
     } catch (error) {
-          console.error("Could not update user profile data:", error);
-          throw error;
+      console.error("Could not update user profile data:", error);
+      throw error;
     }
   }
 
   /**
    * Get all active state system administrators' contact info for a list of states.
-  */
+   */
   async getStateAdmins(states) {
     const params = new URLSearchParams();
     for (const state of states) {
@@ -127,14 +122,14 @@ class UserDataApi {
 
   /**
    * Get all active CMS role approvers' contact info.
-  */
+   */
   async getCmsApprovers() {
     return await API.get("userDataAPI", "/getCmsApprovers");
   }
 
   /**
    * Get all active CMS system admins' contact info.
-  */
+   */
   async getCmsSystemAdmins() {
     return await API.get("userDataAPI", "/getCmsSystemAdmins");
   }
