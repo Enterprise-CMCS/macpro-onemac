@@ -221,7 +221,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // if the ID is valid, check if exists/not exist in data
     if (newMessage.statusMessage === "" && checkingNumber !== "") {
-      newMessage.statusLevel = transmittalNumberDetails.errorLevel;
+      if (transmittalNumberDetails.errorLevel)
+        newMessage.statusLevel = transmittalNumberDetails.errorLevel;
 
       if (transmittalNumberDetails.existenceRegex !== undefined) {
         checkingNumber = changeRequest.transmittalNumber.match(
@@ -314,8 +315,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     };
 
     if (isSubmitting && !limitSubmit.current) {
-      saveForm();
       limitSubmit.current = true;
+      saveForm();
     }
   }, [
     isSubmitting,
