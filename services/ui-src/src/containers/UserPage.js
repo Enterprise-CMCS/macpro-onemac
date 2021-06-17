@@ -197,7 +197,7 @@ const UserPage = () => {
           errorMessage="Please select at least one state."
           loading={loading}
           options={territoryList}
-          placeholder="select state here"
+          placeholder="Select state here"
           required
           showCancelButton
           subtitle="Select your State Access."
