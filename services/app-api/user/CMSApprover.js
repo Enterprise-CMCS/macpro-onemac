@@ -15,12 +15,12 @@ class CMSApprover {
    * CMS Approvers manage the State Admins
    * @returns {Object} Scan parameters for dynamodb
    */
-   getScanParams(){
+  getScanParams() {
     const scanParams = {
       TableName: process.env.userTableName,
       FilterExpression: "#ty = :userType0",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: {":userType0": USER_TYPES.STATE_ADMIN},
+      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_ADMIN },
     };
     return scanParams;
   }

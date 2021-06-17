@@ -7,7 +7,6 @@ const sender = new AWS.SES({ region: "us-east-1" });
  * @param {Object} email generic email properties
  */
 function getSESEmailParams(email) {
-
   let emailParams = {
     Destination: {
       ToAddresses: email.ToAddresses,
@@ -21,10 +20,12 @@ function getSESEmailParams(email) {
       },
       Subject: {
         Charset: "UTF-8",
-        Data: email.Subject
+        Data: email.Subject,
       },
     },
-    Source: email.fromAddressSource ? process.env[email.fromAddressSource] : process.env.emailSource,
+    Source: email.fromAddressSource
+      ? process.env[email.fromAddressSource]
+      : process.env.emailSource,
   };
 
   return emailParams;
@@ -52,7 +53,6 @@ export default function sendEmail(email) {
   } catch (er) {
     console.log(`Warning: Erro occured while sending the confirmation email: 
         ${JSON.stringify(email, null, 2)}, with error: ${er}`);
-    return Promise.reject(new Error('Error while sending email'));
+    return Promise.reject(new Error("Error while sending email"));
   }
-
 }

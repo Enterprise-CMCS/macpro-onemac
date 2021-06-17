@@ -26,8 +26,8 @@ export const MultiSelectDropDown = ({
     (required && value.length === 0) || (onlyOne && value.length > 1);
 
   const selectClassName = classNames({
-    'state-dropdown-select': true,
-    'state-dropdown-select-no-selection': value.length === 0 && true,
+    "state-dropdown-select": true,
+    "state-dropdown-select-no-selection": value.length === 0 && true,
   });
 
   return (

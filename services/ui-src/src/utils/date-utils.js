@@ -1,4 +1,4 @@
-import { format } from 'date-fns'
+import { format } from "date-fns";
 
 /**
  * Format a date to a string.
@@ -6,12 +6,12 @@ import { format } from 'date-fns'
  * @returns a string with the date
  */
 export function formatDate(date) {
-    let dateString="";
+  let dateString = "";
 
-    if (date) {
-        dateString = format(date, "EEE, MMM d yyyy, h:mm:ss a");
-    }
-    return dateString;
+  if (date) {
+    dateString = format(date, "EEE, MMM d yyyy, h:mm:ss a");
+  }
+  return dateString;
 }
 
 /**
@@ -20,10 +20,10 @@ export function formatDate(date) {
  * @returns a string with the date without time
  */
 export function formatDateOnly(date) {
-    let dateString="";
+  let dateString = "";
 
-    if (date) {
-        dateString = format(date, "EEE, MMM d yyyy");
-    }
-    return dateString;
+  if (date) {
+    dateString = format(date, "EEE, MMM d yyyy");
+  }
+  return dateString;
 }

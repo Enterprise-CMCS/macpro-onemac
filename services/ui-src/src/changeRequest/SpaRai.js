@@ -4,6 +4,7 @@ import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 import { ROUTES } from "cmscommonlib";
+import { commonSubheaderMessage } from "../libs/formsLib"
 
 /**
  * SpaRai acts as a wrapper around RaiTemplate to render custom RAI form for a SPA RAI
@@ -15,13 +16,10 @@ const SpaRai = () => {
   const formInfo = {
     pageTitle: "Respond to Medicaid SPA RAI",
     readOnlyPageTitle: "Medicaid SPA RAI Response Details",
-    subheaderMessage:
-        "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
+    subheaderMessage: commonSubheaderMessage,
     detailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
-    optionalUploads: [
-      "Other",
-    ],
+    optionalUploads: ["Other"],
 
     transmittalNumber: {
       idType: "spa",
@@ -29,11 +27,11 @@ const SpaRai = () => {
       idHintText: "Must follow the format SS-YY-NNNN-xxxx",
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex: "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idRegex:
+        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
       idMustExist: true,
       errorLevel: "error",
     },
-
   };
 
   if (id && userId) {

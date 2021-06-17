@@ -13,7 +13,9 @@ jest.mock("../utils/ChangeRequestDataApi");
 
 it("renders with a New Submission button", async () => {
   const promise = Promise.resolve([]);
-  ChangeRequestDataApi.getAllByAuthorizedTerritories.mockImplementationOnce(() => promise);
+  ChangeRequestDataApi.getAllByAuthorizedTerritories.mockImplementationOnce(
+    () => promise
+  );
 
   render(
     <AppContext.Provider
@@ -27,6 +29,8 @@ it("renders with a New Submission button", async () => {
   );
 
   const newSubmissionButton = screen.getByText("New Submission");
-  expect(newSubmissionButton.getAttribute("href")).toBe(ROUTES.NEW_SUBMISSION_SELECTION);
+  expect(newSubmissionButton.getAttribute("href")).toBe(
+    ROUTES.NEW_SUBMISSION_SELECTION
+  );
   await act(() => promise);
 });
