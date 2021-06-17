@@ -4,6 +4,7 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 
+/*
 
 //const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
 const login = require('../suites/OY2_9999_Login');
@@ -94,22 +95,30 @@ module.exports = {
         //browser.useCss();
     },
 
-    'Verify the uploaded attachment in the submission lists for the submitted SPA/Waiver': function (browser) {
-        browser.useCss();
-        submitWaiver["Verify that user can submit a New Waiver"](browser);
-        let waiverNumber = '//tbody/tr[1]/td/a';
-        let attachementElement = ".form-container a[target='_blank']";
-        browser.useXpath().click(waiverNumber).pause(4000);
-        browser.useCss().expect.element(attachementElement).to.be.visible;
-        browser.back();
-    },
+    // 'Verify the uploaded attachment in the submission lists for the submitted SPA/Waiver': function (browser) {
+    //     browser.useCss();
+    //     submitWaiver["Verify that user can submit a New Waiver"](browser);
+    //     let waiverNumber = '//tbody/tr[1]/td/a';
+    //     let attachementElement = ".form-container a[target='_blank']";
+    //     browser.useXpath().click(waiverNumber).pause(4000);
+    //     browser.useCss().expect.element(attachementElement).to.be.visible;
+    //     browser.back();
+    // },
 
     'Verify “No file chosen” case': function (browser) {
-        browser.useCss().click("button#spaSubmitBtn").pause(4000);
-        browser.verify.containsText("tr:nth-of-type(1) > td:nth-of-type(3)", "No file chosen"); 
-        browser.back();
+        //browser.useCss().click("button#spaSubmitBtn").pause(4000);
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.useCss().verify.containsText("tr:nth-of-type(1) > td:nth-of-type(3)", "No file chosen"); 
+        //browser.back();
+        let dashboard_link = "//a[@id='dashboardLink']";
+        browser.useXpath().click(dashboard_link);
     },
 }
+*/
 
 /*
 # Test Case Location:
