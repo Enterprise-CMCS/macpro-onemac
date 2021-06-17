@@ -36,9 +36,10 @@ const FAQ = () => {
     <PageTitleBar heading="Frequently Asked Questions" />
     <div className="form-container" id="top">
       <div className="form-card">
+      <div className="faq-border-box"></div>
         <div className="faq-info-box">
-          <hr className="faq-info-box-top-border"/>
-          <p className="faq-info-box-title">MACPRO HELP DESK CONTACT INFO</p>
+          {/* <hr className="faq-info-box-top-border"/> */}
+          <p className="faq-info-box-title">MACPro Help Desk Contact Info</p>
           <b>Phone Number</b>
           <br/>
           <a href="phone:8332282540">(833) 228-2540</a>
@@ -48,14 +49,14 @@ const FAQ = () => {
           <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">MACPro_HelpDesk@cms.hhs.gov</a>
         </div>
         <div className="faq-left-column">
-        <h2>General</h2>
+        <h3 className="topic-title">General</h3>
         <Collapsible triggerWhenOpen={<TriggerCB isOpen={false} text="What browsers can I use to access the system?"/>}
                      trigger={<TriggerCB isOpen={true} text="  What browsers can I use to access the system?"/>} >
         <br/>
           The submission portal works best on Google Chrome (Version 91.0.4472.77 or later), Firefox  (Version 89.0 or later).
         </Collapsible>
           <hr/>
-        <h3>State Plan Amendments (SPAs)</h3>
+        <h3 className="topic-title">State Plan Amendments (SPAs)</h3>
         <div  ref={spaIdRef} id="spa-id-format">
         <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a SPA ID?"/>}
                      triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a SPA ID?"/>} >
@@ -79,6 +80,7 @@ const FAQ = () => {
         <div>
         <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a Medicaid SPA?"/>}
                      triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a Medicaid SPA?"/>} >
+        <br/>
         <p>
           SPA submission requirements can be found in regulation&nbsp;
           <a
@@ -394,10 +396,11 @@ const FAQ = () => {
         </Collapsible>
           <hr/>
       </div>
-        <h3>Waivers</h3>
+        <h3 className="topic-title">Waivers</h3>
         <div  ref={waiverIdRef} id="waiver-id-format">
           <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(b) waiver number?"/>}
                        triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(b) waiver number?"/>} >
+        <br/>
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
           <li>SS = 2 character state abbreviation</li>
@@ -418,7 +421,7 @@ const FAQ = () => {
           <br/>
           <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(c) waiver number?"/>}
                        triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(c) waiver number?"/>} >
-
+        <br/>
         <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
         <ul>
           <li>SS = 2 character state abbreviation</li>
@@ -439,6 +442,7 @@ const FAQ = () => {
         <br/>
         <Collapsible trigger={<TriggerCB isOpen={true} text="What attachments are needed to submit a 1915(b) waiver action?"/>}
                      triggerWhenOpen={<TriggerCB isOpen={false} text="What attachments are needed to submit a 1915(b) waiver action?"/>} >
+        <br/>
         <p><span>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe
             the requirements for submitting section 1915(b) and 1915(c) waivers.</span></p>
         <table className="faq-table">
@@ -521,6 +525,7 @@ const FAQ = () => {
           <hr/>
         <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"/>}
                      triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"/>} >
+        <br/>
         <p><span>Note: “*” indicates a required attachment.</span></p>
         <table className="faq-table">
           <colgroup>
@@ -561,6 +566,7 @@ const FAQ = () => {
           <hr/>
         <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"/>}
                      triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"/>} >
+        <br/>
         <p><span>Note: “*” indicates a required attachment.</span></p>
         <table className="faq-table">
           <colgroup>
