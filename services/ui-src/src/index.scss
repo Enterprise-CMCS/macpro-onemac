@@ -359,6 +359,11 @@ input[type="file"] {
   h3 {
     @extend .ds-u-margin-top--7;
   }
+  .topic-title {
+    @extend .ds-h3;
+    @extend .ds-u-margin-top--0;
+    margin-bottom: 24px;
+  }
   .ds-c-review {
     @extend .ds-u-border-bottom--0;
   }
@@ -1297,10 +1302,36 @@ dl.state-access-cards {
   }
 }
 
+.faq-border-box {
+  background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
+  @media only screen and (min-width: 1200px) {
+    position: fixed;
+    float: right;
+    top: 218px;
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1525px){
+    margin-right: 40px;
+  }
+  @media only screen and (max-width: 1199px){
+    width: 100% !important;
+    text-align: center;
+  }
+  width: 368px;
+  height: 8px;
+  right: 72px;
+}
+
 .faq-info-box {
   @media only screen and (min-width: 1200px) {
     position: fixed;
     float: right;
+  }
+  @media only screen and (min-width: 1200px) and (max-width: 1525px){
+    margin-right: 40px;
+  }
+  @media only screen and (max-width: 1199px){
+    width: 100% !important;
+    text-align: center;
   }
   width: 368px;
   right: 72px;
@@ -1310,10 +1341,10 @@ dl.state-access-cards {
   border: 1px solid #d6d7d9;
   box-sizing: border-box;
   border-radius: 3px;
+  border-radius: 3px 3px 0px 0px;
 }
 
 .faq-info-box-title {
-  top: -30px;
   position: relative;
   font-family: Open Sans;
   font-style: normal;
@@ -1321,18 +1352,22 @@ dl.state-access-cards {
   font-size: 16px;
   line-height: 20px;
   /* identical to box height, or 125% */
-  text-transform: uppercase;
+  text-transform: capitalize;
   /* Text / Default - Light */
   color: #5b616b;
+  padding-bottom: 30px;
 }
 
 .faq-info-box-top-border {
-  top: -35px;
+  @media only screen and (max-width: 1190px){
+    width: 105%;
+  }
+  top: -37px;
   right: 16px;
   position: relative;
   width: 368px;
   height: 8px;
-
+  border-top: 8px;;
   background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
   border-radius: 3px 3px 0px 0px;
   margin-left: -1px;
@@ -1340,6 +1375,24 @@ dl.state-access-cards {
 
 .faq-collapsible-trigger {
   cursor: pointer;
+  .plus{
+    background-image: url("./images/plus.svg");
+    background-repeat: no-repeat;
+    padding-right: 20px;
+    background-position: center;
+  }
+  .minus{
+    background-image: url("./images/minus.svg");
+    background-repeat: no-repeat;
+    padding-right: 20px;
+    background-position: center;
+  }
+  .text{
+    padding-left: 31px;
+  }
+}
+.Collapsible__contentOuter {
+  padding-left: 22px;
 }
 
 .vert-line-svg {
