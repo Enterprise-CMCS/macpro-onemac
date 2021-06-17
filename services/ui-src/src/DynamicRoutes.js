@@ -1,24 +1,31 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { ROUTES, getUserRoleObj } from "cmscommonlib";
+
+import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
+
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
 import UserManagement from "./containers/UserManagement";
-import Spa from "./changeRequest/Spa";
-import Waiver from "./changeRequest/Waiver";
-import SpaRai from "./changeRequest/SpaRai";
-import WaiverRai from "./changeRequest/WaiverRai";
-import WaiverExtension from "./changeRequest/WaiverExtension";
-import WaiverAppK from "./changeRequest/WaiverAppK";
-import Metrics from "./containers/Metrics";
 import { useAppContext } from "./libs/contextLib";
-import ChipSpa from "./changeRequest/ChipSpa";
-import ChipSpaRai from "./changeRequest/ChipSpaRai";
+import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
 import NewSPA from "./changeRequest/NewSPA";
 import NewWaiver from "./changeRequest/NewWaiver";
+import SubmissionForm from "./changeRequest/SubmissionForm";
+import SubmissionView from "./changeRequest/SubmissionView";
+
+const FORM_TYPES = {
+  [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
+  [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
+  [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
+  [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
+  [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
+  [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
+  [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,
+  [ROUTES.WAIVER_RAI]: ChangeRequest.TYPE.WAIVER_RAI,
+};
 
 export default function DynamicRoutes() {
   const { userProfile: { userData: { type } = {} } = {} } = useAppContext();
@@ -61,37 +68,20 @@ export default function DynamicRoutes() {
           </AuthenticatedRoute>
         </>
       )}
-      {userRoleObj.canAccessDashboard && (
-        <>
-          <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
-            <ChipSpa />
+      {/* submission view */}
+      {userRoleObj.canAccessForms &&
+        Object.entries(FORM_TYPES).map(([route, type]) => (
+          <AuthenticatedRoute key={route} exact path={route}>
+            <SubmissionForm changeRequestType={type} />
           </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.CHIP_SPA_RAI}/:id?/:userId?`}>
-            <ChipSpaRai />
+        ))}
+      {/* read only view */}
+      {userRoleObj.canAccessDashboard &&
+        Object.entries(FORM_TYPES).map(([route, type]) => (
+          <AuthenticatedRoute key={route} exact path={`${route}/:id/:userId`}>
+            <SubmissionView changeRequestType={type} />
           </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.SPA}/:id?/:userId?`}>
-            <Spa />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?/:userId?`}>
-            <Waiver />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?/:userId?`}>
-            <SpaRai />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?/:userId?`}>
-            <WaiverRai />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?/:userId?`}>
-            <WaiverExtension />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute
-            exact
-            path={`${ROUTES.WAIVER_APP_K}/:id?/:userId?`}
-          >
-            <WaiverAppK />
-          </AuthenticatedRoute>
-        </>
-      )}
+        ))}
       {userRoleObj.canAccessUserManagement && (
         <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />

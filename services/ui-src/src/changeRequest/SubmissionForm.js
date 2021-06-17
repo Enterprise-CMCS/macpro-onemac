@@ -6,6 +6,7 @@ import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import {
   latestAccessStatus,
+  ChangeRequest,
   RESPONSE_CODE,
   ROUTES,
   USER_STATUS,
@@ -24,10 +25,9 @@ const leavePageConfirmMessage =
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
- * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-export const SubmissionForm = ({ formInfo, changeRequestType }) => {
+export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
   const {
@@ -40,6 +40,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
+  const formInfo = ChangeRequest.CONFIG[changeRequestType];
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
     formInfo?.actionType?.errorMessage
   );
@@ -449,7 +450,6 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 };
 
 SubmissionForm.propTypes = {
-  formInfo: PropTypes.object.isRequired,
   changeRequestType: PropTypes.string.isRequired,
 };
 

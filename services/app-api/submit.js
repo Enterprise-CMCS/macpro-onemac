@@ -1,14 +1,17 @@
+import { DateTime } from "luxon";
 import * as uuid from "uuid";
+
+import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
+
+import getChangeRequestFunctions, {
+  validateSubmission,
+  hasValidStateCode,
+} from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import getChangeRequestFunctions, {
-  hasValidStateCode,
-} from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "./libs/response-codes";
-import { DateTime } from "luxon";
 import getUser from "./utils/getUser";
-import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
 
 /**
  * Submission states for the change requests.
@@ -45,9 +48,8 @@ export const main = handler(async (event) => {
   data.userId = event.requestContext.identity.cognitoIdentityId;
 
   // do a pre-check for things that should stop us immediately
-  const errorMessage = runInitialCheck(data);
-  if (errorMessage) {
-    return errorMessage;
+  if (validateSubmission(data)) {
+    return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
   try {
@@ -194,16 +196,3 @@ export const main = handler(async (event) => {
 
   return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });
-
-/**
- * Validation check for items that should be checked before anything else is done
- * @param {Object} data the received data
- * @returns {String} any error messages triggered
- */
-function runInitialCheck(data) {
-  if (!data.user) return RESPONSE_CODE.VALIDATION_ERROR;
-  if (!data.uploads) return RESPONSE_CODE.ATTACHMENT_ERROR;
-  if (!data.type) return RESPONSE_CODE.SYSTEM_ERROR;
-
-  return "";
-}
