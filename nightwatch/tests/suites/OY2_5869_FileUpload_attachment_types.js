@@ -4,7 +4,7 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 
-/*
+
 //const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
 const login = require('../suites/OY2_9999_Login');
 const submitWaiver = require('../suites/OY2_4807_Validate_Waiver_Form_Logic');
@@ -26,7 +26,12 @@ module.exports = {
     },
 
     'Verify the attachment types for SPA': function (browser) {
-        browser.click("button#spaSubmitBtn");
+        //browser.click("button#spaSubmitBtn");
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
         let fileUploadElem = "[name='uploader-input-0']";
         // Verify upload PDF file 
         let filePath = require('path').resolve(__dirname + '/files/adobe.pdf')
@@ -83,7 +88,10 @@ module.exports = {
         filePath = require('path').resolve(__dirname + '/files/textnotes.txt')
         browser.useCss().setValue(fileUploadElem, filePath);
         browser.useXpath().expect.element(textElement).to.be.visible;
-        browser.back();
+        //browser.back();
+        let dashboard_link = "//a[@id='dashboardLink']";
+        browser.useXpath().click(dashboard_link);
+        //browser.useCss();
     },
 
     'Verify the uploaded attachment in the submission lists for the submitted SPA/Waiver': function (browser) {
@@ -100,7 +108,7 @@ module.exports = {
         browser.useCss().click("button#spaSubmitBtn").pause(4000);
         browser.verify.containsText("tr:nth-of-type(1) > td:nth-of-type(3)", "No file chosen"); 
         browser.back();
-    }
+    },
 }
 
 /*
