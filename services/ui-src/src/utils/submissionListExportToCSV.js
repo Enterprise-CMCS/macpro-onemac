@@ -12,7 +12,7 @@ const submissionTypes =
         "waiverappk": "1915(c) Appendix K Amendment"
     }
 
-export const JSONToCSVConvertor = (JSONData, ReportTitle, ShowLabel, columns) => {
+export const SubmissionListExportToCSV = (JSONData, ReportTitle, ShowLabel, columns) => {
 
     var CSV = "";
 
