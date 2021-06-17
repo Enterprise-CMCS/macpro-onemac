@@ -23,39 +23,48 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
     return function cleanup() {
       mounted = false;
     };
-  }, [ alertCode ] );
+  }, [alertCode]);
 
   useEffect(() => {
     let mounted = true;
 
     if (mounted && alert && alert.heading && alert.heading !== "") {
-        var elmnt = document.getElementById("alert-bar");
-        if (elmnt) elmnt.scrollIntoView({behavior: 'smooth'});    
+      var elmnt = document.getElementById("alert-bar");
+      if (elmnt) elmnt.scrollIntoView({ behavior: "smooth" });
     }
 
     return function cleanup() {
       mounted = false;
     };
-  }, [ alert, personalizedString ]);
+  }, [alert, personalizedString]);
 
-  const renderText=()=>{
+  const renderText = () => {
     let newText = alert.text.replace("$personalize$", personalizedString);
     if (alert?.linkURL && alert?.linkText) {
       let parts = newText.split("$Link$");
-      let theLink = (<a href={alert.linkURL} target="_blank" rel="noopener noreferrer">{alert.linkText}</a>);
-      return <>{parts[0].toString()}{theLink}{parts[1].toString()}</>;
-    } else{
+      let theLink = (
+        <a href={alert.linkURL} target="_blank" rel="noopener noreferrer">
+          {alert.linkText}
+        </a>
+      );
+      return (
+        <>
+          {parts[0].toString()}
+          {theLink}
+          {parts[1].toString()}
+        </>
+      );
+    } else {
       return newText;
     }
-  }
+  };
 
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
-  return (
-    alertCode && alert && alert.heading && alert.heading !== "" ?
+  return alertCode && alert && alert.heading && alert.heading !== "" ? (
     <div className="alert-bar" id="alert-bar">
       <Alert variation={alert.type} heading={alert.heading}>
-        <p className="ds-c-alert__text" >{renderText()}</p>
+        <p className="ds-c-alert__text">{renderText()}</p>
         <button
           className="close-button"
           onClick={() => { setAlert(ALERTS_MSG.NONE); if (closeCallback) closeCallback(); } }
@@ -64,8 +73,7 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
         </button>
       </Alert>
     </div>
-    : null
-  );
+  ) : null;
 };
 
 AlertBar.propTypes = {

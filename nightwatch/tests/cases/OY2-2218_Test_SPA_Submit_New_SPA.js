@@ -7,32 +7,56 @@
  */
 
 const timeout = 1000;
+const { expect } = require('chai');
 const login = require('./OY2-1494_Test_SPA_Login');
 let spa;
 module.exports = {
 
     before : function(browser) {
-        login.before(browser);
-        login["Login to SPA and Waiver Dashboard"](browser);
+        login.beforeEach(browser);
+        login['Login to SPA and Waiver Dashboard'](browser);
         browser.pause(timeout * 3);
     },
 
     after : function(browser) {
-        login["Logout of SPA and Waiver Dashboard"](browser);
-        login.after(browser);
+        login.afterEach(browser);
     },
 
-    "Click on 'Start a new SPA'": function (browser, testData = {
-        selector: '@newSPA',
-        subUrl: '/spa',
+    "Click on 'New Submission'": function (browser, testData = {
+        selector: '@newSubmission',
+        new: 'new',
     }) {
         spa = browser.page.spaBasePage();
         spa.assert.elementPresent(testData.selector);
-        spa.click(testData.selector).waitForElementPresent('body');
-        browser.assert.urlContains(testData.subUrl);
+        spa.click(testData.selector)
+        .waitForElementPresent('body')
+        .expect.element('h1').text.to.contain('Submission Type');
+        browser.expect.url().to.contain(testData.new);
+        browser.expect.element('h4').text.to.contain('State Plan Amendment (SPA)');
+        
+    }, 
+
+
+    "Click on 'State Plan Amendment (SPA)'": function (browser, testData = {
+        selector: '#root > div > div.choice-container > ul > li:nth-child(1) > a',
+        headerText: 'SPA Type',
+    }) {
+        browser.click(testData.selector);
+        browser.expect.url().to.contain(testData.selector);
+        browser.expect.element('h1').text.to.contain(testData.headerText);
     },
-    /*
-    "Enter SPA State/Territory Information" : function (browser) {
+
+    "Click on 'Medicaid SPA'": function (browser) {
+        const testData = {
+            selector: '//*[@id="root"]/div/div[3]/ul/li[1]/a',
+            headerText: 'Submit New Medicaid SPA',
+        };
+        browser.click('xpath', testData.selector);
+        browser.expect.url().to.contain(testData.selector);
+        browser.expect.element('h4').text.to.contain(testData.headerText);
+    },
+
+/*         "Enter SPA State/Territory Information" : function (browser) {
         spa = browser.page.spaBasePage();
         let testData = {
             selector: '@territory',
@@ -46,12 +70,12 @@ module.exports = {
         spa.pause(timeout);
     },
 
-    */
+    
 
     "Enter SPA ID" : function (browser, spa_id) {
         spa = browser.page.spaBasePage();
         let selector = '@transmittal';
-        let id = (spa_id) ? spa_id : spa.getTransmitNumber(false, "AK");
+        let id = (spa_id) ? spa_id : spa.getTransmitNumber(true, browser.globals.user.state);
         spa.expect.element(selector).to.be.visible.before(timeout * 10);
         spa.setValue(selector, id, () => {
             browser.keys([browser.Keys.TAB]);
@@ -60,23 +84,29 @@ module.exports = {
 
     },
 
-    "Enter SPA ID (Optional)" : function (browser) {
+        "Enter SPA ID (Optional)" : function (browser) {
         spa = browser.page.spaBasePage();
-        this["Enter ID"](browser, spa.getTransmitNumber(true, "ND"));
+        this['Enter SPA ID'](browser, spa.getTransmitNumber(true, "ND"));
     },
-/*
+
 
     'Upload Documents Number' : function (browser, numOfFiles = 9) {
         spa = browser.page.spaBasePage();
         spa.uploadFiles(numOfFiles);
     },
-*/
 
-    "Upload Documents": function (browser, required = 2, type = 'pdf') {
-        let validate = (selector, fileName) => browser.expect.element(selector).value.contains(fileName);
-        spa = browser.page.spaBasePage();
-        spa.uploadDocs(type, required, validate);
+
+    "Upload Documents": function (browser, required = 1, type = 'pdf') {
+        let validate = (fileName) => {
+           //browser.expect.element(`//*[contains(text(),"${fileName}")]`).text.contain(fileName);
+           browser.expect.element(`//*[contains(text(),"${fileName}")]`).to.be.present;
+        }
+             spa = browser.page.spaBasePage();
+        spa.uploadDocs(type);
     },
+   // "Upload another Documents": function (browser) {
+   //     this['Upload another Documents'](browser, 1, 'docx');
+   // },
 
     'Enter Comments' : function (browser, selector = 'textarea',
                                  entered_text = "Relax. This is only a test") {
@@ -92,6 +122,7 @@ module.exports = {
         spa = browser.page.spaBasePage();
         browser.click('[type="submit"]');
         spa.expect.element(testData.selector).to.be.visible.before(timeout * 20);
+        browser.pause(3000);
     },
-
+  */
 };

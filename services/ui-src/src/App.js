@@ -13,7 +13,7 @@ function App() {
     isAuthenticated: false,
     isLoggedInAsDeveloper: false,
     userProfile: null,
-    isValidRoute: false
+    isValidRoute: false,
   });
 
   useEffect(() => {
@@ -41,7 +41,8 @@ function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       userAuthenticationStatus = true;
       tempUserProfile = {
-        cmsRoles: authUser.signInUserSession.idToken.payload["custom:cms_roles"],
+        cmsRoles:
+          authUser.signInUserSession.idToken.payload["custom:cms_roles"],
         email: authUser.signInUserSession.idToken.payload.email,
         firstName: authUser.signInUserSession.idToken.payload.given_name,
         lastName: authUser.signInUserSession.idToken.payload.family_name,
@@ -75,20 +76,20 @@ function App() {
   }
 
   return (
-      !authState.isAuthenticating && (
-          <div>
-            <AppContext.Provider
-                value={{
-                  ...authState,
-                  setUserInfo,
-                }}
-            >
-              <Header />
-              <Routes />
-            </AppContext.Provider>
-            <Footer />
-          </div>
-      )
+    !authState.isAuthenticating && (
+      <div>
+        <AppContext.Provider
+          value={{
+            ...authState,
+            setUserInfo,
+          }}
+        >
+          <Header />
+          <Routes />
+        </AppContext.Provider>
+        <Footer />
+      </div>
+    )
   );
 }
 

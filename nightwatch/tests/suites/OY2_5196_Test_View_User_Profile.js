@@ -1,20 +1,19 @@
-const login = require("../cases/OY2-1494_Test_SPA_Login");
+const login = require('../suites/OY2_9999_Login');
 
 const timeout = 1000;
 let pageObjects;
 
 module.exports = {
+  "@tags": ["smoke", "regression-soon"],
+  
   before: function (browser) {
-    login.before(browser);
-    login["Login to SPA and Waiver Dashboard"](browser);
-    pageObjects = browser.page.spaBasePage();
-    browser.pause(timeout * 3);
-  },
+    login.beforeEach(browser);
+    login['Login with state user'](browser);
+},
 
-  after: function (browser) {
-    login["Logout of SPA and Waiver Dashboard"](browser);
-    login.after(browser);
-  },
+after: function (browser) {
+    login.afterEach(browser);
+},
 
   "Navigate to the Manage Account page": function (
     browser,
@@ -22,7 +21,7 @@ module.exports = {
       myAccountLink: "@myAccountLink",
       manageAccountLink: "@manageAccountLink",
       subUrl: "/profile",
-      pageTitle: "Account Management"
+      pageTitle: "User Profile"
     }
   ) {
     pageObjects = browser.page.spaBasePage();

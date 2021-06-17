@@ -58,6 +58,14 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           METRICS_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_METRICS_USERS] || secrets.METRICS_USERS }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
+          TEST_STATE_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_USERS] || secrets.TEST_STATE_USERS }}
+          TEST_STATE_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_USER_PASSWORD] || secrets.TEST_STATE_USER_PASSWORD }}
+          TEST_STATE_ADMIN_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_ADMIN_USERS] || secrets.TEST_STATE_ADMIN_USERS }}
+          TEST_STATE_ADMIN_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_ADMIN_USER_PASSWORD] || secrets.TEST_STATE_ADMIN_USER_PASSWORD }}
+          TEST_CMS_APPROVER_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_APPROVER_USERS] || secrets.TEST_CMS_APPROVER_USERS }}
+          TEST_CMS_APPROVER_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_APPROVER_USER_PASSWORD] || secrets.TEST_CMS_APPROVER_USER_PASSWORD }}
+          TEST_CMS_SYSTEM_ADMIN_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_SYSTEM_ADMIN_USERS] || secrets.TEST_CMS_SYSTEM_ADMIN_USERS }}
+          TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD] || secrets.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD }}
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
         env:
@@ -80,38 +88,6 @@ jobs:
             node_modules
             tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      - name: Get default test user name
-        uses: "marvinpinto/action-inject-ssm-secrets@latest"
-        env:
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        with:
-          ssm_parameter: /macstack/default/nightwatch/TEST_USERS
-          env_variable_name: TEST_USERS
-        continue-on-error: true
-      - name: Get branch specific test user name, if exists
-        uses: "marvinpinto/action-inject-ssm-secrets@latest"
-        env:
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        with:
-          ssm_parameter: /macstack/${{ env.branch_name }}/nightwatch/TEST_USERS
-          env_variable_name: TEST_USERS
-        continue-on-error: true
-      - name: Get default test user password
-        uses: "marvinpinto/action-inject-ssm-secrets@latest"
-        env:
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        with:
-          ssm_parameter: "/macstack/default/nightwatch/TEST_USER_PASSWORD"
-          env_variable_name: TEST_USER_PASSWORD
-        continue-on-error: true
-      - name: Get branch specific test user password
-        uses: "marvinpinto/action-inject-ssm-secrets@latest"
-        env:
-          AWS_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        with:
-          ssm_parameter: "/macstack/${{ env.branch_name }}/nightwatch/TEST_USER_PASSWORD"
-          env_variable_name: "TEST_USER_PASSWORD"
-        continue-on-error: true
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -135,22 +111,23 @@ jobs:
       - name: Seed Data
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
-      - name: Run Nightwatch suite
-        if: env.branch_name != 'production'
-        run: |
-          pushd services
-          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
-          popd
-          ./run.sh
       - name: Endpoint
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
+      - name: Run Nightwatch suite
+        # do not run tests on val and production
+        if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          popd
+          ./test.sh
       - name: Store test reults
         if: ${{ always() }}
         uses: actions/upload-artifact@v2
         with:
           name: test_results
-          path: tests/nightwatch/tests_output
+          path: ./tests_output

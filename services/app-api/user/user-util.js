@@ -5,7 +5,6 @@ import SystemAdmin from "./SystemAdmin";
 import Helpdesk from "./Helpdesk";
 import { USER_TYPE } from "cmscommonlib";
 
-
 /**
  * Get a singleton object that overloads user functions
  * with the specfic functions for the user role.

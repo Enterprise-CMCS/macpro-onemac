@@ -9,9 +9,13 @@ import { Spinner } from "@cmsgov/design-system";
 export default function LoadingScreen(props) {
   if (props.isLoading) {
     return (
-      <div className="loading-screen" aria-relevant="additions" aria-live="polite">
+      <div
+        className="loading-screen"
+        aria-relevant="additions"
+        aria-live="polite"
+      >
         <Spinner />
       </div>
     );
-  } else return props.children
+  } else return props.children;
 }

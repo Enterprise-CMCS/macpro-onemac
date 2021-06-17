@@ -58,13 +58,13 @@ export function Signup() {
         </div>
       ) : isHelpdeskUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
-         <HelpdeskSignup/>
+          <HelpdeskSignup />
         </div>
       ) : (
         <Redirect
           to={{
             pathname: "/",
-            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR },  // ALERTS_MSG.CONTACT_HELP_DESK },
+            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR }, // ALERTS_MSG.CONTACT_HELP_DESK },
           }}
         />
       ),
