@@ -45,7 +45,7 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
         onFocus={e => e.currentTarget.select()}
         value={value}
       />
-      <Button type="submit" variation="success">
+      <Button type="submit" variation="primary">
         Submit
       </Button>
       <Button
