@@ -1,6 +1,9 @@
 import React from "react";
 
-import { render, screen } from "@testing-library/react";
+import {
+  render,
+  screen,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import AlertBar from "./AlertBar";
@@ -31,13 +34,14 @@ jest.mock("../libs/error-mappings", () => {
             linkURL: "https://www.google.com",
             linkText: "Test Link Text",
           };
-          case "NONE":
-            return {
-              type: "success",
-              heading: "",
-              text: "",
-            };
-        }
+        case "NONE":
+        case "":
+          return {
+            type: "success",
+            heading: "",
+            text: "",
+          };
+      }
       return returnAlert;
     },
   };
@@ -70,15 +74,25 @@ it("shows an alert with a link", () => {
 
 it("goes away when closed", async () => {
   let initialCode = "SIMPLE_ALERT";
+  let findText = "success alert text.";
+
   render(<AlertBar alertCode={initialCode} />);
 
-  let alertEl = screen.getByText("success alert text.", { exact: false });
+  let alertEl = screen.getByText(findText, { exact: false });
   expect(alertEl).toBeInTheDocument();
-  expect( screen.getByRole("button") ).toBeInTheDocument();
+  expect(screen.getByRole("button")).toBeInTheDocument();
 
-  // userEvent.click( screen.getByRole("button") );
-
- // expect(alertEl).toBe("");
+  userEvent.click(screen.getByRole("button"));
+  expect(screen.queryByText(findText, { exact: false })).toBe(null);
 });
 
-it("calls the closing callback", () => {});
+it("calls the closing callback", () => {
+  let initialCode = "SIMPLE_ALERT";
+  let onCloseFn = jest.fn();
+
+  render(<AlertBar alertCode={initialCode} closeCallback={onCloseFn} />);
+
+  userEvent.click(screen.getByRole("button"));
+
+  expect(onCloseFn).toBeCalled();
+});
