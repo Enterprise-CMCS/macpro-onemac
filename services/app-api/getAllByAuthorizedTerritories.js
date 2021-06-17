@@ -20,46 +20,59 @@ export const main = handler(async (event, context) => {
   if (!user) {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
+  var allResults = [];
+  return await getDataFromDB(null).then(function () {
+    // extracts items from each of the results
+    let items = [];
+    allResults.forEach((result) => {
+      items = items.concat(result[0].Items);
+    });
 
-  let promises;
-  if (user.type === USER_TYPE.HELPDESK) {
-    promises = [dynamoDb.scan({ TableName: process.env.tableName })];
-  } else {
-    // query dynamodb for each territory in the territiories array
-    promises = getAuthorizedStateList(user).map((territory) =>
-      dynamoDb.query({
-        TableName: process.env.tableName,
-        IndexName: "territory-submittedAt-index",
-        KeyConditionExpression:
-          "territory = :v_territory and submittedAt > :v_submittedAt",
-        ExpressionAttributeValues: {
-          ":v_territory": territory,
-          ":v_submittedAt": 0,
-        },
-        ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
-      })
-    );
-  }
+    if (items.length === 0) {
+      console.log(`No change requests found matching that query.`);
+    }
 
-  // resolve promises from all queries
-  let results;
-  try {
-    results = await Promise.all(promises);
-  } catch (error) {
-    console.error("Could not fetch results from Dynamo:", error);
-    return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
-  }
-
-  // extracts items from each of the results
-  let items = [];
-  results.forEach((result) => {
-    items = items.concat(result.Items);
+    console.log(`Sending back ${items.length} change request(s).`);
+    return items;
   });
 
-  if (items.length === 0) {
-    console.log(`No change requests found matching that query.`);
+  async function getDataFromDB(startingKey) {
+    let promises;
+    if (user.type === USER_TYPE.HELPDESK) {
+      promises = [dynamoDb.scan({
+        TableName: process.env.tableName,
+        ExclusiveStartKey: startingKey
+      })];
+    } else {
+      // query dynamodb for each territory in the territiories array
+      promises = getAuthorizedStateList(user).map((territory) =>
+        dynamoDb.query({
+          TableName: process.env.tableName,
+          ExclusiveStartKey: startingKey,
+          IndexName: "territory-submittedAt-index",
+          KeyConditionExpression:
+            "territory = :v_territory and submittedAt > :v_submittedAt",
+          ExpressionAttributeValues: {
+            ":v_territory": territory,
+            ":v_submittedAt": 0,
+          },
+          ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
+        })
+      );
+    }
+    // resolve promises from all queries
+    let results;
+    try {
+      results = await Promise.all(promises);
+      allResults.push(results);
+      if (results[0].LastEvaluatedKey) {
+        await getDataFromDB(results[0].LastEvaluatedKey);
+      } else {
+        return;
+      }
+    } catch (error) {
+      console.error("Could not fetch results from Dynamo:", error);
+      return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
+    }
   }
-
-  console.log(`Sending back ${items.length} change request(s).`);
-  return items;
 });
