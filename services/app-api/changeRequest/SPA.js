@@ -112,7 +112,7 @@ class SPA {
         )}.
       </p>
       <p>
-        This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on
+        This mailbox is for the submittal of State Plan Amendments and non-web-based responses to Requests for Additional Information (RAI) on 
         submitted SPAs only.  Any other correspondence will be disregarded.
       </p>
       <p>If you have questions or did not expect this email, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a></p>
