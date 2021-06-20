@@ -2,7 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
-import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, USER_TYPE,getUserRoleObj  } from "cmscommonlib";
 
 import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
 import PageTitleBar from "../components/PageTitleBar";
@@ -18,7 +18,7 @@ import {
   isPending,
   isActive,
 } from "../libs/userLib";
-import {SubmissionListExportToCSV} from "../utils/JSONToCSVConvertor";
+import {tableListExportToCSV} from "../utils/tableListExportToCSV";
 
 /**
  * Component containing dashboard
@@ -142,7 +142,9 @@ const Dashboard = () => {
             className="new-submission-button"
             onClick={(e) => {
                 e.preventDefault();
-                SubmissionListExportToCSV(changeRequestList,"SubmissionList",true, columns)
+                tableListExportToCSV("submission-table", changeRequestList,"SubmissionList",
+                    columns)
+
             }}
             inversed
         >
@@ -190,7 +192,7 @@ const Dashboard = () => {
       <PageTitleBar
         heading="Submission List"
         rightSideContent={ ( isUserActive && userRoleObj.canAccessForms && newSubmissionButton)
-        || ( userData.type === "helpdesk" && csvExportSubmissions) }
+        || ( userData.type === USER_TYPE.HELPDESK && csvExportSubmissions) }
 
       />
       <AlertBar alertCode={alertCode} />
@@ -218,6 +220,6 @@ const Dashboard = () => {
       </div>
     </div>
   );
-};
+}
 
 export default Dashboard;
