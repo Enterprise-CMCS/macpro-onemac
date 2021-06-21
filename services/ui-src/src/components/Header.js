@@ -131,8 +131,11 @@ function Header(props) {
         return (
           <div className="nav-bar">
             <div className="nav-left">
-              <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-              <Link
+              <table><tr><td>
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+              </td>
+              <td>
+                <Link
                 to={ROUTES.HOME}
                 className={getActiveClass(currentRoute, RouteList.HOME)}
               >
@@ -184,6 +187,7 @@ function Header(props) {
                   Component Page
                 </Link>
               ) : null}
+              </td></tr></table>
             </div>
             {renderAccountButtons(isLoggedInAsDeveloper)}
           </div>
