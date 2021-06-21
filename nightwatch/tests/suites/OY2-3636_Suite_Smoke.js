@@ -88,7 +88,7 @@ module.exports = {
 
         // Verify the SPA on Submission List 
         //browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
+        browser.useXpath().verify.containsText('(//table[@class="submissions-table"]/tbody/tr/td/a)[1]', spaID);
         browser.useCss();
         return spaID;
     },
