@@ -46,6 +46,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
   );
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
     useState("");
+
+  // Rename to Display instead of status messsage ? 
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
     useState({
       statusLevel: "error",
@@ -54,6 +56,15 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  const [transmittalNumberFormatMessage, setTransmittalNumberFormatMessage] =
+    useState({
+      statusLevel: "error",
+      statusMessage: "",
+    });
+
+  const [transmittalNumberExistMessages, setTransmittalNumberExistMessages] =
+    useState([]);
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -126,43 +137,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
       return errorMessage;
     },
-    [transmittalNumberDetails, userData]
-  );
-
-  const validateIdExistence = useCallback(
-    (transmittalNumber) => {
-      let checkingNumber = transmittalNumber;
-      let statusMessage = "";
-
-      if (transmittalNumberDetails.existenceRegex !== undefined) {
-        checkingNumber = changeRequest.transmittalNumber.match(
-          transmittalNumberDetails.existenceRegex
-        )[0];
-      }
-
-      ChangeRequestDataApi.packageExists(checkingNumber)
-        .then((dupID) => {
-          if (!dupID && transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
-            }
-          } else if (dupID && !transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
-            }
-          }
-        })
-        .catch((error) => {
-          console.log("There was an error submitting a request.", error);
-        });
-
-      return statusMessage;
-    },
-    [transmittalNumberDetails, changeRequest]
+    [transmittalNumberDetails, userData, changeRequest.transmittalNumber]
   );
 
   /**
@@ -238,6 +213,65 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }, [alertCode, history]);
 
   useEffect(() => {
+    let formatMessage = {
+      statusLevel: "error",
+      statusMessage: validateTransmittalNumber(changeRequest.transmittalNumber),
+    };
+
+    if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber){
+      const promises = transmittalNumberDetails.idExistValidations.map((idExistValidation) => {
+        let checkingNumber = changeRequest.transmittalNumber;
+
+        if (idExistValidation.existenceRegex !== undefined) {
+          checkingNumber = changeRequest.transmittalNumber.match(
+            idExistValidation.existenceRegex
+          )[0];
+        }
+
+        return ChangeRequestDataApi.packageExists(checkingNumber)
+      })
+
+      let existMessages = []
+      Promise.all(promises).then((results) => {
+        results.map((dupID, key) => {
+          const correspondingValidation = transmittalNumberDetails.idExistValidations[key]
+          let tempMessage
+
+          // ID does not exist but it should exist
+          if (!dupID && correspondingValidation.idMustExist) {
+            if (correspondingValidation.errorLevel === "error") {
+              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+            }
+          }
+          // ID exists but it should NOT exist
+          else if (dupID && !correspondingValidation.idMustExist) {
+            if (correspondingValidation.errorLevel === "error") {
+              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              tempMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+            }
+          }
+
+          // if we got a message through checking, then we should add it to the existMessages array
+          const messageToAdd = {
+            statusLevel: correspondingValidation.errorLevel,
+            statusMessage: tempMessage
+          }
+          tempMessage && existMessages.push(messageToAdd)
+        })
+      }).then(() => {
+        setTransmittalNumberExistMessages(existMessages)
+      })
+    }
+
+    setTransmittalNumberFormatMessage(formatMessage)
+  },
+  [transmittalNumberDetails, changeRequest, changeRequest.transmittalNumber, validateTransmittalNumber]
+  );
+
+  useEffect(() => {
     let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
     let actionTypeMessage = formInfo?.actionType?.errorMessage;
 
@@ -245,33 +279,32 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
     if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
 
-    // validate that the ID is in correct format
-    let newMessage = {
+    setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+    setActionTypeErrorMessage(actionTypeMessage);
+
+    // default display message settings with empty message
+    let displayMessage = {
       statusLevel: "error",
       statusMessage: "",
     };
-    let checkingNumber = changeRequest.transmittalNumber;
 
-    newMessage.statusMessage = validateTransmittalNumber(checkingNumber);
-
-    // if the ID is valid, check if exists/not exist in data
-    if (newMessage.statusMessage === "" && checkingNumber !== "") {
-      if (transmittalNumberDetails.errorLevel)
-        newMessage.statusLevel = transmittalNumberDetails.errorLevel;
-
-      newMessage.statusMessage = validateIdExistence(checkingNumber);
+    if (transmittalNumberFormatMessage.statusMessage !== "") {
+      displayMessage = transmittalNumberFormatMessage
+      setTransmittalNumberStatusMessage(displayMessage);
+    } else if (transmittalNumberExistMessages.length > 0) {
+      displayMessage = transmittalNumberExistMessages[0];
+      setTransmittalNumberStatusMessage(displayMessage);
+    } else {
+      setTransmittalNumberStatusMessage(displayMessage);
     }
 
-    setTransmittalNumberStatusMessage(newMessage);
-    setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-    setActionTypeErrorMessage(actionTypeMessage);
   }, [
     changeRequest,
-    firstTimeThrough,
+    changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
-    validateTransmittalNumber,
-    validateIdExistence
+    transmittalNumberFormatMessage,
+    transmittalNumberExistMessages,
   ]);
 
   /**
