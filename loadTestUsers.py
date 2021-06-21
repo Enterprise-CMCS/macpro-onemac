@@ -82,7 +82,7 @@ def seed_cognito(test_users, user_pool_id, password):
         elif user["type"].startswith("cms") or user["type"] == "systemadmin":
             role = "onemac-cms-user"
         elif user["type"] == "helpdesk":
-            role = "onemac-helpdesk-user"
+            role = "onemac-helpdesk"
 
         # checking errors so we do not set the password when the first call
         # fails, but the failure itself is not a big problem - in most cases
