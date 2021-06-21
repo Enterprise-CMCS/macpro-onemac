@@ -57,15 +57,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [transmittalNumberFormatMessage, setTransmittalNumberFormatMessage] =
-    useState({
-      statusLevel: "error",
-      statusMessage: "",
-    });
-
-  const [transmittalNumberExistMessages, setTransmittalNumberExistMessages] =
-    useState([]);
-
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
@@ -213,10 +204,25 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }, [alertCode, history]);
 
   useEffect(() => {
+    let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
+    let actionTypeMessage = formInfo?.actionType?.errorMessage;
+
+    if (changeRequest.actionType) actionTypeMessage = "";
+
+    if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
+
+    // default display message settings with empty message
+    let displayMessage = {
+      statusLevel: "error",
+      statusMessage: "",
+    };
+
     let formatMessage = {
       statusLevel: "error",
       statusMessage: validateTransmittalNumber(changeRequest.transmittalNumber),
     };
+
+    let existMessages = []
 
     if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber){
       const promises = transmittalNumberDetails.idExistValidations.map((idExistValidation) => {
@@ -231,7 +237,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
         return ChangeRequestDataApi.packageExists(checkingNumber)
       })
 
-      let existMessages = []
       Promise.all(promises).then((results) => {
         results.map((dupID, key) => {
           const correspondingValidation = transmittalNumberDetails.idExistValidations[key]
@@ -250,7 +255,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
             if (correspondingValidation.errorLevel === "error") {
               tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
             } else {
-              tempMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
             }
           }
 
@@ -262,49 +267,26 @@ export const SubmissionForm = ({ changeRequestType }) => {
           tempMessage && existMessages.push(messageToAdd)
         })
       }).then(() => {
-        setTransmittalNumberExistMessages(existMessages)
+        if (existMessages.length > 0) {
+          displayMessage = existMessages[0];
+          setTransmittalNumberStatusMessage(displayMessage);
+        } else {
+          setTransmittalNumberStatusMessage(displayMessage);
+        }
       })
+    } else {
+      displayMessage = formatMessage
+      setTransmittalNumberStatusMessage(displayMessage);
     }
-
-    setTransmittalNumberFormatMessage(formatMessage)
-  },
-  [transmittalNumberDetails, changeRequest, changeRequest.transmittalNumber, validateTransmittalNumber]
-  );
-
-  useEffect(() => {
-    let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
-    let actionTypeMessage = formInfo?.actionType?.errorMessage;
-
-    if (changeRequest.actionType) actionTypeMessage = "";
-
-    if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
 
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setActionTypeErrorMessage(actionTypeMessage);
-
-    // default display message settings with empty message
-    let displayMessage = {
-      statusLevel: "error",
-      statusMessage: "",
-    };
-
-    if (transmittalNumberFormatMessage.statusMessage !== "") {
-      displayMessage = transmittalNumberFormatMessage
-      setTransmittalNumberStatusMessage(displayMessage);
-    } else if (transmittalNumberExistMessages.length > 0) {
-      displayMessage = transmittalNumberExistMessages[0];
-      setTransmittalNumberStatusMessage(displayMessage);
-    } else {
-      setTransmittalNumberStatusMessage(displayMessage);
-    }
-
   }, [
     changeRequest,
     changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
-    transmittalNumberFormatMessage,
-    transmittalNumberExistMessages,
+    validateTransmittalNumber
   ]);
 
   /**
