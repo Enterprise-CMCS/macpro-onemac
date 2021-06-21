@@ -4,8 +4,9 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 
-
-const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
+/*
+//const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../suites/OY2_9999_Login');
 const submitWaiver = require('../suites/OY2_4807_Validate_Waiver_Form_Logic');
 let pdfElement = "//span[text()='adobe.pdf']";
 let excelElement = "//span[text()='excel.xlsx']";
@@ -13,21 +14,15 @@ let fileElement = "//span[text()='file.docx']";
 let picElement = "//span[text()='picture.jpg']";
 let textElement = "//span[text()='textnotes.txt']";
 module.exports = {
-    "@tags": ["smoke", "attachmentType"],
+    "@tags": ["smoke", "regression-soon"],
+  
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(browser.launch_url);
-        browser.waitForElementPresent('body');
-        loginModule["Login to Medicaid as Regular User"](browser);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
-    
+
     after: function (browser) {
-        loginModule["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
 
     'Verify the attachment types for SPA': function (browser) {
@@ -37,26 +32,31 @@ module.exports = {
         let filePath = require('path').resolve(__dirname + '/files/adobe.pdf')
         browser.useCss().setValue(fileUploadElem, filePath);
         browser.useXpath().expect.element(pdfElement).to.be.visible;
+        browser.pause(3000);
         browser.useCss().click("[fill='currentColor']");
         // Verify upload EXCEL file 
         filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
         browser.useCss().setValue(fileUploadElem, filePath);
         browser.useXpath().expect.element(excelElement).to.be.visible;
+        browser.pause(3000);
         browser.useCss().click("[fill='currentColor']");
         // Verify upload DOC file 
         filePath = require('path').resolve(__dirname + '/files/file.docx')
         browser.useCss().setValue(fileUploadElem, filePath);
         browser.useXpath().expect.element(fileElement).to.be.visible;
+        browser.pause(3000);
         browser.useCss().click("[fill='currentColor']");
         // Verify upload PICTURE file 
         filePath = require('path').resolve(__dirname + '/files/picture.jpg')
         browser.useCss().setValue(fileUploadElem, filePath);
         browser.useXpath().expect.element(picElement).to.be.visible;
+        browser.pause(3000);
         browser.useCss().click("[fill='currentColor']");
         // Verify upload TEXT file 
         filePath = require('path').resolve(__dirname + '/files/textnotes.txt')
         browser.useCss().setValue(fileUploadElem, filePath);
         browser.useXpath().expect.element(textElement).to.be.visible;
+        browser.pause(3000);
         browser.useCss().click("[fill='currentColor']").pause(1000);
         browser.back();
     },

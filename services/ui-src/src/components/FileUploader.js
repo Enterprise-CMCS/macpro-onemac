@@ -239,7 +239,8 @@ export default class FileUploader extends Component {
       // disabled flag for types that only allow a single file for upload and a file is already selected
       let isDisabled = uploader.allowMultiple === false && uploader.hasFile;
 
-      if (uploader.allowMultiple === false) singleFileControls.push(uploader.title);
+      if (uploader.allowMultiple === false)
+        singleFileControls.push(uploader.title);
 
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
@@ -318,9 +319,7 @@ export default class FileUploader extends Component {
           Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
           multiple files per attachment type
           {singleFileControls.length > 0 && (
-            <>
-              , except for the {formatList(singleFileControls)}
-            </>
+            <>, except for the {formatList(singleFileControls)}</>
           )}
           . Read the description for each of the attachment types on the FAQ
           Page.
@@ -337,7 +336,7 @@ export default class FileUploader extends Component {
           </p>
         )}
         <div className="ds-u-color--error">
-          { this.props.showRequiredFieldErrors && 
+          {this.props.showRequiredFieldErrors &&
             this.state.errorMessages.map((message, index) => (
               <div key={index}>{message}</div>
             ))}

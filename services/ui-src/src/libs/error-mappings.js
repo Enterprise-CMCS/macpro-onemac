@@ -104,7 +104,7 @@ export const getAlert = (errorCode) => {
     case "UR048":
       returnAlert = ALERTS_MSG.USER_STATUS_DENIED;
       break;
-  
+
     default:
       console.log("Not sure what this error is", errorCode);
       returnAlert = ALERTS_MSG.SUBMISSION_ERROR;
