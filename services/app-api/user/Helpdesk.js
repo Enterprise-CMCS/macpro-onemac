@@ -13,14 +13,14 @@ class Helpdesk {
    * CMS Approvers manage the State Admins
    * @returns {String} the User Role
    */
-   getScanParams() {
+  getScanParams() {
     let scanParams = {
       TableName: process.env.userTableName,
-      FilterExpression:  "#ty <> :userType",
+      FilterExpression: "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
       ExpressionAttributeValues: { ":userType": USER_TYPE.SYSTEM_ADMIN },
     };
-     return scanParams;
+    return scanParams;
   }
 
   /**
@@ -67,7 +67,7 @@ class Helpdesk {
         );
         return;
       }
-      if (oneUser.type !== 'cmsapprover' && oneUser.type !== 'helpdesk'){
+      if (oneUser.type !== "cmsapprover" && oneUser.type !== "helpdesk") {
         oneUser.attributes.forEach((oneAttribute) => {
           // State Admins and State Users must have the history section
           if (!oneAttribute.history) {
@@ -97,13 +97,12 @@ class Helpdesk {
           email: oneUser.id,
           firstName: oneUser.firstName,
           lastName: oneUser.lastName,
-          stateCode: 'N/A',
+          stateCode: "N/A",
           role: oneUser.type,
           latest: getCurrentStatus(oneUser.attributes),
         });
         i++;
       }
-
     });
 
     console.log("error List is ", errorList);

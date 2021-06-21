@@ -10,49 +10,50 @@ import AlertBar from "../components/AlertBar";
 export default function Home() {
   const location = useLocation();
 
-  const submissionTitle ='How to create a submission';
+  const submissionTitle = "How to create a submission";
   const submissionsList = [
     {
-      image: 'login',
-      subTitle: 'Login with IDM',
-      text: 'Login with your IDM username and password to access your SPA and Waiver dashboard.',
-      verticalLineClass: 'vertical-line-64',
+      image: "login",
+      subTitle: "Login with IDM",
+      text: "Login with your IDM username and password to access your SPA and Waiver dashboard.",
+      verticalLineClass: "vertical-line-64",
     },
     {
-      image: 'attach',
-      subTitle: 'Attach your documents',
-      text: 'Select a submission type and attach required documents relevant to your SPA and/or Waiver submission.',
-      verticalLineClass: 'vertical-line-96',
+      image: "attach",
+      subTitle: "Attach your documents",
+      text: "Select a submission type and attach required documents relevant to your SPA and/or Waiver submission.",
+      verticalLineClass: "vertical-line-96",
     },
     {
-      image: 'email',
-      subTitle: 'Recieve an email confirmation',
+      image: "email",
+      subTitle: "Recieve an email confirmation",
       text: `After you submit, you will receive an email confirmation that your submission was 
         successful, marking the start of the 90-day review process.`,
-      verticalLineClass: '',
-    }
+      verticalLineClass: "",
+    },
   ];
 
-  const paperSubmissionTitle = 'You can submit paper-based submissions, including:';
+  const paperSubmissionTitle =
+    "You can submit paper-based submissions, including:";
 
   const paperSubmissionList = [
     {
-      text: 'Amendments to your Medicaid State Plans (not submitted through MACPro, MMDL or WMS)'
+      text: "Amendments to your Medicaid State Plans (not submitted through MACPro, MMDL or WMS)",
     },
     {
-      text: 'Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro)'
+      text: "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro)",
     },
     {
-      text: 'Section 1915(b) waiver submissions (those not submitted through WMS)'
+      text: "Section 1915(b) waiver submissions (those not submitted through WMS)",
     },
     {
-      text: 'Section 1915(c) Appendix K amendments (which cannot be submitted through WMS)'
+      text: "Section 1915(c) Appendix K amendments (which cannot be submitted through WMS)",
     },
     {
-      text: 'Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable)'
+      text: "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable)",
     },
     {
-      text: 'State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.'
+      text: "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
     },
   ];
 
@@ -61,51 +62,51 @@ export default function Home() {
    * @param {Array} submissionsList data items for the list
    * @returns  list of data divs
    */
-  const renderSubmissionSteps = submissionsList => {
-    return (
-      submissionsList.map((item,i) => {
-        return (
-          <div key={i} >
-            <div className="ds-l-row">
-              <div className="ds-l-col--1 ds-u-padding--0">
-                <img src={`/assets/images/icons/${item.image}.svg`} alt={item.subTitle} />
-              </div>
-              <div className="ds-l-col--11 ds-u-padding-left--1 sub-title">
-                {item.subTitle}
-              </div>
+  const renderSubmissionSteps = (submissionsList) => {
+    return submissionsList.map((item, i) => {
+      return (
+        <div key={i}>
+          <div className="ds-l-row">
+            <div className="ds-l-col--1 ds-u-padding--0">
+              <img
+                src={`/assets/images/icons/${item.image}.svg`}
+                alt={item.subTitle}
+              />
             </div>
+            <div className="ds-l-col--11 ds-u-padding-left--1 sub-title">
+              {item.subTitle}
+            </div>
+          </div>
 
-            <div className="ds-l-row">
-              <div className="ds-l-col--1 ds-u-padding--0">
-                <div className={item.verticalLineClass}></div>
-              </div>
-              <div className="ds-l-col--11 ds-u-padding-left--1 text">
-                {item.text}
-              </div>
+          <div className="ds-l-row">
+            <div className="ds-l-col--1 ds-u-padding--0">
+              <div className={item.verticalLineClass}></div>
             </div>
-          </div>)
-      })
-    );
-  }
+            <div className="ds-l-col--11 ds-u-padding-left--1 text">
+              {item.text}
+            </div>
+          </div>
+        </div>
+      );
+    });
+  };
 
   /**
    * Takes a list of items for the Submission List.
    * @param {Array} renderSubmissionSteps data items for the list
    * @returns  Unordered list of data items
    */
-  const renderPaperSubmissionInfo = renderSubmissionSteps => {
+  const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
     return (
       <ul className="ds-u-padding--0">
-        {
-          renderSubmissionSteps.map( (item, i) =>
-            <li key={i} className="text" >
-              {item.text}
-            </li>
-          )
-        }
+        {renderSubmissionSteps.map((item, i) => (
+          <li key={i} className="text">
+            {item.text}
+          </li>
+        ))}
       </ul>
     );
-  }
+  };
 
   return (
     <>

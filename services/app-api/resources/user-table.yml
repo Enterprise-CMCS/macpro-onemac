@@ -6,7 +6,7 @@ Resources:
       AttributeDefinitions:
         - AttributeName: id
           AttributeType: S
-    # Set the capacity to auto-scale
+      # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
       KeySchema:
         - AttributeName: id

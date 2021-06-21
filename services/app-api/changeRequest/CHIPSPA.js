@@ -7,27 +7,25 @@ import { RESPONSE_CODE } from "../libs/response-codes";
  * @class
  */
 class CHIPSPA {
-
-/**
- * SPA Submissions require that the Package ID is not currently being used.
- * @param {Object} data the received data
- * @returns {String} any errors
- */
-async fieldsValid(data) {
-  let areFieldsValid = false;
-  let whyNot = "";
+  /**
+   * SPA Submissions require that the Package ID is not currently being used.
+   * @param {Object} data the received data
+   * @returns {String} any errors
+   */
+  async fieldsValid(data) {
+    let areFieldsValid = false;
+    let whyNot = "";
 
     const params = {
       TableName: process.env.spaIdTableName,
       // 'Key' defines the partition key and sort key of the item to be retrieved
       // - 'id': change request ID
       Key: {
-        id: data.transmittalNumber
-      }
+        id: data.transmittalNumber,
+      },
     };
     console.log("the params for checking", params);
     try {
-
       const result = await dynamoDb.get(params);
 
       if (result.Item) {
@@ -38,25 +36,24 @@ async fieldsValid(data) {
         console.log("result.Item does not exist");
         areFieldsValid = true;
       }
-
     } catch (error) {
       console.log("packageExists got an error: ", error);
     }
 
-  return { areFieldsValid, whyNot };
-}
+    return { areFieldsValid, whyNot };
+  }
 
-/**
- * CHIP SPA submission email to CMS details wrapped in generic function name.
- * @param {Object} data from the form submission.
- * @returns {Object} email parameters in generic format.
- */
-getCMSEmail(data) {
-  const cmsEmail = {};
+  /**
+   * CHIP SPA submission email to CMS details wrapped in generic function name.
+   * @param {Object} data from the form submission.
+   * @returns {Object} email parameters in generic format.
+   */
+  getCMSEmail(data) {
+    const cmsEmail = {};
 
-  cmsEmail.ToAddresses = [process.env.reviewerCHIPEmail];
-  cmsEmail.Subject = `New CHIP SPA ${data.transmittalNumber} submitted`;
-  cmsEmail.HTML = `
+    cmsEmail.ToAddresses = [process.env.reviewerCHIPEmail];
+    cmsEmail.Subject = `New CHIP SPA ${data.transmittalNumber} submitted`;
+    cmsEmail.HTML = `
       <p>The Submission Portal received a CHIP State Plan Amendment:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
@@ -77,22 +74,22 @@ getCMSEmail(data) {
       <p>Thank you!</p>
     `;
 
-  return cmsEmail;
-}
+    return cmsEmail;
+  }
 
-/**
- * CHIP SPA submission confimation email to State User wrapped in
- * generic function name.
- * @param {Object} data from the form submission.
- * @returns {Object} email parameters in generic format.
- */
-getStateEmail(data) {
-  const stateEmail = {};
+  /**
+   * CHIP SPA submission confimation email to State User wrapped in
+   * generic function name.
+   * @param {Object} data from the form submission.
+   * @returns {Object} email parameters in generic format.
+   */
+  getStateEmail(data) {
+    const stateEmail = {};
 
-  stateEmail.ToAddresses = [data.user.email];
-  stateEmail.Subject =
-    "Your CHIP SPA " + data.transmittalNumber + " has been submitted to CMS";
-  stateEmail.HTML = `
+    stateEmail.ToAddresses = [data.user.email];
+    stateEmail.Subject =
+      "Your CHIP SPA " + data.transmittalNumber + " has been submitted to CMS";
+    stateEmail.HTML = `
       <p>This is confirmation that you submitted a CHIP State Plan Amendment to CMS for review:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
@@ -113,8 +110,8 @@ getStateEmail(data) {
       <p>Thank you!</p>
     `;
 
-  return stateEmail;
-}
+    return stateEmail;
+  }
 }
 
 const instance = new CHIPSPA();

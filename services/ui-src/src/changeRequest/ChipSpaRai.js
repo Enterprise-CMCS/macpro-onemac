@@ -4,6 +4,7 @@ import { CHANGE_REQUEST_TYPES } from "./changeRequestTypes";
 import SubmissionForm from "./SubmissionForm";
 import SubmissionView from "./SubmissionView";
 import { ROUTES } from "cmscommonlib";
+import { commonSubheaderMessage } from "../libs/formsLib"
 
 /**
  * SpaRai acts as a wrapper around RaiTemplate to render custom RAI form for a SPA RAI
@@ -15,10 +16,12 @@ const ChipSpaRai = () => {
   const formInfo = {
     pageTitle: "Respond to CHIP SPA RAI",
     readOnlyPageTitle: "CHIP SPA RAI Response Details",
-    subheaderMessage:
-      "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.",
+    subheaderMessage: commonSubheaderMessage,
     detailsHeader: "CHIP SPA RAI",
-    requiredUploads: ["Revised Amended State Plan Language", "Official RAI Response"],
+    requiredUploads: [
+      "Revised Amended State Plan Language",
+      "Official RAI Response",
+    ],
     optionalUploads: [
       "Budget Documents",
       "Public Notice",

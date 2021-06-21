@@ -1,4 +1,3 @@
-
 service: ui-waf-log-assoc
 
 plugins:
