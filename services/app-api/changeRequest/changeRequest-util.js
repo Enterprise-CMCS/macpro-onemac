@@ -120,7 +120,9 @@ export function validateSubmission(data) {
   const { error: basicError, value: valueAfterBasic } =
     basicSchema.validate(data);
   if (basicError) {
-    console.error(basicError, valueAfterBasic);
+    if (process.env.NODE_ENV !== "test") {
+      console.error(basicError, valueAfterBasic);
+    }
     return basicError;
   }
 
@@ -174,7 +176,9 @@ export function validateSubmission(data) {
   const { error: advancedError, value: valueAfterAdvanced } =
     advancedSchema.validate(data);
   if (advancedError) {
-    console.error(advancedError, valueAfterAdvanced);
+    if (process.env.NODE_ENV !== "test") {
+      console.error(advancedError, valueAfterAdvanced);
+    }
     return advancedError;
   }
 }
