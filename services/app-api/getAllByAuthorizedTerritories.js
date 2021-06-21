@@ -12,7 +12,6 @@ import { getAuthorizedStateList } from "./user/user-util";
 
 export const main = handler(async (event, context) => {
   var allResults = [];
-  var newKey;
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -23,7 +22,7 @@ export const main = handler(async (event, context) => {
   if (!user) {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
-  allResults = await getDataFromDB(newKey, user);
+  allResults = await getDataFromDB(user);
   // extracts items from each of the results
   let items = [];
   allResults.forEach((result) => {
@@ -36,8 +35,14 @@ export const main = handler(async (event, context) => {
   console.log(`Sending back ${items.length} change request(s).`);
   return items;
 });
+/**
+ * Determines how to scan/query depending on the user role.
+ * @param {Object} user the user to query or scan for.
+ * @returns Returns an array of change requests to display on users submission list.
+ */
 
-async function getDataFromDB(startingKey, user) {
+async function getDataFromDB(user) {
+  let startingKey;
   let promises;
   let tempResults = [];
   let allResults = [];
@@ -62,7 +67,7 @@ async function getDataFromDB(startingKey, user) {
         };
         return tempResults;
       });
-        // resolve promises from all queries
+      // resolve promises from all queries
       allResults = await Promise.all(promises);
       let concatResults = [];
       for (var i = 0; i < allResults.length; i++) {
@@ -78,6 +83,15 @@ async function getDataFromDB(startingKey, user) {
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
 }
+
+/**
+ * Returns an array of updated parameters for querying a helpdesk or reviewer role
+ * Will stop once entire dynamoDB has been scanned
+ * @param {String} startingKey the key to continue from if the query is not complete
+ * @param {Boolean} keepSearching determines how to proceed with the query true==continue query/false==end query
+ * @param {Object} allResults the results of the query/past queries
+ * @returns the updated versions of the parameters
+ */
 async function helpdeskOrReviewerDynamoDbQuery(startingKey, keepSearching, allResults) {
   let results = await dynamoDb.scan({
     TableName: process.env.tableName,
@@ -93,7 +107,15 @@ async function helpdeskOrReviewerDynamoDbQuery(startingKey, keepSearching, allRe
   }
 }
 
-
+/**
+ * Returns an array of updated parameters for querying a state submitter role
+ * Will stop once all results for particular territory have been returned
+ * @param {String} startingKey the key to continue from if the query is not complete
+ * @param {String} territory the territory to query
+ * @param {Boolean} keepSearching determines how to proceed with the query true==continue query/false==end query
+ * @param {Object} allResults the results of the query/past queries
+ * @returns the updated versions of the parameters
+ */
 async function stateUserDynamoDbQuery(startingKey, territory, keepSearching, allResults) {
   let results = await dynamoDb.query({
     TableName: process.env.tableName,
