@@ -42,10 +42,12 @@ custom:
     seed:
       domain:
         sources:
-          - table: ${self:custom.spaIdTableName}
-            sources: [./spa-ids-seed.json]
-          - table: ${self:custom.userTableName}
-            sources: [./user-profiles-seed.json]
+        - table: ${self:custom.tableName}
+          sources: [./change-requests-seed.json]
+        - table: ${self:custom.spaIdTableName}
+          sources: [./spa-ids-seed.json]
+        - table: ${self:custom.userTableName}
+          sources: [./user-profiles-seed.json]
   serverless-offline:
     allowCache: true
 associateWaf:
