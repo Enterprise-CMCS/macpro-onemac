@@ -133,7 +133,6 @@ function Header(props) {
             <div className="nav-left">
              <div className="logo-nav-left">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-              </td>
              <div>
               <div>
                 <Link
