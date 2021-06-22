@@ -128,7 +128,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
       return errorMessage;
     },
-    [transmittalNumberDetails, userData, changeRequest.transmittalNumber]
+    [transmittalNumberDetails, userData]
   );
 
   /**
