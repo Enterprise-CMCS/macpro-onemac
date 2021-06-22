@@ -37,7 +37,7 @@ const isStateUser = (cmsRoles) =>
 const isCmsUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-cms-user");
 const isHelpdeskUser = (cmsRoles) =>
-  !!cmsRoles.split(",").includes("onemac-helpdesk-user");
+  !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
   const history = useHistory();
