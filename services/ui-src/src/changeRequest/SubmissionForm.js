@@ -1,6 +1,6 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import LoadingScreen from "../components/LoadingScreen";
+import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
@@ -51,8 +51,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       statusMessage: "",
     });
 
-  // True if we are currently submitting the form or on inital load of the form
-  const [isLoading, setIsLoading] = useState(false);
+  // True if we are currently submitting the form
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -189,7 +189,16 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-  }, []);
+
+    if ( alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED ) {
+      history.push({
+        pathname: ROUTES.DASHBOARD,
+        state: {
+          passCode: alertCode,
+        },
+      });
+    }
+  }, [alertCode, history]);
 
   useEffect(() => {
     let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
@@ -212,7 +221,8 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 
     // if the ID is valid, check if exists/not exist in data
     if (newMessage.statusMessage === "" && checkingNumber !== "") {
-      newMessage.statusLevel = transmittalNumberDetails.errorLevel;
+      if (transmittalNumberDetails.errorLevel)
+        newMessage.statusLevel = transmittalNumberDetails.errorLevel;
 
       if (transmittalNumberDetails.existenceRegex !== undefined) {
         checkingNumber = changeRequest.transmittalNumber.match(
@@ -268,26 +278,64 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     }
   }
 
+  const limitSubmit = useRef(false);
+
+  useEffect(() => {
+    
+    const saveForm = async () => {
+      let uploadRef = uploader.current;
+      let transmittalNumberWarningMessage = "";
+
+      if (
+        transmittalNumberStatusMessage.statusLevel === "warn" &&
+        transmittalNumberStatusMessage.statusMessage
+      ) {
+        transmittalNumberWarningMessage =
+          "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
+      }
+
+      uploadRef
+        .uploadFiles()
+        .then((uploadedList) => {
+          return ChangeRequestDataApi.submit(
+            { ...changeRequest, transmittalNumberWarningMessage },
+            uploadedList
+          );
+        }).then((returnCode) => {
+          setAlertCode(returnCode);
+        } )
+        .catch((err) => {
+          console.log("error is: ", err);
+          setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+        })
+        .finally(() => {
+          limitSubmit.current = false;
+          setIsSubmitting(false);
+        });
+    };
+
+    if (isSubmitting && !limitSubmit.current) {
+      limitSubmit.current = true;
+      saveForm();
+    }
+  }, [
+    isSubmitting,
+    transmittalNumberStatusMessage,
+    changeRequest,
+    uploader,
+  ]);
+
   /**
    * Submit the new change request.
    * @param {Object} event the click event
    */
   async function handleSubmit(event) {
     event.preventDefault();
-    let mounted = true;
+
     let newAlertCode = "NONE";
+    let readyToSubmit = false;
 
-    // in case form validation takes a while (external validation)
-    if (mounted) setIsLoading(true);
-    if (mounted) setFirstTimeThrough(false);
-
-    if (
-      transmittalNumberStatusMessage.statusLevel === "warn" &&
-      transmittalNumberStatusMessage.statusMessage
-    ) {
-      changeRequest.transmittalNumberWarningMessage =
-        "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
-    }
+    setFirstTimeThrough(false);
     if (
       (transmittalNumberStatusMessage.statusLevel === "error" &&
         transmittalNumberStatusMessage.statusMessage) ||
@@ -298,53 +346,32 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
     } else if (!areUploadsReady) {
       newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
     } else {
-      try {
-        const uploadRef = uploader.current;
-        const uploadedList = await uploadRef.uploadFiles();
-        try {
-          const returnCode = await ChangeRequestDataApi.submit(
-            changeRequest,
-            uploadedList
-          );
-          newAlertCode = returnCode;
-
-          if (newAlertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
-            mounted = false;
-            history.push({
-              pathname: ROUTES.DASHBOARD,
-              state: {
-                passCode: RESPONSE_CODE.SUCCESSFULLY_SUBMITTED,
-              },
-            });
-          }
-        } catch (err) {
-          newAlertCode = RESPONSE_CODE.SYSTEM_ERROR;
-          console.log("submit caught error: ", err);
-        }
-      } catch (err) {
-        newAlertCode = RESPONSE_CODE.SYSTEM_ERROR;
-        console.log("uploadFiles() caught error: ", err);
-      }
+      readyToSubmit = true;
     }
 
-    if (mounted) setAlertCode(newAlertCode);
-    if (mounted) setIsLoading(false);
+    // if we would get the same alert message, alert bar does not know to show itself
+    // have to do at submit, because when tried to get AlertBar to recognize situation
+    // it was showing itself on every form change (ie, selecting Waiver Authority)
+    if (newAlertCode === alertCode) window.scrollTo({ top: 0 });
 
-    // if the same alert persists, AlertBar doesn't know to assert itself
-    var elmnt = document.getElementById("alert-bar");
-    if (elmnt) elmnt.scrollIntoView({ behavior: "smooth" });
+    setAlertCode(newAlertCode);
+    setIsSubmitting(readyToSubmit);
+  }
+
+  function closedAlert() {
+    setAlertCode("NONE");
   }
 
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
-    <LoadingScreen isLoading={isLoading}>
+    <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
         heading={formInfo.pageTitle}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
@@ -413,6 +440,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               name="summary"
               label="Additional Information"
               hint="Add anything else that you would like to share with CMS."
+              disabled={isSubmitting}
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
@@ -423,9 +451,10 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>
-          <input type="submit" className="form-submit" value="Submit" />
+          <input type="submit" disabled={isSubmitting} className="form-submit" value="Submit" />
           <button
             onClick={handleCancel}
+            disabled={isSubmitting}
             className="submission-form-cancel-button"
             type="button"
           >
@@ -444,7 +473,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
           </a>
         </div>
       </div>
-    </LoadingScreen>
+    </LoadingOverlay>
   );
 };
 

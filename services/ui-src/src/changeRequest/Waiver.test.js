@@ -11,6 +11,7 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 jest.mock("../utils/ChangeRequestDataApi");
 
 window.HTMLElement.prototype.scrollIntoView = function () {};
+window.scrollTo = function () {};
 
 const history = createMemoryHistory();
 const route = "/waiver";

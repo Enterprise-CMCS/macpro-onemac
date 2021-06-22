@@ -12,7 +12,7 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-const AlertBar = ({ alertCode, personalizedString = "" }) => {
+const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
   const [alert, setAlert] = useState(getAlert(alertCode));
 
   useEffect(() => {
@@ -27,6 +27,7 @@ const AlertBar = ({ alertCode, personalizedString = "" }) => {
 
   useEffect(() => {
     let mounted = true;
+
     if (mounted && alert && alert.heading && alert.heading !== "") {
       var elmnt = document.getElementById("alert-bar");
       if (elmnt) elmnt.scrollIntoView({ behavior: "smooth" });
@@ -66,7 +67,7 @@ const AlertBar = ({ alertCode, personalizedString = "" }) => {
         <p className="ds-c-alert__text">{renderText()}</p>
         <button
           className="close-button"
-          onClick={() => setAlert(ALERTS_MSG.NONE)}
+          onClick={() => { setAlert(ALERTS_MSG.NONE); if (closeCallback) closeCallback(); } }
         >
           {CLOSING_X_IMAGE}
         </button>
