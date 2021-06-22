@@ -6,6 +6,7 @@ import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import {
   latestAccessStatus,
+  ChangeRequest,
   RESPONSE_CODE,
   ROUTES,
   USER_STATUS,
@@ -24,10 +25,9 @@ const leavePageConfirmMessage =
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
- * @param {Object} formInfo - all the change request details specific to this submission
  * @param {String} changeRequestType - the type of change request
  */
-export const SubmissionForm = ({ formInfo, changeRequestType }) => {
+export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState("NONE");
   const {
@@ -40,6 +40,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
+  const formInfo = ChangeRequest.CONFIG[changeRequestType];
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
     formInfo?.actionType?.errorMessage
   );
@@ -190,7 +191,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   useEffect(() => {
     window.scrollTo({ top: 0 });
 
-    if ( alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED ) {
+    if (alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
       history.push({
         pathname: ROUTES.DASHBOARD,
         state: {
@@ -281,7 +282,6 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
   const limitSubmit = useRef(false);
 
   useEffect(() => {
-    
     const saveForm = async () => {
       let uploadRef = uploader.current;
       let transmittalNumberWarningMessage = "";
@@ -301,9 +301,10 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
             { ...changeRequest, transmittalNumberWarningMessage },
             uploadedList
           );
-        }).then((returnCode) => {
+        })
+        .then((returnCode) => {
           setAlertCode(returnCode);
-        } )
+        })
         .catch((err) => {
           console.log("error is: ", err);
           setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
@@ -318,12 +319,7 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
       limitSubmit.current = true;
       saveForm();
     }
-  }, [
-    isSubmitting,
-    transmittalNumberStatusMessage,
-    changeRequest,
-    uploader,
-  ]);
+  }, [isSubmitting, transmittalNumberStatusMessage, changeRequest, uploader]);
 
   /**
    * Submit the new change request.
@@ -451,7 +447,12 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
               {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>
-          <input type="submit" disabled={isSubmitting} className="form-submit" value="Submit" />
+          <input
+            type="submit"
+            disabled={isSubmitting}
+            className="form-submit"
+            value="Submit"
+          />
           <button
             onClick={handleCancel}
             disabled={isSubmitting}
@@ -478,7 +479,6 @@ export const SubmissionForm = ({ formInfo, changeRequestType }) => {
 };
 
 SubmissionForm.propTypes = {
-  formInfo: PropTypes.object.isRequired,
   changeRequestType: PropTypes.string.isRequired,
 };
 

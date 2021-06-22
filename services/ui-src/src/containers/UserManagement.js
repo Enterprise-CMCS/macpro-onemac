@@ -308,9 +308,8 @@ const UserManagement = () => {
     renderActions,
     getRoleLabel,
     renderDate,
-    userProfile.userData.type
-  ]
-);
+    userProfile.userData.type,
+  ]);
 
   const initialTableState = useMemo(
     () => ({

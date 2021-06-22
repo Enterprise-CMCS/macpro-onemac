@@ -54,7 +54,12 @@ async function getDataFromDB(user) {
     if (user.type === USER_TYPE.HELPDESK) {
       keepSearching = true;
       while (keepSearching == true) {
-        [startingKey, keepSearching, tempResults] = await helpdeskOrReviewerDynamoDbQuery(startingKey, keepSearching, tempResults);
+        [startingKey, keepSearching, tempResults] =
+          await helpdeskOrReviewerDynamoDbQuery(
+            startingKey,
+            keepSearching,
+            tempResults
+          );
       }
       return tempResults;
     } else {
@@ -63,8 +68,14 @@ async function getDataFromDB(user) {
         tempResults = [];
         keepSearching = true;
         while (keepSearching == true) {
-          [startingKey, keepSearching, tempResults] = await stateUserDynamoDbQuery(startingKey, territory, keepSearching, tempResults);
-        };
+          [startingKey, keepSearching, tempResults] =
+            await stateUserDynamoDbQuery(
+              startingKey,
+              territory,
+              keepSearching,
+              tempResults
+            );
+        }
         return tempResults;
       });
       // resolve promises from all queries
@@ -77,8 +88,7 @@ async function getDataFromDB(user) {
       }
       return concatResults;
     }
-  }
-  catch (error) {
+  } catch (error) {
     console.error("Could not fetch results from Dynamo:", error);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
@@ -92,10 +102,14 @@ async function getDataFromDB(user) {
  * @param {Object} allResults the results of the query/past queries
  * @returns the updated versions of the parameters
  */
-async function helpdeskOrReviewerDynamoDbQuery(startingKey, keepSearching, allResults) {
+async function helpdeskOrReviewerDynamoDbQuery(
+  startingKey,
+  keepSearching,
+  allResults
+) {
   let results = await dynamoDb.scan({
     TableName: process.env.tableName,
-    ExclusiveStartKey: startingKey
+    ExclusiveStartKey: startingKey,
   });
   allResults.push(results);
   if (results.LastEvaluatedKey) {
@@ -116,7 +130,12 @@ async function helpdeskOrReviewerDynamoDbQuery(startingKey, keepSearching, allRe
  * @param {Object} allResults the results of the query/past queries
  * @returns the updated versions of the parameters
  */
-async function stateUserDynamoDbQuery(startingKey, territory, keepSearching, allResults) {
+async function stateUserDynamoDbQuery(
+  startingKey,
+  territory,
+  keepSearching,
+  allResults
+) {
   let results = await dynamoDb.query({
     TableName: process.env.tableName,
     ExclusiveStartKey: startingKey,
@@ -138,4 +157,3 @@ async function stateUserDynamoDbQuery(startingKey, territory, keepSearching, all
     return [null, keepSearching, allResults];
   }
 }
-

@@ -20,12 +20,15 @@ function CMSSignup() {
   );
 }
 function HelpdeskSignup() {
-  const [dummy,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
+  const [dummy, onLoadHelpdesk] = useSignupCallback(
+    "helpdesk",
+    createAttribute
+  );
   useEffect(() => {
-    if(onLoadHelpdesk)onLoadHelpdesk();
-  },[onLoadHelpdesk]);
-  console.log("Dummy is: ",dummy);
-  return null
+    if (onLoadHelpdesk) onLoadHelpdesk();
+  }, [onLoadHelpdesk]);
+  console.log("Dummy is: ", dummy);
+  return null;
 }
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names

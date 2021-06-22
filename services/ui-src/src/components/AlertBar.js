@@ -67,7 +67,10 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
         <p className="ds-c-alert__text">{renderText()}</p>
         <button
           className="close-button"
-          onClick={() => { setAlert(ALERTS_MSG.NONE); if (closeCallback) closeCallback(); } }
+          onClick={() => {
+            setAlert(ALERTS_MSG.NONE);
+            if (closeCallback) closeCallback();
+          }}
         >
           {CLOSING_X_IMAGE}
         </button>
