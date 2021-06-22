@@ -1,37 +1,37 @@
 {
-    "type": "spa",
-    "summary": "",
-    "transmittalNumber": "AL-33-1112",
-    "actionType": "",
-    "waiverAuthority": "",
-    "territory": "AX",
-    "user": {
-        "username": "demoUser",
-        "signInUserSession": {
-            "idToken": {
-                "jwtToken": "testToken",
-                "payload": {
-                    "given_name": "TestFirstName",
-                    "family_name": "TestLastName",
-                    "email": "zlewis@clarityinnovates.com"
-                }
-            }
+  "type": "spa",
+  "summary": "",
+  "transmittalNumber": "AL-33-1112",
+  "actionType": "",
+  "waiverAuthority": "",
+  "territory": "AX",
+  "user": {
+    "username": "demoUser",
+    "signInUserSession": {
+      "idToken": {
+        "jwtToken": "testToken",
+        "payload": {
+          "given_name": "TestFirstName",
+          "family_name": "TestLastName",
+          "email": "zlewis@clarityinnovates.com"
         }
+      }
+    }
+  },
+  "uploads": [
+    {
+      "s3Key": "testFile179",
+      "filename": "testFile179.jpg",
+      "contentType": "image/jpeg",
+      "url": "http://localhost:3002/testbucket/testFile179.jpg",
+      "title": "CMS Form 179"
     },
-    "uploads": [
-        {
-            "s3Key": "testFile179",
-            "filename": "testFile179.jpg",
-            "contentType": "image/jpeg",
-            "url": "http://localhost:3002/testbucket/testFile179.jpg",
-            "title": "CMS Form 179"
-        },
-        {
-            "s3Key": "testFileSPAPages",
-            "filename": "testFileSPAPages.jpg",
-            "contentType": "image/jpeg",
-            "url": "http://localhost:3002/testbucket/testFileSPAPages.jpg",
-            "title": "SPA Pages"
-        }
-    ]
+    {
+      "s3Key": "testFileSPAPages",
+      "filename": "testFileSPAPages.jpg",
+      "contentType": "image/jpeg",
+      "url": "http://localhost:3002/testbucket/testFileSPAPages.jpg",
+      "title": "SPA Pages"
+    }
+  ]
 }

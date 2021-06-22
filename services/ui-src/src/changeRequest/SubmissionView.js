@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, ChangeRequest } from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileList from "../components/FileList";
 import { TextField } from "@cmsgov/design-system";
@@ -14,12 +14,11 @@ import { Review } from "@cmsgov/design-system";
 /**
  * Given an id and the relevant submission type forminfo, show the details
  * @param {Object} formInfo - all the change request details specific to this submission
- * @param {String} id - the id of the change request data element to view
- * @param {String} userId - the id of the user who created the change request
  */
-const SubmissionView = ({ formInfo, id, userId }) => {
+const SubmissionView = ({ changeRequestType }) => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
+  const { id, userId } = useParams();
 
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
@@ -52,6 +51,8 @@ const SubmissionView = ({ formInfo, id, userId }) => {
       mounted = false;
     };
   }, [id, userId, history]);
+
+  const formInfo = ChangeRequest.CONFIG[changeRequestType];
 
   return (
     <LoadingScreen isLoading={isLoading}>
@@ -98,8 +99,7 @@ const SubmissionView = ({ formInfo, id, userId }) => {
 };
 
 SubmissionView.propTypes = {
-  formInfo: PropTypes.object.isRequired,
-  id: PropTypes.string.isRequired,
+  changeRequestType: PropTypes.string.isRequired,
 };
 
 export default SubmissionView;

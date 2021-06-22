@@ -8,14 +8,16 @@ export default function DeveloperOnlyRoute({ children, ...rest }) {
   const history = useHistory();
 
   useEffect(() => {
-    let mounted = true;    // Drop to home if user not logged in
+    let mounted = true; // Drop to home if user not logged in
     if (!isLoggedInAsDeveloper && mounted) {
       history.push(ROUTES.HOME);
     }
     return function cleanup() {
       mounted = false;
-    }
+    };
   });
 
-  return <Route {...rest}>{isLoggedInAsDeveloper ? children : <div></div>}</Route>;
+  return (
+    <Route {...rest}>{isLoggedInAsDeveloper ? children : <div></div>}</Route>
+  );
 }

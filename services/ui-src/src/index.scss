@@ -118,13 +118,13 @@ p.field-hint {
   &.title-bar-light-theme {
     background-color: $color-primary-alt-lightest;
     color: $color-base;
-    
+
     .title-bar-back-button {
       background-color: $color-primary-alt-lightest;
       color: $color-primary;
       padding: 0 2.4rem 0 0;
       font-size: 2.4rem;
-  
+
       &:hover {
         text-decoration: none;
         color: $color-primary-darker;
@@ -440,6 +440,12 @@ input[type="file"] {
     height: 70px;
     width: 70px;
   }
+  width: 100%;
+  height: 40rem;
+}
+
+.loading-screen-hidden {
+  display: none;
 }
 
 .about {

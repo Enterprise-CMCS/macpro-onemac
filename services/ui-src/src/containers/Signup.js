@@ -20,11 +20,15 @@ function CMSSignup() {
   );
 }
 function HelpdeskSignup() {
-  const [_,onLoadHelpdesk]=useSignupCallback("helpdesk",createAttribute);
+  const [dummy, onLoadHelpdesk] = useSignupCallback(
+    "helpdesk",
+    createAttribute
+  );
   useEffect(() => {
-    if(onLoadHelpdesk)onLoadHelpdesk();
-  },[onLoadHelpdesk]);
-  return null
+    if (onLoadHelpdesk) onLoadHelpdesk();
+  }, [onLoadHelpdesk]);
+  console.log("Dummy is: ", dummy);
+  return null;
 }
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
@@ -57,13 +61,13 @@ export function Signup() {
         </div>
       ) : isHelpdeskUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
-         <HelpdeskSignup/>
+          <HelpdeskSignup />
         </div>
       ) : (
         <Redirect
           to={{
             pathname: "/",
-            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR },  // ALERTS_MSG.CONTACT_HELP_DESK },
+            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR }, // ALERTS_MSG.CONTACT_HELP_DESK },
           }}
         />
       ),

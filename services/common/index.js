@@ -3,6 +3,12 @@
  * This will contain static items needed by both the frontend and backend.
  */
 
+import * as ChangeRequest from "./changeRequest";
+export { ChangeRequest };
+
+import { ROUTES } from "./routes";
+export * from "./routes";
+
 /**
  * Codes to send to front end
  */
@@ -37,7 +43,7 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_REVOKED: "UR047",
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
-  HELPDESK_USER_SUBMITTED:"HU000",
+  HELPDESK_USER_SUBMITTED: "HU000",
 };
 
 export const USER_ADMIN_PERMISSION = {
@@ -73,41 +79,11 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  stateuser: 'State Submitter',
-  stateadmin: 'State Admin',
-  cmsapprover: 'CMS Approver',
-  systemadin: 'CMS System Admin',
-  helpdesk: 'Help Desk',
-}
-/**
- * Routing Control Shared List
- *
- */
-export const ROUTES = {
-  CHIP_SPA: "/chipspa",
-  CHIP_SPA_RAI: "/chipsparai",
-  DASHBOARD: "/dashboard",
-  USER_MANAGEMENT: "/usermanagement",
-  FAQ: "/FAQ",
-  FAQ_TOP: "/FAQ/#top",
-  FAQ_SPA_ID: "/FAQ#spa-id-format",
-  FAQ_WAIVER_ID: "/FAQ#waiver-id-format",
-  HOME: "/",
-  PROFILE: "/profile",
-  METRICS: "/metrics",
-  NEW_SUBMISSION_SELECTION: "/new",
-  DEVLOGIN: "/devlogin",
-  SIGNUP: "/signup",
-  STATE_SIGNUP: "/signup/state",
-  NEW_SPA: "/newspa",
-  SPA: "/spa",
-  SPA_RAI: "/sparai",
-  COMPONENT_PAGE: "/componentpage", // temporary placeholder for the developers to house components //
-  NEW_WAIVER: "/newwaiver",
-  WAIVER: "/waiver",
-  WAIVER_RAI: "/waiverrai",
-  WAIVER_EXTENSION: "/waiverextension",
-  WAIVER_APP_K: "/waiverappk",
+  stateuser: "State Submitter",
+  stateadmin: "State Admin",
+  cmsapprover: "CMS Approver",
+  systemadin: "CMS System Admin",
+  helpdesk: "Help Desk",
 };
 
 const ALL_USERS_ROUTES = [
@@ -220,11 +196,12 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
 
     case ROLES.CMS_APPROVER:
     case ROLES.HELPDESK:
-    case ROLES.SYSTEM_ADMIN: {
-      return attributes.sort(datesDescending)[0].status;
-    }
+    case ROLES.SYSTEM_ADMIN:
+      {
+        return attributes.sort(datesDescending)[0].status;
+      }
 
-    attributes = stateObj.history;
+      attributes = stateObj.history;
   }
 
   return attributes.sort(datesDescending)[0].status;
