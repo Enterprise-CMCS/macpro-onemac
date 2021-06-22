@@ -1302,13 +1302,11 @@ dl.state-access-cards {
 
 .faq-border-box {
   background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
+  border-radius: 3px 3px 0px 0px;
   @media only screen and (min-width: 1200px) {
     position: fixed;
     float: right;
     top: 218px;
-  }
-  @media only screen and (min-width: 1200px) and (max-width: 1525px){
-    margin-right: 40px;
   }
   @media only screen and (max-width: 1199px){
     width: 100% !important;
@@ -1319,13 +1317,17 @@ dl.state-access-cards {
   right: 72px;
 }
 
+.faq-border-box-small {
+  @media only screen and (max-height: 600px){
+    position:static;
+    width: 100% !important;
+    text-align: center;
+  }
+}
 .faq-info-box {
   @media only screen and (min-width: 1200px) {
     position: fixed;
     float: right;
-  }
-  @media only screen and (min-width: 1200px) and (max-width: 1525px){
-    margin-right: 40px;
   }
   @media only screen and (max-width: 1199px){
     width: 100% !important;
@@ -1339,8 +1341,16 @@ dl.state-access-cards {
   /* Text/Background/Gray - Lighter */
   border: 1px solid #d6d7d9;
   box-sizing: border-box;
-  border-radius: 3px;
-  border-radius: 3px 3px 0px 0px;
+}
+
+.faq-info-box-small {
+
+  @media only screen and (max-height: 600px){
+    position:static;
+    width: 100% !important;
+    text-align: center;
+    margin-bottom: 40px;
+  }
 }
 
 .faq-info-box-title {

@@ -26,13 +26,33 @@ const FAQ = () => {
     scrollToSection();
   }, []);
 
+  const placeFaqInfoBox = (e) => {
+    let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
+    let faqInfo = document.getElementById('faq-info-box');
+    let faqBorder = document.getElementById('faq-border-box');
+    if (height <= 628){
+      console.log('height: ', height, 'height + window.scrollY: ',height + window.scrollY, 'window.scrollY: ',window.scrollY, 'document.body.offsetHeight: ',document.body.offsetHeight, 'document.body.offsetHeight -  window.: ',document.body.offsetHeight -  window.scrollY); //window.pageYOffset)
+      faqInfo.classList.add("faq-info-box-small");
+      faqBorder.classList.add("faq-border-box-small");
+    }
+    else {
+      faqInfo.classList.remove("faq-info-box-small");
+      faqBorder.classList.remove("faq-border-box-small");
+    }
+  }
+  useEffect (()=>{
+    placeFaqInfoBox();
+    window.addEventListener('resize', placeFaqInfoBox );
+    return () => window.removeEventListener('resize', placeFaqInfoBox );
+  },[]);
+  
   return (
     <div>
       <PageTitleBar heading="Frequently Asked Questions" />
       <div className="form-container" id="top">
         <div className="form-card">
-          <div className="faq-border-box"></div>
-          <div className="faq-info-box">
+          <div id="faq-border-box" className="faq-border-box"></div>
+          <div id="faq-info-box" className="faq-info-box">
             <p className="faq-info-box-title">MACPro Help Desk Contact Info</p>
             <b>Phone Number</b>
             <br />
@@ -494,6 +514,7 @@ const FAQ = () => {
             <div ref={waiverIdRef} id="waiver-id-format">
               <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(b) waiver number?" />}
                 triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(b) waiver number?" />} >
+                <br />
                 <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
                 <ul>
                   <li>SS = 2 character state abbreviation</li>
@@ -513,6 +534,7 @@ const FAQ = () => {
               <hr />
               <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(c) waiver number?" />}
                 triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(c) waiver number?" />} >
+                <br />
                 <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
                 <ul>
                   <li>SS = 2 character state abbreviation</li>
