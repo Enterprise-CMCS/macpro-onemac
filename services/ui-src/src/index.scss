@@ -1286,6 +1286,7 @@ dl.state-access-cards {
 
   /* Primary / Default */
   color: #0071bc;
+  width: 606px;
 }
 
 .Collapsible__contentInner {
@@ -1297,6 +1298,9 @@ dl.state-access-cards {
 .faq-left-column {
   @media only screen and (min-width: 1200px) {
     width: calc(100% - 300px);
+  }
+  .faq-misc-points{
+    width: 606px;
   }
 }
 

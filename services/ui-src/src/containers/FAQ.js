@@ -780,6 +780,7 @@ const FAQ = () => {
               </table>
             </Collapsible>
             <hr />
+            <div className="faq-misc-points">
             <h4>What should we do if we don’t receive a confirmation email?</h4>
             <p>
               Refresh your inbox, check your SPAM filters, then contact the MACPro
@@ -799,6 +800,7 @@ const FAQ = () => {
               submissions, please contact your state lead or your state’s CMS lead
               for HCBS or managed care.
             </p>
+            </div>
           </div>
         </div>
       </div>
