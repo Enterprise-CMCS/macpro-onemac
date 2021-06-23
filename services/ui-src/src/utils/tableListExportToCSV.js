@@ -25,12 +25,11 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle, columns)
     var CSV = "";
 
     var row = "";
-    if (exportType === "user-table")  columns.pop()
+    
     columns.forEach((header) => {
         row += header.Header + ",";
         return;
     })
-    row += "Modified By,";
 
     row = row.slice(0, -1);
 
