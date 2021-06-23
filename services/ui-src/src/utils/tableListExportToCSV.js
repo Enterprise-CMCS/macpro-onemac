@@ -1,5 +1,4 @@
 import {formatDate} from "./date-utils";
-import {JS} from "aws-amplify";
 
 const submissionTypes =
     {
