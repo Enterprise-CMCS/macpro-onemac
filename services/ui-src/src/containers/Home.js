@@ -38,7 +38,7 @@ export default function Home() {
 
   const paperSubmissionList = [
     {
-      text: "Amendments to your Medicaid State Plans (not submitted through MACPro, MMDL or WMS)",
+      text: "Amendments to your Medicaid and CHIP State Plans (not submitted through MACPro, MMDL or WMS)",
     },
     {
       text: "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro)",

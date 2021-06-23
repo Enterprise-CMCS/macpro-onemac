@@ -1,6 +1,6 @@
 // Updated by: Guli 
 // Date      : 03/19/2021
-/*
+
 const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
@@ -175,8 +175,8 @@ module.exports = {
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
-        browser.useCss();
-        browser.click('.form-card a');
+        //browser.useCss();
+        browser.useCss().click('.form-card a');
         let fqaHeader = '(//h4[@class="faq-collapsible-trigger"])[4]';
 
         //Switch to new tab
@@ -189,6 +189,7 @@ module.exports = {
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a 1915(b) waiver number?';
         browser.verify.containsText(fqaHeader, expectedText);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -196,11 +197,19 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-        browser.back().pause(3000);
+        let dashboard_link = "//a[@id='dashboardLink']";
+        browser.useXpath().click(dashboard_link);
+        browser.useCss();
+        //browser.back().pause(3000);
         
         // Respond to 1915(b) Waiver RAI
-        browser.click('button#waiverRaiBtn');
-        browser.click('.form-card a');
+        //browser.click('button#waiverRaiBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.useCss().click('.form-card a');
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -208,8 +217,9 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -218,11 +228,18 @@ module.exports = {
             browser.switchWindow(handle);
         });
 
-        browser.back();
+        //browser.back();
+        browser.useXpath().click(dashboard_link);
+        browser.useCss();
 
         // Request Waiver Temporary Extension
-        browser.click('button#waiverExtBtn');
-        browser.click('.form-card a');
+        //browser.click('button#waiverExtBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[3]");
+        browser.useCss().click('.form-card a');
 
         //Switch to new tab
         browser.windowHandles(function (result) {
@@ -231,18 +248,20 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
     },
 
     
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
+        browser.useXpath().click("(//h4)[3]");
+        browser.pause(300);
         let linkInFAQ = '.form-card [target]';
-        browser.click(linkInFAQ);
+        browser.useCss().click(linkInFAQ);
         let submittalAmendments = "//h2";
         //Switch to new tab
         browser.windowHandles(function (result) {
-            // 0 == current main window, 1 == new tab
+            // 0 == current main window, 1 == new tab, 2 == new link tab from FAQ page
             var handle = result.value[2];
             browser.switchWindow(handle);
         });
@@ -257,6 +276,5 @@ module.exports = {
             browser.switchWindow(handle);
         });
         browser.useCss();
-    }
+    },
 }
-*/

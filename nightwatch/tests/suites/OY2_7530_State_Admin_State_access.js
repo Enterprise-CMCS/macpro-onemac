@@ -1,4 +1,4 @@
-/*
+
 const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
@@ -24,8 +24,8 @@ module.exports = {
         let personal_actions = '(//tr/th)[6]';
         let first_name = '(//tr/td)[1]';
         let first_email ='(//tr/td)[2]';
-        let second_name = '(//tr/td)[7]';
-        let second_email ='(//tr/td)[8]';
+        //let second_name = '(//tr/td)[7]';
+        //let second_email ='(//tr/td)[8]';
         //check on name and email for four listed user
         browser.useXpath().expect.element(name).to.be.visible;
         browser.useXpath().expect.element(email).to.be.visible;
@@ -34,9 +34,9 @@ module.exports = {
         browser.useXpath().expect.element(modified_by).to.be.visible;
         browser.useXpath().expect.element(personal_actions).to.be.visible;
         browser.useXpath().expect.element(first_email).to.be.visible;
-        browser.useXpath().expect.element(second_email).to.be.visible;
+        //browser.useXpath().expect.element(second_email).to.be.visible;
         browser.useXpath().expect.element(first_name).to.be.visible;
-        browser.useXpath().expect.element(second_name).to.be.visible;
+        //browser.useXpath().expect.element(second_name).to.be.visible;
     },
 
 
@@ -69,4 +69,3 @@ module.exports = {
         browser.useCss();
     },
 }
-*/

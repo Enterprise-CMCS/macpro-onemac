@@ -70,7 +70,7 @@ const transformAccesses = (user = {}) => {
         state: stateCode,
         status: latestAccessStatus(user, stateCode),
       }));
-
+    
     case ROLES.CMS_APPROVER:
     case ROLES.HELPDESK:
       return [{ status: latestAccessStatus(user) }];
@@ -197,7 +197,7 @@ const UserPage = () => {
           errorMessage="Please select at least one state."
           loading={loading}
           options={territoryList}
-          placeholder="select state here"
+          placeholder="Select state here"
           required
           showCancelButton
           subtitle="Select your State Access."
@@ -323,18 +323,16 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
-  const helpdeskMessage = (userType) => {
+  const helpdeskMessage=(userType)=>{
     if (userType !== "helpdesk") {
-      return (
-        <>
-          If you have questions, please contact the MACPro Help Desk at{" "}
-          <a href={`mailto:${helpDeskContact.email}`}>
-            {helpDeskContact.email}
-          </a>{" "}
+      return <>If you have
+          questions, please contact the MACPro Help Desk at{" "}
+        <a href={`mailto:${helpDeskContact.email}`}>
+          {helpDeskContact.email}
+        </a>{" "}
           or call{" "}
-          <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
-        </>
-      );
+        <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
+      </>
     }
   };
 
@@ -346,8 +344,7 @@ const UserPage = () => {
         <div className="subheader-message">
           Below is the account information for your role as a{" "}
           {userTypes[userType] ?? userType}. Your name and email cannot be
-          edited in OneMAC. It can be changed in your IDM profile.
-          {helpdeskMessage(userType)}
+          edited in OneMAC. It can be changed in your IDM profile.{helpdeskMessage(userType)}
         </div>
         <div className="ds-l-row">
           <div className="ds-l-col--6">
