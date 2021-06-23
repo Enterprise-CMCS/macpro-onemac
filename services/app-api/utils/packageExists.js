@@ -6,14 +6,13 @@ import dynamoDb from "../libs/dynamodb-lib";
  * @returns {Boolean} true if found in data, false if not in data
  */
 export default async function packageExists(id) {
-
   const params = {
     TableName: process.env.spaIdTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
     // - 'id': change request ID
     Key: {
-      id: id
-    }
+      id: id,
+    },
   };
   console.log("the params for checking", params);
   let idResponse;

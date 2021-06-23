@@ -6,7 +6,6 @@ import dynamoDb from "../libs/dynamodb-lib";
  * @returns {Object} the User json object
  */
 export default async function getUser(userEmail) {
-
   const params = {
     TableName: process.env.userTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -18,15 +17,17 @@ export default async function getUser(userEmail) {
 
   let result;
   try {
-      result = await dynamoDb.get(params);
+    result = await dynamoDb.get(params);
   } catch (dbError) {
-      console.log(`Error happened while reading from DB:  ${dbError}`);
-      throw dbError;
+    console.log(`Error happened while reading from DB:  ${dbError}`);
+    throw dbError;
   }
 
   if (!result.Item) {
-      console.log(`The user does not exists with the id: ${userEmail} in the User table`);
-      return result;
+    console.log(
+      `The user does not exists with the id: ${userEmail} in the User table`
+    );
+    return result;
   }
 
   console.log(`Selected User ${userEmail}: ${JSON.stringify(result)}`);

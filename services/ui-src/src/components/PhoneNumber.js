@@ -42,7 +42,7 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
         autoFocus
         id="phoneNumber"
         onChange={({ target: { value } }) => dispatch(value)}
-        onFocus={e => e.currentTarget.select()}
+        onFocus={(e) => e.currentTarget.select()}
         value={value}
       />
       <Button type="submit" variation="success">

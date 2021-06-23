@@ -35,21 +35,28 @@ export const main = handler(async (event, context) => {
   }
 
   const userResult = await dynamoDb.scan(scanParams);
-  const transformedUserList = uFunctions.transformUserList(userResult, stateList);
+  const transformedUserList = uFunctions.transformUserList(
+    userResult,
+    stateList
+  );
   // Collect the unique doneBy user's email ids
-  const doneByEmails = [...new Set(transformedUserList.map(user => user.latest.doneBy))];
-  let filterAttributeNames = '';
+  const doneByEmails = [
+    ...new Set(transformedUserList.map((user) => user.latest.doneBy)),
+  ];
+  let filterAttributeNames = "";
   const filterAttribValues = {};
   // Generate filter expression attribute names and values for retreving the doneBy user names
   doneByEmails.map((email, i) => {
-    filterAttributeNames += `:email${i}${i < doneByEmails.length - 1 ? ',' : ''}`;
+    filterAttributeNames += `:email${i}${
+      i < doneByEmails.length - 1 ? "," : ""
+    }`;
     filterAttribValues[`:email${i}`] = email;
   });
   scanParams = {
     TableName: process.env.userTableName,
-    ProjectionExpression: 'id, firstName, lastName',
+    ProjectionExpression: "id, firstName, lastName",
     FilterExpression: `id IN (${filterAttributeNames})`,
-    ExpressionAttributeValues: filterAttribValues
+    ExpressionAttributeValues: filterAttribValues,
   };
   let userNames;
   try {
@@ -59,14 +66,20 @@ export const main = handler(async (event, context) => {
     throw dbError;
   }
   // Populate doneBy Name
-  return transformedUserList.map(user => {
-     const doneBy = userNames.Items.find(item => item.id === user.latest.doneBy);
-     if (doneBy){
-        user.latest.doneByName = [doneBy.firstName, doneBy.lastName].filter(Boolean).join(" ");
-     } else {
-       console.log(`User id: ${user.email} has the doneBy id as ${user.latest.doneBy}, which does not have a user record of it's own in the DB`);
-       user.latest.doneByName = '';
-     }
-     return user;
+  return transformedUserList.map((user) => {
+    const doneBy = userNames.Items.find(
+      (item) => item.id === user.latest.doneBy
+    );
+    if (doneBy) {
+      user.latest.doneByName = [doneBy.firstName, doneBy.lastName]
+        .filter(Boolean)
+        .join(" ");
+    } else {
+      console.log(
+        `User id: ${user.email} has the doneBy id as ${user.latest.doneBy}, which does not have a user record of it's own in the DB`
+      );
+      user.latest.doneByName = "";
+    }
+    return user;
   });
 });

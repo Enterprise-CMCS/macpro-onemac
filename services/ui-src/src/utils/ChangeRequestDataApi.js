@@ -46,7 +46,10 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let changeRequest = await API.get("changeRequestAPI", `/get/${id}/${userId}`);
+      let changeRequest = await API.get(
+        "changeRequestAPI",
+        `/get/${id}/${userId}`
+      );
       return changeRequest;
     } catch (error) {
       console.log(`There was an error fetching ID ${id}.`, error);
@@ -84,7 +87,10 @@ class ChangeRequestDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get("changeRequestAPI", `/getAllByAuthorizedTerritories?email=${userEmail}`);
+      return await API.get(
+        "changeRequestAPI",
+        `/getAllByAuthorizedTerritories?email=${userEmail}`
+      );
     } catch (error) {
       console.log(
         `There was an error fetching change requests for the states/territories.`,
