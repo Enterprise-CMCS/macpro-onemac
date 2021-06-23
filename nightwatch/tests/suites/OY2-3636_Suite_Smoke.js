@@ -84,10 +84,11 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(2000);
+        browser.click("[value='Submit']").pause(3000);
 
         // Verify the SPA on Submission List 
-        //browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
+        //browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.useXpath().verify.containsText('(//table[@class="submissions-table"]/tbody/tr/td/a)[1]', spaID);
         browser.useCss();
         return spaID;
     },
