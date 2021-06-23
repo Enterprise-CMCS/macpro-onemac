@@ -1,4 +1,12 @@
 import {formatDate} from "./date-utils";
+import {userTypes} from "../libs/userLib";
+
+const userStatus = {
+    "active": "Granted",
+    "denied": "Denied",
+    "pending": "Pending",
+    "revoked": "Revoked"
+}
 
 const submissionTypes =
     {
@@ -44,7 +52,8 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle, columns)
                 row += JSONData[i].lastName + ","
                 row += JSONData[i].email + ","
                 row += JSONData[i].stateCode + ","
-                row += JSONData[i].latest.status + ","
+                row += userStatus[JSONData[i].latest.status] + ","
+                row += userTypes[JSONData[i].role] + ","
                 row += "\"" + formatDate(JSONData[i].latest.date) + "\","
                 row += JSON.stringify(JSONData[i].latest.doneByName)
                 break;
