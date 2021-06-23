@@ -66,6 +66,7 @@ jobs:
           TEST_CMS_APPROVER_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_APPROVER_USER_PASSWORD] || secrets.TEST_CMS_APPROVER_USER_PASSWORD }}
           TEST_CMS_SYSTEM_ADMIN_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_SYSTEM_ADMIN_USERS] || secrets.TEST_CMS_SYSTEM_ADMIN_USERS }}
           TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD] || secrets.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
       - name: lock this branch to prevent concurrent builds
         run: ./.github/github-lock.sh
         env:

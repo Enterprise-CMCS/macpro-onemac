@@ -305,10 +305,12 @@ const UserManagement = () => {
     includeStateCode,
     renderEmail,
     renderStatus,
+    showUserRole,
     sortStatus,
     renderActions,
     getRoleLabel,
     renderDate,
+    userProfile.userData.type,
   ]);
 
   const initialTableState = useMemo(

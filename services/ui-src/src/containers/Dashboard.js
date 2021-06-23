@@ -2,9 +2,15 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
-import { RESPONSE_CODE, ROUTES, USER_TYPE,getUserRoleObj  } from "cmscommonlib";
 
-import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
+import {
+  RESPONSE_CODE,
+  ROUTES,
+  ChangeRequest,
+  getUserRoleObj,
+} from "cmscommonlib";
+
+
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
@@ -77,14 +83,14 @@ const Dashboard = () => {
   const getType = useCallback(
     ({ type }) =>
       ({
-        [CHANGE_REQUEST_TYPES.CHIP_SPA]: "CHIP SPA",
-        [CHANGE_REQUEST_TYPES.CHIP_SPA_RAI]: "CHIP SPA RAI",
-        [CHANGE_REQUEST_TYPES.SPA]: "Medicaid SPA",
-        [CHANGE_REQUEST_TYPES.WAIVER]: "Waiver",
-        [CHANGE_REQUEST_TYPES.SPA_RAI]: "SPA RAI",
-        [CHANGE_REQUEST_TYPES.WAIVER_RAI]: "Waiver RAI",
-        [CHANGE_REQUEST_TYPES.WAIVER_EXTENSION]: "Temporary Extension Request",
-        [CHANGE_REQUEST_TYPES.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+        [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
+        [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
+        [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
+        [ChangeRequest.TYPE.WAIVER]: "Waiver",
+        [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
+        [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
+        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
+        [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
       }[type] ?? []),
     []
   );

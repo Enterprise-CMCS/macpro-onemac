@@ -20,10 +20,14 @@ function CMSSignup() {
   );
 }
 function HelpdeskSignup() {
-  const [_, onLoadHelpdesk] = useSignupCallback("helpdesk", createAttribute);
+  const [dummy, onLoadHelpdesk] = useSignupCallback(
+    "helpdesk",
+    createAttribute
+  );
   useEffect(() => {
     if (onLoadHelpdesk) onLoadHelpdesk();
   }, [onLoadHelpdesk]);
+  console.log("Dummy is: ", dummy);
   return null;
 }
 
@@ -33,7 +37,7 @@ const isStateUser = (cmsRoles) =>
 const isCmsUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-cms-user");
 const isHelpdeskUser = (cmsRoles) =>
-  !!cmsRoles.split(",").includes("onemac-helpdesk-user");
+  !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
   const history = useHistory();

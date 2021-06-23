@@ -1,6 +1,4 @@
-import { ROUTES, USER_TYPE } from "cmscommonlib";
-import { Link } from "react-router-dom";
-import React from "react";
+import { USER_TYPE } from "cmscommonlib";
 
 export const userTypes = {
   [USER_TYPE.STATE_USER]: "State Submitter",
