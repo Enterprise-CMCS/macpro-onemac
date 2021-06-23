@@ -46,6 +46,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
   );
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
     useState("");
+
+  // Rename to Display instead of status messsage ? 
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
     useState({
       statusLevel: "error",
@@ -209,60 +211,82 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
     if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
 
-    // validate that the ID is in correct format
-    let newMessage = {
+    // default display message settings with empty message
+    let displayMessage = {
       statusLevel: "error",
       statusMessage: "",
     };
-    let checkingNumber = changeRequest.transmittalNumber;
 
-    newMessage.statusMessage = validateTransmittalNumber(
-      changeRequest.transmittalNumber
-    );
+    let formatMessage = {
+      statusLevel: "error",
+      statusMessage: validateTransmittalNumber(changeRequest.transmittalNumber),
+    };
 
-    // if the ID is valid, check if exists/not exist in data
-    if (newMessage.statusMessage === "" && checkingNumber !== "") {
-      if (transmittalNumberDetails.errorLevel)
-        newMessage.statusLevel = transmittalNumberDetails.errorLevel;
+    let existMessages = []
 
-      if (transmittalNumberDetails.existenceRegex !== undefined) {
-        checkingNumber = changeRequest.transmittalNumber.match(
-          transmittalNumberDetails.existenceRegex
-        )[0];
-      }
+    if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber){
+      const promises = transmittalNumberDetails.idExistValidations.map((idExistValidation) => {
+        let checkingNumber = changeRequest.transmittalNumber;
 
-      ChangeRequestDataApi.packageExists(checkingNumber)
-        .then((dupID) => {
-          if (!dupID && transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+        if (idExistValidation.existenceRegex !== undefined) {
+          checkingNumber = changeRequest.transmittalNumber.match(
+            idExistValidation.existenceRegex
+          )[0];
+        }
+
+        return ChangeRequestDataApi.packageExists(checkingNumber)
+      })
+
+      Promise.all(promises).then((results) => {
+        results.map((dupID, key) => {
+          const correspondingValidation = transmittalNumberDetails.idExistValidations[key]
+          let tempMessage
+
+          // ID does not exist but it should exist
+          if (!dupID && correspondingValidation.idMustExist) {
+            if (correspondingValidation.errorLevel === "error") {
+              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
             } else {
-              newMessage.statusMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
-            }
-          } else if (dupID && !transmittalNumberDetails.idMustExist) {
-            if (transmittalNumberDetails.errorLevel === "error") {
-              newMessage.statusMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              newMessage.statusMessage = `Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting.  Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+              tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
             }
           }
-          setTransmittalNumberStatusMessage(newMessage);
+          // ID exists but it should NOT exist
+          else if (dupID && !correspondingValidation.idMustExist) {
+            if (correspondingValidation.errorLevel === "error") {
+              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+            } else {
+              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+            }
+          }
+
+          // if we got a message through checking, then we should add it to the existMessages array
+          const messageToAdd = {
+            statusLevel: correspondingValidation.errorLevel,
+            statusMessage: tempMessage
+          }
+          tempMessage && existMessages.push(messageToAdd)
         })
-        .catch((error) => {
-          console.log("There was an error submitting a request.", error);
-        });
+      }).then(() => {
+        if (existMessages.length > 0) {
+          displayMessage = existMessages[0];
+          setTransmittalNumberStatusMessage(displayMessage);
+        } else {
+          setTransmittalNumberStatusMessage(displayMessage);
+        }
+      })
     } else {
-      setTransmittalNumberStatusMessage(newMessage);
+      displayMessage = formatMessage
+      setTransmittalNumberStatusMessage(displayMessage);
     }
 
     setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
     setActionTypeErrorMessage(actionTypeMessage);
   }, [
     changeRequest,
-    firstTimeThrough,
+    changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
-    validateTransmittalNumber,
+    validateTransmittalNumber
   ]);
 
   /**

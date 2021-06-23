@@ -45,8 +45,12 @@ export const CONFIG = {
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
         "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-      idMustExist: false,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        }
+      ],
     },
   },
 
@@ -73,8 +77,12 @@ export const CONFIG = {
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
         "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-      idMustExist: true,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: true,
+          errorLevel: "error",
+        }
+      ],
     },
   },
 
@@ -104,8 +112,12 @@ export const CONFIG = {
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
         "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-      idMustExist: false,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        }
+      ],
     },
   },
 
@@ -125,8 +137,12 @@ export const CONFIG = {
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
         "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-      idMustExist: true,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: true,
+          errorLevel: "error",
+        }
+      ],
     },
   },
 
@@ -175,8 +191,12 @@ export const CONFIG = {
       idHintText: "Must follow the format required by the Action Type",
       idFormat: "the Action Type.  Please select an Action Type first.",
       idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
-      idMustExist: false,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
     },
     newTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
@@ -184,26 +204,45 @@ export const CONFIG = {
         "Must be a new base number with the format SS.#### or SS.#####",
       idFormat: "SS.#### or SS.#####",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}$",
-      idMustExist: false,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
     },
     amendmentTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
       idHintText: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##",
       idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
-      idMustExist: true,
-      errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+      idExistValidations: [
+        {
+          idMustExist: true,
+          errorLevel: "warn",
+          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+        },
+      ],
     },
     renewalTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
       idHintText: "Must follow the format SS.####.R## or SS.#####.R##",
       idFormat: "SS.####.R## or SS.#####.R##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
-      idMustExist: true,
-      errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+      idExistValidations: [
+        // Want the base waiver number to exist
+        {
+          idMustExist: true,
+          errorLevel: "warn",
+          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+        },
+        // DON'T want the entire Waiver number with renewal portion to exist
+        {
+          idMustExist: false,
+          errorLevel: "warn",
+          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+        },
+      ],
     },
   },
 
@@ -222,9 +261,13 @@ export const CONFIG = {
         "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)",
       idFormat: "SS.####.R##.## or SS.#####.R##.##",
       idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
-      idMustExist: true,
-      errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+      idExistValidations: [
+        {
+          idMustExist: true,
+          errorLevel: "warn",
+          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+        }
+      ],
     },
   },
 
@@ -243,8 +286,12 @@ export const CONFIG = {
       idHintText: "Must follow the format SS.#### or SS.#####",
       idFormat: "SS.#### or SS.#####",
       idRegex: "(^[A-Z]{2}[.][0-9]{4,5}$)",
-      idMustExist: true,
-      errorLevel: "error",
+      idExistValidations: [
+        {
+          idMustExist: true,
+          errorLevel: "error",
+        }
+      ],
     },
   },
 
@@ -264,7 +311,11 @@ export const CONFIG = {
       idFormat: "the Number format sent with the RAI",
       idRegex:
         "(^[A-Z]{2}[.][0-9]{4,5}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$)",
-      idMustExist: true,
+      idExistValidations: [
+        {
+          idMustExist: true,
+        }
+      ],
     },
   },
 };
