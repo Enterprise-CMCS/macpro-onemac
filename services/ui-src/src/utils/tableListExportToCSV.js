@@ -3,9 +3,9 @@ import {JS} from "aws-amplify";
 
 const submissionTypes =
     {
-        "spa": "CHIP SPA",
+        "spa": "Medicaid SPA",
         "chipsparai": "CHIP SPA RAI",
-        "chipspa": "Medicaid SPA",
+        "chipspa": "CHIP SPA",
         "waiver": "Waiver",
         "sparai": "SPA RAI",
         "waiverrai": "Waiver RAI",
