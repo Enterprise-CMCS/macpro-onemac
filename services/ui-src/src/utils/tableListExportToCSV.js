@@ -30,6 +30,7 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle, columns)
         row += header.Header + ",";
         return;
     })
+    row += "Modified By,";
 
     row = row.slice(0, -1);
 
