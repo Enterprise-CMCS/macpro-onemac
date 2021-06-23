@@ -123,7 +123,7 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         })
-        browser.useXpath().moveToElement('//div[@class="nav-left-links"]/img', 10, 10).pause(200);
+        browser.useXpath().moveToElement('//div[@class="logo-nav-left"]/img', 10, 10).pause(200);
         browser.useCss();
     }
 
