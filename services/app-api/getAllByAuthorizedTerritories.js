@@ -69,7 +69,7 @@ async function getDataFromDB(user) {
         keepSearching = true;
         while (keepSearching == true) {
           [startingKey, keepSearching, tempResults] =
-            await stateUserDynamoDbQuery(
+            await stateSubmitterDynamoDbQuery(
               startingKey,
               territory,
               keepSearching,
@@ -130,7 +130,7 @@ async function helpdeskOrReviewerDynamoDbQuery(
  * @param {Object} allResults the results of the query/past queries
  * @returns the updated versions of the parameters
  */
-async function stateUserDynamoDbQuery(
+async function stateSubmitterDynamoDbQuery(
   startingKey,
   territory,
   keepSearching,

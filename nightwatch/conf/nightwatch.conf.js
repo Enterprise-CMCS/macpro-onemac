@@ -40,8 +40,8 @@ module.exports = {
                     state: "MD"
                 }, */
                 user:{
-                    username: `${process.env.TEST_STATE_USERS}`,
-                    password: `${process.env.TEST_STATE_USER_PASSWORD}`,
+                    username: `${process.env.TEST_STATE_SUBMITTERS}`,
+                    password: `${process.env.TEST_STATE_SUBMITTER_PASSWORD}`,
                 },   
 
                 state_admin:{
@@ -59,8 +59,8 @@ module.exports = {
                 },
 
                 user_pending:{
-                    username: `${process.env.TEST_STATE_USERS_PENDING}`,
-                    password: `${process.env.TEST_STATE_USER_PASSWORD}`,
+                    username: `${process.env.TEST_STATE_SUBMITTERS_PENDING}`,
+                    password: `${process.env.TEST_STATE_SUBMITTER_PASSWORD}`,
                 },
 
                 state_admin_pending:{

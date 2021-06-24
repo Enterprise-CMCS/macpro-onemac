@@ -43,17 +43,17 @@ module.exports = {
   },*/
   /* from Guli's PR 177
   // 1st: Logins to the test site
-  "Login to Medicaid as Regular User": function (browser) {
+  "Login to Medicaid as State Submitter": function (browser) {
     this["Login to SPA and Waiver Dashboard via Okta"](browser,{
       username:browser.globals.user,password:browser.globals.pass})
     // Test Assertion
     browser.verify.containsText("h1", spaPageTitle);
   },
 
-  // login as state user for val environment
-  "Login to Medicaid as State User in val environment": function (browser) {
+  // login as state submitter for val environment
+  "Login to Medicaid as State Submitter in val environment": function (browser) {
     this["Login to SPA and Waiver Dashboard via Okta"](browser,{
-      username:browser.globals.state_user,password:browser.globals.state_pass})
+      username:browser.globals.STATE_SUBMITTER,password:browser.globals.state_pass})
     // Test Stesp
     browser.useXpath().click("//a[text()='Login']"); // click the login button
     browser.useCss().setValue("#okta-signin-username", username);
@@ -114,7 +114,7 @@ module.exports = {
 
   // from Guli's PR 177
 
-  "Verify logout from SPA and Wavier Dashboard as Regular User": function (browser) {
+  "Verify logout from SPA and Wavier Dashboard as State Submitter": function (browser) {
     // elements
     let logout_banner_text = "paper-based state plan amendments (SPAs) and section 1915 waivers.";
 

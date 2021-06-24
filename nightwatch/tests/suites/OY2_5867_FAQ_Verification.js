@@ -10,7 +10,7 @@ module.exports = {
     // Opens the browser, goes to the test site
     before: function (browser) {
         login.beforeEach(browser);
-        //login['Login with state user'](browser);
+        //login['Login with state submitter'](browser);
         // User can go to the FAQ without logging into the application
         let fqaLink = "//a[text()='FAQ']";
         browser.useXpath().click(fqaLink).pause(500);
@@ -33,7 +33,7 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-        login['Login with state user'](browser);
+        login['Login with state submitter'](browser);
     },
 
     after: function (browser) {
@@ -64,8 +64,8 @@ module.exports = {
     //     });
     // },
 
-    // 'User logs into Medicaid as Regular user': function(browser) {
-    //     login["Login to Medicaid as Regular User"](browser);
+    // 'User logs into Medicaid as State Submitter': function(browser) {
+    //     login["Login to Medicaid as State Submitter"](browser);
     // },
 
 

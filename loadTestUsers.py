@@ -16,7 +16,7 @@ UNREGISTERED_USERS = [
         "firstName": "Ulysses",
         "lastName": "Unregistered",
     }
-    for user_type in ["stateuser", "stateadmin", "cmsapprover", "helpdesk"]
+    for user_type in ["statesubmitter", "stateadmin", "cmsapprover", "helpdesk"]
 ]
 
 

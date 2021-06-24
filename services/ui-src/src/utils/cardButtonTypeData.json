@@ -25,12 +25,12 @@
       "left": "-42"
     }
   },
-  "stateuser": {
+  "statesubmitter": {
     "title": "State Submitter",
     "desc": "Responsible for submitting packages",
     "navigateTo": "/signup/state",
     "pushState": {
-      "role": "stateuser"
+      "role": "statesubmitter"
     },
     "imageAttributes": {
       "fileName": "addUser",

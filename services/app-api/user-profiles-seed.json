@@ -248,10 +248,10 @@
         "stateCode": "VA"
       }
     ],
-    "id": "stateuseractive@cms.hhs.local",
+    "id": "statesubmitteractive@cms.hhs.local",
     "firstName": "Angie",
     "lastName": "Active",
-    "type": "stateuser"
+    "type": "statesubmitter"
   },
 
   {
@@ -277,10 +277,10 @@
         "stateCode": "VA"
       }
     ],
-    "id": "stateuserdenied@cms.hhs.local",
+    "id": "statesubmitterdenied@cms.hhs.local",
     "firstName": "Darrell",
     "lastName": "Denied",
-    "type": "stateuser"
+    "type": "statesubmitter"
   },
 
   {
@@ -306,10 +306,10 @@
         "stateCode": "VA"
       }
     ],
-    "id": "stateuserpending@cms.hhs.local",
+    "id": "statesubmitterpending@cms.hhs.local",
     "firstName": "Pauline",
     "lastName": "Pending",
-    "type": "stateuser"
+    "type": "statesubmitter"
   },
 
   {
@@ -335,10 +335,10 @@
         "stateCode": "VA"
       }
     ],
-    "id": "stateuserrevoked@cms.hhs.local",
+    "id": "statesubmitterrevoked@cms.hhs.local",
     "firstName": "Randy",
     "lastName": "Revoked",
-    "type": "stateuser"
+    "type": "statesubmitter"
   },
 
   {
@@ -510,8 +510,8 @@
       }
     ],
     "id": "statesubmitter@nightwatch.test",
-    "firstName": "Statesubmitter",
+    "firstName": "StateSubmitter",
     "lastName": "Nightwatch",
-    "type": "stateuser"
+    "type": "statesubmitter"
   }
 ]

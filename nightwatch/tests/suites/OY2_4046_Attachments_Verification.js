@@ -9,14 +9,14 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state Submitter'](browser);
     },
 
     after: function (browser) {
         login.afterEach(browser);
     },
 
-    'Verify that State User can see the optional attachments on SPA form page': function (browser) {
+    'Verify that State Submitter can see the optional attachments on SPA form page': function (browser) {
         // Go to [Submit new SPA] page 
         //browser.click('button#spaSubmitBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -44,7 +44,7 @@ module.exports = {
         //browser.back();  // go back to previous page
     },
 
-    'Verify that State User can see the optional attachments on Respond to SPA RAI page': function (browser) {
+    'Verify that State Submitter can see the optional attachments on Respond to SPA RAI page': function (browser) {
         // Go to [Respond to SPA RAI] page 
         //browser.click('button#spaRaiBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -72,7 +72,7 @@ module.exports = {
     },
 
 
-    'Verify that State User can see the optional attachments on Submit new Waiver page': function (browser) {
+    'Verify that State Submitter can see the optional attachments on Submit new Waiver page': function (browser) {
         // Go to [Submit new Waiver] page 
         //browser.click('button#waiverBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -99,7 +99,7 @@ module.exports = {
         browser.useCss();
     },
 
-    'Verify that State User can see the optional attachments on Respond to 1915(c) Waiver RAI page': function (browser) {
+    'Verify that State Submitter can see the optional attachments on Respond to 1915(c) Waiver RAI page': function (browser) {
         // Go to [Respond to 1915(c) Waiver RAI] page 
         //browser.click('button#waiverRaiBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -127,7 +127,7 @@ module.exports = {
         browser.useCss();
     },
 
-    'Verify that State User can see the optional attachments on Request Temporary Extension form page': function (browser) {
+    'Verify that State Submitter can see the optional attachments on Request Temporary Extension form page': function (browser) {
         // Go to [Respond to 1915(c) Waiver RAI] page 
         //browser.click('button#waiverExtBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");

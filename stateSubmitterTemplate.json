@@ -3,7 +3,7 @@
     "S": <replace-email>
   },
   "type": {
-    "S": "stateuser"
+    "S": "statesubmitter"
   },
   "attributes": {
     "L": [

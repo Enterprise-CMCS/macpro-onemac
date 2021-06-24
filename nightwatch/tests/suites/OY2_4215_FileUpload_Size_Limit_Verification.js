@@ -16,10 +16,10 @@ module.exports = {
     //     console.log('Maximizing the browser window size...');
     //     browser.windowMaximize().url(browser.launch_url);
     //     browser.waitForElementPresent('body');
-    //     login["Login to Medicaid as Regular User"](browser);
+    //     login["Login to Medicaid as Regular Submitter"](browser);
     // },
     // after: function (browser) {
-    //     login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
+    //     login["Verify logout from SPA and Wavier Dashboard as Regular Submitter"](browser);
     //     console.log("Stopping test executions...")
     //     console.log('Closing down the browser instance...');
     //     browser.end();
@@ -29,7 +29,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state Submitter'](browser);
     },
 
     after: function (browser) {

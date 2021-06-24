@@ -11,6 +11,6 @@
       "stateCode": "MI"
     }
   ],
-  "id": "[REPLACE TEST EMAIL FOR STATE USER]",
-  "type": "stateuser"
+  "id": "[REPLACE TEST EMAIL FOR STATE SUBMITTER]",
+  "type": "statesubmitter"
 }

@@ -36,7 +36,7 @@ class ChangeRequestDataApi {
   /**
    * Fetch a specific record from the backend.
    * @param {string} id the ID of the change request to fetch
-   * * @param {string} userId the ID of the user that created the change request
+   * * @param {string} userId the ID of the submitter that created the change request
    * @return {Object} a change request
    */
   async get(id, userId) {

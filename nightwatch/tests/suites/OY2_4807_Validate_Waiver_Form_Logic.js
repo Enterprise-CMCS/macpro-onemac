@@ -10,14 +10,14 @@ module.exports = {
     // Opens the browser, goes to the test site
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter'](browser);
     },
 
     after: function (browser) {
         login.afterEach(browser);
     },
 
-    'Verify that user can submit a New Waiver': function (browser) {
+    'Verify that submitter can submit a New Waiver': function (browser) {
         browser.useXpath().click("//a[@id='new-submission-button']");
         browser.pause(500);
         browser.useXpath().click("(//h4)[2]");

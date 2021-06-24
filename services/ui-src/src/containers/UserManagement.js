@@ -71,7 +71,7 @@ const UserManagement = () => {
       !userProfile.userData ||
       (userProfile.userData.type !== USER_TYPE.SYSTEM_ADMIN &&
         (!userProfile.userData.attributes ||
-          userProfile.userData.type === USER_TYPE.STATE_USER))
+          userProfile.userData.type === USER_TYPE.STATE_SUBMITTER))
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -207,7 +207,7 @@ const UserManagement = () => {
               doneBy: userProfile.userData.id,
               attributes: [
                 {
-                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
+                  stateCode: userList[rowNum].stateCode, // required for state submitter and state admin
                   status: value,
                 },
               ],
