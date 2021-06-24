@@ -51,7 +51,8 @@ async function getDataFromDB(user) {
   }
   try {
     var keepSearching;
-    if (user.type === USER_TYPE.HELPDESK) {
+    if ((user.type === USER_TYPE.HELPDESK)
+      || (user.type === USER_TYPE.CMS_REVIEWER)) {
       keepSearching = true;
       while (keepSearching == true) {
         [startingKey, keepSearching, tempResults] =

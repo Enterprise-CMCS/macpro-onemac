@@ -87,7 +87,8 @@ export const isPending = (userData) => {
 export const isActive = (userData) => {
   if (
     userData.type === USER_TYPE.CMS_APPROVER ||
-    userData.type === USER_TYPE.HELPDESK
+    userData.type === USER_TYPE.HELPDESK ||
+    userData.type === USER_TYPE.CMS_REVIEWER
   ) {
     userData.attributes.sort(sortDescendingOrder);
     return userData.attributes[0].status === "active";
