@@ -21,6 +21,7 @@ module.exports = {
     //     browser.end();
     // },
 
+    //changed credentials to nightwatch.conf.js
     before: function (browser) {
         login.beforeEach(browser);
         login['Login with cms_approvers denied user'](browser);
