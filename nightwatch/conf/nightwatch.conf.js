@@ -59,33 +59,33 @@ module.exports = {
                 },
 
                 user_pending:{
-                    username: `${process.env.TEST_STATE_USERS_PENDING}`,
-                    password: `${process.env.TEST_STATE_USER_PASSWORD}`,
+                    username: "stateuserpending@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 state_admin_pending:{
-                    username: `${process.env.TEST_STATE_ADMIN_USERS_PENDING}`,
-                    password: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+                    username: "stateadminpending@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 cms_approvers_pending: {
-                    username: `${process.env.TEST_CMS_APPROVER_USERS_PENDING}`,
-                    password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+                    username: "cmsapproverpending@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 user_denied:{
-                    username: `${process.env.TEST_STATE_USERS_DENIED}`,
-                    password: `${process.env.TEST_STATE_USER_PASSWORD}`,
+                    username: "stateuserdenied@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 state_admin_denied:{
-                    username: `${process.env.TEST_STATE_ADMIN_USERS_DENIED}`,
-                    password: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+                    username: "stateadmindenied@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 cms_approvers_denied: {
-                    username: `${process.env.TEST_CMS_APPROVER_USERS_DENIED}`,
-                    password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+                    username: "cmsapproverdenied@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
            },
 

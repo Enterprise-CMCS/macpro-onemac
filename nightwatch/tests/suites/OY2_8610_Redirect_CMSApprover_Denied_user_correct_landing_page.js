@@ -1,8 +1,25 @@
 
 const login = require('../suites/OY2_9999_Login');
+//const login = require('../cases/OY2-1494_Test_SPA_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
+
+    // before: function (browser) {
+    //     console.log('Setting up the browser instance...');
+    //     console.log('Opening the browser...')
+    //     console.log('Maximizing the browser window size...');
+    //     browser.windowMaximize().url(browser.launch_url);
+    //     browser.waitForElementPresent('body');
+    //     login["Login to Medicaid as Regular User"](browser);
+    // },
+
+    // after: function (browser) {
+    //     login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
+    //     console.log("Stopping test executions...")
+    //     console.log('Closing down the browser instance...');
+    //     browser.end();
+    // },
 
     before: function (browser) {
         login.beforeEach(browser);
