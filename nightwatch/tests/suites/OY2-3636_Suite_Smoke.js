@@ -55,7 +55,8 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(3000);
+        browser.click("[value='Submit']").pause(5000);
+        browser.refresh();
 
         // Verify the SPA on Submission List 
         //browser.useXpath().click("//a[@id='new-submission-button']");
