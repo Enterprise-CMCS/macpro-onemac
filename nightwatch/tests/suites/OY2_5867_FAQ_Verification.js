@@ -1,6 +1,6 @@
 // Updated by: Guli 
 // Date      : 03/19/2021
-
+/*
 const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
@@ -278,3 +278,4 @@ module.exports = {
         browser.useCss();
     },
 }
+*/
