@@ -25,7 +25,6 @@ module.exports = {
         let pending_message = "//div[@class='empty-list']/h4";
         let my_account_button = "//button[@id='myAccountLink']";
         let management_profile_link = "//a[@id='manageAccountLink']";
-        browser.pause(5000);
         browser.useXpath().expect.element(home_link).to.be.visible;
         browser.useXpath().expect.element(faq_link).to.be.visible;
         browser.useXpath().expect.element(user_management_link).to.be.visible;
