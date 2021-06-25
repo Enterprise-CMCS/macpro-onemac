@@ -16,7 +16,10 @@ module.exports = {
     'CMS System Admin user can see the text, profile information': function (browser) {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
-        
+        let user_management_title = "//h1";
+        let user_management_link = "//a[@id='userManagementLink']";
+        browser.useXpath().expect.element(user_management_link).to.be.visible;
+        browser.useXpath().expect.element(user_management_title).to.be.visible;
 
         // Click on button My Account and get access to account management 
         browser.useCss().click(my_account_button); 

@@ -41,15 +41,22 @@ module.exports = {
     browser.useXpath().verify.containsText("//h1", "SPA and Waiver Dashboard");
     browser.useCss();
   },*/
-  /* from Guli's PR 177
+  //from Guli's PR 177
   // 1st: Logins to the test site
-  "Login to Medicaid as Regular User": function (browser) {
-    this["Login to SPA and Waiver Dashboard via Okta"](browser,{
-      username:browser.globals.user,password:browser.globals.pass})
-    // Test Assertion
-    browser.verify.containsText("h1", spaPageTitle);
-  },
+  // "Login to Medicaid as Regular User": function (browser) {
+  //   this["Login to SPA and Waiver Dashboard via Okta"](
+  //       browser,{
+  //       // username:browser.globals.user,
+  //       // password:browser.globals.pass
+  //       username:"cmsapproverdenied@cms.hhs.local",
+  //       password:"Passw0rd!"
+  //     }
+  //   )
+  //   // Test Assertion
+  //   browser.verify.containsText("h1", spaPageTitle);
+  // },
 
+  /*
   // login as state user for val environment
   "Login to Medicaid as State User in val environment": function (browser) {
     this["Login to SPA and Waiver Dashboard via Okta"](browser,{
