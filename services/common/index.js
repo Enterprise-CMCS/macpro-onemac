@@ -148,7 +148,6 @@ class CmsReviewer extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
-    this.canAccessUserManagement = true;
   }
 }
 class CmsApprover extends Role {

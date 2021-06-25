@@ -66,7 +66,6 @@ export const revokeConfirmMessage = {
  */
 
 export const isPending = (userData) => {
-  //
   if (
     userData.type === USER_TYPE.CMS_APPROVER ||
     userData.type === USER_TYPE.HELPDESK

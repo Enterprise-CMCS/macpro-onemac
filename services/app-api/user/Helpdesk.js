@@ -67,9 +67,7 @@ class Helpdesk {
         );
         return;
       }
-      if (oneUser.type !== "cmsapprover"
-        && oneUser.type !== "helpdesk"
-        && oneUser.type !== "cmsreviewer") {
+      if (oneUser.type === "stateuser" && oneUser.type === "stateadmin") {
         oneUser.attributes.forEach((oneAttribute) => {
           // State Admins and State Users must have the history section
           if (!oneAttribute.history) {
