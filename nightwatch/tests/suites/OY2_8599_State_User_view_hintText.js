@@ -5,7 +5,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -13,7 +13,7 @@ module.exports = {
 
     },
 
-    'State User can view SPA ID and Waiver Number hint text on all submission forms': function (browser) {
+    'State Submitter User can view SPA ID and Waiver Number hint text on all submission forms': function (browser) {
         //check on respond to SPA RAI SPA ID hint text
         browser.useXpath().click("//a[@id='new-submission-button']");
         browser.pause(500);

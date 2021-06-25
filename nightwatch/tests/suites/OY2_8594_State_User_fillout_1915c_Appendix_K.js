@@ -7,7 +7,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -16,7 +16,7 @@ module.exports = {
     },
 
 
-    'State user check the Submit 1915(c) Appendix K Amendment': function (browser) {
+    'State Submitter user check the Submit 1915(c) Appendix K Amendment': function (browser) {
         // Go to Submit 1915(c) Appendix K Amendment
         //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -71,7 +71,7 @@ module.exports = {
     },
 
 
-    'State user check the Submit 1915(c) Appendix K Amendment error message on format and FAQ': function (browser) {
+    'State Submitter user check the Submit 1915(c) Appendix K Amendment error message on format and FAQ': function (browser) {
         // Go to Submit 1915(c) Appendix K Amendment
         //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
         browser.useXpath().click("//a[@id='new-submission-button']");

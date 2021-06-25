@@ -5,7 +5,7 @@ module.exports = {
     
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -13,7 +13,7 @@ module.exports = {
 
     },
 
-    'Verify that State User can enter Waiver number in RAI form with correct format': function (browser) {
+    'Verify that State Submitter User can enter Waiver number in RAI form with correct format': function (browser) {
        //browser.useCss().click("button#waiverRaiBtn").pause(500);
        browser.useXpath().click("//a[@id='new-submission-button']");
        browser.pause(500);

@@ -19,7 +19,7 @@ module.exports = {
         let state = '(//tr/th)[3]'
         let status = '(//tr/th)[4]';
         let personal_actions = '(//tr/th)[5]';
-        let STATE_SUBMITTER_name = '(//tr/td)[11]';
+        let state_submitter_name = '(//tr/td)[11]';
         let first_email ='(//tr/td)[2]';
         let second_email ='(//tr/td)[7]';
         let third_email ='(//tr/td)[12]';
@@ -34,7 +34,7 @@ module.exports = {
         browser.useXpath().expect.element(state).to.be.visible;
         browser.useXpath().expect.element(status).to.be.visible;
         browser.useXpath().expect.element(personal_actions).to.be.visible;
-        browser.useXpath().expect.element(STATE_SUBMITTER_name).to.be.visible;
+        browser.useXpath().expect.element(state_submitter_name).to.be.visible;
         browser.useXpath().expect.element(first_email).to.be.visible;
         browser.useXpath().expect.element(second_email).to.be.visible;
         browser.useXpath().expect.element(third_email).to.be.visible;
