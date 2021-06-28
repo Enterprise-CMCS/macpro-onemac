@@ -42,7 +42,7 @@ module.exports = {
     'Submit new SPA with state name and verify if it shows under submission list': function (browser) {
         // Submit a SPA Report 
         const newSPA = require('./OY2-3636_Suite_Smoke.js');
-        generatedSPAID = newSPA['Verify submitter user can submit new SPA'](browser);
+        generatedSPAID = newSPA['Verify Submitter user can submit new SPA'](browser);
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";

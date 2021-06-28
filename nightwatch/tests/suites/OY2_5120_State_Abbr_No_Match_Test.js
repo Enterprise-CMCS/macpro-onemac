@@ -30,7 +30,7 @@ module.exports = {
         // Enter illegal State abbribiation 
         let abbr = 'QA';
         browser.setValue('input#transmittalNumber', abbr);
-        let expectedErroMsg = "You can only submit for a state you have access to. If you need to add another state, visit your submitter profile to request access.";
+        let expectedErroMsg = "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.";
         browser.verify.containsText('div#transmittalNumberStatusMsg', expectedErroMsg);
     }
 }
