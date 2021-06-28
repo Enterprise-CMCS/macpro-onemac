@@ -131,59 +131,63 @@ function Header(props) {
         return (
           <div className="nav-bar">
             <div className="nav-left">
-              <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-              <Link
-                to={ROUTES.HOME}
-                className={getActiveClass(currentRoute, RouteList.HOME)}
-              >
-                Home
-              </Link>
-              {isAuthenticated && (
-                <>
-                  {userObj.canAccessDashboard && (
-                    <Link
-                      id="dashboardLink"
-                      to={ROUTES.DASHBOARD}
-                      className={getActiveClass(
-                        currentRoute,
-                        RouteList.DASHBOARD
-                      )}
-                    >
-                      Dashboard
-                    </Link>
-                  )}
-                  {userObj.canAccessUserManagement && (
-                    <Link
-                      id="userManagementLink"
-                      to={ROUTES.USER_MANAGEMENT}
-                      className={getActiveClass(
-                        currentRoute,
-                        RouteList.USER_MANAGEMENT
-                      )}
-                    >
-                      User Management
-                    </Link>
-                  )}
-                </>
-              )}
-              <a
-                href={ROUTES.FAQ}
-                className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-                target="new"
-              >
-                FAQ
-              </a>
-              {isLoggedInAsDeveloper ? (
+              <div className="logo-nav-left">
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+              </div>
+              <div className="nav-left-links">
                 <Link
-                  to={ROUTES.COMPONENT_PAGE}
-                  className={getActiveClass(
-                    currentRoute,
-                    RouteList.COMPONENT_PAGE
-                  )}
+                  to={ROUTES.HOME}
+                  className={getActiveClass(currentRoute, RouteList.HOME)}
                 >
-                  Component Page
+                  Home
                 </Link>
-              ) : null}
+                {isAuthenticated && (
+                  <>
+                    {userObj.canAccessDashboard && (
+                      <Link
+                        id="dashboardLink"
+                        to={ROUTES.DASHBOARD}
+                        className={getActiveClass(
+                          currentRoute,
+                          RouteList.DASHBOARD
+                        )}
+                      >
+                        Dashboard
+                      </Link>
+                    )}
+                    {userObj.canAccessUserManagement && (
+                      <Link
+                        id="userManagementLink"
+                        to={ROUTES.USER_MANAGEMENT}
+                        className={getActiveClass(
+                          currentRoute,
+                          RouteList.USER_MANAGEMENT
+                        )}
+                      >
+                        User Management
+                      </Link>
+                    )}
+                  </>
+                )}
+                <a
+                  href={ROUTES.FAQ}
+                  className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
+                  target="new"
+                >
+                  FAQ
+                </a>
+                {isLoggedInAsDeveloper ? (
+                  <Link
+                    to={ROUTES.COMPONENT_PAGE}
+                    className={getActiveClass(
+                      currentRoute,
+                      RouteList.COMPONENT_PAGE
+                    )}
+                  >
+                    Component Page
+                  </Link>
+                ) : null}
+              </div>
             </div>
             {renderAccountButtons(isLoggedInAsDeveloper)}
           </div>

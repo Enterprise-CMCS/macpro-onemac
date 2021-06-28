@@ -4,7 +4,7 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 // Updated on 6/16/2021
-
+/*
 
 let generatedSPAID;
 let generatedWaiverID;
@@ -156,3 +156,4 @@ module.exports = {
         browser.useCss();
     },
 }
+*/
