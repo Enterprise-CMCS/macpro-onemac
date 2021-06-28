@@ -96,7 +96,7 @@ module.exports = {
 
         //click on "What is my Waiver Number?" link and FAQ page
         let what_isWaiver_number = "//div[@class='label-rcol']/a";
-        browser.useXpath().click(what_isWaiver_number).pause(500);
+        browser.useXpath().click(what_isWaiver_number).pause(2000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab

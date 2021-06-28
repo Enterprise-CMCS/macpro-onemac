@@ -35,7 +35,7 @@ module.exports = {
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.pause(1000);
-        browser.useXpath().assert.containsText(submittedType, "SPA").pause(1000);
+        browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
         browser.useCss();
