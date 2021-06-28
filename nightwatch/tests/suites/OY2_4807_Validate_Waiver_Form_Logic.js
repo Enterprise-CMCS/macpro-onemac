@@ -10,7 +10,7 @@ module.exports = {
     // Opens the browser, goes to the test site
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state submitter'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {

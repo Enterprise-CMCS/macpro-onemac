@@ -29,7 +29,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state Submitter'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
