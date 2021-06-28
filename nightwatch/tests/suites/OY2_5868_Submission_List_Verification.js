@@ -4,7 +4,7 @@
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
 // Updated on 6/16/2021
-/*
+
 
 let generatedSPAID;
 let generatedWaiverID;
@@ -35,7 +35,7 @@ module.exports = {
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.pause(1000);
-        browser.useXpath().assert.containsText(submittedType, "SPA").pause(1000);
+        browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
         browser.useCss();
@@ -156,4 +156,3 @@ module.exports = {
         browser.useCss();
     },
 }
-*/
