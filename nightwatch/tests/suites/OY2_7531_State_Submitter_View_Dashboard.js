@@ -1,6 +1,6 @@
 let generatedSPAID;
 let generatedWaiverID;
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
@@ -41,7 +41,7 @@ module.exports = {
 
     'Submit new SPA with state name and verify if it shows under submission list': function (browser) {
         // Submit a SPA Report 
-        const newSPA = require('../suites/OY2-3636_Suite_Smoke.js');
+        const newSPA = require('./OY2-3636_Suite_Smoke.js');
         generatedSPAID = newSPA['Verify submitter user can submit new SPA'](browser);
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";

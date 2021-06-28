@@ -1,5 +1,5 @@
 const { first } = require('lodash');
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
