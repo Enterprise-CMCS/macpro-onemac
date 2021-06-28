@@ -1,6 +1,6 @@
 import {formatDate} from "./date-utils";
 import {userTypes} from "../libs/userLib";
-
+import { format } from "date-fns";
 const userStatus = {
     "active": "Granted",
     "denied": "Denied",
@@ -25,7 +25,7 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle, columns)
     var CSV = "";
 
     var row = "";
-    
+
     columns.forEach((header) => {
         row += header.Header + ",";
         return;
@@ -43,7 +43,7 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle, columns)
                 row += JSONData[i].transmittalNumber + ","
                 row += submissionTypes[JSONData[i].type] + ","
                 row += JSONData[i].territory + ","
-                row += "\"" + formatDate(JSONData[i].submittedAt) + "\","
+                row += "\"" + format(JSONData[i].submittedAt, "MMM d, yyyy") + "\","
                 row += JSONData[i].user.firstName + " "
                 row += JSONData[i].user.lastName
                 break;
