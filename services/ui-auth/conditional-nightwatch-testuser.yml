@@ -38,7 +38,7 @@ resources:
     BasicParameter:
       Type: AWS::SSM::Parameter
       Properties:
-        Name: /${self:custom.stage}/nightwatch/TEST_USERS
+        Name: /${self:custom.stage}/nightwatch/TEST_STATE_SUBMITTER_USERS
         Type: String
         Value:
           - Fn::If:

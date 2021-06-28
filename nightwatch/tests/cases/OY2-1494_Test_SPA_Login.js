@@ -4,6 +4,7 @@ module.exports = {
   beforeEach: function (browser) {
     console.log("Setting up...");
     console.log("url is: ", browser.launch_url);
+    console.log("user is: ", browser.globals.user);
     browser.maximizeWindow();
     browser.url(browser.launch_url);
     browser.waitForElementPresent("body");
