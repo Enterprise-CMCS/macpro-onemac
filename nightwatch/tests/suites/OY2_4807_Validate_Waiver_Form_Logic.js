@@ -17,7 +17,7 @@ module.exports = {
         login.afterEach(browser);
     },
 
-    'Verify that submitter can submit a New Waiver': function (browser) {
+    'Verify that submitter user can submit a New Waiver': function (browser) {
         browser.useXpath().click("//a[@id='new-submission-button']");
         browser.pause(500);
         browser.useXpath().click("(//h4)[2]");
