@@ -1,5 +1,4 @@
-import { USER_TYPE } from "cmscommonlib";
-import { getCurrentStatus } from "./user-util";
+import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
  * CMSReiewer User specific functions.
@@ -14,13 +13,7 @@ class CMSReviewer {
    * @returns {String} the User Role
    */
   getScanParams() {
-    let scanParams = {
-      TableName: process.env.userTableName,
-      FilterExpression: "#ty <> :userType",
-      ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType": USER_TYPE.SYSTEM_ADMIN },
-    };
-    return scanParams;
+    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
   /**
@@ -49,67 +42,7 @@ class CMSReviewer {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
-    let i = 1;
-
-    console.log("results:", JSON.stringify(userResult));
-
-    // if there are no items, return an empty user list
-    if (!userResult.Items) return userRows;
-
-    userResult.Items.forEach((oneUser) => {
-      // All users must have the attribute section
-      if (!oneUser.attributes) {
-        errorList.push(
-          "Attributes data required for this role, but not found ",
-          oneUser
-        );
-        return;
-      }
-      if (oneUser.type !== "cmsapprover" && oneUser.type !== "helpdesk" && oneUser.type !== "cmsreviewer") {
-        oneUser.attributes.forEach((oneAttribute) => {
-          // State Admins and State Users must have the history section
-          if (!oneAttribute.history) {
-            errorList.push(
-              "History data required for this role, but not found ",
-              oneUser
-            );
-            return;
-          }
-
-          userRows.push({
-            id: i,
-            email: oneUser.id,
-            firstName: oneUser.firstName,
-            lastName: oneUser.lastName,
-            stateCode: oneAttribute.stateCode,
-            role: oneUser.type,
-            latest: getCurrentStatus(oneAttribute.history),
-          });
-          i++;
-        });
-      }
-      // Helpdesk users, CMSReviewers and CMS Approvers must not have the history section
-      else {
-        userRows.push({
-          id: i,
-          email: oneUser.id,
-          firstName: oneUser.firstName,
-          lastName: oneUser.lastName,
-          stateCode: "N/A",
-          role: oneUser.type,
-          latest: getCurrentStatus(oneUser.attributes),
-        });
-        i++;
-      }
-    });
-
-    console.log("error List is ", errorList);
-
-    console.log("Response:", userRows);
-
-    return userRows;
+    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 }
 
