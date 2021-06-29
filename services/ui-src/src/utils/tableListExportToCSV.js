@@ -54,7 +54,7 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle, columns)
                 row += JSONData[i].stateCode + ","
                 row += userStatus[JSONData[i].latest.status] + ","
                 row += userTypes[JSONData[i].role] + ","
-                row += "\"" + formatDate(JSONData[i].latest.date) + "\","
+                row += "\"" + format(JSONData[i].latest.date * 1000, "MMM d, yyyy hh:mm a") + "\","
                 row += JSON.stringify(JSONData[i].latest.doneByName)
                 break;
             default:
