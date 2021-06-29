@@ -30,7 +30,7 @@ services=(
   'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'
-)
+
 
 set -e
 for i in "${services[@]}"; do
