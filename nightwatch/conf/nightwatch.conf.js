@@ -59,18 +59,33 @@ module.exports = {
                 },
 
                 user_pending:{
-                    username: `${process.env.TEST_STATE_SUBMITTERS_PENDING}`,
-                    password: `${process.env.TEST_STATE_SUBMITTER_PASSWORD}`,
+                    username: "statesubmitterpending@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 state_admin_pending:{
-                    username: `${process.env.TEST_STATE_ADMIN_USERS_PENDING}`,
-                    password: `${process.env.TEST_STATE_ADMIN_USER_PASSWORD}`,
+                    username: "stateadminpending@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
 
                 cms_approvers_pending: {
-                    username: `${process.env.TEST_CMS_APPROVER_USERS_PENDING}`,
-                    password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+                    username: "cmsapproverpending@cms.hhs.local",
+                    password: "Passw0rd!",
+                },
+
+                user_denied:{
+                    username: "statesubmitterdenied@cms.hhs.local",
+                    password: "Passw0rd!",
+                },
+
+                state_admin_denied:{
+                    username: "stateadmindenied@cms.hhs.local",
+                    password: "Passw0rd!",
+                },
+
+                cms_approvers_denied: {
+                    username: "cmsapproverdenied@cms.hhs.local",
+                    password: "Passw0rd!",
                 },
            },
 

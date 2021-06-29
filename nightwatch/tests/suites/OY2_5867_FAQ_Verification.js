@@ -71,7 +71,7 @@ module.exports = {
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = "//a[text()='FAQ']";
-        browser.useXpath().click(fqaLink).pause(500);
+        browser.useXpath().click(fqaLink).pause(1000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -144,6 +144,7 @@ module.exports = {
         browser.useXpath().click("(//h4)[2]");
         browser.useCss();
         browser.click('.form-card a');
+        browser.pause(1000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -179,6 +180,7 @@ module.exports = {
         browser.useXpath().click("(//h4)[1]");
         //browser.useCss();
         browser.useCss().click('.form-card a');
+        browser.pause(1000);
         let fqaHeader = '(//h4[@class="faq-collapsible-trigger"])[4]';
 
         //Switch to new tab
@@ -213,6 +215,7 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[2]");
         browser.useCss().click('.form-card a');
+        browser.pause(1000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -244,6 +247,7 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[3]");
         browser.useCss().click('.form-card a');
+        browser.pause(1000);
 
         //Switch to new tab
         browser.windowHandles(function (result) {
@@ -263,6 +267,7 @@ module.exports = {
         browser.pause(300);
         let linkInFAQ = '.form-card [target]';
         browser.useCss().click(linkInFAQ);
+        browser.pause(1000);
         let submittalAmendments = "//h2";
         //Switch to new tab
         browser.windowHandles(function (result) {

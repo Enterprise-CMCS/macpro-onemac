@@ -27,15 +27,27 @@ module.exports= {
         this['Login with state submitter user'](browser, browser.globals.cms_system_admin);
     },
 
-    // "Login with state submitter pending user": function (browser) {
-    //     this['Login with state submitter user'](browser, browser.globals.user_pending);
-    // },
+    "Login with state submitter pending user": function (browser) {
+        this['Login with state user'](browser, browser.globals.user_pending);
+    },
 
-    // "Login with state admin pending user": function (browser) {
-    //     this['Login with state admin user'](browser, browser.globals.state_admin_pending);
-    // },
+    "Login with state admin pending user": function (browser) {
+        this['Login with state user'](browser, browser.globals.state_admin_pending);
+    },
 
-    // "Login with cms_approvers pending user": function (browser) {
-    //     this['Login with state submitter user'](browser, browser.globals.cms_approvers_pending);
-    // },
+    "Login with cms_approvers pending user": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_approvers_pending);
+    },
+
+    "Login with state submitter denied user": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.user_denied);
+    },
+
+    "Login with state admin denied user": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.state_admin_denied);
+    },
+
+    "Login with cms_approvers denied user": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_approvers_denied);
+    },
 }

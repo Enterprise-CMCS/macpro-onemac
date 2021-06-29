@@ -5,7 +5,6 @@
 
 
 const locator = '(//*[@disabled])';
-//const login = require('../cases/OY2-1494_Test_SPA_Login');
 const login = require('../suites/OY2_9999_Login');
 let spaID;
 let generatedWaiverID;
@@ -21,34 +20,6 @@ module.exports = {
     after: function (browser) {
         login.afterEach(browser);
     },
-    // Opens the browser, goes to the test site
-    // before: function (browser) {
-    //     console.log('Setting up the browser instance...');
-    //     console.log('Opening the browser...')
-    //     console.log('Maximizing the browser window size...');
-    //     browser.windowMaximize().url(browser.launch_url);
-    //     browser.waitForElementPresent('body');
-    //     login["Login to Medicaid as State Submitter"](browser);
-    // },
-
-    // // After all the test case executions, clear out the browser
-    // after: function (browser) {
-    //     login["Verify logout from SPA and Wavier Dashboard as State Submitter"](browser);
-    //     console.log("Stopping test executions...")
-    //     console.log('Closing down the browser instance...');
-    //     browser.end();
-    // },
-
-
-    // 'Login to Medicaid as Developer' : function(browser) {
-    //     // Verifying that Login page is displayed
-    //     login["Logout of SPA and Waiver Dashboard"](browser);
-    // },
-
-    // 'Login to Medicaid' : function(browser) {
-    //     // Verifying that Login page is displayed
-    //     login["Login to SPA and Waiver Dashboard via Okta"](browser);
-    // },
 
     // DONE 
     'Verify Submitter user can submit new SPA': function (browser) {
@@ -84,7 +55,8 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(3000);
+        browser.click("[value='Submit']").pause(5000);
+        browser.refresh();
 
         // Verify the SPA on Submission List 
         //browser.useXpath().click("//a[@id='new-submission-button']");

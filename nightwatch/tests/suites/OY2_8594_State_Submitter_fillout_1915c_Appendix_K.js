@@ -24,7 +24,7 @@ module.exports = {
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[4]");
-        // Verify that Submit 1915(c) Appendix K Amendment is displayed 
+        // Verify that Submit 1915(c) Appendix K Amendment is displayed
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
         // Verify that text "if your Appendix ..." shows up on the page
         browser.useXpath().expect.element('//div[@class="form-subheader-message"]').to.be.visible;
@@ -43,28 +43,28 @@ module.exports = {
         //enter the correct waiver number format
         //browser.useCss().setValue("input#transmittalNumber", '');
         let spaCHIPId2 = 'MD.' + NNNNN + '.R' + YY + '.' + YY;
-        // input the SPA ID number 
+        // input the SPA ID number
         browser.useCss().setValue("input#transmittalNumber", spaCHIPId2);
 
-        // Take care of the attachement. 
-        // First File Uplaoding 
+        // Take care of the attachement.
+        // First File Uplaoding
         let fileUploadElem = "[name='uploader-input-0']";
         let filePath = require('path').resolve(__dirname + '/files/adobe.pdf')
         browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
 
-        // Second File Uplaoding 
+        // Second File Uplaoding
         fileUploadElem = "[name='uploader-input-1']";
         filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
         browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
 
-        // Enter Additional Information 
+        // Enter Additional Information
         browser.useXpath().moveToElement('//textarea', 10, 10).pause(500);
         browser.useXpath().setValue('//textarea', 'This is a test K Amendment');
 
-        // Click Submit 
+        // Click Submit
         browser.useCss().click("[value='Submit']").pause(1000);
 
-        // Verify the CHIP SPA was submitted 
+        // Verify the CHIP SPA was submitted
         browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId2);
         browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[2]", "1915(c) Appendix K Amendment");
         browser.useCss();
@@ -79,7 +79,7 @@ module.exports = {
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[4]");
-        // Verify that Submit 1915(c) Appendix K Amendment is displayed 
+        // Verify that Submit 1915(c) Appendix K Amendment is displayed
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
 
         // Enter Waiver number
@@ -96,7 +96,7 @@ module.exports = {
 
         //click on "What is my Waiver Number?" link and FAQ page
         let what_isWaiver_number = "//div[@class='label-rcol']/a";
-        browser.useXpath().click(what_isWaiver_number).pause(500);
+        browser.useXpath().click(what_isWaiver_number).pause(2000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -124,8 +124,8 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         })
-        browser.useXpath().moveToElement('//div[@class="nav-left"]/img', 10, 10).pause(200);
+        browser.useXpath().moveToElement('//div[@class="logo-nav-left"]/img', 10, 10).pause(200);
         browser.useCss();
     }
-    
+
 }
