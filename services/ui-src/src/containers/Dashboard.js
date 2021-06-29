@@ -147,8 +147,9 @@ const Dashboard = () => {
       href={ROUTES.NEW_SUBMISSION_SELECTION}
       inversed
     >
-      New Submission{" "}
+      New Submission
       <svg
+        className="new-submission-icon"
         width="15"
         height="16"
         viewBox="0 0 15 16"
