@@ -1,0 +1,51 @@
+import { RESPONSE_CODE } from "../libs/response-codes";
+
+/**
+ * CMSReiewer User specific functions.
+ *
+ * all CMSReiewer User can view all Users except CMS System Admins
+ *
+ * @class
+ */
+class CMSReviewer {
+  /**
+   * CMS Approvers manage the State Admins
+   * @returns {String} the User Role
+   */
+  getScanParams() {
+    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+  }
+
+  /**
+   * CMSReiewer User do NOT have a state
+   * @returns {Boolean} false because we do not check if the states match
+   */
+  shouldICheckState() {
+    return false;
+  }
+
+  /**
+   * CMSReiewer User have to be active to see user lists
+   * @returns {String} null always as CMSReiewer User can have a read-only view of all users with any statuses
+   */
+  canIRequestThis(doneBy) {
+    return undefined;
+  }
+
+  /**
+   * takes the raw user data and transforms into
+   * what to send to front end.
+   *
+   * CMSReiewer User gets all users except CMS System Admins
+   *
+   * @param {userResult} Array of User Objects from database
+   * @returns {userRows} the list of users
+   */
+  transformUserList(userResult) {
+    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+  }
+}
+
+const instance = new CMSReviewer();
+Object.freeze(instance);
+export default instance;
