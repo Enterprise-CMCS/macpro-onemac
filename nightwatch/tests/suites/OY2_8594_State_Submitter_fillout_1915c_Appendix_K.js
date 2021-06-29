@@ -103,6 +103,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         let pageBanner = '//h1';
         let expectedBannerText = 'Frequently Asked Questions';

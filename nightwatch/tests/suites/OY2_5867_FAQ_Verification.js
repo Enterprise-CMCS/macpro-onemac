@@ -113,6 +113,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.useCss();
@@ -149,6 +150,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
@@ -185,6 +187,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a 1915(b) waiver number?';
@@ -216,6 +219,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
@@ -247,6 +251,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
@@ -265,6 +270,7 @@ module.exports = {
             var handle = result.value[2];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         //Verify the new window 
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;
         browser.verify.containsText(submittalAmendments, 'Submittal of State plans and plan amendments.');
