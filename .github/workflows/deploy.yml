@@ -134,7 +134,7 @@ jobs:
           path: ./tests_output
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
-        if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master","slack-config", "production"]'), env.branch_name) && failure ()
+        if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master", "production"]'), env.branch_name) && failure ()
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
           SLACK_USERNAME: ${{env.branch_name}} Deploy Failure
