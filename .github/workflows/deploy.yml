@@ -137,7 +137,7 @@ jobs:
         if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master", "production"]'), env.branch_name) && failure ()
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_USERNAME: Deploy Failure Alert
+          SLACK_USERNAME: ${env.branch_name} Deploy Failure
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_COLOR: ${{job.status}}
           SLACK_FOOTER: ""
