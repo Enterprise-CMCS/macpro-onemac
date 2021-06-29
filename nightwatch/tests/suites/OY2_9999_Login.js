@@ -11,7 +11,7 @@ module.exports= {
    
     },
       
-    "Login with state submitter user": function (browser, testData = browser.globals.user) {
+    "Login with state submitter user": function (browser, testData = browser.globals.submitter) {
         login['Login to SPA and Waiver Dashboard'](browser, testData);
     },
 
@@ -28,11 +28,11 @@ module.exports= {
     },
 
     "Login with state submitter pending user": function (browser) {
-        this['Login with state user'](browser, browser.globals.user_pending);
+        this['Login with state submitter user'](browser, browser.globals.submitter_pending);
     },
 
     "Login with state admin pending user": function (browser) {
-        this['Login with state user'](browser, browser.globals.state_admin_pending);
+        this['Login with state submitter user'](browser, browser.globals.state_admin_pending);
     },
 
     "Login with cms_approvers pending user": function (browser) {
@@ -40,7 +40,7 @@ module.exports= {
     },
 
     "Login with state submitter denied user": function (browser) {
-        this['Login with state submitter user'](browser, browser.globals.user_denied);
+        this['Login with state submitter user'](browser, browser.globals.submitter_denied);
     },
 
     "Login with state admin denied user": function (browser) {

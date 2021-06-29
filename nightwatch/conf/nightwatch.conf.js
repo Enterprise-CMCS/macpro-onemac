@@ -39,7 +39,7 @@ module.exports = {
                     pass: `${process.env.TEST_USER_PASSWORD}`,
                     state: "MD"
                 }, */
-                user:{
+                submitter:{
                     username: `${process.env.TEST_STATE_SUBMITTER_USERS}`,
                     password: `${process.env.TEST_STATE_SUBMITTER_USER_PASSWORD}`,
                 },   
@@ -58,7 +58,7 @@ module.exports = {
                     password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
                 },
 
-                user_pending:{
+                submitter_pending:{
                     username: "statesubmitterpending@cms.hhs.local",
                     password: "Passw0rd!",
                 },
@@ -73,7 +73,7 @@ module.exports = {
                     password: "Passw0rd!",
                 },
 
-                user_denied:{
+                submitter_denied:{
                     username: "statesubmitterdenied@cms.hhs.local",
                     password: "Passw0rd!",
                 },
