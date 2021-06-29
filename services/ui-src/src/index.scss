@@ -375,6 +375,7 @@ input[type="file"] {
 
   .form-subheader-message {
     padding-top: 40px;
+    max-width: 650px;
   }
 
   .form-card {
@@ -715,7 +716,7 @@ input[type="file"] {
 
   .type-badge {
     @extend .ds-c-badge;
-    font-weight: bold;
+    font-weight: 600;
     background-color: $color-primary-alt-lightest;
     color: $color-gray;
   }
@@ -738,6 +739,10 @@ input[type="file"] {
   }
 }
 
+.new-submission-icon {
+  padding-left: 8px;
+  width: 23px !important;
+}
 .user-table {
   @include custom-table;
   td:last-child {
@@ -1305,7 +1310,7 @@ dl.state-access-cards {
   @media only screen and (min-width: 1200px) {
     width: calc(100% - 300px);
   }
-  .faq-misc-points{
+  .faq-misc-points {
     width: 606px;
   }
 }
@@ -1318,7 +1323,7 @@ dl.state-access-cards {
     float: right;
     top: 218px;
   }
-  @media only screen and (max-width: 1199px){
+  @media only screen and (max-width: 1199px) {
     width: 100% !important;
     text-align: center;
   }
@@ -1328,8 +1333,8 @@ dl.state-access-cards {
 }
 
 .faq-border-box-small {
-  @media only screen and (max-height: 600px){
-    position:static;
+  @media only screen and (max-height: 600px) {
+    position: static;
     width: 100% !important;
     text-align: center;
   }
@@ -1339,7 +1344,7 @@ dl.state-access-cards {
     position: fixed;
     float: right;
   }
-  @media only screen and (max-width: 1199px){
+  @media only screen and (max-width: 1199px) {
     width: 100% !important;
     text-align: center;
     margin-bottom: 40px;
@@ -1354,9 +1359,8 @@ dl.state-access-cards {
 }
 
 .faq-info-box-small {
-
-  @media only screen and (max-height: 600px){
-    position:static;
+  @media only screen and (max-height: 600px) {
+    position: static;
     width: 100% !important;
     text-align: center;
     margin-bottom: 40px;
@@ -1378,7 +1382,7 @@ dl.state-access-cards {
 }
 
 .faq-info-box-top-border {
-  @media only screen and (max-width: 1190px){
+  @media only screen and (max-width: 1190px) {
     width: 105%;
   }
   top: -37px;
@@ -1386,7 +1390,7 @@ dl.state-access-cards {
   position: relative;
   width: 368px;
   height: 8px;
-  border-top: 8px;;
+  border-top: 8px;
   background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
   border-radius: 3px 3px 0px 0px;
   margin-left: -1px;
@@ -1394,19 +1398,19 @@ dl.state-access-cards {
 
 .faq-collapsible-trigger {
   cursor: pointer;
-  .plus{
+  .plus {
     background-image: url("./images/plus.svg");
     background-repeat: no-repeat;
     padding-right: 20px;
     background-position: center;
   }
-  .minus{
+  .minus {
     background-image: url("./images/minus.svg");
     background-repeat: no-repeat;
     padding-right: 20px;
     background-position: center;
   }
-  .text{
+  .text {
     padding-left: 31px;
   }
 }
@@ -1496,11 +1500,10 @@ dl.state-access-cards {
     position: absolute;
     top: 0;
     right: 0;
-    bottom: 0;
     left: 0;
-    z-index: -1;
-    margin-top: -$border;
-    border-radius: inherit;
+    bottom: 220px;
+    margin: -8px -1px 0 -1px;
+    border-radius: 3px 3px 0 0;
     background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
   }
   li {
@@ -1526,6 +1529,17 @@ dl.state-access-cards {
   }
   li:hover {
     background-color: #f0fafe;
+  }
+}
+.gradient-box-small {
+  &:before {
+    bottom: 220px;
+  }
+}
+
+.gradient-box-big {
+  &:before {
+    bottom: 440px;
   }
 }
 
