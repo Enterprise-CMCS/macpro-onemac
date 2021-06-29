@@ -1,3 +1,32 @@
+export const stateUserNoAuthState = {
+  isAuthenticating: true,
+  isAuthenticated: false,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "stateuserunregistered@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [],
+      id: "stateuserunregistered@cms.hhs.local",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/dashboard",
+        "/signup",
+        "/signup/state"
+      ],
+    },
+  },
+};
+
 export const stateUserInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
@@ -208,6 +237,36 @@ export const stateAdminDeniedInitialAuthState = {
         "/devlogin",
         "/FAQ",
         "/dashboard",
+      ],
+    },
+  },
+};
+
+export const cmsUserNoAuthState = {
+  isAuthenticating: true,
+  isAuthenticated: false,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-cms-user",
+    email: "cmsapproverunregistered@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [],
+      id: "cmsapproverunregistered@cms.hhs.local",
+      validRoutes: [
+        "/",
+        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/usermanagement",
+        "/metrics",
+        "/signup",
+        "/signup/cmsreviewer"
       ],
     },
   },

@@ -18,12 +18,14 @@ function StateUserSignup() {
     {
       title: "State Submitter",
       description: "Responsible for submitting packages",
-      onclick: ()=>{history.push("signup/state", {"role": "stateuser"})}
+      linkTo: "/state",
+      onclick: ()=>{history.replace("signup/state", {"role": "stateuser"})}
     },
     {
       title: "State System Administrator",
       description: "Approves State Submitters",
-      onclick: ()=>{history.push("signup/state", {"role": "stateadmin"})}
+      linkTo: "/state",
+      onclick: ()=>{history.replace("signup/state", {"role": "stateadmin"})}
     }
   ];
   return (
@@ -31,7 +33,7 @@ function StateUserSignup() {
   );
 }
 
-function CMSSignup() {
+ function CMSSignup() {
   const [_, onClickCMS] = useSignupCallback(
     "cmsapprover",
     createAttribute
@@ -41,11 +43,12 @@ function CMSSignup() {
     {
       title: "CMS Reviewer",
       description: "Responsible for reviewing packages",
-      linkTo: "/cmsreviewer",
+      linkTo: "signup/cmsreviewer",
     },
     {
       title: "CMS Role Approver",
       description: "Responsible for managing CMS Reviewers and State System Admins",
+      linkTo: "/usermanagement",
       onclick:onClickCMS,
     }
   ];
