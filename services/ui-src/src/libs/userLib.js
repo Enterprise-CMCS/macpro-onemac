@@ -1,57 +1,75 @@
+import { USER_TYPE } from "cmscommonlib";
+
 export const userTypes = {
-  stateuser: 'State Submitter',
-  stateadmin: 'State Admin',
-  cmsapprover: 'CMS Role Approver',
-  systemadmin: 'CMS System Admin'
-}
+  [USER_TYPE.STATE_USER]: "State Submitter",
+  [USER_TYPE.STATE_ADMIN]: "State Admin",
+  [USER_TYPE.CMS_APPROVER]: "CMS Role Approver",
+  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
+  [USER_TYPE.HELPDESK]: "Helpdesk User",
+};
 
 export const pendingMessage = {
-  stateuser:
+  [USER_TYPE.STATE_USER]:
     "Your system access is pending approval. Contact your State System Admin with any questions.",
-  stateadmin: "Your system access is pending approval.",
-  cmsapprover:
+  [USER_TYPE.STATE_ADMIN]: "Your system access is pending approval.",
+  [USER_TYPE.CMS_APPROVER]:
     "Your system access is pending approval. Contact the CMS System Admin with any questions.",
-  systemadmin:
+  [USER_TYPE.SYSTEM_ADMIN]:
     "Your system access is pending approval. Contact the Help Desk with any questions.",
+  [USER_TYPE.HELPDESK]:
+    "Your system access is pending approval. Contact the CMS System Admin with any questions.",
 };
 
 export const deniedOrRevokedMessage = {
-  stateuser:
-    "Sorry, you don't have access. Please contact the State System Admin with any questions.",
-  stateadmin: "Sorry, you don't have access. Please contact the CMS Role Approver with any questions.",
-  cmsapprover:
-    "Sorry, you don't have access. Please contact the CMS System Admin with any questions.",
-  systemadmin:
-    "There is something wrong. Contact the Help Desk.",
+  [USER_TYPE.STATE_USER]:
+    "Sorry, you don't have access. Please contact the State System Admin with any questions",
+  [USER_TYPE.STATE_ADMIN]:
+    "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
+  [USER_TYPE.CMS_APPROVER]:
+    "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
+  [USER_TYPE.SYSTEM_ADMIN]: "There is something wrong. Contact the Help Desk.",
+  [USER_TYPE.HELPDESK]:
+    "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
 };
 
 export const grantConfirmMessage = {
-  stateadmin: "stateadmin Grant Acccess Action Confirmation - Need content",
-  cmsapprover:
-    "Warning!\n\nThis will activate the selected user’s account for State Systems Administrator access. This role approves State Submitters. A notifcation will be emailed to the user.\n\nAre you sure you want to proceed?",
-  systemadmin: "systemadmin Grant Acccess Action Confirmation - Need content",
+  [USER_TYPE.STATE_ADMIN]:
+    "Warning\n\nThis will activate the selected user’s account for state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  [USER_TYPE.CMS_APPROVER]:
+    "Warning\n\nThis will activate the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  [USER_TYPE.SYSTEM_ADMIN]:
+    "Warning\n\nThis will activate the selected user’s account. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 export const denyConfirmMessage = {
-  stateadmin: "stateadmin Deny Acccess Action Confirmation - Need content",
-  cmsapprover: "cmsapprover Deny Acccess Action Confirmation - Need content",
-  systemadmin: "systemadmin Deny Acccess Action Confirmation - Need content",
+  [USER_TYPE.STATE_ADMIN]:
+    "Warning\n\nThis will deny the selected user’s account state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  [USER_TYPE.CMS_APPROVER]:
+    "Warning\n\nThis will deny the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  [USER_TYPE.SYSTEM_ADMIN]:
+    "Warning\n\nThis will deny the selected user’s account for access. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 export const revokeConfirmMessage = {
-  stateadmin: "stateadmin Revoke Acccess Action Confirmation - Need content",
-  cmsapprover: "cmsapprover Revoke Acccess Action Confirmation - Need content",
-  systemadmin: "systemadmin Revoke Acccess Action Confirmation - Need content",
+  [USER_TYPE.STATE_ADMIN]:
+    "Warning\n\nThis will revoke the selected user’s account for state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  [USER_TYPE.CMS_APPROVER]:
+    "Warning\n\nThis will revoke the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
+  [USER_TYPE.SYSTEM_ADMIN]:
+    "Warning\n\nThis will revoke the selected user’s account for access. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
 };
 
 /**
-   * Determine the type of userData and sort corresponding arrays per state if needed.
-   * @param {Object} userData object of history instance
-   * @return {Boolean} a boolean on status pending
-   */
+ * Determine the type of userData and sort corresponding arrays per state if needed.
+ * @param {Object} userData object of history instance
+ * @return {Boolean} a boolean on status pending
+ */
 
- export const isPending = (userData) => {
-  if (userData.type === "cmsapprover") {
+export const isPending = (userData) => {
+  if (
+    userData.type === USER_TYPE.CMS_APPROVER ||
+    userData.type === USER_TYPE.HELPDESK
+  ) {
     userData.attributes.sort(sortDescendingOrder);
     return userData.attributes[0].status === "pending";
   } else {
@@ -61,39 +79,43 @@ export const revokeConfirmMessage = {
 };
 
 /**
-   * is this CMS Approver active or does State User / State Admin user have any active territories?
-   * @param {Object} userData object of history instance
-   * @return {Boolean} a boolean on status pending
-   */
+ * is this CMS Approver active or does State User / State Admin user have any active territories?
+ * @param {Object} userData object of history instance
+ * @return {Boolean} a boolean on status pending
+ */
 
 export const isActive = (userData) => {
-  if (userData.type === "cmsapprover") {
+  if (
+    userData.type === USER_TYPE.CMS_APPROVER ||
+    userData.type === USER_TYPE.HELPDESK ||
+    userData.type === USER_TYPE.CMS_REVIEWER
+  ) {
     userData.attributes.sort(sortDescendingOrder);
     return userData.attributes[0].status === "active";
   } else {
     userData.attributes.forEach(getStateStatus);
     return stateStatusSet.has("active");
   }
-}
-  /**
-   * Sort history of userData in descending order.
-   * @param {Object} a object of history instance
-   * @param {Object} b object of history instance
-   * @return {Number} the order of which instance should come 1st based on greater value of effectiveDate
-   */
+};
+/**
+ * Sort history of userData in descending order.
+ * @param {Object} a object of history instance
+ * @param {Object} b object of history instance
+ * @return {Number} the order of which instance should come 1st based on greater value of effectiveDate
+ */
 
-   const sortDescendingOrder = (a, b) => {
-    return b.date - a.date;
-  };
+const sortDescendingOrder = (a, b) => {
+  return b.date - a.date;
+};
 
-  const stateStatusSet = new Set();
-  /**
-   * get the status of the sorted history array's 1st element and put them in a set.
-   * @param {Object} attribute object of history instance
-   * @return {Array} the most recent status values for each state
-   */
+const stateStatusSet = new Set();
+/**
+ * get the status of the sorted history array's 1st element and put them in a set.
+ * @param {Object} attribute object of history instance
+ * @return {Array} the most recent status values for each state
+ */
 
-  const getStateStatus = (attribute) => {
-    attribute.history.sort(sortDescendingOrder);
-    stateStatusSet.add(attribute.history[0].status);
-  };
+const getStateStatus = (attribute) => {
+  attribute.history.sort(sortDescendingOrder);
+  stateStatusSet.add(attribute.history[0].status);
+};

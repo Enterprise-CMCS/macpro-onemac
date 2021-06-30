@@ -1,33 +1,21 @@
 // Updated by: Guli 
 // Date      : 03/19/2021
-const login = require('../cases/OY2-1494_Test_SPA_Login');
+
+const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
 
-    "@tags": ["FAQ", "smoke", "regression-soon"],
+    "@tags": ["smoke", "regression-soon"],
 
     // Opens the browser, goes to the test site
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(browser.launch_url);
-        browser.waitForElementPresent('body');
-    },
-
-    // After all the test case executions, clear out the browser
-    after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
-        browser.end();
-    },
-
-    'User can go to the FAQ without logging into the application': function (browser) {
+        login.beforeEach(browser);
+        //login['Login with state user'](browser);
+        // User can go to the FAQ without logging into the application
         let fqaLink = "//a[text()='FAQ']";
         browser.useXpath().click(fqaLink).pause(500);
-        let pageBanner = 'div#title_bar > h1';
-        let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
+        let pageBanner = "//h1";
+        let expectedBannerText = 'Frequently Asked Questions';
         //Switch to new tab
          browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -35,8 +23,9 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(pageBanner).to.be.visible;
+        browser.useXpath().expect.element(pageBanner).to.be.visible;
         browser.verify.containsText(pageBanner, expectedBannerText).pause(500);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -44,16 +33,45 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
+        login['Login with state user'](browser);
     },
 
-    'User logs into Medicaid as Regular user': function(browser) {
-        login["Login to Medicaid as Regular User"](browser);
+    after: function (browser) {
+        login.afterEach(browser);
     },
+
+    // 'User can go to the FAQ without logging into the application': function (browser) {
+    //     let fqaLink = "//a[text()='FAQ']";
+    //     browser.useXpath().click(fqaLink).pause(500);
+    //     let pageBanner = "//h1";
+    //     let expectedBannerText = 'Frequently Asked Questions';
+    //     //Switch to new tab
+    //      browser.windowHandles(function (result) {
+    //         // 0 == current main window, 1 == new tab
+    //         var handle = result.value[1];
+    //         browser.switchWindow(handle);
+    //     });
+    //     // Verify the new window 
+    //     browser.useXpath().expect.element(pageBanner).to.be.visible;
+    //     browser.verify.containsText(pageBanner, expectedBannerText).pause(500);
+    //     browser.useCss();
+    //     browser.closeWindow(); // Close tab
+    //     // Switch to main window
+    //     browser.windowHandles(function (result) {
+    //         // 0 == current main window, 1 == new tab
+    //         var handle = result.value[0];
+    //         browser.switchWindow(handle);
+    //     });
+    // },
+
+    // 'User logs into Medicaid as Regular user': function(browser) {
+    //     login["Login to Medicaid as Regular User"](browser);
+    // },
 
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = "//a[text()='FAQ']";
-        browser.useXpath().click(fqaLink).pause(500);
+        browser.useXpath().click(fqaLink).pause(1000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -61,10 +79,11 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        let pageBanner = 'div#title_bar > h1';
-        let expectedBannerText = 'SPA and Waiver Frequently Asked Questions';
-        browser.useCss().expect.element(pageBanner).to.be.visible;
+        let pageBanner = "//h1";
+        let expectedBannerText = 'Frequently Asked Questions';
+        browser.useXpath().expect.element(pageBanner).to.be.visible;
         browser.verify.containsText(pageBanner, expectedBannerText);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -77,10 +96,17 @@ module.exports = {
     
     'For each section under SPAs, there is a link to open the corresponding question in the FAQ': function (browser) {
         // Submit a New SPA
-        let newSPALink = 'button#spaSubmitBtn';
-        browser.click(newSPALink);
-        browser.click('.form-card a').pause(3000);
-        let fqaHeader = 'h4#spa-id-format';
+        // let newSPALink = 'button#spaSubmitBtn';
+        // browser.click(newSPALink);
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        //browser.useCss();
+        browser.useCss().click('.form-card a').pause(3000);
+        //let fqaHeader = 'h4#spa-id-format';
+        let fqaHeader = '(//h4[@class="faq-collapsible-trigger"])[2]';
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -88,9 +114,11 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
+        browser.useCss();
         let expectedText = 'What format is used to enter a SPA ID?';
-        browser.verify.containsText(fqaHeader, expectedText);
+        browser.useXpath().verify.containsText(fqaHeader, expectedText);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -99,13 +127,23 @@ module.exports = {
             browser.switchWindow(handle);
             //browser.back().pause(3000);
         });
-        browser.back().pause(3000);
+        //browser.back().pause(3000);
+        let dashboard_link = "//a[@id='dashboardLink']";
+        browser.useXpath().click(dashboard_link);
+        browser.useCss();
 
         
         // Respond to SPA RAI
-        let respondToSAPRAI = 'button#spaRaiBtn';
-        browser.click(respondToSAPRAI);
+        // let respondToSAPRAI = 'button#spaRaiBtn';
+        // browser.click(respondToSAPRAI);
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.useCss();
         browser.click('.form-card a');
+        browser.pause(1000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -113,7 +151,7 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
         browser.closeWindow(); // Close tab
         // Switch to main window
@@ -123,16 +161,25 @@ module.exports = {
             browser.switchWindow(handle);
             //browser.back().pause(3000);
         });
-        browser.back().pause(3000);
+        //browser.back().pause(3000);
+        browser.useXpath().click(dashboard_link);
+        browser.useCss();
     },
 
     
 
     'For each section under Waivers, there is a link to open the corresponding question in the FAQ': function (browser) {
         // Submit a new Waiver 
-        browser.click('button#waiverBtn');
-        browser.click('.form-card a');
-        let fqaHeader = 'h4#waiver-id-format';
+        // browser.click('button#waiverBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        //browser.useCss();
+        browser.useCss().click('.form-card a');
+        browser.pause(1000);
+        let fqaHeader = '(//h4[@class="faq-collapsible-trigger"])[4]';
 
         //Switch to new tab
         browser.windowHandles(function (result) {
@@ -141,9 +188,10 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a 1915(b) waiver number?';
         browser.verify.containsText(fqaHeader, expectedText);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -151,11 +199,20 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-        browser.back().pause(3000);
+        let dashboard_link = "//a[@id='dashboardLink']";
+        browser.useXpath().click(dashboard_link);
+        browser.useCss();
+        //browser.back().pause(3000);
         
         // Respond to 1915(b) Waiver RAI
-        browser.click('button#waiverRaiBtn');
-        browser.click('.form-card a');
+        //browser.click('button#waiverRaiBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.useCss().click('.form-card a');
+        browser.pause(1000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -163,8 +220,9 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
+        browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
         browser.windowHandles(function (result) {
@@ -173,11 +231,19 @@ module.exports = {
             browser.switchWindow(handle);
         });
 
-        browser.back();
+        //browser.back();
+        browser.useXpath().click(dashboard_link);
+        browser.useCss();
 
         // Request Waiver Temporary Extension
-        browser.click('button#waiverExtBtn');
-        browser.click('.form-card a');
+        //browser.click('button#waiverExtBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[2]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[3]");
+        browser.useCss().click('.form-card a');
+        browser.pause(1000);
 
         //Switch to new tab
         browser.windowHandles(function (result) {
@@ -186,18 +252,21 @@ module.exports = {
             browser.switchWindow(handle);
         });
         // Verify the new window 
-        browser.useCss().expect.element(fqaHeader).to.be.visible;
+        browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
     },
 
     
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
+        browser.useXpath().click("(//h4)[3]");
+        browser.pause(300);
         let linkInFAQ = '.form-card [target]';
-        browser.click(linkInFAQ);
+        browser.useCss().click(linkInFAQ);
+        browser.pause(1000);
         let submittalAmendments = "//h2";
         //Switch to new tab
         browser.windowHandles(function (result) {
-            // 0 == current main window, 1 == new tab
+            // 0 == current main window, 1 == new tab, 2 == new link tab from FAQ page
             var handle = result.value[2];
             browser.switchWindow(handle);
         });
@@ -212,5 +281,5 @@ module.exports = {
             browser.switchWindow(handle);
         });
         browser.useCss();
-    }
+    },
 }

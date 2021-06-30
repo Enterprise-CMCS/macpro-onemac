@@ -1,18 +1,18 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { Alert } from "@cmsgov/design-system";
-import { ROUTES } from "cmscommonlib";
-
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { format } from "date-fns";
+import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
 import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
-import { getAlert } from "../libs/error-mappings";
+import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
+import { roleLabels } from "../libs/roleLib";
+import { USER_TYPE } from "cmscommonlib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
@@ -22,6 +22,8 @@ import {
   isPending,
   isActive,
 } from "../libs/userLib";
+import { Button } from "@cmsgov/design-system";
+import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
@@ -33,45 +35,48 @@ const PENDING_CIRCLE_IMAGE = (
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [alert, setAlert] = useState();
   const { userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
+  const [doneToName, setDoneToName] = useState("");
 
+  const showUserRole =
+    userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN ||
+    userProfile.userData.type === USER_TYPE.HELPDESK;
   const updateList = useCallback(() => {
-    setIncludeStateCode(userProfile.userData.type === "cmsapprover");
+    setIncludeStateCode(
+      userProfile.userData.type === USER_TYPE.CMS_APPROVER ||
+        userProfile.userData.type === USER_TYPE.HELPDESK
+    );
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
-        console.log("user List: ", ul);
         if (typeof ul === "string") {
-          if (!isPending(userProfile.userData)) setAlert(getAlert(ul));
+          if (!isPending(userProfile.userData)) setAlertCode(ul);
           ul = [];
         }
         setUserList(ul);
       })
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setAlert(ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
       });
   }, [userProfile.email, userProfile.userData]);
 
   // Load the data from the backend.
   useEffect(() => {
     let mounted = true;
+    if (location?.state?.passCode !== undefined) location.state.passCode = null;
     if (
       !userProfile ||
       !userProfile.userData ||
-      (userProfile.userData.type !== "systemadmin" &&
+      (userProfile.userData.type !== USER_TYPE.SYSTEM_ADMIN &&
         (!userProfile.userData.attributes ||
-          userProfile.userData.type === "stateuser"))
+          userProfile.userData.type === USER_TYPE.STATE_USER))
     ) {
       history.push(ROUTES.DASHBOARD);
     }
-
-    let newAlert = ALERTS_MSG.NONE;
-    if (location.state) newAlert = location.state.showAlert;
-    if (mounted) setAlert(newAlert);
 
     if (mounted) updateList();
 
@@ -79,11 +84,6 @@ const UserManagement = () => {
       mounted = false;
     };
   }, [location, userProfile, history, updateList]);
-
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
 
   useEffect(() => {
     let newIsLoading = true;
@@ -97,30 +97,13 @@ const UserManagement = () => {
     };
   }, [userList]);
 
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-  }, [alert]);
-
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
-
   const getName = useCallback(
     ({ firstName, lastName }) =>
       [firstName, lastName].filter(Boolean).join(" "),
     []
   );
+
+  const getRoleLabel = useCallback(({ role }) => roleLabels[role], []);
 
   const renderStatus = useCallback(({ value }) => {
     let content = value;
@@ -149,6 +132,11 @@ const UserManagement = () => {
         {value}
       </a>
     ),
+    []
+  );
+
+  const renderDate = useCallback(
+    ({ value }) => format(new Date(value * 1000), "MMM d, yyyy hh:mm a"),
     []
   );
 
@@ -201,33 +189,50 @@ const UserManagement = () => {
           revoked: [grant],
         }[row.values.status] ?? [];
 
+      const alertCodes = {
+        active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+        denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+        revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
+      };
+
       return (
         <PopupMenu
-          selectedRow={row.values.id}
+          selectedRow={row.id}
           userEmail={row.values.email}
           menuItems={menuItems}
-          handleSelected={(row, value) => {
+          handleSelected={(rowNum, value) => {
+            let newAlertCode = alertCodes[value];
+            let newPersonalized = "Chester Tester";
+
             const updateStatusRequest = {
-              userEmail: userList[row].email,
+              userEmail: userList[rowNum].email,
               doneBy: userProfile.userData.id,
               attributes: [
                 {
-                  stateCode: userList[row].stateCode, // required for state user and state admin
+                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
                   status: value,
                 },
               ],
               type: getAdminTypeByRole(userProfile.userData.type),
             };
-            try {
-              UserDataApi.setUserStatus(updateStatusRequest).then(function (
-                returnCode
-              ) {
-                setAlert(getAlert(returnCode));
+            UserDataApi.setUserStatus(updateStatusRequest)
+              .then(function (returnCode) {
+                // alert already set per status change, only check for success here
+                if (returnCode === "UR000") {
+                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
+                } else {
+                  newAlertCode = returnCode;
+                }
                 updateList();
+              })
+              .then(() => {
+                setAlertCode(newAlertCode);
+                setDoneToName(newPersonalized);
+              })
+              .catch((error) => {
+                console.log("Error while fetching user's list.", error);
+                setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
               });
-            } catch (err) {
-              setAlert(ALERTS_MSG.SUBMISSION_ERROR);
-            }
           }}
         />
       );
@@ -235,56 +240,78 @@ const UserManagement = () => {
     [updateList, userList, userProfile]
   );
 
-  const columns = useMemo(
-    () =>
-      [
-        {
-          Header: "Name",
-          accessor: getName,
-          defaultCanSort: true,
-          id: "name",
-        },
-        {
-          Header: "Email",
-          accessor: "email",
-          Cell: renderEmail,
-        },
-        includeStateCode
-          ? {
-              Header: "State",
-              accessor: "stateCode",
-              defaultCanSort: true,
-              id: "state",
-            }
-          : null,
-        {
-          accessor: "latest.date",
-          defaultCanSort: true,
-          id: "date",
-        },
-        {
-          Header: "Status",
-          accessor: "latest.status",
-          id: "status",
-          sortType: sortStatus,
-          Cell: renderStatus,
-        },
-        {
-          Header: "Personnel Actions",
-          disableSortBy: true,
-          Cell: renderActions,
-          id: "personnelActions",
-        },
-      ].filter(Boolean),
-    [
-      getName,
-      includeStateCode,
-      renderEmail,
-      renderStatus,
-      sortStatus,
-      renderActions,
-    ]
-  );
+  const columns = useMemo(() => {
+    let columnList = [
+      {
+        Header: "Name",
+        accessor: getName,
+        defaultCanSort: true,
+        id: "name",
+      },
+      {
+        Header: "Email",
+        accessor: "email",
+        Cell: renderEmail,
+      },
+      includeStateCode
+        ? {
+            Header: "State",
+            accessor: "stateCode",
+            defaultCanSort: true,
+            id: "state",
+          }
+        : null,
+      {
+        Header: "Status",
+        accessor: "latest.status",
+        id: "status",
+        sortType: sortStatus,
+        Cell: renderStatus,
+      },
+      showUserRole
+        ? {
+            Header: "Role",
+            accessor: getRoleLabel,
+            defaultCanSort: true,
+            id: "role",
+          }
+        : null,
+      {
+        Header: "Last Modified",
+        accessor: "latest.date",
+        Cell: renderDate,
+        id: "lastModified",
+        disableSortBy: true,
+      },
+      {
+        Header: "Modified By",
+        accessor: "latest.doneByName",
+        disableSortBy: true,
+        id: "doneByName",
+      },
+      userProfile.userData.type !== USER_TYPE.HELPDESK
+        ? {
+            Header: "Personnel Actions",
+            disableSortBy: true,
+            Cell: renderActions,
+            id: "personnelActions",
+          }
+        : null,
+    ];
+
+    return columnList.filter(Boolean);
+  }, [
+    getName,
+    includeStateCode,
+    renderEmail,
+    renderStatus,
+    showUserRole,
+    sortStatus,
+    renderActions,
+    getRoleLabel,
+    renderDate,
+    userProfile.userData.type,
+  ]);
 
   const initialTableState = useMemo(
     () => ({
@@ -294,11 +321,39 @@ const UserManagement = () => {
     []
   );
 
+  const csvExportSubmissions = (
+    <Button
+      id="new-submission-button"
+      className="new-submission-button"
+      onClick={(e) => {
+        e.preventDefault();
+        tableListExportToCSV("user-table", userList, "UserList", columns);
+      }}
+      inversed
+    >
+      Export to Excel(CSV){" "}
+      <svg
+        width="15"
+        height="16"
+        viewBox="0 0 15 16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M7.29387 0.941406C3.26446 0.941406 -0.000244141 4.20611 -0.000244141 8.23552C-0.000244141 12.2649 3.26446 15.5296 7.29387 15.5296C11.3233 15.5296 14.588 12.2649 14.588 8.23552C14.588 4.20611 11.3233 0.941406 7.29387 0.941406ZM11.5292 9.05905C11.5292 9.25317 11.3703 9.412 11.1762 9.412H8.47034V12.1179C8.47034 12.312 8.31152 12.4708 8.1174 12.4708H6.47034C6.27623 12.4708 6.1174 12.312 6.1174 12.1179V9.412H3.41152C3.2174 9.412 3.05858 9.25317 3.05858 9.05905V7.412C3.05858 7.21788 3.2174 7.05905 3.41152 7.05905H6.1174V4.35317C6.1174 4.15905 6.27623 4.00023 6.47034 4.00023H8.1174C8.31152 4.00023 8.47034 4.15905 8.47034 4.35317V7.05905H11.1762C11.3703 7.05905 11.5292 7.21788 11.5292 7.412V9.05905Z" />
+      </svg>
+    </Button>
+  );
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
-      <PageTitleBar heading="User Management" text="" />
-      {renderAlert(alert)}
+      <PageTitleBar
+        heading="User Management"
+        rightSideContent={
+          userProfile.userData.type === USER_TYPE.HELPDESK &&
+          csvExportSubmissions
+        }
+      />
+      <AlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&

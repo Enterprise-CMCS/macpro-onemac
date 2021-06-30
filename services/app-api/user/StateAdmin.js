@@ -11,17 +11,23 @@ class StateAdmin {
   /**
    * State Admin "scan for" returns State Users
    *
-   * @returns {String} the User Role
+   * @returns {Object} Scan parameters for dynamodb
    */
-  getScanFor() {
-    return USER_TYPES.STATE_USER;
+  getScanParams() {
+    const scanParams = {
+      TableName: process.env.userTableName,
+      FilterExpression: "#ty = :userType0",
+      ExpressionAttributeNames: { "#ty": "type" },
+      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_USER },
+    };
+    return scanParams;
   }
 
   /**
    * State Admins have to have one active state
    * @returns {String} null if ok to go, the response code if not
    */
-   canIRequestThis(doneBy) {
+  canIRequestThis(doneBy) {
     let myCurrentStatus = getCurrentStatus(doneBy.attributes[0].history).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
@@ -38,7 +44,7 @@ class StateAdmin {
    * State Admins can only manage their approved state
    * @returns {true} check state for State Admins
    */
-   shouldICheckState() {
+  shouldICheckState() {
     return true;
   }
 

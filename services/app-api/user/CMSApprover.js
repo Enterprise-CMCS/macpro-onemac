@@ -13,10 +13,16 @@ import { USER_STATUS } from "./userStatus";
 class CMSApprover {
   /**
    * CMS Approvers manage the State Admins
-   * @returns {String} the User Role
+   * @returns {Object} Scan parameters for dynamodb
    */
-  getScanFor() {
-    return USER_TYPES.STATE_ADMIN;
+  getScanParams() {
+    const scanParams = {
+      TableName: process.env.userTableName,
+      FilterExpression: "#ty = :userType0",
+      ExpressionAttributeNames: { "#ty": "type" },
+      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_ADMIN },
+    };
+    return scanParams;
   }
 
   /**

@@ -10,13 +10,14 @@ import PropTypes from "prop-types";
  * @param {function} onChange
  * @returns the HTML for the SPA ID
  */
-const RequiredChoice = ({ 
+const RequiredChoice = ({
   fieldInfo,
   label,
-  errorMessage, 
-  value, 
-  isReadOnly, 
-  onChange }) => {
+  errorMessage,
+  value,
+  isReadOnly,
+  onChange,
+}) => {
   /**
    * Generates options based on an array of objects with label and value for each option.
    * For example:
@@ -41,12 +42,12 @@ const RequiredChoice = ({
     });
     return retval;
   };
-  const errorMsgId = fieldInfo.fieldName+"ErrorMsg";
+  const errorMsgId = fieldInfo.fieldName + "ErrorMsg";
 
   return (
     <>
-      <label htmlFor={fieldInfo.fieldName}>
-        {label}<span className="required-mark">*</span>
+      <label htmlFor={fieldInfo.fieldName} className="required">
+        {label}
       </label>
       {errorMessage && (
         <div id={errorMsgId} className="ds-u-color--error">

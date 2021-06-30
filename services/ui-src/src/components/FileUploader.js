@@ -4,6 +4,7 @@ import * as s3Uploader from "../utils/s3Uploader";
 import config from "../utils/config";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
+import { formatList } from "../utils";
 
 const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
 
@@ -31,7 +32,7 @@ const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
  * @callback readyCallback callback that returns a boolean with true when all required uploads have been set
  */
 
-const MISSING_REQUIRED_MESSAGE = "Required attachments missing";
+export const MISSING_REQUIRED_MESSAGE = "Required attachments missing";
 const SIZE_TOO_LARGE_MESSAGE = `An attachment cannot be larger than ${config.MAX_ATTACHMENT_SIZE_MB}MB`;
 
 export default class FileUploader extends Component {
@@ -106,34 +107,48 @@ export default class FileUploader extends Component {
     }
 
     this.state = {
-      errorMessages: [],
+      errorMessages: [MISSING_REQUIRED_MESSAGE],
       uploaders: uploaders,
     };
   }
 
-  /**
-   * Track updates to the showRequiredFieldErrors property.
-   * @param {*} prevProps the previous property state
-   */
-  componentDidUpdate(prevProps) {
-    // Make sure we only continue if the property has changed value to stop cascading calls.
-    // If the showRequiredFieldErrors flag is true then show a missing required field error if needed.
+  componentDidUpdate(prevprops) {
     if (
-      this.props.showRequiredFieldErrors !==
-        prevProps.showRequiredFieldErrors &&
-      this.state.errorMessages.length === 0
+      this.props.showRequiredFieldErrors &&
+      !prevprops.showRequiredFieldErrors
     ) {
-      // Checks if all required uploaders have a file
-      let areAllComplete = true;
-      this.state.uploaders.forEach((uploader) => {
-        if (uploader.isRequired && !uploader.hasFile) {
-          areAllComplete = false;
-        }
-      });
+      this.filesUpdated();
+    }
+  }
 
-      if (!areAllComplete) {
-        this.setState({ errorMessages: [MISSING_REQUIRED_MESSAGE] });
+  /**
+   * Track updates to the file list and set flags and errors accordingly
+   */
+  filesUpdated() {
+    // Checks if all required uploaders have a file
+    let areAllComplete = true;
+    let hasAtLeastOne = false;
+
+    this.state.uploaders.forEach((uploader) => {
+      if (uploader.hasFile) hasAtLeastOne = true;
+      if (uploader.isRequired && !uploader.hasFile) {
+        areAllComplete = false;
       }
+    });
+
+    if (this.props.requiredUploads.length === 0) {
+      areAllComplete = hasAtLeastOne;
+    }
+    this.allUploadsComplete = areAllComplete;
+
+    if (this.readyCallback) {
+      this.readyCallback(this.allUploadsComplete);
+    }
+
+    if (areAllComplete) {
+      this.setState({ errorMessages: [] });
+    } else {
+      this.setState({ errorMessages: [MISSING_REQUIRED_MESSAGE] });
     }
   }
 
@@ -170,25 +185,10 @@ export default class FileUploader extends Component {
       uploader.files = filesToUpload;
     }
 
-    // Set the overall completeness of the input, so the overall form knows the required files are selected.
-    let areAllComplete = true;
-    this.state.uploaders.forEach((uploader) => {
-      if (uploader.isRequired && !uploader.hasFile) {
-        areAllComplete = false;
-      }
-    });
+    // remove the file list from the input so you can choose the same file again
+    event.target.value = null;
 
-    // Clear any error messages if everything is ready.
-    if (!areAllComplete && this.props.showRequiredFieldErrors) {
-      errorMessages.push(MISSING_REQUIRED_MESSAGE);
-    }
-
-    this.allUploadsComplete = areAllComplete;
-    if (this.readyCallback) {
-      this.readyCallback(this.allUploadsComplete);
-    }
-
-    this.setState({ errorMessages: errorMessages });
+    this.filesUpdated();
   }
 
   /**
@@ -205,6 +205,8 @@ export default class FileUploader extends Component {
     if (!uploader.files || uploader.files.length === 0) {
       uploader.hasFile = false;
     }
+
+    this.filesUpdated();
   }
 
   /**
@@ -232,9 +234,13 @@ export default class FileUploader extends Component {
     // Generate each file input control first.
     let reqControls = [];
     let optControls = [];
+    const singleFileControls = [];
     this.state.uploaders.forEach((uploader, index) => {
       // disabled flag for types that only allow a single file for upload and a file is already selected
       let isDisabled = uploader.allowMultiple === false && uploader.hasFile;
+
+      if (uploader.allowMultiple === false)
+        singleFileControls.push(uploader.title);
 
       //Note that we hide the file input field, so we can have controls we can style.
       let controls = (
@@ -257,6 +263,7 @@ export default class FileUploader extends Component {
               <input
                 type="file"
                 id={"uploader-input-" + index}
+                data-testid={"uploader-input-" + index}
                 name={"uploader-input-" + index}
                 accept=".bmp,.csv,.doc,.docx,.gif,.jpg,.jpeg,.odp,.ods,.odt,.png,.pdf,.ppt,.pptx,.rtf,.tif,.tiff,.txt,.xls,.xlsx"
                 multiple={uploader.allowMultiple}
@@ -287,7 +294,7 @@ export default class FileUploader extends Component {
                         title="Remove file"
                         onClick={() => this.handleRemoveFile(uploader, file)}
                       >
-                        <FontAwesomeIcon icon={faTimes} size="2x" />
+                        <FontAwesomeIcon icon={faTimes} />
                       </button>
                     </div>
                   );
@@ -309,20 +316,30 @@ export default class FileUploader extends Component {
     return (
       <div>
         <p className="req-message">
-          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB.
+          Maximum file size of {config.MAX_ATTACHMENT_SIZE_MB} MB. You can add
+          multiple files per attachment type
+          {singleFileControls.length > 0 && (
+            <>, except for the {formatList(singleFileControls)}</>
+          )}
+          . Read the description for each of the attachment types on the FAQ
+          Page.
         </p>
-        {this.props.requiredUploads?.length > 0 ?
-        <p className="req-message">
-          <span className="required-mark">*</span> indicates required
-          attachment.
-        </p>
-        : <p className="req-message">
-          <span className="required-mark">*</span> At least one attachment is required.
-      </p>}
+        {this.props.requiredUploads?.length > 0 ? (
+          <p className="req-message">
+            <span className="required-mark">*</span> indicates required
+            attachment.
+          </p>
+        ) : (
+          <p className="req-message">
+            <span className="required-mark">*</span> At least one attachment is
+            required.
+          </p>
+        )}
         <div className="ds-u-color--error">
-          {this.state.errorMessages.map((message, index) => (
-            <div key={index}>{message}</div>
-          ))}
+          {this.props.showRequiredFieldErrors &&
+            this.state.errorMessages.map((message, index) => (
+              <div key={index}>{message}</div>
+            ))}
         </div>
         <div className="upload-card">
           <div className="uploader">

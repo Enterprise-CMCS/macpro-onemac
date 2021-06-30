@@ -1,94 +1,97 @@
 import React from "react";
 import { Redirect } from "react-router-dom";
-import { ROLES, ROUTES } from "cmscommonlib";
+
+import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
+
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import Dashboard from "./containers/Dashboard";
 import UserManagement from "./containers/UserManagement";
-import Spa from "./changeRequest/Spa";
-import Waiver from "./changeRequest/Waiver";
-import SpaRai from "./changeRequest/SpaRai";
-import WaiverRai from "./changeRequest/WaiverRai";
-import WaiverExtension from "./changeRequest/WaiverExtension";
-import WaiverAppK from "./changeRequest/WaiverAppK";
-import Metrics from "./containers/Metrics";
 import { useAppContext } from "./libs/contextLib";
-import ChipSpa from "./changeRequest/ChipSpa";
-import ChipSpaRai from "./changeRequest/ChipSpaRai";
+import Metrics from "./containers/Metrics";
+import NewSubmission from "./changeRequest/NewSubmission";
+import NewSPA from "./changeRequest/NewSPA";
+import NewWaiver from "./changeRequest/NewWaiver";
+import SubmissionForm from "./changeRequest/SubmissionForm";
+import SubmissionView from "./changeRequest/SubmissionView";
+
+const FORM_TYPES = {
+  [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
+  [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
+  [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
+  [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
+  [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
+  [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
+  [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,
+  [ROUTES.WAIVER_RAI]: ChangeRequest.TYPE.WAIVER_RAI,
+};
 
 export default function DynamicRoutes() {
-  const { userProfile } = useAppContext();
+  const { userProfile: { userData: { type } = {} } = {} } = useAppContext();
 
-  if (userProfile) {
-    if (userProfile.userData) {
-      switch (userProfile.userData.type) {
-        case ROLES.STATE_USER:
-          return (
-            <>
-              <AuthenticatedRoute path={`${ROUTES.CHIP_SPA}/:id?/:userId?`}>
-                <ChipSpa />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.CHIP_SPA_RAI}/:id?/:userId?`}>
-                <ChipSpaRai />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
-                <Dashboard />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.SPA}/:id?/:userId?`}>
-                <Spa />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute exact path={`${ROUTES.WAIVER}/:id?/:userId?`}>
-                <Waiver />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.SPA_RAI}/:id?/:userId?`}>
-                <SpaRai />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.WAIVER_RAI}/:id?/:userId?`}>
-                <WaiverRai />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.WAIVER_EXTENSION}/:id?/:userId?`}>
-                <WaiverExtension />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute exact path={`${ROUTES.WAIVER_APP_K}/:id?/:userId?`}>
-                <WaiverAppK />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
-                <Metrics />
-              </AuthenticatedRoute>
-            </>
-          );
-        case ROLES.STATE_ADMIN:
-        case ROLES.CMS_APPROVER:
-        case ROLES.SYSTEM_ADMIN:
-          return (
-            <>
-              <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
-                <Redirect to={ROUTES.USER_MANAGEMENT} />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
-                <UserManagement />
-              </AuthenticatedRoute>
-              <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
-                <Metrics />
-              </AuthenticatedRoute>
-            </>
-          );
-        default:
-          break;
-      }
-    }
+  if (!type) {
+    return (
+      <>
+        <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
+          <Signup />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
+          <StateSignup />
+        </AuthenticatedRoute>
+        <Redirect to={ROUTES.SIGNUP} />
+      </>
+    );
   }
+
+  const userRoleObj = getUserRoleObj(type);
+
   return (
     <>
-      <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
-        <Signup />
+      <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+        {userRoleObj.canAccessDashboard ? (
+          <Dashboard />
+        ) : (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        )}
       </AuthenticatedRoute>
-      <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
-        <StateSignup />
-      </AuthenticatedRoute>
-      <Redirect to={ROUTES.SIGNUP} />
+      {userRoleObj.canAccessForms && (
+        <>
+          <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
+            <NewSubmission />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path={`${ROUTES.NEW_SPA}`}>
+            <NewSPA />
+          </AuthenticatedRoute>
+          <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
+            <NewWaiver />
+          </AuthenticatedRoute>
+        </>
+      )}
+      {/* submission view */}
+      {userRoleObj.canAccessForms &&
+        Object.entries(FORM_TYPES).map(([route, type]) => (
+          <AuthenticatedRoute key={route} exact path={route}>
+            <SubmissionForm changeRequestType={type} />
+          </AuthenticatedRoute>
+        ))}
+      {/* read only view */}
+      {userRoleObj.canAccessDashboard &&
+        Object.entries(FORM_TYPES).map(([route, type]) => (
+          <AuthenticatedRoute key={route} exact path={`${route}/:id/:userId`}>
+            <SubmissionView changeRequestType={type} />
+          </AuthenticatedRoute>
+        ))}
+      {userRoleObj.canAccessUserManagement && (
+        <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+          <UserManagement />
+        </AuthenticatedRoute>
+      )}
+      {userRoleObj.canAccessMetrics && (
+        <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+          <Metrics />
+        </AuthenticatedRoute>
+      )}
     </>
   );
-
 }

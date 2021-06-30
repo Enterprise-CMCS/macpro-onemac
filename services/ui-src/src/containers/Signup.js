@@ -1,11 +1,11 @@
 import React, { useEffect, useMemo } from "react";
 import { Redirect, useHistory } from "react-router-dom";
 
-import { ALERTS_MSG } from "../libs/alert-messages";
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { AlertBar } from "../components/AlertBar";
 import CardButton from "../components/cardButton";
+import { RESPONSE_CODE } from "cmscommonlib";
+import PageTitleBar from "../components/PageTitleBar";
 
 const createAttribute = () => [{ status: "pending" }];
 
@@ -19,12 +19,25 @@ function CMSSignup() {
     <CardButton loading={loading} onClick={onClickCMS} type="cmsapprover" />
   );
 }
+function HelpdeskSignup() {
+  const [dummy, onLoadHelpdesk] = useSignupCallback(
+    "helpdesk",
+    createAttribute
+  );
+  useEffect(() => {
+    if (onLoadHelpdesk) onLoadHelpdesk();
+  }, [onLoadHelpdesk]);
+  console.log("Dummy is: ", dummy);
+  return null;
+}
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
 const isCmsUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-cms-user");
+const isHelpdeskUser = (cmsRoles) =>
+  !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
   const history = useHistory();
@@ -46,11 +59,15 @@ export function Signup() {
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <CMSSignup />
         </div>
+      ) : isHelpdeskUser(cmsRoles) ? (
+        <div className="ds-l-col--auto ds-u-margin-x--auto">
+          <HelpdeskSignup />
+        </div>
       ) : (
         <Redirect
           to={{
             pathname: "/",
-            state: { showAlert: ALERTS_MSG.CONTACT_HELP_DESK },
+            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR }, // ALERTS_MSG.CONTACT_HELP_DESK },
           }}
         />
       ),
@@ -63,11 +80,8 @@ export function Signup() {
 
   return (
     <>
-      <div className="page-title-bar" id="title_bar">
-        <h2>Registration: User Role</h2>
-      </div>
+      <PageTitleBar heading="Registration: User Role" />
       <div className="signup-container">
-        <AlertBar />
         <div className="signup-center">
           <p className="signup-prompt">
             Select the user role you're registering for.

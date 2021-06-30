@@ -1,4 +1,4 @@
- import {DateTime} from "luxon";
+import { DateTime } from "luxon";
 
 /**
  * Get HTML containing links representing the attached documents.
@@ -6,15 +6,22 @@
  * @returns {String} HTML with the document links.
  */
 export function getLinksHtml(uploads) {
-    let html = "";
-    if(Array.isArray(uploads) && uploads.length > 0) {
-        html = "<ul>";
-        uploads.forEach(async (upload) => {
-        html += "<li>" + upload.title + ": <a href=\"" + upload.url +"\">" + upload.filename + "</a></li>";
-        });
+  let html = "";
+  if (Array.isArray(uploads) && uploads.length > 0) {
+    html = "<ul>";
+    uploads.forEach(async (upload) => {
+      html +=
+        "<li>" +
+        upload.title +
+        ': <a href="' +
+        upload.url +
+        '">' +
+        upload.filename +
+        "</a></li>";
+    });
     html += "</ul>";
-    }
-    return html;
+  }
+  return html;
 }
 
 /**
@@ -23,9 +30,9 @@ export function getLinksHtml(uploads) {
  * @returns {String} CMS approved date format.
  */
 export function getCMSDateFormat(theTimestamp) {
-    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
+  const theDate = DateTime.fromMillis(theTimestamp).setZone("America/New_York");
 
-    return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
+  return theDate.toFormat("DDDD '@ 11:59pm' ZZZZ");
 }
 
 /**
@@ -34,7 +41,7 @@ export function getCMSDateFormat(theTimestamp) {
  * @returns {String} CMS approved date format without the 90 day deadline set to 11:59.
  */
 export function getCMSDateFormatNow(theTimestamp) {
-    const theDate = DateTime.fromMillis(theTimestamp).setZone('America/New_York');
+  const theDate = DateTime.fromMillis(theTimestamp).setZone("America/New_York");
 
-    return theDate.toFormat("DDDD '@' t ZZZZ");
+  return theDate.toFormat("DDDD '@' t ZZZZ");
 }

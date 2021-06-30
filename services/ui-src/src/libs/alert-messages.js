@@ -1,5 +1,5 @@
 import config from "../utils/config";
-import { helpDeskContact } from "./helpDeskContact"
+import { helpDeskContact } from "./helpDeskContact";
 
 /**
  * Alert types
@@ -29,18 +29,31 @@ export const ALERTS_MSG = {
     text: "Your submission has been received.",
   },
 
+  HELPDESK_SUBMISSION_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Submission Complete",
+    text: "Thank you. The CMS System Admin will verify your access and credentials.  Please check your email for details on access.",
+  },
+
+  // Success woth Survey Link
+  SUBMISSION_SUCCESS_SURVEY: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Submission Completed",
+    text: "Thanks for your submission. We truly value your feedback. Please consider taking our $Link$.",
+    linkURL: "https://forms.gle/qcsWMaDroBkhT7rs6",
+    linkText: "Post-Submission Survey",
+  },
+
   // Errors and warnings
   DASHBOARD_LIST_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Unable to Fetch Your Submissions",
-    text:
-      "There was an error fetching your list of submissions.  Please reload the page and try again.",
+    text: "There was an error fetching your list of submissions.  Please reload the page and try again.",
   },
   FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Data Retrieval Error",
-    text:
-      "We encountered an error while fetching your data.  Please reload the page and try again.",
+    text: "We encountered an error while fetching your data.  Please reload the page and try again.",
   },
   SUBMISSION_ERROR: {
     type: ALERT_TYPES.ERROR,
@@ -70,22 +83,22 @@ export const ALERTS_MSG = {
   WAIVER_AMENDMENT_NO_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"Waiver Amendment actions require existing ID",
+    text: "Waiver Amendment actions require existing ID",
   },
   WAIVER_NEED_ID_FOR_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"Amendment K actions must have existing IDs",
+    text: "Amendment K actions must have existing IDs",
   },
   WAIVER_NEW_NOT_K: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"New Waiver Actions (other than Amendment Ks) require new IDs",
+    text: "New Waiver Actions (other than Amendment Ks) require new IDs",
   },
   WAIVER_ACTION_UNKNOWN: {
     type: ALERT_TYPES.ERROR,
     heading: "Waiver Action Error",
-    text:"This Waiver Action cannot be validated",
+    text: "This Waiver Action cannot be validated",
   },
   SUBMISSION_INCOMPLETE: {
     type: ALERT_TYPES.ERROR,
@@ -116,5 +129,20 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "System Submission Error",
     text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
-  }
+  },
+  USER_STATUS_GRANTED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `$personalize$ has been granted access, a notification has been sent to their email.`,
+  },
+  USER_STATUS_DENIED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `$personalize$ has been denied access, a notification has been sent to their email.`,
+  },
+  USER_STATUS_REVOKED: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Status Change",
+    text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
+  },
 };

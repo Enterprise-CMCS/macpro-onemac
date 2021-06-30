@@ -1,30 +1,27 @@
 // Updated by: Guli 
 // Date      : 03/19/2021
 
-const login = require('../cases/OY2-1494_Test_SPA_Login');
-
+const login = require('../suites/OY2_9999_Login');
 module.exports = {
 
-    "@tags": ["abbrVerify", "smoke", "regression-soon"],
+    "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
-        console.log('Setting up the browser instance...');
-        console.log('Opening the browser...')
-        console.log('Maximizing the browser window size...');
-        browser.windowMaximize().url(browser.launch_url);
-        browser.waitForElementPresent('body');
-        login["Login to Medicaid as Regular User"](browser);
+        login.beforeEach(browser);
+        login['Login with state user'](browser);
     },
 
     after: function (browser) {
-        login["Verify logout from SPA and Wavier Dashboard as Regular User"](browser);
-        console.log("Stopping test executions...")
-        console.log('Closing down the browser instance...');
-        browser.end();
+        login.afterEach(browser);
     },
-
     'Verify that there are no state abbribiation option': function (browser) {
-        browser.click('#spaSubmitBtn');
+        //browser.click('#spaSubmitBtn');
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.useCss();
         browser.click("[value='Submit']");
         let state_territory = "//*[contains(text(), 'State/Territory')]";
         browser.useXpath().expect.element(state_territory).to.be.not.present;
@@ -33,7 +30,7 @@ module.exports = {
         // Enter illegal State abbribiation 
         let abbr = 'QA';
         browser.setValue('input#transmittalNumber', abbr);
-        let expectedErroMsg = "The SPA ID must contain valid Territory/State Code";
+        let expectedErroMsg = "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.";
         browser.verify.containsText('div#transmittalNumberStatusMsg', expectedErroMsg);
     }
 }
