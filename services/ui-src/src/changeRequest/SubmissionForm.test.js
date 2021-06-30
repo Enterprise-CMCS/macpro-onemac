@@ -59,7 +59,6 @@ const initialAuthState = {
       type: "stateuser",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",

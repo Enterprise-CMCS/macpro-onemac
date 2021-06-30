@@ -21,7 +21,6 @@ export const ROUTES = {
   NEW_SPA: "/newspa",
   SPA: "/spa",
   SPA_RAI: "/sparai",
-  COMPONENT_PAGE: "/componentpage", // temporary placeholder for the developers to house components //
   NEW_WAIVER: "/newwaiver",
   WAIVER: "/waiver",
   WAIVER_RAI: "/waiverrai",

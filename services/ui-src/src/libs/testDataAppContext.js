@@ -15,7 +15,6 @@ export const stateUserNoAuthState = {
       id: "stateuserunregistered@cms.hhs.local",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -66,7 +65,6 @@ export const stateUserInitialAuthState = {
       type: "stateuser",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -115,7 +113,6 @@ export const stateUserRevokedInitialAuthState = {
       type: "stateuser",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -154,7 +151,6 @@ export const stateUserDeniedInitialAuthState = {
       type: "stateuser",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -193,7 +189,6 @@ export const stateAdminRevokedInitialAuthState = {
       type: "stateadmin",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -232,7 +227,6 @@ export const stateAdminDeniedInitialAuthState = {
       type: "stateadmin",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -259,7 +253,6 @@ export const cmsUserNoAuthState = {
       id: "cmsapproverunregistered@cms.hhs.local",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -298,7 +291,6 @@ export const cmsApproverDeniedInitialAuthState = {
       type: "cmsapprover",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -335,7 +327,6 @@ export const cmsApproverRevokedInitialAuthState = {
       type: "cmsapprover",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -371,7 +362,6 @@ export const helpDeskDeniedInitialAuthState = {
       type: "helpdesk",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -407,7 +397,6 @@ export const helpDeskRevokedInitialAuthState = {
       type: "helpdesk",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
