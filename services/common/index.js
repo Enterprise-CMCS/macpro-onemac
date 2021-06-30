@@ -88,7 +88,6 @@ export const roleLabels = {
 
 const ALL_USERS_ROUTES = [
   ROUTES.HOME,
-  ROUTES.COMPONENT_PAGE,
   ROUTES.PROFILE,
   ROUTES.DEVLOGIN,
   ROUTES.FAQ,
