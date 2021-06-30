@@ -37,7 +37,6 @@ module.exports = {
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
         let user_management_link = "//a[@id='userManagementLink']";
-        let component_page_link = "(//a[@class='ds-u-text-decoration--none'])[3]";
         let user_management_title = "//h1";
         let puzzle_piece_image = "//div[@class='empty-list']/img";
         let pending_message = "//div[@class='empty-list']/h4";
@@ -47,7 +46,6 @@ module.exports = {
         browser.useXpath().expect.element(home_link).to.be.visible;
         browser.useXpath().expect.element(faq_link).to.be.visible;
         browser.useXpath().expect.element(user_management_link).to.be.visible;
-        browser.useXpath().expect.element(component_page_link).to.be.visible;
         browser.useXpath().expect.element(user_management_title).to.be.visible;
         browser.useXpath().expect.element(puzzle_piece_image).to.be.visible;
         browser.useXpath().expect.element(pending_message).to.be.visible;

@@ -18,7 +18,6 @@ module.exports = {
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let user_management_link = "//a[@id='userManagementLink']";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
-        let component_page_link = "(//a[@class='ds-u-text-decoration--none'])[3]";
         let name_title = "//th[@id='nameColHeader']";
         let email_title = "//th[@id='emailColHeader']";
         let status_title = "//th[@id='statusColHeader']";
@@ -30,7 +29,6 @@ module.exports = {
         browser.useXpath().expect.element(home_link).to.be.visible;
         browser.useXpath().expect.element(user_management_link).to.be.visible;
         browser.useXpath().expect.element(faq_link).to.be.visible;
-        browser.useXpath().expect.element(component_page_link).to.be.visible;
         browser.useXpath().expect.element(name_title).to.be.visible;
         browser.useXpath().expect.element(email_title).to.be.visible;
         browser.useXpath().expect.element(status_title).to.be.visible;
