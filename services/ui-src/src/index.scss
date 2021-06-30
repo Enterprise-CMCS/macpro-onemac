@@ -5,6 +5,25 @@ $input-border-radius: 3px;
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
 
+@mixin gradient-top-border {
+  background: linear-gradient(
+    90.11deg,
+    $color-primary 49.91%,
+    $color-primary-alt 66.06%
+  );
+  border-radius: 3px 3px 0px 0px;
+  height: 8px;
+}
+
+// Expansion for the CMS Review component
+// styled to look like a read only textbox
+@mixin cms-review-read-only-textbox-body {
+  background-color: $color-gray-lighter;
+  width: 460px;
+  padding: 8px;
+  border-radius: 3px;
+}
+
 .faq-table {
   table,
   th,
@@ -81,8 +100,8 @@ p.field-hint {
 }
 .app-bar {
   @extend .ds-l-row;
-  padding-left: 14rem;
-  padding-right: 14rem;
+  padding-left: 7.2rem;
+  padding-right: 7.2rem;
   @extend .ds-u-padding-top--1;
   @extend .ds-u-padding-bottom--1;
   @extend .ds-u-margin-left--0;
@@ -263,23 +282,12 @@ input[type="file"] {
   width: 100%;
 }
 
-// Expansion for the CMS Review component
-// styled to look like a read only textbox
-.cms-review-read-only-textbox-body {
-  background-color: $color-gray-lighter;
-  width: 460px;
-  padding: 8px;
-  border-radius: 3px;
-}
-
 .profile-container {
   @extend .app-bar;
-  @extend .ds-u-margin-left--7;
-  @extend .ds-u-margin-right--7;
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
 
-  h3 {
+  h2 {
     @extend .ds-u-margin-top--7;
     @extend .ds-u-margin-bottom--3;
   }
@@ -293,16 +301,20 @@ input[type="file"] {
     }
   }
   .ds-c-review__heading {
-    @extend .ds-u-margin-top--1;
+    @extend .ds-u-font-weight--semibold;
   }
   .ds-c-review__body {
-    @extend .cms-review-read-only-textbox-body;
-    width: initial;
-    max-width: 460px;
+    @extend .ds-u-margin-top--1;
+    font-size: 2rem;
+    color: $color-gray;
   }
 
-  .subheader-message {
-    padding-top: 40px;
+  .disclaimer-message {
+    @extend .ds-text-body--md;
+    @extend .ds-u-measure--wide;
+    @extend .ds-u-font-style--italic;
+    color: $color-gray;
+    padding-bottom: 40px;
 
     a {
       white-space: nowrap;
@@ -369,7 +381,7 @@ input[type="file"] {
     @extend .ds-u-margin-top--1;
   }
   .ds-c-review__body {
-    @extend .cms-review-read-only-textbox-body;
+    @include cms-review-read-only-textbox-body;
     border: 2px solid $color-gray-light;
   }
 
@@ -1252,13 +1264,21 @@ input[type="file"] {
   text-align: right;
 }
 
-dl.state-access-cards {
+.access-card-container {
+  &:not(:last-child) {
+    @extend .ds-u-margin-bottom--3;
+  }
+  .gradient-border {
+    @include gradient-top-border;
+  }
+
   .state-access-card {
-    @extend .ds-u-border--1;
     @extend .ds-u-padding--3;
     @extend .ds-u-fill--white;
 
-    border-radius: 3px;
+    border: 1px solid $color-gray-lighter;
+    border-radius: 0px 0px 3px 3px;
+    border-top: none;
     box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
     position: relative;
 
@@ -1268,14 +1288,20 @@ dl.state-access-cards {
 
     dt {
       @extend .ds-u-font-size--h3;
-      @extend .ds-u-font-weight--normal;
+      @extend .ds-u-font-weight--semibold;
 
       margin-bottom: 5px;
     }
 
     dd {
+      em {
+        color: $color-gray;
+      }
+      p {
+        @extend .ds-u-font-weight--semibold;
+      }
       a {
-        @extend .ds-u-font-weight--bold;
+        @extend .ds-u-font-weight--normal;
         @extend .ds-u-text-decoration--none;
       }
     }
@@ -1319,8 +1345,6 @@ dl.state-access-cards {
 }
 
 .faq-border-box {
-  background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
-  border-radius: 3px 3px 0px 0px;
   @media only screen and (min-width: 1200px) {
     position: fixed;
     float: right;
@@ -1330,8 +1354,9 @@ dl.state-access-cards {
     width: 100% !important;
     text-align: center;
   }
+
+  @include gradient-top-border;
   width: 368px;
-  height: 8px;
   right: 72px;
 }
 
@@ -1355,10 +1380,11 @@ dl.state-access-cards {
   width: 368px;
   right: 72px;
   padding: 16px;
-  background: #ffffff;
+  background: $color-white;
   /* Text/Background/Gray - Lighter */
-  border: 1px solid #d6d7d9;
+  border: 1px solid $color-gray-lighter;
   box-sizing: border-box;
+  border-top: none;
 }
 
 .faq-info-box-small {
@@ -1380,23 +1406,8 @@ dl.state-access-cards {
   /* identical to box height, or 125% */
   text-transform: capitalize;
   /* Text / Default - Light */
-  color: #5b616b;
+  color: $color-gray;
   padding-bottom: 30px;
-}
-
-.faq-info-box-top-border {
-  @media only screen and (max-width: 1190px) {
-    width: 105%;
-  }
-  top: -37px;
-  right: 16px;
-  position: relative;
-  width: 368px;
-  height: 8px;
-  border-top: 8px;
-  background: linear-gradient(90.11deg, #0071bc 49.91%, #02bfe7 66.06%);
-  border-radius: 3px 3px 0px 0px;
-  margin-left: -1px;
 }
 
 .faq-collapsible-trigger {

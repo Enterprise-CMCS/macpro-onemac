@@ -11,7 +11,6 @@ import {
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
-import { helpDeskContact } from "../libs/helpDeskContact";
 import { getAlert } from "../libs/error-mappings";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import UserDataApi from "../utils/UserDataApi";
@@ -44,7 +43,7 @@ const ContactList = ({ contacts, userType }) => {
 
   return (
     <p>
-      <b>{label}:</b>{" "}
+      {label}:{" "}
       {contacts.map(({ firstName, lastName, email }, idx) => (
         <React.Fragment key={email}>
           <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
@@ -239,26 +238,29 @@ const UserPage = () => {
 
     return (
       <div className="ds-l-col--6">
-        <h3>{heading}</h3>
-        <dl className="state-access-cards">
+        <h2>{heading}</h2>
+        <dl>
           {accesses.map(({ state, status, contacts }) => (
-            <div className="state-access-card" key={state ?? "only-one"}>
-              {userType === ROLES.STATE_SUBMITTER &&
-                (status === "active" || status === "pending") && (
-                  <button
-                    className="close-button"
-                    onClick={() => xClicked(state)}
-                  >
-                    {CLOSING_X_IMAGE}
-                  </button>
-                )}
-              {!!state && <dt>{territoryMap[state] || state}</dt>}
-              <dd>
-                <em>{ACCESS_LABELS[status] || status}</em>
-                <br />
-                <br />
-                <ContactList contacts={contacts} userType={userType} />
-              </dd>
+            <div className="access-card-container">
+              <div className="gradient-border" />
+              <div className="state-access-card" key={state ?? "only-one"}>
+                {userType === ROLES.STATE_SUBMITTER &&
+                  (status === "active" || status === "pending") && (
+                    <button
+                      className="close-button"
+                      onClick={() => xClicked(state)}
+                    >
+                      {CLOSING_X_IMAGE}
+                    </button>
+                  )}
+                {!!state && <dt>{territoryMap[state] || state}</dt>}
+                <dd>
+                  <em>{ACCESS_LABELS[status] || status}</em>
+                  <br />
+                  <br />
+                  <ContactList contacts={contacts} userType={userType} />
+                </dd>
+              </div>
             </div>
           ))}
         </dl>
@@ -323,35 +325,14 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
-  const helpdeskMessage = (userType) => {
-    if (userType !== "helpdesk") {
-      return (
-        <>
-          If you have questions, please contact the MACPro Help Desk at{" "}
-          <a href={`mailto:${helpDeskContact.email}`}>
-            {helpDeskContact.email}
-          </a>{" "}
-          or call{" "}
-          <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
-        </>
-      );
-    }
-  };
-
   return (
     <div>
       <PageTitleBar heading="User Profile" />
       <AlertBar alertCode={alertCode} />
       <div className="profile-container">
-        <div className="subheader-message">
-          Below is the account information for your role as a{" "}
-          {userTypes[userType] ?? userType}. Your name and email cannot be
-          edited in OneMAC. It can be changed in your IDM profile.
-          {helpdeskMessage(userType)}
-        </div>
         <div className="ds-l-row">
           <div className="ds-l-col--6">
-            <h3>Profile Information</h3>
+            <h2>Profile Information</h2>
             <Review heading="Full Name">
               {getFullName(firstName, lastName)}
             </Review>
@@ -362,6 +343,12 @@ const UserPage = () => {
             />
           </div>
           {accessSection}
+        </div>
+        <div className="disclaimer-message">
+          This page contains Profile Information for the{" "}
+          {userTypes[userType] ?? userType}. The information cannot be changed
+          in the portal. However, the {userTypes[userType] ?? userType} can
+          change their contact phone number in their account.
         </div>
       </div>
     </div>
