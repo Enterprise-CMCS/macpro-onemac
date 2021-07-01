@@ -19,7 +19,7 @@ function StateUserSignup() {
       title: "State Submitter",
       description: "Responsible for submitting packages",
       linkTo: "/state",
-      onclick: ()=>{history.replace("signup/state", {"role": "stateuser"})}
+      onclick: ()=>{history.replace("signup/state", {"role": "statesubmitter"})}
     },
     {
       title: "State System Administrator",

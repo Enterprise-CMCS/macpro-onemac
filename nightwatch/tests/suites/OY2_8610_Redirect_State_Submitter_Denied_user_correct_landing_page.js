@@ -1,12 +1,12 @@
 
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state pending user'](browser);
+        login['Login with state submitter denied user'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +14,7 @@ module.exports = {
 
     },
 
-    'State User pending status view system access is pending approval': function (browser) {
+    'State Submitter User pending status view system access is pending approval': function (browser) {
         //check on user management page 
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
@@ -31,7 +31,7 @@ module.exports = {
         browser.useXpath().expect.element(submission_list_title).to.be.visible;
         browser.useXpath().expect.element(puzzle_piece_image).to.be.visible;
         browser.useXpath().expect.element(pending_message).to.be.visible;
-        browser.useXpath().verify.containsText(pending_message, "Your system access is pending approval. Contact your State System Admin with any questions..");
+        browser.useXpath().verify.containsText(pending_message, "Sorry, you don't have access. Please contact the State System Admin with any questions, or visit your user profile for more information.");
         browser.useXpath().expect.element(my_account_button).to.be.visible;
         browser.click(my_account_button);
         browser.useXpath().expect.element(management_profile_link).to.be.visible;

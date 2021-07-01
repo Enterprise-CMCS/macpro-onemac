@@ -5,8 +5,8 @@ import { MemoryRouter } from "react-router-dom";
 
 import { AppContext } from "../libs/contextLib";
 import {
-  stateUserDeniedInitialAuthState,
-  stateUserRevokedInitialAuthState,
+  statesubmitterDeniedInitialAuthState,
+  statesubmitterRevokedInitialAuthState,
   stateAdminRevokedInitialAuthState,
   stateAdminDeniedInitialAuthState,
   cmsApproverDeniedInitialAuthState,
@@ -16,7 +16,7 @@ import Dashboard from "../containers/Dashboard";
 
 jest.mock("../utils/ChangeRequestDataApi");
 
-const stateUserRevokedDeniedMsg =
+const statesubmitterRevokedDeniedMsg =
   "Sorry, you don't have access. Please contact the State System Admin with any questions or visit your user profile for more information.";
 const stateAdminRevokedDeniedMsg =
   "Sorry, you don't have access. Please contact the CMS Role Approver with any questions, or visit your user profile for more information.";

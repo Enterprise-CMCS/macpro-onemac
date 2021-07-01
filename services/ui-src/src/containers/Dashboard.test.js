@@ -5,7 +5,7 @@ import { MemoryRouter } from "react-router-dom";
 
 import { ROUTES } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
-import { stateUserInitialAuthState } from "../libs/testDataAppContext";
+import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import Dashboard from "./Dashboard";
 
@@ -20,7 +20,7 @@ it("renders with a New Submission button", async () => {
   render(
     <AppContext.Provider
       value={{
-        ...stateUserInitialAuthState,
+        ...stateSubmitterInitialAuthState,
       }}
     >
       <Dashboard />

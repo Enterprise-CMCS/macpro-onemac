@@ -14,7 +14,7 @@ module.exports = {
 
     },
 
-    'State User pending status view system access is pending approval': function (browser) {
+    'State Admin User denied status view system access is pending approval': function (browser) {
         //check on user management page 
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
