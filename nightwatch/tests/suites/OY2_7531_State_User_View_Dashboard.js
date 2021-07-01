@@ -34,6 +34,7 @@ module.exports = {
         browser.useCss();
         let dashboard = "(//div[@class ='nav-left-links']/a)[2]";
         browser.pause(2000);
+        browser.useXpath().waitForElementVisible(dashboard, 1000);
         browser.useXpath().click(dashboard);
         browser.useCss();
         browser.pause(2000);

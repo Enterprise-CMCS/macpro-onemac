@@ -21,6 +21,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
         browser.useXpath().expect.element(pageBanner).to.be.visible;
@@ -32,6 +33,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         login['Login with state user'](browser);
     },
@@ -77,10 +79,12 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
         let pageBanner = "//h1";
         let expectedBannerText = 'Frequently Asked Questions';
+        browser.useXpath().waitForElementVisible(pageBanner, 1000);
         browser.useXpath().expect.element(pageBanner).to.be.visible;
         browser.verify.containsText(pageBanner, expectedBannerText);
         browser.useCss();
@@ -90,6 +94,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
     },
 
@@ -112,8 +117,10 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
+        browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.useCss();
         let expectedText = 'What format is used to enter a SPA ID?';
@@ -125,6 +132,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
             //browser.back().pause(3000);
         });
         //browser.back().pause(3000);
@@ -149,8 +157,10 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
+        //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
         browser.closeWindow(); // Close tab
@@ -159,6 +169,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
             //browser.back().pause(3000);
         });
         //browser.back().pause(3000);
@@ -186,8 +197,10 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
+        //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a 1915(b) waiver number?';
         browser.verify.containsText(fqaHeader, expectedText);
@@ -198,6 +211,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         let dashboard_link = "//a[@id='dashboardLink']";
         browser.useXpath().click(dashboard_link);
@@ -218,8 +232,10 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
+        //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
         browser.useCss();
@@ -229,6 +245,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
 
         //browser.back();
@@ -250,8 +267,10 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         // Verify the new window 
+        //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
     },
@@ -269,8 +288,10 @@ module.exports = {
             // 0 == current main window, 1 == new tab, 2 == new link tab from FAQ page
             var handle = result.value[2];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         //Verify the new window 
+        browser.useXpath().waitForElementVisible(submittalAmendments, 1000);
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;
         browser.verify.containsText(submittalAmendments, 'Submittal of State plans and plan amendments.');
         browser.closeWindow(); // Close tab
@@ -279,6 +300,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
+            browser.pause(1000);
         });
         browser.useCss();
     },
