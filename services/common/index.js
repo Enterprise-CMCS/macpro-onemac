@@ -57,6 +57,7 @@ export const USER_ADMIN_PERMISSION = {
  */
 export const USER_TYPE = {
   STATE_SUBMITTER: "statesubmitter",
+  CMS_REVIEWER: "cmsreviewer",
   STATE_ADMIN: "stateadmin",
   CMS_APPROVER: "cmsapprover",
   SYSTEM_ADMIN: "systemadmin",
@@ -143,6 +144,12 @@ class StateAdmin extends Role {
   }
 }
 
+class CmsReviewer extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+  }
+}
 class CmsApprover extends Role {
   constructor() {
     super();
@@ -175,6 +182,7 @@ export const getUserRoleObj = (role) =>
     [USER_TYPE.CMS_APPROVER]: CmsApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
+    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
   }[role] || Role)();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
