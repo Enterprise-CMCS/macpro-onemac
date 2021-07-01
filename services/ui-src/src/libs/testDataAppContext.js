@@ -20,13 +20,13 @@ export const stateUserNoAuthState = {
         "/FAQ",
         "/dashboard",
         "/signup",
-        "/signup/state"
+        "/signup/state",
       ],
     },
   },
 };
 
-export const stateUserInitialAuthState = {
+export const stateSubmitterInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
@@ -111,13 +111,7 @@ export const statesubmitterRevokedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "statesubmitter",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -149,13 +143,7 @@ export const statesubmitterDeniedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "statesubmitter",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -187,13 +175,7 @@ export const stateAdminRevokedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "stateadmin",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -225,13 +207,7 @@ export const stateAdminDeniedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "stateadmin",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -259,7 +235,7 @@ export const cmsUserNoAuthState = {
         "/usermanagement",
         "/metrics",
         "/signup",
-        "/signup/cmsreviewer"
+        "/signup/cmsreviewer",
       ],
     },
   },
@@ -360,13 +336,7 @@ export const helpDeskDeniedInitialAuthState = {
       firstName: "Rhonda",
       lastName: "Revoked",
       type: "helpdesk",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -395,13 +365,7 @@ export const helpDeskRevokedInitialAuthState = {
       firstName: "Rhonda",
       lastName: "Denied",
       type: "helpdesk",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
