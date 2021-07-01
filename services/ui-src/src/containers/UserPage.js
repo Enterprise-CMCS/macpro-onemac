@@ -31,7 +31,7 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 const getFullName = (...names) => names.filter(Boolean).join(" ");
 
 const ROLE_TO_APPROVER_LABEL = {
-  [ROLES.STATE_USER]: "State Admin",
+  [ROLES.STATE_SUBMITTER]: "State Admin",
   [ROLES.STATE_ADMIN]: "CMS Role Approver",
   [ROLES.CMS_APPROVER]: "CMS System Admin",
   [ROLES.HELPDESK]: "CMS System Admin",
@@ -64,7 +64,7 @@ const ACCESS_LABELS = {
 
 const transformAccesses = (user = {}) => {
   switch (user.type) {
-    case ROLES.STATE_USER:
+    case ROLES.STATE_SUBMITTER:
     case ROLES.STATE_ADMIN:
       return user.attributes?.map(({ stateCode }) => ({
         state: stateCode,
@@ -155,7 +155,7 @@ const UserPage = () => {
     (stateCode) => {
       if (
         window.confirm(
-          "Warning Withdraw of State Access\n\nThis action cannot be undone. State User Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
+          "Warning Withdraw of State Access\n\nThis action cannot be undone. State Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
         )
       ) {
         const updateStatusRequest = {
@@ -163,7 +163,7 @@ const UserPage = () => {
           doneBy: email,
           attributes: [
             {
-              stateCode: stateCode, // required for state user and state admin
+              stateCode: stateCode, // required for state submitter and state admin
               status: "revoked",
             },
           ],
@@ -224,7 +224,7 @@ const UserPage = () => {
     let heading;
 
     switch (userType) {
-      case ROLES.STATE_USER:
+      case ROLES.STATE_SUBMITTER:
       case ROLES.STATE_ADMIN:
         heading = "State Access Management";
         break;
@@ -243,7 +243,7 @@ const UserPage = () => {
         <dl className="state-access-cards">
           {accesses.map(({ state, status, contacts }) => (
             <div className="state-access-card" key={state ?? "only-one"}>
-              {userType === ROLES.STATE_USER &&
+              {userType === ROLES.STATE_SUBMITTER &&
                 (status === "active" || status === "pending") && (
                   <button
                     className="close-button"
@@ -262,7 +262,7 @@ const UserPage = () => {
             </div>
           ))}
         </dl>
-        {userType === ROLES.STATE_USER && (
+        {userType === ROLES.STATE_SUBMITTER && (
           <div className="add-access-container">
             {isStateSelectorVisible
               ? renderSelectStateAccess
@@ -287,7 +287,7 @@ const UserPage = () => {
           getContacts = () => contacts;
 
         switch (userType) {
-          case ROLES.STATE_USER: {
+          case ROLES.STATE_SUBMITTER: {
             const adminsByState = await UserDataApi.getStateAdmins(
               userData.attributes
                 .map(({ stateCode }) => stateCode)

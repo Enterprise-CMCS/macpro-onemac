@@ -10,7 +10,7 @@ module.exports = {
     // Opens the browser, goes to the test site
     before: function (browser) {
         login.beforeEach(browser);
-        //login['Login with state user'](browser);
+        //login['Login with state submitter user'](browser);
         // User can go to the FAQ without logging into the application
         let fqaLink = "//a[text()='FAQ']";
         browser.useXpath().click(fqaLink).pause(500);
@@ -35,7 +35,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -66,8 +66,8 @@ module.exports = {
     //     });
     // },
 
-    // 'User logs into Medicaid as Regular user': function(browser) {
-    //     login["Login to Medicaid as Regular User"](browser);
+    // 'User logs into Medicaid as State Submitter': function(browser) {
+    //     login["Login to Medicaid as State Submitter"](browser);
     // },
 
 
@@ -119,6 +119,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -159,6 +160,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
+        browser.pause(500);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -199,6 +201,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
+        browser.pause(500);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -234,6 +237,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
+        browser.pause(500);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -269,6 +273,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
+        browser.pause(500);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -290,6 +295,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
+        browser.pause(500);
         //Verify the new window 
         browser.useXpath().waitForElementVisible(submittalAmendments, 1000);
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;

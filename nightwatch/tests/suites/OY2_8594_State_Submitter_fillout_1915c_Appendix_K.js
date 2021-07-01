@@ -1,5 +1,5 @@
 const { first } = require('lodash');
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
@@ -7,7 +7,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -16,7 +16,7 @@ module.exports = {
     },
 
 
-    'State user check the Submit 1915(c) Appendix K Amendment': function (browser) {
+    'State Submitter user check the Submit 1915(c) Appendix K Amendment': function (browser) {
         // Go to Submit 1915(c) Appendix K Amendment
         //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -71,7 +71,7 @@ module.exports = {
     },
 
 
-    'State user check the Submit 1915(c) Appendix K Amendment error message on format and FAQ': function (browser) {
+    'State Submitter user check the Submit 1915(c) Appendix K Amendment error message on format and FAQ': function (browser) {
         // Go to Submit 1915(c) Appendix K Amendment
         //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -103,7 +103,8 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        // Verify the new window
+        browser.pause(500);
+        // Verify the new window 
         let pageBanner = '//h1';
         let expectedBannerText = 'Frequently Asked Questions';
         browser.useXpath().moveToElement(pageBanner, 10, 10).pause(200);

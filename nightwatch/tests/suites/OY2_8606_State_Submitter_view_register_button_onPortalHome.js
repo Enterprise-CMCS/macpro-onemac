@@ -1,4 +1,4 @@
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 module.exports = {
     "@tags": ["profileOne", "smoke", "regression-soon"],
@@ -9,7 +9,7 @@ module.exports = {
         browser.useXpath().expect.element(register_link).to.be.visible;
         browser.click(register_link).pause(1000);
         browser.assert.urlContains('/signin/login.html');
-        //login['Login with state user'](browser);
+        //login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {

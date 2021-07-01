@@ -19,11 +19,11 @@ The application provides a set of test users for the DEV environment that you ca
 The following are the available static test users:
 
 ```
-stateuserpending@cms.hhs.local
-stateuseractive@cms.hhs.local
-stateuserdenied@cms.hhs.local
-stateuserrevoked@cms.hhs.local
-stateuserunregistered@cms.hhs.local
+statesubmitterpending@cms.hhs.local
+statesubmitteractive@cms.hhs.local
+statesubmitterdenied@cms.hhs.local
+statesubmitterrevoked@cms.hhs.local
+statesubmitterunregistered@cms.hhs.local
 stateadminpending@cms.hhs.local
 stateadminactive@cms.hhs.local
 stateadmindenied@cms.hhs.local

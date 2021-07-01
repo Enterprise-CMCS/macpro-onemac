@@ -67,9 +67,9 @@ class Helpdesk {
         );
         return;
       }
-      if (oneUser.type !== "cmsapprover" && oneUser.type !== "helpdesk") {
+      if (oneUser.type === "statesubmitter" || oneUser.type === "stateadmin") {
         oneUser.attributes.forEach((oneAttribute) => {
-          // State Admins and State Users must have the history section
+          // State Admins and State Submitters must have the history section
           if (!oneAttribute.history) {
             errorList.push(
               "History data required for this role, but not found ",

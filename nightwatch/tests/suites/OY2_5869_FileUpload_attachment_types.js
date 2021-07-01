@@ -20,7 +20,7 @@ module.exports = {
   
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -111,7 +111,7 @@ module.exports = {
 
     'Verify the uploaded attachment in the submission lists for the submitted SPA/Waiver': function (browser) {
         browser.useCss();
-        submitWaiver["Verify that user can submit a New Waiver"](browser);
+        submitWaiver["Verify that submitter user can submit a New Waiver"](browser);
         let waiverNumber = '//tbody/tr[1]/td/a';
         let attachementElement = ".form-container a[target='_blank']";
         browser.useXpath().click(waiverNumber).pause(4000);

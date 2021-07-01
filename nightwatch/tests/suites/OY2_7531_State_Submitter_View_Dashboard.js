@@ -1,13 +1,13 @@
 let generatedSPAID;
 let generatedWaiverID;
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 module.exports = {
     "@tags": ["smoke", "regression-soon"],
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -23,7 +23,7 @@ module.exports = {
         browser.click(my_account_button);
         browser.click(manage_account_link);
         browser.pause(2000);
-        //check on state access management for state user
+        //check on state access management for state submitter user 
         let state_access_management = "(//h3)[5]";
         let maryland = "(//div[@class='state-access-card']/dt)[1]";
         let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
@@ -41,10 +41,10 @@ module.exports = {
     },
 
     'Submit new SPA with state name and verify if it shows under submission list': function (browser) {
-        // Submit a SPA Report
-        const newSPA = require('../suites/OY2-3636_Suite_Smoke.js');
-        generatedSPAID = newSPA['Verify user can submit new SPA'](browser);
-        // Verify the submitted Content
+        // Submit a SPA Report 
+        const newSPA = require('./OY2-3636_Suite_Smoke.js');
+        generatedSPAID = newSPA['Verify Submitter user can submit new SPA'](browser);
+        // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";

@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -22,6 +22,8 @@ import {
   isPending,
   isActive,
 } from "../libs/userLib";
+import { Button } from "@cmsgov/design-system";
+import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
@@ -71,7 +73,7 @@ const UserManagement = () => {
       !userProfile.userData ||
       (userProfile.userData.type !== USER_TYPE.SYSTEM_ADMIN &&
         (!userProfile.userData.attributes ||
-          userProfile.userData.type === USER_TYPE.STATE_USER))
+          userProfile.userData.type === USER_TYPE.STATE_SUBMITTER))
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -207,7 +209,7 @@ const UserManagement = () => {
               doneBy: userProfile.userData.id,
               attributes: [
                 {
-                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
+                  stateCode: userList[rowNum].stateCode, // required for state submitter and state admin
                   status: value,
                 },
               ],
@@ -319,10 +321,38 @@ const UserManagement = () => {
     []
   );
 
+  const csvExportSubmissions = (
+    <Button
+      id="new-submission-button"
+      className="new-submission-button"
+      onClick={(e) => {
+        e.preventDefault();
+        tableListExportToCSV("user-table", userList, "UserList", columns);
+      }}
+      inversed
+    >
+      Export to Excel(CSV){" "}
+      <svg
+        width="15"
+        height="16"
+        viewBox="0 0 15 16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M7.29387 0.941406C3.26446 0.941406 -0.000244141 4.20611 -0.000244141 8.23552C-0.000244141 12.2649 3.26446 15.5296 7.29387 15.5296C11.3233 15.5296 14.588 12.2649 14.588 8.23552C14.588 4.20611 11.3233 0.941406 7.29387 0.941406ZM11.5292 9.05905C11.5292 9.25317 11.3703 9.412 11.1762 9.412H8.47034V12.1179C8.47034 12.312 8.31152 12.4708 8.1174 12.4708H6.47034C6.27623 12.4708 6.1174 12.312 6.1174 12.1179V9.412H3.41152C3.2174 9.412 3.05858 9.25317 3.05858 9.05905V7.412C3.05858 7.21788 3.2174 7.05905 3.41152 7.05905H6.1174V4.35317C6.1174 4.15905 6.27623 4.00023 6.47034 4.00023H8.1174C8.31152 4.00023 8.47034 4.15905 8.47034 4.35317V7.05905H11.1762C11.3703 7.05905 11.5292 7.21788 11.5292 7.412V9.05905Z" />
+      </svg>
+    </Button>
+  );
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
-      <PageTitleBar heading="User Management" />
+      <PageTitleBar
+        heading="User Management"
+        rightSideContent={
+          userProfile.userData.type === USER_TYPE.HELPDESK &&
+          csvExportSubmissions
+        }
+      />
       <AlertBar alertCode={alertCode} personalizedString={doneToName} />
       <div className="dashboard-container">
         {userProfile &&

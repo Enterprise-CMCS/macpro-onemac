@@ -58,8 +58,8 @@ jobs:
           STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
           METRICS_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_METRICS_USERS] || secrets.METRICS_USERS }}
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
-          TEST_STATE_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_USERS] || secrets.TEST_STATE_USERS }}
-          TEST_STATE_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_USER_PASSWORD] || secrets.TEST_STATE_USER_PASSWORD }}
+          TEST_STATE_SUBMITTER_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_SUBMITTER_USERS] || secrets.TEST_STATE_SUBMITTER_USERS }}
+          TEST_STATE_SUBMITTER_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_SUBMITTER_USER_PASSWORD] || secrets.TEST_STATE_SUBMITTER_USER_PASSWORD }}
           TEST_STATE_ADMIN_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_ADMIN_USERS] || secrets.TEST_STATE_ADMIN_USERS }}
           TEST_STATE_ADMIN_USER_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_STATE_ADMIN_USER_PASSWORD] || secrets.TEST_STATE_ADMIN_USER_PASSWORD }}
           TEST_CMS_APPROVER_USERS: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_TEST_CMS_APPROVER_USERS] || secrets.TEST_CMS_APPROVER_USERS }}
@@ -137,7 +137,7 @@ jobs:
         if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master", "production"]'), env.branch_name) && failure ()
         env:
           SLACK_WEBHOOK: ${{ secrets.SLACK_WEBHOOK_URL }}
-          SLACK_USERNAME: Destroy Alerts
+          SLACK_USERNAME: ${{env.branch_name}} Deploy Failure
           SLACK_ICON_EMOJI: ":bell:"
           SLACK_COLOR: ${{job.status}}
           SLACK_FOOTER: ""
