@@ -10,7 +10,7 @@ module.exports = {
     // Opens the browser, goes to the test site
     before: function (browser) {
         login.beforeEach(browser);
-        //login['Login with state user'](browser);
+        //login['Login with state submitter user'](browser);
         // User can go to the FAQ without logging into the application
         let fqaLink = "//a[text()='FAQ']";
         browser.useXpath().click(fqaLink).pause(500);
@@ -33,7 +33,7 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         });
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -64,8 +64,8 @@ module.exports = {
     //     });
     // },
 
-    // 'User logs into Medicaid as Regular user': function(browser) {
-    //     login["Login to Medicaid as Regular User"](browser);
+    // 'User logs into Medicaid as State Submitter': function(browser) {
+    //     login["Login to Medicaid as State Submitter"](browser);
     // },
 
 
@@ -113,6 +113,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.useCss();
@@ -150,6 +151,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
@@ -187,6 +189,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         let expectedText = 'What format is used to enter a 1915(b) waiver number?';
@@ -219,6 +222,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
@@ -251,6 +255,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         // Verify the new window 
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
@@ -270,6 +275,7 @@ module.exports = {
             var handle = result.value[2];
             browser.switchWindow(handle);
         });
+        browser.pause(500);
         //Verify the new window 
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;
         browser.verify.containsText(submittalAmendments, 'Submittal of State plans and plan amendments.');

@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +14,7 @@ module.exports = {
     },
 
 
-    'State user check the SPA ID Format in New Medicaid SPA Link': function (browser) {
+    'State Submitter user check the SPA ID Format in New Medicaid SPA Link': function (browser) {
         //let medicaid_SPA_Link = "//button[@id='spaSubmitBtn']";
         browser.useXpath().click("//a[@id='new-submission-button']");
         browser.pause(500);
@@ -83,7 +83,7 @@ module.exports = {
         browser.useCss();
     },
 
-    'State user check the SPA ID Format in Respond to Medicaid SPA RAI': function (browser) {
+    'State Submitter user check the SPA ID Format in Respond to Medicaid SPA RAI': function (browser) {
         let dashboard_link ='//a[@id="dashboardLink"]';
         //let medicaid_SPA_RAI_Link = "//button[@id='spaRaiBtn']";
         // Go to Submit New Medicaid SPA page
@@ -108,7 +108,7 @@ module.exports = {
         browser.useCss();
     },
 
-    'State user check the SPA ID Format in New CHIP SPA Link': function (browser) {
+    'State Submitter user check the SPA ID Format in New CHIP SPA Link': function (browser) {
         let dashboard_link ='//a[@id="dashboardLink"]';
         //let submit_CHIP_SPA_Link = "//button[@id='chipSpaBtn']";
         // Go to Submit New Medicaid SPA page
@@ -133,7 +133,7 @@ module.exports = {
         browser.useCss();
     },
 
-    'State user check the SPA ID Format in Respond to CHIP SPA RAI Link': function (browser) {
+    'State Submitter user check the SPA ID Format in Respond to CHIP SPA RAI Link': function (browser) {
         let dashboard_link ='//a[@id="dashboardLink"]';
         //let respond_CHIP_SPA_RAI_Link = "//button[@id='chipSpaRaiBtn']";
         // Go to Submit New Medicaid SPA page

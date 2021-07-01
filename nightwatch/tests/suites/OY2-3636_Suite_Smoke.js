@@ -14,7 +14,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -22,7 +22,7 @@ module.exports = {
     },
 
     // DONE 
-    'Verify user can submit new SPA': function (browser) {
+    'Verify Submitter user can submit new SPA': function (browser) {
         browser.useXpath().click("//a[@id='new-submission-button']");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -94,7 +94,7 @@ module.exports = {
     // },
 
     // DONE 
-    // 'Verify user can submit 1915(b) Waiver Action': function (browser) {
+    // 'Verify Submitter user can submit 1915(b) Waiver Action': function (browser) {
     //     browser.useCss().click("button#waiverBtn");
     //     browser.useCss().click("select#actionType");
     //     browser.useCss().click("select#actionType > option[value='new']");
@@ -153,7 +153,7 @@ module.exports = {
     // },
 
 
-    // 'Verify user can submit Respond to 1915(b) Waiver RAI': function (browser) {
+    // 'Verify Submitter user can submit Respond to 1915(b) Waiver RAI': function (browser) {
     //     browser.pause(2000);
     //     browser.useCss().click("button#waiverRaiBtn");
     //     browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);

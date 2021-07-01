@@ -2,7 +2,7 @@
  * Record types.
  */
 export const USER_TYPES = {
-  STATE_USER: "stateuser",
+  STATE_SUBMITTER: "statesubmitter",
   STATE_ADMIN: "stateadmin",
   CMS_APPROVER: "cmsapprover",
   HELPDESK: "helpdesk",
