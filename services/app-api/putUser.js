@@ -49,7 +49,10 @@ const validateInput = (input) => {
     attributes: Joi.array()
       // When type is state then state attribute is required and must be valid //
       .when("type", {
-        is: Joi.string().valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN),
+        is: Joi.string().valid(
+          USER_TYPE.STATE_SUBMITTER,
+          USER_TYPE.STATE_ADMIN
+        ),
         then: Joi.array().items(
           Joi.object({
             stateCode: Joi.string()
@@ -208,7 +211,7 @@ const populateUserAttributes = (
   console.log("selfInflicted is: ", isSelfInflicted);
 
   if (
-    input.type === USER_TYPE.STATE_USER ||
+    input.type === USER_TYPE.STATE_SUBMITTER ||
     input.type === USER_TYPE.STATE_ADMIN
   ) {
     input.attributes.forEach((item) => {
@@ -258,7 +261,7 @@ const populateUserAttributes = (
 
 // Ensure the DoneBy user has permission to execute the requested actions //
 const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
-  if (userType === USER_TYPE.STATE_USER) {
+  if (userType === USER_TYPE.STATE_SUBMITTER) {
     if (doneByUser.type !== USER_TYPE.STATE_ADMIN) {
       console.log(
         `Warning: The doneBy user ${doneByUser.id} must be a stateadmin for the state ${userState}`
@@ -422,7 +425,7 @@ const processEmail = async (input) => {
 // Collect recipient email addresses to send out confirmation emails to //
 const collectRoleAdminEmailIds = async (input) => {
   const recipients = [];
-  if (input.type === USER_TYPE.STATE_USER) {
+  if (input.type === USER_TYPE.STATE_SUBMITTER) {
     const states = input.attributes.map((item) => item.stateCode);
     // get all stateAdmin email ids
     const stateAdmins = (await getUsersByType(USER_TYPE.STATE_ADMIN)) || [];
@@ -512,7 +515,7 @@ const constructRoleAdminEmails = (recipients, input) => {
   const typeText = roleLabels[input.type] ?? "User";
 
   if (
-    input.type === USER_TYPE.STATE_USER &&
+    input.type === USER_TYPE.STATE_SUBMITTER &&
     input.userEmail === input.doneBy &&
     input.attributes[0].status === USER_STATUS.REVOKED
   ) {

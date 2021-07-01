@@ -1,6 +1,6 @@
 import { constructRoleAdminEmails } from "./putUser";
 
-const stateUser = {
+const stateSubmitter = {
   firstName: "John",
   lastName: "Doe",
   doneBy: "systemadmintest@cms.hhs.local",
@@ -10,8 +10,8 @@ const stateUser = {
       status: "active",
     },
   ],
-  id: "stateuserdenied@cms.hhs.local",
-  type: "stateuser",
+  id: "statesubmitterdenied@cms.hhs.local",
+  type: "statesubmitter",
 };
 
 const stateAdmin = {
@@ -47,8 +47,8 @@ it("Should show the full name in the email message for CMSApprover", async () =>
   expect(result).toContain("CMS Approver");
 });
 
-it("Should show the full name in the email message for State User", async () => {
-  const result = constructRoleAdminEmails([], stateUser).email.HTML;
+it("Should show the full name in the email message for State Submitter", async () => {
+  const result = constructRoleAdminEmails([], stateSubmitter).email.HTML;
   expect(result).toContain("State Submitter");
 });
 

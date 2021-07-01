@@ -1,4 +1,4 @@
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 let spaCHIPId;
 module.exports = {
@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +14,7 @@ module.exports = {
 
     },
 
-    'State user check the Submit New CHIP SPA form': function (browser) {
+    'State Submitter user check the Submit New CHIP SPA form': function (browser) {
         // Go to Submit New CHIP SPA page
         //browser.useCss().click("button#chipSpaBtn");
         browser.useXpath().click("//a[@id='new-submission-button']");

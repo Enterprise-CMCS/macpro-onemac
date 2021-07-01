@@ -14,7 +14,7 @@ module.exports = {
     // Opens the browser, goes to the test site
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -24,7 +24,7 @@ module.exports = {
     'Submission List Verification > Submit new SPA and Respond to SPA RAI': function (browser) {
         // Submit a SPA Report 
         const newSPA = require('../suites/OY2-3636_Suite_Smoke.js');
-        generatedSPAID = newSPA['Verify user can submit new SPA'](browser);
+        generatedSPAID = newSPA['Verify Submitter user can submit new SPA'](browser);
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";

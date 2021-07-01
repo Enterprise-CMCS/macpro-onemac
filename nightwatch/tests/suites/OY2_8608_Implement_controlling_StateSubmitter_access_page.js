@@ -1,11 +1,11 @@
-const login = require('../suites/OY2_9999_Login');
+const login = require('./OY2_9999_Login');
 
 module.exports = {
     "@tags": ["profileOne", "smoke", "regression-soon"],
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -13,7 +13,7 @@ module.exports = {
 
     },
 
-    'State User can view Submission List Dashboard, FAQ, About, Account Management, SubmissionSelection': function (browser) {
+    'State Submitter User can view Submission List Dashboard, FAQ, About, Account Management, SubmissionSelection': function (browser) {
         //check on Submission List on the homepage
         let submission_list = "//h1";
         let spa_waiver_number = "(//table[@class='submissions-table']/thead/tr/th)[1]";

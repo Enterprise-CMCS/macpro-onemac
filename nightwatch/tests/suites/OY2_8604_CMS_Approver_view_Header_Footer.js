@@ -43,7 +43,7 @@ module.exports = {
 
     },
 
-    'state user verify header after login': function (browser) {
+    'state submitter user verify header after login': function (browser) {
         let one_mac_logo = '(//img)[2]';
         let us_official_banner = '//div/div[@class="usa-bar"]';
 
@@ -52,7 +52,7 @@ module.exports = {
         browser.useXpath().assert.containsText(us_official_banner, "An official website of the United States government");
     },
 
-    'state user verify footer after login': function (browser) {
+    'state submitter user verify footer after login': function (browser) {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
 

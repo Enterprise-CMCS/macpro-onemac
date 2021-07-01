@@ -4,7 +4,7 @@ import { USER_TYPE } from "cmscommonlib";
 export const getAdminTypeByRole = (role) => {
   switch (role) {
     case USER_TYPE.STATE_ADMIN:
-      return USER_TYPE.STATE_USER;
+      return USER_TYPE.STATE_SUBMITTER;
     case USER_TYPE.CMS_APPROVER:
       return USER_TYPE.STATE_ADMIN;
     case USER_TYPE.SYSTEM_ADMIN:

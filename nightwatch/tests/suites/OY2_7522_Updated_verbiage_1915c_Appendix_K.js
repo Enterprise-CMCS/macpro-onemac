@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +14,7 @@ module.exports = {
     },
     
 
-    'State user see error message when waiver number not exist in 1915c Appendix forms': function (browser) {
+    'State Submitter user see error message when waiver number not exist in 1915c Appendix forms': function (browser) {
         // Go to Submit New CHIP SPA page
         //browser.useCss().click("button#chipSpaBtn");
         browser.useXpath().click("//a[@id='new-submission-button']");

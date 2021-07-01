@@ -1,13 +1,13 @@
 import { RESPONSE_CODE } from "../libs/response-codes";
 
 /**
- * State User specific functions.
+ * State Submitter specific functions.
  * @class
  */
-class StateUser {
+class StateSubmitter {
   /**
-   * State User "scan for" returns that the
-   * State User currently has no users to show on
+   * State Submitter "scan for" returns that the
+   * State Submitter currently has no users to show on
    * the User Management Dashboard
    * @returns {String} the User Role
    */
@@ -16,7 +16,7 @@ class StateUser {
   }
 
   /**
-   * State Users may not see user lists
+   * State Submitters may not see user lists
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
@@ -24,8 +24,8 @@ class StateUser {
   }
 
   /**
-   * State Users have state associations
-   * @returns {true} check state for State Users
+   * State Submitters have state associations
+   * @returns {true} check state for State Submitters
    */
   shouldICheckState() {
     return true;
@@ -35,7 +35,7 @@ class StateUser {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * State Users should not get this far
+   * State Submitters should not get this far
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
@@ -45,6 +45,6 @@ class StateUser {
   }
 }
 
-const instance = new StateUser();
+const instance = new StateSubmitter();
 Object.freeze(instance);
 export default instance;

@@ -1,7 +1,7 @@
 import { USER_TYPE, USER_STATUS } from "cmscommonlib";
 
 export const userTypes = {
-  [USER_TYPE.STATE_USER]: "State Submitter",
+  [USER_TYPE.STATE_SUBMITTER]: "State Submitter",
   [USER_TYPE.STATE_ADMIN]: "State Admin",
   [USER_TYPE.CMS_APPROVER]: "CMS Role Approver",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
@@ -9,7 +9,7 @@ export const userTypes = {
 };
 
 export const pendingMessage = {
-  [USER_TYPE.STATE_USER]:
+  [USER_TYPE.STATE_SUBMITTER]:
     "Your system access is pending approval. Contact your State System Admin with any questions.",
   [USER_TYPE.STATE_ADMIN]: "Your system access is pending approval.",
   [USER_TYPE.CMS_APPROVER]:
@@ -23,7 +23,7 @@ export const pendingMessage = {
 };
 
 export const deniedOrRevokedMessage = {
-  [USER_TYPE.STATE_USER]:
+  [USER_TYPE.STATE_SUBMITTER]:
     "Sorry, you don't have access. Please contact the State System Admin with any questions",
   [USER_TYPE.STATE_ADMIN]:
     "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
@@ -86,7 +86,7 @@ export const isPending = (userData) => {
 };
 
 /**
- * is this CMS Approver active or does State User / State Admin user have any active territories?
+ * is this CMS Approver active or does State Submitter / State Admin have any active territories?
  * @param {Object} userData object of history instance
  * @return {Boolean} a boolean on status pending
  */

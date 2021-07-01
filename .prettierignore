@@ -21,4 +21,4 @@ nightwatch.js
 /services/stream-functions/
 
 # contains invalid syntax
-stateUserTemplate.json
+stateSubmitterTemplate.json

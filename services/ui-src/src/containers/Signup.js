@@ -45,7 +45,7 @@ export function Signup() {
       isStateUser(cmsRoles) ? (
         <>
           <div className="ds-l-col--6">
-            <CardButton type="stateuser" />
+            <CardButton type="statesubmitter" />
           </div>
           <div className="ds-l-col--6">
             <CardButton type="stateadmin" />
