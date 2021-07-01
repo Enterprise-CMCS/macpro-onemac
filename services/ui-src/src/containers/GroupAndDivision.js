@@ -33,7 +33,7 @@ const groupDivisionReducer = (state, [field, value]) => {
     return { ...state, division: value };
   }
 
-  return null;
+  return state;
 };
 
 export const GroupAndDivision = () => {
