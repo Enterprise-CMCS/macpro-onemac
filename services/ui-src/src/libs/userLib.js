@@ -71,7 +71,7 @@ export const revokeConfirmMessage = {
 
 export const isPending = (userData) => {
   if (
-    userData.type === USER_TYPE.STATE_USER ||
+    userData.type === USER_TYPE.STATE_SUBMITTER ||
     userData.type === USER_TYPE.STATE_ADMIN
   ) {
     userData.attributes.forEach(getStateStatus);
@@ -93,7 +93,7 @@ export const isPending = (userData) => {
 
 export const isActive = (userData) => {
   if (
-    userData.type === USER_TYPE.STATE_USER ||
+    userData.type === USER_TYPE.STATE_SUBMITTER ||
     userData.type === USER_TYPE.STATE_ADMIN
   ) {
     userData.attributes.forEach(getStateStatus);
