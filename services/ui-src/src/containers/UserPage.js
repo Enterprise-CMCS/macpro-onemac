@@ -95,6 +95,7 @@ const UserPage = () => {
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
 
   let userType = userData?.type ?? "user";
+  const userTypeDisplayText = userTypes[userType];
 
   const onPhoneNumberEdit = useCallback(
     async (newNumber) => {
@@ -337,6 +338,9 @@ const UserPage = () => {
               {getFullName(firstName, lastName)}
             </Review>
             <Review heading="Email">{email}</Review>
+            {userTypeDisplayText && (
+              <Review heading="Role">{userTypeDisplayText}</Review>
+            )}
             <PhoneNumber
               initialValue={userData.phoneNumber}
               onSubmit={onPhoneNumberEdit}
@@ -346,8 +350,8 @@ const UserPage = () => {
         </div>
         <div className="disclaimer-message">
           This page contains Profile Information for the{" "}
-          {userTypes[userType] ?? userType}. The information cannot be changed
-          in the portal. However, the {userTypes[userType] ?? userType} can
+          {userTypeDisplayText ?? userType}. The information cannot be changed
+          in the portal. However, the {userTypeDisplayText ?? userType} can
           change their contact phone number in their account.
         </div>
       </div>
