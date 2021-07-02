@@ -41,10 +41,10 @@ it("lets you cancel your changes to the phone number", () => {
 
   // input is no longer there
   expect(screen.queryByLabelText("Phone Number")).toBeNull();
-  // the review component is back with the original value
-  expect(screen.getByText("Phone Number").parentNode).toHaveTextContent(
-    initial
-  );
+  // the initial value remains on the screen
+  expect(screen.getByText(initial));
+  // the replacement value is not displayed on the screen
+  expect(screen.queryByText(replacement)).toBeNull();
 });
 
 it("lets you submit your changes", () => {
@@ -60,8 +60,8 @@ it("lets you submit your changes", () => {
   fireEvent.change(screen.getByLabelText("Phone Number"), {
     target: { value: replacement },
   });
-  // click Submit button to persist changes
-  fireEvent.click(screen.getByText("Submit", { selector: "button" }));
+  // click Apply button to persist changes
+  fireEvent.click(screen.getByText("Apply", { selector: "button" }));
 
   // check that submit handler was called
   expect(onSubmitFn).toBeCalledWith(replacement);

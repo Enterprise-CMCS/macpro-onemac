@@ -337,10 +337,10 @@ const UserPage = () => {
             <Review heading="Full Name">
               {getFullName(firstName, lastName)}
             </Review>
+            <Review heading="Role">
+              {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
+            </Review>
             <Review heading="Email">{email}</Review>
-            {userTypeDisplayText && (
-              <Review heading="Role">{userTypeDisplayText}</Review>
-            )}
             <PhoneNumber
               initialValue={userData.phoneNumber}
               onSubmit={onPhoneNumberEdit}
