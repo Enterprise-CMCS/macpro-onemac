@@ -241,9 +241,9 @@ const UserPage = () => {
         <h2>{heading}</h2>
         <dl>
           {accesses.map(({ state, status, contacts }) => (
-            <div className="access-card-container">
+            <div className="access-card-container" key={state ?? "only-one"}>
               <div className="gradient-border" />
-              <div className="state-access-card" key={state ?? "only-one"}>
+              <div className="state-access-card">
                 {userType === ROLES.STATE_SUBMITTER &&
                   (status === "active" || status === "pending") && (
                     <button

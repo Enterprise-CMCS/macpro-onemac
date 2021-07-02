@@ -333,27 +333,44 @@ input[type="file"] {
   }
 }
 
-.phone-number-field {
-  max-width: 300px;
+.phone-number-edit-form {
+  label {
+    @extend .ds-u-font-weight--semibold;
+    margin-bottom: 1.6rem;
+  }
 
-  .phone-edit-button {
-    height: 40px;
-    align-self: flex-end;
+  input {
+    border-color: $color-gray-light;
+    margin-bottom: 1.6rem;
+    width: fit-content;
+    min-width: 13.4rem;
+  }
+
+  .phone-apply-button {
+    margin-right: 1rem;
   }
 }
 
-.phone-number-edit-form {
+.phone-number-empty-form {
   label {
-    margin: 32px 0 24px;
+    @extend .ds-u-font-weight--semibold;
+    margin-bottom: 1.6rem;
+  }
+}
+
+.phone-number-view-form {
+  label {
+    @extend .ds-u-font-weight--semibold;
+    margin-bottom: 0.8rem;
   }
 
-  input,
-  button {
-    height: 40px;
+  .phone-edit-button {
+    border: none;
   }
 
-  button {
-    margin-left: 14px;
+  .phone-text {
+    font-size: 2rem;
+    color: $color-gray;
   }
 }
 
