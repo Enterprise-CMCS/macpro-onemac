@@ -121,7 +121,7 @@ module.exports = {
         });
         browser.pause(500);
         // Verify the new window 
-        browser.useXpath().waitForElementVisible(fqaHeader, 1000);
+        //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.useCss();
         let expectedText = 'What format is used to enter a SPA ID?';
