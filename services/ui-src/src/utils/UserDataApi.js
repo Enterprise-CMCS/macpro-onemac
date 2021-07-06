@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import APIWrapper from "./apiWrapper";
 import { USER_TYPE } from "cmscommonlib";
 
 export const getAdminTypeByRole = (role) => {
@@ -25,7 +25,10 @@ class UserDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
+      return await APIWrapper.get(
+        "userDataAPI",
+        `/getMyUserList?email=${userEmail}`
+      );
     } catch (error) {
       console.log(`There was an error fetching data for the user.`, error);
       throw error;
@@ -45,7 +48,10 @@ class UserDataApi {
     }
 
     try {
-      let answer = await API.get("userDataAPI", `/getUser?email=${userEmail}`);
+      let answer = await APIWrapper.get(
+        "userDataAPI",
+        `/getUser?email=${userEmail}`
+      );
       return answer;
     } catch (error) {
       console.log(`There was an error checking user ${userEmail}.`, error);
@@ -60,7 +66,7 @@ class UserDataApi {
    */
   async updateUser(userRecord) {
     try {
-      return await API.put("changeRequestAPI", "/putUser", {
+      return await APIWrapper.put("changeRequestAPI", "/putUser", {
         body: { ...userRecord, isPutUser: true },
       });
     } catch (error) {
@@ -77,11 +83,11 @@ class UserDataApi {
    */
   async updatePhoneNumber(id, phoneNumber) {
     try {
-      return await API.put("changeRequestAPI", "/phoneNumber", {
+      return await APIWrapper.put("changeRequestAPI", "/phoneNumber", {
         body: { id, phoneNumber },
       });
     } catch (error) {
-      console.error("Could not save user phone number:", error);
+      console.error("Could not save user phone number:", error, "Error type:");
       throw error;
     }
   }
@@ -100,7 +106,7 @@ class UserDataApi {
     }
 
     try {
-      return await API.put("changeRequestAPI", "/putUser", {
+      return await APIWrapper.put("changeRequestAPI", "/putUser", {
         body: updateStatusRequest,
       });
     } catch (error) {
@@ -117,21 +123,24 @@ class UserDataApi {
     for (const state of states) {
       params.append("state", state);
     }
-    return await API.get("userDataAPI", `/getStateAdmins?${params.toString()}`);
+    return await APIWrapper.get(
+      "userDataAPI",
+      `/getStateAdmins?${params.toString()}`
+    );
   }
 
   /**
    * Get all active CMS role approvers' contact info.
    */
   async getCmsApprovers() {
-    return await API.get("userDataAPI", "/getCmsApprovers");
+    return await APIWrapper.get("userDataAPI", "/getCmsApprovers");
   }
 
   /**
    * Get all active CMS system admins' contact info.
    */
   async getCmsSystemAdmins() {
-    return await API.get("userDataAPI", "/getCmsSystemAdmins");
+    return await APIWrapper.get("userDataAPI", "/getCmsSystemAdmins");
   }
 }
 

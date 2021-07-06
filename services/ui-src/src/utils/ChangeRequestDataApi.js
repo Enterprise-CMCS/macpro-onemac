@@ -1,5 +1,4 @@
-import { API } from "aws-amplify";
-import { Auth } from "aws-amplify";
+import APIWrapper from "./apiWrapper";
 
 /**
  * Singleton class to perform operations with the change request backend.
@@ -21,10 +20,9 @@ class ChangeRequestDataApi {
       throw new Error("Missing required data or uploads");
     }
     try {
-      data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
-      return await API.post("changeRequestAPI", "/submit", {
+      return await APIWrapper.post("changeRequestAPI", "/submit", {
         body: data,
       });
     } catch (error) {
@@ -46,7 +44,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let changeRequest = await API.get(
+      let changeRequest = await APIWrapper.get(
         "changeRequestAPI",
         `/get/${id}/${userId}`
       );
@@ -69,7 +67,10 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
+      let answer = await APIWrapper.get(
+        "changeRequestAPI",
+        `/package-exists/${id}`
+      );
 
       return answer;
     } catch (error) {
@@ -87,7 +88,7 @@ class ChangeRequestDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get(
+      return await APIWrapper.get(
         "changeRequestAPI",
         `/getAllByAuthorizedTerritories?email=${userEmail}`
       );
@@ -106,7 +107,7 @@ class ChangeRequestDataApi {
    */
   async listAll() {
     try {
-      return await API.get("changeRequestAPI", `/listall`);
+      return await APIWrapper.get("changeRequestAPI", `/listall`);
     } catch (error) {
       console.log(`There was an error fetching all change requests`, error);
       throw error;
