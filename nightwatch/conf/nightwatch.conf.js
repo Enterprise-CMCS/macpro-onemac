@@ -57,6 +57,10 @@ module.exports = {
                     username: `${process.env.TEST_CMS_SYSTEM_ADMIN_USERS}`,
                     password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
                 },
+                cms_helpdesk: {
+                    username: `${process.env.TEST_CMS_HELPDESK_USERS}`,
+                    password: `${process.env.TEST_CMS_HELPDESK_USER_PASSWORD}`,
+                },
 
                 submitter_pending:{
                     username: "statesubmitterpending@cms.hhs.local",

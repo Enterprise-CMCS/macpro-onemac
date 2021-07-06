@@ -26,6 +26,9 @@ module.exports= {
     "Login with cms_system_admin": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.cms_system_admin);
     },
+    "Login with cms_helpdesk_users": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_helpdesk);
+    },
 
     "Login with state submitter pending user": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.submitter_pending);
