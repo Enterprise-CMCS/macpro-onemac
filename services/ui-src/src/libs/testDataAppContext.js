@@ -37,7 +37,6 @@ export const stateSubmitterInitialAuthState = {
       type: "statesubmitter",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -84,14 +83,7 @@ export const statesubmitterRevokedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "statesubmitter",
-      validRoutes: [
-        "/",
-        "/componentpage",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -123,14 +115,7 @@ export const statesubmitterDeniedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "statesubmitter",
-      validRoutes: [
-        "/",
-        "/componentpage",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -162,14 +147,7 @@ export const stateAdminRevokedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "stateadmin",
-      validRoutes: [
-        "/",
-        "/componentpage",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -201,14 +179,7 @@ export const stateAdminDeniedInitialAuthState = {
       ],
       id: "statesubmitteractive@cms.hhs.local",
       type: "stateadmin",
-      validRoutes: [
-        "/",
-        "/componentpage",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -239,7 +210,6 @@ export const cmsApproverDeniedInitialAuthState = {
       type: "cmsapprover",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -276,7 +246,6 @@ export const cmsApproverRevokedInitialAuthState = {
       type: "cmsapprover",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",
@@ -310,14 +279,7 @@ export const helpDeskDeniedInitialAuthState = {
       firstName: "Rhonda",
       lastName: "Revoked",
       type: "helpdesk",
-      validRoutes: [
-        "/",
-        "/componentpage",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-      ],
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
 };
@@ -346,13 +308,63 @@ export const helpDeskRevokedInitialAuthState = {
       firstName: "Rhonda",
       lastName: "Denied",
       type: "helpdesk",
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
+    },
+  },
+};
+
+export const cmsUserNoAuthState = {
+  isAuthenticating: true,
+  isAuthenticated: false,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-cms-user",
+    email: "cmsapproverunregistered@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [],
+      id: "cmsapproverunregistered@cms.hhs.local",
       validRoutes: [
         "/",
-        "/componentpage",
+        "/profile",
+        "/devlogin",
+        "/FAQ",
+        "/usermanagement",
+        "/metrics",
+        "/signup",
+        "/signup/cmsreviewer",
+      ],
+    },
+  },
+};
+
+export const stateUserNoAuthState = {
+  isAuthenticating: true,
+  isAuthenticated: false,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "stateuserunregistered@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      firstName: "Unita",
+      lastName: "Goodcode",
+      attributes: [],
+      id: "stateuserunregistered@cms.hhs.local",
+      validRoutes: [
+        "/",
         "/profile",
         "/devlogin",
         "/FAQ",
         "/dashboard",
+        "/signup",
+        "/signup/state",
       ],
     },
   },

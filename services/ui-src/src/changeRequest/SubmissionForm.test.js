@@ -59,7 +59,6 @@ const initialAuthState = {
       type: "statesubmitter",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",

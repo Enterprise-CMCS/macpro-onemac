@@ -19,7 +19,6 @@ module.exports = {
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
         // State Admin User does not see dashboard let dashboard_link = "//a[@id='dashboardLink']";
-        let component_page_link = "(//a[@class='ds-u-text-decoration--none'])[3]";
         let submission_list_title = "//h1";
         let puzzle_piece_image = "//div[@class='empty-list']/img";
         let pending_message = "//div[@class='empty-list']/h4";
@@ -29,7 +28,6 @@ module.exports = {
         browser.useXpath().expect.element(home_link).to.be.visible;
         browser.useXpath().expect.element(faq_link).to.be.visible;
         // no Dashboard for admin users browser.useXpath().expect.element(dashboard_link).to.be.visible;
-        browser.useXpath().expect.element(component_page_link).to.be.visible;
         browser.useXpath().expect.element(submission_list_title).to.be.visible;
         browser.useXpath().expect.element(puzzle_piece_image).to.be.visible;
         browser.useXpath().expect.element(pending_message).to.be.visible;
