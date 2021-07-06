@@ -66,3 +66,37 @@ it("lets you submit your changes", () => {
   // check that submit handler was called
   expect(onSubmitFn).toBeCalledWith(replacement);
 });
+
+it("displays the Add button when a user has no initial phone number", () => {
+  // no initialValue is passed in as component props
+  render(<PhoneNumber />);
+  expect(screen.getByText("Add", { selector: "button" }));
+});
+
+it("displays the Add button when a user removes their existing phone number", () => {
+  const initial = "303-909-8080",
+    replacement = "",
+    onSubmitFn = jest.fn();
+
+  render(<PhoneNumber initialValue={initial} onSubmit={onSubmitFn} />);
+
+  // remove the phone number
+  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
+  fireEvent.change(screen.getByLabelText("Phone Number"), {
+    target: { value: replacement },
+  });
+  fireEvent.click(screen.getByText("Apply", { selector: "button" }));
+
+  // check for the Add button
+  expect(screen.getByText("Add", { selector: "button" }));
+});
+
+it("displays opens the edit mode with Apply and Cancel buttons after clicking the Add button", () => {
+  render(<PhoneNumber />);
+
+  fireEvent.click(screen.getByText("Add", { selector: "button" }));
+
+  // checks for Apply and Cancel buttons
+  expect(screen.getByText("Apply", { selector: "button" }));
+  expect(screen.getByText("Cancel", { selector: "button" }));
+});
