@@ -239,7 +239,7 @@ const UserPage = () => {
 
     return (
       <div className="ds-l-col--6">
-        <h2>{heading}</h2>
+        <h2 id="accessHeader">{heading}</h2>
         <dl>
           {accesses.map(({ state, status, contacts }) => (
             <div className="access-card-container" key={state ?? "only-one"}>
@@ -333,7 +333,9 @@ const UserPage = () => {
       <div className="profile-container">
         <div className="ds-l-row">
           <div className="ds-l-col--6">
-            <h2>Profile Information</h2>
+            <h2 id="profileInfoHeader" className="profileTest">
+              Profile Information
+            </h2>
             <Review heading="Full Name">
               {getFullName(firstName, lastName)}
             </Review>
@@ -348,7 +350,7 @@ const UserPage = () => {
           </div>
           {accessSection}
         </div>
-        <div className="disclaimer-message">
+        <div id="profileDisclaimer" className="disclaimer-message">
           This page contains Profile Information for the{" "}
           {userTypeDisplayText ?? userType}. The information cannot be changed
           in the portal. However, the {userTypeDisplayText ?? userType} can

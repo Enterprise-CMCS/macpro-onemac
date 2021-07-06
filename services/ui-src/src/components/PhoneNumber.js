@@ -20,7 +20,7 @@ const editReducer = (state, action) => {
   }
 };
 
-export const PhoneNumber = ({ initialValue, onSubmit }) => {
+export const PhoneNumber = ({ initialValue, onSubmit, id }) => {
   const [{ isEditing, value }, dispatch] = useReducer(editReducer, {
     isEditing: false,
     value: initialValue ?? "",
@@ -31,9 +31,11 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
     dispatch(SUBMIT);
   }, [onSubmit, value]);
 
+  const formId = id || "phoneSection";
+
   if (isEditing) {
     return (
-      <form className="phone-number-edit-form">
+      <form id={formId} className="phone-number-edit-form">
         <TextField
           className="phone-text-field"
           id="phoneNumber"
@@ -65,7 +67,7 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
   } else {
     if (!value) {
       return (
-        <form className="phone-number-empty-form">
+        <form id={formId} className="phone-number-empty-form">
           <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
           <Button
             className="phone-add-button"
@@ -81,7 +83,7 @@ export const PhoneNumber = ({ initialValue, onSubmit }) => {
       );
     } else {
       return (
-        <form className="phone-number-view-form">
+        <form id={formId} className="phone-number-view-form">
           <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
           <span className="phone-text">{value.trim()}</span>
           <Button
