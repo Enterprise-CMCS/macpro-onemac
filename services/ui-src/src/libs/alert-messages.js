@@ -130,6 +130,11 @@ export const ALERTS_MSG = {
     heading: "System Submission Error",
     text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
   },
+  SESSION_EXPIRED: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Session Expiry Error",
+    text: `Your session time has expired. Please log back in to access OneMAC.`,
+  },
   USER_STATUS_GRANTED: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",

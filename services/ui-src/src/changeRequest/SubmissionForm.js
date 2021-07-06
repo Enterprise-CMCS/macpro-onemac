@@ -337,6 +337,11 @@ export const SubmissionForm = ({ changeRequestType }) => {
         .catch((err) => {
           console.log("error is: ", err);
           setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+          if (err.message === "SESSION_EXPIRED") {
+            setAlertCode(RESPONSE_CODE.SESSION_EXPIRED);
+          } else {
+            setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+          }
         })
         .finally(() => {
           limitSubmit.current = false;

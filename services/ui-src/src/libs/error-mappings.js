@@ -60,6 +60,10 @@ export const getAlert = (errorCode) => {
     case "SY000":
       returnAlert = ALERTS_MSG.CONTACT_HELP_DESK;
       break;
+    // app-api/response-codes.js    SESSION_EXPIRED: "SY001",
+    case "SY001":
+      returnAlert = ALERTS_MSG.SESSION_EXPIRED;
+      break;
     // app-api/response-codes.js    TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
     case "ID001":
       returnAlert = ALERTS_MSG.SUBMISSION_TERRITORY_ERROR;

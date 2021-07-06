@@ -104,7 +104,11 @@ const UserPage = () => {
         setAlertCode(result);
       } catch (e) {
         console.error("Error updating phone number", e);
-        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+        if (e.message === "SESSION_EXPIRED") {
+          setAlertCode(RESPONSE_CODE.SESSION_EXPIRED);
+        } else {
+          setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+        }
       }
     },
     [email]
