@@ -58,8 +58,8 @@ module.exports = {
                     password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
                 },
                 cms_helpdesk: {
-                    username: `${process.env.TEST_CMS_HELPDESK_USERS}`,
-                    password: `${process.env.TEST_CMS_HELPDESK_USER_PASSWORD}`,
+                    username: "helpdesk@nightwatch.test",
+                    password: "Passw0rd!",
                 },
 
                 submitter_pending:{
