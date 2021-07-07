@@ -80,8 +80,8 @@ export const GroupAndDivision = () => {
       <PageTitleBar heading="Registration: CMS Reviewer Access" />
       <form
         className="group-division-selection"
+        name="group and division selection"
         onSubmit={onSubmit}
-        role="form"
       >
         <h2>Select your Group</h2>
         <FormLabel fieldId="group-select">Group</FormLabel>
