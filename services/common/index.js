@@ -85,7 +85,7 @@ export const roleLabels = {
   stateadmin: "State Admin",
   cmsapprover: "CMS Approver",
   [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
-  systemadin: "CMS System Admin",
+  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
   helpdesk: "Help Desk",
 };
 
