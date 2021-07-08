@@ -1,35 +1,30 @@
-import React, { useCallback, useReducer } from "react";
+import React, { useCallback, useState } from "react";
 import { Button, FormLabel, TextField } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
-const EDIT = Symbol("edit"),
-  CANCEL = Symbol("cancel"),
-  SUBMIT = Symbol("submit");
-
-const editReducer = (state, action) => {
-  switch (action) {
-    case EDIT:
-      return { ...state, isEditing: true, cachedValue: state.value };
-    case CANCEL:
-      return { ...state, isEditing: false, value: state.cachedValue };
-    case SUBMIT:
-      return { ...state, isEditing: false, cachedValue: state.value };
-    default:
-      return { ...state, value: action };
-  }
-};
-
-export const PhoneNumber = ({ initialValue, onSubmit, id }) => {
-  const [{ isEditing, value }, dispatch] = useReducer(editReducer, {
-    isEditing: false,
-    value: initialValue ?? "",
-  });
+export const PhoneNumber = ({
+  id,
+  isEditing,
+  onCancel,
+  onEdit,
+  onSubmit,
+  phoneNumber,
+}) => {
+  const [value, setValue] = useState(phoneNumber);
 
   const onSubmitFn = useCallback(() => {
     onSubmit(value);
-    dispatch(SUBMIT);
   }, [onSubmit, value]);
+
+  const onEditFn = useCallback(() => {
+    onEdit();
+  }, [onEdit, value]);
+
+  const onCancelFn = useCallback(() => {
+    onCancel();
+    setValue(phoneNumber); // resets value displayed in TextField back to the original value
+  }, [onCancel]);
 
   const formId = id || "phoneSection";
 
@@ -41,7 +36,7 @@ export const PhoneNumber = ({ initialValue, onSubmit, id }) => {
           id="phoneNumber"
           label="Phone Number"
           name="phoneTextField"
-          onChange={({ target: { value } }) => dispatch(value)}
+          onChange={({ target: { value } }) => setValue(value)}
           onFocus={(e) => e.currentTarget.select()}
           value={value}
         />
@@ -56,7 +51,7 @@ export const PhoneNumber = ({ initialValue, onSubmit, id }) => {
         </Button>
         <Button
           id="cancelButton"
-          onClick={() => dispatch(CANCEL)}
+          onClick={() => onCancelFn()}
           type="button"
           variation="transparent"
         >
@@ -72,7 +67,7 @@ export const PhoneNumber = ({ initialValue, onSubmit, id }) => {
           <Button
             className="phone-add-button"
             id="addButton"
-            onClick={() => dispatch(EDIT)}
+            onClick={() => onEditFn()}
             variation="primary"
             type="button"
           >
@@ -85,11 +80,11 @@ export const PhoneNumber = ({ initialValue, onSubmit, id }) => {
       return (
         <form id={formId} className="phone-number-view-form">
           <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
-          <span className="phone-text">{value.trim()}</span>
+          <span className="phone-text">{phoneNumber.trim()}</span>
           <Button
             className="phone-edit-button"
             id="editButton"
-            onClick={() => dispatch(EDIT)}
+            onClick={() => onEditFn()}
             type="button"
           >
             Edit&nbsp;&nbsp;

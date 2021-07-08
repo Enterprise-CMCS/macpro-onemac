@@ -93,21 +93,34 @@ const UserPage = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState(userData?.phoneNumber || "");
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
 
   let userType = userData?.type ?? "user";
   const userTypeDisplayText = userTypes[userType];
 
-  const onPhoneNumberEdit = useCallback(
+  const onPhoneNumberCancel = useCallback(() => {
+    setIsEditingPhone(false);
+  }, [setIsEditingPhone]);
+
+  const onPhoneNumberEdit = useCallback(() => {
+    setIsStateSelectorVisible(false); // closes out state selector if we're editing the phone section
+    setIsEditingPhone(true);
+  }, [setIsStateSelectorVisible, setIsEditingPhone]);
+
+  const onPhoneNumberSubmit = useCallback(
     async (newNumber) => {
       try {
         const result = await UserDataApi.updatePhoneNumber(email, newNumber);
         setAlertCode(result);
+        setPhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
       }
+      setIsEditingPhone(false);
     },
-    [email]
+    [email, setPhoneNumber]
   );
 
   const signupUser = useCallback(
@@ -213,12 +226,15 @@ const UserPage = () => {
     return (
       <Button
         className="add-state-button"
-        onClick={() => setIsStateSelectorVisible(true)}
+        onClick={() => {
+          setIsEditingPhone(false); // closes out the phone edit mode if we want to modify state access through state selector
+          setIsStateSelectorVisible(true);
+        }}
       >
         <img src={addStateButton} alt="add state or territiory" />
       </Button>
     );
-  }, [setIsStateSelectorVisible]);
+  }, [setIsEditingPhone, setIsStateSelectorVisible]);
 
   const accessSection = useMemo(() => {
     let heading;
@@ -344,8 +360,12 @@ const UserPage = () => {
             </Review>
             <Review heading="Email">{email}</Review>
             <PhoneNumber
+              isEditing={isEditingPhone}
               initialValue={userData.phoneNumber}
-              onSubmit={onPhoneNumberEdit}
+              phoneNumber={phoneNumber}
+              onCancel={onPhoneNumberCancel}
+              onEdit={onPhoneNumberEdit}
+              onSubmit={onPhoneNumberSubmit}
             />
           </div>
           {accessSection}
