@@ -76,15 +76,17 @@ module.exports = {
         browser
         .useCss()
         .waitForElementPresent("[value='Submit']", 1000)
-        .click("[value='Submit']").pause(5000);
+        .click("[value='Submit']").pause(8000);
         
+        browser.refresh();
+        browser.pause(5000);
         browser.refresh();
 
         // Verify the SPA on Submission List 
         // browser.useXpath().click("//a[@id='new-submission-button']");
         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
         // browser.refresh();
-        browser.useXpath().verify.containsText('(//table[@class="submissions-table"]/tbody/tr/td/a)[1]', spaID);
+        browser.useXpath().verify.containsText('(//td[@role="cell"])[1]', spaID).pause(5000);
         browser.useCss();
         // return spaID;
         generatedSPAID = spaID;
@@ -100,9 +102,9 @@ module.exports = {
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // SPA ID Verification
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.pause(3000);
+        browser.pause(5000);
         browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
-        browser.pause(2000);
+        browser.pause(3000);
         // Submitted Type Verification
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.pause(1000);
