@@ -100,7 +100,9 @@ module.exports = {
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // SPA ID Verification
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.pause(3000);
         browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+        browser.pause(2000);
         // Submitted Type Verification
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.pause(1000);
