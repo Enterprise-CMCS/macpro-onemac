@@ -136,6 +136,6 @@ class UserDataApi {
 }
 
 const instance = new UserDataApi();
-Object.freeze(instance);
+if (process.env.NODE_ENV !== "test") Object.freeze(instance);
 
 export default instance;
