@@ -371,6 +371,7 @@ input[type="file"] {
   .phone-text {
     font-size: 2rem;
     color: $color-gray;
+    margin-right: 1rem;
   }
 }
 
@@ -1354,7 +1355,7 @@ input[type="file"] {
 }
 .faq-left-column {
   @media only screen and (min-width: 1200px) {
-    width: calc(100% - 300px);
+    width: calc(100% - 400px);
   }
   .faq-misc-points {
     width: 606px;
