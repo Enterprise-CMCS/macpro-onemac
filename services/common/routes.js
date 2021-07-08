@@ -18,6 +18,7 @@ export const ROUTES = {
   DEVLOGIN: "/devlogin",
   SIGNUP: "/signup",
   STATE_SIGNUP: "/signup/state",
+  REVIEWER_SIGNUP: "/signup/cmsreviewer",
   NEW_SPA: "/newspa",
   SPA: "/spa",
   SPA_RAI: "/sparai",

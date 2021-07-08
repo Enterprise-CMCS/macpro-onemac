@@ -1,0 +1,92 @@
+[
+  {
+    "id": 0,
+    "name": "DEHPG",
+    "divisions": [
+      { "id": 9, "name": "DMCP" },
+      { "id": 10, "name": "DHPC" },
+      { "id": 11, "name": "DBC" },
+      { "id": 12, "name": "DLTSS" },
+      { "id": 13, "name": "DCST" },
+      { "id": 14, "name": "DP" },
+      { "id": 15, "name": "DEHPG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 1,
+    "name": "CAHPG",
+    "divisions": [
+      { "id": 16, "name": "DSCP" },
+      { "id": 17, "name": "DQHO" },
+      { "id": 18, "name": "DMEP" },
+      { "id": 19, "name": "DEPO" },
+      { "id": 20, "name": "DTA" },
+      { "id": 21, "name": "CAHPG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 2,
+    "name": "OACT",
+    "divisions": [{ "id": 22, "name": "OACT - Office of Group Director" }]
+  },
+  {
+    "id": 3,
+    "name": "FMG",
+    "divisions": [
+      { "id": 23, "name": "DRR" },
+      { "id": 24, "name": "DRP" },
+      { "id": 25, "name": "DFOE" },
+      { "id": 26, "name": "DFOW" },
+      { "id": 27, "name": "DFP" },
+      { "id": 28, "name": "FMG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 4,
+    "name": "DSG",
+    "divisions": [
+      { "id": 29, "name": "DSS" },
+      { "id": 30, "name": "DIS" },
+      { "id": 31, "name": "DBES" },
+      { "id": 32, "name": "DBDA" },
+      { "id": 33, "name": "DHM" },
+      { "id": 34, "name": "DSG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 5,
+    "name": "OSG",
+    "divisions": [
+      { "id": 35, "name": "DBA" },
+      { "id": 36, "name": "DOES" },
+      { "id": 37, "name": "DHC" },
+      { "id": 38, "name": "DCO" },
+      { "id": 39, "name": "OSG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 6,
+    "name": "SDG",
+    "divisions": [
+      { "id": 40, "name": "DECD" },
+      { "id": 41, "name": "DSRD" },
+      { "id": 42, "name": "DDME" },
+      { "id": 43, "name": "SDG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 7,
+    "name": "MCOG",
+    "divisions": [
+      { "id": 44, "name": "DPO" },
+      { "id": 45, "name": "DMCO" },
+      { "id": 46, "name": "DHCBSO" },
+      { "id": 47, "name": "MCOG - Office of Group Director" }
+    ]
+  },
+  {
+    "id": 8,
+    "name": "OCD",
+    "divisions": [{ "id": 48, "name": "OCD - Office of Group Director" }]
+  }
+]

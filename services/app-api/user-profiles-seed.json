@@ -70,6 +70,70 @@
   },
 
   {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "active"
+      }
+    ],
+    "firstName": "Amanda",
+    "lastName": "Active",
+    "group": 0,
+    "division": 12,
+    "id": "cmsrevieweractive@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "denied"
+      }
+    ],
+    "firstName": "Donny",
+    "lastName": "Denied",
+    "group": 3,
+    "division": 23,
+    "id": "cmsreviewerdenied@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "pending"
+      }
+    ],
+    "firstName": "Pamela",
+    "lastName": "Pending",
+    "group": 2,
+    "division": 22,
+    "id": "cmsreviewerpending@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
+    "attributes": [
+      {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "revoked"
+      }
+    ],
+    "firstName": "Ronald",
+    "lastName": "Revoked",
+    "group": 7,
+    "division": 46,
+    "id": "cmsreviewerrevoked@cms.hhs.local",
+    "type": "cmsreviewer"
+  },
+
+  {
     "id": "sabrina.mccrae@cms.hhs.gov",
     "firstName": "Sabrina",
     "lastName": "McCrae",
@@ -444,6 +508,8 @@
     ],
     "firstName": "CMSReviewer",
     "lastName": "Nightwatch",
+    "group": 6,
+    "division": 40,
     "id": "cmsreviewer@nightwatch.test",
     "type": "cmsreviewer"
   },

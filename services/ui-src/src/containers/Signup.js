@@ -57,14 +57,10 @@ function StateUserSignup() {
   );
 }
 function HelpdeskSignup() {
-  const [dummy, onLoadHelpdesk] = useSignupCallback(
-    "helpdesk",
-    createAttribute
-  );
+  const [, onLoadHelpdesk] = useSignupCallback("helpdesk", createAttribute);
   useEffect(() => {
     if (onLoadHelpdesk) onLoadHelpdesk();
   }, [onLoadHelpdesk]);
-  console.log("Dummy is: ", dummy);
   return null;
 }
 
