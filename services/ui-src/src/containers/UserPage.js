@@ -22,6 +22,7 @@ import { PhoneNumber } from "../components/PhoneNumber";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
+import groupData from "cmscommonlib/groupDivision.json";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -37,6 +38,18 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.HELPDESK]: "CMS System Admin",
   [ROLES.CMS_REVIEWER]: "CMS Reviewer",
 };
+
+function getUserGroup(groupId, currentGroup, currentDivision) {
+  const search = (id) =>
+      groupData.find((element) => element.id === currentGroup);
+  const divisions = search(currentGroup).divisions;
+  const searchDivision = (id) =>
+      divisions.find((element) => element.id === currentDivision);
+  return {
+    group: search(currentGroup).name,
+    division: searchDivision(currentDivision).name,
+  };
+}
 
 const ContactList = ({ contacts, userType }) => {
   let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
@@ -231,6 +244,9 @@ const UserPage = () => {
       case ROLES.STATE_ADMIN:
         heading = "State Access Management";
         break;
+      case ROLES.CMS_REVIEWER:
+        heading = "Group & Division";
+        break;
       case ROLES.CMS_APPROVER:
       case ROLES.HELPDESK:
         heading = "Status";
@@ -261,6 +277,27 @@ const UserPage = () => {
                 <br />
                 <br />
                 <ContactList contacts={contacts} userType={userType} />
+                {userType === ROLES.CMS_REVIEWER && (
+                    <div key={userData.group ?? "only-one"}>
+                      <Review heading="Group">
+                        {
+                          getUserGroup(
+                              groupData.group,
+                              userData.group,
+                              userData.division
+                          ).group
+                        }
+                      </Review>
+                      <Review heading="Division">
+                        {
+                          getUserGroup(
+                              groupData.group,
+                              userData.group,
+                              userData.division
+                          ).division
+                        }
+                      </Review>
+                    </div>)}
               </dd>
             </div>
           ))}
