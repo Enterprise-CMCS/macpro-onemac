@@ -51,11 +51,11 @@ module.exports = {
 
                 cms_approvers: {
                     username: "cmsapprover@nightwatch.test",
-                    password: `${process.env.TEST_CMS_APPROVER_USER_PASSWORD}`,
+                    password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
                 cms_system_admin: {
                     username: "systemadmin@nightwatch.test",
-                    password: `${process.env.TEST_CMS_SYSTEM_ADMIN_USER_PASSWORD}`,
+                    password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
                 cms_helpdesk: {
                     username: "helpdesk@nightwatch.test",
