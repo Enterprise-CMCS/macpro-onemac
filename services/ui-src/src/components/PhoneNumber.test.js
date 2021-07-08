@@ -3,100 +3,111 @@ import { render, fireEvent, screen } from "@testing-library/react";
 
 import { PhoneNumber } from "./PhoneNumber";
 
-it("lets you change the phone number", async () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309";
-
-  render(<PhoneNumber initialValue={initial} />);
-
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-
-  // find the input, which should be visible and enabled
-  const phoneInputEl = screen.getByLabelText("Phone Number");
-  expect(phoneInputEl).toBeInTheDocument();
-  expect(phoneInputEl).not.toBeDisabled();
-
-  // change the value
-  fireEvent.change(phoneInputEl, { target: { value: replacement } });
-
-  // the component should allow that change and update the input element
-  expect(phoneInputEl).toHaveValue(replacement);
-});
-
-it("lets you cancel your changes to the phone number", () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309";
-
-  render(<PhoneNumber initialValue={initial} />);
-
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  // change the value in the input
-  fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
-  });
-  // click Cancel button to revert changes
-  fireEvent.click(screen.getByText("Cancel", { selector: "button" }));
-
-  // input is no longer there
-  expect(screen.queryByLabelText("Phone Number")).toBeNull();
-  // the initial value remains on the screen
-  expect(screen.getByText(initial));
-  // the replacement value is not displayed on the screen
-  expect(screen.queryByText(replacement)).toBeNull();
-});
-
-it("lets you submit your changes", () => {
-  const initial = "303-909-8080",
-    replacement = "202-867-5309",
+it("displays a text box with Apply and Cancel buttons in edit mode", () => {
+  const phone = "303-909-8080",
+    newPhone = "202-867-5309",
+    onCancelFn = jest.fn(),
     onSubmitFn = jest.fn();
 
-  render(<PhoneNumber initialValue={initial} onSubmit={onSubmitFn} />);
+  render(
+    <PhoneNumber
+      isEditing={true}
+      phoneNumber={phone}
+      onCancel={onCancelFn}
+      onSubmit={onSubmitFn}
+    />
+  );
 
-  // click Edit button to start editing
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  // change the value in the input
+  // shows text box exists and can be typed in to display new text
   fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
+    target: { value: newPhone },
   });
-  // click Apply button to persist changes
-  fireEvent.click(screen.getByText("Apply", { selector: "button" }));
-
-  // check that submit handler was called
-  expect(onSubmitFn).toBeCalledWith(replacement);
-});
-
-it("displays the Add button when a user has no initial phone number", () => {
-  // no initialValue is passed in as component props
-  render(<PhoneNumber />);
-  expect(screen.getByText("Add", { selector: "button" }));
-});
-
-it("displays the Add button when a user removes their existing phone number", () => {
-  const initial = "303-909-8080",
-    replacement = "",
-    onSubmitFn = jest.fn();
-
-  render(<PhoneNumber initialValue={initial} onSubmit={onSubmitFn} />);
-
-  // remove the phone number
-  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
-  fireEvent.change(screen.getByLabelText("Phone Number"), {
-    target: { value: replacement },
-  });
-  fireEvent.click(screen.getByText("Apply", { selector: "button" }));
-
-  // check for the Add button
-  expect(screen.getByText("Add", { selector: "button" }));
-});
-
-it("displays opens the edit mode with Apply and Cancel buttons after clicking the Add button", () => {
-  render(<PhoneNumber />);
-
-  fireEvent.click(screen.getByText("Add", { selector: "button" }));
+  expect(screen.getByDisplayValue(newPhone)).toBeVisible();
 
   // checks for Apply and Cancel buttons
-  expect(screen.getByText("Apply", { selector: "button" }));
-  expect(screen.getByText("Cancel", { selector: "button" }));
+  expect(screen.getByText("Apply", { selector: "button" })).toBeVisible();
+  expect(screen.getByText("Cancel", { selector: "button" })).toBeVisible();
+});
+
+it("displays the phone number with an edit button when a user has an existing number", () => {
+  const phone = "303-909-8080";
+
+  render(<PhoneNumber isEditing={false} phoneNumber={phone} />);
+
+  // checks for phone number displaying on screen
+  screen.getByText(phone);
+
+  // checks for Edit button
+  expect(screen.getByText("Edit", { selector: "button" })).toBeVisible();
+});
+
+it("displays an add button when there is NO existing number", () => {
+  const emptyPhone = "";
+
+  render(<PhoneNumber isEditing={false} phoneNumber={emptyPhone} />);
+
+  // checks for Add button
+  expect(screen.getByText("Add", { selector: "button" })).toBeVisible();
+});
+
+it("calls the onCancelFn function when the cancel button is clicked in edit mode", () => {
+  const phone = "303-909-8080",
+    onCancelFn = jest.fn(),
+    onSubmitFn = jest.fn();
+
+  render(
+    <PhoneNumber
+      isEditing={true}
+      phoneNumber={phone}
+      onCancel={onCancelFn}
+      onSubmit={onSubmitFn}
+    />
+  );
+
+  fireEvent.click(screen.getByText("Cancel", { selector: "button" }));
+  expect(onCancelFn).toBeCalled();
+  expect(onSubmitFn).not.toBeCalled();
+});
+
+it("calls the onSubmitFn function when the Apply button is clicked in edit mode", () => {
+  const phone = "303-909-8080",
+    onCancelFn = jest.fn(),
+    onSubmitFn = jest.fn();
+
+  render(
+    <PhoneNumber
+      isEditing={true}
+      phoneNumber={phone}
+      onCancel={onCancelFn}
+      onSubmit={onSubmitFn}
+    />
+  );
+
+  fireEvent.click(screen.getByText("Apply", { selector: "button" }));
+  expect(onSubmitFn).toBeCalled();
+  expect(onCancelFn).not.toBeCalled();
+});
+
+it("calls the onEditFn function when the Edit button is clicked (when the user has an existing phone number)", () => {
+  const phone = "303-909-8080",
+    onEditFn = jest.fn();
+
+  render(
+    <PhoneNumber isEditing={false} phoneNumber={phone} onEdit={onEditFn} />
+  );
+
+  fireEvent.click(screen.getByText("Edit", { selector: "button" }));
+  expect(onEditFn).toBeCalled();
+});
+
+it("calls the onEditFn function when the Add button is clicked (when the user has NO existing phone number)", () => {
+  const phone = "",
+    onEditFn = jest.fn();
+
+  render(
+    <PhoneNumber isEditing={false} phoneNumber={phone} onEdit={onEditFn} />
+  );
+
+  fireEvent.click(screen.getByText("Add", { selector: "button" }));
+  expect(onEditFn).toBeCalled();
 });
