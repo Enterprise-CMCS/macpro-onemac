@@ -44,6 +44,7 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
   HELPDESK_USER_SUBMITTED: "HU000",
+  CMS_REVIEWER_USER_SUBMITTED: "CU000",
 };
 
 export const USER_ADMIN_PERMISSION = {
@@ -83,7 +84,8 @@ export const roleLabels = {
   statesubmitter: "State Submitter",
   stateadmin: "State Admin",
   cmsapprover: "CMS Approver",
-  systemadin: "CMS System Admin",
+  [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
+  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
   helpdesk: "Help Desk",
 };
 
@@ -149,6 +151,7 @@ class CmsReviewer extends Role {
     this.canAccessDashboard = true;
   }
 }
+
 class CmsApprover extends Role {
   constructor() {
     super();
