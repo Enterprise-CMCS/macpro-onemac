@@ -79,6 +79,8 @@
     ],
     "firstName": "Amanda",
     "lastName": "Active",
+    "group": 0,
+    "division": 12,
     "id": "cmsrevieweractive@cms.hhs.local",
     "type": "cmsreviewer"
   },
@@ -93,6 +95,8 @@
     ],
     "firstName": "Donny",
     "lastName": "Denied",
+    "group": 3,
+    "division": 23,
     "id": "cmsreviewerdenied@cms.hhs.local",
     "type": "cmsreviewer"
   },
@@ -107,6 +111,8 @@
     ],
     "firstName": "Pamela",
     "lastName": "Pending",
+    "group": 2,
+    "division": 22,
     "id": "cmsreviewerpending@cms.hhs.local",
     "type": "cmsreviewer"
   },
@@ -121,6 +127,8 @@
     ],
     "firstName": "Ronald",
     "lastName": "Revoked",
+    "group": 7,
+    "division": 46,
     "id": "cmsreviewerrevoked@cms.hhs.local",
     "type": "cmsreviewer"
   },
@@ -500,6 +508,8 @@
     ],
     "firstName": "CMSReviewer",
     "lastName": "Nightwatch",
+    "group": 6,
+    "division": 40,
     "id": "cmsreviewer@nightwatch.test",
     "type": "cmsreviewer"
   },
