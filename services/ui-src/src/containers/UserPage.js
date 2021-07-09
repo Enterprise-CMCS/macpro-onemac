@@ -271,36 +271,6 @@ const UserPage = () => {
         // CMS System Admins do not see this section at all
         return null;
     }
-
-
-    /*
-{userType === ROLES.CMS_REVIEWER && (<div>
-  <ul className="choice-list">
-    <li>
-      <Review heading="Group">
-        {
-          getUserGroup(
-              groupData.group,
-              userData.group,
-              userData.division
-          ).group
-        }
-      </Review>
-    </li>
-    <li>
-      <Review heading="Division">
-        {
-          getUserGroup(
-              groupData.group,
-              userData.group,
-              userData.division
-          ).division
-        }
-      </Review>
-    </li>
-  </ul>
-</div>)}
-*/
     if ( userType === ROLES.CMS_REVIEWER ) {
       return (
           <div className="ds-l-col--6">
@@ -315,26 +285,32 @@ const UserPage = () => {
                               <p className="indent-32">
                               <h3 className="ds-c-review__heading">Group</h3>
                               <br/>
-                              <br/>
+                                <div className="ds-c-review__body">
                               {
                                 getUserGroup(
                                     groupData.group,
                                     userData.group,
                                     userData.division
                                 ).group
-                              }</p>
+                              }
+                                </div>
+                                </p>
                             </div>
                             <div className="bg-lite-gray">
                               <p className="indent-32">
                               <h3 className="ds-c-review__heading">Division</h3>
                               <br/>
+                              <div className="ds-c-review__body">
                               {
                                 getUserGroup(
                                     groupData.group,
                                     userData.group,
                                     userData.division
                                 ).division
-                              }</p>
+
+                              }
+                              </div>
+                              </p>
                             </div>
                     </div>
                   </div>
