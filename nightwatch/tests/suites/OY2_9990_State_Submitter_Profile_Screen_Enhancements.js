@@ -14,7 +14,7 @@ module.exports = {
     },
 
     
-    'State Submitter User can view Submission List Dashboard, FAQ, About, Account Management, SubmissionSelection': function (browser) {
+    'State Submitter User Profile Screen Enhancements': function (browser) {
         //check on Submission List on the homepage
         let submission_list = "//h1";
         let spa_waiver_number = "(//table[@class='submissions-table']/thead/tr/th)[1]";

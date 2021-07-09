@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state admin user'](browser);
+        login['Login with cms_approvers'](browser);
     },
 
     after: function (browser) {
@@ -14,15 +14,16 @@ module.exports = {
     },
 
     
-    'State System Admin User Profile Screen Enhancements': function (browser) {
+    'CMS Approver User Profile Screen Enhancements': function (browser) {
         //check on Submission List on the homepage
         let user_management_title = "//h1";
         let name_title = "(//tr[@role='row']/th)[1]";
         let email_title = "(//tr[@role='row']/th)[2]"
         let state_title = "(//tr[@role='row']/th)[3]";
-        let last_modified_title = "(//tr[@role='row']/th)[4]";
-        let modified_by_title = "(//tr[@role='row']/th)[5]";
-        let personnel_actions_title = "(//tr[@role='row']/th)[6]";
+        let status_title = "(//tr[@role='row']/th)[4]";
+        let last_modified_title = "(//tr[@role='row']/th)[5]";
+        let modified_by_title = "(//tr[@role='row']/th)[6]";
+        let personnel_actions_title = "(//tr[@role='row']/th)[7]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
         let user_management_link = "//a[@id='userManagementLink']";
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
@@ -56,8 +57,8 @@ module.exports = {
         let phone_number_title = "(//h3)[4]";
         let phone_number = "(//div[@class='ds-c-review__body'])[3]";
         let edit_button = "//button[@class='ds-c-button phone-edit-button']";
-        let state_access_management = "(//h3)[5]";
-        let state_name_one = "//div[@class='state-access-card']/dt";
+        //let state_access_management = "(//h3)[5]";
+        //let state_name_one = "//div[@class='state-access-card']/dt";
         let access_granted_status = "//div[@class='state-access-card']/dd/em";
         let state_admins = "//div[@class='state-access-card']/dd/p";
         //let close_button = "//button[@class='close-button']";
@@ -72,8 +73,8 @@ module.exports = {
         browser.useXpath().expect.element(phone_number_title).to.be.visible;
         browser.useXpath().expect.element(phone_number).to.be.visible;
         browser.useXpath().expect.element(edit_button).to.be.visible;
-        browser.useXpath().expect.element(state_access_management).to.be.visible;
-        browser.useXpath().expect.element(state_name_one).to.be.visible;
+        //browser.useXpath().expect.element(state_access_management).to.be.visible;
+        //browser.useXpath().expect.element(state_name_one).to.be.visible;
         browser.useXpath().expect.element(access_granted_status).to.be.visible;
         browser.useXpath().expect.element(state_admins).to.be.visible;
         //browser.useXpath().expect.element(close_button).to.be.visible;

@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state admin user'](browser);
+        login['Login with cms_helpdesk_users'](browser);
     },
 
     after: function (browser) {
@@ -14,30 +14,31 @@ module.exports = {
     },
 
     
-    'State System Admin User Profile Screen Enhancements': function (browser) {
+    'CMS Helpdesk User Profile Screen Enhancements': function (browser) {
         //check on Submission List on the homepage
-        let user_management_title = "//h1";
-        let name_title = "(//tr[@role='row']/th)[1]";
-        let email_title = "(//tr[@role='row']/th)[2]"
+        let submission_list_title = "//h1";
+        let spa_id_waiver_number = "(//tr[@role='row']/th)[1]";
+        let type_title = "(//tr[@role='row']/th)[2]"
         let state_title = "(//tr[@role='row']/th)[3]";
-        let last_modified_title = "(//tr[@role='row']/th)[4]";
-        let modified_by_title = "(//tr[@role='row']/th)[5]";
-        let personnel_actions_title = "(//tr[@role='row']/th)[6]";
-        let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
-        let user_management_link = "//a[@id='userManagementLink']";
+        let date_submitted_title = "(//tr[@role='row']/th)[4]";
+        let state_submitter_title = "(//tr[@role='row']/th)[5]";
+        
+        let user_management_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
+        let dashboard_link = "//a[@id='dashboardLink']";
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
+        let faq_link = "(//a[@class='ds-u-text-decoration--none'])[3]";
         let my_account_button = "//button[@id='myAccountLink']";
         let management_profile_link = "//a[@id='manageAccountLink']";
         
-        browser.useXpath().expect.element(user_management_title).to.be.visible;
-        browser.useXpath().expect.element(name_title).to.be.visible;
-        browser.useXpath().expect.element(email_title).to.be.visible;
+        browser.useXpath().expect.element(submission_list_title).to.be.visible;
+        browser.useXpath().expect.element(spa_id_waiver_number).to.be.visible;
+        browser.useXpath().expect.element(type_title).to.be.visible;
         browser.useXpath().expect.element(state_title).to.be.visible;
-        browser.useXpath().expect.element(last_modified_title).to.be.visible;
-        browser.useXpath().expect.element(modified_by_title).to.be.visible;
-        browser.useXpath().expect.element(personnel_actions_title).to.be.visible;
-        browser.useXpath().expect.element(faq_link).to.be.visible;
+        browser.useXpath().expect.element(date_submitted_title).to.be.visible;
+        browser.useXpath().expect.element(state_submitter_title).to.be.visible;
         browser.useXpath().expect.element(user_management_link).to.be.visible;
+        browser.useXpath().expect.element(dashboard_link).to.be.visible;
+        browser.useXpath().expect.element(faq_link).to.be.visible;
         browser.useXpath().expect.element(home_link).to.be.visible;
         browser.click(my_account_button);
         browser.pause(500);
@@ -56,8 +57,8 @@ module.exports = {
         let phone_number_title = "(//h3)[4]";
         let phone_number = "(//div[@class='ds-c-review__body'])[3]";
         let edit_button = "//button[@class='ds-c-button phone-edit-button']";
-        let state_access_management = "(//h3)[5]";
-        let state_name_one = "//div[@class='state-access-card']/dt";
+        //let state_access_management = "(//h3)[5]";
+        //let state_name_one = "//div[@class='state-access-card']/dt";
         let access_granted_status = "//div[@class='state-access-card']/dd/em";
         let state_admins = "//div[@class='state-access-card']/dd/p";
         //let close_button = "//button[@class='close-button']";
@@ -72,8 +73,8 @@ module.exports = {
         browser.useXpath().expect.element(phone_number_title).to.be.visible;
         browser.useXpath().expect.element(phone_number).to.be.visible;
         browser.useXpath().expect.element(edit_button).to.be.visible;
-        browser.useXpath().expect.element(state_access_management).to.be.visible;
-        browser.useXpath().expect.element(state_name_one).to.be.visible;
+        //browser.useXpath().expect.element(state_access_management).to.be.visible;
+        //browser.useXpath().expect.element(state_name_one).to.be.visible;
         browser.useXpath().expect.element(access_granted_status).to.be.visible;
         browser.useXpath().expect.element(state_admins).to.be.visible;
         //browser.useXpath().expect.element(close_button).to.be.visible;
