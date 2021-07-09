@@ -5,7 +5,7 @@
 // until these issues are refactored and resolved. 3/25/2021
 // Updated on 6/16/2021
 
-/*
+
 let generatedSPAID;
 let generatedWaiverID;
 const login = require('../suites/OY2_9999_Login');
@@ -156,5 +156,3 @@ module.exports = {
         browser.useCss();
     },
 }
-
-*/
