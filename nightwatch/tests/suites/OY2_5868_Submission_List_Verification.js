@@ -23,15 +23,60 @@ module.exports = {
 
     'Submission List Verification > Submit new SPA and Respond to SPA RAI': function (browser) {
         // Submit a SPA Report 
-        const newSPA = require('../suites/OY2-3636_Suite_Smoke.js');
-        generatedSPAID = newSPA['Verify Submitter user can submit new SPA'](browser);
+        browser.useXpath().click("//a[@id='new-submission-button']");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        browser.pause(500);
+        browser.useXpath().click("(//h4)[1]");
+        //browser.useXpath().click("//button[text()='Submit New Medicaid SPA']");
+        // create random SPA ID
+        let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        // SS-YY-NNNN
+        //changed the state to MD
+        let spaID = 'MD-' + num1 + '-' + num2 + '' + num3;
+        // input the SPA ID number 
+        browser.useCss().setValue("input#transmittalNumber", spaID);
+        // upload the first documents
+        let fileUploadElem = "[name='uploader-input-0']";
+        browser.assert.elementPresent(fileUploadElem);
+        let filePath = require('path').resolve(__dirname + '/files/file.docx');
+        browser.setValue(fileUploadElem, filePath);
+
+        // upload the second documents
+        fileUploadElem = "[name='uploader-input-1']";
+        browser.assert.elementPresent(fileUploadElem);
+        filePath = require('path').resolve(__dirname + '/files/file.docx');
+        browser.setValue(fileUploadElem, filePath);
+
+        // write the Summary 
+        let phrase = "This is a test, test, test";
+        browser.setValue('textarea', phrase);
+
+        // Submit the new SPA 
+        browser
+        .useCss()
+        .waitForElementPresent("[value='Submit']", 1000)
+        .click("[value='Submit']").pause(5000);
+        
+        browser.refresh();
+
+        // Verify the SPA on Submission List 
+        // browser.useXpath().click("//a[@id='new-submission-button']");
+        //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
+        // browser.refresh();
+        //browser.useXpath().verify.containsText('(//table[@class="submissions-table"]/tbody/tr/td/a)[1]', spaID);
+        browser.useXpath().verify.containsText('(//td[@role="cell"])[1]', spaID);
+
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // SPA ID Verification 
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+        //browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+        browser.useXpath().assert.containsText(submittedIDNumber, spaID);
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.pause(1000);
@@ -47,11 +92,10 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[2]");
         let selector = '#transmittalNumber';
-        browser.useCss().setValue(selector,generatedSPAID);
+        browser.useCss().setValue(selector,spaID);
         // upload a file 
-        console.log("About to upload a file")
-        let fileUploadElem = "[name='uploader-input-0']";
-        let filePath = require('path').resolve(__dirname + '/files/file.docx')
+        fileUploadElem = "[name='uploader-input-0']";
+        filePath = require('path').resolve(__dirname + '/files/file.docx')
         browser.useCss().setValue(fileUploadElem, filePath).pause(5000);
         browser.useCss().setValue("textarea", "This is a test, just a test");
         // Submit the SPA RAI
@@ -59,7 +103,8 @@ module.exports = {
         // Verify the submitted Content 
         // SPA ID Verification 
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+        //browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+        browser.useXpath().assert.containsText(submittedIDNumber, spaID);
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
         browser.useXpath().assert.containsText(submittedType, "SPA RAI");
