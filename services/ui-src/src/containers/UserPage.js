@@ -101,6 +101,7 @@ const UserPage = () => {
     async (newNumber) => {
       try {
         const result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        if (result === RESPONSE_CODE.USER_SUBMITTED) result = "NONE"; // do not show success message
         setAlertCode(result);
       } catch (e) {
         console.error("Error updating phone number", e);
@@ -338,10 +339,14 @@ const UserPage = () => {
     }
   };
 
+  function closedAlert() {
+    setAlertCode("NONE");
+  }
+
   return (
     <div>
       <PageTitleBar heading="User Profile" />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
         <div className="subheader-message">
           Below is the account information for your role as a{" "}

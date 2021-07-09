@@ -327,6 +327,10 @@ const UserManagement = () => {
     []
   );
 
+  function closedAlert() {
+    setAlertCode("NONE");
+  }
+
   const csvExportSubmissions = (
     <Button
       id="new-submission-button"
@@ -359,7 +363,11 @@ const UserManagement = () => {
           csvExportSubmissions
         }
       />
-      <AlertBar alertCode={alertCode} personalizedString={doneToName} />
+      <AlertBar
+        alertCode={alertCode}
+        personalizedString={doneToName}
+        closeCallback={closedAlert}
+      />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&
