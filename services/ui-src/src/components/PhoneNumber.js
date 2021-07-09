@@ -13,9 +13,13 @@ export const PhoneNumber = ({
 }) => {
   const [value, setValue] = useState(phoneNumber);
 
-  const onSubmitFn = useCallback(() => {
-    onSubmit(value);
-  }, [onSubmit, value]);
+  const onSubmitFn = useCallback(
+    (e) => {
+      e.preventDefault();
+      onSubmit(value);
+    },
+    [onSubmit, value]
+  );
 
   const onEditFn = useCallback(() => {
     onEdit();
@@ -24,14 +28,19 @@ export const PhoneNumber = ({
   const onCancelFn = useCallback(() => {
     onCancel();
     setValue(phoneNumber); // resets value displayed in TextField back to the original value
-  }, [onCancel]);
+  }, [onCancel, phoneNumber]);
 
   const formId = id || "phoneSection";
 
   if (isEditing) {
     return (
-      <form id={formId} className="phone-number-edit-form">
+      <form
+        id={formId}
+        className="phone-number-edit-form"
+        onSubmit={onSubmitFn}
+      >
         <TextField
+          autoFocus
           className="phone-text-field"
           id="phoneNumber"
           label="Phone Number"
@@ -43,7 +52,7 @@ export const PhoneNumber = ({
         <Button
           className="phone-apply-button"
           id="applyButton"
-          onClick={() => onSubmitFn()}
+          onClick={onSubmitFn}
           type="button"
           variation="primary"
         >
@@ -51,7 +60,7 @@ export const PhoneNumber = ({
         </Button>
         <Button
           id="cancelButton"
-          onClick={() => onCancelFn()}
+          onClick={onCancelFn}
           type="button"
           variation="transparent"
         >
@@ -67,7 +76,7 @@ export const PhoneNumber = ({
           <Button
             className="phone-add-button"
             id="addButton"
-            onClick={() => onEditFn()}
+            onClick={onEditFn}
             variation="primary"
             type="button"
           >
@@ -84,7 +93,7 @@ export const PhoneNumber = ({
           <Button
             className="phone-edit-button"
             id="editButton"
-            onClick={() => onEditFn()}
+            onClick={onEditFn}
             type="button"
           >
             Edit&nbsp;&nbsp;
