@@ -100,7 +100,7 @@ const UserPage = () => {
   const onPhoneNumberEdit = useCallback(
     async (newNumber) => {
       try {
-        const result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        var result = await UserDataApi.updatePhoneNumber(email, newNumber);
         if (result === RESPONSE_CODE.USER_SUBMITTED) result = "NONE"; // do not show success message
         setAlertCode(result);
       } catch (e) {
