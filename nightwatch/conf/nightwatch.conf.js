@@ -91,6 +91,10 @@ module.exports = {
                     username: "cmsapproverdenied@cms.hhs.local",
                     password: "Passw0rd!",
                 },
+                cms_helpdesk: {
+                    username: "helpdesk@nightwatch.test",
+                    password: "Passw0rd!",
+                },
            },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
