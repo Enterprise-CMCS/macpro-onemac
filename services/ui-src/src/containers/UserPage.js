@@ -313,7 +313,8 @@ const UserPage = () => {
                     <div className="ds-u-border--1" >
                             <div className="bg-white">
                               <p className="indent-32">
-                              <h3>Group</h3>
+                              <h3 className="ds-c-review__heading">Group</h3>
+                              <br/>
                               <br/>
                               {
                                 getUserGroup(
@@ -325,7 +326,7 @@ const UserPage = () => {
                             </div>
                             <div className="bg-lite-gray">
                               <p className="indent-32">
-                              <h3>Division</h3>
+                              <h3 className="ds-c-review__heading">Division</h3>
                               <br/>
                               {
                                 getUserGroup(
