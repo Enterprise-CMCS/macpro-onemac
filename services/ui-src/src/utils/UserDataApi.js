@@ -1,5 +1,6 @@
-import APIWrapper from "./apiWrapper";
+import handleApiError from "../libs/apiErrorHandler";
 import { USER_TYPE } from "cmscommonlib";
+import { API } from "aws-amplify";
 
 export const getAdminTypeByRole = (role) => {
   switch (role) {
@@ -25,13 +26,13 @@ class UserDataApi {
     if (!userEmail) return [];
 
     try {
-      return await APIWrapper.get(
-        "userDataAPI",
-        `/getMyUserList?email=${userEmail}`
-      );
+      return await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
     } catch (error) {
-      console.log(`There was an error fetching data for the user.`, error);
-      throw error;
+      handleApiError(
+        error,
+        "DASHBOARD_RETRIEVAL_ERROR",
+        "There was an error fetching data for the user."
+      );
     }
   }
 
@@ -48,14 +49,14 @@ class UserDataApi {
     }
 
     try {
-      let answer = await APIWrapper.get(
-        "userDataAPI",
-        `/getUser?email=${userEmail}`
-      );
+      let answer = await API.get("userDataAPI", `/getUser?email=${userEmail}`);
       return answer;
     } catch (error) {
-      console.log(`There was an error checking user ${userEmail}.`, error);
-      throw error;
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        "There was an error fetching data for the user."
+      );
     }
   }
 
@@ -66,12 +67,15 @@ class UserDataApi {
    */
   async updateUser(userRecord) {
     try {
-      return await APIWrapper.put("changeRequestAPI", "/putUser", {
+      return await API.put("changeRequestAPI", "/putUser", {
         body: { ...userRecord, isPutUser: true },
       });
     } catch (error) {
-      console.error("Could not save user profile data:", error);
-      throw error;
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error submitting data for the user."
+      );
     }
   }
 
@@ -83,12 +87,15 @@ class UserDataApi {
    */
   async updatePhoneNumber(id, phoneNumber) {
     try {
-      return await APIWrapper.put("changeRequestAPI", "/phoneNumber", {
+      return await API.put("changeRequestAPI", "/phoneNumber", {
         body: { id, phoneNumber },
       });
     } catch (error) {
-      console.error("Could not save user phone number:", error, "Error type:");
-      throw error;
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Could not save user phone number."
+      );
     }
   }
 
@@ -106,12 +113,15 @@ class UserDataApi {
     }
 
     try {
-      return await APIWrapper.put("changeRequestAPI", "/putUser", {
+      return await API.put("changeRequestAPI", "/putUser", {
         body: updateStatusRequest,
       });
     } catch (error) {
-      console.error("Could not update user profile data:", error);
-      throw error;
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error changing the user status."
+      );
     }
   }
 
@@ -119,28 +129,52 @@ class UserDataApi {
    * Get all active state system administrators' contact info for a list of states.
    */
   async getStateAdmins(states) {
-    const params = new URLSearchParams();
-    for (const state of states) {
-      params.append("state", state);
+    try {
+      const params = new URLSearchParams();
+      for (const state of states) {
+        params.append("state", state);
+      }
+      return await API.get(
+        "userDataAPI",
+        `/getStateAdmins?${params.toString()}`
+      );
+    } catch (error) {
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        "There was an error fetching the state admins."
+      );
     }
-    return await APIWrapper.get(
-      "userDataAPI",
-      `/getStateAdmins?${params.toString()}`
-    );
   }
 
   /**
    * Get all active CMS role approvers' contact info.
    */
   async getCmsApprovers() {
-    return await APIWrapper.get("userDataAPI", "/getCmsApprovers");
+    try {
+      return await API.get("userDataAPI", "/getCmsApprovers");
+    } catch (error) {
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        "There was an error fetching the CMS approvers."
+      );
+    }
   }
 
   /**
    * Get all active CMS system admins' contact info.
    */
   async getCmsSystemAdmins() {
-    return await APIWrapper.get("userDataAPI", "/getCmsSystemAdmins");
+    try {
+      return await API.get("userDataAPI", "/getCmsSystemAdmins");
+    } catch (error) {
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        "There was an error fetching the CMS admins."
+      );
+    }
   }
 }
 

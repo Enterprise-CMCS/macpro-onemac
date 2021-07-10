@@ -1,4 +1,5 @@
-import APIWrapper from "./apiWrapper";
+import { API } from "aws-amplify";
+import handleApiError from "../libs/apiErrorHandler";
 
 /**
  * Singleton class to perform operations with the change request backend.
@@ -21,13 +22,16 @@ class ChangeRequestDataApi {
     }
     try {
       data.uploads = uploadsList;
-
-      return await APIWrapper.post("changeRequestAPI", "/submit", {
+      return await API.post("changeRequestAPI", "/submit", {
         body: data,
       });
     } catch (error) {
-      console.log("Error while submitting the form.", error);
-      throw error;
+      console.log("data: ", data);
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
     }
   }
 
@@ -44,14 +48,17 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let changeRequest = await APIWrapper.get(
+      let changeRequest = await API.get(
         "changeRequestAPI",
         `/get/${id}/${userId}`
       );
       return changeRequest;
     } catch (error) {
-      console.log(`There was an error fetching ID ${id}.`, error);
-      throw error;
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error fetching ID ${id}.`
+      );
     }
   }
 
@@ -67,15 +74,15 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let answer = await APIWrapper.get(
-        "changeRequestAPI",
-        `/package-exists/${id}`
-      );
+      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
 
       return answer;
     } catch (error) {
-      console.log(`There was an error checking ID ${id}.`, error);
-      throw error;
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error fetching package with ID ${id}.`
+      );
     }
   }
 
@@ -88,16 +95,16 @@ class ChangeRequestDataApi {
     if (!userEmail) return [];
 
     try {
-      return await APIWrapper.get(
+      return await API.get(
         "changeRequestAPI",
         `/getAllByAuthorizedTerritories?email=${userEmail}`
       );
     } catch (error) {
-      console.log(
-        `There was an error fetching change requests for the states/territories.`,
-        error
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        `There was an error fetching the states/territories for ${userEmail}.`
       );
-      throw error;
     }
   }
 
@@ -107,10 +114,13 @@ class ChangeRequestDataApi {
    */
   async listAll() {
     try {
-      return await APIWrapper.get("changeRequestAPI", `/listall`);
+      return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
-      console.log(`There was an error fetching all change requests`, error);
-      throw error;
+      handleApiError(
+        error,
+        "DASHBOARD_LIST_FETCH_ERROR",
+        `There was an error fetching Change requests`
+      );
     }
   }
 }

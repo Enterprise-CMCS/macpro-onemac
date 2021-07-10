@@ -155,6 +155,7 @@ export const main = handler(async (event) => {
           console.log(
             "ID " + smallerID + " exists in " + process.env.spaIdTableName
           );
+        throw error;
       }
       sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
