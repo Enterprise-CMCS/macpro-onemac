@@ -1,6 +1,5 @@
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import handleApiError from "../libs/apiErrorHandler";
-
 /**
  * Singleton class to perform operations with the change request backend.
  */
@@ -21,6 +20,7 @@ class ChangeRequestDataApi {
       throw new Error("Missing required data or uploads");
     }
     try {
+      data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
       return await API.post("changeRequestAPI", "/submit", {
         body: data,
