@@ -43,7 +43,12 @@ export async function uploadFiles(fileArray) {
           resolve(results);
         })
         .catch((error) => {
-          reject("Error uploading.", error);
+          if (error.message.indexOf("status code 403") !== -1) {
+            reject("SESSION_EXPIRED");
+          } else {
+            console.log("Error uploading.", error);
+            reject("UPLOADS_ERROR");
+          }
         });
     });
   } else {

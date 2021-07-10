@@ -130,6 +130,11 @@ export const ALERTS_MSG = {
     heading: "Attachment Too Large",
     text: `An individual attachment cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.  Please select a smaller file.`,
   },
+  UPLOADS_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Document Upload Error",
+    text: `An error occured while uploading documents to AWS S3 service.`,
+  },
   NOT_AUTHENTICATED: {
     type: ALERT_TYPES.WARNING,
     heading: "Login Required",

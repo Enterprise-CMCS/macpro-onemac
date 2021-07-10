@@ -73,6 +73,9 @@ export const getAlert = (errorCode) => {
     case "AT000":
       returnAlert = ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
       break;
+    // app-api/response-codes.js  UPLOADS_ERROR
+    case "AT001":
+      returnAlert = ALERTS_MSG.UPLOADS_ERROR;
     // app-api/response-codes.js    SYSTEM_ERROR: "SY000",
     case "SY000":
       returnAlert = ALERTS_MSG.CONTACT_HELP_DESK;
