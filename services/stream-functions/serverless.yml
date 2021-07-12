@@ -69,7 +69,7 @@ functions:
           arn: ${self:custom.tableStreamArn}
           startingPosition: LATEST
           maximumRetryAttempts: 2
-          enabled: false
+          enabled: true
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
