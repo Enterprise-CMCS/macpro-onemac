@@ -35,7 +35,7 @@ module.exports = {
 
 
         browser.useXpath().expect.element(text_cms_approver).to.be.visible;
-        browser.useXpath().assert.containsText(text_cms_approver, "MACPro_HelpDesk@cms.hhs.gov");
+        browser.useXpath().assert.containsText(text_cms_approver, "OneMAC_Helpdesk@cms.hhs.gov");
         browser.useXpath().assert.containsText(text_cms_approver,"(833) 228-2540");
         browser.useXpath().assert.containsText(text_cms_approver,"Below is the account information for your role as a CMS System Admin.");
         browser.useXpath().expect.element(profile_information).to.be.visible;

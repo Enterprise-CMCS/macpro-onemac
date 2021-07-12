@@ -27,25 +27,38 @@ const FAQ = () => {
   }, []);
 
   const placeFaqInfoBox = (e) => {
-    let height = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
-    let faqInfo = document.getElementById('faq-info-box');
-    let faqBorder = document.getElementById('faq-border-box');
-    if (height <= 628){
-      console.log('height: ', height, 'height + window.scrollY: ',height + window.scrollY, 'window.scrollY: ',window.scrollY, 'document.body.offsetHeight: ',document.body.offsetHeight, 'document.body.offsetHeight -  window.: ',document.body.offsetHeight -  window.scrollY); //window.pageYOffset)
+    let height =
+      window.innerHeight ||
+      document.documentElement.clientHeight ||
+      document.body.clientHeight;
+    let faqInfo = document.getElementById("faq-info-box");
+    let faqBorder = document.getElementById("faq-border-box");
+    if (height <= 628) {
+      console.log(
+        "height: ",
+        height,
+        "height + window.scrollY: ",
+        height + window.scrollY,
+        "window.scrollY: ",
+        window.scrollY,
+        "document.body.offsetHeight: ",
+        document.body.offsetHeight,
+        "document.body.offsetHeight -  window.: ",
+        document.body.offsetHeight - window.scrollY
+      ); //window.pageYOffset)
       faqInfo.classList.add("faq-info-box-small");
       faqBorder.classList.add("faq-border-box-small");
-    }
-    else {
+    } else {
       faqInfo.classList.remove("faq-info-box-small");
       faqBorder.classList.remove("faq-border-box-small");
     }
-  }
-  useEffect (()=>{
+  };
+  useEffect(() => {
     placeFaqInfoBox();
-    window.addEventListener('resize', placeFaqInfoBox );
-    return () => window.removeEventListener('resize', placeFaqInfoBox );
-  },[]);
-  
+    window.addEventListener("resize", placeFaqInfoBox);
+    return () => window.removeEventListener("resize", placeFaqInfoBox);
+  }, []);
+
   return (
     <div>
       <PageTitleBar heading="Frequently Asked Questions" />
@@ -61,8 +74,8 @@ const FAQ = () => {
             <br />
             <b>Email</b>
             <br />
-            <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">
-              MACPro_HelpDesk@cms.hhs.gov
+            <a href="mailto:OneMAC_Helpdesk@cms.hhs.gov">
+              OneMAC_Helpdesk@cms.hhs.gov
             </a>
           </div>
           <div className="faq-left-column">
@@ -81,9 +94,9 @@ const FAQ = () => {
                 />
               }
             >
-             <br />
-              The submission portal works best on Google Chrome (Version 
-              91.0.4472.77 or later), Firefox  (Version 89.0 or later).
+              <br />
+              The submission portal works best on Google Chrome (Version
+              91.0.4472.77 or later), Firefox (Version 89.0 or later).
             </Collapsible>
             <hr />
             <h3 className="topic-title">State Plan Amendments (SPAs)</h3>
@@ -122,7 +135,7 @@ const FAQ = () => {
               <hr />
             </div>
             <div>
-            <Collapsible
+              <Collapsible
                 trigger={
                   <TriggerCB
                     isOpen={true}
@@ -283,7 +296,9 @@ const FAQ = () => {
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Tribal Consultation</span></p>
+                        <p>
+                          <span>Tribal Consultation</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
                         <p>
@@ -301,51 +316,26 @@ const FAQ = () => {
                         </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>UPLs, reimbursement methodology spreadsheet, Copies of
-                          legislation, any document that will assist in the review of SPA</span></p>
+                        <p>
+                          <span>
+                            UPLs, reimbursement methodology spreadsheet, Copies
+                            of legislation, any document that will assist in the
+                            review of SPA
+                          </span>
+                        </p>
                       </td>
                     </tr>
                   </tbody>
                 </table>
-                <h4><span>What are the attachments for a Medicaid response to Request for Additional
-                  Information (RAI)?</span></h4>
-                <p><span>Note: “*” indicates a required attachment.</span></p>
-                <table className="faq-table" >
-                  <colgroup>
-                    <col />
-                    <col />
-                  </colgroup>
-                  <tbody>
-                    <tr>
-                      <th >
-                        <p><strong><span>Attachment Name</span></strong></p>
-                      </th>
-                      <th >
-                        <p><strong><span>Description</span></strong></p>
-                      </th>
-                    </tr>
-                    <tr>
-                      <td className="confluenceTd">
-                        <p><span>RAI Response*</span></p>
-                      </td>
-                      <td className="confluenceTd">
-                        <p><span>Letter responding to RAI questions, any updated SPA pages,
-                          and other documentation requested by CMS in the RAI</span></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="confluenceTd">
-                        <p><span>Other</span></p>
-                      </td>
-                      <td className="confluenceTd">
-                        <p><span>Additional document(s) needed to process the SPA RAI
-                          submission</span></p>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <h4><span>What are the attachments for a CHIP SPA?</span></h4>
-                <p><span>Note: “*” indicates a required attachment.</span></p>
+                <h4>
+                  <span>
+                    What are the attachments for a Medicaid response to Request
+                    for Additional Information (RAI)?
+                  </span>
+                </h4>
+                <p>
+                  <span>Note: “*” indicates a required attachment.</span>
+                </p>
                 <table className="faq-table">
                   <colgroup>
                     <col />
@@ -353,84 +343,204 @@ const FAQ = () => {
                   </colgroup>
                   <tbody>
                     <tr>
-                      <th >
-                        <p><strong><span>Attachment Name</span></strong></p>
+                      <th>
+                        <p>
+                          <strong>
+                            <span>Attachment Name</span>
+                          </strong>
+                        </p>
                       </th>
-                      <th >
-                        <p><strong><span>Description</span></strong></p>
+                      <th>
+                        <p>
+                          <strong>
+                            <span>Description</span>
+                          </strong>
+                        </p>
                       </th>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Current State Plan*</span></p>
+                        <p>
+                          <span>RAI Response*</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Current version of the CHIP state plan that details how the
-                          State operates its CHIP program</span></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="confluenceTd">
-                        <p><span>Amended State Plan Language*</span></p>
-                      </td>
-                      <td className="confluenceTd">
-                        <p><span>Redline version of proposed changes to the existing CHIP
-                          state plan pages. State to provide a redline version and a clean version of the CHIP state
-                          plan pages being amended.</span></p>
+                        <p>
+                          <span>
+                            Letter responding to RAI questions, any updated SPA
+                            pages, and other documentation requested by CMS in
+                            the RAI
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Cover Letter*</span></p>
+                        <p>
+                          <span>Other</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Cover letter to CMS with an authorized signature that
-                          outlines the purpose of the CHIP SPA submission</span></p>
+                        <p>
+                          <span>
+                            Additional document(s) needed to process the SPA RAI
+                            submission
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+                <h4>
+                  <span>What are the attachments for a CHIP SPA?</span>
+                </h4>
+                <p>
+                  <span>Note: “*” indicates a required attachment.</span>
+                </p>
+                <table className="faq-table">
+                  <colgroup>
+                    <col />
+                    <col />
+                  </colgroup>
+                  <tbody>
+                    <tr>
+                      <th>
+                        <p>
+                          <strong>
+                            <span>Attachment Name</span>
+                          </strong>
+                        </p>
+                      </th>
+                      <th>
+                        <p>
+                          <strong>
+                            <span>Description</span>
+                          </strong>
+                        </p>
+                      </th>
+                    </tr>
+                    <tr>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>Current State Plan*</span>
+                        </p>
+                      </td>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>
+                            Current version of the CHIP state plan that details
+                            how the State operates its CHIP program
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Budget Docs</span></p>
+                        <p>
+                          <span>Amended State Plan Language*</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Updated 1-year budget if applicable of the State’s planned
-                          expenditures if the CHIP SPA submission has a significant impact on the approved
-                          budget</span></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="confluenceTd">
-                        <p><span>Public Notice</span></p>
-                      </td>
-                      <td className="confluenceTd">
-                        <p><span>Process used by the State if applicable to accomplish
-                          involvement of the public that occurred specifically for this CHIP SPA submission</span></p>
+                        <p>
+                          <span>
+                            Redline version of proposed changes to the existing
+                            CHIP state plan pages. State to provide a redline
+                            version and a clean version of the CHIP state plan
+                            pages being amended.
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Tribal Consultation</span></p>
+                        <p>
+                          <span>Cover Letter*</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Consultation process with Indian Tribes if applicable that
-                          occurred specifically for this CHIP SPA submission</span></p>
+                        <p>
+                          <span>
+                            Cover letter to CMS with an authorized signature
+                            that outlines the purpose of the CHIP SPA submission
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Other</span></p>
+                        <p>
+                          <span>Budget Docs</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Other document(s) needed to process the CHIP SPA
-                          submission</span></p>
+                        <p>
+                          <span>
+                            Updated 1-year budget if applicable of the State’s
+                            planned expenditures if the CHIP SPA submission has
+                            a significant impact on the approved budget
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>Public Notice</span>
+                        </p>
+                      </td>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>
+                            Process used by the State if applicable to
+                            accomplish involvement of the public that occurred
+                            specifically for this CHIP SPA submission
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>Tribal Consultation</span>
+                        </p>
+                      </td>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>
+                            Consultation process with Indian Tribes if
+                            applicable that occurred specifically for this CHIP
+                            SPA submission
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>Other</span>
+                        </p>
+                      </td>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>
+                            Other document(s) needed to process the CHIP SPA
+                            submission
+                          </span>
+                        </p>
                       </td>
                     </tr>
                   </tbody>
                 </table>
 
-                <h4><span>What are the attachments for a CHIP SPA response to Request for Additional
-                  Information (RAI)?</span></h4>
-                <p><span>Note: “*” indicates a required attachment.</span></p>
+                <h4>
+                  <span>
+                    What are the attachments for a CHIP SPA response to Request
+                    for Additional Information (RAI)?
+                  </span>
+                </h4>
+                <p>
+                  <span>Note: “*” indicates a required attachment.</span>
+                </p>
                 <table className="faq-table">
                   <colgroup>
                     <col />
@@ -438,116 +548,222 @@ const FAQ = () => {
                   </colgroup>
                   <tbody>
                     <tr>
-                      <th >
-                        <p><strong><span>Attachment Name</span></strong></p>
+                      <th>
+                        <p>
+                          <strong>
+                            <span>Attachment Name</span>
+                          </strong>
+                        </p>
                       </th>
-                      <th >
-                        <p><strong><span>Description</span></strong></p>
+                      <th>
+                        <p>
+                          <strong>
+                            <span>Description</span>
+                          </strong>
+                        </p>
                       </th>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Revised Amended State Plan Language*</span></p>
+                        <p>
+                          <span>Revised Amended State Plan Language*</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Revision made to the amended state plan language of the CHIP
-                          SPA submission. State to provide a redline version and a clean version of the revised
-                          amended state plan pages</span></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="confluenceTd">
-                        <p><span>Official RAI Response*</span></p>
-                      </td>
-                      <td className="confluenceTd">
-                        <p><span>Official response to CMS to support RAI inquiries for the
-                          CHIP SPA submission</span></p>
+                        <p>
+                          <span>
+                            Revision made to the amended state plan language of
+                            the CHIP SPA submission. State to provide a redline
+                            version and a clean version of the revised amended
+                            state plan pages
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Budget Docs</span></p>
+                        <p>
+                          <span>Official RAI Response*</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Updated 1-year budget if applicable of the State’s planned
-                          expenditures if the CHIP SPA submission has a significant impact on the approved
-                          budget</span></p>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td className="confluenceTd">
-                        <p><span>Public Notice</span></p>
-                      </td>
-                      <td className="confluenceTd">
-                        <p><span>Process used by the State if applicable to accomplish
-                          involvement of the public that occurred specifically for this CHIP SPA submission</span></p>
+                        <p>
+                          <span>
+                            Official response to CMS to support RAI inquiries
+                            for the CHIP SPA submission
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Tribal Consultation</span></p>
+                        <p>
+                          <span>Budget Docs</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Consultation process with Indian Tribes if applicable that
-                          occurred specifically for this CHIP SPA submission</span></p>
+                        <p>
+                          <span>
+                            Updated 1-year budget if applicable of the State’s
+                            planned expenditures if the CHIP SPA submission has
+                            a significant impact on the approved budget
+                          </span>
+                        </p>
                       </td>
                     </tr>
                     <tr>
                       <td className="confluenceTd">
-                        <p><span>Other</span></p>
+                        <p>
+                          <span>Public Notice</span>
+                        </p>
                       </td>
                       <td className="confluenceTd">
-                        <p><span>Other document(s) needed to process the CHIP SPA
-                          submission</span></p>
+                        <p>
+                          <span>
+                            Process used by the State if applicable to
+                            accomplish involvement of the public that occurred
+                            specifically for this CHIP SPA submission
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>Tribal Consultation</span>
+                        </p>
+                      </td>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>
+                            Consultation process with Indian Tribes if
+                            applicable that occurred specifically for this CHIP
+                            SPA submission
+                          </span>
+                        </p>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>Other</span>
+                        </p>
+                      </td>
+                      <td className="confluenceTd">
+                        <p>
+                          <span>
+                            Other document(s) needed to process the CHIP SPA
+                            submission
+                          </span>
+                        </p>
                       </td>
                     </tr>
                   </tbody>
                 </table>
                 <br />
-                <p><strong><span  >Can I submit SPAs relating to the Public Health Emergency (PHE) in
-                  OneMAC?</span></strong><br /><span  >Yes, all PHE-related SPAs should be
-                    submitted through OneMAC by completing the Medicaid SPA form.</span></p>
+                <p>
+                  <strong>
+                    <span>
+                      Can I submit SPAs relating to the Public Health Emergency
+                      (PHE) in OneMAC?
+                    </span>
+                  </strong>
+                  <br />
+                  <span>
+                    Yes, all PHE-related SPAs should be submitted through OneMAC
+                    by completing the Medicaid SPA form.
+                  </span>
+                </p>
               </Collapsible>
               <hr />
             </div>
             <h3 className="topic-title">Waivers</h3>
             <div ref={waiverIdRef} id="waiver-id-format">
-              <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(b) waiver number?" />}
-                triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(b) waiver number?" />} >
+              <Collapsible
+                trigger={
+                  <TriggerCB
+                    isOpen={true}
+                    text="What format is used to enter a 1915(b) waiver number?"
+                  />
+                }
+                triggerWhenOpen={
+                  <TriggerCB
+                    isOpen={false}
+                    text="What format is used to enter a 1915(b) waiver number?"
+                  />
+                }
+              >
                 <br />
-                <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
+                <p>
+                  Waiver number must follow the format SS.####.R##.## or
+                  SS.#####.R##.## to include:
+                </p>
                 <ul>
                   <li>SS = 2 character state abbreviation</li>
                   <li>##### = 4 or 5 digit waiver base number</li>
-                  <li>R## = renewal number (R01, R02, ...) (Use R00 for waivers without renewals)</li>
-                  <li>M## = amendment number, prefixed with a capital M (M01)</li>
+                  <li>
+                    R## = renewal number (R01, R02, ...) (Use R00 for waivers
+                    without renewals)
+                  </li>
+                  <li>
+                    M## = amendment number, prefixed with a capital M (M01)
+                  </li>
                 </ul>
                 <p>
                   All separated by periods (.). For example, the waiver number
-                  KY.0003.R02.M02 is a waiver for the state of Kentucky, with a base
-                  waiver number of 0003, a second renewal (R02) and a second amendment
-                  (02). Base waivers without renewals should use “R00” as their renewal number.
+                  KY.0003.R02.M02 is a waiver for the state of Kentucky, with a
+                  base waiver number of 0003, a second renewal (R02) and a
+                  second amendment (02). Base waivers without renewals should
+                  use “R00” as their renewal number.
                 </p>
-                <h4>Who can I contact to help me figure out the correct 1915(b) Waiver Number?</h4>
-                <p>Email <a href="mailto:MCOGDMCOActions@cms.hhs.gov">MCOGDMCOActions@cms.hhs.gov</a> to get support with determining the correct 1915(b) Waiver Number.</p>
+                <h4>
+                  Who can I contact to help me figure out the correct 1915(b)
+                  Waiver Number?
+                </h4>
+                <p>
+                  Email{" "}
+                  <a href="mailto:MCOGDMCOActions@cms.hhs.gov">
+                    MCOGDMCOActions@cms.hhs.gov
+                  </a>{" "}
+                  to get support with determining the correct 1915(b) Waiver
+                  Number.
+                </p>
               </Collapsible>
               <hr />
-              <Collapsible trigger={<TriggerCB isOpen={true} text="What format is used to enter a 1915(c) waiver number?" />}
-                triggerWhenOpen={<TriggerCB isOpen={false} text="What format is used to enter a 1915(c) waiver number?" />} >
+              <Collapsible
+                trigger={
+                  <TriggerCB
+                    isOpen={true}
+                    text="What format is used to enter a 1915(c) waiver number?"
+                  />
+                }
+                triggerWhenOpen={
+                  <TriggerCB
+                    isOpen={false}
+                    text="What format is used to enter a 1915(c) waiver number?"
+                  />
+                }
+              >
                 <br />
-                <p>Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include:</p>
+                <p>
+                  Waiver number must follow the format SS.####.R##.## or
+                  SS.#####.R##.## to include:
+                </p>
                 <ul>
                   <li>SS = 2 character state abbreviation</li>
                   <li>##### = 4 or 5 digit waiver base number</li>
-                  <li>R## = renewal number (R01, R02, ...) (Use R00 for waivers without renewals)</li>
+                  <li>
+                    R## = renewal number (R01, R02, ...) (Use R00 for waivers
+                    without renewals)
+                  </li>
                   <li>## = appendix K amendment number (01)</li>
                 </ul>
                 <p>
                   All separated by periods (.). For example, the waiver number
-                  KY.0003.R02.02 is a waiver for the state of Kentucky, with a base
-                  waiver number of 0003, the second renewal (R02) and the second
-                  appendix K amendment (02). Base waivers without renewals should use
-                  “R00” as their renewal number.
+                  KY.0003.R02.02 is a waiver for the state of Kentucky, with a
+                  base waiver number of 0003, the second renewal (R02) and the
+                  second appendix K amendment (02). Base waivers without
+                  renewals should use “R00” as their renewal number.
                 </p>
               </Collapsible>
               <hr />
@@ -588,78 +804,147 @@ const FAQ = () => {
                         </strong>
                       </p>
                     </th>
-                    <th >
-                      <p><strong><span>Description</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Description</span>
+                        </strong>
+                      </p>
                     </th>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>1915(b)(4) FFS Selective Contracting (Streamlined) waiver
-                        application pre-print (Initial, Renewal, Amendment)</span></p>
+                      <p>
+                        <span>
+                          1915(b)(4) FFS Selective Contracting (Streamlined)
+                          waiver application pre-print (Initial, Renewal,
+                          Amendment)
+                        </span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>State submission of the 1915(b)(4) Waiver Fee-for-Service
-                        Selective Contracting Program preprint narrative (Sections A, B, and C)</span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="confluenceTd">
-                      <p><span>1915(b) Comprehensive (Capitated) Waiver Application
-                        Pre-print (Initial, Renewal, Amendment)</span></p>
-                    </td>
-                    <td className="confluenceTd">
-                      <p><span>State submission of the 1915(b) preprint narrative (Sections
-                        A, B, C and D) (non-FFS Selective Contracting Waiver programs)</span></p>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td className="confluenceTd">
-                      <p><span>1915(b) Comprehensive (Capitated) Waiver Cost effectiveness
-                        spreadsheets (Initial, Renewal, Amendment)</span></p>
-                    </td>
-                    <td className="confluenceTd">
-                      <p><span>Appendix D Cost Effectiveness Demonstration for 1915(b)
-                        Waivers only (not applicable to 1915(b)(4) Fee-for-Service Selective Contracting
-                        programs)</span></p>
+                      <p>
+                        <span>
+                          State submission of the 1915(b)(4) Waiver
+                          Fee-for-Service Selective Contracting Program preprint
+                          narrative (Sections A, B, and C)
+                        </span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>1915(b)(4) FFS Selective Contracting (Streamlined) and
-                        1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals
-                        only)</span></p>
+                      <p>
+                        <span>
+                          1915(b) Comprehensive (Capitated) Waiver Application
+                          Pre-print (Initial, Renewal, Amendment)
+                        </span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>State submission of the findings from the Independent
-                        Assessment of their 1915(b) waiver program</span></p>
+                      <p>
+                        <span>
+                          State submission of the 1915(b) preprint narrative
+                          (Sections A, B, C and D) (non-FFS Selective
+                          Contracting Waiver programs)
+                        </span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Tribal Consultation (Initial, Renewal, Amendment)</span></p>
+                      <p>
+                        <span>
+                          1915(b) Comprehensive (Capitated) Waiver Cost
+                          effectiveness spreadsheets (Initial, Renewal,
+                          Amendment)
+                        </span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Document that outlines the changes the waiver action is
-                        making and the impact that tribes can expect from the waiver action</span></p>
+                      <p>
+                        <span>
+                          Appendix D Cost Effectiveness Demonstration for
+                          1915(b) Waivers only (not applicable to 1915(b)(4)
+                          Fee-for-Service Selective Contracting programs)
+                        </span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Other</span></p>
+                      <p>
+                        <span>
+                          1915(b)(4) FFS Selective Contracting (Streamlined) and
+                          1915(b) Comprehensive (Capitated) Waiver Independent
+                          Assessment (first two renewals only)
+                        </span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Any other documents or spreadsheets that are supplemental to
-                        the state's waiver application</span></p>
+                      <p>
+                        <span>
+                          State submission of the findings from the Independent
+                          Assessment of their 1915(b) waiver program
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>
+                          Tribal Consultation (Initial, Renewal, Amendment)
+                        </span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>
+                          Document that outlines the changes the waiver action
+                          is making and the impact that tribes can expect from
+                          the waiver action
+                        </span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>Other</span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>
+                          Any other documents or spreadsheets that are
+                          supplemental to the state's waiver application
+                        </span>
+                      </p>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </Collapsible>
             <hr />
-            <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?" />}
-              triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?" />} >
+            <Collapsible
+              trigger={
+                <TriggerCB
+                  isOpen={true}
+                  text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"
+                />
+              }
+              triggerWhenOpen={
+                <TriggerCB
+                  isOpen={false}
+                  text="What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?"
+                />
+              }
+            >
               <br />
-              <p><span>Note: “*” indicates a required attachment.</span></p>
+              <p>
+                <span>Note: “*” indicates a required attachment.</span>
+              </p>
               <table className="faq-table">
                 <colgroup>
                   <col />
@@ -667,40 +952,76 @@ const FAQ = () => {
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th >
-                      <p><strong><span>Attachment Name</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Attachment Name</span>
+                        </strong>
+                      </p>
                     </th>
-                    <th >
-                      <p><strong><span>Description</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Description</span>
+                        </strong>
+                      </p>
                     </th>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Waiver RAI Response</span><strong><span
-                      >*</span></strong></p>
+                      <p>
+                        <span>Waiver RAI Response</span>
+                        <strong>
+                          <span>*</span>
+                        </strong>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Official response to CMS to support RAI inquiries for the
-                        Waiver submission</span></p>
+                      <p>
+                        <span>
+                          Official response to CMS to support RAI inquiries for
+                          the Waiver submission
+                        </span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Other</span></p>
+                      <p>
+                        <span>Other</span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Any other documents or spreadsheets that are supplemental to
-                        the state's response to RAI </span></p>
+                      <p>
+                        <span>
+                          Any other documents or spreadsheets that are
+                          supplemental to the state's response to RAI{" "}
+                        </span>
+                      </p>
                     </td>
                   </tr>
                 </tbody>
               </table>
             </Collapsible>
             <hr />
-            <Collapsible trigger={<TriggerCB isOpen={true} text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?" />}
-              triggerWhenOpen={<TriggerCB isOpen={false} text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?" />} >
+            <Collapsible
+              trigger={
+                <TriggerCB
+                  isOpen={true}
+                  text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"
+                />
+              }
+              triggerWhenOpen={
+                <TriggerCB
+                  isOpen={false}
+                  text="What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?"
+                />
+              }
+            >
               <br />
-              <p><span>Note: “*” indicates a required attachment.</span></p>
+              <p>
+                <span>Note: “*” indicates a required attachment.</span>
+              </p>
               <table className="faq-table">
                 <colgroup>
                   <col />
@@ -708,42 +1029,82 @@ const FAQ = () => {
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th >
-                      <p><strong><span>Attachment Name</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Attachment Name</span>
+                        </strong>
+                      </p>
                     </th>
-                    <th >
-                      <p><strong><span>Description</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Description</span>
+                        </strong>
+                      </p>
                     </th>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Waiver Extension Request*</span></p>
+                      <p>
+                        <span>Waiver Extension Request*</span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>A formal letter addressed to the Deputy Director of the
-                        Division of Disabled and Elderly Health Programs Group (DEHPG) requesting a temporary
-                        extension beyond the current approved waiver period</span></p>
+                      <p>
+                        <span>
+                          A formal letter addressed to the Deputy Director of
+                          the Division of Disabled and Elderly Health Programs
+                          Group (DEHPG) requesting a temporary extension beyond
+                          the current approved waiver period
+                        </span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Other</span></p>
+                      <p>
+                        <span>Other</span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Supplemental documents for the 1915(c) Appendix K waiver
-                        amendment</span></p>
+                      <p>
+                        <span>
+                          Supplemental documents for the 1915(c) Appendix K
+                          waiver amendment
+                        </span>
+                      </p>
                     </td>
                   </tr>
                 </tbody>
               </table>
-              <p><strong><span>Can I submit Appendix K amendments in
-                OneMAC? </span></strong><br /><span>Yes, you can submit Appendix K
-                  amendments in the 1915(c) Appendix K form.</span></p>
-              <p><strong><span>What are the attachments for a 1915(c) Appendix K
-                Waiver?</span></strong></p>
-              <p><span>The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe
-                the requirements for submitting section 1915(b) and 1915(c) waivers.</span></p>
-              <p><span>Note: “*” indicates a required attachment.</span></p>
+              <p>
+                <strong>
+                  <span>Can I submit Appendix K amendments in OneMAC? </span>
+                </strong>
+                <br />
+                <span>
+                  Yes, you can submit Appendix K amendments in the 1915(c)
+                  Appendix K form.
+                </span>
+              </p>
+              <p>
+                <strong>
+                  <span>
+                    What are the attachments for a 1915(c) Appendix K Waiver?
+                  </span>
+                </strong>
+              </p>
+              <p>
+                <span>
+                  The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R.
+                  §441.301 describe the requirements for submitting section
+                  1915(b) and 1915(c) waivers.
+                </span>
+              </p>
+              <p>
+                <span>Note: “*” indicates a required attachment.</span>
+              </p>
               <table className="faq-table">
                 <colgroup>
                   <col />
@@ -751,29 +1112,51 @@ const FAQ = () => {
                 </colgroup>
                 <tbody>
                   <tr>
-                    <th >
-                      <p><strong><span>Attachment Name</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Attachment Name</span>
+                        </strong>
+                      </p>
                     </th>
-                    <th >
-                      <p><strong><span>Description</span></strong></p>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Description</span>
+                        </strong>
+                      </p>
                     </th>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>1915(c) Appendix K Amendment Waiver Template*</span></p>
+                      <p>
+                        <span>
+                          1915(c) Appendix K Amendment Waiver Template*
+                        </span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Official amendments to 1915(c) waiver programs addressing or
-                        in response to Disasters or Emergencies.</span></p>
+                      <p>
+                        <span>
+                          Official amendments to 1915(c) waiver programs
+                          addressing or in response to Disasters or Emergencies.
+                        </span>
+                      </p>
                     </td>
                   </tr>
                   <tr>
                     <td className="confluenceTd">
-                      <p><span>Other</span></p>
+                      <p>
+                        <span>Other</span>
+                      </p>
                     </td>
                     <td className="confluenceTd">
-                      <p><span>Supplemental documents for the 1915(c) Appendix K waiver
-                        amendment</span></p>
+                      <p>
+                        <span>
+                          Supplemental documents for the 1915(c) Appendix K
+                          waiver amendment
+                        </span>
+                      </p>
                     </td>
                   </tr>
                 </tbody>
@@ -781,25 +1164,29 @@ const FAQ = () => {
             </Collapsible>
             <hr />
             <div className="faq-misc-points">
-            <h4>What should we do if we don’t receive a confirmation email?</h4>
-            <p>
-              Refresh your inbox, check your SPAM filters, then contact the MACPro
-              Help Desk <a href={`mailto:${helpDeskContact.email}`}>
-                {helpDeskContact.email}
-              </a>{" "}
-              or call {helpDeskContact.phone} or contact your state lead.
-            </p>
-            <h4>Is this considered the official state submission?</h4>
-            <p>
-              Yes, as long as you have the electronic receipt (confirmation email).
-              Your submission is considered your official state submission and will
-              only be considered received by CMS if you have received the electronic
-              receipt. You should receive an email confirmation that the formal
-              action was received along with information about the 90th day. If you
-              do not receive a confirmation email for your SPA or waiver
-              submissions, please contact your state lead or your state’s CMS lead
-              for HCBS or managed care.
-            </p>
+              <h4>
+                What should we do if we don’t receive a confirmation email?
+              </h4>
+              <p>
+                Refresh your inbox, check your SPAM filters, then contact the
+                MACPro Help Desk{" "}
+                <a href={`mailto:${helpDeskContact.email}`}>
+                  {helpDeskContact.email}
+                </a>{" "}
+                or call {helpDeskContact.phone} or contact your state lead.
+              </p>
+              <h4>Is this considered the official state submission?</h4>
+              <p>
+                Yes, as long as you have the electronic receipt (confirmation
+                email). Your submission is considered your official state
+                submission and will only be considered received by CMS if you
+                have received the electronic receipt. You should receive an
+                email confirmation that the formal action was received along
+                with information about the 90th day. If you do not receive a
+                confirmation email for your SPA or waiver submissions, please
+                contact your state lead or your state’s CMS lead for HCBS or
+                managed care.
+              </p>
             </div>
           </div>
         </div>

@@ -32,7 +32,7 @@ module.exports = {
         browser.useXpath().expect.element(text_next_hhs_logo).to.be.visible;
         browser.useXpath().expect.element(email_footer).to.be.visible;
         browser.useXpath().expect.element(address_footer).to.be.visible;
-        browser.useXpath().assert.containsText(email_footer, "Email MACPro_HelpDesk@cms.hhs.gov for help or feedback.");
+        browser.useXpath().assert.containsText(email_footer, "Email OneMAC_Helpdesk@cms.hhs.gov for help or feedback.");
         browser.useXpath().assert.containsText(address_footer, "7500 Security Boulevard Baltimore, MD 21244");
         browser.useCss();
         login['Login with cms_approvers'](browser);
@@ -74,7 +74,7 @@ module.exports = {
         browser.useXpath().expect.element(text_next_hhs_logo).to.be.visible;
         browser.useXpath().expect.element(email_footer).to.be.visible;
         browser.useXpath().expect.element(address_footer).to.be.visible;
-        browser.useXpath().assert.containsText(email_footer, "Email MACPro_HelpDesk@cms.hhs.gov for help or feedback.");
+        browser.useXpath().assert.containsText(email_footer, "Email OneMAC_Helpdesk@cms.hhs.gov for help or feedback.");
         browser.useXpath().assert.containsText(address_footer, "7500 Security Boulevard Baltimore, MD 21244");
         browser.useCss();
     },
