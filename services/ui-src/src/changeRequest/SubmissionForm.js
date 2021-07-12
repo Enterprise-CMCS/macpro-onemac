@@ -21,7 +21,7 @@ import ScrollToTop from "../components/ScrollToTop";
 import config from "../utils/config";
 
 const leavePageConfirmMessage =
-  "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?";
+  "<strong>If you leave this page</strong>, you will lose your progress on this form. Are you sure you want to proceed?";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -47,7 +47,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
     useState("");
 
-  // Rename to Display instead of status messsage ? 
+  // Rename to Display instead of status messsage ?
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
     useState({
       statusLevel: "error",
@@ -222,60 +222,65 @@ export const SubmissionForm = ({ changeRequestType }) => {
       statusMessage: validateTransmittalNumber(changeRequest.transmittalNumber),
     };
 
-    let existMessages = []
+    let existMessages = [];
 
-    if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber){
-      const promises = transmittalNumberDetails.idExistValidations.map((idExistValidation) => {
-        let checkingNumber = changeRequest.transmittalNumber;
+    if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber) {
+      const promises = transmittalNumberDetails.idExistValidations.map(
+        (idExistValidation) => {
+          let checkingNumber = changeRequest.transmittalNumber;
 
-        if (idExistValidation.existenceRegex !== undefined) {
-          checkingNumber = changeRequest.transmittalNumber.match(
-            idExistValidation.existenceRegex
-          )[0];
+          if (idExistValidation.existenceRegex !== undefined) {
+            checkingNumber = changeRequest.transmittalNumber.match(
+              idExistValidation.existenceRegex
+            )[0];
+          }
+
+          return ChangeRequestDataApi.packageExists(checkingNumber);
         }
+      );
 
-        return ChangeRequestDataApi.packageExists(checkingNumber)
-      })
+      Promise.all(promises)
+        .then((results) => {
+          results.map((dupID, key) => {
+            const correspondingValidation =
+              transmittalNumberDetails.idExistValidations[key];
+            let tempMessage;
 
-      Promise.all(promises).then((results) => {
-        results.map((dupID, key) => {
-          const correspondingValidation = transmittalNumberDetails.idExistValidations[key]
-          let tempMessage
-
-          // ID does not exist but it should exist
-          if (!dupID && correspondingValidation.idMustExist) {
-            if (correspondingValidation.errorLevel === "error") {
-              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+            // ID does not exist but it should exist
+            if (!dupID && correspondingValidation.idMustExist) {
+              if (correspondingValidation.errorLevel === "error") {
+                tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+              } else {
+                tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+              }
             }
-          }
-          // ID exists but it should NOT exist
-          else if (dupID && !correspondingValidation.idMustExist) {
-            if (correspondingValidation.errorLevel === "error") {
-              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+            // ID exists but it should NOT exist
+            else if (dupID && !correspondingValidation.idMustExist) {
+              if (correspondingValidation.errorLevel === "error") {
+                tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+              } else {
+                tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+              }
             }
-          }
 
-          // if we got a message through checking, then we should add it to the existMessages array
-          const messageToAdd = {
-            statusLevel: correspondingValidation.errorLevel,
-            statusMessage: tempMessage
-          }
-          tempMessage && existMessages.push(messageToAdd)
+            // if we got a message through checking, then we should add it to the existMessages array
+            const messageToAdd = {
+              statusLevel: correspondingValidation.errorLevel,
+              statusMessage: tempMessage,
+            };
+            tempMessage && existMessages.push(messageToAdd);
+          });
         })
-      }).then(() => {
-        if (existMessages.length > 0) {
-          displayMessage = existMessages[0];
-          setTransmittalNumberStatusMessage(displayMessage);
-        } else {
-          setTransmittalNumberStatusMessage(displayMessage);
-        }
-      })
+        .then(() => {
+          if (existMessages.length > 0) {
+            displayMessage = existMessages[0];
+            setTransmittalNumberStatusMessage(displayMessage);
+          } else {
+            setTransmittalNumberStatusMessage(displayMessage);
+          }
+        });
     } else {
-      displayMessage = formatMessage
+      displayMessage = formatMessage;
       setTransmittalNumberStatusMessage(displayMessage);
     }
 
@@ -286,7 +291,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
-    validateTransmittalNumber
+    validateTransmittalNumber,
   ]);
 
   /**
