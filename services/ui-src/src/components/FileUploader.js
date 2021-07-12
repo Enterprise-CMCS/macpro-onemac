@@ -6,7 +6,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { formatList } from "../utils";
 
-const MAX_FILE_SIZE_BYTES = config.MAX_ATTACHMENT_SIZE_MB * 1024 * 1024;
+/** adjust to approximately 80 MB **/
+const MAX_FILE_SIZE_BYTES = 1024 * 1024 * (config.MAX_ATTACHMENT_SIZE_MB - 3);
 
 /**
  * Provides a file uploader component with a set of required and optional uploads.
@@ -171,6 +172,7 @@ export default class FileUploader extends Component {
     for (let file of files) {
       // Adds error message if any of the files are too large
       if (file.size > MAX_FILE_SIZE_BYTES) {
+        window.alert(SIZE_TOO_LARGE_MESSAGE);
         errorMessages.push(SIZE_TOO_LARGE_MESSAGE);
         continue;
       }
