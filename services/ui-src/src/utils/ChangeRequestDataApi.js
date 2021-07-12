@@ -1,5 +1,4 @@
-import { API } from "aws-amplify";
-import { Auth } from "aws-amplify";
+import { API, Auth, Storage } from "aws-amplify";
 
 /**
  * Singleton class to perform operations with the change request backend.
