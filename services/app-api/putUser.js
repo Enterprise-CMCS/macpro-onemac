@@ -44,7 +44,10 @@ const validateInput = (input) => {
     attributes: Joi.array()
       // When type is state then state attribute is required and must be valid //
       .when("type", {
-        is: Joi.string().valid(USER_TYPE.STATE_SUBMITTER, USER_TYPE.STATE_ADMIN),
+        is: Joi.string().valid(
+          USER_TYPE.STATE_SUBMITTER,
+          USER_TYPE.STATE_ADMIN
+        ),
         then: Joi.array().items(
           Joi.object({
             stateCode: Joi.string()
@@ -485,6 +488,12 @@ const getLatestAttribute = (attribs) =>
 // Construct email to the authorities with the role request info //
 const constructRoleAdminEmails = (recipients, input) => {
   const userType = input.type;
+  let stateText;
+  if (roleLabels[userType] == "State Admin") {
+    stateText = ` for ${input.attributes[0].stateCode}`;
+  } else {
+    stateText = "";
+  }
   const email = {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: recipients,
@@ -492,11 +501,7 @@ const constructRoleAdminEmails = (recipients, input) => {
   email.HTML = `
     <p>Hello,</p>
 
-    There is a new OneMAC Portal ${
-      roleLabels[input.type]
-    } access request waiting from ${input.firstName} ${
-    input.lastName
-  } for your review. 
+    There is a new OneMAC Portal ${roleLabels[userType]} access request${stateText} from ${input.firstName} ${input.lastName} waiting for your review. 
     Please log into your User Management Dashboard to see the pending request.
 
     <p>Thank you!</p>`;
