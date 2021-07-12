@@ -24,9 +24,10 @@ class ChangeRequestDataApi {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
-      return await API.post("changeRequestAPI", "/submit", {
-        body: data,
-      });
+      console.log("DEBUG:(" + JSON.stringify(data) + "):");
+      //return await API.post("changeRequestAPI", "/submit", {
+      //  body: data,
+      //});
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
