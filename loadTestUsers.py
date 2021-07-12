@@ -212,7 +212,7 @@ if __name__ == "__main__":
             )
             sys.exit(101)
 
-        seed_cognito(seed_users + devs + UNREGISTERED_USERS, user_pool_id, "Passw0rd!")
+        seed_cognito(seed_users + devs + UNREGISTERED_USERS, user_pool_id, os.environ.get("COGNITO_TEST_USERS_PASSWORD"))
 
         # system admin user is populated before this script is run
         if len(scan_dynamo(args.stage)["Items"]) < 2:

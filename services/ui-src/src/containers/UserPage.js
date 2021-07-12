@@ -320,32 +320,31 @@ const UserPage = () => {
          )
     } else {
     return (
-      <div className="ds-l-col--6">
+      <div className="right-column">
         <h2 id="accessHeader">{heading}</h2>
-        <div className="gradient-border" />
         <dl>
           {accesses.map(({ state, status, contacts }) => (
-              <div className="access-card-container" key={state ?? "only-one"}>
-                <div className="gradient-border" />
-                <div className="state-access-card">
-                  {userType === ROLES.STATE_SUBMITTER &&
+            <div className="access-card-container" key={state ?? "only-one"}>
+              <div className="gradient-border" />
+              <div className="state-access-card">
+                {userType === ROLES.STATE_SUBMITTER &&
                   (status === "active" || status === "pending") && (
-                      <button
-                          className="close-button"
-                          onClick={() => xClicked(state)}
-                      >
-                        {CLOSING_X_IMAGE}
-                      </button>
+                    <button
+                      className="close-button"
+                      onClick={() => xClicked(state)}
+                    >
+                      {CLOSING_X_IMAGE}
+                    </button>
                   )}
-                  {!!state && <dt>{territoryMap[state] || state}</dt>}
-                  <dd>
-                    <em>{ACCESS_LABELS[status] || status}</em>
-                    <br />
-                    <br />
-                    <ContactList contacts={contacts} userType={userType} />
-                  </dd>
-                </div>
+                {!!state && <dt>{territoryMap[state] || state}</dt>}
+                <dd>
+                  <em>{ACCESS_LABELS[status] || status}</em>
+                  <br />
+                  <br />
+                  <ContactList contacts={contacts} userType={userType} />
+                </dd>
               </div>
+            </div>
           ))}
         </dl>
         {userType === ROLES.STATE_SUBMITTER && (
@@ -410,27 +409,13 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
-  const helpdeskMessage = (userType) => {
-    if (userType !== "helpdesk") {
-      return (
-        <>
-          If you have questions, please contact the MACPro Help Desk at{" "}
-          <a href={`mailto:${helpDeskContact.email}`}>
-            {helpDeskContact.email}
-          </a>{" "}
-          or call{" "}
-          <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
-        </>
-      );
-    }
-  };
   return (
     <div>
       <PageTitleBar heading="User Profile" />
       <AlertBar alertCode={alertCode} />
       <div className="profile-container">
         <div className="ds-l-row">
-          <div className="ds-l-col--6">
+          <div className="left-column">
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
             </h2>
