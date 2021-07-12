@@ -43,7 +43,7 @@ export async function uploadFiles(fileArray) {
           resolve(results);
         })
         .catch((error) => {
-          if (error.message.indexOf("status code 403") !== -1) {
+          if (error.indexOf("No credentials") !== -1) {
             reject("SESSION_EXPIRED");
           } else {
             console.log("Error uploading.", error);

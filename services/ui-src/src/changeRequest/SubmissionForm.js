@@ -348,7 +348,13 @@ export const SubmissionForm = ({ changeRequestType }) => {
       limitSubmit.current = true;
       saveForm();
     }
-  }, [isSubmitting, transmittalNumberStatusMessage, changeRequest, uploader]);
+  }, [
+    isSubmitting,
+    transmittalNumberStatusMessage,
+    changeRequest,
+    uploader,
+    alertCode,
+  ]);
 
   /**
    * Submit the new change request.

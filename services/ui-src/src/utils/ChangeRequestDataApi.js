@@ -26,7 +26,6 @@ class ChangeRequestDataApi {
         body: data,
       });
     } catch (error) {
-      console.log("data: ", data);
       handleApiError(
         error,
         "USER_SUBMISSION_FAILED",
