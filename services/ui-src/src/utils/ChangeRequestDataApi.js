@@ -50,6 +50,17 @@ class ChangeRequestDataApi {
         "changeRequestAPI",
         `/get/${id}/${userId}`
       );
+      if (changeRequest.uploads) {
+        let i;
+        // Use a for loop instead of forEach to stay in the context of this async function.
+        for (i = 0; i < changeRequest.uploads.length; i++) {
+          var fromStorage = await Storage.get(changeRequest.uploads[i].s3Key, {
+            level: "protected",
+            identityId: userId, // the identityId of that user
+          });
+          changeRequest.uploads[i].url = fromStorage.split("?", 1)[0];
+        }
+      }
       return changeRequest;
     } catch (error) {
       console.log(`There was an error fetching ID ${id}.`, error);
