@@ -254,7 +254,7 @@ const UserPage = () => {
     }
 
     return (
-      <div className="ds-l-col--6">
+      <div className="right-column">
         <h2 id="accessHeader">{heading}</h2>
         <dl>
           {accesses.map(({ state, status, contacts }) => (
@@ -348,7 +348,7 @@ const UserPage = () => {
       <AlertBar alertCode={alertCode} />
       <div className="profile-container">
         <div className="ds-l-row">
-          <div className="ds-l-col--6">
+          <div className="left-column">
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
             </h2>

@@ -309,6 +309,17 @@ input[type="file"] {
     color: $color-gray;
   }
 
+  // contains profile information
+  .left-column {
+    @extend .ds-l-col--6;
+    margin-bottom: 9rem;
+  }
+
+  // contains access management/status of access
+  .right-column {
+    @extend .ds-l-col--6;
+  }
+
   .disclaimer-message {
     @extend .ds-text-body--md;
     @extend .ds-u-measure--wide;
