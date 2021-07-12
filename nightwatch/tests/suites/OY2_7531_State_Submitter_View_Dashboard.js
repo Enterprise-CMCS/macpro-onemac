@@ -24,7 +24,9 @@ module.exports = {
         browser.click(manage_account_link);
         browser.pause(2000);
         //check on state access management for state submitter user 
-        let state_access_management = "(//h2)[2]";
+
+        let state_access_management = "//*[@id='accessHeader']";
+
         let maryland = "(//div[@class='state-access-card']/dt)[1]";
         let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
         //check if each element is visible
