@@ -72,10 +72,10 @@ module.exports = {
         browser.pause(3000);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(2000);
+        browser.click("[value='Submit']").pause(4000);
 
         // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
+        browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID).pause(4000);
         browser.useCss();
         browser.click("xpath", "(//table//td)[1]/a").pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
@@ -126,7 +126,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(2000);
 
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
