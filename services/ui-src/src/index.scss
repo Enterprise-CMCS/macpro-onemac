@@ -1605,8 +1605,13 @@ input[type="file"] {
   }
 }
 
-.cms-group-section {
+.cms-group-and-division-box {
+  @extend .ds-u-border-bottom--1;
+  @extend .ds-u-border-left--1;
+  @extend .ds-u-border-right--1;
+}
 
+.cms-group-section {
       padding-bottom: 10px;
       padding-top: 10px;
       font-size: 2rem;

@@ -280,7 +280,7 @@ const UserPage = () => {
               {accesses.map(({ state, status, contacts }) => (
                   <div className="access-card-container" key={state ?? "only-one"}>
                     <div className="gradient-border" />
-                    <div className="ds-u-border--1" >
+                    <div className="cms-group-and-division-box ">
                             <div className="cms-group-section">
                               <h3>Group</h3>
                               <br/>
