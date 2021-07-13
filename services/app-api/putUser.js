@@ -519,48 +519,35 @@ const constructRoleAdminEmails = (recipients, input) => {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: recipients,
   };
-  email.HTML = `
-    <p>Hello,</p>
+  const typeText = roleLabels[input.type] ?? "User";
 
-    There is a new OneMAC Portal ${roleLabels[userType]} access request${stateText} from ${input.firstName} ${input.lastName} waiting for your review. 
-    Please log into your User Management Dashboard to see the pending request.
+  if (
+    input.type === USER_TYPE.STATE_SUBMITTER &&
+    input.userEmail === input.doneBy &&
+    input.attributes[0].status === USER_STATUS.REVOKED
+  ) {
+    email.Subject =
+      `OneMAC Portal State access for ` +
+      input.attributes[0].stateCode +
+      ` Access self-revoked by the user`;
+    email.HTML = `
+      <p>Hello,</p>
 
-    <p>Thank you!</p>`;
+      The OneMAC Portal State access for ${input.attributes[0].stateCode}
+      has been self-revoked by the user. Please log into your User
+      Management Dashboard to see the updated access.
 
-  let typeText = "User";
-  let newSubject = "";
+      <p>Thank you!</p>`;
+  } else {
+    email.Subject = `New OneMAC Portal ${typeText} Access Request`;
+    email.HTML = `
+      <p>Hello,</p>
 
-  switch (userType) {
-    case USER_TYPE.STATE_SUBMITTER:
-      typeText = "State Submitter";
+      There is a new OneMAC Portal ${typeText} access request${stateText} from
+      ${input.firstName} ${input.lastName} waiting for your review.  Please log into your
+      User Management Dashboard to see the pending request.
 
-      if (
-        input.userEmail === input.doneBy &&
-        input.attributes[0].status === USER_STATUS.REVOKED
-      ) {
-        newSubject =
-          `OneMAC Portal State access for ` +
-          input.attributes[0].stateCode +
-          ` Access self-revoked by the user`;
-        email.HTML =
-          `<p>Hello,</p>
-
-          The OneMAC Portal State access for ` +
-          input.attributes[0].stateCode +
-          ` has been self-revoked by the user. Please log into your User Management Dashboard to see the updated access.
-
-          <p>Thank you!</p>`;
-      }
-      break;
-    case USER_TYPE.STATE_ADMIN:
-      typeText = "State Admin";
-      break;
-    case USER_TYPE.CMS_APPROVER:
-      typeText = "CMS Approver";
-      break;
-    case USER_TYPE.HELPDESK:
-      typeText = "Helpdesk User";
-      break;
+      <p>Thank you!</p>`;
   }
 
   return { email };
