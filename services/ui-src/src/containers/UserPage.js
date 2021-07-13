@@ -11,7 +11,6 @@ import {
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
-import { helpDeskContact } from "../libs/helpDeskContact";
 import { getAlert } from "../libs/error-mappings";
 import { ALERTS_MSG } from "../libs/alert-messages";
 import UserDataApi from "../utils/UserDataApi";
@@ -44,7 +43,7 @@ const ContactList = ({ contacts, userType }) => {
 
   return (
     <p>
-      <b>{label}:</b>{" "}
+      {label}:{" "}
       {contacts.map(({ firstName, lastName, email }, idx) => (
         <React.Fragment key={email}>
           <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
@@ -94,21 +93,35 @@ const UserPage = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
+  const [phoneNumber, setPhoneNumber] = useState(userData?.phoneNumber || "");
+  const [isEditingPhone, setIsEditingPhone] = useState(false);
 
   let userType = userData?.type ?? "user";
+  const userTypeDisplayText = userTypes[userType];
 
-  const onPhoneNumberEdit = useCallback(
+  const onPhoneNumberCancel = useCallback(() => {
+    setIsEditingPhone(false);
+  }, [setIsEditingPhone]);
+
+  const onPhoneNumberEdit = useCallback(() => {
+    setIsStateSelectorVisible(false); // closes out state selector if we're editing the phone section
+    setIsEditingPhone(true);
+  }, [setIsStateSelectorVisible, setIsEditingPhone]);
+
+  const onPhoneNumberSubmit = useCallback(
     async (newNumber) => {
       try {
         var result = await UserDataApi.updatePhoneNumber(email, newNumber);
         if (result === RESPONSE_CODE.USER_SUBMITTED) result = "NONE"; // do not show success message
         setAlertCode(result);
+        setPhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
       }
+      setIsEditingPhone(false);
     },
-    [email]
+    [email, setPhoneNumber]
   );
 
   const signupUser = useCallback(
@@ -214,12 +227,15 @@ const UserPage = () => {
     return (
       <Button
         className="add-state-button"
-        onClick={() => setIsStateSelectorVisible(true)}
+        onClick={() => {
+          setIsEditingPhone(false); // closes out the phone edit mode if we want to modify state access through state selector
+          setIsStateSelectorVisible(true);
+        }}
       >
         <img src={addStateButton} alt="add state or territiory" />
       </Button>
     );
-  }, [setIsStateSelectorVisible]);
+  }, [setIsEditingPhone, setIsStateSelectorVisible]);
 
   const accessSection = useMemo(() => {
     let heading;
@@ -239,27 +255,30 @@ const UserPage = () => {
     }
 
     return (
-      <div className="ds-l-col--6">
-        <h3>{heading}</h3>
-        <dl className="state-access-cards">
+      <div className="right-column">
+        <h2 id="accessHeader">{heading}</h2>
+        <dl>
           {accesses.map(({ state, status, contacts }) => (
-            <div className="state-access-card" key={state ?? "only-one"}>
-              {userType === ROLES.STATE_SUBMITTER &&
-                (status === "active" || status === "pending") && (
-                  <button
-                    className="close-button"
-                    onClick={() => xClicked(state)}
-                  >
-                    {CLOSING_X_IMAGE}
-                  </button>
-                )}
-              {!!state && <dt>{territoryMap[state] || state}</dt>}
-              <dd>
-                <em>{ACCESS_LABELS[status] || status}</em>
-                <br />
-                <br />
-                <ContactList contacts={contacts} userType={userType} />
-              </dd>
+            <div className="access-card-container" key={state ?? "only-one"}>
+              <div className="gradient-border" />
+              <div className="state-access-card">
+                {userType === ROLES.STATE_SUBMITTER &&
+                  (status === "active" || status === "pending") && (
+                    <button
+                      className="close-button"
+                      onClick={() => xClicked(state)}
+                    >
+                      {CLOSING_X_IMAGE}
+                    </button>
+                  )}
+                {!!state && <dt>{territoryMap[state] || state}</dt>}
+                <dd>
+                  <em>{ACCESS_LABELS[status] || status}</em>
+                  <br />
+                  <br />
+                  <ContactList contacts={contacts} userType={userType} />
+                </dd>
+              </div>
             </div>
           ))}
         </dl>
@@ -324,21 +343,6 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
-  const helpdeskMessage = (userType) => {
-    if (userType !== "helpdesk") {
-      return (
-        <>
-          If you have questions, please contact the MACPro Help Desk at{" "}
-          <a href={`mailto:${helpDeskContact.email}`}>
-            {helpDeskContact.email}
-          </a>{" "}
-          or call{" "}
-          <a href={`tel:${helpDeskContact.phone}`}>{helpDeskContact.phone}</a>.
-        </>
-      );
-    }
-  };
-
   function closedAlert() {
     setAlertCode("NONE");
   }
@@ -348,25 +352,34 @@ const UserPage = () => {
       <PageTitleBar heading="User Profile" />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
-        <div className="subheader-message">
-          Below is the account information for your role as a{" "}
-          {userTypes[userType] ?? userType}. Your name and email cannot be
-          edited in OneMAC. It can be changed in your IDM profile.
-          {helpdeskMessage(userType)}
-        </div>
         <div className="ds-l-row">
-          <div className="ds-l-col--6">
-            <h3>Profile Information</h3>
+          <div className="left-column">
+            <h2 id="profileInfoHeader" className="profileTest">
+              Profile Information
+            </h2>
             <Review heading="Full Name">
               {getFullName(firstName, lastName)}
             </Review>
+            <Review heading="Role">
+              {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
+            </Review>
             <Review heading="Email">{email}</Review>
             <PhoneNumber
+              isEditing={isEditingPhone}
               initialValue={userData.phoneNumber}
-              onSubmit={onPhoneNumberEdit}
+              phoneNumber={phoneNumber}
+              onCancel={onPhoneNumberCancel}
+              onEdit={onPhoneNumberEdit}
+              onSubmit={onPhoneNumberSubmit}
             />
           </div>
           {accessSection}
+        </div>
+        <div id="profileDisclaimer" className="disclaimer-message">
+          This page contains Profile Information for the{" "}
+          {userTypeDisplayText ?? userType}. The information cannot be changed
+          in the portal. However, the {userTypeDisplayText ?? userType} can
+          change their contact phone number in their account.
         </div>
       </div>
     </div>

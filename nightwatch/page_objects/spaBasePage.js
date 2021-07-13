@@ -3,7 +3,7 @@ const path = require('path');
 const commands = {
 
     // SS-YY-NNNN-xxxx or SS-YY-NNNN
-    getTransmitNumber: function (optional = true, state = "VA", file = "spa.txt") {
+    getTransmitNumber: function (optional = true, state = "MD", file = "spa.txt") {
         let rand = (min = 0, max = 10000) => this.props.getRandomNumber(min, max);
         let group = [state, rand(0, 100), rand()];
         if (optional) {
@@ -19,7 +19,7 @@ const commands = {
     // new - SS.#### or SS.#####
     // amendment - SS.####.R##.M## or SS.#####.R##.M##
     // renewal - SS.####.R## or SS.#####.R##
-    getWaiverNumber: function (waiverAction = 'new',state = 'VA', option = false) {
+    getWaiverNumber: function (waiverAction = 'new',state = 'MD', option = false) {
         let rand = (min = 0, max = 100000) => this.props.getRandomNumber(min, max);
         let group = (waiverAction === 'new' && option === true) ? [state, rand()] : [state, rand(0, 10000)];
 
@@ -40,7 +40,7 @@ const commands = {
     // Note that the base waiver number is the first set of numbers which can be either 4 or 5 digits
     // SS.####.R##.##
     // SS.#####.R##.##
-    getWaiverAppKNumber: function (state = "VA") {
+    getWaiverAppKNumber: function (state = "MD") {
         const baseNumLengthOptions = [4, 5];
         const randomBaseNumLengthOption = baseNumLengthOptions[Math.floor(Math.random() * baseNumLengthOptions.length)]
         let group = [state, getRandomNumberString(randomBaseNumLengthOption), `R${getRandomNumberString(2)}`, getRandomNumberString(2)];
