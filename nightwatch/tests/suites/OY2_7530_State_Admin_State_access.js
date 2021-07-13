@@ -47,8 +47,8 @@ module.exports = {
         let profile_information = '(//h3)[1]';
         let full_name = '(//div/h3)[1]';
         let email = '(//div/h3)[3]';
-        let phone_number = '(//h3)[4]';
-        let state_access_management = '(//h3)[5]';
+        let phone_number = '//label[@class="ds-c-label"]';
+        let state_access_management = '(//h2)[2]';
         let state_admin_nightwatch = '(//div/div[@class="ds-c-review__body"])[1]';
         let state_admin_nightwatch_email = '(//div/div[@class="ds-c-review__body"])[2]';
         let maryland = '//div/dt';

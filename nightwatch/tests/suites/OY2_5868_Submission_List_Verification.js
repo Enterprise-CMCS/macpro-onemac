@@ -61,7 +61,8 @@ module.exports = {
         .click("[value='Submit']").pause(5000);
         
         browser.refresh();
-        browser.pause(3000);
+        browser.pause(5000);
+        browser.refresh();
         
 
         // Verify the SPA on Submission List 
