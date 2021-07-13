@@ -7,7 +7,7 @@ import { faTimes } from "@fortawesome/free-solid-svg-icons";
 import { formatList } from "../utils";
 
 /** adjust to approximately 80 MB **/
-const MAX_FILE_SIZE_BYTES = 1024 * 1024 * (config.MAX_ATTACHMENT_SIZE_MB - 3);
+const MAX_FILE_SIZE_BYTES = 1024 * 1024 * (config.MAX_ATTACHMENT_SIZE_MB);
 
 /**
  * Provides a file uploader component with a set of required and optional uploads.
