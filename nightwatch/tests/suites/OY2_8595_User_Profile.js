@@ -22,12 +22,12 @@ module.exports = {
         browser.click(manage_account_link); 
         browser.pause(2000);
         //browser.expect.element(".ds-l-col--6>h3").to.be.present;
-        let profile_information = "(//div[@class='ds-l-col--6']/h3)[1]";
-        let full_name = "(//h3)[2]";
+        let profile_information = "//*[@id='profileInfoHeader']";
+        let full_name = "(//h3)[1]";
         let STATE_SUBMITTER_name ="(//div[@class='ds-c-review__body'])[1]";
         let email = "(//h3)[3]";
-        let email_address = "(//div[@class='ds-c-review__body'])[2]";
-        let phone_number = "(//h3)[4]";
+        let email_address = "(//div[@class='ds-c-review__body'])[3]";
+        let phone_number = "//*[@id='phoneSection']";
         browser.useXpath().expect.element(profile_information).to.be.visible;
         browser.useXpath().expect.element(full_name).to.be.visible;
         browser.useXpath().expect.element(STATE_SUBMITTER_name).to.be.visible;

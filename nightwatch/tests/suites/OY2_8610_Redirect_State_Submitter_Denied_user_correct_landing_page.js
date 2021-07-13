@@ -37,7 +37,7 @@ module.exports = {
         browser.useXpath().expect.element(management_profile_link).to.be.visible;
         browser.click(management_profile_link);
         browser.pause(500);
-        let profile_information_title = "(//h3)[1]";
+        let profile_information_title = "//*[@id='profileInfoHeader']";
         browser.useXpath().expect.element(profile_information_title).to.be.visible;
         browser.useCss();
     },
