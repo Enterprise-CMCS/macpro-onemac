@@ -96,20 +96,28 @@ const validateInput = (input) => {
     type: Joi.valid(
       ...Object.values(USER_TYPE).filter((v) => v !== USER_TYPE.SYSTEM_ADMIN)
     ).required(),
-    group: Joi.any().when("..", {
-      is: Joi.object({ isPutUser: true, type: USER_TYPE.CMS_REVIEWER }),
+    group: Joi.any().when("type", {
+      is: USER_TYPE.CMS_REVIEWER,
       then: Joi.any()
         .valid(...groupData.map(({ id }) => id))
-        .required(),
+        .when("isPutUser", {
+          is: true,
+          then: Joi.any().required(),
+          otherwise: Joi.any().optional(),
+        }),
       otherwise: Joi.any().forbidden(),
     }),
-    division: Joi.any().when("..", {
-      is: Joi.object({ isPutUser: true, type: USER_TYPE.CMS_REVIEWER }),
+    division: Joi.any().when("type", {
+      is: USER_TYPE.CMS_REVIEWER,
       then: Joi.any()
         .valid(
           ...groupData.flatMap(({ divisions }) => divisions.map(({ id }) => id))
         )
-        .required(),
+        .when("isPutUser", {
+          is: true,
+          then: Joi.any().required(),
+          otherwise: Joi.any().optional(),
+        }),
       otherwise: Joi.any().forbidden(),
     }),
   });
