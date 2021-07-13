@@ -24,7 +24,12 @@ const main = handler(async (event) => {
     let input = isObject(event.body) ? event.body : JSON.parse(event.body);
     console.log("PutUser Lambda call for: ", JSON.stringify(input));
     // do a pre-check for things that should stop us immediately //
-    validateInput(input);
+    const valError = validateInput(input);
+    if (valError) {
+      console.error("Validation error:", valError);
+      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+    }
+    console.log("Initial validation successful.");
 
     let { user, doneByUser } = await retrieveUsers(input);
     // populate user atributes after ensuring data validity //
@@ -42,7 +47,7 @@ const main = handler(async (event) => {
 
 const EMAIL_SCHEMA = { tlds: { allow: false } };
 
-const validateInput = (input) => {
+export const validateInput = (input) => {
   const userSchema = Joi.object().keys({
     userEmail: Joi.string().email(EMAIL_SCHEMA).required(),
     doneBy: Joi.string().email(EMAIL_SCHEMA).required(),
@@ -126,12 +131,7 @@ const validateInput = (input) => {
     ? { error: "Lambda body is missing" }
     : userSchema.validate(input);
 
-  if (result.error) {
-    console.log("Validation error:", result.error);
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-  console.log("Initial validation successful.");
-  return;
+  return result.error;
 };
 
 const getUser = async (userEmail) => {
