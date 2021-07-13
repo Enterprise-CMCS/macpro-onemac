@@ -44,11 +44,11 @@ module.exports = {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
         //element on account management page
-        let profile_information = '//*[@id="profileInfoHeader"]';
+        let profile_information = '(//h3)[1]';
         let full_name = '(//div/h3)[1]';
         let email = '(//div/h3)[3]';
-        let phone_number = '//*[@id="phoneSection"]';
-        let state_access_management = '//*[@id="accessHeader"]';
+        let phone_number = '(//h3)[4]';
+        let state_access_management = '(//h3)[5]';
         let state_admin_nightwatch = '(//div/div[@class="ds-c-review__body"])[1]';
         let state_admin_nightwatch_email = '(//div/div[@class="ds-c-review__body"])[2]';
         let maryland = '//div/dt';

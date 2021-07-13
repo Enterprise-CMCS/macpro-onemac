@@ -25,7 +25,7 @@ module.exports = {
         browser.pause(2000);
         //check on state access management for state submitter user 
 
-        let state_access_management = "//*[@id='accessHeader']";
+        let state_access_management = "(//h3)[5]";
 
         let maryland = "(//div[@class='state-access-card']/dt)[1]";
         let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
