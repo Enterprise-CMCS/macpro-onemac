@@ -5,8 +5,13 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
-import { territoryCodeList, roleLabels } from "cmscommonlib";
-import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
+import {
+  USER_TYPE,
+  USER_STATUS,
+  territoryCodeList,
+  roleLabels,
+} from "cmscommonlib";
+import groupData from "cmscommonlib/groupDivision.json";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";
 
@@ -30,7 +35,7 @@ const main = handler(async (event) => {
     //
     return RESPONSE_CODE.USER_SUBMITTED;
   } catch (e) {
-    console.log(`Error executing lambda: ${JSON.stringify(e)}`);
+    console.error("Error executing lambda:", e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 });
@@ -89,11 +94,24 @@ const validateInput = (input) => {
       otherwise: Joi.string().optional(),
     }),
     type: Joi.valid(
-      USER_TYPE.STATE_SUBMITTER,
-      USER_TYPE.STATE_ADMIN,
-      USER_TYPE.CMS_APPROVER,
-      USER_TYPE.HELPDESK
+      ...Object.values(USER_TYPE).filter((v) => v !== USER_TYPE.SYSTEM_ADMIN)
     ).required(),
+    group: Joi.any().when("..", {
+      is: Joi.object({ isPutUser: true, type: USER_TYPE.CMS_REVIEWER }),
+      then: Joi.any()
+        .valid(...groupData.map(({ id }) => id))
+        .required(),
+      otherwise: Joi.any().forbidden(),
+    }),
+    division: Joi.any().when("..", {
+      is: Joi.object({ isPutUser: true, type: USER_TYPE.CMS_REVIEWER }),
+      then: Joi.any()
+        .valid(
+          ...groupData.flatMap(({ divisions }) => divisions.map(({ id }) => id))
+        )
+        .required(),
+      otherwise: Joi.any().forbidden(),
+    }),
   });
   //Todo: Add deeper validation for types //
   const result = isEmpty(input)
@@ -420,7 +438,10 @@ const collectRoleAdminEmailIds = async (input) => {
           : null;
       });
     });
-  } else if (input.type === USER_TYPE.STATE_ADMIN) {
+  } else if (
+    input.type === USER_TYPE.STATE_ADMIN ||
+    input.type === USER_TYPE.CMS_REVIEWER
+  ) {
     // get all cms approvers emails //
     // query all cms approvers
     const cmsApprovers = (await getUsersByType(USER_TYPE.CMS_APPROVER)) || [];
@@ -541,8 +562,6 @@ const constructRoleAdminEmails = (recipients, input) => {
       typeText = "Helpdesk User";
       break;
   }
-  if (newSubject) email.Subject = newSubject;
-  else email.Subject = `New OneMAC Portal ${typeText} Access Request`;
 
   return { email };
 };
