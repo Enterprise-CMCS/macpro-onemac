@@ -44,13 +44,13 @@ module.exports = {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
         //element on account management page
-        let profile_information = '(//h3)[1]';
+        let profile_information = '//h2[@id="profileInfoHeader"]';
         let full_name = '(//div/h3)[1]';
         let email = '(//div/h3)[3]';
-        let phone_number = '//label[@class="ds-c-label"]';
-        let state_access_management = '(//h2)[2]';
+        let phone_number = '//form[@id="phoneSection"]/label';
+        let state_access_management = '//h2[@id="accessHeader"]';
         let state_admin_nightwatch = '(//div/div[@class="ds-c-review__body"])[1]';
-        let state_admin_nightwatch_email = '(//div/div[@class="ds-c-review__body"])[2]';
+        let state_admin_nightwatch_email = '(//div[@class="ds-c-review__body"])[3]';
         let maryland = '//div/dt';
         let access_granted = '//div/dd/em';
         // Click on button My Account and get access to account management 
