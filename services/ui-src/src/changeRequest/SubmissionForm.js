@@ -223,6 +223,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     };
 
     let existMessages = [];
+    let result = false;
 
     if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber) {
       const promises = transmittalNumberDetails.idExistValidations.map(
@@ -234,8 +235,13 @@ export const SubmissionForm = ({ changeRequestType }) => {
               idExistValidation.existenceRegex
             )[0];
           }
-
-          return ChangeRequestDataApi.packageExists(checkingNumber);
+          try {
+            result = ChangeRequestDataApi.packageExists(checkingNumber);
+          } catch (err) {
+            console.log("error is: ", err);
+            setAlertCode(RESPONSE_CODE[err.message]);
+          }
+          return result;
         }
       );
 
@@ -292,6 +298,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     formInfo,
     transmittalNumberDetails,
     validateTransmittalNumber,
+    alertCode,
   ]);
 
   /**
