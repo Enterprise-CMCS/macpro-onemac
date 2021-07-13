@@ -309,39 +309,6 @@ input[type="file"] {
     color: $color-gray;
   }
 
-.bg-white {
-      border-bottom: 2px solid #d6d7d9;
-      padding-bottom: 16px;
-      padding-top: 16px;
-      font-size: 2rem;
-      font-family: Open Sans;
-      font-style: normal;
-      font-weight: normal;
-      font-size: 20px;
-      line-height: 27px;
-
-}
-
-.indent-32 {
-   margin-left: 32px;
-}
-
-.bg-lite-gray {
-      background: rgba(196, 196, 196, 0.1);
-      border-bottom: 2px solid #d6d7d9;
-          padding-bottom: 16px;
-          padding-top: 16px;
-
-          font-size: 2rem;
-
-          font-family: Open Sans;
-          font-style: normal;
-          font-weight: normal;
-          font-size: 20px;
-          line-height: 27px;
-
- }
-
   // contains profile information
   .left-column {
     @extend .ds-l-col--6;
@@ -1636,4 +1603,43 @@ input[type="file"] {
     text-decoration: none;
     color: $color-primary-darker;
   }
+}
+
+.cms-group-section {
+
+      padding-bottom: 10px;
+      padding-top: 10px;
+      font-size: 2rem;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: normal;
+      font-size: 20px;
+      h3 {
+       @extend .ds-c-review__heading;
+       margin-left: 32px;
+      }
+      p {
+       margin-left: 32px;
+       @extend .ds-c-review__body;
+     }
+}
+
+.cms-division-section {
+      background: rgba(196, 196, 196, 0.1);
+
+      padding-bottom: 10px;
+      padding-top: 10px;
+      font-size: 2rem;
+      color: $color-gray;
+      font-family: Open Sans;
+      font-style: normal;
+      font-weight: normal;
+      h3 {
+             @extend .ds-c-review__heading;
+             margin-left: 32px;
+            }
+      p {
+             margin-left: 32px;
+             @extend .ds-c-review__body;
+      }
 }

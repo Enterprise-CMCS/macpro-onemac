@@ -281,26 +281,21 @@ const UserPage = () => {
                   <div className="access-card-container" key={state ?? "only-one"}>
                     <div className="gradient-border" />
                     <div className="ds-u-border--1" >
-                            <div className="bg-white">
-                              <p className="indent-32">
-                              <h3 className="ds-c-review__heading">Group</h3>
+                            <div className="cms-group-section">
+                              <h3>Group</h3>
                               <br/>
-                                <div className="ds-c-review__body">
-                              {
+                              <p>{
                                 getUserGroup(
                                     groupData.group,
                                     userData.group,
                                     userData.division
                                 ).group
-                              }
-                                </div>
-                                </p>
+                              }</p>
                             </div>
-                            <div className="bg-lite-gray">
-                              <p className="indent-32">
-                              <h3 className="ds-c-review__heading">Division</h3>
+                            <div className="cms-division-section">
+                              <h3>Division</h3>
                               <br/>
-                              <div className="ds-c-review__body">
+                              <p>
                               {
                                 getUserGroup(
                                     groupData.group,
@@ -309,7 +304,6 @@ const UserPage = () => {
                                 ).division
 
                               }
-                              </div>
                               </p>
                             </div>
                     </div>
