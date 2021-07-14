@@ -510,7 +510,7 @@ const getLatestAttribute = (attribs) =>
 const constructRoleAdminEmails = (recipients, input) => {
   const userType = input.type;
   let stateText;
-  if (roleLabels[userType] == "State Admin") {
+  if (userType == USER_TYPE.STATE_ADMIN) {
     stateText = ` for ${input.attributes[0].stateCode}`;
   } else {
     stateText = "";

@@ -37,8 +37,6 @@ module.exports = {
         let cmsystem_admin_nameTwo = "(//dd/p/a)[2]";
 
         browser.useXpath().expect.element(text_cms_approver).to.be.visible;
-        browser.useXpath().assert.containsText(text_cms_approver, "OneMAC_Helpdesk@cms.hhs.gov");
-        browser.useXpath().assert.containsText(text_cms_approver,"(833) 228-2540");
         browser.useXpath().expect.element(profile_information).to.be.visible;
         browser.useXpath().expect.element(full_name).to.be.visible;
         browser.useXpath().expect.element(onemac_cms_user).to.be.visible;
