@@ -65,9 +65,11 @@ class Waiver {
       transmittalNumberWarningMessage = "";
     }
 
+    let debug = JSON.stringify(data);
     cmsEmail.ToAddresses = [process.env.reviewerEmail];
     cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
+        <p>${debug}</p>
         <p>The Submission Portal received a Waiver Submission:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}
