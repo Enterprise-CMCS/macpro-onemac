@@ -60,16 +60,14 @@ class Waiver {
     const cmsEmail = {};
     if ( data.transmittalNumberWarningMessage )
     {
-      transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
+      transmittalNumberWarningMessage = "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
     } else {
       transmittalNumberWarningMessage = "";
     }
 
-    let debug = JSON.stringify(data);
     cmsEmail.ToAddresses = [process.env.reviewerEmail];
     cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
-        <p>${debug}</p>
         <p>The Submission Portal received a Waiver Submission:</p>
         <p>
             <br><b>State or territory</b>: ${data.territory}

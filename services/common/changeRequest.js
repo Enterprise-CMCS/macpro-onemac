@@ -226,7 +226,6 @@ export const CONFIG = {
     },
     renewalTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      cmsEmailWarningMsg: "Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
       idHintText: "Must follow the format SS.####.R## or SS.#####.R##",
       idFormat: "SS.####.R## or SS.#####.R##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
