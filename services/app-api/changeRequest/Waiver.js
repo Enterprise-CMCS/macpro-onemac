@@ -58,8 +58,8 @@ class Waiver {
     let transmittalNumberWarningMessage;
 
     const cmsEmail = {};
-    if ( data.transmittalNumberWarningMessage &&
-        data.transmittalNumberWarningMessage === "According to our records, this Waiver Number already exists. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.") {
+    if ( data.transmittalNumberWarningMessage )
+    {
       transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
     } else {
       transmittalNumberWarningMessage = "";
