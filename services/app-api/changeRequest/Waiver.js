@@ -55,10 +55,15 @@ class Waiver {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
+
     const cmsEmail = {};
-    let transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
-      ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
-      : "";
+    if ( data.transmittalNumberWarningMessage &&
+        data.transmittalNumberWarningMessage === "According to our records, this Waiver Number already exists. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.") {
+      transmittalNumberWarningMessage = "Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
 
     cmsEmail.ToAddresses = [process.env.reviewerEmail];
     cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";

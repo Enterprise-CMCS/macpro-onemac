@@ -9,7 +9,7 @@ const sender = new AWS.SES({ region: "us-east-1" });
 function getSESEmailParams(email) {
   let emailParams = {
     Destination: {
-      ToAddresses: email.ToAddresses,
+      ToAddresses: "zlewis@clarityinnovates.com",
     },
     Message: {
       Body: {
