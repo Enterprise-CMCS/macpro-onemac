@@ -281,7 +281,7 @@ const UserPage = () => {
                   <div className="access-card-container" key={state ?? "only-one"}>
                     <div className="gradient-border" />
                     <div className="cms-group-and-division-box ">
-                            <div className="cms-group-section">
+                            <div className="cms-group-division-section">
                               <h3>Group</h3>
                               <br/>
                               <p>{
@@ -292,7 +292,7 @@ const UserPage = () => {
                                 ).group
                               }</p>
                             </div>
-                            <div className="cms-division-section">
+                            <div className="cms-group-division-section cms-division-background">
                               <h3>Division</h3>
                               <br/>
                               <p>
