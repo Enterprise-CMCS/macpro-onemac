@@ -508,6 +508,13 @@ const getLatestAttribute = (attribs) =>
 
 // Construct email to the authorities with the role request info //
 const constructRoleAdminEmails = (recipients, input) => {
+  const userType = input.type;
+  let stateText;
+  if (userType == USER_TYPE.STATE_ADMIN) {
+    stateText = ` for ${input.attributes[0].stateCode}`;
+  } else {
+    stateText = "";
+  }
   const email = {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: recipients,
@@ -536,8 +543,8 @@ const constructRoleAdminEmails = (recipients, input) => {
     email.HTML = `
       <p>Hello,</p>
 
-      There is a new OneMAC Portal ${typeText} access request waiting from
-      ${input.firstName} ${input.lastName} for your review.  Please log into your
+      There is a new OneMAC Portal ${typeText} access request${stateText} from
+      ${input.firstName} ${input.lastName} waiting for your review.  Please log into your
       User Management Dashboard to see the pending request.
 
       <p>Thank you!</p>`;
