@@ -399,9 +399,10 @@ export const SubmissionForm = ({ changeRequestType }) => {
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
         {formInfo.subheaderMessage && (
-          <div className="form-subheader-message">
-            {formInfo.subheaderMessage}
-          </div>
+          <div
+            className="form-subheader-message"
+            dangerouslySetInnerHTML={formInfo.subheaderMessage}
+          ></div>
         )}
         <form
           onSubmit={handleSubmit}
