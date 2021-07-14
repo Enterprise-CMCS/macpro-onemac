@@ -230,7 +230,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
         changeRequest.transmittalNumber
       ) {
         const promises = transmittalNumberDetails.idExistValidations.map(
-          (idExistValidation) => {
+          async (idExistValidation) => {
             let checkingNumber = changeRequest.transmittalNumber;
 
             if (idExistValidation.existenceRegex !== undefined) {
@@ -238,8 +238,13 @@ export const SubmissionForm = ({ changeRequestType }) => {
                 idExistValidation.existenceRegex
               )[0];
             }
-
-            return ChangeRequestDataApi.packageExists(checkingNumber);
+            try {
+              result = await ChangeRequestDataApi.packageExists(checkingNumber);
+            } catch (e) {
+              console.log("error message is: ", e.message);
+              setAlertCode(RESPONSE_CODE[e.message]);
+            }
+            return result;
           }
         );
 

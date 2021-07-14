@@ -73,9 +73,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
-
-      return answer;
+      return await API.get("changeRequestAPI", `/package-exists/${id}`);
     } catch (error) {
       handleApiError(
         error,

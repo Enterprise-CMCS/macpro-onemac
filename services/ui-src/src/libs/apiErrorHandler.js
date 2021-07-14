@@ -1,6 +1,5 @@
 const handleApiError = (err, customError, errorLog) => {
   {
-    console.log("API Error: ", errorLog);
     let message;
     if (
       (typeof err === "object" &&
@@ -14,6 +13,7 @@ const handleApiError = (err, customError, errorLog) => {
     ) {
       message = "SESSION_EXPIRED";
     }
+    console.log("error:", err, "message: ", message);
     throw new Error(message ? "SESSION_EXPIRED" : customError);
   }
 };
