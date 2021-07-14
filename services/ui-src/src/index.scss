@@ -1609,14 +1609,16 @@ input[type="file"] {
   @extend .ds-u-border-bottom--1;
   @extend .ds-u-border-left--1;
   @extend .ds-u-border-right--1;
+  border-radius: 0px 0px 3px 3px;
 }
 
 .cms-division-background {
  background: rgba(196, 196, 196, 0.1);
+
 }
 
 .cms-group-division-section {
-
+       border-radius: 3px 3px 0px 0px;
       padding-bottom: 10px;
       padding-top: 10px;
       font-size: 2rem;
