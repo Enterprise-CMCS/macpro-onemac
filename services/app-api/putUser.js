@@ -260,7 +260,7 @@ const populateUserAttributes = (
     "Successfully ensured Privileges, status change rules and populated user attributes"
   );
 
-  for (const attr of ["firstName", "lastName"]) {
+  for (const attr of ["firstName", "lastName", "group", "division"]) {
     if (input[attr]) user[attr] = input[attr];
   }
 
