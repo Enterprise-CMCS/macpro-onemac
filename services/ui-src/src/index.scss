@@ -433,18 +433,12 @@ input[type="file"] {
     width: 100%;
     margin-left: 0px;
     @extend .ds-u-align-items--end;
-  }
-  .label-lcol {
-    @extend .ds-l-col--4;
-    @extend .ds-c-label;
-    margin-top: 0px;
-  }
-  .label-rcol {
-    @extend .ds-l-col--6;
-    @extend .ds-u-margin-left--auto;
-    padding-right: 0px;
-    text-align: right;
-    font-weight: 400;
+
+    .label-rcol {
+      @extend .ds-u-margin-left--auto;
+      text-align: right;
+      font-weight: 400;
+    }
   }
   .faq-container {
     background-color: $color-primary-alt-lightest;
