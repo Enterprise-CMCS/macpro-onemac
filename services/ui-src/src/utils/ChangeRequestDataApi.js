@@ -25,9 +25,10 @@ class ChangeRequestDataApi {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
 
+      console.log(JSON.stringify(data))
       return await API.post("changeRequestAPI", "/submit", {
-        body: data,
-      });
+          body: data,
+        });
     } catch (error) {
       console.log("Error while submitting the form.", error);
       throw error;
@@ -37,30 +38,25 @@ class ChangeRequestDataApi {
   /**
    * Fetch a specific record from the backend.
    * @param {string} id the ID of the change request to fetch
-   * * @param {string} userId the ID of the user that created the change request
    * @return {Object} a change request
    */
-  async get(id, userId) {
-    if (!id || !userId) {
-      console.log("ID or user ID was not specified for get API call");
-      throw new Error("ID or user ID was not specified for get API call");
+  async get(id) {
+    if (!id) {
+      console.log("ID was not specified for get API call");
+      throw new Error("ID was not specified for get API call");
     }
 
     try {
-      let changeRequest = await API.get(
-        "changeRequestAPI",
-        `/get/${id}/${userId}`
-      );
+      let changeRequest = await API.get("changeRequestAPI", `/get/${id}`);
       // Get temporary URLs to the S3 bucket
       if (changeRequest.uploads) {
         let i;
         // Use a for loop instead of forEach to stay in the context of this async function.
         for (i = 0; i < changeRequest.uploads.length; i++) {
-          var fromStorage = await Storage.get(changeRequest.uploads[i].s3Key, {
-            level: "protected",
-            identityId: userId, // the identityId of that user
-          });
-          changeRequest.uploads[i].url = fromStorage.split("?", 1)[0];
+          changeRequest.uploads[i].url = await Storage.vault.get(
+            changeRequest.uploads[i].s3Key,
+            { level: "protected" }
+          );
         }
       }
       return changeRequest;
@@ -92,21 +88,35 @@ class ChangeRequestDataApi {
   }
 
   /**
-   * Fetch all change requests that correspond to the user's active access to states/territories
-   * @param {string} email the user's email
-   * @return {Promise<Array>} a list of change requests
+   * Check to see if an user exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the user  exists in the back end
    */
-  async getAllByAuthorizedTerritories(userEmail) {
-    if (!userEmail) return [];
+  async userProfile(userEmail) {
+    if (!userEmail) {
+      console.log("user Email was not specified for userProfile API call");
+      throw new Error("user Email was not specified for userProfile API call");
+    }
 
     try {
-      return await API.get(
-        "changeRequestAPI",
-        `/getAllByAuthorizedTerritories?email=${userEmail}`
-      );
+      let answer = await API.get("changeRequestAPI", `/getUser?email=${userEmail}`);
+      return answer;
+    } catch (error) {
+      console.log(`There was an error checking user ${userEmail}.`, error);
+      throw error;
+    }
+  }
+
+  /**
+   * Fetch a specific record from the backend.
+   * @return {Array} a list of change requests
+   */
+  async getAll() {
+    try {
+      return await API.get("changeRequestAPI", `/get`);
     } catch (error) {
       console.log(
-        `There was an error fetching change requests for the states/territories.`,
+        `There was an error fetching all change requests for the user.`,
         error
       );
       throw error;
@@ -121,10 +131,14 @@ class ChangeRequestDataApi {
     try {
       return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
-      console.log(`There was an error fetching all change requests`, error);
+      console.log(
+          `There was an error fetching all change requests`,
+          error
+      );
       throw error;
     }
   }
+
 }
 
 const instance = new ChangeRequestDataApi();

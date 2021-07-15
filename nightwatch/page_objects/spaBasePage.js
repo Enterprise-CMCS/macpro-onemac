@@ -3,14 +3,14 @@ const path = require('path');
 const commands = {
 
     // SS-YY-NNNN-xxxx or SS-YY-NNNN
-    getTransmitNumber: function (optional = true, state = "VA", file = "spa.txt") {
+    getTransmitNumber: function (optional = true, state = "VA") {
         let rand = (min = 0, max = 10000) => this.props.getRandomNumber(min, max);
         let group = [state, rand(0, 100), rand()];
         if (optional) {
             group.push(rand());
         }
         let id = group.join("-");
-        const spaFile = path.join(__dirname, file);
+        const spaFile = path.join(__dirname, "spa.txt");
         fs.writeFileSync(spaFile, id, {encoding: "utf8", flag: 'w'});
         return id;
     },
@@ -59,7 +59,8 @@ const commands = {
     },
 
     onDashBoard: function (loginBtn = this.elements.loginBtn) {
-            this.api.click(loginBtn).waitForElementPresent('body');
+        this.api.click(loginBtn).waitForElementPresent('body');
+        this.api.pause(3000);
     },
 
 
@@ -84,7 +85,7 @@ const commands = {
         this.api.click(this.elements.logout);
     },
 
-    uploadDocs: function (type = '.pdf', validateUpload) {
+    uploadDocs: function (type = '.pdf',required = 0, validateUpload) {
         const dir = path.join(__dirname, 'files');
         const testFile = fs.readdirSync(dir).find(file => {
             const regEx = `^.*(${type})$`;
@@ -95,19 +96,18 @@ const commands = {
         const uploadElement = (webElementID) => this.api.elementIdAttribute(webElementID, 'id', function (result) {
             let selector = `[id=${result.value}]`, filePath = path.resolve(dir, testFile);
             setValueTo(selector, filePath);
-            if(validateUpload) {
-                validateUpload(testFile);
-            }
+            validateUpload(selector, testFile);
         });
 
         let eachElement = function (result) {
             let elements = Array.from(result.value);
 
             elements.forEach((obj, index) => {
+                if(index < required && index < elements.length) {
                     let webElementId = obj["ELEMENT"];
                     uploadElement(webElementId);
-                
-        });
+                }
+            });
         }
 
         this.api.elements('css selector', this.elements.uploadFields, eachElement);
@@ -159,13 +159,13 @@ module.exports = {
         devSubmitBtn : 'input[type=submit]',
         devUserField : '[id=email]',
         userField : '[id=okta-signin-username]',
-        loginBtn: '[id=loginBtn]',
-        titleBar : 'div[id=title_bar]',
+        loginBtn: 'div.nav-right > button',
+        loginTitle : 'div[id=title_bar]',
         myAccountLink : '[id=myAccountLink]',
         manageAccountLink: "[id=manageAccountLink]",
         logout : '[id=logoutLink]',
         passField : '[id=okta-signin-password]',
-        newSubmission: '[id="new-submission-button"]',
+        newSPA: "[id=spaSubmitBtn]",
         respondSPA: "[id=spaRaiBtn]",
         newWaiver: "[id=waiverBtn]",
         respondWaiver: "[id=waiverRaiBtn]",
@@ -175,8 +175,7 @@ module.exports = {
         tandc: "[id=tandc]",
         territory : "#territory",
         transmittal: '[id=transmittalNumber]',
-        uploadFields: '[id*=uploader-input]',
-        homeHeader: '[class=home-header-angle-box]'
+        uploadFields: '[id*=uploader-input]'
     },
 
     commands : [commands],

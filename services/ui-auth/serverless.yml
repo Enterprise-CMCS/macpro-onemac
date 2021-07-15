@@ -27,8 +27,8 @@ resources:
     CreatePermissionsBoundary:
       Fn::Not:
         - Fn::Equals:
-            - ""
-            - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
+          - ""
+          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}        
   Resources:
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
@@ -48,10 +48,6 @@ resources:
             Mutable: true
             Required: false
           - Name: phone_number
-            AttributeDataType: String
-            Mutable: true
-            Required: false
-          - Name: cms_roles
             AttributeDataType: String
             Mutable: true
             Required: false
@@ -90,8 +86,9 @@ resources:
       Properties:
         Domain:
           Fn::Join:
-            - ""
-            - - ${self:custom.stage}-login-
+            - ''
+            -
+              - ${self:custom.stage}-login-
               - Ref: CognitoUserPoolClient
         UserPoolId:
           Ref: CognitoUserPool
@@ -103,7 +100,6 @@ resources:
           email: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/emailaddress
           family_name: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname
           given_name: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
-          custom:cms_roles: cmsRoles
         IdpIdentifiers:
           - IdpIdentifier
         ProviderDetails:
@@ -122,7 +118,7 @@ resources:
           - ClientId:
               Ref: CognitoUserPoolClient
             ProviderName:
-              Fn::GetAtt: ["CognitoUserPool", "ProviderName"]
+              Fn::GetAtt: [ "CognitoUserPool", "ProviderName" ]
     CognitoIdentityPoolRoles:
       Type: AWS::Cognito::IdentityPoolRoleAttachment
       Properties:
@@ -140,65 +136,76 @@ resources:
           Fn::If:
             - CreatePermissionsBoundary
             - Fn::Join:
-                - ""
-                - - "arn:aws:iam::"
-                  - Ref: AWS::AccountId
-                  - ":policy"
-                  - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
             - Ref: AWS::NoValue
         AssumeRolePolicyDocument:
-          Version: "2012-10-17"
+          Version: '2012-10-17'
           Statement:
-            - Effect: "Allow"
+            - Effect: 'Allow'
               Principal:
-                Federated: "cognito-identity.amazonaws.com"
+                Federated: 'cognito-identity.amazonaws.com'
               Action:
-                - "sts:AssumeRoleWithWebIdentity"
+                - 'sts:AssumeRoleWithWebIdentity'
               Condition:
                 StringEquals:
-                  "cognito-identity.amazonaws.com:aud":
+                  'cognito-identity.amazonaws.com:aud':
                     Ref: CognitoIdentityPool
-                "ForAnyValue:StringLike":
-                  "cognito-identity.amazonaws.com:amr": authenticated
+                'ForAnyValue:StringLike':
+                  'cognito-identity.amazonaws.com:amr': authenticated
         Policies:
-          - PolicyName: "CognitoAuthorizedPolicy"
+          - PolicyName: 'CognitoAuthorizedPolicy'
             PolicyDocument:
-              Version: "2012-10-17"
+              Version: '2012-10-17'
               Statement:
-                - Effect: "Allow"
+                - Effect: 'Allow'
                   Action:
-                    - "mobileanalytics:PutEvents"
-                    - "cognito-sync:*"
-                    - "cognito-identity:*"
-                  Resource: "*"
+                    - 'mobileanalytics:PutEvents'
+                    - 'cognito-sync:*'
+                    - 'cognito-identity:*'
+                  Resource: '*'
 
-                - Effect: "Allow"
+                - Effect: 'Allow'
                   Action:
-                    - "execute-api:Invoke"
+                    - 'execute-api:Invoke'
                   Resource:
                     Fn::Join:
-                      - ""
-                      - - "arn:aws:execute-api:"
+                      - ''
+                      -
+                        - 'arn:aws:execute-api:'
                         - Ref: AWS::Region
-                        - ":"
+                        - ':'
                         - Ref: AWS::AccountId
-                        - ":"
+                        - ':'
                         - ${self:custom.api_gateway_rest_api_name}
-                        - "/*"
+                        - '/*'
 
-                - Effect: "Allow"
+                - Effect: 'Allow'
                   Action:
                     # These are all required for amplify to do a PUT
-                    - "s3:GetObject"
-                    - "s3:PutObject"
-                    - "s3:DeleteObject"
+                    - 's3:GetObject'
+                    - 's3:PutObject'
+                    - 's3:DeleteObject'
                   Resource:
                     - Fn::Join:
-                        - ""
-                        - - ${self:custom.attachments_bucket_arn}
-                          - "/protected/"
-                          - "$"
-                          - "{cognito-identity.amazonaws.com:sub}/*"
+                      - ''
+                      -
+                        - ${self:custom.attachments_bucket_arn}
+                        - '/protected/'
+                        - '$'
+                        - '{cognito-identity.amazonaws.com:sub}/*'
+
+
+
+
+
+
+
+
 
   Outputs:
     UserPoolId:
@@ -210,8 +217,9 @@ resources:
     UserPoolClientDomain:
       Value:
         Fn::Join:
-          - ""
-          - - Ref: UserPoolDomain
+          - ''
+          -
+            - Ref: UserPoolDomain
             - .auth.
             - Ref: AWS::Region
             - .amazoncognito.com

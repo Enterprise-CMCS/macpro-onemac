@@ -1,6 +1,6 @@
 Conditions:
-  CreatePermissionsBoundary:
-    Fn::Not:
-      - Fn::Equals:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
           - ""
           - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}

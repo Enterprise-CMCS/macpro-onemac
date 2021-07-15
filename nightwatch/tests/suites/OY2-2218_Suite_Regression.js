@@ -1,11 +1,13 @@
-/* const login = require('../cases/OY2-1494_Test_SPA_Login');
+const login = require('../cases/OY2-1494_Test_SPA_Login');
 const timeout = 1000;
 
 module.exports = {
     "@tags": ["regression"],
 
     before: function (browser, loginType = "Login to SPA and Waiver Dashboard via Okta") {
-        login.beforeEach(browser);
+        login.before(browser);
+        login[loginType](browser);
+        browser.pause(timeout * 5);
     },
 
     afterEach: function (browser) {
@@ -14,9 +16,10 @@ module.exports = {
     },
 
     after: function (browser) {
-       login.afterEach(broswer);
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        login.after(browser);
     },
-    
+
     "Submit a SPA Report": function (browser, steps = [
         "Click on 'Start a new SPA'",
         "Enter SPA ID",
@@ -37,28 +40,6 @@ module.exports = {
     ]) {
         const spaRAI = require('../cases/OY2-2218_Test_SPA_Respond_To_SPA_RAI');
         steps.forEach(step => spaRAI[step](browser));
-    },
-
-    "Submit a CHIP SPA Report": function (browser, steps = [
-        "Click on 'Start a new CHIP SPA'",
-        "Enter SPA ID",
-        "Upload Documents",
-        "Enter Comments",
-        "Submit SPA"
-    ]) {
-        const newCHIPSPA = require('../cases/OY2-5835_Submit_New_CHIP_SPA');
-        steps.forEach(step => newCHIPSPA[step](browser));
-    },
-
-    "Submit a CHIP SPA RAI Response": function (browser, steps = [
-        "Click on 'Respond to CHIP SPA RAI'",
-        "Enter SPA ID",
-        "Upload Documents",
-        "Enter Comments",
-        "Submit Response",
-    ]) {
-        const chipSpaRAI = require('../cases/OY2-5835_Respond_To_CHIP_SPA_RAI');
-        steps.forEach(step => chipSpaRAI[step](browser));
     },
 
     "Submit a New Waiver Action": function (browser, steps = [
@@ -130,9 +111,9 @@ module.exports = {
         appK["Enter Comments"](browser);
         appK["Submit Form"](browser);
     },
+
     "View My Account Page": function (browser) {
         const account = require('../cases/OY2_5196_Test_View_User_Profile');
         account["Navigate to the Manage Account page"](browser);
-    }
+    },
 };
- */

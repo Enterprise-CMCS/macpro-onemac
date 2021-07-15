@@ -9,9 +9,6 @@ scratch
 *.log
 *.xml
 .env
-.env.*
-.env.dev 
-.env.val
 reports/
 reports/screenshots/
 node_modules/*

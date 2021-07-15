@@ -1,6 +1,6 @@
 import React from "react";
 import PropTypes from "prop-types";
-import { Link } from "@material-ui/core";
+import { HashLink } from "react-router-hash-link";
 
 /**
  * Returns the ID specific form element
@@ -32,14 +32,13 @@ const TransmittalNumber = ({
     <div>
       <div className="label-container">
         <div className="label-lcol">
-          <label htmlFor="transmittalNumber" className="required">
+          <label htmlFor="transmittalNumber">
             {idLabel}
+            <span className="required-mark">*</span>
           </label>
         </div>
         <div className="label-rcol">
-          <Link target="new" href={idFAQLink}>
-            What is my {idLabel}?
-          </Link>
+          <HashLink to={idFAQLink}>What is my {idLabel}?</HashLink>
         </div>
         <p className="field-hint">{hintText}</p>
       </div>

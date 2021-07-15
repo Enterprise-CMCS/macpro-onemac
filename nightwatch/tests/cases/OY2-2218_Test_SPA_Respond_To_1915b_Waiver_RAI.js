@@ -8,16 +8,21 @@
 
 const timeout = 1000;
 
+const login =require('./OY2-1494_Test_SPA_Login');
 const new_waiver = require('./OY2-2218_Test_SPA_Submit_New_Waiver');
 let spa;
 module.exports = {
 
     before : function(browser) {
-       new_waiver.before(browser);
+        login.before(browser);
+        login["Login to SPA and Waiver Dashboard"](browser);
+        spa = browser.page.spaBasePage();
+        browser.pause(timeout * 3);
     },
 
     after : function(browser) {
-        new_waiver.after(browser);
+        login["Logout of SPA and Waiver Dashboard"](browser);
+        login.after(browser);
     },
 
     "Click on Respond to 1915(b) Waiver RAI" : function (browser, testData = {

@@ -1,87 +1,102 @@
-import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import React, { Component } from "react";
 import { Alert } from "@cmsgov/design-system";
-import { getAlert } from "../libs/error-mappings";
-import closingX from "../images/AlertClosingX.svg";
-
-const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
+import {TITLE_BAR_ID} from "./PageTitleBar";
 
 /**
- * RAI Form template to allow rendering for different types of RAI's.
- * @param {Object} formInfo - all the change request details specific to this submission
- * @param {String} changeRequestType - the type of change request
+ * Alert types
  */
-const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
-  const [alert, setAlert] = useState(getAlert(alertCode));
+/*export const ALERT_TYPES = {
+  INFO: null, // Per CMS Design System
+  WARNING: "warn",
+  ERROR: "error",
+  SUCCESS: "success",
+};
 
-  useEffect(() => {
-    let mounted = true;
+/**
+ * Singleton Alert bar to display notifications to the user.  Note you can only add this
+ * component once as it is a singleton.  Example usage:
+ *   AlertBar.alert(ALERTS_MSG.MY_ALERT)
+ */
+export default class AlertBar extends Component {
+  /**
+   * Reference to the component instance.
+   */
+  static __singletonRef;
 
-    if (alertCode && mounted) setAlert(getAlert(alertCode));
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, [alertCode]);
-
-  useEffect(() => {
-    let mounted = true;
-
-    if (mounted && alert && alert.heading && alert.heading !== "") {
-      var elmnt = document.getElementById("alert-bar");
-      if (elmnt) elmnt.scrollIntoView({ behavior: "smooth" });
-    }
-
-    return function cleanup() {
-      mounted = false;
-    };
-  }, [alert, personalizedString]);
-
-  const renderText = () => {
-    let newText = alert.text.replace("$personalize$", personalizedString);
-    if (alert?.linkURL && alert?.linkText) {
-      let parts = newText.split("$Link$");
-      let theLink = (
-        <a href={alert.linkURL} target="_blank" rel="noopener noreferrer">
-          {alert.linkText}
-        </a>
+  /**
+   * Constructor.
+   */
+  constructor() {
+    super();
+    if (!AlertBar.__singletonRef) {
+      AlertBar.__singletonRef = this;
+    } else {
+      throw new Error(
+        "You can only use the AlertBar once in your application."
       );
-      return (
-        <>
-          {parts[0].toString()}
-          {theLink}
-          {parts[1].toString()}
-        </>
+    }
+    this.state = { isShown: false, heading: "", text: "", type: "" };
+  }
+
+  /**
+   * Displays an alert.
+   * @param {Object} alertMsg the alert message object with type, heading and text
+   */
+  static alert(alertMsg) {
+    if (alertMsg) {
+      AlertBar.__singletonRef.__alert(
+        alertMsg.type,
+        alertMsg.heading,
+        alertMsg.text
       );
     } else {
-      return newText;
+      throw new Error("Must specify an alert message object.");
     }
-  };
+  }
 
-  // Render the component conditionally when NOT in read only mode
-  // OR in read only mode when change request data was successfully retrieved
-  return alertCode && alert && alert.heading && alert.heading !== "" ? (
-    <div className="alert-bar" id="alert-bar">
-      <Alert variation={alert.type} heading={alert.heading}>
-        <p className="ds-c-alert__text">{renderText()}</p>
-        <button
-          className="close-button"
-          onClick={() => {
-            setAlert(ALERTS_MSG.NONE);
-            if (closeCallback) closeCallback();
-          }}
-        >
-          {CLOSING_X_IMAGE}
-        </button>
-      </Alert>
-    </div>
-  ) : null;
-};
+  /**
+   * Dismisses/hides the alert.
+   */
+  static dismiss() {
+    AlertBar.__singletonRef.__dismiss();
+  }
 
-AlertBar.propTypes = {
-  alertCode: PropTypes.string,
-  personalizedString: PropTypes.string,
-};
+  /**
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.dismiss().
+   * Dismisses/hides the alert.
+   */
+  __dismiss() {
+    this.setState({ isShown: false });
+  }
 
-export default AlertBar;
+  /**
+   * DO NOT CALL THIS FUNCTION DIRECTLY.  Use AlertBar.alert().
+   * Displays an informational alert.
+   * @param {string} type the type of alert
+   * @param {string} heading the alert heading
+   * @param {string} text the alert text
+   */
+  __alert(type, heading, text) {
+    // Going to the anchor must happen first of the alert will not show.
+    var elmnt = document.getElementById(TITLE_BAR_ID);
+    elmnt.scrollIntoView();
+    this.setState({ isShown: true, type, heading, text });
+  }
+
+  /**
+   * Render the component.
+   */
+  render() {
+    return (
+      <div>
+        {this.state.isShown && (
+          <div className="alert-bar">
+            <Alert variation={this.state.type} heading={this.state.heading}>
+              <p className="ds-c-alert__text">{this.state.text}</p>
+            </Alert>
+          </div>
+        )}
+      </div>
+    );
+  }
+}
