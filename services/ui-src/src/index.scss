@@ -1510,6 +1510,10 @@ input[type="file"] {
   .submit-buttons {
     @extend .ds-u-margin-top--5;
     @extend .ds-u-margin-bottom--1;
+
+    button:not(:last-child) {
+      margin-right: 1ch;
+    }
   }
 }
 
