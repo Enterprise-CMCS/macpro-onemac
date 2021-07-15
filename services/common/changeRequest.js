@@ -251,7 +251,9 @@ export const CONFIG = {
   [TYPE.WAIVER_APP_K]: {
     pageTitle: "Submit 1915(c) Appendix K Amendment",
     readOnlyPageTitle: "1915(c) Appendix K Amendment",
-    subheaderMessage: `${commonSubheaderMessage} If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.`,
+    subheaderMessage:
+      commonSubheaderMessage +
+      "If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.",
     detailsHeader: "1915(c) Appendix K Amendment",
     requiredUploads: ["1915(c) Appendix K Amendment Waiver Template"],
     optionalUploads: ["Other"],
