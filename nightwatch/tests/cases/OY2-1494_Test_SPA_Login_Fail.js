@@ -3,17 +3,16 @@ module.exports = {
   tags : ['smoke'],
 
   before : function(browser) {
-    login.beforeEach(browser);
+    login.before(browser);
   },
 
   after : function(browser) {
-    browser.end();
+    login.after(browser);
   },
 
   'Enter Login Credentials' : function (browser) {
     const loginPage = browser.page.spaBasePage();
-    loginPage.verify.elementPresent("@devLoginButton")
-    .click("@devLoginButton");
+    loginPage.click("@devLoginButton");
     browser.waitForElementPresent('body');
     loginPage.setValue('@devUserField', 'automatedtester011@gmail.com');
     loginPage.setValue('@devPassField', 'badpassword');

@@ -1,17 +1,12 @@
-import { DateTime } from "luxon";
 import * as uuid from "uuid";
-
-import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
-
-import getChangeRequestFunctions, {
-  validateSubmission,
-  hasValidStateCode,
-} from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
+import getChangeRequestFunctions, {
+  hasValidStateCode,
+} from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "./libs/response-codes";
-import getUser from "./utils/getUser";
+import { DateTime } from "luxon";
 
 /**
  * Submission states for the change requests.
@@ -32,42 +27,10 @@ export const main = handler(async (event) => {
   }
   const data = JSON.parse(event.body);
 
-  // Add required data to the record before storing.
-  data.id = uuid.v1();
-  data.createdAt = Date.now();
-  data.state = SUBMISSION_STATES.CREATED;
-
-  //Normalize the user data.
-  data.user = {
-    id: event.requestContext.identity.cognitoIdentityId,
-    authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
-    email: data.user.signInUserSession.idToken.payload.email,
-    firstName: data.user.signInUserSession.idToken.payload.given_name,
-    lastName: data.user.signInUserSession.idToken.payload.family_name,
-  };
-  data.userId = event.requestContext.identity.cognitoIdentityId;
-
   // do a pre-check for things that should stop us immediately
-  if (validateSubmission(data)) {
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  }
-
-  try {
-    // get the rest of the details about the current user
-    const doneBy = await getUser(data.user.email);
-    console.log("done by: ", doneBy);
-    if (!doneBy) {
-      return RESPONSE_CODE.USER_NOT_FOUND;
-    }
-
-    if (
-      doneBy.type != USER_TYPE.STATE_USER ||
-      latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
-    ) {
-      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
-    }
-  } catch (error) {
-    throw error;
+  const errorMessage = runInitialCheck(data);
+  if (errorMessage) {
+    return errorMessage;
   }
 
   // map the changeRequest functions from the data.type
@@ -87,6 +50,21 @@ export const main = handler(async (event) => {
   if (!crVerifyTerritoryStateCode) {
     return RESPONSE_CODE.TERRITORY_NOT_VALID;
   }
+
+  // Add required data to the record before storing.
+  data.id = uuid.v1();
+  data.createdAt = Date.now();
+  data.state = SUBMISSION_STATES.CREATED;
+
+  //Normalize the user data.
+  data.user = {
+    id: event.requestContext.identity.cognitoIdentityId,
+    authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
+    email: data.user.signInUserSession.idToken.payload.email,
+    firstName: data.user.signInUserSession.idToken.payload.given_name,
+    lastName: data.user.signInUserSession.idToken.payload.family_name,
+  };
+  data.userId = event.requestContext.identity.cognitoIdentityId;
 
   try {
     // check for submission-specific validation (uses database)
@@ -196,3 +174,16 @@ export const main = handler(async (event) => {
 
   return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });
+
+/**
+ * Validation check for items that should be checked before anything else is done
+ * @param {Object} data the received data
+ * @returns {String} any error messages triggered
+ */
+function runInitialCheck(data) {
+  if (!data.user) return RESPONSE_CODE.VALIDATION_ERROR;
+  if (!data.uploads) return RESPONSE_CODE.ATTACHMENT_ERROR;
+  if (!data.type) return RESPONSE_CODE.SYSTEM_ERROR;
+
+  return "";
+}

@@ -6,29 +6,28 @@ const sender = new AWS.SES({ region: "us-east-1" });
  * Transforms generic email details into the SES email parameter structure.
  * @param {Object} email generic email properties
  */
-function getSESEmailParams(email) {
+function getSESEmailParams (email) {
+
   let emailParams = {
-    Destination: {
-      ToAddresses: email.ToAddresses,
-    },
-    Message: {
-      Body: {
-        Html: {
+      Destination: {
+        ToAddresses: email.ToAddresses,
+      },
+      Message: {
+        Body: {
+          Html: {
+            Charset: "UTF-8",
+            Data: email.HTML,
+          },
+        },
+        Subject: {
           Charset: "UTF-8",
-          Data: email.HTML,
+          Data: email.Subject
         },
       },
-      Subject: {
-        Charset: "UTF-8",
-        Data: email.Subject,
-      },
-    },
-    Source: email.fromAddressSource
-      ? process.env[email.fromAddressSource]
-      : process.env.emailSource,
-  };
+      Source: process.env.emailSource,
+    };
 
-  return emailParams;
+    return emailParams;
 }
 
 /**
@@ -37,10 +36,11 @@ function getSESEmailParams(email) {
  * @param {Object} email the generic email properties
  */
 export default function sendEmail(email) {
-  try {
-    let emailParams = getSESEmailParams(email);
-    // If we are in offline mode just log the email message.
-    if (process.env.IS_OFFLINE) {
+
+  let emailParams = getSESEmailParams(email);
+
+  // If we are in offline mode just log the email message.
+  if(process.env.IS_OFFLINE) {
       console.log("IN OFFLINE MODE: Will not send email.");
       console.log("Amazon email parameters:\n");
       console.log(emailParams);
@@ -50,9 +50,4 @@ export default function sendEmail(email) {
     } else {
       return sender.sendEmail(emailParams).promise();
     }
-  } catch (er) {
-    console.log(`Warning: Erro occured while sending the confirmation email: 
-        ${JSON.stringify(email, null, 2)}, with error: ${er}`);
-    return Promise.reject(new Error("Error while sending email"));
-  }
 }

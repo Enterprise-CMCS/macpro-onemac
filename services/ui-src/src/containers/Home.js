@@ -1,138 +1,74 @@
 import React from "react";
-import { useLocation } from "react-router-dom";
-import HomeHeader from "../components/HomeHeader";
-import HomeFooter from "../components/HomeFooter";
-import AlertBar from "../components/AlertBar";
+import PageTitleBar from "../components/PageTitleBar";
+import { HashLink } from "react-router-hash-link";
+import { ROUTES } from "../Routes";
+import StepCard from "../components/StepCard";
 
 /**
  * Displays information about the usage of the webform
  */
 export default function Home() {
-  const location = useLocation();
-
-  const submissionTitle = "How to create a submission";
   const submissionsList = [
-    {
-      image: "login",
-      subTitle: "Login with IDM",
-      text: "Login with your IDM username and password to access your SPA and Waiver dashboard.",
-      verticalLineClass: "vertical-line-64",
-    },
-    {
-      image: "attach",
-      subTitle: "Attach your documents",
-      text: "Select a submission type and attach required documents relevant to your SPA and/or Waiver submission.",
-      verticalLineClass: "vertical-line-96",
-    },
-    {
-      image: "email",
-      subTitle: "Recieve an email confirmation",
-      text: `After you submit, you will receive an email confirmation that your submission was 
-        successful, marking the start of the 90-day review process.`,
-      verticalLineClass: "",
-    },
+    "Amendments to your Medicaid State Plans (not submitted through MACPro, MMDL or WMS);",
+    "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro),",
+    "Section 1915(b) waiver submissions (those not submitted through WMS),",
+    "Section 1915(c) Appendix K amendments (which cannot be submitted through WMS);",
+    "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable); and",
+    "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
   ];
-
-  const paperSubmissionTitle =
-    "You can submit paper-based submissions, including:";
-
-  const paperSubmissionList = [
-    {
-      text: "Amendments to your Medicaid and CHIP State Plans (not submitted through MACPro, MMDL or WMS)",
-    },
-    {
-      text: "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro)",
-    },
-    {
-      text: "Section 1915(b) waiver submissions (those not submitted through WMS)",
-    },
-    {
-      text: "Section 1915(c) Appendix K amendments (which cannot be submitted through WMS)",
-    },
-    {
-      text: "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable)",
-    },
-    {
-      text: "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
-    },
-  ];
-
+  const submissionTypesid = "submission-types";
+  
   /**
-   * Takes a list of items for the Submission List.
-   * @param {Array} submissionsList data items for the list
-   * @returns  list of data divs
+   * Takes a list of items and renders it into an unordered list.
+   * @param {Array} listData data items for the list
+   * @param {String} ariaLabelledBy aria-labelledby attribute on the unordered list for accessiblity
+   * @returns an unordered list of data items
    */
-  const renderSubmissionSteps = (submissionsList) => {
-    return submissionsList.map((item, i) => {
-      return (
-        <div key={i}>
-          <div className="ds-l-row">
-            <div className="ds-l-col--1 ds-u-padding--0">
-              <img
-                src={`/assets/images/icons/${item.image}.svg`}
-                alt={item.subTitle}
-              />
-            </div>
-            <div className="ds-l-col--11 ds-u-padding-left--1 sub-title">
-              {item.subTitle}
-            </div>
-          </div>
+  function renderList(listData, ariaLabelledBy = "") {
+    const list = listData.map((dataItem, index) => (
+      <li key={index}>{dataItem}</li>
+    ));
 
-          <div className="ds-l-row">
-            <div className="ds-l-col--1 ds-u-padding--0">
-              <div className={item.verticalLineClass}></div>
-            </div>
-            <div className="ds-l-col--11 ds-u-padding-left--1 text">
-              {item.text}
-            </div>
-          </div>
-        </div>
-      );
-    });
-  };
-
-  /**
-   * Takes a list of items for the Submission List.
-   * @param {Array} renderSubmissionSteps data items for the list
-   * @returns  Unordered list of data items
-   */
-  const renderPaperSubmissionInfo = (renderSubmissionSteps) => {
-    return (
-      <ul className="ds-u-padding--0">
-        {renderSubmissionSteps.map((item, i) => (
-          <li key={i} className="text">
-            {item.text}
-          </li>
-        ))}
-      </ul>
-    );
-  };
+    return <ul aria-labelledby={ariaLabelledBy}>{list}</ul>;
+  }
 
   return (
     <>
-      <HomeHeader />
-      <AlertBar alertCode={location?.state?.passCode} />
-      <div className="home-content-box">
-        <div className="container-fluid ds-u-margin--0">
-          <div className="ds-l-row">
-            <div className="ds-l-col--6">
-              <div className="home-content-left-box">
-                <div className="ds-l-container ds-u-margin--0">
-                  <div className="title">{submissionTitle}</div>
-                  {renderSubmissionSteps(submissionsList)}
-                </div>
-              </div>
-            </div>
-            <div className="ds-l-col--6">
-              <div className="home-content-right-box">
-                <div className="title">{paperSubmissionTitle}</div>
-                {renderPaperSubmissionInfo(paperSubmissionList)}
-              </div>
-            </div>
-          </div>
+        <PageTitleBar 
+        heading= "CMS State Plan Amendment and Waiver Submission Platform" 
+        text="Welcome to the official submission system for paper-based state plan amendments (SPAs) and section 1915 waivers." />
+    <div className="about">
+      <div className="section section-how-it-works">
+        <div className="section-title-center">How it Works</div>
+        <div className="container-step-cards">
+          <StepCard
+            stepNumber="1"
+            content="Login with your EIDM username and password to access your SPA and Waiver dashboard."
+          />
+          <StepCard
+            stepNumber="2"
+            content="Select a submission type and attach required documents relevant your SPA and/or Waiver submission."
+          />
+          <StepCard
+            stepNumber="3"
+            content="After you submit, you will receive an email confirmation that your submission was successful, marking the start of the 90-day review process."
+          />
         </div>
       </div>
-      <HomeFooter />
+      <div className="section section-submission-types">
+        <div className="section-title" id={submissionTypesid}>
+          In this system, pilot program users can submit paper-based
+          submissions, including:
+        </div>
+        {renderList(submissionsList, submissionTypesid)}
+      </div>
+      <div className="section section-support">
+        <div className="section-title-center white-text">
+          {"Do you have questions or need support? "}
+          <HashLink to={ROUTES.FAQ_TOP}>Please read the FAQ page.</HashLink>
+        </div>
+      </div>
+    </div>
     </>
   );
 }

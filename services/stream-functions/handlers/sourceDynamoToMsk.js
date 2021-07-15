@@ -7,7 +7,7 @@ const mappings = {
     'name': 'type_mapped.S',
     'mapping': {
       'spa': 'Medicaid SPA',
-      // 'sparai': 'Medicaid SPA'
+      'sparai': 'Medicaid SPA'
     }
   },
   'state.S': {
