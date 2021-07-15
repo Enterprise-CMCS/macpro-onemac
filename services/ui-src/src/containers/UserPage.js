@@ -21,6 +21,8 @@ import { PhoneNumber } from "../components/PhoneNumber";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
+import groupData from "cmscommonlib/groupDivision.json";
+import {helpDeskContact} from "../libs/helpDeskContact";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -34,7 +36,20 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.STATE_ADMIN]: "CMS Role Approver",
   [ROLES.CMS_APPROVER]: "CMS System Admin",
   [ROLES.HELPDESK]: "CMS System Admin",
+  [ROLES.CMS_REVIEWER]: "CMS Reviewer",
 };
+
+function getUserGroup(groupId, currentGroup, currentDivision) {
+  const search = (id) =>
+      groupData.find((element) => element.id === currentGroup);
+  const divisions = search(currentGroup).divisions;
+  const searchDivision = (id) =>
+      divisions.find((element) => element.id === currentDivision);
+  return {
+    group: search(currentGroup).name,
+    division: searchDivision(currentDivision).name,
+  };
+}
 
 const ContactList = ({ contacts, userType }) => {
   let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
@@ -70,6 +85,7 @@ const transformAccesses = (user = {}) => {
         status: latestAccessStatus(user, stateCode),
       }));
 
+    case ROLES.CMS_REVIEWER:
     case ROLES.CMS_APPROVER:
     case ROLES.HELPDESK:
       return [{ status: latestAccessStatus(user) }];
@@ -244,6 +260,9 @@ const UserPage = () => {
       case ROLES.STATE_ADMIN:
         heading = "State Access Management";
         break;
+      case ROLES.CMS_REVIEWER:
+        heading = "Group & Division";
+        break;
       case ROLES.CMS_APPROVER:
       case ROLES.HELPDESK:
         heading = "Status";
@@ -252,7 +271,48 @@ const UserPage = () => {
         // CMS System Admins do not see this section at all
         return null;
     }
+    if ( userType === ROLES.CMS_REVIEWER ) {
+      return (
+          <div className="ds-l-col--6">
+            <h2 id="accessHeader">{heading}</h2>
+            <div className="gradient-border" />
+            <dl>
+              {accesses.map(({ state, status, contacts }) => (
+                  <div className="access-card-container" key={state ?? "only-one"}>
+                    <div className="gradient-border" />
+                    <div className="cms-group-and-division-box ">
+                            <div className="cms-group-division-section">
+                              <h3>Group</h3>
+                              <br/>
+                              <p>{
+                                getUserGroup(
+                                    groupData.group,
+                                    userData.group,
+                                    userData.division
+                                ).group
+                              }</p>
+                            </div>
+                            <div className="cms-group-division-section cms-division-background">
+                              <h3>Division</h3>
+                              <br/>
+                              <p>
+                              {
+                                getUserGroup(
+                                    groupData.group,
+                                    userData.group,
+                                    userData.division
+                                ).division
 
+                              }
+                              </p>
+                            </div>
+                    </div>
+                  </div>
+              ))}
+            </dl>
+          </div>
+         )
+    } else {
     return (
       <div className="right-column">
         <h2 id="accessHeader">{heading}</h2>
@@ -290,6 +350,7 @@ const UserPage = () => {
         )}
       </div>
     );
+    }
   }, [
     accesses,
     userType,

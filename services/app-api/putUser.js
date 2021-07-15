@@ -24,7 +24,12 @@ const main = handler(async (event) => {
     let input = isObject(event.body) ? event.body : JSON.parse(event.body);
     console.log("PutUser Lambda call for: ", JSON.stringify(input));
     // do a pre-check for things that should stop us immediately //
-    validateInput(input);
+    const valError = validateInput(input);
+    if (valError) {
+      console.error("Validation error:", valError);
+      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+    }
+    console.log("Initial validation successful.");
 
     let { user, doneByUser } = await retrieveUsers(input);
     // populate user atributes after ensuring data validity //
@@ -42,7 +47,7 @@ const main = handler(async (event) => {
 
 const EMAIL_SCHEMA = { tlds: { allow: false } };
 
-const validateInput = (input) => {
+export const validateInput = (input) => {
   const userSchema = Joi.object().keys({
     userEmail: Joi.string().email(EMAIL_SCHEMA).required(),
     doneBy: Joi.string().email(EMAIL_SCHEMA).required(),
@@ -96,20 +101,28 @@ const validateInput = (input) => {
     type: Joi.valid(
       ...Object.values(USER_TYPE).filter((v) => v !== USER_TYPE.SYSTEM_ADMIN)
     ).required(),
-    group: Joi.any().when("..", {
-      is: Joi.object({ isPutUser: true, type: USER_TYPE.CMS_REVIEWER }),
+    group: Joi.any().when("type", {
+      is: USER_TYPE.CMS_REVIEWER,
       then: Joi.any()
         .valid(...groupData.map(({ id }) => id))
-        .required(),
+        .when("isPutUser", {
+          is: true,
+          then: Joi.any().required(),
+          otherwise: Joi.any().optional(),
+        }),
       otherwise: Joi.any().forbidden(),
     }),
-    division: Joi.any().when("..", {
-      is: Joi.object({ isPutUser: true, type: USER_TYPE.CMS_REVIEWER }),
+    division: Joi.any().when("type", {
+      is: USER_TYPE.CMS_REVIEWER,
       then: Joi.any()
         .valid(
           ...groupData.flatMap(({ divisions }) => divisions.map(({ id }) => id))
         )
-        .required(),
+        .when("isPutUser", {
+          is: true,
+          then: Joi.any().required(),
+          otherwise: Joi.any().optional(),
+        }),
       otherwise: Joi.any().forbidden(),
     }),
   });
@@ -118,12 +131,7 @@ const validateInput = (input) => {
     ? { error: "Lambda body is missing" }
     : userSchema.validate(input);
 
-  if (result.error) {
-    console.log("Validation error:", result.error);
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-  console.log("Initial validation successful.");
-  return;
+  return result.error;
 };
 
 const getUser = async (userEmail) => {
@@ -252,7 +260,7 @@ const populateUserAttributes = (
     "Successfully ensured Privileges, status change rules and populated user attributes"
   );
 
-  for (const attr of ["firstName", "lastName"]) {
+  for (const attr of ["firstName", "lastName", "group", "division"]) {
     if (input[attr]) user[attr] = input[attr];
   }
 
