@@ -78,7 +78,7 @@ class WaiverRAI {
   }
 
   /**
-   * Waiver RAI submission confimation email to State User wrapped in
+   * Waiver RAI submission confimation email to State Submitter wrapped in
    * generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.

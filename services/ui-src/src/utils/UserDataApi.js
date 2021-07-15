@@ -5,7 +5,7 @@ import { API } from "aws-amplify";
 export const getAdminTypeByRole = (role) => {
   switch (role) {
     case USER_TYPE.STATE_ADMIN:
-      return USER_TYPE.STATE_USER;
+      return USER_TYPE.STATE_SUBMITTER;
     case USER_TYPE.CMS_APPROVER:
       return USER_TYPE.STATE_ADMIN;
     case USER_TYPE.SYSTEM_ADMIN:
@@ -179,6 +179,6 @@ class UserDataApi {
 }
 
 const instance = new UserDataApi();
-Object.freeze(instance);
+if (process.env.NODE_ENV !== "test") Object.freeze(instance);
 
 export default instance;

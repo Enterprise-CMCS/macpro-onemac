@@ -74,8 +74,8 @@ const FAQ = () => {
             <br />
             <b>Email</b>
             <br />
-            <a href="mailto:MACPro_HelpDesk@cms.hhs.gov">
-              MACPro_HelpDesk@cms.hhs.gov
+            <a href={`mailto:${helpDeskContact.email}`}>
+              {helpDeskContact.email}
             </a>
           </div>
           <div className="faq-left-column">

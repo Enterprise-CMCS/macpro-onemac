@@ -24,7 +24,7 @@
    territory=`echo $line | cut -f1 -d:`
    email=`echo $line | cut -f2 -d:`
 
-   cat ./stateUserTemplate.json | sed s/\<replace-email\>/\"${email}\"/ \
+   cat ./stateSubmitterTemplate.json | sed s/\<replace-email\>/\"${email}\"/ \
                                 | sed s/\<replace-territory\>/\"${territory}\"/ \
                                 | sed s/\<replace-date\>/\"${createdDate}\"/ \
    > user.json

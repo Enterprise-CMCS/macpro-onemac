@@ -48,7 +48,7 @@ export function StateSignup() {
           <MultiSelectDropDown
             cancelFn={() => history.replace("/signup")}
             errorMessage={
-              role === USER_TYPE.STATE_USER
+              role === USER_TYPE.STATE_SUBMITTER
                 ? "Please select at least one state."
                 : "Please select one state."
             }

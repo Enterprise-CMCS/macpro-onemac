@@ -5,8 +5,13 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "./libs/response-codes";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
-import { territoryCodeList, roleLabels } from "cmscommonlib";
-import { USER_TYPE, USER_STATUS } from "./libs/user-lib";
+import {
+  USER_TYPE,
+  USER_STATUS,
+  territoryCodeList,
+  roleLabels,
+} from "cmscommonlib";
+import groupData from "cmscommonlib/groupDivision.json";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";
 
@@ -19,7 +24,12 @@ const main = handler(async (event) => {
     let input = isObject(event.body) ? event.body : JSON.parse(event.body);
     console.log("PutUser Lambda call for: ", JSON.stringify(input));
     // do a pre-check for things that should stop us immediately //
-    validateInput(input);
+    const valError = validateInput(input);
+    if (valError) {
+      console.error("Validation error:", valError);
+      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+    }
+    console.log("Initial validation successful.");
 
     let { user, doneByUser } = await retrieveUsers(input);
     // populate user atributes after ensuring data validity //
@@ -30,21 +40,24 @@ const main = handler(async (event) => {
     //
     return RESPONSE_CODE.USER_SUBMITTED;
   } catch (e) {
-    console.log(`Error executing lambda: ${JSON.stringify(e)}`);
+    console.error("Error executing lambda:", e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 });
 
 const EMAIL_SCHEMA = { tlds: { allow: false } };
 
-const validateInput = (input) => {
+export const validateInput = (input) => {
   const userSchema = Joi.object().keys({
     userEmail: Joi.string().email(EMAIL_SCHEMA).required(),
     doneBy: Joi.string().email(EMAIL_SCHEMA).required(),
     attributes: Joi.array()
       // When type is state then state attribute is required and must be valid //
       .when("type", {
-        is: Joi.string().valid(USER_TYPE.STATE_USER, USER_TYPE.STATE_ADMIN),
+        is: Joi.string().valid(
+          USER_TYPE.STATE_SUBMITTER,
+          USER_TYPE.STATE_ADMIN
+        ),
         then: Joi.array().items(
           Joi.object({
             stateCode: Joi.string()
@@ -86,23 +99,39 @@ const validateInput = (input) => {
       otherwise: Joi.string().optional(),
     }),
     type: Joi.valid(
-      USER_TYPE.STATE_USER,
-      USER_TYPE.STATE_ADMIN,
-      USER_TYPE.CMS_APPROVER,
-      USER_TYPE.HELPDESK
+      ...Object.values(USER_TYPE).filter((v) => v !== USER_TYPE.SYSTEM_ADMIN)
     ).required(),
+    group: Joi.any().when("type", {
+      is: USER_TYPE.CMS_REVIEWER,
+      then: Joi.any()
+        .valid(...groupData.map(({ id }) => id))
+        .when("isPutUser", {
+          is: true,
+          then: Joi.any().required(),
+          otherwise: Joi.any().optional(),
+        }),
+      otherwise: Joi.any().forbidden(),
+    }),
+    division: Joi.any().when("type", {
+      is: USER_TYPE.CMS_REVIEWER,
+      then: Joi.any()
+        .valid(
+          ...groupData.flatMap(({ divisions }) => divisions.map(({ id }) => id))
+        )
+        .when("isPutUser", {
+          is: true,
+          then: Joi.any().required(),
+          otherwise: Joi.any().optional(),
+        }),
+      otherwise: Joi.any().forbidden(),
+    }),
   });
   //Todo: Add deeper validation for types //
   const result = isEmpty(input)
     ? { error: "Lambda body is missing" }
     : userSchema.validate(input);
 
-  if (result.error) {
-    console.log("Validation error:", result.error);
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-  console.log("Initial validation successful.");
-  return;
+  return result.error;
 };
 
 const getUser = async (userEmail) => {
@@ -190,7 +219,7 @@ const populateUserAttributes = (
   console.log("selfInflicted is: ", isSelfInflicted);
 
   if (
-    input.type === USER_TYPE.STATE_USER ||
+    input.type === USER_TYPE.STATE_SUBMITTER ||
     input.type === USER_TYPE.STATE_ADMIN
   ) {
     input.attributes.forEach((item) => {
@@ -231,7 +260,7 @@ const populateUserAttributes = (
     "Successfully ensured Privileges, status change rules and populated user attributes"
   );
 
-  for (const attr of ["firstName", "lastName"]) {
+  for (const attr of ["firstName", "lastName", "group", "division"]) {
     if (input[attr]) user[attr] = input[attr];
   }
 
@@ -240,7 +269,7 @@ const populateUserAttributes = (
 
 // Ensure the DoneBy user has permission to execute the requested actions //
 const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
-  if (userType === USER_TYPE.STATE_USER) {
+  if (userType === USER_TYPE.STATE_SUBMITTER) {
     if (doneByUser.type !== USER_TYPE.STATE_ADMIN) {
       console.log(
         `Warning: The doneBy user ${doneByUser.id} must be a stateadmin for the state ${userState}`
@@ -404,7 +433,7 @@ const processEmail = async (input) => {
 // Collect recipient email addresses to send out confirmation emails to //
 const collectRoleAdminEmailIds = async (input) => {
   const recipients = [];
-  if (input.type === USER_TYPE.STATE_USER) {
+  if (input.type === USER_TYPE.STATE_SUBMITTER) {
     const states = input.attributes.map((item) => item.stateCode);
     // get all stateAdmin email ids
     const stateAdmins = (await getUsersByType(USER_TYPE.STATE_ADMIN)) || [];
@@ -417,7 +446,10 @@ const collectRoleAdminEmailIds = async (input) => {
           : null;
       });
     });
-  } else if (input.type === USER_TYPE.STATE_ADMIN) {
+  } else if (
+    input.type === USER_TYPE.STATE_ADMIN ||
+    input.type === USER_TYPE.CMS_REVIEWER
+  ) {
     // get all cms approvers emails //
     // query all cms approvers
     const cmsApprovers = (await getUsersByType(USER_TYPE.CMS_APPROVER)) || [];
@@ -485,59 +517,46 @@ const getLatestAttribute = (attribs) =>
 // Construct email to the authorities with the role request info //
 const constructRoleAdminEmails = (recipients, input) => {
   const userType = input.type;
+  let stateText;
+  if (userType == USER_TYPE.STATE_ADMIN) {
+    stateText = ` for ${input.attributes[0].stateCode}`;
+  } else {
+    stateText = "";
+  }
   const email = {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: recipients,
   };
-  email.HTML = `
-    <p>Hello,</p>
+  const typeText = roleLabels[input.type] ?? "User";
 
-    There is a new OneMAC Portal ${
-      roleLabels[input.type]
-    } access request waiting from ${input.firstName} ${
-    input.lastName
-  } for your review. 
-    Please log into your User Management Dashboard to see the pending request.
+  if (
+    input.type === USER_TYPE.STATE_SUBMITTER &&
+    input.userEmail === input.doneBy &&
+    input.attributes[0].status === USER_STATUS.REVOKED
+  ) {
+    email.Subject =
+      `OneMAC Portal State access for ` +
+      input.attributes[0].stateCode +
+      ` Access self-revoked by the user`;
+    email.HTML = `
+      <p>Hello,</p>
 
-    <p>Thank you!</p>`;
+      The OneMAC Portal State access for ${input.attributes[0].stateCode}
+      has been self-revoked by the user. Please log into your User
+      Management Dashboard to see the updated access.
 
-  let typeText = "User";
-  let newSubject = "";
+      <p>Thank you!</p>`;
+  } else {
+    email.Subject = `New OneMAC Portal ${typeText} Access Request`;
+    email.HTML = `
+      <p>Hello,</p>
 
-  switch (userType) {
-    case USER_TYPE.STATE_USER:
-      typeText = "State User";
+      There is a new OneMAC Portal ${typeText} access request${stateText} from
+      ${input.firstName} ${input.lastName} waiting for your review.  Please log into your
+      User Management Dashboard to see the pending request.
 
-      if (
-        input.userEmail === input.doneBy &&
-        input.attributes[0].status === USER_STATUS.REVOKED
-      ) {
-        newSubject =
-          `OneMAC Portal State access for ` +
-          input.attributes[0].stateCode +
-          ` Access self-revoked by the user`;
-        email.HTML =
-          `<p>Hello,</p>
-
-          The OneMAC Portal State access for ` +
-          input.attributes[0].stateCode +
-          ` has been self-revoked by the user. Please log into your User Management Dashboard to see the updated access.
-
-          <p>Thank you!</p>`;
-      }
-      break;
-    case USER_TYPE.STATE_ADMIN:
-      typeText = "State Admin";
-      break;
-    case USER_TYPE.CMS_APPROVER:
-      typeText = "CMS Approver";
-      break;
-    case USER_TYPE.HELPDESK:
-      typeText = "Helpdesk User";
-      break;
+      <p>Thank you!</p>`;
   }
-  if (newSubject) email.Subject = newSubject;
-  else email.Subject = `New OneMAC Portal ${typeText} Access Request`;
 
   return { email };
 };

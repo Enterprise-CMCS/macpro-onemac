@@ -35,12 +35,19 @@ export const ALERTS_MSG = {
     text: "Thank you. The CMS System Admin will verify your access and credentials.  Please check your email for details on access.",
   },
 
+  CMS_REVIEWER_SUBMISSION_SUCCESS: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Registration Complete",
+    text: "Thank you. The CMS Role Approver will verify your access and credentials.  Please check your email for details on access.",
+  },
+
   // Success woth Survey Link
   SUBMISSION_SUCCESS_SURVEY: {
     type: ALERT_TYPES.SUCCESS,
     heading: "Submission Completed",
     text: "Thanks for your submission. We truly value your feedback. Please consider taking our $Link$.",
-    linkURL: "https://forms.gle/qcsWMaDroBkhT7rs6",
+    linkURL:
+      "https://docs.google.com/forms/d/e/1FAIpQLSfnmjpetVur4NPBTA5V_jP2adSQNmVaUSL6R8sd6vWSuHQpAg/viewform",
     linkText: "Post-Submission Survey",
   },
 

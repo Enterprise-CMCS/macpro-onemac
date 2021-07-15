@@ -32,7 +32,7 @@ const initialAuthState = {
   isValidRoute: true,
   userProfile: {
     cmsRoles: "onemac-state-user",
-    email: "stateuseractive@cms.hhs.local",
+    email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
@@ -60,11 +60,10 @@ const initialAuthState = {
           ],
         },
       ],
-      id: "stateuseractive@cms.hhs.local",
-      type: "stateuser",
+      id: "statesubmitteractive@cms.hhs.local",
+      type: "statesubmitter",
       validRoutes: [
         "/",
-        "/componentpage",
         "/profile",
         "/devlogin",
         "/FAQ",

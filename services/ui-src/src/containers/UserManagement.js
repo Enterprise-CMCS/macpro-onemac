@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { RESPONSE_CODE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, USER_TYPE } from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -12,7 +12,6 @@ import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
 import { roleLabels } from "../libs/roleLib";
-import { USER_TYPE } from "cmscommonlib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
@@ -42,9 +41,7 @@ const UserManagement = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole =
-    userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN ||
-    userProfile.userData.type === USER_TYPE.HELPDESK;
+  const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
       userProfile.userData.type === USER_TYPE.CMS_APPROVER ||
@@ -73,7 +70,7 @@ const UserManagement = () => {
       !userProfile.userData ||
       (userProfile.userData.type !== USER_TYPE.SYSTEM_ADMIN &&
         (!userProfile.userData.attributes ||
-          userProfile.userData.type === USER_TYPE.STATE_USER))
+          userProfile.userData.type === USER_TYPE.STATE_SUBMITTER))
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -168,17 +165,22 @@ const UserManagement = () => {
       const grant = {
           label: "Grant Access",
           value: "active",
-          confirmMessage: grantConfirmMessage[userProfile.userData.type],
+          confirmMessage:
+            grantConfirmMessage[row.original.role] ??
+            grantConfirmMessage.default,
         },
         deny = {
           label: "Deny Access",
           value: "denied",
-          confirmMessage: denyConfirmMessage[userProfile.userData.type],
+          confirmMessage:
+            denyConfirmMessage[row.original.role] ?? denyConfirmMessage.default,
         },
         revoke = {
           label: "Revoke Access",
           value: "revoked",
-          confirmMessage: revokeConfirmMessage[userProfile.userData.type],
+          confirmMessage:
+            revokeConfirmMessage[row.original.role] ??
+            revokeConfirmMessage.default,
         };
 
       const menuItems =
@@ -209,11 +211,15 @@ const UserManagement = () => {
               doneBy: userProfile.userData.id,
               attributes: [
                 {
-                  stateCode: userList[rowNum].stateCode, // required for state user and state admin
+                  stateCode:
+                    row.original.role === USER_TYPE.STATE_SUBMITTER ||
+                    row.original.role === USER_TYPE.STATE_ADMIN
+                      ? row.original.stateCode
+                      : undefined, // required for state submitter and state admin
                   status: value,
                 },
               ],
-              type: getAdminTypeByRole(userProfile.userData.type),
+              type: row.original.role,
             };
             UserDataApi.setUserStatus(updateStatusRequest)
               .then(function (returnCode) {

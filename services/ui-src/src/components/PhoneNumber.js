@@ -1,73 +1,106 @@
-import React, { useCallback, useReducer } from "react";
-import { Button, FormLabel, Review } from "@cmsgov/design-system";
+import React, { useCallback, useState } from "react";
+import { Button, FormLabel, TextField } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPen } from "@fortawesome/free-solid-svg-icons";
+import { faPen, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
-const EDIT = Symbol("edit"),
-  CANCEL = Symbol("cancel"),
-  SUBMIT = Symbol("submit");
-
-const editReducer = (state, action) => {
-  switch (action) {
-    case EDIT:
-      return { ...state, isEditing: true, cachedValue: state.value };
-    case CANCEL:
-      return { ...state, isEditing: false, value: state.cachedValue };
-    case SUBMIT:
-      return { ...state, isEditing: false, cachedValue: state.value };
-    default:
-      return { ...state, value: action };
-  }
-};
-
-export const PhoneNumber = ({ initialValue, onSubmit }) => {
-  const [{ isEditing, value }, dispatch] = useReducer(editReducer, {
-    isEditing: false,
-    value: initialValue ?? "",
-  });
+export const PhoneNumber = ({
+  id,
+  isEditing,
+  onCancel,
+  onEdit,
+  onSubmit,
+  phoneNumber,
+}) => {
+  const [value, setValue] = useState(phoneNumber);
 
   const onSubmitFn = useCallback(
-    (event) => {
-      event.preventDefault();
+    (e) => {
+      e.preventDefault();
       onSubmit(value);
-      dispatch(SUBMIT);
     },
     [onSubmit, value]
   );
 
-  return isEditing ? (
-    <form className="phone-number-edit-form" onSubmit={onSubmitFn}>
-      <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
-      <input
-        autoFocus
-        id="phoneNumber"
-        onChange={({ target: { value } }) => dispatch(value)}
-        onFocus={(e) => e.currentTarget.select()}
-        value={value}
-      />
-      <Button type="submit" variation="primary">
-        Submit
-      </Button>
-      <Button
-        onClick={() => dispatch(CANCEL)}
-        type="button"
-        variation="transparent"
+  const onEditFn = useCallback(() => {
+    onEdit();
+  }, [onEdit, value]);
+
+  const onCancelFn = useCallback(() => {
+    onCancel();
+    setValue(phoneNumber); // resets value displayed in TextField back to the original value
+  }, [onCancel, phoneNumber]);
+
+  const formId = id || "phoneSection";
+
+  if (isEditing) {
+    return (
+      <form
+        id={formId}
+        className="phone-number-edit-form"
+        onSubmit={onSubmitFn}
       >
-        Cancel
-      </Button>
-    </form>
-  ) : (
-    <Review
-      className="phone-number-field"
-      editContent={
-        <Button className="phone-edit-button" onClick={() => dispatch(EDIT)}>
-          Edit&nbsp;&nbsp;
-          <FontAwesomeIcon icon={faPen} />
+        <TextField
+          autoFocus
+          className="phone-text-field"
+          id="phoneNumber"
+          label="Phone Number"
+          name="phoneTextField"
+          onChange={({ target: { value } }) => setValue(value)}
+          onFocus={(e) => e.currentTarget.select()}
+          value={value}
+        />
+        <Button
+          className="phone-apply-button"
+          id="applyButton"
+          onClick={onSubmitFn}
+          type="button"
+          variation="primary"
+        >
+          Apply
         </Button>
-      }
-      heading="Phone Number"
-    >
-      {value?.trim() || <br />}
-    </Review>
-  );
+        <Button
+          id="cancelButton"
+          onClick={onCancelFn}
+          type="button"
+          variation="transparent"
+        >
+          Cancel
+        </Button>
+      </form>
+    );
+  } else {
+    if (!value) {
+      return (
+        <form id={formId} className="phone-number-empty-form">
+          <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
+          <Button
+            className="phone-add-button"
+            id="addButton"
+            onClick={onEditFn}
+            variation="primary"
+            type="button"
+          >
+            Add&nbsp;&nbsp;
+            <FontAwesomeIcon icon={faPlusCircle} />
+          </Button>
+        </form>
+      );
+    } else {
+      return (
+        <form id={formId} className="phone-number-view-form">
+          <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
+          <span className="phone-text">{phoneNumber.trim()}</span>
+          <Button
+            className="phone-edit-button"
+            id="editButton"
+            onClick={onEditFn}
+            type="button"
+          >
+            Edit&nbsp;&nbsp;
+            <FontAwesomeIcon icon={faPen} />
+          </Button>
+        </form>
+      );
+    }
+  }
 };

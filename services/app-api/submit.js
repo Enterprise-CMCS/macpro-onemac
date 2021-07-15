@@ -61,7 +61,7 @@ export const main = handler(async (event) => {
     }
 
     if (
-      doneBy.type != USER_TYPE.STATE_USER ||
+      doneBy.type != USER_TYPE.STATE_SUBMITTER ||
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
@@ -184,7 +184,7 @@ export const main = handler(async (event) => {
 
   //An error sending the user email is not a failure.
   try {
-    // send the submission "reciept" to the State User
+    // send the submission "reciept" to the State Submitter
     await sendEmail(crFunctions.getStateEmail(data));
   } catch (error) {
     console.log(

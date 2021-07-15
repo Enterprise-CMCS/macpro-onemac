@@ -3,31 +3,59 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import CardButton from "../components/cardButton";
 import { RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
+import ChoiceList from "../components/ChoiceList";
 
 const createAttribute = () => [{ status: "pending" }];
 
-function CMSSignup() {
-  const [loading, onClickCMS] = useSignupCallback(
-    "cmsapprover",
-    createAttribute
-  );
+function StateUserSignup() {
+  const history = useHistory();
+  const STATE_CHOICES = [
+    {
+      title: "State Submitter",
+      description: "Responsible for submitting packages",
+      linkTo: "/state",
+      onclick: () => {
+        history.replace("signup/state", { role: "statesubmitter" });
+      },
+    },
+    {
+      title: "State System Administrator",
+      description: "Approves State Submitters",
+      linkTo: "/state",
+      onclick: () => {
+        history.replace("signup/state", { role: "stateadmin" });
+      },
+    },
+  ];
+  return <ChoiceList choices={STATE_CHOICES} />;
+}
 
-  return (
-    <CardButton loading={loading} onClick={onClickCMS} type="cmsapprover" />
-  );
+function CMSSignup() {
+  const [_, onClickCMS] = useSignupCallback("cmsapprover", createAttribute);
+
+  const CMS_CHOICES = [
+    {
+      title: "CMS Reviewer",
+      description: "Responsible for reviewing packages",
+      linkTo: "signup/cmsreviewer",
+    },
+    {
+      title: "CMS Role Approver",
+      description:
+        "Responsible for managing CMS Reviewers and State System Admins",
+      linkTo: "/usermanagement",
+      onclick: onClickCMS,
+    },
+  ];
+  return <ChoiceList choices={CMS_CHOICES} />;
 }
 function HelpdeskSignup() {
-  const [dummy, onLoadHelpdesk] = useSignupCallback(
-    "helpdesk",
-    createAttribute
-  );
+  const [, onLoadHelpdesk] = useSignupCallback("helpdesk", createAttribute);
   useEffect(() => {
     if (onLoadHelpdesk) onLoadHelpdesk();
   }, [onLoadHelpdesk]);
-  console.log("Dummy is: ", dummy);
   return null;
 }
 
@@ -47,18 +75,9 @@ export function Signup() {
   const signupOptions = useMemo(
     () =>
       isStateUser(cmsRoles) ? (
-        <>
-          <div className="ds-l-col--6">
-            <CardButton type="stateuser" />
-          </div>
-          <div className="ds-l-col--6">
-            <CardButton type="stateadmin" />
-          </div>
-        </>
+        <StateUserSignup />
       ) : isCmsUser(cmsRoles) ? (
-        <div className="ds-l-col--auto ds-u-margin-x--auto">
-          <CMSSignup />
-        </div>
+        <CMSSignup />
       ) : isHelpdeskUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <HelpdeskSignup />
@@ -78,20 +97,17 @@ export function Signup() {
     if (type) history.replace("/dashboard");
   }, [history, type]);
 
+  // //<p className="signup-prompt">
+  // Select the user role you're registering for.
+  // </p>
   return (
     <>
       <PageTitleBar heading="Registration: User Role" />
-      <div className="signup-container">
-        <div className="signup-center">
-          <p className="signup-prompt">
-            Select the user role you're registering for.
-          </p>
-          <section className="signup-collapse-padding ds-l-container">
-            <div className="signup-collapse-padding ds-l-row">
-              {signupOptions}
-            </div>
-          </section>
+      <div className="choice-container">
+        <div className="choice-intro">
+          Select the user role you're registering for.
         </div>
+        {signupOptions}
       </div>
     </>
   );

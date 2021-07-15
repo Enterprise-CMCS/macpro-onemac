@@ -46,11 +46,12 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
   HELPDESK_USER_SUBMITTED: "HU000",
+  CMS_REVIEWER_USER_SUBMITTED: "CU000",
 };
 
 export const USER_ADMIN_PERMISSION = {
-  STATE_USER: "none",
-  STATE_ADMIN: "stateuser",
+  STATE_SUBMITTER: "none",
+  STATE_ADMIN: "statesubmitter",
   CMS_APPROVER: "stateadmin",
 };
 
@@ -58,7 +59,7 @@ export const USER_ADMIN_PERMISSION = {
  * Possible user types
  */
 export const USER_TYPE = {
-  STATE_USER: "stateuser",
+  STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
   STATE_ADMIN: "stateadmin",
   CMS_APPROVER: "cmsapprover",
@@ -82,16 +83,16 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  stateuser: "State Submitter",
+  statesubmitter: "State Submitter",
   stateadmin: "State Admin",
   cmsapprover: "CMS Approver",
-  systemadin: "CMS System Admin",
+  [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
+  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
   helpdesk: "Help Desk",
 };
 
 const ALL_USERS_ROUTES = [
   ROUTES.HOME,
-  ROUTES.COMPONENT_PAGE,
   ROUTES.PROFILE,
   ROUTES.DEVLOGIN,
   ROUTES.FAQ,
@@ -152,6 +153,7 @@ class CmsReviewer extends Role {
     this.canAccessDashboard = true;
   }
 }
+
 class CmsApprover extends Role {
   constructor() {
     super();
@@ -179,7 +181,7 @@ class Helpdesk extends Role {
 
 export const getUserRoleObj = (role) =>
   new ({
-    [USER_TYPE.STATE_USER]: StateSubmitter,
+    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
     [USER_TYPE.CMS_APPROVER]: CmsApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
@@ -190,13 +192,13 @@ export const getUserRoleObj = (role) =>
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
 /**
- * Finds a user's most recent approval status. For state users and admins, it takes an optional state code to search for.
+ * Finds a user's most recent approval status. For state submitters and admins, it takes an optional state code to search for.
  * @param user - The user object to inspect.
- * @param [state] - A two-letter territory code to search for (only for state users and admins).
+ * @param [state] - A two-letter territory code to search for (only for state submitters and admins).
  */
 export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
   switch (type) {
-    case ROLES.STATE_USER:
+    case ROLES.STATE_SUBMITTER:
     case ROLES.STATE_ADMIN: {
       const stateObj = attributes.find(({ stateCode }) => stateCode === state);
       if (!stateObj) return null;

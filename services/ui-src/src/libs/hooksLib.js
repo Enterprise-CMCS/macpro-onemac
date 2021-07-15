@@ -1,6 +1,6 @@
 import { useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { RESPONSE_CODE, ROLES, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROLES, ROUTES, getUserRoleObj } from "cmscommonlib";
 
 import UserDataApi from "../utils/UserDataApi";
 import { useAppContext } from "./contextLib";
@@ -27,7 +27,7 @@ export function useSignupCallback(userType, processAttributes) {
     useAppContext() ?? {};
 
   const signupUser = useCallback(
-    async (payload) => {
+    async (payload, additionalProperties) => {
       let destination, messageState;
       if (loading) return;
       try {
@@ -44,20 +44,29 @@ export function useSignupCallback(userType, processAttributes) {
           lastName,
           type: userType,
           attributes: payload,
+          ...additionalProperties,
         });
         // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
 
         await setUserInfo();
 
-        destination =
-          userType === ROLES.STATE_USER || userType === ROLES.HELPDESK
-            ? ROUTES.DASHBOARD
-            : ROUTES.USER_MANAGEMENT;
-        messageState =
-          userType === ROLES.HELPDESK
-            ? { passCode: RESPONSE_CODE.HELPDESK_USER_SUBMITTED }
-            : { passCode: RESPONSE_CODE.USER_SUBMITTED }; //ALERTS_MSG.SUBMISSION_SUCCESS };
+        const roleObj = getUserRoleObj(userType);
+        destination = roleObj.canAccessDashboard
+          ? ROUTES.DASHBOARD
+          : ROUTES.USER_MANAGEMENT;
+        switch (userType) {
+          case ROLES.HELPDESK:
+            messageState = { passCode: RESPONSE_CODE.HELPDESK_USER_SUBMITTED };
+            break;
+          case ROLES.CMS_REVIEWER:
+            messageState = {
+              passCode: RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED,
+            };
+            break;
+          default:
+            messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };
+        }
       } catch (error) {
         console.error("Could not create new user:", error);
         destination = { ...location, state: undefined };

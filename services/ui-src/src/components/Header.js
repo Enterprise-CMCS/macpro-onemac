@@ -176,17 +176,6 @@ function Header(props) {
                 >
                   FAQ
                 </a>
-                {isLoggedInAsDeveloper ? (
-                  <Link
-                    to={ROUTES.COMPONENT_PAGE}
-                    className={getActiveClass(
-                      currentRoute,
-                      RouteList.COMPONENT_PAGE
-                    )}
-                  >
-                    Component Page
-                  </Link>
-                ) : null}
               </div>
             </div>
             {renderAccountButtons(isLoggedInAsDeveloper)}

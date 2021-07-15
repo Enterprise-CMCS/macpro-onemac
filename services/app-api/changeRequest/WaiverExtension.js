@@ -84,7 +84,7 @@ class WaiverExtension {
   }
 
   /**
-   * Waiver Extension submission confimation email to State User wrapped in
+   * Waiver Extension submission confimation email to State Submitter wrapped in
    * generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
