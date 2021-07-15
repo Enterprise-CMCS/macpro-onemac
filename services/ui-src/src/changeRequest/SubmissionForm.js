@@ -21,7 +21,7 @@ import ScrollToTop from "../components/ScrollToTop";
 import config from "../utils/config";
 
 const leavePageConfirmMessage =
-  "<strong>If you leave this page</strong>, you will lose your progress on this form. Are you sure you want to proceed?";
+  "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
