@@ -14,6 +14,7 @@ export * from "./routes";
  */
 export const RESPONSE_CODE = {
   NONE: "",
+  LOGIN_ERROR: "UR403",
   SUCCESSFULLY_SUBMITTED: "SC000",
   DATA_MISSING: "SC001",
   ATTACHMENTS_MISSING: "SC002",

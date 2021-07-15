@@ -1,3 +1,4 @@
+import { RESPONSE_CODE } from "cmscommonlib";
 import config from "../utils/config";
 import { helpDeskContact } from "./helpDeskContact";
 
@@ -150,5 +151,13 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",
     text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
+  },
+};
+
+export const alertMessage = {
+  [RESPONSE_CODE.LOGIN_ERROR]: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Login Error",
+    text: "We were unable to log you in with the credentials you provided. Please try to login again.",
   },
 };

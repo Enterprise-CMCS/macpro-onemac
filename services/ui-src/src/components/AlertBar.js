@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { alertMessage, ALERTS_MSG } from "../libs/alert-messages";
 import { Alert } from "@cmsgov/design-system";
 import { getAlert } from "../libs/error-mappings";
 import closingX from "../images/AlertClosingX.svg";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -17,8 +18,11 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
 
   useEffect(() => {
     let mounted = true;
-
-    if (alertCode && mounted) setAlert(getAlert(alertCode));
+    console.log("alertCode is: ", alertCode);
+    if (alertCode && mounted)
+      if (alertCode === RESPONSE_CODE.LOGIN_ERROR)
+        setAlert(alertMessage[RESPONSE_CODE.LOGIN_ERROR]);
+      else setAlert(getAlert(alertCode));
 
     return function cleanup() {
       mounted = false;
