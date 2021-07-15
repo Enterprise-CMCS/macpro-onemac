@@ -14,26 +14,27 @@ module.exports = {
     after: function (browser) {
         login.afterEach(browser);
     },
-    "Navigate to the Manage Account page": function (
-        browser,
-        testData = {
-          myAccountLink: "@myAccountLink",
-          manageAccountLink: "@manageAccountLink",
-          subUrl: "/profile",
-          pageTitle: "User Profile"
-          
-          
-        }
-      ) {
-        pageObjects = browser.page.spaBasePage();
-    
-        pageObjects.click(testData.myAccountLink).waitForElementPresent(testData.manageAccountLink);
-        pageObjects.click(testData.manageAccountLink).waitForElementPresent("body");
-        browser.assert.urlContains(testData.subUrl);
-        browser.verify.containsText('h1', testData.pageTitle);
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/dt", "Maryland");
+    'CMS reviewer group and division': function (browser) {
+        //check on user management page
+        let my_account_button = 'button#myAccountLink';
+        let manage_account_link = 'a#manageAccountLink'; 
+        browser.useCss().click(my_account_button); 
+        browser.useCss().click(manage_account_link); 
+        browser.pause(2000);
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[1]/div/h1", "User Profile").pause(2000);
+        
+        let full_name = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/div";
+        let role = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/div";
+        let role_email = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[3]/div/div";
+        let group = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/div[1]/p";
+        let division = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/div[2]/p";
+
+        
+        browser.useXpath().assert.containsText( full_name, "CMSReviewer Nightwatch");
+        browser.useXpath().assert.containsText( role, "CMS Reviewer");
+        browser.useXpath().assert.containsText( role_email, "cmsreviewer@nightwatch.test");
+        browser.useXpath().assert.containsText( group, "SDG");
+        browser.useXpath().assert.containsText( division, "DECD");
         browser.useCss();
-        browser.click("xpath", "/html/body/reference/div/div/div[1]/div[2]/div[1]/div[2]/a[2]").waitForElementPresent("body");
-    
-      },
+    },
 }
