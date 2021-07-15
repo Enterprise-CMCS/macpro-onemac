@@ -1,10 +1,8 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { alertMessage, ALERTS_MSG } from "../libs/alert-messages";
 import { Alert } from "@cmsgov/design-system";
-import { getAlert } from "../libs/error-mappings";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import closingX from "../images/AlertClosingX.svg";
-import { RESPONSE_CODE } from "cmscommonlib";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -14,15 +12,12 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * @param {String} changeRequestType - the type of change request
  */
 const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
-  const [alert, setAlert] = useState(getAlert(alertCode));
+  const [alert, setAlert] = useState(alertCodeAlerts[alertCode]);
 
   useEffect(() => {
     let mounted = true;
-    console.log("alertCode is: ", alertCode);
-    if (alertCode && mounted)
-      if (alertCode === RESPONSE_CODE.LOGIN_ERROR)
-        setAlert(alertMessage[RESPONSE_CODE.LOGIN_ERROR]);
-      else setAlert(getAlert(alertCode));
+
+    if (alertCode && mounted) setAlert(alertCodeAlerts[alertCode]);
 
     return function cleanup() {
       mounted = false;

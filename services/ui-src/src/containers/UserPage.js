@@ -11,8 +11,7 @@ import {
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
-import { getAlert } from "../libs/error-mappings";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import UserDataApi from "../utils/UserDataApi";
 
 import AlertBar from "../components/AlertBar";
@@ -22,7 +21,6 @@ import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
-import { helpDeskContact } from "../libs/helpDeskContact";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -204,7 +202,7 @@ const UserPage = () => {
           UserDataApi.setUserStatus(updateStatusRequest).then(function (
             returnCode
           ) {
-            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+            if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
               setUserInfo();
             } else {
               console.log("Returned: ", returnCode);
@@ -355,6 +353,8 @@ const UserPage = () => {
     }
   }, [
     accesses,
+    userData.group,
+    userData.division,
     userType,
     xClicked,
     isStateSelectorVisible,
