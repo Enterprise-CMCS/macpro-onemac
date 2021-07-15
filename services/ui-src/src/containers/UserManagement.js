@@ -6,7 +6,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
+import UserDataApi from "../utils/UserDataApi";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";

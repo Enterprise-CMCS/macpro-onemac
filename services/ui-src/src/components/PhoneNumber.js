@@ -23,7 +23,7 @@ export const PhoneNumber = ({
 
   const onEditFn = useCallback(() => {
     onEdit();
-  }, [onEdit, value]);
+  }, [onEdit]);
 
   const onCancelFn = useCallback(() => {
     onCancel();
