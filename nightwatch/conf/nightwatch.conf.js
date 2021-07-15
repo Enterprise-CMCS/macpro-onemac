@@ -48,6 +48,10 @@ module.exports = {
                     username: "stateadmin@nightwatch.test",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
+                cms_reviewers:{
+                    username: "cmsreviewer@nightwatch.test",
+                    password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
+                },
 
                 cms_approvers: {
                     username: "cmsapprover@nightwatch.test",
