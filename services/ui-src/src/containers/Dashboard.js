@@ -1,15 +1,27 @@
-import React, { useState, useEffect } from "react";
-import { CHANGE_REQUEST_TYPES } from "../changeRequest/changeRequestTypes";
-import PageTitleBar, { TITLE_BAR_ID } from "../components/PageTitleBar";
+import React, { useCallback, useState, useEffect, useMemo } from "react";
+import { Link, useHistory, useLocation } from "react-router-dom";
+import { format } from "date-fns";
+import { Button } from "@cmsgov/design-system";
+import {
+  RESPONSE_CODE,
+  ROUTES,
+  ChangeRequest,
+  getUserRoleObj,
+} from "cmscommonlib";
+
+import PageTitleBar from "../components/PageTitleBar";
+import PortalTable from "../components/PortalTable";
+import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import { ALERTS_MSG } from "../libs/alert-messages";
-import { ROUTES } from "../Routes";
-import { Link, useHistory, useLocation } from "react-router-dom";
-import { Button } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import { format } from "date-fns";
-import { Alert } from "@cmsgov/design-system";
+import { useAppContext } from "../libs/contextLib";
+import {
+  pendingMessage,
+  deniedOrRevokedMessage,
+  isPending,
+  isActive,
+} from "../libs/userLib";
 
 /**
  * Component containing dashboard
@@ -17,201 +29,171 @@ import { Alert } from "@cmsgov/design-system";
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [alert, setAlert] = useState();
-
+  const { userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
+  const userRoleObj = getUserRoleObj(userData.type);
 
-  // Load the data from the backend.
+  // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
-    let mounted = true;
-    let newAlert = ALERTS_MSG.NONE;
+    if (location?.state?.passCode !== undefined) location.state.passCode = null;
+    if (!userData?.type || !userData?.attributes) {
+      history.replace("/signup", location.state);
+      return;
+    }
 
-    async function onLoad() {
+    let mounted = true;
+
+    (async function onLoad() {
       try {
-        if (mounted) setChangeRequestList(await ChangeRequestDataApi.getAll());
+        const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+          userProfile.email
+        );
+
+        if (typeof data === "string") throw data;
+
+        if (mounted) setChangeRequestList(data);
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        newAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
+        setAlertCode(RESPONSE_CODE.SYSTEM_ERROR); // ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
       }
-    }
-
-    if (location.state) newAlert = location.state.showAlert;
-    if (mounted) onLoad();
-    if (mounted) setAlert(newAlert);
+    })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [location]);
+  }, [history, location, userData, userProfile]);
 
-  const jumpToPageTitle = () => {
-    var elmnt = document.getElementById(TITLE_BAR_ID);
-    if (elmnt) elmnt.scrollIntoView();
-  };
+  const renderId = useCallback(
+    ({ row, value }) => (
+      <Link
+        to={`/${row.original.type}/${row.original.id}/${row.original.userId}`}
+      >
+        {value}
+      </Link>
+    ),
+    []
+  );
 
-  useEffect(() => {
-    if (alert && alert.heading && alert.heading !== "") {
-      jumpToPageTitle();
-    }
-  }, [alert]);
+  const getType = useCallback(
+    ({ type }) =>
+      ({
+        [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
+        [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
+        [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
+        [ChangeRequest.TYPE.WAIVER]: "Waiver",
+        [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
+        [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
+        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
+        [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+      }[type] ?? []),
+    []
+  );
 
-  const renderAlert = (alert) => {
-    if (!alert) return;
-    if (alert.heading && alert.heading !== "") {
-      return (
-        <div className="alert-bar">
-          <Alert variation={alert.type} heading={alert.heading}>
-            <p className="ds-c-alert__text">{alert.text}</p>
-          </Alert>
-        </div>
-      );
-    }
-  };
+  const renderType = useCallback(
+    ({ value }) => <span className="type-badge">{value}</span>,
+    []
+  );
 
-  /**
-   * Render the list of change requests.
-   * @param {Array} changeRequests
-   * @returns the change requests
-   */
-  function renderChangeRequestList(changeRequests) {
-    // First sort the list with the lastest record first.
-    let sortedChangeRequests = changeRequests.sort(function (a, b) {
-      let retVal = 0;
-      if (a && b && a.submittedAt && b.submittedAt) {
-        let aDate = new Date(a.submittedAt);
-        let bDate = new Date(b.submittedAt);
-        if (aDate < bDate) retVal = 1;
-        else if (aDate > bDate) retVal = -1;
-      }
-      return retVal;
-    });
+  const renderDate = useCallback(
+    ({ value }) => format(value, "MMM d, yyyy"),
+    []
+  );
 
-    //Now generate the list
-    return sortedChangeRequests.map((changeRequest, i) => {
-      let type;
-      let link = "/" + changeRequest.type + "/" + changeRequest.id;
-      switch (changeRequest.type) {
-        case CHANGE_REQUEST_TYPES.SPA:
-          type = "SPA";
-          break;
+  const columns = useMemo(
+    () => [
+      {
+        Header: "SPA ID/Waiver Number",
+        accessor: "transmittalNumber",
+        disableSortBy: true,
+        Cell: renderId,
+      },
+      {
+        Header: "Type",
+        accessor: getType,
+        id: "type",
+        Cell: renderType,
+      },
+      {
+        Header: "State",
+        accessor: "territory",
+      },
+      {
+        Header: "Date Submitted",
+        accessor: "submittedAt",
+        Cell: renderDate,
+      },
+      {
+        Header: "State Submitter",
+        accessor: ({ user: { firstName, lastName } = {} }) =>
+          [firstName, lastName].filter(Boolean).join(" "),
+        id: "submitter",
+      },
+    ],
+    [getType, renderDate, renderId, renderType]
+  );
 
-        case CHANGE_REQUEST_TYPES.WAIVER:
-          type = "Waiver";
-          break;
+  const initialTableState = useMemo(
+    () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
+    []
+  );
 
-        case CHANGE_REQUEST_TYPES.SPA_RAI:
-          type = "SPA RAI";
-          break;
+  const newSubmissionButton = (
+    <Button
+      id="new-submission-button"
+      className="new-submission-button"
+      href={ROUTES.NEW_SUBMISSION_SELECTION}
+      inversed
+    >
+      New Submission{" "}
+      <svg
+        width="15"
+        height="16"
+        viewBox="0 0 15 16"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path d="M7.29387 0.941406C3.26446 0.941406 -0.000244141 4.20611 -0.000244141 8.23552C-0.000244141 12.2649 3.26446 15.5296 7.29387 15.5296C11.3233 15.5296 14.588 12.2649 14.588 8.23552C14.588 4.20611 11.3233 0.941406 7.29387 0.941406ZM11.5292 9.05905C11.5292 9.25317 11.3703 9.412 11.1762 9.412H8.47034V12.1179C8.47034 12.312 8.31152 12.4708 8.1174 12.4708H6.47034C6.27623 12.4708 6.1174 12.312 6.1174 12.1179V9.412H3.41152C3.2174 9.412 3.05858 9.25317 3.05858 9.05905V7.412C3.05858 7.21788 3.2174 7.05905 3.41152 7.05905H6.1174V4.35317C6.1174 4.15905 6.27623 4.00023 6.47034 4.00023H8.1174C8.31152 4.00023 8.47034 4.15905 8.47034 4.35317V7.05905H11.1762C11.3703 7.05905 11.5292 7.21788 11.5292 7.412V9.05905Z" />
+      </svg>
+    </Button>
+  );
 
-        case CHANGE_REQUEST_TYPES.WAIVER_RAI:
-          type = "Waiver RAI";
-          break;
-
-        case CHANGE_REQUEST_TYPES.WAIVER_EXTENSION:
-          type = "Temporary Extension Request";
-          break;
-
-        case CHANGE_REQUEST_TYPES.WAIVER_APP_K:
-          type = "1915(c) Appendix K Amendment";
-          break;
-
-        default:
-          type = "";
-      }
-
-      return (
-        <tr key={i}>
-          <td>
-            <Link to={link}>{changeRequest.transmittalNumber}</Link>
-          </td>
-          <td>
-            <span className="type-badge">{type}</span>
-          </td>
-          <td className="date-submitted-column">
-            {format(changeRequest.submittedAt, "MMM d, yyyy")}
-          </td>
-        </tr>
-      );
-    });
-  }
+  const isUserActive =
+    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
   // Render the dashboard
   return (
     <div className="dashboard-white">
-      <PageTitleBar heading="SPA and Waiver Dashboard" text="" />
-      {renderAlert(alert)}
+      <PageTitleBar
+        heading="Submission List"
+        rightSideContent={
+          isUserActive && userRoleObj.canAccessForms && newSubmissionButton
+        }
+      />
+      <AlertBar alertCode={alertCode} />
       <div className="dashboard-container">
-        <div className="dashboard-left-col">
-          <div className="action-title">SPAs</div>
-          <Button
-            id="spaSubmitBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.SPA)}
-          >
-            Submit new SPA
-          </Button>
-          <Button
-            id="spaRaiBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.SPA_RAI)}
-          >
-            Respond to SPA RAI
-          </Button>
-          <div className="action-title">Waivers</div>
-          <Button
-            id="waiverBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER)}
-          >
-            Submit new Waiver
-          </Button>
-          <Button
-            id={"waiverRaiBtn"}
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_RAI)}
-          >
-            Respond to 1915(b) Waiver RAI
-          </Button>
-          <Button
-            id="waiverExtBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_EXTENSION)}
-          >
-            Request Temporary Extension form - 1915(b) and 1915(c)
-          </Button>
-          <Button
-            id="waiverAppKBtn"
-            variation="transparent"
-            onClick={() => history.push(ROUTES.WAIVER_APP_K)}
-          >
-            Submit 1915(c) Appendix K Amendment
-          </Button>
-        </div>
-        <div className="dashboard-right-col">
-          <div className="action-title">Submissions List</div>
+        {isUserActive ? (
           <LoadingScreen isLoading={isLoading}>
-            <div>
-              {changeRequestList.length > 0 ? (
-                <table className="submissions-table">
-                  <thead>
-                    <tr>
-                      <th scope="col">SPA ID/Waiver Number</th>
-                      <th scope="col">Type</th>
-                      <th className="date-submitted-column" scope="col">
-                        Date Submitted
-                      </th>
-                    </tr>
-                  </thead>
-                  <tbody>{renderChangeRequestList(changeRequestList)}</tbody>
-                </table>
-              ) : (
-                <EmptyList message="You have no submissions yet." />
-              )}
-            </div>
+            {changeRequestList.length > 0 ? (
+              <PortalTable
+                className="submissions-table"
+                columns={columns}
+                data={changeRequestList}
+                initialState={initialTableState}
+              />
+            ) : (
+              <EmptyList message="You have no submissions yet." />
+            )}
           </LoadingScreen>
-        </div>
+        ) : isPending(userProfile.userData) ? (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        ) : (
+          <EmptyList
+            showProfileLink="true"
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        )}
       </div>
     </div>
   );

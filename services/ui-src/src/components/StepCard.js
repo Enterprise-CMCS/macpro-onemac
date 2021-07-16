@@ -10,17 +10,13 @@ import PropTypes from "prop-types";
 export default function StepCard({ stepNumber, content }) {
   return (
     <div className="info-card">
-      <div className="circle-single-digit">
-        {stepNumber}
-      </div>
-      <div className="card-content">
-        {content}
-      </div>
+      <div className="circle-single-digit">{stepNumber}</div>
+      <div className="card-content">{content}</div>
     </div>
   );
 }
 
 StepCard.propTypes = {
   stepNumber: PropTypes.string.isRequired,
-  content: PropTypes.PropTypes.string.isRequired
+  content: PropTypes.PropTypes.string.isRequired,
 };

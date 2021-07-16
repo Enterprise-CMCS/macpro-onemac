@@ -50,16 +50,22 @@ class WaiverExtension {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
+    let transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
+      ? `<br/>${data.transmittalNumberWarningMessage}`
+      : "";
 
     cmsEmail.ToAddresses = [process.env.reviewerEmail];
     cmsEmail.Subject =
       "New Waiver Extension for " + data.transmittalNumber + " submitted";
-    cmsEmail.HTML = `
+    cmsEmail.HTML =
+      `
         <p>The Submission Portal received a Request for Waiver Extension Submission:</p>
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}
+            <br><b>Waiver #</b>: ${data.transmittalNumber}` +
+      transmittalNumberWarningMessage +
+      `
         </p>
         <p>
             <b>Additional Information</b>:
@@ -104,8 +110,8 @@ class WaiverExtension {
         </p>
         <br>
         <p>
-            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers,
-            responses to Requests for Additional Information (RAI), and extension requests on Waivers only.
+            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, 
+            responses to Requests for Additional Information (RAI), and extension requests on Waivers only. 
             Any other correspondence will be disregarded.
         </p>
         <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>

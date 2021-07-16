@@ -1,15 +1,16 @@
 import React, { useState, useEffect, useRef } from "react";
-import { Link, useHistory } from "react-router-dom";
+import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES } from "../Routes";
-import medicaidLogo from "../images/medicaidLogo.png";
+import { ROUTES, getUserRoleObj } from "cmscommonlib";
+import { getCurrentRoute } from "../utils/routeUtils";
 import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
 import { Alert } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
-
+import oneMacLogo from "../images/OneMAC_logoLight1.svg";
+import { ROUTES as RouteList } from "cmscommonlib";
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
@@ -23,12 +24,39 @@ function getSignInUrl() {
 }
 
 /**
+ * Get the register URL depending on the current domain.
+ * @returns the register URL
+ */
+function getRegisterUrl() {
+  const currentDomain = window.location.hostname;
+  let registerUrl = "https://test.home.idm.cms.gov/";
+
+  // TODO remove the 'spa.cms.gov' and 'spa-val.cms.gov' as options
+  // after the rebrand has changed the domain to onemac
+  if (currentDomain === "onemac.cms.gov" || currentDomain === "spa.cms.gov") {
+    registerUrl = "https://home.idm.cms.gov/";
+  } else if (
+    currentDomain === "onemacval.cms.gov" ||
+    currentDomain === "spa-val.cms.gov"
+  ) {
+    registerUrl = "https://impl.home.idm.cms.gov/";
+  }
+
+  return registerUrl;
+}
+
+/**
  * Logout the user.
  */
-function logout() {
+function logout(isLoggedInAsDeveloper) {
   const authConfig = Auth.configure();
   Auth.signOut();
-  window.location.href = authConfig.oauth.redirectSignOut;
+  if (isLoggedInAsDeveloper) {
+    window.location.href = authConfig.oauth.redirectSignOut;
+    document.location.reload(true);
+  } else {
+    window.location.href = getRegisterUrl();
+  }
 }
 
 /**
@@ -74,24 +102,7 @@ function Header(props) {
     return (
       <div className="usa-bar">
         <img src={flagIcon} alt="united states flag" />
-        An offical website of the United States government
-      </div>
-    );
-  }
-
-  /**
-   * Renders a branding bar
-   */
-  function renderBrandBar() {
-    return (
-      <div className="brand-bar">
-        <a
-          href="https://www.medicaid.gov/"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <img src={medicaidLogo} alt="Medicaid.gov-Keeping America Healthy" />
-        </a>
+        An official website of the United States government
       </div>
     );
   }
@@ -99,31 +110,109 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
-  function renderNavBar(isLoggedInAsDeveloper) {
-    return (
-      <div className="nav-bar">
-        <div className="nav-left">
-          <Link to={ROUTES.HOME}>About</Link>
-          <Link id="dashboardLink" to={ROUTES.DASHBOARD}>
-            Dashboard
-          </Link>
-          <Link to={ROUTES.FAQ}>FAQ</Link>
-          {isLoggedInAsDeveloper? <Link to={ROUTES.COMPONENT_PAGE}>Component Page</Link> : null}
-        </div>
-        {renderAccountButtons()}
-      </div>
-    );
+  function renderNavBar(
+    isLoggedInAsDeveloper,
+    currentRoute,
+    isAuthenticated,
+    userType
+  ) {
+    const userObj = getUserRoleObj(userType);
+    switch (document.location.pathname) {
+      case ROUTES.FAQ:
+      case ROUTES.FAQ + "/":
+        return (
+          <div className="nav-bar">
+            <div className="nav-left">
+              <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+            </div>
+          </div>
+        );
+      default:
+        return (
+          <div className="nav-bar">
+            <div className="nav-left">
+              <div className="logo-nav-left">
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+              </div>
+              <div className="nav-left-links">
+                <Link
+                  to={ROUTES.HOME}
+                  className={getActiveClass(currentRoute, RouteList.HOME)}
+                >
+                  Home
+                </Link>
+                {isAuthenticated && (
+                  <>
+                    {userObj.canAccessDashboard && (
+                      <Link
+                        id="dashboardLink"
+                        to={ROUTES.DASHBOARD}
+                        className={getActiveClass(
+                          currentRoute,
+                          RouteList.DASHBOARD
+                        )}
+                      >
+                        Dashboard
+                      </Link>
+                    )}
+                    {userObj.canAccessUserManagement && (
+                      <Link
+                        id="userManagementLink"
+                        to={ROUTES.USER_MANAGEMENT}
+                        className={getActiveClass(
+                          currentRoute,
+                          RouteList.USER_MANAGEMENT
+                        )}
+                      >
+                        User Management
+                      </Link>
+                    )}
+                  </>
+                )}
+                <a
+                  href={ROUTES.FAQ}
+                  className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
+                  target="new"
+                >
+                  FAQ
+                </a>
+                {isLoggedInAsDeveloper ? (
+                  <Link
+                    to={ROUTES.COMPONENT_PAGE}
+                    className={getActiveClass(
+                      currentRoute,
+                      RouteList.COMPONENT_PAGE
+                    )}
+                  >
+                    Component Page
+                  </Link>
+                ) : null}
+              </div>
+            </div>
+            {renderAccountButtons(isLoggedInAsDeveloper)}
+          </div>
+        );
+    }
   }
 
+  function getActiveClass(currentRoute, targetRoute) {
+    return currentRoute === targetRoute.split("/")[1].toUpperCase()
+      ? "activeLink"
+      : "ds-u-text-decoration--none";
+  }
   /**
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
-  function renderAccountButtons() {
+  function renderAccountButtons(isLoggedInAsDeveloper) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (isAuthenticated) {
       return (
         <div className="nav-right" ref={wrapperRef}>
-          <button className="dropdown" id="myAccountLink" onClick={() => setShowMenu(!showMenu)}>
+          <button
+            className="dropdown"
+            id="myAccountLink"
+            onClick={() => setShowMenu(!showMenu)}
+          >
             My Account&nbsp;
             <svg
               width="11"
@@ -140,7 +229,11 @@ function Header(props) {
           </button>
           {showMenu && (
             <div className="dropdown-content">
-              <Link to={ROUTES.PROFILE} id="manageAccountLink" onClick={() => setShowMenu(false)}>
+              <Link
+                to={ROUTES.PROFILE}
+                id="manageAccountLink"
+                onClick={() => setShowMenu(false)}
+              >
                 <svg
                   width="14"
                   height="15"
@@ -153,14 +246,14 @@ function Header(props) {
                     fill="white"
                   />
                 </svg>
-                &nbsp; Manage account
+                &nbsp; Manage Profile
               </Link>
               <Link
                 to={ROUTES.HOME}
                 id="logoutLink"
                 onClick={() => {
                   setShowMenu(false);
-                  logout();
+                  logout(isLoggedInAsDeveloper);
                 }}
               >
                 <svg
@@ -186,7 +279,10 @@ function Header(props) {
     } else {
       return (
         <div className="nav-right">
-          <Button onClick={() => (window.location = getSignInUrl())} inversed>
+          <Button href={getRegisterUrl()} inversed className="register-link">
+            Register
+          </Button>
+          <Button href={getSignInUrl()} id="loginBtn" inversed>
             Login
           </Button>
           {showDevLogin && (
@@ -205,10 +301,12 @@ function Header(props) {
     }
   }
 
+  const { userData } = useAppContext().userProfile || {};
+  let userType = userData?.type ?? "user";
+
   return (
     <div>
       {renderUSABar()}
-      {renderBrandBar()}
       {isIE && (
         <Alert variation="error" heading="Internet Explorer Browser Issues">
           Please consider upgrading to a recommended browser. Internet Explorer
@@ -217,7 +315,12 @@ function Header(props) {
           list of recommended browsers.”
         </Alert>
       )}
-      {renderNavBar(isLoggedInAsDeveloper)}
+      {renderNavBar(
+        isLoggedInAsDeveloper,
+        getCurrentRoute(useLocation().pathname),
+        isAuthenticated,
+        userType
+      )}
     </div>
   );
 }
