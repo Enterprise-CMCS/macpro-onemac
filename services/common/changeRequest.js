@@ -288,7 +288,9 @@ export const CONFIG = {
   [TYPE.WAIVER_EXTENSION]: {
     pageTitle: "Request Waiver Temporary Extension",
     readOnlyPageTitle: "Waiver Temporary Extension Request Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Request Temporary Extension",
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
@@ -312,7 +314,9 @@ export const CONFIG = {
   [TYPE.WAIVER_RAI]: {
     pageTitle: "Respond to Waiver RAI",
     readOnlyPageTitle: "Waiver RAI Response Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],
     optionalUploads: ["Other"],
