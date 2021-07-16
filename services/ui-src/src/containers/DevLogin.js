@@ -1,19 +1,19 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
+
+import { RESPONSE_CODE } from "cmscommonlib";
+
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
-//import { alertMessage } from "../libs/alert-messages";
 import config from "../utils/config";
+
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
-import { RESPONSE_CODE } from "cmscommonlib";
-//import { Alert } from "@cmsgov/design-system";
 
 export default function DevLogin() {
   const { setUserInfo } = useAppContext();
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
-  //const [alert, setAlert] = useState();
-  const [alertCode, setAlertCode] = useState("NONE");
+  const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const [fields, handleFieldChange] = useFormFields({
     email: "",
     password: "",
@@ -22,7 +22,7 @@ export default function DevLogin() {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let newAlertCode = "NONE";
+    let newAlertCode = RESPONSE_CODE.NONE;
 
     try {
       await Auth.signIn(fields.email, fields.password);
@@ -35,7 +35,7 @@ export default function DevLogin() {
   }
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   return (

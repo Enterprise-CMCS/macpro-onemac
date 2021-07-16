@@ -328,7 +328,7 @@ const UserManagement = () => {
   );
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   const csvExportSubmissions = (

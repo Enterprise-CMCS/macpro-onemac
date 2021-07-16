@@ -13,7 +13,7 @@ export * from "./routes";
  * Codes to send to front end
  */
 export const RESPONSE_CODE = {
-  NONE: "",
+  NONE: "NONE",
   LOGIN_ERROR: "UR403",
   SUCCESSFULLY_SUBMITTED: "SC000",
   DATA_MISSING: "SC001",

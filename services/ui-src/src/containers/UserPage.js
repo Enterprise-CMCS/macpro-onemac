@@ -126,7 +126,8 @@ const UserPage = () => {
     async (newNumber) => {
       try {
         var result = await UserDataApi.updatePhoneNumber(email, newNumber);
-        if (result === RESPONSE_CODE.USER_SUBMITTED) result = "NONE"; // do not show success message
+        if (result === RESPONSE_CODE.USER_SUBMITTED)
+          result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setPhoneNumber(newNumber);
       } catch (e) {
@@ -406,7 +407,7 @@ const UserPage = () => {
   }, [userData, userType]);
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   return (

@@ -29,7 +29,7 @@ const leavePageConfirmMessage =
  */
 export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
-  const [alertCode, setAlertCode] = useState("NONE");
+  const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const {
     userProfile: { userData },
   } = useAppContext();
@@ -357,7 +357,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let newAlertCode = "NONE";
+    let newAlertCode = RESPONSE_CODE.NONE;
     let readyToSubmit = false;
 
     setFirstTimeThrough(false);
@@ -384,7 +384,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   // Render the component conditionally when NOT in read only mode
