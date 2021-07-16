@@ -57,7 +57,7 @@ const UserManagement = () => {
       })
       .catch((error) => {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
+        setAlertCode(RESPONSE_CODE[error.message]);
       });
   }, [userProfile.email, userProfile.userData]);
 
@@ -235,9 +235,9 @@ const UserManagement = () => {
                 setAlertCode(newAlertCode);
                 setDoneToName(newPersonalized);
               })
-              .catch((error) => {
-                console.log("Error while fetching user's list.", error);
-                setAlertCode(RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR);
+              .catch((e) => {
+                console.log("Error while fetching user's list.", e);
+                setAlertCode(RESPONSE_CODE[e.message]);
               });
           }}
         />
