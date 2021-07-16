@@ -1,4 +1,3 @@
-
 const login = require('../suites/OY2_9999_Login');
 module.exports = {
 
@@ -21,7 +20,7 @@ module.exports = {
        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[4]", "Date Submitted");
        browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[4]");
        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]", "State Submitter");
-       browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]");
+       browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]").pause(2000);
        browser.waitForElementPresent('link text', 'User Management').click('link text', 'User Management');
        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[1]", "Name");
        browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[1]");
