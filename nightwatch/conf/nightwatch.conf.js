@@ -91,6 +91,7 @@ module.exports = {
                     username: "cmsapproverdenied@cms.hhs.local",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
+              
            },
 
             exclude: ["./nightwatch/page_objects", "./nightwatch/examples"],
