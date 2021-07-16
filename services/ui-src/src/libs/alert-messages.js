@@ -46,7 +46,8 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.SUCCESS,
     heading: "Submission Completed",
     text: "Thanks for your submission. We truly value your feedback. Please consider taking our $Link$.",
-    linkURL: "https://forms.gle/qcsWMaDroBkhT7rs6",
+    linkURL:
+      "https://docs.google.com/forms/d/e/1FAIpQLSfnmjpetVur4NPBTA5V_jP2adSQNmVaUSL6R8sd6vWSuHQpAg/viewform",
     linkText: "Post-Submission Survey",
   },
 

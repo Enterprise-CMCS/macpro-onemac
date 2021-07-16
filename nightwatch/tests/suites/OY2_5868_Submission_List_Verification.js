@@ -61,6 +61,8 @@ module.exports = {
         .click("[value='Submit']").pause(5000);
         
         browser.refresh();
+        browser.pause(5000);
+        browser.refresh();
 
         // Verify the SPA on Submission List 
         // browser.useXpath().click("//a[@id='new-submission-button']");
