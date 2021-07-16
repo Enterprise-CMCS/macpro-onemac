@@ -132,6 +132,9 @@ module.exports = {
         
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.refresh();
+        browser.pause(5000);
+        browser.refresh();
         
         // SPA ID Verification 
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
