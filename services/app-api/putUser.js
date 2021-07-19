@@ -2,7 +2,7 @@ import handler from "./libs/handler-lib";
 import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "./libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
 import {

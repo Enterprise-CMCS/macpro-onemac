@@ -132,7 +132,7 @@ const UserPage = () => {
         setPhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
-        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+        setAlertCode(RESPONSE_CODE[e.message]);
       }
       setIsEditingPhone(false);
     },
@@ -162,9 +162,9 @@ const UserPage = () => {
         setAlertCode(RESPONSE_CODE.USER_SUBMITTED);
         setIsStateSelectorVisible(false);
         setUserInfo();
-      } catch (error) {
-        console.error("Could not create new user:", error);
-        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+      } catch (e) {
+        console.error("Could not create new user:", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
       } finally {
         setLoading(false);
       }
@@ -210,8 +210,8 @@ const UserPage = () => {
               setAlertCode(returnCode);
             }
           });
-        } catch (err) {
-          setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+        } catch (e) {
+          setAlertCode(RESPONSE_CODE[e.message]);
         }
       }
     },

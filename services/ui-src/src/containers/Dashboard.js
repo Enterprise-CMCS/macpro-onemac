@@ -60,7 +60,7 @@ const Dashboard = () => {
         if (mounted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE.SYSTEM_ERROR); // ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR);
+        setAlertCode(RESPONSE_CODE[error.message]);
       }
     })();
 

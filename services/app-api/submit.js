@@ -10,7 +10,7 @@ import getChangeRequestFunctions, {
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "./libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
 
 /**
@@ -155,6 +155,7 @@ export const main = handler(async (event) => {
           console.log(
             "ID " + smallerID + " exists in " + process.env.spaIdTableName
           );
+        throw error;
       }
       sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed

@@ -68,6 +68,16 @@ export const ALERTS_MSG = {
     heading: "Submission Error",
     text: "There was an issue submitting your request. Please try again.",
   },
+  SUBMISSION_FETCH_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Submission Fetch Error",
+    text: "There was an issue fetching the submission. The provided ID could be wrong",
+  },
+  PACKAGE_FETCH_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Package Fetch Error",
+    text: "There was an issue fetching the package. The provided ID could be wrong",
+  },
   SUBMISSION_DUPLICATE_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Duplicate ID",
@@ -128,6 +138,11 @@ export const ALERTS_MSG = {
     heading: "Attachment Too Large",
     text: `An individual attachment cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.  Please select a smaller file.`,
   },
+  UPLOADS_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Document Upload Error",
+    text: `An error occured while uploading documents to AWS S3 service.`,
+  },
   NOT_AUTHENTICATED: {
     type: ALERT_TYPES.WARNING,
     heading: "Login Required",
@@ -137,6 +152,11 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "System Submission Error",
     text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
+  },
+  SESSION_EXPIRED: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Session Expiry Error",
+    text: `Your session time has expired. Please log back in to access OneMAC.`,
   },
   USER_STATUS_GRANTED: {
     type: ALERT_TYPES.SUCCESS,
@@ -152,6 +172,11 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.SUCCESS,
     heading: "Status Change",
     text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
+  },
+  UNKNOWN_SYSTEM_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Unknown System Error",
+    text: `An unknown system error has occured. Please try again and if the problem persists, please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
   },
 };
 
@@ -182,9 +207,11 @@ export const alertCodeAlerts = {
   [RESPONSE_CODE.SUCCESS_USER_GRANTED]: ALERTS_MSG.USER_STATUS_GRANTED,
   [RESPONSE_CODE.SUCCESS_USER_REVOKED]: ALERTS_MSG.USER_STATUS_REVOKED,
   [RESPONSE_CODE.SUCCESS_USER_DENIED]: ALERTS_MSG.USER_STATUS_DENIED,
-  [RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR]: ALERTS_MSG.SUBMISSION_ERROR,
+  [RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR]: ALERTS_MSG.FETCH_ERROR,
   [RESPONSE_CODE.HELPDESK_USER_SUBMITTED]:
     ALERTS_MSG.HELPDESK_SUBMISSION_SUCCESS,
   [RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED]:
     ALERTS_MSG.CMS_REVIEWER_SUBMISSION_SUCCESS,
+  [RESPONSE_CODE.DASHBOARD_LIST_FETCH_ERROR]:
+    ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
 };

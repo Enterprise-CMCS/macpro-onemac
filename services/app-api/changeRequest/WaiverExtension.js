@@ -1,6 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * Waiver Extension submission specific email generation functions.
