@@ -3,10 +3,7 @@ import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faDownload,
-  faExternalLinkAlt,
-} from "@fortawesome/free-solid-svg-icons";
+import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
 /**
  * Read only component to list the attachments.
@@ -58,8 +55,6 @@ export default function FileList({ heading, uploadList, zipId }) {
           {uploadList.map((upload, index) => (
             <li className="choice-list-item" key={index}>
               <h3>{upload.title}</h3>
-              <FontAwesomeIcon icon={faExternalLinkAlt} />
-              &nbsp;&nbsp;New Tab&nbsp;&nbsp;-&nbsp;&nbsp;
               <a href={upload.url} target="_blank" rel="noopener noreferrer">
                 {upload.filename}
               </a>
