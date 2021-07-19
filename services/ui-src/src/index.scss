@@ -467,6 +467,10 @@ input[type="file"] {
 article.form-container {
   @extend .ds-u-margin-bottom--7;
 
+  section {
+    @extend .ds-u-measure--wide;
+  }
+
   // i hate this hacky, redundant selector, but such is life
   > section + section,
   .choice-container {
