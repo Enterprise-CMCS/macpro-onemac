@@ -16,6 +16,23 @@ export const getAlert = (errorCode) => {
     case "":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
       break;
+    // app-api/response-codes.js    USER_SUBMITTED: "DB000",
+    case "DB000":
+      returnAlert = ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR;
+      break;
+    // app-api/response-codes.js    USER_SUBMITTED: "DB001",
+    case "DB001":
+      returnAlert = ALERTS_MSG.FETCH_ERROR;
+      break;
+    // app-api/response-codes.js    SUBMISSION_FETCH_ERROR: "DB002",
+    case "DB002":
+      returnAlert = ALERTS_MSG.SUBMISSION_FETCH_ERROR;
+      break;
+
+    // app-api/response-codes.js    PACKAGE_FETCH_ERROR: "DB003",
+    case "DB003":
+      returnAlert = ALERTS_MSG.PACKAGE_FETCH_ERROR;
+      break;
     // app-api/response-codes.js    USER_SUBMITTED: "UR000",
     case "UR000":
       returnAlert = ALERTS_MSG.SUBMISSION_SUCCESS;
@@ -60,9 +77,16 @@ export const getAlert = (errorCode) => {
     case "AT000":
       returnAlert = ALERTS_MSG.REQUIRED_UPLOADS_MISSING;
       break;
+    // app-api/response-codes.js  UPLOADS_ERROR
+    case "AT001":
+      returnAlert = ALERTS_MSG.UPLOADS_ERROR;
     // app-api/response-codes.js    SYSTEM_ERROR: "SY000",
     case "SY000":
       returnAlert = ALERTS_MSG.CONTACT_HELP_DESK;
+      break;
+    // app-api/response-codes.js    SESSION_EXPIRED: "SY001",
+    case "SY001":
+      returnAlert = ALERTS_MSG.SESSION_EXPIRED;
       break;
     // app-api/response-codes.js    TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
     case "ID001":
@@ -108,10 +132,13 @@ export const getAlert = (errorCode) => {
     case "UR048":
       returnAlert = ALERTS_MSG.USER_STATUS_DENIED;
       break;
-
+    //  SUCCESS_USER_DENIED: "UR048",
+    case "UN000":
+      returnAlert = ALERTS_MSG.UNKNOWN_SYSTEM_ERROR;
+      break;
     default:
-      console.log("Not sure what this error is", errorCode);
-      returnAlert = ALERTS_MSG.SUBMISSION_ERROR;
+      console.log("Not sure what this error is.", errorCode);
+      returnAlert = ALERTS_MSG.UNKNOWN_SYSTEM_ERROR;
       break;
   }
   return returnAlert;

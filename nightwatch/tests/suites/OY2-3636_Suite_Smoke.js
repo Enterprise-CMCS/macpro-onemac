@@ -28,6 +28,7 @@ module.exports = {
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
+        browser.pause(3000);
         //browser.useXpath().click("//button[text()='Submit New Medicaid SPA']");
         // create random SPA ID
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -55,14 +56,9 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser
-        .useCss()
-        .waitForElementPresent("[value='Submit']", 1000)
-        .click("[value='Submit']").pause(8000);
+        browser.useCss().waitForElementPresent("[value='Submit']", 1000);
+        browser.useCss().click("[value='Submit']").pause(8000);
         
-        browser.refresh();
-        browser.pause(5000);
-        browser.refresh();
         // Verify the SPA on Submission List 
         // browser.useXpath().click("//a[@id='new-submission-button']");
         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);

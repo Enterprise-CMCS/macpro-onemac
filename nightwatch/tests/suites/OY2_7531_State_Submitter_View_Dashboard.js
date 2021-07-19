@@ -24,7 +24,9 @@ module.exports = {
         browser.click(manage_account_link);
         browser.pause(2000);
         //check on state access management for state submitter user 
-        let state_access_management = "(//h3)[5]";
+
+        let state_access_management = "//h2[@id='accessHeader']";
+
         let maryland = "(//div[@class='state-access-card']/dt)[1]";
         let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
         //check if each element is visible
@@ -86,7 +88,7 @@ module.exports = {
         // browser.useXpath().click("//a[@id='new-submission-button']");
         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
         // browser.refresh();
-        browser.useXpath().verify.containsText('(//td[@role="cell"])[1]', spaID).pause(5000);
+        browser.useXpath().waitForElementPresent('xpath','(//td[@role="cell"])[1]').verify.containsText('(//td[@role="cell"])[1]', spaID);
         browser.useCss();
         // return spaID;
         generatedSPAID = spaID;
