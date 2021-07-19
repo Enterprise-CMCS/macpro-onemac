@@ -59,7 +59,7 @@ function App() {
         isDev = true;
       }
     } catch (error) {
-      if (error !== "not authenticated") {
+      if (error !== "not authenticated" || error.Message !== "SESSION_EXPIRY") {
         console.log(
           "There was an error while loading the user information.",
           error

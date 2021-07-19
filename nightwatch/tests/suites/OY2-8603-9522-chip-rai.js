@@ -73,7 +73,9 @@ module.exports = {
 
         // Submit the new SPA 
         browser.click("[value='Submit']").pause(2000);
-
+        browser.refresh();
+        browser.pause(5000);
+        browser.refresh();
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
         browser.useCss();
@@ -127,9 +129,12 @@ module.exports = {
 
         // click ["Submit"] button 
         browser.useCss().click("[value='Submit']").pause(1000);
-
+        
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.refresh();
+        browser.pause(5000);
+        browser.refresh();
         
         // SPA ID Verification 
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
