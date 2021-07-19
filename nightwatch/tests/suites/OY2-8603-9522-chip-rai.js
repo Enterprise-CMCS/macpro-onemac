@@ -78,12 +78,12 @@ module.exports = {
         browser.refresh();
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
-        browser.useCss();
-        browser.click("xpath", "(//table//td)[1]/a").pause(2000);
+        browser.pause(2000);
+        browser.useXpath().click("(//table//td)[1]/a");
+        browser.pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
-        browser.useCss();
-        browser.click( "#back-button > svg").waitForElementPresent("body");
+        browser.useCss().click( "#back-button > svg").waitForElementPresent("body");
         browser.pause(5000);
         return chipspaID;
     },
@@ -131,20 +131,18 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(1000);
         
         // Verify the submitted Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
         browser.refresh();
         browser.pause(5000);
         browser.refresh();
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         
         // SPA ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(2000);
+        browser.useXpath().click(submittedIDNumber);
+        browser.pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
-        browser.useCss();
-        browser.click( "#back-button > svg").waitForElementPresent("body");
+        browser.useCss().click( "#back-button > svg").waitForElementPresent("body");
         browser.pause(5000);
     },
-
-    
 }
