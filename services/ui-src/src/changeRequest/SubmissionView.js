@@ -11,6 +11,17 @@ import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import { Review } from "@cmsgov/design-system";
 
+const AUTHORITY_LABELS = {
+  "1915(b)": "All other 1915(b) Waivers",
+  "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
+};
+
+const ACTION_LABELS = {
+  amendment: "Waiver Amendment",
+  new: "New Waiver",
+  renewal: "Request for Waiver Renewal",
+};
+
 /**
  * Given an id and the relevant submission type forminfo, show the details
  * @param {Object} formInfo - all the change request details specific to this submission
@@ -58,15 +69,30 @@ const SubmissionView = ({ changeRequestType }) => {
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.readOnlyPageTitle} enableBackNav />
       {changeRequest && (
-        <div className="form-container">
-          <h3>{formInfo.detailsHeader} Details</h3>
-          <div className="form-card">
-            {changeRequest.actionType && (
-              <Review heading="Action Type">{changeRequest.actionType}</Review>
-            )}
+        <article className="form-container">
+          {changeRequest.submittedAt && (
+            <section>
+              <Review
+                className="original-review-component"
+                headingLevel="2"
+                heading="Date Submitted"
+              >
+                {formatDate(changeRequest.submittedAt)}
+              </Review>
+            </section>
+          )}
+          <section>
+            <h2>{formInfo.detailsHeader} Details</h2>
             {changeRequest.waiverAuthority && (
               <Review heading="Waiver Authority">
-                {changeRequest.waiverAuthority}
+                {AUTHORITY_LABELS[changeRequest.waiverAuthority] ??
+                  changeRequest.waiverAuthority}
+              </Review>
+            )}
+            {changeRequest.actionType && (
+              <Review heading="Action Type">
+                {ACTION_LABELS[changeRequest.actionType] ??
+                  changeRequest.actionType}
               </Review>
             )}
             {changeRequest.transmittalNumber && (
@@ -74,25 +100,24 @@ const SubmissionView = ({ changeRequestType }) => {
                 {changeRequest.transmittalNumber}
               </Review>
             )}
-            {changeRequest.submittedAt && (
-              <Review heading="Submitted On">
-                {formatDate(changeRequest.submittedAt)}
+          </section>
+          <FileList
+            heading="Attachments"
+            uploadList={changeRequest.uploads}
+            zipId={changeRequest.transmittalNumber}
+          />
+          {changeRequest.summary && (
+            <section>
+              <Review
+                className="original-review-component"
+                headingLevel="2"
+                heading="Additional Information"
+              >
+                {changeRequest.summary}
               </Review>
-            )}
-          </div>
-          <h3>Attachments</h3>
-          <FileList uploadList={changeRequest.uploads}></FileList>
-          <div className="summary-box">
-            <TextField
-              name="summary"
-              label="Additional Information"
-              fieldClassName="summary-field"
-              multiline
-              disabled
-              value={changeRequest.summary}
-            ></TextField>
-          </div>
-        </div>
+            </section>
+          )}
+        </article>
       )}
     </LoadingScreen>
   );
