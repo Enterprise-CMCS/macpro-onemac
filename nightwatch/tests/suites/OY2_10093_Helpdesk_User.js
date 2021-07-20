@@ -37,8 +37,8 @@ module.exports = {
         browser.useCss();
         browser.click("xpath", "/html/body/reference/div/div/div[2]/div[1]/button");
         browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a" );
-        browser.useXpath().assert.elementPresent("/html/body/reference/div/div/div[3]/div[2]/div/div[1]");
+        browser.useXpath().assert.elementPresent("/html/body/reference/div/div/article/section[3]/ul/li[1]/a");
         browser.useCss();
-        browser.click("xpath", "/html/body/reference/div/div/div[3]/div[2]/div/div[1]/a").pause(2000);
+        browser.click("xpath", "/html/body/reference/div/div/article/section[3]/ul/li[1]/a").pause(2000);
         }
 }

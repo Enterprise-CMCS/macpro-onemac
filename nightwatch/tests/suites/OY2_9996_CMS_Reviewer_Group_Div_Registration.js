@@ -26,8 +26,8 @@ module.exports = {
         let full_name = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/div";
         let role = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/div";
         let role_email = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[3]/div/div";
-        let group = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/div[1]/p";
-        let division = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/div[2]/p";
+        let group = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/div/div[2]/div[1]/p";
+        let division = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/div/div[2]/div[2]/p";
 
         
         browser.useXpath().assert.containsText( full_name, "CMSReviewer Nightwatch");
