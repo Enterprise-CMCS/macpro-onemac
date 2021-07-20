@@ -100,10 +100,13 @@ const Dashboard = () => {
     []
   );
 
-  const renderDate = useCallback(
-    ({ value }) => format(value, "MMM d, yyyy"),
-    []
-  );
+  const renderDate = useCallback(({ value }) => {
+    if (value) {
+      return format(value, "MMM d, yyyy");
+    } else {
+      return "N/A";
+    }
+  }, []);
 
   const columns = useMemo(
     () => [
