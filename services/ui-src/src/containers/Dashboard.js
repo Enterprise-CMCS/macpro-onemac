@@ -192,6 +192,10 @@ const Dashboard = () => {
     </Button>
   );
 
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
@@ -205,7 +209,7 @@ const Dashboard = () => {
           (userData.type === USER_TYPE.HELPDESK && csvExportSubmissions)
         }
       />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="dashboard-container">
         {isUserActive ? (
           <LoadingScreen isLoading={isLoading}>

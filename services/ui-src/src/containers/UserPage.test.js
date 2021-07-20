@@ -7,6 +7,9 @@ import { AppContext } from "../libs/contextLib";
 import UserPage from "./UserPage";
 
 import UserDataApi from "../utils/UserDataApi";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
+import { RESPONSE_CODE } from "cmscommonlib";
+
 jest.mock("../utils/UserDataApi");
 
 const initialAuthState = {
@@ -148,6 +151,11 @@ describe("Phone Number section", () => {
         replacement
       );
     });
+
+    // this action should NOT show a success alert
+    expect(
+      screen.queryByText(ALERTS_MSG.SUBMISSION_SUCCESS.text, { exact: false })
+    ).toBe(null);
   });
 
   it("displays the Add button when a user has no initial phone number", async () => {
