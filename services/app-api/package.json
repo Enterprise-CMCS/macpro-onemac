@@ -26,6 +26,7 @@
     "joi": "^17.4.0",
     "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
+    "serverless-enable-api-logs": "^2.0.0",
     "uuid": "^7.0.3"
   }
 }
