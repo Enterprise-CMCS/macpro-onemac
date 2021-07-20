@@ -22,7 +22,6 @@ import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
-import { helpDeskContact } from "../libs/helpDeskContact";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -275,42 +274,37 @@ const UserPage = () => {
       return (
         <div className="ds-l-col--6">
           <h2 id="accessHeader">{heading}</h2>
-          <div className="gradient-border" />
-          <dl>
-            {accesses.map(({ state, status, contacts }) => (
-              <div className="access-card-container" key={state ?? "only-one"}>
-                <div className="gradient-border" />
-                <div className="cms-group-and-division-box ">
-                  <div className="cms-group-division-section">
-                    <h3>Group</h3>
-                    <br />
-                    <p>
-                      {
-                        getUserGroup(
-                          groupData.group,
-                          userData.group,
-                          userData.division
-                        ).group
-                      }
-                    </p>
-                  </div>
-                  <div className="cms-group-division-section cms-division-background">
-                    <h3>Division</h3>
-                    <br />
-                    <p>
-                      {
-                        getUserGroup(
-                          groupData.group,
-                          userData.group,
-                          userData.division
-                        ).division
-                      }
-                    </p>
-                  </div>
-                </div>
+          <div className="access-card-container">
+            <div className="gradient-border" />
+            <div className="cms-group-and-division-box ">
+              <div className="cms-group-division-section">
+                <h3>Group</h3>
+                <br />
+                <p>
+                  {
+                    getUserGroup(
+                      groupData.group,
+                      userData.group,
+                      userData.division
+                    ).group
+                  }
+                </p>
               </div>
-            ))}
-          </dl>
+              <div className="cms-group-division-section cms-division-background">
+                <h3>Division</h3>
+                <br />
+                <p>
+                  {
+                    getUserGroup(
+                      groupData.group,
+                      userData.group,
+                      userData.division
+                    ).division
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       );
     } else {

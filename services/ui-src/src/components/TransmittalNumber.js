@@ -31,7 +31,7 @@ const TransmittalNumber = ({
   return (
     <div>
       <div className="label-container">
-        <div className="label-lcol">
+        <div>
           <label htmlFor="transmittalNumber" className="required">
             {idLabel}
           </label>
