@@ -11,8 +11,7 @@ import {
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
-import { getAlert } from "../libs/error-mappings";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import UserDataApi from "../utils/UserDataApi";
 
 import AlertBar from "../components/AlertBar";
@@ -126,7 +125,9 @@ const UserPage = () => {
   const onPhoneNumberSubmit = useCallback(
     async (newNumber) => {
       try {
-        const result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        var result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        if (result === RESPONSE_CODE.USER_SUBMITTED)
+          result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setPhoneNumber(newNumber);
       } catch (e) {
@@ -202,7 +203,7 @@ const UserPage = () => {
           UserDataApi.setUserStatus(updateStatusRequest).then(function (
             returnCode
           ) {
-            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+            if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
               setUserInfo();
             } else {
               console.log("Returned: ", returnCode);
@@ -348,6 +349,8 @@ const UserPage = () => {
     }
   }, [
     accesses,
+    userData.group,
+    userData.division,
     userType,
     xClicked,
     isStateSelectorVisible,
@@ -398,10 +401,14 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
   return (
     <div>
       <PageTitleBar heading="User Profile" />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
         <div className="ds-l-row">
           <div className="left-column">

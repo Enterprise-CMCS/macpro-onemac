@@ -4,44 +4,28 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
 import AlertBar from "./AlertBar";
+import * as ALERT_CONSTANTS from "../libs/alertLib";
 
-jest.mock("../libs/error-mappings", () => {
-  return {
-    getAlert: (alertCode) => {
-      let returnAlert;
-
-      switch (alertCode) {
-        case "SIMPLE_ALERT":
-          return {
-            type: "success",
-            heading: "Success",
-            text: "This is the success alert text.",
-          };
-        case "PERSONALIZED_ALERT":
-          return {
-            type: "success",
-            heading: "Success",
-            text: "This is the $personalize$ success alert text.",
-          };
-        case "LINK_ALERT":
-          return {
-            type: "success",
-            heading: "Success with Link",
-            text: "You achieved success! Now follow our $Link$.",
-            linkURL: "https://www.google.com",
-            linkText: "Test Link Text",
-          };
-        case "NONE":
-        case "":
-          return {
-            type: "success",
-            heading: "",
-            text: "",
-          };
-      }
-      return returnAlert;
+Object.defineProperty(ALERT_CONSTANTS, "alertCodeAlerts", {
+  value: {
+    SIMPLE_ALERT: {
+      type: "success",
+      heading: "Success",
+      text: "This is the success alert text.",
     },
-  };
+    PERSONALIZED_ALERT: {
+      type: "success",
+      heading: "Success",
+      text: "This is the $personalize$ success alert text.",
+    },
+    LINK_ALERT: {
+      type: "success",
+      heading: "Success with Link",
+      text: "You achieved success! Now follow our $Link$.",
+      linkURL: "https://www.google.com",
+      linkText: "Test Link Text",
+    },
+  },
 });
 
 window.HTMLElement.prototype.scrollIntoView = function () {};

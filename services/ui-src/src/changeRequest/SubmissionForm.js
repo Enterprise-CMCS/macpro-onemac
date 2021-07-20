@@ -29,7 +29,7 @@ const leavePageConfirmMessage =
  */
 export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
-  const [alertCode, setAlertCode] = useState("NONE");
+  const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const {
     userProfile: { userData },
   } = useAppContext();
@@ -250,7 +250,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
         Promise.all(promises)
           .then((results) => {
-            results.map((dupID, key) => {
+            results.forEach((dupID, key) => {
               const correspondingValidation =
                 transmittalNumberDetails.idExistValidations[key];
               let tempMessage;
@@ -262,9 +262,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
                 } else {
                   tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
                 }
-              }
-              // ID exists but it should NOT exist
-              else if (dupID && !correspondingValidation.idMustExist) {
+                // ID exists but it should NOT exist
+              } else if (dupID && !correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                 } else {
@@ -353,8 +352,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
           setAlertCode(RESPONSE_CODE[err.message]);
         })
         .finally(() => {
-          limitSubmit.current = false;
           setIsSubmitting(false);
+          limitSubmit.current = false;
         });
     };
 
@@ -377,7 +376,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let newAlertCode = "NONE";
+    let newAlertCode = RESPONSE_CODE.NONE;
     let readyToSubmit = false;
 
     setFirstTimeThrough(false);
@@ -404,7 +403,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   // Render the component conditionally when NOT in read only mode
