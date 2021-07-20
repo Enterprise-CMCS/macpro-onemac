@@ -1,18 +1,17 @@
 import React from "react";
 
+import OneMACLogo from "../assets/images/OneMAC_logoLight.svg";
+
 function HomeHeader() {
   return (
     <>
-      <div className="container-fluid home-header">
-        <div className="ds-l-row home-header-content">
-          <div className="ds-l-col" style={{ position: "relative" }}>
-            <div className="home-header-image-box"></div>
-          </div>
-          <div className="ds-l-col" style={{ position: "relative" }}>
-            <div className="home-header-text">
-              Welcome to the official submission system for <br />
-              paper-based state plan amendments (SPAs) and section 1915 waivers.
-            </div>
+      <div className="home-header">
+        <div className="home-header-content">
+          <img className="home-header-image" src={OneMACLogo} />
+          <div className="home-header-text">
+            Welcome to the official submission system for paper-
+            <wbr />
+            based state plan amendments (SPAs) and section 1915 waivers.
           </div>
         </div>
 

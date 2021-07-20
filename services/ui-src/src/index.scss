@@ -15,6 +15,10 @@ $input-border-radius: 3px;
   height: 8px;
 }
 
+@mixin max-width-ultra-wide {
+  max-width: $width-lg;
+}
+
 // Expansion for the CMS Review component
 // styled to look like a read only textbox
 @mixin cms-review-read-only-textbox-body {
@@ -312,15 +316,15 @@ input[type="file"] {
     @extend .ds-u-font-weight--semibold;
   }
 
-  // contains profile information
-  .left-column {
-    @extend .ds-l-col--6;
-    margin-bottom: 9rem;
-  }
+  .profile-content {
+    @extend .ds-l-row;
+    @include max-width-ultra-wide;
 
-  // contains access management/status of access
-  .right-column {
-    @extend .ds-l-col--6;
+    .left-column,
+    .right-column {
+      @extend .ds-l-col--12;
+      @extend .ds-l-lg-col--6;
+    }
   }
 
   .disclaimer-message {
@@ -1110,8 +1114,18 @@ article.form-container {
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--center;
   @extend .ds-u-justify-content--between;
+  @extend .ds-u-padding-top--0;
+  @extend .ds-u-lg-padding-top--2;
   @extend .ds-u-padding-bottom--3;
   background: $color-primary-alt-lightest;
+
+  @media only screen and (max-width: $width-lg) {
+    flex-direction: column;
+
+    > * {
+      margin-top: 40px;
+    }
+  }
 }
 .footer-bottom-container {
   @extend .app-bar;
@@ -1150,45 +1164,45 @@ article.form-container {
 .footer-email {
   color: $color-white;
 }
+
 .home-header {
-  height: 500px;
+  padding-top: 97px;
   background: linear-gradient(
     180deg,
     $color-primary 0%,
     $color-primary-darker 100%
   );
-  position: relative;
+
+  .home-header-content {
+    @extend .ds-l-row;
+    @extend .ds-u-margin-x--7;
+
+    .home-header-image {
+      @extend .ds-l-col;
+      @extend .ds-u-display--none;
+      @extend .ds-u-lg-display--block;
+    }
+
+    .home-header-text {
+      @extend .ds-l-col;
+      font-family: Open Sans;
+      font-size: 36px;
+      font-style: normal;
+      font-weight: 400;
+      line-height: 47px;
+      letter-spacing: 0px;
+      text-align: left;
+      color: $color-white;
+    }
+  }
+
+  .home-header-angle-box {
+    @extend .ds-u-margin-top--5;
+    border-top: 120px solid transparent;
+    border-left: 100vw solid $color-white;
+  }
 }
-.home-header-text {
-  position: absolute;
-  top: 97px;
-  height: 234px;
-  width: 560px;
-  font-family: Open Sans;
-  font-size: 36px;
-  font-style: normal;
-  font-weight: 400;
-  line-height: 47px;
-  letter-spacing: 0px;
-  text-align: left;
-  color: $color-white;
-}
-.home-header-image-box {
-  position: absolute;
-  left: 140px;
-  top: 134px;
-  width: 464px;
-  height: 161px;
-  background-image: url("/assets/images/OneMAC_logoLight.svg");
-  background-repeat: no-repeat;
-}
-.home-header-angle-box {
-  border-top: 120px solid transparent;
-  border-left: 100vw solid $color-white;
-  bottom: 0;
-  left: 0;
-  position: absolute;
-}
+
 .home-footer-container {
   background: $color-primary-alt-lightest;
   height: 295px;
@@ -1200,9 +1214,16 @@ article.form-container {
   bottom: 0;
   left: 0;
 }
+
 .home-content-box {
+  @extend .ds-l-row;
+  @extend .ds-u-align-items--start;
+  @extend .ds-u-justify-content--around;
+  @extend .ds-u-margin-top--5;
+  @extend .ds-u-padding-x--7;
+  @extend .ds-u-lg-padding-x--0;
   background-color: $color-white;
-  padding-top: 80px;
+
   // Reusable styles
   @mixin title-font($size, $lineHeight, $weight) {
     font-family: Open Sans;
@@ -1215,8 +1236,7 @@ article.form-container {
   }
   .title {
     @include title-font(24px, 30px, 700);
-    padding-top: 32px;
-    padding-bottom: 36px;
+    @extend .ds-u-margin-bottom--3;
     color: $color-base;
     width: 100%;
   }
@@ -1234,12 +1254,22 @@ article.form-container {
     color: $color-base;
     width: 100%;
   }
+
+  .home-content-left-box,
+  .home-content-right-box {
+    @extend .ds-l-col--12;
+    @extend .ds-u-measure--base;
+  }
+
   .home-content-left-box {
-    margin-left: 125px;
-    width: 464px;
+    @extend .ds-l-lg-col--4;
+    @extend .ds-u-lg-margin-left--auto;
+    @extend .ds-u-lg-margin-right--3;
+    @extend .ds-u-margin-bottom--5;
+    @extend .ds-u-lg-margin-bottom--0;
+    @extend .ds-u-padding-y--3;
     border: 1px solid $color-gray-lighter;
     border-radius: 4px;
-    @include title-font(24px, 30px, 700); // params: font size, line height
     .vertical-line-64 {
       @extend .vertical-line;
       height: 64px;
@@ -1253,11 +1283,17 @@ article.form-container {
       margin-bottom: 13.33px;
     }
   }
+
   .home-content-right-box {
-    width: 560px;
+    @extend .ds-l-lg-col--5;
+    @extend .ds-u-lg-margin-left--4;
+    @extend .ds-u-lg-margin-right--auto;
+    @extend .ds-u-margin-top--5;
+    @extend .ds-u-lg-margin-top--0;
+
     li {
+      @extend .ds-u-margin-bottom--3;
       list-style-position: inside;
-      padding-bottom: 24px;
     }
   }
 }
@@ -1382,79 +1418,60 @@ article.form-container {
   font-weight: normal;
   color: black !important;
 }
+
 .faq-left-column {
-  @media only screen and (min-width: 1200px) {
+  @media only screen and (min-width: $width-xl) {
     width: calc(100% - 400px);
   }
+
   .faq-misc-points {
     width: 606px;
   }
 }
 
-.faq-border-box {
-  @media only screen and (min-width: 1200px) {
-    position: fixed;
+aside#faq-contact-info-box {
+  @extend .ds-u-margin-bottom--5;
+  @extend .ds-u-xl-margin-bottom--0;
+  @extend .ds-u-measure--wide;
+
+  @media only screen and (min-width: $width-xl) {
+    position: sticky;
+    top: 64px;
     float: right;
-    top: 218px;
-  }
-  @media only screen and (max-width: 1199px) {
-    width: 100% !important;
-    text-align: center;
+    width: 347px;
   }
 
-  @include gradient-top-border;
-  width: 368px;
-  right: 72px;
-}
+  .faq-border-box {
+    @include gradient-top-border;
+  }
 
-.faq-border-box-small {
-  @media only screen and (max-height: 600px) {
-    position: static;
-    width: 100% !important;
-    text-align: center;
-  }
-}
-.faq-info-box {
-  @media only screen and (min-width: 1200px) {
-    position: fixed;
-    float: right;
-  }
-  @media only screen and (max-width: 1199px) {
-    width: 100% !important;
-    text-align: center;
-    margin-bottom: 40px;
-  }
-  width: 368px;
-  right: 72px;
-  padding: 16px;
-  background: $color-white;
-  /* Text/Background/Gray - Lighter */
-  border: 1px solid $color-gray-lighter;
-  box-sizing: border-box;
-  border-top: none;
-}
+  .faq-info-box {
+    @extend .ds-u-padding--4;
+    background: $color-white;
+    border: 1px solid $color-gray-lighter;
+    border-radius: 0 0 3px 3px;
+    border-top: none;
 
-.faq-info-box-small {
-  @media only screen and (max-height: 600px) {
-    position: static;
-    width: 100% !important;
-    text-align: center;
-    margin-bottom: 40px;
-  }
-}
+    h3 {
+      @extend .ds-u-margin-top--0;
+      @extend .ds-u-margin-bottom--3;
+    }
 
-.faq-info-box-title {
-  position: relative;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  font-size: 16px;
-  line-height: 20px;
-  /* identical to box height, or 125% */
-  text-transform: capitalize;
-  /* Text / Default - Light */
-  color: $color-gray;
-  padding-bottom: 30px;
+    dl {
+      @extend .ds-l-row;
+
+      .faq-info-wrapper {
+        @extend .ds-l-col--6;
+        @extend .ds-l-xl-col--12;
+        @extend .ds-u-xl-margin-bottom--5;
+
+        dt {
+          @extend .ds-u-font-weight--semibold;
+          @extend .ds-u-margin-bottom--1;
+        }
+      }
+    }
+  }
 }
 
 .faq-collapsible-trigger {
@@ -1538,12 +1555,9 @@ article.form-container {
 .choice-container {
   @extend .form-container;
   @extend .ds-u-padding-bottom--7;
-  padding-left: 35rem;
-  padding-right: 35rem;
-  width: 100%;
-  margin: 0px;
-  position: relative;
-  align-self: center;
+  @extend .ds-u-margin-x--auto;
+  max-width: 800px;
+
   .gradient-box {
     height: 8px;
     border: 0;
@@ -1593,11 +1607,10 @@ article.form-container {
   border-bottom: 1px solid #d6d7d9;
   border-left: 1px solid #d6d7d9;
   border-right: 1px solid #d6d7d9;
-  border-radius: 0px 0px 4px 4px;
+  border-radius: 0 0 3px 3px;
   li {
     list-style-type: none;
     margin: 0px;
-    position: relative;
     min-height: 110px;
     p {
       color: #5b616b;
@@ -1605,11 +1618,11 @@ article.form-container {
       font-weight: 600;
     }
     a {
+      @extend .ds-u-padding--3;
       text-decoration: none;
-      display: block;
-      @extend .ds-u-padding-top--3;
-      @extend .ds-u-padding-left--3;
-      @extend .ds-u-padding-right--7;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
     }
   }
   li:nth-child(even) {
@@ -1635,23 +1648,9 @@ article.form-container {
     }
   }
 }
-.gradient-box-small {
-  &:before {
-    bottom: 220px;
-  }
-}
-
-.gradient-box-big {
-  &:before {
-    bottom: 440px;
-  }
-}
 
 .choice-item-arrow {
-  position: absolute;
   background: inherit;
-  top: 40%;
-  right: 37px;
   border: none;
   color: $color-primary;
   font-size: 24px;
