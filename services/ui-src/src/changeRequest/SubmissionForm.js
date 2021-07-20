@@ -352,8 +352,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
           setAlertCode(RESPONSE_CODE[err.message]);
         })
         .finally(() => {
-          limitSubmit.current = false;
           setIsSubmitting(false);
+          limitSubmit.current = false;
         });
     };
 

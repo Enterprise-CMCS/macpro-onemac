@@ -85,7 +85,7 @@ export const main = handler(async (event) => {
 
   const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
   if (!crVerifyTerritoryStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
+    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
   }
 
   try {
@@ -149,13 +149,13 @@ export const main = handler(async (event) => {
         console.log("params are: ", params);
         await dynamoDb.put(params);
       } catch (error) {
-        if (error.code != "ConditionalCheckFailedException")
+        if (error.code != "ConditionalCheckFailedException") {
           console.log("Error is: ", error);
-        else
+          throw error;
+        } else
           console.log(
             "ID " + smallerID + " exists in " + process.env.spaIdTableName
           );
-        throw error;
       }
       sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
