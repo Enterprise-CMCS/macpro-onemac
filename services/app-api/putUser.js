@@ -186,7 +186,7 @@ const retrieveUsers = async (input) => {
       console.log(
         `Warning: The doneBy user record does not exists with the id: ${input.doneBy} in the db`
       );
-      throw new Error(RESPONSE_CODE.USER_NOT_FOUND_ERROR);
+      throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
     }
   }
 

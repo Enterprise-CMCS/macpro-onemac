@@ -43,7 +43,7 @@ class Waiver {
     // NEW action type should have NEW IDs
     if (data.actionType === "new" && idExists) {
       areFieldsValid = false;
-      whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
+      whyNot = RESPONSE_CODE.DUPLICATE_ID;
     }
 
     return { areFieldsValid, whyNot };

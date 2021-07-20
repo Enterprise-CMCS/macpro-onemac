@@ -85,7 +85,7 @@ export const main = handler(async (event) => {
 
   const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
   if (!crVerifyTerritoryStateCode) {
-    return RESPONSE_CODE.TERRITORY_NOT_VALID;
+    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
   }
 
   try {
