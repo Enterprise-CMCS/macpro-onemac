@@ -63,6 +63,8 @@ provider:
     role:
       path: ${self:custom.iamPath}
       permissionsBoundary: arn:aws:iam::${aws:accountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY}
+  logs:
+    restApi: true    
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
