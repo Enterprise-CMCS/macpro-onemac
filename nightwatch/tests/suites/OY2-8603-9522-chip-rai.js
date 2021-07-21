@@ -125,7 +125,7 @@ module.exports = {
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
-        browser.pause(3000);
+        browser.pause(7000);
 
         // click ["Submit"] button 
         browser.useCss().click("[value='Submit']").pause(1000);
