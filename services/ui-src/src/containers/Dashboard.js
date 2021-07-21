@@ -100,10 +100,13 @@ const Dashboard = () => {
     []
   );
 
-  const renderDate = useCallback(
-    ({ value }) => format(value, "MMM d, yyyy"),
-    []
-  );
+  const renderDate = useCallback(({ value }) => {
+    if (value) {
+      return format(value, "MMM d, yyyy");
+    } else {
+      return "N/A";
+    }
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -189,6 +192,10 @@ const Dashboard = () => {
     </Button>
   );
 
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
@@ -202,7 +209,7 @@ const Dashboard = () => {
           (userData.type === USER_TYPE.HELPDESK && csvExportSubmissions)
         }
       />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="dashboard-container">
         {isUserActive ? (
           <LoadingScreen isLoading={isLoading}>

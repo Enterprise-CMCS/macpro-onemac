@@ -6,7 +6,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import UserDataApi, { getAdminTypeByRole } from "../utils/UserDataApi";
+import UserDataApi from "../utils/UserDataApi";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
@@ -327,6 +327,10 @@ const UserManagement = () => {
     []
   );
 
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
   const csvExportSubmissions = (
     <Button
       id="new-submission-button"
@@ -359,7 +363,11 @@ const UserManagement = () => {
           csvExportSubmissions
         }
       />
-      <AlertBar alertCode={alertCode} personalizedString={doneToName} />
+      <AlertBar
+        alertCode={alertCode}
+        personalizedString={doneToName}
+        closeCallback={closedAlert}
+      />
       <div className="dashboard-container">
         {userProfile &&
         userProfile.userData &&

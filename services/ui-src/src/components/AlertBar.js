@@ -1,8 +1,7 @@
 import React, { useState, useEffect } from "react";
 import PropTypes from "prop-types";
-import { ALERTS_MSG } from "../libs/alert-messages";
 import { Alert } from "@cmsgov/design-system";
-import { getAlert } from "../libs/error-mappings";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import closingX from "../images/AlertClosingX.svg";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
@@ -13,12 +12,12 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * @param {String} changeRequestType - the type of change request
  */
 const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
-  const [alert, setAlert] = useState(getAlert(alertCode));
+  const [alert, setAlert] = useState(alertCodeAlerts[alertCode]);
 
   useEffect(() => {
     let mounted = true;
 
-    if (alertCode && mounted) setAlert(getAlert(alertCode));
+    if (alertCode && mounted) setAlert(alertCodeAlerts[alertCode]);
 
     return function cleanup() {
       mounted = false;

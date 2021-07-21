@@ -1,4 +1,3 @@
-import { formatDate } from "./date-utils";
 import { userTypes } from "../libs/userLib";
 import { format } from "date-fns";
 const userStatus = {
