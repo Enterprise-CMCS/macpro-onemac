@@ -59,7 +59,10 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: dev
-
+  iam:
+    role:
+      path: ${self:custom.iamPath}
+      permissionsBoundary: arn:aws:iam::${aws:accountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY}
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
