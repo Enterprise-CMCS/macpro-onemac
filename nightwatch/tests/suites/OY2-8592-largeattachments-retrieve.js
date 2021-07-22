@@ -62,10 +62,10 @@ module.exports = {
         browser.click("[value='Submit']").pause(timeout * 25);
 
        // Verify the SPA on Submission List 
-       browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID).pause(4000);
+       browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
        browser.useCss();
-       browser.click("xpath", "(//table//td)[1]/a").pause(2000);
-       browser.click("xpath", "/html/body/reference/div/div/div[3]/div[2]/div/div[1]/a").pause(4000);
+       browser.click("xpath", "//*[@id='transmittalNumber-0']/a").pause(2000);
+       browser.click("xpath", "//*[@id='root']/div/article/section[3]/ul/li[1]/a").pause(2000);
        
     //    //Switch to new tab
     //     browser.windowHandles(function (result) {

@@ -37,8 +37,8 @@ module.exports = {
         browser.useCss();
         browser.click("xpath", "/html/body/reference/div/div/div[2]/div[1]/button");
         browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a" );
-        browser.useXpath().assert.elementPresent("/html/body/reference/div/div/div[3]/div[2]/div/div[1]");
+        browser.useXpath().assert.elementPresent("(//li[@class='choice-list-item']/a)[1]");
         browser.useCss();
-        browser.click("xpath", "/html/body/reference/div/div/div[3]/div[2]/div/div[1]/a").pause(2000);
+        browser.useXpath().click("(//li[@class='choice-list-item']/a)[1]").pause(2000);
         }
 }
