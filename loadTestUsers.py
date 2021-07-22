@@ -155,7 +155,7 @@ def scan_dynamo(stage):
                 "dynamodb",
                 "scan",
                 "--table-name",
-                f"cms-spa-form-{stage}-user-profiles",
+                f"onemac-{stage}-user-profiles",
             ],
             check=True,
             capture_output=True,

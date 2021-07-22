@@ -9,7 +9,7 @@
 
 
  branchName=$1
- userTable="cms-spa-form-${branchName}-user-profiles"
+ userTable="onemac-${branchName}-user-profiles"
 
  for line in `cat ./pilotusers.list`
  do
