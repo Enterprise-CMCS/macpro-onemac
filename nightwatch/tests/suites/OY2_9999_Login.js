@@ -22,6 +22,9 @@ module.exports= {
     "Login with cms_approvers": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.cms_approvers);
     },
+    "Login with cms_reviewers": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_reviewers);
+    },
 
     "Login with cms_system_admin": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.cms_system_admin);
