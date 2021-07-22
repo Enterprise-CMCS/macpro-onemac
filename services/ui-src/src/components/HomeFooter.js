@@ -6,7 +6,7 @@ function HomeFooter() {
     <>
       <section className="home-footer-container">
         <div className="home-footer-angle-box"></div>
-        <div className="ds-l-row ds-u-padding--6">
+        <div className="home-footer-faq-callout">
           <div className="ds-l-col--6 ds-u-margin-left--auto">
             Do you have questions or need support?
           </div>

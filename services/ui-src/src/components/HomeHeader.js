@@ -7,7 +7,11 @@ function HomeHeader() {
     <>
       <div className="home-header">
         <div className="home-header-content">
-          <img className="home-header-image" src={OneMACLogo} />
+          <img
+            alt="OneMAC Logo"
+            className="home-header-image"
+            src={OneMACLogo}
+          />
           <div className="home-header-text">
             Welcome to the official submission system for paper-
             <wbr />

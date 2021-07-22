@@ -298,6 +298,7 @@ input[type="file"] {
   @extend .app-bar;
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
+  @extend .ds-u-align-items--center;
 
   h2 {
     @extend .ds-u-margin-top--7;
@@ -319,6 +320,7 @@ input[type="file"] {
   .profile-content {
     @extend .ds-l-row;
     @include max-width-ultra-wide;
+    width: 100%;
 
     .left-column,
     .right-column {
@@ -401,6 +403,7 @@ input[type="file"] {
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-justify-content--center;
   @extend .ds-l-col--auto;
+  @extend .ds-u-align-items--center;
 
   h3 {
     @extend .ds-u-margin-top--7;
@@ -418,9 +421,14 @@ input[type="file"] {
     @extend .ds-u-font-weight--semibold;
   }
 
+  form,
+  .form-subheader-message {
+    @extend .ds-u-measure--wide;
+    width: 100%;
+  }
+
   .form-subheader-message {
     padding-top: 40px;
-    max-width: 650px;
   }
 
   .form-card {
@@ -464,25 +472,31 @@ input[type="file"] {
 
 article.form-container {
   @extend .ds-u-margin-bottom--7;
+  @extend .ds-u-align-items--center;
 
-  section {
+  .read-only-submission {
     @extend .ds-u-measure--wide;
-  }
+    width: 100%;
 
-  // i hate this hacky, redundant selector, but such is life
-  > section + section,
-  .choice-container {
-    @extend .ds-u-margin-top--7;
-  }
+    section {
+      @extend .ds-u-measure--wide;
+    }
 
-  h2:not(.ds-c-review__heading) {
-    @extend .ds-u-margin-bottom--0;
-  }
+    // i hate this hacky, redundant selector, but such is life
+    > section + section,
+    .choice-container {
+      @extend .ds-u-margin-top--7;
+    }
 
-  h2.ds-c-review__heading {
-    @extend .ds-h2;
-    @extend .ds-u-font-weight--bold;
-    @extend .ds-u-margin-bottom--3;
+    h2:not(.ds-c-review__heading) {
+      @extend .ds-u-margin-bottom--0;
+    }
+
+    h2.ds-c-review__heading {
+      @extend .ds-h2;
+      @extend .ds-u-font-weight--bold;
+      @extend .ds-u-margin-bottom--3;
+    }
   }
 }
 
@@ -1166,6 +1180,9 @@ article.form-container {
 }
 
 .home-header {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
+  @extend .ds-u-align-items--center;
   padding-top: 97px;
   background: linear-gradient(
     180deg,
@@ -1176,11 +1193,14 @@ article.form-container {
   .home-header-content {
     @extend .ds-l-row;
     @extend .ds-u-margin-x--7;
+    @extend .ds-u-align-items--center;
+    max-width: $width-xl;
 
     .home-header-image {
       @extend .ds-l-col;
       @extend .ds-u-display--none;
       @extend .ds-u-lg-display--block;
+      max-height: 17rem;
     }
 
     .home-header-text {
@@ -1204,10 +1224,25 @@ article.form-container {
 }
 
 .home-footer-container {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-flex-direction--column;
+  @extend .ds-u-align-items--center;
   background: $color-primary-alt-lightest;
   height: 295px;
+
+  .home-footer-faq-callout {
+    @extend .ds-u-margin-bottom--6;
+    @extend .ds-u-display--flex;
+    @extend .ds-u-align-items--center;
+    @extend .ds-u-justify-content--between;
+    @include max-width-ultra-wide;
+    width: 100%;
+    font-size: 24px;
+  }
 }
+
 .home-footer-angle-box {
+  @extend .ds-u-margin-bottom--6;
   height: 117px;
   border-top: 120px solid $color-white;
   border-right: 100vw solid transparent;
