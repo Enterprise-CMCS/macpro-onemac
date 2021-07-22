@@ -10,7 +10,7 @@ function myHandler(event, context, callback) {
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
   var id = value.payload.ID_Number;
   var packageStatusID = value.payload.SPW_Status_ID.toString();
-  console.log(`State Plan ID Number: ${id}`);
+  var payload = event.value.payload;
   var planType = '0';
   if (value.payload.Plan_Type) {
     planType = value.payload.Plan_Type.toString();
@@ -26,6 +26,7 @@ function myHandler(event, context, callback) {
         'cmsStatusID': {N: packageStatusID},
         'planType': {N: planType},
         'originalID': {S: id},
+        'payload': {S: payload},
       }
     };
     ddb.putItem(params, function(err, data) {
