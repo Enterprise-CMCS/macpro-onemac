@@ -4,7 +4,6 @@ import { useHistory, useParams } from "react-router-dom";
 import { RESPONSE_CODE, ROUTES, ChangeRequest } from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileList from "../components/FileList";
-import { TextField } from "@cmsgov/design-system";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PropTypes from "prop-types";
 import { formatDate } from "../utils/date-utils";
