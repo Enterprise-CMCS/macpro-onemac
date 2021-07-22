@@ -77,9 +77,15 @@ module.exports = {
         browser.pause(5000);
         browser.refresh();
         // Verify the SPA on Submission List 
+<<<<<<< HEAD
         browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', chipspaID);
         browser.pause(2000);
         browser.useXpath().click("//*[@id='transmittalNumber-0']/a");
+=======
+        browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
+        browser.pause(2000);
+        browser.useXpath().click("(//table//td)[1]/a");
+>>>>>>> develop
         browser.pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
@@ -125,18 +131,27 @@ module.exports = {
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
-        browser.pause(3000);
+        browser.pause(7000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(3000);
         
         // Verify the submitted Content 
+<<<<<<< HEAD
         
         browser.pause(5000);
         
         let submittedIDNumber = "//*[@id='transmittalNumber-0']/a";
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         
+=======
+        // browser.refresh();
+        browser.pause(5000);
+        // browser.refresh();
+        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        
+>>>>>>> develop
         // SPA ID Verification 
         browser.useXpath().click(submittedIDNumber);
         browser.pause(2000);
