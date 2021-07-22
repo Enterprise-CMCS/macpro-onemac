@@ -45,6 +45,60 @@ Resources:
           KeyType: HASH
       # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
+  OneMACDatav0:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: ${self:custom.oneTableName}
+      StreamSpecification:
+        StreamViewType: NEW_AND_OLD_IMAGES
+      AttributeDefinitions:
+        - AttributeName: pk
+          AttributeType: S
+        - AttributeName: sk
+          AttributeType: S
+        - AttributeName: GSI1pk
+          AttributeType: S
+        - AttributeName: GSI1sk
+          AttributeType: S
+        - AttributeName: GSI2pk
+          AttributeType: S
+        - AttributeName: GSI2sk
+          AttributeType: S
+        - AttributeName: timestamp
+          AttributeType: N
+      KeySchema:
+        - AttributeName: pk
+          KeyType: HASH
+        - AttributeName: sk
+          KeyType: RANGE
+      # GlobalSecondaryIndex on the territory with submittedAt as the sort key
+      GlobalSecondaryIndexes:
+        - IndexName: GSI1
+          KeySchema:
+            - AttributeName: GSI1pk
+              KeyType: HASH
+            - AttributeName: GSI1sk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL # Makes all columns available in the index
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2pk
+              KeyType: HASH
+            - AttributeName: GSI2sk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL # Makes all columns available in the index
+        - IndexName: GSI1Timestamp
+          KeySchema:
+            - AttributeName: GSI1pk
+              KeyType: HASH
+            - AttributeName: timestamp
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL # Makes all columns available in the index
+      # Set the capacity to auto-scale
+      BillingMode: PAY_PER_REQUEST
 Outputs:
   AmendmentsTableStreamArn:
     Value: !GetAtt AmendmentsTable.StreamArn
