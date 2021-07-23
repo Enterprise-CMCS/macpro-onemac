@@ -144,6 +144,8 @@ class StateAdmin extends Role {
     super();
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canAccessDashboard = true;
+    this.canAccessForms = true;
   }
 }
 
