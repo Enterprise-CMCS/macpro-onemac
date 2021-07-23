@@ -60,7 +60,11 @@ class Waiver {
     const cmsEmail = {};
     if ( data.transmittalNumberWarningMessage )
     {
-      transmittalNumberWarningMessage = "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
+      if ( data.transmittalNumberWarningMessage.includes("According to our records, this Waiver Number already exists.")) {
+        transmittalNumberWarningMessage = "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
+      } else {
+        transmittalNumberWarningMessage = data.transmittalNumberWarningMessage;
+      }
     } else {
       transmittalNumberWarningMessage = "";
     }

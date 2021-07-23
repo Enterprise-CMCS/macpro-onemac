@@ -319,8 +319,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
         transmittalNumberStatusMessage.statusLevel === "warn" &&
         transmittalNumberStatusMessage.statusMessage
       ) {
-        transmittalNumberWarningMessage =
-          "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
+        transmittalNumberWarningMessage = transmittalNumberStatusMessage.statusMessage;
       }
 
       uploadRef
