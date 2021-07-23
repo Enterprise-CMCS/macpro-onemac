@@ -34,7 +34,7 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.STATE_ADMIN]: "CMS Role Approver",
   [ROLES.CMS_APPROVER]: "CMS System Admin",
   [ROLES.HELPDESK]: "CMS System Admin",
-  [ROLES.CMS_REVIEWER]: "CMS Reviewer",
+  [ROLES.CMS_REVIEWER]: "CMS Role Approver",
 };
 
 function getUserGroup(groupId, currentGroup, currentDivision) {
