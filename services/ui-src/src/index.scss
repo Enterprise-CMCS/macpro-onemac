@@ -427,6 +427,11 @@ input[type="file"] {
     width: 100%;
   }
 
+  .faq-card {
+    max-width: $width-xl;
+    width: 100%;
+  }
+
   .form-subheader-message {
     padding-top: 40px;
   }
@@ -1591,6 +1596,7 @@ aside#faq-contact-info-box {
   @extend .form-container;
   @extend .ds-u-padding-bottom--7;
   @extend .ds-u-margin-x--auto;
+  @extend .ds-u-align-items--stretch;
   max-width: 800px;
 
   .gradient-box {

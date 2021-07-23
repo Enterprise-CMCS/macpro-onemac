@@ -26,7 +26,7 @@ const FAQ = () => {
     <div>
       <PageTitleBar heading="Frequently Asked Questions" />
       <div className="form-container" id="top">
-        <div className="form-card">
+        <div className="faq-card">
           <aside id="faq-contact-info-box">
             <div className="faq-border-box" />
             <div className="faq-info-box">
