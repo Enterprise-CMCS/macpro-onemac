@@ -432,12 +432,12 @@ const UserPage = () => {
             />
           </div>
           {accessSection}
-        </div>
-        <div id="profileDisclaimer" className="disclaimer-message">
-          This page contains Profile Information for the{" "}
-          {userTypeDisplayText ?? userType}. The information cannot be changed
-          in the portal. However, the {userTypeDisplayText ?? userType} can
-          change their contact phone number in their account.
+          <div id="profileDisclaimer" className="disclaimer-message">
+            This page contains Profile Information for the{" "}
+            {userTypeDisplayText ?? userType}. The information cannot be changed
+            in the portal. However, the {userTypeDisplayText ?? userType} can
+            change their contact phone number in their account.
+          </div>
         </div>
       </div>
     </div>

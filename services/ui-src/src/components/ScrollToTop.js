@@ -8,8 +8,10 @@ function ScrollToTop() {
       className="scrollToTop"
       onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
     >
-      <FontAwesomeIcon icon={faAngleUp} />
-      <span>Back to Top</span>
+      <span>
+        <FontAwesomeIcon icon={faAngleUp} />
+        <span>Back to Top</span>
+      </span>
     </div>
   );
 }
