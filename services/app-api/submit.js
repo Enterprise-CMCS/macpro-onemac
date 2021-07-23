@@ -10,7 +10,7 @@ import getChangeRequestFunctions, {
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, SEATool } from "cmscommonlib";
 import getUser from "./utils/getUser";
 
 /**
@@ -102,63 +102,73 @@ export const main = handler(async (event) => {
       TableName: process.env.tableName,
       Item: data,
     });
-
-    // create the (package) ID data
-    const packageParams = {
-      TableName: process.env.spaIdTableName,
-      Item: {
-        id: data.transmittalNumber,
-        [data.id]: data.userId,
-      },
-    };
-    await dynamoDb.put(packageParams);
-  } catch (dbError) {
-    console.log("This error is: " + dbError);
-    throw dbError;
+  } catch (error) {
+    console.log("Error is: ", error);
+    throw error;
   }
-  console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
 
-  // if the ID is a waiver, store all the possibilities for package checking
-  // if this is an id type where we want better searching, do that now
-  // 122 is 1915b (123 is 1915c appendix k)
-  if (data.type === "waiver" || data.type === "waiverappk") {
-    let sliceEnd = data.transmittalNumber.lastIndexOf(".");
-    let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
-    let params;
-    let numIterations = 5;
-    let planType;
+  if (SEATool.PLAN_TYPE_IDS[data.type] !== undefined) {
+    try {
+      // create the (package) ID data
+      let params = {
+        TableName: process.env.spaIdTableName,
 
-    if (data.type === "waiver") {
-      planType = 122;
+        Item: {
+          id: data.transmittalNumber,
+          seatool_plan_type: SEATool.PLAN_TYPE_IDS[data.type],
+        },
+        ConditionExpression: "attribute_not_exists(id)",
+      };
+      await dynamoDb.put(params);
+    } catch (error) {
+      if (error.code != "ConditionalCheckFailedException") {
+        console.log("Error is: ", error);
+        throw error;
+      } else
+        console.log(
+          "ID " +
+            data.transmittalNumber +
+            " exists in " +
+            process.env.spaIdTableName
+        );
     }
-    if (data.type === "waiverappk") {
-      planType = 123;
-    }
 
-    while (smallerID.length > 2 && numIterations-- > 0) {
-      try {
-        params = {
-          TableName: process.env.spaIdTableName,
-          Item: {
-            id: smallerID,
-            planType: planType,
-            originalID: data.transmittalNumber,
-          },
-          ConditionExpression: "attribute_not_exists(id)",
-        };
-        console.log("params are: ", params);
-        await dynamoDb.put(params);
-      } catch (error) {
-        if (error.code != "ConditionalCheckFailedException") {
-          console.log("Error is: ", error);
-          throw error;
-        } else
-          console.log(
-            "ID " + smallerID + " exists in " + process.env.spaIdTableName
-          );
+    console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+    // if the ID is a waiver, store all the possibilities for package checking
+    // if this is an id type where we want better searching, do that now
+    // 122 is 1915b (123 is 1915c appendix k)
+    if (data.type === "waiver" || data.type === "waiverappk") {
+      let sliceEnd = data.transmittalNumber.lastIndexOf(".");
+      let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
+      let params;
+      let numIterations = 5;
+
+      while (smallerID.length > 2 && numIterations-- > 0) {
+        try {
+          params = {
+            TableName: process.env.spaIdTableName,
+            Item: {
+              id: smallerID,
+              seatool_plan_type: SEATool.PLAN_TYPE_IDS[data.type],
+              originalID: data.transmittalNumber,
+            },
+            ConditionExpression: "attribute_not_exists(id)",
+          };
+          console.log("params are: ", params);
+          await dynamoDb.put(params);
+        } catch (error) {
+          if (error.code != "ConditionalCheckFailedException") {
+            console.log("Error is: ", error);
+            throw error;
+          } else
+            console.log(
+              "ID " + smallerID + " exists in " + process.env.spaIdTableName
+            );
+        }
+        sliceEnd = smallerID.lastIndexOf(".");
+        smallerID = smallerID.slice(0, sliceEnd); // one layer removed
       }
-      sliceEnd = smallerID.lastIndexOf(".");
-      smallerID = smallerID.slice(0, sliceEnd); // one layer removed
     }
   }
 

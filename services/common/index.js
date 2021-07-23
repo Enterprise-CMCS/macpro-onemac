@@ -9,6 +9,9 @@ export { ChangeRequest };
 import { ROUTES } from "./routes";
 export * from "./routes";
 
+import * as SEATool from "./SEATool";
+export { SEATool };
+
 /**
  * Codes to send to front end
  */
