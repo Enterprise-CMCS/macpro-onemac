@@ -300,6 +300,7 @@ const UserPage = () => {
             ))}
           </dl>
           <div className="access-card-container">
+            { userData.group && <>
             <div className="gradient-border" />
             <div className="cms-group-and-division-box ">
               <div className="cms-group-division-section">
@@ -320,7 +321,7 @@ const UserPage = () => {
                 <br />
                 <p>
                   {
-                    getUserGroup(
+                     getUserGroup(
                       groupData.group,
                       userData.group,
                       userData.division
@@ -328,7 +329,7 @@ const UserPage = () => {
                   }
                 </p>
               </div>
-            </div>
+            </div> </> }
           </div>
         </div>
       );
