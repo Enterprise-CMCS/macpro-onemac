@@ -410,7 +410,7 @@ const UserPage = () => {
       <PageTitleBar heading="User Profile" />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
-        <div className="ds-l-row">
+        <div className="profile-content">
           <div className="left-column">
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
@@ -432,12 +432,12 @@ const UserPage = () => {
             />
           </div>
           {accessSection}
-        </div>
-        <div id="profileDisclaimer" className="disclaimer-message">
-          This page contains Profile Information for the{" "}
-          {userTypeDisplayText ?? userType}. The information cannot be changed
-          in the portal. However, the {userTypeDisplayText ?? userType} can
-          change their contact phone number in their account.
+          <div id="profileDisclaimer" className="disclaimer-message">
+            This page contains Profile Information for the{" "}
+            {userTypeDisplayText ?? userType}. The information cannot be changed
+            in the portal. However, the {userTypeDisplayText ?? userType} can
+            change their contact phone number in their account.
+          </div>
         </div>
       </div>
     </div>
