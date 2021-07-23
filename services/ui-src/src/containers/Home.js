@@ -113,15 +113,17 @@ export default function Home() {
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
       <div className="home-content-box">
-        <div className="home-content-left-box">
-          <div className="ds-l-container ds-u-margin--0">
-            <div className="title">{submissionTitle}</div>
-            {renderSubmissionSteps(submissionsList)}
+        <div className="home-content-wrapper">
+          <div className="home-content-left-box">
+            <div className="ds-l-container ds-u-margin--0">
+              <div className="title">{submissionTitle}</div>
+              {renderSubmissionSteps(submissionsList)}
+            </div>
           </div>
-        </div>
-        <div className="home-content-right-box">
-          <div className="title">{paperSubmissionTitle}</div>
-          {renderPaperSubmissionInfo(paperSubmissionList)}
+          <div className="home-content-right-box">
+            <div className="title">{paperSubmissionTitle}</div>
+            {renderPaperSubmissionInfo(paperSubmissionList)}
+          </div>
         </div>
       </div>
       <HomeFooter />

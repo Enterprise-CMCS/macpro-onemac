@@ -760,6 +760,7 @@ article.form-container {
   @extend .ds-u-padding-top--7;
   @extend .ds-u-padding-bottom--7;
   background-color: $color-white;
+  @extend .ds-u-align-items--center;
 }
 
 .empty-list {
@@ -772,6 +773,7 @@ article.form-container {
 @mixin custom-table {
   @extend .ds-c-table;
   @extend .ds-c-table--borderless;
+  @include max-width-ultra-wide;
   width: 100%;
   color: $color-gray;
   font-family: Open Sans;
@@ -892,8 +894,8 @@ article.form-container {
   min-height: 70px;
 
   #oneMacLogo {
-    padding-right: 50px;
-    display: flex;
+    @extend .ds-u-margin-right--6;
+    max-height: 4rem;
   }
 
   .nav-left {
@@ -1236,19 +1238,22 @@ article.form-container {
 
   .home-header-content {
     @extend .ds-l-row;
-    @extend .ds-u-margin-x--7;
     @extend .ds-u-align-items--center;
-    max-width: $width-xl;
+    margin-left: 7.2rem;
+    margin-right: 7.2rem;
+    @include max-width-ultra-wide;
 
     .home-header-image {
       @extend .ds-l-col;
       @extend .ds-u-display--none;
       @extend .ds-u-lg-display--block;
-      max-height: 17rem;
+      @extend .ds-u-padding--0;
+      @extend .ds-u-margin-right--5;
     }
 
     .home-header-text {
       @extend .ds-l-col;
+      @extend .ds-u-padding--0;
       font-family: Open Sans;
       font-size: 36px;
       font-style: normal;
@@ -1295,9 +1300,8 @@ article.form-container {
 }
 
 .home-content-box {
-  @extend .ds-l-row;
-  @extend .ds-u-align-items--start;
-  @extend .ds-u-justify-content--around;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--center;
   @extend .ds-u-margin-top--5;
   @extend .ds-u-padding-x--7;
   @extend .ds-u-lg-padding-x--0;
@@ -1334,6 +1338,14 @@ article.form-container {
     width: 100%;
   }
 
+  .home-content-wrapper {
+    @extend .ds-l-row;
+    @extend .ds-u-align-items--start;
+    @extend .ds-u-justify-content--around;
+    @include max-width-ultra-wide;
+    width: 100%;
+  }
+
   .home-content-left-box,
   .home-content-right-box {
     @extend .ds-l-col--12;
@@ -1341,14 +1353,14 @@ article.form-container {
   }
 
   .home-content-left-box {
-    @extend .ds-l-lg-col--4;
-    @extend .ds-u-lg-margin-left--auto;
+    @extend .ds-l-lg-col--5;
     @extend .ds-u-lg-margin-right--3;
     @extend .ds-u-margin-bottom--5;
     @extend .ds-u-lg-margin-bottom--0;
     @extend .ds-u-padding-y--3;
     border: 1px solid $color-gray-lighter;
     border-radius: 4px;
+
     .vertical-line-64 {
       @extend .vertical-line;
       height: 64px;
@@ -1364,15 +1376,19 @@ article.form-container {
   }
 
   .home-content-right-box {
-    @extend .ds-l-lg-col--5;
+    @extend .ds-l-lg-col--6;
     @extend .ds-u-lg-margin-left--4;
-    @extend .ds-u-lg-margin-right--auto;
     @extend .ds-u-margin-top--5;
     @extend .ds-u-lg-margin-top--0;
+    @extend .ds-u-padding--0;
+
+    ul {
+      padding-left: 2ch !important;
+    }
 
     li {
       @extend .ds-u-margin-bottom--3;
-      list-style-position: inside;
+      list-style-position: outside;
     }
   }
 }

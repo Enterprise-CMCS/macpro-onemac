@@ -8,7 +8,7 @@ import config from "../utils/config";
 import { Alert, UsaBanner } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
-import oneMacLogo from "../images/OneMAC_logoLight1.svg";
+import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
 /**
  * Get the sign in URL used with OKTA.
@@ -121,9 +121,7 @@ function Header(props) {
           <div className="nav-bar">
             <div className="header-wrapper">
               <div className="nav-left">
-                <div className="logo-nav-left">
-                  <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-                </div>
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
                 <div className="nav-left-links">
                   <Link
                     to={ROUTES.HOME}
