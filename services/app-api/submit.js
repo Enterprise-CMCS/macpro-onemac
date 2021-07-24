@@ -61,8 +61,8 @@ export const main = handler(async (event) => {
     }
 
     if (
-      doneBy.type != USER_TYPE.STATE_SUBMITTER ||
-      doneBy.type != USER_TYPE.STATE_ADMIN ||
+      (doneBy.type != USER_TYPE.STATE_SUBMITTER ||
+        doneBy.type != USER_TYPE.STATE_ADMIN) &&
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
@@ -156,7 +156,6 @@ export const main = handler(async (event) => {
           console.log(
             "ID " + smallerID + " exists in " + process.env.spaIdTableName
           );
-        throw error;
       }
       sliceEnd = smallerID.lastIndexOf(".");
       smallerID = smallerID.slice(0, sliceEnd); // one layer removed
