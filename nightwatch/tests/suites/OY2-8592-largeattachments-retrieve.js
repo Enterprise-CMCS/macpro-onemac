@@ -31,8 +31,8 @@ module.exports = {
     // DONE 
     'Verify user can submit new SPA': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
         // create random SPA ID
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -59,13 +59,13 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(timeout * 25);
+        browser.useCss().click("[value='Submit']").pause(timeout * 25);
 
        // Verify the SPA on Submission List 
        browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
        browser.useCss();
        browser.click("xpath", "//*[@id='transmittalNumber-0']/a").pause(2000);
-       browser.click("xpath", "//*[@id='root']/div/article/section[3]/ul/li[1]/a").pause(2000);
+       browser.click("xpath", "(//li[@class='choice-list-item']/a)[1]").pause(2000);
        
     //    //Switch to new tab
     //     browser.windowHandles(function (result) {
