@@ -32,8 +32,8 @@ module.exports = {
     // DONE 
     'Verify user can submit new SPA': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
+        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
         // create random SPA ID
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;

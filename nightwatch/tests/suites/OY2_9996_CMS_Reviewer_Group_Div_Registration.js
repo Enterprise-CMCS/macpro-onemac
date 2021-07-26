@@ -20,8 +20,8 @@ module.exports = {
         let manage_account_link = 'a#manageAccountLink'; 
         browser.useCss().click(my_account_button); 
         browser.useCss().click(manage_account_link); 
-        browser.pause(2000);
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[1]/div/h1", "User Profile").pause(2000);
+        browser.pause(3000);
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[1]/div/div/h1", "User Profile").pause(2000);
         
         let full_name = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/div";
         let role = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/div";
