@@ -1,6 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * Waiver submission specific email generation functions.
@@ -60,11 +60,7 @@ class Waiver {
     const cmsEmail = {};
     if ( data.transmittalNumberWarningMessage )
     {
-      if ( data.transmittalNumberWarningMessage.includes("According to our records, this Waiver Number already exists.")) {
-        transmittalNumberWarningMessage = "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.";
-      } else {
-        transmittalNumberWarningMessage = data.transmittalNumberWarningMessage;
-      }
+      transmittalNumberWarningMessage = cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
     } else {
       transmittalNumberWarningMessage = "";
     }

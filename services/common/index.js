@@ -10,6 +10,15 @@ import { ROUTES } from "./routes";
 export * from "./routes";
 
 /**
+ * Map Warning Message displayed on Waiver Form to message to include in CMS Email
+ */
+export const cmsEmailMapToFormWarningMessages = {
+
+  "According to our records, this Waiver Number already exists. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.": "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+  "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.":"<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
+}
+
+/**
  * Codes to send to front end
  */
 export const RESPONSE_CODE = {
