@@ -11,8 +11,7 @@ import {
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
-import { getAlert } from "../libs/error-mappings";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import UserDataApi from "../utils/UserDataApi";
 
 import AlertBar from "../components/AlertBar";
@@ -22,7 +21,6 @@ import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
-import {helpDeskContact} from "../libs/helpDeskContact";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -41,10 +39,10 @@ const ROLE_TO_APPROVER_LABEL = {
 
 function getUserGroup(groupId, currentGroup, currentDivision) {
   const search = (id) =>
-      groupData.find((element) => element.id === currentGroup);
+    groupData.find((element) => element.id === currentGroup);
   const divisions = search(currentGroup).divisions;
   const searchDivision = (id) =>
-      divisions.find((element) => element.id === currentDivision);
+    divisions.find((element) => element.id === currentDivision);
   return {
     group: search(currentGroup).name,
     division: searchDivision(currentDivision).name,
@@ -127,12 +125,14 @@ const UserPage = () => {
   const onPhoneNumberSubmit = useCallback(
     async (newNumber) => {
       try {
-        const result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        var result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        if (result === RESPONSE_CODE.USER_SUBMITTED)
+          result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setPhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
-        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+        setAlertCode(RESPONSE_CODE[e.message]);
       }
       setIsEditingPhone(false);
     },
@@ -162,9 +162,9 @@ const UserPage = () => {
         setAlertCode(RESPONSE_CODE.USER_SUBMITTED);
         setIsStateSelectorVisible(false);
         setUserInfo();
-      } catch (error) {
-        console.error("Could not create new user:", error);
-        setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+      } catch (e) {
+        console.error("Could not create new user:", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
       } finally {
         setLoading(false);
       }
@@ -203,15 +203,15 @@ const UserPage = () => {
           UserDataApi.setUserStatus(updateStatusRequest).then(function (
             returnCode
           ) {
-            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+            if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
               setUserInfo();
             } else {
               console.log("Returned: ", returnCode);
               setAlertCode(returnCode);
             }
           });
-        } catch (err) {
-          setAlertCode(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+        } catch (e) {
+          setAlertCode(RESPONSE_CODE[e.message]);
         }
       }
     },
@@ -271,88 +271,86 @@ const UserPage = () => {
         // CMS System Admins do not see this section at all
         return null;
     }
-    if ( userType === ROLES.CMS_REVIEWER ) {
+    if (userType === ROLES.CMS_REVIEWER) {
       return (
-          <div className="ds-l-col--6">
-            <h2 id="accessHeader">{heading}</h2>
+        <div className="ds-l-col--6">
+          <h2 id="accessHeader">{heading}</h2>
+          <div className="access-card-container">
             <div className="gradient-border" />
-            <dl>
-              {accesses.map(({ state, status, contacts }) => (
-                  <div className="access-card-container" key={state ?? "only-one"}>
-                    <div className="gradient-border" />
-                    <div className="cms-group-and-division-box ">
-                            <div className="cms-group-division-section">
-                              <h3>Group</h3>
-                              <br/>
-                              <p>{
-                                getUserGroup(
-                                    groupData.group,
-                                    userData.group,
-                                    userData.division
-                                ).group
-                              }</p>
-                            </div>
-                            <div className="cms-group-division-section cms-division-background">
-                              <h3>Division</h3>
-                              <br/>
-                              <p>
-                              {
-                                getUserGroup(
-                                    groupData.group,
-                                    userData.group,
-                                    userData.division
-                                ).division
-
-                              }
-                              </p>
-                            </div>
-                    </div>
-                  </div>
-              ))}
-            </dl>
-          </div>
-         )
-    } else {
-    return (
-      <div className="right-column">
-        <h2 id="accessHeader">{heading}</h2>
-        <dl>
-          {accesses.map(({ state, status, contacts }) => (
-            <div className="access-card-container" key={state ?? "only-one"}>
-              <div className="gradient-border" />
-              <div className="state-access-card">
-                {userType === ROLES.STATE_SUBMITTER &&
-                  (status === "active" || status === "pending") && (
-                    <button
-                      className="close-button"
-                      onClick={() => xClicked(state)}
-                    >
-                      {CLOSING_X_IMAGE}
-                    </button>
-                  )}
-                {!!state && <dt>{territoryMap[state] || state}</dt>}
-                <dd>
-                  <em>{ACCESS_LABELS[status] || status}</em>
-                  <br />
-                  <br />
-                  <ContactList contacts={contacts} userType={userType} />
-                </dd>
+            <div className="cms-group-and-division-box ">
+              <div className="cms-group-division-section">
+                <h3>Group</h3>
+                <br />
+                <p>
+                  {
+                    getUserGroup(
+                      groupData.group,
+                      userData.group,
+                      userData.division
+                    ).group
+                  }
+                </p>
+              </div>
+              <div className="cms-group-division-section cms-division-background">
+                <h3>Division</h3>
+                <br />
+                <p>
+                  {
+                    getUserGroup(
+                      groupData.group,
+                      userData.group,
+                      userData.division
+                    ).division
+                  }
+                </p>
               </div>
             </div>
-          ))}
-        </dl>
-        {userType === ROLES.STATE_SUBMITTER && (
-          <div className="add-access-container">
-            {isStateSelectorVisible
-              ? renderSelectStateAccess
-              : renderAddStateButton}
           </div>
-        )}
-      </div>
-    );
+        </div>
+      );
+    } else {
+      return (
+        <div className="right-column">
+          <h2 id="accessHeader">{heading}</h2>
+          <dl>
+            {accesses.map(({ state, status, contacts }) => (
+              <div className="access-card-container" key={state ?? "only-one"}>
+                <div className="gradient-border" />
+                <div className="state-access-card">
+                  {userType === ROLES.STATE_SUBMITTER &&
+                    (status === "active" || status === "pending") && (
+                      <button
+                        className="close-button"
+                        onClick={() => xClicked(state)}
+                      >
+                        {CLOSING_X_IMAGE}
+                      </button>
+                    )}
+                  {!!state && <dt>{territoryMap[state] || state}</dt>}
+                  <dd>
+                    <em>{ACCESS_LABELS[status] || status}</em>
+                    <br />
+                    <br />
+                    <ContactList contacts={contacts} userType={userType} />
+                  </dd>
+                </div>
+              </div>
+            ))}
+          </dl>
+          {userType === ROLES.STATE_SUBMITTER && (
+            <div className="add-access-container">
+              {isStateSelectorVisible
+                ? renderSelectStateAccess
+                : renderAddStateButton}
+            </div>
+          )}
+        </div>
+      );
     }
   }, [
     accesses,
+    userData.group,
+    userData.division,
     userType,
     xClicked,
     isStateSelectorVisible,
@@ -403,12 +401,16 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
   return (
     <div>
       <PageTitleBar heading="User Profile" />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
-        <div className="ds-l-row">
+        <div className="profile-content">
           <div className="left-column">
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
@@ -430,12 +432,12 @@ const UserPage = () => {
             />
           </div>
           {accessSection}
-        </div>
-        <div id="profileDisclaimer" className="disclaimer-message">
-          This page contains Profile Information for the{" "}
-          {userTypeDisplayText ?? userType}. The information cannot be changed
-          in the portal. However, the {userTypeDisplayText ?? userType} can
-          change their contact phone number in their account.
+          <div id="profileDisclaimer" className="disclaimer-message">
+            This page contains Profile Information for the{" "}
+            {userTypeDisplayText ?? userType}. The information cannot be changed
+            in the portal. However, the {userTypeDisplayText ?? userType} can
+            change their contact phone number in their account.
+          </div>
         </div>
       </div>
     </div>

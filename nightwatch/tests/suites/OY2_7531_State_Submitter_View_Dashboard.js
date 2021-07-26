@@ -75,10 +75,8 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser
-        .useCss()
-        .waitForElementPresent("[value='Submit']", 1000)
-        .click("[value='Submit']").pause(8000);
+        browser.useCss().waitForElementPresent("[value='Submit']", 1000);
+        browser.useCss().click("[value='Submit']").pause(8000);
         
         browser.refresh();
         browser.pause(5000);

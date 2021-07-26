@@ -29,7 +29,7 @@ const leavePageConfirmMessage =
  */
 export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
-  const [alertCode, setAlertCode] = useState("NONE");
+  const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const {
     userProfile: { userData },
   } = useAppContext();
@@ -223,75 +223,88 @@ export const SubmissionForm = ({ changeRequestType }) => {
     };
 
     let existMessages = [];
+    let result = false;
+    try {
+      if (
+        formatMessage.statusMessage === "" &&
+        changeRequest.transmittalNumber
+      ) {
+        const promises = transmittalNumberDetails.idExistValidations.map(
+          async (idExistValidation) => {
+            let checkingNumber = changeRequest.transmittalNumber;
 
-    if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber) {
-      const promises = transmittalNumberDetails.idExistValidations.map(
-        (idExistValidation) => {
-          let checkingNumber = changeRequest.transmittalNumber;
-
-          if (idExistValidation.existenceRegex !== undefined) {
-            checkingNumber = changeRequest.transmittalNumber.match(
-              idExistValidation.existenceRegex
-            )[0];
+            if (idExistValidation.existenceRegex !== undefined) {
+              checkingNumber = changeRequest.transmittalNumber.match(
+                idExistValidation.existenceRegex
+              )[0];
+            }
+            try {
+              result = await ChangeRequestDataApi.packageExists(checkingNumber);
+            } catch (e) {
+              console.log("error message is: ", e.message);
+              setAlertCode(RESPONSE_CODE[e.message]);
+            }
+            return result;
           }
+        );
 
-          return ChangeRequestDataApi.packageExists(checkingNumber);
-        }
-      );
+        Promise.all(promises)
+          .then((results) => {
+            results.forEach((dupID, key) => {
+              const correspondingValidation =
+                transmittalNumberDetails.idExistValidations[key];
+              let tempMessage;
 
-      Promise.all(promises)
-        .then((results) => {
-          results.map((dupID, key) => {
-            const correspondingValidation =
-              transmittalNumberDetails.idExistValidations[key];
-            let tempMessage;
-
-            // ID does not exist but it should exist
-            if (!dupID && correspondingValidation.idMustExist) {
-              if (correspondingValidation.errorLevel === "error") {
-                tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-              } else {
-                tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+              // ID does not exist but it should exist
+              if (!dupID && correspondingValidation.idMustExist) {
+                if (correspondingValidation.errorLevel === "error") {
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                } else {
+                  tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+                }
+                // ID exists but it should NOT exist
+              } else if (dupID && !correspondingValidation.idMustExist) {
+                if (correspondingValidation.errorLevel === "error") {
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                } else {
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+                }
               }
-            }
-            // ID exists but it should NOT exist
-            else if (dupID && !correspondingValidation.idMustExist) {
-              if (correspondingValidation.errorLevel === "error") {
-                tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-              } else {
-                tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
-              }
-            }
 
-            // if we got a message through checking, then we should add it to the existMessages array
-            const messageToAdd = {
-              statusLevel: correspondingValidation.errorLevel,
-              statusMessage: tempMessage,
-            };
-            tempMessage && existMessages.push(messageToAdd);
+              // if we got a message through checking, then we should add it to the existMessages array
+              const messageToAdd = {
+                statusLevel: correspondingValidation.errorLevel,
+                statusMessage: tempMessage,
+              };
+              tempMessage && existMessages.push(messageToAdd);
+            });
+          })
+          .then(() => {
+            if (existMessages.length > 0) {
+              displayMessage = existMessages[0];
+              setTransmittalNumberStatusMessage(displayMessage);
+            } else {
+              setTransmittalNumberStatusMessage(displayMessage);
+            }
           });
-        })
-        .then(() => {
-          if (existMessages.length > 0) {
-            displayMessage = existMessages[0];
-            setTransmittalNumberStatusMessage(displayMessage);
-          } else {
-            setTransmittalNumberStatusMessage(displayMessage);
-          }
-        });
-    } else {
-      displayMessage = formatMessage;
-      setTransmittalNumberStatusMessage(displayMessage);
-    }
+      } else {
+        displayMessage = formatMessage;
+        setTransmittalNumberStatusMessage(displayMessage);
+      }
 
-    setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-    setActionTypeErrorMessage(actionTypeMessage);
+      setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+      setActionTypeErrorMessage(actionTypeMessage);
+    } catch (err) {
+      console.log("error is: ", err);
+      setAlertCode(RESPONSE_CODE[err.message]);
+    }
   }, [
     changeRequest,
     changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
     validateTransmittalNumber,
+    alertCode,
   ]);
 
   /**
@@ -335,11 +348,11 @@ export const SubmissionForm = ({ changeRequestType }) => {
         })
         .catch((err) => {
           console.log("error is: ", err);
-          setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+          setAlertCode(RESPONSE_CODE[err.message]);
         })
         .finally(() => {
-          limitSubmit.current = false;
           setIsSubmitting(false);
+          limitSubmit.current = false;
         });
     };
 
@@ -347,7 +360,13 @@ export const SubmissionForm = ({ changeRequestType }) => {
       limitSubmit.current = true;
       saveForm();
     }
-  }, [isSubmitting, transmittalNumberStatusMessage, changeRequest, uploader]);
+  }, [
+    isSubmitting,
+    transmittalNumberStatusMessage,
+    changeRequest,
+    uploader,
+    alertCode,
+  ]);
 
   /**
    * Submit the new change request.
@@ -356,7 +375,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let newAlertCode = "NONE";
+    let newAlertCode = RESPONSE_CODE.NONE;
     let readyToSubmit = false;
 
     setFirstTimeThrough(false);
@@ -383,7 +402,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -398,10 +417,9 @@ export const SubmissionForm = ({ changeRequestType }) => {
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
         {formInfo.subheaderMessage && (
-          <div
-            className="form-subheader-message"
-            dangerouslySetInnerHTML={formInfo.subheaderMessage}
-          ></div>
+          <div className="form-subheader-message">
+            <p dangerouslySetInnerHTML={formInfo.subheaderMessage} />
+          </div>
         )}
         <form
           onSubmit={handleSubmit}
@@ -497,7 +515,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
           <a
             target="new"
             href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto"
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
           >
             View FAQ
           </a>

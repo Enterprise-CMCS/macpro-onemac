@@ -8,7 +8,7 @@ const FAQ = () => {
   const waiverIdRef = useRef(document.location.hash);
   const spaIdRef = useRef(document.location.hash);
 
-  function scrollToSection() {
+  useEffect(() => {
     switch (window.location.hash) {
       case "#waiver-id-format":
         waiverIdRef.current.scrollIntoView();
@@ -20,64 +20,35 @@ const FAQ = () => {
         break;
       default:
     }
-  }
-
-  useEffect(() => {
-    scrollToSection();
-  }, []);
-
-  const placeFaqInfoBox = (e) => {
-    let height =
-      window.innerHeight ||
-      document.documentElement.clientHeight ||
-      document.body.clientHeight;
-    let faqInfo = document.getElementById("faq-info-box");
-    let faqBorder = document.getElementById("faq-border-box");
-    if (height <= 628) {
-      console.log(
-        "height: ",
-        height,
-        "height + window.scrollY: ",
-        height + window.scrollY,
-        "window.scrollY: ",
-        window.scrollY,
-        "document.body.offsetHeight: ",
-        document.body.offsetHeight,
-        "document.body.offsetHeight -  window.: ",
-        document.body.offsetHeight - window.scrollY
-      ); //window.pageYOffset)
-      faqInfo.classList.add("faq-info-box-small");
-      faqBorder.classList.add("faq-border-box-small");
-    } else {
-      faqInfo.classList.remove("faq-info-box-small");
-      faqBorder.classList.remove("faq-border-box-small");
-    }
-  };
-  useEffect(() => {
-    placeFaqInfoBox();
-    window.addEventListener("resize", placeFaqInfoBox);
-    return () => window.removeEventListener("resize", placeFaqInfoBox);
   }, []);
 
   return (
     <div>
       <PageTitleBar heading="Frequently Asked Questions" />
       <div className="form-container" id="top">
-        <div className="form-card">
-          <div id="faq-border-box" className="faq-border-box"></div>
-          <div id="faq-info-box" className="faq-info-box">
-            <p className="faq-info-box-title">MACPro Help Desk Contact Info</p>
-            <b>Phone Number</b>
-            <br />
-            <a href="phone:8332282540">(833) 228-2540</a>
-            <br />
-            <br />
-            <b>Email</b>
-            <br />
-            <a href={`mailto:${helpDeskContact.email}`}>
-              {helpDeskContact.email}
-            </a>
-          </div>
+        <div className="faq-card">
+          <aside id="faq-contact-info-box">
+            <div className="faq-border-box" />
+            <div className="faq-info-box">
+              <h3>MACPro Help Desk Contact Info</h3>
+              <dl>
+                <div className="faq-info-wrapper">
+                  <dt>Phone Number</dt>
+                  <dd>
+                    <a href="phone:8332282540">(833) 228-2540</a>
+                  </dd>
+                </div>
+                <div className="faq-info-wrapper">
+                  <dt>Email</dt>
+                  <dd>
+                    <a href={`mailto:${helpDeskContact.email}`}>
+                      {helpDeskContact.email}
+                    </a>
+                  </dd>
+                </div>
+              </dl>
+            </div>
+          </aside>
           <div className="faq-left-column">
             <h3 className="topic-title">General</h3>
             <Collapsible
