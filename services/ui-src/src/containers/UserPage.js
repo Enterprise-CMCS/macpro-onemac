@@ -11,8 +11,7 @@ import {
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
 import { userTypes } from "../libs/userLib";
-import { getAlert } from "../libs/error-mappings";
-import { ALERTS_MSG } from "../libs/alert-messages";
+import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import UserDataApi from "../utils/UserDataApi";
 
 import AlertBar from "../components/AlertBar";
@@ -22,7 +21,6 @@ import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
 import groupData from "cmscommonlib/groupDivision.json";
-import { helpDeskContact } from "../libs/helpDeskContact";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
@@ -127,7 +125,9 @@ const UserPage = () => {
   const onPhoneNumberSubmit = useCallback(
     async (newNumber) => {
       try {
-        const result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        var result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        if (result === RESPONSE_CODE.USER_SUBMITTED)
+          result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setPhoneNumber(newNumber);
       } catch (e) {
@@ -203,7 +203,7 @@ const UserPage = () => {
           UserDataApi.setUserStatus(updateStatusRequest).then(function (
             returnCode
           ) {
-            if (getAlert(returnCode) === ALERTS_MSG.SUBMISSION_SUCCESS) {
+            if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
               setUserInfo();
             } else {
               console.log("Returned: ", returnCode);
@@ -275,42 +275,37 @@ const UserPage = () => {
       return (
         <div className="ds-l-col--6">
           <h2 id="accessHeader">{heading}</h2>
-          <div className="gradient-border" />
-          <dl>
-            {accesses.map(({ state, status, contacts }) => (
-              <div className="access-card-container" key={state ?? "only-one"}>
-                <div className="gradient-border" />
-                <div className="cms-group-and-division-box ">
-                  <div className="cms-group-division-section">
-                    <h3>Group</h3>
-                    <br />
-                    <p>
-                      {
-                        getUserGroup(
-                          groupData.group,
-                          userData.group,
-                          userData.division
-                        ).group
-                      }
-                    </p>
-                  </div>
-                  <div className="cms-group-division-section cms-division-background">
-                    <h3>Division</h3>
-                    <br />
-                    <p>
-                      {
-                        getUserGroup(
-                          groupData.group,
-                          userData.group,
-                          userData.division
-                        ).division
-                      }
-                    </p>
-                  </div>
-                </div>
+          <div className="access-card-container">
+            <div className="gradient-border" />
+            <div className="cms-group-and-division-box ">
+              <div className="cms-group-division-section">
+                <h3>Group</h3>
+                <br />
+                <p>
+                  {
+                    getUserGroup(
+                      groupData.group,
+                      userData.group,
+                      userData.division
+                    ).group
+                  }
+                </p>
               </div>
-            ))}
-          </dl>
+              <div className="cms-group-division-section cms-division-background">
+                <h3>Division</h3>
+                <br />
+                <p>
+                  {
+                    getUserGroup(
+                      groupData.group,
+                      userData.group,
+                      userData.division
+                    ).division
+                  }
+                </p>
+              </div>
+            </div>
+          </div>
         </div>
       );
     } else {
@@ -354,6 +349,8 @@ const UserPage = () => {
     }
   }, [
     accesses,
+    userData.group,
+    userData.division,
     userType,
     xClicked,
     isStateSelectorVisible,
@@ -404,12 +401,16 @@ const UserPage = () => {
     })();
   }, [userData, userType]);
 
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
   return (
     <div>
       <PageTitleBar heading="User Profile" />
-      <AlertBar alertCode={alertCode} />
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
-        <div className="ds-l-row">
+        <div className="profile-content">
           <div className="left-column">
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
@@ -431,12 +432,12 @@ const UserPage = () => {
             />
           </div>
           {accessSection}
-        </div>
-        <div id="profileDisclaimer" className="disclaimer-message">
-          This page contains Profile Information for the{" "}
-          {userTypeDisplayText ?? userType}. The information cannot be changed
-          in the portal. However, the {userTypeDisplayText ?? userType} can
-          change their contact phone number in their account.
+          <div id="profileDisclaimer" className="disclaimer-message">
+            This page contains Profile Information for the{" "}
+            {userTypeDisplayText ?? userType}. The information cannot be changed
+            in the portal. However, the {userTypeDisplayText ?? userType} can
+            change their contact phone number in their account.
+          </div>
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * Waiver submission specific email generation functions.
@@ -43,7 +43,7 @@ class Waiver {
     // NEW action type should have NEW IDs
     if (data.actionType === "new" && idExists) {
       areFieldsValid = false;
-      whyNot = RESPONSE_CODE.WAIVER_NEW_NOT_K;
+      whyNot = RESPONSE_CODE.DUPLICATE_ID;
     }
 
     return { areFieldsValid, whyNot };

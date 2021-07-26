@@ -10,7 +10,7 @@ import getChangeRequestFunctions, {
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "./libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
 
 /**
@@ -86,7 +86,7 @@ export const main = handler(async (event) => {
 
   const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
   if (!crVerifyTerritoryStateCode) {
-    return RESPONSE_CODE.TERRITORY_NOT_VALID;
+    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
   }
 
   try {
@@ -150,9 +150,10 @@ export const main = handler(async (event) => {
         console.log("params are: ", params);
         await dynamoDb.put(params);
       } catch (error) {
-        if (error.code != "ConditionalCheckFailedException")
+        if (error.code != "ConditionalCheckFailedException") {
           console.log("Error is: ", error);
-        else
+          throw error;
+        } else
           console.log(
             "ID " + smallerID + " exists in " + process.env.spaIdTableName
           );

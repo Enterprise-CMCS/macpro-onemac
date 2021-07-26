@@ -33,7 +33,7 @@ function StateUserSignup() {
 }
 
 function CMSSignup() {
-  const [_, onClickCMS] = useSignupCallback("cmsapprover", createAttribute);
+  const [, onClickCMS] = useSignupCallback("cmsapprover", createAttribute);
 
   const CMS_CHOICES = [
     {
