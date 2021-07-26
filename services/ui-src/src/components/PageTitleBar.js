@@ -23,9 +23,9 @@ const PageTitleBar = ({
 }) => {
   const history = useHistory();
 
-  const titleBarClassName = classNames({
-    "page-title-bar": true,
-    [enableBackNav ? "title-bar-light-theme" : "title-bar-dark-theme"]: true,
+  const titleBarClassName = classNames("page-title-bar", {
+    "title-bar-light-theme": enableBackNav,
+    "title-bar-dark-theme": !enableBackNav,
   });
 
   /**
@@ -42,28 +42,30 @@ const PageTitleBar = ({
 
   return (
     <div id={TITLE_BAR_ID} className={titleBarClassName}>
-      <div className="title-bar-left-content">
-        {enableBackNav && (
-          <Button
-            id="back-button"
-            data-testid="back-button"
-            className="title-bar-back-button"
-            onClick={
-              backNavConfirmationMessage
-                ? handleBackWithConfirm
-                : () => history.goBack()
-            }
-            variation="transparent"
-          >
-            <FontAwesomeIcon
-              icon={faChevronLeft}
-              className="title-bar-back-arrow"
-            />
-          </Button>
-        )}
-        <h1>{heading}</h1>
+      <div className="header-wrapper">
+        <div className="title-bar-left-content">
+          {enableBackNav && (
+            <Button
+              id="back-button"
+              data-testid="back-button"
+              className="title-bar-back-button"
+              onClick={
+                backNavConfirmationMessage
+                  ? handleBackWithConfirm
+                  : () => history.goBack()
+              }
+              variation="transparent"
+            >
+              <FontAwesomeIcon
+                icon={faChevronLeft}
+                className="title-bar-back-arrow"
+              />
+            </Button>
+          )}
+          <h1>{heading}</h1>
+        </div>
+        {rightSideContent}
       </div>
-      {rightSideContent}
     </div>
   );
 };
