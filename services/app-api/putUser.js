@@ -473,7 +473,9 @@ const collectRoleAdminEmailIds = async (input) => {
       systemadmins.forEach((sysadmin) => recipients.push(sysadmin.id));
     }
   }
-  recipients.push(process.env.reviewerEmail);
+  if (process.env.stage !== "production") {
+    recipients.push(process.env.reviewerEmail);
+  }
   console.log("Role admin email recipients,", recipients);
   return recipients;
 };
@@ -567,6 +569,11 @@ const constructUserEmail = (userEmailId, input) => {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: [userEmailId, process.env.reviewerEmail],
   };
+
+  if (process.env.stage === "production") {
+    email.ToAddresses = [userEmailId];
+  }
+
   const updatedStatus = input.attributes[0].status;
   const userType = input.type;
   input.attributes[0].stateCode

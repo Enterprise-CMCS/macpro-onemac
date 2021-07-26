@@ -67,6 +67,7 @@ provider:
   logs:
     restApi: true    
   environment:
+    stage: ${self:custom.stage}
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
     userTableName: ${self:custom.userTableName}
