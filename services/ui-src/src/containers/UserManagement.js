@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 import { RESPONSE_CODE, ROUTES, USER_TYPE } from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
@@ -123,11 +123,14 @@ const UserManagement = () => {
     return <span className="user-status">{content}</span>;
   }, []);
 
-  const renderEmail = useCallback(
-    ({ value }) => (
-      <a className="user-email" href={`mailto:${value}`}>
+  const renderName = useCallback(
+    ({ value, row }) => (
+      <Link
+        className="user-name"
+        to={`${ROUTES.PROFILE}/${row.original.email}`}
+      >
         {value}
-      </a>
+      </Link>
     ),
     []
   );
@@ -253,11 +256,7 @@ const UserManagement = () => {
         accessor: getName,
         defaultCanSort: true,
         id: "name",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-        Cell: renderEmail,
+        Cell: renderName,
       },
       includeStateCode
         ? {
@@ -309,7 +308,7 @@ const UserManagement = () => {
   }, [
     getName,
     includeStateCode,
-    renderEmail,
+    renderName,
     renderStatus,
     showUserRole,
     sortStatus,

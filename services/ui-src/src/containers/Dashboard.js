@@ -100,6 +100,18 @@ const Dashboard = () => {
     []
   );
 
+  const renderName = useCallback(
+    ({ value, row }) => (
+      <Link
+        className="user-name"
+        to={`${ROUTES.PROFILE}/${row.original.user.email}`}
+      >
+        {value}
+      </Link>
+    ),
+    []
+  );
+
   const renderDate = useCallback(({ value }) => {
     if (value) {
       return format(value, "MMM d, yyyy");
@@ -136,9 +148,10 @@ const Dashboard = () => {
         accessor: ({ user: { firstName, lastName } = {} }) =>
           [firstName, lastName].filter(Boolean).join(" "),
         id: "submitter",
+        Cell: renderName,
       },
     ],
-    [getType, renderDate, renderId, renderType]
+    [getType, renderDate, renderId, renderName, renderType]
   );
 
   const initialTableState = useMemo(

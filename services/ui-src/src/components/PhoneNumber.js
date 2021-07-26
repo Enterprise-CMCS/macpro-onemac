@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { Button, FormLabel, TextField } from "@cmsgov/design-system";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, FormLabel, TextField, Review } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -10,8 +10,13 @@ export const PhoneNumber = ({
   onEdit,
   onSubmit,
   phoneNumber,
+  readOnly,
 }) => {
   const [value, setValue] = useState(phoneNumber);
+
+  useEffect(() => {
+    setValue(phoneNumber);
+  }, [phoneNumber]);
 
   const onSubmitFn = useCallback(
     (e) => {
@@ -32,7 +37,9 @@ export const PhoneNumber = ({
 
   const formId = id || "phoneSection";
 
-  if (isEditing) {
+  if (readOnly) {
+    return <Review heading="Phone Number">{phoneNumber || "N/A"}</Review>;
+  } else if (isEditing) {
     return (
       <form
         id={formId}
@@ -69,7 +76,7 @@ export const PhoneNumber = ({
       </form>
     );
   } else {
-    if (!value) {
+    if (!phoneNumber) {
       return (
         <form id={formId} className="phone-number-empty-form">
           <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
