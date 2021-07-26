@@ -35,7 +35,7 @@ custom:
   dynamodb:
     stages:
       - dev
-      - ${env:BRANCH}
+      - ${env:BRANCH, ""}
     start:
       inMemory: true
       migrate: true
@@ -63,7 +63,7 @@ provider:
   iam:
     role:
       path: ${self:custom.iamPath}
-      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY}'
+      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
   logs:
     restApi: true    
   environment:
