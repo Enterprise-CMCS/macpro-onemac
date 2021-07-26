@@ -1,5 +1,3 @@
-
-
 const login = require('../suites/OY2_9999_Login');
 const timeout = 1000;
 
