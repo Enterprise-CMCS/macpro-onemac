@@ -8,8 +8,10 @@ const ChoiceItem = ({ linkTo, title, description, onclick }) => {
   return (
     <li className="choice" onClick={onclick}>
       <Link to={linkTo}>
-        <h4>{title}</h4>
-        <p>{description}</p>
+        <div>
+          <h4>{title}</h4>
+          <p>{description}</p>
+        </div>
         <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
       </Link>
     </li>

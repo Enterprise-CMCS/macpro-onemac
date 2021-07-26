@@ -418,10 +418,9 @@ export const SubmissionForm = ({ changeRequestType }) => {
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
         {formInfo.subheaderMessage && (
-          <div
-            className="form-subheader-message"
-            dangerouslySetInnerHTML={formInfo.subheaderMessage}
-          ></div>
+          <div className="form-subheader-message">
+            <p dangerouslySetInnerHTML={formInfo.subheaderMessage} />
+          </div>
         )}
         <form
           onSubmit={handleSubmit}
@@ -517,7 +516,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
           <a
             target="new"
             href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto"
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
           >
             View FAQ
           </a>

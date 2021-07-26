@@ -4,12 +4,11 @@ import { Auth } from "aws-amplify";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
-import flagIcon from "../images/flagIcon.png";
 import config from "../utils/config";
-import { Alert } from "@cmsgov/design-system";
+import { Alert, UsaBanner } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
-import oneMacLogo from "../images/OneMAC_logoLight1.svg";
+import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
 /**
  * Get the sign in URL used with OKTA.
@@ -96,18 +95,6 @@ function Header(props) {
   }
 
   /**
-   * Renders the USA bar
-   */
-  function renderUSABar() {
-    return (
-      <div className="usa-bar">
-        <img src={flagIcon} alt="united states flag" />
-        An official website of the United States government
-      </div>
-    );
-  }
-
-  /**
    * Renders a navigation bar
    */
   function renderNavBar(
@@ -122,63 +109,65 @@ function Header(props) {
       case ROUTES.FAQ + "/":
         return (
           <div className="nav-bar">
-            <div className="nav-left">
-              <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+            <div className="header-wrapper">
+              <div className="nav-left">
+                <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+              </div>
             </div>
           </div>
         );
       default:
         return (
           <div className="nav-bar">
-            <div className="nav-left">
-              <div className="logo-nav-left">
+            <div className="header-wrapper">
+              <div className="nav-left">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
+                <div className="nav-left-links">
+                  <Link
+                    to={ROUTES.HOME}
+                    className={getActiveClass(currentRoute, RouteList.HOME)}
+                  >
+                    Home
+                  </Link>
+                  {isAuthenticated && (
+                    <>
+                      {userObj.canAccessDashboard && (
+                        <Link
+                          id="dashboardLink"
+                          to={ROUTES.DASHBOARD}
+                          className={getActiveClass(
+                            currentRoute,
+                            RouteList.DASHBOARD
+                          )}
+                        >
+                          Dashboard
+                        </Link>
+                      )}
+                      {userObj.canAccessUserManagement && (
+                        <Link
+                          id="userManagementLink"
+                          to={ROUTES.USER_MANAGEMENT}
+                          className={getActiveClass(
+                            currentRoute,
+                            RouteList.USER_MANAGEMENT
+                          )}
+                        >
+                          User Management
+                        </Link>
+                      )}
+                    </>
+                  )}
+                  <a
+                    href={ROUTES.FAQ}
+                    className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
+                    target="new"
+                  >
+                    FAQ
+                  </a>
+                </div>
               </div>
-              <div className="nav-left-links">
-                <Link
-                  to={ROUTES.HOME}
-                  className={getActiveClass(currentRoute, RouteList.HOME)}
-                >
-                  Home
-                </Link>
-                {isAuthenticated && (
-                  <>
-                    {userObj.canAccessDashboard && (
-                      <Link
-                        id="dashboardLink"
-                        to={ROUTES.DASHBOARD}
-                        className={getActiveClass(
-                          currentRoute,
-                          RouteList.DASHBOARD
-                        )}
-                      >
-                        Dashboard
-                      </Link>
-                    )}
-                    {userObj.canAccessUserManagement && (
-                      <Link
-                        id="userManagementLink"
-                        to={ROUTES.USER_MANAGEMENT}
-                        className={getActiveClass(
-                          currentRoute,
-                          RouteList.USER_MANAGEMENT
-                        )}
-                      >
-                        User Management
-                      </Link>
-                    )}
-                  </>
-                )}
-                <a
-                  href={ROUTES.FAQ}
-                  className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-                  target="new"
-                >
-                  FAQ
-                </a>
-              </div>
+              {renderAccountButtons(isLoggedInAsDeveloper)}
             </div>
-            {renderAccountButtons(isLoggedInAsDeveloper)}
           </div>
         );
     }
@@ -295,7 +284,9 @@ function Header(props) {
 
   return (
     <div>
-      {renderUSABar()}
+      <div className="usa-banner-custom">
+        <UsaBanner />
+      </div>
       {isIE && (
         <Alert variation="error" heading="Internet Explorer Browser Issues">
           Please consider upgrading to a recommended browser. Internet Explorer
