@@ -60,7 +60,7 @@ module.exports = {
         browser.useXpath().expect.element(email_title_two).to.be.visible;
         browser.useXpath().expect.element(email).to.be.visible;
         browser.useXpath().expect.element(phone_number_title).to.be.visible;
-        browser.useXpath().expect.element(phone_number_add).to.be.visible;
+        //browser.useXpath().expect.element(phone_number_add).to.be.visible;
         browser.useXpath().expect.element(text_at_bottom).to.be.visible;
         browser.useCss();
 
