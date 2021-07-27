@@ -199,6 +199,7 @@ const Dashboard = () => {
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
+  console.log(isUserActive)
   // Render the dashboard
   return (
     <div className="dashboard-white">
@@ -206,7 +207,9 @@ const Dashboard = () => {
         heading="Submission List"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK && csvExportSubmissions)
+          (userData.type === USER_TYPE.HELPDESK
+              && isUserActive
+              && csvExportSubmissions)
         }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
