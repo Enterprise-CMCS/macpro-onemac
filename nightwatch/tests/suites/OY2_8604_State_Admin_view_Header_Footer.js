@@ -25,7 +25,7 @@ module.exports = {
 
     'state admin user verify header after login': function (browser) {
         let one_mac_logo = '(//img)[2]';
-        let us_official_banner = '//div/div[@class="usa-bar"]';
+        let us_official_banner = '//section[@class="ds-c-usa-banner"]';
 
         browser.useXpath().expect.element(one_mac_logo).to.be.visible;
         browser.useXpath().expect.element(us_official_banner).to.be.visible;
@@ -41,11 +41,11 @@ module.exports = {
         browser.useCss().click(manage_account_link); 
         browser.pause(2000);
 
-        let madicaid_gov_logo = "(//section/div)[1]";
-        let hhs_logo = "(//section/div/div)[1]";
-        let text_next_hhs_logo = "(//section/div/div)[2]";
-        let email_footer = "(//div[@class='footer-bottom-container']/div)[1]";
-        let address_footer = "(//div[@class='footer-bottom-container']/div)[2]";
+        let madicaid_gov_logo = "//section[@class='footer-top-container']/div/div/img";
+        let hhs_logo = "//section[@class='footer-top-container']/div/div/div/img";
+        let text_next_hhs_logo = "((//section/div/div)/div)[4]";
+        let email_footer = "((//div[@class='footer-bottom-container']/div)[1]/div)[1]";
+        let address_footer = "((//div[@class='footer-bottom-container']/div)[1]/div)[2]";
 
         
 

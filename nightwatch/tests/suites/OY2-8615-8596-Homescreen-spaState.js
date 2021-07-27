@@ -14,10 +14,10 @@ module.exports = {
         const tests_data={
             create:{
 
-                selector: "//*[@id='root']/div/div[3]/div/div/div[1]/div/div/div[1]",
+                selector: "//*[@id='root']/div/div[3]/div/div[1]/div/div[1]",
             },
             submit:{
-                selector: "/html/body/reference/div/div/div[3]/div/div/div[2]/div/div",
+                selector: "//*[@id='root']/div/div[3]/div/div[2]/div",
             },
             
         
@@ -54,13 +54,13 @@ module.exports = {
     browser.verify.containsText('h1', testData.pageTitle);
     browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/dt", "Maryland");
     browser.useCss();
-    browser.click("xpath", "/html/body/reference/div/div/div[1]/div[2]/div[1]/div[2]/a[2]").waitForElementPresent("body");
+    browser.click("xpath", "//*[@id='dashboardLink']").waitForElementPresent("body");
 
   },
   'Verify that there are no state abbribiation option': function (browser) {
     browser.useCss().click("#new-submission-button");
-    browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-    browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+    browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
+    browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
     browser.click("[value='Submit']");
     let state_territory = "//*[contains(text(), 'State/Territory')]";
     browser.useXpath().expect.element(state_territory).to.be.not.present;
