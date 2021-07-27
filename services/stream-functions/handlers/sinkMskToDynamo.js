@@ -20,12 +20,12 @@ function myHandler(event, context, callback) {
     stateCode = value.payload.State_Code.toString();
   }
   var sk = "v0#" + id;
-  console.log(process.env.oneTableName);
+  console.log(process.env.oneMacTableName);
   if (id != undefined) {
     AWS.config.update({region: 'us-east-1'});
     var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
     var params = {
-      TableName: process.env.oneTableName,
+      TableName: process.env.oneMacTableName,
       Item: {
         'pk': {S: stateCode},
         'sk': {S: sk},
@@ -47,7 +47,7 @@ function myHandler(event, context, callback) {
 
     // if this is an id type where we want better searching, do that now
     // 122 is 1915b and 123 is 1915c
-    if (planType === 122 || planType === 123) {
+ /*   if (planType === 122 || planType === 123) {
       let sliceEnd = id.lastIndexOf('.');
       let smallerID = id.slice(0,sliceEnd); // one layer removed
 
@@ -73,6 +73,7 @@ function myHandler(event, context, callback) {
         smallerID = smallerID.slice(0,sliceEnd); // one layer removed
       }
     }
+    */
   }
 }
 

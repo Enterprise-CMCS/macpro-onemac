@@ -45,10 +45,10 @@ Resources:
           KeyType: HASH
       # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
-  OneMACDatav0:
+  OneMacTable:
     Type: AWS::DynamoDB::Table
     Properties:
-      TableName: ${self:custom.oneTableName}
+      TableName: ${self:custom.oneMacTableName}
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
       AttributeDefinitions:
@@ -106,3 +106,7 @@ Outputs:
     Value: !Ref SpaIdTable
   SpaIdTableArn:
     Value: !GetAtt SpaIdTable.Arn
+  OneMacTableName:
+    Value: !Ref OneMacTable
+  OneMacTableArn:
+    Value: !GetAtt OneMacTable.Arn
