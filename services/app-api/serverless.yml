@@ -13,7 +13,7 @@ custom:
   tableName: onemac-${self:custom.stage}-change-requests
   spaIdTableName: onemac-${self:custom.stage}-spa-ids
   userTableName: onemac-${self:custom.stage}-user-profiles
-  oneMacTableName: onemac-${self:custom.stage}
+  oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   userAccessEmailSource: ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
