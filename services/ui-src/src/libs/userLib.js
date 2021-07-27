@@ -37,32 +37,12 @@ export const deniedOrRevokedMessage = {
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
 };
 
-export const grantConfirmMessage = {
-  [USER_TYPE.STATE_SUBMITTER]:
-    "This will grant the selected user access.\nAre you sure you want to proceed?",
-  [USER_TYPE.STATE_ADMIN]:
-    "This will grant the selected user access.\nAre you sure you want to proceed?",
-  default:
-    "This will grant the selected user access.\nAre you sure you want to proceed?",
-};
-
-export const denyConfirmMessage = {
-  [USER_TYPE.STATE_SUBMITTER]:
-    "This will deny the selected user’s request for access.\nAre you sure you want to proceed?",
-  [USER_TYPE.STATE_ADMIN]:
-    "This will deny the selected user’s request for access.\nAre you sure you want to proceed?",
-  default:
-    "This will deny the selected user’s request for access.\nAre you sure you want to proceed?",
-};
-
-export const revokeConfirmMessage = {
-  [USER_TYPE.STATE_SUBMITTER]:
-    "This will revoke the selected user’s request for access.\nAre you sure you want to proceed?",
-  [USER_TYPE.STATE_ADMIN]:
-    "This will revoke the selected user’s request for access.\nAre you sure you want to proceed?",
-  default:
-    "This will revoke the selected user’s request for access.\nAre you sure you want to proceed?",
-};
+export const grantConfirmMessage =
+  "This will grant the selected user access.\nAre you sure you want to proceed?";
+export const denyConfirmMessage =
+  "This will deny the selected user’s request for access.\nAre you sure you want to proceed?";
+export const revokeConfirmMessage =
+  "This will revoke the selected user’s request for access.\nAre you sure you want to proceed?";
 
 /**
  * Determine the type of userData and sort corresponding arrays per state if needed.
