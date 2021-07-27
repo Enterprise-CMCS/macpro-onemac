@@ -70,10 +70,10 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(6000);
-       
+        browser.click("[value='Submit']").pause(10000);
+          
         // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
+        browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(4000);
         browser.useCss();
         return spaID;
     },
