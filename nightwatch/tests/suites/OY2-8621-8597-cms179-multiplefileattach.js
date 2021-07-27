@@ -71,6 +71,7 @@ module.exports = {
 
         // Submit the new SPA 
         browser.click("[value='Submit']").pause(6000);
+        browser.refresh();
        
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
