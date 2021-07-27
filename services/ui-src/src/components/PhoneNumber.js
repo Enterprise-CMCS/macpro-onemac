@@ -26,10 +26,6 @@ export const PhoneNumber = ({
     [onSubmit, value]
   );
 
-  const onEditFn = useCallback(() => {
-    onEdit();
-  }, [onEdit]);
-
   const onCancelFn = useCallback(() => {
     onCancel();
     setValue(phoneNumber); // resets value displayed in TextField back to the original value
@@ -83,7 +79,7 @@ export const PhoneNumber = ({
           <Button
             className="phone-add-button"
             id="addButton"
-            onClick={onEditFn}
+            onClick={onEdit}
             variation="primary"
             type="button"
           >
@@ -100,7 +96,7 @@ export const PhoneNumber = ({
           <Button
             className="phone-edit-button"
             id="editButton"
-            onClick={onEditFn}
+            onClick={onEdit}
             type="button"
           >
             Edit&nbsp;&nbsp;

@@ -107,7 +107,6 @@ const UserPage = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState("");
   const [isEditingPhone, setIsEditingPhone] = useState(false);
 
   const isReadOnly =
@@ -119,9 +118,6 @@ const UserPage = () => {
   useEffect(() => {
     if (!isReadOnly) {
       setUserData(userProfile.userData);
-      if (userProfile.userData?.phoneNumber) {
-        setPhoneNumber(userProfile.userData.phoneNumber);
-      }
       return;
     }
 
@@ -154,14 +150,14 @@ const UserPage = () => {
         if (result === RESPONSE_CODE.USER_SUBMITTED)
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
-        setPhoneNumber(newNumber);
+        setUserData((data) => ({ ...data, phoneNumber: newNumber }));
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
       setIsEditingPhone(false);
     },
-    [userProfile.email, setPhoneNumber]
+    [userProfile.email, setUserData]
   );
 
   const signupUser = useCallback(
@@ -462,8 +458,7 @@ const UserPage = () => {
             </Review>
             <PhoneNumber
               isEditing={isEditingPhone}
-              initialValue={userData.phoneNumber}
-              phoneNumber={phoneNumber}
+              phoneNumber={userData.phoneNumber}
               onCancel={onPhoneNumberCancel}
               onEdit={onPhoneNumberEdit}
               onSubmit={onPhoneNumberSubmit}
