@@ -41,7 +41,7 @@ module.exports = {
       myAccountLink: "@myAccountLink",
       manageAccountLink: "@manageAccountLink",
       subUrl: "/profile",
-      pageTitle: "User Profile"
+      pageTitle: "My Profile"
       
       
     }
