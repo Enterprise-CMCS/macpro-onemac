@@ -70,6 +70,7 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
+
         browser.click("[value='Submit']").pause(10000);
           
         // Verify the SPA on Submission List 
