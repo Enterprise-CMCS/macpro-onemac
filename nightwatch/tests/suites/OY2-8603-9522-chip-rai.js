@@ -23,8 +23,8 @@ module.exports = {
 
     'Verify user can submit new CHIP SPA': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(3) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[3]");
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -91,8 +91,8 @@ module.exports = {
     
     'Verify SPA and Waiver Dashboard > Respond to CHIP RAI for SPA Submission': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(4) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[4]");
         browser.useCss().setValue("input#transmittalNumber", chipspaID);
 
         // upload a document and make a comment 

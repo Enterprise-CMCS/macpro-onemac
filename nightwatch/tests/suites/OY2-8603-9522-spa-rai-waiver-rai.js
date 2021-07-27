@@ -24,8 +24,8 @@ module.exports = {
 
       'Verify user can submit new SPA': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
         // create random SPA ID
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -66,12 +66,11 @@ module.exports = {
         browser.pause(3000);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(2000);
+        browser.useCss().click("[value='Submit']").pause(2000);
 
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
-        browser.useCss();
-        browser.click("xpath", "(//table//td)[1]/a").pause(2000);
+        browser.useXpath().click("xpath", "(//table//td)[1]/a").pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
         browser.useCss();
@@ -82,8 +81,8 @@ module.exports = {
     },
     'Verify SPA and Waiver Dashboard > Respond to RAI for SPA Submission': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
         browser.useCss().setValue("input#transmittalNumber", spaID);
 
         // upload a document and make a comment 
@@ -134,8 +133,8 @@ module.exports = {
 
     'Verify user can submit 1915(b) Waiver Action': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
         browser.useCss().click("select#actionType");
         browser.useCss().click("select#actionType > option[value='new']");
         browser.useCss().click("select#waiverAuthority");
@@ -199,8 +198,8 @@ module.exports = {
     'Verify user can submit Respond to 1915(b) Waiver RAI': function (browser) {
         browser.pause(2000);
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
 
         // upload a document and make a comment 
