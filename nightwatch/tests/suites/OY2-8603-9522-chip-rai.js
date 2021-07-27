@@ -134,7 +134,7 @@ module.exports = {
         // browser.refresh();
         browser.pause(5000);
         // browser.refresh();
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedIDNumber = "//*[@id='transmittalNumber-0']/a";
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         
         // SPA ID Verification 
