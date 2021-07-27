@@ -60,7 +60,7 @@ module.exports = {
         .waitForElementPresent("[value='Submit']", 1000)
         .click("[value='Submit']").pause(5000);
         
-        browser.refresh();
+        //browser.refresh();
         browser.pause(5000);
         browser.refresh();
 

@@ -12,7 +12,8 @@ module.exports = {
         login.afterEach(browser);
     },
     'Verify the sort funtionality on Dashboard': function (browser) {
-       browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[1]/div/h1", "Submission List");
+       browser.useXpath().assert.containsText( "//h1", "Submission List");
+       browser.useXpath().assert.containsText("/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[1]", "SPA ID/Waiver Number");
        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[2]", "Type");
        browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[2]");
        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[3]", "State");

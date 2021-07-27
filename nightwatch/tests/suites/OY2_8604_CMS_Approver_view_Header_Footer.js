@@ -16,17 +16,17 @@ module.exports = {
     before: function (browser) {
         login.beforeEach(browser);
         let one_mac_logo = '(//img)[2]';
-        let us_official_banner = '//div/div[@class="usa-bar"]';
+        let us_official_banner = '//section[@class="ds-c-usa-banner"]';
         let madicaid_gov_logo = "(//div/img)[6]";
         let hhs_logo = "(//div/img)[7]";
         let text_next_hhs_logo = "//div/div[@class='footer-fed-gov-text']";
         let email_footer = "(//div[@class='footer-bottom-container']/div)[1]";
-        let address_footer = "(//div[@class='footer-bottom-container']/div)[2]";
+        let address_footer = "(//div[@class='footer-bottom-container']/div/div)[2]";
         //check on header and footer before login 
         browser.useXpath().expect.element(one_mac_logo).to.be.visible;
         browser.useXpath().expect.element(us_official_banner).to.be.visible;
         browser.useXpath().assert.containsText(us_official_banner, "An official website of the United States government");
-        browser.useXpath().moveToElement(madicaid_gov_logo, 10, 10).waitForElementVisible(madicaid_gov_logo, 500);
+        browser.useXpath().moveToElement(email_footer, 10, 10).waitForElementVisible(email_footer, 500);
         browser.useXpath().expect.element(madicaid_gov_logo).to.be.visible;
         browser.useXpath().expect.element(hhs_logo).to.be.visible;
         browser.useXpath().expect.element(text_next_hhs_logo).to.be.visible;
@@ -45,7 +45,7 @@ module.exports = {
 
     'state submitter user verify header after login': function (browser) {
         let one_mac_logo = '(//img)[2]';
-        let us_official_banner = '//div/div[@class="usa-bar"]';
+        let us_official_banner = '//section[@class="ds-c-usa-banner"]';
 
         browser.useXpath().expect.element(one_mac_logo).to.be.visible;
         browser.useXpath().expect.element(us_official_banner).to.be.visible;
@@ -61,11 +61,11 @@ module.exports = {
         browser.useCss().click(manage_account_link); 
         browser.pause(2000);
 
-        let madicaid_gov_logo = "(//section/div)[1]";
-        let hhs_logo = "(//section/div/div)[1]";
-        let text_next_hhs_logo = "(//section/div/div)[2]";
-        let email_footer = "(//div[@class='footer-bottom-container']/div)[1]";
-        let address_footer = "(//div[@class='footer-bottom-container']/div)[2]";
+        let madicaid_gov_logo = "//section[@class='footer-top-container']/div/div/img";
+        let hhs_logo = "//section[@class='footer-top-container']/div/div/div/img";
+        let text_next_hhs_logo = "((//section/div/div)/div)[4]";
+        let email_footer = "((//div[@class='footer-bottom-container']/div)[1]/div)[1]";
+        let address_footer = "((//div[@class='footer-bottom-container']/div)[1]/div)[2]";
 
         
 
