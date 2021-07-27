@@ -15,6 +15,11 @@ function myHandler(event, context, callback) {
   if (value.payload.Plan_Type) {
     planType = value.payload.Plan_Type.toString();
   }
+  var stateCode = 'MI';
+  if (value.payload.State_Code) {
+    stateCode = value.payload.State_Code.toString();
+  }
+  var sk = "v0#" + id;
   console.log(process.env.oneTableName);
   if (id != undefined) {
     AWS.config.update({region: 'us-east-1'});
@@ -22,6 +27,8 @@ function myHandler(event, context, callback) {
     var params = {
       TableName: process.env.oneTableName,
       Item: {
+        'pk': {S: stateCode},
+        'sk': {S: sk},
         'id' : {S: id},
         'cmsStatusID': {N: packageStatusID},
         'planType': {N: planType},
