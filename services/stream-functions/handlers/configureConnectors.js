@@ -26,7 +26,7 @@ function myHandler(event, context, callback) {
     console.log("Warmed up... although this function shouldn't be prewarmed.  So, turn it off.");
     return null;
   }
-  console.log('Received event:', JSON.stringify(event, null, 2));
+  console.log('configureConnectors received event:', JSON.stringify(event, null, 2));
   var ecs = new aws.ECS();
   var params = {
     cluster: process.env.cluster

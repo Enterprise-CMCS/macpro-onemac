@@ -2,25 +2,26 @@ var AWS = require('aws-sdk');
 
 function myHandler(event, context, callback) {
   if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
     return null;
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
   var value = JSON.parse(event.value);
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
   var id = value.payload.ID_Number;
-  var packageStatusID = value.payload.SPW_Status_ID.toString();
-  var payload = event.value.payload;
+  var packageStatusID = "unknown";
+  if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
+  var payload = event.value.payload.toString();
+  
   var planType = '0';
   if (value.payload.Plan_Type) {
     planType = value.payload.Plan_Type.toString();
   }
-  console.log(process.env.spaIdTableName);
+  console.log(process.env.oneTableName);
   if (id != undefined) {
     AWS.config.update({region: 'us-east-1'});
     var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
     var params = {
-      TableName: process.env.spaIdTableName,
+      TableName: process.env.oneTableName,
       Item: {
         'id' : {S: id},
         'cmsStatusID': {N: packageStatusID},
