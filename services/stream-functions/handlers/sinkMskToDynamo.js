@@ -11,7 +11,6 @@ function myHandler(event, context, callback) {
   var packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
   var payload = event.value.payload.toString();
-  
   var planType = '0';
   if (value.payload.Plan_Type) {
     planType = value.payload.Plan_Type.toString();
