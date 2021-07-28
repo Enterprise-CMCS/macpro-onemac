@@ -86,6 +86,7 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - dynamodb:GetItem
+                  - dynamodb:Query
                   - dynamodb:Scan
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem

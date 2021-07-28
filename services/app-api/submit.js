@@ -108,11 +108,22 @@ export const main = handler(async (event) => {
   }
 
   try {
-    data.pk = data.territory;
-    data.sk = "v0#" + data.transmittalNumber;
+    let onedata;
+    onedata.pk = data.territory;
+    onedata.sk = "v0#" + data.transmittalNumber;
+    onedata.currentVersion = "0";
+    onedata.packageID = data.transmittalNumber;
+    onedata.type = data.type;
+    onedata.oneMacPackageStatus = "Pending";
+    onedata.territory = data.territory;
+    onedata.submitterName = data.user.firstName + " " + data.user.family_name;
+    onedata.submitterEmail = data.user.email;
+    onedata.timestamp = data.submittedAt;
+    onedata.additionalInformation = data.summary;
+    onedata.uploads = data.uploads;
     let oneparams = {
       TableName: process.env.oneMacTableName,
-      Item: data,
+      Item: onedata,
     };
     console.log("TableName is: ", process.env.oneMacTableName);
     console.log("oneParams is: ", oneparams);
