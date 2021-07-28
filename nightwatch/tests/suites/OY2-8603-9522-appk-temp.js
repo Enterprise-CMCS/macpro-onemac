@@ -33,7 +33,7 @@ module.exports = {
        spa = browser.page.spaBasePage();
         spa.click(selector);
         spa.setValue(selector, generatedWaiverID);
-         spa.expect.element(selector).value.to.equals(generatedWaiverID);
+         spa.expect.element(selector).value.to.equals(generatedWaiverID).pause(2000);
 
         // upload a document and make a comment 
      let fileUploadElem = "[name='uploader-input-0']";
@@ -62,7 +62,7 @@ module.exports = {
     browser.pause(3000);
 
      // click ["Submit"] button 
-    browser.useCss().click("[value='Submit']").pause(1000);
+    browser.useCss().click("[value='Submit']").pause(4000);
     
      
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -128,7 +128,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(3000);
 
         // Verify the submitted SPA Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";

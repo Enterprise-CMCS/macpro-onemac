@@ -97,10 +97,10 @@ module.exports = {
         browser.useXpath().setValue('//textarea', 'This is a test, test, test');
 
         // Click Submit 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(4000);
 
         // Verify the CHIP SPA was submitted 
-        browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId);
+        browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId).pause(3000);
         browser.useCss();
     }
 }
