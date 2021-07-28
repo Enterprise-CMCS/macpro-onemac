@@ -268,7 +268,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                 } else {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING
                 }
               }
 
