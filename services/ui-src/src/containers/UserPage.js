@@ -303,7 +303,7 @@ const UserPage = () => {
 
           <div className="access-card-container">
 
-            { userData.group && <>
+            {typeof userData.group === "number" && <>
             <h2 id="accessHeader">{heading2}</h2>
             <div className="gradient-border" />
             <div className="cms-group-and-division-box ">
