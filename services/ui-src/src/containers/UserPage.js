@@ -302,8 +302,9 @@ const UserPage = () => {
           </dl>
 
           <div className="access-card-container">
-            <h2 id="accessHeader">{heading2}</h2>
+
             { userData.group && <>
+            <h2 id="accessHeader">{heading2}</h2>
             <div className="gradient-border" />
             <div className="cms-group-and-division-box ">
               <div className="cms-group-division-section">
