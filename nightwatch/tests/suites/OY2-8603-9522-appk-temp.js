@@ -33,7 +33,7 @@ module.exports = {
        spa = browser.page.spaBasePage();
         spa.click(selector);
         spa.setValue(selector, generatedWaiverID);
-         spa.expect.element(selector).value.to.equals(generatedWaiverID).pause(2000);
+         spa.expect.element(selector).value.to.equals(generatedWaiverID);
 
         // upload a document and make a comment 
      let fileUploadElem = "[name='uploader-input-0']";
@@ -103,7 +103,7 @@ module.exports = {
 
         // upload a document and make a comment 
         let fileUploadElem = "[name='uploader-input-0']";
-        let filePath = require('path').resolve(__dirname + '/files/file.docx')
+        let filePath = require('path').resolve(__dirname + '/files/file.docx');
         browser.useCss().setValue(fileUploadElem, filePath).pause(5000);
         
 
