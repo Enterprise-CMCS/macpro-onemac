@@ -25,7 +25,7 @@ module.exports = {
         });
         // Verify the new window 
         browser.useXpath().expect.element(pageBanner).to.be.visible;
-        browser.verify.containsText(pageBanner, expectedBannerText).pause(1000);
+        browser.verify.containsText(pageBanner, expectedBannerText).pause(2000);
         browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
@@ -73,7 +73,7 @@ module.exports = {
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = "//a[text()='FAQ']";
-        browser.useXpath().click(fqaLink).pause(1000);
+        browser.useXpath().click(fqaLink).pause(2000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -84,8 +84,7 @@ module.exports = {
         // Verify the new window 
         let pageBanner = "//h1";
         let expectedBannerText = 'Frequently Asked Questions';
-        browser.useXpath().waitForElementVisible(pageBanner, 2000);
-        browser.useXpath().expect.element(pageBanner).to.be.visible;
+        browser.useXpath().waitForElementVisible(pageBanner, 10000);
         browser.verify.containsText(pageBanner, expectedBannerText);
         browser.useCss();
         browser.closeWindow(); // Close tab
@@ -298,7 +297,7 @@ module.exports = {
         });
         browser.pause(500);
         //Verify the new window 
-        browser.useXpath().waitForElementVisible(submittalAmendments, 1000);
+        browser.useXpath().waitForElementVisible(submittalAmendments, 2000);
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;
         browser.verify.containsText(submittalAmendments, 'Submittal of State plans and plan amendments.');
         browser.closeWindow(); // Close tab
