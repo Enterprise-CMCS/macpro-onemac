@@ -62,7 +62,7 @@ module.exports = {
     browser.pause(3000);
 
      // click ["Submit"] button 
-    browser.useCss().click("[value='Submit']").pause(1000);
+    browser.useCss().click("[value='Submit']").pause(4000);
     
      
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -103,7 +103,7 @@ module.exports = {
 
         // upload a document and make a comment 
         let fileUploadElem = "[name='uploader-input-0']";
-        let filePath = require('path').resolve(__dirname + '/files/file.docx')
+        let filePath = require('path').resolve(__dirname + '/files/file.docx');
         browser.useCss().setValue(fileUploadElem, filePath).pause(5000);
         
 
@@ -128,7 +128,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(3000);
 
         // Verify the submitted SPA Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
