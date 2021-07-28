@@ -41,5 +41,5 @@ module.exports = {
         browser.useXpath().assert.elementPresent("(//li[@class='choice-list-item']/a)[1]");
         browser.useCss();
         browser.useXpath().click("(//li[@class='choice-list-item']/a)[1]").pause(2000);
-        }
+        },
 }
