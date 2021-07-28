@@ -1,5 +1,3 @@
-
-
 const locator = '(//*[@disabled])';
 const login = require('../suites/OY2_9999_Login');
 const timeout = 1000;
@@ -32,8 +30,8 @@ module.exports = {
     // DONE 
     'Verify user can submit new SPA': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
+        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
         // create random SPA ID
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -72,10 +70,11 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(6000);
-       
+
+        browser.click("[value='Submit']").pause(10000);
+          
         // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
+        browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(4000);
         browser.useCss();
         return spaID;
     },

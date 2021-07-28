@@ -69,53 +69,55 @@ const SubmissionView = ({ changeRequestType }) => {
       <PageTitleBar heading={formInfo.readOnlyPageTitle} enableBackNav />
       {changeRequest && (
         <article className="form-container">
-          {changeRequest.submittedAt && (
+          <div className="read-only-submission">
+            {changeRequest.submittedAt && (
+              <section>
+                <Review
+                  className="original-review-component"
+                  headingLevel="2"
+                  heading="Date Submitted"
+                >
+                  {formatDate(changeRequest.submittedAt)}
+                </Review>
+              </section>
+            )}
             <section>
-              <Review
-                className="original-review-component"
-                headingLevel="2"
-                heading="Date Submitted"
-              >
-                {formatDate(changeRequest.submittedAt)}
-              </Review>
+              <h2>{formInfo.detailsHeader} Details</h2>
+              {changeRequest.waiverAuthority && (
+                <Review heading="Waiver Authority">
+                  {AUTHORITY_LABELS[changeRequest.waiverAuthority] ??
+                    changeRequest.waiverAuthority}
+                </Review>
+              )}
+              {changeRequest.actionType && (
+                <Review heading="Action Type">
+                  {ACTION_LABELS[changeRequest.actionType] ??
+                    changeRequest.actionType}
+                </Review>
+              )}
+              {changeRequest.transmittalNumber && (
+                <Review heading={formInfo.transmittalNumber.idLabel}>
+                  {changeRequest.transmittalNumber}
+                </Review>
+              )}
             </section>
-          )}
-          <section>
-            <h2>{formInfo.detailsHeader} Details</h2>
-            {changeRequest.waiverAuthority && (
-              <Review heading="Waiver Authority">
-                {AUTHORITY_LABELS[changeRequest.waiverAuthority] ??
-                  changeRequest.waiverAuthority}
-              </Review>
+            <FileList
+              heading="Attachments"
+              uploadList={changeRequest.uploads}
+              zipId={changeRequest.transmittalNumber}
+            />
+            {changeRequest.summary && (
+              <section>
+                <Review
+                  className="original-review-component"
+                  headingLevel="2"
+                  heading="Additional Information"
+                >
+                  {changeRequest.summary}
+                </Review>
+              </section>
             )}
-            {changeRequest.actionType && (
-              <Review heading="Action Type">
-                {ACTION_LABELS[changeRequest.actionType] ??
-                  changeRequest.actionType}
-              </Review>
-            )}
-            {changeRequest.transmittalNumber && (
-              <Review heading={formInfo.transmittalNumber.idLabel}>
-                {changeRequest.transmittalNumber}
-              </Review>
-            )}
-          </section>
-          <FileList
-            heading="Attachments"
-            uploadList={changeRequest.uploads}
-            zipId={changeRequest.transmittalNumber}
-          />
-          {changeRequest.summary && (
-            <section>
-              <Review
-                className="original-review-component"
-                headingLevel="2"
-                heading="Additional Information"
-              >
-                {changeRequest.summary}
-              </Review>
-            </section>
-          )}
+          </div>
         </article>
       )}
     </LoadingScreen>

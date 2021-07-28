@@ -285,8 +285,8 @@ module.exports = {
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         browser.useXpath().click("(//h4)[3]");
         browser.pause(300);
-        let linkInFAQ = '.form-card [target]';
-        browser.useCss().click(linkInFAQ);
+        let linkInFAQ = '(//div[@class="Collapsible__contentInner"]/p/a)[1]';
+        browser.useXpath().click(linkInFAQ);
         browser.pause(1000);
         let submittalAmendments = "//h2";
         //Switch to new tab

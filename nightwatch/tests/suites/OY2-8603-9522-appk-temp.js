@@ -25,8 +25,8 @@ module.exports = {
         spa = browser.page.spaBasePage();
         spa.useCss().click("#new-submission-button");
         spa.pause(5000);
-        spa.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
-        spa.useCss().click("#root > div > div.choice-container > ul > li:nth-child(4) > a > h4");
+        spa.useXpath().click("(//li[@class='choice']/a)[2]");
+        spa.useXpath().click("(//li[@class='choice']/a)[4]");
     },
      "Enter Waiver Number" : function (browser, generatedWaiverID = spa.getWaiverAppKNumber()) {
        let selector = '@transmittal';
@@ -86,8 +86,8 @@ module.exports = {
  },
     'Verify user can submit 1915(b) Waiver Action': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
         browser.useCss().click("select#actionType");
         browser.useCss().click("select#actionType > option[value='new']");
         browser.useCss().click("select#waiverAuthority");
@@ -152,8 +152,8 @@ module.exports = {
     'Verify user can submit Respond to 1915(b) Temporary Extension': function (browser) {
         browser.pause(2000);
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(3) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
+        browser.useXpath().click("(//li[@class='choice']/a)[3]");
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
 
         // upload a document and make a comment 
