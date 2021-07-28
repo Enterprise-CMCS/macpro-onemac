@@ -67,7 +67,7 @@ module.exports = {
 
         // write the Summary 
         let phrase = "This is a test, test, test";
-        browser.setValue('textarea', phrase);
+        browser.setValue('textarea', phrase).pause(3000);
 
         // Submit the new SPA 
         browser.click("[value='Submit']").pause(10000);
