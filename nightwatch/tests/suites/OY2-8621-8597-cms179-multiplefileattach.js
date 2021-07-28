@@ -1,5 +1,3 @@
-
-
 const locator = '(//*[@disabled])';
 const login = require('../suites/OY2_9999_Login');
 const timeout = 1000;
@@ -72,10 +70,11 @@ module.exports = {
         browser.setValue('textarea', phrase);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(6000);
-       
+
+        browser.click("[value='Submit']").pause(10000);
+          
         // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
+        browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(4000);
         browser.useCss();
         return spaID;
     },
