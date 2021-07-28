@@ -253,7 +253,7 @@ const UserPage = () => {
   }, [setIsEditingPhone, setIsStateSelectorVisible]);
 
   const accessSection = useMemo(() => {
-    let heading;
+    let heading, heading2;
 
     switch (userType) {
       case ROLES.STATE_SUBMITTER:
@@ -261,7 +261,8 @@ const UserPage = () => {
         heading = "State Access Management";
         break;
       case ROLES.CMS_REVIEWER:
-        heading = "Group & Division";
+        heading = "Status"
+        heading2 = "Group & Division";
         break;
       case ROLES.CMS_APPROVER:
       case ROLES.HELPDESK:
@@ -299,7 +300,9 @@ const UserPage = () => {
                 </div>
             ))}
           </dl>
+
           <div className="access-card-container">
+            <h2 id="accessHeader">{heading2}</h2>
             { userData.group && <>
             <div className="gradient-border" />
             <div className="cms-group-and-division-box ">
