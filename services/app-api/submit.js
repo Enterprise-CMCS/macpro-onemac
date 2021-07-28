@@ -107,6 +107,19 @@ export const main = handler(async (event) => {
     throw error;
   }
 
+  try {
+    data.pk = data.territory;
+    data.sK = "v0#" + data.transmittalNumber;
+    let oneparams = {
+      TableName: process.env.oneMacTableName,
+      Item: data,
+    };
+    await dynamoDb.put(oneparams);
+  } catch (error) {
+    console.log("Error is: ", error);
+    throw error;
+  }
+
   if (SEATool.PLAN_TYPE_IDS[data.type] !== undefined) {
     try {
       // create the (package) ID data
