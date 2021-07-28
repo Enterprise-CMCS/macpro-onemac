@@ -76,7 +76,7 @@ module.exports = {
          browser.useXpath().assert.containsText(submittedType, "1915(c) Appendix K Amendment");
          // Data Submitted Verification 
          browser.useXpath().expect.element(submittedDate).to.be.visible;
-         browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(2000);
+         browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(6000);
          browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
          browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
          browser.useCss();
@@ -142,7 +142,7 @@ module.exports = {
         browser.useXpath().assert.containsText(submittedType, "Waiver");
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
-        browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(2000);
+        browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(6000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
         browser.useCss();
@@ -197,7 +197,7 @@ module.exports = {
         browser.useXpath().assert.containsText(submittedType, "Temporary Extension Request");
         // Data Submitted Verification 
         browser.useXpath().expect.element(submittedDate).to.be.visible;
-        browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(2000);
+        browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(6000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
         browser.useCss();
