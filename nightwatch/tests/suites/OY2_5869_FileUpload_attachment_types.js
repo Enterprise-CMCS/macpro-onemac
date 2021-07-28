@@ -94,11 +94,11 @@ module.exports = {
         browser.useXpath().expect.element(pdfElement).to.be.visible;
         // Verify upload EXCEL file 
         filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(500);;
+        browser.useCss().setValue(fileUploadElem, filePath).pause(500);
         browser.useXpath().expect.element(excelElement).to.be.visible;
         // Verify upload DOC file 
         filePath = require('path').resolve(__dirname + '/files/file.docx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(500);;
+        browser.useCss().setValue(fileUploadElem, filePath).pause(500);
         browser.useXpath().expect.element(fileElement).to.be.visible;
         // Verify upload PICTURE file 
         filePath = require('path').resolve(__dirname + '/files/picture.jpg')
