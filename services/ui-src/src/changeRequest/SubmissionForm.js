@@ -253,21 +253,22 @@ export const SubmissionForm = ({ changeRequestType }) => {
             results.forEach((dupID, key) => {
               const correspondingValidation =
                 transmittalNumberDetails.idExistValidations[key];
-              let tempMessage;
+              let tempMessage, tempCode;
 
               // ID does not exist but it should exist
               if (!dupID && correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                 } else {
-                  tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+                  tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNINGq}) if you need support.`;
                 }
                 // ID exists but it should NOT exist
               } else if (dupID && !correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                 } else {
-                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING
                 }
               }
 
@@ -275,6 +276,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
               const messageToAdd = {
                 statusLevel: correspondingValidation.errorLevel,
                 statusMessage: tempMessage,
+                warningMessageCode: tempCode,
               };
               tempMessage && existMessages.push(messageToAdd);
             });
@@ -332,7 +334,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
         transmittalNumberStatusMessage.statusLevel === "warn" &&
         transmittalNumberStatusMessage.statusMessage
       ) {
-        transmittalNumberWarningMessage = transmittalNumberStatusMessage.statusMessage;
+        transmittalNumberWarningMessage = transmittalNumberWarningMessage.warningMessageCode;
       }
 
       uploadRef

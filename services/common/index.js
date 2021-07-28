@@ -10,15 +10,6 @@ import { ROUTES } from "./routes";
 export * from "./routes";
 
 /**
- * Map Warning Message displayed on Waiver Form to message to include in CMS Email
- */
-export const cmsEmailMapToFormWarningMessages = {
-
-  "According to our records, this Waiver Number already exists. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.": "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
-  "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.":"<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
-}
-
-/**
  * Codes to send to front end
  */
 export const RESPONSE_CODE = {
@@ -51,7 +42,19 @@ export const RESPONSE_CODE = {
   DASHBOARD_LIST_FETCH_ERROR: "DB00",
   HELPDESK_USER_SUBMITTED: "HU000",
   CMS_REVIEWER_USER_SUBMITTED: "CU000",
+  SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
+  SUBMISSION_ID_EXIST_WARNING: "OMP003"
 };
+
+/**
+ * Map Warning Message displayed on Waiver Form to message to include in CMS Email
+ */
+
+
+export const cmsEmailMapToFormWarningMessages = {
+  SUBMISSION_ID_EXIST_WARNING: "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+  SUBMISSION_ID_NOT_FOUND_WARNING:"<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
+}
 
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
