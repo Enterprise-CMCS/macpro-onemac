@@ -78,7 +78,7 @@ module.exports = {
         browser.refresh();
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
-        browser.pause(2000);
+        browser.pause(6000);
         browser.useXpath().click("(//table//td)[1]/a");
         browser.pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
