@@ -70,6 +70,7 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
+    oneMacTableName: ${self:custom.oneMacTableName}
     userTableName: ${self:custom.userTableName}
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}

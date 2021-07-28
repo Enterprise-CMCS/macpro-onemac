@@ -109,11 +109,14 @@ export const main = handler(async (event) => {
 
   try {
     data.pk = data.territory;
-    data.sK = "v0#" + data.transmittalNumber;
+    data.sk = "v0#" + data.transmittalNumber;
     let oneparams = {
       TableName: process.env.oneMacTableName,
       Item: data,
     };
+    console.log("TableName is: ", process.env.oneMacTableName);
+    console.log("oneParams is: ", oneparams);
+
     await dynamoDb.put(oneparams);
   } catch (error) {
     console.log("Error is: ", error);

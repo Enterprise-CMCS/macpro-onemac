@@ -6,27 +6,27 @@ import dynamoDb from "../libs/dynamodb-lib";
  * @returns {Boolean} true if found in data, false if not in data
  */
 export default async function packageExists(id) {
+  //assume the territory is the first two chars
+  let pk = id.substring(0, 2);
+  let sk = "v0#" + id;
   const params = {
-    TableName: process.env.spaIdTableName,
-    // 'Key' defines the partition key and sort key of the item to be retrieved
-    // - 'id': change request ID
-    Key: {
-      id: id,
+    TableName: process.env.oneMacTableName,
+    KeyConditionExpression: "pk = :pk AND begins_with(sk, :sk)",
+    ExpressionAttributeValues: {
+      ":pk": pk,
+      ":sk": sk,
     },
   };
-  console.log("the params for checking", params);
   let idResponse;
   let result;
   try {
-    result = await dynamoDb.get(params);
+    result = await dynamoDb.query(params);
   } catch (error) {
     console.log("packageExists got an error: ", error);
   }
-  if (result.Item) {
-    console.log("the Item exists", result);
+  if (result.Count > 0) {
     idResponse = true;
   } else {
-    console.log("result.Item does not exist");
     idResponse = false;
   }
   return idResponse;
