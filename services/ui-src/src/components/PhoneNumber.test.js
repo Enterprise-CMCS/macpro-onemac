@@ -3,6 +3,27 @@ import { render, fireEvent, screen } from "@testing-library/react";
 
 import { PhoneNumber } from "./PhoneNumber";
 
+describe("read only mode", () => {
+  it("displays just the phone number if provided", () => {
+    const phone = "101-867-5309";
+    render(<PhoneNumber readOnly phoneNumber={phone} />);
+    const heading = screen.getByText("Phone Number");
+    expect(heading).toBeVisible();
+    expect(heading.parentNode).toContainHTML(phone);
+    expect(heading.parentNode).not.toContainHTML("Add");
+    expect(heading.parentNode).not.toContainHTML("Edit");
+  });
+
+  it("displays N/A if phone number is not provided", () => {
+    render(<PhoneNumber readOnly phoneNumber="" />);
+    const heading = screen.getByText("Phone Number");
+    expect(heading).toBeVisible();
+    expect(heading.parentNode).toContainHTML("N/A");
+    expect(heading.parentNode).not.toContainHTML("Add");
+    expect(heading.parentNode).not.toContainHTML("Edit");
+  });
+});
+
 it("displays a text box with Apply and Cancel buttons in edit mode", () => {
   const phone = "303-909-8080",
     newPhone = "202-867-5309",

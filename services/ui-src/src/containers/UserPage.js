@@ -1,10 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation } from "react-router-dom";
+import { useLocation, useParams } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 import {
   RESPONSE_CODE,
   ROLES,
+  ROUTES,
   latestAccessStatus,
   territoryMap,
   territoryList,
@@ -98,20 +99,37 @@ const transformAccesses = (user = {}) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const {
-    userProfile: { email, firstName, lastName, userData },
-    setUserInfo,
-  } = useAppContext();
+  const { userProfile, setUserInfo } = useAppContext();
   const location = useLocation();
+  const { userId } = useParams() ?? {};
+  const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
-  const [phoneNumber, setPhoneNumber] = useState(userData?.phoneNumber || "");
   const [isEditingPhone, setIsEditingPhone] = useState(false);
 
+  const isReadOnly =
+    location.pathname !== ROUTES.PROFILE &&
+    decodeURIComponent(userId) !== userProfile.email;
   let userType = userData?.type ?? "user";
   const userTypeDisplayText = userTypes[userType];
+
+  useEffect(() => {
+    if (!isReadOnly) {
+      setUserData(userProfile.userData);
+      return;
+    }
+
+    (async () => {
+      try {
+        setUserData(await UserDataApi.userProfile(userId));
+      } catch (e) {
+        console.error("Error fetching user data", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      }
+    })();
+  }, [isReadOnly, userId, userProfile]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);
@@ -125,18 +143,21 @@ const UserPage = () => {
   const onPhoneNumberSubmit = useCallback(
     async (newNumber) => {
       try {
-        var result = await UserDataApi.updatePhoneNumber(email, newNumber);
+        var result = await UserDataApi.updatePhoneNumber(
+          userProfile.email,
+          newNumber
+        );
         if (result === RESPONSE_CODE.USER_SUBMITTED)
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
-        setPhoneNumber(newNumber);
+        setUserData((data) => ({ ...data, phoneNumber: newNumber }));
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
       setIsEditingPhone(false);
     },
-    [email, setPhoneNumber]
+    [userProfile.email, setUserData]
   );
 
   const signupUser = useCallback(
@@ -150,10 +171,10 @@ const UserPage = () => {
         }));
 
         let answer = await UserDataApi.updateUser({
-          userEmail: email,
-          doneBy: email,
-          firstName,
-          lastName,
+          userEmail: userProfile.email,
+          doneBy: userProfile.email,
+          firstName: userProfile.firstName,
+          lastName: userProfile.lastName,
           type: userType,
           attributes: payload,
         });
@@ -170,9 +191,9 @@ const UserPage = () => {
       }
     },
     [
-      email,
-      firstName,
-      lastName,
+      userProfile.email,
+      userProfile.firstName,
+      userProfile.lastName,
       userType,
       setIsStateSelectorVisible,
       setLoading,
@@ -188,8 +209,8 @@ const UserPage = () => {
         )
       ) {
         const updateStatusRequest = {
-          userEmail: email,
-          doneBy: email,
+          userEmail: userProfile.email,
+          doneBy: userProfile.email,
           attributes: [
             {
               stateCode: stateCode, // required for state submitter and state admin
@@ -215,7 +236,7 @@ const UserPage = () => {
         }
       }
     },
-    [email, userType, setUserInfo]
+    [userProfile.email, userType, setUserInfo]
   );
 
   const renderSelectStateAccess = useMemo(() => {
@@ -317,9 +338,11 @@ const UserPage = () => {
               <div className="access-card-container" key={state ?? "only-one"}>
                 <div className="gradient-border" />
                 <div className="state-access-card">
-                  {userType === ROLES.STATE_SUBMITTER &&
+                  {!isReadOnly &&
+                    userType === ROLES.STATE_SUBMITTER &&
                     (status === "active" || status === "pending") && (
                       <button
+                        disabled={isReadOnly}
                         className="close-button"
                         onClick={() => xClicked(state)}
                       >
@@ -337,7 +360,7 @@ const UserPage = () => {
               </div>
             ))}
           </dl>
-          {userType === ROLES.STATE_SUBMITTER && (
+          {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
             <div className="add-access-container">
               {isStateSelectorVisible
                 ? renderSelectStateAccess
@@ -353,6 +376,7 @@ const UserPage = () => {
     userData.division,
     userType,
     xClicked,
+    isReadOnly,
     isStateSelectorVisible,
     renderSelectStateAccess,
     renderAddStateButton,
@@ -407,7 +431,7 @@ const UserPage = () => {
 
   return (
     <div>
-      <PageTitleBar heading="User Profile" />
+      <PageTitleBar heading={isReadOnly ? "User Profile" : "My Profile"} />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="profile-container">
         <div className="profile-content">
@@ -416,28 +440,41 @@ const UserPage = () => {
               Profile Information
             </h2>
             <Review heading="Full Name">
-              {getFullName(firstName, lastName)}
+              {getFullName(userData.firstName, userData.lastName)}
             </Review>
             <Review heading="Role">
               {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
             </Review>
-            <Review heading="Email">{email}</Review>
+            <Review heading="Email">
+              {userData.id ? (
+                isReadOnly ? (
+                  <a href={`mailto:${userData.id}`}>{userData.id}</a>
+                ) : (
+                  userData.id
+                )
+              ) : (
+                ""
+              )}
+            </Review>
             <PhoneNumber
               isEditing={isEditingPhone}
-              initialValue={userData.phoneNumber}
-              phoneNumber={phoneNumber}
+              phoneNumber={userData.phoneNumber}
               onCancel={onPhoneNumberCancel}
               onEdit={onPhoneNumberEdit}
               onSubmit={onPhoneNumberSubmit}
+              readOnly={isReadOnly}
             />
           </div>
           {accessSection}
-          <div id="profileDisclaimer" className="disclaimer-message">
-            This page contains Profile Information for the{" "}
-            {userTypeDisplayText ?? userType}. The information cannot be changed
-            in the portal. However, the {userTypeDisplayText ?? userType} can
-            change their contact phone number in their account.
-          </div>
+          {!isReadOnly && (
+            <div id="profileDisclaimer" className="disclaimer-message">
+              This page contains Profile Information for the{" "}
+              {userTypeDisplayText ?? userType}. The information cannot be
+              changed in the portal. However, the{" "}
+              {userTypeDisplayText ?? userType} can change their contact phone
+              number in their account.
+            </div>
+          )}
         </div>
       </div>
     </div>
