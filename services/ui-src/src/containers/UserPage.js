@@ -101,6 +101,7 @@ const UserPage = () => {
   const {
     userProfile: { email, firstName, lastName, userData },
     setUserInfo,
+    updatePhoneNumber,
   } = useAppContext();
   const location = useLocation();
   const [loading, setLoading] = useState(false);
@@ -130,6 +131,7 @@ const UserPage = () => {
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setPhoneNumber(newNumber);
+        updatePhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE[e.message]);
