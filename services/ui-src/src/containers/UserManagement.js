@@ -347,14 +347,19 @@ const UserManagement = () => {
     </Button>
   );
 
+    const isUserActive =
+        !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
+
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          userProfile.userData.type === USER_TYPE.HELPDESK &&
-          csvExportSubmissions
+          userProfile.userData.type === USER_TYPE.HELPDESK
+          && isUserActive
+          && csvExportSubmissions
         }
       />
       <AlertBar
