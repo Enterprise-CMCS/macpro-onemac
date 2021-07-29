@@ -127,3 +127,4 @@ For example:
   `--window-size=800,600`
   This allows the headless browser to estimate where an element would be located in the DOM window, 
   given this set resolution.
+  
