@@ -1648,6 +1648,11 @@ aside#faq-contact-info-box {
   }
 }
 
+.group-division-option-abbr {
+  display: inline-block;
+  min-width: 8ch;
+}
+
 .choice-container {
   @extend .form-container;
   @extend .ds-u-padding-bottom--7;
