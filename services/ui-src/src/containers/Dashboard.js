@@ -199,7 +199,6 @@ const Dashboard = () => {
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
-  console.log(isUserActive)
   // Render the dashboard
   return (
     <div className="dashboard-white">
