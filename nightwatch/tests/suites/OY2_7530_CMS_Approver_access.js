@@ -19,7 +19,7 @@ module.exports = {
         let state = '(//tr/th)[3]'
         let status = '(//tr/th)[4]';
         let personal_actions = '(//tr/th)[5]';
-        let state_user_name = '(//tr/td)[11]';
+        let state_submitter_name = '(//tr/td)[11]';
         let first_email ='(//tr/td)[2]';
         let second_email ='(//tr/td)[7]';
         let third_email ='(//tr/td)[12]';
@@ -34,7 +34,7 @@ module.exports = {
         browser.useXpath().expect.element(state).to.be.visible;
         browser.useXpath().expect.element(status).to.be.visible;
         browser.useXpath().expect.element(personal_actions).to.be.visible;
-        browser.useXpath().expect.element(state_user_name).to.be.visible;
+        browser.useXpath().expect.element(state_submitter_name).to.be.visible;
         browser.useXpath().expect.element(first_email).to.be.visible;
         browser.useXpath().expect.element(second_email).to.be.visible;
         browser.useXpath().expect.element(third_email).to.be.visible;
@@ -50,12 +50,12 @@ module.exports = {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
         //element on account management page
-        let profile_information = '(//div/h3)[1]';
-        let full_name = '(//div/h3)[2]';
+        let profile_information = '//*[@id="profileInfoHeader"]';
+        let full_name = '(//div/h3)[1]';
         let email = '(//div/h3)[3]';
-        let status = '(//div/h3)[4]';
+        let status = '//*[@id="accessHeader"]';
         let one_cms_name = '(//div/div[@class="ds-c-review__body"])[1]';
-        let one_cms_email = '(//div/div[@class="ds-c-review__body"])[2]';
+        let one_cms_email = '(//div/div[@class="ds-c-review__body"])[3]';
         let access_granted = '//div/dd/em';
         // Click on button My Account and get access to account management 
         browser.useCss().click(my_account_button); 

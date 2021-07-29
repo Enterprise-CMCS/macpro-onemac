@@ -13,29 +13,25 @@ export * from "./routes";
  * Codes to send to front end
  */
 export const RESPONSE_CODE = {
-  NONE: "",
+  NONE: "NONE",
+  LOGIN_ERROR: "UR403",
   SUCCESSFULLY_SUBMITTED: "SC000",
   DATA_MISSING: "SC001",
   ATTACHMENTS_MISSING: "SC002",
   VALIDATION_ERROR: "VA000",
-  DATA_PARSING_ERROR: "VA001",
   ATTACHMENT_ERROR: "AT000",
+  UPLOADS_ERROR: "AT001",
   EMAIL_NOT_SENT: "EM000",
   SYSTEM_ERROR: "SY000",
+  DATA_RETRIEVAL_ERROR: "DT000",
+  SESSION_EXPIRED: "SY001",
   TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
   DUPLICATE_ID: "ID002",
   ID_NOT_FOUND: "ID000",
-  WAIVER_RENEWAL_NO_ID: "ID020",
-  WAIVER_NEED_ID_FOR_K: "ID031",
-  WAIVER_AMENDMENT_NO_ID: "ID022",
-  WAIVER_NEW_NOT_K: "ID023",
-  WAIVER_ACTION_UNKNOWN: "WA000",
   USER_NOT_AUTHORIZED: "UR040",
   USER_NOT_FOUND: "UR041",
   USER_SUBMITTED: "UR000",
   USER_SUBMISSION_FAILED: "UR001",
-  USER_TYPE_MISMATCH_ERROR: "UR002",
-  USER_FORMAT_MISMATCH: "UR042",
   CALLING_USER_PENDING: "UR043",
   CALLING_USER_REVOKED: "UR044",
   CALLING_USER_DENIED: "UR045",
@@ -43,12 +39,14 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_REVOKED: "UR047",
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
+  DASHBOARD_LIST_FETCH_ERROR: "DB00",
   HELPDESK_USER_SUBMITTED: "HU000",
+  CMS_REVIEWER_USER_SUBMITTED: "CU000",
 };
 
 export const USER_ADMIN_PERMISSION = {
-  STATE_USER: "none",
-  STATE_ADMIN: "stateuser",
+  STATE_SUBMITTER: "none",
+  STATE_ADMIN: "statesubmitter",
   CMS_APPROVER: "stateadmin",
 };
 
@@ -56,7 +54,8 @@ export const USER_ADMIN_PERMISSION = {
  * Possible user types
  */
 export const USER_TYPE = {
-  STATE_USER: "stateuser",
+  STATE_SUBMITTER: "statesubmitter",
+  CMS_REVIEWER: "cmsreviewer",
   STATE_ADMIN: "stateadmin",
   CMS_APPROVER: "cmsapprover",
   SYSTEM_ADMIN: "systemadmin",
@@ -79,16 +78,16 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  stateuser: "State Submitter",
+  statesubmitter: "State Submitter",
   stateadmin: "State Admin",
   cmsapprover: "CMS Approver",
-  systemadin: "CMS System Admin",
+  [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
+  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
   helpdesk: "Help Desk",
 };
 
 const ALL_USERS_ROUTES = [
   ROUTES.HOME,
-  ROUTES.COMPONENT_PAGE,
   ROUTES.PROFILE,
   ROUTES.DEVLOGIN,
   ROUTES.FAQ,
@@ -143,6 +142,13 @@ class StateAdmin extends Role {
   }
 }
 
+class CmsReviewer extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+  }
+}
+
 class CmsApprover extends Role {
   constructor() {
     super();
@@ -170,23 +176,24 @@ class Helpdesk extends Role {
 
 export const getUserRoleObj = (role) =>
   new ({
-    [USER_TYPE.STATE_USER]: StateSubmitter,
+    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
     [USER_TYPE.CMS_APPROVER]: CmsApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
+    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
   }[role] || Role)();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
 /**
- * Finds a user's most recent approval status. For state users and admins, it takes an optional state code to search for.
+ * Finds a user's most recent approval status. For state submitters and admins, it takes an optional state code to search for.
  * @param user - The user object to inspect.
- * @param [state] - A two-letter territory code to search for (only for state users and admins).
+ * @param [state] - A two-letter territory code to search for (only for state submitters and admins).
  */
 export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
   switch (type) {
-    case ROLES.STATE_USER:
+    case ROLES.STATE_SUBMITTER:
     case ROLES.STATE_ADMIN: {
       const stateObj = attributes.find(({ stateCode }) => stateCode === state);
       if (!stateObj) return null;

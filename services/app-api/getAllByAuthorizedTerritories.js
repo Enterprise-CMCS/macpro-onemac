@@ -1,7 +1,7 @@
 import { USER_TYPE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE } from "./libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
 
@@ -51,7 +51,10 @@ async function getDataFromDB(user) {
   }
   try {
     var keepSearching;
-    if (user.type === USER_TYPE.HELPDESK) {
+    if (
+      user.type === USER_TYPE.HELPDESK ||
+      user.type === USER_TYPE.CMS_REVIEWER
+    ) {
       keepSearching = true;
       while (keepSearching == true) {
         [startingKey, keepSearching, tempResults] =
@@ -69,7 +72,7 @@ async function getDataFromDB(user) {
         keepSearching = true;
         while (keepSearching == true) {
           [startingKey, keepSearching, tempResults] =
-            await stateUserDynamoDbQuery(
+            await stateSubmitterDynamoDbQuery(
               startingKey,
               territory,
               keepSearching,
@@ -130,7 +133,7 @@ async function helpdeskOrReviewerDynamoDbQuery(
  * @param {Object} allResults the results of the query/past queries
  * @returns the updated versions of the parameters
  */
-async function stateUserDynamoDbQuery(
+async function stateSubmitterDynamoDbQuery(
   startingKey,
   territory,
   keepSearching,

@@ -2,7 +2,7 @@
  * Possible user types
  */
 export const USER_TYPE = {
-  STATE_USER: "stateuser",
+  STATE_SUBMITTER: "statesubmitter",
   STATE_ADMIN: "stateadmin",
   CMS_APPROVER: "cmsapprover",
   HELPDESK: "helpdesk",

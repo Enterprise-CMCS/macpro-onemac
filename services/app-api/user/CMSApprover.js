@@ -1,7 +1,6 @@
-import { USER_TYPES } from "./userTypes";
+import { USER_STATUS, USER_TYPE } from "cmscommonlib";
 import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "../libs/response-codes";
-import { USER_STATUS } from "./userStatus";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * CMS Approver specific functions.
@@ -18,9 +17,12 @@ class CMSApprover {
   getScanParams() {
     const scanParams = {
       TableName: process.env.userTableName,
-      FilterExpression: "#ty = :userType0",
+      FilterExpression: "#ty = :userType0 or #ty = :userType1",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_ADMIN },
+      ExpressionAttributeValues: {
+        ":userType0": USER_TYPE.STATE_ADMIN,
+        ":userType1": USER_TYPE.CMS_REVIEWER,
+      },
     };
     return scanParams;
   }
@@ -79,26 +81,39 @@ class CMSApprover {
         return;
       }
 
-      oneUser.attributes.forEach((oneAttribute) => {
-        // State Admins must have the history section
-        if (!oneAttribute.history) {
-          errorList.push(
-            "History data required for this role, but not found ",
-            oneUser
-          );
-          return;
-        }
+      const baseRow = {
+        email: oneUser.id,
+        firstName: oneUser.firstName,
+        lastName: oneUser.lastName,
+        role: oneUser.type,
+      };
 
-        userRows.push({
-          id: i,
-          email: oneUser.id,
-          firstName: oneUser.firstName,
-          lastName: oneUser.lastName,
-          stateCode: oneAttribute.stateCode,
-          latest: getCurrentStatus(oneAttribute.history),
+      if (oneUser.type === USER_TYPE.STATE_ADMIN) {
+        oneUser.attributes.forEach((oneAttribute) => {
+          // State Admins must have the history section
+          if (!oneAttribute.history) {
+            errorList.push(
+              "History data required for this role, but not found ",
+              oneUser
+            );
+            return;
+          }
+
+          userRows.push({
+            ...baseRow,
+            id: i++,
+            stateCode: oneAttribute.stateCode,
+            latest: getCurrentStatus(oneAttribute.history),
+          });
         });
-        i++;
-      });
+      } else {
+        userRows.push({
+          ...baseRow,
+          id: i++,
+          stateCode: "N/A",
+          latest: getCurrentStatus(oneUser.attributes),
+        });
+      }
     });
 
     console.log("error List is ", errorList);

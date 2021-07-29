@@ -1,6 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * CHIP SPA submission specific functions.
@@ -78,7 +78,7 @@ class CHIPSPA {
   }
 
   /**
-   * CHIP SPA submission confimation email to State User wrapped in
+   * CHIP SPA submission confimation email to State Submitter wrapped in
    * generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.

@@ -55,13 +55,20 @@ export default function PortalTable({ ...props }) {
         ))}
       </thead>
       <tbody {...getTableBodyProps()}>
-        {rows.map((row) => {
-          prepareRow(row);
+        {rows.map((row, rowIndex) => {
+          prepareRow(row, rowIndex);
           return (
             <tr {...row.getRowProps()}>
-              {row.cells.map((cell) => (
-                <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
-              ))}
+              {row.cells.map((cell, index) => {
+                return (
+                  <td
+                    id={headerGroups[0].headers[index].id + "-" + rowIndex}
+                    {...cell.getCellProps()}
+                  >
+                    {cell.render("Cell")}
+                  </td>
+                );
+              })}
             </tr>
           );
         })}

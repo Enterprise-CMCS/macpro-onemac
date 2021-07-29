@@ -7,6 +7,9 @@ const mappings = {
     'name': 'type_mapped.S',
     'mapping': {
       'spa': 'Medicaid SPA',
+      'chipspa': 'Medicaid CHIP SPA',
+      'waiver': '1915(b)',
+      'waiverappk': '1915(c)',
       // 'sparai': 'Medicaid SPA'
     }
   },

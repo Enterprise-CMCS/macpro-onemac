@@ -4,12 +4,14 @@ import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronRight } from "@fortawesome/free-solid-svg-icons";
 
-const ChoiceItem = ({ linkTo, title, description }) => {
+const ChoiceItem = ({ linkTo, title, description, onclick }) => {
   return (
-    <li className="choice">
+    <li className="choice" onClick={onclick}>
       <Link to={linkTo}>
-        <h4>{title}</h4>
-        <p>{description}</p>
+        <div>
+          <h4>{title}</h4>
+          <p>{description}</p>
+        </div>
         <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
       </Link>
     </li>

@@ -12,7 +12,7 @@ export const TYPE = {
 };
 
 const commonSubheaderMessage =
-  "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email. If you leave this page, you will lose your progress on this form.";
+  "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.<b> If you leave this page, you will lose your progress on this form.</b>";
 
 const waiverBaseTransmittalNumber = {
   idType: "waiver",
@@ -25,7 +25,9 @@ export const CONFIG = {
     pageTitle: "Submit New CHIP SPA",
     readOnlyPageTitle: "CHIP SPA Submission Details",
     detailsHeader: "CHIP SPA",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     requiredUploads: [
       "Current State Plan",
       "Amended State Plan Language",
@@ -49,7 +51,7 @@ export const CONFIG = {
         {
           idMustExist: false,
           errorLevel: "error",
-        }
+        },
       ],
     },
   },
@@ -57,7 +59,9 @@ export const CONFIG = {
   [TYPE.CHIP_SPA_RAI]: {
     pageTitle: "Respond to CHIP SPA RAI",
     readOnlyPageTitle: "CHIP SPA RAI Response Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "CHIP SPA RAI",
     requiredUploads: [
       "Revised Amended State Plan Language",
@@ -81,7 +85,7 @@ export const CONFIG = {
         {
           idMustExist: true,
           errorLevel: "error",
-        }
+        },
       ],
     },
   },
@@ -89,7 +93,9 @@ export const CONFIG = {
   [TYPE.SPA]: {
     pageTitle: "Submit New Medicaid SPA",
     readOnlyPageTitle: "Medicaid SPA Submission Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Medicaid SPA",
     requiredUploads: [
       { title: "CMS Form 179", allowMultiple: false },
@@ -116,7 +122,7 @@ export const CONFIG = {
         {
           idMustExist: false,
           errorLevel: "error",
-        }
+        },
       ],
     },
   },
@@ -124,7 +130,9 @@ export const CONFIG = {
   [TYPE.SPA_RAI]: {
     pageTitle: "Respond to Medicaid SPA RAI",
     readOnlyPageTitle: "Medicaid SPA RAI Response Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
     optionalUploads: ["Other"],
@@ -141,7 +149,7 @@ export const CONFIG = {
         {
           idMustExist: true,
           errorLevel: "error",
-        }
+        },
       ],
     },
   },
@@ -149,7 +157,9 @@ export const CONFIG = {
   [TYPE.WAIVER]: {
     pageTitle: "Submit New Waiver Action",
     readOnlyPageTitle: "Waiver Action Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Waiver Action",
     requiredUploads: [],
     optionalUploads: [
@@ -249,7 +259,11 @@ export const CONFIG = {
   [TYPE.WAIVER_APP_K]: {
     pageTitle: "Submit 1915(c) Appendix K Amendment",
     readOnlyPageTitle: "1915(c) Appendix K Amendment",
-    subheaderMessage: `${commonSubheaderMessage} If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.`,
+    subheaderMessage: {
+      __html:
+        commonSubheaderMessage +
+        "If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.",
+    },
     detailsHeader: "1915(c) Appendix K Amendment",
     requiredUploads: ["1915(c) Appendix K Amendment Waiver Template"],
     optionalUploads: ["Other"],
@@ -266,7 +280,7 @@ export const CONFIG = {
           idMustExist: true,
           errorLevel: "warn",
           existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
-        }
+        },
       ],
     },
   },
@@ -274,7 +288,9 @@ export const CONFIG = {
   [TYPE.WAIVER_EXTENSION]: {
     pageTitle: "Request Waiver Temporary Extension",
     readOnlyPageTitle: "Waiver Temporary Extension Request Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Request Temporary Extension",
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
@@ -290,7 +306,7 @@ export const CONFIG = {
         {
           idMustExist: true,
           errorLevel: "error",
-        }
+        },
       ],
     },
   },
@@ -298,7 +314,9 @@ export const CONFIG = {
   [TYPE.WAIVER_RAI]: {
     pageTitle: "Respond to Waiver RAI",
     readOnlyPageTitle: "Waiver RAI Response Details",
-    subheaderMessage: commonSubheaderMessage,
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],
     optionalUploads: ["Other"],
@@ -314,7 +332,7 @@ export const CONFIG = {
       idExistValidations: [
         {
           idMustExist: true,
-        }
+        },
       ],
     },
   },

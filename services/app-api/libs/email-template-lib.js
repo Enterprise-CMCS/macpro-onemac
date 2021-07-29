@@ -1,11 +1,11 @@
 export const ACCESS_CONFIRMATION_EMAILS = {
-  stateuser: {
+  statesubmitter: {
     pending: {
       subjectLine: "Your OneMAC Role Access is Pending Review",
       bodyHTML: `
             <p>Hello,</p>
     
-            <p>We received your request as a State User on [insert date/time stamp]. 
+            <p>We received your request as a State Submitter on [insert date/time stamp]. 
             Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
     
             <p>Thank you!</p>`,
@@ -126,6 +126,48 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             <p>Hello,</p>
     
             <p>Your access as a CMS Role Approver has been revoked. 
+            If you have any questions, please reach out to your CMS Administrator.</p>
+    
+            <p>Thank you!</p>`,
+    },
+  },
+  cmsreviewer: {
+    pending: {
+      subjectLine: "Your OneMAC Role Access is Pending Review",
+      bodyHTML: `
+            <p>Hello,</p>
+    
+            <p>We received your request as a CMS Reviewer on [insert date/time stamp]. 
+            Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
+    
+            <p>Thank you!</p>`,
+    },
+    active: {
+      subjectLine: "Your OneMAC Portal CMS access has been granted!",
+      bodyHTML: `
+            <p>Hello,</p>
+    
+            <p>You have been granted access as a CMS Reviewer. 
+            If you have any questions, please reach out to your CMS Administrator.</p>
+    
+            <p>Thank you!</p>`,
+    },
+    denied: {
+      subjectLine: "Your OneMAC Portal CMS access has been denied",
+      bodyHTML: `
+            <p>Hello,</p>
+    
+            <p>Your access as a CMS Reviewer has been denied. 
+            If you have any questions, please reach out to your CMS Administrator.</p>
+    
+            <p>Thank you!</p>`,
+    },
+    revoked: {
+      subjectLine: "Your OneMAC Portal CMS access has been revoked",
+      bodyHTML: `
+            <p>Hello,</p>
+    
+            <p>Your access as a CMS Reviewer has been revoked. 
             If you have any questions, please reach out to your CMS Administrator.</p>
     
             <p>Thank you!</p>`,

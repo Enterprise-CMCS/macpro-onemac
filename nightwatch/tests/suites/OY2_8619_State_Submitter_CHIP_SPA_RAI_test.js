@@ -6,14 +6,14 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
         login.afterEach(browser);
     },
 
-    'State user check the Submit New CHIP SPA form': function (browser) {
+    'State Submitter user check the Submit New CHIP SPA form': function (browser) {
         // Go to Submit New CHIP SPA page
         //browser.useCss().click("button#chipSpaBtn");
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -62,7 +62,7 @@ module.exports = {
         browser.useCss();
     },
 
-    'Verify that State User can enter Waiver number in RAI form with correct format': function (browser) {
+    'Verify that State Submitter User can enter Waiver number in RAI form with correct format': function (browser) {
         browser.pause(1000);
         //browser.useXpath().click("//button[text()='Respond to CHIP SPA RAI']").pause(1000);
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -97,10 +97,10 @@ module.exports = {
         browser.useXpath().setValue('//textarea', 'This is a test, test, test');
 
         // Click Submit 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(4000);
 
         // Verify the CHIP SPA was submitted 
-        browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId);
+        browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId).pause(3000);
         browser.useCss();
     }
 }

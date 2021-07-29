@@ -8,7 +8,7 @@ module.exports = {
   
   before: function (browser) {
     login.beforeEach(browser);
-    login['Login with state user'](browser);
+    login['Login with state submitter user'](browser);
 },
 
 after: function (browser) {
@@ -21,7 +21,7 @@ after: function (browser) {
       myAccountLink: "@myAccountLink",
       manageAccountLink: "@manageAccountLink",
       subUrl: "/profile",
-      pageTitle: "User Profile"
+      pageTitle: "My Profile"
     }
   ) {
     pageObjects = browser.page.spaBasePage();
