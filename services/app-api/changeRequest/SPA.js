@@ -1,4 +1,5 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
+import newPackage from "../utils/newPackage";
 import dynamoDb from "../libs/dynamodb-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -120,6 +121,10 @@ class SPA {
     `;
 
     return stateEmail;
+  }
+
+  async saveSubmission(data) {
+    newPackage(data);
   }
 }
 

@@ -120,6 +120,8 @@ class WaiverExtension {
 
     return stateEmail;
   }
+
+  saveSubmission(data) {}
 }
 
 const instance = new WaiverExtension();

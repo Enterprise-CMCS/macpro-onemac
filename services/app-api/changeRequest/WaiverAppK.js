@@ -122,6 +122,8 @@ class WaiverAppK {
 
     return stateEmail;
   }
+
+  saveSubmission(data) {}
 }
 
 const instance = new WaiverAppK();

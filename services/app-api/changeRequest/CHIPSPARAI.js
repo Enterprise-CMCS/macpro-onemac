@@ -112,6 +112,8 @@ class CHIPSPARAI {
 
     return stateEmail;
   }
+
+  saveSubmission(data) {}
 }
 
 const instance = new CHIPSPARAI();

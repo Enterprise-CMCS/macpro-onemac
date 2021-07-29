@@ -119,6 +119,8 @@ class WaiverRAI {
 
     return stateEmail;
   }
+
+  saveSubmission(data) {}
 }
 
 const instance = new WaiverRAI();

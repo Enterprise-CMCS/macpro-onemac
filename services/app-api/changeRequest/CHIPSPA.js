@@ -112,6 +112,8 @@ class CHIPSPA {
 
     return stateEmail;
   }
+
+  saveSubmission(data) {}
 }
 
 const instance = new CHIPSPA();

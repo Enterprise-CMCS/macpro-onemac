@@ -10,8 +10,9 @@ import getChangeRequestFunctions, {
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE, SEATool } from "cmscommonlib";
+import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
+//import newPackage from "./utils/newPackage";
 
 /**
  * Submission states for the change requests.
@@ -107,98 +108,6 @@ export const main = handler(async (event) => {
     throw error;
   }
 
-  try {
-    let onedata;
-    onedata.pk = data.territory;
-    onedata.sk = "v0#" + data.transmittalNumber;
-    onedata.currentVersion = "0";
-    onedata.packageID = data.transmittalNumber;
-    onedata.type = data.type;
-    onedata.oneMacPackageStatus = "Pending";
-    onedata.territory = data.territory;
-    onedata.submitterName = data.user.firstName + " " + data.user.family_name;
-    onedata.submitterEmail = data.user.email;
-    onedata.timestamp = data.submittedAt;
-    onedata.additionalInformation = data.summary;
-    onedata.uploads = data.uploads;
-    let oneparams = {
-      TableName: process.env.oneMacTableName,
-      Item: onedata,
-    };
-    console.log("TableName is: ", process.env.oneMacTableName);
-    console.log("oneParams is: ", oneparams);
-
-    await dynamoDb.put(oneparams);
-  } catch (error) {
-    console.log("Error is: ", error);
-    throw error;
-  }
-
-  if (SEATool.PLAN_TYPE_IDS[data.type] !== undefined) {
-    try {
-      // create the (package) ID data
-      let params = {
-        TableName: process.env.spaIdTableName,
-
-        Item: {
-          id: data.transmittalNumber,
-          seatool_plan_type: SEATool.PLAN_TYPE_IDS[data.type],
-        },
-        ConditionExpression: "attribute_not_exists(id)",
-      };
-      await dynamoDb.put(params);
-    } catch (error) {
-      if (error.code != "ConditionalCheckFailedException") {
-        console.log("Error is: ", error);
-        throw error;
-      } else
-        console.log(
-          "ID " +
-            data.transmittalNumber +
-            " exists in " +
-            process.env.spaIdTableName
-        );
-    }
-
-    console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-
-    // if the ID is a waiver, store all the possibilities for package checking
-    // if this is an id type where we want better searching, do that now
-    // 122 is 1915b (123 is 1915c appendix k)
-    if (data.type === "waiver" || data.type === "waiverappk") {
-      let sliceEnd = data.transmittalNumber.lastIndexOf(".");
-      let smallerID = data.transmittalNumber.slice(0, sliceEnd); // one layer removed
-      let params;
-      let numIterations = 5;
-
-      while (smallerID.length > 2 && numIterations-- > 0) {
-        try {
-          params = {
-            TableName: process.env.spaIdTableName,
-            Item: {
-              id: smallerID,
-              seatool_plan_type: SEATool.PLAN_TYPE_IDS[data.type],
-              originalID: data.transmittalNumber,
-            },
-            ConditionExpression: "attribute_not_exists(id)",
-          };
-          console.log("params are: ", params);
-          await dynamoDb.put(params);
-        } catch (error) {
-          if (error.code != "ConditionalCheckFailedException") {
-            console.log("Error is: ", error);
-            throw error;
-          } else
-            console.log(
-              "ID " + smallerID + " exists in " + process.env.spaIdTableName
-            );
-        }
-        sliceEnd = smallerID.lastIndexOf(".");
-        smallerID = smallerID.slice(0, sliceEnd); // one layer removed
-      }
-    }
-  }
-
   // Now send the CMS email
   await sendEmail(crFunctions.getCMSEmail(data));
 
@@ -219,7 +128,7 @@ export const main = handler(async (event) => {
     Item: data,
   });
 
-  //An error sending the user email is not a failure.
+  //An error sending the state submitter email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
     await sendEmail(crFunctions.getStateEmail(data));
@@ -230,7 +139,14 @@ export const main = handler(async (event) => {
     );
   }
 
-  console.log("Successfully submitted amendment:", data);
+  try {
+    await crFunctions.saveSubmission(data);
+  } catch (error) {
+    console.log("Error is: ", error.message);
+    throw error;
+  }
+
+  console.log("Successfully submitted the following:", data);
 
   return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });

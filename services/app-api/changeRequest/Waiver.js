@@ -134,6 +134,8 @@ class Waiver {
 
     return stateEmail;
   }
+
+  saveSubmission(data) {}
 }
 
 const instance = new Waiver();
