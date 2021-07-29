@@ -35,7 +35,7 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.STATE_ADMIN]: "CMS Role Approver",
   [ROLES.CMS_APPROVER]: "CMS System Admin",
   [ROLES.HELPDESK]: "CMS System Admin",
-  [ROLES.CMS_REVIEWER]: "CMS Reviewer",
+  [ROLES.CMS_REVIEWER]: "CMS Role Approver",
 };
 
 function getUserGroup(groupId, currentGroup, currentDivision) {
@@ -274,7 +274,7 @@ const UserPage = () => {
   }, [setIsEditingPhone, setIsStateSelectorVisible]);
 
   const accessSection = useMemo(() => {
-    let heading;
+    let heading, heading2;
 
     switch (userType) {
       case ROLES.STATE_SUBMITTER:
@@ -282,7 +282,8 @@ const UserPage = () => {
         heading = "State Access Management";
         break;
       case ROLES.CMS_REVIEWER:
-        heading = "Group & Division";
+        heading = "Status"
+        heading2 = "Group & Division";
         break;
       case ROLES.CMS_APPROVER:
       case ROLES.HELPDESK:
@@ -296,7 +297,35 @@ const UserPage = () => {
       return (
         <div className="ds-l-col--6">
           <h2 id="accessHeader">{heading}</h2>
+          <dl>
+            {accesses.map(({ state, status, contacts }) => (
+                <div className="access-card-container" key={state ?? "only-one"}>
+                  <div className="gradient-border" />
+                  <div className="state-access-card">
+                    {userType === ROLES.STATE_SUBMITTER &&
+                    (status === "active" || status === "pending") && (
+                        <button
+                            className="close-button"
+                            onClick={() => xClicked(contacts)}
+                        >
+                          {CLOSING_X_IMAGE}
+                        </button>
+                    )}
+                    <dd>
+                      <em>{ACCESS_LABELS[status] || status}</em>
+                      <br />
+                      <br />
+                      <ContactList contacts={contacts} userType={userType} />
+                    </dd>
+                  </div>
+                </div>
+            ))}
+          </dl>
+
           <div className="access-card-container">
+
+            {typeof userData.group === "number" && <>
+            <h2 id="accessHeader">{heading2}</h2>
             <div className="gradient-border" />
             <div className="cms-group-and-division-box ">
               <div className="cms-group-division-section">
@@ -317,7 +346,7 @@ const UserPage = () => {
                 <br />
                 <p>
                   {
-                    getUserGroup(
+                     getUserGroup(
                       groupData.group,
                       userData.group,
                       userData.division
@@ -325,7 +354,7 @@ const UserPage = () => {
                   }
                 </p>
               </div>
-            </div>
+            </div> </> }
           </div>
         </div>
       );
@@ -399,6 +428,7 @@ const UserPage = () => {
             break;
           }
 
+          case ROLES.CMS_REVIEWER:
           case ROLES.STATE_ADMIN: {
             contacts = await UserDataApi.getCmsApprovers();
             break;
