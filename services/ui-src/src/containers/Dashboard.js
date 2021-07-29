@@ -123,7 +123,7 @@ const Dashboard = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SPA ID/Waiver Number",
+        Header: "ID/Number",
         accessor: "transmittalNumber",
         disableSortBy: true,
         Cell: renderId,
@@ -144,7 +144,7 @@ const Dashboard = () => {
         Cell: renderDate,
       },
       {
-        Header: "State Submitter",
+        Header: "Submitted By",
         accessor: ({ user: { firstName, lastName } = {} }) =>
           [firstName, lastName].filter(Boolean).join(" "),
         id: "submitter",

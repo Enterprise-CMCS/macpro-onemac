@@ -168,22 +168,17 @@ const UserManagement = () => {
       const grant = {
           label: "Grant Access",
           value: "active",
-          confirmMessage:
-            grantConfirmMessage[row.original.role] ??
-            grantConfirmMessage.default,
+          confirmMessage: grantConfirmMessage,
         },
         deny = {
           label: "Deny Access",
           value: "denied",
-          confirmMessage:
-            denyConfirmMessage[row.original.role] ?? denyConfirmMessage.default,
+          confirmMessage: denyConfirmMessage,
         },
         revoke = {
           label: "Revoke Access",
           value: "revoked",
-          confirmMessage:
-            revokeConfirmMessage[row.original.role] ??
-            revokeConfirmMessage.default,
+          confirmMessage: revokeConfirmMessage,
         };
 
       const menuItems =
