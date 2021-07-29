@@ -25,12 +25,12 @@ module.exports = {
        browser.waitForElementPresent('link text', 'User Management').click('link text', 'User Management');
        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[1]", "Name");
        browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[1]");
-       browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[3]", "State");
-       browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[3]");
-       browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[4]", "Status");
-       browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[4]");
-       browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]", "Role");
-       browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]");
+       browser.useXpath().assert.containsText( "//*[@id='stateColHeader']", "State");
+       browser.click("xpath", "//*[@id='stateColHeader']");
+       browser.useXpath().assert.containsText( "//*[@id='statusColHeader']", "Status");
+       browser.click("xpath", "//*[@id='statusColHeader']");
+       browser.useXpath().assert.containsText( "//*[@id='roleColHeader']", "Role");
+       browser.click("xpath", "//*[@id='roleColHeader']");
        
     },
 }
