@@ -65,14 +65,14 @@ module.exports = {
         console.log("filePath--" , filePath);
         // let text4000 = fs.readFileSync(path.join(__dirname, '/files/textvalidation.txt'),'utf8');
         let text4000 = fs.readFileSync(filePath,'utf8');
-        browser.pause(2000);
+        browser.pause(6000);
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
-        browser.pause(3000);
+        browser.pause(6000);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(2000);
+        browser.click("[value='Submit']").pause(8000);
         browser.refresh();
         browser.pause(5000);
         browser.refresh();
@@ -121,14 +121,14 @@ module.exports = {
         console.log("filePath--" , filePath);
         // let text4000 = fs.readFileSync(path.join(__dirname, '/files/textvalidation.txt'),'utf8');
         let text4000 = fs.readFileSync(filePath,'utf8');
-        browser.pause(2000);
+        browser.pause(4000);
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
         browser.pause(7000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(3000);
+        browser.useCss().click("[value='Submit']").pause(6000);
         
         // Verify the submitted Content 
         // browser.refresh();
