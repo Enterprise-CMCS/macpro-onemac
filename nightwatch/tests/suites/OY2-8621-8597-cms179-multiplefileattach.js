@@ -73,7 +73,7 @@ module.exports = {
         browser.click("[value='Submit']").pause(10000);
           
         // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(4000);
+        browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(6000);
         browser.useCss();
         return spaID;
     },

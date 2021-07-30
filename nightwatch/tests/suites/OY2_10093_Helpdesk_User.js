@@ -29,11 +29,11 @@ module.exports = {
         browser.click("xpath", "//a[@id='dashboardLink']");
         browser.useXpath().assert.containsText( "//h1", "Submission List");
         browser.useXpath().assert.containsText( "//button[@id='new-submission-button']", "Export to Excel(CSV)");
-        browser.useXpath().assert.containsText( "//*[@id='transmittalNumberColHeader']", "SPA ID/Waiver Number");
+        browser.useXpath().assert.containsText("//*[@id='transmittalNumberColHeader']", "ID/Number");
         browser.useXpath().assert.containsText( "//*[@id='typeColHeader']", "Type");
         browser.useXpath().assert.containsText( "//*[@id='territoryColHeader']", "State");
         browser.useXpath().assert.containsText( "//*[@id='submittedAtColHeader']", "Date Submitted");
-        browser.useXpath().assert.containsText( "//*[@id='submitterColHeader']", "State Submitter");      
+        browser.useXpath().assert.containsText(  "//*[@id='submitterColHeader']", "Submitted By");  
         browser.useCss();
         browser.click("xpath", "//button[@id='new-submission-button']");
         browser.click("xpath", "/html/body/reference/div/div/div[2]/div[2]/table/tbody/tr[1]/td[1]/a" );

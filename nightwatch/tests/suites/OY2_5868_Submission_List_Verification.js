@@ -58,7 +58,7 @@ module.exports = {
         browser
         .useCss()
         .waitForElementPresent("[value='Submit']", 1000)
-        .click("[value='Submit']").pause(5000);
+        .click("[value='Submit']").pause(10000);
         
         //browser.refresh();
         browser.pause(5000);
