@@ -93,7 +93,7 @@ jobs:
           for d in services/*/; do
             pushd $d
             if [ "`jq '.scripts.test' <package.json`" != null ]; then
-              npm clean-install-test
+              npm clean-install-test --coverage
             fi
             popd
           done
