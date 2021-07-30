@@ -346,7 +346,6 @@ const UserManagement = () => {
       </svg>
     </Button>
   );
-
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
@@ -356,9 +355,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          userProfile.userData.type === USER_TYPE.HELPDESK &&
-          isUserActive &&
-          csvExportSubmissions
+          userProfile.userData.type === USER_TYPE.HELPDESK
+          && isUserActive
         }
       />
       <AlertBar

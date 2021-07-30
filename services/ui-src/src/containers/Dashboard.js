@@ -218,9 +218,9 @@ const Dashboard = () => {
         heading="Submission List"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK &&
-            isUserActive &&
-            csvExportSubmissions)
+          (userData.type === USER_TYPE.HELPDESK
+              && isUserActive
+              && csvExportSubmissions)
         }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />

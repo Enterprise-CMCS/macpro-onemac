@@ -21,7 +21,7 @@ import { uploadFiles } from "../utils/s3Uploader";
 jest.mock("../utils/s3Uploader");
 
 import { AppContext } from "../libs/contextLib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import {RESPONSE_CODE} from "cmscommonlib";
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 

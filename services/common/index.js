@@ -57,6 +57,16 @@ export const cmsEmailMapToFormWarningMessages = {
     "<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.",
 };
 
+/**
+ * Map Warning Message displayed on Waiver Form to message to include in CMS Email
+ */
+
+
+export const cmsEmailMapToFormWarningMessages = {
+  [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]: "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+  [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:"<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
+}
+
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
   STATE_ADMIN: "statesubmitter",
