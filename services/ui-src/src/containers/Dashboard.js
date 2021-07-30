@@ -167,8 +167,7 @@ const Dashboard = () => {
         tableListExportToCSV(
           "submission-table",
           changeRequestList,
-          "SubmissionList",
-          columns
+          "SubmissionList"
         );
       }}
       inversed

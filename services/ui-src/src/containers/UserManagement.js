@@ -331,7 +331,7 @@ const UserManagement = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV("user-table", userList, "UserList", columns);
+        tableListExportToCSV("user-table", userList, "UserList");
       }}
       inversed
     >
