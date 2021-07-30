@@ -46,7 +46,7 @@ export default async function updatePackage(packageID, updates) {
   };
 
   nextItem.currentVersion = newVersion;
-  nextItem.sk = "v" + newVersion + "#" + currentPackage.Item.transmittalNumber;
+  nextItem.sk = "v" + newVersion + "#" + currentPackage.Item.packageID;
 
   // go through and make our updates... if the attribute already exists, overwrite
   // if it does not, then add

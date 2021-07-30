@@ -113,9 +113,8 @@ class SPARAI {
       packageID: data.transmittalNumber,
       actionTimestamp: data.submittedAt,
       packageStatus: "RAI Response Submitted",
-      raiVersion: "1",
-      attachments: data.uploads,
-      additionalInformation: data.summary,
+      rairesponseattachments: data.uploads,
+      rairesponseAdditionalInformation: data.summary,
       submitterName: data.user.firstName + " " + data.user.lastName,
       submitterEmail: data.user.email,
     };
