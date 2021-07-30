@@ -18,20 +18,20 @@ const submissionTypes = {
   waiverappk: "1915(c) Appendix K Amendment",
 };
 
-export const tableListExportToCSV = (
-  exportType,
-  JSONData,
-  ReportTitle,
-  columns
-) => {
+export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
   var CSV = "";
 
   var row = "";
 
-  columns.forEach((header) => {
-    row += header.Header + ",";
-    return;
-  });
+  switch (exportType) {
+    case "submission-table":
+      row += "SPA ID/Waiver Number,Type,Date Submitted,Submitted By";
+      break;
+    case "user-table":
+      row += "Name,Email,State,Status,Role,Last Modified,Modified By";
+      break;
+    default:
+  }
 
   row = row.slice(0, -1);
 
@@ -44,7 +44,14 @@ export const tableListExportToCSV = (
         row += JSONData[i].transmittalNumber + ",";
         row += submissionTypes[JSONData[i].type] + ",";
         row += JSONData[i].territory + ",";
-        row += '"' + format(JSONData[i].submittedAt, "MMM d, yyyy") + '",';
+        try {
+          row += '"' + format(JSONData[i].submittedAt, "MMM d, yyyy") + '",';
+        } catch (e) {
+          console.warn(
+            `Invalid time value in row ${i}: ${JSONData[i].submittedAt}`
+          );
+          row += '"' + JSONData[i].submittedAt + '",';
+        }
         row += JSONData[i].user.firstName + " ";
         row += JSONData[i].user.lastName;
         break;
