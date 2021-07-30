@@ -1,4 +1,4 @@
-[macstack-spa-submission-form](https://github.com/CMSgov/macstack-spa-submission-form) [![Maintainability](https://api.codeclimate.com/v1/badges/4ad566f3e59e2a003451/maintainability)](https://codeclimate.com/repos/60413fbab8e5b05d5101a9f6/maintainability) [![Deploy](https://github.com/CMSgov/macstack-spa-submission-form/actions/workflows/deploy.yml/badge.svg)](https://github.com/CMSgov/macstack-spa-submission-form/actions/workflows/deploy.yml)
+[macstack-spa-submission-form](https://github.com/CMSgov/macstack-spa-submission-form) [![Maintainability](https://api.codeclimate.com/v1/badges/4ad566f3e59e2a003451/maintainability)](https://codeclimate.com/repos/60413fbab8e5b05d5101a9f6/maintainability) [![Deploy](https://github.com/CMSgov/macstack-spa-submission-form/actions/workflows/deploy.yml/badge.svg)](https://github.com/CMSgov/macstack-spa-submission-form/actions/workflows/deploy.yml) [![Test Coverage](https://api.codeclimate.com/v1/badges/4ad566f3e59e2a003451/test_coverage)](https://codeclimate.com/repos/60413fbab8e5b05d5101a9f6/test_coverage)
 
 # macstack-spa-submission-form
 
