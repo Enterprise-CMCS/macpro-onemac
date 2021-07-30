@@ -1,5 +1,5 @@
-import React, { useCallback, useState } from "react";
-import { Button, FormLabel, TextField } from "@cmsgov/design-system";
+import React, { useCallback, useEffect, useState } from "react";
+import { Button, FormLabel, TextField, Review } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPen, faPlusCircle } from "@fortawesome/free-solid-svg-icons";
 
@@ -10,8 +10,13 @@ export const PhoneNumber = ({
   onEdit,
   onSubmit,
   phoneNumber,
+  readOnly,
 }) => {
   const [value, setValue] = useState(phoneNumber);
+
+  useEffect(() => {
+    setValue(phoneNumber);
+  }, [phoneNumber]);
 
   const onSubmitFn = useCallback(
     (e) => {
@@ -21,10 +26,6 @@ export const PhoneNumber = ({
     [onSubmit, value]
   );
 
-  const onEditFn = useCallback(() => {
-    onEdit();
-  }, [onEdit, value]);
-
   const onCancelFn = useCallback(() => {
     onCancel();
     setValue(phoneNumber); // resets value displayed in TextField back to the original value
@@ -32,7 +33,9 @@ export const PhoneNumber = ({
 
   const formId = id || "phoneSection";
 
-  if (isEditing) {
+  if (readOnly) {
+    return <Review heading="Phone Number">{phoneNumber || "N/A"}</Review>;
+  } else if (isEditing) {
     return (
       <form
         id={formId}
@@ -69,14 +72,14 @@ export const PhoneNumber = ({
       </form>
     );
   } else {
-    if (!value) {
+    if (!phoneNumber) {
       return (
         <form id={formId} className="phone-number-empty-form">
           <FormLabel fieldId="phoneNumber">Phone Number</FormLabel>
           <Button
             className="phone-add-button"
             id="addButton"
-            onClick={onEditFn}
+            onClick={onEdit}
             variation="primary"
             type="button"
           >
@@ -93,7 +96,7 @@ export const PhoneNumber = ({
           <Button
             className="phone-edit-button"
             id="editButton"
-            onClick={onEditFn}
+            onClick={onEdit}
             type="button"
           >
             Edit&nbsp;&nbsp;

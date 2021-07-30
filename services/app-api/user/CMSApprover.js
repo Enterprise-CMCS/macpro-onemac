@@ -1,6 +1,6 @@
 import { USER_STATUS, USER_TYPE } from "cmscommonlib";
 import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * CMS Approver specific functions.

@@ -7,6 +7,7 @@ plugins:
   - serverless-dynamodb-local
   - serverless-associate-waf
   - serverless-offline
+  - serverless-iam-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
@@ -34,7 +35,7 @@ custom:
   dynamodb:
     stages:
       - dev
-      - ${env:BRANCH}
+      - ${env:BRANCH, ""}
     start:
       inMemory: true
       migrate: true
@@ -59,7 +60,12 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: dev
-
+  iam:
+    role:
+      path: ${self:custom.iamPath}
+      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+  logs:
+    restApi: true    
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}

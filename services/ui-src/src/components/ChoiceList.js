@@ -1,4 +1,3 @@
-import { divide } from "lodash";
 import React from "react";
 
 import ChoiceItem from "./ChoiceItem";

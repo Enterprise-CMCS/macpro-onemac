@@ -1,6 +1,6 @@
 import { USER_TYPES } from "./userTypes";
 import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 import { USER_STATUS } from "./userStatus";
 
 /**
@@ -97,6 +97,7 @@ class StateAdmin {
           lastName: oneUser.lastName,
           stateCode: oneAttribute.stateCode,
           latest: getCurrentStatus(oneAttribute.history),
+          role: oneUser.type,
         });
         i++;
       });

@@ -29,7 +29,7 @@ const leavePageConfirmMessage =
  */
 export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
-  const [alertCode, setAlertCode] = useState("NONE");
+  const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const {
     userProfile: { userData },
   } = useAppContext();
@@ -47,7 +47,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
     useState("");
 
-  // Rename to Display instead of status messsage ? 
+  // Rename to Display instead of status messsage ?
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
     useState({
       statusLevel: "error",
@@ -220,73 +220,96 @@ export const SubmissionForm = ({ changeRequestType }) => {
     let formatMessage = {
       statusLevel: "error",
       statusMessage: validateTransmittalNumber(changeRequest.transmittalNumber),
+      warningMessageCode: "",
     };
 
-    let existMessages = []
+    let existMessages = [];
+    let result = false;
+    try {
+      if (
+        formatMessage.statusMessage === "" &&
+        changeRequest.transmittalNumber
+      ) {
+        const promises = transmittalNumberDetails.idExistValidations.map(
+          async (idExistValidation) => {
+            let checkingNumber = changeRequest.transmittalNumber;
 
-    if (formatMessage.statusMessage === "" && changeRequest.transmittalNumber){
-      const promises = transmittalNumberDetails.idExistValidations.map((idExistValidation) => {
-        let checkingNumber = changeRequest.transmittalNumber;
-
-        if (idExistValidation.existenceRegex !== undefined) {
-          checkingNumber = changeRequest.transmittalNumber.match(
-            idExistValidation.existenceRegex
-          )[0];
-        }
-
-        return ChangeRequestDataApi.packageExists(checkingNumber)
-      })
-
-      Promise.all(promises).then((results) => {
-        results.map((dupID, key) => {
-          const correspondingValidation = transmittalNumberDetails.idExistValidations[key]
-          let tempMessage
-
-          // ID does not exist but it should exist
-          if (!dupID && correspondingValidation.idMustExist) {
-            if (correspondingValidation.errorLevel === "error") {
-              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+            if (idExistValidation.existenceRegex !== undefined) {
+              checkingNumber = changeRequest.transmittalNumber.match(
+                idExistValidation.existenceRegex
+              )[0];
             }
-          }
-          // ID exists but it should NOT exist
-          else if (dupID && !correspondingValidation.idMustExist) {
-            if (correspondingValidation.errorLevel === "error") {
-              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-            } else {
-              tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+            try {
+              result = await ChangeRequestDataApi.packageExists(checkingNumber);
+            } catch (e) {
+              console.log("error message is: ", e.message);
+              setAlertCode(RESPONSE_CODE[e.message]);
             }
+            return result;
           }
+        );
 
-          // if we got a message through checking, then we should add it to the existMessages array
-          const messageToAdd = {
-            statusLevel: correspondingValidation.errorLevel,
-            statusMessage: tempMessage
-          }
-          tempMessage && existMessages.push(messageToAdd)
-        })
-      }).then(() => {
-        if (existMessages.length > 0) {
-          displayMessage = existMessages[0];
-          setTransmittalNumberStatusMessage(displayMessage);
-        } else {
-          setTransmittalNumberStatusMessage(displayMessage);
-        }
-      })
-    } else {
-      displayMessage = formatMessage
-      setTransmittalNumberStatusMessage(displayMessage);
+        Promise.all(promises)
+          .then((results) => {
+            results.forEach((dupID, key) => {
+              const correspondingValidation =
+                transmittalNumberDetails.idExistValidations[key];
+              let tempMessage, tempCode;
+
+              // ID does not exist but it should exist
+              if (!dupID && correspondingValidation.idMustExist) {
+                if (correspondingValidation.errorLevel === "error") {
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                } else {
+                  tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING
+                }
+                // ID exists but it should NOT exist
+              } else if (dupID && !correspondingValidation.idMustExist) {
+                if (correspondingValidation.errorLevel === "error") {
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING
+                } else {
+                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING
+                }
+              }
+
+              // if we got a message through checking, then we should add it to the existMessages array
+              const messageToAdd = {
+                statusLevel: correspondingValidation.errorLevel,
+                statusMessage: tempMessage,
+                warningMessageCode: tempCode,
+              };
+              tempMessage && existMessages.push(messageToAdd);
+            });
+          })
+          .then(() => {
+            if (existMessages.length > 0) {
+              displayMessage = existMessages[0];
+              setTransmittalNumberStatusMessage(displayMessage);
+            } else {
+              setTransmittalNumberStatusMessage(displayMessage);
+            }
+          });
+      } else {
+        displayMessage = formatMessage;
+        setTransmittalNumberStatusMessage(displayMessage);
+      }
+
+      setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+      setActionTypeErrorMessage(actionTypeMessage);
+    } catch (err) {
+      console.log("error is: ", err);
+      setAlertCode(RESPONSE_CODE[err.message]);
     }
-
-    setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-    setActionTypeErrorMessage(actionTypeMessage);
   }, [
     changeRequest,
     changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
-    validateTransmittalNumber
+    validateTransmittalNumber,
+    alertCode,
   ]);
 
   /**
@@ -314,8 +337,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
         transmittalNumberStatusMessage.statusLevel === "warn" &&
         transmittalNumberStatusMessage.statusMessage
       ) {
-        transmittalNumberWarningMessage =
-          "Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.";
+        transmittalNumberWarningMessage = transmittalNumberStatusMessage.warningMessageCode;
       }
 
       uploadRef
@@ -331,11 +353,11 @@ export const SubmissionForm = ({ changeRequestType }) => {
         })
         .catch((err) => {
           console.log("error is: ", err);
-          setAlertCode(RESPONSE_CODE.SYSTEM_ERROR);
+          setAlertCode(RESPONSE_CODE[err.message]);
         })
         .finally(() => {
-          limitSubmit.current = false;
           setIsSubmitting(false);
+          limitSubmit.current = false;
         });
     };
 
@@ -343,7 +365,13 @@ export const SubmissionForm = ({ changeRequestType }) => {
       limitSubmit.current = true;
       saveForm();
     }
-  }, [isSubmitting, transmittalNumberStatusMessage, changeRequest, uploader]);
+  }, [
+    isSubmitting,
+    transmittalNumberStatusMessage,
+    changeRequest,
+    uploader,
+    alertCode,
+  ]);
 
   /**
    * Submit the new change request.
@@ -352,7 +380,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   async function handleSubmit(event) {
     event.preventDefault();
 
-    let newAlertCode = "NONE";
+    let newAlertCode = RESPONSE_CODE.NONE;
     let readyToSubmit = false;
 
     setFirstTimeThrough(false);
@@ -379,7 +407,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }
 
   function closedAlert() {
-    setAlertCode("NONE");
+    setAlertCode(RESPONSE_CODE.NONE);
   }
 
   // Render the component conditionally when NOT in read only mode
@@ -395,7 +423,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
       <div className="form-container">
         {formInfo.subheaderMessage && (
           <div className="form-subheader-message">
-            {formInfo.subheaderMessage}
+            <p dangerouslySetInnerHTML={formInfo.subheaderMessage} />
           </div>
         )}
         <form
@@ -492,7 +520,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
           <a
             target="new"
             href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none ds-u-margin-left--auto"
+            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
           >
             View FAQ
           </a>

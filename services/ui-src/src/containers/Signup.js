@@ -22,7 +22,7 @@ function StateUserSignup() {
     },
     {
       title: "State System Administrator",
-      description: "Approves State Submitters",
+      description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
       onclick: () => {
         history.replace("signup/state", { role: "stateadmin" });
@@ -33,7 +33,7 @@ function StateUserSignup() {
 }
 
 function CMSSignup() {
-  const [_, onClickCMS] = useSignupCallback("cmsapprover", createAttribute);
+  const [, onClickCMS] = useSignupCallback("cmsapprover", createAttribute);
 
   const CMS_CHOICES = [
     {
@@ -105,7 +105,7 @@ export function Signup() {
       <PageTitleBar heading="Registration: User Role" />
       <div className="choice-container">
         <div className="choice-intro">
-          Select the user role you're registering for.
+          Select the role for which you are registering.
         </div>
         {signupOptions}
       </div>

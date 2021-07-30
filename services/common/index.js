@@ -13,29 +13,25 @@ export * from "./routes";
  * Codes to send to front end
  */
 export const RESPONSE_CODE = {
-  NONE: "",
+  NONE: "NONE",
+  LOGIN_ERROR: "UR403",
   SUCCESSFULLY_SUBMITTED: "SC000",
   DATA_MISSING: "SC001",
   ATTACHMENTS_MISSING: "SC002",
   VALIDATION_ERROR: "VA000",
-  DATA_PARSING_ERROR: "VA001",
   ATTACHMENT_ERROR: "AT000",
+  UPLOADS_ERROR: "AT001",
   EMAIL_NOT_SENT: "EM000",
   SYSTEM_ERROR: "SY000",
+  DATA_RETRIEVAL_ERROR: "DT000",
+  SESSION_EXPIRED: "SY001",
   TRANSMITTAL_ID_TERRITORY_NOT_VALID: "ID001",
   DUPLICATE_ID: "ID002",
   ID_NOT_FOUND: "ID000",
-  WAIVER_RENEWAL_NO_ID: "ID020",
-  WAIVER_NEED_ID_FOR_K: "ID031",
-  WAIVER_AMENDMENT_NO_ID: "ID022",
-  WAIVER_NEW_NOT_K: "ID023",
-  WAIVER_ACTION_UNKNOWN: "WA000",
   USER_NOT_AUTHORIZED: "UR040",
   USER_NOT_FOUND: "UR041",
   USER_SUBMITTED: "UR000",
   USER_SUBMISSION_FAILED: "UR001",
-  USER_TYPE_MISMATCH_ERROR: "UR002",
-  USER_FORMAT_MISMATCH: "UR042",
   CALLING_USER_PENDING: "UR043",
   CALLING_USER_REVOKED: "UR044",
   CALLING_USER_DENIED: "UR045",
@@ -43,9 +39,22 @@ export const RESPONSE_CODE = {
   SUCCESS_USER_REVOKED: "UR047",
   SUCCESS_USER_DENIED: "UR048",
   DASHBOARD_RETRIEVAL_ERROR: "DB000",
+  DASHBOARD_LIST_FETCH_ERROR: "DB00",
   HELPDESK_USER_SUBMITTED: "HU000",
   CMS_REVIEWER_USER_SUBMITTED: "CU000",
+  SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
+  SUBMISSION_ID_EXIST_WARNING: "OMP003"
 };
+
+/**
+ * Map Warning Message displayed on Waiver Form to message to include in CMS Email
+ */
+
+
+export const cmsEmailMapToFormWarningMessages = {
+  [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]: "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+  [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:"<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
+}
 
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
@@ -142,6 +151,8 @@ class StateAdmin extends Role {
     super();
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canAccessDashboard = true;
+    this.canAccessForms = true;
   }
 }
 

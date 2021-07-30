@@ -22,8 +22,8 @@ module.exports = {
 
     'Verify user can submit 1915(b) Waiver Action': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
         browser.useCss().click("select#actionType");
         browser.useCss().click("select#actionType > option[value='new']");
         browser.useCss().click("select#waiverAuthority");
@@ -97,8 +97,8 @@ module.exports = {
             
         }
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(2) > a > h4"),
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[2]");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
         browser.useCss().click("select#actionType");
         browser.useCss().click("select#actionType > option[value='new']");
         browser.useCss().click("select#waiverAuthority");

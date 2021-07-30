@@ -59,14 +59,11 @@ module.exports = {
         browser.useCss().waitForElementPresent("[value='Submit']", 1000);
         browser.useCss().click("[value='Submit']").pause(8000);
         
-        browser.refresh();
-        browser.pause(5000);
-        browser.refresh();
         // Verify the SPA on Submission List 
         // browser.useXpath().click("//a[@id='new-submission-button']");
         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
         // browser.refresh();
-        browser.useXpath().verify.containsText('(//td[@role="cell"])[1]', spaID).pause(5000);
+        browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(5000);
         browser.useCss();
         return spaID;
     },

@@ -1,4 +1,4 @@
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * State Submitter specific functions.

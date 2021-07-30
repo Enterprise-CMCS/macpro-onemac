@@ -1,3 +1,4 @@
+import { RESPONSE_CODE } from "cmscommonlib";
 import config from "../utils/config";
 import { helpDeskContact } from "./helpDeskContact";
 
@@ -67,6 +68,16 @@ export const ALERTS_MSG = {
     heading: "Submission Error",
     text: "There was an issue submitting your request. Please try again.",
   },
+  SUBMISSION_FETCH_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Submission Fetch Error",
+    text: "There was an issue fetching the submission. The provided ID could be wrong",
+  },
+  PACKAGE_FETCH_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Package Fetch Error",
+    text: "There was an issue fetching the package. The provided ID could be wrong",
+  },
   SUBMISSION_DUPLICATE_ID: {
     type: ALERT_TYPES.ERROR,
     heading: "Duplicate ID",
@@ -127,6 +138,11 @@ export const ALERTS_MSG = {
     heading: "Attachment Too Large",
     text: `An individual attachment cannot exceed ${config.MAX_ATTACHMENT_SIZE_MB} MB in size.  Please select a smaller file.`,
   },
+  UPLOADS_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Document Upload Error",
+    text: `An error occured while uploading documents to AWS S3 service.`,
+  },
   NOT_AUTHENTICATED: {
     type: ALERT_TYPES.WARNING,
     heading: "Login Required",
@@ -136,6 +152,11 @@ export const ALERTS_MSG = {
     type: ALERT_TYPES.ERROR,
     heading: "System Submission Error",
     text: `Please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
+  },
+  SESSION_EXPIRED: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Session Expiry Error",
+    text: `Your session time has expired. Please log back in to access OneMAC.`,
   },
   USER_STATUS_GRANTED: {
     type: ALERT_TYPES.SUCCESS,
@@ -152,4 +173,44 @@ export const ALERTS_MSG = {
     heading: "Status Change",
     text: `$personalize$'s access has been revoked, a notification has been sent to their email.`,
   },
+  UNKNOWN_SYSTEM_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Unknown System Error",
+    text: `An unknown system error has occured. Please try again and if the problem persists, please contact the Helpdesk ${helpDeskContact.email} or ${helpDeskContact.phone} for additional support.`,
+  },
+};
+
+export const alertCodeAlerts = {
+  NONE: ALERTS_MSG.NONE,
+  [RESPONSE_CODE.NONE]: ALERTS_MSG.NONE,
+  [RESPONSE_CODE.LOGIN_ERROR]: ALERTS_MSG.LOGIN_ERROR,
+  [RESPONSE_CODE.SUCCESSFULLY_SUBMITTED]: ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY,
+  [RESPONSE_CODE.DATA_MISSING]: ALERTS_MSG.SUBMISSION_INCOMPLETE,
+  [RESPONSE_CODE.ATTACHMENTS_MISSING]: ALERTS_MSG.REQUIRED_UPLOADS_MISSING,
+  [RESPONSE_CODE.USER_SUBMITTED]: ALERTS_MSG.SUBMISSION_SUCCESS,
+  [RESPONSE_CODE.VALIDATION_ERROR]: ALERTS_MSG.SUBMISSION_ERROR,
+  [RESPONSE_CODE.ATTACHMENT_ERROR]: ALERTS_MSG.REQUIRED_UPLOADS_MISSING,
+  [RESPONSE_CODE.EMAIL_NOT_SENT]: ALERTS_MSG.SUBMISSION_ERROR,
+  [RESPONSE_CODE.SYSTEM_ERROR]: ALERTS_MSG.CONTACT_HELP_DESK,
+  [RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID]:
+    ALERTS_MSG.SUBMISSION_TERRITORY_ERROR,
+  [RESPONSE_CODE.DUPLICATE_ID]: ALERTS_MSG.SUBMISSION_DUPLICATE_ID,
+  [RESPONSE_CODE.ID_NOT_FOUND]: ALERTS_MSG.SUBMISSION_ID_NOT_FOUND,
+  [RESPONSE_CODE.USER_NOT_AUTHORIZED]: ALERTS_MSG.SUBMISSION_ERROR,
+  [RESPONSE_CODE.USER_NOT_FOUND]: ALERTS_MSG.SUBMISSION_ERROR,
+  [RESPONSE_CODE.USER_SUBMISSION_FAILED]: ALERTS_MSG.SUBMISSION_ERROR,
+  [RESPONSE_CODE.CALLING_USER_PENDING]: ALERTS_MSG.NONE,
+  [RESPONSE_CODE.CALLING_USER_REVOKED]: ALERTS_MSG.NONE,
+  [RESPONSE_CODE.CALLING_USER_DENIED]: ALERTS_MSG.NONE,
+  [RESPONSE_CODE.SUCCESS_USER_GRANTED]: ALERTS_MSG.USER_STATUS_GRANTED,
+  [RESPONSE_CODE.SUCCESS_USER_REVOKED]: ALERTS_MSG.USER_STATUS_REVOKED,
+  [RESPONSE_CODE.SUCCESS_USER_DENIED]: ALERTS_MSG.USER_STATUS_DENIED,
+  [RESPONSE_CODE.DASHBOARD_RETRIEVAL_ERROR]: ALERTS_MSG.FETCH_ERROR,
+  [RESPONSE_CODE.HELPDESK_USER_SUBMITTED]:
+    ALERTS_MSG.HELPDESK_SUBMISSION_SUCCESS,
+  [RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED]:
+    ALERTS_MSG.CMS_REVIEWER_SUBMISSION_SUCCESS,
+  [RESPONSE_CODE.DASHBOARD_LIST_FETCH_ERROR]:
+    ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
+  [RESPONSE_CODE.SESSION_EXPIRED]: ALERTS_MSG.SESSION_EXPIRED,
 };

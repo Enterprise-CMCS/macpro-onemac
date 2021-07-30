@@ -16,6 +16,7 @@ import NewSPA from "./changeRequest/NewSPA";
 import NewWaiver from "./changeRequest/NewWaiver";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
+import UserPage from "./containers/UserPage";
 
 const FORM_TYPES = {
   [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
@@ -95,8 +96,11 @@ export default function DynamicRoutes() {
           <UserManagement />
         </AuthenticatedRoute>
       )}
+      <AuthenticatedRoute exact path={ROUTES.PROFILE + "/:userId"}>
+        <UserPage />
+      </AuthenticatedRoute>
       {userRoleObj.canAccessMetrics && (
-        <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+        <AuthenticatedRoute path={ROUTES.METRICS}>
           <Metrics />
         </AuthenticatedRoute>
       )}
