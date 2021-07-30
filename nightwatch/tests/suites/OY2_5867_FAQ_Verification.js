@@ -21,11 +21,11 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
         // Verify the new window 
         browser.useXpath().expect.element(pageBanner).to.be.visible;
-        browser.verify.containsText(pageBanner, expectedBannerText).pause(2000);
+        browser.verify.containsText(pageBanner, expectedBannerText).pause(3000);
         browser.useCss();
         browser.closeWindow(); // Close tab
         // Switch to main window
@@ -33,7 +33,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
         login['Login with state submitter user'](browser);
     },
@@ -73,13 +73,13 @@ module.exports = {
 
     'User can go to the FAQ with logging into the application': function (browser) {
         let fqaLink = "//a[text()='FAQ']";
-        browser.useXpath().click(fqaLink).pause(2000);
+        browser.useXpath().click(fqaLink).pause(4000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(5000);
         });
         // Verify the new window 
         let pageBanner = "//h1";
@@ -93,7 +93,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
     },
 
@@ -103,9 +103,9 @@ module.exports = {
         // let newSPALink = 'button#spaSubmitBtn';
         // browser.click(newSPALink);
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(800);
         browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
+        browser.pause(800);
         browser.useXpath().click("(//h4)[1]");
         //browser.useCss();
         browser.useCss().click('.form-card a').pause(3000);
@@ -116,9 +116,9 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
-        browser.pause(500);
+        browser.pause(800);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -132,7 +132,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
             //browser.back().pause(3000);
         });
         //browser.back().pause(3000);
@@ -145,19 +145,19 @@ module.exports = {
         // let respondToSAPRAI = 'button#spaRaiBtn';
         // browser.click(respondToSAPRAI);
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(1000);
         browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
+        browser.pause(1000);
         browser.useXpath().click("(//h4)[2]");
         browser.useCss();
         browser.click('.form-card a');
-        browser.pause(1000);
+        browser.pause(3000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
         browser.pause(500);
         // Verify the new window 
@@ -170,7 +170,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
             //browser.back().pause(3000);
         });
         //browser.back().pause(3000);
@@ -184,13 +184,13 @@ module.exports = {
         // Submit a new Waiver 
         // browser.click('button#waiverBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(3000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(500);
+        browser.pause(3000);
         browser.useXpath().click("(//h4)[1]");
         //browser.useCss();
         browser.useCss().click('.form-card a');
-        browser.pause(1000);
+        browser.pause(4000);
         let fqaHeader = '(//h4[@class="faq-collapsible-trigger"])[4]';
 
         //Switch to new tab
@@ -198,7 +198,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(4000);
         });
         browser.pause(500);
         // Verify the new window 
@@ -214,7 +214,7 @@ module.exports = {
             // 0 == current main window, 1 == new tab
             var handle = result.value[0];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
         let dashboard_link = "//a[@id='dashboardLink']";
         browser.useXpath().click(dashboard_link);
@@ -224,9 +224,9 @@ module.exports = {
         // Respond to 1915(b) Waiver RAI
         //browser.click('button#waiverRaiBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(10000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(500);
+        browser.pause(1000);
         browser.useXpath().click("(//h4)[2]");
         browser.useCss().click('.form-card a');
         browser.pause(1000);
@@ -237,7 +237,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
-        browser.pause(500);
+        browser.pause(100);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -259,9 +259,9 @@ module.exports = {
         // Request Waiver Temporary Extension
         //browser.click('button#waiverExtBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(1000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(500);
+        browser.pause(1000);
         browser.useXpath().click("(//h4)[3]");
         browser.useCss().click('.form-card a');
         browser.pause(1000);
@@ -273,7 +273,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
-        browser.pause(500);
+        browser.pause(1000);
         // Verify the new window 
         //browser.useXpath().waitForElementVisible(fqaHeader, 1000);
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
@@ -283,7 +283,7 @@ module.exports = {
     
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         browser.useXpath().click("(//h4)[3]");
-        browser.pause(300);
+        browser.pause(800);
         let linkInFAQ = '(//div[@class="Collapsible__contentInner"]/p/a)[1]';
         browser.useXpath().click(linkInFAQ);
         browser.pause(1000);
@@ -295,7 +295,7 @@ module.exports = {
             browser.switchWindow(handle);
             browser.pause(1000);
         });
-        browser.pause(500);
+        browser.pause(1000);
         //Verify the new window 
         browser.useXpath().waitForElementVisible(submittalAmendments, 2000);
         browser.useXpath().expect.element(submittalAmendments).to.be.visible;
