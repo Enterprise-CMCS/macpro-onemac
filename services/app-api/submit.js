@@ -28,7 +28,6 @@ const SUBMISSION_STATES = {
 export const main = handler(async (event) => {
   // If this invocation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
     return null;
   }
   const data = JSON.parse(event.body);

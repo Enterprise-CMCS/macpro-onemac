@@ -1,5 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 import newPackage from "../utils/newPackage";
+import updatePackage from "../utils/updatePackage";
 import dynamoDb from "../libs/dynamodb-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -124,7 +125,32 @@ class SPA {
   }
 
   async saveSubmission(data) {
-    newPackage(data);
+    let spaData = {
+      packageID: data.transmittalNumber,
+      territory: data.territory,
+      timestamp: data.submittedAt,
+      packageType: "Medicaid SPA",
+      packageStatus: "Submitted",
+      clockEndTimestamp: data.ninetyDayClockEnd,
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submitterName: data.user.firstName + " " + data.user.lastName,
+      submitterEmail: data.user.email,
+    };
+    newPackage(spaData).then(() => {
+      let raiTime = Date.now();
+
+      let raiData = {
+        packageID: data.transmittalNumber,
+        raiTimestamp: raiTime,
+        packageStatus: "Pending - RAI",
+        raiRequestText:
+          "Please send additional information about ice cream socials.",
+        submitterName: "Amanda Active",
+        submitterEmail: "cmsrevieweractive@cms.hhs.local",
+      };
+      updatePackage(raiData.packageID, raiData);
+    });
   }
 }
 

@@ -109,7 +109,18 @@ class SPARAI {
   }
 
   saveSubmission(data) {
-    updatePackage(data);
+    let raiResponseData = {
+      packageID: data.transmittalNumber,
+      actionTimestamp: data.submittedAt,
+      packageStatus: "RAI Response Submitted",
+      raiVersion: "1",
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submitterName: data.user.firstName + " " + data.user.lastName,
+      submitterEmail: data.user.email,
+    };
+
+    updatePackage(raiResponseData.packageID, raiResponseData);
   }
 }
 

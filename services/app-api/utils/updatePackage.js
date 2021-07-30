@@ -1,12 +1,14 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export default async function updatePackage(data) {
+export default async function updatePackage(packageID, updates) {
   // get the latest version from current v0 Item
-  var v0sk = "v0#" + data.transmittalNumber;
+  var v0sk = "v0#" + packageID;
+  var v0pk = packageID.toString().substring(0, 2);
+
   var v0params = {
     TableName: process.env.oneMacTableName,
     Key: {
-      pk: data.territory,
+      pk: v0pk,
       sk: v0sk,
     },
   };
@@ -28,13 +30,34 @@ export default async function updatePackage(data) {
   // copy the v0 into the v(currentVersion+1)
   console.log("Result.Item is : ", currentPackage.Item);
 
-  let nextItem = { ...currentPackage.Item };
-  let updateItem = { ...currentPackage.Item };
+  let oldVersion = parseInt(currentPackage.Item.currentVersion);
+  let newVersion = oldVersion + 1;
 
-  nextItem.currentVersion = currentPackage.Item.currentVersion + 1;
-  updateItem.currentVersion = currentPackage.Item.currentVersion + 1;
-  nextItem.sk =
-    "v" + nextItem.currentVersion + "#" + currentPackage.Item.transmittalNumber;
+  let nextItem = { ...currentPackage.Item };
+  let updateExp = "SET #currentVersion = :newVersion, #time = :time";
+  let expressionAttributeNames = {
+    "#time": "timestamp",
+    "#currentVersion": "currentVersion",
+  };
+  let expressionAttributeValues = {
+    ":time": Date.now(),
+    ":newVersion": newVersion.toString(),
+    ":currentVersion": oldVersion.toString(),
+  };
+
+  nextItem.currentVersion = newVersion;
+  nextItem.sk = "v" + newVersion + "#" + currentPackage.Item.transmittalNumber;
+
+  // go through and make our updates... if the attribute already exists, overwrite
+  // if it does not, then add
+  for (const [key, value] of Object.entries(updates)) {
+    nextItem[key] = value;
+    updateExp += ",#" + key + " = :" + key;
+    expressionAttributeNames["#" + key] = key.toString();
+    expressionAttributeValues[":" + key] = value.toString();
+  }
+
+  console.log("update Expression: ", updateExp);
   var transParams = {
     TransactItems: [
       {
@@ -47,57 +70,29 @@ export default async function updatePackage(data) {
         Update: {
           TableName: process.env.oneMacTableName,
           Key: {
-            pk: data.territory,
+            pk: v0pk,
             sk: v0sk,
           },
-          UpdateExpression: "SET currentVersion = :newVersion, #time = :time",
-          ExpressionAttributeNames: {
-            "#time": "timestamp",
-          },
-          ExpressionAttributeValues: {
-            ":time": Date.now(),
-            ":newVersion": updateItem.currentVersion,
-          },
+          ConditionExpression: "#currentVersion = :currentVersion",
+          UpdateExpression: updateExp,
+          ExpressionAttributeNames: expressionAttributeNames,
+          ExpressionAttributeValues: expressionAttributeValues,
         },
       },
     ],
   };
 
-  //     dynamodb.transact_write_items(
+  console.log("trasaction params: ", JSON.stringify(transParams));
+
   try {
     let transResult = await dynamoDb.transactWriteItems(transParams);
-    console.log(`transaction write result:  ${transResult}`);
+    console.log(`transaction write result: `, transResult);
   } catch (dbError) {
-    console.log(`Error happened while reading from DB:  ${dbError.message}`);
+    console.log(
+      `Error happened while transact writing to DB:  ${dbError.message}`
+    );
     throw dbError;
   }
 
-  /*
-  var onedata = {
-    pk: data.territory,
-  };
-  onedata.sk = "v0#" + data.transmittalNumber;
-  onedata.currentVersion = "0";
-  onedata.packageID = data.transmittalNumber;
-  onedata.type = data.type;
-  onedata.oneMacPackageStatus = "Pending";
-  onedata.territory = data.territory;
-  onedata.submitterName = data.user.firstName + " " + data.user.family_name;
-  onedata.submitterEmail = data.user.email;
-  onedata.timestamp = data.submittedAt;
-  onedata.clockEnd = data.ninetyDayClockEnd;
-  onedata.additionalInformation = data.summary;
-  onedata.uploads = data.uploads;
-  var oneparams = {
-    TableName: process.env.oneMacTableName,
-    Item: onedata,
-  };
-  console.log("TableName is: ", process.env.oneMacTableName);
-  console.log("oneParams is: ", oneparams);
-  try {
-    await dynamoDb.put(oneparams);
-  } catch (error) {
-    throw error;
-  } */
   return;
 }
