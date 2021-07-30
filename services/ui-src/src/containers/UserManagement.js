@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
-import { useLocation, useHistory } from "react-router-dom";
+import { useLocation, useHistory, Link } from "react-router-dom";
 import { RESPONSE_CODE, ROUTES, USER_TYPE } from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
@@ -123,11 +123,14 @@ const UserManagement = () => {
     return <span className="user-status">{content}</span>;
   }, []);
 
-  const renderEmail = useCallback(
-    ({ value }) => (
-      <a className="user-email" href={`mailto:${value}`}>
+  const renderName = useCallback(
+    ({ value, row }) => (
+      <Link
+        className="user-name"
+        to={`${ROUTES.PROFILE}/${row.original.email}`}
+      >
         {value}
-      </a>
+      </Link>
     ),
     []
   );
@@ -165,22 +168,17 @@ const UserManagement = () => {
       const grant = {
           label: "Grant Access",
           value: "active",
-          confirmMessage:
-            grantConfirmMessage[row.original.role] ??
-            grantConfirmMessage.default,
+          confirmMessage: grantConfirmMessage,
         },
         deny = {
           label: "Deny Access",
           value: "denied",
-          confirmMessage:
-            denyConfirmMessage[row.original.role] ?? denyConfirmMessage.default,
+          confirmMessage: denyConfirmMessage,
         },
         revoke = {
           label: "Revoke Access",
           value: "revoked",
-          confirmMessage:
-            revokeConfirmMessage[row.original.role] ??
-            revokeConfirmMessage.default,
+          confirmMessage: revokeConfirmMessage,
         };
 
       const menuItems =
@@ -253,11 +251,7 @@ const UserManagement = () => {
         accessor: getName,
         defaultCanSort: true,
         id: "name",
-      },
-      {
-        Header: "Email",
-        accessor: "email",
-        Cell: renderEmail,
+        Cell: renderName,
       },
       includeStateCode
         ? {
@@ -309,7 +303,7 @@ const UserManagement = () => {
   }, [
     getName,
     includeStateCode,
-    renderEmail,
+    renderName,
     renderStatus,
     showUserRole,
     sortStatus,
@@ -337,7 +331,7 @@ const UserManagement = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV("user-table", userList, "UserList", columns);
+        tableListExportToCSV("user-table", userList, "UserList");
       }}
       inversed
     >
@@ -353,14 +347,19 @@ const UserManagement = () => {
     </Button>
   );
 
+    const isUserActive =
+        !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
+
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          userProfile.userData.type === USER_TYPE.HELPDESK &&
-          csvExportSubmissions
+          userProfile.userData.type === USER_TYPE.HELPDESK
+          && isUserActive
+          && csvExportSubmissions
         }
       />
       <AlertBar

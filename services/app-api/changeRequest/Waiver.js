@@ -1,6 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * Waiver submission specific email generation functions.
@@ -55,10 +55,15 @@ class Waiver {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
+
     const cmsEmail = {};
-    let transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
-      ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
-      : "";
+    if ( data.transmittalNumberWarningMessage )
+    {
+      transmittalNumberWarningMessage = cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
 
     cmsEmail.ToAddresses = [process.env.reviewerEmail];
     cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";

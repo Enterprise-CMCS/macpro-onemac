@@ -4,6 +4,8 @@ Resources:
     Type: AWS::DynamoDB::Table
     Properties:
       TableName: ${self:custom.tableName}
+      PointInTimeRecoverySpecification:
+        PointInTimeRecoveryEnabled: true
       StreamSpecification:
         StreamViewType: NEW_AND_OLD_IMAGES
       AttributeDefinitions:
