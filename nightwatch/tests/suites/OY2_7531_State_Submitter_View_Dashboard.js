@@ -88,26 +88,26 @@ module.exports = {
         generatedSPAID = spaID;
     },
 
-    'Submit new SPA with state name and verify if it shows under submission list': function (browser) {
-        // Submit a SPA Report 
-        // const newSPA = require('./OY2-3636_Suite_Smoke.js');
-        // generatedSPAID = newSPA['Verify Submitter user can submit new SPA'](browser);
-        // Verify the submitted Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
-        // SPA ID Verification
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.pause(5000);
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
-        browser.pause(3000);
-        // Submitted Type Verification
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.pause(1000);
-        browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
-        // Data Submitted Verification
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
-        browser.useXpath().assert.containsText("(//tbody/tr/td)[3]","MD");
-        browser.useCss();
-    },
+    // 'Submit new SPA with state name and verify if it shows under submission list': function (browser) {
+    //     // Submit a SPA Report 
+    //     // const newSPA = require('./OY2-3636_Suite_Smoke.js');
+    //     // generatedSPAID = newSPA['Verify Submitter user can submit new SPA'](browser);
+    //     // Verify the submitted Content 
+    //     let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+    //     let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
+    //     let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+    //     // SPA ID Verification
+    //     browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+    //     browser.pause(5000);
+    //     browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+    //     browser.pause(3000);
+    //     // Submitted Type Verification
+    //     browser.useXpath().expect.element(submittedType).to.be.visible;
+    //     browser.pause(1000);
+    //     browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
+    //     // Data Submitted Verification
+    //     browser.useXpath().expect.element(submittedDate).to.be.visible;
+    //     browser.useXpath().assert.containsText("(//tbody/tr/td)[3]","MD");
+    //     browser.useCss();
+    // },
 }
