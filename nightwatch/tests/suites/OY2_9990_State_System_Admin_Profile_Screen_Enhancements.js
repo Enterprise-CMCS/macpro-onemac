@@ -18,11 +18,10 @@ module.exports = {
         //check on Submission List on the homepage
         let user_management_title = "//h1";
         let name_title = "(//tr[@role='row']/th)[1]";
-        let email_title = "(//tr[@role='row']/th)[2]"
-        let state_title = "(//tr[@role='row']/th)[3]";
-        let last_modified_title = "(//tr[@role='row']/th)[4]";
-        let modified_by_title = "(//tr[@role='row']/th)[5]";
-        let personnel_actions_title = "(//tr[@role='row']/th)[6]";
+        let state_title = "(//tr[@role='row']/th)[2]";
+        let last_modified_title = "(//tr[@role='row']/th)[3]";
+        let modified_by_title = "(//tr[@role='row']/th)[4]";
+        let personnel_actions_title = "(//tr[@role='row']/th)[5]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
         let user_management_link = "//a[@id='userManagementLink']";
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
@@ -31,7 +30,6 @@ module.exports = {
         
         browser.useXpath().expect.element(user_management_title).to.be.visible;
         browser.useXpath().expect.element(name_title).to.be.visible;
-        browser.useXpath().expect.element(email_title).to.be.visible;
         browser.useXpath().expect.element(state_title).to.be.visible;
         browser.useXpath().expect.element(last_modified_title).to.be.visible;
         browser.useXpath().expect.element(modified_by_title).to.be.visible;

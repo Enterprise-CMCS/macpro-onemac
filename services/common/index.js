@@ -42,6 +42,19 @@ export const RESPONSE_CODE = {
   DASHBOARD_LIST_FETCH_ERROR: "DB00",
   HELPDESK_USER_SUBMITTED: "HU000",
   CMS_REVIEWER_USER_SUBMITTED: "CU000",
+  SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
+  SUBMISSION_ID_EXIST_WARNING: "OMP003",
+};
+
+/**
+ * Map Warning Message displayed on Waiver Form to message to include in CMS Email
+ */
+
+export const cmsEmailMapToFormWarningMessages = {
+  [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]:
+    "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+  [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:
+    "<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.",
 };
 
 export const USER_ADMIN_PERMISSION = {
@@ -139,6 +152,8 @@ class StateAdmin extends Role {
     super();
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canAccessDashboard = true;
+    this.canAccessForms = true;
   }
 }
 

@@ -21,7 +21,7 @@ import { uploadFiles } from "../utils/s3Uploader";
 jest.mock("../utils/s3Uploader");
 
 import { AppContext } from "../libs/contextLib";
-
+import { RESPONSE_CODE } from "cmscommonlib";
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
@@ -232,7 +232,7 @@ describe("Effects of Failed Submit", () => {
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await screen.findByText(
-      "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support."
+      `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
     );
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
@@ -379,7 +379,7 @@ describe("Transmittal Number Validation", () => {
     const waiverIdLabel =
       ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber.idLabel;
     const testId = "MI.1234.R00";
-    const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP003) if you need support.`;
+    const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
 
     // ensure pass of first validation for base id existing
     when(ChangeRequestDataApi.packageExists)

@@ -21,7 +21,7 @@ after: function (browser) {
       myAccountLink: "@myAccountLink",
       manageAccountLink: "@manageAccountLink",
       subUrl: "/profile",
-      pageTitle: "User Profile"
+      pageTitle: "My Profile"
     }
   ) {
     pageObjects = browser.page.spaBasePage();

@@ -100,6 +100,18 @@ const Dashboard = () => {
     []
   );
 
+  const renderName = useCallback(
+    ({ value, row }) => (
+      <Link
+        className="user-name"
+        to={`${ROUTES.PROFILE}/${row.original.user.email}`}
+      >
+        {value}
+      </Link>
+    ),
+    []
+  );
+
   const renderDate = useCallback(({ value }) => {
     if (value) {
       return format(value, "MMM d, yyyy");
@@ -111,7 +123,7 @@ const Dashboard = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SPA ID/Waiver Number",
+        Header: "ID/Number",
         accessor: "transmittalNumber",
         disableSortBy: true,
         Cell: renderId,
@@ -132,13 +144,14 @@ const Dashboard = () => {
         Cell: renderDate,
       },
       {
-        Header: "State Submitter",
+        Header: "Submitted By",
         accessor: ({ user: { firstName, lastName } = {} }) =>
           [firstName, lastName].filter(Boolean).join(" "),
         id: "submitter",
+        Cell: renderName,
       },
     ],
-    [getType, renderDate, renderId, renderType]
+    [getType, renderDate, renderId, renderName, renderType]
   );
 
   const initialTableState = useMemo(
@@ -154,8 +167,7 @@ const Dashboard = () => {
         tableListExportToCSV(
           "submission-table",
           changeRequestList,
-          "SubmissionList",
-          columns
+          "SubmissionList"
         );
       }}
       inversed
@@ -206,7 +218,9 @@ const Dashboard = () => {
         heading="Submission List"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK && csvExportSubmissions)
+          (userData.type === USER_TYPE.HELPDESK &&
+            isUserActive &&
+            csvExportSubmissions)
         }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />

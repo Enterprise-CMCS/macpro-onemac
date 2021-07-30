@@ -19,12 +19,11 @@ module.exports = {
         browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[1]/div[2]/div/div[1]/div/a[3]", "User Management");
         browser.useXpath().assert.containsText( "//button[@id='new-submission-button']", "Export to Excel(CSV)");
         browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[1]", "Name");
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[2]", "Email");
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[3]", "State");
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[4]", "Status");
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]", "Role");
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[6]", "Last Modified");
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[7]", "Modified By");
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[2]", "State");
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[3]", "Status");
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[4]", "Role");
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[5]", "Last Modified");
+        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/table/thead/tr/th[6]", "Modified By");
         browser.useCss();
         browser.click("xpath", "//button[@id='new-submission-button']");
         browser.click("xpath", "//a[@id='dashboardLink']");
@@ -41,5 +40,5 @@ module.exports = {
         browser.useXpath().assert.elementPresent("(//li[@class='choice-list-item']/a)[1]");
         browser.useCss();
         browser.useXpath().click("(//li[@class='choice-list-item']/a)[1]").pause(2000);
-        }
+        },
 }

@@ -88,15 +88,15 @@ jobs:
       - name: Set dev login flag
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: echo "ALLOW_DEV_LOGIN=true" >> $GITHUB_ENV
-      - name: Unit Test
-        run: |
-          for d in services/*/; do
-            pushd $d
-            if [ "`jq '.scripts.test' <package.json`" != null ]; then
-              npm clean-install-test
-            fi
-            popd
-          done
+      - name: Unit Test & Publish Coverage
+        uses: paambaati/codeclimate-action@v2.7.5
+        env:
+          CC_TEST_REPORTER_ID: ${{ secrets.CODECLIMATE_TEST_REPORTER_ID }}
+        with:
+          debug: true
+          coverageCommand: ./unit-test.sh
+          coverageLocations: |
+            ${{github.workspace}}/services/*/coverage/lcov.info:lcov
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
