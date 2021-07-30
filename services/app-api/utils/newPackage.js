@@ -4,15 +4,17 @@ export default async function newPackage(data) {
   var onedata = {
     pk: data.territory,
   };
-  onedata.sk = "v0#" + data.transmittalNumber;
-  onedata.currentVersion = "0";
+  onedata.timestamp = data.submittedAt;
   onedata.packageID = data.transmittalNumber;
   onedata.type = data.type;
   onedata.oneMacPackageStatus = "Pending";
   onedata.territory = data.territory;
   onedata.submitterName = data.user.firstName + " " + data.user.family_name;
   onedata.submitterEmail = data.user.email;
-  onedata.timestamp = data.submittedAt;
+  onedata.sk = "v0#" + data.transmittalNumber;
+  onedata.currentVersion = "0";
+  onedata.GSI1pk = "PACKAGE#v" + onedata.currentVersion;
+  onedata.GSI1sk = onedata.timestamp + "#" + onedata.packageID;
   onedata.clockEnd = data.ninetyDayClockEnd;
   onedata.additionalInformation = data.summary;
   onedata.uploads = data.uploads;
