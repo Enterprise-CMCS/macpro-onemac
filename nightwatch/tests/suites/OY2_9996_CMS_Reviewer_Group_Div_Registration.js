@@ -33,8 +33,8 @@ module.exports = {
         browser.useXpath().assert.containsText( full_name, "CMSReviewer Nightwatch");
         browser.useXpath().assert.containsText( role, "CMS Reviewer");
         browser.useXpath().assert.containsText( role_email, "cmsreviewer@nightwatch.test");
-        browser.useXpath().assert.containsText( group, "SDG");
-        browser.useXpath().assert.containsText( division, "DECD");
+        browser.useXpath().assert.containsText( group, "State Demonstrations Group");
+        browser.useXpath().assert.containsText( division, "Div of Eligibility & Coverage Demonstrations");
         browser.useCss();
     },
 }
