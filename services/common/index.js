@@ -43,8 +43,9 @@ export const RESPONSE_CODE = {
   HELPDESK_USER_SUBMITTED: "HU000",
   CMS_REVIEWER_USER_SUBMITTED: "CU000",
   SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
-  SUBMISSION_ID_EXIST_WARNING: "OMP003"
+  SUBMISSION_ID_EXIST_WARNING: "OMP003",
 };
+
 
 /**
  * Map Warning Message displayed on Waiver Form to message to include in CMS Email
