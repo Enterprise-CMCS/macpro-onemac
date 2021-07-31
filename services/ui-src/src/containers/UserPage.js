@@ -99,7 +99,7 @@ const transformAccesses = (user = {}) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile, setUserInfo } = useAppContext();
+  const { userProfile, setUserInfo, updatePhoneNumber } = useAppContext();
   const location = useLocation();
   const { userId } = useParams() ?? {};
   const [userData, setUserData] = useState({});
@@ -151,13 +151,14 @@ const UserPage = () => {
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setUserData((data) => ({ ...data, phoneNumber: newNumber }));
+        updatePhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
       setIsEditingPhone(false);
     },
-    [userProfile.email, setUserData]
+    [userProfile.email, setUserData, updatePhoneNumber]
   );
 
   const signupUser = useCallback(
@@ -282,7 +283,7 @@ const UserPage = () => {
         heading = "State Access Management";
         break;
       case ROLES.CMS_REVIEWER:
-        heading = "Status"
+        heading = "Status";
         heading2 = "Group & Division";
         break;
       case ROLES.CMS_APPROVER:

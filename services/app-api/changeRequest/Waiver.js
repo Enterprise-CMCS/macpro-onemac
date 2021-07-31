@@ -58,9 +58,9 @@ class Waiver {
     let transmittalNumberWarningMessage;
 
     const cmsEmail = {};
-    if ( data.transmittalNumberWarningMessage )
-    {
-      transmittalNumberWarningMessage = cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
     } else {
       transmittalNumberWarningMessage = "";
     }
