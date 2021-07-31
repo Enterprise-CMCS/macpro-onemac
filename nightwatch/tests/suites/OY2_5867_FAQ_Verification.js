@@ -145,13 +145,13 @@ module.exports = {
         // let respondToSAPRAI = 'button#spaRaiBtn';
         // browser.click(respondToSAPRAI);
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(1000);
+        browser.pause(4000);
         browser.useXpath().click("(//h4)[1]");
-        browser.pause(1000);
+        browser.pause(4000);
         browser.useXpath().click("(//h4)[2]");
         browser.useCss();
         browser.click('.form-card a');
-        browser.pause(3000);
+        browser.pause(4000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -224,12 +224,12 @@ module.exports = {
         // Respond to 1915(b) Waiver RAI
         //browser.click('button#waiverRaiBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(10000);
+        browser.pause(6000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(1000);
+        browser.pause(3000);
         browser.useXpath().click("(//h4)[2]");
         browser.useCss().click('.form-card a');
-        browser.pause(1000);
+        browser.pause(3000);
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
@@ -259,19 +259,19 @@ module.exports = {
         // Request Waiver Temporary Extension
         //browser.click('button#waiverExtBtn');
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(1000);
+        browser.pause(4000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(1000);
+        browser.pause(2000);
         browser.useXpath().click("(//h4)[3]");
         browser.useCss().click('.form-card a');
-        browser.pause(1000);
+        browser.pause(2000);
 
         //Switch to new tab
         browser.windowHandles(function (result) {
             // 0 == current main window, 1 == new tab
             var handle = result.value[1];
             browser.switchWindow(handle);
-            browser.pause(1000);
+            browser.pause(3000);
         });
         browser.pause(1000);
         // Verify the new window 
@@ -283,7 +283,7 @@ module.exports = {
     
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         browser.useXpath().click("(//h4)[3]");
-        browser.pause(800);
+        browser.pause(1000);
         let linkInFAQ = '(//div[@class="Collapsible__contentInner"]/p/a)[1]';
         browser.useXpath().click(linkInFAQ);
         browser.pause(1000);
