@@ -76,16 +76,16 @@ module.exports = {
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // SPA ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        //browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
-        browser.useXpath().assert.containsText(submittedIDNumber, spaID);
-        // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.pause(1000);
-        browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
-        // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
-        browser.useCss();
+        // browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        // //browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
+        // browser.useXpath().assert.containsText(submittedIDNumber, spaID);
+        // // Submitted Type Verification 
+        // browser.useXpath().expect.element(submittedType).to.be.visible;
+        // browser.pause(1000);
+        // browser.useXpath().assert.containsText(submittedType, "Medicaid SPA").pause(1000);
+        // // Data Submitted Verification 
+        // browser.useXpath().expect.element(submittedDate).to.be.visible;
+        // browser.useCss();
 
         //Submission List Verification Respond to SPA RAI
         browser.useXpath().click("//a[@id='new-submission-button']");
