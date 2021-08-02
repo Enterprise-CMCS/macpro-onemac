@@ -133,7 +133,7 @@ module.exports = {
         // Verify the submitted Content 
         // browser.refresh();
         browser.pause(5000);
-        // browser.refresh();
+        browser.refresh();
         let submittedIDNumber = "//*[@id='transmittalNumber-0']/a";
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         
