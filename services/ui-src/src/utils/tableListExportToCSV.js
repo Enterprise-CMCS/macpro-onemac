@@ -18,22 +18,19 @@ const submissionTypes = {
   waiverappk: "1915(c) Appendix K Amendment",
 };
 
-export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
-  var CSV = "";
-
-  var row = "";
+export const tableToCSV = (exportType, JSONData) => {
+  let CSV = "";
+  let row = "";
 
   switch (exportType) {
     case "submission-table":
-      row += "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By,";
+      row += "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By";
       break;
     case "user-table":
-      row += "Name,Email,State,Status,Role,Last Modified,Modified By,";
+      row += "Name,Email,State,Status,Role,Last Modified,Modified By";
       break;
     default:
   }
-
-  row = row.slice(0, -1);
 
   CSV += row + "\r\n";
 
@@ -74,6 +71,12 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
 
     CSV += row + "\r\n";
   }
+
+  return CSV;
+};
+
+export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
+  const CSV = tableToCSV(exportType, JSONData);
 
   if (CSV === "") {
     alert("Invalid data");
