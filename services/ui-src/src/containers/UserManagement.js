@@ -356,7 +356,7 @@ const UserManagement = () => {
         heading="User Management"
         rightSideContent={
           userProfile.userData.type === USER_TYPE.HELPDESK
-          && isUserActive
+          && isUserActive && csvExportSubmissions
         }
       />
       <AlertBar
