@@ -106,8 +106,8 @@ module.exports = {
     browser.pause(5000);
     browser.refresh();
 
-    // Verify the SPA on Submission List 
-    browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(6000);
+    // Verify the SPA on Submission List
+    browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(10000);
     browser.useCss();
     return spaID;
 },
