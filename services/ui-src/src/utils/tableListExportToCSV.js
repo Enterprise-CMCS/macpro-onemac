@@ -30,7 +30,7 @@ const serializeDate = (date) => {
     return '"' + format(date, "MMM d, yyyy") + '"';
   } catch (e) {
     console.warn(`Invalid time value: ${date}`);
-    row.push('"' + date + '"');
+    return '"' + date + '"';
   }
 };
 
@@ -40,6 +40,7 @@ export const tableToCSV = (exportType, JSONData) => {
 
   for (const JSONRow of JSONData) {
     const row = [];
+    // eslint-disable-next-line default-case
     switch (exportType) {
       case "submission-table":
         row.push(JSONRow.transmittalNumber);
@@ -56,8 +57,6 @@ export const tableToCSV = (exportType, JSONData) => {
         row.push(userTypes[JSONRow.role]);
         row.push(serializeDate(JSONRow.latest.date));
         row.push(JSON.stringify(JSONRow.latest.doneByName));
-        break;
-      default:
     }
 
     CSV += row.join(",") + "\r\n";
