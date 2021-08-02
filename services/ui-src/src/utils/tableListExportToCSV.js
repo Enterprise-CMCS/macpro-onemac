@@ -36,33 +36,32 @@ export const serializeDate = (date) => {
   }
 };
 
+const rowTransformer = {
+  "submission-table": (row) => [
+    row.transmittalNumber,
+    submissionTypes[row.type],
+    row.territory,
+    serializeDate(row.submittedAt),
+    JSON.stringify(row.user.firstName + " " + row.user.lastName),
+  ],
+  "user-table": (row) => [
+    JSON.stringify(row.firstName + " " + row.lastName),
+    row.email,
+    row.stateCode,
+    userStatus[row.latest.status],
+    userTypes[row.role],
+    serializeDate(row.latest.date),
+    JSON.stringify(row.latest.doneByName),
+  ],
+};
+
 export const tableToCSV = (exportType, JSONData) => {
   let CSV = CSV_HEADER[exportType] ?? "";
   CSV += "\r\n";
 
   for (const JSONRow of JSONData) {
-    const row = [];
-    // eslint-disable-next-line default-case
-    switch (exportType) {
-      case "submission-table":
-        row.push(JSONRow.transmittalNumber);
-        row.push(submissionTypes[JSONRow.type]);
-        row.push(JSONRow.territory);
-        row.push(serializeDate(JSONRow.submittedAt));
-        row.push(
-          JSON.stringify(JSONRow.user.firstName + " " + JSONRow.user.lastName)
-        );
-        break;
-      case "user-table":
-        row.push(JSON.stringify(JSONRow.firstName + " " + JSONRow.lastName));
-        row.push(JSONRow.email);
-        row.push(JSONRow.stateCode);
-        row.push(userStatus[JSONRow.latest.status]);
-        row.push(userTypes[JSONRow.role]);
-        row.push(serializeDate(JSONRow.latest.date));
-        row.push(JSON.stringify(JSONRow.latest.doneByName));
-    }
-
+    const tform = rowTransformer[exportType] ?? Object.values;
+    const row = tform(JSONRow);
     CSV += row.join(",") + "\r\n";
   }
 
