@@ -88,7 +88,7 @@ module.exports = {
         // upload a document and make a comment 
         let fileUploadElem = "[name='uploader-input-0']";
         let filePath = require('path').resolve(__dirname + '/files/file.docx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+        browser.useCss().setValue(fileUploadElem, filePath).pause(4000);
         //browser.useCss().setValue("textarea", "This is a test, just a test");
 
         // write the Summary 
