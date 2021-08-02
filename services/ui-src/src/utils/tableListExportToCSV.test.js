@@ -1,4 +1,18 @@
-import { tableToCSV } from "./tableListExportToCSV";
+import { format } from "date-fns";
+
+import { serializeDate, tableToCSV } from "./tableListExportToCSV";
+
+describe("date output", () => {
+  it("shapes a valid date into the right format", () => {
+    const date = new Date();
+    expect(serializeDate(date)).toContain(format(date, "MMM d, yyyy"));
+  });
+
+  it("outputs quoted raw value if an invalid date is passed in", () => {
+    const date = null;
+    expect(serializeDate(date)).toBe('"' + date + '"');
+  });
+});
 
 it("provides correct header row for submissions table", () => {
   const output = tableToCSV("submission-table", [], "");

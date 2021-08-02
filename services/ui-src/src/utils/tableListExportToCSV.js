@@ -25,11 +25,13 @@ const submissionTypes = {
   waiverappk: "1915(c) Appendix K Amendment",
 };
 
-const serializeDate = (date) => {
+export const serializeDate = (date) => {
   try {
     return '"' + format(date, "MMM d, yyyy") + '"';
   } catch (e) {
-    console.warn(`Invalid time value: ${date}`);
+    if (process.env.NODE_ENV !== "test") {
+      console.warn(`Invalid time value: ${date}`);
+    }
     return '"' + date + '"';
   }
 };
