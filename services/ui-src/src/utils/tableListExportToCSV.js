@@ -1,5 +1,12 @@
 import { userTypes } from "../libs/userLib";
 import { format } from "date-fns";
+
+const CSV_HEADER = {
+  "submission-table":
+    "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By",
+  "user-table": "Name,Email,State,Status,Role,Last Modified,Modified By",
+};
+
 const userStatus = {
   active: "Granted",
   denied: "Denied",
@@ -18,58 +25,42 @@ const submissionTypes = {
   waiverappk: "1915(c) Appendix K Amendment",
 };
 
-export const tableToCSV = (exportType, JSONData) => {
-  let CSV = "";
-  let row = "";
-
-  switch (exportType) {
-    case "submission-table":
-      row += "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By";
-      break;
-    case "user-table":
-      row += "Name,Email,State,Status,Role,Last Modified,Modified By";
-      break;
-    default:
+const serializeDate = (date) => {
+  try {
+    return '"' + format(date, "MMM d, yyyy") + '"';
+  } catch (e) {
+    console.warn(`Invalid time value: ${date}`);
+    row.push('"' + date + '"');
   }
+};
 
-  CSV += row + "\r\n";
+export const tableToCSV = (exportType, JSONData) => {
+  let CSV = CSV_HEADER[exportType] ?? "";
+  CSV += "\r\n";
 
-  for (var i = 0; i < JSONData.length; i++) {
-    row = "";
+  for (const JSONRow of JSONData) {
+    const row = [];
     switch (exportType) {
       case "submission-table":
-        row += JSONData[i].transmittalNumber + ",";
-        row += submissionTypes[JSONData[i].type] + ",";
-        row += JSONData[i].territory + ",";
-        try {
-          row += '"' + format(JSONData[i].submittedAt, "MMM d, yyyy") + '",';
-        } catch (e) {
-          console.warn(
-            `Invalid time value in row ${i}: ${JSONData[i].submittedAt}`
-          );
-          row += '"' + JSONData[i].submittedAt + '",';
-        }
-        row += JSONData[i].user.firstName + " ";
-        row += JSONData[i].user.lastName;
+        row.push(JSONRow.transmittalNumber);
+        row.push(submissionTypes[JSONRow.type]);
+        row.push(JSONRow.territory);
+        row.push(serializeDate(JSONRow.submittedAt));
+        row.push(JSONRow.user.firstName + " " + JSONRow.user.lastName);
         break;
       case "user-table":
-        row += JSONData[i].firstName + " ";
-        row += JSONData[i].lastName + ",";
-        row += JSONData[i].email + ",";
-        row += JSONData[i].stateCode + ",";
-        row += userStatus[JSONData[i].latest.status] + ",";
-        row += userTypes[JSONData[i].role] + ",";
-        row +=
-          '"' +
-          format(JSONData[i].latest.date * 1000, "MMM d, yyyy hh:mm a") +
-          '",';
-        row += JSON.stringify(JSONData[i].latest.doneByName);
+        row.push(JSONRow.user.firstName + " " + JSONRow.user.lastName);
+        row.push(JSONRow.email);
+        row.push(JSONRow.stateCode);
+        row.push(userStatus[JSONRow.latest.status]);
+        row.push(userTypes[JSONRow.role]);
+        row.push(serializeDate(JSONRow.latest.date));
+        row.push(JSON.stringify(JSONRow.latest.doneByName));
         break;
       default:
     }
-    row.slice(0, row.length - 1);
 
-    CSV += row + "\r\n";
+    CSV += row.join(",") + "\r\n";
   }
 
   return CSV;
