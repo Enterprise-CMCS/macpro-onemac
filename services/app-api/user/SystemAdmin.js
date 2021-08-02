@@ -13,12 +13,9 @@ class SystemAdmin {
   getScanParams() {
     const scanParams = {
       TableName: process.env.userTableName,
-      FilterExpression: "#ty = :userType0 or #ty = :userType1",
+      FilterExpression: "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: {
-        ":userType0": USER_TYPES.CMS_APPROVER,
-        ":userType1": USER_TYPES.HELPDESK,
-      },
+      ExpressionAttributeValues: { ":userType": USER_TYPES.SYSTEM_ADMIN },
     };
     return scanParams;
   }

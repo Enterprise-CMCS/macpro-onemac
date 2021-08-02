@@ -196,49 +196,51 @@ const UserManagement = () => {
       };
 
       return (
-        <PopupMenu
-          selectedRow={row.id}
-          userEmail={row.values.email}
-          menuItems={menuItems}
-          handleSelected={(rowNum, value) => {
-            let newAlertCode = alertCodes[value];
-            let newPersonalized = "Chester Tester";
+        showActions(userProfile.userData.type, row.original.role) && (
+          <PopupMenu
+            selectedRow={row.id}
+            userEmail={row.values.email}
+            menuItems={menuItems}
+            handleSelected={(rowNum, value) => {
+              let newAlertCode = alertCodes[value];
+              let newPersonalized = "Chester Tester";
 
-            const updateStatusRequest = {
-              userEmail: userList[rowNum].email,
-              doneBy: userProfile.userData.id,
-              attributes: [
-                {
-                  stateCode:
-                    row.original.role === USER_TYPE.STATE_SUBMITTER ||
-                    row.original.role === USER_TYPE.STATE_ADMIN
-                      ? row.original.stateCode
-                      : undefined, // required for state submitter and state admin
-                  status: value,
-                },
-              ],
-              type: row.original.role,
-            };
-            UserDataApi.setUserStatus(updateStatusRequest)
-              .then(function (returnCode) {
-                // alert already set per status change, only check for success here
-                if (returnCode === "UR000") {
-                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
-                } else {
-                  newAlertCode = returnCode;
-                }
-                updateList();
-              })
-              .then(() => {
-                setAlertCode(newAlertCode);
-                setDoneToName(newPersonalized);
-              })
-              .catch((e) => {
-                console.log("Error while fetching user's list.", e);
-                setAlertCode(RESPONSE_CODE[e.message]);
-              });
-          }}
-        />
+              const updateStatusRequest = {
+                userEmail: userList[rowNum].email,
+                doneBy: userProfile.userData.id,
+                attributes: [
+                  {
+                    stateCode:
+                      row.original.role === USER_TYPE.STATE_SUBMITTER ||
+                      row.original.role === USER_TYPE.STATE_ADMIN
+                        ? row.original.stateCode
+                        : undefined, // required for state submitter and state admin
+                    status: value,
+                  },
+                ],
+                type: row.original.role,
+              };
+              UserDataApi.setUserStatus(updateStatusRequest)
+                .then(function (returnCode) {
+                  // alert already set per status change, only check for success here
+                  if (returnCode === "UR000") {
+                    newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
+                  } else {
+                    newAlertCode = returnCode;
+                  }
+                  updateList();
+                })
+                .then(() => {
+                  setAlertCode(newAlertCode);
+                  setDoneToName(newPersonalized);
+                })
+                .catch((e) => {
+                  console.log("Error while fetching user's list.", e);
+                  setAlertCode(RESPONSE_CODE[e.message]);
+                });
+            }}
+          />
+        )
       );
     },
     [updateList, userList, userProfile]
@@ -321,6 +323,15 @@ const UserManagement = () => {
     []
   );
 
+  const showActions = (currentUserRole, rowUserRole) => {
+    if (currentUserRole !== USER_TYPE.STATE_ADMIN) return true;
+    if (
+      rowUserRole === USER_TYPE.CMS_APPROVER ||
+      rowUserRole === USER_TYPE.HELPDESK
+    ) {
+      return true;
+    } else return false;
+  };
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
@@ -347,9 +358,8 @@ const UserManagement = () => {
     </Button>
   );
 
-    const isUserActive =
-        !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
-
+  const isUserActive =
+    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
   // Render the dashboard
   return (
@@ -357,9 +367,9 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          userProfile.userData.type === USER_TYPE.HELPDESK
-          && isUserActive
-          && csvExportSubmissions
+          userProfile.userData.type === USER_TYPE.HELPDESK &&
+          isUserActive &&
+          csvExportSubmissions
         }
       />
       <AlertBar
