@@ -25,10 +25,10 @@ export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
 
   switch (exportType) {
     case "submission-table":
-      row += "SPA ID/Waiver Number,Type,Date Submitted,Submitted By";
+      row += "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By,";
       break;
     case "user-table":
-      row += "Name,Email,State,Status,Role,Last Modified,Modified By";
+      row += "Name,Email,State,Status,Role,Last Modified,Modified By,";
       break;
     default:
   }
