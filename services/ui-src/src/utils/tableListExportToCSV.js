@@ -1,5 +1,12 @@
 import { userTypes } from "../libs/userLib";
 import { format } from "date-fns";
+
+const CSV_HEADER = {
+  "submission-table":
+    "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By",
+  "user-table": "Name,Email,State,Status,Role,Last Modified,Modified By",
+};
+
 const userStatus = {
   active: "Granted",
   denied: "Denied",
@@ -18,62 +25,51 @@ const submissionTypes = {
   waiverappk: "1915(c) Appendix K Amendment",
 };
 
-export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
-  var CSV = "";
-
-  var row = "";
-
-  switch (exportType) {
-    case "submission-table":
-      row += "SPA ID/Waiver Number,Type,Date Submitted,Submitted By";
-      break;
-    case "user-table":
-      row += "Name,Email,State,Status,Role,Last Modified,Modified By";
-      break;
-    default:
-  }
-
-  row = row.slice(0, -1);
-
-  CSV += row + "\r\n";
-
-  for (var i = 0; i < JSONData.length; i++) {
-    row = "";
-    switch (exportType) {
-      case "submission-table":
-        row += JSONData[i].transmittalNumber + ",";
-        row += submissionTypes[JSONData[i].type] + ",";
-        row += JSONData[i].territory + ",";
-        try {
-          row += '"' + format(JSONData[i].submittedAt, "MMM d, yyyy") + '",';
-        } catch (e) {
-          console.warn(
-            `Invalid time value in row ${i}: ${JSONData[i].submittedAt}`
-          );
-          row += '"' + JSONData[i].submittedAt + '",';
-        }
-        row += JSONData[i].user.firstName + " ";
-        row += JSONData[i].user.lastName;
-        break;
-      case "user-table":
-        row += JSONData[i].firstName + " ";
-        row += JSONData[i].lastName + ",";
-        row += JSONData[i].email + ",";
-        row += JSONData[i].stateCode + ",";
-        row += userStatus[JSONData[i].latest.status] + ",";
-        row += userTypes[JSONData[i].role] + ",";
-        row +=
-          '"' +
-          format(JSONData[i].latest.date * 1000, "MMM d, yyyy hh:mm a") +
-          '",';
-        row += JSON.stringify(JSONData[i].latest.doneByName);
-        break;
-      default:
+export const serializeDate = (date) => {
+  try {
+    return '"' + format(date, "MMM d, yyyy") + '"';
+  } catch (e) {
+    if (process.env.NODE_ENV !== "test") {
+      console.warn(`Invalid time value: ${date}`);
     }
-    row.slice(0, row.length - 1);
-
-    CSV += row + "\r\n";
+    return '"' + date + '"';
   }
+};
+
+const rowTransformer = {
+  "submission-table": (row) => [
+    row.transmittalNumber,
+    submissionTypes[row.type],
+    row.territory,
+    serializeDate(row.submittedAt),
+    JSON.stringify(row.user.firstName + " " + row.user.lastName),
+  ],
+  "user-table": (row) => [
+    JSON.stringify(row.firstName + " " + row.lastName),
+    row.email,
+    row.stateCode,
+    userStatus[row.latest.status],
+    userTypes[row.role],
+    serializeDate(row.latest.date),
+    JSON.stringify(row.latest.doneByName),
+  ],
+};
+
+export const tableToCSV = (exportType, JSONData) => {
+  let CSV = CSV_HEADER[exportType] ?? "";
+  CSV += "\r\n";
+
+  for (const JSONRow of JSONData) {
+    const tform = rowTransformer[exportType] ?? Object.values;
+    const row = tform(JSONRow);
+    CSV += row.join(",") + "\r\n";
+  }
+
+  return CSV;
+};
+
+export const tableListExportToCSV = (exportType, JSONData, ReportTitle) => {
+  const CSV = tableToCSV(exportType, JSONData);
 
   if (CSV === "") {
     alert("Invalid data");
