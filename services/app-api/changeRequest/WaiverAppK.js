@@ -1,5 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
-import dynamoDb from "../libs/dynamodb-lib";
+import newPackage from "../utils/newPackage";
+import packageExists from "../utils/packageExists";
 
 /**
  * Waiver Appendix K Amendment specific functions.
@@ -14,26 +15,16 @@ class WaiverAppK {
   async fieldsValid(data) {
     let areFieldsValid = true;
     let whyNot = "";
-
-    const params = {
-      TableName: process.env.spaIdTableName,
-      // 'Key' defines the partition key and sort key of the item to be retrieved
-      // - 'id': change request ID
-      Key: {
-        id: data.transmittalNumber,
-      },
-    };
-    console.log("the params for checking", params);
+    let doesExist = false;
     try {
-      const result = await dynamoDb.get(params);
-
-      if (result.Item) {
-        console.log("the Item exists", result);
-      } else {
-        console.log("result.Item does not exist");
-      }
+      doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
-      console.log("packageExists got an error: ", error);
+      throw error;
+    }
+    if (doesExist) {
+      console.log("the Item exists");
+    } else {
+      console.log("result.Item does not exist");
     }
 
     return { areFieldsValid, whyNot };
@@ -123,7 +114,26 @@ class WaiverAppK {
     return stateEmail;
   }
 
-  saveSubmission(data) {}
+  saveSubmission(data) {
+    let submitterName = data.user.firstName + " " + data.user.lastName;
+    let appkData = {
+      packageID: data.transmittalNumber,
+      packageType: "1915(c)",
+      packageStatus: "Submitted",
+      territory: data.territory,
+      timestamp: data.submittedAt,
+      clockEndTimestamp: data.ninetyDayClockEnd,
+      originalSubmissionDate: data.submittedAt,
+      originalAttachments: data.uploads,
+      originalAdditionalInformation: data.summary,
+      originalSubmitterName: submitterName,
+      originalSubmitterEmail: data.user.email,
+      lastModifiedByName: submitterName,
+      lastModifiedByEmail: data.user.email,
+    };
+
+    newPackage(appkData);
+  }
 }
 
 const instance = new WaiverAppK();

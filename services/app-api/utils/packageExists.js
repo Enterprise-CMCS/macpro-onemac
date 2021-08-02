@@ -11,7 +11,7 @@ export default async function packageExists(id) {
   let sk = "v0#" + id;
   const params = {
     TableName: process.env.oneMacTableName,
-    KeyConditionExpression: "pk = :pk AND begins_with(sk, :sk)",
+    KeyConditionExpression: "pk = :pk AND sk = :sk",
     ExpressionAttributeValues: {
       ":pk": pk,
       ":sk": sk,

@@ -1,5 +1,4 @@
 import { getLinksHtml } from "./changeRequest-util";
-//import dynamoDb from "../libs/dynamodb-lib";
 import packageExists from "../utils/packageExists";
 import updatePackage from "../utils/updatePackage";
 import { RESPONSE_CODE } from "cmscommonlib";
@@ -109,17 +108,21 @@ class SPARAI {
   }
 
   saveSubmission(data) {
+    let submitterName = data.user.firstName + " " + data.user.lastName;
     let raiResponseData = {
       packageID: data.transmittalNumber,
-      actionTimestamp: data.submittedAt,
       packageStatus: "RAI Response Submitted",
-      rairesponseattachments: data.uploads,
-      rairesponseAdditionalInformation: data.summary,
-      submitterName: data.user.firstName + " " + data.user.lastName,
-      submitterEmail: data.user.email,
+      timestamp: data.submittedAt,
+      raiResponseSubmissionDate: data.submittedAt,
+      raiResponseAttachments: data.uploads,
+      raiResponseAdditionalInformation: data.summary,
+      raiResponseSubmitterName: submitterName,
+      raiResponseSubmitterEmail: data.user.email,
+      lastModifiedByName: submitterName,
+      lastModifiedByEmail: data.user.email,
     };
 
-    updatePackage(raiResponseData.packageID, raiResponseData);
+    updatePackage(raiResponseData);
   }
 }
 

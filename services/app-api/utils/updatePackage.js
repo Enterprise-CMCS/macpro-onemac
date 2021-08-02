@@ -1,9 +1,9 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export default async function updatePackage(packageID, updates) {
+export default async function updatePackage(updateData) {
   // get the latest version from current v0 Item
-  var v0sk = "v0#" + packageID;
-  var v0pk = packageID.toString().substring(0, 2);
+  var v0sk = "v0#" + updateData.packageID;
+  var v0pk = updateData.packageID.toString().substring(0, 2);
 
   var v0params = {
     TableName: process.env.oneMacTableName,
@@ -34,13 +34,11 @@ export default async function updatePackage(packageID, updates) {
   let newVersion = oldVersion + 1;
 
   let nextItem = { ...currentPackage.Item };
-  let updateExp = "SET #currentVersion = :newVersion, #time = :time";
+  let updateExp = "SET #currentVersion = :newVersion";
   let expressionAttributeNames = {
-    "#time": "timestamp",
     "#currentVersion": "currentVersion",
   };
   let expressionAttributeValues = {
-    ":time": Date.now(),
     ":newVersion": newVersion.toString(),
     ":currentVersion": oldVersion.toString(),
   };
@@ -50,7 +48,8 @@ export default async function updatePackage(packageID, updates) {
 
   // go through and make our updates... if the attribute already exists, overwrite
   // if it does not, then add
-  for (const [key, value] of Object.entries(updates)) {
+  for (const [key, value] of Object.entries(updateData)) {
+    if (key === "packageID") continue;
     nextItem[key] = value;
     updateExp += ",#" + key + " = :" + key;
     expressionAttributeNames["#" + key] = key.toString();
@@ -93,6 +92,22 @@ export default async function updatePackage(packageID, updates) {
     );
     throw dbError;
   }
+
+  try {
+    currentPackage = await dynamoDb.get(v0params);
+  } catch (dbError) {
+    console.log(`Error happened while reading from DB:  ${dbError.message}`);
+    throw dbError;
+  }
+
+  if (!currentPackage.Item) {
+    throw new Error(
+      `v0 Item does not exist for params: ${JSON.stringify(v0params)}`
+    );
+  }
+
+  // copy the v0 into the v(currentVersion+1)
+  console.log("Updated v0 Result.Item is : ", currentPackage.Item);
 
   return;
 }

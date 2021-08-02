@@ -124,18 +124,23 @@ class SPA {
   }
 
   async saveSubmission(data) {
+    let submitterName = data.user.firstName + " " + data.user.lastName;
     let spaData = {
       packageID: data.transmittalNumber,
-      territory: data.territory,
-      timestamp: data.submittedAt,
       packageType: "Medicaid SPA",
       packageStatus: "Submitted",
+      territory: data.territory,
+      timestamp: data.submittedAt,
       clockEndTimestamp: data.ninetyDayClockEnd,
-      attachments: data.uploads,
-      additionalInformation: data.summary,
-      submitterName: data.user.firstName + " " + data.user.lastName,
-      submitterEmail: data.user.email,
+      originalSubmissionDate: data.submittedAt,
+      originalAttachments: data.uploads,
+      originalAdditionalInformation: data.summary,
+      originalSubmitterName: submitterName,
+      originalSubmitterEmail: data.user.email,
+      lastModifiedByName: submitterName,
+      lastModifiedByEmail: data.user.email,
     };
+
     newPackage(spaData);
   }
 }

@@ -7,16 +7,15 @@ export default async function newPackage(data) {
   data.GSI1pk = "PACKAGE#v" + data.currentVersion;
   data.GSI1sk = data.timestamp + "#" + data.packageID;
 
-  var oneparams = {
+  var v0params = {
     TableName: process.env.oneMacTableName,
     Item: data,
   };
 
-  console.log("oneParams is: ", oneparams);
+  console.log("oneParams is: ", v0params);
   try {
-    await dynamoDb.put(oneparams);
+    await dynamoDb.put(v0params);
   } catch (error) {
     throw error;
   }
-  return;
 }

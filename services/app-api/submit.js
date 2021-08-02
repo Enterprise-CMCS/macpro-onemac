@@ -12,7 +12,6 @@ import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
-//import newPackage from "./utils/newPackage";
 
 /**
  * Submission states for the change requests.

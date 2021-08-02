@@ -1,5 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
-import dynamoDb from "../libs/dynamodb-lib";
+import updatePackage from "../utils/updatePackage";
+import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
@@ -15,29 +16,19 @@ class CHIPSPARAI {
   async fieldsValid(data) {
     let areFieldsValid = false;
     let whyNot = "";
-
-    const params = {
-      TableName: process.env.spaIdTableName,
-      // 'Key' defines the partition key and sort key of the item to be retrieved
-      // - 'id': change request ID
-      Key: {
-        id: data.transmittalNumber,
-      },
-    };
-    console.log("the params for checking", params);
+    let doesExist = false;
     try {
-      const result = await dynamoDb.get(params);
-
-      if (result.Item) {
-        console.log("the Item exists", result);
-        areFieldsValid = true;
-      } else {
-        console.log("result.Item does not exist");
-        areFieldsValid = false;
-        whyNot = RESPONSE_CODE.ID_NOT_FOUND;
-      }
+      doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
-      console.log("packageExists got an error: ", error);
+      throw error;
+    }
+    if (doesExist) {
+      console.log("the Item exists");
+      areFieldsValid = true;
+    } else {
+      console.log("result.Item does not exist");
+      areFieldsValid = false;
+      whyNot = RESPONSE_CODE.ID_NOT_FOUND;
     }
 
     return { areFieldsValid, whyNot };
@@ -113,7 +104,23 @@ class CHIPSPARAI {
     return stateEmail;
   }
 
-  saveSubmission(data) {}
+  saveSubmission(data) {
+    let submitterName = data.user.firstName + " " + data.user.lastName;
+    let raiResponseData = {
+      packageID: data.transmittalNumber,
+      packageStatus: "RAI Response Submitted",
+      timestamp: data.submittedAt,
+      raiResponseSubmissionDate: data.submittedAt,
+      raiResponseAttachments: data.uploads,
+      raiResponseAdditionalInformation: data.summary,
+      raiResponseSubmitterName: submitterName,
+      raiResponseSubmitterEmail: data.user.email,
+      lastModifiedByName: submitterName,
+      lastModifiedByEmail: data.user.email,
+    };
+
+    updatePackage(raiResponseData);
+  }
 }
 
 const instance = new CHIPSPARAI();

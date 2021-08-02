@@ -1,7 +1,9 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Redirect, useHistory } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
+import UserDataApi from "./utils/UserDataApi";
 
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
@@ -30,7 +32,47 @@ const FORM_TYPES = {
 };
 
 export default function DynamicRoutes() {
-  const { userProfile: { userData: { type } = {} } = {} } = useAppContext();
+  const { isAuthenticated, userProfile: { userData: { type } = {} } = {} } =
+    useAppContext();
+  const history = useHistory();
+
+  async function checkRoute() {
+    let isValidURLPath = false;
+    const authUser = await Auth.currentAuthenticatedUser();
+    const email = authUser.signInUserSession.idToken.payload.email;
+    const userData = await UserDataApi.userProfile(email);
+
+    if (userData.type !== undefined && userData.validRoutes !== undefined) {
+      const roleRoutes = userData.validRoutes;
+
+      // Loop check for allowed route base path
+      roleRoutes.forEach(checkBaseURLPath);
+
+      function checkBaseURLPath(item) {
+        let currentPath = document.location.pathname.substring(0, item.length);
+        if (item === currentPath) {
+          isValidURLPath = true;
+        }
+      }
+      if (!isValidURLPath) {
+        history.push(ROUTES.HOME);
+        return;
+      }
+    }
+  }
+
+  useEffect(() => {
+    let mounted = true;
+
+    checkRoute();
+    // Drop to home if user not logged in
+    if (!isAuthenticated && mounted) {
+      history.push(ROUTES.HOME);
+    }
+    return function cleanup() {
+      mounted = false;
+    };
+  });
 
   if (!type) {
     return (

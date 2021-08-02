@@ -1,4 +1,5 @@
 import { getLinksHtml } from "./changeRequest-util";
+import newPackage from "../utils/newPackage";
 import dynamoDb from "../libs/dynamodb-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -113,7 +114,26 @@ class CHIPSPA {
     return stateEmail;
   }
 
-  saveSubmission(data) {}
+  saveSubmission(data) {
+    let submitterName = data.user.firstName + " " + data.user.lastName;
+    let chipData = {
+      packageID: data.transmittalNumber,
+      packageType: "CHIP SPA",
+      packageStatus: "Submitted",
+      territory: data.territory,
+      timestamp: data.submittedAt,
+      clockEndTimestamp: data.ninetyDayClockEnd,
+      originalSubmissionDate: data.submittedAt,
+      originalAttachments: data.uploads,
+      originalAdditionalInformation: data.summary,
+      originalSubmitterName: submitterName,
+      originalSubmitterEmail: data.user.email,
+      lastModifiedByName: submitterName,
+      lastModifiedByEmail: data.user.email,
+    };
+
+    newPackage(chipData);
+  }
 }
 
 const instance = new CHIPSPA();
