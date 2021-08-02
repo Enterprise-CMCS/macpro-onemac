@@ -346,10 +346,8 @@ const UserManagement = () => {
       </svg>
     </Button>
   );
-
-    const isUserActive =
-        !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
-
+  const isUserActive =
+    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
   // Render the dashboard
   return (
@@ -358,8 +356,7 @@ const UserManagement = () => {
         heading="User Management"
         rightSideContent={
           userProfile.userData.type === USER_TYPE.HELPDESK
-          && isUserActive
-          && csvExportSubmissions
+          && isUserActive && csvExportSubmissions
         }
       />
       <AlertBar

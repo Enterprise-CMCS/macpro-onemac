@@ -21,7 +21,7 @@ after: function (browser) {
       myAccountLink: "@myAccountLink",
       manageAccountLink: "@manageAccountLink",
       subUrl: "/profile",
-      pageTitle: "My Profile"
+      pageTitle: "Profile Information"
     }
   ) {
     pageObjects = browser.page.spaBasePage();
@@ -29,6 +29,6 @@ after: function (browser) {
     pageObjects.click(testData.myAccountLink).waitForElementPresent(testData.manageAccountLink);
     pageObjects.click(testData.manageAccountLink).waitForElementPresent("body");
     browser.assert.urlContains(testData.subUrl);
-    browser.verify.containsText('h1', testData.pageTitle);
+    browser.verify.containsText('h2', testData.pageTitle);
   },
 };

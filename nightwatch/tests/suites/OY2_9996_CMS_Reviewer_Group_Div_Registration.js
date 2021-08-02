@@ -21,7 +21,7 @@ module.exports = {
         browser.useCss().click(my_account_button); 
         browser.useCss().click(manage_account_link); 
         browser.pause(2000);
-        browser.useXpath().assert.containsText( "//h1", "My Profile").pause(2000);
+        browser.useXpath().assert.containsText( "//h2", "Profile Information").pause(2000);
         
         let full_name = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/div";
         let role = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/div";
@@ -33,8 +33,8 @@ module.exports = {
         browser.useXpath().assert.containsText( full_name, "CMSReviewer Nightwatch");
         browser.useXpath().assert.containsText( role, "CMS Reviewer");
         browser.useXpath().assert.containsText( role_email, "cmsreviewer@nightwatch.test");
-        browser.useXpath().assert.containsText( group, "SDG");
-        browser.useXpath().assert.containsText( division, "DECD");
+        browser.useXpath().assert.containsText( group, "State Demonstrations Group");
+        browser.useXpath().assert.containsText( division, "Div of Eligibility & Coverage Demonstrations");
         browser.useCss();
     },
 }

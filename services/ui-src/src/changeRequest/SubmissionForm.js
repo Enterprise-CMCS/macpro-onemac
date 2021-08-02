@@ -262,7 +262,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                 } else {
                   tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
                 }
                 // ID exists but it should NOT exist
               } else if (dupID && !correspondingValidation.idMustExist) {
@@ -337,7 +337,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
         transmittalNumberStatusMessage.statusLevel === "warn" &&
         transmittalNumberStatusMessage.statusMessage
       ) {
-        transmittalNumberWarningMessage = transmittalNumberStatusMessage.warningMessageCode;
+        transmittalNumberWarningMessage =
+          transmittalNumberStatusMessage.warningMessageCode;
       }
 
       uploadRef
