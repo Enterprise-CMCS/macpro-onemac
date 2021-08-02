@@ -23,8 +23,8 @@ module.exports = {
 
     'Verify user can submit new CHIP SPA': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(3) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[3]");
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -65,22 +65,22 @@ module.exports = {
         console.log("filePath--" , filePath);
         // let text4000 = fs.readFileSync(path.join(__dirname, '/files/textvalidation.txt'),'utf8');
         let text4000 = fs.readFileSync(filePath,'utf8');
-        browser.pause(2000);
+        browser.pause(6000);
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
-        browser.pause(3000);
+        browser.pause(6000);
 
         // Submit the new SPA 
-        browser.click("[value='Submit']").pause(2000);
+        browser.click("[value='Submit']").pause(8000);
         browser.refresh();
         browser.pause(5000);
         browser.refresh();
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
-        browser.pause(2000);
+        browser.pause(10000);
         browser.useXpath().click("(//table//td)[1]/a");
-        browser.pause(2000);
+        browser.pause(6000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
         browser.useCss().click( "#back-button > svg").waitForElementPresent("body");
@@ -91,8 +91,8 @@ module.exports = {
     
     'Verify SPA and Waiver Dashboard > Respond to CHIP RAI for SPA Submission': function (browser) {
         browser.useCss().click("#new-submission-button");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > h4");
-        browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(4) > a > h4");
+        browser.useXpath().click("(//li[@class='choice']/a)[1]");
+        browser.useXpath().click("(//li[@class='choice']/a)[4]");
         browser.useCss().setValue("input#transmittalNumber", chipspaID);
 
         // upload a document and make a comment 
@@ -121,20 +121,20 @@ module.exports = {
         console.log("filePath--" , filePath);
         // let text4000 = fs.readFileSync(path.join(__dirname, '/files/textvalidation.txt'),'utf8');
         let text4000 = fs.readFileSync(filePath,'utf8');
-        browser.pause(2000);
+        browser.pause(4000);
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
         browser.pause(7000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(3000);
+        browser.useCss().click("[value='Submit']").pause(6000);
         
         // Verify the submitted Content 
         // browser.refresh();
         browser.pause(5000);
         // browser.refresh();
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedIDNumber = "//*[@id='transmittalNumber-0']/a";
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         
         // SPA ID Verification 

@@ -97,6 +97,7 @@ class StateAdmin {
           lastName: oneUser.lastName,
           stateCode: oneAttribute.stateCode,
           latest: getCurrentStatus(oneAttribute.history),
+          role: oneUser.type,
         });
         i++;
       });

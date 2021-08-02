@@ -299,6 +299,7 @@ input[type="file"] {
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-align-items--center;
+  @extend .ds-u-padding-bottom--5;
 
   h2 {
     @extend .ds-u-margin-top--7;
@@ -335,7 +336,6 @@ input[type="file"] {
     @extend .ds-u-measure--wide;
     @extend .ds-u-font-style--italic;
     color: $color-gray;
-    padding-bottom: 40px;
 
     a {
       white-space: nowrap;
@@ -847,10 +847,6 @@ article.form-container {
     width: 20%;
   }
 
-  #emailColHeader {
-    min-width: 30%;
-  }
-
   #stateColHeader {
     width: 75px;
   }
@@ -861,11 +857,6 @@ article.form-container {
 
   #personnelActionsColHeader {
     width: 140px;
-  }
-
-  .user-email {
-    font-weight: normal;
-    text-decoration: none;
   }
 
   .user-state {
@@ -884,6 +875,14 @@ article.form-container {
 
   td.actions button {
     float: right;
+  }
+}
+
+.submissions-table,
+.user-table {
+  .user-name {
+    font-weight: normal;
+    text-decoration: none;
   }
 }
 
@@ -1647,6 +1646,11 @@ aside#faq-contact-info-box {
       margin-right: 1ch;
     }
   }
+}
+
+.group-division-option-abbr {
+  display: inline-block;
+  min-width: 8ch;
 }
 
 .choice-container {

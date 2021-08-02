@@ -79,5 +79,18 @@
     "presets": [
       "react-app"
     ]
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "clover"
+    ]
   }
 }

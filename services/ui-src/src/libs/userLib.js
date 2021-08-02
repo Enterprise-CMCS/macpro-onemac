@@ -37,32 +37,12 @@ export const deniedOrRevokedMessage = {
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
 };
 
-export const grantConfirmMessage = {
-  [USER_TYPE.STATE_SUBMITTER]:
-    "Warning\n\nThis will activate the selected user’s account for state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-  [USER_TYPE.STATE_ADMIN]:
-    "Warning\n\nThis will activate the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-  default:
-    "Warning\n\nThis will activate the selected user’s account. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-};
-
-export const denyConfirmMessage = {
-  [USER_TYPE.STATE_SUBMITTER]:
-    "Warning\n\nThis will deny the selected user’s account state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-  [USER_TYPE.STATE_ADMIN]:
-    "Warning\n\nThis will deny the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-  default:
-    "Warning\n\nThis will deny the selected user’s account for access. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-};
-
-export const revokeConfirmMessage = {
-  [USER_TYPE.STATE_SUBMITTER]:
-    "Warning\n\nThis will revoke the selected user’s account for state access to create and submit SPA and Waiver forms.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-  [USER_TYPE.STATE_ADMIN]:
-    "Warning\n\nThis will revoke the selected user’s account for State Systems Administrator access.  This role approves State Submitters.  A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-  default:
-    "Warning\n\nThis will revoke the selected user’s account for access. A notification will be emailed to the user.\n\nAre you sure you want to proceed?",
-};
+export const grantConfirmMessage =
+  "This will grant the selected user access.\nAre you sure you want to proceed?";
+export const denyConfirmMessage =
+  "This will deny the selected user’s request for access.\nAre you sure you want to proceed?";
+export const revokeConfirmMessage =
+  "This will revoke the selected user’s request for access.\nAre you sure you want to proceed?";
 
 /**
  * Determine the type of userData and sort corresponding arrays per state if needed.

@@ -28,5 +28,18 @@
     "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "clover"
+    ]
   }
 }

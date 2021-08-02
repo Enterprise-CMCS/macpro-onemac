@@ -12,7 +12,7 @@ import UserDataApi from "../utils/UserDataApi";
 import { GroupAndDivision } from "./GroupAndDivision";
 
 describe("dropdown logic", () => {
-  it("lets you select a group", async () => {
+  it.each(["name", "abbr"])("lets you select a group by %s", async (field) => {
     render(
       <MemoryRouter>
         <GroupAndDivision />
@@ -21,7 +21,7 @@ describe("dropdown logic", () => {
     expect(screen.getByRole("form")).toHaveFormValues({ group: "" });
     // TODO: adjust this when groups and divisions are no longer hardcoded
     const group = groupData[2];
-    await selectEvent.select(screen.getByLabelText(/group/i), group.name);
+    await selectEvent.select(screen.getByLabelText(/group/i), group[field]);
     expect(screen.getByRole("form")).toHaveFormValues({
       group: `${group.id}`,
     });
@@ -36,26 +36,32 @@ describe("dropdown logic", () => {
     expect(screen.queryByLabelText(/division/i)).toBeNull();
   });
 
-  it("lets you select a division once a group is selected", async () => {
-    render(
-      <MemoryRouter>
-        <GroupAndDivision />
-      </MemoryRouter>
-    );
-    // TODO: adjust this when groups and divisions are no longer hardcoded
-    const group = groupData[1],
-      division = group.divisions[3];
-    await selectEvent.select(screen.getByLabelText(/group/i), group.name);
-    expect(screen.getByRole("form")).toHaveFormValues({
-      group: `${group.id}`,
-      division: "",
-    });
-    await selectEvent.select(screen.getByLabelText(/division/i), division.name);
-    expect(screen.getByRole("form")).toHaveFormValues({
-      group: `${group.id}`,
-      division: `${division.id}`,
-    });
-  });
+  it.each(["name", "abbr"])(
+    "lets you select a division by %s once a group is selected",
+    async (field) => {
+      render(
+        <MemoryRouter>
+          <GroupAndDivision />
+        </MemoryRouter>
+      );
+      // TODO: adjust this when groups and divisions are no longer hardcoded
+      const group = groupData[1],
+        division = group.divisions[3];
+      await selectEvent.select(screen.getByLabelText(/group/i), group.name);
+      expect(screen.getByRole("form")).toHaveFormValues({
+        group: `${group.id}`,
+        division: "",
+      });
+      await selectEvent.select(
+        screen.getByLabelText(/division/i),
+        division[field]
+      );
+      expect(screen.getByRole("form")).toHaveFormValues({
+        group: `${group.id}`,
+        division: `${division.id}`,
+      });
+    }
+  );
 
   it("clears the selected division when group is changed", async () => {
     render(

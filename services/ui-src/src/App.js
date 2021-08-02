@@ -75,6 +75,23 @@ function App() {
     });
   }
 
+  /**
+   * Updates phone number in the user profile,
+   * @param {string} phoneNumber is used to update the user profile
+   */
+  async function updatePhoneNumber(phoneNumber) {
+    setAuthState({
+      ...authState,
+      userProfile: {
+        ...authState.userProfile,
+        userData: {
+          ...authState.userProfile.userData,
+          phoneNumber: phoneNumber,
+        },
+      },
+    });
+  }
+
   return (
     !authState.isAuthenticating && (
       <div>
@@ -82,6 +99,7 @@ function App() {
           value={{
             ...authState,
             setUserInfo,
+            updatePhoneNumber,
           }}
         >
           <Header />

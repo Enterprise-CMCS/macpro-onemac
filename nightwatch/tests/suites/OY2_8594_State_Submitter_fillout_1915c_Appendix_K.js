@@ -20,9 +20,9 @@ module.exports = {
         // Go to Submit 1915(c) Appendix K Amendment
         //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(500);
+        browser.pause(2000);
         browser.useXpath().click("(//h4)[4]");
         // Verify that Submit 1915(c) Appendix K Amendment is displayed
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
@@ -50,19 +50,19 @@ module.exports = {
         // First File Uplaoding
         let fileUploadElem = "[name='uploader-input-0']";
         let filePath = require('path').resolve(__dirname + '/files/adobe.pdf')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+        browser.useCss().setValue(fileUploadElem, filePath).pause(3000);
 
         // Second File Uplaoding
         fileUploadElem = "[name='uploader-input-1']";
         filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+        browser.useCss().setValue(fileUploadElem, filePath).pause(3000);
 
         // Enter Additional Information
         browser.useXpath().moveToElement('//textarea', 10, 10).pause(500);
         browser.useXpath().setValue('//textarea', 'This is a test K Amendment');
 
         // Click Submit
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(5000);
 
         // Verify the CHIP SPA was submitted
         browser.useXpath().verify.containsText("(//tbody/tr)[1]/td[1]/a", spaCHIPId2);
@@ -75,9 +75,9 @@ module.exports = {
         // Go to Submit 1915(c) Appendix K Amendment
         //browser.useXpath().click("(//button[@class='ds-c-button ds-c-button--transparent'])[8]");
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2000);
         browser.useXpath().click("(//h4)[2]");
-        browser.pause(500);
+        browser.pause(2000);
         browser.useXpath().click("(//h4)[4]");
         // Verify that Submit 1915(c) Appendix K Amendment is displayed
         browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
@@ -103,7 +103,7 @@ module.exports = {
             var handle = result.value[1];
             browser.switchWindow(handle);
         });
-        browser.pause(500);
+        browser.pause(100);
         // Verify the new window 
         let pageBanner = '//h1';
         let expectedBannerText = 'Frequently Asked Questions';
@@ -124,7 +124,7 @@ module.exports = {
             var handle = result.value[0];
             browser.switchWindow(handle);
         })
-        browser.useXpath().moveToElement('//div[@class="logo-nav-left"]/img', 10, 10).pause(200);
+        browser.useXpath().moveToElement('//img[@id="oneMacLogo"]', 10, 10).pause(200);
         browser.useCss();
     }
 
