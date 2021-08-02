@@ -15,7 +15,7 @@ describe("date output", () => {
 });
 
 it("provides correct header row for submissions table", () => {
-  const output = tableToCSV("submission-table", [], "");
+  const output = tableToCSV("submission-table", []);
   const outputElements = output.split("\n")[0].trim().split(",");
   expect(outputElements).toContain("SPA ID/Waiver Number");
   expect(outputElements).toContain("Type");
@@ -25,7 +25,7 @@ it("provides correct header row for submissions table", () => {
 });
 
 it("provides correct header row for user table", () => {
-  const output = tableToCSV("user-table", [], "");
+  const output = tableToCSV("user-table", []);
   const outputElements = output.split("\n")[0].trim().split(",");
   expect(outputElements).toContain("Name");
   expect(outputElements).toContain("Email");
@@ -34,4 +34,39 @@ it("provides correct header row for user table", () => {
   expect(outputElements).toContain("Role");
   expect(outputElements).toContain("Last Modified");
   expect(outputElements).toContain("Modified By");
+});
+
+it("formats submission data", () => {
+  const output = tableToCSV("submission-table", [
+    {
+      transmittalNumber: "ZZ-12-3456",
+      type: "spa",
+      territory: "ZZ",
+      submittedAt: 1234567898765,
+      user: { firstName: "Me", lastName: "Myself" },
+    },
+  ]);
+  expect(output.split("\n")[1].trim()).toBe(
+    'ZZ-12-3456,Medicaid SPA,ZZ,"Feb 13, 2009","Me Myself"'
+  );
+});
+
+it("formats user data", () => {
+  const output = tableToCSV("user-table", [
+    {
+      firstName: "You",
+      lastName: "Yourself",
+      email: "you@example.com",
+      stateCode: "ZZ",
+      latest: {
+        date: 987654321234,
+        status: "pending",
+        doneByName: "Someone Else",
+      },
+      role: "statesubmitter",
+    },
+  ]);
+  expect(output.split("\n")[1].trim()).toBe(
+    '"You Yourself",you@example.com,ZZ,Pending,State Submitter,"Apr 19, 2001","Someone Else"'
+  );
 });

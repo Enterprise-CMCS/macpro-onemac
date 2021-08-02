@@ -49,10 +49,12 @@ export const tableToCSV = (exportType, JSONData) => {
         row.push(submissionTypes[JSONRow.type]);
         row.push(JSONRow.territory);
         row.push(serializeDate(JSONRow.submittedAt));
-        row.push(JSONRow.user.firstName + " " + JSONRow.user.lastName);
+        row.push(
+          JSON.stringify(JSONRow.user.firstName + " " + JSONRow.user.lastName)
+        );
         break;
       case "user-table":
-        row.push(JSONRow.user.firstName + " " + JSONRow.user.lastName);
+        row.push(JSON.stringify(JSONRow.firstName + " " + JSONRow.lastName));
         row.push(JSONRow.email);
         row.push(JSONRow.stateCode);
         row.push(userStatus[JSONRow.latest.status]);
