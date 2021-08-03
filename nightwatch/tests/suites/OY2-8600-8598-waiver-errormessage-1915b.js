@@ -80,7 +80,7 @@ module.exports = {
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
         browser.useCss();
-        browser.click( "#back-button > svg").waitForElementPresent("body");
+       // browser.click( "#back-button > svg").waitForElementPresent("body");
         browser.pause(5000);
     },
 
