@@ -72,9 +72,9 @@ module.exports = {
         browser.useXpath().verify.containsText('(//td[@role="cell"])[1]', spaID);
 
         // Verify the submitted Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // SPA ID Verification 
         // browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         // //browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
@@ -104,14 +104,14 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(3000);
         // Verify the submitted Content 
         // SPA ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
         //browser.useXpath().assert.containsText(submittedIDNumber, generatedSPAID);
-        browser.useXpath().assert.containsText(submittedIDNumber, spaID);
+        browser.useCss().assert.containsText(submittedIDNumber, spaID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "SPA RAI");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "SPA RAI");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
         browser.useCss();
     },
     
@@ -142,17 +142,17 @@ module.exports = {
         // click ["Submit"] button 
         browser.useCss().click("[value='Submit']").pause(1000);
         // Verify the submitted SPA Report Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Waiver");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Waiver");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
         browser.useCss();
 
         // Submission List Verification Respond to 1915(b) Waiver RAI
@@ -170,13 +170,13 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(1000);
         // Verify the submitted SPA Report Content 
         // ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Waiver RAI");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Waiver RAI");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
         browser.useCss();
 
         // Submission List Verification Submit a Temporary Request Extension
@@ -193,13 +193,13 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(1000);
         // Verify the submitted SPA Report Content 
         // ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Temporary Extension Request");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Temporary Extension Request");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
         browser.useCss();
     },
 }
