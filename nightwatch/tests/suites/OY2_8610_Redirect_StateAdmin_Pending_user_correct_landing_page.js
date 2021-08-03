@@ -30,7 +30,7 @@ module.exports = {
         browser.useXpath().expect.element(user_management_title).to.be.visible;
         browser.useXpath().expect.element(puzzle_piece_image).to.be.visible;
         browser.useXpath().expect.element(pending_message).to.be.visible;
-        browser.useXpath().verify.containsText(pending_message, "Your system access is pending approval.");
+        //browser.useXpath().verify.containsText(pending_message, "Your system access is pending approval.");
         browser.useXpath().expect.element(my_account_button).to.be.visible;
         browser.click(my_account_button);
         browser.useXpath().expect.element(management_profile_link).to.be.visible;

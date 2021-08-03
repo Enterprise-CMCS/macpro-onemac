@@ -361,7 +361,6 @@ const UserManagement = () => {
       </svg>
     </Button>
   );
-
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 

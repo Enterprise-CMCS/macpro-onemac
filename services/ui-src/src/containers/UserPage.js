@@ -99,7 +99,7 @@ const transformAccesses = (user = {}) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile, setUserInfo } = useAppContext();
+  const { userProfile, setUserInfo, updatePhoneNumber } = useAppContext();
   const location = useLocation();
   const { userId } = useParams() ?? {};
   const [userData, setUserData] = useState({});
@@ -151,13 +151,14 @@ const UserPage = () => {
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
         setUserData((data) => ({ ...data, phoneNumber: newNumber }));
+        updatePhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
       setIsEditingPhone(false);
     },
-    [userProfile.email, setUserData]
+    [userProfile.email, setUserData, updatePhoneNumber]
   );
 
   const signupUser = useCallback(
@@ -282,7 +283,7 @@ const UserPage = () => {
         heading = "State Access Management";
         break;
       case ROLES.CMS_REVIEWER:
-        heading = "Status"
+        heading = "Status";
         heading2 = "Group & Division";
         break;
       case ROLES.CMS_APPROVER:
@@ -299,62 +300,64 @@ const UserPage = () => {
           <h2 id="accessHeader">{heading}</h2>
           <dl>
             {accesses.map(({ state, status, contacts }) => (
-                <div className="access-card-container" key={state ?? "only-one"}>
-                  <div className="gradient-border" />
-                  <div className="state-access-card">
-                    {userType === ROLES.STATE_SUBMITTER &&
+              <div className="access-card-container" key={state ?? "only-one"}>
+                <div className="gradient-border" />
+                <div className="state-access-card">
+                  {userType === ROLES.STATE_SUBMITTER &&
                     (status === "active" || status === "pending") && (
-                        <button
-                            className="close-button"
-                            onClick={() => xClicked(contacts)}
-                        >
-                          {CLOSING_X_IMAGE}
-                        </button>
+                      <button
+                        className="close-button"
+                        onClick={() => xClicked(contacts)}
+                      >
+                        {CLOSING_X_IMAGE}
+                      </button>
                     )}
-                    <dd>
-                      <em>{ACCESS_LABELS[status] || status}</em>
-                      <br />
-                      <br />
-                      <ContactList contacts={contacts} userType={userType} />
-                    </dd>
-                  </div>
+                  <dd>
+                    <em>{ACCESS_LABELS[status] || status}</em>
+                    <br />
+                    <br />
+                    <ContactList contacts={contacts} userType={userType} />
+                  </dd>
                 </div>
+              </div>
             ))}
           </dl>
 
           <div className="access-card-container">
-
-            {typeof userData.group === "number" && <>
-            <h2 id="accessHeader">{heading2}</h2>
-            <div className="gradient-border" />
-            <div className="cms-group-and-division-box ">
-              <div className="cms-group-division-section">
-                <h3>Group</h3>
-                <br />
-                <p>
-                  {
-                    getUserGroup(
-                      groupData.group,
-                      userData.group,
-                      userData.division
-                    ).group
-                  }
-                </p>
-              </div>
-              <div className="cms-group-division-section cms-division-background">
-                <h3>Division</h3>
-                <br />
-                <p>
-                  {
-                     getUserGroup(
-                      groupData.group,
-                      userData.group,
-                      userData.division
-                    ).division
-                  }
-                </p>
-              </div>
-            </div> </> }
+            {typeof userData.group === "number" && (
+              <>
+                <h2 id="accessHeader">{heading2}</h2>
+                <div className="gradient-border" />
+                <div className="cms-group-and-division-box ">
+                  <div className="cms-group-division-section">
+                    <h3>Group</h3>
+                    <br />
+                    <p>
+                      {
+                        getUserGroup(
+                          groupData.group,
+                          userData.group,
+                          userData.division
+                        ).group
+                      }
+                    </p>
+                  </div>
+                  <div className="cms-group-division-section cms-division-background">
+                    <h3>Division</h3>
+                    <br />
+                    <p>
+                      {
+                        getUserGroup(
+                          groupData.group,
+                          userData.group,
+                          userData.division
+                        ).division
+                      }
+                    </p>
+                  </div>
+                </div>{" "}
+              </>
+            )}
           </div>
         </div>
       );

@@ -19,7 +19,7 @@ module.exports = {
 
     'Verify that submitter user can submit a New Waiver': function (browser) {
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -61,7 +61,7 @@ module.exports = {
     'Validate Waiver Form Logic for New Waiver and 1915(c)': function (browser) {
         // Submit Waiver again
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -77,7 +77,7 @@ module.exports = {
 
         // Verify that duplicate error message
         let expected = "this Waiver Number already exists";
-        browser.verify.containsText('div#transmittalNumberStatusMsg', expected).pause(3000);
+        browser.verify.containsText('div#transmittalNumberStatusMsg', expected).pause(6000);
         //browser.back();  // go back to previous page
         let dashboard_link = "//a[@id='dashboardLink']";
         browser.useXpath().click(dashboard_link);
@@ -88,7 +88,7 @@ module.exports = {
     'Validate Waiver Form Logic for New Waiver and All other': function (browser) {
         //browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -117,7 +117,7 @@ module.exports = {
     'Validate Waiver Form Logic for Waiver Amendment and 1915(b)': function (browser) {
         //browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(1500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -142,7 +142,7 @@ module.exports = {
     'Validate Waiver Form Logic for Waiver Amendment and All other': function (browser) {
         //browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(1500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -169,7 +169,7 @@ module.exports = {
     'Validate Waiver Form Logic for Waiver Renewal and 1915(b)': function (browser) {
         //browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(1500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -195,7 +195,7 @@ module.exports = {
     'Validate Waiver Form Logic for Waiver Renewal and All other': function (browser) {
         //browser.click('button#waiverBtn');    // click Submit New Waiver
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(1500);
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");

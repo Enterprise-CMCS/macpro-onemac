@@ -66,11 +66,11 @@ module.exports = {
         browser.pause(3000);
 
         // Submit the new SPA 
-        browser.useCss().click("[value='Submit']").pause(2000);
+        browser.useCss().click("[value='Submit']").pause(10000);
 
         // Verify the SPA on Submission List 
         browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
-        browser.useXpath().click("xpath", "(//table//td)[1]/a").pause(2000);
+        browser.useXpath().click("xpath", "(//table//td)[1]/a").pause(4000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
         browser.useCss();
@@ -88,7 +88,7 @@ module.exports = {
         // upload a document and make a comment 
         let fileUploadElem = "[name='uploader-input-0']";
         let filePath = require('path').resolve(__dirname + '/files/file.docx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+        browser.useCss().setValue(fileUploadElem, filePath).pause(4000);
         //browser.useCss().setValue("textarea", "This is a test, just a test");
 
         // write the Summary 
@@ -104,14 +104,14 @@ module.exports = {
         console.log("filePath--" , filePath);
         // let text4000 = fs.readFileSync(path.join(__dirname, '/files/textvalidation.txt'),'utf8');
         let text4000 = fs.readFileSync(filePath,'utf8');
-        browser.pause(2000);
+        browser.pause(4000);
         browser.setValue('textarea', text4000);
         browser.useXpath().assert.containsText( charCount, "4000/4000").pause(1000);
         browser.useCss();
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(6000);
 
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -173,7 +173,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(6000);
 
         // Verify the submitted Waiver Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -196,7 +196,7 @@ module.exports = {
     },
 
     'Verify user can submit Respond to 1915(b) Waiver RAI': function (browser) {
-        browser.pause(2000);
+        browser.pause(4000);
         browser.useCss().click("#new-submission-button");
         browser.useXpath().click("(//li[@class='choice']/a)[2]");
         browser.useXpath().click("(//li[@class='choice']/a)[2]");
@@ -229,7 +229,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(6000);
 
         // Verify the submitted SPA Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
