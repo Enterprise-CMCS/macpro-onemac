@@ -30,7 +30,7 @@ module.exports = {
     'Verify the attachment types for SPA': function (browser) {
         //browser.click("button#spaSubmitBtn");
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -82,7 +82,7 @@ module.exports = {
 
     'Verify the multiple attachment types for SPA': function (browser) {
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -119,7 +119,7 @@ module.exports = {
         submitWaiver["Verify that submitter user can submit a New Waiver"](browser);
         let waiverNumber = '//tbody/tr[1]/td/a';
         let attachementElement = ".form-container a[target='_blank']";
-        browser.useXpath().click(waiverNumber).pause(4000);
+        browser.useXpath().click(waiverNumber).pause(6000);
         browser.useCss().expect.element(attachementElement).to.be.visible;
         //browser.back();
         browser.useXpath().click("//a[@id='dashboardLink']");
@@ -128,7 +128,7 @@ module.exports = {
     'Verify “No file chosen” case': function (browser) {
         //browser.useCss().click("button#spaSubmitBtn").pause(4000);
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
