@@ -1,6 +1,10 @@
 import dynamoDb from "../libs/dynamodb-lib";
+import newPackage from "../utils/newPackage";
 
-export default async function updatePackage(updateData) {
+export default async function updatePackage(
+  updateData,
+  createIfNotFound = false
+) {
   // get the latest version from current v0 Item
   var v0sk = "v0#" + updateData.packageID;
   var v0pk = updateData.packageID.toString().substring(0, 2);
@@ -20,9 +24,13 @@ export default async function updatePackage(updateData) {
     .get(v0params)
     .then((currentPackage) => {
       if (!currentPackage.Item) {
-        throw new Error(
-          `v0 Item does not exist for params: ${JSON.stringify(v0params)}`
-        );
+        if (createIfNotFound) {
+          newPackage(updateData);
+        } else {
+          throw new Error(
+            `v0 Item does not exist for params: ${JSON.stringify(v0params)}`
+          );
+        }
       }
       // copy the v0 into the v(currentVersion+1)
       console.log("Result.Item is : ", currentPackage.Item);

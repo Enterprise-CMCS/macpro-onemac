@@ -32,6 +32,8 @@ custom:
   tableStreamArn: ${cf:app-api-${self:custom.stage}.AmendmentsTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
+  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
+  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   dataSubnets:
