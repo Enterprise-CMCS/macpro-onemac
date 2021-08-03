@@ -43,11 +43,9 @@ export default async function updatePackage(updateData) {
       };
       console.log("vnextParams is: ", vnextparams);
 
-      return dynamoDb.put(vnextparams);
+      dynamoDb.put(vnextparams);
     })
-    .then((vnextresult) => {
-      console.log("Put result is: ", vnextresult);
-
+    .then(() => {
       let updateExp = "SET #currentVersion = :newVersion";
       let expressionAttributeNames = {
         "#currentVersion": "currentVersion",
@@ -66,8 +64,6 @@ export default async function updatePackage(updateData) {
         expressionAttributeValues[":" + key] = value.toString();
       }
 
-      console.log("update Expression: ", updateExp);
-
       let updateParams = {
         TableName: process.env.oneMacTableName,
         Key: {
@@ -79,6 +75,8 @@ export default async function updatePackage(updateData) {
         ExpressionAttributeNames: expressionAttributeNames,
         ExpressionAttributeValues: expressionAttributeValues,
       };
+
+      console.log("update Parameters: ", JSON.stringify(updateParams, null, 2));
 
       return dynamoDb.update(updateParams);
     })

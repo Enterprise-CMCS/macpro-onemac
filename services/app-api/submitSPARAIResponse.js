@@ -3,15 +3,13 @@ import * as uuid from "uuid";
 
 import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
 
-import getChangeRequestFunctions, {
-  validateSubmission,
-  hasValidStateCode,
-} from "./changeRequest/changeRequest-util";
+import { validateSubmission } from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
+import SPARAIResponse from "./changeRequest/SPARAIResponse.js";
 
 /**
  * Submission states for the change requests.
@@ -69,28 +67,13 @@ export const main = handler(async (event) => {
   } catch (error) {
     throw error;
   }
-
-  // map the changeRequest functions from the data.type
-  const crFunctions = getChangeRequestFunctions(data.type);
-  if (!crFunctions) {
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  }
-
-  const crVerifyTransmittalIdStateCode = hasValidStateCode(
-    data.transmittalNumber
-  );
-  if (!crVerifyTransmittalIdStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
-  }
-
-  const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
-  if (!crVerifyTerritoryStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
-  }
+  // put these here for now for backwards compatibility
+  data.state = SUBMISSION_STATES.SUBMITTED;
+  data.submittedAt = Date.now();
 
   try {
     // check for submission-specific validation (uses database)
-    const validationResponse = await crFunctions.fieldsValid(data);
+    const validationResponse = await SPARAIResponse.fieldsValid(data);
     console.log("validation Response: ", validationResponse);
 
     if (validationResponse.areFieldsValid === false) {
@@ -108,7 +91,7 @@ export const main = handler(async (event) => {
   }
 
   // Now send the CMS email
-  await sendEmail(crFunctions.getCMSEmail(data));
+  await sendEmail(SPARAIResponse.getCMSEmail(data));
 
   //We successfully sent the submission email.  Update the record to reflect that.
   data.state = SUBMISSION_STATES.SUBMITTED;
@@ -122,15 +105,11 @@ export const main = handler(async (event) => {
     .setZone("America/New_York")
     .plus({ days: 90 })
     .toMillis();
-  await dynamoDb.put({
-    TableName: process.env.tableName,
-    Item: data,
-  });
 
   //An error sending the state submitter email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
-    await sendEmail(crFunctions.getStateEmail(data));
+    await sendEmail(SPARAIResponse.getStateEmail(data));
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user acknowledgement email.",
@@ -138,14 +117,14 @@ export const main = handler(async (event) => {
     );
   }
 
-  crFunctions
-    .saveSubmission(data)
-    .then(() => {
-      console.log("Successfully submitted the following:", data);
-      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
-    })
-    .catch((error) => {
-      console.log("Error is: ", error.message);
-      throw error;
-    });
+  try {
+    await SPARAIResponse.saveSubmission(data);
+  } catch (error) {
+    console.log("Error is: ", error.message);
+    throw error;
+  }
+
+  console.log("Successfully submitted the following:", data);
+
+  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });

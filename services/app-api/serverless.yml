@@ -89,6 +89,24 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  submitSPA:
+    handler: submitSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+  submitSPARAIResponse:
+    handler: submitSPARAIResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitSPARAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
   get:
     handler: get.main
     role: LambdaApiRole
