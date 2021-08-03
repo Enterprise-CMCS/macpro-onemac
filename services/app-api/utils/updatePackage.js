@@ -44,6 +44,7 @@ export default async function updatePackage(
       nextItem.GSI1pk = "PACKAGE#v" + newVersion;
       nextItem.GSI1sk =
         currentPackage.Item.timestamp + "#" + currentPackage.Item.packageID;
+      delete nextItem["currentVersion"];
 
       var vnextparams = {
         TableName: process.env.oneMacTableName,

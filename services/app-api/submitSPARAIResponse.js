@@ -6,6 +6,7 @@ import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
 import { validateSubmission } from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
+import updatePackage from "./utils/updatePackage";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
@@ -118,7 +119,21 @@ export const main = handler(async (event) => {
   }
 
   try {
-    await SPARAIResponse.saveSubmission(data);
+    let submitterName = data.user.firstName + " " + data.user.lastName;
+    let raiResponseData = {
+      packageID: data.transmittalNumber,
+      packageStatus: "RAI Response Submitted",
+      timestamp: data.submittedAt,
+      raiResponseSubmissionDate: data.submittedAt,
+      raiResponseAttachments: data.uploads,
+      raiResponseAdditionalInformation: data.summary,
+      raiResponseSubmitterName: submitterName,
+      raiResponseSubmitterEmail: data.user.email,
+      lastModifiedByName: submitterName,
+      lastModifiedByEmail: data.user.email,
+    };
+
+    await updatePackage(raiResponseData);
   } catch (error) {
     console.log("Error is: ", error.message);
     throw error;
