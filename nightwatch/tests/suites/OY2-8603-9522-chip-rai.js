@@ -128,7 +128,7 @@ module.exports = {
         browser.pause(7000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(6000);
+        browser.useCss().click("[value='Submit']").pause(8000);
         
         // Verify the submitted Content 
         // browser.refresh();

@@ -89,9 +89,9 @@ module.exports = {
 
         //Submission List Verification Respond to SPA RAI
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(2000);
+        browser.pause(3000);
         browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
+        browser.pause(1000);
         browser.useXpath().click("(//h4)[2]");
         let selector = '#transmittalNumber';
         browser.useCss().setValue(selector,spaID);
