@@ -62,7 +62,7 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(timeout * 25);
 
        // Verify the SPA on Submission List 
-       browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(4000);
+       browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', spaID).pause(5000);
        browser.useCss();
        browser.click("xpath", "//*[@id='transmittalNumber-0']/a").pause(2000);
        browser.click("xpath", "(//li[@class='choice-list-item']/a)[1]").pause(2000);

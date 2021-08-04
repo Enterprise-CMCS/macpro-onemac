@@ -35,7 +35,7 @@ module.exports = {
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", spaCHIPId);
         //check if the error message shows up
-        let error_message = '//div[@id="transmittalNumberStatusMsg"]';
+        let error_message = "//*[contains(@id, 'transmittalNumberStatusMsg')]"; 
         browser.useXpath().expect.element(error_message).to.be.visible;
         browser.useXpath().assert.containsText(error_message, "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.");
         browser.useCss();
