@@ -35,7 +35,7 @@ const main = handler(async (event) => {
     // populate user atributes after ensuring data validity //
     user = populateUserAttributes(input, user, doneByUser);
     // PUT user in db
-    await putUser(process.env.userTableName, user);
+    await putUserIntoDB(process.env.userTableName, user);
     await processEmail(input);
     //
     return RESPONSE_CODE.USER_SUBMITTED;
@@ -383,7 +383,7 @@ const generateAttribute = (item, doneBy) => {
 };
 
 // Insert or modify an user record in the db //
-const putUser = async (tableName, user) => {
+const putUserIntoDB = async (tableName, user) => {
   try {
     await dynamoDb.put({
       TableName: tableName,
