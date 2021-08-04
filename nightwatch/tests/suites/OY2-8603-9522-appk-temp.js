@@ -62,20 +62,20 @@ module.exports = {
     browser.pause(3000);
 
      // click ["Submit"] button 
-    browser.useCss().click("[value='Submit']").pause(4000);
+    browser.useCss().click("[value='Submit']").waitForElementPresent("body");
     
      
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-         browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+         browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+         browser.useCss().verify.containsText(submittedIDNumber, generatedWaiverID);
          // Submitted Type Verification 
-         browser.useXpath().expect.element(submittedType).to.be.visible;
-         browser.useXpath().assert.containsText(submittedType, "1915(c) Appendix K Amendment");
+         browser.useCss().expect.element(submittedType).to.be.visible;
+         browser.useCss().verify.containsText(submittedType, "1915(c) Appendix K Amendment");
          // Data Submitted Verification 
-         browser.useXpath().expect.element(submittedDate).to.be.visible;
+         browser.useCss().expect.element(submittedDate).to.be.visible;
          browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(6000);
          browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
          browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
@@ -131,17 +131,17 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(3000);
 
         // Verify the submitted SPA Report Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Waiver");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Waiver");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
         browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(6000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
@@ -183,25 +183,25 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(3000);
 
         // Verify the submitted SPA Report Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Temporary Extension Request");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Temporary Extension Request");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
         browser.click("xpath", "//table[@class='submissions-table']//tr[1]/td[1]/a").pause(6000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
         browser.useCss();
-        browser.click( "#back-button > svg").waitForElementPresent("body");
+       // browser.click( "#back-button > svg").waitForElementPresent("body");
         browser.pause(5000);
     },
 }
