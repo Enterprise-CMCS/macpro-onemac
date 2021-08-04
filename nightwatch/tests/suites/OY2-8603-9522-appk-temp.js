@@ -183,7 +183,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(3000);
 
         // Verify the submitted SPA Report Content 
         const submittedIDNumber = "[id=transmittalNumber-0] > a";
