@@ -80,7 +80,7 @@ module.exports = {
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[1]/div/div[1]/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
         browser.useCss();
-       // browser.click( "#back-button > svg").waitForElementPresent("body");
+        browser.click( "#back-button > svg").waitForElementPresent("body");
         browser.pause(5000);
     },
 
@@ -105,15 +105,15 @@ module.exports = {
         browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
         console.log("generatedWaiverID--" + generatedWaiverID);
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
-        browser.useXpath().assert.containsText(tests_data.error1.selector, "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.").pause(3000);
+        browser.useXpath().assert.containsText(tests_data.error1.selector, "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.").pause(6000);
         browser.useCss();
         browser.clearValue("xpath", tests_data.wavNum.selector);
         browser.setValue("xpath", tests_data.wavNum.selector, 'MD.123456' );
-        browser.useXpath().assert.containsText(tests_data.error1.selector, "The Waiver Number must be in the format of SS.#### or SS.#####").pause(3000);
+        browser.useXpath().assert.containsText(tests_data.error1.selector, "The Waiver Number must be in the format of SS.#### or SS.#####").pause(6000);
         browser.useCss();
         browser.clearValue("xpath", tests_data.wavNum.selector);
         browser.setValue("xpath", tests_data.wavNum.selector, 'TX' );
-        browser.useXpath().assert.containsText(tests_data.error1.selector, "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.").pause(3000);
+        browser.useXpath().assert.containsText(tests_data.error1.selector, "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.").pause(6000);
         browser.useCss();
 
        
