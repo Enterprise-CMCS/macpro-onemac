@@ -112,7 +112,7 @@ class ChangeRequestDataApi {
     try {
       return await API.get(
         "changeRequestAPI",
-        `/getAllByAuthorizedTerritories?email=${userEmail}`
+        `/getAllPackages?email=${userEmail}`
       );
     } catch (error) {
       handleApiError(

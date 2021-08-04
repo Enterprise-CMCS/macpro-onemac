@@ -3,13 +3,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
 
-import {
-  RESPONSE_CODE,
-  ROUTES,
-  ChangeRequest,
-  getUserRoleObj,
-  USER_TYPE,
-} from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, getUserRoleObj, USER_TYPE } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -72,26 +66,11 @@ const Dashboard = () => {
   const renderId = useCallback(
     ({ row, value }) => (
       <Link
-        to={`/${row.original.type}/${row.original.id}/${row.original.userId}`}
+        to={`/${row.original.packageType}/${row?.original?.id}/${row?.original?.userId}`}
       >
         {value}
       </Link>
     ),
-    []
-  );
-
-  const getType = useCallback(
-    ({ type }) =>
-      ({
-        [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
-        [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
-        [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
-        [ChangeRequest.TYPE.WAIVER]: "Waiver",
-        [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
-        [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
-        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
-        [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-      }[type] ?? []),
     []
   );
 
@@ -104,7 +83,7 @@ const Dashboard = () => {
     ({ value, row }) => (
       <Link
         className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.user.email}`}
+        to={`${ROUTES.PROFILE}/${row.original.lastModifiedByEmail}`}
       >
         {value}
       </Link>
@@ -124,14 +103,14 @@ const Dashboard = () => {
     () => [
       {
         Header: "ID/Number",
-        accessor: "transmittalNumber",
+        accessor: "packageID",
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
-        accessor: getType,
-        id: "type",
+        accessor: "packageType",
+        id: "packageType",
         Cell: renderType,
       },
       {
@@ -140,22 +119,21 @@ const Dashboard = () => {
       },
       {
         Header: "Date Submitted",
-        accessor: "submittedAt",
+        accessor: "timestamp",
         Cell: renderDate,
       },
       {
         Header: "Submitted By",
-        accessor: ({ user: { firstName, lastName } = {} }) =>
-          [firstName, lastName].filter(Boolean).join(" "),
-        id: "submitter",
+        accessor: "lastModifiedByName",
+        id: "lastModifiedByName",
         Cell: renderName,
       },
     ],
-    [getType, renderDate, renderId, renderName, renderType]
+    [renderDate, renderId, renderName, renderType]
   );
 
   const initialTableState = useMemo(
-    () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
+    () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
     []
   );
   const csvExportSubmissions = (
@@ -218,9 +196,9 @@ const Dashboard = () => {
         heading="Submission List"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK
-              && isUserActive
-              && csvExportSubmissions)
+          (userData.type === USER_TYPE.HELPDESK &&
+            isUserActive &&
+            csvExportSubmissions)
         }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
