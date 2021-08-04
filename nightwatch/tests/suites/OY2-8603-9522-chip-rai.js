@@ -128,21 +128,21 @@ module.exports = {
         browser.pause(7000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(6000);
+        browser.useCss().click("[value='Submit']").pause(8000);
         
         // Verify the submitted Content 
         // browser.refresh();
         browser.pause(5000);
-        // browser.refresh();
-        let submittedIDNumber = "//*[@id='transmittalNumber-0']/a";
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.refresh();
+        let submittedIDNumber = "[id=transmittalNumber-0] > a";
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
         
         // SPA ID Verification 
-        browser.useXpath().click(submittedIDNumber);
+        browser.useCss().click(submittedIDNumber);
         browser.pause(2000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
-        browser.useCss().click( "#back-button > svg").waitForElementPresent("body");
+       // browser.useCss().click( "#back-button > svg").waitForElementPresent("body");
         browser.pause(5000);
     },
 }

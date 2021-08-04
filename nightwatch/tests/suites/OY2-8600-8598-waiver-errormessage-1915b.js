@@ -62,7 +62,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(1000);
+        browser.useCss().click("[value='Submit']").pause(6000);
 
         // Verify the submitted Waiver Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -105,15 +105,15 @@ module.exports = {
         browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
         console.log("generatedWaiverID--" + generatedWaiverID);
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
-        browser.useXpath().assert.containsText(tests_data.error1.selector, "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.").pause(3000);
+        browser.useXpath().assert.containsText(tests_data.error1.selector, "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.").pause(6000);
         browser.useCss();
         browser.clearValue("xpath", tests_data.wavNum.selector);
         browser.setValue("xpath", tests_data.wavNum.selector, 'MD.123456' );
-        browser.useXpath().assert.containsText(tests_data.error1.selector, "The Waiver Number must be in the format of SS.#### or SS.#####").pause(3000);
+        browser.useXpath().assert.containsText(tests_data.error1.selector, "The Waiver Number must be in the format of SS.#### or SS.#####").pause(6000);
         browser.useCss();
         browser.clearValue("xpath", tests_data.wavNum.selector);
         browser.setValue("xpath", tests_data.wavNum.selector, 'TX' );
-        browser.useXpath().assert.containsText(tests_data.error1.selector, "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.").pause(3000);
+        browser.useXpath().assert.containsText(tests_data.error1.selector, "You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.").pause(6000);
         browser.useCss();
 
        

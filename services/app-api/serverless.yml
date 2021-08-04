@@ -20,6 +20,7 @@ custom:
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
+  productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
   warmupEnabled:
     production: true
     development: true
@@ -77,6 +78,7 @@ provider:
     reviewerEmail: ${self:custom.reviewerEmail}
     reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
     systemAdminEmail: ${self:custom.systemAdminEmail}
+    productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
 
 functions:
   # For DynamoDB Change Requests Table

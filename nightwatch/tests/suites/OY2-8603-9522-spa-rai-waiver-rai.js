@@ -88,7 +88,7 @@ module.exports = {
         // upload a document and make a comment 
         let fileUploadElem = "[name='uploader-input-0']";
         let filePath = require('path').resolve(__dirname + '/files/file.docx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(1000);
+        browser.useCss().setValue(fileUploadElem, filePath).pause(4000);
         //browser.useCss().setValue("textarea", "This is a test, just a test");
 
         // write the Summary 
@@ -111,7 +111,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(6000);
+        browser.useCss().click("[value='Submit']").pause(8000);
 
         // Verify the submitted Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -173,7 +173,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(6000);
+        browser.useCss().click("[value='Submit']").pause(8000);
 
         // Verify the submitted Waiver Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
@@ -229,7 +229,7 @@ module.exports = {
         browser.pause(3000);
 
         // click ["Submit"] button 
-        browser.useCss().click("[value='Submit']").pause(6000);
+        browser.useCss().click("[value='Submit']").pause(8000);
 
         // Verify the submitted SPA Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
