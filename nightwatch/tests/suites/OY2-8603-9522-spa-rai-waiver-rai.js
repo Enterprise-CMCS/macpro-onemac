@@ -180,7 +180,7 @@ module.exports = {
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // Waiver ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        //browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
@@ -236,7 +236,7 @@ module.exports = {
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // Waiver ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+       // browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
         browser.useXpath().expect.element(submittedType).to.be.visible;
@@ -248,7 +248,7 @@ module.exports = {
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[4]/form/div[2]/p[2]");
         browser.useCss();
         browser.click( "#back-button > svg").waitForElementPresent("body");
-        browser.pause(5000);
+        browser.pause(4000);
     },
 
        
