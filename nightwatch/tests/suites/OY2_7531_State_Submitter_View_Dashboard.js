@@ -1,92 +1,92 @@
-let generatedSPAID;
-let generatedWaiverID;
-const login = require('./OY2_9999_Login');
+// let generatedSPAID;
+// let generatedWaiverID;
+// const login = require('./OY2_9999_Login');
 
-module.exports = {
-    "@tags": ["smoke", "regression-soon"],
+// module.exports = {
+//     "@tags": ["smoke", "regression-soon"],
 
-    before: function (browser) {
-        login.beforeEach(browser);
-        login['Login with state submitter user'](browser);
-    },
+//     before: function (browser) {
+//         login.beforeEach(browser);
+//         login['Login with state submitter user'](browser);
+//     },
 
-    after: function (browser) {
-        login.afterEach(browser);
+//     after: function (browser) {
+//         login.afterEach(browser);
 
-    },
+//     },
 
-    'User can see their state access management': function (browser) {
-        let my_account_button = 'button#myAccountLink';
-        let manage_account_link = 'a#manageAccountLink';
+//     'User can see their state access management': function (browser) {
+//         let my_account_button = 'button#myAccountLink';
+//         let manage_account_link = 'a#manageAccountLink';
 
-        // Click on button My Account and get access to account management
-        browser.click(my_account_button);
-        browser.click(manage_account_link);
-        browser.pause(2000);
-        //check on state access management for state submitter user 
+//         // Click on button My Account and get access to account management
+//         browser.click(my_account_button);
+//         browser.click(manage_account_link);
+//         browser.pause(2000);
+//         //check on state access management for state submitter user 
 
-        let state_access_management = "//h2[@id='accessHeader']";
+//         let state_access_management = "//h2[@id='accessHeader']";
 
-        let maryland = "(//div[@class='state-access-card']/dt)[1]";
-        let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
-        //check if each element is visible
-        browser.useXpath().expect.element(state_access_management).to.be.visible;
-        browser.useXpath().expect.element(maryland_access_granted).to.be.visible;
-        browser.useXpath().expect.element(maryland).to.be.visible;
-        browser.useCss();
-        let dashboard = "(//div[@class ='nav-left-links']/a)[2]";
-        browser.pause(2000);
-        browser.useXpath().waitForElementVisible(dashboard, 1000);
-        browser.useXpath().click(dashboard);
-        browser.useCss();
-        browser.pause(2000);
-    },
+//         let maryland = "(//div[@class='state-access-card']/dt)[1]";
+//         let maryland_access_granted = "(//div[@class='state-access-card']/dd/em)[1]";
+//         //check if each element is visible
+//         browser.useXpath().expect.element(state_access_management).to.be.visible;
+//         browser.useXpath().expect.element(maryland_access_granted).to.be.visible;
+//         browser.useXpath().expect.element(maryland).to.be.visible;
+//         browser.useCss();
+//         let dashboard = "(//div[@class ='nav-left-links']/a)[2]";
+//         browser.pause(2000);
+//         browser.useXpath().waitForElementVisible(dashboard, 1000);
+//         browser.useXpath().click(dashboard);
+//         browser.useCss();
+//         browser.pause(2000);
+//     },
 
-    'Verify Submitter user can submit new SPA': function (browser) {
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        //browser.useXpath().click("//button[text()='Submit New Medicaid SPA']");
-        // create random SPA ID
-        let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
-        let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
-        let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
-        // SS-YY-NNNN
-        //changed the state to MD
-        spaID = 'MD-' + num1 + '-' + num2 + '' + num3;
-        // input the SPA ID number 
-        browser.useCss().setValue("input#transmittalNumber", spaID);
-        // upload the first documents
-        let fileUploadElem = "[name='uploader-input-0']";
-        browser.assert.elementPresent(fileUploadElem);
-        let filePath = require('path').resolve(__dirname + '/files/file.docx');
-        browser.setValue(fileUploadElem, filePath);
+//     'Verify Submitter user can submit new SPA': function (browser) {
+//         browser.useXpath().click("//a[@id='new-submission-button']");
+//         browser.pause(500);
+//         browser.useXpath().click("(//h4)[1]");
+//         browser.pause(500);
+//         browser.useXpath().click("(//h4)[1]");
+//         //browser.useXpath().click("//button[text()='Submit New Medicaid SPA']");
+//         // create random SPA ID
+//         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
+//         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+//         let num3 = Math.floor(Math.random() * Math.floor(80)) + 10;
+//         // SS-YY-NNNN
+//         //changed the state to MD
+//         spaID = 'MD-' + num1 + '-' + num2 + '' + num3;
+//         // input the SPA ID number 
+//         browser.useCss().setValue("input#transmittalNumber", spaID);
+//         // upload the first documents
+//         let fileUploadElem = "[name='uploader-input-0']";
+//         browser.assert.elementPresent(fileUploadElem);
+//         let filePath = require('path').resolve(__dirname + '/files/file.docx');
+//         browser.setValue(fileUploadElem, filePath);
 
-        // upload the second documents
-        fileUploadElem = "[name='uploader-input-1']";
-        browser.assert.elementPresent(fileUploadElem);
-        filePath = require('path').resolve(__dirname + '/files/file.docx');
-        browser.setValue(fileUploadElem, filePath);
+//         // upload the second documents
+//         fileUploadElem = "[name='uploader-input-1']";
+//         browser.assert.elementPresent(fileUploadElem);
+//         filePath = require('path').resolve(__dirname + '/files/file.docx');
+//         browser.setValue(fileUploadElem, filePath);
 
-        // write the Summary 
-        let phrase = "This is a test, test, test";
-        browser.setValue('textarea', phrase);
+//         // write the Summary 
+//         let phrase = "This is a test, test, test";
+//         browser.setValue('textarea', phrase);
 
-        // Submit the new SPA 
-        browser.useCss().waitForElementPresent("[value='Submit']", 1000);
-        browser.useCss().click("[value='Submit']").pause(8000);
+//         // Submit the new SPA 
+//         browser.useCss().waitForElementPresent("[value='Submit']", 1000);
+//         browser.useCss().click("[value='Submit']").pause(8000);
 
-        // Verify the SPA on Submission List 
-        // browser.useXpath().click("//a[@id='new-submission-button']");
-        //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
-        // browser.refresh();
-        browser.useXpath().waitForElementPresent('xpath','(//td[@role="cell"])[1]').verify.containsText('(//td[@role="cell"])[1]', spaID);
-        browser.useCss();
-        // return spaID;
-        generatedSPAID = spaID;
-    },
+//         // Verify the SPA on Submission List 
+//         // browser.useXpath().click("//a[@id='new-submission-button']");
+//         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
+//         // browser.refresh();
+//         browser.useXpath().waitForElementPresent('xpath','(//td[@role="cell"])[1]').verify.containsText('(//td[@role="cell"])[1]', spaID);
+//         browser.useCss();
+//         // return spaID;
+//         generatedSPAID = spaID;
+//     },
 
     // 'Submit new SPA with state name and verify if it shows under submission list': function (browser) {
     //     // Submit a SPA Report 
