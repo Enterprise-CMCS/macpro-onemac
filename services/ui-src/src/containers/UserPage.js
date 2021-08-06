@@ -39,15 +39,11 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.CMS_REVIEWER]: "CMS Role Approver",
 };
 
-function getUserGroup(groupId, currentGroup, currentDivision) {
-  const search = (id) =>
-    groupData.find((element) => element.id === currentGroup);
-  const divisions = search(currentGroup).divisions;
-  const searchDivision = (id) =>
-    divisions.find((element) => element.id === currentDivision);
+function getUserGroup(currentGroup, currentDivision) {
+  const group = groupData.find(({ id }) => id === currentGroup);
   return {
-    group: search(currentGroup).name,
-    division: searchDivision(currentDivision).name,
+    group: group.name,
+    division: group.divisions.find(({ id }) => id === currentDivision).name,
   };
 }
 
@@ -207,22 +203,18 @@ const UserPage = () => {
   const closeConfirmation = useCallback(() => setStateAccessToRemove(null), []);
 
   const onRemoveAccess = useCallback(() => {
-    const updateStatusRequest = {
-      userEmail: userProfile.email,
-      doneBy: userProfile.email,
-      attributes: [
-        {
-          stateCode: stateAccessToRemove, // required for state submitter and state admin
-          status: "revoked",
-        },
-      ],
-      type: userType,
-    };
     try {
-      console.log("updateStatusRequest", updateStatusRequest);
-      UserDataApi.setUserStatus(updateStatusRequest).then(function (
-        returnCode
-      ) {
+      UserDataApi.setUserStatus({
+        userEmail: userProfile.email,
+        doneBy: userProfile.email,
+        attributes: [
+          {
+            stateCode: stateAccessToRemove, // required for state submitter and state admin
+            status: "revoked",
+          },
+        ],
+        type: userType,
+      }).then(function (returnCode) {
         if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
           setUserInfo();
         } else {
@@ -268,116 +260,6 @@ const UserPage = () => {
       </Button>
     );
   }, [setIsEditingPhone, setIsStateSelectorVisible]);
-
-  const accessSection = useMemo(() => {
-    let heading, heading2;
-
-    switch (userType) {
-      case ROLES.STATE_SUBMITTER:
-      case ROLES.STATE_ADMIN:
-        heading = "State Access Management";
-        break;
-      case ROLES.CMS_REVIEWER:
-        heading = "Status";
-        heading2 = "Group & Division";
-        break;
-      case ROLES.CMS_APPROVER:
-      case ROLES.HELPDESK:
-        heading = "Status";
-        break;
-      default:
-        // CMS System Admins do not see this section at all
-        return null;
-    }
-
-    return (
-      <div className="right-column">
-        <h2 id="accessHeader">{heading}</h2>
-        <dl>
-          {accesses.map(({ state, status, contacts }) => (
-            <div className="access-card-container" key={state ?? "only-one"}>
-              <div className="gradient-border" />
-              <div className="state-access-card">
-                {!isReadOnly &&
-                  userType === ROLES.STATE_SUBMITTER &&
-                  (status === "active" || status === "pending") && (
-                    <button
-                      disabled={isReadOnly}
-                      className="close-button"
-                      onClick={() => setStateAccessToRemove(state)}
-                    >
-                      {CLOSING_X_IMAGE}
-                    </button>
-                  )}
-                {!!state && <dt>{territoryMap[state] || state}</dt>}
-                <dd>
-                  <em>{ACCESS_LABELS[status] || status}</em>
-                  <br />
-                  <br />
-                  <ContactList contacts={contacts} userType={userType} />
-                </dd>
-              </div>
-            </div>
-          ))}
-        </dl>
-        {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
-          <div className="add-access-container">
-            {isStateSelectorVisible
-              ? renderSelectStateAccess
-              : renderAddStateButton}
-          </div>
-        )}
-        {userType === ROLES.CMS_REVIEWER && (
-          <div className="access-card-container">
-            {typeof userData.group === "number" && (
-              <>
-                <h2 id="accessHeader">{heading2}</h2>
-                <div className="gradient-border" />
-                <div className="cms-group-and-division-box ">
-                  <div className="cms-group-division-section">
-                    <h3>Group</h3>
-                    <br />
-                    <p>
-                      {
-                        getUserGroup(
-                          groupData.group,
-                          userData.group,
-                          userData.division
-                        ).group
-                      }
-                    </p>
-                  </div>
-                  <div className="cms-group-division-section cms-division-background">
-                    <h3>Division</h3>
-                    <br />
-                    <p>
-                      {
-                        getUserGroup(
-                          groupData.group,
-                          userData.group,
-                          userData.division
-                        ).division
-                      }
-                    </p>
-                  </div>
-                </div>{" "}
-              </>
-            )}
-          </div>
-        )}
-      </div>
-    );
-  }, [
-    accesses,
-    userData.group,
-    userData.division,
-    userType,
-    setStateAccessToRemove,
-    isReadOnly,
-    isStateSelectorVisible,
-    renderSelectStateAccess,
-    renderAddStateButton,
-  ]);
 
   useEffect(() => {
     (async () => {
@@ -427,6 +309,23 @@ const UserPage = () => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
+  let accessHeading;
+
+  switch (userType) {
+    case ROLES.STATE_SUBMITTER:
+    case ROLES.STATE_ADMIN:
+      accessHeading = "State Access Management";
+      break;
+    case ROLES.CMS_REVIEWER:
+      accessHeading = "Status";
+      break;
+    case ROLES.CMS_APPROVER:
+    case ROLES.HELPDESK:
+      accessHeading = "Status";
+      break;
+    default:
+  }
+
   return (
     <div>
       <PageTitleBar heading={isReadOnly ? "User Profile" : "My Profile"} />
@@ -463,7 +362,80 @@ const UserPage = () => {
               readOnly={isReadOnly}
             />
           </div>
-          {accessSection}
+          {userType !== ROLES.SYSTEM_ADMIN && (
+            <div className="right-column">
+              <h2 id="accessHeader">{accessHeading}</h2>
+              <dl>
+                {accesses.map(({ state, status, contacts }) => (
+                  <div
+                    className="access-card-container"
+                    key={state ?? "only-one"}
+                  >
+                    <div className="gradient-border" />
+                    <div className="state-access-card">
+                      {!isReadOnly &&
+                        userType === ROLES.STATE_SUBMITTER &&
+                        (status === "active" || status === "pending") && (
+                          <button
+                            disabled={isReadOnly}
+                            className="close-button"
+                            onClick={() => setStateAccessToRemove(state)}
+                          >
+                            {CLOSING_X_IMAGE}
+                          </button>
+                        )}
+                      {!!state && <dt>{territoryMap[state] || state}</dt>}
+                      <dd>
+                        <em>{ACCESS_LABELS[status] || status}</em>
+                        <br />
+                        <br />
+                        <ContactList contacts={contacts} userType={userType} />
+                      </dd>
+                    </div>
+                  </div>
+                ))}
+              </dl>
+              {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
+                <div className="add-access-container">
+                  {isStateSelectorVisible
+                    ? renderSelectStateAccess
+                    : renderAddStateButton}
+                </div>
+              )}
+              {userType === ROLES.CMS_REVIEWER && (
+                <div className="access-card-container">
+                  {typeof userData.group === "number" && (
+                    <>
+                      <h2 id="accessHeader">Group & Division</h2>
+                      <div className="gradient-border" />
+                      <div className="cms-group-and-division-box ">
+                        <div className="cms-group-division-section">
+                          <h3>Group</h3>
+                          <br />
+                          <p>
+                            {
+                              getUserGroup(userData.group, userData.division)
+                                .group
+                            }
+                          </p>
+                        </div>
+                        <div className="cms-group-division-section cms-division-background">
+                          <h3>Division</h3>
+                          <br />
+                          <p>
+                            {
+                              getUserGroup(userData.group, userData.division)
+                                .division
+                            }
+                          </p>
+                        </div>
+                      </div>{" "}
+                    </>
+                  )}
+                </div>
+              )}
+            </div>
+          )}
           {!isReadOnly && (
             <div id="profileDisclaimer" className="disclaimer-message">
               This page contains Profile Information for the{" "}
@@ -478,15 +450,13 @@ const UserPage = () => {
       {stateAccessToRemove && (
         <ConfirmationDialog
           onAccept={onRemoveAccess}
-          acceptText="Yes, withdraw"
+          acceptText="Confirm"
           onCancel={closeConfirmation}
-          heading="Withdraw State Access"
+          heading="Withdraw State Access?"
+          size="wide"
         >
-          <p>
-            This action cannot be undone. {stateAccessToRemove} State Admin will
-            be notified.
-          </p>
-          <p>Are you sure you would like to withdraw State Access?</p>
+          This action cannot be undone. {territoryMap[stateAccessToRemove]}{" "}
+          State Admin will be notified.
         </ConfirmationDialog>
       )}
     </div>

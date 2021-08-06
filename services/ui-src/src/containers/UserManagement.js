@@ -30,6 +30,43 @@ const getName = ({ firstName, lastName }) =>
 const getAccessDescription = ({ stateCode }) =>
   stateCode ? `${territoryMap[stateCode]} in OneMAC` : "OneMAC";
 
+const grant = {
+    label: "Grant Access",
+    value: "active",
+    formatConfirmationMessage: (rowData) =>
+      `This will grant ${getName(rowData)} access to ${getAccessDescription(
+        rowData
+      )}.`,
+  },
+  deny = {
+    label: "Deny Access",
+    value: "denied",
+    formatConfirmationMessage: (rowData) =>
+      `This will deny ${getName(
+        rowData
+      )}'s request for access to ${getAccessDescription(rowData)}.`,
+  },
+  revoke = {
+    label: "Revoke Access",
+    value: "revoked",
+    formatConfirmationMessage: (rowData) =>
+      `This will revoke ${getName(rowData)}'s access to ${getAccessDescription(
+        rowData
+      )}.`,
+  },
+  menuItemMap = {
+    pending: [grant, deny],
+    active: [revoke],
+    denied: [grant],
+    revoked: [grant],
+  };
+
+const alertCodes = {
+  active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+  denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+  revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
+};
+
 /**
  * User Management "Dashboard"
  */
@@ -159,94 +196,55 @@ const UserManagement = () => {
     return orig;
   }, []);
 
+  const onPopupAction = useCallback(
+    async (rowNum, value) => {
+      const { role, stateCode, ...restOfUser } = userList[rowNum];
+      let newAlertCode = alertCodes[value];
+      setDoneToName(getName(restOfUser));
+
+      try {
+        const returnCode = await UserDataApi.setUserStatus({
+          userEmail: userList[rowNum].email,
+          doneBy: userProfile.userData.id,
+          type: role,
+          attributes: [
+            {
+              stateCode:
+                role === USER_TYPE.STATE_SUBMITTER ||
+                role === USER_TYPE.STATE_ADMIN
+                  ? stateCode
+                  : undefined, // required for state submitter and state admin
+              status: value,
+            },
+          ],
+        });
+
+        // alert already set per status change, only check for success here
+        if (returnCode !== "UR000") {
+          newAlertCode = returnCode;
+        }
+        updateList();
+        setAlertCode(newAlertCode);
+      } catch (e) {
+        console.log("Error while fetching user's list.", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      }
+    },
+    [updateList, userList, userProfile.userData.id]
+  );
+
   const renderActions = useCallback(
     ({ row }) => {
-      const grant = {
-          label: "Grant Access",
-          value: "active",
-          formatConfirmationMessage: (rowData) =>
-            `This will grant ${getName(
-              rowData
-            )} access to ${getAccessDescription(rowData)}.`,
-        },
-        deny = {
-          label: "Deny Access",
-          value: "denied",
-          formatConfirmationMessage: (rowData) =>
-            `This will deny ${getName(
-              rowData
-            )}'s request for access to ${getAccessDescription(rowData)}.`,
-        },
-        revoke = {
-          label: "Revoke Access",
-          value: "revoked",
-          formatConfirmationMessage: (rowData) =>
-            `This will revoke ${getName(
-              rowData
-            )}'s access to ${getAccessDescription(rowData)}.`,
-        };
-
-      const menuItems =
-        {
-          pending: [grant, deny],
-          active: [revoke],
-          denied: [grant],
-          revoked: [grant],
-        }[row.values.status] ?? [];
-
-      const alertCodes = {
-        active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
-        denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
-        revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
-      };
-
       return (
         <PopupMenu
           selectedRow={row}
           userEmail={row.values.email}
-          menuItems={menuItems}
-          handleSelected={(rowNum, value) => {
-            let newAlertCode = alertCodes[value];
-            let newPersonalized = "Chester Tester";
-
-            const updateStatusRequest = {
-              userEmail: userList[rowNum].email,
-              doneBy: userProfile.userData.id,
-              attributes: [
-                {
-                  stateCode:
-                    row.original.role === USER_TYPE.STATE_SUBMITTER ||
-                    row.original.role === USER_TYPE.STATE_ADMIN
-                      ? row.original.stateCode
-                      : undefined, // required for state submitter and state admin
-                  status: value,
-                },
-              ],
-              type: row.original.role,
-            };
-            UserDataApi.setUserStatus(updateStatusRequest)
-              .then(function (returnCode) {
-                // alert already set per status change, only check for success here
-                if (returnCode === "UR000") {
-                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
-                } else {
-                  newAlertCode = returnCode;
-                }
-                updateList();
-              })
-              .then(() => {
-                setAlertCode(newAlertCode);
-                setDoneToName(newPersonalized);
-              })
-              .catch((e) => {
-                console.log("Error while fetching user's list.", e);
-                setAlertCode(RESPONSE_CODE[e.message]);
-              });
-          }}
+          menuItems={menuItemMap[row.values.status] ?? []}
+          handleSelected={onPopupAction}
         />
       );
     },
-    [updateList, userList, userProfile]
+    [onPopupAction]
   );
 
   const columns = useMemo(() => {
