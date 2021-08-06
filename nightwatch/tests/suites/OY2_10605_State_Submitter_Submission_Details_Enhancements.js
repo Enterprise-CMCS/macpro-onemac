@@ -39,6 +39,8 @@ module.exports = {
         browser.useCss().setValue("textarea", "This is a test for waiver");
         // click ["Submit"] button 
         browser.useCss().click("[value='Submit']").pause(1000);
+        browser.pause(3000);
+        browser.refresh();
         // Verify the submitted SPA Report Content 
         let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
