@@ -22,7 +22,6 @@ import {
   pendingMessage,
   deniedOrRevokedMessage,
   isPending,
-  isActive,
 } from "../libs/userLib";
 import { Button } from "@cmsgov/design-system";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
