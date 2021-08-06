@@ -8,7 +8,6 @@ import {
   ROUTES,
   ChangeRequest,
   getUserRoleObj,
-  USER_TYPE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -22,7 +21,6 @@ import {
   pendingMessage,
   deniedOrRevokedMessage,
   isPending,
-  isActive,
 } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
@@ -32,7 +30,11 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userProfile: { userData } = {} } = useAppContext();
+  const {
+    isUserActive,
+    userProfile,
+    userProfile: { userData } = {},
+  } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
@@ -208,19 +210,16 @@ const Dashboard = () => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  const isUserActive =
-    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
-
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar
         heading="Submission List"
         rightSideContent={
-          (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK
-              && isUserActive
-              && csvExportSubmissions)
+          isUserActive &&
+          (userRoleObj.canAccessForms
+            ? newSubmissionButton
+            : csvExportSubmissions)
         }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />

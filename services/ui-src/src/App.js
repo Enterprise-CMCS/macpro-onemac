@@ -6,6 +6,7 @@ import UserDataApi from "./utils/UserDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import { isActive } from "./libs/userLib";
 
 function App() {
   const [authState, setAuthState] = useState({
@@ -34,6 +35,7 @@ function App() {
     let userAuthenticationStatus = false;
     let isDev = false;
     let tempUserProfile;
+    let isUserActive;
 
     try {
       // Get authenticated user's info from cognito
@@ -54,6 +56,16 @@ function App() {
       const userData = await UserDataApi.userProfile(tempUserProfile.email);
       tempUserProfile.userData = userData;
 
+      // If there's user data, then check if user is in active status.
+      // System admins are active by default since they are hardcoded into the data via seeding.
+      if (userData && Object.keys(userData).length > 0) {
+        if (userData.type === "systemadmin") {
+          isUserActive = true;
+        } else {
+          isUserActive = isActive(userData);
+        }
+      }
+
       // Set isDev for dev users.
       if (isDeveloper || devUsers.includes(tempUserProfile.email)) {
         isDev = true;
@@ -70,6 +82,7 @@ function App() {
     setAuthState({
       isAuthenticating: false,
       isAuthenticated: userAuthenticationStatus,
+      isUserActive: isUserActive,
       isLoggedInAsDeveloper: isDev,
       userProfile: tempUserProfile,
     });

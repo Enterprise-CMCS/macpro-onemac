@@ -79,7 +79,7 @@ const alertCodes = {
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile } = useAppContext();
+  const { isUserActive, userProfile } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
@@ -350,8 +350,6 @@ const UserManagement = () => {
       </svg>
     </Button>
   );
-  const isUserActive =
-    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
   // Render the dashboard
   return (
@@ -374,7 +372,7 @@ const UserManagement = () => {
         userProfile.userData &&
         userProfile.userData.attributes &&
         userProfile.userData.attributes.length !== 0 &&
-        !isActive(userProfile.userData) ? (
+        !isUserActive ? (
           isPending(userProfile.userData) ? (
             <EmptyList message={pendingMessage[userProfile.userData.type]} />
           ) : (
