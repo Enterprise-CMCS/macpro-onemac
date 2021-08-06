@@ -68,6 +68,26 @@ export const isActive = (userData) => {
     return userData.attributes[0].status === USER_STATUS.ACTIVE;
   }
 };
+
+export const getUserStatus = (userData) => {
+  const hasNoUserData = !userData || Object.keys(userData).length === 0;
+
+  if (hasNoUserData) {
+    return null;
+  }
+
+  // System admins are active by default since they are hardcoded into the data via seeding.
+  if (userData.type === USER_TYPE.SYSTEM_ADMIN) {
+    return USER_STATUS.ACTIVE;
+  } else if (isActive(userData)) {
+    return USER_STATUS.ACTIVE;
+  } else if (isPending(userData)) {
+    return USER_STATUS.PENDING;
+  } else {
+    return null;
+  }
+};
+
 /**
  * Sort history of userData in descending order.
  * @param {Object} a object of history instance
