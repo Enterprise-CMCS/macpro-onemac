@@ -42,7 +42,7 @@ module.exports = {
         browser.pause(3000);
         browser.refresh();
         // Verify the submitted SPA Report Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
+        let submittedIDNumber = "//td[@id='transmittalNumber-0']/a";
         let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
         let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
         // Waiver ID Verification 
@@ -56,7 +56,8 @@ module.exports = {
 
         //click on waiver and verify the page
         browser.useXpath().click(submittedIDNumber);
-        browser.pause(500);
+        browser.pause(2000);
+        browser.refresh();
         let waiver_action_details = "//h1";
         let date_submitted_title = "(//h2)[1]";
         let date = "(//div[@class='ds-c-review__body'])[1]";
