@@ -1791,3 +1791,9 @@ aside#faq-contact-info-box {
     @extend .ds-c-review__body;
   }
 }
+
+.confirmation-dialog {
+  .ds-c-dialog__close {
+    display: none;
+  }
+}

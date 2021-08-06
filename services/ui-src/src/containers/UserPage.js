@@ -17,6 +17,7 @@ import UserDataApi from "../utils/UserDataApi";
 
 import AlertBar from "../components/AlertBar";
 import PageTitleBar from "../components/PageTitleBar";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { PhoneNumber } from "../components/PhoneNumber";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
@@ -107,6 +108,7 @@ const UserPage = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(transformAccesses(userData));
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
+  const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
 
   const isReadOnly =
@@ -202,43 +204,36 @@ const UserPage = () => {
     ]
   );
 
-  const xClicked = useCallback(
-    (stateCode) => {
-      if (
-        window.confirm(
-          "Warning Withdraw of State Access\n\nThis action cannot be undone. State Admin will be notified. Are you sure you would like to withdraw State Access?\n\nAre you sure you want to proceed?"
-        )
+  const closeConfirmation = useCallback(() => setStateAccessToRemove(null), []);
+
+  const onRemoveAccess = useCallback(() => {
+    const updateStatusRequest = {
+      userEmail: userProfile.email,
+      doneBy: userProfile.email,
+      attributes: [
+        {
+          stateCode: stateAccessToRemove, // required for state submitter and state admin
+          status: "revoked",
+        },
+      ],
+      type: userType,
+    };
+    try {
+      console.log("updateStatusRequest", updateStatusRequest);
+      UserDataApi.setUserStatus(updateStatusRequest).then(function (
+        returnCode
       ) {
-        const updateStatusRequest = {
-          userEmail: userProfile.email,
-          doneBy: userProfile.email,
-          attributes: [
-            {
-              stateCode: stateCode, // required for state submitter and state admin
-              status: "revoked",
-            },
-          ],
-          type: userType,
-        };
-        try {
-          console.log("updateStatusRequest", updateStatusRequest);
-          UserDataApi.setUserStatus(updateStatusRequest).then(function (
-            returnCode
-          ) {
-            if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
-              setUserInfo();
-            } else {
-              console.log("Returned: ", returnCode);
-              setAlertCode(returnCode);
-            }
-          });
-        } catch (e) {
-          setAlertCode(RESPONSE_CODE[e.message]);
+        if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
+          setUserInfo();
+        } else {
+          console.log("Returned: ", returnCode);
+          setAlertCode(returnCode);
         }
-      }
-    },
-    [userProfile.email, userType, setUserInfo]
-  );
+      });
+    } catch (e) {
+      setAlertCode(RESPONSE_CODE[e.message]);
+    }
+  }, [stateAccessToRemove, userProfile.email, userType, setUserInfo]);
 
   const renderSelectStateAccess = useMemo(() => {
     return (
@@ -294,118 +289,90 @@ const UserPage = () => {
         // CMS System Admins do not see this section at all
         return null;
     }
-    if (userType === ROLES.CMS_REVIEWER) {
-      return (
-        <div className="ds-l-col--6">
-          <h2 id="accessHeader">{heading}</h2>
-          <dl>
-            {accesses.map(({ state, status, contacts }) => (
-                <div className="access-card-container" key={state ?? "only-one"}>
-                  <div className="gradient-border" />
-                  <div className="state-access-card">
-                    {userType === ROLES.STATE_SUBMITTER &&
-                    (status === "active" || status === "pending") && (
-                        <button
-                            className="close-button"
-                            onClick={() => xClicked(contacts)}
-                        >
-                          {CLOSING_X_IMAGE}
-                        </button>
-                    )}
-                    <dd>
-                      <em>{ACCESS_LABELS[status] || status}</em>
-                      <br />
-                      <br />
-                      <ContactList contacts={contacts} userType={userType} />
-                    </dd>
-                  </div>
-                </div>
-            ))}
-          </dl>
 
-          <div className="access-card-container">
-
-            {typeof userData.group === "number" && <>
-            <h2 id="accessHeader">{heading2}</h2>
-            <div className="gradient-border" />
-            <div className="cms-group-and-division-box ">
-              <div className="cms-group-division-section">
-                <h3>Group</h3>
-                <br />
-                <p>
-                  {
-                    getUserGroup(
-                      groupData.group,
-                      userData.group,
-                      userData.division
-                    ).group
-                  }
-                </p>
+    return (
+      <div className="right-column">
+        <h2 id="accessHeader">{heading}</h2>
+        <dl>
+          {accesses.map(({ state, status, contacts }) => (
+            <div className="access-card-container" key={state ?? "only-one"}>
+              <div className="gradient-border" />
+              <div className="state-access-card">
+                {!isReadOnly &&
+                  userType === ROLES.STATE_SUBMITTER &&
+                  (status === "active" || status === "pending") && (
+                    <button
+                      disabled={isReadOnly}
+                      className="close-button"
+                      onClick={() => setStateAccessToRemove(state)}
+                    >
+                      {CLOSING_X_IMAGE}
+                    </button>
+                  )}
+                {!!state && <dt>{territoryMap[state] || state}</dt>}
+                <dd>
+                  <em>{ACCESS_LABELS[status] || status}</em>
+                  <br />
+                  <br />
+                  <ContactList contacts={contacts} userType={userType} />
+                </dd>
               </div>
-              <div className="cms-group-division-section cms-division-background">
-                <h3>Division</h3>
-                <br />
-                <p>
-                  {
-                     getUserGroup(
-                      groupData.group,
-                      userData.group,
-                      userData.division
-                    ).division
-                  }
-                </p>
-              </div>
-            </div> </> }
-          </div>
-        </div>
-      );
-    } else {
-      return (
-        <div className="right-column">
-          <h2 id="accessHeader">{heading}</h2>
-          <dl>
-            {accesses.map(({ state, status, contacts }) => (
-              <div className="access-card-container" key={state ?? "only-one"}>
-                <div className="gradient-border" />
-                <div className="state-access-card">
-                  {!isReadOnly &&
-                    userType === ROLES.STATE_SUBMITTER &&
-                    (status === "active" || status === "pending") && (
-                      <button
-                        disabled={isReadOnly}
-                        className="close-button"
-                        onClick={() => xClicked(state)}
-                      >
-                        {CLOSING_X_IMAGE}
-                      </button>
-                    )}
-                  {!!state && <dt>{territoryMap[state] || state}</dt>}
-                  <dd>
-                    <em>{ACCESS_LABELS[status] || status}</em>
-                    <br />
-                    <br />
-                    <ContactList contacts={contacts} userType={userType} />
-                  </dd>
-                </div>
-              </div>
-            ))}
-          </dl>
-          {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
-            <div className="add-access-container">
-              {isStateSelectorVisible
-                ? renderSelectStateAccess
-                : renderAddStateButton}
             </div>
-          )}
-        </div>
-      );
-    }
+          ))}
+        </dl>
+        {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
+          <div className="add-access-container">
+            {isStateSelectorVisible
+              ? renderSelectStateAccess
+              : renderAddStateButton}
+          </div>
+        )}
+        {userType === ROLES.CMS_REVIEWER && (
+          <div className="access-card-container">
+            {typeof userData.group === "number" && (
+              <>
+                <h2 id="accessHeader">{heading2}</h2>
+                <div className="gradient-border" />
+                <div className="cms-group-and-division-box ">
+                  <div className="cms-group-division-section">
+                    <h3>Group</h3>
+                    <br />
+                    <p>
+                      {
+                        getUserGroup(
+                          groupData.group,
+                          userData.group,
+                          userData.division
+                        ).group
+                      }
+                    </p>
+                  </div>
+                  <div className="cms-group-division-section cms-division-background">
+                    <h3>Division</h3>
+                    <br />
+                    <p>
+                      {
+                        getUserGroup(
+                          groupData.group,
+                          userData.group,
+                          userData.division
+                        ).division
+                      }
+                    </p>
+                  </div>
+                </div>{" "}
+              </>
+            )}
+          </div>
+        )}
+      </div>
+    );
   }, [
     accesses,
     userData.group,
     userData.division,
     userType,
-    xClicked,
+    setStateAccessToRemove,
     isReadOnly,
     isStateSelectorVisible,
     renderSelectStateAccess,
@@ -508,6 +475,20 @@ const UserPage = () => {
           )}
         </div>
       </div>
+      {stateAccessToRemove && (
+        <ConfirmationDialog
+          onAccept={onRemoveAccess}
+          acceptText="Yes, withdraw"
+          onCancel={closeConfirmation}
+          heading="Withdraw State Access"
+        >
+          <p>
+            This action cannot be undone. {stateAccessToRemove} State Admin will
+            be notified.
+          </p>
+          <p>Are you sure you would like to withdraw State Access?</p>
+        </ConfirmationDialog>
+      )}
     </div>
   );
 };

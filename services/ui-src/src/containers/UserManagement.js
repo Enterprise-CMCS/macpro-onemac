@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory, Link } from "react-router-dom";
-import { RESPONSE_CODE, ROUTES, USER_TYPE } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, USER_TYPE, territoryMap } from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -15,9 +15,6 @@ import { roleLabels } from "../libs/roleLib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
-  grantConfirmMessage,
-  denyConfirmMessage,
-  revokeConfirmMessage,
   isPending,
   isActive,
 } from "../libs/userLib";
@@ -27,6 +24,11 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
 );
+
+const getName = ({ firstName, lastName }) =>
+  [firstName, lastName].filter(Boolean).join(" ");
+const getAccessDescription = ({ stateCode }) =>
+  stateCode ? `${territoryMap[stateCode]} in OneMAC` : "OneMAC";
 
 /**
  * User Management "Dashboard"
@@ -93,12 +95,6 @@ const UserManagement = () => {
       mounted = false;
     };
   }, [userList]);
-
-  const getName = useCallback(
-    ({ firstName, lastName }) =>
-      [firstName, lastName].filter(Boolean).join(" "),
-    []
-  );
 
   const getRoleLabel = useCallback(({ role }) => roleLabels[role], []);
 
@@ -168,17 +164,26 @@ const UserManagement = () => {
       const grant = {
           label: "Grant Access",
           value: "active",
-          confirmMessage: grantConfirmMessage,
+          formatConfirmationMessage: (rowData) =>
+            `This will grant ${getName(
+              rowData
+            )} access to ${getAccessDescription(rowData)}.`,
         },
         deny = {
           label: "Deny Access",
           value: "denied",
-          confirmMessage: denyConfirmMessage,
+          formatConfirmationMessage: (rowData) =>
+            `This will deny ${getName(
+              rowData
+            )}'s request for access to ${getAccessDescription(rowData)}.`,
         },
         revoke = {
           label: "Revoke Access",
           value: "revoked",
-          confirmMessage: revokeConfirmMessage,
+          formatConfirmationMessage: (rowData) =>
+            `This will revoke ${getName(
+              rowData
+            )}'s access to ${getAccessDescription(rowData)}.`,
         };
 
       const menuItems =
@@ -197,7 +202,7 @@ const UserManagement = () => {
 
       return (
         <PopupMenu
-          selectedRow={row.id}
+          selectedRow={row}
           userEmail={row.values.email}
           menuItems={menuItems}
           handleSelected={(rowNum, value) => {
@@ -301,7 +306,6 @@ const UserManagement = () => {
 
     return columnList.filter(Boolean);
   }, [
-    getName,
     includeStateCode,
     renderName,
     renderStatus,

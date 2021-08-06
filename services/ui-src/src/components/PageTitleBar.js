@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faChevronLeft } from "@fortawesome/free-solid-svg-icons";
 import classNames from "classnames";
+
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
+import { useFlag } from "../libs/hooksLib";
 
 export const TITLE_BAR_ID = "title_bar";
 
@@ -22,26 +25,29 @@ const PageTitleBar = ({
   backNavConfirmationMessage,
 }) => {
   const history = useHistory();
+  const [
+    showCancelConfirmation,
+    closeCancelConfirmation,
+    openCancelConfirmation,
+  ] = useFlag();
 
-  const titleBarClassName = classNames("page-title-bar", {
-    "title-bar-light-theme": enableBackNav,
-    "title-bar-dark-theme": !enableBackNav,
-  });
-
-  /**
-   * Opens browser confirmation window.
-   * @param {Object} event the click event
-   */
-  async function handleBackWithConfirm(event) {
-    event.preventDefault();
-    const result = window.confirm(backNavConfirmationMessage);
-    if (result === true) {
-      history.goBack();
-    }
-  }
+  const handleBackWithConfirm = useCallback(
+    async (event) => {
+      event.preventDefault();
+      if (backNavConfirmationMessage) openCancelConfirmation();
+      else history.goBack();
+    },
+    [backNavConfirmationMessage, history, openCancelConfirmation]
+  );
 
   return (
-    <div id={TITLE_BAR_ID} className={titleBarClassName}>
+    <div
+      id={TITLE_BAR_ID}
+      className={classNames("page-title-bar", {
+        "title-bar-light-theme": enableBackNav,
+        "title-bar-dark-theme": !enableBackNav,
+      })}
+    >
       <div className="header-wrapper">
         <div className="title-bar-left-content">
           {enableBackNav && (
@@ -49,11 +55,7 @@ const PageTitleBar = ({
               id="back-button"
               data-testid="back-button"
               className="title-bar-back-button"
-              onClick={
-                backNavConfirmationMessage
-                  ? handleBackWithConfirm
-                  : () => history.goBack()
-              }
+              onClick={handleBackWithConfirm}
               variation="transparent"
             >
               <FontAwesomeIcon
@@ -66,6 +68,17 @@ const PageTitleBar = ({
         </div>
         {rightSideContent}
       </div>
+      {showCancelConfirmation && (
+        <ConfirmationDialog
+          acceptText="Leave Anyway"
+          cancelText="Stay on Page"
+          heading="Leave this page?"
+          onAccept={() => history.goBack()}
+          onCancel={closeCancelConfirmation}
+        >
+          {backNavConfirmationMessage}
+        </ConfirmationDialog>
+      )}
     </div>
   );
 };
