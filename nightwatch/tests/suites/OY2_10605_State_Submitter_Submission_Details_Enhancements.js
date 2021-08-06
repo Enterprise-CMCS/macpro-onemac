@@ -138,12 +138,13 @@ module.exports = {
         browser.click("[value='Submit']").pause(2000);
         
         //browser.refresh();
-        browser.pause(2000);
+        browser.pause(3000);
         browser.refresh();
 
         //click on SPA and verify the page
         let spa_id_top = "//td[@id='transmittalNumber-0']/a";
         browser.useXpath().waitForElementPresent(spa_id_top, 1000);
+        browser.refresh();
         browser.useXpath().click(spa_id_top);
         browser.pause(500);
         let medicaid_spa_submission_details = "//h1";
