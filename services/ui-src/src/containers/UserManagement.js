@@ -168,22 +168,17 @@ const UserManagement = () => {
       const grant = {
           label: "Grant Access",
           value: "active",
-          confirmMessage:
-            grantConfirmMessage[row.original.role] ??
-            grantConfirmMessage.default,
+          confirmMessage: grantConfirmMessage,
         },
         deny = {
           label: "Deny Access",
           value: "denied",
-          confirmMessage:
-            denyConfirmMessage[row.original.role] ?? denyConfirmMessage.default,
+          confirmMessage: denyConfirmMessage,
         },
         revoke = {
           label: "Revoke Access",
           value: "revoked",
-          confirmMessage:
-            revokeConfirmMessage[row.original.role] ??
-            revokeConfirmMessage.default,
+          confirmMessage: revokeConfirmMessage,
         };
 
       const menuItems =
@@ -336,7 +331,7 @@ const UserManagement = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV("user-table", userList, "UserList", columns);
+        tableListExportToCSV("user-table", userList, "UserList");
       }}
       inversed
     >
@@ -351,6 +346,8 @@ const UserManagement = () => {
       </svg>
     </Button>
   );
+  const isUserActive =
+    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
   // Render the dashboard
   return (
@@ -359,6 +356,7 @@ const UserManagement = () => {
         heading="User Management"
         rightSideContent={
           userProfile.userData.type === USER_TYPE.HELPDESK &&
+          isUserActive &&
           csvExportSubmissions
         }
       />

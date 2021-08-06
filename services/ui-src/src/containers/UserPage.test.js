@@ -44,7 +44,7 @@ describe("Phone Number section", () => {
     const initial = "303-909-8080";
     const replacement = "202-867-5309";
 
-    const authState = { ...initialAuthState };
+    const authState = { ...initialAuthState, updatePhoneNumber: jest.fn() };
     authState.userProfile.userData.phoneNumber = initial;
 
     render(
@@ -80,7 +80,7 @@ describe("Phone Number section", () => {
     const initial = "303-909-8080",
       replacement = "202-867-5309";
 
-    const authState = { ...initialAuthState };
+    const authState = { ...initialAuthState, updatePhoneNumber: jest.fn() };
     authState.userProfile.userData.phoneNumber = initial;
 
     render(
@@ -118,7 +118,7 @@ describe("Phone Number section", () => {
     const initial = "303-909-8080",
       replacement = "202-867-5309";
 
-    const authState = { ...initialAuthState };
+    const authState = { ...initialAuthState, updatePhoneNumber: jest.fn() };
     authState.userProfile.userData.phoneNumber = initial;
 
     UserDataApi.updatePhoneNumber = jest.fn();
@@ -159,7 +159,7 @@ describe("Phone Number section", () => {
   });
 
   it("displays the Add button when a user has no initial phone number", async () => {
-    const authState = { ...initialAuthState };
+    const authState = { ...initialAuthState, updatePhoneNumber: jest.fn() };
 
     // ensure no phoneNumber will exist in the data
     delete authState.userProfile.userData.phoneNumber;
@@ -185,7 +185,7 @@ describe("Phone Number section", () => {
     const initial = "303-909-8080",
       replacement = "";
 
-    const authState = { ...initialAuthState };
+    const authState = { ...initialAuthState, updatePhoneNumber: jest.fn() };
     authState.userProfile.userData.phoneNumber = initial;
 
     render(
@@ -214,7 +214,7 @@ describe("Phone Number section", () => {
   });
 
   it("opens the edit mode with Apply and Cancel buttons after clicking the Add button", async () => {
-    const authState = { ...initialAuthState };
+    const authState = { ...initialAuthState, updatePhoneNumber: jest.fn() };
     delete authState.userProfile.userData.phoneNumber;
 
     render(

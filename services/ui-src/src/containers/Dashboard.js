@@ -123,7 +123,7 @@ const Dashboard = () => {
   const columns = useMemo(
     () => [
       {
-        Header: "SPA ID/Waiver Number",
+        Header: "ID/Number",
         accessor: "transmittalNumber",
         disableSortBy: true,
         Cell: renderId,
@@ -144,7 +144,7 @@ const Dashboard = () => {
         Cell: renderDate,
       },
       {
-        Header: "State Submitter",
+        Header: "Submitted By",
         accessor: ({ user: { firstName, lastName } = {} }) =>
           [firstName, lastName].filter(Boolean).join(" "),
         id: "submitter",
@@ -167,8 +167,7 @@ const Dashboard = () => {
         tableListExportToCSV(
           "submission-table",
           changeRequestList,
-          "SubmissionList",
-          columns
+          "SubmissionList"
         );
       }}
       inversed
@@ -219,7 +218,9 @@ const Dashboard = () => {
         heading="Submission List"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK && csvExportSubmissions)
+          (userData.type === USER_TYPE.HELPDESK
+              && isUserActive
+              && csvExportSubmissions)
         }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />

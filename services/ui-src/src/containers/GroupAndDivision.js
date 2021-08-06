@@ -1,6 +1,6 @@
 import React, { useCallback, useMemo, useReducer } from "react";
 import { useHistory } from "react-router-dom";
-import Select from "react-select";
+import Select, { components } from "react-select";
 import { Button, FormLabel } from "@cmsgov/design-system";
 import cx from "classnames";
 import { ROLES, USER_STATUS } from "cmscommonlib";
@@ -10,14 +10,41 @@ import PageTitleBar from "../components/PageTitleBar";
 import { useSignupCallback } from "../libs/hooksLib";
 
 const createAttribute = () => [{ status: USER_STATUS.PENDING }];
-const customComponents = { IndicatorSeparator: () => null };
+const customComponents = {
+  IndicatorSeparator: () => null,
+  Option: (props) => (
+    <components.Option {...props}>
+      <b className="group-division-option-abbr">{props.data.abbr ?? "--"}</b>{" "}
+      <span>{props.data.name}</span>
+    </components.Option>
+  ),
+  SingleValue: (props) => (
+    <components.SingleValue {...props}>
+      <b className="group-division-option-abbr">{props.data.abbr ?? "--"}</b>{" "}
+      <span>{props.data.name}</span>
+    </components.SingleValue>
+  ),
+};
 
-const getGroupOptions = () =>
-  groupData.map(({ id, name }) => ({ label: name, value: id }));
+const compareOpts = ({ abbr: abbrA }, { abbr: abbrB }) => {
+  if (abbrA) {
+    if (abbrB) return abbrA.localeCompare(abbrB);
+    return -1;
+  } else if (abbrB) return 1;
+  return 0;
+};
+const createOpt = ({ id, abbr, name }) => ({
+  label: `${abbr} ${name}`,
+  name,
+  abbr,
+  value: id,
+});
+const getGroupOptions = () => groupData.sort(compareOpts).map(createOpt);
 const getDivisionOptions = (groupId) =>
   groupData
     .find(({ id }) => id === groupId)
-    ?.divisions.map(({ id, name }) => ({ label: name, value: id })) ?? [];
+    ?.divisions.sort(compareOpts)
+    .map(createOpt) ?? [];
 
 const useSelectedOption = (list, current) =>
   useMemo(
@@ -83,7 +110,7 @@ export const GroupAndDivision = () => {
         name="group and division selection"
         onSubmit={onSubmit}
       >
-        <h2>Select your Group</h2>
+        <h2>Select a Group and Division</h2>
         <FormLabel fieldId="group-select">Group</FormLabel>
         <Select
           components={customComponents}

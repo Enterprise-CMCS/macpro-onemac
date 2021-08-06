@@ -67,15 +67,16 @@ module.exports = {
 
         // write the Summary 
         let phrase = "This is a test, test, test";
-        browser.setValue('textarea', phrase);
+        browser.setValue('textarea', phrase).pause(3000);
 
         // Submit the new SPA 
-
         browser.click("[value='Submit']").pause(10000);
-          
-        // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(4000);
-        browser.useCss();
-        return spaID;
+        // browser.refresh();
+        // browser.pause(5000);
+        // browser.refresh();  
+        // // Verify the SPA on Submission List 
+        // browser.useXpath().verify.containsText("//*[@id='transmittalNumber-0']/a", spaID).pause(10000);
+        // browser.useCss();
+        // return spaID;
     },
 }
