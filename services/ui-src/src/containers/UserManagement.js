@@ -199,7 +199,6 @@ const UserManagement = () => {
   const onPopupAction = useCallback(
     async (rowNum, value) => {
       const { role, stateCode, ...restOfUser } = userList[rowNum];
-      let newAlertCode = alertCodes[value];
       setDoneToName(getName(restOfUser));
 
       try {
@@ -219,12 +218,8 @@ const UserManagement = () => {
           ],
         });
 
-        // alert already set per status change, only check for success here
-        if (returnCode !== "UR000") {
-          newAlertCode = returnCode;
-        }
         updateList();
-        setAlertCode(newAlertCode);
+        setAlertCode(returnCode === "UR000" ? alertCodes[value] : returnCode);
       } catch (e) {
         console.log("Error while fetching user's list.", e);
         setAlertCode(RESPONSE_CODE[e.message]);
