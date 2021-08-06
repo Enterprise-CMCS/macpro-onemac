@@ -119,6 +119,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  getPackage:
+    handler: getPackage.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getPackage/{id}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   getAllByAuthorizedTerritories:
     handler: getAllByAuthorizedTerritories.main
     role: LambdaApiRole

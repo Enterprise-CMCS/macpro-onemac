@@ -1,4 +1,4 @@
-import { TYPE } from "./changeRequest";
+import { TYPE } from "./package";
 
 export const PLAN_TYPE_IDS = {
   [TYPE.CHIP_SPA]: "124",

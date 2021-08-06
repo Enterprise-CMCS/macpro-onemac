@@ -110,19 +110,20 @@ class SPARAIResponse {
   saveSubmission(data) {
     let submitterName = data.user.firstName + " " + data.user.lastName;
     let raiResponseData = {
-      packageID: data.transmittalNumber,
-      packageStatus: "RAI Response Submitted",
-      timestamp: data.submittedAt,
-      raiResponseSubmissionDate: data.submittedAt,
-      raiResponseAttachments: data.uploads,
-      raiResponseAdditionalInformation: data.summary,
-      raiResponseSubmitterName: submitterName,
-      raiResponseSubmitterEmail: data.user.email,
-      lastModifiedByName: submitterName,
-      lastModifiedByEmail: data.user.email,
+      packageId: data.transmittalNumber,
+      mostRecentUpdate: {
+        type: "raiResponse",
+        packageStatus: "Submitted",
+        sourceSystem: "OneMAC",
+        timestamp: data.submittedAt,
+        submitterName: submitterName,
+        submitterEmail: data.user.email,
+        attachments: data.uploads,
+        additionalInformation: data.summary,
+      },
     };
 
-    updatePackage(raiResponseData);
+    return updatePackage(raiResponseData);
   }
 }
 

@@ -61,7 +61,7 @@ Resources:
         - AttributeName: GSI1pk
           AttributeType: S
         - AttributeName: GSI1sk
-          AttributeType: N
+          AttributeType: S
       KeySchema:
         - AttributeName: pk
           KeyType: HASH

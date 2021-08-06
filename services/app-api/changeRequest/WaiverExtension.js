@@ -115,7 +115,7 @@ class WaiverExtension {
   saveSubmission(data) {
     let submitterName = data.user.firstName + " " + data.user.lastName;
     let extensionRequestData = {
-      packageID: data.transmittalNumber,
+      packageId: data.transmittalNumber,
       packageStatus: "Extension Requested",
       timestamp: data.submittedAt,
       extensionRequestSubmissionDate: data.submittedAt,

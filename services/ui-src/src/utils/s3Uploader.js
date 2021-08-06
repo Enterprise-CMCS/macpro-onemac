@@ -26,13 +26,13 @@ export function ensureLowerCaseFileExtension(file) {
  * @param {Array.Object} fileArray a list of files to upload
  * @return {Promise} promise that returns an array of files uploaded
  */
-export async function uploadFiles(fileArray) {
+export async function uploadFiles(fileArray, packageId) {
   let resultPromise;
   if (fileArray.length > 0) {
     // Process each file.
     let uploadPromises = [];
     fileArray.forEach((file) => {
-      let promise = uploadFile(file);
+      let promise = uploadFile(file, packageId);
       uploadPromises.push(promise);
     });
 
@@ -64,11 +64,11 @@ export async function uploadFiles(fileArray) {
  * @param {Object} file file object from the form
  * @returns metadata of the uploaded object which includes s3 key, filename, content type and url
  */
-export async function uploadFile(file) {
+export async function uploadFile(file, packageId) {
   const fileToUpload = ensureLowerCaseFileExtension(file);
 
   let retPromise;
-  const targetPathname = `${Date.now()}/${fileToUpload.name}`;
+  const targetPathname = `/${packageId}/${fileToUpload.type}/${fileToUpload.name}`;
 
   try {
     const stored = await Storage.vault.put(targetPathname, fileToUpload, {

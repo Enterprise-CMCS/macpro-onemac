@@ -117,7 +117,7 @@ class CHIPSPA {
   saveSubmission(data) {
     let submitterName = data.user.firstName + " " + data.user.lastName;
     let chipData = {
-      packageID: data.transmittalNumber,
+      packageId: data.transmittalNumber,
       packageType: "CHIP SPA",
       packageStatus: "Submitted",
       territory: data.territory,

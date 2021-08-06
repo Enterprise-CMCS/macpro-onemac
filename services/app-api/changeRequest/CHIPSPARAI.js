@@ -107,7 +107,7 @@ class CHIPSPARAI {
   saveSubmission(data) {
     let submitterName = data.user.firstName + " " + data.user.lastName;
     let raiResponseData = {
-      packageID: data.transmittalNumber,
+      packageId: data.transmittalNumber,
       packageStatus: "RAI Response Submitted",
       timestamp: data.submittedAt,
       raiResponseSubmissionDate: data.submittedAt,

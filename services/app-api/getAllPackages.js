@@ -30,7 +30,11 @@ export const main = handler(async (event, context) => {
   console.log("allResults is: ", allResults);
   if (allResults) {
     allResults.forEach((result) => {
-      items = items.concat(result.Items);
+      items = items.concat(
+        result.Items.map((item) => {
+          return item.changeHistory[0];
+        })
+      );
     });
   }
   if (items.length === 0) {
@@ -38,6 +42,7 @@ export const main = handler(async (event, context) => {
   }
 
   console.log(`Sending back ${items.length} change request(s).`);
+  console.log("items are: ", items);
   return items;
 });
 /**
@@ -81,18 +86,13 @@ async function getPackages(startingKey, keepSearching, allResults) {
   let results = await dynamoDb.query({
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :pk AND GSI1sk > :v_GSI1sk",
-    ExpressionAttributeNames: {
-      "#timestamp": "timestamp",
-    },
+    KeyConditionExpression: "GSI1pk = :pk",
     ExpressionAttributeValues: {
-      ":pk": "PACKAGE",
-      ":v_GSI1sk": 0,
+      ":pk": "OneMAC",
     },
     ExclusiveStartKey: startingKey,
     ScanIndexForward: false,
-    ProjectionExpression:
-      "packageID, packageType, territory, #timestamp, lastModifiedByName, lastModifiedByEmail",
+    ProjectionExpression: "changeHistory[0]",
   });
   allResults.push(results);
   if (results.LastEvaluatedKey) {

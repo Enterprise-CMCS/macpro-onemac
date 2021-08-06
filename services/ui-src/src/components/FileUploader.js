@@ -214,7 +214,7 @@ export default class FileUploader extends Component {
   /**
    * Upload all the files.
    */
-  uploadFiles = () => {
+  uploadFiles = (packageId) => {
     let files = [];
     this.state.uploaders.forEach((uploader) => {
       if (uploader.files) {
@@ -225,7 +225,7 @@ export default class FileUploader extends Component {
       }
     });
 
-    return s3Uploader.uploadFiles(files);
+    return s3Uploader.uploadFiles(files, packageId);
   };
 
   /**

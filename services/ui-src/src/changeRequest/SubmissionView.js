@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { RESPONSE_CODE, ROUTES, ChangeRequest } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, Package } from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileList from "../components/FileList";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
@@ -62,7 +62,7 @@ const SubmissionView = ({ changeRequestType }) => {
     };
   }, [id, userId, history]);
 
-  const formInfo = ChangeRequest.CONFIG[changeRequestType];
+  const formInfo = Package.CONFIG[changeRequestType];
 
   return (
     <LoadingScreen isLoading={isLoading}>

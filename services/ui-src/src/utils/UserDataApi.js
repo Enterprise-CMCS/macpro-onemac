@@ -26,7 +26,7 @@ class UserDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get("userDataAPI", `/getMyUserList?email=${userEmail}`);
+      return await API.get("oneMacAPI", `/getMyUserList?email=${userEmail}`);
     } catch (error) {
       handleApiError(
         error,
@@ -49,7 +49,7 @@ class UserDataApi {
     }
 
     try {
-      let answer = await API.get("userDataAPI", `/getUser?email=${userEmail}`);
+      let answer = await API.get("oneMacAPI", `/getUser?email=${userEmail}`);
       return answer;
     } catch (error) {
       handleApiError(
@@ -67,7 +67,7 @@ class UserDataApi {
    */
   async updateUser(userRecord) {
     try {
-      return await API.put("changeRequestAPI", "/putUser", {
+      return await API.put("oneMacAPI", "/putUser", {
         body: { ...userRecord, isPutUser: true },
       });
     } catch (error) {
@@ -87,7 +87,7 @@ class UserDataApi {
    */
   async updatePhoneNumber(id, phoneNumber) {
     try {
-      return await API.put("changeRequestAPI", "/phoneNumber", {
+      return await API.put("oneMacAPI", "/phoneNumber", {
         body: { id, phoneNumber },
       });
     } catch (error) {
@@ -113,7 +113,7 @@ class UserDataApi {
     }
 
     try {
-      return await API.put("changeRequestAPI", "/putUser", {
+      return await API.put("oneMacAPI", "/putUser", {
         body: updateStatusRequest,
       });
     } catch (error) {
@@ -134,10 +134,7 @@ class UserDataApi {
       for (const state of states) {
         params.append("state", state);
       }
-      return await API.get(
-        "userDataAPI",
-        `/getStateAdmins?${params.toString()}`
-      );
+      return await API.get("oneMacAPI", `/getStateAdmins?${params.toString()}`);
     } catch (error) {
       handleApiError(
         error,
@@ -152,7 +149,7 @@ class UserDataApi {
    */
   async getCmsApprovers() {
     try {
-      return await API.get("userDataAPI", "/getCmsApprovers");
+      return await API.get("oneMacAPI", "/getCmsApprovers");
     } catch (error) {
       handleApiError(
         error,
@@ -167,7 +164,7 @@ class UserDataApi {
    */
   async getCmsSystemAdmins() {
     try {
-      return await API.get("userDataAPI", "/getCmsSystemAdmins");
+      return await API.get("oneMacAPI", "/getCmsSystemAdmins");
     } catch (error) {
       handleApiError(
         error,

@@ -23,7 +23,7 @@ const waiverBaseTransmittalNumber = {
 export const CONFIG = {
   [TYPE.CHIP_SPA]: {
     pageTitle: "Submit New CHIP SPA",
-    readOnlyPageTitle: "CHIP SPA Submission Details",
+    readOnlyPageTitle: "CHIP SPA Package Details",
     detailsHeader: "CHIP SPA",
     subheaderMessage: {
       __html: commonSubheaderMessage,
@@ -92,7 +92,7 @@ export const CONFIG = {
 
   [TYPE.SPA]: {
     pageTitle: "Submit New Medicaid SPA",
-    readOnlyPageTitle: "Medicaid SPA Submission Details",
+    readOnlyPageTitle: "Medicaid SPA Package Details",
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },

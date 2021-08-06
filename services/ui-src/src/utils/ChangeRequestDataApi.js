@@ -29,7 +29,7 @@ class ChangeRequestDataApi {
       } else if (data.type === "sparai") {
         postType = "/submitSPARAIResponse";
       }
-      return await API.post("changeRequestAPI", postType, {
+      return await API.post("oneMacAPI", postType, {
         body: data,
       });
     } catch (error) {
@@ -54,10 +54,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let changeRequest = await API.get(
-        "changeRequestAPI",
-        `/get/${id}/${userId}`
-      );
+      let changeRequest = await API.get("oneMacAPI", `/get/${id}/${userId}`);
       if (changeRequest.uploads) {
         let i;
         // Use a for loop instead of forEach to stay in the context of this async function.
@@ -91,7 +88,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      return await API.get("changeRequestAPI", `/package-exists/${id}`);
+      return await API.get("oneMacAPI", `/package-exists/${id}`);
     } catch (error) {
       handleApiError(
         error,
@@ -110,10 +107,7 @@ class ChangeRequestDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get(
-        "changeRequestAPI",
-        `/getAllPackages?email=${userEmail}`
-      );
+      return await API.get("oneMacAPI", `/getAllPackages?email=${userEmail}`);
     } catch (error) {
       handleApiError(
         error,
@@ -129,7 +123,7 @@ class ChangeRequestDataApi {
    */
   async listAll() {
     try {
-      return await API.get("changeRequestAPI", `/listall`);
+      return await API.get("oneMacAPI", `/listall`);
     } catch (error) {
       handleApiError(
         error,

@@ -3,10 +3,10 @@ import { useHistory } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import PackageApi from "../utils/PackageApi";
 import {
   latestAccessStatus,
-  ChangeRequest,
+  Package,
   RESPONSE_CODE,
   ROUTES,
   USER_STATUS,
@@ -40,7 +40,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
 
-  const formInfo = ChangeRequest.CONFIG[changeRequestType];
+  const formInfo = Package.CONFIG[changeRequestType];
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
     formInfo?.actionType?.errorMessage
   );
@@ -240,7 +240,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
               )[0];
             }
             try {
-              result = await ChangeRequestDataApi.packageExists(checkingNumber);
+              result = await PackageApi.packageExists(checkingNumber);
             } catch (e) {
               console.log("error message is: ", e.message);
               setAlertCode(RESPONSE_CODE[e.message]);
@@ -268,10 +268,10 @@ export const SubmissionForm = ({ changeRequestType }) => {
               } else if (dupID && !correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 } else {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING
+                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 }
               }
 
@@ -340,14 +340,15 @@ export const SubmissionForm = ({ changeRequestType }) => {
         transmittalNumberWarningMessage =
           transmittalNumberStatusMessage.warningMessageCode;
       }
-
+      console.log("the change Request is: ", changeRequest);
       uploadRef
-        .uploadFiles()
+        .uploadFiles(changeRequest.transmittalNumber)
         .then((uploadedList) => {
-          return ChangeRequestDataApi.submit(
-            { ...changeRequest, transmittalNumberWarningMessage },
-            uploadedList
-          );
+          return PackageApi.submit({
+            ...changeRequest,
+            transmittalNumberWarningMessage,
+            uploads: uploadedList,
+          });
         })
         .then((returnCode) => {
           setAlertCode(returnCode);

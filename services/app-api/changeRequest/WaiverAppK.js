@@ -117,7 +117,7 @@ class WaiverAppK {
   saveSubmission(data) {
     let submitterName = data.user.firstName + " " + data.user.lastName;
     let appkData = {
-      packageID: data.transmittalNumber,
+      packageId: data.transmittalNumber,
       packageType: "1915(c)",
       packageStatus: "Submitted",
       territory: data.territory,

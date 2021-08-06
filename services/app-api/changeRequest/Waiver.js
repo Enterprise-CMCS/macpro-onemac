@@ -130,7 +130,7 @@ class Waiver {
   saveSubmission(data) {
     let submitterName = data.user.firstName + " " + data.user.lastName;
     let waiverData = {
-      packageID: data.transmittalNumber,
+      packageId: data.transmittalNumber,
       packageType: "1915(b)",
       packageStatus: "Submitted",
       territory: data.territory,

@@ -10,7 +10,7 @@ import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import PackageAPI from "../utils/PackageApi";
 import { useAppContext } from "../libs/contextLib";
 import {
   pendingMessage,
@@ -44,12 +44,12 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+        const data = await PackageAPI.getAllByAuthorizedTerritories(
           userProfile.email
         );
 
         if (typeof data === "string") throw data;
-
+        console.log("the data returned is: ", data);
         if (mounted) setChangeRequestList(data);
         if (mounted) setIsLoading(false);
       } catch (error) {
@@ -65,37 +65,31 @@ const Dashboard = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link
-        to={`/${row.original.packageType}/${row?.original?.id}/${row?.original?.userId}`}
-      >
-        {value}
-      </Link>
+      <Link to={`/package/${row?.original?.packageId}`}>{value}</Link>
     ),
     []
   );
+
+  const renderState = useCallback(({ value }) => {
+    if (!value) {
+      return "--";
+    } else {
+      return value.toString().substring(0, 2);
+    }
+  }, []);
 
   const renderType = useCallback(
     ({ value }) => <span className="type-badge">{value}</span>,
     []
   );
 
-  const renderName = useCallback(
-    ({ value, row }) => (
-      <Link
-        className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.lastModifiedByEmail}`}
-      >
-        {value}
-      </Link>
-    ),
-    []
-  );
-
-  const renderDate = useCallback(({ value }) => {
-    if (value) {
-      return format(value, "MMM d, yyyy");
+  const render90thDay = useCallback(({ value }) => {
+    if (!value) {
+      return "--";
+    } else if (value === "Paused") {
+      return "Paused\nRAI Issued";
     } else {
-      return "N/A";
+      return format(value, "MMM d, yyyy");
     }
   }, []);
 
@@ -103,7 +97,7 @@ const Dashboard = () => {
     () => [
       {
         Header: "ID/Number",
-        accessor: "packageID",
+        accessor: "packageId",
         disableSortBy: true,
         Cell: renderId,
       },
@@ -115,21 +109,22 @@ const Dashboard = () => {
       },
       {
         Header: "State",
-        accessor: "territory",
+        accessor: "packageId",
+        id: "territory",
+        Cell: renderState,
       },
       {
-        Header: "Date Submitted",
-        accessor: "timestamp",
-        Cell: renderDate,
+        Header: "90th Day",
+        accessor: "clockEndTimestamp",
+        Cell: render90thDay,
       },
       {
-        Header: "Submitted By",
-        accessor: "lastModifiedByName",
-        id: "lastModifiedByName",
-        Cell: renderName,
+        Header: "Status",
+        accessor: "packageStatus",
+        id: "packageStatus",
       },
     ],
-    [renderDate, renderId, renderName, renderType]
+    [render90thDay, renderId, renderType]
   );
 
   const initialTableState = useMemo(
@@ -193,7 +188,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar
-        heading="Submission List"
+        heading="Submission Dashboard"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
           (userData.type === USER_TYPE.HELPDESK &&
