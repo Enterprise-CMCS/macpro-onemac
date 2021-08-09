@@ -3,10 +3,12 @@ import { useLocation, useParams } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 import {
+  APPROVING_USER_TYPE,
   RESPONSE_CODE,
   ROLES,
   ROUTES,
   latestAccessStatus,
+  roleLabels,
   territoryMap,
   territoryList,
 } from "cmscommonlib";
@@ -30,14 +32,6 @@ const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
  * Formats multi-part name into single full name
  */
 const getFullName = (...names) => names.filter(Boolean).join(" ");
-
-const ROLE_TO_APPROVER_LABEL = {
-  [ROLES.STATE_SUBMITTER]: "State Admin",
-  [ROLES.STATE_ADMIN]: "CMS Role Approver",
-  [ROLES.CMS_APPROVER]: "CMS System Admin",
-  [ROLES.HELPDESK]: "CMS System Admin",
-  [ROLES.CMS_REVIEWER]: "CMS Role Approver",
-};
 
 export const ACCESS_LABELS = {
   active: "Access Granted",
@@ -67,7 +61,7 @@ const transformAccesses = (user = {}) => {
 };
 
 const ContactList = ({ contacts, userType }) => {
-  let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
+  let label = roleLabels[APPROVING_USER_TYPE[userType]] ?? "Contact";
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
 
@@ -145,23 +139,23 @@ export function getUserGroup(userData) {
   const group = groupData.find(({ id }) => id === userData.group);
   let division;
 
-  if (userData.division) {
-    const getDivisionFromGroup = ({ divisions }) =>
-      divisions.find(({ id }) => id === userData.division);
-    // first, try the group found above. if the org chart has not changed since
-    // the user last modified their info, it should succeed
-    division = getDivisionFromGroup(group);
+  if (!userData.division) return { group };
 
-    // if the org chart has changed, go through the whole list of groups to find it
-    if (!division) {
-      for (const g of groupData) {
-        const d = getDivisionFromGroup(g);
-        if (d) {
-          division = d;
-          break;
-        }
-      }
-    }
+  const getDivisionFromGroup = ({ divisions }) =>
+    divisions.find(({ id }) => id === userData.division);
+
+  // first, try the group found above. if the org chart has not changed since
+  // the user last modified their info, it should succeed
+  division = getDivisionFromGroup(group);
+
+  // if the org chart has changed, go through the whole list of groups to find
+  // the right division
+  for (
+    let groupIndex = 0;
+    !division && groupIndex < groupData.length;
+    groupIndex++
+  ) {
+    division = getDivisionFromGroup(groupData[groupIndex]);
   }
 
   return { group, division };

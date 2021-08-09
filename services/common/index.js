@@ -77,6 +77,14 @@ export const USER_TYPE = {
 
 export const ROLES = USER_TYPE;
 
+export const APPROVING_USER_TYPE = {
+  [ROLES.STATE_SUBMITTER]: ROLES.STATE_ADMIN,
+  [ROLES.STATE_ADMIN]: ROLES.CMS_APPROVER,
+  [ROLES.CMS_APPROVER]: ROLES.SYSTEM_ADMIN,
+  [ROLES.HELPDESK]: ROLES.SYSTEM_ADMIN,
+  [ROLES.CMS_REVIEWER]: ROLES.CMS_APPROVER,
+};
+
 /**
  * Possible user status
  */
@@ -91,12 +99,12 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  statesubmitter: "State Submitter",
-  stateadmin: "State Admin",
-  cmsapprover: "CMS Approver",
+  [ROLES.STATE_SUBMITTER]: "State Submitter",
+  [ROLES.STATE_ADMIN]: "State Admin",
+  [ROLES.CMS_APPROVER]: "CMS Role Approver",
   [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
-  helpdesk: "Help Desk",
+  [ROLES.HELPDESK]: "Help Desk",
 };
 
 const ALL_USERS_ROUTES = [
