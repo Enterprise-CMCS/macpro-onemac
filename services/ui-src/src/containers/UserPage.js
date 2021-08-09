@@ -39,33 +39,7 @@ const ROLE_TO_APPROVER_LABEL = {
   [ROLES.CMS_REVIEWER]: "CMS Role Approver",
 };
 
-function getUserGroup(currentGroup, currentDivision) {
-  const group = groupData.find(({ id }) => id === currentGroup);
-  return {
-    group: group.name,
-    division: group.divisions.find(({ id }) => id === currentDivision).name,
-  };
-}
-
-const ContactList = ({ contacts, userType }) => {
-  let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
-  if (!contacts) return null;
-  if (contacts.length > 1) label += "s";
-
-  return (
-    <p>
-      {label}:{" "}
-      {contacts.map(({ firstName, lastName, email }, idx) => (
-        <React.Fragment key={email}>
-          <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
-          {idx < contacts.length - 1 && ", "}
-        </React.Fragment>
-      ))}
-    </p>
-  );
-};
-
-const ACCESS_LABELS = {
+export const ACCESS_LABELS = {
   active: "Access Granted",
   pending: "Pending Access",
   denied: "Access Denied",
@@ -90,6 +64,130 @@ const transformAccesses = (user = {}) => {
     default:
       return [];
   }
+};
+
+const ContactList = ({ contacts, userType }) => {
+  let label = ROLE_TO_APPROVER_LABEL[userType] ?? "Contact";
+  if (!contacts) return null;
+  if (contacts.length > 1) label += "s";
+
+  return (
+    <p>
+      {label}:{" "}
+      {contacts.map(({ firstName, lastName, email }, idx) => (
+        <React.Fragment key={email}>
+          <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
+          {idx < contacts.length - 1 && ", "}
+        </React.Fragment>
+      ))}
+    </p>
+  );
+};
+
+export const AccessDisplay = ({
+  isReadOnly,
+  selfRevoke,
+  userType,
+  accesses = [],
+}) => {
+  let accessHeading;
+
+  switch (userType) {
+    case ROLES.STATE_SUBMITTER:
+    case ROLES.STATE_ADMIN:
+      accessHeading = "State Access Management";
+      break;
+    case ROLES.CMS_REVIEWER:
+    case ROLES.CMS_APPROVER:
+    case ROLES.HELPDESK:
+      accessHeading = "Status";
+      break;
+    default:
+      return null;
+  }
+
+  return (
+    <>
+      <h2 id="accessHeader">{accessHeading}</h2>
+      <dl>
+        {accesses.map(({ state, status, contacts }) => (
+          <div className="access-card-container" key={state ?? "only-one"}>
+            <div className="gradient-border" />
+            <div className="state-access-card">
+              {!isReadOnly &&
+                userType === ROLES.STATE_SUBMITTER &&
+                (status === "active" || status === "pending") && (
+                  <button
+                    aria-label={`Self-revoke access to ${territoryMap[state]}`}
+                    disabled={isReadOnly}
+                    className="close-button"
+                    onClick={() => selfRevoke(state)}
+                  >
+                    {CLOSING_X_IMAGE}
+                  </button>
+                )}
+              {!!state && <dt>{territoryMap[state] || state}</dt>}
+              <dd>
+                <em>{ACCESS_LABELS[status] || status}</em>
+                <br />
+                <br />
+                <ContactList contacts={contacts} userType={userType} />
+              </dd>
+            </div>
+          </div>
+        ))}
+      </dl>
+    </>
+  );
+};
+
+export function getUserGroup(userData) {
+  const group = groupData.find(({ id }) => id === userData.group);
+  let division;
+
+  if (userData.division) {
+    const getDivisionFromGroup = ({ divisions }) =>
+      divisions.find(({ id }) => id === userData.division);
+    // first, try the group found above. if the org chart has not changed since
+    // the user last modified their info, it should succeed
+    division = getDivisionFromGroup(group);
+
+    // if the org chart has changed, go through the whole list of groups to find it
+    if (!division) {
+      for (const g of groupData) {
+        const d = getDivisionFromGroup(g);
+        if (d) {
+          division = d;
+          break;
+        }
+      }
+    }
+  }
+
+  return { group, division };
+}
+
+export const GroupDivisionDisplay = ({ userData = {} }) => {
+  if (userData.type !== ROLES.CMS_REVIEWER) return null;
+
+  const groupInfo = getUserGroup(userData);
+
+  return (
+    <div className="access-card-container">
+      <h2 id="accessHeader">Group & Division</h2>
+      <div className="gradient-border" />
+      <dl className="cms-group-and-division-box">
+        <div className="cms-group-division-section">
+          <dt>Group</dt>
+          <dd>{groupInfo.group?.name}</dd>
+        </div>
+        <div className="cms-group-division-section cms-division-background">
+          <dt>Division</dt>
+          <dd>{groupInfo.division?.name}</dd>
+        </div>
+      </dl>
+    </div>
+  );
 };
 
 /**
@@ -309,23 +407,6 @@ const UserPage = () => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  let accessHeading;
-
-  switch (userType) {
-    case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_ADMIN:
-      accessHeading = "State Access Management";
-      break;
-    case ROLES.CMS_REVIEWER:
-      accessHeading = "Status";
-      break;
-    case ROLES.CMS_APPROVER:
-    case ROLES.HELPDESK:
-      accessHeading = "Status";
-      break;
-    default:
-  }
-
   return (
     <div>
       <PageTitleBar heading={isReadOnly ? "User Profile" : "My Profile"} />
@@ -364,37 +445,12 @@ const UserPage = () => {
           </div>
           {userType !== ROLES.SYSTEM_ADMIN && (
             <div className="right-column">
-              <h2 id="accessHeader">{accessHeading}</h2>
-              <dl>
-                {accesses.map(({ state, status, contacts }) => (
-                  <div
-                    className="access-card-container"
-                    key={state ?? "only-one"}
-                  >
-                    <div className="gradient-border" />
-                    <div className="state-access-card">
-                      {!isReadOnly &&
-                        userType === ROLES.STATE_SUBMITTER &&
-                        (status === "active" || status === "pending") && (
-                          <button
-                            disabled={isReadOnly}
-                            className="close-button"
-                            onClick={() => setStateAccessToRemove(state)}
-                          >
-                            {CLOSING_X_IMAGE}
-                          </button>
-                        )}
-                      {!!state && <dt>{territoryMap[state] || state}</dt>}
-                      <dd>
-                        <em>{ACCESS_LABELS[status] || status}</em>
-                        <br />
-                        <br />
-                        <ContactList contacts={contacts} userType={userType} />
-                      </dd>
-                    </div>
-                  </div>
-                ))}
-              </dl>
+              <AccessDisplay
+                accesses={accesses}
+                isReadOnly={isReadOnly}
+                selfRevoke={setStateAccessToRemove}
+                userType={userType}
+              />
               {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
                 <div className="add-access-container">
                   {isStateSelectorVisible
@@ -402,38 +458,7 @@ const UserPage = () => {
                     : renderAddStateButton}
                 </div>
               )}
-              {userType === ROLES.CMS_REVIEWER && (
-                <div className="access-card-container">
-                  {typeof userData.group === "number" && (
-                    <>
-                      <h2 id="accessHeader">Group & Division</h2>
-                      <div className="gradient-border" />
-                      <div className="cms-group-and-division-box ">
-                        <div className="cms-group-division-section">
-                          <h3>Group</h3>
-                          <br />
-                          <p>
-                            {
-                              getUserGroup(userData.group, userData.division)
-                                .group
-                            }
-                          </p>
-                        </div>
-                        <div className="cms-group-division-section cms-division-background">
-                          <h3>Division</h3>
-                          <br />
-                          <p>
-                            {
-                              getUserGroup(userData.group, userData.division)
-                                .division
-                            }
-                          </p>
-                        </div>
-                      </div>{" "}
-                    </>
-                  )}
-                </div>
-              )}
+              <GroupDivisionDisplay userData={userData} />
             </div>
           )}
           {!isReadOnly && (
