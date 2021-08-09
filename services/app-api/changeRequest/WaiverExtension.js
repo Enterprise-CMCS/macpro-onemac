@@ -117,14 +117,12 @@ class WaiverExtension {
     let extensionRequestData = {
       packageId: data.transmittalNumber,
       packageStatus: "Extension Requested",
-      timestamp: data.submittedAt,
-      extensionRequestSubmissionDate: data.submittedAt,
-      extensionRequestAttachments: data.uploads,
-      extensionRequestAdditionalInformation: data.summary,
-      extensionRequestSubmitterName: submitterName,
-      extensionRequestSubmitterEmail: data.user.email,
-      lastModifiedByName: submitterName,
-      lastModifiedByEmail: data.user.email,
+      clockEndTimestamp: data.ninetyDayClockEnd,
+      dateSubmitted: data.submittedAt,
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submitterName: submitterName,
+      submitterEmail: data.user.email,
     };
 
     updatePackage(extensionRequestData);

@@ -71,14 +71,14 @@ const PackageView = () => {
       {packageDetails && (
         <article className="form-container">
           <div className="read-only-submission">
-            {packageDetails.originalSubmissionDate && (
+            {packageDetails.submissionDate && (
               <section>
                 <Review
                   className="original-review-component"
                   headingLevel="2"
                   heading="Date Submitted"
                 >
-                  {formatDate(packageDetails.originalSubmissionDate)}
+                  {formatDate(packageDetails.submissionDate)}
                 </Review>
               </section>
             )}

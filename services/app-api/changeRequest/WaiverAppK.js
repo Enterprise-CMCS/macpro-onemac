@@ -120,16 +120,14 @@ class WaiverAppK {
       packageId: data.transmittalNumber,
       packageType: "1915(c)",
       packageStatus: "Submitted",
-      territory: data.territory,
-      timestamp: data.submittedAt,
+      actionType: data.actionType,
+      waiverAuthority: data.waiverAuthority,
       clockEndTimestamp: data.ninetyDayClockEnd,
-      originalSubmissionDate: data.submittedAt,
-      originalAttachments: data.uploads,
-      originalAdditionalInformation: data.summary,
-      originalSubmitterName: submitterName,
-      originalSubmitterEmail: data.user.email,
-      lastModifiedByName: submitterName,
-      lastModifiedByEmail: data.user.email,
+      dateSubmitted: data.submittedAt,
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submitterName: submitterName,
+      submitterEmail: data.user.email,
     };
 
     newPackage(appkData);

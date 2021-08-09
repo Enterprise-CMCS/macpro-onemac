@@ -133,21 +133,17 @@ class Waiver {
       packageId: data.transmittalNumber,
       packageType: "1915(b)",
       packageStatus: "Submitted",
-      territory: data.territory,
       actionType: data.actionType,
       waiverAuthority: data.waiverAuthority,
-      timestamp: data.submittedAt,
       clockEndTimestamp: data.ninetyDayClockEnd,
-      originalSubmissionDate: data.submittedAt,
-      originalAttachments: data.uploads,
-      originalAdditionalInformation: data.summary,
-      originalSubmitterName: submitterName,
-      originalSubmitterEmail: data.user.email,
-      lastModifiedByName: submitterName,
-      lastModifiedByEmail: data.user.email,
+      dateSubmitted: data.submittedAt,
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submitterName: submitterName,
+      submitterEmail: data.user.email,
     };
 
-    newPackage(waiverData);
+    return newPackage(waiverData);
   }
 }
 

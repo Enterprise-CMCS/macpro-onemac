@@ -19,21 +19,24 @@ function myHandler(event, context, callback) {
   if (value.payload.State_Code) {
     stateCode = value.payload.State_Code.toString();
   }
-  var sk = "v0#" + id;
+  var sk = "SEATOOL";
   console.log(process.env.oneMacTableName);
   if (id != undefined) {
     AWS.config.update({region: 'us-east-1'});
-    var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
+    var ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
+
     var params = {
       TableName: process.env.oneMacTableName,
       Item: {
-        'pk': {S: stateCode},
-        'sk': {S: sk},
-        'id' : {S: id},
-        'cmsStatusID': {N: packageStatusID},
-        'planType': {N: planType},
-        'originalID': {S: id},
-        'payload': {S: payload},
+        'pk': id,
+        'sk': sk,
+        'changeHistory' : [ {
+          'packageStatus': packageStatusID,
+          'stateCode': stateCode,
+          'planType': planType,
+          'packageID': id,
+          'payload': payload,  
+        }],
       }
     };
     ddb.putItem(params, function(err, data) {
@@ -44,36 +47,6 @@ function myHandler(event, context, callback) {
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
       }
     });
-
-    // if this is an id type where we want better searching, do that now
-    // 122 is 1915b and 123 is 1915c
- /*   if (planType === 122 || planType === 123) {
-      let sliceEnd = id.lastIndexOf('.');
-      let smallerID = id.slice(0,sliceEnd); // one layer removed
-
-      while ( smallerID.length > 2 ) {
-        params = {
-          TableName: process.env.spaIdTableName,
-          Item: {
-            'id' : {S: smallerID},
-            'cmsStatusID': {N: packageStatusID},
-            'planType': {N: planType},
-            'originalID': {S: id},
-          }
-        };
-        ddb.putItem(params, function(err, data) {
-          if (err) {
-            console.log("Error", err);
-          } else {
-            console.log("Success", data);
-            console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-          }
-        });
-        sliceEnd = smallerID.lastIndexOf('.');
-        smallerID = smallerID.slice(0,sliceEnd); // one layer removed
-      }
-    }
-    */
   }
 }
 

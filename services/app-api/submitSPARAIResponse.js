@@ -111,7 +111,6 @@ export const main = handler(async (event) => {
     packageId: data.transmittalNumber,
     type: "RAI Response",
     packageStatus: "RAI Response Submitted",
-    sourceSystem: "OneMAC",
     timestamp: data.submittedAt,
     submitterName: submitterName,
     submitterEmail: data.user.email,

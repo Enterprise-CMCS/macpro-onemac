@@ -31,6 +31,10 @@ export const main = handler(async (event, context) => {
     }
   }
   console.log("Sending back result:", JSON.stringify(result, null, 2));
-  // Return the retrieved item
-  return result.Item;
+  var returnData = {
+    submissionDate:
+      result.Item.changeHistory[result.Item.length - 1].submissionDate,
+  };
+
+  return returnData;
 });
