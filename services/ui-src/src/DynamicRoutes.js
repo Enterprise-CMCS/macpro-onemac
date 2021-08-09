@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
 import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
