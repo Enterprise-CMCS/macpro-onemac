@@ -31,8 +31,9 @@ module.exports = {
         browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random());
         // SS.#####
-        spaID = 'MD.' + num1 + '' + num2;
+        spaID = 'MD.' + num1 + '' + num2 + '' + num3;
         browser.setValue('input#transmittalNumber', spaID);
 
         // upload the file 
