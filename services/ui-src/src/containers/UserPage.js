@@ -170,7 +170,7 @@ export const GroupDivisionDisplay = ({ userData = {} }) => {
     <div className="access-card-container">
       <h2 id="accessHeader">Group & Division</h2>
       <div className="gradient-border" />
-      <dl className="cms-group-and-division-box">
+      <dl className="access-card-container">
         <div className="cms-group-division-section">
           <dt>Group</dt>
           <dd>{groupInfo.group?.name}</dd>
