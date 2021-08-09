@@ -7,6 +7,8 @@ import { makeStyles } from "@material-ui/core/styles";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import tripleDots from "../images/TripleDots.svg";
 
+export const POPUP_TRIGGER_TEST_ID = "popup-menu-trigger";
+
 const TRIPLE_DOTS_IMAGE = (
   <img alt="" className="triple-dots" src={tripleDots} />
 );
@@ -42,6 +44,7 @@ export default function PopupMenu({ selectedRow, menuItems, handleSelected }) {
     <>
       <Button
         aria-haspopup="true"
+        data-testid={POPUP_TRIGGER_TEST_ID}
         onClick={handleClick}
         size="small"
         variation="transparent"

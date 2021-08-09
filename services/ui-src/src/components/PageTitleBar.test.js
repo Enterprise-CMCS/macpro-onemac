@@ -39,7 +39,10 @@ describe("PageTitleBar", () => {
   });
 
   it("opens a confirmation modal when back button is clicked and message is provided", async () => {
-    const history = createMemoryHistory(["/currentPage"]);
+    const history = createMemoryHistory();
+    history.push("/previousPage");
+    history.push("/currentPage");
+
     const confirmationMessage = "Are you, like, absolutely sure?????";
     render(
       <Router history={history}>
@@ -50,9 +53,8 @@ describe("PageTitleBar", () => {
       </Router>
     );
 
-    const backButton = screen.getByTestId("back-button");
-    userEvent.click(backButton);
-    screen.debug();
-    // expect(window.confirm).toBeCalledWith(confirmationMessage);
+    userEvent.click(screen.getByTestId("back-button"));
+    userEvent.click(screen.getByText(/leave/i, { selector: "button" }));
+    expect(history.location.pathname).toBe("/previousPage");
   });
 });
