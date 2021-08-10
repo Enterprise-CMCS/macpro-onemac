@@ -30,11 +30,7 @@ export const main = handler(async (event, context) => {
   console.log("allResults is: ", allResults);
   if (allResults) {
     allResults.forEach((result) => {
-      items = items.concat(
-        result.Items.map((item) => {
-          return item.changeHistory[0];
-        })
-      );
+      items = items.concat(result.Items);
     });
   }
   if (items.length === 0) {
@@ -42,7 +38,7 @@ export const main = handler(async (event, context) => {
   }
 
   console.log(`Sending back ${items.length} change request(s).`);
-  console.log("items are: ", items);
+  console.log("items are: ", JSON.stringify(items));
   return items;
 });
 /**
@@ -87,12 +83,16 @@ async function getPackages(startingKey, keepSearching, allResults) {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
     KeyConditionExpression: "GSI1pk = :pk",
+    ExpressionAttributeNames: {
+      "#packageId": "packageId",
+    },
     ExpressionAttributeValues: {
       ":pk": "OneMAC",
     },
     ExclusiveStartKey: startingKey,
     ScanIndexForward: false,
-    ProjectionExpression: "changeHistory[0]",
+    ProjectionExpression:
+      "#packageId,packageType,currentStatus,currentClockEnd,originalSubmissionDate,changeHistory[0]",
   });
   allResults.push(results);
   if (results.LastEvaluatedKey) {

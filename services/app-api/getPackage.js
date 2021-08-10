@@ -31,10 +31,12 @@ export const main = handler(async (event, context) => {
     }
   }
   console.log("Sending back result:", JSON.stringify(result, null, 2));
-  var returnData = {
-    submissionDate:
-      result.Item.changeHistory[result.Item.length - 1].submissionDate,
-  };
+  var returnData = { ...result.Item };
+  returnData.submissionDate =
+    result.Item?.changeHistory[result.Item.length - 1]?.submissionDate;
+  returnData.packageType = result.Item?.changeHistory.find(
+    (element) => element.packageType
+  );
 
   return returnData;
 });

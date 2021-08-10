@@ -27,8 +27,9 @@ const ACTION_LABELS = {
 const PackageView = () => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-  const { packageId } = useParams();
+  const { packageType, packageId } = useParams();
 
+  console.log("type is: ", packageType);
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
@@ -63,7 +64,17 @@ const PackageView = () => {
     };
   }, [packageId, history]);
 
-  const formInfo = Package.CONFIG["spa"];
+  const formInfo = Package.CONFIG[packageType];
+
+  const renderChangeHistory = (changeHistory) => {
+    return (
+      <ul>
+        {changeHistory.map((oneEvent, index) => {
+          return <li key={index}>{JSON.stringify(oneEvent, null, 2)}</li>;
+        })}
+      </ul>
+    );
+  };
 
   return (
     <LoadingScreen isLoading={isLoading}>
@@ -103,45 +114,29 @@ const PackageView = () => {
               )}
             </section>
             <FileList
-              heading="Original Attachments"
-              uploadList={packageDetails.originalAttachments}
+              heading="Attachments"
+              uploadList={packageDetails.attachments}
               zipId={packageDetails.packageId}
             />
-            {packageDetails.originalAdditionalInformation && (
+            {packageDetails.additionalInformation && (
               <section>
                 <Review
                   className="original-review-component"
                   headingLevel="2"
                   heading="Additional Information"
                 >
-                  {packageDetails.originalAdditionalInformation}
+                  {packageDetails.additionalInformation}
                 </Review>
               </section>
             )}
-            {packageDetails.raiResponseSubmissionDate && (
+            {packageDetails.changeHistory && (
               <section>
                 <Review
                   className="original-review-component"
                   headingLevel="2"
-                  heading="RAI Response Date Submitted"
+                  heading="Change History"
                 >
-                  {formatDate(packageDetails.raiResponseSubmissionDate)}
-                </Review>
-              </section>
-            )}
-            <FileList
-              heading="RAI Response Attachments"
-              uploadList={packageDetails.raiResponseAttachments}
-              zipId={packageDetails.packageId}
-            />
-            {packageDetails.raiResponseAdditionalInformation && (
-              <section>
-                <Review
-                  className="original-review-component"
-                  headingLevel="2"
-                  heading="RAI Response Additional Information"
-                >
-                  {packageDetails.raiResponseAdditionalInformation}
+                  {renderChangeHistory(packageDetails.changeHistory)}
                 </Review>
               </section>
             )}

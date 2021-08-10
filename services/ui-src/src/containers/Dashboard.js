@@ -65,7 +65,11 @@ const Dashboard = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link to={`/package/${row?.original?.packageId}`}>{value}</Link>
+      <Link
+        to={`/package/${row?.original?.packageType}/${row?.original?.packageId}`}
+      >
+        {value}
+      </Link>
     ),
     []
   );
@@ -115,16 +119,16 @@ const Dashboard = () => {
       },
       {
         Header: "90th Day",
-        accessor: "clockEndTimestamp",
+        accessor: "currentClockEnd",
         Cell: render90thDay,
       },
       {
         Header: "Status",
-        accessor: "packageStatus",
+        accessor: "currentStatus",
         id: "packageStatus",
       },
     ],
-    [render90thDay, renderId, renderType]
+    [render90thDay, renderState, renderId, renderType]
   );
 
   const initialTableState = useMemo(

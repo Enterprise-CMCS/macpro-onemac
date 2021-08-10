@@ -1,11 +1,13 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
 export default async function updatePackage(updateData) {
+  let updatePk = updateData.packageId;
+  let updateSk = "PACKAGE";
   var getPackageParams = {
     TableName: process.env.oneMacTableName,
     Key: {
-      pk: updateData.packageID,
-      sk: "PACKAGE",
+      pk: updatePk,
+      sk: updateSk,
     },
   };
 
@@ -15,16 +17,39 @@ export default async function updatePackage(updateData) {
       if (!result.Item) {
         throw new Error(`ItemNotFound`);
       }
-      console.log("item is: ", result.Item);
-      result.Item.changeHistory.unshift(updateData);
-      console.log("item with new changeHistory is: ", result.Item);
 
-      var putPackageParams = {
+      var updatePackageParams = {
         TableName: process.env.oneMacTableName,
-        Item: { ...result.Item },
+        Key: {
+          pk: updatePk,
+          sk: updateSk,
+        },
+        UpdateExpression:
+          "SET changeHistory = list_append(:newChange, changeHistory)",
+        ExpressionAttributeValues: {
+          ":newChange": [updateData],
+        },
       };
 
-      return dynamoDb.put(putPackageParams);
+      // only update clock if new Clock is sent
+      if (updateData.clockEndTimestamp) {
+        updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
+          updateData.currentClockEnd;
+        updatePackageParams.UpdateExpression.concat(
+          ", currentClockEnd = :newClockEnd"
+        );
+      }
+
+      // only update status if new Status is sent
+      if (updateData.clockEndTimestamp) {
+        updatePackageParams.ExpressionAttributeValues[":newStatus"] =
+          updateData.packageStatus;
+        updatePackageParams.UpdateExpression.concat(
+          ",currentStatus = :newStatus"
+        );
+      }
+
+      return dynamoDb.update(updatePackageParams); // need to use update for concurrency
     })
     .catch((error) => {
       console.log(`Error happened while reading from DB:  ${error.message}`);

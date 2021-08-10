@@ -5,7 +5,7 @@ import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
 
 import { validateSubmission } from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
-import newRaiResponse from "./utils/newRaiResponse";
+import updatePackage from "./utils/updatePackage";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
@@ -119,7 +119,7 @@ export const main = handler(async (event) => {
   };
 
   try {
-    await newRaiResponse(raiResponseData);
+    await updatePackage(raiResponseData);
     console.log("Successfully submitted the following:", raiResponseData);
     return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
   } catch (error) {

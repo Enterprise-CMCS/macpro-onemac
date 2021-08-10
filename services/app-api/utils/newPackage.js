@@ -6,6 +6,11 @@ export default async function newPackage(newData) {
     sk: "PACKAGE",
     GSI1pk: "OneMAC",
     GSI1sk: newData.packageId,
+    packageId: newData.packageId,
+    packageType: newData.packageType,
+    currentStatus: newData.packageStatus,
+    originalSubmissionDate: newData.submissionDate,
+    currentClockEnd: newData.clockEndTimestamp,
     changeHistory: [newData],
   };
 

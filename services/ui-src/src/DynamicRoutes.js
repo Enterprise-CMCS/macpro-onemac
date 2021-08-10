@@ -128,7 +128,10 @@ export default function DynamicRoutes() {
         ))}
       {/* read only view */}
       {userRoleObj.canAccessDashboard && (
-        <AuthenticatedRoute exact path={`${ROUTES.PACKAGE}/:packageId`}>
+        <AuthenticatedRoute
+          exact
+          path={`${ROUTES.PACKAGE}/:packageType/:packageId`}
+        >
           <PackageView />
         </AuthenticatedRoute>
       )}
