@@ -52,7 +52,7 @@ module.exports = {
 
         // Verify the SPA on Submission List 
         //browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
-        browser.useXpath().verify.containsText('(//table[@class="submissions-table"]/tbody/tr/td/a)[1]',spaID);
+        browser.useXpath().verify.containsText('//td[@id="transmittalNumber-0"]/a',spaID);
         browser.useCss();
         return spaID;
     },
@@ -78,7 +78,7 @@ module.exports = {
 
         // Verify that duplicate error message
         let expected = "this Waiver Number already exists";
-        browser.verify.containsText('div#transmittalNumberStatusMsg', expected).pause(6000);
+        browser.useCss().verify.containsText('div#transmittalNumberStatusMsg', expected).pause(6000);
         //browser.back();  // go back to previous page
         let dashboard_link = "//a[@id='dashboardLink']";
         browser.useXpath().click(dashboard_link);
