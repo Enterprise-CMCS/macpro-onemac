@@ -35,7 +35,7 @@ function myHandler(event, context, callback) {
           'stateCode': stateCode,
           'planType': planType,
           'packageID': id,
-          'payload': payload,  
+          'payload': payload,
         }],
       }
     };
