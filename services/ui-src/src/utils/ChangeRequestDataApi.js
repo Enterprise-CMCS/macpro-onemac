@@ -11,9 +11,29 @@ class ChangeRequestDataApi {
    * @returns the submitted change request
    */
   async submit(data, uploadsList) {
-    let postType = "/submit";
+    try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      //Normalize the user data.
+      data.user = {
+        email: userAuth.signInUserSession.idToken.payload.email,
+        firstName: userAuth.signInUserSession.idToken.payload.given_name,
+        lastName: userAuth.signInUserSession.idToken.payload.family_name,
+      };
+    } catch (error) {
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
+    }
 
-    if (!data || !uploadsList || !data.type || uploadsList.length === 0) {
+    if (
+      !data ||
+      !uploadsList ||
+      !data.type ||
+      uploadsList.length === 0 ||
+      !data.user
+    ) {
       console.log(
         "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
         data,
@@ -21,15 +41,9 @@ class ChangeRequestDataApi {
       );
       throw new Error("Missing required data or uploads");
     }
+
     try {
-      data.user = await Auth.currentAuthenticatedUser();
-      data.uploads = uploadsList;
-      if (data.type === "spa") {
-        postType = "/submitSPA";
-      } else if (data.type === "sparai") {
-        postType = "/submitSPARAIResponse";
-      }
-      return await API.post("oneMacAPI", postType, {
+      return await API.post("changeRequestAPI", "/submit", {
         body: data,
       });
     } catch (error) {

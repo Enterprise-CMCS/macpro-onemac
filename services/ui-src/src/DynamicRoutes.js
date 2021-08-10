@@ -1,11 +1,10 @@
 import React, { useEffect } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { Route, Redirect, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
-import { ROUTES, Package, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
 import UserDataApi from "./utils/UserDataApi";
 
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import { GroupAndDivision } from "./containers/GroupAndDivision";
@@ -77,18 +76,18 @@ export default function DynamicRoutes() {
   if (!type) {
     return (
       <>
-        <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
+        <Route exact path={ROUTES.SIGNUP}>
           <Signup />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
+        </Route>
+        <Route exact path={ROUTES.STATE_SIGNUP}>
           <StateSignup />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute exact path={ROUTES.REVIEWER_SIGNUP}>
+        </Route>
+        <Route exact path={ROUTES.REVIEWER_SIGNUP}>
           <GroupAndDivision />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+        </Route>
+        <Route exact path={ROUTES.DASHBOARD}>
           <Redirect to={ROUTES.SIGNUP} />
-        </AuthenticatedRoute>
+        </Route>
       </>
     );
   }
@@ -97,7 +96,7 @@ export default function DynamicRoutes() {
 
   return (
     <>
-      <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+      <Route exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />
         ) : userRoleObj.canAccessUserManagement ? (
@@ -105,48 +104,46 @@ export default function DynamicRoutes() {
         ) : (
           <Redirect to={ROUTES.HOME} />
         )}
-      </AuthenticatedRoute>
+      </Route>
       {userRoleObj.canAccessForms && (
         <>
-          <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
+          <Route path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
             <NewSubmission />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.NEW_SPA}`}>
+          </Route>
+          <Route path={`${ROUTES.NEW_SPA}`}>
             <NewSPA />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
+          </Route>
+          <Route path={`${ROUTES.NEW_WAIVER}`}>
             <NewWaiver />
-          </AuthenticatedRoute>
+          </Route>
         </>
       )}
       {/* submission view */}
       {userRoleObj.canAccessForms &&
         Object.entries(FORM_TYPES).map(([route, type]) => (
-          <AuthenticatedRoute key={route} exact path={route}>
+          <Route key={route} exact path={route}>
             <SubmissionForm changeRequestType={type} />
-          </AuthenticatedRoute>
+          </Route>
         ))}
       {/* read only view */}
-      {userRoleObj.canAccessDashboard && (
-        <AuthenticatedRoute
-          exact
-          path={`${ROUTES.PACKAGE}/:packageType/:packageId`}
-        >
-          <PackageView />
-        </AuthenticatedRoute>
-      )}
+      {userRoleObj.canAccessDashboard &&
+        Object.entries(FORM_TYPES).map(([route, type]) => (
+          <Route key={route} exact path={`${route}/:id/:userId`}>
+            <SubmissionView changeRequestType={type} />
+          </Route>
+        ))}
       {userRoleObj.canAccessUserManagement && (
-        <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+        <Route exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />
-        </AuthenticatedRoute>
+        </Route>
       )}
-      <AuthenticatedRoute exact path={ROUTES.PROFILE + "/:userId"}>
+      <Route exact path={ROUTES.PROFILE + "/:userId"}>
         <UserPage />
-      </AuthenticatedRoute>
+      </Route>
       {userRoleObj.canAccessMetrics && (
-        <AuthenticatedRoute path={ROUTES.METRICS}>
+        <Route path={ROUTES.METRICS}>
           <Metrics />
-        </AuthenticatedRoute>
+        </Route>
       )}
     </>
   );
