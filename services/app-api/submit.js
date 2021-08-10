@@ -37,14 +37,6 @@ export const main = handler(async (event) => {
   data.createdAt = Date.now();
   data.state = SUBMISSION_STATES.CREATED;
 
-  //Normalize the user data.
-  data.user = {
-    id: event.requestContext.identity.cognitoIdentityId,
-    authProvider: event.requestContext.identity.cognitoAuthenticationProvider,
-    email: data.user.signInUserSession.idToken.payload.email,
-    firstName: data.user.signInUserSession.idToken.payload.given_name,
-    lastName: data.user.signInUserSession.idToken.payload.family_name,
-  };
   data.userId = event.requestContext.identity.cognitoIdentityId;
 
   // do a pre-check for things that should stop us immediately
