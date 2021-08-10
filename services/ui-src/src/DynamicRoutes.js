@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Route, Redirect, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
-import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, Package, getUserRoleObj } from "cmscommonlib";
 import UserDataApi from "./utils/UserDataApi";
 
 import { Signup } from "./containers/Signup";
@@ -125,13 +125,11 @@ export default function DynamicRoutes() {
             <SubmissionForm changeRequestType={type} />
           </Route>
         ))}
-      {/* read only view */}
-      {userRoleObj.canAccessDashboard &&
-        Object.entries(FORM_TYPES).map(([route, type]) => (
-          <Route key={route} exact path={`${route}/:id/:userId`}>
-            <SubmissionView changeRequestType={type} />
-          </Route>
-        ))}
+      {userRoleObj.canAccessDashboard && (
+        <Route exact path={ROUTES.PACKAGE + "/:packageType/:packageId"}>
+          <PackageView />
+        </Route>
+      )}
       {userRoleObj.canAccessUserManagement && (
         <Route exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />
