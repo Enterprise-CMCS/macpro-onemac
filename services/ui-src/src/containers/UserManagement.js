@@ -1,6 +1,12 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory, Link } from "react-router-dom";
-import { RESPONSE_CODE, ROUTES, USER_TYPE, territoryMap } from "cmscommonlib";
+import {
+  APPROVING_USER_TYPE,
+  RESPONSE_CODE,
+  ROUTES,
+  USER_TYPE,
+  territoryMap,
+} from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -229,17 +235,18 @@ const UserManagement = () => {
   );
 
   const renderActions = useCallback(
-    ({ row }) => {
-      return (
+    ({ row }) =>
+      APPROVING_USER_TYPE[row.original.role] === userProfile.userData.type ? (
         <PopupMenu
           selectedRow={row}
           userEmail={row.values.email}
           menuItems={menuItemMap[row.values.status] ?? []}
           handleSelected={onPopupAction}
         />
-      );
-    },
-    [onPopupAction]
+      ) : (
+        <></>
+      ),
+    [onPopupAction, userProfile?.userData?.type]
   );
 
   const columns = useMemo(() => {
@@ -352,8 +359,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          userProfile.userData.type === USER_TYPE.HELPDESK &&
-          isUserActive &&
+          ((userProfile.userData.type === USER_TYPE.HELPDESK && isUserActive) ||
+            userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
           csvExportSubmissions
         }
       />
