@@ -77,9 +77,9 @@ module.exports = {
         browser.pause(5000);
         browser.refresh();
         // Verify the SPA on Submission List 
-        browser.useXpath().verify.containsText('(//table//td)[1]/a', chipspaID);
+        browser.useXpath().verify.containsText('//*[@id="transmittalNumber-0"]/a', chipspaID);
         browser.pause(10000);
-        browser.useXpath().click("(//table//td)[1]/a");
+        browser.useXpath().click('//*[@id="transmittalNumber-0"]/a');
         browser.pause(6000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
@@ -139,7 +139,7 @@ module.exports = {
         
         // SPA ID Verification 
         browser.useCss().click(submittedIDNumber);
-        browser.pause(2000);
+        browser.pause(3000);
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[1]/div/div/div[2]/a");
         browser.useXpath().assert.not.elementPresent("/html/body/reference/div/div/div[3]/form/div[2]/p[2]");
        // browser.useCss().click( "#back-button > svg").waitForElementPresent("body");
