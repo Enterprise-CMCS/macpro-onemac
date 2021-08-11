@@ -1448,47 +1448,50 @@ article.form-container {
   .gradient-border {
     @include gradient-top-border;
   }
+}
 
-  .state-access-card {
-    @extend .ds-u-padding--3;
-    @extend .ds-u-fill--white;
+.state-access-card {
+  @extend .ds-u-padding--3;
+  @extend .ds-u-fill--white;
 
-    border: 1px solid $color-gray-lighter;
-    border-radius: 0px 0px 3px 3px;
-    border-top: none;
-    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
-    position: relative;
+  border: 1px solid $color-gray-lighter;
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
 
-    &:not(:last-child) {
-      @extend .ds-u-margin-bottom--3;
+  &:not(:last-child) {
+    @extend .ds-u-margin-bottom--3;
+  }
+
+  button {
+    position: absolute;
+    background: inherit;
+    top: 26px;
+    right: 26px;
+    border: none;
+  }
+}
+
+.state-access-card,
+.cms-group-division-section {
+  dt {
+    @extend .ds-u-font-size--h3;
+    @extend .ds-u-font-weight--semibold;
+
+    margin-bottom: 5px;
+  }
+
+  dd {
+    em {
+      color: $color-gray;
     }
-
-    dt {
-      @extend .ds-u-font-size--h3;
+    p {
       @extend .ds-u-font-weight--semibold;
-
-      margin-bottom: 5px;
     }
-
-    dd {
-      em {
-        color: $color-gray;
-      }
-      p {
-        @extend .ds-u-font-weight--semibold;
-      }
-      a {
-        @extend .ds-u-font-weight--normal;
-        @extend .ds-u-text-decoration--none;
-      }
-    }
-
-    button {
-      position: absolute;
-      background: inherit;
-      top: 26px;
-      right: 26px;
-      border: none;
+    a {
+      @extend .ds-u-font-weight--normal;
+      @extend .ds-u-text-decoration--none;
     }
   }
 }
@@ -1763,31 +1766,23 @@ aside#faq-contact-info-box {
   }
 }
 
-.cms-group-and-division-box {
-  @extend .ds-u-border-bottom--1;
+.cms-group-division-section {
   @extend .ds-u-border-left--1;
   @extend .ds-u-border-right--1;
-  border-radius: 0px 0px 3px 3px;
-}
+  @extend .ds-u-padding--3;
 
-.cms-division-background {
-  background: rgba(196, 196, 196, 0.1);
-}
-
-.cms-group-division-section {
-  padding-bottom: 10px;
-  padding-top: 10px;
-  font-size: 2rem;
-  color: #212121;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  h3 {
-    @extend .ds-c-review__heading;
-    margin-left: 32px;
+  &:nth-child(even) {
+    background: rgba(196, 196, 196, 0.1);
   }
-  p {
-    margin-left: 32px;
-    @extend .ds-c-review__body;
+
+  &:last-child {
+    @extend .ds-u-border-bottom--1;
+    border-radius: 0px 0px 3px 3px;
+  }
+}
+
+.confirmation-dialog {
+  .ds-c-dialog__close {
+    display: none;
   }
 }
