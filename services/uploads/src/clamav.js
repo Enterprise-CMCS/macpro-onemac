@@ -14,7 +14,7 @@ const S3 = new AWS.S3();
  */
 function updateAVDefinitonsWithFreshclam() {
   try {
-    let executionResult = execSync(
+    const executionResult = execSync(
       `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
     );
 
@@ -41,20 +41,20 @@ async function downloadAVDefinitions() {
   const downloadPromises = constants.CLAMAV_DEFINITIONS_FILES.map(
     (filenameToDownload) => {
       return new Promise((resolve, reject) => {
-        let destinationFile = path.join("/tmp/", filenameToDownload);
+        const destinationFile = path.join("/tmp/", filenameToDownload);
 
         utils.generateSystemMessage(
           `Downloading ${filenameToDownload} from S3 to ${destinationFile}`
         );
 
-        let localFileWriteStream = fs.createWriteStream(destinationFile);
+        const localFileWriteStream = fs.createWriteStream(destinationFile);
 
-        let options = {
+        const options = {
           Bucket: constants.CLAMAV_BUCKET_NAME,
           Key: `${constants.PATH_TO_AV_DEFINITIONS}/${filenameToDownload}`,
         };
 
-        let s3ReadStream = S3.getObject(options)
+        const s3ReadStream = S3.getObject(options)
           .createReadStream()
           .on("end", function () {
             utils.generateSystemMessage(
@@ -89,7 +89,7 @@ async function uploadAVDefinitions() {
           `Uploading updated definitions for file ${filenameToUpload} ---`
         );
 
-        let options = {
+        const options = {
           Bucket: constants.CLAMAV_BUCKET_NAME,
           Key: `${constants.PATH_TO_AV_DEFINITIONS}/${filenameToUpload}`,
           Body: fs.createReadStream(path.join("/tmp/", filenameToUpload)),

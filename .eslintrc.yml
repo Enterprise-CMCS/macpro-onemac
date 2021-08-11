@@ -15,7 +15,10 @@ plugins:
   - react
   - '@typescript-eslint'
 rules:
-  no-use-before-define: ["error", { "functions": false, "variables": true }]
+  prefer-const: error
+  prefer-rest-params: error
+  no-use-before-define: error
+  no-var: error
 settings:
   react:
     version: detect

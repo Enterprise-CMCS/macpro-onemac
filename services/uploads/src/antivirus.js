@@ -20,7 +20,7 @@ async function sizeOf(key, bucket) {
   console.log("key: " + key);
   console.log("bucket: " + bucket);
 
-  let res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
+  const res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
   return res.ContentLength;
 }
 
@@ -31,7 +31,7 @@ async function sizeOf(key, bucket) {
  * @return {boolean} True if S3 object is larger then MAX_FILE_SIZE
  */
 async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
-  let fileSize = await sizeOf(s3ObjectKey, s3ObjectBucket);
+  const fileSize = await sizeOf(s3ObjectKey, s3ObjectBucket);
   return fileSize > constants.MAX_FILE_SIZE;
 }
 
@@ -40,15 +40,15 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   if (!fs.existsSync(downloadDir)) {
     fs.mkdirSync(downloadDir);
   }
-  let localPath = `${downloadDir}/${path.basename(s3ObjectKey)}`;
+  const localPath = `${downloadDir}/${path.basename(s3ObjectKey)}`;
 
-  let writeStream = fs.createWriteStream(localPath);
+  const writeStream = fs.createWriteStream(localPath);
 
   utils.generateSystemMessage(
     `Downloading file s3://${s3ObjectBucket}/${s3ObjectKey}`
   );
 
-  let options = {
+  const options = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
   };
@@ -73,8 +73,8 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
 async function lambdaHandleEvent(event) {
   utils.generateSystemMessage("Start Antivirus Lambda function");
 
-  let s3ObjectKey = utils.extractKeyFromS3Event(event);
-  let s3ObjectBucket = utils.extractBucketFromS3Event(event);
+  const s3ObjectKey = utils.extractKeyFromS3Event(event);
+  const s3ObjectBucket = utils.extractBucketFromS3Event(event);
 
   utils.generateSystemMessage(
     `S3 Bucket and Key\n ${s3ObjectBucket}\n${s3ObjectKey}`
@@ -103,7 +103,7 @@ async function lambdaHandleEvent(event) {
     utils.generateSystemMessage(`virusScanStatus=${virusScanStatus}`);
   }
 
-  var taggingParams = {
+  const taggingParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
     Tagging: utils.generateTagSet(virusScanStatus),
@@ -127,9 +127,9 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
 
   await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
 
-  let virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
+  const virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
 
-  var taggingParams = {
+  const taggingParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
     Tagging: utils.generateTagSet(virusScanStatus),

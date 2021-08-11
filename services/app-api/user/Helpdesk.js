@@ -14,7 +14,7 @@ class Helpdesk {
    * @returns {String} the User Role
    */
   getScanParams() {
-    let scanParams = {
+    const scanParams = {
       TableName: process.env.userTableName,
       FilterExpression: "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
@@ -49,8 +49,8 @@ class Helpdesk {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));

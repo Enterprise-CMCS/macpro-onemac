@@ -46,8 +46,8 @@ class SystemAdmin {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));

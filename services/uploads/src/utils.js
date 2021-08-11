@@ -45,7 +45,7 @@ function cleanupFolder(folderToClean) {
  * @return {string} decoded key.
  */
 function extractKeyFromS3Event(s3Event) {
-  let key = s3Event["Records"][0]["s3"]["object"]["key"];
+  const key = s3Event["Records"][0]["s3"]["object"]["key"];
 
   if (!key) {
     throw new Error("Unable to retrieve key information from the event");
@@ -60,7 +60,7 @@ function extractKeyFromS3Event(s3Event) {
  * @return {string} Bucket
  */
 function extractBucketFromS3Event(s3Event) {
-  let bucketName = s3Event["Records"][0]["s3"]["bucket"]["name"];
+  const bucketName = s3Event["Records"][0]["s3"]["bucket"]["name"];
 
   if (!bucketName) {
     throw new Error("Unable to retrieve bucket information from the event");
@@ -75,7 +75,7 @@ function extractBucketFromS3Event(s3Event) {
  * @return {string} decoded key.
  */
 function extractKeyFromApiEvent(s3Event) {
-  let key = s3Event.s3Key;
+  const key = s3Event.s3Key;
 
   if (!key) {
     throw new Error("Unable to retrieve key information from the api event");
@@ -90,7 +90,7 @@ function extractKeyFromApiEvent(s3Event) {
  * @return {string} Bucket
  */
 function extractBucketFromApiEvent(s3Event) {
-  let bucketName = s3Event.s3Bucket;
+  const bucketName = s3Event.s3Bucket;
 
   if (!bucketName) {
     throw new Error("Unable to retrieve bucket information from the api event");
@@ -105,7 +105,7 @@ function extractBucketFromApiEvent(s3Event) {
  * @return {string} Formatted message.
  */
 function generateSystemMessage(systemMessage) {
-  let finalMessage = `--- ${systemMessage} ---`;
+  const finalMessage = `--- ${systemMessage} ---`;
   console.log(finalMessage);
   return finalMessage;
 }

@@ -5,12 +5,12 @@
 
 export function generateMetrics(scanData) {
   let submissions = 0;
-  let stateMap = new Map();
-  let userMap = new Map();
-  let submissionTypeMap = new Map();
+  const stateMap = new Map();
+  const userMap = new Map();
+  const submissionTypeMap = new Map();
   scanData.filter(function (item) {
     submissions = submissions + 1;
-    let stateCode = item.transmittalNumber.substring(0, 2);
+    const stateCode = item.transmittalNumber.substring(0, 2);
     stateMap[stateCode] =
       1 + (stateMap[stateCode] === undefined ? 0 : stateMap[stateCode]);
     userMap[item.user.email] =
@@ -24,19 +24,19 @@ export function generateMetrics(scanData) {
     return true;
   });
 
-  var result = {};
+  const result = {};
   result["totalSubmissions"] = submissions;
   result["totalUniqueUserSubmissions"] = Object.keys(userMap).length;
-  var stateTotals = [];
+  const stateTotals = [];
   Object.keys(stateMap).forEach(function (stateCode) {
-    let temp = " { '" + stateCode + "' : '" + stateMap[stateCode] + "' } ";
+    const temp = " { '" + stateCode + "' : '" + stateMap[stateCode] + "' } ";
     stateTotals.push(temp);
   });
   result["stateTotals"] = stateTotals;
 
-  var typeTotals = [];
+  const typeTotals = [];
   Object.keys(submissionTypeMap).forEach(function (type) {
-    let temp = " { '" + type + "' : '" + submissionTypeMap[type] + "' } ";
+    const temp = " { '" + type + "' : '" + submissionTypeMap[type] + "' } ";
     typeTotals.push(temp);
   });
   result["submissionTypeTotals"] = typeTotals;

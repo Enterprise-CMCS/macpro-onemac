@@ -6,40 +6,74 @@ import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
 
 /**
- * Gets all change requests from the DynamoDB change requests table
- * that correspond to the user's active access to states/territories
+ * Returns an array of updated parameters for querying a helpdesk or reviewer role
+ * Will stop once entire dynamoDB has been scanned
+ * @param {String} startingKey the key to continue from if the query is not complete
+ * @param {Boolean} keepSearching determines how to proceed with the query true==continue query/false==end query
+ * @param {Object} allResults the results of the query/past queries
+ * @returns the updated versions of the parameters
  */
-
-export const main = handler(async (event) => {
-  // If this invocation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
-
-  const user = await getUser(event.queryStringParameters.email);
-  if (!user) {
-    return RESPONSE_CODE.USER_NOT_FOUND;
-  }
-  const allResults = await getDataFromDB(user);
-  // extracts items from each of the results
-  let items = [];
-  allResults.forEach((result) => {
-    items = items.concat(result.Items);
+async function helpdeskOrReviewerDynamoDbQuery(
+  startingKey,
+  keepSearching,
+  allResults
+) {
+  const results = await dynamoDb.scan({
+    TableName: process.env.tableName,
+    ExclusiveStartKey: startingKey,
   });
-  if (items.length === 0) {
-    console.log(`No change requests found matching that query.`);
+  allResults.push(results);
+  if (results.LastEvaluatedKey) {
+    startingKey = results.LastEvaluatedKey;
+    return [startingKey, keepSearching, allResults];
+  } else {
+    keepSearching = false;
+    return [null, keepSearching, allResults];
   }
+}
 
-  console.log(`Sending back ${items.length} change request(s).`);
-  return items;
-});
+/**
+ * Returns an array of updated parameters for querying a state submitter role
+ * Will stop once all results for particular territory have been returned
+ * @param {String} startingKey the key to continue from if the query is not complete
+ * @param {String} territory the territory to query
+ * @param {Boolean} keepSearching determines how to proceed with the query true==continue query/false==end query
+ * @param {Object} allResults the results of the query/past queries
+ * @returns the updated versions of the parameters
+ */
+async function stateSubmitterDynamoDbQuery(
+  startingKey,
+  territory,
+  keepSearching,
+  allResults
+) {
+  const results = await dynamoDb.query({
+    TableName: process.env.tableName,
+    ExclusiveStartKey: startingKey,
+    IndexName: "territory-submittedAt-index",
+    KeyConditionExpression:
+      "territory = :v_territory and submittedAt > :v_submittedAt",
+    ExpressionAttributeValues: {
+      ":v_territory": territory,
+      ":v_submittedAt": 0,
+    },
+    ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
+  });
+  allResults.push(results);
+  if (results.LastEvaluatedKey) {
+    startingKey = results.LastEvaluatedKey;
+    return [startingKey, keepSearching, allResults];
+  } else {
+    keepSearching = false;
+    return [null, keepSearching, allResults];
+  }
+}
+
 /**
  * Determines how to scan/query depending on the user role.
  * @param {Object} user the user to query or scan for.
  * @returns Returns an array of change requests to display on users submission list.
  */
-
 async function getDataFromDB(user) {
   let startingKey;
   let promises;
@@ -97,65 +131,30 @@ async function getDataFromDB(user) {
 }
 
 /**
- * Returns an array of updated parameters for querying a helpdesk or reviewer role
- * Will stop once entire dynamoDB has been scanned
- * @param {String} startingKey the key to continue from if the query is not complete
- * @param {Boolean} keepSearching determines how to proceed with the query true==continue query/false==end query
- * @param {Object} allResults the results of the query/past queries
- * @returns the updated versions of the parameters
+ * Gets all change requests from the DynamoDB change requests table
+ * that correspond to the user's active access to states/territories
  */
-async function helpdeskOrReviewerDynamoDbQuery(
-  startingKey,
-  keepSearching,
-  allResults
-) {
-  const results = await dynamoDb.scan({
-    TableName: process.env.tableName,
-    ExclusiveStartKey: startingKey,
-  });
-  allResults.push(results);
-  if (results.LastEvaluatedKey) {
-    startingKey = results.LastEvaluatedKey;
-    return [startingKey, keepSearching, allResults];
-  } else {
-    keepSearching = false;
-    return [null, keepSearching, allResults];
+export const main = handler(async (event) => {
+  // If this invocation is a prewarm, do nothing and return.
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up!");
+    return null;
   }
-}
 
-/**
- * Returns an array of updated parameters for querying a state submitter role
- * Will stop once all results for particular territory have been returned
- * @param {String} startingKey the key to continue from if the query is not complete
- * @param {String} territory the territory to query
- * @param {Boolean} keepSearching determines how to proceed with the query true==continue query/false==end query
- * @param {Object} allResults the results of the query/past queries
- * @returns the updated versions of the parameters
- */
-async function stateSubmitterDynamoDbQuery(
-  startingKey,
-  territory,
-  keepSearching,
-  allResults
-) {
-  let results = await dynamoDb.query({
-    TableName: process.env.tableName,
-    ExclusiveStartKey: startingKey,
-    IndexName: "territory-submittedAt-index",
-    KeyConditionExpression:
-      "territory = :v_territory and submittedAt > :v_submittedAt",
-    ExpressionAttributeValues: {
-      ":v_territory": territory,
-      ":v_submittedAt": 0,
-    },
-    ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
-  });
-  allResults.push(results);
-  if (results.LastEvaluatedKey) {
-    startingKey = results.LastEvaluatedKey;
-    return [startingKey, keepSearching, allResults];
-  } else {
-    keepSearching = false;
-    return [null, keepSearching, allResults];
+  const user = await getUser(event.queryStringParameters.email);
+  if (!user) {
+    return RESPONSE_CODE.USER_NOT_FOUND;
   }
-}
+  const allResults = await getDataFromDB(user);
+  // extracts items from each of the results
+  let items = [];
+  allResults.forEach((result) => {
+    items = items.concat(result.Items);
+  });
+  if (items.length === 0) {
+    console.log(`No change requests found matching that query.`);
+  }
+
+  console.log(`Sending back ${items.length} change request(s).`);
+  return items;
+});
