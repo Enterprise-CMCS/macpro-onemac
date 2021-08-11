@@ -19,8 +19,9 @@ jobs:
         run: |
           npm ci
           for service in services/*/; do
-            cd "$service"
+            pushd "$service"
             if [ -f package-lock.json ]; then npm ci; fi
+            popd
           done
       - name: Run ESLint
         run: npx eslint --max-warnings=0 services
