@@ -14,7 +14,8 @@ parserOptions:
 plugins:
   - react
   - '@typescript-eslint'
-rules: {}
+rules:
+  no-use-before-define: ["error", { "functions": false, "variables": true }]
 settings:
   react:
     version: detect

@@ -25,7 +25,7 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
-  let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
+  const reasonWhyNot = uFunctions.canIRequestThis(doneBy);
   if (reasonWhyNot) return reasonWhyNot;
 
   let scanParams = uFunctions.getScanParams();

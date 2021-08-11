@@ -12,9 +12,6 @@ class WaiverAppK {
    * @returns {String} any errors
    */
   async fieldsValid(data) {
-    let areFieldsValid = true;
-    let whyNot = "";
-
     const params = {
       TableName: process.env.spaIdTableName,
       // 'Key' defines the partition key and sort key of the item to be retrieved
@@ -36,7 +33,7 @@ class WaiverAppK {
       console.log("packageExists got an error: ", error);
     }
 
-    return { areFieldsValid, whyNot };
+    return { areFieldsValid: true, whyNot: "" };
   }
 
   /**
@@ -46,7 +43,7 @@ class WaiverAppK {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    let transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
+    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
       ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
       : "";
 

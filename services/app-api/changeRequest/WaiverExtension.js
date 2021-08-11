@@ -50,7 +50,7 @@ class WaiverExtension {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    let transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
+    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
       ? `<br/>${data.transmittalNumberWarningMessage}`
       : "";
 

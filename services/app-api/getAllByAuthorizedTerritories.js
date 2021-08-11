@@ -11,8 +11,7 @@ import { getAuthorizedStateList } from "./user/user-util";
  */
 
 export const main = handler(async (event) => {
-  var allResults = [];
-  // If this invokation is a prewarm, do nothing and return.
+  // If this invocation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
     return null;
@@ -22,7 +21,7 @@ export const main = handler(async (event) => {
   if (!user) {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
-  allResults = await getDataFromDB(user);
+  const allResults = await getDataFromDB(user);
   // extracts items from each of the results
   let items = [];
   allResults.forEach((result) => {
@@ -50,7 +49,7 @@ async function getDataFromDB(user) {
     startingKey = null;
   }
   try {
-    var keepSearching;
+    let keepSearching;
     if (
       user.type === USER_TYPE.HELPDESK ||
       user.type === USER_TYPE.CMS_REVIEWER
@@ -83,8 +82,8 @@ async function getDataFromDB(user) {
       });
       // resolve promises from all queries
       allResults = await Promise.all(promises);
-      let concatResults = [];
-      for (var i = 0; i < allResults.length; i++) {
+      const concatResults = [];
+      for (let i = 0; i < allResults.length; i++) {
         allResults[i].forEach((stateInfo) => {
           concatResults.push(stateInfo);
         });
@@ -110,7 +109,7 @@ async function helpdeskOrReviewerDynamoDbQuery(
   keepSearching,
   allResults
 ) {
-  let results = await dynamoDb.scan({
+  const results = await dynamoDb.scan({
     TableName: process.env.tableName,
     ExclusiveStartKey: startingKey,
   });
