@@ -37,13 +37,6 @@ export const deniedOrRevokedMessage = {
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
 };
 
-export const grantConfirmMessage =
-  "This will grant the selected user access.\nAre you sure you want to proceed?";
-export const denyConfirmMessage =
-  "This will deny the selected user’s request for access.\nAre you sure you want to proceed?";
-export const revokeConfirmMessage =
-  "This will revoke the selected user’s request for access.\nAre you sure you want to proceed?";
-
 /**
  * Determine the type of userData and sort corresponding arrays per state if needed.
  * @param {Object} userData object of history instance

@@ -13,15 +13,16 @@ import {
 } from "cmscommonlib";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import TransmittalNumber from "../components/TransmittalNumber";
 import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
+import { useFlag } from "../libs/hooksLib";
 import ScrollToTop from "../components/ScrollToTop";
 import config from "../utils/config";
 
-const leavePageConfirmMessage =
-  "If you leave this page, you will lose your progress on this form. Are you sure you want to proceed?";
+const leavePageConfirmMessage = "Changes you made will not be saved.";
 
 /**
  * RAI Form template to allow rendering for different types of RAI's.
@@ -30,6 +31,11 @@ const leavePageConfirmMessage =
 export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
+  const [
+    showCancelConfirmation,
+    closeCancelConfirmation,
+    openCancelConfirmation,
+  ] = useFlag();
   const {
     userProfile: { userData },
   } = useAppContext();
@@ -312,20 +318,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
     alertCode,
   ]);
 
-  /**
-   * Cancel Form.
-   * @param {Object} event the click event
-   *
-   * confirm dialog with a Yes No Buttons
-   */
-  async function handleCancel(event) {
-    event.preventDefault();
-    const result = window.confirm(leavePageConfirmMessage);
-    if (result === true) {
-      history.replace(ROUTES.DASHBOARD);
-    }
-  }
-
   const limitSubmit = useRef(false);
 
   useEffect(() => {
@@ -507,7 +499,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
             value="Submit"
           />
           <button
-            onClick={handleCancel}
+            onClick={openCancelConfirmation}
             disabled={isSubmitting}
             className="submission-form-cancel-button"
             type="button"
@@ -527,6 +519,18 @@ export const SubmissionForm = ({ changeRequestType }) => {
           </a>
         </div>
       </div>
+      {showCancelConfirmation && (
+        <ConfirmationDialog
+          acceptText="Confirm"
+          cancelText="Keep Editing"
+          heading="Cancel submission?"
+          onAccept={() => history.replace(ROUTES.DASHBOARD)}
+          onCancel={closeCancelConfirmation}
+          size="wide"
+        >
+          {leavePageConfirmMessage}
+        </ConfirmationDialog>
+      )}
     </LoadingOverlay>
   );
 };

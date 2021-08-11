@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory, Link } from "react-router-dom";
-import { RESPONSE_CODE, ROUTES, USER_TYPE } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, USER_TYPE, territoryMap } from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -15,9 +15,6 @@ import { roleLabels } from "../libs/roleLib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
-  grantConfirmMessage,
-  denyConfirmMessage,
-  revokeConfirmMessage,
   isPending,
   isActive,
 } from "../libs/userLib";
@@ -27,6 +24,61 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
 );
+
+const getName = ({ firstName, lastName }) =>
+  [firstName, lastName].filter(Boolean).join(" ");
+const getAccessDescription = ({ stateCode }) =>
+  stateCode ? `${territoryMap[stateCode]} in OneMAC` : "OneMAC";
+
+const grant = {
+    label: "Grant Access",
+    value: "active",
+    formatConfirmationMessage: (rowData) =>
+      `This will grant ${getName(rowData)} access to ${getAccessDescription(
+        rowData
+      )}.`,
+  },
+  deny = {
+    label: "Deny Access",
+    value: "denied",
+    formatConfirmationMessage: (rowData) =>
+      `This will deny ${getName(
+        rowData
+      )}'s request for access to ${getAccessDescription(rowData)}.`,
+  },
+  revoke = {
+    label: "Revoke Access",
+    value: "revoked",
+    formatConfirmationMessage: (rowData) =>
+      `This will revoke ${getName(rowData)}'s access to ${getAccessDescription(
+        rowData
+      )}.`,
+  },
+  menuItemMap = {
+    pending: [grant, deny],
+    active: [revoke],
+    denied: [grant],
+    revoked: [grant],
+  };
+
+const alertCodes = {
+  active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
+  denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
+  revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
+};
+
+const showActions = (currentUserRole, rowUserRole) => {
+  if (currentUserRole !== USER_TYPE.STATE_ADMIN) return true;
+
+  if (
+    rowUserRole === USER_TYPE.CMS_APPROVER ||
+    rowUserRole === USER_TYPE.HELPDESK
+  ) {
+    return true;
+  }
+
+  return false;
+};
 
 /**
  * User Management "Dashboard"
@@ -94,12 +146,6 @@ const UserManagement = () => {
     };
   }, [userList]);
 
-  const getName = useCallback(
-    ({ firstName, lastName }) =>
-      [firstName, lastName].filter(Boolean).join(" "),
-    []
-  );
-
   const getRoleLabel = useCallback(({ role }) => roleLabels[role], []);
 
   const renderStatus = useCallback(({ value }) => {
@@ -163,88 +209,51 @@ const UserManagement = () => {
     return orig;
   }, []);
 
+  const onPopupAction = useCallback(
+    async (rowNum, value) => {
+      const { role, stateCode, ...restOfUser } = userList[rowNum];
+      setDoneToName(getName(restOfUser));
+
+      try {
+        const returnCode = await UserDataApi.setUserStatus({
+          userEmail: userList[rowNum].email,
+          doneBy: userProfile.userData.id,
+          type: role,
+          attributes: [
+            {
+              stateCode:
+                role === USER_TYPE.STATE_SUBMITTER ||
+                role === USER_TYPE.STATE_ADMIN
+                  ? stateCode
+                  : undefined, // required for state submitter and state admin
+              status: value,
+            },
+          ],
+        });
+
+        updateList();
+        setAlertCode(returnCode === "UR000" ? alertCodes[value] : returnCode);
+      } catch (e) {
+        console.log("Error while fetching user's list.", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      }
+    },
+    [updateList, userList, userProfile.userData.id]
+  );
+
   const renderActions = useCallback(
-    ({ row }) => {
-      const grant = {
-          label: "Grant Access",
-          value: "active",
-          confirmMessage: grantConfirmMessage,
-        },
-        deny = {
-          label: "Deny Access",
-          value: "denied",
-          confirmMessage: denyConfirmMessage,
-        },
-        revoke = {
-          label: "Revoke Access",
-          value: "revoked",
-          confirmMessage: revokeConfirmMessage,
-        };
-
-      const menuItems =
-        {
-          pending: [grant, deny],
-          active: [revoke],
-          denied: [grant],
-          revoked: [grant],
-        }[row.values.status] ?? [];
-
-      const alertCodes = {
-        active: RESPONSE_CODE.SUCCESS_USER_GRANTED,
-        denied: RESPONSE_CODE.SUCCESS_USER_DENIED,
-        revoked: RESPONSE_CODE.SUCCESS_USER_REVOKED,
-      };
-
-      return showActions(userProfile.userData.type, row.original.role) ===
-        true ? (
+    ({ row }) =>
+      showActions(userProfile.userData.type, row.original.role) === true ? (
         <PopupMenu
-          selectedRow={row.id}
+          selectedRow={row}
           userEmail={row.values.email}
-          menuItems={menuItems}
-          handleSelected={(rowNum, value) => {
-            let newAlertCode = alertCodes[value];
-            let newPersonalized = "Chester Tester";
-
-            const updateStatusRequest = {
-              userEmail: userList[rowNum].email,
-              doneBy: userProfile.userData.id,
-              attributes: [
-                {
-                  stateCode:
-                    row.original.role === USER_TYPE.STATE_SUBMITTER ||
-                    row.original.role === USER_TYPE.STATE_ADMIN
-                      ? row.original.stateCode
-                      : undefined, // required for state submitter and state admin
-                  status: value,
-                },
-              ],
-              type: row.original.role,
-            };
-            UserDataApi.setUserStatus(updateStatusRequest)
-              .then(function (returnCode) {
-                // alert already set per status change, only check for success here
-                if (returnCode === "UR000") {
-                  newPersonalized = `${userList[rowNum].firstName} ${userList[rowNum].lastName}`;
-                } else {
-                  newAlertCode = returnCode;
-                }
-                updateList();
-              })
-              .then(() => {
-                setAlertCode(newAlertCode);
-                setDoneToName(newPersonalized);
-              })
-              .catch((e) => {
-                console.log("Error while fetching user's list.", e);
-                setAlertCode(RESPONSE_CODE[e.message]);
-              });
-          }}
+          menuItems={menuItemMap[row.values.status] ?? []}
+          handleSelected={onPopupAction}
         />
       ) : (
         <></>
-      );
-    },
-    [updateList, userList, userProfile]
+      ),
+    [onPopupAction]
   );
 
   const columns = useMemo(() => {
@@ -304,7 +313,6 @@ const UserManagement = () => {
 
     return columnList.filter(Boolean);
   }, [
-    getName,
     includeStateCode,
     renderName,
     renderStatus,
@@ -323,18 +331,6 @@ const UserManagement = () => {
     }),
     []
   );
-
-  const showActions = (currentUserRole, rowUserRole) => {
-    let result = true;
-    if (currentUserRole !== USER_TYPE.STATE_ADMIN) result = true;
-    if (
-      rowUserRole === USER_TYPE.CMS_APPROVER ||
-      rowUserRole === USER_TYPE.HELPDESK
-    ) {
-      result = true;
-    } else result = false;
-    return result;
-  };
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);

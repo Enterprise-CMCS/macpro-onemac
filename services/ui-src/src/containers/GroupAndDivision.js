@@ -7,7 +7,8 @@ import { ROLES, USER_STATUS } from "cmscommonlib";
 import groupData from "cmscommonlib/groupDivision.json";
 
 import PageTitleBar from "../components/PageTitleBar";
-import { useSignupCallback } from "../libs/hooksLib";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
+import { useFlag, useSignupCallback } from "../libs/hooksLib";
 
 const createAttribute = () => [{ status: USER_STATUS.PENDING }];
 const customComponents = {
@@ -69,6 +70,11 @@ export const GroupAndDivision = () => {
     ROLES.CMS_REVIEWER,
     createAttribute
   );
+  const [
+    showCancelConfirmation,
+    closeCancelConfirmation,
+    openCancelConfirmation,
+  ] = useFlag();
 
   const [{ group, division }, dispatch] = useReducer(groupDivisionReducer, {
     group: null,
@@ -86,14 +92,6 @@ export const GroupAndDivision = () => {
     ({ value } = {}) => dispatch(["division", value]),
     []
   );
-  const onCancel = useCallback(() => {
-    if (
-      window.confirm(
-        "If you leave this page, you will lose your progress. Are you sure you want to proceed?"
-      )
-    )
-      history.goBack();
-  }, [history]);
   const onSubmit = useCallback(
     (e) => {
       e.preventDefault();
@@ -144,13 +142,24 @@ export const GroupAndDivision = () => {
           </Button>
           <Button
             className="ds-c-button--transparent"
-            onClick={onCancel}
+            onClick={openCancelConfirmation}
             type="button"
           >
             Cancel
           </Button>
         </div>
       </form>
+      {showCancelConfirmation && (
+        <ConfirmationDialog
+          acceptText="Confirm"
+          cancelText="Stay on Page"
+          heading="Cancel role request?"
+          onAccept={() => history.goBack()}
+          onCancel={closeCancelConfirmation}
+        >
+          Changes you made will not be saved.
+        </ConfirmationDialog>
+      )}
     </>
   );
 };
