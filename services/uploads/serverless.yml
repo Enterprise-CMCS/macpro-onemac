@@ -122,6 +122,10 @@ resources:
                   - - "arn:aws:s3:::"
                     - Ref: AttachmentsBucket
                     - "/protected/*"
+              Condition:
+                StringEquals:
+                  s3:ExistingObjectTag/virusScanStatus:
+                    - "CLEAN"
             - Effect: Deny
               Action: "s3:PutObject"
               Principal: "*"
