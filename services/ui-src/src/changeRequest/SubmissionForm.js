@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
@@ -39,6 +39,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+  const { packageId } = useParams();
+  console.log("PackageId is: ", packageId);
 
   const formInfo = Package.CONFIG[changeRequestType];
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
@@ -73,7 +75,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     type: changeRequestType,
     territory: "",
     summary: "",
-    transmittalNumber: "", //This is needed to be able to control the field
+    transmittalNumber: packageId, //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
   });

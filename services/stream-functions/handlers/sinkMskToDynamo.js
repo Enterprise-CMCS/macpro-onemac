@@ -7,7 +7,9 @@ function myHandler(event, context, callback) {
   console.log('Received event:', JSON.stringify(event, null, 2));
   var value = JSON.parse(event.value);
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
-  var id = value.payload.ID_Number;
+
+  var SEAToolId = value.payload.ID_Number;
+  
   var packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
   var payload = value.payload.toString();
@@ -19,34 +21,51 @@ function myHandler(event, context, callback) {
   if (value.payload.State_Code) {
     stateCode = value.payload.State_Code.toString();
   }
-  var sk = "SEATOOL";
-  console.log(process.env.oneMacTableName);
-  if (id != undefined) {
+  var SEAToolData = {
+    'packageStatus': packageStatusID,
+    'stateCode': stateCode,
+    'planType': planType,
+    'packageID': SEAToolId,
+    'clockEndTimestamp': value.payload.Alert_90_Days_Date,
+    'payload': payload,
+  };
+  if (SEAToolId != undefined) {
     AWS.config.update({region: 'us-east-1'});
     var ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
-    var params = {
+    // update the SEATool Entry
+    var updateSEAToolParams = {
       TableName: process.env.oneMacTableName,
-      Item: {
-        'pk': id,
-        'sk': sk,
-        'changeHistory' : [ {
-          'packageStatus': packageStatusID,
-          'stateCode': stateCode,
-          'planType': planType,
-          'packageID': id,
-          'payload': payload,
-        }],
-      }
+      Key: {
+        pk: SEAToolId,
+        sk: "SEATool",
+      },
+      UpdateExpression:
+        "SET changeHistory = list_append(:newChange, changeHistory)",
+      ExpressionAttributeValues: {
+        ":pkVal": updatePk,
+        ":skVal": updateSk,
+        ":newChange": [SEAToolData],
+      },
+      ReturnValues: "UPDATED_NEW",
     };
-    ddb.put(params, function(err, data) {
+  
+    ddb.update(updateSEAToolParams, function(err, data) {
       if (err) {
         console.log("Error", err);
       } else {
         console.log("Success", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+        // if the SEATool entry is new, do we need to add Paper IDs??
+
       }
     });
+
+    // check if the SEATool updates should be reflected in OneMAC
+
+    // if so, update OneMAC Package Item
+
   }
 }
 

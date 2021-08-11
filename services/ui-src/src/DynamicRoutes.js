@@ -121,7 +121,7 @@ export default function DynamicRoutes() {
       {/* submission view */}
       {userRoleObj.canAccessForms &&
         Object.entries(FORM_TYPES).map(([route, type]) => (
-          <Route key={route} exact path={route}>
+          <Route key={route} exact path={route + "/:packageId"}>
             <SubmissionForm changeRequestType={type} />
           </Route>
         ))}
