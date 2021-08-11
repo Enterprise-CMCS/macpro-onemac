@@ -19,6 +19,7 @@ class ChangeRequestDataApi {
         firstName: userAuth.signInUserSession.idToken.payload.given_name,
         lastName: userAuth.signInUserSession.idToken.payload.family_name,
       };
+      data.uploads = uploadsList;
     } catch (error) {
       handleApiError(
         error,

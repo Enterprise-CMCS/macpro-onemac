@@ -10,7 +10,7 @@ function myHandler(event, context, callback) {
   var id = value.payload.ID_Number;
   var packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
-  var payload = event.value.payload.toString();
+  var payload = value.payload.toString();
   var planType = '0';
   if (value.payload.Plan_Type) {
     planType = value.payload.Plan_Type.toString();
@@ -39,7 +39,7 @@ function myHandler(event, context, callback) {
         }],
       }
     };
-    ddb.putItem(params, function(err, data) {
+    ddb.put(params, function(err, data) {
       if (err) {
         console.log("Error", err);
       } else {
