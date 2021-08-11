@@ -43,6 +43,7 @@ jobs:
           coverageLocations: |
             ${{github.workspace}}/services/*/coverage/lcov.info:lcov
   deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
