@@ -1,9 +1,13 @@
-import React from "react";
-import Button from "@material-ui/core/Button";
+import React, { Fragment, useCallback, useState } from "react";
+import { Button } from "@cmsgov/design-system";
 import Menu from "@material-ui/core/Menu";
 import MenuItem from "@material-ui/core/MenuItem";
 import { makeStyles } from "@material-ui/core/styles";
+
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import tripleDots from "../images/TripleDots.svg";
+
+export const POPUP_TRIGGER_TEST_ID = "popup-menu-trigger";
 
 const TRIPLE_DOTS_IMAGE = (
   <img alt="" className="triple-dots" src={tripleDots} />
@@ -22,26 +26,30 @@ const useStyles = makeStyles((theme) => ({
 
 export default function PopupMenu({ selectedRow, menuItems, handleSelected }) {
   const classes = useStyles();
-  const [anchorEl, setAnchorEl] = React.useState(null);
+  const [anchorEl, setAnchorEl] = useState(null);
+  const [confirmItem, setConfirmItem] = useState(null);
 
-  const handleClick = (event) => {
-    setAnchorEl(event.currentTarget);
-  };
-
-  const handleClose = (value) => {
-    setAnchorEl(null);
-  };
-  const confirmStatusChange = (item) => {
-    if (window.confirm(item.confirmMessage)) {
-      handleSelected(selectedRow, item.value);
-    }
-    handleClose(item.value);
-  };
+  const handleClick = useCallback(
+    (event) => setAnchorEl(event.currentTarget),
+    []
+  );
+  const handleClose = useCallback(() => setAnchorEl(null), []);
+  const closeConfirmation = useCallback(() => setConfirmItem(null), []);
+  const confirmStatusChange = useCallback(
+    () => handleSelected(selectedRow.id, confirmItem.value),
+    [confirmItem, handleSelected, selectedRow.id]
+  );
 
   return (
     <>
-      <Button aria-haspopup="true" onClick={handleClick}>
-        &nbsp;{TRIPLE_DOTS_IMAGE}
+      <Button
+        aria-haspopup="true"
+        data-testid={POPUP_TRIGGER_TEST_ID}
+        onClick={handleClick}
+        size="small"
+        variation="transparent"
+      >
+        {TRIPLE_DOTS_IMAGE}
       </Button>
       <Menu
         id="simple-menu"
@@ -52,19 +60,33 @@ export default function PopupMenu({ selectedRow, menuItems, handleSelected }) {
       >
         <div>
           {menuItems.map((item, i) => (
-            <React.Fragment key={item.value}>
+            <Fragment key={item.value}>
               {i !== 0 && <hr />}
               <MenuItem
                 key={item.value}
                 className={classes.root}
-                onClick={() => confirmStatusChange(item)}
+                onClick={() => {
+                  handleClose();
+                  setConfirmItem(item);
+                }}
               >
                 {item.label}
               </MenuItem>
-            </React.Fragment>
+            </Fragment>
           ))}
         </div>
       </Menu>
+      {confirmItem && (
+        <ConfirmationDialog
+          acceptText="Confirm"
+          heading="Modify User's Access?"
+          onAccept={confirmStatusChange}
+          onCancel={closeConfirmation}
+          size="wide"
+        >
+          {confirmItem.formatConfirmationMessage(selectedRow.original)}
+        </ConfirmationDialog>
+      )}
     </>
   );
 }
