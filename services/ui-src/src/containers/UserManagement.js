@@ -243,7 +243,7 @@ const UserManagement = () => {
 
   const renderActions = useCallback(
     ({ row }) =>
-      showActions(userProfile.userData.type, row.original.role) === true ? (
+      showActions(userProfile.userData.type, row.original.role) ? (
         <PopupMenu
           selectedRow={row}
           userEmail={row.values.email}
@@ -366,9 +366,9 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          (userProfile.userData.type === USER_TYPE.HELPDESK && isUserActive) ||
-          (userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN &&
-            csvExportSubmissions)
+          ((userProfile.userData.type === USER_TYPE.HELPDESK && isUserActive) ||
+            userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
+          csvExportSubmissions
         }
       />
       <AlertBar
