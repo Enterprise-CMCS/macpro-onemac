@@ -139,8 +139,7 @@ resources:
               Condition:
                 StringNotEquals:
                   s3:ExistingObjectTag/virusScanStatus:
-                    - "CLEAN"
-                  aws:PrincipalArn: !GetAtt IamRoleLambdaExecution.Arn     
+                    - "CLEAN"    
             - Effect: Deny
               Action: "s3:PutObject"
               Principal: "*"
