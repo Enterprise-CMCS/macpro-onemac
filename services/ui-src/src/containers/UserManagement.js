@@ -246,7 +246,7 @@ const UserManagement = () => {
       ) : (
         <></>
       ),
-    [onPopupAction]
+    [onPopupAction, userProfile?.userData?.type]
   );
 
   const columns = useMemo(() => {
