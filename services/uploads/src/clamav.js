@@ -96,7 +96,7 @@ async function uploadAVDefinitions() {
           ACL: "public-read",
         };
 
-        S3.putObject(options, function (err, data) {
+        S3.putObject(options, function (err) {
           if (err) {
             utils.generateSystemMessage(
               `--- Error uploading ${filenameToUpload} ---`

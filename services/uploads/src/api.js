@@ -1,10 +1,8 @@
-const AWS = require("aws-sdk");
-const path = require("path");
 const utils = require("./utils");
 const av = require("./antivirus");
 const constants = require("./constants");
 
-async function lambdaHandleEvent(event, context) {
+async function lambdaHandleEvent(event) {
   let s3ObjectKey = utils.extractKeyFromApiEvent(event);
   let s3ObjectBucket = utils.extractBucketFromApiEvent(event);
 

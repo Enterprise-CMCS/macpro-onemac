@@ -32,7 +32,7 @@ class SystemAdmin {
    * System Admins can do everything
    * @returns {String} null if ok to go, the response code if not
    */
-  canIRequestThis(doneBy) {
+  canIRequestThis() {
     return undefined;
   }
 

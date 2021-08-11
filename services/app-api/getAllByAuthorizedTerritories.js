@@ -10,7 +10,7 @@ import { getAuthorizedStateList } from "./user/user-util";
  * that correspond to the user's active access to states/territories
  */
 
-export const main = handler(async (event, context) => {
+export const main = handler(async (event) => {
   var allResults = [];
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {

@@ -19,8 +19,6 @@ const constants = require("./constants");
 async function sizeOf(key, bucket) {
   console.log("key: " + key);
   console.log("bucket: " + bucket);
-  var sts = new AWS.STS();
-  var params = {};
 
   let res = await s3.headObject({ Key: key, Bucket: bucket }).promise();
   return res.ContentLength;
@@ -72,7 +70,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   });
 }
 
-async function lambdaHandleEvent(event, context) {
+async function lambdaHandleEvent(event) {
   utils.generateSystemMessage("Start Antivirus Lambda function");
 
   let s3ObjectKey = utils.extractKeyFromS3Event(event);
@@ -116,9 +114,9 @@ async function lambdaHandleEvent(event, context) {
     utils.generateSystemMessage("Tagging successful");
   } catch (err) {
     console.log(err);
-  } finally {
-    return virusScanStatus;
   }
+
+  return virusScanStatus;
 }
 
 async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
@@ -142,9 +140,9 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     utils.generateSystemMessage("Tagging successful");
   } catch (err) {
     console.log(err);
-  } finally {
-    return virusScanStatus;
   }
+
+  return virusScanStatus;
 }
 
 module.exports = {

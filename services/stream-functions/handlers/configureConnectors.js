@@ -21,7 +21,7 @@ const connectors = [
   }
 ];
 
-function myHandler(event, context, callback) {
+function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up... although this function shouldn't be prewarmed.  So, turn it off.");
     return null;
@@ -84,7 +84,7 @@ function putConnectorConfig(workerIp, config, callback) {
       console.log(d.toString('utf-8'));
     });
   }).on('error', retry);
-  req.setTimeout(5000, function(thing){
+  req.setTimeout(5000, function(){
       this.socket.destroy();
   });
   req.write(JSON.stringify(config.config));

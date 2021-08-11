@@ -591,7 +591,7 @@ const constructUserEmail = (userEmailId, input) => {
 };
 
 // Send email //
-const dispatchEmail = async (email, input) => {
+const dispatchEmail = async (email) => {
   try {
     const emailStatus = await sendEmail(email);
     if (emailStatus instanceof Error) {

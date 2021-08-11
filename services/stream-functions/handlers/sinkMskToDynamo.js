@@ -1,6 +1,6 @@
 var AWS = require('aws-sdk');
 
-function myHandler(event, context, callback) {
+function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
     return null;
