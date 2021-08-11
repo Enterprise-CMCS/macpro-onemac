@@ -117,11 +117,20 @@ resources:
                 - "s3:GetObject"
               Principal: "*"
               Resource:
-                Fn::Join:
-                  - ""
-                  - - "arn:aws:s3:::"
-                    - Ref: AttachmentsBucket
-                    - "/protected/*"
+              Condition:
+                StringEquals:
+                  s3:ExistingObjectTag/virusScanStatus:
+                    - "CLEAN" 
+            - Effect: "Deny"
+              Action:
+                - "s3:GetObject"
+              Resource: 
+              Principal: "*"
+              Condition:
+                StringNotEquals:
+                  s3:ExistingObjectTag/virusScanStatus:
+                    - "CLEAN"
+                  aws:PrincipalArn: !GetAtt IamRoleLambdaExecution.Arn     
             - Effect: Deny
               Action: "s3:PutObject"
               Principal: "*"
