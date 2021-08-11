@@ -69,7 +69,8 @@ module.exports = {
         let submittedType = "[id=type-0] span";
         let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+       // browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.waitForElementPresent('xpath', "//*[@id='transmittalNumber-0']/a")
         browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
         browser.useCss().expect.element(submittedType).to.be.visible;
