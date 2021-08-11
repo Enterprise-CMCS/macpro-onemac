@@ -9,7 +9,7 @@ function myHandler(event, context, callback) {
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
 
   var SEAToolId = value.payload.ID_Number;
-  
+
   var packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
   var payload = value.payload.toString();
@@ -43,13 +43,11 @@ function myHandler(event, context, callback) {
       UpdateExpression:
         "SET changeHistory = list_append(:newChange, changeHistory)",
       ExpressionAttributeValues: {
-        ":pkVal": updatePk,
-        ":skVal": updateSk,
         ":newChange": [SEAToolData],
       },
       ReturnValues: "UPDATED_NEW",
     };
-  
+
     ddb.update(updateSEAToolParams, function(err, data) {
       if (err) {
         console.log("Error", err);
@@ -61,11 +59,23 @@ function myHandler(event, context, callback) {
 
       }
     });
-
+/*
     // check if the SEATool updates should be reflected in OneMAC
-
+    const SEATOOL_TO_ONEMAC_STATUS = {
+      [SEATOOL.PENDING]: "Package In Review",
+      [SEATOOL.PENDING_RAI]: "RAI Issued",
+      [SEATOOL.PENDING_OFF_THE_CLOCK]: "Response to RAI In Review",
+      [SEATOOL.APPROVED]: "Package Approved",
+      [SEATOOL.DISAPPROVED]: "Package Disapproved",
+      [SEATOOL.WITHDRAWN]: "Package Withdrawn",
+      [SEATOOL.TERMINATED]: "Amendmend Terminated",
+      [SEATOOL.PENDING_CONCURRANCE]: "Package In Review",
+      [SEATOOL.UNSUBMITTED]: "Draft",
+      [SEATOOL.PENDING_FINANCE]: "Package In Review",
+      [SEATOOL.PENDING_APPROVAL]: "Package In Review",
+    }
     // if so, update OneMAC Package Item
-
+*/
   }
 }
 
