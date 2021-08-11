@@ -5,6 +5,13 @@ import { RESPONSE_CODE, ROLES, ROUTES, getUserRoleObj } from "cmscommonlib";
 import UserDataApi from "../utils/UserDataApi";
 import { useAppContext } from "./contextLib";
 
+export function useFlag(initialState = false) {
+  const [value, setValue] = useState(initialState);
+  const setValueFalse = useCallback(() => setValue(false), []);
+  const setValueTrue = useCallback(() => setValue(true), []);
+  return [value, setValueFalse, setValueTrue, setValue];
+}
+
 export function useFormFields(initialState) {
   const [fields, setValues] = useState(initialState);
 
