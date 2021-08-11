@@ -1,5 +1,7 @@
 name: Deploy
 
+concurrency: ci-${{ github.ref }}
+
 on:
   push:
     branches:
@@ -96,10 +98,6 @@ jobs:
           OKTA_METADATA_URL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_OKTA_METADATA_URL] || secrets.OKTA_METADATA_URL }}
           COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
-      - name: lock this branch to prevent concurrent builds
-        run: ./.github/github-lock.sh
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
@@ -138,9 +136,54 @@ jobs:
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
+  nightwatch-test:
+    name: Nightwatch Tests
+    needs: deploy
+    if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/master' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: set branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v1
+      - name: set branch specific variable names
+        run: ./.github/build_vars.sh set_names
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+          COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Combine package-lock.json files to single file
+        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+      - name: cache service dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            services/uploads/node_modules
+            services/app-api/node_modules
+            services/stream-functions/node_modules
+            services/ui/node_modules
+            services/ui-auth/node_modules
+            services/ui-src/node_modules
+            node_modules
+            tests/nightwatch/node_modules
+          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+      - name: Install dependencies
+        run: npm ci
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: Endpoint
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "Application endpoint: $APPLICATION_ENDPOINT"
+          popd
       - name: Run Nightwatch suite
         # do not run tests on val and production
-        if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
