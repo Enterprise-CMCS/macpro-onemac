@@ -16,7 +16,12 @@ jobs:
         with:
           node-version: "12.x"
       - name: Install dependencies
-        run: npm ci
+        run: |
+          npm ci
+          for service in services/*/; do
+            cd "$service"
+            if [ -f package-lock.json ]; then npm ci; fi
+          done
       - name: Run ESLint
         run: npx eslint --max-warnings=0 services
   unit-test:
