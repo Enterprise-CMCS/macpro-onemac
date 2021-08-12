@@ -26,11 +26,12 @@ export default async function updatePackage(updateData) {
     },
     ConditionExpression: "pk = :pkVal AND sk = :skVal",
     UpdateExpression:
-      "SET changeHistory = list_append(:newChange, changeHistory)",
+      "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
     ExpressionAttributeValues: {
       ":pkVal": updatePk,
       ":skVal": updateSk,
       ":newChange": [updateData],
+      ":emptyList": [],
     },
   };
 
@@ -44,7 +45,7 @@ export default async function updatePackage(updateData) {
   }
 
   // only update status if new Status is sent
-  if (updateData.clockEndTimestamp) {
+  if (updateData.packageStatus) {
     updatePackageParams.ExpressionAttributeValues[":newStatus"] =
       updateData.packageStatus;
     updatePackageParams.UpdateExpression.concat(",currentStatus = :newStatus");
