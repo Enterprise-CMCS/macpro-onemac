@@ -63,7 +63,10 @@ module.exports = {
         // browser.useXpath().click("//a[@id='new-submission-button']");
         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
         // browser.refresh();
-        browser.useXpath().verify.containsText("//tbody/tr[1]/td[1]/a", spaID).pause(8000);
+        let element = '//tbody/tr[1]/td[1]/a';
+        let timeout = 5000;
+        browser.useXpath().waitForElementVisible(element,timeout); 
+        browser.useXpath().verify.containsText(element, spaID).pause(8000);
         browser.useCss();
         return spaID;
     },
