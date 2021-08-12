@@ -88,18 +88,15 @@ describe("dropdown logic", () => {
 });
 
 describe("submission and navigation", () => {
-  let confirmSpy, putUserSpy;
+  let putUserSpy;
   beforeAll(() => {
-    confirmSpy = jest.spyOn(window, "confirm");
     putUserSpy = jest.spyOn(UserDataApi, "updateUser");
   });
   afterAll(() => {
-    confirmSpy.mockRestore();
     putUserSpy.mockRestore();
   });
 
   it("lets you cancel and returns you to the previous page", () => {
-    confirmSpy.mockImplementation(jest.fn(() => true));
     const history = createMemoryHistory();
     history.push("/previous");
     history.push("/current");
@@ -109,11 +106,11 @@ describe("submission and navigation", () => {
       </Router>
     );
     fireEvent.click(screen.getByText(/cancel/i, { selector: "button" }));
+    fireEvent.click(screen.getByText(/confirm/i, { selector: "button" }));
     expect(history.location.pathname).toBe("/previous");
   });
 
   it("gives you the chance to stay on the page after clicking cancel", () => {
-    confirmSpy.mockImplementation(jest.fn(() => false));
     const history = createMemoryHistory();
     history.push("/previous");
     history.push("/current");
@@ -124,10 +121,11 @@ describe("submission and navigation", () => {
     );
     fireEvent.click(screen.getByText(/cancel/i, { selector: "button" }));
     expect(history.location.pathname).toBe("/current");
+    fireEvent.click(screen.getByText(/stay/i, { selector: "button" }));
+    expect(history.location.pathname).toBe("/current");
   });
 
   it("keeps your selections when you choose not to cancel", async () => {
-    confirmSpy.mockImplementation(jest.fn(() => false));
     const history = createMemoryHistory();
     history.push("/previous");
     history.push("/current");
@@ -146,6 +144,7 @@ describe("submission and navigation", () => {
       division: `${division.id}`,
     });
     fireEvent.click(screen.getByText(/cancel/i, { selector: "button" }));
+    fireEvent.click(screen.getByText(/stay/i, { selector: "button" }));
     expect(history.location.pathname).toBe("/current");
     expect(screen.getByRole("form")).toHaveFormValues({
       group: `${group.id}`,
@@ -187,8 +186,7 @@ describe("submission and navigation", () => {
     );
     // TODO: adjust this when groups and divisions are no longer hardcoded
     const group = groupData[3],
-      division = group.divisions[2],
-      otherGroup = groupData[2];
+      division = group.divisions[2];
     // not sure why this `act` is necessary but here we are
     await act(async () => {
       await selectEvent.select(screen.getByLabelText(/group/i), group.name);

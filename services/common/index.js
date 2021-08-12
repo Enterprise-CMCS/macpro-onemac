@@ -226,17 +226,10 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
       return stateObj.history.sort(datesDescending)[0].status;
     }
 
-    case ROLES.CMS_APPROVER:
-    case ROLES.HELPDESK:
-    case ROLES.SYSTEM_ADMIN:
-      {
-        return attributes.sort(datesDescending)[0].status;
-      }
-
-      attributes = stateObj.history;
+    default: {
+      return attributes.sort(datesDescending)[0].status;
+    }
   }
-
-  return attributes.sort(datesDescending)[0].status;
 };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.

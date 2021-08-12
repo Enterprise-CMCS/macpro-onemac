@@ -28,7 +28,7 @@ class CMSReviewer {
    * CMSReiewer User have to be active to see user lists
    * @returns {String} null always as CMSReiewer User can have a read-only view of all users with any statuses
    */
-  canIRequestThis(doneBy) {
+  canIRequestThis() {
     return undefined;
   }
 
@@ -38,10 +38,9 @@ class CMSReviewer {
    *
    * CMSReiewer User gets all users except CMS System Admins
    *
-   * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
    */
-  transformUserList(userResult) {
+  transformUserList() {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 }

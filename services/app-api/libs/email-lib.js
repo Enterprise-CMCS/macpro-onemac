@@ -7,7 +7,7 @@ const sender = new AWS.SES({ region: "us-east-1" });
  * @param {Object} email generic email properties
  */
 function getSESEmailParams(email) {
-  let emailParams = {
+  const emailParams = {
     Destination: {
       ToAddresses: email.ToAddresses,
     },
@@ -38,7 +38,7 @@ function getSESEmailParams(email) {
  */
 export default function sendEmail(email) {
   try {
-    let emailParams = getSESEmailParams(email);
+    const emailParams = getSESEmailParams(email);
     // If we are in offline mode just log the email message.
     if (process.env.IS_OFFLINE) {
       console.log("IN OFFLINE MODE: Will not send email.");

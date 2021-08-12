@@ -195,8 +195,6 @@ export const cmsApproverDeniedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -231,8 +229,6 @@ export const cmsApproverRevokedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -266,8 +262,6 @@ export const helpDeskDeniedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -295,8 +289,6 @@ export const helpDeskRevokedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
