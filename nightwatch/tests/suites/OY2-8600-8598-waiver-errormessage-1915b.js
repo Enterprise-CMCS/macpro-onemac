@@ -32,8 +32,9 @@ module.exports = {
         // Enter Waiver number
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random());
         // SS-YY-NNNN
-        generatedWaiverID = 'MD.' + num1 + '' + num2;
+        generatedWaiverID = 'MD.' + num1 + '' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
 
@@ -65,13 +66,13 @@ module.exports = {
         browser.useCss().click("[value='Submit']").pause(6000);
 
         // Verify the submitted Waiver Report Content 
-        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        const submittedIDNumber = "//tbody/tr[1]/td[1]/a";
         let submittedType = "[id=type-0] span";
         let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
        // browser.useCss().expect.element(submittedIDNumber).to.be.visible;
-        browser.waitForElementPresent('xpath', "//*[@id='transmittalNumber-0']/a")
-        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.waitForElementPresent('xpath', submittedIDNumber)
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
         browser.useCss().expect.element(submittedType).to.be.visible;
         browser.useCss().assert.containsText(submittedType, "Waiver");
