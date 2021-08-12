@@ -120,8 +120,6 @@ class WaiverAppK {
       packageId: data.transmittalNumber,
       packageType: "1915(c)",
       packageStatus: "Submitted",
-      actionType: data.actionType,
-      waiverAuthority: data.waiverAuthority,
       clockEndTimestamp: data.ninetyDayClockEnd,
       dateSubmitted: data.submittedAt,
       attachments: data.uploads,

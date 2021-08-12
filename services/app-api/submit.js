@@ -129,7 +129,7 @@ export const main = handler(async (event) => {
     );
   }
 
-  crFunctions
+  return crFunctions
     .saveSubmission(data)
     .then(() => {
       console.log("Successfully submitted the following:", data);

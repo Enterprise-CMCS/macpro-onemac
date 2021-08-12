@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import Joi from "joi";
 
-import { Package, territoryCodeList } from "cmscommonlib";
+import { ChangeRequest, territoryCodeList } from "cmscommonlib";
 
 import SPA from "./SPA";
 import SPARAI from "./SPARAI";
@@ -21,14 +21,14 @@ import CHIPSPARAI from "./CHIPSPARAI";
  */
 export default function getChangeRequestFunctions(type) {
   return {
-    [Package.TYPE.CHIP_SPA]: CHIPSPA,
-    [Package.TYPE.CHIP_SPA_RAI]: CHIPSPARAI,
-    [Package.TYPE.SPA]: SPA,
-    [Package.TYPE.SPA_RAI]: SPARAI,
-    [Package.TYPE.WAIVER]: Waiver,
-    [Package.TYPE.WAIVER_APP_K]: WaiverAppK,
-    [Package.TYPE.WAIVER_EXTENSION]: WaiverExtension,
-    [Package.TYPE.WAIVER_RAI]: WaiverRAI,
+    [ChangeRequest.TYPE.CHIP_SPA]: CHIPSPA,
+    [ChangeRequest.TYPE.CHIP_SPA_RAI]: CHIPSPARAI,
+    [ChangeRequest.TYPE.SPA]: SPA,
+    [ChangeRequest.TYPE.SPA_RAI]: SPARAI,
+    [ChangeRequest.TYPE.WAIVER]: Waiver,
+    [ChangeRequest.TYPE.WAIVER_APP_K]: WaiverAppK,
+    [ChangeRequest.TYPE.WAIVER_EXTENSION]: WaiverExtension,
+    [ChangeRequest.TYPE.WAIVER_RAI]: WaiverRAI,
   }[type];
 }
 
@@ -111,7 +111,7 @@ export function validateSubmission(data) {
     transmittalNumber: Joi.string().required(),
     transmittalNumberWarningMessage: Joi.string().allow(""),
     type: Joi.string()
-      .valid(...Object.values(Package.TYPE))
+      .valid(...Object.values(ChangeRequest.TYPE))
       .required(),
     uploads: Joi.array().items(uploadSchema).min(1).required(),
     user: Joi.object(),
@@ -128,11 +128,11 @@ export function validateSubmission(data) {
 
   // then, retrieve the specific config for this submission type and check it
   // against the particular business requirements it must fulfill
-  const config = Package.CONFIG[data.type];
+  const config = ChangeRequest.CONFIG[data.type];
 
   let transmittalNumber = Joi.string();
   if (
-    data.type === Package.TYPE.WAIVER &&
+    data.type === ChangeRequest.TYPE.WAIVER &&
     config[`${data.actionType}TransmittalNumber`]?.idRegex
   ) {
     transmittalNumber = transmittalNumber.pattern(

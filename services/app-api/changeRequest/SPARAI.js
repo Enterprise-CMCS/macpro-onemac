@@ -113,13 +113,11 @@ class SPARAI {
       packageId: data.transmittalNumber,
       packageStatus: "RAI Response Submitted",
       timestamp: data.submittedAt,
-      raiResponseSubmissionDate: data.submittedAt,
-      raiResponseAttachments: data.uploads,
-      raiResponseAdditionalInformation: data.summary,
-      raiResponseSubmitterName: submitterName,
-      raiResponseSubmitterEmail: data.user.email,
-      lastModifiedByName: submitterName,
-      lastModifiedByEmail: data.user.email,
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submitterName: submitterName,
+      submitterEmail: data.user.email,
+      clockEndMessage: "Pending RAI Response Review",
     };
 
     updatePackage(raiResponseData);

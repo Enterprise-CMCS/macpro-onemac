@@ -44,7 +44,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      return await API.post("changeRequestAPI", "/submit", {
+      return await API.post("oneMacAPI", "/submit", {
         body: data,
       });
     } catch (error) {
@@ -122,7 +122,10 @@ class ChangeRequestDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get("oneMacAPI", `/getAllPackages?email=${userEmail}`);
+      return await API.get(
+        "oneMacAPI",
+        `/getAllByAuthorizedTerritories?email=${userEmail}`
+      );
     } catch (error) {
       handleApiError(
         error,

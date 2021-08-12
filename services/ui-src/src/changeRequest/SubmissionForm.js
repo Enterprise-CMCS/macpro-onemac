@@ -1,9 +1,9 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
-import PackageApi from "../utils/PackageApi";
+import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import {
   latestAccessStatus,
   ChangeRequest,
@@ -39,8 +39,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   // because the first time through, we do not want to be annoying with the error messaging
   const [firstTimeThrough, setFirstTimeThrough] = useState(true);
-  const { packageId } = useParams();
-  console.log("PackageId is: ", packageId);
 
   const formInfo = ChangeRequest.CONFIG[changeRequestType];
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
@@ -75,7 +73,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     type: changeRequestType,
     territory: "",
     summary: "",
-    transmittalNumber: packageId, //This is needed to be able to control the field
+    transmittalNumber: "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
   });
@@ -242,7 +240,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
               )[0];
             }
             try {
-              result = await PackageApi.packageExists(checkingNumber);
+              result = await ChangeRequestDataApi.packageExists(checkingNumber);
             } catch (e) {
               console.log("error message is: ", e.message);
               setAlertCode(RESPONSE_CODE[e.message]);
@@ -306,7 +304,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
       setAlertCode(RESPONSE_CODE[err.message]);
     }
   }, [
-    changeRequest,
+    changeRequest.actionType,
+    changeRequest.waiverAuthority,
     changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
@@ -346,11 +345,10 @@ export const SubmissionForm = ({ changeRequestType }) => {
       uploadRef
         .uploadFiles(changeRequest.transmittalNumber)
         .then((uploadedList) => {
-          return PackageApi.submit({
-            ...changeRequest,
-            transmittalNumberWarningMessage,
-            uploads: uploadedList,
-          });
+          return ChangeRequestDataApi.submit(
+            { ...changeRequest, transmittalNumberWarningMessage },
+            uploadedList
+          );
         })
         .then((returnCode) => {
           setAlertCode(returnCode);
