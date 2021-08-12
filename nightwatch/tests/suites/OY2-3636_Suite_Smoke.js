@@ -1,4 +1,4 @@
-
+/*
 // The automated UI test scripts that belongs to this module has 
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
@@ -339,3 +339,4 @@ module.exports = {
 //     }
 };
 //oy2-5226-nightwatch-new 
+*/
