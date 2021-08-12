@@ -45,7 +45,7 @@ describe("Construction of approver emails", () => {
   it("Should show the full name in the email message for CMSApprover", async () => {
     const result = constructRoleAdminEmails([], cmsApprover).email.HTML;
     expect(result).toContain("John Doe");
-    expect(result).toContain("CMS Approver");
+    expect(result).toContain("CMS Role Approver");
   });
 
   it("Should show the full name in the email message for State Submitter", async () => {
