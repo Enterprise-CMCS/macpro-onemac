@@ -77,7 +77,8 @@ provider:
     productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
 
 functions:
-  # For DynamoDB Change Requests Table
+
+  # For Submission and Package Management
   submit:
     handler: submit.main
     role: LambdaApiRole
@@ -87,24 +88,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  submitSPA:
-    handler: submitSPA.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: submitSPA
-          method: post
-          cors: true
-          authorizer: aws_iam
-  submitSPARAIResponse:
-    handler: submitSPARAIResponse.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: submitSPARAIResponse
-          method: post
-          cors: true
-          authorizer: aws_iam
+
   get:
     handler: get.main
     role: LambdaApiRole
@@ -155,26 +139,7 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  list:
-    handler: list.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: get
-          method: get
-          cors: true
-          authorizer: aws_iam
-  listall:
-    handler: listall.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: listall
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  # For DynamoDB User Table
+  # For User Management
   getUser:
     handler: getUser.main
     role: LambdaApiRole
@@ -184,6 +149,7 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+
   getMyUserList:
     handler: getMyUserList.main
     role: LambdaApiRole
@@ -193,6 +159,7 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+
   putUser:
     handler: putUser.main
     role: LambdaApiRole
@@ -202,6 +169,7 @@ functions:
           method: put
           cors: true
           authorizer: aws_iam
+
   setUserPhoneNumber:
     handler: putPhoneNumber.main
     role: LambdaApiRole

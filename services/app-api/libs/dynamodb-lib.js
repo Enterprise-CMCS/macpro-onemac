@@ -21,5 +21,4 @@ export default {
   update: (params) => client.update(params).promise(),
   delete: (params) => client.delete(params).promise(),
   scan: (params) => client.scan(params).promise(),
-  transactWriteItems: (params) => client.transactWrite(params).promise(),
 };

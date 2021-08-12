@@ -5,63 +5,6 @@ import handleApiError from "../libs/apiErrorHandler";
  */
 class PackageApi {
   /**
-   * Submit a change request to be saved by the backend.
-   * @param {Object} data the change request data
-   * @param {Array} uploadsList an array with the information on the already uploaded files
-   * @returns the submitted change request
-   */
-  async submit(data) {
-    let postType = "/submit";
-
-    try {
-      const userAuth = await Auth.currentAuthenticatedUser();
-      //Normalize the user data.
-      data.user = {
-        email: userAuth.signInUserSession.idToken.payload.email,
-        firstName: userAuth.signInUserSession.idToken.payload.given_name,
-        lastName: userAuth.signInUserSession.idToken.payload.family_name,
-      };
-    } catch (error) {
-      handleApiError(
-        error,
-        "USER_SUBMISSION_FAILED",
-        "Error while submitting the form."
-      );
-    }
-
-    console.log("the data being submitted: ", data);
-    if (
-      !data ||
-      !data.uploads ||
-      !data.type ||
-      data.uploads.length === 0 ||
-      !data.user
-    ) {
-      console.log(
-        "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
-        data
-      );
-      throw new Error("Missing required data or uploads");
-    }
-    try {
-      if (data.type === "spa") {
-        postType = "/submitSPA";
-      } else if (data.type === "sparai") {
-        postType = "/submitSPARAIResponse";
-      }
-      return await API.post("oneMacAPI", postType, {
-        body: data,
-      });
-    } catch (error) {
-      handleApiError(
-        error,
-        "USER_SUBMISSION_FAILED",
-        "Error while submitting the form."
-      );
-    }
-  }
-
-  /**
    * Fetch a specific package from the backend.
    * @param {string} id the ID of the package to fetch
    * @return {Object} a change request
@@ -118,11 +61,11 @@ class PackageApi {
   }
 
   /**
-   * Fetch all change requests that correspond to the user's active access to states/territories
+   * Fetch all packages that correspond to the user's active access to states/territories
    * @param {string} email the user's email
    * @return {Promise<Array>} a list of change requests
    */
-  async getAllByAuthorizedTerritories(userEmail) {
+  async getMyPackages(userEmail) {
     if (!userEmail) return [];
 
     try {
@@ -132,22 +75,6 @@ class PackageApi {
         error,
         "FETCH_ERROR",
         `There was an error fetching the states/territories for ${userEmail}.`
-      );
-    }
-  }
-
-  /**
-   * Fetch a specific record from the backend.
-   * @return {Array} a list of change requests
-   */
-  async listAll() {
-    try {
-      return await API.get("oneMacAPI", `/listall`);
-    } catch (error) {
-      handleApiError(
-        error,
-        "DASHBOARD_LIST_FETCH_ERROR",
-        `There was an error fetching Change requests`
       );
     }
   }
