@@ -134,7 +134,7 @@ resources:
               Principal: "*"
               Condition:
                 StringNotEquals:
-                  s3:ExistingObjectTag/virusScanStatus:
+                  s3:ExistingObjectTag/VirusScanStatus:
                     - "CLEAN"
             - Effect: Deny
               Action: "s3:PutObject"
