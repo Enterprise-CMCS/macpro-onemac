@@ -125,12 +125,6 @@ resources:
             - Effect: "Deny"
               Action:
                 - "s3:GetObject"
-              Resource:
-                 Fn::Join:
-                  - ""
-                  - - "arn:aws:s3:::"
-                    - Ref: AttachmentsBucket
-                    - "/protected/*"
               Principal: "*"
               Condition:
                 StringNotEquals:
