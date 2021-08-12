@@ -112,7 +112,7 @@ resources:
           Ref: AttachmentsBucket
         PolicyDocument:
           Statement:
-            - Effect: "Allow"
+            - Effect: "Deny"
               Action:
                 - "s3:GetObject"
               Principal: "*"
@@ -121,21 +121,7 @@ resources:
                   - ""
                   - - "arn:aws:s3:::"
                     - Ref: AttachmentsBucket
-                    - "/protected/*"
-            - Effect: "Deny"
-              Action:
-                - "s3:GetObject"
-              Resource:
-                 Fn::Join:
-                  - ""
-                  - - "arn:aws:s3:::"
-                    - Ref: AttachmentsBucket
-                    - "/protected/*"
-              Principal: "*"
-              Condition:
-                StringNotEquals:
-                  s3:ExistingObjectTag/virusScanStatus:
-                    - "CLEAN"        
+                    - "/protected/*"        
             - Effect: Deny
               Action: "s3:PutObject"
               Principal: "*"

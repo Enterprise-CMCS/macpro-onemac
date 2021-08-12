@@ -137,9 +137,19 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
+  var aclParams = {
+    Bucket: s3ObjectBucket,
+    Key: s3ObjectKey,
+    GrantRead: '*'
+  };
+
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
+    s3.putObjectAcl(params, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else     console.log(data);           // successful response
+    });
   } catch (err) {
     console.log(err);
   } finally {
