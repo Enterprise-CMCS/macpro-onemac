@@ -112,7 +112,7 @@ resources:
           Ref: AttachmentsBucket
         PolicyDocument:
           Statement:
-            - Effect: "Deny"
+            - Effect: "Allow"
               Action:
                 - "s3:GetObject"
               Principal: "*"
