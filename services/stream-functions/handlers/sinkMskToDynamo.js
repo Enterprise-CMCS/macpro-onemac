@@ -91,7 +91,7 @@ function myHandler(event, context, callback) {
       [SEATOOL.UNSUBMITTED]: "Draft",
       [SEATOOL.PENDING_FINANCE]: "Package In Review",
       [SEATOOL.PENDING_APPROVAL]: "Package In Review",
-    }
+    };
     // update OneMAC Package Item
     let updatePk = SEAToolData.packageId;
     let updateSk = "PACKAGE";
@@ -111,7 +111,7 @@ function myHandler(event, context, callback) {
         ":emptyList": [],
       },
     };
-  
+
     // only update clock if new Clock is sent
     if (SEAToolData.clockEndTimestamp) {
       updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
@@ -120,18 +120,18 @@ function myHandler(event, context, callback) {
         ", currentClockEnd = :newClockEnd"
       );
     }
-  
+
     // only update status if new Status is sent
     if (SEAToolData.packageStatus) {
       updatePackageParams.ExpressionAttributeValues[":newStatus"] =
       SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus];
       updatePackageParams.UpdateExpression.concat(",currentStatus = :newStatus");
     }
-  
+
     ddb.update(updatePackageParams, function(err) {
       console.log(`Error happened updating DB:  ${err.message}`);
     });
-  
+
   }
 }
 
