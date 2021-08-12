@@ -115,7 +115,7 @@ resources:
             - Effect: "Allow"
               Action:
                 - "s3:GetObject"
-              Principal: ""
+              Principal: "*"
               Resource:
                 Fn::Join:
                   - ""
@@ -131,11 +131,11 @@ resources:
                   - - "arn:aws:s3:::"
                     - Ref: AttachmentsBucket
                     - "/protected/*"
-              Principal: ""
+              Principal: "*"
               Condition:
                 StringNotEquals:
                   s3:ExistingObjectTag/virusScanStatus:
-                    - "CLEAN"
+                    - "CLEAN"        
             - Effect: Deny
               Action: "s3:PutObject"
               Principal: "*"
