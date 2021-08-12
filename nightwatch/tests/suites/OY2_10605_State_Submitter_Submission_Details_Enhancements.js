@@ -28,8 +28,9 @@ module.exports = {
         // Enter Waiver number
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random());
         // SS-YY-NNNN
-        generatedWaiverID = 'MD.' + num1 + '' + num2;
+        generatedWaiverID = 'MD.' + num1 + '' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
         // upload a document and make a comment 

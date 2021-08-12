@@ -33,10 +33,10 @@ module.exports = {
         let add_phone_button = "//button[@id='addButton']";
         let text_at_bottom = "//div[@id='profileDisclaimer']";
         let group_division = "(//h2)[3]";
-        let group_title = "(//h3)[4]";
-        let group = "//div[@class='cms-group-division-section']/p";
-        let division_title = "(//h3)[5]";
-        let division = "//div[@class='cms-group-division-section cms-division-background']/p";
+        let group_title = "(//dt)[1]";
+        let group = "(//dd)[2]";
+        let division_title = "(//dt)[2]";
+        let division = "(//dd)[3]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[3]";
         let status = "(//h2)[2]";
         let access_granted = "//div[@class='state-access-card']//dd//em";
