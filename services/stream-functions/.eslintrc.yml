@@ -1,2 +1,5 @@
 rules:
+  no-console: off
+  # TODO: remove this after fixing the names
+  "@typescript-eslint/camelcase": off
   "@typescript-eslint/no-var-requires": off

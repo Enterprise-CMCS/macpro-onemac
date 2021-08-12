@@ -15,10 +15,15 @@ plugins:
   - react
   - '@typescript-eslint'
 rules:
-  prefer-const: error
-  prefer-rest-params: error
+  no-console:
+    - warn
+    - allow:
+      - warn
+      - error
   no-use-before-define: error
   no-var: error
+  prefer-const: error
+  prefer-rest-params: error
 settings:
   react:
     version: detect
