@@ -3,20 +3,14 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
 
-import {
-  RESPONSE_CODE,
-  ROUTES,
-  ChangeRequest,
-  getUserRoleObj,
-  USER_TYPE,
-} from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, getUserRoleObj, USER_TYPE } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import PackageAPI from "../utils/PackageApi";
 import { useAppContext } from "../libs/contextLib";
 import {
   pendingMessage,
@@ -29,7 +23,7 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 /**
  * Component containing dashboard
  */
-const Dashboard = () => {
+const PackageList = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile, userProfile: { userData } = {} } = useAppContext();
@@ -50,12 +44,12 @@ const Dashboard = () => {
 
     (async function onLoad() {
       try {
-        const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+        const data = await PackageAPI.getAllByAuthorizedTerritories(
           userProfile.email
         );
 
         if (typeof data === "string") throw data;
-
+        console.log("the data returned is: ", data);
         if (mounted) setChangeRequestList(data);
         if (mounted) setIsLoading(false);
       } catch (error) {
@@ -72,7 +66,7 @@ const Dashboard = () => {
   const renderId = useCallback(
     ({ row, value }) => (
       <Link
-        to={`/${row.original.type}/${row.original.id}/${row.original.userId}`}
+        to={`/package/${row?.original?.packageType}/${row?.original?.packageId}`}
       >
         {value}
       </Link>
@@ -80,43 +74,26 @@ const Dashboard = () => {
     []
   );
 
-  const getType = useCallback(
-    ({ type }) =>
-      ({
-        [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
-        [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
-        [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
-        [ChangeRequest.TYPE.WAIVER]: "Waiver",
-        [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
-        [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
-        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
-        [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-      }[type] ?? []),
-    []
-  );
+  const renderState = useCallback(({ value }) => {
+    if (!value) {
+      return "--";
+    } else {
+      return value.toString().substring(0, 2);
+    }
+  }, []);
 
   const renderType = useCallback(
     ({ value }) => <span className="type-badge">{value}</span>,
     []
   );
 
-  const renderName = useCallback(
-    ({ value, row }) => (
-      <Link
-        className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.user.email}`}
-      >
-        {value}
-      </Link>
-    ),
-    []
-  );
-
-  const renderDate = useCallback(({ value }) => {
-    if (value) {
-      return format(value, "MMM d, yyyy");
+  const render90thDay = useCallback(({ value }) => {
+    if (!value) {
+      return "--";
+    } else if (value === "Paused") {
+      return "Paused\nRAI Issued";
     } else {
-      return "N/A";
+      return format(value, "MMM d, yyyy");
     }
   }, []);
 
@@ -124,38 +101,38 @@ const Dashboard = () => {
     () => [
       {
         Header: "ID/Number",
-        accessor: "transmittalNumber",
+        accessor: "packageId",
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
-        accessor: getType,
-        id: "type",
+        accessor: "packageType",
+        id: "packageType",
         Cell: renderType,
       },
       {
         Header: "State",
-        accessor: "territory",
+        accessor: "packageId",
+        id: "territory",
+        Cell: renderState,
       },
       {
-        Header: "Date Submitted",
-        accessor: "submittedAt",
-        Cell: renderDate,
+        Header: "90th Day",
+        accessor: "currentClockEnd",
+        Cell: render90thDay,
       },
       {
-        Header: "Submitted By",
-        accessor: ({ user: { firstName, lastName } = {} }) =>
-          [firstName, lastName].filter(Boolean).join(" "),
-        id: "submitter",
-        Cell: renderName,
+        Header: "Status",
+        accessor: "currentStatus",
+        id: "packageStatus",
       },
     ],
-    [getType, renderDate, renderId, renderName, renderType]
+    [render90thDay, renderState, renderId, renderType]
   );
 
   const initialTableState = useMemo(
-    () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
+    () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
     []
   );
   const csvExportSubmissions = (
@@ -215,7 +192,7 @@ const Dashboard = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar
-        heading="Submission List"
+        heading="Submission Dashboard"
         rightSideContent={
           (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
           (userData.type === USER_TYPE.HELPDESK &&
@@ -251,4 +228,4 @@ const Dashboard = () => {
   );
 };
 
-export default Dashboard;
+export default PackageList;

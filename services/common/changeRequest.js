@@ -3,7 +3,7 @@ import { ROUTES } from "./routes";
 export const TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
-  SPA: "Medicaid SPA",
+  SPA: "spa",
   SPA_RAI: "sparai",
   WAIVER: "waiver",
   WAIVER_RAI: "waiverrai",

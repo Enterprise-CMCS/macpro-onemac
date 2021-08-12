@@ -6,7 +6,7 @@ import { TextField } from "@cmsgov/design-system";
 import PackageApi from "../utils/PackageApi";
 import {
   latestAccessStatus,
-  Package,
+  ChangeRequest,
   RESPONSE_CODE,
   ROUTES,
   USER_STATUS,
@@ -42,7 +42,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
   const { packageId } = useParams();
   console.log("PackageId is: ", packageId);
 
-  const formInfo = Package.CONFIG[changeRequestType];
+  const formInfo = ChangeRequest.CONFIG[changeRequestType];
   const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
     formInfo?.actionType?.errorMessage
   );

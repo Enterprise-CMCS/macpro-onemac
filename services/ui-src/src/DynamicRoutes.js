@@ -2,13 +2,14 @@ import React, { useEffect } from "react";
 import { Route, Redirect, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
-import { ROUTES, Package, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
 import UserDataApi from "./utils/UserDataApi";
 
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import { GroupAndDivision } from "./containers/GroupAndDivision";
 import Dashboard from "./containers/Dashboard";
+import PackageList from "./containers/PackageList";
 import UserManagement from "./containers/UserManagement";
 import { useAppContext } from "./libs/contextLib";
 import Metrics from "./containers/Metrics";
@@ -20,14 +21,14 @@ import PackageView from "./changeRequest/PackageView";
 import UserPage from "./containers/UserPage";
 
 const FORM_TYPES = {
-  [ROUTES.CHIP_SPA]: Package.TYPE.CHIP_SPA,
-  [ROUTES.CHIP_SPA_RAI]: Package.TYPE.CHIP_SPA_RAI,
-  [ROUTES.SPA]: Package.TYPE.SPA,
-  [ROUTES.SPA_RAI]: Package.TYPE.SPA_RAI,
-  [ROUTES.WAIVER]: Package.TYPE.WAIVER,
-  [ROUTES.WAIVER_APP_K]: Package.TYPE.WAIVER_APP_K,
-  [ROUTES.WAIVER_EXTENSION]: Package.TYPE.WAIVER_EXTENSION,
-  [ROUTES.WAIVER_RAI]: Package.TYPE.WAIVER_RAI,
+  [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
+  [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
+  [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
+  [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
+  [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
+  [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
+  [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,
+  [ROUTES.WAIVER_RAI]: ChangeRequest.TYPE.WAIVER_RAI,
 };
 
 export default function DynamicRoutes() {
@@ -105,6 +106,15 @@ export default function DynamicRoutes() {
           <Redirect to={ROUTES.HOME} />
         )}
       </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
       {userRoleObj.canAccessForms && (
         <>
           <Route path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
@@ -121,7 +131,7 @@ export default function DynamicRoutes() {
       {/* submission view */}
       {userRoleObj.canAccessForms &&
         Object.entries(FORM_TYPES).map(([route, type]) => (
-          <Route key={route} exact path={route + "/:packageId"}>
+          <Route key={route} exact path={route}>
             <SubmissionForm changeRequestType={type} />
           </Route>
         ))}

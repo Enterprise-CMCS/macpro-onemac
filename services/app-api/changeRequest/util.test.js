@@ -3,7 +3,7 @@ import { validateSubmission } from "./changeRequest-util";
 const mockSubmission = () => ({
   territory: "MI",
   transmittalNumber: "MI-01-1234",
-  type: "Medicaid SPA",
+  type: "spa",
   uploads: [
     {
       contentType: "text/plain",

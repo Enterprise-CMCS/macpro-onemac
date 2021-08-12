@@ -6,6 +6,9 @@
 import * as Package from "./package";
 export { Package };
 
+import * as ChangeRequest from "./changeRequest";
+export { ChangeRequest };
+
 import { ROUTES } from "./routes";
 export * from "./routes";
 
