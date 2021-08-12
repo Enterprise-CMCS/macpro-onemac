@@ -122,8 +122,18 @@ resources:
                   - - "arn:aws:s3:::"
                     - Ref: AttachmentsBucket
                     - "/protected/*"
+            - Effect: "Deny"
+              Action:
+                - "s3:GetObject"
+              Resource:
+                 Fn::Join:
+                  - ""
+                  - - "arn:aws:s3:::"
+                    - Ref: AttachmentsBucket
+                    - "/protected/*"
+              Principal: "*"
               Condition:
-                StringEquals:
+                StringNotEquals:
                   s3:ExistingObjectTag/virusScanStatus:
                     - "CLEAN"
             - Effect: Deny
