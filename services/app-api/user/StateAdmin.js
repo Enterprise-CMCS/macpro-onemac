@@ -28,7 +28,9 @@ class StateAdmin {
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
-    let myCurrentStatus = getCurrentStatus(doneBy.attributes[0].history).status;
+    const myCurrentStatus = getCurrentStatus(
+      doneBy.attributes[0].history
+    ).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
         return RESPONSE_CODE.CALLING_USER_PENDING;
@@ -58,8 +60,8 @@ class StateAdmin {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult, stateList) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));

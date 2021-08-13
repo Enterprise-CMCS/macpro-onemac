@@ -53,7 +53,7 @@ const isLatestAttributeActive = (attr) => {
 };
 
 export const getAuthorizedStateList = (user) => {
-  let tempStateList = [];
+  const tempStateList = [];
 
   if (!user.attributes) return tempStateList;
 

@@ -40,7 +40,7 @@ class CMSApprover {
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
-    let myCurrentStatus = getCurrentStatus(doneBy.attributes).status;
+    const myCurrentStatus = getCurrentStatus(doneBy.attributes).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
         return RESPONSE_CODE.CALLING_USER_PENDING;
@@ -62,8 +62,8 @@ class CMSApprover {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));

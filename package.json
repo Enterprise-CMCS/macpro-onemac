@@ -36,9 +36,13 @@
   },
   "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
   "devDependencies": {
+    "@typescript-eslint/eslint-plugin": "^4.29.1",
+    "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.2.0",
     "chromedriver": ">=90.0.0",
     "dotenv": "^8.2.0",
+    "eslint": "^7.32.0",
+    "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "geckodriver": "^1.21.1",
     "husky": "^6.0.0",
@@ -48,7 +52,8 @@
     "prettier": "^2.3.1",
     "selenium-server": "^3.141.59",
     "serverless": "2.19.0",
-    "sinon": "^9.2.3"
+    "sinon": "^9.2.3",
+    "typescript": "^4.3.5"
   },
   "lint-staged": {
     "*.{js,jsx,scss,css,md}": [
