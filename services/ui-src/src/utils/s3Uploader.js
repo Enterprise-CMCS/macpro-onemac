@@ -94,14 +94,13 @@ export async function uploadFile(file) {
     //   method: "HEAD",
     // }).then((response) => {
     //   if (response.status !== 200) {
-    //     retPromise = Promise.reject("File verification failed");
+    //     retPromise = Promise.resolve(result);
     //   } else {
     //     retPromise = Promise.resolve(result);
     //   }
     // });
   } catch (error) {
-    //retPromise = Promise.reject(error);
-    retPromise = Promise.resolve(result);
+    retPromise = Promise.reject(error);
   }
-  return retPromise;
+  return Promise.resolve(result);;
 }
