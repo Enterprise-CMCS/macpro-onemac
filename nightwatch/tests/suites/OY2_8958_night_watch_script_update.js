@@ -49,7 +49,7 @@ module.exports = {
        browser.useXpath().expect.element("//h1").to.be.visible;
        browser.useXpath().assert.containsText("//h1", "Respond to CHIP SPA RAI");
        browser.useCss().click("button#back-button").pause(1000);
-       browser.acceptAlert();
+       browser.useXpath().click("//button[@class='ds-c-button ds-c-button--primary ds-u-margin-right--1']");
        browser.useXpath().click(dashboard_link);
        browser.useXpath().click("//a[@id='new-submission-button']");
        browser.pause(500);

@@ -1,11 +1,11 @@
-var AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
 
-function myHandler(event, context, callback) {
+function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     return null;
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
-  var value = JSON.parse(event.value);
+  const value = JSON.parse(event.value);
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
 
   var SEAToolId = value.payload.ID_Number;

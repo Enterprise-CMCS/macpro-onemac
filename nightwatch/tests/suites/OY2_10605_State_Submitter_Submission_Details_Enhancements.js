@@ -28,8 +28,9 @@ module.exports = {
         // Enter Waiver number
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random());
         // SS-YY-NNNN
-        generatedWaiverID = 'MD.' + num1 + '' + num2;
+        generatedWaiverID = 'MD.' + num1 + '' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
         // upload a document and make a comment 
@@ -42,20 +43,20 @@ module.exports = {
         browser.pause(3000);
         browser.refresh();
         // Verify the submitted SPA Report Content 
-        let submittedIDNumber = "//td[@id='transmittalNumber-0']/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
-        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
+        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Waiver");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Waiver");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
 
         //click on waiver and verify the page
-        browser.useXpath().click(submittedIDNumber);
+        browser.useCss().click(submittedIDNumber);
         browser.pause(2000);
         browser.refresh();
         let waiver_action_details = "//h1";
@@ -144,7 +145,7 @@ module.exports = {
 
         //click on SPA and verify the page
         let spa_id_top = "//td[@id='transmittalNumber-0']/a";
-        browser.useXpath().waitForElementPresent(spa_id_top, 1000);
+        browser.useXpath().waitForElementPresent(spa_id_top, 2000);
         browser.refresh();
         browser.useXpath().click(spa_id_top);
         browser.pause(500);

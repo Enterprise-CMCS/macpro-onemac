@@ -13,6 +13,7 @@ import App from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Amplify } from "aws-amplify";
+import { getApplicationNode } from "./utils";
 import config from "./utils/config";
 import { ROUTES } from "cmscommonlib";
 import "core-js/stable";
@@ -54,7 +55,7 @@ ReactDOM.render(
   <Router>
     <App />
   </Router>,
-  document.getElementById("root")
+  getApplicationNode()
 );
 
 serviceWorker.unregister();

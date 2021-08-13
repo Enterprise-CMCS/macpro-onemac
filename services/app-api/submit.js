@@ -58,7 +58,8 @@ export const main = handler(async (event) => {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
     }
   } catch (error) {
-    throw error;
+    console.error("Could not get user from database:", error);
+    return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
 
   // map the changeRequest functions from the data.type

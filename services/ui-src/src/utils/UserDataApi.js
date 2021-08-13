@@ -105,7 +105,7 @@ class UserDataApi {
    * @param {string} doneBy email of the user making the change
    * @param {string} userEmail email of the user to be updated
    * @param {string} newStatus the new status for the user
-   * @return {string} the response code
+   * @return {Promise<string>} the response code
    */
   async setUserStatus(updateStatusRequest) {
     if (!updateStatusRequest) {

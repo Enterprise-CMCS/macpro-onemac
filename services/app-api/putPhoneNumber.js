@@ -6,6 +6,25 @@ import handler from "./libs/handler-lib";
 import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 
+const validateInput = (input) => {
+  const schema = Joi.object().keys({
+    id: Joi.string()
+      .email({ tlds: { allow: false } })
+      .required(),
+    phoneNumber: Joi.string().required().allow(""),
+  });
+
+  const result = isEmpty(input)
+    ? { error: "No request body sent" }
+    : schema.validate(input);
+
+  if (!result.error) {
+    return true;
+  }
+
+  console.log("Validation error:", result.error);
+};
+
 /**
  * Update a user's phone number
  */
@@ -33,22 +52,3 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 });
-
-const validateInput = (input) => {
-  const schema = Joi.object().keys({
-    id: Joi.string()
-      .email({ tlds: { allow: false } })
-      .required(),
-    phoneNumber: Joi.string().required().allow(""),
-  });
-
-  const result = isEmpty(input)
-    ? { error: "No request body sent" }
-    : schema.validate(input);
-
-  if (!result.error) {
-    return true;
-  }
-
-  console.log("Validation error:", result.error);
-};

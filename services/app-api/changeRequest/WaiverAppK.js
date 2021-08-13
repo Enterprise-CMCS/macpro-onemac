@@ -12,22 +12,8 @@ class WaiverAppK {
    * @param {Object} data the received data
    * @returns {String} any errors
    */
-  async fieldsValid(data) {
-    let areFieldsValid = true;
-    let whyNot = "";
-    let doesExist = false;
-    try {
-      doesExist = await packageExists(data.transmittalNumber);
-    } catch (error) {
-      throw error;
-    }
-    if (doesExist) {
-      console.log("the Item exists");
-    } else {
-      console.log("result.Item does not exist");
-    }
-
-    return { areFieldsValid, whyNot };
+  async fieldsValid() {
+    return { areFieldsValid: true, whyNot: "" };
   }
 
   /**
@@ -37,7 +23,7 @@ class WaiverAppK {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    let transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
+    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
       ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
       : "";
 
