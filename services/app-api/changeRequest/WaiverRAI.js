@@ -20,6 +20,7 @@ class WaiverRAI {
     try {
       doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
+      console.log("WaiverRAI packageExists call error: ", error);
       throw error;
     }
     if (doesExist) {
@@ -112,8 +113,8 @@ class WaiverRAI {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let raiResponseData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const raiResponseData = {
       packageId: data.transmittalNumber,
       packageStatus: "RAI Response Submitted",
       timestamp: data.submittedAt,

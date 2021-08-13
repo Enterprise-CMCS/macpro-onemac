@@ -108,7 +108,7 @@ class SPARAIResponse {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
+    const submitterName = data.user.firstName + " " + data.user.lastName;
     let raiResponseData = {
       packageId: data.transmittalNumber,
       mostRecentUpdate: {

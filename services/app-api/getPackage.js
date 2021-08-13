@@ -1,7 +1,7 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
-export const main = handler(async (event, context) => {
+export const main = handler(async (event) => {
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -31,7 +31,7 @@ export const main = handler(async (event, context) => {
     }
   }
   console.log("Sending back result:", JSON.stringify(result, null, 2));
-  var returnData = { ...result.Item };
+  const returnData = { ...result.Item };
   returnData.submissionDate =
     result.Item?.changeHistory[result.Item.length - 1]?.submissionDate;
   returnData.packageType = result.Item?.changeHistory.find(

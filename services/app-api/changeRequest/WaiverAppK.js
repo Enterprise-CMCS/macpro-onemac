@@ -101,8 +101,8 @@ class WaiverAppK {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let appkData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const appkData = {
       packageId: data.transmittalNumber,
       packageType: "1915(c)",
       packageStatus: "Submitted",

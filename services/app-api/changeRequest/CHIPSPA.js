@@ -115,8 +115,8 @@ class CHIPSPA {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let spaData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const spaData = {
       packageId: data.transmittalNumber,
       packageType: "CHIP SPA",
       packageStatus: "Submitted",

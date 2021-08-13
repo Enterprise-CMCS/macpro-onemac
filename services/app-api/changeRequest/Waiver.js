@@ -20,6 +20,7 @@ class Waiver {
     try {
       doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
+      console.log("Waiver packageExists call error: ", error);
       throw error;
     }
     if (doesExist) {
@@ -128,8 +129,8 @@ class Waiver {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let waiverData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const waiverData = {
       packageId: data.transmittalNumber,
       packageType: "1915(b)",
       packageStatus: "Submitted",

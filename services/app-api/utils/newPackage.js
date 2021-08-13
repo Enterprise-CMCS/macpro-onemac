@@ -1,7 +1,7 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
 export default async function newPackage(newData) {
-  let data = {
+  const data = {
     pk: newData.packageId,
     sk: "PACKAGE",
     GSI1pk: "OneMAC",
@@ -14,7 +14,7 @@ export default async function newPackage(newData) {
     changeHistory: [newData],
   };
 
-  var params = {
+  const params = {
     TableName: process.env.oneMacTableName,
     Item: data,
   };
@@ -23,6 +23,7 @@ export default async function newPackage(newData) {
   try {
     await dynamoDb.put(params);
   } catch (error) {
+    console.log("newPackage put error is: ", error);
     throw error;
   }
 

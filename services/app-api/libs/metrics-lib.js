@@ -4,7 +4,7 @@
  */
 
 export function generateMetrics(scanData) {
-  let submissions = 0;
+  const submissions = 0;
   const stateMap = new Map();
   const userMap = new Map();
   const submissionTypeMap = new Map();

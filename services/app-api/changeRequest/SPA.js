@@ -20,6 +20,7 @@ class SPA {
     try {
       doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
+      console.log("SPA packageExists call error: ", error);
       throw error;
     }
 
@@ -115,8 +116,8 @@ class SPA {
   }
 
   async saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let spaData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const spaData = {
       packageId: data.transmittalNumber,
       packageType: "Medicaid SPA",
       packageStatus: "Submitted",

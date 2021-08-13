@@ -7,12 +7,11 @@ import dynamoDb from "../libs/dynamodb-lib";
  */
 export default async function packageExists(id) {
   //assume the territory is the first two chars
-  let pk = id;
   const params = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
-      ":pk": pk,
+      ":pk": id,
     },
   };
 

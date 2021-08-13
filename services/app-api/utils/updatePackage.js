@@ -1,8 +1,8 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
 export default async function updatePackage(updateData) {
-  let updatePk = updateData.packageId;
-  let updateSk = "PACKAGE";
+  const updatePk = updateData.packageId;
+  const updateSk = "PACKAGE";
   /*  var getPackageParams = {
     TableName: process.env.oneMacTableName,
     Key: {
@@ -18,7 +18,7 @@ export default async function updatePackage(updateData) {
         throw new Error(`ItemNotFound`);
       }
 */
-  var updatePackageParams = {
+  const updatePackageParams = {
     TableName: process.env.oneMacTableName,
     Key: {
       pk: updatePk,
@@ -39,16 +39,14 @@ export default async function updatePackage(updateData) {
   if (updateData.clockEndTimestamp) {
     updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
       updateData.currentClockEnd;
-    updatePackageParams.UpdateExpression.concat(
-      ", currentClockEnd = :newClockEnd"
-    );
+    updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
   }
 
   // only update status if new Status is sent
   if (updateData.packageStatus) {
     updatePackageParams.ExpressionAttributeValues[":newStatus"] =
       updateData.packageStatus;
-    updatePackageParams.UpdateExpression.concat(",currentStatus = :newStatus");
+    updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
   }
 
   dynamoDb.update(updatePackageParams).catch((error) => {

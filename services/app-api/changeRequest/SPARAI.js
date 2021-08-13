@@ -20,6 +20,7 @@ class SPARAI {
     try {
       doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
+      console.log("SPARAI packageExists call error: ", error);
       throw error;
     }
     if (doesExist) {
@@ -108,8 +109,8 @@ class SPARAI {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let raiResponseData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const raiResponseData = {
       packageId: data.transmittalNumber,
       packageStatus: "RAI Response Submitted",
       timestamp: data.submittedAt,
@@ -120,7 +121,7 @@ class SPARAI {
       clockEndMessage: "Pending RAI Response Review",
     };
 
-    updatePackage(raiResponseData);
+    return updatePackage(raiResponseData);
   }
 }
 

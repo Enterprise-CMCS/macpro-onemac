@@ -20,6 +20,7 @@ class WaiverExtension {
     try {
       doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
+      console.log("WaiverExtension packageExists call error: ", error);
       throw error;
     }
     if (doesExist) {
@@ -113,8 +114,8 @@ class WaiverExtension {
   }
 
   saveSubmission(data) {
-    let submitterName = data.user.firstName + " " + data.user.lastName;
-    let extensionRequestData = {
+    const submitterName = data.user.firstName + " " + data.user.lastName;
+    const extensionRequestData = {
       packageId: data.transmittalNumber,
       packageStatus: "Extension Requested",
       clockEndTimestamp: data.ninetyDayClockEnd,

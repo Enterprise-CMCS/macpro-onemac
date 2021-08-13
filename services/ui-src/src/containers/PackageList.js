@@ -44,9 +44,7 @@ const PackageList = () => {
 
     (async function onLoad() {
       try {
-        const data = await PackageAPI.getAllByAuthorizedTerritories(
-          userProfile.email
-        );
+        const data = await PackageAPI.getMyPackages(userProfile.email);
 
         if (typeof data === "string") throw data;
         console.log("the data returned is: ", data);
