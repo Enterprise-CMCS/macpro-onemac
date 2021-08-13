@@ -296,7 +296,7 @@ const UserManagement = () => {
       },
       userProfile.userData.type !== USER_TYPE.HELPDESK
         ? {
-            Header: "Personnel Actions",
+            Header: "Actions",
             disableSortBy: true,
             Cell: renderActions,
             id: "personnelActions",
