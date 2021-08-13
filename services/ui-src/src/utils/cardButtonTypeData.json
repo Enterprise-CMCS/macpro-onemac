@@ -57,7 +57,7 @@
       "left": "-42"
     }
   },
-  "cmsapprover": {
+  "cmsroleapprover": {
     "title": "CMS Role Approver",
     "desc": "Responsible for managing State System Admins.",
     "imageAttributes": {

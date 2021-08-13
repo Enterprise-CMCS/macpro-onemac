@@ -10,7 +10,7 @@ import { getCurrentStatus } from "./user-util";
  */
 class Helpdesk {
   /**
-   * CMS Approvers manage the State Admins
+   * Help Desk users see all users
    * @returns {String} the User Role
    */
   getScanParams() {
@@ -90,7 +90,7 @@ class Helpdesk {
           i++;
         });
       }
-      // Helpdesk users and CMS Approvers must not have the history section
+      // Helpdesk users and CMS Role Approvers must not have the history section
       else {
         userRows.push({
           id: i,

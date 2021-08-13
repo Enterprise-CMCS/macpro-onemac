@@ -5,6 +5,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   USER_TYPE,
+  roleLabels,
   territoryMap,
 } from "cmscommonlib";
 import { format } from "date-fns";
@@ -17,7 +18,6 @@ import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
-import { roleLabels } from "../libs/roleLib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
@@ -89,7 +89,7 @@ const UserManagement = () => {
   const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
-      userProfile.userData.type === USER_TYPE.CMS_APPROVER ||
+      userProfile.userData.type === USER_TYPE.CMS_ROLE_APPROVER ||
         userProfile.userData.type === USER_TYPE.HELPDESK
     );
     UserDataApi.getMyUserList(userProfile.email)
