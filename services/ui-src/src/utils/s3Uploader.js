@@ -100,7 +100,8 @@ export async function uploadFile(file) {
     //   }
     // });
   } catch (error) {
-    retPromise = Promise.reject(error);
+    //retPromise = Promise.reject(error);
+    retPromise = Promise.resolve(result);
   }
   return retPromise;
 }
