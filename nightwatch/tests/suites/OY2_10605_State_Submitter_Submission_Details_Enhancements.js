@@ -144,10 +144,10 @@ module.exports = {
         browser.refresh();
 
         //click on SPA and verify the page
-        let spa_id_top = "//tbody/tr[1]/td[1]/a";
-        browser.useXpath().waitForElementPresent(spa_id_top, 2000);
+        let spa_id_top = 'tr:nth-of-type(1) > td:nth-of-type(1) > a';
+        browser.useCss().waitForElementPresent(spa_id_top, 2000);
         browser.refresh();
-        browser.useXpath().click(spa_id_top);
+        browser.useCss().click(spa_id_top);
         browser.pause(500);
         let medicaid_spa_submission_details = "//h1";
         let date_submitted_title = "(//h2)[1]";
