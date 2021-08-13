@@ -20,7 +20,7 @@ module.exports = {
   
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -30,7 +30,7 @@ module.exports = {
     'Verify the attachment types for SPA': function (browser) {
         //browser.click("button#spaSubmitBtn");
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -38,6 +38,7 @@ module.exports = {
         // Verify upload PDF file 
         let filePath = require('path').resolve(__dirname + '/files/adobe.pdf')
         browser.useCss().setValue(fileUploadElem, filePath);
+        browser.pause(500);
         browser.useXpath().expect.element(pdfElement).to.be.visible;
         browser.pause(500);
         //browser.useCss().click("[fill='currentColor']");
@@ -45,6 +46,7 @@ module.exports = {
         // Verify upload EXCEL file 
         filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
         browser.useCss().setValue(fileUploadElem, filePath);
+        browser.pause(500);
         browser.useXpath().expect.element(excelElement).to.be.visible;
         browser.pause(500);
         //browser.useCss().click("[fill='currentColor']");
@@ -52,6 +54,7 @@ module.exports = {
         // Verify upload DOC file 
         filePath = require('path').resolve(__dirname + '/files/file.docx')
         browser.useCss().setValue(fileUploadElem, filePath);
+        browser.pause(500);
         browser.useXpath().expect.element(fileElement).to.be.visible;
         browser.pause(500);
         //browser.useCss().click("[fill='currentColor']");
@@ -59,6 +62,7 @@ module.exports = {
         // Verify upload PICTURE file 
         filePath = require('path').resolve(__dirname + '/files/picture.jpg')
         browser.useCss().setValue(fileUploadElem, filePath);
+        browser.pause(500);
         browser.useXpath().expect.element(picElement).to.be.visible;
         browser.pause(500);
         //browser.useCss().click("[fill='currentColor']");
@@ -66,6 +70,7 @@ module.exports = {
         // Verify upload TEXT file 
         filePath = require('path').resolve(__dirname + '/files/textnotes.txt')
         browser.useCss().setValue(fileUploadElem, filePath);
+        browser.pause(500);
         browser.useXpath().expect.element(textElement).to.be.visible;
         browser.pause(500);
         //browser.useCss().click("[fill='currentColor']").pause(1000);
@@ -77,7 +82,7 @@ module.exports = {
 
     'Verify the multiple attachment types for SPA': function (browser) {
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
@@ -89,11 +94,11 @@ module.exports = {
         browser.useXpath().expect.element(pdfElement).to.be.visible;
         // Verify upload EXCEL file 
         filePath = require('path').resolve(__dirname + '/files/excel.xlsx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(500);;
+        browser.useCss().setValue(fileUploadElem, filePath).pause(500);
         browser.useXpath().expect.element(excelElement).to.be.visible;
         // Verify upload DOC file 
         filePath = require('path').resolve(__dirname + '/files/file.docx')
-        browser.useCss().setValue(fileUploadElem, filePath).pause(500);;
+        browser.useCss().setValue(fileUploadElem, filePath).pause(500);
         browser.useXpath().expect.element(fileElement).to.be.visible;
         // Verify upload PICTURE file 
         filePath = require('path').resolve(__dirname + '/files/picture.jpg')
@@ -111,10 +116,10 @@ module.exports = {
 
     'Verify the uploaded attachment in the submission lists for the submitted SPA/Waiver': function (browser) {
         browser.useCss();
-        submitWaiver["Verify that user can submit a New Waiver"](browser);
+        submitWaiver["Verify that submitter user can submit a New Waiver"](browser);
         let waiverNumber = '//tbody/tr[1]/td/a';
         let attachementElement = ".form-container a[target='_blank']";
-        browser.useXpath().click(waiverNumber).pause(4000);
+        browser.useXpath().click(waiverNumber).pause(6000);
         browser.useCss().expect.element(attachementElement).to.be.visible;
         //browser.back();
         browser.useXpath().click("//a[@id='dashboardLink']");
@@ -123,7 +128,7 @@ module.exports = {
     'Verify “No file chosen” case': function (browser) {
         //browser.useCss().click("button#spaSubmitBtn").pause(4000);
         browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
+        browser.pause(2500);
         browser.useXpath().click("(//h4)[1]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");

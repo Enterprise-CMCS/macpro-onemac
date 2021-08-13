@@ -17,6 +17,7 @@
     "serverless-associate-waf": "^1.2.1",
     "serverless-bundle": "^3.1.0",
     "serverless-dotenv-plugin": "^3.0.0",
+    "serverless-iam-helper": "file:../../plugins/serverless-iam-helper",
     "serverless-offline": "^6.9.0",
     "serverless-plugin-warmup": "^4.9.0"
   },
@@ -27,5 +28,18 @@
     "luxon": "^1.25.0",
     "serverless-dynamodb-local": "^0.2.39",
     "uuid": "^7.0.3"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "clover"
+    ]
   }
 }

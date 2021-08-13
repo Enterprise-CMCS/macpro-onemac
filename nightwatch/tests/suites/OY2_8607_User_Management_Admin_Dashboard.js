@@ -14,26 +14,20 @@ module.exports = {
     },
 
 
-    'Admin user can see the list all names with a link to contact their email': function (browser) {
+    'Admin user can see the list all names': function (browser) {
         let name = '(//tr/th)[1]';
-        let email = '(//tr/th)[2]';
-        let status = '(//tr/th)[3]';
-        let last_modified = '(//tr/th)[4]';
-        let modified_by = '(//tr/th)[5]';
-        let personal_actions = '(//tr/th)[6]';
+        let status = '(//tr/th)[2]';
+        let last_modified = '(//tr/th)[3]';
+        let modified_by = '(//tr/th)[4]';
+        let personal_actions = '(//tr/th)[5]';
         let first_name = '(//tr/td)[1]';
-        let first_email ='(//tr/td)[2]';
-        //let second_name = '(//tr/td)[7]';
-        //let second_email ='(//tr/td)[8]';
+        //let second_name = '(//tr/td)[6]';
         //check on name and email for four listed user
         browser.useXpath().expect.element(name).to.be.visible;
-        browser.useXpath().expect.element(email).to.be.visible;
         browser.useXpath().expect.element(status).to.be.visible;
         browser.useXpath().expect.element(last_modified).to.be.visible;
         browser.useXpath().expect.element(modified_by).to.be.visible;
         browser.useXpath().expect.element(personal_actions).to.be.visible;
-        browser.useXpath().expect.element(first_email).to.be.visible;
-        //browser.useXpath().expect.element(second_email).to.be.visible;
         browser.useXpath().expect.element(first_name).to.be.visible;
         //browser.useXpath().expect.element(second_name).to.be.visible;
     },
@@ -43,13 +37,13 @@ module.exports = {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
         //element on account management page
-        let profile_information = '(//div/h3)[1]';
-        let full_name = '(//div/h3)[2]';
+        let profile_information = '//*[@id="profileInfoHeader"]';
+        let full_name = '(//div/h3)[1]';
         let email = '(//div/h3)[3]';
-        let phone_number = '(//div/h3)[4]';
-        let state_access_management = '(//div/h3)[5]';
+        let phone_number = '//*[@id="phoneSection"]';
+        let state_access_management = '//*[@id="accessHeader"]';
         let state_admin_nightwatch = '(//div/div[@class="ds-c-review__body"])[1]';
-        let state_admin_nightwatch_email = '(//div/div[@class="ds-c-review__body"])[2]';
+        let state_admin_nightwatch_email = '(//div/div[@class="ds-c-review__body"])[3]';
         let maryland = '//div/dt';
         let access_granted = '//div/dd/em';
         // Click on button My Account and get access to account management 

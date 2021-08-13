@@ -1,6 +1,6 @@
 import { USER_TYPES } from "./userTypes";
 import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 import { USER_STATUS } from "./userStatus";
 
 /**
@@ -9,7 +9,7 @@ import { USER_STATUS } from "./userStatus";
  */
 class StateAdmin {
   /**
-   * State Admin "scan for" returns State Users
+   * State Admin "scan for" returns State Submitters
    *
    * @returns {Object} Scan parameters for dynamodb
    */
@@ -18,7 +18,7 @@ class StateAdmin {
       TableName: process.env.userTableName,
       FilterExpression: "#ty = :userType0",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_USER },
+      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_SUBMITTER },
     };
     return scanParams;
   }
@@ -52,7 +52,7 @@ class StateAdmin {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * State Admin gets all State Users for their State
+   * State Admin gets all State Submitters for their State
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
@@ -97,6 +97,7 @@ class StateAdmin {
           lastName: oneUser.lastName,
           stateCode: oneAttribute.stateCode,
           latest: getCurrentStatus(oneAttribute.history),
+          role: oneUser.type,
         });
         i++;
       });

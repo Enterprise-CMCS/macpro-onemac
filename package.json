@@ -37,7 +37,7 @@
   "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme",
   "devDependencies": {
     "chai": "^4.2.0",
-    "chromedriver": "^90.0.0",
+    "chromedriver": ">=90.0.0",
     "dotenv": "^8.2.0",
     "eslint-plugin-react-hooks": "^4.2.0",
     "geckodriver": "^1.21.1",
@@ -52,8 +52,7 @@
   },
   "lint-staged": {
     "*.{js,jsx,scss,css,md}": [
-      "prettier --write",
-      "git add"
+      "prettier --write"
     ]
   }
 }

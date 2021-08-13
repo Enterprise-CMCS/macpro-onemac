@@ -6,6 +6,7 @@ import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
 import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
+import { GroupAndDivision } from "./containers/GroupAndDivision";
 import Dashboard from "./containers/Dashboard";
 import UserManagement from "./containers/UserManagement";
 import { useAppContext } from "./libs/contextLib";
@@ -15,6 +16,7 @@ import NewSPA from "./changeRequest/NewSPA";
 import NewWaiver from "./changeRequest/NewWaiver";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
+import UserPage from "./containers/UserPage";
 
 const FORM_TYPES = {
   [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
@@ -39,7 +41,12 @@ export default function DynamicRoutes() {
         <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
           <StateSignup />
         </AuthenticatedRoute>
-        <Redirect to={ROUTES.SIGNUP} />
+        <AuthenticatedRoute exact path={ROUTES.REVIEWER_SIGNUP}>
+          <GroupAndDivision />
+        </AuthenticatedRoute>
+        <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+          <Redirect to={ROUTES.SIGNUP} />
+        </AuthenticatedRoute>
       </>
     );
   }
@@ -51,8 +58,10 @@ export default function DynamicRoutes() {
       <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />
-        ) : (
+        ) : userRoleObj.canAccessUserManagement ? (
           <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
         )}
       </AuthenticatedRoute>
       {userRoleObj.canAccessForms && (
@@ -87,8 +96,11 @@ export default function DynamicRoutes() {
           <UserManagement />
         </AuthenticatedRoute>
       )}
+      <AuthenticatedRoute exact path={ROUTES.PROFILE + "/:userId"}>
+        <UserPage />
+      </AuthenticatedRoute>
       {userRoleObj.canAccessMetrics && (
-        <AuthenticatedRoute path={`${ROUTES.METRICS}`}>
+        <AuthenticatedRoute path={ROUTES.METRICS}>
           <Metrics />
         </AuthenticatedRoute>
       )}

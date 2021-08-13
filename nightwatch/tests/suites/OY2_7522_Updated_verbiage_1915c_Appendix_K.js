@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state user'](browser);
+        login['Login with state submitter user'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +14,7 @@ module.exports = {
     },
     
 
-    'State user see error message when waiver number not exist in 1915c Appendix forms': function (browser) {
+    'State Submitter user see error message when waiver number not exist in 1915c Appendix forms': function (browser) {
         // Go to Submit New CHIP SPA page
         //browser.useCss().click("button#chipSpaBtn");
         browser.useXpath().click("//a[@id='new-submission-button']");
@@ -35,7 +35,7 @@ module.exports = {
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", spaCHIPId);
         //check if the error message shows up
-        let error_message = '//div[@id="transmittalNumberStatusMsg"]';
+        let error_message = "//*[contains(@id, 'transmittalNumberStatusMsg')]"; 
         browser.useXpath().expect.element(error_message).to.be.visible;
         browser.useXpath().assert.containsText(error_message, "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.");
         browser.useCss();

@@ -1,6 +1,6 @@
 import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
 import dynamoDb from "../libs/dynamodb-lib";
-import { RESPONSE_CODE } from "../libs/response-codes";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * SPA submission specific functions.
@@ -78,7 +78,7 @@ class SPA {
   }
 
   /**
-   * SPA submission confimation email to State User wrapped in
+   * SPA submission confimation email to State Submitter wrapped in
    * generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.

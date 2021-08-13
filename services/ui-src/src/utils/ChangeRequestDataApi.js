@@ -1,7 +1,5 @@
-import { API } from "aws-amplify";
-import { Auth } from "aws-amplify";
-import { Storage } from "aws-amplify";
-
+import { API, Auth, Storage } from "aws-amplify";
+import handleApiError from "../libs/apiErrorHandler";
 /**
  * Singleton class to perform operations with the change request backend.
  */
@@ -24,20 +22,22 @@ class ChangeRequestDataApi {
     try {
       data.user = await Auth.currentAuthenticatedUser();
       data.uploads = uploadsList;
-
       return await API.post("changeRequestAPI", "/submit", {
         body: data,
       });
     } catch (error) {
-      console.log("Error while submitting the form.", error);
-      throw error;
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
     }
   }
 
   /**
    * Fetch a specific record from the backend.
    * @param {string} id the ID of the change request to fetch
-   * * @param {string} userId the ID of the user that created the change request
+   * * @param {string} userId the ID of the submitter that created the change request
    * @return {Object} a change request
    */
   async get(id, userId) {
@@ -51,7 +51,6 @@ class ChangeRequestDataApi {
         "changeRequestAPI",
         `/get/${id}/${userId}`
       );
-      // Get temporary URLs to the S3 bucket
       if (changeRequest.uploads) {
         let i;
         // Use a for loop instead of forEach to stay in the context of this async function.
@@ -65,8 +64,11 @@ class ChangeRequestDataApi {
       }
       return changeRequest;
     } catch (error) {
-      console.log(`There was an error fetching ID ${id}.`, error);
-      throw error;
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error fetching ID ${id}.`
+      );
     }
   }
 
@@ -82,12 +84,13 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let answer = await API.get("changeRequestAPI", `/package-exists/${id}`);
-
-      return answer;
+      return await API.get("changeRequestAPI", `/package-exists/${id}`);
     } catch (error) {
-      console.log(`There was an error checking ID ${id}.`, error);
-      throw error;
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error fetching package with ID ${id}.`
+      );
     }
   }
 
@@ -105,11 +108,11 @@ class ChangeRequestDataApi {
         `/getAllByAuthorizedTerritories?email=${userEmail}`
       );
     } catch (error) {
-      console.log(
-        `There was an error fetching change requests for the states/territories.`,
-        error
+      handleApiError(
+        error,
+        "FETCH_ERROR",
+        `There was an error fetching the states/territories for ${userEmail}.`
       );
-      throw error;
     }
   }
 
@@ -121,8 +124,11 @@ class ChangeRequestDataApi {
     try {
       return await API.get("changeRequestAPI", `/listall`);
     } catch (error) {
-      console.log(`There was an error fetching all change requests`, error);
-      throw error;
+      handleApiError(
+        error,
+        "DASHBOARD_LIST_FETCH_ERROR",
+        `There was an error fetching Change requests`
+      );
     }
   }
 }

@@ -4,8 +4,6 @@ import { ROUTES } from "cmscommonlib";
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ";
 import NotFound from "./containers/NotFound";
-import ComponentPage from "./containers/ComponentPage";
-import DeveloperOnlyRoute from "./components/DeveloperOnlyRoute";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
 import DynamicRoutes from "./DynamicRoutes";
@@ -18,9 +16,6 @@ export default function Routes() {
       <Route exact path={ROUTES.HOME}>
         <Home />
       </Route>
-      <DeveloperOnlyRoute exact path={ROUTES.COMPONENT_PAGE}>
-        <ComponentPage />
-      </DeveloperOnlyRoute>
       <Route exact path={ROUTES.FAQ}>
         <FAQ />
       </Route>

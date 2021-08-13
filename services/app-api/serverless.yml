@@ -7,6 +7,7 @@ plugins:
   - serverless-dynamodb-local
   - serverless-associate-waf
   - serverless-offline
+  - serverless-iam-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
@@ -18,6 +19,7 @@ custom:
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
+  productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
   warmupEnabled:
     production: true
     development: true
@@ -34,7 +36,7 @@ custom:
   dynamodb:
     stages:
       - dev
-      - ${env:BRANCH}
+      - ${env:BRANCH, ""}
     start:
       inMemory: true
       migrate: true
@@ -59,7 +61,12 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: dev
-
+  iam:
+    role:
+      path: ${self:custom.iamPath}
+      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+  logs:
+    restApi: true    
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
@@ -69,6 +76,7 @@ provider:
     reviewerEmail: ${self:custom.reviewerEmail}
     reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
     systemAdminEmail: ${self:custom.systemAdminEmail}
+    productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
 
 functions:
   # For DynamoDB Change Requests Table
