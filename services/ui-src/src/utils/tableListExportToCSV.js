@@ -50,7 +50,7 @@ const rowTransformer = {
     row.stateCode,
     userStatus[row.latest.status],
     roleLabels[row.role],
-    serializeDate(row.latest.date),
+    serializeDate(row.latest.date * 1000),
     JSON.stringify(row.latest.doneByName),
   ],
 };

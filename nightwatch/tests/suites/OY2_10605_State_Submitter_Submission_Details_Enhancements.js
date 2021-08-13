@@ -1,3 +1,4 @@
+/*
 const login = require('../suites/OY2_9999_Login');
 let spaCHIPId;
 module.exports = {
@@ -43,12 +44,12 @@ module.exports = {
         browser.pause(3000);
         browser.refresh();
         // Verify the submitted SPA Report Content 
-        const submittedIDNumber = "[id=transmittalNumber-0] > a";
+        const submittedIDNumber = "//tbody/tr[1]/td[1]/a";
         let submittedType = "[id=type-0] span";
         let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
-        browser.useCss().expect.element(submittedIDNumber).to.be.visible;
-        browser.useCss().assert.containsText(submittedIDNumber, generatedWaiverID);
+        browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
+        browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
         browser.useCss().expect.element(submittedType).to.be.visible;
         browser.useCss().assert.containsText(submittedType, "Waiver");
@@ -56,7 +57,7 @@ module.exports = {
         browser.useCss().expect.element(submittedDate).to.be.visible;
 
         //click on waiver and verify the page
-        browser.useCss().click(submittedIDNumber);
+        browser.useXpath().click(submittedIDNumber);
         browser.pause(2000);
         browser.refresh();
         let waiver_action_details = "//h1";
@@ -144,10 +145,10 @@ module.exports = {
         browser.refresh();
 
         //click on SPA and verify the page
-        let spa_id_top = "//td[@id='transmittalNumber-0']/a";
-        browser.useXpath().waitForElementPresent(spa_id_top, 2000);
+        let spa_id_top = 'tr:nth-of-type(1) > td:nth-of-type(1) > a';
+        browser.useCss().waitForElementPresent(spa_id_top, 2000);
         browser.refresh();
-        browser.useXpath().click(spa_id_top);
+        browser.useCss().click(spa_id_top);
         browser.pause(500);
         let medicaid_spa_submission_details = "//h1";
         let date_submitted_title = "(//h2)[1]";
@@ -183,3 +184,5 @@ module.exports = {
         browser.pause(500);
     },
 }
+
+*/
