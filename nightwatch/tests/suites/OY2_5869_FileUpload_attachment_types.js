@@ -6,7 +6,7 @@
 // Updated on 6/21/2021
 
 
-
+/*
 //const loginModule = require('../cases/OY2-1494_Test_SPA_Login');
 const login = require('../suites/OY2_9999_Login');
 const submitWaiver = require('../suites/OY2_4807_Validate_Waiver_Form_Logic');
@@ -138,3 +138,4 @@ module.exports = {
         browser.useXpath().click(dashboard_link);
     },
 }
+*/
