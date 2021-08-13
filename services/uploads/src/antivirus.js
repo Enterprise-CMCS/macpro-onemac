@@ -140,7 +140,7 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
   var aclParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
-    GrantRead: "uri=http://acs.amazonaws.com/groups/global/AllUsers",
+    ACL: 'public-read'
   };
 
   try {
