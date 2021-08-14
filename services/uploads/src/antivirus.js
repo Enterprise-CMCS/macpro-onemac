@@ -114,7 +114,7 @@ async function lambdaHandleEvent(event, context) {
   var aclParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
-    ACL: 'uri="http://acs.amazonaws.com/groups/global/AllUsers"'
+    ACL: 'public-read'
   };
 
   try {
@@ -150,7 +150,7 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
   var aclParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
-    ACL: 'uri="http://acs.amazonaws.com/groups/global/AllUsers"'
+    ACL: 'public-read'
   };
 
   try {
