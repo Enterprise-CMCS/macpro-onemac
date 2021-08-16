@@ -856,7 +856,7 @@ article.form-container {
   }
 
   #personnelActionsColHeader {
-    width: 140px;
+    width: 60px;
   }
 
   .user-state {
@@ -869,12 +869,22 @@ article.form-container {
     color: $color-black;
   }
 
+  td:not(:last-child) {
+    @extend .ds-u-padding-right--1;
+  }
+
   th:last-child {
     text-align: right;
   }
 
-  td.actions button {
-    float: right;
+  td:last-child button {
+    color: $color-black;
+    width: 100%;
+
+    &:focus {
+      // remove hideous magenta outline
+      box-shadow: none;
+    }
   }
 }
 

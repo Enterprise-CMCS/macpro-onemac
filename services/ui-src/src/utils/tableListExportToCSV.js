@@ -1,4 +1,4 @@
-import { userTypes } from "../libs/userLib";
+import { roleLabels } from "cmscommonlib";
 import { format } from "date-fns";
 
 const CSV_HEADER = {
@@ -49,7 +49,7 @@ const rowTransformer = {
     row.email,
     row.stateCode,
     userStatus[row.latest.status],
-    userTypes[row.role],
+    roleLabels[row.role],
     serializeDate(row.latest.date * 1000),
     JSON.stringify(row.latest.doneByName),
   ],

@@ -35,7 +35,7 @@ module.exports = {
         browser.useXpath().assert.containsText(email_footer, "Email OneMAC_Helpdesk@cms.hhs.gov for help or feedback.");
         browser.useXpath().assert.containsText(address_footer, "7500 Security Boulevard Baltimore, MD 21244");
         browser.useCss();
-        login['Login with cms_approvers'](browser);
+        login['Login with cms_role_approvers'](browser);
     },
 
     after: function (browser) {

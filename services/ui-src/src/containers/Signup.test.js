@@ -27,9 +27,9 @@ it("renders the new cms user options", async () => {
     { wrapper: MemoryRouter }
   );
   const cmsReviewerOption = screen.getByText("CMS Reviewer");
-  const cmsApproverOption = screen.getByText("CMS Role Approver");
+  const cmsRoleApproverOption = screen.getByText("CMS Role Approver");
   expect(cmsReviewerOption).toBeInTheDocument();
-  expect(cmsApproverOption).toBeInTheDocument();
+  expect(cmsRoleApproverOption).toBeInTheDocument();
   userEvent.click(cmsReviewerOption);
   expect(history.location.pathname).toBe("/signup/cmsreviewer");
 });

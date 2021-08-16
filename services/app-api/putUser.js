@@ -5,6 +5,7 @@ import sendEmail from "./libs/email-lib";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
 import {
+  APPROVING_USER_TYPE,
   RESPONSE_CODE,
   USER_TYPE,
   USER_STATUS,
@@ -190,13 +191,13 @@ const isLatestAttributeActive = (attribs) => {
 
 // Ensure the DoneBy user has permission to execute the requested actions //
 const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
+  if (doneByUser.type !== APPROVING_USER_TYPE[userType]) {
+    console.log(
+      `Warning: The doneBy user ${doneByUser.id} must be a ${APPROVING_USER_TYPE[userType]}`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+  }
   if (userType === USER_TYPE.STATE_SUBMITTER) {
-    if (doneByUser.type !== USER_TYPE.STATE_ADMIN) {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be a stateadmin for the state ${userState}`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
     const index = doneByUser.attributes.findIndex(
       (attr) => attr.stateCode === userState
     );
@@ -211,23 +212,9 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
     }
   }
   if (userType === USER_TYPE.STATE_ADMIN) {
-    if (doneByUser.type !== USER_TYPE.CMS_APPROVER) {
-      console.log(
-        `Warning: The doneBy user : ${doneByUser.id}, must be a cmsapprover`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
     if (!isLatestAttributeActive(doneByUser.attributes)) {
       console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active cmsapprover`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-  }
-  if (userType === USER_TYPE.CMS_APPROVER) {
-    if (doneByUser.type !== USER_TYPE.SYSTEM_ADMIN) {
-      console.log(
-        `Warning: The doneBy user : ${doneByUser.id}, must be a systemadmin`
+        `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
       );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
@@ -345,7 +332,7 @@ const populateUserAttributes = (
       }
     });
   } else {
-    // CMSApprover & systemadmin //
+    // CMSRoleApprover & systemadmin //
     input.attributes.forEach((item) => {
       if (!input.isPutUser && !isSelfInflicted)
         ensureDonebyHasPrivilege(doneByUser, input.type);
@@ -473,17 +460,18 @@ const collectRoleAdminEmailIds = async (input) => {
     input.type === USER_TYPE.STATE_ADMIN ||
     input.type === USER_TYPE.CMS_REVIEWER
   ) {
-    // get all cms approvers emails //
-    // query all cms approvers
-    const cmsApprovers = (await getUsersByType(USER_TYPE.CMS_APPROVER)) || [];
+    // get all cms role approvers emails //
+    // query all cms role approvers
+    const cmsRoleApprovers =
+      (await getUsersByType(USER_TYPE.CMS_ROLE_APPROVER)) || [];
     // check if recent attribute status is active and add email to recipient list //
-    cmsApprovers.forEach((approver) => {
+    cmsRoleApprovers.forEach((approver) => {
       isLatestAttributeActive(approver.attributes)
         ? recipients.push(approver.id)
         : null;
     });
   } else if (
-    input.type === USER_TYPE.CMS_APPROVER ||
+    input.type === USER_TYPE.CMS_ROLE_APPROVER ||
     input.type === USER_TYPE.HELPDESK
   ) {
     let systemadmins = [];

@@ -24,7 +24,7 @@ module.exports = {
     //changed credentials to nightwatch.conf.js
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with cms_approvers denied user'](browser);
+        login['Login with cms_role_approvers denied user'](browser);
     },
 
     after: function (browser) {
@@ -32,7 +32,7 @@ module.exports = {
 
     },
 
-    'CMS Approver User denied status view system access is pending approval': function (browser) {
+    'CMS Role Approver User denied status view system access is pending approval': function (browser) {
         //check on user management page 
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";

@@ -1,9 +1,8 @@
 import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { territoryList, USER_TYPE } from "cmscommonlib";
+import { roleLabels, territoryList, USER_TYPE } from "cmscommonlib";
 
 import { useFlag, useSignupCallback } from "../libs/hooksLib";
-import { userTypes } from "../libs/userLib";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import PageTitleBar from "../components/PageTitleBar";
@@ -36,7 +35,7 @@ export function StateSignup() {
           <div className="signup-headings">
             <p className="role-header">User Role:</p>
             <p className="user-role">
-              {userTypes[role] ?? role}
+              {roleLabels[role] ?? role}
               <svg
                 width="19"
                 height="18"

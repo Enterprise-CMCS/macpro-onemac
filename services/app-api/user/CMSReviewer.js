@@ -9,7 +9,7 @@ import { RESPONSE_CODE } from "cmscommonlib";
  */
 class CMSReviewer {
   /**
-   * CMS Approvers manage the State Admins
+   * CMS Reviewers don't see any users
    * @returns {String} the User Role
    */
   getScanParams() {
