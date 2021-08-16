@@ -1,4 +1,4 @@
-import { API, Storage } from "aws-amplify";
+import { API } from "aws-amplify";
 import handleApiError from "../libs/apiErrorHandler";
 /**
  * Singleton class to perform operations with the change request backend.
