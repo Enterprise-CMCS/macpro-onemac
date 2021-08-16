@@ -1,6 +1,5 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
 
 import { RESPONSE_CODE, ROUTES, getUserRoleObj, USER_TYPE } from "cmscommonlib";
@@ -85,16 +84,6 @@ const PackageList = () => {
     []
   );
 
-  const render90thDay = useCallback(({ value }) => {
-    if (!value) {
-      return "--";
-    } else if (value === "Paused") {
-      return "Paused\nRAI Issued";
-    } else {
-      return format(value, "MMM d, yyyy");
-    }
-  }, []);
-
   const columns = useMemo(
     () => [
       {
@@ -116,17 +105,12 @@ const PackageList = () => {
         Cell: renderState,
       },
       {
-        Header: "90th Day",
-        accessor: "currentClockEnd",
-        Cell: render90thDay,
-      },
-      {
         Header: "Status",
         accessor: "currentStatus",
         id: "packageStatus",
       },
     ],
-    [render90thDay, renderState, renderId, renderType]
+    [renderState, renderId, renderType]
   );
 
   const initialTableState = useMemo(

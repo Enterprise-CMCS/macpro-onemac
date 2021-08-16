@@ -126,7 +126,7 @@ class WaiverExtension {
       submitterEmail: data.user.email,
     };
 
-    updatePackage(extensionRequestData);
+    return updatePackage(extensionRequestData);
   }
 }
 

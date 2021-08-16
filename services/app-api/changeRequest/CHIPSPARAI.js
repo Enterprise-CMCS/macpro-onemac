@@ -118,7 +118,7 @@ class CHIPSPARAI {
       clockEndMessage: "Pending RAI Response Review",
     };
 
-    updatePackage(raiResponseData);
+    return updatePackage(raiResponseData);
   }
 }
 

@@ -197,9 +197,10 @@ export const SubmissionForm = ({ changeRequestType }) => {
   };
 
   useEffect(() => {
+    let mounted = true;
     window.scrollTo({ top: 0 });
 
-    if (alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
+    if (mounted && alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
       history.push({
         pathname: ROUTES.DASHBOARD,
         state: {
@@ -207,9 +208,14 @@ export const SubmissionForm = ({ changeRequestType }) => {
         },
       });
     }
+
+    return function cleanup() {
+      mounted = false;
+    };
   }, [alertCode, history]);
 
   useEffect(() => {
+    let mounted = true;
     let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
     let actionTypeMessage = formInfo?.actionType?.errorMessage;
 
@@ -249,7 +255,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
               result = await ChangeRequestDataApi.packageExists(checkingNumber);
             } catch (e) {
               console.log("error message is: ", e.message);
-              setAlertCode(RESPONSE_CODE[e.message]);
+              if (mounted) setAlertCode(RESPONSE_CODE[e.message]);
             }
             return result;
           }
@@ -293,22 +299,26 @@ export const SubmissionForm = ({ changeRequestType }) => {
           .then(() => {
             if (existMessages.length > 0) {
               displayMessage = existMessages[0];
-              setTransmittalNumberStatusMessage(displayMessage);
+              if (mounted) setTransmittalNumberStatusMessage(displayMessage);
             } else {
-              setTransmittalNumberStatusMessage(displayMessage);
+              if (mounted) setTransmittalNumberStatusMessage(displayMessage);
             }
           });
       } else {
         displayMessage = formatMessage;
-        setTransmittalNumberStatusMessage(displayMessage);
+        if (mounted) setTransmittalNumberStatusMessage(displayMessage);
       }
 
-      setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-      setActionTypeErrorMessage(actionTypeMessage);
+      if (mounted) setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
+      if (mounted) setActionTypeErrorMessage(actionTypeMessage);
     } catch (err) {
       console.log("error is: ", err);
-      setAlertCode(RESPONSE_CODE[err.message]);
+      if (mounted) setAlertCode(RESPONSE_CODE[err.message]);
     }
+
+    return function cleanup() {
+      mounted = false;
+    };
   }, [
     changeRequest.actionType,
     changeRequest.waiverAuthority,

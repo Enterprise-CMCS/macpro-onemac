@@ -67,8 +67,8 @@ export async function uploadFiles(fileArray, packageId) {
 export async function uploadFile(file, packageId) {
   const fileToUpload = ensureLowerCaseFileExtension(file);
 
-  let retPromise;
-  const targetPathname = `/${packageId}/${fileToUpload.type}/${fileToUpload.name}`;
+  let result = {};
+  const targetPathname = `${packageId}/${fileToUpload.title}/${fileToUpload.name}`;
 
   try {
     const stored = await Storage.vault.put(targetPathname, fileToUpload, {
@@ -78,7 +78,7 @@ export async function uploadFile(file, packageId) {
 
     const url = await Storage.vault.get(stored.key, { level: "protected" });
 
-    let result = {
+    result = {
       s3Key: stored.key,
       filename: fileToUpload.name,
       contentType: fileToUpload.type,
@@ -90,7 +90,7 @@ export async function uploadFile(file, packageId) {
     // promise comes back resolved, AND the get call will work as well.
     // HOWEVER, if you try to access the url sent back, you receive an error message
     // so can check for that.
-    await fetch(result.url, {
+    /*   await fetch(result.url, {
       method: "HEAD",
     }).then((response) => {
       if (response.status !== 200) {
@@ -99,8 +99,10 @@ export async function uploadFile(file, packageId) {
         retPromise = Promise.resolve(result);
       }
     });
+    */
   } catch (error) {
-    retPromise = Promise.reject(error);
+    return Promise.reject(error);
   }
-  return retPromise;
+
+  return Promise.resolve(result);
 }
