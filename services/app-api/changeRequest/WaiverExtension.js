@@ -113,20 +113,9 @@ class WaiverExtension {
     return stateEmail;
   }
 
-  saveSubmission(data) {
-    const submitterName = data.user.firstName + " " + data.user.lastName;
-    const extensionRequestData = {
-      packageId: data.transmittalNumber,
-      packageStatus: "Extension Requested",
-      clockEndTimestamp: data.ninetyDayClockEnd,
-      dateSubmitted: data.submittedAt,
-      attachments: data.uploads,
-      additionalInformation: data.summary,
-      submitterName: submitterName,
-      submitterEmail: data.user.email,
-    };
-
-    return updatePackage(extensionRequestData);
+  async saveSubmission(data) {
+    data.packageStatus = "Extension Requested";
+    return updatePackage(data);
   }
 }
 

@@ -130,8 +130,25 @@ export const main = handler(async (event) => {
     );
   }
 
+  const submitterName = data.user.firstName + " " + data.user.lastName;
+  const packageData = {
+    packageId: data.transmittalNumber,
+    packageType: data.type,
+    clockEndTimestamp: data.ninetyDayClockEnd,
+    submissionTimestamp: data.submittedAt,
+    attachments: data.uploads,
+    additionalInformation: data.summary,
+    submissionId: data.id,
+    submitterName: submitterName,
+    submitterEmail: data.user.email,
+    submitterId: data.userId,
+  };
+
+  if (data.actiontype) packageData.actionType = data.actionType;
+  if (data.waiverAuthority) packageData.waiverAuthority = data.waiverAuthority;
+
   return crFunctions
-    .saveSubmission(data)
+    .saveSubmission(packageData)
     .then(() => {
       console.log("Successfully submitted the following:", data);
       return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;

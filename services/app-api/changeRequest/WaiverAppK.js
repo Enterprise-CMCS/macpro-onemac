@@ -103,17 +103,17 @@ class WaiverAppK {
     const submitterName = data.user.firstName + " " + data.user.lastName;
     const appkData = {
       packageId: data.transmittalNumber,
-      packageType: "1915(c)",
+      packageType: "waiverappk",
       packageStatus: "Submitted",
       clockEndTimestamp: data.ninetyDayClockEnd,
-      dateSubmitted: data.submittedAt,
+      submissionTimestamp: data.submittedAt,
       attachments: data.uploads,
       additionalInformation: data.summary,
       submitterName: submitterName,
       submitterEmail: data.user.email,
     };
 
-    newPackage(appkData);
+    return newPackage(appkData);
   }
 }
 

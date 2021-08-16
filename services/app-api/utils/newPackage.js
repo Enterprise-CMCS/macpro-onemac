@@ -9,7 +9,11 @@ export default async function newPackage(newData) {
     packageId: newData.packageId,
     packageType: newData.packageType,
     currentStatus: newData.packageStatus,
-    originalSubmissionDate: newData.submissionDate,
+    submissionTimestamp: newData.submissionTimestamp,
+    submissionId: newData.submissionId,
+    submitterId: newData.submitterId,
+    submitterName: newData.submitterName,
+    submitterEmail: newData.submitterEmail,
     currentClockEnd: newData.clockEndTimestamp,
     changeHistory: [newData],
   };

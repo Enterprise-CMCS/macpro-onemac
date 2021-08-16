@@ -128,23 +128,9 @@ class Waiver {
     return stateEmail;
   }
 
-  saveSubmission(data) {
-    const submitterName = data.user.firstName + " " + data.user.lastName;
-    const waiverData = {
-      packageId: data.transmittalNumber,
-      packageType: "1915(b)",
-      packageStatus: "Submitted",
-      actionType: data.actionType,
-      waiverAuthority: data.waiverAuthority,
-      clockEndTimestamp: data.ninetyDayClockEnd,
-      dateSubmitted: data.submittedAt,
-      attachments: data.uploads,
-      additionalInformation: data.summary,
-      submitterName: submitterName,
-      submitterEmail: data.user.email,
-    };
-
-    return newPackage(waiverData);
+  async saveSubmission(data) {
+    data.packageStatus = "Submitted";
+    return newPackage(data);
   }
 }
 

@@ -33,13 +33,10 @@ export const main = handler(async (event) => {
       const baseParams = {
         TableName: process.env.oneMacTableName,
         IndexName: "GSI1",
-        ExpressionAttributeNames: {
-          "#packageId": "packageId",
-        },
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "#packageId,packageType,currentStatus,currentClockEnd,originalSubmissionDate,changeHistory[0]",
+          "packageId,packageType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId",
       };
 
       let paramList = [];

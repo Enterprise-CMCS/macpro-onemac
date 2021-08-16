@@ -114,21 +114,9 @@ class CHIPSPA {
     return stateEmail;
   }
 
-  saveSubmission(data) {
-    const submitterName = data.user.firstName + " " + data.user.lastName;
-    const spaData = {
-      packageId: data.transmittalNumber,
-      packageType: "CHIP SPA",
-      packageStatus: "Submitted",
-      clockEndTimestamp: data.ninetyDayClockEnd,
-      dateSubmitted: data.submittedAt,
-      attachments: data.uploads,
-      additionalInformation: data.summary,
-      submitterName: submitterName,
-      submitterEmail: data.user.email,
-    };
-
-    return newPackage(spaData);
+  async saveSubmission(data) {
+    data.packageStatus = "Submitted";
+    return newPackage(data);
   }
 }
 

@@ -112,20 +112,9 @@ class WaiverRAI {
     return stateEmail;
   }
 
-  saveSubmission(data) {
-    const submitterName = data.user.firstName + " " + data.user.lastName;
-    const raiResponseData = {
-      packageId: data.transmittalNumber,
-      packageStatus: "RAI Response Submitted",
-      timestamp: data.submittedAt,
-      attachments: data.uploads,
-      additionalInformation: data.summary,
-      submitterName: submitterName,
-      submitterEmail: data.user.email,
-      clockEndMessage: "Pending RAI Response Review",
-    };
-
-    return updatePackage(raiResponseData);
+  async saveSubmission(data) {
+    data.packageStatus = "RAI Response Submitted";
+    return updatePackage(data);
   }
 }
 

@@ -38,7 +38,7 @@ export default async function updatePackage(updateData) {
   // only update clock if new Clock is sent
   if (updateData.clockEndTimestamp) {
     updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
-      updateData.currentClockEnd;
+      updateData.clockEndTimestamp;
     updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
   }
 
@@ -51,6 +51,7 @@ export default async function updatePackage(updateData) {
 
   dynamoDb.update(updatePackageParams).catch((error) => {
     console.log(`Error happened updating DB:  ${error.message}`);
+    console.log("update parameters tried: ", updatePackageParams);
     throw error;
   });
 

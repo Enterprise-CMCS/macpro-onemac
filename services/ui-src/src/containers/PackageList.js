@@ -1,8 +1,15 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
+import { format } from "date-fns";
 
-import { RESPONSE_CODE, ROUTES, getUserRoleObj, USER_TYPE } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  ROUTES,
+  Package,
+  getUserRoleObj,
+  USER_TYPE,
+} from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -63,11 +70,31 @@ const PackageList = () => {
   const renderId = useCallback(
     ({ row, value }) => (
       <Link
-        to={`/package/${row?.original?.packageType}/${row?.original?.packageId}`}
+        to={`/${row.original.packageType}/${row.original.submissionId}/${row.original.submitterId}`}
       >
         {value}
       </Link>
     ),
+    []
+  );
+
+  const getType = useCallback(
+    ({ packageType }) =>
+      ({
+        [Package.TYPE.CHIP_SPA]: "CHIP SPA",
+        [Package.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
+        [Package.TYPE.SPA]: "Medicaid SPA",
+        [Package.TYPE.WAIVER]: "Waiver",
+        [Package.TYPE.SPA_RAI]: "SPA RAI",
+        [Package.TYPE.WAIVER_RAI]: "Waiver RAI",
+        [Package.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
+        [Package.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+      }[packageType] ?? []),
+    []
+  );
+
+  const renderType = useCallback(
+    ({ value }) => <span className="type-badge">{value}</span>,
     []
   );
 
@@ -79,10 +106,25 @@ const PackageList = () => {
     }
   }, []);
 
-  const renderType = useCallback(
-    ({ value }) => <span className="type-badge">{value}</span>,
+  const renderName = useCallback(
+    ({ value, row }) => (
+      <Link
+        className="user-name"
+        to={`${ROUTES.PROFILE}/${row.original.submitterEmail}`}
+      >
+        {value}
+      </Link>
+    ),
     []
   );
+
+  const renderDate = useCallback(({ value }) => {
+    if (value) {
+      return format(value, "MMM d, yyyy");
+    } else {
+      return "N/A";
+    }
+  }, []);
 
   const columns = useMemo(
     () => [
@@ -94,7 +136,7 @@ const PackageList = () => {
       },
       {
         Header: "Type",
-        accessor: "packageType",
+        accessor: getType,
         id: "packageType",
         Cell: renderType,
       },
@@ -109,8 +151,19 @@ const PackageList = () => {
         accessor: "currentStatus",
         id: "packageStatus",
       },
+      {
+        Header: "Date Submitted",
+        accessor: "submissionTimestamp",
+        Cell: renderDate,
+      },
+      {
+        Header: "Submitted By",
+        accessor: "submitterName",
+        id: "submitter",
+        Cell: renderName,
+      },
     ],
-    [renderState, renderId, renderType]
+    [getType, renderState, renderId, renderType, renderDate, renderName]
   );
 
   const initialTableState = useMemo(
