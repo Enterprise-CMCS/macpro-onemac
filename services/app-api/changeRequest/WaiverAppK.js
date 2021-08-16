@@ -1,6 +1,5 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
 import newPackage from "../utils/newPackage";
-import packageExists from "../utils/packageExists";
 
 /**
  * Waiver Appendix K Amendment specific functions.

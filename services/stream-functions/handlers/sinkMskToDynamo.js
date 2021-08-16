@@ -8,21 +8,21 @@ function myHandler(event) {
   const value = JSON.parse(event.value);
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
 
-  var SEAToolId = value.payload.ID_Number;
+  const SEAToolId = value.payload.ID_Number;
 
-  var packageStatusID = "unknown";
+  let packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
 
   if (!value?.payload?.Plan_Type)  return;
   const planTypeList = ["122", "123", "124", "125"];
-  var planType = planTypeList.find( (pt) => (pt === value.payload.Plan_Type.toString()));
+  const planType = planTypeList.find( (pt) => (pt === value.payload.Plan_Type.toString()));
   if (!planType) return;
 
-  var stateCode = 'MI';
+  let stateCode = 'MI';
   if (value.payload.State_Code) {
     stateCode = value.payload.State_Code.toString();
   }
-  var SEAToolData = {
+  const SEAToolData = {
     'packageStatus': packageStatusID,
     'stateCode': stateCode,
     'planType': planType,
@@ -31,10 +31,10 @@ function myHandler(event) {
   };
   if (SEAToolId != undefined) {
     AWS.config.update({region: 'us-east-1'});
-    var ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
+    const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
     // update the SEATool Entry
-    var updateSEAToolParams = {
+    const updateSEAToolParams = {
       TableName: process.env.oneMacTableName,
       Key: {
         pk: SEAToolId,
@@ -93,9 +93,9 @@ function myHandler(event) {
       [SEATOOL.PENDING_APPROVAL]: "Package In Review",
     };
     // update OneMAC Package Item
-    let updatePk = SEAToolData.packageId;
-    let updateSk = "PACKAGE";
-    var updatePackageParams = {
+    const updatePk = SEAToolData.packageId;
+    const updateSk = "PACKAGE";
+    const updatePackageParams = {
       TableName: process.env.oneMacTableName,
       Key: {
         pk: updatePk,
