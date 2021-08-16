@@ -6,6 +6,6 @@
       "status": "pending"
     }
   ],
-  "id": "[REPLACE TEST EMAIL FOR CMS APPROVER]",
-  "type": "cmsapprover"
+  "id": "[REPLACE TEST EMAIL FOR CMS ROLE APPROVER]",
+  "type": "cmsroleapprover"
 }

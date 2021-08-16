@@ -48,7 +48,7 @@ module.exports = {
   //       browser,{
   //       // username:browser.globals.user,
   //       // password:browser.globals.pass
-  //       username:"cmsapproverdenied@cms.hhs.local",
+  //       username:"cmsroleapproverdenied@cms.hhs.local",
   //       password:""
   //     }
   //   )
@@ -92,11 +92,11 @@ module.exports = {
     browser.verify.containsText("h1", spaPageTitle);
   },
 
-  // login as cms approver user for val environment
-  "Login to Medicaid as CMS Approver User in val environment": function (browser) {
+  // login as cms role approver user for val environment
+  "Login to Medicaid as CMS Role Approver User in val environment": function (browser) {
     // Test Data
-    const username = browser.globals.cms_approver_user;
-    const password = browser.globals.cms_approver_pass;
+    const username = browser.globals.cms_role_approver_user;
+    const password = browser.globals.cms_role_approver_pass;
     let spaPageTitle = "SPA and Waiver Dashboard";
 
     // Test Stesp

@@ -1,4 +1,4 @@
-
+/*
 const fs = require('fs');
 const locator = '(//*[@disabled])';
 const login = require('../suites/OY2_9999_Login');
@@ -206,4 +206,5 @@ module.exports = {
         browser.pause(5000);
     },
 }
-    
+
+*/
