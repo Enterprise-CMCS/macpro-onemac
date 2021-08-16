@@ -28,6 +28,20 @@ $input-border-radius: 3px;
   border-radius: 3px;
 }
 
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .header-and-content {
+    flex: 1 0 auto;
+  }
+
+  > footer {
+    flex-shrink: 0;
+  }
+}
+
 .faq-table {
   table,
   th,

@@ -94,19 +94,19 @@ function App() {
 
   return (
     !authState.isAuthenticating && (
-      <div>
-        <AppContext.Provider
-          value={{
-            ...authState,
-            setUserInfo,
-            updatePhoneNumber,
-          }}
-        >
+      <AppContext.Provider
+        value={{
+          ...authState,
+          setUserInfo,
+          updatePhoneNumber,
+        }}
+      >
+        <div className="header-and-content">
           <Header />
           <Routes />
-        </AppContext.Provider>
+        </div>
         <Footer />
-      </div>
+      </AppContext.Provider>
     )
   );
 }
