@@ -10,12 +10,12 @@ import { when } from "jest-when";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 
-import { Package } from "cmscommonlib";
+import { ChangeRequest } from "cmscommonlib";
 
 import { SubmissionForm } from "./SubmissionForm";
 
-import PackageApi from "../utils/PackageApi";
-jest.mock("../utils/PackageApi");
+import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+jest.mock("../utils/ChangeRequestDataApi");
 
 import { uploadFiles } from "../utils/s3Uploader";
 jest.mock("../utils/s3Uploader");
@@ -94,12 +94,12 @@ it("does not clear Transmittal Number if submit fails.", async () => {
         ...initialAuthState,
       }}
     >
-      <SubmissionForm changeRequestType={Package.TYPE.CHIP_SPA} />
+      <SubmissionForm changeRequestType={ChangeRequest.TYPE.CHIP_SPA} />
     </AppContext.Provider>
   );
 
   const transmittalNumberEl = screen.getByLabelText(
-    Package.CONFIG[Package.TYPE.CHIP_SPA].transmittalNumber.idLabel
+    ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber.idLabel
   );
 
   const summaryEl = screen.getByLabelText("Additional Information", {
@@ -109,7 +109,7 @@ it("does not clear Transmittal Number if submit fails.", async () => {
   expect(transmittalNumberEl.value).toBe("");
   expect(summaryEl.value).toBe("");
 
-  PackageApi.packageExists.mockResolvedValue(false);
+  ChangeRequestDataApi.packageExists.mockResolvedValue(false);
   userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
   userEvent.type(summaryEl, testValues.additionalInformation);
 
@@ -134,7 +134,7 @@ it("does not clear already uploaded file list if submit fails.", async () => {
       }}
     >
       <SubmissionForm
-        changeRequestType={Package.TYPE.CHIP_SPA}
+        changeRequestType={ChangeRequest.TYPE.CHIP_SPA}
       ></SubmissionForm>
     </AppContext.Provider>
   );
@@ -164,7 +164,7 @@ it("does not exceed additional information character limit", async () => {
       }}
     >
       <SubmissionForm
-        changeRequestType={Package.TYPE.CHIP_SPA}
+        changeRequestType={ChangeRequest.TYPE.CHIP_SPA}
       ></SubmissionForm>
     </AppContext.Provider>
   );
@@ -208,7 +208,7 @@ describe("Effects of Failed Submit", () => {
         }}
       >
         <Router history={history}>
-          <SubmissionForm changeRequestType={Package.TYPE.WAIVER} />
+          <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
         </Router>
       </AppContext.Provider>
     );
@@ -229,7 +229,7 @@ describe("Effects of Failed Submit", () => {
     await screen.findByText("All other 1915(b) Waivers");
 
     // Don't find the package
-    PackageApi.packageExists.mockResolvedValue(false);
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
     await screen.findByText(
       `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
@@ -250,12 +250,12 @@ describe("Effects of Failed Submit", () => {
 describe("Transmittal Number Validation", () => {
   it("displays error message when the format id is invalid (but not when it's valid)", async () => {
     const chipSpaTransmittalNumberDetails =
-      Package.CONFIG[Package.TYPE.CHIP_SPA].transmittalNumber;
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber;
     const formatMessage = `The ${chipSpaTransmittalNumberDetails.idLabel} must be in the format of ${chipSpaTransmittalNumberDetails.idFormat}`;
     const invalidFormatId = "MI-12";
     const validFormatId = "MI-12-1122-CHIP";
 
-    PackageApi.packageExists.mockResolvedValue(false);
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
     render(
       <AppContext.Provider
@@ -263,7 +263,7 @@ describe("Transmittal Number Validation", () => {
           ...initialAuthState,
         }}
       >
-        <SubmissionForm changeRequestType={Package.TYPE.CHIP_SPA} />
+        <SubmissionForm changeRequestType={ChangeRequest.TYPE.CHIP_SPA} />
       </AppContext.Provider>
     );
 
@@ -284,12 +284,12 @@ describe("Transmittal Number Validation", () => {
 
   it("displays error message when id SHOULD NOT exist but it does", async () => {
     const spaIdLabel =
-      Package.CONFIG[Package.TYPE.SPA].transmittalNumber.idLabel;
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA].transmittalNumber.idLabel;
     const testId = "MI-12-1122";
     const existErrorMessage = `According to our records, this ${spaIdLabel} already exists. Please check the ${spaIdLabel} and try entering it again.`;
 
     // id will exist
-    PackageApi.packageExists.mockResolvedValue(true);
+    ChangeRequestDataApi.packageExists.mockResolvedValue(true);
 
     render(
       <AppContext.Provider
@@ -297,7 +297,7 @@ describe("Transmittal Number Validation", () => {
           ...initialAuthState,
         }}
       >
-        <SubmissionForm changeRequestType={Package.TYPE.SPA} />
+        <SubmissionForm changeRequestType={ChangeRequest.TYPE.SPA} />
       </AppContext.Provider>
     );
 
@@ -309,12 +309,13 @@ describe("Transmittal Number Validation", () => {
 
   it("displays error message when id SHOULD exist but it doesn't", async () => {
     const spaRaiIdLabel =
-      Package.CONFIG[Package.TYPE.SPA_RAI].transmittalNumber.idLabel;
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA_RAI].transmittalNumber
+        .idLabel;
     const testId = "MI-12-1122";
     const existErrorMessage = `According to our records, this ${spaRaiIdLabel} does not exist. Please check the ${spaRaiIdLabel} and try entering it again.`;
 
     // id will NOT exist
-    PackageApi.packageExists.mockResolvedValue(false);
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
     render(
       <AppContext.Provider
@@ -322,7 +323,7 @@ describe("Transmittal Number Validation", () => {
           ...initialAuthState,
         }}
       >
-        <SubmissionForm changeRequestType={Package.TYPE.SPA_RAI} />
+        <SubmissionForm changeRequestType={ChangeRequest.TYPE.SPA_RAI} />
       </AppContext.Provider>
     );
 
@@ -339,14 +340,16 @@ describe("Transmittal Number Validation", () => {
   // #2: DON'T want the entire Waiver number with renewal portion to exist
   it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the base waiver number SHOULD exist but doesn't)", async () => {
     const waiverIdLabel =
-      Package.CONFIG[Package.TYPE.WAIVER].transmittalNumber.idLabel;
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber.idLabel;
     const testId = "MI.1234.R00";
     const existErrorMessage = `${waiverIdLabel} not found. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
     // base id will NOT exist (this will cause validation to fail so we can check the warning message)
-    when(PackageApi.packageExists).calledWith("MI.1234").mockReturnValue(false);
+    when(ChangeRequestDataApi.packageExists)
+      .calledWith("MI.1234")
+      .mockReturnValue(false);
     // ensure pass of second validation for entire id not existing
-    when(PackageApi.packageExists)
+    when(ChangeRequestDataApi.packageExists)
       .calledWith("MI.1234.R00")
       .mockReturnValue(false);
 
@@ -356,7 +359,7 @@ describe("Transmittal Number Validation", () => {
           ...initialAuthState,
         }}
       >
-        <SubmissionForm changeRequestType={Package.TYPE.WAIVER} />
+        <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
       </AppContext.Provider>
     );
 
@@ -374,14 +377,16 @@ describe("Transmittal Number Validation", () => {
 
   it("displays a warning message for a Waiver Renewal when failing the second existence validation (that the entire Waiver number with renewal portion SHOULD NOT exist, but does)", async () => {
     const waiverIdLabel =
-      Package.CONFIG[Package.TYPE.WAIVER].transmittalNumber.idLabel;
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber.idLabel;
     const testId = "MI.1234.R00";
     const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
 
     // ensure pass of first validation for base id existing
-    when(PackageApi.packageExists).calledWith("MI.1234").mockReturnValue(true);
+    when(ChangeRequestDataApi.packageExists)
+      .calledWith("MI.1234")
+      .mockReturnValue(true);
     // entire id will exist in the database (this will cause validation to fail so we can check the warning message)
-    when(PackageApi.packageExists)
+    when(ChangeRequestDataApi.packageExists)
       .calledWith("MI.1234.R00")
       .mockReturnValue(true);
 
@@ -391,7 +396,7 @@ describe("Transmittal Number Validation", () => {
           ...initialAuthState,
         }}
       >
-        <SubmissionForm changeRequestType={Package.TYPE.WAIVER} />
+        <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
       </AppContext.Provider>
     );
 
