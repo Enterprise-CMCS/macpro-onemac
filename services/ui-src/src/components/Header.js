@@ -283,7 +283,7 @@ function Header(props) {
   let userType = userData?.type ?? "user";
 
   return (
-    <div>
+    <>
       <div className="usa-banner-custom">
         <UsaBanner />
       </div>
@@ -301,7 +301,7 @@ function Header(props) {
         isAuthenticated,
         userType
       )}
-    </div>
+    </>
   );
 }
 
