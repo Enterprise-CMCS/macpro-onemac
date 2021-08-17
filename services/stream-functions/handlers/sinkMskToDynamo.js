@@ -60,7 +60,7 @@ function myHandler(event) {
       if (err) {
         console.log("Error", err);
       } else {
-        console.log("Success", JSON.parse(data));
+        console.log("Update Success, data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
 
         // if the SEATool entry is new, do we need to add Paper IDs??
@@ -107,14 +107,6 @@ function myHandler(event) {
       [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER,
       [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
     };
-/*
-const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
-  [SEATOOL_PLAN_TYPE.CHIP_SPA]: "chipspa",
-  [SEATOOL_PLAN_TYPE.SPA]: "spa",
-  [SEATOOL_PLAN_TYPE.WAIVER]: "waiver",
-  [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: "waiverappk",
-};
-*/
 
     SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
 
@@ -158,7 +150,7 @@ const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
       if (err) {
         console.log("Error", err);
       } else {
-        console.log("Success", JSON.parse(data));
+        console.log("Update Success!  Returned data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
     }});
 
