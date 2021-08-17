@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-import ChangeRequest from "cmscommonlib";
+import { ChangeRequest } from "cmscommonlib";
 
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
