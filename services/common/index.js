@@ -60,7 +60,7 @@ export const cmsEmailMapToFormWarningMessages = {
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
   STATE_ADMIN: "statesubmitter",
-  CMS_APPROVER: "stateadmin",
+  CMS_ROLE_APPROVER: "stateadmin",
 };
 
 /**
@@ -70,7 +70,7 @@ export const USER_TYPE = {
   STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
   STATE_ADMIN: "stateadmin",
-  CMS_APPROVER: "cmsapprover",
+  CMS_ROLE_APPROVER: "cmsroleapprover",
   SYSTEM_ADMIN: "systemadmin",
   HELPDESK: "helpdesk",
 };
@@ -79,10 +79,10 @@ export const ROLES = USER_TYPE;
 
 export const APPROVING_USER_TYPE = {
   [ROLES.STATE_SUBMITTER]: ROLES.STATE_ADMIN,
-  [ROLES.STATE_ADMIN]: ROLES.CMS_APPROVER,
-  [ROLES.CMS_APPROVER]: ROLES.SYSTEM_ADMIN,
+  [ROLES.STATE_ADMIN]: ROLES.CMS_ROLE_APPROVER,
+  [ROLES.CMS_ROLE_APPROVER]: ROLES.SYSTEM_ADMIN,
   [ROLES.HELPDESK]: ROLES.SYSTEM_ADMIN,
-  [ROLES.CMS_REVIEWER]: ROLES.CMS_APPROVER,
+  [ROLES.CMS_REVIEWER]: ROLES.CMS_ROLE_APPROVER,
 };
 
 /**
@@ -101,7 +101,7 @@ export const USER_STATUS = {
 export const roleLabels = {
   [ROLES.STATE_SUBMITTER]: "State Submitter",
   [ROLES.STATE_ADMIN]: "State Admin",
-  [ROLES.CMS_APPROVER]: "CMS Role Approver",
+  [ROLES.CMS_ROLE_APPROVER]: "CMS Role Approver",
   [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
   [ROLES.HELPDESK]: "Help Desk",
@@ -172,7 +172,7 @@ class CmsReviewer extends Role {
   }
 }
 
-class CmsApprover extends Role {
+class CmsRoleApprover extends Role {
   constructor() {
     super();
     this.canAccessUserManagement = true;
@@ -201,7 +201,7 @@ export const getUserRoleObj = (role) =>
   new ({
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
-    [USER_TYPE.CMS_APPROVER]: CmsApprover,
+    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,

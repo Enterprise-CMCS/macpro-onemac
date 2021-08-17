@@ -1,6 +1,6 @@
 import StateSubmitter from "./StateSubmitter";
 import StateAdmin from "./StateAdmin";
-import CMSApprover from "./CMSApprover";
+import CMSRoleApprover from "./CMSRoleApprover";
 import SystemAdmin from "./SystemAdmin";
 import Helpdesk from "./Helpdesk";
 import { USER_TYPE } from "cmscommonlib";
@@ -24,8 +24,8 @@ export const getUserFunctions = (doneBy) => {
     case USER_TYPE.STATE_ADMIN:
       retval = StateAdmin;
       break;
-    case USER_TYPE.CMS_APPROVER:
-      retval = CMSApprover;
+    case USER_TYPE.CMS_ROLE_APPROVER:
+      retval = CMSRoleApprover;
       break;
     case USER_TYPE.SYSTEM_ADMIN:
       retval = SystemAdmin;

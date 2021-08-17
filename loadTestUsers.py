@@ -21,7 +21,7 @@ UNREGISTERED_USERS = [
         [
             "statesubmitter",
             "stateadmin",
-            "cmsapprover",
+            "cmsroleapprover",
             "cmsreviewer",
             "helpdesk",
         ],

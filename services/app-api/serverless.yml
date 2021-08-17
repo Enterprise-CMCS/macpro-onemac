@@ -198,12 +198,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getCmsApproverList:
-    handler: getCmsApproverList.main
+  getCmsRoleApproverList:
+    handler: getCmsRoleApproverList.main
     role: LambdaApiRole
     events:
       - http:
-          path: getCmsApprovers
+          path: getCmsRoleApprovers
           method: get
           cors: true
           authorizer: aws_iam

@@ -29,11 +29,11 @@ stateadminactive@cms.hhs.local
 stateadmindenied@cms.hhs.local
 stateadminrevoked@cms.hhs.local
 stateadminunregistered@cms.hhs.local
-cmsapproverpending@cms.hhs.local
-cmsapproveractive@cms.hhs.local
-cmsapproverdenied@cms.hhs.local
-cmsapproverrevoked@cms.hhs.local
-cmsapproverunregistered@cms.hhs.local
+cmsroleapproverpending@cms.hhs.local
+cmsroleapproveractive@cms.hhs.local
+cmsroleapproverdenied@cms.hhs.local
+cmsroleapproverrevoked@cms.hhs.local
+cmsroleapproverunregistered@cms.hhs.local
 ```
 
 For every build, a dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application. Developers need to setup their correct email in the Git configuration and have already committed changes to the repo. To see the list of emails added run the following command in the Git repository.

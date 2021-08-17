@@ -1,4 +1,4 @@
-import { USER_TYPES } from "./userTypes";
+import { USER_TYPE } from "cmscommonlib";
 import { getCurrentStatus } from "./user-util";
 
 /**
@@ -7,7 +7,7 @@ import { getCurrentStatus } from "./user-util";
  */
 class SystemAdmin {
   /**
-   * System Admin "scan for" returns CMS Approvers and Helpdesk Users
+   * System Admin "scan for" returns everyone but system admins
    * @returns {Object} Object of Scan Parameters for DynamnoDB Scan
    */
   getScanParams() {
@@ -15,7 +15,7 @@ class SystemAdmin {
       TableName: process.env.userTableName,
       FilterExpression: "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType": USER_TYPES.SYSTEM_ADMIN },
+      ExpressionAttributeValues: { ":userType": USER_TYPE.SYSTEM_ADMIN },
     };
     return scanParams;
   }
@@ -40,7 +40,7 @@ class SystemAdmin {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * System Admin gets all CMS Approvers, regardless of State
+   * System Admin gets all CMS Role Approvers, regardless of State
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
@@ -87,7 +87,7 @@ class SystemAdmin {
           i++;
         });
       }
-      // Helpdesk users and CMS Approvers must not have the history section
+      // Helpdesk users and CMS Role Approvers must not have the history section
       else {
         userRows.push({
           id: i,
