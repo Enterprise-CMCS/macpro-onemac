@@ -9,6 +9,7 @@ import {
   ChangeRequest,
   getUserRoleObj,
   USER_STATUS,
+  USER_TYPE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -40,13 +41,19 @@ const Dashboard = () => {
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
-    if (!userData?.type || !userData?.attributes) {
+
+    // Redirect new users to the signup flow.
+    const missingUserType = !userData?.type;
+    const missingOtherUserData =
+      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
+    if (missingUserType || missingOtherUserData) {
       history.replace("/signup", location.state);
       return;
     }
 
     let mounted = true;
 
+    // Load data from the backend for existing users.
     (async function onLoad() {
       try {
         const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
