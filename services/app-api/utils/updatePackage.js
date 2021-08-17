@@ -3,21 +3,7 @@ import dynamoDb from "../libs/dynamodb-lib";
 export default async function updatePackage(updateData) {
   const updatePk = updateData.packageId;
   const updateSk = "PACKAGE";
-  /*  var getPackageParams = {
-    TableName: process.env.oneMacTableName,
-    Key: {
-      pk: updatePk,
-      sk: updateSk,
-    },
-  };
 
-  dynamoDb
-    .get(getPackageParams)
-    .then((result) => {
-      if (!result.Item) {
-        throw new Error(`ItemNotFound`);
-      }
-*/
   const updatePackageParams = {
     TableName: process.env.oneMacTableName,
     Key: {

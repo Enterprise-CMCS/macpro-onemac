@@ -6,10 +6,10 @@ export const getAdminTypeByRole = (role) => {
   switch (role) {
     case USER_TYPE.STATE_ADMIN:
       return USER_TYPE.STATE_SUBMITTER;
-    case USER_TYPE.CMS_APPROVER:
+    case USER_TYPE.CMS_ROLE_APPROVER:
       return USER_TYPE.STATE_ADMIN;
     case USER_TYPE.SYSTEM_ADMIN:
-      return USER_TYPE.CMS_APPROVER;
+      return USER_TYPE.CMS_ROLE_APPROVER;
     default:
       return undefined;
   }
@@ -147,14 +147,14 @@ class UserDataApi {
   /**
    * Get all active CMS role approvers' contact info.
    */
-  async getCmsApprovers() {
+  async getCmsRoleApprovers() {
     try {
       return await API.get("oneMacAPI", "/getCmsApprovers");
     } catch (error) {
       handleApiError(
         error,
         "FETCH_ERROR",
-        "There was an error fetching the CMS approvers."
+        "There was an error fetching the CMS role approvers."
       );
     }
   }

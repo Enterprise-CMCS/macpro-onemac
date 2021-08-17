@@ -100,20 +100,8 @@ class WaiverAppK {
   }
 
   saveSubmission(data) {
-    const submitterName = data.user.firstName + " " + data.user.lastName;
-    const appkData = {
-      packageId: data.transmittalNumber,
-      packageType: "waiverappk",
-      packageStatus: "Submitted",
-      clockEndTimestamp: data.ninetyDayClockEnd,
-      submissionTimestamp: data.submittedAt,
-      attachments: data.uploads,
-      additionalInformation: data.summary,
-      submitterName: submitterName,
-      submitterEmail: data.user.email,
-    };
-
-    return newPackage(appkData);
+    data.packageStatus = "Submitted";
+    return newPackage(data);
   }
 }
 

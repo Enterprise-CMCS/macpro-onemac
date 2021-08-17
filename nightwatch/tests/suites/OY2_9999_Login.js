@@ -19,8 +19,8 @@ module.exports= {
         this['Login with state submitter user'](browser, browser.globals.state_admin);
     },
 
-    "Login with cms_approvers": function (browser) {
-        this['Login with state submitter user'](browser, browser.globals.cms_approvers);
+    "Login with cms_role_approvers": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_role_approvers);
     },
     "Login with cms_reviewers": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.cms_reviewers);
@@ -42,8 +42,8 @@ module.exports= {
         this['Login with state submitter user'](browser, browser.globals.state_admin_pending);
     },
 
-    "Login with cms_approvers pending user": function (browser) {
-        this['Login with state submitter user'](browser, browser.globals.cms_approvers_pending);
+    "Login with cms_role_approvers pending user": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_role_approvers_pending);
     },
 
     "Login with state submitter denied user": function (browser) {
@@ -54,7 +54,7 @@ module.exports= {
         this['Login with state submitter user'](browser, browser.globals.state_admin_denied);
     },
 
-    "Login with cms_approvers denied user": function (browser) {
-        this['Login with state submitter user'](browser, browser.globals.cms_approvers_denied);
+    "Login with cms_role_approvers denied user": function (browser) {
+        this['Login with state submitter user'](browser, browser.globals.cms_role_approvers_denied);
     },
 }

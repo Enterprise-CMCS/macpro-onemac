@@ -96,7 +96,6 @@ Resources:
                   - dynamodb:Query
                 Resource:
                   - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
-
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:

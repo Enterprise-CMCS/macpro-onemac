@@ -105,7 +105,7 @@ class CHIPSPARAI {
     return stateEmail;
   }
 
-  async saveSubmission(data) {
+  saveSubmission(data) {
     data.packageStatus = "RAI Response Submitted";
     return updatePackage(data);
   }
