@@ -19,7 +19,7 @@ class StateSubmitter {
    * State Submitters may not see user lists
    * @returns {String} null if ok to go, the response code if not
    */
-  canIRequestThis(doneBy) {
+  canIRequestThis() {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
@@ -37,10 +37,9 @@ class StateSubmitter {
    *
    * State Submitters should not get this far
    *
-   * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
    */
-  transformUserList(userResult) {
+  transformUserList() {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 }

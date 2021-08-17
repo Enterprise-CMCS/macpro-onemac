@@ -1,4 +1,4 @@
-import { USER_TYPES } from "./userTypes";
+import { USER_TYPE } from "cmscommonlib";
 import { getCurrentStatus } from "./user-util";
 
 /**
@@ -7,18 +7,15 @@ import { getCurrentStatus } from "./user-util";
  */
 class SystemAdmin {
   /**
-   * System Admin "scan for" returns CMS Approvers and Helpdesk Users
+   * System Admin "scan for" returns everyone but system admins
    * @returns {Object} Object of Scan Parameters for DynamnoDB Scan
    */
   getScanParams() {
     const scanParams = {
       TableName: process.env.userTableName,
-      FilterExpression: "#ty = :userType0 or #ty = :userType1",
+      FilterExpression: "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: {
-        ":userType0": USER_TYPES.CMS_APPROVER,
-        ":userType1": USER_TYPES.HELPDESK,
-      },
+      ExpressionAttributeValues: { ":userType": USER_TYPE.SYSTEM_ADMIN },
     };
     return scanParams;
   }
@@ -35,7 +32,7 @@ class SystemAdmin {
    * System Admins can do everything
    * @returns {String} null if ok to go, the response code if not
    */
-  canIRequestThis(doneBy) {
+  canIRequestThis() {
     return undefined;
   }
 
@@ -43,14 +40,14 @@ class SystemAdmin {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * System Admin gets all CMS Approvers, regardless of State
+   * System Admin gets all CMS Role Approvers, regardless of State
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
@@ -59,7 +56,7 @@ class SystemAdmin {
     if (!userResult.Items) return userRows;
 
     userResult.Items.forEach((oneUser) => {
-      // CMS Approvers must have the attribute section
+      // All users must have the attribute section
       if (!oneUser.attributes) {
         errorList.push(
           "Attributes data required for this role, but not found ",
@@ -67,16 +64,42 @@ class SystemAdmin {
         );
         return;
       }
+      if (oneUser.type === "statesubmitter" || oneUser.type === "stateadmin") {
+        oneUser.attributes.forEach((oneAttribute) => {
+          // State Admins and State Submitters must have the history section
+          if (!oneAttribute.history) {
+            errorList.push(
+              "History data required for this role, but not found ",
+              oneUser
+            );
+            return;
+          }
 
-      userRows.push({
-        id: i,
-        email: oneUser.id,
-        firstName: oneUser.firstName,
-        lastName: oneUser.lastName,
-        latest: getCurrentStatus(oneUser.attributes),
-        role: oneUser.type,
-      });
-      i++;
+          userRows.push({
+            id: i,
+            email: oneUser.id,
+            firstName: oneUser.firstName,
+            lastName: oneUser.lastName,
+            stateCode: oneAttribute.stateCode,
+            role: oneUser.type,
+            latest: getCurrentStatus(oneAttribute.history),
+          });
+          i++;
+        });
+      }
+      // Helpdesk users and CMS Role Approvers must not have the history section
+      else {
+        userRows.push({
+          id: i,
+          email: oneUser.id,
+          firstName: oneUser.firstName,
+          lastName: oneUser.lastName,
+          stateCode: "N/A",
+          role: oneUser.type,
+          latest: getCurrentStatus(oneUser.attributes),
+        });
+        i++;
+      }
     });
 
     console.log("error List is ", errorList);

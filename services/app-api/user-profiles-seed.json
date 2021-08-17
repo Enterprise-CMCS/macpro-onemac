@@ -9,8 +9,8 @@
     ],
     "firstName": "Arnold",
     "lastName": "Active",
-    "id": "cmsapproveractive@cms.hhs.local",
-    "type": "cmsapprover"
+    "id": "cmsroleapproveractive@cms.hhs.local",
+    "type": "cmsroleapprover"
   },
 
   {
@@ -37,8 +37,8 @@
     ],
     "firstName": "Debbie",
     "lastName": "Denied",
-    "id": "cmsapproverdenied@cms.hhs.local",
-    "type": "cmsapprover"
+    "id": "cmsroleapproverdenied@cms.hhs.local",
+    "type": "cmsroleapprover"
   },
 
   {
@@ -51,8 +51,8 @@
     ],
     "firstName": "Peter",
     "lastName": "Pending",
-    "id": "cmsapproverpending@cms.hhs.local",
-    "type": "cmsapprover"
+    "id": "cmsroleapproverpending@cms.hhs.local",
+    "type": "cmsroleapprover"
   },
 
   {
@@ -65,8 +65,8 @@
     ],
     "firstName": "Rhonda",
     "lastName": "Revoked",
-    "id": "cmsapproverrevoked@cms.hhs.local",
-    "type": "cmsapprover"
+    "id": "cmsroleapproverrevoked@cms.hhs.local",
+    "type": "cmsroleapprover"
   },
 
   {
@@ -483,14 +483,14 @@
       },
       {
         "date": 1617148287,
-        "doneBy": "cmsapprover@nightwatch.test",
+        "doneBy": "cmsroleapprover@nightwatch.test",
         "status": "pending"
       }
     ],
-    "firstName": "CMSApprover",
+    "firstName": "CMSroleapprover",
     "lastName": "Nightwatch",
-    "id": "cmsapprover@nightwatch.test",
-    "type": "cmsapprover"
+    "id": "cmsroleapprover@nightwatch.test",
+    "type": "cmsroleapprover"
   },
 
   {
@@ -539,7 +539,7 @@
         "history": [
           {
             "date": 1617149287,
-            "doneBy": "cmsapprover@nightwatch.test",
+            "doneBy": "cmsroleapprover@nightwatch.test",
             "status": "active"
           },
           {

@@ -3,15 +3,15 @@ import { getCurrentStatus } from "./user-util";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
- * CMS Approver specific functions.
+ * CMS Role Approver specific functions.
  *
- * all CMS Approvers manage all State Admin Users
+ * all CMS Role Approvers manage all State Admin Users
  *
  * @class
  */
-class CMSApprover {
+class CMSRoleApprover {
   /**
-   * CMS Approvers manage the State Admins
+   * CMS Role Approvers manage the State Admins
    * @returns {Object} Scan parameters for dynamodb
    */
   getScanParams() {
@@ -28,7 +28,7 @@ class CMSApprover {
   }
 
   /**
-   * CMS Approvers do NOT have a state
+   * CMS Role Approvers do NOT have a state
    * @returns {Boolean} false because we do not check if the states match
    */
   shouldICheckState() {
@@ -36,11 +36,11 @@ class CMSApprover {
   }
 
   /**
-   * CMS Approvers have to be active to see user lists
+   * CMS Role Approvers have to be active to see user lists
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
-    let myCurrentStatus = getCurrentStatus(doneBy.attributes).status;
+    const myCurrentStatus = getCurrentStatus(doneBy.attributes).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
         return RESPONSE_CODE.CALLING_USER_PENDING;
@@ -56,14 +56,14 @@ class CMSApprover {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * CMS Approver gets all State Admins, regardless of State
+   * CMS Role Approver gets all State Admins, regardless of State
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
@@ -124,6 +124,6 @@ class CMSApprover {
   }
 }
 
-const instance = new CMSApprover();
+const instance = new CMSRoleApprover();
 Object.freeze(instance);
 export default instance;

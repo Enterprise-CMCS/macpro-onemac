@@ -9,8 +9,8 @@ import {
   statesubmitterRevokedInitialAuthState,
   stateAdminRevokedInitialAuthState,
   stateAdminDeniedInitialAuthState,
-  cmsApproverDeniedInitialAuthState,
-  cmsApproverRevokedInitialAuthState,
+  cmsRoleApproverDeniedInitialAuthState,
+  cmsRoleApproverRevokedInitialAuthState,
 } from "../libs/testDataAppContext";
 import Dashboard from "../containers/Dashboard";
 
@@ -20,17 +20,17 @@ const statesubmitterRevokedDeniedMsg =
   "Sorry, you don't have access. Please contact the State System Admin with any questions or visit your user profile for more information.";
 const stateAdminRevokedDeniedMsg =
   "Sorry, you don't have access. Please contact the CMS Role Approver with any questions, or visit your user profile for more information.";
-const cmsApproverRevokedDeniedMsg =
+const cmsRoleApproverRevokedDeniedMsg =
   "Sorry, you don't have access. Please contact the CMS System Admin with any questions";
-const cmsApproverRevokedDeniedMsgProfileLink = "href=";
+const cmsRoleApproverRevokedDeniedMsgProfileLink = "href=";
 
-it("renders CMS Approver Denied Message", async () => {
+it("renders CMS Role Approver Denied Message", async () => {
   const promise = Promise.resolve([{ isLoading: false }]);
 
   render(
     <AppContext.Provider
       value={{
-        ...cmsApproverDeniedInitialAuthState,
+        ...cmsRoleApproverDeniedInitialAuthState,
       }}
     >
       <Dashboard />
@@ -38,7 +38,7 @@ it("renders CMS Approver Denied Message", async () => {
     { wrapper: MemoryRouter }
   );
 
-  screen.getByText(cmsApproverRevokedDeniedMsg, { exact: false }).click();
+  screen.getByText(cmsRoleApproverRevokedDeniedMsg, { exact: false }).click();
 
   await act(() => promise);
 });

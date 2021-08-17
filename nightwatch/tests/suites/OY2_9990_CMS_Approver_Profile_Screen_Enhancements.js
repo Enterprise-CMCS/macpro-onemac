@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with cms_approvers'](browser);
+        login['Login with cms_role_approvers'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +14,7 @@ module.exports = {
     },
 
     
-    'CMS Approver User Profile Screen Enhancements': function (browser) {
+    'CMS Role Approver User Profile Screen Enhancements': function (browser) {
         //check on Submission List on the homepage
         let user_management_title = "//h1";
         let name_title = "(//tr[@role='row']/th)[1]";

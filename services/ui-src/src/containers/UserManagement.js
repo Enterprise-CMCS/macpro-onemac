@@ -1,6 +1,13 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory, Link } from "react-router-dom";
-import { RESPONSE_CODE, ROUTES, USER_TYPE, territoryMap } from "cmscommonlib";
+import {
+  APPROVING_USER_TYPE,
+  RESPONSE_CODE,
+  ROUTES,
+  USER_TYPE,
+  roleLabels,
+  territoryMap,
+} from "cmscommonlib";
 import { format } from "date-fns";
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable from "../components/PortalTable";
@@ -11,7 +18,6 @@ import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
-import { roleLabels } from "../libs/roleLib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
@@ -83,7 +89,7 @@ const UserManagement = () => {
   const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
-      userProfile.userData.type === USER_TYPE.CMS_APPROVER ||
+      userProfile.userData.type === USER_TYPE.CMS_ROLE_APPROVER ||
         userProfile.userData.type === USER_TYPE.HELPDESK
     );
     UserDataApi.getMyUserList(userProfile.email)
@@ -229,17 +235,18 @@ const UserManagement = () => {
   );
 
   const renderActions = useCallback(
-    ({ row }) => {
-      return (
+    ({ row }) =>
+      APPROVING_USER_TYPE[row.original.role] === userProfile.userData.type ? (
         <PopupMenu
           selectedRow={row}
           userEmail={row.values.email}
           menuItems={menuItemMap[row.values.status] ?? []}
           handleSelected={onPopupAction}
         />
-      );
-    },
-    [onPopupAction]
+      ) : (
+        <></>
+      ),
+    [onPopupAction, userProfile?.userData?.type]
   );
 
   const columns = useMemo(() => {
@@ -289,7 +296,7 @@ const UserManagement = () => {
       },
       userProfile.userData.type !== USER_TYPE.HELPDESK
         ? {
-            Header: "Personnel Actions",
+            Header: "Actions",
             disableSortBy: true,
             Cell: renderActions,
             id: "personnelActions",
@@ -352,8 +359,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          userProfile.userData.type === USER_TYPE.HELPDESK &&
-          isUserActive &&
+          ((userProfile.userData.type === USER_TYPE.HELPDESK && isUserActive) ||
+            userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
           csvExportSubmissions
         }
       />

@@ -1,6 +1,5 @@
-import { USER_TYPES } from "./userTypes";
 import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
 import { USER_STATUS } from "./userStatus";
 
 /**
@@ -18,7 +17,7 @@ class StateAdmin {
       TableName: process.env.userTableName,
       FilterExpression: "#ty = :userType0",
       ExpressionAttributeNames: { "#ty": "type" },
-      ExpressionAttributeValues: { ":userType0": USER_TYPES.STATE_SUBMITTER },
+      ExpressionAttributeValues: { ":userType0": USER_TYPE.STATE_SUBMITTER },
     };
     return scanParams;
   }
@@ -28,7 +27,9 @@ class StateAdmin {
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
-    let myCurrentStatus = getCurrentStatus(doneBy.attributes[0].history).status;
+    const myCurrentStatus = getCurrentStatus(
+      doneBy.attributes[0].history
+    ).status;
     switch (myCurrentStatus) {
       case USER_STATUS.PENDING:
         return RESPONSE_CODE.CALLING_USER_PENDING;
@@ -58,8 +59,8 @@ class StateAdmin {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult, stateList) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
