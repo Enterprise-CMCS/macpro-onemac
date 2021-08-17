@@ -4,6 +4,7 @@
   "version": "1.0.0",
   "scripts": {},
   "dependencies": {
+    "cmscommonlib": "file:../common",
     "kafka-node": "^5.0.0",
     "kafkajs": "^1.14.0",
     "lodash": "^4.17.20"
