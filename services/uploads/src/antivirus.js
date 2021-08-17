@@ -109,7 +109,7 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-  var aclParams = {
+  const aclParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
     ACL: 'public-read'
