@@ -73,17 +73,17 @@ function myHandler(event) {
     });
 
     const SEATOOL_STATUS = {
-      PENDING: "1",
-      PENDING_RAI: "2",
-      PENDING_OFF_THE_CLOCK: "3",
-      APPROVED: "4",
-      DISAPPROVED: "5",
-      WITHDRAWN: "6",
-      TERMINATED: "7",
-      PENDING_CONCURRANCE: "8",
-      UNSUBMITTED: "9",
-      PENDING_FINANCE: "10",
-      PENDING_APPROVAL: "11",
+      PENDING: "Pending",
+      PENDING_RAI: "Pending-RAI",
+      PENDING_OFF_THE_CLOCK: "Pending-Off the Clock",
+      APPROVED: "Approved",
+      DISAPPROVED: "Disapproved",
+      WITHDRAWN: "Withdrawn",
+      TERMINATED: "Terminated",
+      PENDING_CONCURRANCE: "Pending-Concurrence",
+      UNSUBMITTED: "Unsubmitted",
+      PENDING_FINANCE: "Pending-Finance",
+      PENDING_APPROVAL: "Pending-Approval",
     };
 
     // check if the SEATool updates should be reflected in OneMAC
@@ -100,14 +100,22 @@ function myHandler(event) {
       [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
       [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
     };
-
+/*
     const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
       [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
       [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
       [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER,
       [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
     };
-    
+*/
+
+const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
+  [SEATOOL_PLAN_TYPE.CHIP_SPA]: "chipspa",
+  [SEATOOL_PLAN_TYPE.SPA]: "spa",
+  [SEATOOL_PLAN_TYPE.WAIVER]: "waiver",
+  [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: "waiverappk",
+};
+
     SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
 
     // update OneMAC Package Item
@@ -133,22 +141,26 @@ function myHandler(event) {
     // only update clock if new Clock is sent
     if (SEAToolData.clockEndTimestamp) {
       updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
-      SEAToolData.currentClockEnd;
-      updatePackageParams.UpdateExpression.concat(
-        ", currentClockEnd = :newClockEnd"
-      );
+      SEAToolData.clockEndTimestamp;
+      updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
     }
 
     // only update status if new Status is sent
     if (SEAToolData.packageStatus) {
-      updatePackageParams.ExpressionAttributeValues[":newStatus"] =
-      SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus];
-      updatePackageParams.UpdateExpression.concat(",currentStatus = :newStatus");
+      let newStatus = `SEATool Status: ${SEAToolData.packageStatus}`;
+      if (SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus])
+        newStatus = SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus];
+      updatePackageParams.ExpressionAttributeValues[":newStatus"] = newStatus;
+      updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
     }
 
-    ddb.update(updatePackageParams, function(err) {
-      console.log(`Error happened updating DB:  ${err.message}`);
-    });
+    ddb.update(updatePackageParams, function(err, data) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Success", JSON.parse(data));
+        console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+    }});
 
   }
 }
