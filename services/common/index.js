@@ -183,6 +183,7 @@ class CmsRoleApprover extends Role {
 class SystemAdmin extends Role {
   constructor() {
     super();
+    this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
   }
