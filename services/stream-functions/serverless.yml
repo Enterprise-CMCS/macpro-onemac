@@ -85,8 +85,7 @@ functions:
     role: LamdaSinkMskToDynamoRole
     environment:
       spaIdTableName: ${self:custom.spaIdTableName}
-      oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
-  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+      oneMacTableName: ${self:custom.oneMacTableName}
     maximumRetryAttempts: 2
     memorySize: 1024
   configureConnectors:
