@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-// import { ChangeRequest } from "cmscommonlib";
+const { ChangeRequest } = require("cmscommonlib");
 
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
@@ -100,21 +100,21 @@ function myHandler(event) {
       [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
       [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
     };
-/*
+
     const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
       [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
       [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
       [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER,
       [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
     };
-*/
-
+/*
 const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
   [SEATOOL_PLAN_TYPE.CHIP_SPA]: "chipspa",
   [SEATOOL_PLAN_TYPE.SPA]: "spa",
   [SEATOOL_PLAN_TYPE.WAIVER]: "waiver",
   [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: "waiverappk",
 };
+*/
 
     SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
 
