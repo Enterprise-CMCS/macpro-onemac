@@ -69,7 +69,6 @@ provider:
     spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
     userTableName: ${self:custom.userTableName}
-    oneMacTableName: ${self:custom.oneMacTableName}
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
