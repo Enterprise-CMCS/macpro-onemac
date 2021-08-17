@@ -1,8 +1,11 @@
+import { USER_STATUS } from "cmscommonlib";
+
 export const stateSubmitterInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
   isValidRoute: true,
+  userStatus: USER_STATUS.ACTIVE,
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
