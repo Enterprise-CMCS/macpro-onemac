@@ -69,6 +69,12 @@ export const isActive = (userData) => {
   }
 };
 
+/**
+ * Gets user status if user status is PENDING or ACTIVE. RETURNS NULL IF USER STATUS IS DENIED OR REVOKED.
+ * @param {Object} userData user data
+ * @return {String} the user status. Possible return values are pending, active, or null.
+ */
+
 export const getUserStatus = (userData) => {
   const hasNoUserData = !userData || Object.keys(userData).length === 0;
 
