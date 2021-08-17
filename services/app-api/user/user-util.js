@@ -55,11 +55,15 @@ const isLatestAttributeActive = (attr) => {
 export const getAuthorizedStateList = (user) => {
   const tempStateList = [];
 
-  if (!user.attributes) return tempStateList;
+  if (
+    !user?.attributes ||
+    (!user?.attributes?.history && isLatestAttributeActive(user.attributes))
+  )
+    return "All";
 
   user.attributes.forEach((attribute) => {
     isLatestAttributeActive(attribute.history)
-      ? tempStateList.push(attribute.stateCode)
+      ? tempStateList.push(attribute?.stateCode)
       : null;
   });
 
