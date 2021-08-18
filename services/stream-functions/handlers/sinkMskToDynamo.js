@@ -1,6 +1,8 @@
 const AWS = require('aws-sdk');
 const { ChangeRequest } = require("cmscommonlib");
 
+const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
+
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
   SPA: "125",
@@ -17,6 +19,7 @@ function myHandler(event) {
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
 
   const SEAToolId = value.payload.ID_Number;
+  if (!SEAToolId) return;
 
   let packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
@@ -26,10 +29,10 @@ function myHandler(event) {
   const planType = planTypeList.find( (pt) => (pt === value.payload.Plan_Type.toString()));
   if (!planType) return;
 
-  let stateCode = 'MI';
+  let stateCode;
   if (value.payload.State_Code) {
     stateCode = value.payload.State_Code.toString();
-  }
+  } else stateCode = SEAToolId.substring(0,2);
   const SEAToolData = {
     'packageStatus': packageStatusID,
     'stateCode': stateCode,
@@ -39,7 +42,6 @@ function myHandler(event) {
   };
   if (SEAToolId != undefined) {
     AWS.config.update({region: 'us-east-1'});
-    const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
     // update the SEATool Entry
     const updateSEAToolParams = {
