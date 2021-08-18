@@ -109,9 +109,19 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
+  const aclParams = {
+    Bucket: s3ObjectBucket,
+    Key: s3ObjectKey,
+    ACL: 'public-read'
+  };
+
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
+    s3.putObjectAcl(aclParams, function(err, data) {
+      if (err) console.log(err, err.stack); // an error occurred
+      else     console.log(data);           // successful response
+    });
   } catch (err) {
     console.log(err);
   }
@@ -135,9 +145,14 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
+
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
+     //s3.putObjectAcl(aclParams, function(err, data) {
+       //if (err) console.log(err, err.stack); // an error occurred
+       //else     console.log(data);           // successful response
+    //});
   } catch (err) {
     console.log(err);
   }
