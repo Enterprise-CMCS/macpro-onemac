@@ -13,7 +13,6 @@ import {
   territoryList,
 } from "cmscommonlib";
 import { useAppContext } from "../libs/contextLib";
-import { userTypes } from "../libs/userLib";
 import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import UserDataApi from "../utils/UserDataApi";
 
@@ -50,7 +49,7 @@ const transformAccesses = (user = {}) => {
       }));
 
     case ROLES.CMS_REVIEWER:
-    case ROLES.CMS_APPROVER:
+    case ROLES.CMS_ROLE_APPROVER:
     case ROLES.HELPDESK:
       return [{ status: latestAccessStatus(user) }];
 
@@ -92,7 +91,7 @@ export const AccessDisplay = ({
       accessHeading = "State Access Management";
       break;
     case ROLES.CMS_REVIEWER:
-    case ROLES.CMS_APPROVER:
+    case ROLES.CMS_ROLE_APPROVER:
     case ROLES.HELPDESK:
       accessHeading = "Status";
       break;
@@ -203,7 +202,7 @@ const UserPage = () => {
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
   let userType = userData?.type ?? "user";
-  const userTypeDisplayText = userTypes[userType];
+  const userTypeDisplayText = roleLabels[userType];
 
   useEffect(() => {
     if (!isReadOnly) {
@@ -372,11 +371,11 @@ const UserPage = () => {
 
           case ROLES.CMS_REVIEWER:
           case ROLES.STATE_ADMIN: {
-            contacts = await UserDataApi.getCmsApprovers();
+            contacts = await UserDataApi.getCmsRoleApprovers();
             break;
           }
           case ROLES.HELPDESK:
-          case ROLES.CMS_APPROVER: {
+          case ROLES.CMS_ROLE_APPROVER: {
             contacts = await UserDataApi.getCmsSystemAdmins();
             break;
           }

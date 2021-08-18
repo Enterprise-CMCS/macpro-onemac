@@ -15,7 +15,7 @@ module.exports = {
     },
 
     
-    'CMS Approver User Profile Screen Enhancements': function (browser) {
+    'CMS Role Approver User Profile Screen Enhancements': function (browser) {
         //check on Submission List on the homepage
         let user_management_title = "//h1";
         let name_title = "(//tr[@role='row']/th)[1]";

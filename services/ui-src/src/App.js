@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Auth } from "aws-amplify";
 import { AppContext } from "./libs/contextLib";
 import { devUsers } from "./libs/devUsers";
+import { getUserStatus } from "./libs/userLib";
 import UserDataApi from "./utils/UserDataApi";
 import Routes from "./Routes";
 import Header from "./components/Header";
@@ -34,6 +35,7 @@ function App() {
     let userAuthenticationStatus = false;
     let isDev = false;
     let tempUserProfile;
+    let userStatus;
 
     try {
       // Get authenticated user's info from cognito
@@ -54,6 +56,8 @@ function App() {
       const userData = await UserDataApi.userProfile(tempUserProfile.email);
       tempUserProfile.userData = userData;
 
+      userStatus = getUserStatus(userData);
+
       // Set isDev for dev users.
       if (isDeveloper || devUsers.includes(tempUserProfile.email)) {
         isDev = true;
@@ -72,6 +76,7 @@ function App() {
       isAuthenticated: userAuthenticationStatus,
       isLoggedInAsDeveloper: isDev,
       userProfile: tempUserProfile,
+      userStatus: userStatus,
     });
   }
 
@@ -94,19 +99,19 @@ function App() {
 
   return (
     !authState.isAuthenticating && (
-      <div>
-        <AppContext.Provider
-          value={{
-            ...authState,
-            setUserInfo,
-            updatePhoneNumber,
-          }}
-        >
+      <AppContext.Provider
+        value={{
+          ...authState,
+          setUserInfo,
+          updatePhoneNumber,
+        }}
+      >
+        <div className="header-and-content">
           <Header />
           <Routes />
-        </AppContext.Provider>
+        </div>
         <Footer />
-      </div>
+      </AppContext.Provider>
     )
   );
 }

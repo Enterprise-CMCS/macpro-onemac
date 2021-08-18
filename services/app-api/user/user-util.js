@@ -1,6 +1,6 @@
 import StateSubmitter from "./StateSubmitter";
 import StateAdmin from "./StateAdmin";
-import CMSApprover from "./CMSApprover";
+import CMSRoleApprover from "./CMSRoleApprover";
 import SystemAdmin from "./SystemAdmin";
 import Helpdesk from "./Helpdesk";
 import { USER_TYPE } from "cmscommonlib";
@@ -24,8 +24,8 @@ export const getUserFunctions = (doneBy) => {
     case USER_TYPE.STATE_ADMIN:
       retval = StateAdmin;
       break;
-    case USER_TYPE.CMS_APPROVER:
-      retval = CMSApprover;
+    case USER_TYPE.CMS_ROLE_APPROVER:
+      retval = CMSRoleApprover;
       break;
     case USER_TYPE.SYSTEM_ADMIN:
       retval = SystemAdmin;
@@ -55,11 +55,15 @@ const isLatestAttributeActive = (attr) => {
 export const getAuthorizedStateList = (user) => {
   const tempStateList = [];
 
-  if (!user.attributes) return tempStateList;
+  if (
+    !user?.attributes ||
+    (!user?.attributes?.history && isLatestAttributeActive(user.attributes))
+  )
+    return "All";
 
   user.attributes.forEach((attribute) => {
     isLatestAttributeActive(attribute.history)
-      ? tempStateList.push(attribute.stateCode)
+      ? tempStateList.push(attribute?.stateCode)
       : null;
   });
 

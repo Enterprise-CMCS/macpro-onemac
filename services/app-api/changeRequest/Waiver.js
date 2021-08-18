@@ -1,5 +1,6 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
-import dynamoDb from "../libs/dynamodb-lib";
+import newPackage from "../utils/newPackage";
+import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
@@ -14,34 +15,21 @@ class Waiver {
    */
   async fieldsValid(data) {
     let areFieldsValid = true;
-    let idExists = null;
     let whyNot = "";
-
-    const params = {
-      TableName: process.env.spaIdTableName,
-      // 'Key' defines the partition key and sort key of the item to be retrieved
-      // - 'id': change request ID
-      Key: {
-        id: data.transmittalNumber,
-      },
-    };
-    console.log("the params for checking", params);
+    let doesExist = false;
     try {
-      const result = await dynamoDb.get(params);
-
-      if (result.Item) {
-        console.log("the Item exists", result);
-        idExists = true;
-      } else {
-        console.log("result.Item does not exist");
-        idExists = false;
-      }
+      doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
-      console.log("packageExists got an error: ", error);
+      console.log("Waiver packageExists call error: ", error);
+      throw error;
     }
-
+    if (doesExist) {
+      console.log("the Item exists");
+    } else {
+      console.log("result.Item does not exist");
+    }
     // NEW action type should have NEW IDs
-    if (data.actionType === "new" && idExists) {
+    if (data.actionType === "new" && doesExist) {
       areFieldsValid = false;
       whyNot = RESPONSE_CODE.DUPLICATE_ID;
     }
@@ -138,6 +126,11 @@ class Waiver {
     `;
 
     return stateEmail;
+  }
+
+  async saveSubmission(data) {
+    data.packageStatus = "Submitted";
+    return newPackage(data);
   }
 }
 

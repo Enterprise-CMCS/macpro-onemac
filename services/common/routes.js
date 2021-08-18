@@ -6,6 +6,7 @@ export const ROUTES = {
   CHIP_SPA: "/chipspa",
   CHIP_SPA_RAI: "/chipsparai",
   DASHBOARD: "/dashboard",
+  PACKAGE_LIST: "/packagelist",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
   FAQ_TOP: "/FAQ/#top",

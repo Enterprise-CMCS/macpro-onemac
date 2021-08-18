@@ -86,7 +86,8 @@ async function getDataFromDB(user) {
     let keepSearching;
     if (
       user.type === USER_TYPE.HELPDESK ||
-      user.type === USER_TYPE.CMS_REVIEWER
+      user.type === USER_TYPE.CMS_REVIEWER ||
+      user.type === USER_TYPE.SYSTEM_ADMIN
     ) {
       keepSearching = true;
       while (keepSearching == true) {

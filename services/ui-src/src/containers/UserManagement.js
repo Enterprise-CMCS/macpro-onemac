@@ -4,7 +4,9 @@ import {
   APPROVING_USER_TYPE,
   RESPONSE_CODE,
   ROUTES,
+  USER_STATUS,
   USER_TYPE,
+  roleLabels,
   territoryMap,
 } from "cmscommonlib";
 import { format } from "date-fns";
@@ -17,12 +19,9 @@ import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
-import { roleLabels } from "../libs/roleLib";
 import {
   pendingMessage,
   deniedOrRevokedMessage,
-  isPending,
-  isActive,
 } from "../libs/userLib";
 import { Button } from "@cmsgov/design-system";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
@@ -79,7 +78,7 @@ const alertCodes = {
 const UserManagement = () => {
   const [userList, setUserList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile } = useAppContext();
+  const { userProfile, userStatus } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
@@ -89,13 +88,13 @@ const UserManagement = () => {
   const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
-      userProfile.userData.type === USER_TYPE.CMS_APPROVER ||
+      userProfile.userData.type === USER_TYPE.CMS_ROLE_APPROVER ||
         userProfile.userData.type === USER_TYPE.HELPDESK
     );
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         if (typeof ul === "string") {
-          if (!isPending(userProfile.userData)) setAlertCode(ul);
+          if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
         setUserList(ul);
@@ -104,7 +103,7 @@ const UserManagement = () => {
         console.log("Error while fetching user's list.", error);
         setAlertCode(RESPONSE_CODE[error.message]);
       });
-  }, [userProfile.email, userProfile.userData]);
+  }, [userProfile.email, userProfile.userData, userStatus]);
 
   // Load the data from the backend.
   useEffect(() => {
@@ -296,7 +295,7 @@ const UserManagement = () => {
       },
       userProfile.userData.type !== USER_TYPE.HELPDESK
         ? {
-            Header: "Personnel Actions",
+            Header: "Actions",
             disableSortBy: true,
             Cell: renderActions,
             id: "personnelActions",
@@ -350,8 +349,40 @@ const UserManagement = () => {
       </svg>
     </Button>
   );
-  const isUserActive =
-    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
+
+  function renderUserList() {
+    if (userStatus === USER_STATUS.PENDING) {
+      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
+    }
+
+    const userStatusNotActive =
+      !userStatus || userStatus !== USER_STATUS.ACTIVE;
+    if (userStatusNotActive) {
+      return (
+        <EmptyList
+          message={deniedOrRevokedMessage[userProfile.userData.type]}
+        />
+      );
+    }
+
+    const userListExists = userList && userList.length !== 0;
+    const hasUsersToManage =
+      userListExists && userList !== RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    return (
+      <LoadingScreen isLoading={isLoading}>
+        {hasUsersToManage ? (
+          <PortalTable
+            className="user-table"
+            columns={columns}
+            data={userList}
+            initialState={initialTableState}
+          />
+        ) : (
+          <EmptyList message="You have no Users to manage at this time." />
+        )}
+      </LoadingScreen>
+    );
+  }
 
   // Render the dashboard
   return (
@@ -359,8 +390,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          ((userProfile.userData.type === USER_TYPE.HELPDESK && isUserActive) ||
-            userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
+          (userProfile.userData.type === USER_TYPE.HELPDESK || userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
+          userStatus === USER_STATUS.ACTIVE &&
           csvExportSubmissions
         }
       />
@@ -369,34 +400,7 @@ const UserManagement = () => {
         personalizedString={doneToName}
         closeCallback={closedAlert}
       />
-      <div className="dashboard-container">
-        {userProfile &&
-        userProfile.userData &&
-        userProfile.userData.attributes &&
-        userProfile.userData.attributes.length !== 0 &&
-        !isActive(userProfile.userData) ? (
-          isPending(userProfile.userData) ? (
-            <EmptyList message={pendingMessage[userProfile.userData.type]} />
-          ) : (
-            <EmptyList
-              message={deniedOrRevokedMessage[userProfile.userData.type]}
-            />
-          )
-        ) : (
-          <LoadingScreen isLoading={isLoading}>
-            {userList && userList.length !== 0 && userList !== "UR040" ? (
-              <PortalTable
-                className="user-table"
-                columns={columns}
-                data={userList}
-                initialState={initialTableState}
-              />
-            ) : (
-              <EmptyList message="You have no Users to manage at this time." />
-            )}
-          </LoadingScreen>
-        )}
-      </div>
+      <div className="dashboard-container">{renderUserList()}</div>
     </div>
   );
 };

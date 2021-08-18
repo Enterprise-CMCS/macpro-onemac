@@ -1,19 +1,10 @@
 import { USER_TYPE, USER_STATUS } from "cmscommonlib";
 
-export const userTypes = {
-  [USER_TYPE.STATE_SUBMITTER]: "State Submitter",
-  [USER_TYPE.STATE_ADMIN]: "State Admin",
-  [USER_TYPE.CMS_APPROVER]: "CMS Role Approver",
-  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
-  [USER_TYPE.HELPDESK]: "Helpdesk User",
-  [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
-};
-
 export const pendingMessage = {
   [USER_TYPE.STATE_SUBMITTER]:
     "Your system access is pending approval. Contact your State System Admin with any questions.",
   [USER_TYPE.STATE_ADMIN]: "Your system access is pending approval.",
-  [USER_TYPE.CMS_APPROVER]:
+  [USER_TYPE.CMS_ROLE_APPROVER]:
     "Your system access is pending approval. Contact the CMS System Admin with any questions.",
   [USER_TYPE.CMS_REVIEWER]:
     "Your system access is pending approval. Contact the CMS Role Approver with any questions.",
@@ -28,7 +19,7 @@ export const deniedOrRevokedMessage = {
     "Sorry, you don't have access. Please contact the State System Admin with any questions",
   [USER_TYPE.STATE_ADMIN]:
     "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
-  [USER_TYPE.CMS_APPROVER]:
+  [USER_TYPE.CMS_ROLE_APPROVER]:
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
   [USER_TYPE.CMS_REVIEWER]:
     "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
@@ -60,7 +51,7 @@ export const isPending = (userData) => {
 };
 
 /**
- * is this CMS Approver active or does State Submitter / State Admin have any active territories?
+ * is this CMS Role Approver active or does State Submitter / State Admin have any active territories?
  * @param {Object} userData object of history instance
  * @return {Boolean} a boolean on status pending
  */
@@ -77,6 +68,32 @@ export const isActive = (userData) => {
     return userData.attributes[0].status === USER_STATUS.ACTIVE;
   }
 };
+
+/**
+ * Gets user status if user status is PENDING or ACTIVE. RETURNS NULL IF USER STATUS IS DENIED OR REVOKED.
+ * @param {Object} userData user data
+ * @return {String} the user status. Possible return values are pending, active, or null.
+ */
+
+export const getUserStatus = (userData) => {
+  const hasNoUserData = !userData || Object.keys(userData).length === 0;
+
+  if (hasNoUserData) {
+    return null;
+  }
+
+  // System admins are active by default since they are hardcoded into the data via seeding.
+  if (userData.type === USER_TYPE.SYSTEM_ADMIN) {
+    return USER_STATUS.ACTIVE;
+  } else if (isActive(userData)) {
+    return USER_STATUS.ACTIVE;
+  } else if (isPending(userData)) {
+    return USER_STATUS.PENDING;
+  } else {
+    return null;
+  }
+};
+
 /**
  * Sort history of userData in descending order.
  * @param {Object} a object of history instance

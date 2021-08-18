@@ -9,6 +9,7 @@ import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import { GroupAndDivision } from "./containers/GroupAndDivision";
 import Dashboard from "./containers/Dashboard";
+import PackageList from "./containers/PackageList";
 import UserManagement from "./containers/UserManagement";
 import { useAppContext } from "./libs/contextLib";
 import Metrics from "./containers/Metrics";
@@ -99,6 +100,15 @@ export default function DynamicRoutes() {
       <Route exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList />
         ) : userRoleObj.canAccessUserManagement ? (
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         ) : (

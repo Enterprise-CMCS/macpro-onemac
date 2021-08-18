@@ -3,7 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { ROLES, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
@@ -33,7 +33,10 @@ function StateUserSignup() {
 }
 
 function CMSSignup() {
-  const [, onClickCMS] = useSignupCallback("cmsapprover", createAttribute);
+  const [, onClickCMS] = useSignupCallback(
+    ROLES.CMS_ROLE_APPROVER,
+    createAttribute
+  );
 
   const CMS_CHOICES = [
     {

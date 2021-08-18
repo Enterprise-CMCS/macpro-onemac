@@ -49,8 +49,8 @@ module.exports = {
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
-                cms_approvers: {
-                    username: "cmsapprover@nightwatch.test",
+                cms_role_approvers: {
+                    username: "cmsroleapprover@nightwatch.test",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
@@ -77,8 +77,8 @@ module.exports = {
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
-                cms_approvers_pending: {
-                    username: "cmsapproverpending@cms.hhs.local",
+                cms_role_approvers_pending: {
+                    username: "cmsroleapproverpending@cms.hhs.local",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
@@ -92,8 +92,8 @@ module.exports = {
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
-                cms_approvers_denied: {
-                    username: "cmsapproverdenied@cms.hhs.local",
+                cms_role_approvers_denied: {
+                    username: "cmsroleapproverdenied@cms.hhs.local",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
               

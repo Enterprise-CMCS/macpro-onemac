@@ -1,14 +1,13 @@
 import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
-import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
+import { format } from "date-fns";
 
 import {
   RESPONSE_CODE,
   ROUTES,
   ChangeRequest,
   getUserRoleObj,
-  USER_STATUS,
   USER_TYPE,
 } from "cmscommonlib";
 
@@ -17,22 +16,23 @@ import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import PackageAPI from "../utils/PackageApi";
 import { useAppContext } from "../libs/contextLib";
-import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
+import {
+  pendingMessage,
+  deniedOrRevokedMessage,
+  isPending,
+  isActive,
+} from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 /**
  * Component containing dashboard
  */
-const Dashboard = () => {
+const PackageList = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const {
-    userStatus,
-    userProfile,
-    userProfile: { userData } = {},
-  } = useAppContext();
+  const { userProfile, userProfile: { userData } = {} } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
@@ -41,27 +41,19 @@ const Dashboard = () => {
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
-
-    // Redirect new users to the signup flow.
-    const missingUserType = !userData?.type;
-    const missingOtherUserData =
-      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (missingUserType || missingOtherUserData) {
+    if (!userData?.type || !userData?.attributes) {
       history.replace("/signup", location.state);
       return;
     }
 
     let mounted = true;
 
-    // Load data from the backend for existing users.
     (async function onLoad() {
       try {
-        const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
-          userProfile.email
-        );
+        const data = await PackageAPI.getMyPackages(userProfile.email);
 
         if (typeof data === "string") throw data;
-
+        console.log("the data returned is: ", data);
         if (mounted) setChangeRequestList(data);
         if (mounted) setIsLoading(false);
       } catch (error) {
@@ -78,7 +70,7 @@ const Dashboard = () => {
   const renderId = useCallback(
     ({ row, value }) => (
       <Link
-        to={`/${row.original.type}/${row.original.id}/${row.original.userId}`}
+        to={`/${row.original.packageType}/${row.original.submissionId}/${row.original.submitterId}`}
       >
         {value}
       </Link>
@@ -87,7 +79,7 @@ const Dashboard = () => {
   );
 
   const getType = useCallback(
-    ({ type }) =>
+    ({ packageType }) =>
       ({
         [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
         [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
@@ -97,7 +89,7 @@ const Dashboard = () => {
         [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
         [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-      }[type] ?? []),
+      }[packageType] ?? []),
     []
   );
 
@@ -106,11 +98,19 @@ const Dashboard = () => {
     []
   );
 
+  const renderState = useCallback(({ value }) => {
+    if (!value) {
+      return "--";
+    } else {
+      return value.toString().substring(0, 2);
+    }
+  }, []);
+
   const renderName = useCallback(
     ({ value, row }) => (
       <Link
         className="user-name"
-        to={`${ROUTES.PROFILE}/${row.original.user.email}`}
+        to={`${ROUTES.PROFILE}/${row.original.submitterEmail}`}
       >
         {value}
       </Link>
@@ -130,38 +130,44 @@ const Dashboard = () => {
     () => [
       {
         Header: "ID/Number",
-        accessor: "transmittalNumber",
+        accessor: "packageId",
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
         accessor: getType,
-        id: "type",
+        id: "packageType",
         Cell: renderType,
       },
       {
         Header: "State",
-        accessor: "territory",
+        accessor: "packageId",
+        id: "territory",
+        Cell: renderState,
+      },
+      {
+        Header: "Status",
+        accessor: "currentStatus",
+        id: "packageStatus",
       },
       {
         Header: "Date Submitted",
-        accessor: "submittedAt",
+        accessor: "submissionTimestamp",
         Cell: renderDate,
       },
       {
         Header: "Submitted By",
-        accessor: ({ user: { firstName, lastName } = {} }) =>
-          [firstName, lastName].filter(Boolean).join(" "),
+        accessor: "submitterName",
         id: "submitter",
         Cell: renderName,
       },
     ],
-    [getType, renderDate, renderId, renderName, renderType]
+    [getType, renderState, renderId, renderType, renderDate, renderName]
   );
 
   const initialTableState = useMemo(
-    () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
+    () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
     []
   );
   const csvExportSubmissions = (
@@ -214,65 +220,47 @@ const Dashboard = () => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  function getRightSideContent() {
-    const userCanSubmit =
-      userStatus === USER_STATUS.ACTIVE && userRoleObj.canAccessForms;
-
-    let rightSideContent = "";
-    if (userCanSubmit) {
-      rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE) {
-      rightSideContent = csvExportSubmissions;
-    }
-
-    return rightSideContent;
-  }
-
-  function renderSubmissionList() {
-    if (userStatus === USER_STATUS.PENDING) {
-      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
-    }
-
-    const userStatusNotActive =
-      !userStatus || userStatus !== USER_STATUS.ACTIVE;
-    if (userStatusNotActive) {
-      return (
-        <EmptyList
-          showProfileLink="true"
-          message={deniedOrRevokedMessage[userProfile.userData.type]}
-        />
-      );
-    }
-
-    const changeRequestListExists =
-      changeRequestList && changeRequestList.length > 0;
-    return (
-      <LoadingScreen isLoading={isLoading}>
-        {changeRequestListExists ? (
-          <PortalTable
-            className="submissions-table"
-            columns={columns}
-            data={changeRequestList}
-            initialState={initialTableState}
-          />
-        ) : (
-          <EmptyList message="You have no submissions yet." />
-        )}
-      </LoadingScreen>
-    );
-  }
+  const isUserActive =
+    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar
-        heading="Submission List"
-        rightSideContent={getRightSideContent()}
+        heading="Submission Dashboard"
+        rightSideContent={
+          (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
+          (userData.type === USER_TYPE.HELPDESK &&
+            isUserActive &&
+            csvExportSubmissions)
+        }
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-      <div className="dashboard-container">{renderSubmissionList()}</div>
+      <div className="dashboard-container">
+        {isUserActive ? (
+          <LoadingScreen isLoading={isLoading}>
+            {changeRequestList.length > 0 ? (
+              <PortalTable
+                className="submissions-table"
+                columns={columns}
+                data={changeRequestList}
+                initialState={initialTableState}
+              />
+            ) : (
+              <EmptyList message="You have no submissions yet." />
+            )}
+          </LoadingScreen>
+        ) : isPending(userProfile.userData) ? (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        ) : (
+          <EmptyList
+            showProfileLink="true"
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        )}
+      </div>
     </div>
   );
 };
 
-export default Dashboard;
+export default PackageList;
