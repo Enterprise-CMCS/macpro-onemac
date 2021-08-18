@@ -96,7 +96,7 @@ resources:
               MaxAge: 3000
         NotificationConfiguration:
           LambdaConfigurations:
-            - Event: s3:ObjectCreated:Put
+            - Event: s3:ObjectCreated:*
               Function: !GetAtt AvScanLambdaFunction.Arn
         #Set at rest encryption
         BucketEncryption:
