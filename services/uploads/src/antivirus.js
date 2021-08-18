@@ -145,7 +145,7 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-// we may want to comment back in this code once we get the permanent fix in place.
+
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
