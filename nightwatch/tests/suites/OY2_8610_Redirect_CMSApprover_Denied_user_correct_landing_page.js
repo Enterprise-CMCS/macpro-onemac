@@ -1,4 +1,4 @@
-
+/*
 const login = require('../suites/OY2_9999_Login');
 //const login = require('../cases/OY2-1494_Test_SPA_Login');
 
@@ -60,3 +60,5 @@ module.exports = {
         browser.useCss();
     },
 }
+
+*/

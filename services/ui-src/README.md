@@ -45,9 +45,9 @@ The password for all test users is `Passw0rd!`
 Here are the ways you can log in to the application:
 
 - Feature and hotfix branches - static test users and dynamic developer emails
-- [develop](https://github.com/CMSgov/macstack-spa-submission-form/tree/develop) branch - OKTA authentication, static test users and dynamic developer emails
-- [master](https://github.com/CMSgov/macstack-spa-submission-form/tree/master) branch - OKTA authentication only
-- [production](https://github.com/CMSgov/macstack-spa-submission-form/tree/production) branch - OKTA authentication only
+- [develop](https://github.com/CMSgov/onemac/tree/develop) branch - OKTA authentication, static test users and dynamic developer emails
+- [master](https://github.com/CMSgov/onemac/tree/master) branch - OKTA authentication only
+- [production](https://github.com/CMSgov/onemac/tree/production) branch - OKTA authentication only
 
 ### Building
 
