@@ -14,10 +14,10 @@ module.exports = {
         const tests_data={
             create:{
 
-                selector: "//*[@id='root']/div/div[3]/div/div[1]/div/div[1]",
+                selector: "(//div[@class='ds-l-container ds-u-margin--0']/div)[1]",
             },
             submit:{
-                selector: "//*[@id='root']/div/div[3]/div/div[2]/div",
+                selector: "//div[@class='home-content-right-box']/div",
             },
             
         
@@ -52,7 +52,7 @@ module.exports = {
     pageObjects.click(testData.manageAccountLink).waitForElementPresent("body");
     browser.assert.urlContains(testData.subUrl);
     browser.verify.containsText('h1', testData.pageTitle);
-    browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/dl/div/div[2]/dt", "Maryland");
+    browser.useXpath().assert.containsText( "//div[@class='state-access-card']/dt", "Maryland");
     browser.useCss();
     browser.click("xpath", "//*[@id='dashboardLink']").waitForElementPresent("body");
 
