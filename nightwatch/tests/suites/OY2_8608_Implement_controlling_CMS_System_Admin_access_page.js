@@ -1,4 +1,4 @@
-
+/*
 const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
@@ -45,3 +45,5 @@ module.exports = {
         browser.useCss();
     },
 }
+
+*/
