@@ -1,5 +1,7 @@
 #!/bin/bash
 
+#!/bin/bash
+
 
 
 echo $branch_name
@@ -13,4 +15,3 @@ echo $branch_name
   echo "This branch is not develop or master, it is $branch_name branch"
   ./test.sh --dev
  fi
-
