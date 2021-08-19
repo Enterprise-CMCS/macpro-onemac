@@ -154,11 +154,11 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
 
   const virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
 
-  const taggingParams = {
-    Bucket: s3ObjectBucket,
-    Key: s3ObjectKey,
-    Tagging: utils.generateTagSet(virusScanStatus),
-  };
+  // const taggingParams = {
+  //   Bucket: s3ObjectBucket,
+  //   Key: s3ObjectKey,
+  //   Tagging: utils.generateTagSet(virusScanStatus),
+  // };
 
   var aclParams = {
     Bucket: s3ObjectBucket,
