@@ -21,7 +21,24 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-export default function PopupMenu({ selectedRow, menuItems, handleSelected }) {
+const VARIATION_PROPS = {
+  UserManagement: {
+    acceptText: "Confirm",
+    dialogTitle: "Modify User's Access?",
+  },
+  PackageList: {
+    acceptText: "Yes, withdraw",
+    dialogTitle: "Withdraw Package?",
+  },
+};
+
+export default function PopupMenu({
+  variation,
+  selectedRow,
+  menuItems,
+  handleSelected,
+}) {
+  const variationProps = VARIATION_PROPS[variation];
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [confirmItem, setConfirmItem] = useState(null);
@@ -32,16 +49,17 @@ export default function PopupMenu({ selectedRow, menuItems, handleSelected }) {
   );
   const handleClose = useCallback(() => setAnchorEl(null), []);
   const closeConfirmation = useCallback(() => setConfirmItem(null), []);
-  const confirmStatusChange = useCallback(
-    () => handleSelected(selectedRow.id, confirmItem.value),
-    [confirmItem, handleSelected, selectedRow.id]
-  );
+  const confirmStatusChange = useCallback(() => {
+    handleSelected(selectedRow.id, confirmItem.value);
+    closeConfirmation();
+  }, [closeConfirmation, confirmItem, handleSelected, selectedRow.id]);
 
   return (
     <>
       <Button
         aria-haspopup="true"
         data-testid={POPUP_TRIGGER_TEST_ID}
+        disabled={!menuItems || menuItems.length === 0}
         onClick={handleClick}
         size="small"
         variation="transparent"
@@ -75,8 +93,8 @@ export default function PopupMenu({ selectedRow, menuItems, handleSelected }) {
       </Menu>
       {confirmItem && (
         <ConfirmationDialog
-          acceptText="Confirm"
-          heading="Modify User's Access?"
+          acceptText={variationProps.acceptText}
+          heading={variationProps.dialogTitle}
           onAccept={confirmStatusChange}
           onCancel={closeConfirmation}
           size="wide"

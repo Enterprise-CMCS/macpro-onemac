@@ -17,6 +17,7 @@ import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import PackageAPI from "../utils/PackageApi";
+import PopupMenu from "../components/PopupMenu";
 import { useAppContext } from "../libs/contextLib";
 import {
   pendingMessage,
@@ -25,6 +26,17 @@ import {
   isActive,
 } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+
+const withdrawMenuItem = {
+  label: "Withdraw",
+  value: "Withdrawn",
+  formatConfirmationMessage: () =>
+    `This action cannot be undone. CMS will be notified. Are you sure you would like to withdraw your package submission?`,
+};
+
+const menuItemMap = {
+  Submitted: [withdrawMenuItem],
+};
 
 /**
  * Component containing dashboard
@@ -126,6 +138,35 @@ const PackageList = () => {
     }
   }, []);
 
+  const onPopupAction = useCallback(
+    async (rowNum) => {
+      // For now, the second argument is constant.
+      // When we add another action to the menu, we will need to look at the action taken here.
+
+      const packageToModify = changeRequestList[rowNum];
+      console.info(packageToModify);
+      try {
+        await PackageAPI.withdraw(userProfile.email, packageToModify.packageId);
+      } catch (e) {
+        console.log("Error while updating package.", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      }
+    },
+    [changeRequestList, userProfile.email]
+  );
+
+  const renderActions = useCallback(
+    ({ row }) => (
+      <PopupMenu
+        selectedRow={row}
+        menuItems={menuItemMap[row.original.currentStatus] ?? []}
+        handleSelected={onPopupAction}
+        variation="PackageList"
+      />
+    ),
+    [onPopupAction]
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -162,8 +203,22 @@ const PackageList = () => {
         id: "submitter",
         Cell: renderName,
       },
+      {
+        Header: "Actions",
+        disableSortBy: true,
+        id: "packageActions",
+        Cell: renderActions,
+      },
     ],
-    [getType, renderState, renderId, renderType, renderDate, renderName]
+    [
+      getType,
+      renderActions,
+      renderState,
+      renderId,
+      renderType,
+      renderDate,
+      renderName,
+    ]
   );
 
   const initialTableState = useMemo(
