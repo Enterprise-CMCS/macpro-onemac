@@ -109,11 +109,11 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-  var taggingParams = {
-    Bucket: s3ObjectBucket,
-    Key: s3ObjectKey,
-    Tagging: utils.generateTagSet(virusScanStatus),
-  };
+  // var taggingParams = {
+  //   Bucket: s3ObjectBucket,
+  //   Key: s3ObjectKey,
+  //   Tagging: utils.generateTagSet(virusScanStatus),
+  // };
 
   try {
     await s3.putObjectTagging(taggingParams).promise();
@@ -160,7 +160,7 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
   //   Tagging: utils.generateTagSet(virusScanStatus),
   // };
 
-  var aclParams = {
+  const aclParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
     ACL: "public-read",
