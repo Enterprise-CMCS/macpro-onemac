@@ -31,11 +31,6 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
 export const SubmissionForm = ({ changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
-  const [
-    showCancelConfirmation,
-    closeCancelConfirmation,
-    openCancelConfirmation,
-  ] = useFlag();
   const {
     userProfile: { userData },
   } = useAppContext();
@@ -498,14 +493,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
             className="form-submit"
             value="Submit"
           />
-          <button
-            onClick={openCancelConfirmation}
-            disabled={isSubmitting}
-            className="submission-form-cancel-button"
-            type="button"
-          >
-            Cancel
-          </button>
         </form>
         <ScrollToTop />
         <div className="faq-container">
@@ -519,18 +506,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
           </a>
         </div>
       </div>
-      {showCancelConfirmation && (
-        <ConfirmationDialog
-          acceptText="Confirm"
-          cancelText="Keep Editing"
-          heading="Cancel submission?"
-          onAccept={() => history.replace(ROUTES.DASHBOARD)}
-          onCancel={closeCancelConfirmation}
-          size="wide"
-        >
-          {leavePageConfirmMessage}
-        </ConfirmationDialog>
-      )}
     </LoadingOverlay>
   );
 };
