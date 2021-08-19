@@ -123,7 +123,7 @@ async function lambdaHandleEvent(event) {
     console.log(err);
   }
   //change object ACL with public-read upon successful av scan
-  if (`${virusScanStatus}` == "FOO") {
+  if (`${virusScanStatus}` == "CLEAN") {
     try {
       await s3.putObjectAcl(aclParams).promise();
       utils.generateSystemMessage("ACL Param Update Successful");
