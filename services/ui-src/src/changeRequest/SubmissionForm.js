@@ -297,6 +297,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
       setAlertCode(RESPONSE_CODE[err.message]);
     }
   }, [
+    areUploadsReady,
     changeRequest,
     formInfo,
     transmittalNumberDetails,
