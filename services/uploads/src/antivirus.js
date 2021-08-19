@@ -109,15 +109,21 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-  // var taggingParams = {
-  //   Bucket: s3ObjectBucket,
-  //   Key: s3ObjectKey,
-  //   Tagging: utils.generateTagSet(virusScanStatus),
-  // };
+  const aclParams = {
+    Bucket: s3ObjectBucket,
+    Key: s3ObjectKey,
+    ACL: "public-read",
+  };
 
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
+  } catch (err) {
+    console.log(err);
+  }
+  try {
+    await s3.putObjectAcl(aclParams).promise();
+    utils.generateSystemMessage("ACL Param Update Successful");
   } catch (err) {
     console.log(err);
   }
@@ -153,23 +159,23 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
 
   const virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
 
-  // const taggingParams = {
-  //   Bucket: s3ObjectBucket,
-  //   Key: s3ObjectKey,
-  //   Tagging: utils.generateTagSet(virusScanStatus),
-  // };
-
-  const aclParams = {
+  const taggingParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
-    ACL: "public-read",
+    Tagging: utils.generateTagSet(virusScanStatus),
   };
 
+  // const aclParams = {
+  //   Bucket: s3ObjectBucket,
+  //   Key: s3ObjectKey,
+  //   ACL: "public-read",
+  // };
+
   try {
-    //await s3.putObjectTagging(taggingParams).promise();
-    await s3.putObjectAcl(aclParams).promise();
-    utils.generateSystemMessage("ACL Param update successful");
-    s3.putObjectAcl(aclParams, function (err, data) {
+    await s3.putObjectTagging(taggingParams).promise();
+    // await s3.putObjectAcl(aclParams).promise();
+    utils.generateSystemMessage("2 Tagging Successful");
+    s3.putObjectTagging(taggingParams, function (err, data) {
       if (err) console.log(err, err.stack);
       // an error occurred
       else console.log(data); // successful response
