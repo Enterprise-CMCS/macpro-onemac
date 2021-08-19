@@ -3,7 +3,7 @@ import { helpDeskContact } from "../libs/helpDeskContact";
 
 function Footer() {
   return (
-    <>
+    <footer>
       <section className="footer-top-container">
         <div className="footer-wrapper footer-top-wrapper">
           <div>
@@ -43,7 +43,7 @@ function Footer() {
           <div>7500 Security Boulevard Baltimore, MD 21244</div>
         </div>
       </div>
-    </>
+    </footer>
   );
 }
 

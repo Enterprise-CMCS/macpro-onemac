@@ -8,6 +8,7 @@ import {
   ROUTES,
   ChangeRequest,
   getUserRoleObj,
+  USER_STATUS,
   USER_TYPE,
 } from "cmscommonlib";
 
@@ -18,12 +19,7 @@ import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
-import {
-  pendingMessage,
-  deniedOrRevokedMessage,
-  isPending,
-  isActive,
-} from "../libs/userLib";
+import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 /**
@@ -32,7 +28,11 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const Dashboard = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userProfile: { userData } = {} } = useAppContext();
+  const {
+    userStatus,
+    userProfile,
+    userProfile: { userData } = {},
+  } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
@@ -41,13 +41,19 @@ const Dashboard = () => {
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
-    if (!userData?.type || !userData?.attributes) {
+
+    // Redirect new users to the signup flow.
+    const missingUserType = !userData?.type;
+    const missingOtherUserData =
+      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
+    if (missingUserType || missingOtherUserData) {
       history.replace("/signup", location.state);
       return;
     }
 
     let mounted = true;
 
+    // Load data from the backend for existing users.
     (async function onLoad() {
       try {
         const data = await ChangeRequestDataApi.getAllByAuthorizedTerritories(
@@ -208,45 +214,63 @@ const Dashboard = () => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  const isUserActive =
-    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
+  function getRightSideContent() {
+    const userCanSubmit =
+      userStatus === USER_STATUS.ACTIVE && userRoleObj.canAccessForms;
+
+    let rightSideContent = "";
+    if (userCanSubmit) {
+      rightSideContent = newSubmissionButton;
+    } else if (userStatus === USER_STATUS.ACTIVE) {
+      rightSideContent = csvExportSubmissions;
+    }
+
+    return rightSideContent;
+  }
+
+  function renderSubmissionList() {
+    if (userStatus === USER_STATUS.PENDING) {
+      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
+    }
+
+    const userStatusNotActive =
+      !userStatus || userStatus !== USER_STATUS.ACTIVE;
+    if (userStatusNotActive) {
+      return (
+        <EmptyList
+          showProfileLink="true"
+          message={deniedOrRevokedMessage[userProfile.userData.type]}
+        />
+      );
+    }
+
+    const changeRequestListExists =
+      changeRequestList && changeRequestList.length > 0;
+    return (
+      <LoadingScreen isLoading={isLoading}>
+        {changeRequestListExists ? (
+          <PortalTable
+            className="submissions-table"
+            columns={columns}
+            data={changeRequestList}
+            initialState={initialTableState}
+          />
+        ) : (
+          <EmptyList message="You have no submissions yet." />
+        )}
+      </LoadingScreen>
+    );
+  }
 
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar
         heading="Submission List"
-        rightSideContent={
-          (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK
-              && isUserActive
-              && csvExportSubmissions)
-        }
+        rightSideContent={getRightSideContent()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-      <div className="dashboard-container">
-        {isUserActive ? (
-          <LoadingScreen isLoading={isLoading}>
-            {changeRequestList.length > 0 ? (
-              <PortalTable
-                className="submissions-table"
-                columns={columns}
-                data={changeRequestList}
-                initialState={initialTableState}
-              />
-            ) : (
-              <EmptyList message="You have no submissions yet." />
-            )}
-          </LoadingScreen>
-        ) : isPending(userProfile.userData) ? (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        ) : (
-          <EmptyList
-            showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userData.type]}
-          />
-        )}
-      </div>
+      <div className="dashboard-container">{renderSubmissionList()}</div>
     </div>
   );
 };

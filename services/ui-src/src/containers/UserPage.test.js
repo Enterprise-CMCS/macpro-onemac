@@ -3,12 +3,17 @@ import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-import { AppContext } from "../libs/contextLib";
-import UserPage from "./UserPage";
+import { territoryMap } from "cmscommonlib";
 
+import { ALERTS_MSG } from "../libs/alertLib";
+import { AppContext } from "../libs/contextLib";
 import UserDataApi from "../utils/UserDataApi";
-import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import UserPage, {
+  ACCESS_LABELS,
+  AccessDisplay,
+  GroupDivisionDisplay,
+  getUserGroup,
+} from "./UserPage";
 
 jest.mock("../utils/UserDataApi");
 
@@ -236,5 +241,89 @@ describe("Phone Number section", () => {
       expect(screen.getByText("Apply", { selector: "button" })).toBeVisible();
       expect(screen.getByText("Cancel", { selector: "button" })).toBeVisible();
     });
+  });
+});
+
+describe("group and division section", () => {
+  it("renders nothing for a state submitter", () => {
+    render(
+      <GroupDivisionDisplay userData={initialAuthState.userProfile.userData} />
+    );
+
+    expect(screen.queryByText("Group & Division")).toBeNull();
+  });
+
+  it("renders group and division for a CMS reviewer", () => {
+    const userData = {
+      ...initialAuthState.userProfile.userData,
+      type: "cmsreviewer",
+      group: 3,
+      division: 26,
+    };
+    const groupInfo = getUserGroup(userData);
+
+    render(<GroupDivisionDisplay userData={userData} />);
+
+    expect(screen.getByText("Group & Division")).toBeVisible();
+    const groupHeader = screen.getByText("Group", { selector: "dt" });
+    const divisionHeader = screen.getByText("Division", { selector: "dt" });
+    expect(groupHeader).toBeVisible();
+    expect(divisionHeader).toBeVisible();
+    expect(groupHeader.parentNode).toContainElement(
+      screen.getByText(groupInfo.group.name),
+      { selector: "dd" }
+    );
+    expect(divisionHeader.parentNode).toContainElement(
+      screen.getByText(groupInfo.division.name),
+      { selector: "dd" }
+    );
+  });
+});
+
+describe("access section", () => {
+  it("renders access entry per state for a state user", () => {
+    const accesses = [
+      { state: "UT", status: "pending" },
+      { state: "NH", status: "active" },
+    ];
+    const selfRevoke = jest.fn();
+    render(
+      <AccessDisplay
+        accesses={accesses}
+        selfRevoke={selfRevoke}
+        userType="statesubmitter"
+      />
+    );
+
+    for (const { state, status } of accesses) {
+      const stateLabelEl = screen.getByText(territoryMap[state], {
+        selector: "dt",
+      });
+      expect(stateLabelEl).toBeVisible();
+      expect(stateLabelEl.nextElementSibling.tagName).toBe("DD");
+      expect(stateLabelEl.nextElementSibling).toHaveTextContent(
+        ACCESS_LABELS[status]
+      );
+    }
+    expect(selfRevoke).not.toBeCalled();
+  });
+
+  it("allows state submitter to self-revoke access", () => {
+    const accesses = [
+      { state: "UT", status: "pending" },
+      { state: "NH", status: "active" },
+    ];
+    const selfRevoke = jest.fn();
+    render(
+      <AccessDisplay
+        accesses={accesses}
+        selfRevoke={selfRevoke}
+        userType="statesubmitter"
+      />
+    );
+
+    fireEvent.click(screen.getByLabelText(/revoke.*access.*Utah/i));
+    expect(selfRevoke).toBeCalledTimes(1);
+    expect(selfRevoke).toBeCalledWith("UT");
   });
 });

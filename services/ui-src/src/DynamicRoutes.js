@@ -1,13 +1,15 @@
-import React from "react";
-import { Redirect } from "react-router-dom";
+import React, { useEffect } from "react";
+import { Route, Redirect, useHistory } from "react-router-dom";
+import { Auth } from "aws-amplify";
 
 import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
+import UserDataApi from "./utils/UserDataApi";
 
-import AuthenticatedRoute from "./components/AuthenticatedRoute";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
 import { GroupAndDivision } from "./containers/GroupAndDivision";
 import Dashboard from "./containers/Dashboard";
+import PackageList from "./containers/PackageList";
 import UserManagement from "./containers/UserManagement";
 import { useAppContext } from "./libs/contextLib";
 import Metrics from "./containers/Metrics";
@@ -30,23 +32,63 @@ const FORM_TYPES = {
 };
 
 export default function DynamicRoutes() {
-  const { userProfile: { userData: { type } = {} } = {} } = useAppContext();
+  const { isAuthenticated, userProfile: { userData: { type } = {} } = {} } =
+    useAppContext();
+  const history = useHistory();
+
+  async function checkRoute() {
+    let isValidURLPath = false;
+    const authUser = await Auth.currentAuthenticatedUser();
+    const email = authUser.signInUserSession.idToken.payload.email;
+    const userData = await UserDataApi.userProfile(email);
+
+    if (userData.type !== undefined && userData.validRoutes !== undefined) {
+      const roleRoutes = userData.validRoutes;
+
+      // Loop check for allowed route base path
+      roleRoutes.forEach(checkBaseURLPath);
+
+      function checkBaseURLPath(item) {
+        let currentPath = document.location.pathname.substring(0, item.length);
+        if (item === currentPath) {
+          isValidURLPath = true;
+        }
+      }
+      if (!isValidURLPath) {
+        history.push(ROUTES.HOME);
+        return;
+      }
+    }
+  }
+
+  useEffect(() => {
+    let mounted = true;
+
+    checkRoute();
+    // Drop to home if user not logged in
+    if (!isAuthenticated && mounted) {
+      history.push(ROUTES.HOME);
+    }
+    return function cleanup() {
+      mounted = false;
+    };
+  });
 
   if (!type) {
     return (
       <>
-        <AuthenticatedRoute exact path={ROUTES.SIGNUP}>
+        <Route exact path={ROUTES.SIGNUP}>
           <Signup />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute exact path={ROUTES.STATE_SIGNUP}>
+        </Route>
+        <Route exact path={ROUTES.STATE_SIGNUP}>
           <StateSignup />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute exact path={ROUTES.REVIEWER_SIGNUP}>
+        </Route>
+        <Route exact path={ROUTES.REVIEWER_SIGNUP}>
           <GroupAndDivision />
-        </AuthenticatedRoute>
-        <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+        </Route>
+        <Route exact path={ROUTES.DASHBOARD}>
           <Redirect to={ROUTES.SIGNUP} />
-        </AuthenticatedRoute>
+        </Route>
       </>
     );
   }
@@ -55,7 +97,7 @@ export default function DynamicRoutes() {
 
   return (
     <>
-      <AuthenticatedRoute exact path={ROUTES.DASHBOARD}>
+      <Route exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />
         ) : userRoleObj.canAccessUserManagement ? (
@@ -63,46 +105,55 @@ export default function DynamicRoutes() {
         ) : (
           <Redirect to={ROUTES.HOME} />
         )}
-      </AuthenticatedRoute>
+      </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
       {userRoleObj.canAccessForms && (
         <>
-          <AuthenticatedRoute path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
+          <Route path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
             <NewSubmission />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.NEW_SPA}`}>
+          </Route>
+          <Route path={`${ROUTES.NEW_SPA}`}>
             <NewSPA />
-          </AuthenticatedRoute>
-          <AuthenticatedRoute path={`${ROUTES.NEW_WAIVER}`}>
+          </Route>
+          <Route path={`${ROUTES.NEW_WAIVER}`}>
             <NewWaiver />
-          </AuthenticatedRoute>
+          </Route>
         </>
       )}
       {/* submission view */}
       {userRoleObj.canAccessForms &&
         Object.entries(FORM_TYPES).map(([route, type]) => (
-          <AuthenticatedRoute key={route} exact path={route}>
+          <Route key={route} exact path={route}>
             <SubmissionForm changeRequestType={type} />
-          </AuthenticatedRoute>
+          </Route>
         ))}
       {/* read only view */}
       {userRoleObj.canAccessDashboard &&
         Object.entries(FORM_TYPES).map(([route, type]) => (
-          <AuthenticatedRoute key={route} exact path={`${route}/:id/:userId`}>
+          <Route key={route} exact path={`${route}/:id/:userId`}>
             <SubmissionView changeRequestType={type} />
-          </AuthenticatedRoute>
+          </Route>
         ))}
       {userRoleObj.canAccessUserManagement && (
-        <AuthenticatedRoute exact path={ROUTES.USER_MANAGEMENT}>
+        <Route exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />
-        </AuthenticatedRoute>
+        </Route>
       )}
-      <AuthenticatedRoute exact path={ROUTES.PROFILE + "/:userId"}>
+      <Route exact path={ROUTES.PROFILE + "/:userId"}>
         <UserPage />
-      </AuthenticatedRoute>
+      </Route>
       {userRoleObj.canAccessMetrics && (
-        <AuthenticatedRoute path={ROUTES.METRICS}>
+        <Route path={ROUTES.METRICS}>
           <Metrics />
-        </AuthenticatedRoute>
+        </Route>
       )}
     </>
   );

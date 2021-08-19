@@ -1,5 +1,6 @@
 import { getLinksHtml } from "./changeRequest-util";
-import dynamoDb from "../libs/dynamodb-lib";
+import packageExists from "../utils/packageExists";
+import updatePackage from "../utils/updatePackage";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
@@ -15,29 +16,20 @@ class SPARAI {
   async fieldsValid(data) {
     let areFieldsValid = false;
     let whyNot = "";
-
-    const params = {
-      TableName: process.env.spaIdTableName,
-      // 'Key' defines the partition key and sort key of the item to be retrieved
-      // - 'id': change request ID
-      Key: {
-        id: data.transmittalNumber,
-      },
-    };
-    console.log("the params for checking", params);
+    let doesExist = false;
     try {
-      const result = await dynamoDb.get(params);
-
-      if (result.Item) {
-        console.log("the Item exists", result);
-        areFieldsValid = true;
-      } else {
-        console.log("result.Item does not exist");
-        areFieldsValid = false;
-        whyNot = RESPONSE_CODE.ID_NOT_FOUND;
-      }
+      doesExist = await packageExists(data.transmittalNumber);
     } catch (error) {
-      console.log("packageExists got an error: ", error);
+      console.log("SPARAI packageExists call error: ", error);
+      throw error;
+    }
+    if (doesExist) {
+      console.log("the Item exists");
+      areFieldsValid = true;
+    } else {
+      console.log("result.Item does not exist");
+      areFieldsValid = false;
+      whyNot = RESPONSE_CODE.ID_NOT_FOUND;
     }
 
     return { areFieldsValid, whyNot };
@@ -114,6 +106,11 @@ class SPARAI {
     `;
 
     return stateEmail;
+  }
+
+  async saveSubmission(data) {
+    data.packageStatus = "RAI Response Submitted";
+    return updatePackage(data);
   }
 }
 

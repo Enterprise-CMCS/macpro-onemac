@@ -2,10 +2,11 @@ import handler from "./libs/handler-lib";
 import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
 import {
+  APPROVING_USER_TYPE,
+  RESPONSE_CODE,
   USER_TYPE,
   USER_STATUS,
   territoryCodeList,
@@ -14,36 +15,6 @@ import {
 import groupData from "cmscommonlib/groupDivision.json";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";
-
-/**
- * Create / Update a user or change User status
- */
-const main = handler(async (event) => {
-  try {
-    if (isLambdaWarmup(event)) return null;
-    let input = isObject(event.body) ? event.body : JSON.parse(event.body);
-    console.log("PutUser Lambda call for: ", JSON.stringify(input));
-    // do a pre-check for things that should stop us immediately //
-    const valError = validateInput(input);
-    if (valError) {
-      console.error("Validation error:", valError);
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-    console.log("Initial validation successful.");
-
-    let { user, doneByUser } = await retrieveUsers(input);
-    // populate user atributes after ensuring data validity //
-    user = populateUserAttributes(input, user, doneByUser);
-    // PUT user in db
-    await putUser(process.env.userTableName, user);
-    await processEmail(input);
-    //
-    return RESPONSE_CODE.USER_SUBMITTED;
-  } catch (e) {
-    console.error("Error executing lambda:", e);
-    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
-  }
-});
 
 const EMAIL_SCHEMA = { tlds: { allow: false } };
 
@@ -155,6 +126,16 @@ const getUser = async (userEmail) => {
   return result.Item;
 };
 
+// Create the user object for new users //
+const createUserObject = (input) => {
+  const user = {
+    id: input.userEmail,
+    type: input.type,
+    attributes: [],
+  };
+  return user;
+};
+
 const retrieveUsers = async (input) => {
   // retrieve user and doneByUser from DynamoDb //
   let [user, doneByUser] = await Promise.all([
@@ -196,86 +177,27 @@ const retrieveUsers = async (input) => {
   return { user, doneByUser };
 };
 
-// Create the user object for new users //
-const createUserObject = (input) => {
-  const user = {
-    id: input.userEmail,
-    type: input.type,
-    attributes: [],
-  };
-  return user;
-};
-
-// populate user atributes after ensuring data validity //
-const populateUserAttributes = (
-  input,
-  user = { attributes: [] },
-  doneByUser = {}
-) => {
-  let isSelfInflicted = user.id === doneByUser.id;
-  console.log("user is: ", user);
-  console.log("user attributes: ", user.attributes);
-  console.log("doneBy is: ", doneByUser);
-  console.log("selfInflicted is: ", isSelfInflicted);
-
-  if (
-    input.type === USER_TYPE.STATE_SUBMITTER ||
-    input.type === USER_TYPE.STATE_ADMIN
-  ) {
-    input.attributes.forEach((item) => {
-      const index = user.attributes.findIndex(
-        (attr) => attr.stateCode === item.stateCode
-      );
-      // Ensure the DoneBy user has permission to execute the requested actions //
-      if (!input.isPutUser && !isSelfInflicted)
-        ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
-      // Check if the there is type mismatch between the request and current type of the user //
-      checkTypeMismatch(input.type, user.type);
-      if (index !== -1) {
-        const userAttribs = user.attributes[index].history;
-        // if not allowed status change throw //
-        ensureLegalStatusChange(userAttribs, item, input.isPutUser);
-        // isOkToChange(item, userAttribs, doneByUser) //
-        userAttribs.push(generateAttribute(item, input.doneBy));
-      } else {
-        // ensure if the item is pending //
-        ensurePendingStatus(item);
-
-        user.attributes.push({
-          stateCode: item.stateCode,
-          history: [generateAttribute(item, input.doneBy)],
-        });
-      }
-    });
-  } else {
-    // CMSApprover & systemadmin //
-    input.attributes.forEach((item) => {
-      if (!input.isPutUser && !isSelfInflicted)
-        ensureDonebyHasPrivilege(doneByUser, input.type);
-      ensureLegalStatusChange(user.attributes, item, input.isPutUser);
-      user.attributes.push(generateAttribute(item, input.doneBy));
-    });
-  }
-  console.log(
-    "Successfully ensured Privileges, status change rules and populated user attributes"
+// Get if the latest attribute from an array of attributes //
+const getLatestAttribute = (attribs) =>
+  attribs.reduce((latestItem, currentItem) =>
+    currentItem.date > latestItem.date ? currentItem : latestItem
   );
 
-  for (const attr of ["firstName", "lastName", "group", "division"]) {
-    if (input[attr]) user[attr] = input[attr];
-  }
-
-  return user;
+// check if the latest attribute from an array of attributes is active //
+const isLatestAttributeActive = (attribs) => {
+  const latestAttribute = getLatestAttribute(attribs);
+  return latestAttribute.status === USER_STATUS.ACTIVE;
 };
 
 // Ensure the DoneBy user has permission to execute the requested actions //
 const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
+  if (doneByUser.type !== APPROVING_USER_TYPE[userType]) {
+    console.log(
+      `Warning: The doneBy user ${doneByUser.id} must be a ${APPROVING_USER_TYPE[userType]}`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+  }
   if (userType === USER_TYPE.STATE_SUBMITTER) {
-    if (doneByUser.type !== USER_TYPE.STATE_ADMIN) {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be a stateadmin for the state ${userState}`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
     const index = doneByUser.attributes.findIndex(
       (attr) => attr.stateCode === userState
     );
@@ -290,27 +212,25 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
     }
   }
   if (userType === USER_TYPE.STATE_ADMIN) {
-    if (doneByUser.type !== USER_TYPE.CMS_APPROVER) {
-      console.log(
-        `Warning: The doneBy user : ${doneByUser.id}, must be a cmsapprover`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
     if (!isLatestAttributeActive(doneByUser.attributes)) {
       console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active cmsapprover`
+        `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
       );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
-  if (userType === USER_TYPE.CMS_APPROVER) {
-    if (doneByUser.type !== USER_TYPE.SYSTEM_ADMIN) {
-      console.log(
-        `Warning: The doneBy user : ${doneByUser.id}, must be a systemadmin`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
+};
+
+// Check if the there is type mismatch between the request and current type of the user //
+const checkTypeMismatch = (inputType, userType) => {
+  if (inputType && userType && inputType !== userType) {
+    console.log(
+      `Warning: Type mismatch. Current user type is ${userType} and requested type is ${inputType}`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
   }
+  console.log("No type mismatches");
+  return true;
 };
 
 // transition chart of allowed next states based on current state
@@ -352,16 +272,10 @@ const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
   }
 };
 
-// Check if the there is type mismatch between the request and current type of the user //
-const checkTypeMismatch = (inputType, userType) => {
-  if (inputType && userType && inputType !== userType) {
-    console.log(
-      `Warning: Type mismatch. Current user type is ${userType} and requested type is ${inputType}`
-    );
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-  console.log("No type mismatches");
-  return true;
+// generate the user attribute object using the provided details //
+const generateAttribute = (item, doneBy) => {
+  const currentTimestamp = Math.floor(new Date().getTime() / 1000);
+  return { date: currentTimestamp, status: item.status, doneBy: doneBy };
 };
 
 // ensure if the item is pending
@@ -376,10 +290,65 @@ const ensurePendingStatus = (attrib) => {
   return true;
 };
 
-// generate the user attribute object using the provided details //
-const generateAttribute = (item, doneBy) => {
-  const currentTimestamp = Math.floor(new Date().getTime() / 1000);
-  return { date: currentTimestamp, status: item.status, doneBy: doneBy };
+// populate user atributes after ensuring data validity //
+const populateUserAttributes = (
+  input,
+  user = { attributes: [] },
+  doneByUser = {}
+) => {
+  const isSelfInflicted = user.id === doneByUser.id;
+  console.log("user is: ", user);
+  console.log("user attributes: ", user.attributes);
+  console.log("doneBy is: ", doneByUser);
+  console.log("selfInflicted is: ", isSelfInflicted);
+
+  if (
+    input.type === USER_TYPE.STATE_SUBMITTER ||
+    input.type === USER_TYPE.STATE_ADMIN
+  ) {
+    input.attributes.forEach((item) => {
+      const index = user.attributes.findIndex(
+        (attr) => attr.stateCode === item.stateCode
+      );
+      // Ensure the DoneBy user has permission to execute the requested actions //
+      if (!input.isPutUser && !isSelfInflicted)
+        ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
+      // Check if the there is type mismatch between the request and current type of the user //
+      checkTypeMismatch(input.type, user.type);
+      if (index !== -1) {
+        const userAttribs = user.attributes[index].history;
+        // if not allowed status change throw //
+        ensureLegalStatusChange(userAttribs, item, input.isPutUser);
+        // isOkToChange(item, userAttribs, doneByUser) //
+        userAttribs.push(generateAttribute(item, input.doneBy));
+      } else {
+        // ensure if the item is pending //
+        ensurePendingStatus(item);
+
+        user.attributes.push({
+          stateCode: item.stateCode,
+          history: [generateAttribute(item, input.doneBy)],
+        });
+      }
+    });
+  } else {
+    // CMSRoleApprover & systemadmin //
+    input.attributes.forEach((item) => {
+      if (!input.isPutUser && !isSelfInflicted)
+        ensureDonebyHasPrivilege(doneByUser, input.type);
+      ensureLegalStatusChange(user.attributes, item, input.isPutUser);
+      user.attributes.push(generateAttribute(item, input.doneBy));
+    });
+  }
+  console.log(
+    "Successfully ensured Privileges, status change rules and populated user attributes"
+  );
+
+  for (const attr of ["firstName", "lastName", "group", "division"]) {
+    if (input[attr]) user[attr] = input[attr];
+  }
+
+  return user;
 };
 
 // Insert or modify an user record in the db //
@@ -400,82 +369,51 @@ const putUser = async (tableName, user) => {
   }
 };
 
-// Preparing and sending confirmation email //
-const processEmail = async (input) => {
-  // Construct and send email acknowledgement to the requesting user //
-  const userEmail = await constructUserEmail(input.userEmail, input);
+// Construct the email with all needed properties //
+const constructUserEmail = (userEmailId, input) => {
+  const email = {
+    fromAddressSource: "userAccessEmailSource",
+    ToAddresses: [userEmailId, process.env.productionNoEmailDebug],
+  };
 
-  await dispatchEmail(userEmail.email, input);
+  const updatedStatus = input.attributes[0].status;
+  const userType = input.type;
+  input.attributes[0].stateCode
+    ? (email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][
+        updatedStatus
+      ].subjectLine.replace("[insert state]", input.attributes[0].stateCode))
+    : (email.Subject =
+        ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine);
 
-  // only email approvers if user is acting on their own status
-  if (input.userEmail !== input.doneBy) {
-    return RESPONSE_CODE.EMAIL_NOT_SENT;
-  }
-
-  // Collect the emails of the authorized user who can make the requested role changes to //
-  const roleAdminEmails = await collectRoleAdminEmailIds(input);
-  if (roleAdminEmails.length > 0) {
-    // construct email parameters
-    const emailParams = constructRoleAdminEmails(
-      roleAdminEmails,
-      input,
-      "doneBy"
-    );
-    await dispatchEmail(emailParams.email, input);
-  } else {
-    console.log(
-      `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`
-    );
-    return RESPONSE_CODE.EMAIL_NOT_SENT;
-  }
+  input.attributes[0].stateCode
+    ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML
+        .replace("[insert state]", input.attributes[0].stateCode)
+        .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())))
+    : (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
+        updatedStatus
+      ].bodyHTML.replace(
+        "[insert date/time stamp]",
+        getCMSDateFormatNow(Date.now())
+      ));
+  return { email };
 };
 
-// Collect recipient email addresses to send out confirmation emails to //
-const collectRoleAdminEmailIds = async (input) => {
-  const recipients = [];
-  if (input.type === USER_TYPE.STATE_SUBMITTER) {
-    const states = input.attributes.map((item) => item.stateCode);
-    // get all stateAdmin email ids
-    const stateAdmins = (await getUsersByType(USER_TYPE.STATE_ADMIN)) || [];
-    // fiter out by selected states with latest attribute status is active //
-    stateAdmins.map((admin) => {
-      const attributes = admin.attributes;
-      attributes.forEach((attr) => {
-        states.includes(attr.stateCode) && isLatestAttributeActive(attr.history)
-          ? recipients.push(admin.id)
-          : null;
-      });
-    });
-  } else if (
-    input.type === USER_TYPE.STATE_ADMIN ||
-    input.type === USER_TYPE.CMS_REVIEWER
-  ) {
-    // get all cms approvers emails //
-    // query all cms approvers
-    const cmsApprovers = (await getUsersByType(USER_TYPE.CMS_APPROVER)) || [];
-    // check if recent attribute status is active and add email to recipient list //
-    cmsApprovers.forEach((approver) => {
-      isLatestAttributeActive(approver.attributes)
-        ? recipients.push(approver.id)
-        : null;
-    });
-  } else if (
-    input.type === USER_TYPE.CMS_APPROVER ||
-    input.type === USER_TYPE.HELPDESK
-  ) {
-    let systemadmins = [];
-    // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
-    if (process.env.systemAdminEmail) {
-      recipients.push(process.env.systemAdminEmail);
-    } else {
-      // get all system admins emails //
-      systemadmins = (await getUsersByType(USER_TYPE.SYSTEM_ADMIN)) || [];
-      systemadmins.forEach((sysadmin) => recipients.push(sysadmin.id));
+// Send email //
+const dispatchEmail = async (email) => {
+  try {
+    const emailStatus = await sendEmail(email);
+    if (emailStatus instanceof Error) {
+      console.log("Warning: Email not sent");
     }
+    console.log("Email successfully sent");
+    return RESPONSE_CODE.USER_SUBMITTED;
+  } catch (error) {
+    console.log(
+      "Warning: There was an error sending the user access request acknowledgment email.",
+      error
+    );
+    return RESPONSE_CODE.EMAIL_NOT_SENT;
   }
-  recipients.push(process.env.productionNoEmailDebug);
-  console.log("Role admin email recipients,", recipients);
-  return recipients;
 };
 
 const getUsersByType = async (type) => {
@@ -502,20 +440,57 @@ const getUsersByType = async (type) => {
   }
 };
 
-// check if the latest attribute from an array of attributes is active //
-const isLatestAttributeActive = (attribs) => {
-  const latestAttribute = getLatestAttribute(attribs);
-  return latestAttribute.status === USER_STATUS.ACTIVE;
+// Collect recipient email addresses to send out confirmation emails to //
+const collectRoleAdminEmailIds = async (input) => {
+  const recipients = [];
+  if (input.type === USER_TYPE.STATE_SUBMITTER) {
+    const states = input.attributes.map((item) => item.stateCode);
+    // get all stateAdmin email ids
+    const stateAdmins = (await getUsersByType(USER_TYPE.STATE_ADMIN)) || [];
+    // fiter out by selected states with latest attribute status is active //
+    stateAdmins.map((admin) => {
+      const attributes = admin.attributes;
+      attributes.forEach((attr) => {
+        states.includes(attr.stateCode) && isLatestAttributeActive(attr.history)
+          ? recipients.push(admin.id)
+          : null;
+      });
+    });
+  } else if (
+    input.type === USER_TYPE.STATE_ADMIN ||
+    input.type === USER_TYPE.CMS_REVIEWER
+  ) {
+    // get all cms role approvers emails //
+    // query all cms role approvers
+    const cmsRoleApprovers =
+      (await getUsersByType(USER_TYPE.CMS_ROLE_APPROVER)) || [];
+    // check if recent attribute status is active and add email to recipient list //
+    cmsRoleApprovers.forEach((approver) => {
+      isLatestAttributeActive(approver.attributes)
+        ? recipients.push(approver.id)
+        : null;
+    });
+  } else if (
+    input.type === USER_TYPE.CMS_ROLE_APPROVER ||
+    input.type === USER_TYPE.HELPDESK
+  ) {
+    let systemadmins = [];
+    // if lambda has a valid sysadminEmail then use it if not fetch all sysadmin emails from the db //
+    if (process.env.systemAdminEmail) {
+      recipients.push(process.env.systemAdminEmail);
+    } else {
+      // get all system admins emails //
+      systemadmins = (await getUsersByType(USER_TYPE.SYSTEM_ADMIN)) || [];
+      systemadmins.forEach((sysadmin) => recipients.push(sysadmin.id));
+    }
+  }
+  recipients.push(process.env.productionNoEmailDebug);
+  console.log("Role admin email recipients,", recipients);
+  return recipients;
 };
 
-// Get if the latest attribute from an array of attributes //
-const getLatestAttribute = (attribs) =>
-  attribs.reduce((latestItem, currentItem) =>
-    currentItem.date > latestItem.date ? currentItem : latestItem
-  );
-
 // Construct email to the authorities with the role request info //
-const constructRoleAdminEmails = (recipients, input) => {
+export const constructRoleAdminEmails = (recipients, input) => {
   const userType = input.type;
   let stateText;
   if (userType == USER_TYPE.STATE_ADMIN) {
@@ -561,51 +536,62 @@ const constructRoleAdminEmails = (recipients, input) => {
   return { email };
 };
 
-// Construct the email with all needed properties //
-const constructUserEmail = (userEmailId, input) => {
-  const email = {
-    fromAddressSource: "userAccessEmailSource",
-    ToAddresses: [userEmailId, process.env.productionNoEmailDebug],
-  };
+// Preparing and sending confirmation email //
+const processEmail = async (input) => {
+  // Construct and send email acknowledgement to the requesting user //
+  const userEmail = await constructUserEmail(input.userEmail, input);
 
-  const updatedStatus = input.attributes[0].status;
-  const userType = input.type;
-  input.attributes[0].stateCode
-    ? (email.Subject = ACCESS_CONFIRMATION_EMAILS[userType][
-        updatedStatus
-      ].subjectLine.replace("[insert state]", input.attributes[0].stateCode))
-    : (email.Subject =
-        ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].subjectLine);
+  await dispatchEmail(userEmail.email, input);
 
-  input.attributes[0].stateCode
-    ? (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][updatedStatus].bodyHTML
-        .replace("[insert state]", input.attributes[0].stateCode)
-        .replace("[insert date/time stamp]", getCMSDateFormatNow(Date.now())))
-    : (email.HTML = ACCESS_CONFIRMATION_EMAILS[userType][
-        updatedStatus
-      ].bodyHTML.replace(
-        "[insert date/time stamp]",
-        getCMSDateFormatNow(Date.now())
-      ));
-  return { email };
-};
+  // only email approvers if user is acting on their own status
+  if (input.userEmail !== input.doneBy) {
+    return RESPONSE_CODE.EMAIL_NOT_SENT;
+  }
 
-// Send email //
-const dispatchEmail = async (email, input) => {
-  try {
-    const emailStatus = await sendEmail(email);
-    if (emailStatus instanceof Error) {
-      console.log("Warning: Email not sent");
-    }
-    console.log("Email successfully sent");
-    return RESPONSE_CODE.USER_SUBMITTED;
-  } catch (error) {
+  // Collect the emails of the authorized user who can make the requested role changes to //
+  const roleAdminEmails = await collectRoleAdminEmailIds(input);
+  if (roleAdminEmails.length > 0) {
+    // construct email parameters
+    const emailParams = constructRoleAdminEmails(
+      roleAdminEmails,
+      input,
+      "doneBy"
+    );
+    await dispatchEmail(emailParams.email, input);
+  } else {
     console.log(
-      "Warning: There was an error sending the user access request acknowledgment email.",
-      error
+      `Warning: Role admin email conformations not sent. There is no recipient email address present for the Role admins`
     );
     return RESPONSE_CODE.EMAIL_NOT_SENT;
   }
 };
 
-export { main, constructRoleAdminEmails };
+/**
+ * Create / Update a user or change User status
+ */
+export const main = handler(async (event) => {
+  try {
+    if (isLambdaWarmup(event)) return null;
+    const input = isObject(event.body) ? event.body : JSON.parse(event.body);
+    console.log("PutUser Lambda call for: ", JSON.stringify(input));
+    // do a pre-check for things that should stop us immediately //
+    const valError = validateInput(input);
+    if (valError) {
+      console.error("Validation error:", valError);
+      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+    }
+    console.log("Initial validation successful.");
+
+    const { user, doneByUser } = await retrieveUsers(input);
+    // populate user atributes after ensuring data validity //
+    const populatedUser = populateUserAttributes(input, user, doneByUser);
+    // PUT user in db
+    await putUser(process.env.userTableName, populatedUser);
+    await processEmail(input);
+    //
+    return RESPONSE_CODE.USER_SUBMITTED;
+  } catch (e) {
+    console.error("Error executing lambda:", e);
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  }
+});

@@ -29,11 +29,11 @@ stateadminactive@cms.hhs.local
 stateadmindenied@cms.hhs.local
 stateadminrevoked@cms.hhs.local
 stateadminunregistered@cms.hhs.local
-cmsapproverpending@cms.hhs.local
-cmsapproveractive@cms.hhs.local
-cmsapproverdenied@cms.hhs.local
-cmsapproverrevoked@cms.hhs.local
-cmsapproverunregistered@cms.hhs.local
+cmsroleapproverpending@cms.hhs.local
+cmsroleapproveractive@cms.hhs.local
+cmsroleapproverdenied@cms.hhs.local
+cmsroleapproverrevoked@cms.hhs.local
+cmsroleapproverunregistered@cms.hhs.local
 ```
 
 For every build, a dynamic list of developer emails is also added to the test user list, so developers can receive the generated emails sent from the application. Developers need to setup their correct email in the Git configuration and have already committed changes to the repo. To see the list of emails added run the following command in the Git repository.
@@ -45,9 +45,9 @@ The password for all test users is `Passw0rd!`
 Here are the ways you can log in to the application:
 
 - Feature and hotfix branches - static test users and dynamic developer emails
-- [develop](https://github.com/CMSgov/macstack-spa-submission-form/tree/develop) branch - OKTA authentication, static test users and dynamic developer emails
-- [master](https://github.com/CMSgov/macstack-spa-submission-form/tree/master) branch - OKTA authentication only
-- [production](https://github.com/CMSgov/macstack-spa-submission-form/tree/production) branch - OKTA authentication only
+- [develop](https://github.com/CMSgov/onemac/tree/develop) branch - OKTA authentication, static test users and dynamic developer emails
+- [master](https://github.com/CMSgov/onemac/tree/master) branch - OKTA authentication only
+- [production](https://github.com/CMSgov/onemac/tree/production) branch - OKTA authentication only
 
 ### Building
 

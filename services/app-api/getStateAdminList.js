@@ -1,7 +1,6 @@
-import { latestAccessStatus } from "cmscommonlib";
+import { USER_TYPE, latestAccessStatus } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import { USER_TYPES } from "./user/userTypes";
 import { queryForUserType } from "./libs/user-table-lib";
 
 // Gets active state admins by state code
@@ -20,7 +19,7 @@ export const main = handler(async (event) => {
     return {};
   }
 
-  return (await queryForUserType(USER_TYPES.STATE_ADMIN)).reduce(
+  return (await queryForUserType(USER_TYPE.STATE_ADMIN)).reduce(
     (output, admin) => {
       for (const state of states) {
         if (latestAccessStatus(admin, state) === "active") {

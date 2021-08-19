@@ -17,3 +17,9 @@ export const formatList = (arr, oxford = true) => {
     }
   }, "");
 };
+
+/**
+ * Get the root node for the app to render into. Also useful for the CMS Design
+ * System Dialog component.
+ */
+export const getApplicationNode = () => document.getElementById("root");

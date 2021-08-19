@@ -1,3 +1,4 @@
+/*
 const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with cms_approvers'](browser);
+        login['Login with cms_role_approvers'](browser);
     },
 
     after: function (browser) {
@@ -14,7 +15,7 @@ module.exports = {
 
 
 
-    'CMS Approver user can see the text, profile information and status card': function (browser) {
+    'CMS Role Approver user can see the text, profile information and status card': function (browser) {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
         
@@ -24,7 +25,7 @@ module.exports = {
         browser.useCss().click(manage_account_link); 
         browser.pause(2000);
         //browser.expect.element(".ds-l-col--6>h3").to.be.present;
-        let text_cms_approver = "//*[@id='profileDisclaimer']";
+        let text_cms_role_approver = "//*[@id='profileDisclaimer']";
         let profile_information = "//*[@id='profileInfoHeader']";
         let full_name = "(//h3)[1]";
         let onemac_cms_user = "(//div[@class='ds-c-review__body'])[1]";
@@ -36,7 +37,7 @@ module.exports = {
         let cmsystem_admin_nameOne = "(//dd/p/a)[1]";
         let cmsystem_admin_nameTwo = "(//dd/p/a)[2]";
 
-        browser.useXpath().expect.element(text_cms_approver).to.be.visible;
+        browser.useXpath().expect.element(text_cms_role_approver).to.be.visible;
         browser.useXpath().expect.element(profile_information).to.be.visible;
         browser.useXpath().expect.element(full_name).to.be.visible;
         browser.useXpath().expect.element(onemac_cms_user).to.be.visible;
@@ -50,3 +51,4 @@ module.exports = {
         browser.useCss();
     },
 }
+*/

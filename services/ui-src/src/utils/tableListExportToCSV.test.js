@@ -42,6 +42,7 @@ it("formats submission data", () => {
       transmittalNumber: "ZZ-12-3456",
       type: "spa",
       territory: "ZZ",
+
       submittedAt: 1234567898765,
       user: { firstName: "Me", lastName: "Myself" },
     },
@@ -59,7 +60,7 @@ it("formats user data", () => {
       email: "you@example.com",
       stateCode: "ZZ",
       latest: {
-        date: 987654321234,
+        date: 987654321,
         status: "pending",
         doneByName: "Someone Else",
       },
