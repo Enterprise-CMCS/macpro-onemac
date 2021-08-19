@@ -19,6 +19,7 @@ import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import ScrollToTop from "../components/ScrollToTop";
 import config from "../utils/config";
+import { Button } from "@cmsgov/design-system";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
@@ -35,16 +36,9 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
-
-  // because the first time through, we do not want to be annoying with the error messaging
-  const [firstTimeThrough, setFirstTimeThrough] = useState(true);
+  const [isSubmissionReady, setIsSubmissionReady] = useState(false);
 
   const formInfo = ChangeRequest.CONFIG[changeRequestType];
-  const [actionTypeErrorMessage, setActionTypeErrorMessage] = useState(
-    formInfo?.actionType?.errorMessage
-  );
-  const [waiverAuthorityErrorMessage, setWaiverAuthorityErrorMessage] =
-    useState("");
 
   // Rename to Display instead of status messsage ?
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
@@ -203,13 +197,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
   }, [alertCode, history]);
 
   useEffect(() => {
-    let waiverAuthorityMessage = formInfo?.waiverAuthority?.errorMessage;
-    let actionTypeMessage = formInfo?.actionType?.errorMessage;
-
-    if (changeRequest.actionType) actionTypeMessage = "";
-
-    if (changeRequest.waiverAuthority) waiverAuthorityMessage = "";
-
     // default display message settings with empty message
     let displayMessage = {
       statusLevel: "error",
@@ -296,15 +283,21 @@ export const SubmissionForm = ({ changeRequestType }) => {
         setTransmittalNumberStatusMessage(displayMessage);
       }
 
-      setWaiverAuthorityErrorMessage(waiverAuthorityMessage);
-      setActionTypeErrorMessage(actionTypeMessage);
+      let formReady = false;
+      if (
+        (displayMessage.statusLevel === "warn" ||
+          !displayMessage.statusMessage) &&
+        areUploadsReady
+      )
+        formReady = true;
+
+      setIsSubmissionReady(formReady);
     } catch (err) {
       console.log("error is: ", err);
       setAlertCode(RESPONSE_CODE[err.message]);
     }
   }, [
     changeRequest,
-    changeRequest.transmittalNumber,
     formInfo,
     transmittalNumberDetails,
     validateTransmittalNumber,
@@ -369,12 +362,9 @@ export const SubmissionForm = ({ changeRequestType }) => {
     let newAlertCode = RESPONSE_CODE.NONE;
     let readyToSubmit = false;
 
-    setFirstTimeThrough(false);
     if (
-      (transmittalNumberStatusMessage.statusLevel === "error" &&
-        transmittalNumberStatusMessage.statusMessage) ||
-      actionTypeErrorMessage ||
-      waiverAuthorityErrorMessage
+      transmittalNumberStatusMessage.statusLevel === "error" &&
+      transmittalNumberStatusMessage.statusMessage
     ) {
       newAlertCode = RESPONSE_CODE.DATA_MISSING;
     } else if (!areUploadsReady) {
@@ -396,6 +386,20 @@ export const SubmissionForm = ({ changeRequestType }) => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
+  function renderSubmissionButton() {
+    return (
+      <Button
+        id="form-submission-button"
+        className="form-submit"
+        disabled={!isSubmissionReady}
+        onClick={handleSubmit}
+        inversed
+      >
+        Submit
+      </Button>
+    );
+  }
+
   // Render the component conditionally when NOT in read only mode
   // OR in read only mode when change request data was successfully retrieved
   return (
@@ -404,6 +408,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
         heading={formInfo.pageTitle}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
+        rightSideContent={renderSubmissionButton()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
@@ -412,11 +417,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
             <p dangerouslySetInnerHTML={formInfo.subheaderMessage} />
           </div>
         )}
-        <form
-          onSubmit={handleSubmit}
-          noValidate
-          className={!firstTimeThrough ? "display-errors" : ""}
-        >
+        <form noValidate>
           <h3>{formInfo.detailsHeader} Details</h3>
           <p className="req-message">
             <span className="required-mark">*</span>
@@ -427,7 +428,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
               <RequiredChoice
                 fieldInfo={formInfo.actionType}
                 label="Action Type"
-                errorMessage={!firstTimeThrough ? actionTypeErrorMessage : ""}
                 value={changeRequest.actionType}
                 onChange={handleActionTypeChange}
               />
@@ -436,9 +436,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
               <RequiredChoice
                 fieldInfo={formInfo.waiverAuthority}
                 label="Waiver Authority"
-                errorMessage={
-                  !firstTimeThrough ? waiverAuthorityErrorMessage : ""
-                }
                 value={changeRequest.waiverAuthority}
                 onChange={handleInputChange}
               />
@@ -449,9 +446,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
               idFAQLink={transmittalNumberDetails.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
-                !firstTimeThrough ||
                 transmittalNumberStatusMessage.statusMessage !==
-                  `${transmittalNumberDetails.idLabel} Required`
+                `${transmittalNumberDetails.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }
@@ -467,7 +463,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
             requiredUploads={formInfo.requiredUploads}
             optionalUploads={formInfo.optionalUploads}
             readyCallback={uploadsReadyCallbackFunction}
-            showRequiredFieldErrors={!firstTimeThrough}
           ></FileUploader>
           <div className="summary-box">
             <TextField
@@ -485,12 +480,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
               {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>
-          <input
-            type="submit"
-            disabled={isSubmitting}
-            className="form-submit"
-            value="Submit"
-          />
         </form>
         <ScrollToTop />
         <div className="faq-container">

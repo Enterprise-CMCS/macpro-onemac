@@ -1035,7 +1035,6 @@ article.form-container {
 
 .LoaderButton,
 .form-submit {
-  @extend .ds-u-margin-top--5;
   background-color: $color-primary;
   color: $color-white;
   padding: 10px 28px;
