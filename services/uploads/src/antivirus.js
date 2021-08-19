@@ -120,9 +120,8 @@ async function lambdaHandleEvent(event) {
     utils.generateSystemMessage("Tagging successful");
   } catch (err) {
     console.log(err);
-  } finally {
-    return virusScanStatus;
   }
+  return virusScanStatus;
 
   // var aclParams = {
   //   Bucket: s3ObjectBucket,
@@ -177,9 +176,8 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     });
   } catch (err) {
     console.log(err);
-  } finally {
-    return virusScanStatus;
   }
+  return virusScanStatus;
 }
 
 module.exports = {
