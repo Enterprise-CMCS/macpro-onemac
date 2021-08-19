@@ -109,24 +109,39 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-  const aclParams = {
+  var taggingParams = {
     Bucket: s3ObjectBucket,
     Key: s3ObjectKey,
-    ACL: 'public-read'
+    Tagging: utils.generateTagSet(virusScanStatus),
   };
 
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
-    s3.putObjectAcl(aclParams, function(err, data) {
-      if (err) console.log(err, err.stack); // an error occurred
-      else     console.log(data);           // successful response
-    });
   } catch (err) {
     console.log(err);
+  } finally {
+    return virusScanStatus;
   }
 
-  return virusScanStatus;
+  // var aclParams = {
+  //   Bucket: s3ObjectBucket,
+  //   Key: s3ObjectKey,
+  //   ACL: 'public-read'
+  // };
+
+  // try {
+  //   await s3.putObjectTagging(taggingParams).promise();
+  //   utils.generateSystemMessage("Tagging successful");
+  //   s3.putObjectAcl(aclParams, function(err, data) {
+  //     if (err) console.log(err, err.stack); // an error occurred
+  //     else     console.log(data);           // successful response
+  //   });
+  // } catch (err) {
+  //   console.log(err);
+  // }
+  //
+  // return virusScanStatus;
 }
 
 async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
@@ -145,18 +160,24 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
+  var aclParams = {
+    Bucket: s3ObjectBucket,
+    Key: s3ObjectKey,
+    ACL: "public-read",
+  };
 
   try {
-    await s3.putObjectTagging(taggingParams).promise();
-    utils.generateSystemMessage("Tagging successful");
-     //s3.putObjectAcl(aclParams, function(err, data) {
-       //if (err) console.log(err, err.stack); // an error occurred
-       //else     console.log(data);           // successful response
-    //});
+    //await s3.putObjectTagging(taggingParams).promise();
+    await s3.putObjectAcl(aclParams).promise();
+    utils.generateSystemMessage("ACL Param update successful");
+    s3.putObjectAcl(aclParams, function (err, data) {
+      if (err) console.log(err, err.stack);
+      // an error occurred
+      else console.log(data); // successful response
+    });
   } catch (err) {
     console.log(err);
   }
-
   return virusScanStatus;
 }
 
