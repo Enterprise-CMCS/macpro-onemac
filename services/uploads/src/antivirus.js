@@ -177,8 +177,9 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
     });
   } catch (err) {
     console.log(err);
+  } finally {
+    return virusScanStatus;
   }
-  return virusScanStatus;
 }
 
 module.exports = {
