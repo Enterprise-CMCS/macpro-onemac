@@ -150,7 +150,6 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
 
   try {
     await s3.putObjectTagging(taggingParams).promise();
-    // await s3.putObjectAcl(aclParams).promise();
     utils.generateSystemMessage("2 Tagging Successful");
     s3.putObjectTagging(taggingParams, function (err, data) {
       if (err) console.log(err, err.stack);
