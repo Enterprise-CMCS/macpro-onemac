@@ -149,42 +149,42 @@ async function lambdaHandleEvent(event) {
   // return virusScanStatus;
 }
 
-async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
-  await clamav.downloadAVDefinitions(
-    constants.CLAMAV_BUCKET_NAME,
-    constants.PATH_TO_AV_DEFINITIONS
-  );
-
-  await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
-
-  const virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
-
-  const taggingParams = {
-    Bucket: s3ObjectBucket,
-    Key: s3ObjectKey,
-    Tagging: utils.generateTagSet(virusScanStatus),
-  };
-
-  // const aclParams = {
-  //   Bucket: s3ObjectBucket,
-  //   Key: s3ObjectKey,
-  //   ACL: "public-read",
-  // };
-
-  try {
-    await s3.putObjectTagging(taggingParams).promise();
-    // await s3.putObjectAcl(aclParams).promise();
-    utils.generateSystemMessage("2 Tagging Successful");
-    s3.putObjectTagging(taggingParams, function (err, data) {
-      if (err) console.log(err, err.stack);
-      // an error occurred
-      else console.log(data); // successful response
-    });
-  } catch (err) {
-    console.log(err);
-  }
-  return virusScanStatus;
-}
+// async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
+//   await clamav.downloadAVDefinitions(
+//     constants.CLAMAV_BUCKET_NAME,
+//     constants.PATH_TO_AV_DEFINITIONS
+//   );
+//
+//   await downloadFileFromS3(s3ObjectKey, s3ObjectBucket);
+//
+//   const virusScanStatus = clamav.scanLocalFile(path.basename(s3ObjectKey));
+//
+//   const taggingParams = {
+//     Bucket: s3ObjectBucket,
+//     Key: s3ObjectKey,
+//     Tagging: utils.generateTagSet(virusScanStatus),
+//   };
+//
+//   // const aclParams = {
+//   //   Bucket: s3ObjectBucket,
+//   //   Key: s3ObjectKey,
+//   //   ACL: "public-read",
+//   // };
+//
+//   try {
+//     await s3.putObjectTagging(taggingParams).promise();
+//     // await s3.putObjectAcl(aclParams).promise();
+//     utils.generateSystemMessage("2 Tagging Successful");
+//     s3.putObjectTagging(taggingParams, function (err, data) {
+//       if (err) console.log(err, err.stack);
+//       // an error occurred
+//       else console.log(data); // successful response
+//     });
+//   } catch (err) {
+//     console.log(err);
+//   }
+//   return virusScanStatus;
+// }
 
 module.exports = {
   lambdaHandleEvent: lambdaHandleEvent,
