@@ -1,9 +1,8 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
-import LoadingOverlay from "../components/LoadingOverlay";
-import FileUploader from "../components/FileUploader";
-import { TextField } from "@cmsgov/design-system";
-import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+
+import { TextField, Button, Dropdown } from "@cmsgov/design-system";
+
 import {
   latestAccessStatus,
   ChangeRequest,
@@ -11,20 +10,23 @@ import {
   ROUTES,
   USER_STATUS,
 } from "cmscommonlib";
+
+import { useAppContext } from "../libs/contextLib";
+import config from "../utils/config";
+
+import LoadingOverlay from "../components/LoadingOverlay";
+import FileUploader from "../components/FileUploader";
+import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
-import RequiredChoice from "../components/RequiredChoice";
 import AlertBar from "../components/AlertBar";
-import { useAppContext } from "../libs/contextLib";
 import ScrollToTop from "../components/ScrollToTop";
-import config from "../utils/config";
-import { Button } from "@cmsgov/design-system";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
 /**
- * RAI Form template to allow rendering for different types of RAI's.
+ * Submisstion Form template to allow rendering for different types of Submissions.
  * @param {String} changeRequestType - the type of change request
  */
 export const SubmissionForm = ({ changeRequestType }) => {
@@ -34,32 +36,28 @@ export const SubmissionForm = ({ changeRequestType }) => {
     userProfile: { userData },
   } = useAppContext();
 
+  const formInfo = ChangeRequest.CONFIG[changeRequestType];
+
+  //Reference to the File Uploader.
+  const uploader = useRef(null);
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isSubmissionReady, setIsSubmissionReady] = useState(false);
+  // True if we are currently submitting the form
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const formInfo = ChangeRequest.CONFIG[changeRequestType];
-
-  // Rename to Display instead of status messsage ?
+  // because the transmittal number has state
+  const [transmittalNumberDetails, setTransmittalNumberDetails] = useState({
+    ...formInfo.transmittalNumber,
+  });
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
     useState({
       statusLevel: "error",
       statusMessage: "",
     });
 
-  // True if we are currently submitting the form
-  const [isSubmitting, setIsSubmitting] = useState(false);
-
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-
-  //Reference to the File Uploader.
-  const uploader = useRef(null);
-
-  // because the transmittal number has state
-  const [transmittalNumberDetails, setTransmittalNumberDetails] = useState({
-    ...formInfo.transmittalNumber,
-  });
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
@@ -165,6 +163,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
         break;
     }
 
+    console.log("updated record: ", updatedRecord);
     setTransmittalNumberDetails(transmittalNumberInfo);
     setChangeRequest(updatedRecord);
   };
@@ -285,6 +284,10 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
       let formReady = false;
       if (
+        formInfo.actionType &&
+        changeRequest.actionType &&
+        formInfo.waiverAuthority &&
+        changeRequest.waiverAuthority &&
         (displayMessage.statusLevel === "warn" ||
           !displayMessage.statusMessage) &&
         areUploadsReady
@@ -353,36 +356,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
     alertCode,
   ]);
 
-  /**
-   * Submit the new change request.
-   * @param {Object} event the click event
-   */
-  async function handleSubmit(event) {
-    event.preventDefault();
-
-    let newAlertCode = RESPONSE_CODE.NONE;
-    let readyToSubmit = false;
-
-    if (
-      transmittalNumberStatusMessage.statusLevel === "error" &&
-      transmittalNumberStatusMessage.statusMessage
-    ) {
-      newAlertCode = RESPONSE_CODE.DATA_MISSING;
-    } else if (!areUploadsReady) {
-      newAlertCode = RESPONSE_CODE.ATTACHMENTS_MISSING;
-    } else {
-      readyToSubmit = true;
-    }
-
-    // if we would get the same alert message, alert bar does not know to show itself
-    // have to do at submit, because when tried to get AlertBar to recognize situation
-    // it was showing itself on every form change (ie, selecting Waiver Authority)
-    if (newAlertCode === alertCode) window.scrollTo({ top: 0 });
-
-    setAlertCode(newAlertCode);
-    setIsSubmitting(readyToSubmit);
-  }
-
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
@@ -393,7 +366,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
         id="form-submission-button"
         className="form-submit"
         disabled={!isSubmissionReady}
-        onClick={handleSubmit}
+        onClick={() => setIsSubmitting(true)}
+        value="Submit"
         inversed
       >
         Submit
@@ -426,18 +400,26 @@ export const SubmissionForm = ({ changeRequestType }) => {
           </p>
           <div className="form-card">
             {formInfo.actionType && (
-              <RequiredChoice
-                fieldInfo={formInfo.actionType}
+              <Dropdown
+                options={formInfo.actionType.optionsList}
+                defaultValue={changeRequest.actionType}
                 label="Action Type"
-                value={changeRequest.actionType}
+                labelClassName="ds-u-margin-top--0 required"
+                fieldClassName="field"
+                name="actionType"
+                id="action-type"
                 onChange={handleActionTypeChange}
               />
             )}
             {formInfo.waiverAuthority && (
-              <RequiredChoice
-                fieldInfo={formInfo.waiverAuthority}
+              <Dropdown
+                options={formInfo.waiverAuthority.optionsList}
+                defaultValue={changeRequest.waiverAuthority}
                 label="Waiver Authority"
-                value={changeRequest.waiverAuthority}
+                labelClassName="ds-u-margin-top--0 required"
+                fieldClassName="field"
+                name="waiverAuthority"
+                id="waiver-authoritye"
                 onChange={handleInputChange}
               />
             )}
