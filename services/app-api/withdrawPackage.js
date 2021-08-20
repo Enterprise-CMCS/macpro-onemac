@@ -1,8 +1,8 @@
 import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
+import updatePackage from "./utils/updatePackage";
 
 export const main = handler(async (event) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -10,7 +10,8 @@ export const main = handler(async (event) => {
     return null;
   }
 
-  const user = await getUser(event.queryStringParameters.email);
+  const body = JSON.parse(event.body);
+  const user = await getUser(body.submitterEmail);
 
   if (!user) {
     throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
@@ -19,18 +20,15 @@ export const main = handler(async (event) => {
   const userRoleObj = getUserRoleObj(user.type);
 
   const territoryList = getAuthorizedStateList(user);
-  if (!userRoleObj.canAccessDashboard || territoryList === []) {
+  if (!userRoleObj.canAccessDashboard || territoryList === "All") {
     throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
   }
 
-  const results = await dynamoDb.update({
-    TableName: process.env.oneMacTableName,
-    Key: { pk: event.queryStringParameters.packageId, sk: "PACKAGE" },
-    UpdateExpression: "SET currentStatus = :newStatus",
-    ExpressionAttributeValues: { ":newStatus": "Withdrawn" },
+  await updatePackage({
+    ...body,
+    packageStatus: "Withdrawn",
+    submissionTimestamp: Date.now(),
   });
-
-  console.info(results);
 
   return RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS;
 });

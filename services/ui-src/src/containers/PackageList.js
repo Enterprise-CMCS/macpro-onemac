@@ -30,8 +30,8 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const withdrawMenuItem = {
   label: "Withdraw",
   value: "Withdrawn",
-  formatConfirmationMessage: () =>
-    `This action cannot be undone. CMS will be notified. Are you sure you would like to withdraw your package submission?`,
+  formatConfirmationMessage: ({ packageId }) =>
+    `You are about to withdraw ${packageId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
 };
 
 const menuItemMap = {
@@ -50,6 +50,24 @@ const PackageList = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData.type);
 
+  const loadPackageList = useCallback(
+    async (ctrlr) => {
+      setIsLoading(true);
+      try {
+        const data = await PackageAPI.getMyPackages(userProfile.email);
+
+        if (typeof data === "string") throw data;
+        console.log("the data returned is: ", data);
+        if (!ctrlr?.signal.aborted) setChangeRequestList(data);
+        if (!ctrlr?.signal.aborted) setIsLoading(false);
+      } catch (error) {
+        console.log("Error while fetching user's list.", error);
+        setAlertCode(RESPONSE_CODE[error.message]);
+      }
+    },
+    [userProfile.email]
+  );
+
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
@@ -58,26 +76,13 @@ const PackageList = () => {
       return;
     }
 
-    let mounted = true;
-
-    (async function onLoad() {
-      try {
-        const data = await PackageAPI.getMyPackages(userProfile.email);
-
-        if (typeof data === "string") throw data;
-        console.log("the data returned is: ", data);
-        if (mounted) setChangeRequestList(data);
-        if (mounted) setIsLoading(false);
-      } catch (error) {
-        console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
-      }
-    })();
+    const ctrlr = new AbortController();
+    loadPackageList(ctrlr);
 
     return function cleanup() {
-      mounted = false;
+      ctrlr.abort();
     };
-  }, [history, location, userData, userProfile]);
+  }, [history, loadPackageList, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -144,15 +149,27 @@ const PackageList = () => {
       // When we add another action to the menu, we will need to look at the action taken here.
 
       const packageToModify = changeRequestList[rowNum];
-      console.info(packageToModify);
       try {
-        await PackageAPI.withdraw(userProfile.email, packageToModify.packageId);
+        const resp = await PackageAPI.withdraw(
+          [userProfile.userData.firstName, userProfile.userData.lastName].join(
+            " "
+          ),
+          userProfile.email,
+          packageToModify.packageId
+        );
+        setAlertCode(resp);
+        loadPackageList();
       } catch (e) {
         console.log("Error while updating package.", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
     },
-    [changeRequestList, userProfile.email]
+    [
+      changeRequestList,
+      loadPackageList,
+      userProfile.email,
+      userProfile.userData,
+    ]
   );
 
   const renderActions = useCallback(

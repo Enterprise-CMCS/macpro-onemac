@@ -31,12 +31,15 @@ class PackageApi {
    * @param {string} ID the package ID
    * @return {Promise<string>} the response code
    */
-  async withdraw(userEmail, packageId) {
+  async withdraw(submitterName, submitterEmail, packageId) {
     try {
-      return await API.put(
-        "changeRequestAPI",
-        `/withdraw?email=${userEmail}&packageId=${packageId}`
-      );
+      return await API.post("changeRequestAPI", `/withdraw`, {
+        body: {
+          packageId,
+          submitterEmail,
+          submitterName,
+        },
+      });
     } catch (err) {
       handleApiError(
         err,

@@ -25,6 +25,7 @@ const VARIATION_PROPS = {
   UserManagement: {
     acceptText: "Confirm",
     dialogTitle: "Modify User's Access?",
+    width: "wide",
   },
   PackageList: {
     acceptText: "Yes, withdraw",
@@ -58,6 +59,7 @@ export default function PopupMenu({
     <>
       <Button
         aria-haspopup="true"
+        className="popup-menu-button"
         data-testid={POPUP_TRIGGER_TEST_ID}
         disabled={!menuItems || menuItems.length === 0}
         onClick={handleClick}
@@ -97,7 +99,7 @@ export default function PopupMenu({
           heading={variationProps.dialogTitle}
           onAccept={confirmStatusChange}
           onCancel={closeConfirmation}
-          size="wide"
+          size={variationProps.width}
         >
           {confirmItem.formatConfirmationMessage(selectedRow.original)}
         </ConfirmationDialog>

@@ -1,7 +1,9 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export default async function updatePackage(updateData) {
-  const updatePk = updateData.packageId;
+export default async function updatePackage({
+  packageId: updatePk,
+  ...updateData
+}) {
   const updateSk = "PACKAGE";
   /*  var getPackageParams = {
     TableName: process.env.oneMacTableName,
