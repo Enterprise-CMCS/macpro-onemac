@@ -163,7 +163,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
         break;
     }
 
-    console.log("updated record: ", updatedRecord);
     setTransmittalNumberDetails(transmittalNumberInfo);
     setChangeRequest(updatedRecord);
   };
@@ -358,13 +357,19 @@ export const SubmissionForm = ({ changeRequestType }) => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
+  async function handleSubmit(event) {
+    event.preventDefault();
+
+    setIsSubmitting(isSubmissionReady);
+  }
+
   function renderSubmissionButton() {
     return (
       <Button
         id="form-submission-button"
         className="form-submit"
         disabled={!isSubmissionReady}
-        onClick={() => setIsSubmitting(true)}
+        onClick={handleSubmit}
         value="Submit"
         inversed
       >
@@ -373,8 +378,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
     );
   }
 
-  // Render the component conditionally when NOT in read only mode
-  // OR in read only mode when change request data was successfully retrieved
   return (
     <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
@@ -390,7 +393,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
             <p dangerouslySetInnerHTML={formInfo.subheaderMessage} />
           </div>
         )}
-        <form noValidate>
+        <form noValidate onSubmit={handleSubmit}>
           <h3>{formInfo.detailsHeader} Details</h3>
           <p className="req-message">
             <span className="required-mark">*</span>
