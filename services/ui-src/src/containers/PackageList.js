@@ -115,11 +115,11 @@ const PackageList = () => {
     []
   );
 
-  const renderState = useCallback(({ value }) => {
-    if (!value) {
+  const getState = useCallback(({ packageId }) => {
+    if (!packageId) {
       return "--";
     } else {
-      return value.toString().substring(0, 2);
+      return packageId.toString().substring(0, 2);
     }
   }, []);
 
@@ -200,9 +200,8 @@ const PackageList = () => {
       },
       {
         Header: "State",
-        accessor: "packageId",
+        accessor: getState,
         id: "territory",
-        Cell: renderState,
       },
       {
         Header: "Status",
@@ -230,7 +229,7 @@ const PackageList = () => {
     [
       getType,
       renderActions,
-      renderState,
+      getState,
       renderId,
       renderType,
       renderDate,
