@@ -1,6 +1,7 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-radius: 3px;
+$color-primary-alt-lightest: #f0fafe;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -1033,19 +1034,24 @@ article.form-container {
   text-align: right;
 }
 
-.LoaderButton,
 .form-submit {
   background-color: $color-primary;
   color: $color-white;
-  padding: 10px 28px;
+  padding: 4px 12px;
   border-radius: 3px;
   align-self: center;
   font-family: Open Sans;
   font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 20px;
   border: none;
+  width: 74px;
+  height: 28;
+}
+.form-submit:disabled {
+  background-color: $color-gray-lighter;
+  color: $color-black;
 }
 
 .display-errors input:invalid,
