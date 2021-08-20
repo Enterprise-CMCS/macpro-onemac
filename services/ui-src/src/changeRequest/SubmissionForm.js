@@ -284,10 +284,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
       let formReady = false;
       if (
-        formInfo.actionType &&
-        changeRequest.actionType &&
-        formInfo.waiverAuthority &&
-        changeRequest.waiverAuthority &&
+        (!formInfo.actionType || changeRequest.actionType) &&
+        (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
         (displayMessage.statusLevel === "warn" ||
           !displayMessage.statusMessage) &&
         areUploadsReady
