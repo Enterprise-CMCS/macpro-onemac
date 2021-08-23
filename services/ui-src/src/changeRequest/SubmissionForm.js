@@ -420,7 +420,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
                 labelClassName="ds-u-margin-top--0 required"
                 fieldClassName="field"
                 name="waiverAuthority"
-                id="waiver-authoritye"
+                id="waiver-authority"
                 onChange={handleInputChange}
               />
             )}
