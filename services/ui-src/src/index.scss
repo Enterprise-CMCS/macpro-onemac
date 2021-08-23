@@ -1034,26 +1034,6 @@ article.form-container {
   text-align: right;
 }
 
-.form-submit {
-  background-color: $color-primary;
-  color: $color-white;
-  padding: 4px 12px;
-  border-radius: 3px;
-  align-self: center;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: 700;
-  font-size: 14px;
-  line-height: 20px;
-  border: none;
-  width: 74px;
-  height: 28;
-}
-.form-submit:disabled {
-  background-color: $color-gray-lighter;
-  color: $color-black;
-}
-
 .display-errors input:invalid,
 .display-errors select:invalid {
   border-color: red;

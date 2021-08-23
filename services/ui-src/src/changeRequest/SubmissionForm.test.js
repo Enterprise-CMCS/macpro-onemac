@@ -17,9 +17,6 @@ import { SubmissionForm } from "./SubmissionForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 jest.mock("../utils/ChangeRequestDataApi");
 
-import { uploadFiles } from "../utils/s3Uploader";
-jest.mock("../utils/s3Uploader");
-
 import { AppContext } from "../libs/contextLib";
 import { RESPONSE_CODE } from "cmscommonlib";
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
@@ -116,14 +113,62 @@ it("does not exceed additional information character limit", async () => {
   );
 });
 
-/*
-describe("Effects of Failed Submit", () => {
+describe("Submit button diabled until form is ready to Submit", () => {
+  const handleSubmit = jest.fn();
   let history;
 
   beforeEach(() => {
     history = createMemoryHistory();
     history.push("/waiver");
   });
+
+  it("has the submit button disabled on initial load", async () => {
+    render(
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+        }}
+      >
+        <SubmissionForm
+          changeRequestType={ChangeRequest.TYPE.WAIVER}
+        ></SubmissionForm>
+      </AppContext.Provider>
+    );
+
+    const submitButtonEl = screen.getByText("Submit");
+
+    userEvent.click(submitButtonEl);
+    expect(handleSubmit).not.toBeCalled();
+  });
+
+  it("stays disabled even with valid ID", async () => {
+    const testID = "MI-11-2222";
+    render(
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+        }}
+      >
+        <SubmissionForm
+          changeRequestType={ChangeRequest.TYPE.SPA}
+        ></SubmissionForm>
+      </AppContext.Provider>
+    );
+
+    const submitButtonEl = screen.getByText("Submit");
+    expect(submitButtonEl).toBeDisabled();
+
+    const transmittalNumberEl = screen.getByLabelText("SPA ID");
+
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+
+    userEvent.type(transmittalNumberEl, testID);
+    await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));
+
+    expect(submitButtonEl).toBeDisabled();
+  });
+
+  // use this for testing failed submit from backend?     uploadFiles.mockResolvedValue();
 
   // oy2-3734 Part One - maintaining Action Type, Waiver Authority, and Transmittal Number
   // values after a failed Submit
@@ -149,6 +194,7 @@ describe("Effects of Failed Submit", () => {
     const transmittalNumberEl = screen.getByLabelText("Waiver Number");
     const actionTypeEl = screen.getByLabelText("Action Type");
     const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    const submitButtonEl = screen.getByText("Submit");
 
     // values start out empty
     expect(transmittalNumberEl.value).toBe("");
@@ -170,8 +216,8 @@ describe("Effects of Failed Submit", () => {
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
     // click the submit button
-    userEvent.click(screen.getByText("Submit", { selector: "input" }));
-    await screen.findByText("Missing Required Attachments");
+    userEvent.click(submitButtonEl);
+    // await screen.findByText("Missing Required Attachments");
 
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
@@ -179,7 +225,7 @@ describe("Effects of Failed Submit", () => {
     expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
   });
 });
-*/
+
 describe("Transmittal Number Validation", () => {
   it("displays error message when the format id is invalid (but not when it's valid)", async () => {
     const chipSpaTransmittalNumberDetails =

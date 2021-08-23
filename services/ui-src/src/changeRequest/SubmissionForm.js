@@ -367,11 +367,11 @@ export const SubmissionForm = ({ changeRequestType }) => {
     return (
       <Button
         id="form-submission-button"
-        className="form-submit"
+        aria-label="submit-form"
+        className="ds-c-button ds-c-button--primary"
         disabled={!isSubmissionReady}
         onClick={handleSubmit}
         value="Submit"
-        inversed
       >
         Submit
       </Button>
