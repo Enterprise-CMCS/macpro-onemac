@@ -135,10 +135,10 @@
 //         browser.useCss().click("#new-submission-button");
 //         browser.useXpath().click("(//li[@class='choice']/a)[2]");
 //         browser.useXpath().click("(//li[@class='choice']/a)[1]");
-//         browser.useCss().click("select#actionType");
-//         browser.useCss().click("select#actionType > option[value='new']");
-//         browser.useCss().click("select#waiverAuthority");
-//         browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+//         browser.useCss().click("select#action-type");
+//         browser.useCss().click("select#action-type > option[value='new']");
+//         browser.useCss().click("select#waiver-authority");
+//         browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
 
 //         // Enter Waiver number
 //         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
