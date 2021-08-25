@@ -32,7 +32,7 @@ it("asks for confirmation when item is clicked", () => {
       formatConfirmationMessage: () => "don't you dare",
     },
   ];
-  render(<PopupMenu menuItems={items} selectedRow={{}} />);
+  render(<PopupMenu menuItems={items} selectedRow={{}} shouldConfirm />);
   userEvent.click(screen.getByTestId(POPUP_TRIGGER_TEST_ID));
   userEvent.click(screen.getByText(items[1].label));
 

@@ -17,7 +17,7 @@ import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import PopupMenu from "../components/PopupMenu copy";
+import PopupMenu from "../components/PopupMenu";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
