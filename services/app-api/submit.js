@@ -121,6 +121,22 @@ export const main = handler(async (event) => {
     Item: data,
   });
 
+  try {
+    // create the (package) ID data
+    const packageParams = {
+      TableName: process.env.spaIdTableName,
+      Item: {
+        id: data.transmittalNumber,
+        doneBy: data.user.email,
+        changeRequestType: data.type,
+      },
+    };
+    await dynamoDb.put(packageParams);
+  } catch (dbError) {
+    console.log("This error is: " + dbError);
+    throw dbError;
+  }
+
   //An error sending the user email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter

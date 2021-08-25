@@ -8,7 +8,7 @@ import dynamoDb from "../libs/dynamodb-lib";
 export default async function packageExists(id) {
   //assume the territory is the first two chars
 
-  const params = {
+  let params = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
@@ -19,8 +19,21 @@ export default async function packageExists(id) {
   let result;
   try {
     result = await dynamoDb.query(params);
+
+    if (result.Count <= 0) {
+      params = {
+        TableName: process.env.spaIdTableName,
+        // 'Key' defines the partition key and sort key of the item to be retrieved
+        // - 'id': change request ID
+        Key: {
+          id: id,
+        },
+      };
+      console.log("the params for checking", params);
+      result = await dynamoDb.get(params);
+    }
   } catch (error) {
-    console.log("packageExists got an error: ", error);
+    console.log(`packageExists ${params.TableName} got an error: `, error);
   }
 
   return result.Count > 0;
