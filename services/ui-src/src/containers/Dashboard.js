@@ -17,10 +17,17 @@ import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
+import PopupMenu from "../components/PopupMenu copy";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+
+const correspondingRAILink = {
+  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
+  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+};
 
 /**
  * Component containing dashboard
@@ -126,6 +133,33 @@ const Dashboard = () => {
     }
   }, []);
 
+  const onPopupAction = useCallback(
+    (value) => {
+      history.push(`${value.link}?transmittalNumber=${value.raiId}`);
+    },
+    [history]
+  );
+
+  const renderActions = useCallback(
+    ({ row }) => {
+      const link = correspondingRAILink[row.original.type];
+      if (link) {
+        const item = {
+          label: "Respond to RAI",
+          value: { link: link, raiId: row.original.transmittalNumber },
+        };
+        return (
+          <PopupMenu
+            selectedRow={row}
+            menuItems={[item]}
+            handleSelected={onPopupAction}
+          />
+        );
+      } else return <></>;
+    },
+    [onPopupAction]
+  );
+
   const columns = useMemo(
     () => [
       {
@@ -156,8 +190,22 @@ const Dashboard = () => {
         id: "submitter",
         Cell: renderName,
       },
+      userRoleObj.canAccessForms && {
+        Header: "Actions",
+        disableSortBy: true,
+        Cell: renderActions,
+        id: "packageActions",
+      },
     ],
-    [getType, renderDate, renderId, renderName, renderType]
+    [
+      getType,
+      renderActions,
+      renderDate,
+      renderId,
+      renderName,
+      renderType,
+      userRoleObj.canAccessForms,
+    ]
   );
 
   const initialTableState = useMemo(

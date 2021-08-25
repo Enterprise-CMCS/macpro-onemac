@@ -1,5 +1,5 @@
 import React, { useRef, useState, useEffect, useCallback } from "react";
-import { useHistory } from "react-router-dom";
+import { useHistory, useLocation } from "react-router-dom";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import { TextField } from "@cmsgov/design-system";
@@ -83,6 +83,25 @@ export const SubmissionForm = ({ changeRequestType }) => {
     actionType: "",
     waiverAuthority: "",
   });
+
+  // Get the transmittal number from the url params if it exists
+  const params = useLocation().search;
+  const intitialTransmittalNumber = new URLSearchParams(params).get(
+    "transmittalNumber"
+  );
+  console.log(intitialTransmittalNumber);
+
+  // If transmittal number exists when page loads, then set it in the changeRequest.
+  // This will cause the number to autopopulate within the id/number field on initial load.
+  useEffect(() => {
+    (function onLoad() {
+      if (intitialTransmittalNumber) {
+        let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+        updatedRecord["transmittalNumber"] = intitialTransmittalNumber;
+        setChangeRequest(updatedRecord);
+      }
+    })();
+  }, []);
 
   /**
    * Callback for the uploader to set if the upload requirements are met.
