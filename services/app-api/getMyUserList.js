@@ -59,11 +59,13 @@ export const main = handler(async (event) => {
     ExpressionAttributeValues: filterAttribValues,
   };
   let userNames;
-  try {
-    userNames = await dynamoDb.scan(scanParams);
-  } catch (dbError) {
-    console.log(`Error happened while reading from DB:  ${dbError}`);
-    throw dbError;
+  if (filterAttributeNames) {
+    try {
+      userNames = await dynamoDb.scan(scanParams);
+    } catch (dbError) {
+      console.log(`Error happened while reading from DB:  ${dbError}`);
+      throw dbError;
+    }
   }
   // Populate doneBy Name
   return transformedUserList.map((user) => {
