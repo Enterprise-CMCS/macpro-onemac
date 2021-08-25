@@ -74,7 +74,6 @@ export const SubmissionForm = ({ changeRequestType }) => {
   const intitialTransmittalNumber = new URLSearchParams(params).get(
     "transmittalNumber"
   );
-  console.log(intitialTransmittalNumber);
 
   // If transmittal number exists when page loads, then set it in the changeRequest.
   // This will cause the number to autopopulate within the id/number field on initial load.
