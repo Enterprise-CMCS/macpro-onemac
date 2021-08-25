@@ -238,6 +238,7 @@ const UserManagement = () => {
           menuItems={menuItemMap[row.values.status] ?? []}
           handleSelected={onPopupAction}
           variation="UserManagement"
+          shouldConfirm
         />
       ) : (
         <></>

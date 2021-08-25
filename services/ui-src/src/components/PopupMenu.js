@@ -38,8 +38,10 @@ export default function PopupMenu({
   selectedRow,
   menuItems,
   handleSelected,
+  shouldConfirm,
 }) {
   const variationProps = VARIATION_PROPS[variation];
+
   const classes = useStyles();
   const [anchorEl, setAnchorEl] = useState(null);
   const [confirmItem, setConfirmItem] = useState(null);
@@ -84,7 +86,9 @@ export default function PopupMenu({
                 className={classes.root}
                 onClick={() => {
                   handleClose();
-                  setConfirmItem(item);
+                  shouldConfirm
+                    ? setConfirmItem(item)
+                    : handleSelected(item.value);
                 }}
               >
                 {item.label}
@@ -93,7 +97,7 @@ export default function PopupMenu({
           ))}
         </div>
       </Menu>
-      {confirmItem && (
+      {shouldConfirm && confirmItem && (
         <ConfirmationDialog
           acceptText={variationProps.acceptText}
           heading={variationProps.dialogTitle}
