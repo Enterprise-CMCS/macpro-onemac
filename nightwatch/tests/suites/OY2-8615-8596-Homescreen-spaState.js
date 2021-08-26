@@ -61,7 +61,7 @@ module.exports = {
     browser.useCss().click("#new-submission-button");
     browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
     browser.useCss().click("#root > div > div.choice-container > ul > li:nth-child(1) > a > div > h4");
-    browser.click("[value='Submit']");
+//    browser.click("[value='Submit']");
     let state_territory = "//*[contains(text(), 'State/Territory')]";
     browser.useXpath().expect.element(state_territory).to.be.not.present;
     browser.useCss();
