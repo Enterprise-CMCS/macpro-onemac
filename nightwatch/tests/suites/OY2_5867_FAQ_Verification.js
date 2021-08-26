@@ -280,7 +280,7 @@ module.exports = {
         browser.verify.containsText(fqaHeader, expectedText);
     },
 
-    
+   /*  put in as a Unit Test
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         browser.useXpath().click("(//h4)[3]");
         browser.pause(1000);
@@ -310,4 +310,5 @@ module.exports = {
         });
         browser.useCss();
     },
+    */
 }
