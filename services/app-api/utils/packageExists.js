@@ -32,6 +32,24 @@ export default async function packageExists(id) {
       console.log("the params for checking", params);
       result = await dynamoDb.get(params);
     }
+
+    if (result.Count <= 0) {
+      params = {
+        TableName: process.env.tableName,
+        ExclusiveStartKey: null,
+        ScanIndexForward: false,
+        FilterExpression: "transmittalNumber = :packageid",
+        ExpressionAttributeValues: {
+          ":packageid": id,
+        },
+      };
+      do {
+        const results = await dynamoDb.query(params);
+        console.log("params are: ", params);
+        console.log("results are: ", results);
+        params.ExclusiveStartKey = results.LastEvaluatedKey;
+      } while (params.ExclusiveStartKey && result.Count <= 0);
+    }
   } catch (error) {
     console.log(`packageExists ${params.TableName} got an error: `, error);
   }
