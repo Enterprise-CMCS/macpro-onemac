@@ -22,7 +22,7 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
-        browser.click("[value='Submit']");
+        //browser.click("[value='Submit']");
         let state_territory = "//*[contains(text(), 'State/Territory')]";
         browser.useXpath().expect.element(state_territory).to.be.not.present;
         browser.useCss();
