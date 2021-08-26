@@ -97,7 +97,7 @@ module.exports = {
         });
     },
 
-    
+    /* added to Transmittal Number Unit Test
     'For each section under SPAs, there is a link to open the corresponding question in the FAQ': function (browser) {
         // Submit a New SPA
         // let newSPALink = 'button#spaSubmitBtn';
@@ -279,8 +279,9 @@ module.exports = {
         browser.useXpath().expect.element(fqaHeader).to.be.visible;
         browser.verify.containsText(fqaHeader, expectedText);
     },
+    */
 
-    
+   /*  put in as a Unit Test
     'Clicking the link on the FAQ page will result in a new detailed page': function (browser) {
         browser.useXpath().click("(//h4)[3]");
         browser.pause(1000);
@@ -310,4 +311,5 @@ module.exports = {
         });
         browser.useCss();
     },
+    */
 }
