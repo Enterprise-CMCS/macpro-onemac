@@ -18,19 +18,19 @@ export default async function packageExists(id) {
 
   let result;
   try {
+    console.log("params for checking: ", params);
     result = await dynamoDb.query(params);
 
     if (result.Count <= 0) {
       params = {
         TableName: process.env.spaIdTableName,
-        // 'Key' defines the partition key and sort key of the item to be retrieved
-        // - 'id': change request ID
-        Key: {
-          id: id,
+        KeyConditionExpression: "id = :pk",
+        ExpressionAttributeValues: {
+          ":pk": id,
         },
       };
       console.log("the params for checking", params);
-      result = await dynamoDb.get(params);
+      result = await dynamoDb.query(params);
     }
 
     if (result.Count <= 0) {
@@ -44,6 +44,7 @@ export default async function packageExists(id) {
         },
       };
       do {
+        console.log("params for checking: ", params);
         const results = await dynamoDb.query(params);
         console.log("params are: ", params);
         console.log("results are: ", results);
