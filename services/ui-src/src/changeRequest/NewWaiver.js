@@ -10,11 +10,6 @@ const WAIVER_CHOICES = [
     linkTo: "/waiver",
   },
   {
-    title: "Respond to Waiver RAI",
-    description: "Submit additional information",
-    linkTo: "/waiverrai",
-  },
-  {
     title: "Request Temporary Extension",
     description: "Submit for 1915(b) and 1915(c)",
     linkTo: "/waiverextension",
