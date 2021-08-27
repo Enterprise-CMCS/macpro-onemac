@@ -45,10 +45,10 @@ export default async function packageExists(id) {
       };
       do {
         console.log("params for checking: ", params);
-        const results = await dynamoDb.query(params);
+        result = await dynamoDb.scan(params);
         console.log("params are: ", params);
-        console.log("results are: ", results);
-        params.ExclusiveStartKey = results.LastEvaluatedKey;
+        console.log("results are: ", result);
+        params.ExclusiveStartKey = result.LastEvaluatedKey;
       } while (params.ExclusiveStartKey && result.Count <= 0);
     }
   } catch (error) {
