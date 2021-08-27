@@ -175,6 +175,7 @@ export const CONFIG = {
       fieldName: "actionType",
       errorMessage: "Please select the Action Type.",
       optionsList: [
+        { label: "-- select an action type --", value: "" },
         { label: "New waiver", value: "new" },
         { label: "Waiver amendment", value: "amendment" },
         {
@@ -182,19 +183,18 @@ export const CONFIG = {
           value: "renewal",
         },
       ],
-      defaultItem: "an action type",
     },
     waiverAuthority: {
       fieldName: "waiverAuthority",
       errorMessage: "Please select the Waiver Authority.",
       optionsList: [
+        { label: "-- select a waiver authority --", value: "" },
         {
           label: "1915(b)(4) FFS Selective Contracting waivers",
           value: "1915(b)(4)",
         },
         { label: "All other 1915(b) Waivers", value: "1915(b)" },
       ],
-      defaultItem: "a waiver authority",
     },
     transmittalNumber: {
       ...waiverBaseTransmittalNumber,

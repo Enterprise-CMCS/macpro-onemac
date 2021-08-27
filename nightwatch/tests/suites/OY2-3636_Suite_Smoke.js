@@ -102,10 +102,10 @@ module.exports = {
     // DONE 
     // 'Verify Submitter user can submit 1915(b) Waiver Action': function (browser) {
     //     browser.useCss().click("button#waiverBtn");
-    //     browser.useCss().click("select#actionType");
-    //     browser.useCss().click("select#actionType > option[value='new']");
-    //     browser.useCss().click("select#waiverAuthority");
-    //     browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+    //     browser.useCss().click("select#action-type");
+    //     browser.useCss().click("select#action-type > option[value='new']");
+    //     browser.useCss().click("select#waiver-authority");
+    //     browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
 
     //     // Enter Waiver number
     //     let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
