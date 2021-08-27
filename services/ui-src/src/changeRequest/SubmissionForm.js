@@ -74,33 +74,21 @@ export const SubmissionForm = ({ changeRequestType }) => {
     ...formInfo.transmittalNumber,
   });
 
-  // The record we are using for the form.
-  const [changeRequest, setChangeRequest] = useState({
-    type: changeRequestType,
-    territory: "",
-    summary: "",
-    transmittalNumber: "", //This is needed to be able to control the field
-    actionType: "",
-    waiverAuthority: "",
-  });
-
   // Get the transmittal number from the url params if it exists
   const params = useLocation().search;
   const intitialTransmittalNumber = new URLSearchParams(params).get(
     "transmittalNumber"
   );
 
-  // If transmittal number exists when page loads, then set it in the changeRequest.
-  // This will cause the number to autopopulate within the id/number field on initial load.
-  useEffect(() => {
-    (function onLoad() {
-      if (intitialTransmittalNumber) {
-        let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
-        updatedRecord["transmittalNumber"] = intitialTransmittalNumber;
-        setChangeRequest(updatedRecord);
-      }
-    })();
-  }, []);
+  // The record we are using for the form.
+  const [changeRequest, setChangeRequest] = useState({
+    type: changeRequestType,
+    territory: "",
+    summary: "",
+    transmittalNumber: intitialTransmittalNumber || "", //This is needed to be able to control the field
+    actionType: "",
+    waiverAuthority: "",
+  });
 
   /**
    * Callback for the uploader to set if the upload requirements are met.
