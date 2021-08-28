@@ -26,15 +26,15 @@ module.exports = {
         browser.useCss().click(manage_account_link); 
         browser.pause(2000);
         //browser.expect.element(".ds-l-col--6>h3").to.be.present;
-        let text_cms_approver = "//*[@id='profileDisclaimer']";
+        let text_cms_role_approver = "//*[@id='profileDisclaimer']";
         let profile_information = "//*[@id='profileInfoHeader']";
         let full_name = "(//h3)[1]";
         let onemac_cms_user = "(//div[@class='ds-c-review__body'])[1]";
         let email = "(//h3)[3]";
         let email_address = "(//div[@class='ds-c-review__body'])[3]";
 
-        browser.useXpath().expect.element(text_cms_approver).to.be.visible;
-        browser.useXpath().assert.containsText(text_cms_approver,"This page contains Profile Information for the CMS System Admin.");
+        browser.useXpath().expect.element(text_cms_role_approver).to.be.visible;
+        browser.useXpath().assert.containsText(text_cms_role_approver,"This page contains Profile Information for the CMS System Admin.");
         browser.useXpath().expect.element(profile_information).to.be.visible;
         browser.useXpath().expect.element(full_name).to.be.visible;
         browser.useXpath().expect.element(onemac_cms_user).to.be.visible;

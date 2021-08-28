@@ -1,8 +1,11 @@
+import { USER_STATUS } from "cmscommonlib";
+
 export const stateSubmitterInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
   isValidRoute: true,
+  userStatus: USER_STATUS.ACTIVE,
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -184,7 +187,7 @@ export const stateAdminDeniedInitialAuthState = {
   },
 };
 
-export const cmsApproverDeniedInitialAuthState = {
+export const cmsRoleApproverDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
@@ -195,8 +198,6 @@ export const cmsApproverDeniedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -204,10 +205,10 @@ export const cmsApproverDeniedInitialAuthState = {
           status: "denied",
         },
       ],
-      id: "cmsapproverrevoked@cms.hhs.local",
+      id: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Denied",
-      type: "cmsapprover",
+      type: "cmsroleapprover",
       validRoutes: [
         "/",
         "/profile",
@@ -220,7 +221,7 @@ export const cmsApproverDeniedInitialAuthState = {
   },
 };
 
-export const cmsApproverRevokedInitialAuthState = {
+export const cmsRoleApproverRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
@@ -231,8 +232,6 @@ export const cmsApproverRevokedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -240,10 +239,10 @@ export const cmsApproverRevokedInitialAuthState = {
           status: "revoked",
         },
       ],
-      id: "cmsapproverrevoked@cms.hhs.local",
+      id: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Revoked",
-      type: "cmsapprover",
+      type: "cmsroleapprover",
       validRoutes: [
         "/",
         "/profile",
@@ -266,8 +265,6 @@ export const helpDeskDeniedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -275,7 +272,7 @@ export const helpDeskDeniedInitialAuthState = {
           status: "revoked",
         },
       ],
-      id: "cmsapproverrevoked@cms.hhs.local",
+      id: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Revoked",
       type: "helpdesk",
@@ -295,8 +292,6 @@ export const helpDeskRevokedInitialAuthState = {
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
       attributes: [
         {
           date: 1617149287,
@@ -304,7 +299,7 @@ export const helpDeskRevokedInitialAuthState = {
           status: "denied",
         },
       ],
-      id: "cmsapproverrevoked@cms.hhs.local",
+      id: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Denied",
       type: "helpdesk",
@@ -320,14 +315,14 @@ export const cmsUserNoAuthState = {
   isValidRoute: true,
   userProfile: {
     cmsRoles: "onemac-cms-user",
-    email: "cmsapproverunregistered@cms.hhs.local",
+    email: "cmsroleapproverunregistered@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
       attributes: [],
-      id: "cmsapproverunregistered@cms.hhs.local",
+      id: "cmsroleapproverunregistered@cms.hhs.local",
       validRoutes: [
         "/",
         "/profile",

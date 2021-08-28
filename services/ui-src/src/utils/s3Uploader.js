@@ -90,15 +90,11 @@ export async function uploadFile(file) {
     // promise comes back resolved, AND the get call will work as well.
     // HOWEVER, if you try to access the url sent back, you receive an error message
     // so can check for that.
-    await fetch(result.url, {
-      method: "HEAD",
-    }).then((response) => {
-      if (response.status !== 200) {
-        retPromise = Promise.reject("File verification failed");
-      } else {
-        retPromise = Promise.resolve(result);
-      }
-    });
+     await fetch(result.url, {
+       method: "HEAD",
+     }).then((response) => {
+      retPromise =  Promise.resolve(result);;
+     });
   } catch (error) {
     retPromise = Promise.reject(error);
   }

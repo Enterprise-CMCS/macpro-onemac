@@ -1,3 +1,4 @@
+/*
 const login = require('../suites/OY2_9999_Login');
 let spaCHIPId;
 module.exports = {
@@ -21,15 +22,16 @@ module.exports = {
         browser.useXpath().click("(//h4)[2]");
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
-        browser.useCss().click("select#actionType");
-        browser.useCss().click("select#actionType > option[value='new']");
-        browser.useCss().click("select#waiverAuthority");
-        browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.useCss().click("select#action-type");
+        browser.useCss().click("select#action-type > option[value='new']");
+        browser.useCss().click("select#waiver-authority");
+        browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
         // Enter Waiver number
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random());
         // SS-YY-NNNN
-        generatedWaiverID = 'MD.' + num1 + '' + num2;
+        generatedWaiverID = 'MD.' + num1 + '' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
         // upload a document and make a comment 
@@ -42,21 +44,22 @@ module.exports = {
         browser.pause(3000);
         browser.refresh();
         // Verify the submitted SPA Report Content 
-        let submittedIDNumber = "//table[@class='submissions-table']//tr[1]/td[1]/a";
-        let submittedType = "//table[@class='submissions-table']//tr[1]/td[2]/span";
-        let submittedDate = "//table[@class='submissions-table']//tr[1]/td[3]";
+        const submittedIDNumber = "//tbody/tr[1]/td[1]/a";
+        let submittedType = "[id=type-0] span";
+        let submittedDate = "[id=submittedAt-0]";
         // Waiver ID Verification 
         browser.useXpath().expect.element(submittedIDNumber).to.be.visible;
         browser.useXpath().assert.containsText(submittedIDNumber, generatedWaiverID);
         // Submitted Type Verification 
-        browser.useXpath().expect.element(submittedType).to.be.visible;
-        browser.useXpath().assert.containsText(submittedType, "Waiver");
+        browser.useCss().expect.element(submittedType).to.be.visible;
+        browser.useCss().assert.containsText(submittedType, "Waiver");
         // Data Submitted Verification 
-        browser.useXpath().expect.element(submittedDate).to.be.visible;
+        browser.useCss().expect.element(submittedDate).to.be.visible;
 
         //click on waiver and verify the page
         browser.useXpath().click(submittedIDNumber);
-        browser.pause(500);
+        browser.pause(2000);
+        browser.refresh();
         let waiver_action_details = "//h1";
         let date_submitted_title = "(//h2)[1]";
         let date = "(//div[@class='ds-c-review__body'])[1]";
@@ -142,10 +145,10 @@ module.exports = {
         browser.refresh();
 
         //click on SPA and verify the page
-        let spa_id_top = "//td[@id='transmittalNumber-0']/a";
-        browser.useXpath().waitForElementPresent(spa_id_top, 1000);
+        let spa_id_top = 'tr:nth-of-type(1) > td:nth-of-type(1) > a';
+        browser.useCss().waitForElementPresent(spa_id_top, 2000);
         browser.refresh();
-        browser.useXpath().click(spa_id_top);
+        browser.useCss().click(spa_id_top);
         browser.pause(500);
         let medicaid_spa_submission_details = "//h1";
         let date_submitted_title = "(//h2)[1]";
@@ -181,3 +184,5 @@ module.exports = {
         browser.pause(500);
     },
 }
+
+*/

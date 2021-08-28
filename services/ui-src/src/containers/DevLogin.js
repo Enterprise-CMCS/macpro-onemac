@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
 
+import { Button } from "@cmsgov/design-system";
+
 import { RESPONSE_CODE } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
@@ -72,12 +74,14 @@ export default function DevLogin() {
                   onChange={handleFieldChange}
                   required
                 ></input>
-                <input
+                <Button
+                  className="ds-c-button ds-c-button--primary"
                   id="loginDevUserBtn"
                   type="submit"
-                  className="form-submit"
                   value="Login"
-                />
+                >
+                  Login
+                </Button>
               </div>
             </form>
           </div>

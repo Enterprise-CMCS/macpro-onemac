@@ -23,11 +23,11 @@ module.exports = {
         browser.pause(2000);
         browser.useXpath().assert.containsText( "//h2", "Profile Information").pause(2000);
         
-        let full_name = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/div";
-        let role = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/div";
-        let role_email = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[1]/div[3]/div/div";
-        let group = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/div/div[2]/div[1]/p";
-        let division = "/html/body/reference/div/div/div[2]/div[2]/div[1]/div[2]/div/div[2]/div[2]/p";
+        let full_name = "(//div[@class='ds-c-review__body'])[1]";
+        let role = "(//div[@class='ds-c-review__body'])[2]";
+        let role_email = "(//div[@class='ds-c-review__body'])[3]";
+        let group = "(//dd)[2]";
+        let division = "(//dd)[3]";
 
         
         browser.useXpath().assert.containsText( full_name, "CMSReviewer Nightwatch");

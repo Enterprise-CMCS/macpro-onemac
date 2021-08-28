@@ -1,3 +1,4 @@
+/*
 const login = require('../suites/OY2_9999_Login');
 
 module.exports = {
@@ -5,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with cms_approvers'](browser);
+        login['Login with cms_role_approvers'](browser);
     },
 
     after: function (browser) {
@@ -71,3 +72,4 @@ module.exports = {
         browser.useCss();
     },
 }
+*/

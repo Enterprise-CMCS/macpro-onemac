@@ -1,3 +1,4 @@
+/*
 const login = require('../suites/OY2_9999_Login');
 let spaCHIPId;
 module.exports = {
@@ -104,3 +105,4 @@ module.exports = {
         browser.useCss();
     }
 }
+*/

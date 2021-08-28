@@ -73,16 +73,31 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - dynamodb:GetItem
+                  - dynamodb:Query
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
                 Resource: !GetAtt SpaIdTable.Arn
               - Effect: "Allow"
                 Action:
                   - dynamodb:GetItem
+                  - dynamodb:Query
                   - dynamodb:Scan
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.userTableName}
+              - Effect: "Allow"
+                Action:
+                  - dynamodb:GetItem
+                  - dynamodb:Query
+                  - dynamodb:Scan
+                  - dynamodb:PutItem
+                  - dynamodb:UpdateItem
+                Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+              - Effect: Allow
+                Action:
+                  - dynamodb:Query
+                Resource:
+                  - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:

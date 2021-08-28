@@ -1,6 +1,7 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-radius: 3px;
+$color-primary-alt-lightest: #f0fafe;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -26,6 +27,20 @@ $input-border-radius: 3px;
   width: 460px;
   padding: 8px;
   border-radius: 3px;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+
+  .header-and-content {
+    flex: 1 0 auto;
+  }
+
+  > footer {
+    flex-shrink: 0;
+  }
 }
 
 .faq-table {
@@ -856,7 +871,7 @@ article.form-container {
   }
 
   #personnelActionsColHeader {
-    width: 140px;
+    width: 60px;
   }
 
   .user-state {
@@ -869,12 +884,22 @@ article.form-container {
     color: $color-black;
   }
 
+  td:not(:last-child) {
+    @extend .ds-u-padding-right--1;
+  }
+
   th:last-child {
     text-align: right;
   }
 
-  td.actions button {
-    float: right;
+  td:last-child button {
+    color: $color-black;
+    width: 100%;
+
+    &:focus {
+      // remove hideous magenta outline
+      box-shadow: none;
+    }
   }
 }
 
@@ -1007,22 +1032,6 @@ article.form-container {
 
 .char-count {
   text-align: right;
-}
-
-.LoaderButton,
-.form-submit {
-  @extend .ds-u-margin-top--5;
-  background-color: $color-primary;
-  color: $color-white;
-  padding: 10px 28px;
-  border-radius: 3px;
-  align-self: center;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
-  border: none;
 }
 
 .display-errors input:invalid,
@@ -1448,47 +1457,50 @@ article.form-container {
   .gradient-border {
     @include gradient-top-border;
   }
+}
 
-  .state-access-card {
-    @extend .ds-u-padding--3;
-    @extend .ds-u-fill--white;
+.state-access-card {
+  @extend .ds-u-padding--3;
+  @extend .ds-u-fill--white;
 
-    border: 1px solid $color-gray-lighter;
-    border-radius: 0px 0px 3px 3px;
-    border-top: none;
-    box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
-    position: relative;
+  border: 1px solid $color-gray-lighter;
+  border-top: none;
+  border-radius: 0px 0px 3px 3px;
+  box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
+  position: relative;
 
-    &:not(:last-child) {
-      @extend .ds-u-margin-bottom--3;
+  &:not(:last-child) {
+    @extend .ds-u-margin-bottom--3;
+  }
+
+  button {
+    position: absolute;
+    background: inherit;
+    top: 26px;
+    right: 26px;
+    border: none;
+  }
+}
+
+.state-access-card,
+.cms-group-division-section {
+  dt {
+    @extend .ds-u-font-size--h3;
+    @extend .ds-u-font-weight--semibold;
+
+    margin-bottom: 5px;
+  }
+
+  dd {
+    em {
+      color: $color-gray;
     }
-
-    dt {
-      @extend .ds-u-font-size--h3;
+    p {
       @extend .ds-u-font-weight--semibold;
-
-      margin-bottom: 5px;
     }
-
-    dd {
-      em {
-        color: $color-gray;
-      }
-      p {
-        @extend .ds-u-font-weight--semibold;
-      }
-      a {
-        @extend .ds-u-font-weight--normal;
-        @extend .ds-u-text-decoration--none;
-      }
-    }
-
-    button {
-      position: absolute;
-      background: inherit;
-      top: 26px;
-      right: 26px;
-      border: none;
+    a {
+      @extend .ds-u-font-weight--normal;
+      @extend .ds-u-text-decoration--none;
     }
   }
 }
@@ -1763,31 +1775,23 @@ aside#faq-contact-info-box {
   }
 }
 
-.cms-group-and-division-box {
-  @extend .ds-u-border-bottom--1;
+.cms-group-division-section {
   @extend .ds-u-border-left--1;
   @extend .ds-u-border-right--1;
-  border-radius: 0px 0px 3px 3px;
-}
+  @extend .ds-u-padding--3;
 
-.cms-division-background {
-  background: rgba(196, 196, 196, 0.1);
-}
-
-.cms-group-division-section {
-  padding-bottom: 10px;
-  padding-top: 10px;
-  font-size: 2rem;
-  color: #212121;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: normal;
-  h3 {
-    @extend .ds-c-review__heading;
-    margin-left: 32px;
+  &:nth-child(even) {
+    background: rgba(196, 196, 196, 0.1);
   }
-  p {
-    margin-left: 32px;
-    @extend .ds-c-review__body;
+
+  &:last-child {
+    @extend .ds-u-border-bottom--1;
+    border-radius: 0px 0px 3px 3px;
+  }
+}
+
+.confirmation-dialog {
+  .ds-c-dialog__close {
+    display: none;
   }
 }

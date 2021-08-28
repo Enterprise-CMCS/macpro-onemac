@@ -28,7 +28,7 @@ const stateAdmin = {
   type: "stateadmin",
 };
 
-const cmsApprover = {
+const cmsRoleApprover = {
   firstName: "John",
   lastName: "Doe",
   doneBy: "systemadmintest@cms.hhs.local",
@@ -38,14 +38,14 @@ const cmsApprover = {
     },
   ],
   id: "hasanfar@gmail.com",
-  type: "cmsapprover",
+  type: "cmsroleapprover",
 };
 
-describe("Construction of approver emails", () => {
-  it("Should show the full name in the email message for CMSApprover", async () => {
-    const result = constructRoleAdminEmails([], cmsApprover).email.HTML;
+describe("Construction of role approver emails", () => {
+  it("Should show the full name in the email message for CMSRoleApprover", async () => {
+    const result = constructRoleAdminEmails([], cmsRoleApprover).email.HTML;
     expect(result).toContain("John Doe");
-    expect(result).toContain("CMS Approver");
+    expect(result).toContain("CMS Role Approver");
   });
 
   it("Should show the full name in the email message for State Submitter", async () => {
@@ -193,7 +193,7 @@ describe("Validating input from the UI", () => {
       });
     });
 
-    it.each(["statesubmitter", "stateadmin", "cmsapprover", "helpdesk"])(
+    it.each(["statesubmitter", "stateadmin", "cmsroleapprover", "helpdesk"])(
       "fails if group or division is provided for user type %s at user creation time",
       (type) => {
         const data = {

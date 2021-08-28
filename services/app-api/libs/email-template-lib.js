@@ -89,7 +89,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             <p>Thank you!</p>`,
     },
   },
-  cmsapprover: {
+  cmsroleapprover: {
     pending: {
       subjectLine: "Your OneMAC Role Access is Pending Review",
       bodyHTML: `

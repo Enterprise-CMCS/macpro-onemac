@@ -1,3 +1,4 @@
+/*
 const locator = '(//*[@disabled])';
 const login = require('../suites/OY2_9999_Login');
 const timeout = 1000;
@@ -40,17 +41,17 @@ module.exports = {
         spaID = 'MD-' + num1 + '-' + num2 + '' + num3;
         // input the SPA ID number 
         browser.useCss().setValue("input#transmittalNumber", spaID);      
-        let fileUploadElem = "[name='uploader-input-0']";
-        browser.assert.elementPresent(fileUploadElem);
-        browser.useXpath().assert.containsText( "/html/body/reference/div/div/div[3]/div[2]/form/div[2]/div[2]/div/table/tbody/tr[2]/td[2]/label", "Add File");
+        let fileUploadElem = "(//label[@class='uploader-input-label-active'])[1]";
+        browser.useXpath().assert.elementPresent(fileUploadElem);
+        browser.useXpath().assert.containsText( "(//label[@class='uploader-input-label-active'])[1]", "Add File");
         browser.useCss();
         
         let filePath = require('path').resolve(__dirname + '/files/file.docx')
         browser.setValue(fileUploadElem, filePath);
         browser.expect.element(fileUploadElem).to.not.be.enabled;
         browser.click("xpath", "//*[@id='root']/div/div[3]/div[2]/form/div[2]/div[2]/div/table/tbody/tr[1]/td[3]/div/button" );
-        browser.expect.element(fileUploadElem).to.be.enabled;
-        browser.setValue(fileUploadElem, filePath);
+        browser.useXpath().expect.element(fileUploadElem).to.be.enabled;
+        browser.useXpath().setValue(fileUploadElem, filePath);
 
         // upload the second documents
         
@@ -80,3 +81,4 @@ module.exports = {
         // return spaID;
     },
 }
+*/

@@ -189,7 +189,6 @@ resources:
                 - Effect: "Allow"
                   Action:
                     # These are all required for amplify to do a PUT
-                    - "s3:GetObject"
                     - "s3:PutObject"
                     - "s3:DeleteObject"
                   Resource:
@@ -199,7 +198,6 @@ resources:
                           - "/protected/"
                           - "$"
                           - "{cognito-identity.amazonaws.com:sub}/*"
-
   Outputs:
     UserPoolId:
       Value:

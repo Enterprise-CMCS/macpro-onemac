@@ -1,70 +1,161 @@
-var AWS = require('aws-sdk');
+const AWS = require('aws-sdk');
+const { ChangeRequest } = require("cmscommonlib");
 
-function myHandler(event, context, callback) {
+const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
+
+const SEATOOL_PLAN_TYPE = {
+  CHIP_SPA: "124",
+  SPA: "125",
+  WAIVER: "122",
+  WAIVER_APP_K: "123",
+};
+
+function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
     return null;
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
-  var value = JSON.parse(event.value);
+  const value = JSON.parse(event.value);
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
-  var id = value.payload.ID_Number;
-  var packageStatusID = value.payload.SPW_Status_ID.toString();
-  console.log(`State Plan ID Number: ${id}`);
-  var planType = '0';
-  if (value.payload.Plan_Type) {
-    planType = value.payload.Plan_Type.toString();
-  }
-  console.log(process.env.spaIdTableName);
-  if (id != undefined) {
+
+  const SEAToolId = value.payload.ID_Number;
+  if (!SEAToolId) return;
+
+  let packageStatusID = "unknown";
+  if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
+
+  if (!value?.payload?.Plan_Type)  return;
+  const planTypeList = ["122", "123", "124", "125"];
+  const planType = planTypeList.find( (pt) => (pt === value.payload.Plan_Type.toString()));
+  if (!planType) return;
+
+  let stateCode;
+  if (value.payload.State_Code) {
+    stateCode = value.payload.State_Code.toString();
+  } else stateCode = SEAToolId.substring(0,2);
+  const SEAToolData = {
+    'packageStatus': packageStatusID,
+    'stateCode': stateCode,
+    'planType': planType,
+    'packageId': SEAToolId,
+    'clockEndTimestamp': value.payload.Alert_90_Days_Date,
+  };
+  if (SEAToolId != undefined) {
     AWS.config.update({region: 'us-east-1'});
-    var ddb = new AWS.DynamoDB({apiVersion: '2012-08-10'});
-    var params = {
-      TableName: process.env.spaIdTableName,
-      Item: {
-        'id' : {S: id},
-        'cmsStatusID': {N: packageStatusID},
-        'planType': {N: planType},
-        'originalID': {S: id},
-      }
+
+    // update the SEATool Entry
+    const updateSEAToolParams = {
+      TableName: process.env.oneMacTableName,
+      Key: {
+        pk: SEAToolId,
+        sk: "SEATool",
+      },
+      UpdateExpression: "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
+      ExpressionAttributeValues: {
+        ":newChange": [SEAToolData],
+        ":emptyList": [],
+      },
+      ReturnValues: "UPDATED_NEW",
     };
-    ddb.putItem(params, function(err, data) {
+
+    ddb.update(updateSEAToolParams, function(err, data) {
       if (err) {
         console.log("Error", err);
       } else {
-        console.log("Success", data);
+        console.log("Update Success, data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+
+        // if the SEATool entry is new, do we need to add Paper IDs??
+        if (data.Attributes.changeHistory.length === 1) {
+          console.log("that was a new package from SEATool");
+        } else {
+          console.log("We have seen that package before!");
+        }
       }
     });
 
-    // if this is an id type where we want better searching, do that now
-    // 122 is 1915b and 123 is 1915c
-    if (planType === 122 || planType === 123) {
-      let sliceEnd = id.lastIndexOf('.');
-      let smallerID = id.slice(0,sliceEnd); // one layer removed
+    const SEATOOL_STATUS = {
+      PENDING: "Pending",
+      PENDING_RAI: "Pending-RAI",
+      PENDING_OFF_THE_CLOCK: "Pending-Off the Clock",
+      APPROVED: "Approved",
+      DISAPPROVED: "Disapproved",
+      WITHDRAWN: "Withdrawn",
+      TERMINATED: "Terminated",
+      PENDING_CONCURRANCE: "Pending-Concurrence",
+      UNSUBMITTED: "Unsubmitted",
+      PENDING_FINANCE: "Pending-Finance",
+      PENDING_APPROVAL: "Pending-Approval",
+    };
 
-      while ( smallerID.length > 2 ) {
-        params = {
-          TableName: process.env.spaIdTableName,
-          Item: {
-            'id' : {S: smallerID},
-            'cmsStatusID': {N: packageStatusID},
-            'planType': {N: planType},
-            'originalID': {S: id},
-          }
-        };
-        ddb.putItem(params, function(err, data) {
-          if (err) {
-            console.log("Error", err);
-          } else {
-            console.log("Success", data);
-            console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-          }
-        });
-        sliceEnd = smallerID.lastIndexOf('.');
-        smallerID = smallerID.slice(0,sliceEnd); // one layer removed
-      }
+    // check if the SEATool updates should be reflected in OneMAC
+    const SEATOOL_TO_ONEMAC_STATUS = {
+      [SEATOOL_STATUS.PENDING]: "Package In Review",
+      [SEATOOL_STATUS.PENDING_RAI]: "RAI Issued",
+      [SEATOOL_STATUS.PENDING_OFF_THE_CLOCK]: "Response to RAI In Review",
+      [SEATOOL_STATUS.APPROVED]: "Package Approved",
+      [SEATOOL_STATUS.DISAPPROVED]: "Package Disapproved",
+      [SEATOOL_STATUS.WITHDRAWN]: "Package Withdrawn",
+      [SEATOOL_STATUS.TERMINATED]: "Amendmend Terminated",
+      [SEATOOL_STATUS.PENDING_CONCURRANCE]: "Package In Review",
+      [SEATOOL_STATUS.UNSUBMITTED]: "Draft",
+      [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
+      [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
+    };
+
+    const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
+      [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
+      [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
+      [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER,
+      [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
+    };
+
+    SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
+
+    // update OneMAC Package Item
+    const updatePk = SEAToolData.packageId;
+    const updateSk = "PACKAGE";
+    const updatePackageParams = {
+      TableName: process.env.oneMacTableName,
+      Key: {
+        pk: updatePk,
+        sk: updateSk,
+      },
+      ConditionExpression: "pk = :pkVal AND sk = :skVal",
+      UpdateExpression:
+        "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
+      ExpressionAttributeValues: {
+        ":pkVal": updatePk,
+        ":skVal": updateSk,
+        ":newChange": [SEAToolData],
+        ":emptyList": [],
+      },
+    };
+
+    // only update clock if new Clock is sent
+    if (SEAToolData.clockEndTimestamp) {
+      updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
+      SEAToolData.clockEndTimestamp;
+      updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
     }
+
+    // only update status if new Status is sent
+    if (SEAToolData.packageStatus) {
+      let newStatus = `SEATool Status: ${SEAToolData.packageStatus}`;
+      if (SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus])
+        newStatus = SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus];
+      updatePackageParams.ExpressionAttributeValues[":newStatus"] = newStatus;
+      updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
+    }
+
+    ddb.update(updatePackageParams, function(err, data) {
+      if (err) {
+        console.log("Error", err);
+      } else {
+        console.log("Update Success!  Returned data is: ", data);
+        console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+    }});
+
   }
 }
 

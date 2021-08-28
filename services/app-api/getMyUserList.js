@@ -5,7 +5,7 @@ import { getUserFunctions, getAuthorizedStateList } from "./user/user-util";
 import getUser from "./utils/getUser";
 
 // Gets owns user data from User DynamoDB table
-export const main = handler(async (event, context) => {
+export const main = handler(async (event) => {
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
@@ -25,7 +25,7 @@ export const main = handler(async (event, context) => {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
-  let reasonWhyNot = uFunctions.canIRequestThis(doneBy);
+  const reasonWhyNot = uFunctions.canIRequestThis(doneBy);
   if (reasonWhyNot) return reasonWhyNot;
 
   let scanParams = uFunctions.getScanParams();
@@ -59,11 +59,13 @@ export const main = handler(async (event, context) => {
     ExpressionAttributeValues: filterAttribValues,
   };
   let userNames;
-  try {
-    userNames = await dynamoDb.scan(scanParams);
-  } catch (dbError) {
-    console.log(`Error happened while reading from DB:  ${dbError}`);
-    throw dbError;
+  if (filterAttributeNames) {
+    try {
+      userNames = await dynamoDb.scan(scanParams);
+    } catch (dbError) {
+      console.log(`Error happened while reading from DB:  ${dbError}`);
+      throw dbError;
+    }
   }
   // Populate doneBy Name
   return transformedUserList.map((user) => {

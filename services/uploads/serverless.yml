@@ -96,7 +96,7 @@ resources:
               MaxAge: 3000
         NotificationConfiguration:
           LambdaConfigurations:
-            - Event: s3:ObjectCreated:Put
+            - Event: s3:ObjectCreated:*
               Function: !GetAtt AvScanLambdaFunction.Arn
         #Set at rest encryption
         BucketEncryption:
@@ -111,17 +111,7 @@ resources:
         Bucket:
           Ref: AttachmentsBucket
         PolicyDocument:
-          Statement:
-            - Effect: "Allow"
-              Action:
-                - "s3:GetObject"
-              Principal: "*"
-              Resource:
-                Fn::Join:
-                  - ""
-                  - - "arn:aws:s3:::"
-                    - Ref: AttachmentsBucket
-                    - "/protected/*"
+          Statement:                 
             - Effect: Deny
               Action: "s3:PutObject"
               Principal: "*"

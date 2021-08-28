@@ -1,4 +1,4 @@
-
+/*
 // The automated UI test scripts that belongs to this module has 
 // element location related problem, we will be disabling this test 
 // until these issues are refactored and resolved. 3/25/2021
@@ -63,7 +63,10 @@ module.exports = {
         // browser.useXpath().click("//a[@id='new-submission-button']");
         //browser.useXpath().waitForElementVisible("(//table[@class='submissions-table']/tbody/tr/td/a)[1]", 1000);
         // browser.refresh();
-        browser.useCss().verify.containsText("[id=transmittalNumber-0] > a", spaID).pause(8000);
+        let element = '//tbody/tr[1]/td[1]/a';
+        let timeout = 5000;
+        browser.useXpath().waitForElementVisible(element,timeout); 
+        browser.useXpath().verify.containsText(element, spaID).pause(8000);
         browser.useCss();
         return spaID;
     },
@@ -99,10 +102,10 @@ module.exports = {
     // DONE 
     // 'Verify Submitter user can submit 1915(b) Waiver Action': function (browser) {
     //     browser.useCss().click("button#waiverBtn");
-    //     browser.useCss().click("select#actionType");
-    //     browser.useCss().click("select#actionType > option[value='new']");
-    //     browser.useCss().click("select#waiverAuthority");
-    //     browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+    //     browser.useCss().click("select#action-type");
+    //     browser.useCss().click("select#action-type > option[value='new']");
+    //     browser.useCss().click("select#waiver-authority");
+    //     browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
 
     //     // Enter Waiver number
     //     let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -336,3 +339,4 @@ module.exports = {
 //     }
 };
 //oy2-5226-nightwatch-new 
+*/

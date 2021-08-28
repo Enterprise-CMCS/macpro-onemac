@@ -15,7 +15,7 @@ module.exports = {
     },
 
     
-    'CMS Approver User Profile Screen Enhancements': function (browser) {
+    'CMS Role Approver User Profile Screen Enhancements': function (browser) {
         //check on Submission List on the homepage
         let user_management_title = "//h1";
         let name_title = "(//tr[@role='row']/th)[1]";
@@ -42,11 +42,11 @@ module.exports = {
         //let text_on_top = "//div[@class='subheader-message']";
         let profile_information_title = "//h2[@id='profileInfoHeader']";
         let full_name_title = "(//h3)[1]";
-        let full_name = "//*[@id='root']/div/div[2]/div[2]/div[1]/div[1]/div[1]/div/div";
+        let full_name = "(//div[@class='ds-c-review__body'])[1]";
         let role_title  = "(//h3)[2]";
-        let role = "//*[@id='root']/div/div[2]/div[2]/div[1]/div[1]/div[2]/div/div";
+        let role = "(//div[@class='ds-c-review__body'])[2]";
         let email_title_two = "(//h3)[3]";
-        let email = "//*[@id='root']/div/div[2]/div[2]/div[1]/div[1]/div[3]/div/div";
+        let email = "(//div[@class='ds-c-review__body'])[3]";
         let phone_number_title = "//span";
         let phone_number_add = "//button[@id='addButton']";
         let text_at_bottom = "//div[@id='profileDisclaimer']";

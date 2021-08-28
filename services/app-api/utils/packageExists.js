@@ -6,28 +6,54 @@ import dynamoDb from "../libs/dynamodb-lib";
  * @returns {Boolean} true if found in data, false if not in data
  */
 export default async function packageExists(id) {
-  const params = {
-    TableName: process.env.spaIdTableName,
-    // 'Key' defines the partition key and sort key of the item to be retrieved
-    // - 'id': change request ID
-    Key: {
-      id: id,
+  //assume the territory is the first two chars
+
+  let params = {
+    TableName: process.env.oneMacTableName,
+    KeyConditionExpression: "pk = :pk",
+    ExpressionAttributeValues: {
+      ":pk": id,
     },
   };
-  console.log("the params for checking", params);
-  let idResponse;
+
   let result;
   try {
-    result = await dynamoDb.get(params);
+    console.log("params for checking: ", params);
+    result = await dynamoDb.query(params);
+
+    if (result.Count <= 0) {
+      params = {
+        TableName: process.env.spaIdTableName,
+        KeyConditionExpression: "id = :pk",
+        ExpressionAttributeValues: {
+          ":pk": id,
+        },
+      };
+      console.log("the params for checking", params);
+      result = await dynamoDb.query(params);
+    }
+
+    if (result.Count <= 0) {
+      params = {
+        TableName: process.env.tableName,
+        ExclusiveStartKey: null,
+        ScanIndexForward: false,
+        FilterExpression: "transmittalNumber = :packageid",
+        ExpressionAttributeValues: {
+          ":packageid": id,
+        },
+      };
+      do {
+        console.log("params for checking: ", params);
+        result = await dynamoDb.scan(params);
+        console.log("params are: ", params);
+        console.log("results are: ", result);
+        params.ExclusiveStartKey = result.LastEvaluatedKey;
+      } while (params.ExclusiveStartKey && result.Count <= 0);
+    }
   } catch (error) {
-    console.log("packageExists got an error: ", error);
+    console.log(`packageExists ${params.TableName} got an error: `, error);
   }
-  if (result.Item) {
-    console.log("the Item exists", result);
-    idResponse = true;
-  } else {
-    console.log("result.Item does not exist");
-    idResponse = false;
-  }
-  return idResponse;
+
+  return result.Count > 0;
 }

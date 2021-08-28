@@ -10,11 +10,11 @@ import { getCurrentStatus } from "./user-util";
  */
 class Helpdesk {
   /**
-   * CMS Approvers manage the State Admins
+   * Help Desk users see all users
    * @returns {String} the User Role
    */
   getScanParams() {
-    let scanParams = {
+    const scanParams = {
       TableName: process.env.userTableName,
       FilterExpression: "#ty <> :userType",
       ExpressionAttributeNames: { "#ty": "type" },
@@ -35,7 +35,7 @@ class Helpdesk {
    * Helpdesk User have to be active to see user lists
    * @returns {String} null always as Helpdesk User can have a read-only view of all users with any statuses
    */
-  canIRequestThis(doneBy) {
+  canIRequestThis() {
     return undefined;
   }
 
@@ -49,8 +49,8 @@ class Helpdesk {
    * @returns {userRows} the list of users
    */
   transformUserList(userResult) {
-    let userRows = [];
-    let errorList = [];
+    const userRows = [];
+    const errorList = [];
     let i = 1;
 
     console.log("results:", JSON.stringify(userResult));
@@ -90,7 +90,7 @@ class Helpdesk {
           i++;
         });
       }
-      // Helpdesk users and CMS Approvers must not have the history section
+      // Helpdesk users and CMS Role Approvers must not have the history section
       else {
         userRows.push({
           id: i,

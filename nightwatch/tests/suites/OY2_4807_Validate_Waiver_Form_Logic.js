@@ -25,14 +25,15 @@ module.exports = {
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
         //browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.click('select#action-type');   // click action type
+        browser.click("select#action-type > option[value='new']");  // Select "New Waiver"
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)(4)']");
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
         let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+        let num3 = Math.floor(Math.random());
         // SS.#####
-        spaID = 'MD.' + num1 + '' + num2;
+        spaID = 'MD.' + num1 + '' + num2 + '' + num3;
         browser.setValue('input#transmittalNumber', spaID);
 
         // upload the file 
@@ -48,10 +49,12 @@ module.exports = {
 
         // Submit the new SPA 
         browser.click("[value='Submit']").pause(2000);
+        browser.pause(3000);
+        browser.refresh();
 
         // Verify the SPA on Submission List 
         //browser.useXpath().verify.containsText('(//table//td)[1]/a', spaID);
-        browser.useXpath().verify.containsText('(//table[@class="submissions-table"]/tbody/tr/td/a)[1]',spaID);
+        browser.useXpath().verify.containsText('//td[@id="transmittalNumber-0"]/a',spaID);
         browser.useCss();
         return spaID;
     },
@@ -67,17 +70,19 @@ module.exports = {
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
         //browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.click('select#action-type');   // click action type
+        browser.click("select#action-type > option[value='new']");  // Select "New Waiver"
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)(4)']");
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
+        let phrase = "Test for number exists";
+        browser.setValue('textarea', phrase);
 
         // Verify that duplicate error message
         let expected = "this Waiver Number already exists";
-        browser.verify.containsText('div#transmittalNumberStatusMsg', expected).pause(6000);
+        browser.useXpath().verify.containsText('//div[@id="transmittalNumberStatusMsg"]', expected).pause(6000);
         //browser.back();  // go back to previous page
         let dashboard_link = "//a[@id='dashboardLink']";
         browser.useXpath().click(dashboard_link);
@@ -93,25 +98,28 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='new']");  // Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)']");   // dropdown value
+        browser.click('select#action-type');   // click action type
+        browser.click("select#action-type > option[value='new']");  // Select "New Waiver"
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)']");   // dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
+        let phrase = "Test for number exists";
+        browser.setValue('textarea', phrase);
 
         //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
         // Verify that duplicate error message
         let expected = "this Waiver Number already exists";
-        browser.verify.containsText('div#transmittalNumberStatusMsg', expected);
+        browser.useXpath().verify.containsText('//div[@id="transmittalNumberStatusMsg"]', expected).pause(2000);
         //browser.back();  // go back to previous page
         let dashboard_link = "//a[@id='dashboardLink']";
         browser.useXpath().click(dashboard_link);
         browser.useCss();
     },
 
+    
     // ---------------------------------------------Waiver Amendament-------------------------------------------------------------------------
 
     'Validate Waiver Form Logic for Waiver Amendment and 1915(b)': function (browser) {
@@ -122,10 +130,10 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='amendment']");      // ----- Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.click('select#action-type');   // click action type
+        browser.click("select#action-type > option[value='amendment']");      // ----- Select "New Waiver"
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)(4)']");
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', "MD.3772 "); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
@@ -147,10 +155,10 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
-        browser.click('select#actionType');   // click action type
-        browser.click("select#actionType > option[value='amendment']");      // ----- Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)']");  // dropdown value
+        browser.click('select#action-type');   // click action type
+        browser.click("select#action-type > option[value='amendment']");      // ----- Select "New Waiver"
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)']");  // dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
@@ -174,10 +182,10 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
-        browser.click('select#actionType');   // click action type
+        browser.click('select#action-type');   // click action type
         browser.click("[value='renewal']");      // ----- Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)(4)']");
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
@@ -200,10 +208,10 @@ module.exports = {
         browser.pause(500);
         browser.useXpath().click("(//h4)[1]");
         browser.useCss();
-        browser.click('select#actionType').pause(1000);   // click action type
+        browser.click('select#action-type').pause(1000);   // click action type
         browser.click("[value='renewal']");      // ----- Select "New Waiver"
-        browser.click('select#waiverAuthority'); // Click Waiver Authority
-        browser.click("select#waiverAuthority > option[value='1915(b)']");   // dropdown value
+        browser.click('select#waiver-authority'); // Click Waiver Authority
+        browser.click("select#waiver-authority > option[value='1915(b)']");   // dropdown value
         browser.click('input#transmittalNumber');
         browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
         browser.keys([browser.Keys.TAB]);
@@ -217,5 +225,6 @@ module.exports = {
         browser.useXpath().click(dashboard_link);
         browser.useCss();
     }
+    
     
 }

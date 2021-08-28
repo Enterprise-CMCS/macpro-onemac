@@ -46,21 +46,21 @@ export const RESPONSE_CODE = {
   SUBMISSION_ID_EXIST_WARNING: "OMP003",
 };
 
-
 /**
  * Map Warning Message displayed on Waiver Form to message to include in CMS Email
  */
 
-
 export const cmsEmailMapToFormWarningMessages = {
-  [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]: "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
-  [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:"<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state."
-}
+  [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]:
+    "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+  [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:
+    "<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.",
+};
 
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
   STATE_ADMIN: "statesubmitter",
-  CMS_APPROVER: "stateadmin",
+  CMS_ROLE_APPROVER: "stateadmin",
 };
 
 /**
@@ -70,12 +70,20 @@ export const USER_TYPE = {
   STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
   STATE_ADMIN: "stateadmin",
-  CMS_APPROVER: "cmsapprover",
+  CMS_ROLE_APPROVER: "cmsroleapprover",
   SYSTEM_ADMIN: "systemadmin",
   HELPDESK: "helpdesk",
 };
 
 export const ROLES = USER_TYPE;
+
+export const APPROVING_USER_TYPE = {
+  [ROLES.STATE_SUBMITTER]: ROLES.STATE_ADMIN,
+  [ROLES.STATE_ADMIN]: ROLES.CMS_ROLE_APPROVER,
+  [ROLES.CMS_ROLE_APPROVER]: ROLES.SYSTEM_ADMIN,
+  [ROLES.HELPDESK]: ROLES.SYSTEM_ADMIN,
+  [ROLES.CMS_REVIEWER]: ROLES.CMS_ROLE_APPROVER,
+};
 
 /**
  * Possible user status
@@ -91,12 +99,12 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  statesubmitter: "State Submitter",
-  stateadmin: "State Admin",
-  cmsapprover: "CMS Approver",
+  [ROLES.STATE_SUBMITTER]: "State Submitter",
+  [ROLES.STATE_ADMIN]: "State Admin",
+  [ROLES.CMS_ROLE_APPROVER]: "CMS Role Approver",
   [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
-  helpdesk: "Help Desk",
+  [ROLES.HELPDESK]: "Help Desk",
 };
 
 const ALL_USERS_ROUTES = [
@@ -164,7 +172,7 @@ class CmsReviewer extends Role {
   }
 }
 
-class CmsApprover extends Role {
+class CmsRoleApprover extends Role {
   constructor() {
     super();
     this.canAccessUserManagement = true;
@@ -175,6 +183,7 @@ class CmsApprover extends Role {
 class SystemAdmin extends Role {
   constructor() {
     super();
+    this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
   }
@@ -193,7 +202,7 @@ export const getUserRoleObj = (role) =>
   new ({
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
-    [USER_TYPE.CMS_APPROVER]: CmsApprover,
+    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
@@ -207,6 +216,8 @@ const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
  * @param [state] - A two-letter territory code to search for (only for state submitters and admins).
  */
 export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
+  if (!attributes.length) return null;
+
   switch (type) {
     case ROLES.STATE_SUBMITTER:
     case ROLES.STATE_ADMIN: {
@@ -216,17 +227,10 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
       return stateObj.history.sort(datesDescending)[0].status;
     }
 
-    case ROLES.CMS_APPROVER:
-    case ROLES.HELPDESK:
-    case ROLES.SYSTEM_ADMIN:
-      {
-        return attributes.sort(datesDescending)[0].status;
-      }
-
-      attributes = stateObj.history;
+    default: {
+      return attributes.sort(datesDescending)[0].status;
+    }
   }
-
-  return attributes.sort(datesDescending)[0].status;
 };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
