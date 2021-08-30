@@ -36,15 +36,14 @@ export const main = handler(async (event) => {
   data.id = uuid.v1();
   data.createdAt = Date.now();
   data.state = SUBMISSION_STATES.CREATED;
-
   data.userId = event.requestContext.identity.cognitoIdentityId;
 
-  // do a pre-check for things that should stop us immediately
-  if (validateSubmission(data)) {
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  }
-
   try {
+    // do a pre-check for things that should stop us immediately
+    if (validateSubmission(data)) {
+      return RESPONSE_CODE.VALIDATION_ERROR;
+    }
+
     // get the rest of the details about the current user
     const doneBy = await getUser(data.user.email);
     console.log("done by: ", doneBy);

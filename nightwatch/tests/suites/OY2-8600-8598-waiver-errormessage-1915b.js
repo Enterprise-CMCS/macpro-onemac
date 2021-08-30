@@ -24,10 +24,10 @@ module.exports = {
         browser.useCss().click("#new-submission-button");
         browser.useXpath().click("(//li[@class='choice']/a)[2]");
         browser.useXpath().click("(//li[@class='choice']/a)[1]");
-        browser.useCss().click("select#actionType");
-        browser.useCss().click("select#actionType > option[value='new']");
-        browser.useCss().click("select#waiverAuthority");
-        browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.useCss().click("select#action-type");
+        browser.useCss().click("select#action-type > option[value='new']");
+        browser.useCss().click("select#waiver-authority");
+        browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
 
         // Enter Waiver number
         let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -101,10 +101,10 @@ module.exports = {
         browser.useCss().click("#new-submission-button");
         browser.useXpath().click("(//li[@class='choice']/a)[2]");
         browser.useXpath().click("(//li[@class='choice']/a)[1]");
-        browser.useCss().click("select#actionType");
-        browser.useCss().click("select#actionType > option[value='new']");
-        browser.useCss().click("select#waiverAuthority");
-        browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.useCss().click("select#action-type");
+        browser.useCss().click("select#action-type > option[value='new']");
+        browser.useCss().click("select#waiver-authority");
+        browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
         console.log("generatedWaiverID--" + generatedWaiverID);
         browser.useCss().setValue("input#transmittalNumber", generatedWaiverID);
         browser.useXpath().assert.containsText(tests_data.error1.selector, "According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.").pause(6000);
@@ -120,10 +120,10 @@ module.exports = {
 
        
         //Renewal
-        browser.useCss().click("select#actionType");
-        browser.useCss().click("select#actionType > option[value='renewal']");
-        browser.useCss().click("select#waiverAuthority");
-        browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.useCss().click("select#action-type");
+        browser.useCss().click("select#action-type > option[value='renewal']");
+        browser.useCss().click("select#waiver-authority");
+        browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
         browser.clearValue("xpath", tests_data.wavNum.selector);
         browser.setValue("xpath", tests_data.wavNum.selector, 'MD.7662' ).pause(5000);
         browser.useXpath().assert.containsText(tests_data.error1.selector, "The Waiver Number must be in the format of SS.####.R## or SS.#####.R##").pause(3000);
@@ -135,11 +135,11 @@ module.exports = {
     
         
         //Amendment
-        browser.useCss().click("select#actionType");
-        browser.useCss().click("select#actionType > option[value='amendment']");
-        browser.verify.not.containsText("select#actionType", '1915(c) Appendix K Amendment');
-        browser.useCss().click("select#waiverAuthority");
-        browser.useCss().click("select#waiverAuthority > option[value='1915(b)(4)']");
+        browser.useCss().click("select#action-type");
+        browser.useCss().click("select#action-type > option[value='amendment']");
+        browser.verify.not.containsText("select#action-type", '1915(c) Appendix K Amendment');
+        browser.useCss().click("select#waiver-authority");
+        browser.useCss().click("select#waiver-authority > option[value='1915(b)(4)']");
         browser.clearValue("xpath", tests_data.wavNum.selector);
         browser.setValue("xpath", tests_data.wavNum.selector, 'MD-23-1234' );
         browser.useXpath().assert.containsText(tests_data.error1.selector, "The Waiver Number must be in the format of SS.####.R##.M## or SS.#####.R##.M##").pause(3000);

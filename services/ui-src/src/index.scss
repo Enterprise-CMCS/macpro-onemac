@@ -1,6 +1,7 @@
 $font-path: "~@cmsgov/design-system/dist/fonts";
 $image-path: "~@cmsgov/design-system/dist/images";
 $input-border-radius: 3px;
+$color-primary-alt-lightest: #f0fafe;
 
 @import "@cmsgov/design-system/dist/scss/index";
 @import "~bootstrap/dist/css/bootstrap.min.css";
@@ -1031,22 +1032,6 @@ article.form-container {
 
 .char-count {
   text-align: right;
-}
-
-.LoaderButton,
-.form-submit {
-  @extend .ds-u-margin-top--5;
-  background-color: $color-primary;
-  color: $color-white;
-  padding: 10px 28px;
-  border-radius: 3px;
-  align-self: center;
-  font-family: Open Sans;
-  font-style: normal;
-  font-weight: bold;
-  font-size: 16px;
-  line-height: 24px;
-  border: none;
 }
 
 .display-errors input:invalid,
