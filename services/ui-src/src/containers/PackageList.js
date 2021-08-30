@@ -35,6 +35,7 @@ const withdrawMenuItem = {
 };
 
 const menuItemMap = {
+  "RAI Response Submitted": [withdrawMenuItem],
   Submitted: [withdrawMenuItem],
 };
 
