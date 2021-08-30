@@ -926,6 +926,7 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-flex-wrap--wrap;
     align-items: center;
+    z-index: 1;
 
     a {
       color: $color-white;
@@ -946,7 +947,8 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-justify-content--end;
     @extend .ds-u-flex-wrap--wrap;
-    font-weight: bold;
+    font-weight: bold; 
+    z-index: 1;
 
     label {
       margin-right: 2rem;
@@ -1047,7 +1049,7 @@ article.form-container {
   background-color: $color-primary;
   font-weight: normal;
   min-width: 160px;
-  z-index: 1;
+  z-index: 2;
 }
 
 .dropdown-content a {
@@ -1235,9 +1237,6 @@ article.form-container {
   }
 }
 
-.header-wrapper{
-  z-index: 1;
-}
 
 .home-header {
   @extend .ds-u-display--flex;
