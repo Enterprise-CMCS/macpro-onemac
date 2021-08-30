@@ -8,7 +8,6 @@ import {
 import sendEmail from "./libs/email-lib";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
-import getPackage from "./utils/getPackage";
 import updatePackage from "./utils/updatePackage";
 
 export const validateUser = async (email, territory) => {
@@ -42,8 +41,9 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
+  let updatedPackageData;
   try {
-    await updatePackage({
+    updatedPackageData = await updatePackage({
       ...body,
       packageStatus: "Withdrawn",
       submissionTimestamp: Date.now(),
@@ -54,9 +54,10 @@ export const main = handler(async (event) => {
   }
 
   try {
-    const data = await getPackage(body.packageId);
     await Promise.all(
-      [CMSWithdrawalEmail(data), StateWithdrawalEmail(data)].map(sendEmail)
+      [CMSWithdrawalEmail, StateWithdrawalEmail]
+        .map((f) => f(updatedPackageData))
+        .map(sendEmail)
     );
   } catch (e) {
     console.error("Failed to send acknowledgement emails", e);

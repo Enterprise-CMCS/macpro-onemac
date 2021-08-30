@@ -34,6 +34,7 @@ export default async function updatePackage({
       ":newChange": [updateData],
       ":emptyList": [],
     },
+    ReturnValues: "ALL_NEW",
   };
 
   // only update clock if new Clock is sent
@@ -50,11 +51,12 @@ export default async function updatePackage({
     updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
   }
 
-  dynamoDb.update(updatePackageParams).catch((error) => {
+  try {
+    const { Attributes } = await dynamoDb.update(updatePackageParams);
+    return Attributes;
+  } catch (error) {
     console.log(`Error happened updating DB:  ${error.message}`);
     console.log("update parameters tried: ", updatePackageParams);
     throw error;
-  });
-
-  return "Success - updatePackage";
+  }
 }
