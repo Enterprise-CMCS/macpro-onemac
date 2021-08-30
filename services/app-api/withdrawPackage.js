@@ -11,7 +11,7 @@ import { getAuthorizedStateList } from "./user/user-util";
 import getPackage from "./utils/getPackage";
 import updatePackage from "./utils/updatePackage";
 
-const validateUser = async (email, territory) => {
+export const validateUser = async (email, territory) => {
   const user = await getUser(email);
 
   if (!user) throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
@@ -19,7 +19,7 @@ const validateUser = async (email, territory) => {
   const userRoleObj = getUserRoleObj(user.type);
   const territoryList = getAuthorizedStateList(user);
   return (
-    userRoleObj.canAccessDashboard &&
+    userRoleObj.canAccessForms &&
     Array.isArray(territoryList) &&
     territoryList.includes(territory)
   );
