@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useHistory, useParams } from "react-router-dom";
 
-import { RESPONSE_CODE, ROUTES, Package } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, ChangeRequest } from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
 import FileList from "../components/FileList";
 import PackageApi from "../utils/PackageApi";
@@ -64,7 +64,7 @@ const PackageView = () => {
     };
   }, [packageId, history]);
 
-  const formInfo = Package.CONFIG[packageType];
+  const formInfo = ChangeRequest.CONFIG[packageType];
 
   const renderChangeHistory = (changeHistory) => {
     return (

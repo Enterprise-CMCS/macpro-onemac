@@ -69,11 +69,7 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link
-        to={`/${row.original.packageType}/${row.original.submissionId}/${row.original.submitterId}`}
-      >
-        {value}
-      </Link>
+      <Link to={`/package/${row.original.packageType}/${value}`}>{value}</Link>
     ),
     []
   );

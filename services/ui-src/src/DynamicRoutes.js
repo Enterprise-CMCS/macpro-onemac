@@ -18,6 +18,7 @@ import NewSPA from "./changeRequest/NewSPA";
 import NewWaiver from "./changeRequest/NewWaiver";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
+import PackageView from "./changeRequest/PackageView";
 import UserPage from "./containers/UserPage";
 
 const FORM_TYPES = {
@@ -142,6 +143,11 @@ export default function DynamicRoutes() {
             <SubmissionView changeRequestType={type} />
           </Route>
         ))}
+      {userRoleObj.canAccessDashboard && (
+        <Route exact path={ROUTES.PACKAGE + "/:packageType/:packageId"}>
+          <PackageView />
+        </Route>
+      )}
       {userRoleObj.canAccessUserManagement && (
         <Route exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />
