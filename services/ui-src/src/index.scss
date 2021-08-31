@@ -847,6 +847,20 @@ article.form-container {
   th:first-child {
     white-space: initial;
   }
+
+  th:last-child {
+    text-align: right;
+  }
+
+  td:last-child button {
+    color: $color-black;
+    width: 100%;
+    padding-left: 25px;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
 }
 
 .new-submission-icon {
