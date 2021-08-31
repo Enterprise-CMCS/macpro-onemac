@@ -28,7 +28,7 @@ import {
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const withdrawMenuItem = {
-  label: "Withdraw",
+  label: "Withdraw Package",
   value: "Withdrawn",
   formatConfirmationMessage: ({ packageId }) =>
     `You are about to withdraw ${packageId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
