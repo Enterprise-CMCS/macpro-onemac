@@ -41,12 +41,7 @@ let amplifyConfig = {
   API: {
     endpoints: [
       {
-        name: "changeRequestAPI",
-        endpoint: config.apiGateway.URL,
-        region: config.apiGateway.REGION,
-      },
-      {
-        name: "userDataAPI",
+        name: "oneMacAPI",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
