@@ -101,7 +101,7 @@ functions:
           cors: true
           authorizer: aws_iam
 
-getPackage:
+  getPackage:
     handler: getPackage.main
     role: LambdaApiRole
     events:
