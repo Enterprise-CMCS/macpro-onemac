@@ -24,6 +24,7 @@ const formatPackageDetails = (data) => {
   `;
 
   const summaryText = data.changeHistory
+    ?.filter(({ packageStatus }) => packageStatus !== "Withdrawn")
     ?.sort(compareSubmissionTimestamps)
     ?.slice(-1)?.[0]?.additionalInformation;
 
