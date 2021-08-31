@@ -132,6 +132,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  withdraw-package:
+    handler: withdrawPackage.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdraw
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   getUser:
     handler: getUser.main
     role: LambdaApiRole
