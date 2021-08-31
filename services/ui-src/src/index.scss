@@ -1875,3 +1875,8 @@ aside#faq-contact-info-box {
     display: none;
   }
 }
+
+.popup-menu-button:disabled {
+  background-color: transparent;
+  color: change-color($color-gray, $alpha: 0.3);
+}

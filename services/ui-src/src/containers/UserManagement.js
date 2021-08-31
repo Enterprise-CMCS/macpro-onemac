@@ -19,10 +19,7 @@ import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import PopupMenu from "../components/PopupMenu";
 import pendingCircle from "../images/PendingCircle.svg";
-import {
-  pendingMessage,
-  deniedOrRevokedMessage,
-} from "../libs/userLib";
+import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { Button } from "@cmsgov/design-system";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
@@ -238,9 +235,9 @@ const UserManagement = () => {
       APPROVING_USER_TYPE[row.original.role] === userProfile.userData.type ? (
         <PopupMenu
           selectedRow={row}
-          userEmail={row.values.email}
           menuItems={menuItemMap[row.values.status] ?? []}
           handleSelected={onPopupAction}
+          variation="UserManagement"
         />
       ) : (
         <></>
@@ -390,7 +387,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          (userProfile.userData.type === USER_TYPE.HELPDESK || userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
+          (userProfile.userData.type === USER_TYPE.HELPDESK ||
+            userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
           userStatus === USER_STATUS.ACTIVE &&
           csvExportSubmissions
         }
