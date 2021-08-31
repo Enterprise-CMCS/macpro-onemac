@@ -35,8 +35,14 @@ const withdrawMenuItem = {
 };
 
 const menuItemMap = {
-  "RAI Response Submitted": [withdrawMenuItem],
-  Submitted: [withdrawMenuItem],
+  "RAI Response Submitted": withdrawMenuItem,
+  Submitted: withdrawMenuItem,
+};
+
+const correspondingRAILink = {
+  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
+  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
 };
 
 /**
@@ -144,7 +150,7 @@ const PackageList = () => {
     }
   }, []);
 
-  const onPopupAction = useCallback(
+  const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
       // When we add another action to the menu, we will need to look at the action taken here.
@@ -173,16 +179,48 @@ const PackageList = () => {
     ]
   );
 
+  const onPopupActionRAI = useCallback(
+    (value) => {
+      history.push(`${value.link}?transmittalNumber=${value.raiId}`);
+    },
+    [history]
+  );
+
   const renderActions = useCallback(
-    ({ row }) => (
-      <PopupMenu
-        selectedRow={row}
-        menuItems={menuItemMap[row.original.currentStatus] ?? []}
-        handleSelected={onPopupAction}
-        variation="PackageList"
-      />
-    ),
-    [onPopupAction]
+    ({ row }) => {
+      const raiLink = correspondingRAILink[row.original.packageType];
+      const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
+      const notWithdrawn = row.original.currentStatus !== "Withdrawn";
+      let menuItems = [];
+
+      if (raiLink && notWithdrawn) {
+        const menuItemRai = {
+          label: "Respond to RAI",
+          value: { link: raiLink, raiId: row.original.packageId },
+          handleSelected: onPopupActionRAI,
+        };
+        menuItems.push(menuItemRai);
+      }
+
+      if (menuItemBasedOnStatus) {
+        menuItemBasedOnStatus.handleSelected = onPopupActionWithdraw;
+        menuItems.push(menuItemBasedOnStatus);
+      }
+
+      const noMenuItems = menuItems.length === 0;
+      if (noMenuItems) {
+        return <></>;
+      }
+
+      return (
+        <PopupMenu
+          selectedRow={row}
+          menuItems={menuItems}
+          variation="PackageList"
+        />
+      );
+    },
+    [onPopupActionWithdraw, onPopupActionRAI]
   );
 
   const columns = useMemo(
@@ -220,7 +258,7 @@ const PackageList = () => {
         id: "submitter",
         Cell: renderName,
       },
-      {
+      userRoleObj.canAccessForms && {
         Header: "Actions",
         disableSortBy: true,
         id: "packageActions",
@@ -235,6 +273,7 @@ const PackageList = () => {
       renderType,
       renderDate,
       renderName,
+      userRoleObj.canAccessForms,
     ]
   );
 

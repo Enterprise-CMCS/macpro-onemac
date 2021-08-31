@@ -33,13 +33,7 @@ const VARIATION_PROPS = {
   },
 };
 
-export default function PopupMenu({
-  variation,
-  selectedRow,
-  menuItems,
-  handleSelected,
-  shouldConfirm,
-}) {
+export default function PopupMenu({ variation, selectedRow, menuItems }) {
   const variationProps = VARIATION_PROPS[variation];
 
   const classes = useStyles();
@@ -53,9 +47,9 @@ export default function PopupMenu({
   const handleClose = useCallback(() => setAnchorEl(null), []);
   const closeConfirmation = useCallback(() => setConfirmItem(null), []);
   const confirmStatusChange = useCallback(() => {
-    handleSelected(selectedRow.id, confirmItem.value);
+    confirmItem.handleSelected(selectedRow.id, confirmItem.value);
     closeConfirmation();
-  }, [closeConfirmation, confirmItem, handleSelected, selectedRow.id]);
+  }, [closeConfirmation, confirmItem, selectedRow.id]);
 
   return (
     <>
@@ -86,9 +80,9 @@ export default function PopupMenu({
                 className={classes.root}
                 onClick={() => {
                   handleClose();
-                  shouldConfirm
+                  item.formatConfirmationMessage
                     ? setConfirmItem(item)
-                    : handleSelected(item.value);
+                    : item.handleSelected(item.value);
                 }}
               >
                 {item.label}
@@ -97,7 +91,7 @@ export default function PopupMenu({
           ))}
         </div>
       </Menu>
-      {shouldConfirm && confirmItem && (
+      {confirmItem && (
         <ConfirmationDialog
           acceptText={variationProps.acceptText}
           heading={variationProps.dialogTitle}
