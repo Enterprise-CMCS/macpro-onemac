@@ -82,6 +82,15 @@ const PackageView = () => {
       {packageDetails && (
         <article className="form-container">
           <div className="read-only-submission">
+            <section>
+              <Review
+                className="original-review-component"
+                headingLevel="2"
+                heading="RAI Response"
+              >
+                This is where the RAI Response card might go.
+              </Review>
+            </section>
             {packageDetails.submissionDate && (
               <section>
                 <Review
