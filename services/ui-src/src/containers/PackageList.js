@@ -208,11 +208,6 @@ const PackageList = () => {
         menuItems.push(menuItemBasedOnStatus);
       }
 
-      const noMenuItems = menuItems.length === 0;
-      if (noMenuItems) {
-        return <></>;
-      }
-
       return (
         <PopupMenu
           selectedRow={row}

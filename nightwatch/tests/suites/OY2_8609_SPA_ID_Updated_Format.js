@@ -132,29 +132,4 @@ module.exports = {
     //     browser.useXpath().expect.element("//div[@id='transmittalNumberStatusMsg']").to.be.visible;
     //     browser.useCss();
     // },
-
-    'State Submitter user check the SPA ID Format in Respond to CHIP SPA RAI Link': function (browser) {
-        let dashboard_link ='//a[@id="dashboardLink"]';
-        //let respond_CHIP_SPA_RAI_Link = "//button[@id='chipSpaRaiBtn']";
-        // Go to Submit New Medicaid SPA page
-        browser.useXpath().click(dashboard_link);
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[4]");
-        //browser.useXpath().click(respond_CHIP_SPA_RAI_Link);
-        // Verify that Submit New Medicaid SPA page is displayed 
-        browser.useCss().expect.element('form > h3:nth-of-type(1)').to.be.visible;
-        let YY = Math.floor(Math.random() * Math.floor(80)) + 10;
-        let NNNN = Math.floor(Math.random() * Math.floor(7999)) + 1000;
-        //let xxxx = Math.floor(Math.random() * Math.floor(7999)) + 1000;
-        // SS-YY-NNNN
-        spaCHIPId = 'MD-' + YY + '-' + NNNN + '-ABCDEFG';
-        // input the SPA ID number 
-        browser.useCss().setValue("input#transmittalNumber", spaCHIPId);
-        // verify the error message
-        browser.useXpath().expect.element("//div[@id='transmittalNumberStatusMsg']").to.be.visible;
-        browser.useCss();
-    },
 }

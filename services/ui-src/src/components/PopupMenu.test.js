@@ -35,7 +35,7 @@ it("asks for confirmation when item is clicked", () => {
     },
   ];
   render(
-    <PopupMenu menuItems={items} selectedRow={{}} variation="UserManagement" shouldConfirm />
+    <PopupMenu menuItems={items} selectedRow={{}} variation="UserManagement" />
   );
   userEvent.click(screen.getByTestId(POPUP_TRIGGER_TEST_ID));
   userEvent.click(screen.getByText(items[1].label));
