@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { format } from "date-fns";
+import classNames from "classnames";
 
 import {
   RESPONSE_CODE,
@@ -223,8 +224,8 @@ const PackageList = () => {
     [onPopupActionWithdraw, onPopupActionRAI]
   );
 
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    let tableColumns = [
       {
         Header: "ID/Number",
         accessor: "packageId",
@@ -258,24 +259,30 @@ const PackageList = () => {
         id: "submitter",
         Cell: renderName,
       },
-      userRoleObj.canAccessForms && {
+    ];
+
+    if (userRoleObj.canAccessForms) {
+      const actionsColumn = {
         Header: "Actions",
+        accessor: "actions",
         disableSortBy: true,
         id: "packageActions",
         Cell: renderActions,
-      },
-    ],
-    [
-      getType,
-      renderActions,
-      getState,
-      renderId,
-      renderType,
-      renderDate,
-      renderName,
-      userRoleObj.canAccessForms,
-    ]
-  );
+      };
+      tableColumns.push(actionsColumn);
+    }
+
+    return tableColumns;
+  }, [
+    getType,
+    renderActions,
+    getState,
+    renderId,
+    renderType,
+    renderDate,
+    renderName,
+    userRoleObj.canAccessForms,
+  ]);
 
   const initialTableState = useMemo(
     () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
@@ -334,6 +341,10 @@ const PackageList = () => {
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
+  const tableClassName = classNames({
+    "submissions-table": true,
+    "submissions-table-actions-column": userRoleObj.canAccessForms,
+  });
   // Render the dashboard
   return (
     <div className="dashboard-white">
@@ -352,7 +363,7 @@ const PackageList = () => {
           <LoadingScreen isLoading={isLoading}>
             {changeRequestList.length > 0 ? (
               <PortalTable
-                className="submissions-table"
+                className={tableClassName}
                 columns={columns}
                 data={changeRequestList}
                 initialState={initialTableState}

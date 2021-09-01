@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
+import classNames from "classnames";
 
 import {
   RESPONSE_CODE,
@@ -155,8 +156,8 @@ const Dashboard = () => {
     [onPopupAction]
   );
 
-  const columns = useMemo(
-    () => [
+  const columns = useMemo(() => {
+    let tableColumns = [
       {
         Header: "ID/Number",
         accessor: "transmittalNumber",
@@ -185,23 +186,29 @@ const Dashboard = () => {
         id: "submitter",
         Cell: renderName,
       },
-      userRoleObj.canAccessForms && {
+    ];
+
+    if (userRoleObj.canAccessForms) {
+      const actionsColumn = {
         Header: "Actions",
+        accessor: "actions",
         disableSortBy: true,
         Cell: renderActions,
         id: "packageActions",
-      },
-    ],
-    [
-      getType,
-      renderActions,
-      renderDate,
-      renderId,
-      renderName,
-      renderType,
-      userRoleObj.canAccessForms,
-    ]
-  );
+      };
+      tableColumns.push(actionsColumn);
+    }
+
+    return tableColumns;
+  }, [
+    getType,
+    renderActions,
+    renderDate,
+    renderId,
+    renderName,
+    renderType,
+    userRoleObj.canAccessForms,
+  ]);
 
   const initialTableState = useMemo(
     () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
@@ -287,13 +294,17 @@ const Dashboard = () => {
       );
     }
 
+    const tableClassName = classNames({
+      "submissions-table": true,
+      "submissions-table-actions-column": userRoleObj.canAccessForms,
+    });
     const changeRequestListExists =
       changeRequestList && changeRequestList.length > 0;
     return (
       <LoadingScreen isLoading={isLoading}>
         {changeRequestListExists ? (
           <PortalTable
-            className="submissions-table"
+            className={tableClassName}
             columns={columns}
             data={changeRequestList}
             initialState={initialTableState}
