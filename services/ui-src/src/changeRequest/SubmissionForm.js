@@ -26,6 +26,15 @@ import ScrollToTop from "../components/ScrollToTop";
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
 /**
+ * Parses out the two character state/territory at the beginning of the transmittal number.
+ * @param {String} transmittalNumber the transmittal number
+ * @returns {String} two character state/territory
+ */
+function getTerritioryFromTransmittalNumber(transmittalNumber) {
+  return transmittalNumber.toString().substring(0, 2);
+}
+
+/**
  * Submisstion Form template to allow rendering for different types of Submissions.
  * @param {String} changeRequestType - the type of change request
  */
@@ -61,16 +70,19 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   // Get the transmittal number from the url params if it exists
   const params = useLocation().search;
-  const intitialTransmittalNumber = new URLSearchParams(params).get(
+  const initialTransmittalNumber = new URLSearchParams(params).get(
     "transmittalNumber"
   );
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
     type: changeRequestType,
-    territory: "",
+    territory:
+      (initialTransmittalNumber &&
+        getTerritioryFromTransmittalNumber(initialTransmittalNumber)) ||
+      "",
     summary: "",
-    transmittalNumber: intitialTransmittalNumber || "", //This is needed to be able to control the field
+    transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
   });
@@ -134,10 +146,11 @@ export const SubmissionForm = ({ changeRequestType }) => {
    */
   async function handleTransmittalNumberChange(newTransmittalNumber) {
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
     updatedRecord["transmittalNumber"] = newTransmittalNumber;
-    updatedRecord["territory"] = newTransmittalNumber
-      .toString()
-      .substring(0, 2);
+    updatedRecord["territory"] =
+      getTerritioryFromTransmittalNumber(newTransmittalNumber);
+
     setChangeRequest(updatedRecord);
   }
 
@@ -441,7 +454,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }
-              disabled={intitialTransmittalNumber}
+              disabled={initialTransmittalNumber}
               value={changeRequest.transmittalNumber}
               onChange={(event) =>
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
