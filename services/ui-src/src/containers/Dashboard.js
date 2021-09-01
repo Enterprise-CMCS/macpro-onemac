@@ -147,14 +147,9 @@ const Dashboard = () => {
         const item = {
           label: "Respond to RAI",
           value: { link: link, raiId: row.original.transmittalNumber },
+          handleSelected: onPopupAction,
         };
-        return (
-          <PopupMenu
-            selectedRow={row}
-            menuItems={[item]}
-            handleSelected={onPopupAction}
-          />
-        );
+        return <PopupMenu selectedRow={row} menuItems={[item]} />;
       } else return <></>;
     },
     [onPopupAction]
