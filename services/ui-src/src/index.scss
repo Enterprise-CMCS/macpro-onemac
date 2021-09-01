@@ -849,6 +849,21 @@ article.form-container {
   }
 }
 
+.submissions-table-actions-column {
+  th:last-child {
+    text-align: right;
+  }
+
+  td:last-child button {
+    width: 100%;
+    padding-left: 25px;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
 .new-submission-icon {
   padding-left: 8px;
   width: 23px !important;
@@ -947,7 +962,7 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-justify-content--end;
     @extend .ds-u-flex-wrap--wrap;
-    font-weight: bold; 
+    font-weight: bold;
     z-index: 1;
 
     label {
@@ -1218,7 +1233,7 @@ article.form-container {
   color: $color-white;
 }
 
-// Header 
+// Header
 
 .usa-banner-custom {
   @extend .ds-u-display--flex;
@@ -1237,20 +1252,21 @@ article.form-container {
   }
 }
 
-
 .home-header {
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-align-items--center;
   padding-top: 97px;
- 
+
   animation: slidein 1s ease-out;
 
-  background: linear-gradient(180deg,
-  $color-primary 0%,
-  $color-primary-darker 100%);
+  background: linear-gradient(
+    180deg,
+    $color-primary 0%,
+    $color-primary-darker 100%
+  );
 
-  @keyframes slidein { 
+  @keyframes slidein {
     0% {
       transform: translateX(-150%);
       background-color: white;
@@ -1258,16 +1274,15 @@ article.form-container {
       opacity: 0;
     }
 
-    50%{
-      opacity: .7;
-      transform: skewX(.8deg);
+    50% {
+      opacity: 0.7;
+      transform: skewX(0.8deg);
       transition: 0.25s;
     }
 
-    100%{
+    100% {
       opacity: 1;
     }
-
   }
 
   .home-header-content {
@@ -1292,17 +1307,25 @@ article.form-container {
       height: 400px;
       top: 150px;
       left: 300px;
-      opacity: .7;
+      opacity: 0.7;
       transform: perspective(8cm) rotateX(-15deg) rotateY(10deg);
       animation: polyperspective 4.5s ease-in-out;
     }
 
-    @keyframes polyperspective { 
-      from { opacity: 0; }
-      to { opacity: .7; }
-      from { transform: perspective(2cm) rotateX(0deg) rotateY(0deg); }
-      to { transform: perspective(8cm) rotateX(-15deg) rotateY(10deg); }
-  }
+    @keyframes polyperspective {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 0.7;
+      }
+      from {
+        transform: perspective(2cm) rotateX(0deg) rotateY(0deg);
+      }
+      to {
+        transform: perspective(8cm) rotateX(-15deg) rotateY(10deg);
+      }
+    }
 
     @media only screen and (max-width: 768px) {
       .polygon-image-top {

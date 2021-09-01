@@ -6,10 +6,14 @@ import { Spinner } from "@cmsgov/design-system";
  * @param {Object} props - component properties
  * @returns the component
  */
+
+export const LOADER_TEST_ID = "loading-screen";
+
 export default function LoadingScreen(props) {
   if (props.isLoading) {
     return (
       <div
+        data-testid={LOADER_TEST_ID}
         className="loading-screen"
         aria-relevant="additions"
         aria-live="polite"

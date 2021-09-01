@@ -231,17 +231,23 @@ const UserManagement = () => {
   );
 
   const renderActions = useCallback(
-    ({ row }) =>
-      APPROVING_USER_TYPE[row.original.role] === userProfile.userData.type ? (
+    ({ row }) => {
+      const menuItems = menuItemMap[row.values.status] ?? [];
+      for (const menuItem of menuItems) {
+        menuItem.handleSelected = onPopupAction;
+      }
+
+      return APPROVING_USER_TYPE[row.original.role] ===
+        userProfile.userData.type ? (
         <PopupMenu
           selectedRow={row}
-          menuItems={menuItemMap[row.values.status] ?? []}
-          handleSelected={onPopupAction}
+          menuItems={menuItems}
           variation="UserManagement"
         />
       ) : (
         <></>
-      ),
+      );
+    },
     [onPopupAction, userProfile?.userData?.type]
   );
 
