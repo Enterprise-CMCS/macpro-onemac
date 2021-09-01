@@ -441,6 +441,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }
+              disabled={intitialTransmittalNumber}
               value={changeRequest.transmittalNumber}
               onChange={(event) =>
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
