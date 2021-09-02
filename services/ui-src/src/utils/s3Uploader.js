@@ -86,15 +86,7 @@ export async function uploadFile(file) {
       title: fileToUpload.title,
     };
 
-    // If the upload to S3 fails (handled in AWS Amplify Storage) a message gets added to the console, but the
-    // promise comes back resolved, AND the get call will work as well.
-    // HOWEVER, if you try to access the url sent back, you receive an error message
-    // so can check for that.
-     await fetch(result.url, {
-       method: "HEAD",
-     }).then((response) => {
-      retPromise =  Promise.resolve(result);;
-     });
+    retPromise = Promise.resolve(result);
   } catch (error) {
     retPromise = Promise.reject(error);
   }
