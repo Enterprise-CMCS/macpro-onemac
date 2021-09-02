@@ -1,4 +1,8 @@
-import { constructRoleAdminEmails, validateInput } from "./putUser";
+import {
+  constructRoleAdminEmails,
+  ensureDonebyHasPrivilege,
+  validateInput,
+} from "./putUser";
 
 const stateSubmitter = {
   firstName: "John",
@@ -225,4 +229,70 @@ describe("Validating input from the UI", () => {
       }
     );
   });
+});
+
+describe("doneBy user authorization check", () => {
+  const cmsUserProps = { attributes: [{ status: "active" }] },
+    stateUserProps = {
+      attributes: [{ stateCode: "OK", history: [{ status: "active" }] }],
+    };
+
+  describe.each`
+    doneByType           | doneByProps       | userTypes
+    ${"systemadmin"}     | ${undefined}      | ${["statesubmitter", "stateadmin", "cmsroleapprover", "cmsreviewer", "helpdesk"]}
+    ${"cmsroleapprover"} | ${cmsUserProps}   | ${["stateadmin", "cmsreviewer"]}
+    ${"stateadmin"}      | ${stateUserProps} | ${["statesubmitter"]}
+  `(
+    "allows active $doneByType to modify user access",
+    ({ doneByType, doneByProps, userTypes }) => {
+      it.each(userTypes)("can modify %s accesses", (type) => {
+        expect(() =>
+          ensureDonebyHasPrivilege(
+            { type: doneByType, ...doneByProps },
+            type,
+            "OK"
+          )
+        ).not.toThrow();
+      });
+    }
+  );
+
+  describe.each`
+    doneByType           | doneByProps       | userTypes
+    ${"cmsroleapprover"} | ${cmsUserProps}   | ${["statesubmitter", "helpdesk"]}
+    ${"stateadmin"}      | ${stateUserProps} | ${["cmsroleapprover", "cmsreviewer", "helpdesk"]}
+  `(
+    "restricts $doneByType ability to modify user access to specific user types",
+    ({ doneByType, doneByProps, userTypes }) => {
+      it.each(userTypes)("cannot modify %s accesses", (type) => {
+        expect(() =>
+          ensureDonebyHasPrivilege(
+            { type: doneByType, ...doneByProps },
+            type,
+            "OK"
+          )
+        ).toThrow("VA000");
+      });
+    }
+  );
+
+  describe.each`
+    doneByType          | doneByProps       | userTypes
+    ${"cmsreviewer"}    | ${cmsUserProps}   | ${["statesubmitter", "stateadmin", "cmsroleapprover", "helpdesk"]}
+    ${"helpdesk"}       | ${cmsUserProps}   | ${["statesubmitter", "stateadmin", "cmsroleapprover", "cmsreviewer"]}
+    ${"statesubmitter"} | ${stateUserProps} | ${["stateadmin", "cmsroleapprover", "cmsreviewer", "helpdesk"]}
+  `(
+    "does not allow $doneByType ability to modify any user access besides their own",
+    ({ doneByType, doneByProps, userTypes }) => {
+      it.each(userTypes)("cannot modify %s accesses", (type) => {
+        expect(() =>
+          ensureDonebyHasPrivilege(
+            { type: doneByType, ...doneByProps },
+            type,
+            "OK"
+          )
+        ).toThrow("VA000");
+      });
+    }
+  );
 });

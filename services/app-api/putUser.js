@@ -190,7 +190,7 @@ const isLatestAttributeActive = (attribs) => {
 };
 
 // Ensure the DoneBy user has permission to execute the requested actions //
-const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
+export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
   switch (doneByUser.type) {
     case USER_TYPE.SYSTEM_ADMIN:
       // System Admins can approve anyone
@@ -198,9 +198,10 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
     case APPROVING_USER_TYPE[userType]:
       break;
     default: {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be a ${APPROVING_USER_TYPE[userType]} or a System Admin`
-      );
+      if (process.env.NODE_ENV !== "test")
+        console.log(
+          `Warning: The doneBy user ${doneByUser.id} must be a ${APPROVING_USER_TYPE[userType]} or a System Admin`
+        );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
@@ -212,17 +213,19 @@ const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
       index === -1 ||
       !isLatestAttributeActive(doneByUser.attributes[index].history)
     ) {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active stateadmin for the state ${userState}`
-      );
+      if (process.env.NODE_ENV !== "test")
+        console.log(
+          `Warning: The doneBy user ${doneByUser.id} must be an active stateadmin for the state ${userState}`
+        );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
   if (userType === USER_TYPE.STATE_ADMIN) {
     if (!isLatestAttributeActive(doneByUser.attributes)) {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
-      );
+      if (process.env.NODE_ENV !== "test")
+        console.log(
+          `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
+        );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
