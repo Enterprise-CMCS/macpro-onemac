@@ -190,12 +190,19 @@ const isLatestAttributeActive = (attribs) => {
 };
 
 // Ensure the DoneBy user has permission to execute the requested actions //
-const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
-  if (doneByUser.type !== APPROVING_USER_TYPE[userType]) {
-    console.log(
-      `Warning: The doneBy user ${doneByUser.id} must be a ${APPROVING_USER_TYPE[userType]}`
-    );
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
+  switch (doneByUser.type) {
+    case USER_TYPE.SYSTEM_ADMIN:
+      // System Admins can approve anyone
+      return;
+    case APPROVING_USER_TYPE[userType]:
+      break;
+    default: {
+      console.log(
+        `Warning: The doneBy user ${doneByUser.id} must be a ${APPROVING_USER_TYPE[userType]} or a System Admin`
+      );
+      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+    }
   }
   if (userType === USER_TYPE.STATE_SUBMITTER) {
     const index = doneByUser.attributes.findIndex(
