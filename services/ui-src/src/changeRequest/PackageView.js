@@ -3,6 +3,7 @@ import { useHistory, useParams } from "react-router-dom";
 
 import { RESPONSE_CODE, ROUTES, ChangeRequest } from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
+import ChoiceList from "../components/ChoiceList";
 import FileList from "../components/FileList";
 import PackageApi from "../utils/PackageApi";
 import { formatDate } from "../utils/date-utils";
@@ -45,6 +46,7 @@ const PackageView = () => {
     PackageApi.getPackage(packageId)
       .then((fetchedPackage) => {
         console.log("got the package: ", fetchedPackage);
+        fetchedPackage.raiResponse = { dateSubmitted: "08/21/2021" };
         if (mounted) setPackageDetails(fetchedPackage);
       })
       .then(() => {
@@ -82,15 +84,29 @@ const PackageView = () => {
       {packageDetails && (
         <article className="form-container">
           <div className="read-only-submission">
-            <section>
-              <Review
-                className="original-review-component"
-                headingLevel="2"
-                heading="RAI Response"
-              >
-                This is where the RAI Response card might go.
-              </Review>
-            </section>
+            {packageDetails.raiResponse && (
+              <section>
+                <Review
+                  className="original-review-component"
+                  headingLevel="2"
+                  heading="Request for Additional Information"
+                >
+                  <div className="details-card-container">
+                    <ChoiceList
+                      choices={[
+                        {
+                          title: "RAI Response",
+                          description:
+                            "Date submitted: " +
+                            packageDetails.raiResponse.dateSubmitted,
+                          linkTo: "/rai",
+                        },
+                      ]}
+                    />
+                  </div>
+                </Review>
+              </section>
+            )}
             {packageDetails.submissionDate && (
               <section>
                 <Review

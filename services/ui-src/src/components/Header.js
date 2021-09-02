@@ -143,6 +143,19 @@ function Header(props) {
                           Dashboard
                         </Link>
                       )}
+                      {isLoggedInAsDeveloper && (
+                        <Link
+                          id="packageListLink"
+                          to={ROUTES.PACKAGE_LIST}
+                          className={getActiveClass(
+                            currentRoute,
+                            RouteList.PACKAGE_LIST
+                          )}
+                        >
+                          Packages
+                        </Link>
+                      )}
+
                       {userObj.canAccessUserManagement && (
                         <Link
                           id="userManagementLink"
