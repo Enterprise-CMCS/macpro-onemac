@@ -59,6 +59,29 @@ class PackageApi {
       );
     }
   }
+
+  /**
+   * Set a package's status to Withdrawn
+   * @param {string} ID the package ID
+   * @return {Promise<string>} the response code
+   */
+  async withdraw(submitterName, submitterEmail, packageId) {
+    try {
+      return await API.post("changeRequestAPI", `/withdraw`, {
+        body: {
+          packageId,
+          submitterEmail,
+          submitterName,
+        },
+      });
+    } catch (err) {
+      handleApiError(
+        err,
+        "FETCH_ERROR",
+        `There was an error updating the status of package ${packageId}.`
+      );
+    }
+  }
 }
 
 const instance = new PackageApi();
