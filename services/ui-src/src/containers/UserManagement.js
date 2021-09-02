@@ -237,16 +237,19 @@ const UserManagement = () => {
         menuItem.handleSelected = onPopupAction;
       }
 
-      return APPROVING_USER_TYPE[row.original.role] ===
-        userProfile.userData.type ? (
-        <PopupMenu
-          selectedRow={row}
-          menuItems={menuItems}
-          variation="UserManagement"
-        />
-      ) : (
-        <></>
-      );
+      switch (userProfile.userData.type) {
+        case USER_TYPE.SYSTEM_ADMIN:
+        case APPROVING_USER_TYPE[row.original.role]:
+          return (
+            <PopupMenu
+              selectedRow={row}
+              menuItems={menuItems}
+              variation="UserManagement"
+            />
+          );
+        default:
+          return null;
+      }
     },
     [onPopupAction, userProfile?.userData?.type]
   );
