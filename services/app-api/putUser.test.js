@@ -45,6 +45,8 @@ const cmsRoleApprover = {
   type: "cmsroleapprover",
 };
 
+console.log = jest.fn();
+
 describe("Construction of role approver emails", () => {
   it("Should show the full name in the email message for CMSRoleApprover", async () => {
     const result = constructRoleAdminEmails([], cmsRoleApprover).email.HTML;
