@@ -21,6 +21,7 @@ const TransmittalNumber = ({
   statusMessage,
   value,
   onChange,
+  disabled,
 }) => {
   let statusMsgClass = "ds-u-color--error";
 
@@ -56,6 +57,7 @@ const TransmittalNumber = ({
         value={value}
         onChange={onChange}
         required
+        disabled={disabled}
       ></input>
     </div>
   );

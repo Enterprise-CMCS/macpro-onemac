@@ -849,6 +849,21 @@ article.form-container {
   }
 }
 
+.submissions-table-actions-column {
+  th:last-child {
+    text-align: right;
+  }
+
+  td:last-child button {
+    width: 100%;
+    padding-left: 25px;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}
+
 .new-submission-icon {
   padding-left: 8px;
   width: 23px !important;
