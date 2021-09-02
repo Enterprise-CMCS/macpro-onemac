@@ -90,34 +90,34 @@ module.exports = {
     },
 
 
-    'Validate Waiver Form Logic for New Waiver and All other': function (browser) {
-        //browser.click('button#waiverBtn');    // click Submit New Waiver
-        browser.useXpath().click("//a[@id='new-submission-button']");
-        browser.pause(2500);
-        browser.useXpath().click("(//h4)[2]");
-        browser.pause(500);
-        browser.useXpath().click("(//h4)[1]");
-        browser.useCss();
-        browser.click('select#action-type');   // click action type
-        browser.click("select#action-type > option[value='new']");  // Select "New Waiver"
-        browser.click('select#waiver-authority'); // Click Waiver Authority
-        browser.click("select#waiver-authority > option[value='1915(b)']");   // dropdown value
-        browser.click('input#transmittalNumber');
-        browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
-        browser.keys([browser.Keys.TAB]);
-        let phrase = "Test for number exists";
-        browser.setValue('textarea', phrase);
+    // 'Validate Waiver Form Logic for New Waiver and All other': function (browser) {
+    //     //browser.click('button#waiverBtn');    // click Submit New Waiver
+    //     browser.useXpath().click("//a[@id='new-submission-button']");
+    //     browser.pause(2500);
+    //     browser.useXpath().click("(//h4)[2]");
+    //     browser.pause(500);
+    //     browser.useXpath().click("(//h4)[1]");
+    //     browser.useCss();
+    //     browser.click('select#action-type');   // click action type
+    //     browser.click("select#action-type > option[value='new']");  // Select "New Waiver"
+    //     browser.click('select#waiver-authority'); // Click Waiver Authority
+    //     browser.click("select#waiver-authority > option[value='1915(b)']");   // dropdown value
+    //     browser.click('input#transmittalNumber');
+    //     browser.setValue('input#transmittalNumber', spaID); // wait for 2 seconds
+    //     browser.keys([browser.Keys.TAB]);
+    //     let phrase = "Test for number exists";
+    //     browser.setValue('textarea', phrase);
 
-        //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
+    //     //browser.setValue('input#transmittalNumber', 'VA.32.R19.67'); // wait for 2 seconds
 
-        // Verify that duplicate error message
-        let expected = "this Waiver Number already exists";
-        browser.useXpath().verify.containsText('//div[@id="transmittalNumberStatusMsg"]', expected).pause(2000);
-        //browser.back();  // go back to previous page
-        let dashboard_link = "//a[@id='dashboardLink']";
-        browser.useXpath().click(dashboard_link);
-        browser.useCss();
-    },
+    //     // Verify that duplicate error message
+    //     let expected = "this Waiver Number already exists";
+    //     browser.useXpath().verify.containsText('//div[@id="transmittalNumberStatusMsg"]', expected).pause(2000);
+    //     //browser.back();  // go back to previous page
+    //     let dashboard_link = "//a[@id='dashboardLink']";
+    //     browser.useXpath().click(dashboard_link);
+    //     browser.useCss();
+    // },
 
     
     // ---------------------------------------------Waiver Amendament-------------------------------------------------------------------------

@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { format } from "date-fns";
+import classNames from "classnames";
 
 import {
   RESPONSE_CODE,
@@ -17,6 +18,7 @@ import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import PackageAPI from "../utils/PackageApi";
+import PopupMenu from "../components/PopupMenu";
 import { useAppContext } from "../libs/contextLib";
 import {
   pendingMessage,
@@ -25,6 +27,24 @@ import {
   isActive,
 } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+
+const withdrawMenuItem = {
+  label: "Withdraw Package",
+  value: "Withdrawn",
+  formatConfirmationMessage: ({ packageId }) =>
+    `You are about to withdraw ${packageId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+};
+
+const menuItemMap = {
+  "RAI Response Submitted": withdrawMenuItem,
+  Submitted: withdrawMenuItem,
+};
+
+const correspondingRAILink = {
+  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
+  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+};
 
 /**
  * Component containing dashboard
@@ -38,6 +58,24 @@ const PackageList = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData.type);
 
+  const loadPackageList = useCallback(
+    async (ctrlr) => {
+      setIsLoading(true);
+      try {
+        const data = await PackageAPI.getMyPackages(userProfile.email);
+
+        if (typeof data === "string") throw data;
+        console.log("the data returned is: ", data);
+        if (!ctrlr?.signal.aborted) setChangeRequestList(data);
+        if (!ctrlr?.signal.aborted) setIsLoading(false);
+      } catch (error) {
+        console.log("Error while fetching user's list.", error);
+        setAlertCode(RESPONSE_CODE[error.message]);
+      }
+    },
+    [userProfile.email]
+  );
+
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
@@ -46,26 +84,13 @@ const PackageList = () => {
       return;
     }
 
-    let mounted = true;
-
-    (async function onLoad() {
-      try {
-        const data = await PackageAPI.getMyPackages(userProfile.email);
-
-        if (typeof data === "string") throw data;
-        console.log("the data returned is: ", data);
-        if (mounted) setChangeRequestList(data);
-        if (mounted) setIsLoading(false);
-      } catch (error) {
-        console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
-      }
-    })();
+    const ctrlr = new AbortController();
+    loadPackageList(ctrlr);
 
     return function cleanup() {
-      mounted = false;
+      ctrlr.abort();
     };
-  }, [history, location, userData, userProfile]);
+  }, [history, loadPackageList, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -98,11 +123,11 @@ const PackageList = () => {
     []
   );
 
-  const renderState = useCallback(({ value }) => {
-    if (!value) {
+  const getState = useCallback(({ packageId }) => {
+    if (!packageId) {
       return "--";
     } else {
-      return value.toString().substring(0, 2);
+      return packageId.toString().substring(0, 2);
     }
   }, []);
 
@@ -126,8 +151,76 @@ const PackageList = () => {
     }
   }, []);
 
-  const columns = useMemo(
-    () => [
+  const onPopupActionWithdraw = useCallback(
+    async (rowNum) => {
+      // For now, the second argument is constant.
+      // When we add another action to the menu, we will need to look at the action taken here.
+
+      const packageToModify = changeRequestList[rowNum];
+      try {
+        const resp = await PackageAPI.withdraw(
+          [userProfile.userData.firstName, userProfile.userData.lastName].join(
+            " "
+          ),
+          userProfile.email,
+          packageToModify.packageId
+        );
+        setAlertCode(resp);
+        loadPackageList();
+      } catch (e) {
+        console.log("Error while updating package.", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      }
+    },
+    [
+      changeRequestList,
+      loadPackageList,
+      userProfile.email,
+      userProfile.userData,
+    ]
+  );
+
+  const onPopupActionRAI = useCallback(
+    (value) => {
+      history.push(`${value.link}?transmittalNumber=${value.raiId}`);
+    },
+    [history]
+  );
+
+  const renderActions = useCallback(
+    ({ row }) => {
+      const raiLink = correspondingRAILink[row.original.packageType];
+      const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
+      const notWithdrawn = row.original.currentStatus !== "Withdrawn";
+      let menuItems = [];
+
+      if (raiLink && notWithdrawn) {
+        const menuItemRai = {
+          label: "Respond to RAI",
+          value: { link: raiLink, raiId: row.original.packageId },
+          handleSelected: onPopupActionRAI,
+        };
+        menuItems.push(menuItemRai);
+      }
+
+      if (menuItemBasedOnStatus) {
+        menuItemBasedOnStatus.handleSelected = onPopupActionWithdraw;
+        menuItems.push(menuItemBasedOnStatus);
+      }
+
+      return (
+        <PopupMenu
+          selectedRow={row}
+          menuItems={menuItems}
+          variation="PackageList"
+        />
+      );
+    },
+    [onPopupActionWithdraw, onPopupActionRAI]
+  );
+
+  const columns = useMemo(() => {
+    let tableColumns = [
       {
         Header: "ID/Number",
         accessor: "packageId",
@@ -142,9 +235,8 @@ const PackageList = () => {
       },
       {
         Header: "State",
-        accessor: "packageId",
+        accessor: getState,
         id: "territory",
-        Cell: renderState,
       },
       {
         Header: "Status",
@@ -162,9 +254,30 @@ const PackageList = () => {
         id: "submitter",
         Cell: renderName,
       },
-    ],
-    [getType, renderState, renderId, renderType, renderDate, renderName]
-  );
+    ];
+
+    if (userRoleObj.canAccessForms) {
+      const actionsColumn = {
+        Header: "Actions",
+        accessor: "actions",
+        disableSortBy: true,
+        id: "packageActions",
+        Cell: renderActions,
+      };
+      tableColumns.push(actionsColumn);
+    }
+
+    return tableColumns;
+  }, [
+    getType,
+    renderActions,
+    getState,
+    renderId,
+    renderType,
+    renderDate,
+    renderName,
+    userRoleObj.canAccessForms,
+  ]);
 
   const initialTableState = useMemo(
     () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
@@ -223,6 +336,10 @@ const PackageList = () => {
   const isUserActive =
     !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
 
+  const tableClassName = classNames({
+    "submissions-table": true,
+    "submissions-table-actions-column": userRoleObj.canAccessForms,
+  });
   // Render the dashboard
   return (
     <div className="dashboard-white">
@@ -241,7 +358,7 @@ const PackageList = () => {
           <LoadingScreen isLoading={isLoading}>
             {changeRequestList.length > 0 ? (
               <PortalTable
-                className="submissions-table"
+                className={tableClassName}
                 columns={columns}
                 data={changeRequestList}
                 initialState={initialTableState}

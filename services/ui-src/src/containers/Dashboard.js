@@ -2,6 +2,7 @@ import React, { useCallback, useState, useEffect, useMemo } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { format } from "date-fns";
 import { Button } from "@cmsgov/design-system";
+import classNames from "classnames";
 
 import {
   RESPONSE_CODE,
@@ -17,10 +18,17 @@ import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
+import PopupMenu from "../components/PopupMenu";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+
+const correspondingRAILink = {
+  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
+  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+};
 
 /**
  * Component containing dashboard
@@ -126,8 +134,30 @@ const Dashboard = () => {
     }
   }, []);
 
-  const columns = useMemo(
-    () => [
+  const onPopupAction = useCallback(
+    (value) => {
+      history.push(`${value.link}?transmittalNumber=${value.raiId}`);
+    },
+    [history]
+  );
+
+  const renderActions = useCallback(
+    ({ row }) => {
+      const link = correspondingRAILink[row.original.type];
+      if (link) {
+        const item = {
+          label: "Respond to RAI",
+          value: { link: link, raiId: row.original.transmittalNumber },
+          handleSelected: onPopupAction,
+        };
+        return <PopupMenu selectedRow={row} menuItems={[item]} />;
+      } else return <></>;
+    },
+    [onPopupAction]
+  );
+
+  const columns = useMemo(() => {
+    let tableColumns = [
       {
         Header: "ID/Number",
         accessor: "transmittalNumber",
@@ -156,9 +186,29 @@ const Dashboard = () => {
         id: "submitter",
         Cell: renderName,
       },
-    ],
-    [getType, renderDate, renderId, renderName, renderType]
-  );
+    ];
+
+    if (userRoleObj.canAccessForms) {
+      const actionsColumn = {
+        Header: "Actions",
+        accessor: "actions",
+        disableSortBy: true,
+        Cell: renderActions,
+        id: "packageActions",
+      };
+      tableColumns.push(actionsColumn);
+    }
+
+    return tableColumns;
+  }, [
+    getType,
+    renderActions,
+    renderDate,
+    renderId,
+    renderName,
+    renderType,
+    userRoleObj.canAccessForms,
+  ]);
 
   const initialTableState = useMemo(
     () => ({ sortBy: [{ id: "submittedAt", desc: true }] }),
@@ -244,13 +294,17 @@ const Dashboard = () => {
       );
     }
 
+    const tableClassName = classNames({
+      "submissions-table": true,
+      "submissions-table-actions-column": userRoleObj.canAccessForms,
+    });
     const changeRequestListExists =
       changeRequestList && changeRequestList.length > 0;
     return (
       <LoadingScreen isLoading={isLoading}>
         {changeRequestListExists ? (
           <PortalTable
-            className="submissions-table"
+            className={tableClassName}
             columns={columns}
             data={changeRequestList}
             initialState={initialTableState}

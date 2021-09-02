@@ -42,6 +42,12 @@ export const ALERTS_MSG = {
     text: "Thank you. The CMS Role Approver will verify your access and credentials.  Please check your email for details on access.",
   },
 
+  WITHDREW_PACKAGE: {
+    type: ALERT_TYPES.SUCCESS,
+    heading: "Your submission package has successfully been withdrawn.",
+    text: "Please check your inbox for an email confirmation.",
+  },
+
   // Success woth Survey Link
   SUBMISSION_SUCCESS_SURVEY: {
     type: ALERT_TYPES.SUCCESS,
@@ -213,4 +219,5 @@ export const alertCodeAlerts = {
   [RESPONSE_CODE.DASHBOARD_LIST_FETCH_ERROR]:
     ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
   [RESPONSE_CODE.SESSION_EXPIRED]: ALERTS_MSG.SESSION_EXPIRED,
+  [RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS]: ALERTS_MSG.WITHDREW_PACKAGE,
 };
