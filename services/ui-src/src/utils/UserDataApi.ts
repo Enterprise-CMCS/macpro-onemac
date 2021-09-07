@@ -1,8 +1,10 @@
-import handleApiError from "../libs/apiErrorHandler";
 import { USER_TYPE } from "cmscommonlib";
 import { API } from "aws-amplify";
 
-export const getAdminTypeByRole = (role) => {
+import { UserRecord } from "../domain-types";
+import handleApiError from "../libs/apiErrorHandler";
+
+export const getAdminTypeByRole = (role: string): string | undefined => {
   switch (role) {
     case USER_TYPE.STATE_ADMIN:
       return USER_TYPE.STATE_SUBMITTER;
@@ -14,21 +16,22 @@ export const getAdminTypeByRole = (role) => {
       return undefined;
   }
 };
+
 /**
  * Singleton class to perform operations with the user tables backend.
  */
 class UserDataApi {
   /**
    * Fetch the list of users appropriate for this User
-   * @return {Array} a list of users
+   * @return a list of users
    */
-  async getMyUserList(userEmail) {
+  async getMyUserList(userEmail: string): Promise<any[]> {
     if (!userEmail) return [];
 
     try {
-      return await API.get("oneMacAPI", `/getMyUserList?email=${userEmail}`);
+      return await API.get("oneMacAPI", `/getMyUserList?email=${userEmail}`, undefined);
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "DASHBOARD_RETRIEVAL_ERROR",
         "There was an error fetching data for the user."
@@ -39,20 +42,19 @@ class UserDataApi {
   /**
    * Get the User details for a given email address
    * Throws an exception if the API throws an exception
-   * @param {string} userEmail the ID to check
-   * @return {Object} the returned user item
+   * @param userEmail the ID to check
+   * @return the returned user item
    */
-  async userProfile(userEmail) {
+  async userProfile(userEmail: string): Promise<UserRecord> {
     if (!userEmail) {
       console.log("user Email was not specified for userProfile API call");
       throw new Error("user Email was not specified for userProfile API call");
     }
 
     try {
-      let answer = await API.get("oneMacAPI", `/getUser?email=${userEmail}`);
-      return answer;
+      return await API.get("oneMacAPI", `/getUser?email=${userEmail}`, undefined);
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "FETCH_ERROR",
         "There was an error fetching data for the user."
@@ -62,16 +64,16 @@ class UserDataApi {
 
   /**
    * Create or update a user's profile
-   * @param {Object} User record to create or update in Dynamo
-   * @return {Promise<string>} An error code, or nothing at all if it succeeds
+   * @param userRecord to create or update in Dynamo
+   * @return errorCode An error code, or nothing at all if it succeeds
    */
-  async updateUser(userRecord) {
+  async updateUser(userRecord: Partial<UserRecord>): Promise<string> {
     try {
       return await API.put("oneMacAPI", "/putUser", {
         body: { ...userRecord, isPutUser: true },
       });
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "USER_SUBMISSION_FAILED",
         "There was an error submitting data for the user."
@@ -81,17 +83,17 @@ class UserDataApi {
 
   /**
    * Update a user's phone number
-   * @param {string} User ID to update
-   * @param {string} Updated phone number
-   * @return {Promise<string>} An error code, or nothing at all if it succeeds
+   * @param userId to update
+   * @param phoneNumber
+   * @return errorCode or nothing at all if it succeeds
    */
-  async updatePhoneNumber(id, phoneNumber) {
+  async updatePhoneNumber(id: string, phoneNumber: string): Promise<string> {
     try {
       return await API.put("oneMacAPI", "/phoneNumber", {
         body: { id, phoneNumber },
       });
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "USER_SUBMISSION_FAILED",
         "Could not save user phone number."
@@ -102,12 +104,10 @@ class UserDataApi {
   /**
    * Tell the back end to update the status of a given user
    * Throws an exception if the API throws an exception
-   * @param {string} doneBy email of the user making the change
-   * @param {string} userEmail email of the user to be updated
-   * @param {string} newStatus the new status for the user
-   * @return {Promise<string>} the response code
+   * @param updateRequest
+   * @return errorCode
    */
-  async setUserStatus(updateStatusRequest) {
+  async setUserStatus(updateStatusRequest: any): Promise<string> {
     if (!updateStatusRequest) {
       throw new Error("setUserStatus API call required parameters missing");
     }
@@ -117,7 +117,7 @@ class UserDataApi {
         body: updateStatusRequest,
       });
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "USER_SUBMISSION_FAILED",
         "There was an error changing the user status."
@@ -128,15 +128,15 @@ class UserDataApi {
   /**
    * Get all active state system administrators' contact info for a list of states.
    */
-  async getStateAdmins(states) {
+  async getStateAdmins(states: string[]): Promise<any[]> {
     try {
       const params = new URLSearchParams();
       for (const state of states) {
         params.append("state", state);
       }
-      return await API.get("oneMacAPI", `/getStateAdmins?${params.toString()}`);
+      return await API.get("oneMacAPI", `/getStateAdmins?${params.toString()}`, undefined);
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "FETCH_ERROR",
         "There was an error fetching the state admins."
@@ -147,11 +147,11 @@ class UserDataApi {
   /**
    * Get all active CMS role approvers' contact info.
    */
-  async getCmsRoleApprovers() {
+  async getCmsRoleApprovers(): Promise<any[]> {
     try {
-      return await API.get("oneMacAPI", "/getCmsRoleApprovers");
+      return await API.get("oneMacAPI", "/getCmsRoleApprovers", undefined);
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "FETCH_ERROR",
         "There was an error fetching the CMS role approvers."
@@ -162,11 +162,11 @@ class UserDataApi {
   /**
    * Get all active CMS system admins' contact info.
    */
-  async getCmsSystemAdmins() {
+  async getCmsSystemAdmins(): Promise<any[]> {
     try {
-      return await API.get("oneMacAPI", "/getCmsSystemAdmins");
+      return await API.get("oneMacAPI", "/getCmsSystemAdmins", undefined);
     } catch (error) {
-      handleApiError(
+      return handleApiError(
         error,
         "FETCH_ERROR",
         "There was an error fetching the CMS admins."
