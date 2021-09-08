@@ -10,6 +10,7 @@ import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
+
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
@@ -68,6 +69,8 @@ function Header(props) {
   const { isLoggedInAsDeveloper } = useAppContext();
   const { isAuthenticated } = useAppContext();
 
+  // const [hamburgerOpen, hamburgerClosed] = useState(false);
+
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 
@@ -97,6 +100,7 @@ function Header(props) {
   /**
    * Renders a navigation bar
    */
+
   function renderNavBar(
     isLoggedInAsDeveloper,
     currentRoute,
@@ -104,13 +108,66 @@ function Header(props) {
     userType
   ) {
     const userObj = getUserRoleObj(userType);
+
+    const homeLink = (
+      <Link
+        to={ROUTES.HOME}
+        className={getActiveClass(currentRoute, RouteList.HOME)}
+      >
+        Home
+      </Link>
+    );
+
+    // Target new ensures FAQ opens in new window.
+    const faq = (
+      <a
+        href={ROUTES.FAQ}
+        className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
+        target="new"
+      >
+        FAQ
+      </a>
+    );
+
+    const dashboardLink = (
+      <Link
+        id="dashboardLink"
+        to={ROUTES.DASHBOARD}
+        className={getActiveClass(currentRoute, RouteList.DASHBOARD)}
+      >
+        Dashboard
+      </Link>
+    );
+
+    const userManagementLink = (
+      <Link
+        id="userManagementLink"
+        to={ROUTES.USER_MANAGEMENT}
+        className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}
+      >
+        User Management
+      </Link>
+    );
+
+    let linksToDisplay = [homeLink];
+    if (isAuthenticated) {
+      if (userObj.canAccessDashboard) {
+        linksToDisplay.push(dashboardLink);
+      }
+      if (userObj.canAccessUserManagement) {
+        linksToDisplay.push(userManagementLink);
+      }
+    }
+    // This is to ensure FAQ shows up last in the link order.
+    linksToDisplay.push(faq);
+
     switch (document.location.pathname) {
       case ROUTES.FAQ:
       case ROUTES.FAQ + "/":
         return (
           <div className="nav-bar">
             <div className="header-wrapper">
-              <div className="nav-left">
+              <div className="nav-left-faq">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
               </div>
             </div>
@@ -121,50 +178,19 @@ function Header(props) {
           <div className="nav-bar">
             <div className="header-wrapper">
               <div className="nav-left">
+                <nav className="nav-left-burger">
+                  <Button
+                    type="button"
+                    id="hamburger-menu"
+                    className="open-hamburger"
+                    aria-controls="link-list"
+                    aria-expanded="true"
+                  >
+                    <p aria-label="Hamburger Menu">☰</p>
+                  </Button>
+                </nav>
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-                <div className="nav-left-links">
-                  <Link
-                    to={ROUTES.HOME}
-                    className={getActiveClass(currentRoute, RouteList.HOME)}
-                  >
-                    Home
-                  </Link>
-                  {isAuthenticated && (
-                    <>
-                      {userObj.canAccessDashboard && (
-                        <Link
-                          id="dashboardLink"
-                          to={ROUTES.DASHBOARD}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.DASHBOARD
-                          )}
-                        >
-                          Dashboard
-                        </Link>
-                      )}
-                      {userObj.canAccessUserManagement && (
-                        <Link
-                          id="userManagementLink"
-                          to={ROUTES.USER_MANAGEMENT}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.USER_MANAGEMENT
-                          )}
-                        >
-                          User Management
-                        </Link>
-                      )}
-                    </>
-                  )}
-                  <a
-                    href={ROUTES.FAQ}
-                    className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-                    target="new"
-                  >
-                    FAQ
-                  </a>
-                </div>
+                <div className="nav-left-links">{linksToDisplay}</div>
               </div>
               {renderAccountButtons(isLoggedInAsDeveloper)}
             </div>

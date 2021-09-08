@@ -926,6 +926,72 @@ article.form-container {
   }
 }
 
+.hamburger-content {
+  height: 100%;
+  width: 200px;
+  // text-align: center;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: #0071bc;
+  color: $color-white;
+  overflow-x: hidden;
+  transition: width 0.8s;
+  visibility: hidden;
+}
+
+.close-hamburger {
+  color: $color-white;
+  font-weight: bold;
+  border: none;
+  margin-left: 0px;
+  background-color: #0071bc;
+
+  &:hover {
+    color: rgba($color-base-inverse, 0.8);
+  }
+
+  &:active {
+    color: rgba($color-base-inverse, 0.6);
+  }
+}
+
+.closing-x-hamburger {
+  background-color: #0071bc;
+  position: absolute;
+  top: 0;
+  left: 0;
+
+  &:hover {
+    color: rgba($color-base-inverse, 0.8);
+  }
+
+  &:active {
+    color: rgba($color-base-inverse, 0.6);
+  }
+}
+
+.no-bullet {
+  list-style-type: none;
+}
+
+.hamburger-content li a {
+  padding: 15px;
+  margin: 15px;
+  font-weight: bold;
+  color: $color-white;
+  border: none;
+  margin-right: 50px;
+  &:hover {
+    color: rgba($color-base-inverse, 0.8);
+  }
+
+  &:active {
+    color: rgba($color-base-inverse, 0.6);
+  }
+}
+
 .nav-bar {
   @extend .ds-u-align-items--center;
   @extend .ds-u-flex-wrap--nowrap;
@@ -954,6 +1020,30 @@ article.form-container {
 
       &:active {
         color: rgba($color-base-inverse, 0.6);
+      }
+    }
+
+    .open-hamburger {
+      background-color: #0071bc;
+      border-color: transparent;
+      z-index: 1;
+      padding-top: 10px;
+      margin: auto;
+      text-align: center;
+      font-size: 32px;
+      color: $color-white;
+      display: none;
+    }
+
+    @media (max-width: 933px) {
+      .open-hamburger {
+        display: inline-block;
+      }
+      .nav-left-links {
+        display: none;
+      }
+      #oneMacLogo {
+        display: none;
       }
     }
   }
