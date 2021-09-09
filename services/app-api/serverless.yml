@@ -102,12 +102,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getPackage:
-    handler: getPackage.main
+  getDetail:
+    handler: getDetail.main
     role: LambdaApiRole
     events:
       - http:
-          path: getPackage/{id}
+          path: getDetail/{id}
           method: get
           cors: true
           authorizer: aws_iam

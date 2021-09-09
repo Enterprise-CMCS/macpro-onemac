@@ -25,29 +25,28 @@ const ACTION_LABELS = {
  * Given an id and the relevant submission type forminfo, show the details
  * @param {Object} formInfo - all the change request details specific to this submission
  */
-const PackageView = () => {
+const DetailView = () => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-  const { packageType, packageId } = useParams();
+  const { componentType, packageId, componentIndex } = useParams();
 
-  console.log("type is: ", packageType);
+  console.log("component type is: ", componentType);
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
   // The record we are using for the form.
-  const [packageDetails, setPackageDetails] = useState();
+  const [details, setDetails] = useState();
 
-  console.log("here in PackageView with package ID: ", packageId);
+  console.log("here in DetailView with Package ID: ", packageId);
   useEffect(() => {
     let mounted = true;
 
     if (!packageId) return;
 
-    PackageApi.getPackage(packageId)
-      .then((fetchedPackage) => {
-        console.log("got the package: ", fetchedPackage);
-        fetchedPackage.raiResponse = { dateSubmitted: "08/21/2021" };
-        if (mounted) setPackageDetails(fetchedPackage);
+    PackageApi.getDetail(packageId, componentType, componentIndex)
+      .then((fetchedDetail) => {
+        console.log("got the package: ", fetchedDetail);
+        if (mounted) setDetails(fetchedDetail);
       })
       .then(() => {
         if (mounted) setIsLoading(false);
@@ -64,9 +63,9 @@ const PackageView = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [packageId, history]);
+  }, [packageId, history, componentType, componentIndex]);
 
-  const formInfo = ChangeRequest.CONFIG[packageType];
+  const formInfo = ChangeRequest.CONFIG[componentType];
 
   const renderChangeHistory = (changeHistory) => {
     return (
@@ -81,10 +80,10 @@ const PackageView = () => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={formInfo.readOnlyPageTitle} enableBackNav />
-      {packageDetails && (
+      {details && (
         <article className="form-container">
           <div className="read-only-submission">
-            {packageDetails.raiResponse && (
+            {details.RAIResponse && (
               <section>
                 <Review
                   className="original-review-component"
@@ -93,75 +92,74 @@ const PackageView = () => {
                 >
                   <div className="details-card-container">
                     <ChoiceList
-                      choices={[
-                        {
+                      choices={details.RAIResponse.map((item, index) => {
+                        return {
                           title: "RAI Response",
                           description:
                             "Date submitted: " +
-                            packageDetails.raiResponse.dateSubmitted,
-                          linkTo: "/rai",
-                        },
-                      ]}
+                            formatDate(item.componentTimestamp),
+                          linkTo: `/package/sparai/${details.packageId}/${index}`,
+                        };
+                      })}
                     />
                   </div>
                 </Review>
               </section>
             )}
-            {packageDetails.submissionDate && (
+            {details.submissionTimestamp && (
               <section>
                 <Review
                   className="original-review-component"
                   headingLevel="2"
                   heading="Date Submitted"
                 >
-                  {formatDate(packageDetails.submissionDate)}
+                  {formatDate(details.submissionTimestamp)}
                 </Review>
               </section>
             )}
             <section>
               <h2>{formInfo.detailsHeader} Details</h2>
-              {packageDetails.waiverAuthority && (
+              {details.waiverAuthority && (
                 <Review heading="Waiver Authority">
-                  {AUTHORITY_LABELS[packageDetails.waiverAuthority] ??
-                    packageDetails.waiverAuthority}
+                  {AUTHORITY_LABELS[details.waiverAuthority] ??
+                    details.waiverAuthority}
                 </Review>
               )}
-              {packageDetails.actionType && (
+              {details.actionType && (
                 <Review heading="Action Type">
-                  {ACTION_LABELS[packageDetails.actionType] ??
-                    packageDetails.actionType}
+                  {ACTION_LABELS[details.actionType] ?? details.actionType}
                 </Review>
               )}
-              {packageDetails.packageId && (
+              {details.packageId && (
                 <Review heading={formInfo.transmittalNumber.idLabel}>
-                  {packageDetails.packageId}
+                  {details.packageId}
                 </Review>
               )}
             </section>
             <FileList
               heading="Attachments"
-              uploadList={packageDetails.attachments}
-              zipId={packageDetails.packageId}
+              uploadList={details.attachments}
+              zipId={details.packageId}
             />
-            {packageDetails.additionalInformation && (
+            {details.additionalInformation && (
               <section>
                 <Review
                   className="original-review-component"
                   headingLevel="2"
                   heading="Additional Information"
                 >
-                  {packageDetails.additionalInformation}
+                  {details.additionalInformation}
                 </Review>
               </section>
             )}
-            {packageDetails.changeHistory && (
+            {details.changeHistory && (
               <section>
                 <Review
                   className="original-review-component"
                   headingLevel="2"
                   heading="Change History"
                 >
-                  {renderChangeHistory(packageDetails.changeHistory)}
+                  {renderChangeHistory(details.changeHistory)}
                 </Review>
               </section>
             )}
@@ -172,4 +170,4 @@ const PackageView = () => {
   );
 };
 
-export default PackageView;
+export default DetailView;

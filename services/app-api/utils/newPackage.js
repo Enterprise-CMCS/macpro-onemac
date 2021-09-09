@@ -3,7 +3,7 @@ import dynamoDb from "../libs/dynamodb-lib";
 export default async function newPackage(newData) {
   const data = {
     pk: newData.packageId,
-    sk: "PACKAGE",
+    sk: newData.packageType,
     packageId: newData.packageId,
     packageType: newData.packageType,
     currentStatus: newData.packageStatus,

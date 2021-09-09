@@ -7,18 +7,22 @@ export const main = handler(async (event) => {
     console.log("Warmed up!");
     return null;
   }
+  let detailsk = event.queryStringParameters.cType;
+  if (event.queryStringParameters.index !== "undefined") {
+    detailsk += event.queryStringParameters.index;
+  }
 
   const params = {
     TableName: process.env.oneMacTableName,
     Key: {
       pk: event.pathParameters.id,
-      sk: "PACKAGE",
+      sk: detailsk,
     },
   };
 
   const result = await dynamoDb.get(params);
   if (!result.Item) {
-    throw new Error("Item not found.");
+    return {};
   }
   console.log("Sending back result:", JSON.stringify(result, null, 2));
   return { ...result.Item };

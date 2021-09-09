@@ -9,23 +9,29 @@ class PackageApi {
    * @param {string} id the ID of the package to fetch
    * @return {Object} a change request
    */
-  async getPackage(id) {
-    if (!id) {
+  async getDetail(componentId, componentType, componentIndex) {
+    if (!componentId) {
       console.log("ID  was not specified for get API call");
       throw new Error("ID was not specified for get API call");
     }
 
     try {
-      let packageData = await API.get("changeRequestAPI", `/getPackage/${id}`);
-      if (packageData.uploads) {
+      let packageData = await API.get(
+        "oneMacAPI",
+        `/getDetail/${componentId}?cType=${componentType}&index=${componentIndex}`
+      );
+      if (packageData.attachments) {
         let i;
         // Use a for loop instead of forEach to stay in the context of this async function.
-        for (i = 0; i < packageData.uploads.length; i++) {
-          var fromStorage = await Storage.get(packageData.uploads[i].s3Key, {
-            level: "protected",
-            identityId: packageData.user.userId, // the identityId of that user
-          });
-          packageData.uploads[i].url = fromStorage.split("?", 1)[0];
+        for (i = 0; i < packageData.attachments.length; i++) {
+          var fromStorage = await Storage.get(
+            packageData.attachments[i].s3Key,
+            {
+              level: "protected",
+              identityId: packageData.user.userId, // the identityId of that user
+            }
+          );
+          packageData.attachments[i].url = fromStorage.split("?", 1)[0];
         }
       }
       return packageData;
@@ -33,7 +39,7 @@ class PackageApi {
       handleApiError(
         error,
         "SUBMISSION_FETCH_ERROR",
-        `There was an error fetching ID ${id}.`
+        `There was an error fetching ID ${componentId}.`
       );
     }
   }
@@ -64,7 +70,7 @@ class PackageApi {
    */
   async withdraw(submitterName, submitterEmail, packageId) {
     try {
-      return await API.post("changeRequestAPI", `/withdraw`, {
+      return await API.post("oneMacAPI", `/withdraw`, {
         body: {
           packageId,
           submitterEmail,
