@@ -10,23 +10,16 @@ export const main = handler(async (event) => {
 
   const params = {
     TableName: process.env.oneMacTableName,
-    KeyConditionExpression: "pk = :pk",
-    ExpressionAttributeValues: {
-      ":pk": event.pathParameters.id,
+    Key: {
+      pk: event.pathParameters.id,
+      sk: "PACKAGE",
     },
   };
 
-  const result = await dynamoDb.query(params);
-  if (!result.Items) {
+  const result = await dynamoDb.get(params);
+  if (!result.Item) {
     throw new Error("Item not found.");
   }
   console.log("Sending back result:", JSON.stringify(result, null, 2));
-  const returnData = { ...result.Items };
-  //  returnData.submissionDate =
-  //    result.Item?.changeHistory[result.Item.length - 1]?.submissionDate;
-  //  returnData.packageType = result.Item?.changeHistory.find(
-  //  (element) => element.packageType
-  // );
-
-  return returnData;
+  return { ...result.Item };
 });

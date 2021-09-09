@@ -37,6 +37,21 @@ export default async function updatePackage({
     updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
   }
 
+  // up the number in the component count for this component
+  if (updateData.componentType) {
+    updatePackageParams.ExpressionAttributeNames = {
+      "#componentTypeName": updateData.componentType,
+    };
+    updatePackageParams.ExpressionAttributeValues[":thiscomponent"] = [
+      {
+        componentType: updateData.componentType,
+        componentTimestamp: updateData.submissionTimestamp,
+      },
+    ];
+    updatePackageParams.UpdateExpression +=
+      ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";
+  }
+
   try {
     const { Attributes } = await dynamoDb.update(updatePackageParams);
     return Attributes;

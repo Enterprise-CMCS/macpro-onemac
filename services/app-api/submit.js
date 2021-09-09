@@ -132,7 +132,7 @@ export const main = handler(async (event) => {
   }
 
   const submitterName = data.user.firstName + " " + data.user.lastName;
-  const packageData = {
+  const submissionData = {
     packageId: data.transmittalNumber,
     packageType: data.type,
     clockEndTimestamp: data.ninetyDayClockEnd,
@@ -145,11 +145,12 @@ export const main = handler(async (event) => {
     submitterId: data.userId,
   };
 
-  if (data.actiontype) packageData.actionType = data.actionType;
-  if (data.waiverAuthority) packageData.waiverAuthority = data.waiverAuthority;
+  if (data.actiontype) submissionData.actionType = data.actionType;
+  if (data.waiverAuthority)
+    submissionData.waiverAuthority = data.waiverAuthority;
 
   return crFunctions
-    .saveSubmission(packageData)
+    .saveSubmission(submissionData)
     .then(() => {
       console.log("Successfully submitted the following:", data);
       return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;

@@ -4,8 +4,6 @@ export default async function newPackage(newData) {
   const data = {
     pk: newData.packageId,
     sk: "PACKAGE",
-    GSI1pk: "OneMAC",
-    GSI1sk: newData.packageId,
     packageId: newData.packageId,
     packageType: newData.packageType,
     currentStatus: newData.packageStatus,
@@ -17,6 +15,11 @@ export default async function newPackage(newData) {
     currentClockEnd: newData.clockEndTimestamp,
     changeHistory: [newData],
   };
+
+  if (data.packageType === "spa" || data.packageType === "chipspa") {
+    data.GSI1pk = "OneMAC";
+    data.GSI1sk = newData.packageId;
+  }
 
   const params = {
     TableName: process.env.oneMacTableName,
