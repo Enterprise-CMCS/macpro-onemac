@@ -52,6 +52,14 @@ export default async function updatePackage({
       ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";
   }
 
+  // add the attachments to the list of attachments for the package
+  if (updateData.attachments) {
+    updatePackageParams.ExpressionAttributeValues[":newAttachments"] =
+      updateData.attachments;
+    updatePackageParams.UpdateExpression +=
+      ", attachments = list_append(if_not_exists(attachments,:emptyList), :newAttachments)";
+  }
+
   try {
     const { Attributes } = await dynamoDb.update(updatePackageParams);
     return Attributes;

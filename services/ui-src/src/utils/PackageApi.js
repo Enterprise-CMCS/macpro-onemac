@@ -1,4 +1,4 @@
-import { API } from "aws-amplify";
+import { API, Storage } from "aws-amplify";
 import handleApiError from "../libs/apiErrorHandler";
 /**
  * Singleton class to perform operations with the change request backend.
@@ -28,7 +28,7 @@ class PackageApi {
             packageData.attachments[i].s3Key,
             {
               level: "protected",
-              identityId: packageData.user.userId, // the identityId of that user
+              identityId: packageData.submitterId, // the identityId of that user
             }
           );
           packageData.attachments[i].url = fromStorage.split("?", 1)[0];

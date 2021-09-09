@@ -13,6 +13,7 @@ export default async function newPackage(newData) {
     submitterName: newData.submitterName,
     submitterEmail: newData.submitterEmail,
     currentClockEnd: newData.clockEndTimestamp,
+    attachments: newData.attachments,
     changeHistory: [newData],
   };
 
