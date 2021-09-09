@@ -47,10 +47,7 @@ class PackageApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get(
-        "changeRequestAPI",
-        `/getMyPackages?email=${userEmail}`
-      );
+      return await API.get("oneMacAPI", `/getMyPackages?email=${userEmail}`);
     } catch (error) {
       handleApiError(
         error,
