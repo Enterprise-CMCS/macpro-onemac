@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState } from "react";
 import { Button } from "@cmsgov/design-system";
 import ClosingXLight from "../assets/images/closingXlight30x30.svg";
 
@@ -24,7 +24,6 @@ function HamburgerMenu({ linksToDisplay }) {
         <ul
           role="navigation"
           aria-controls="link-list"
-          aria-expanded="true"
           className="hamburger-nav-links-list"
         >
           {linksToDisplay &&
@@ -47,7 +46,7 @@ function HamburgerMenu({ linksToDisplay }) {
           className="closed-hamburger"
           aria-controls="link-list"
           aria-expanded="true"
-          transparent
+          transparent="true"
         >
           ☰
         </button>
