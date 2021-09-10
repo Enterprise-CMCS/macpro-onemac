@@ -1,7 +1,7 @@
 import { ChangeRequest } from "cmscommonlib";
 
 import dynamoDb from "../libs/dynamodb-lib";
-import updatePackage from "./updatePackage";
+import updateComponent from "./updateComponent";
 
 const getBaseWaiverId = (inId) => {
   console.log(
@@ -91,7 +91,7 @@ export default async function newSubmission(inData) {
       if (!idInfo.isNewPackage) {
         data.currentStatus = `${data.componentType} Submitted`;
         data.parentType = idInfo.parentType;
-        return updatePackage(data);
+        return updateComponent(data);
       } else {
         return "Compnent is a Package.";
       }

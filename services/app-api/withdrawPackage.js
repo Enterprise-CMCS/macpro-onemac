@@ -8,7 +8,7 @@ import {
 import sendEmail from "./libs/email-lib";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
-import updatePackage from "./utils/updatePackage";
+import updateComponent from "./utils/updateComponent";
 
 export const validateUser = async (email, territory) => {
   const user = await getUser(email);
@@ -43,7 +43,7 @@ export const main = handler(async (event) => {
 
   let updatedPackageData;
   try {
-    updatedPackageData = await updatePackage({
+    updatedPackageData = await updateComponent({
       ...body,
       packageStatus: "Withdrawn",
       submissionTimestamp: Date.now(),

@@ -1,10 +1,10 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export default async function updatePackage({
+export default async function updateComponent({
   packageId: updatePk,
   ...updateData
 }) {
-  const updatePackageParams = {
+  const updateComponentParams = {
     TableName: process.env.oneMacTableName,
     Key: {
       pk: updatePk,
@@ -24,47 +24,48 @@ export default async function updatePackage({
 
   // only update clock if new Clock is sent
   if (updateData.clockEndTimestamp) {
-    updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
+    updateComponentParams.ExpressionAttributeValues[":newClockEnd"] =
       updateData.clockEndTimestamp;
-    updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
+    updateComponentParams.UpdateExpression +=
+      ", currentClockEnd = :newClockEnd";
   }
 
   // only update status if new Status is sent
   if (updateData.currentStatus) {
-    updatePackageParams.ExpressionAttributeValues[":newStatus"] =
+    updateComponentParams.ExpressionAttributeValues[":newStatus"] =
       updateData.currentStatus;
-    updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
+    updateComponentParams.UpdateExpression += ",currentStatus = :newStatus";
   }
 
   // up the number in the component count for this component
   if (updateData.componentType) {
-    updatePackageParams.ExpressionAttributeNames = {
+    updateComponentParams.ExpressionAttributeNames = {
       "#componentTypeName": updateData.componentType,
     };
-    updatePackageParams.ExpressionAttributeValues[":thiscomponent"] = [
+    updateComponentParams.ExpressionAttributeValues[":thiscomponent"] = [
       {
         componentType: updateData.componentType,
         componentTimestamp: updateData.submissionTimestamp,
       },
     ];
-    updatePackageParams.UpdateExpression +=
+    updateComponentParams.UpdateExpression +=
       ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";
   }
 
   // add the attachments to the list of attachments for the package
   if (updateData.attachments) {
-    updatePackageParams.ExpressionAttributeValues[":newAttachments"] =
+    updateComponentParams.ExpressionAttributeValues[":newAttachments"] =
       updateData.attachments;
-    updatePackageParams.UpdateExpression +=
+    updateComponentParams.UpdateExpression +=
       ", attachments = list_append(if_not_exists(attachments,:emptyList), :newAttachments)";
   }
 
   try {
-    const { Attributes } = await dynamoDb.update(updatePackageParams);
+    const { Attributes } = await dynamoDb.update(updateComponentParams);
     return Attributes;
   } catch (error) {
     console.log(`Error happened updating DB:  ${error.message}`);
-    console.log("update parameters tried: ", updatePackageParams);
+    console.log("update parameters tried: ", updateComponentParams);
     throw error;
   }
 }
