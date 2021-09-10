@@ -42,6 +42,8 @@ export const getUserFunctions = (doneBy) => {
 };
 
 export const getCurrentStatus = (attr) => {
+  if (!attr || attr.length === 0) return null;
+
   const latestAttribute = attr.reduce((latestItem, currentItem) =>
     currentItem.date > latestItem.date ? currentItem : latestItem
   );
@@ -49,7 +51,7 @@ export const getCurrentStatus = (attr) => {
 };
 
 const isLatestAttributeActive = (attr) => {
-  return getCurrentStatus(attr).status === "active";
+  return getCurrentStatus(attr)?.status === "active";
 };
 
 export const getAuthorizedStateList = (user) => {

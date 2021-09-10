@@ -9,7 +9,9 @@ it("renders a button for each action passed in", () => {
     { label: "Do thing", value: "thing" },
     { label: "Something else", value: "other" },
   ];
-  render(<PopupMenu menuItems={items} selectedRow={{}} />);
+  render(
+    <PopupMenu menuItems={items} selectedRow={{}} variation="UserManagement" />
+  );
   userEvent.click(screen.getByTestId(POPUP_TRIGGER_TEST_ID));
 
   const listItems = screen.getAllByRole("menuitem");
@@ -32,7 +34,9 @@ it("asks for confirmation when item is clicked", () => {
       formatConfirmationMessage: () => "don't you dare",
     },
   ];
-  render(<PopupMenu menuItems={items} selectedRow={{}} />);
+  render(
+    <PopupMenu menuItems={items} selectedRow={{}} variation="UserManagement" />
+  );
   userEvent.click(screen.getByTestId(POPUP_TRIGGER_TEST_ID));
   userEvent.click(screen.getByText(items[1].label));
 

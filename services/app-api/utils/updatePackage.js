@@ -1,7 +1,9 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export default async function updatePackage(updateData) {
-  const updatePk = updateData.packageId;
+export default async function updatePackage({
+  packageId: updatePk,
+  ...updateData
+}) {
   const updateSk = "PACKAGE";
   /*  var getPackageParams = {
     TableName: process.env.oneMacTableName,
@@ -32,6 +34,7 @@ export default async function updatePackage(updateData) {
       ":newChange": [updateData],
       ":emptyList": [],
     },
+    ReturnValues: "ALL_NEW",
   };
 
   // only update clock if new Clock is sent
@@ -48,11 +51,12 @@ export default async function updatePackage(updateData) {
     updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
   }
 
-  dynamoDb.update(updatePackageParams).catch((error) => {
+  try {
+    const { Attributes } = await dynamoDb.update(updatePackageParams);
+    return Attributes;
+  } catch (error) {
     console.log(`Error happened updating DB:  ${error.message}`);
     console.log("update parameters tried: ", updatePackageParams);
     throw error;
-  });
-
-  return "Success - updatePackage";
+  }
 }
