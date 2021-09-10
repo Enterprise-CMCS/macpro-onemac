@@ -10,6 +10,7 @@ import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
+import HamburgerMenu from "../components/HamburgerMenu.js";
 
 /**
  * Get the sign in URL used with OKTA.
@@ -177,20 +178,14 @@ function Header(props) {
         return (
           <div className="nav-bar">
             <div className="header-wrapper">
+              <HamburgerMenu linksToDisplay={linksToDisplay} />
               <div className="nav-left">
-                <nav className="nav-left-burger">
-                  <Button
-                    type="button"
-                    id="hamburger-menu"
-                    className="open-hamburger"
-                    aria-controls="link-list"
-                    aria-expanded="true"
-                  >
-                    <p aria-label="Hamburger Menu">☰</p>
-                  </Button>
-                </nav>
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
-                <div className="nav-left-links">{linksToDisplay}</div>
+                <div className="nav-left-links">
+                  {linksToDisplay.map((link, index) => {
+                    return <div key={index}>{link}</div>;
+                  })}
+                </div>
               </div>
               {renderAccountButtons(isLoggedInAsDeveloper)}
             </div>

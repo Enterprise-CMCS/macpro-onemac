@@ -1,46 +1,61 @@
-// import React, { useState, useEffect, useRef } from "react";
-// import { Link, useHistory, useLocation } from "react-router-dom";
-// import { Auth } from "aws-amplify";
-// import { Button } from "@cmsgov/design-system";
-// import { ROUTES, getUserRoleObj } from "cmscommonlib";
-// import { getCurrentRoute } from "../utils/routeUtils";
-// import { ROUTES as RouteList } from "cmscommonlib";
-// import { useAppContext } from "../libs/contextLib";
-// import ClosingXLight from "../assets/images/closingXlight30x30.svg";
+import React, { useState, useEffect, useRef } from "react";
+import { Button } from "@cmsgov/design-system";
+import ClosingXLight from "../assets/images/closingXlight30x30.svg";
 
-// function getActiveClass(currentRoute, targetRoute) {
-//     return currentRoute === targetRoute.split("/")[1].toUpperCase()
-//       ? "activeLink"
-//       : "ds-u-text-decoration--none";
-//   }
+function HamburgerMenu({ linksToDisplay }) {
+  const [isMenuExpanded, setIsMenuExpanded] = useState(false);
 
-// function HamburgerMenu(
-//     linksToDisplay) {
+  function renderOpenMenu() {
+    return (
+      <div id="hamburgerNav" className="hamburger-content">
+        <Button
+          onClick={() => setIsMenuExpanded(false)}
+          type="button"
+          id="close-hamburger-menu"
+          className="to-close-hamburger"
+          inversed
+        >
+          <img
+            aria-label="Close Hamburger Navigation"
+            alt="Close Hamburger Navigation"
+            src={ClosingXLight}
+          />
+        </Button>
+        <ul
+          role="navigation"
+          aria-controls="link-list"
+          aria-expanded="true"
+          className="hamburger-nav-links-list"
+        >
+          {linksToDisplay &&
+            linksToDisplay.map((link, index) => {
+              return <li key={index}>{link}</li>;
+            })}
+        </ul>
+      </div>
+    );
+  }
 
-// return (
-// <div id="hamburgerNav" className="hamburger-content">
-//               <Button type="button" id="close-hamburger-menu" className="close-hamburger" aria-controls="link-list" aria-expanded="false">
-//               <p aria-label="Close Hamburger Menu">X</p>
-//               </Button>
-//               <img aria-label="Close Hamburger Navigation" alt="Close Hamburger Navigation" className="closing-x-hamburger" src={ClosingXLight} />
-//               <ul className="no-bullet">
-//                   <li>
+  function renderMenuButton() {
+    return (
+      <nav className="nav-left-burger">
+        <button
+          onClick={() => setIsMenuExpanded(true)}
+          type="button"
+          aria-label="Hamburger Menu"
+          id="hamburger-menu"
+          className="closed-hamburger"
+          aria-controls="link-list"
+          aria-expanded="true"
+          transparent
+        >
+          ☰
+        </button>
+      </nav>
+    );
+  }
 
-//                   </li>
+  return <>{isMenuExpanded ? renderOpenMenu() : renderMenuButton()}</>;
+}
 
-//                         <li>
-
-//                         </li>
-//                       )}
-//                       </li>
-//                       )}
-//                     </>
-//                   )}
-//                   <li>
-//                     </li>
-//               </ul>
-//               </div>
-//          );
-// }
-
-// export default HamburgerMenu;
+export default HamburgerMenu;
