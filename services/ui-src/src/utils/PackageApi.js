@@ -9,16 +9,19 @@ class PackageApi {
    * @param {string} id the ID of the package to fetch
    * @return {Object} a change request
    */
-  async getDetail(componentId, componentType, componentIndex) {
+  async getDetail(componentId, componentType, componentTimestamp) {
     if (!componentId) {
       console.log("ID  was not specified for get API call");
       throw new Error("ID was not specified for get API call");
     }
 
     try {
+      console.log(
+        `/getDetail/${componentId}?cType=${componentType}#${componentTimestamp}`
+      );
       let packageData = await API.get(
         "oneMacAPI",
-        `/getDetail/${componentId}?cType=${componentType}&index=${componentIndex}`
+        `/getDetail/${componentId}?cType=${componentType}&cNum=${componentTimestamp}`
       );
       if (packageData.attachments) {
         let i;

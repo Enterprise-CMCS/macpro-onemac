@@ -150,7 +150,9 @@ export default function DynamicRoutes() {
           </Route>
           <Route
             exact
-            path={ROUTES.PACKAGE + "/:componentType/:packageId/:componentIndex"}
+            path={
+              ROUTES.PACKAGE + "/:componentType/:componentTimestamp/:packageId"
+            }
           >
             <DetailView />
           </Route>

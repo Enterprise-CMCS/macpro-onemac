@@ -8,10 +8,13 @@ export const main = handler(async (event) => {
     return null;
   }
   let detailsk = event.queryStringParameters.cType;
-  if (event.queryStringParameters.index !== "undefined") {
-    detailsk += event.queryStringParameters.index;
-  }
 
+  if (
+    detailsk != "spa" &&
+    detailsk != "waivernew" &&
+    event.queryStringParameters.cNum
+  )
+    detailsk += `#${event.queryStringParameters.cNum}`;
   const params = {
     TableName: process.env.oneMacTableName,
     Key: {
@@ -19,7 +22,7 @@ export const main = handler(async (event) => {
       sk: detailsk,
     },
   };
-
+  console.log("getDetail parameters: ", params);
   const result = await dynamoDb.get(params);
   if (!result.Item) {
     return {};

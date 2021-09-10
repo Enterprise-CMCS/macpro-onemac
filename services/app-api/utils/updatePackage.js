@@ -4,19 +4,18 @@ export default async function updatePackage({
   packageId: updatePk,
   ...updateData
 }) {
-  const updateSk = "PACKAGE";
   const updatePackageParams = {
     TableName: process.env.oneMacTableName,
     Key: {
       pk: updatePk,
-      sk: updateSk,
+      sk: updateData.parentType,
     },
     ConditionExpression: "pk = :pkVal AND sk = :skVal",
     UpdateExpression:
       "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
     ExpressionAttributeValues: {
       ":pkVal": updatePk,
-      ":skVal": updateSk,
+      ":skVal": updateData.parentType,
       ":newChange": [updateData],
       ":emptyList": [],
     },
@@ -31,9 +30,9 @@ export default async function updatePackage({
   }
 
   // only update status if new Status is sent
-  if (updateData.packageStatus) {
+  if (updateData.currentStatus) {
     updatePackageParams.ExpressionAttributeValues[":newStatus"] =
-      updateData.packageStatus;
+      updateData.currentStatus;
     updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
   }
 

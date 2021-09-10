@@ -15,10 +15,22 @@ const AUTHORITY_LABELS = {
   "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
 };
 
-const ACTION_LABELS = {
-  amendment: "Waiver Amendment",
-  new: "New Waiver",
-  renewal: "Request for Waiver Renewal",
+const PAGE_DETAILS = {
+  [ChangeRequest.TYPE.WAIVER_NEW]: {
+    pageTitle: "Base Waiver Details",
+    detailsHeader: "Base Waiver",
+    idLabel: "Waiver Number",
+  },
+  [ChangeRequest.TYPE.SPA]: {
+    pageTitle: "Medicaid SPA Details",
+    detailsHeader: "Medicaid SPA Details",
+    idLabel: "Medicaid SPA ID",
+  },
+  [ChangeRequest.TYPE.CHIP_SPA]: {
+    pageTitle: "CHIP SPA Details",
+    detailsHeader: "CHIP SPA Details",
+    idLabel: "CHIP SPA ID",
+  },
 };
 
 /**
@@ -28,9 +40,10 @@ const ACTION_LABELS = {
 const DetailView = () => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-  const { componentType, packageId, componentIndex } = useParams();
+  const { componentType, componentTimestamp, packageId } = useParams();
 
   console.log("component type is: ", componentType);
+  console.log("component timestamp is: ", componentTimestamp);
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
@@ -43,7 +56,7 @@ const DetailView = () => {
 
     if (!packageId) return;
 
-    PackageApi.getDetail(packageId, componentType, componentIndex)
+    PackageApi.getDetail(packageId, componentType, componentTimestamp)
       .then((fetchedDetail) => {
         console.log("got the package: ", fetchedDetail);
         if (mounted) setDetails(fetchedDetail);
@@ -63,9 +76,7 @@ const DetailView = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [packageId, history, componentType, componentIndex]);
-
-  const formInfo = ChangeRequest.CONFIG[componentType];
+  }, [packageId, history, componentType, componentTimestamp]);
 
   const renderChangeHistory = (changeHistory) => {
     return (
@@ -79,7 +90,10 @@ const DetailView = () => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={formInfo.readOnlyPageTitle} enableBackNav />
+      <PageTitleBar
+        heading={PAGE_DETAILS[componentType].pageTitle}
+        enableBackNav
+      />
       {details && (
         <article className="form-container">
           <div className="read-only-submission">
@@ -118,20 +132,15 @@ const DetailView = () => {
               </section>
             )}
             <section>
-              <h2>{formInfo.detailsHeader} Details</h2>
+              <h2>{PAGE_DETAILS[componentType].detailsHeader} Details</h2>
               {details.waiverAuthority && (
                 <Review heading="Waiver Authority">
                   {AUTHORITY_LABELS[details.waiverAuthority] ??
                     details.waiverAuthority}
                 </Review>
               )}
-              {details.actionType && (
-                <Review heading="Action Type">
-                  {ACTION_LABELS[details.actionType] ?? details.actionType}
-                </Review>
-              )}
               {details.packageId && (
-                <Review heading={formInfo.transmittalNumber.idLabel}>
+                <Review heading={PAGE_DETAILS[componentType].idLabel}>
                   {details.packageId}
                 </Review>
               )}

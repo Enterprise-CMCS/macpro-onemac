@@ -31,8 +31,8 @@ import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 const withdrawMenuItem = {
   label: "Withdraw Package",
   value: "Withdrawn",
-  formatConfirmationMessage: ({ packageId }) =>
-    `You are about to withdraw ${packageId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+  formatConfirmationMessage: ({ componentId }) =>
+    `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
 };
 
 const menuItemMap = {
@@ -94,23 +94,28 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link to={`/package/${row.original.packageType}/${value}`}>{value}</Link>
+      <Link
+        to={`/package/${row.original.componentType}/${row.original.submissionTimestamp}/${value}`}
+      >
+        {value}
+      </Link>
     ),
     []
   );
 
   const getType = useCallback(
-    ({ packageType }) =>
+    ({ componentType }) =>
       ({
         [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
         [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
         [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
         [ChangeRequest.TYPE.WAIVER]: "Waiver",
+        [ChangeRequest.TYPE.WAIVER_NEW]: "1915(b) Waiver",
         [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
         [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
         [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-      }[packageType] ?? []),
+      }[componentType] ?? []),
     []
   );
 
@@ -119,11 +124,11 @@ const PackageList = () => {
     []
   );
 
-  const getState = useCallback(({ packageId }) => {
-    if (!packageId) {
+  const getState = useCallback(({ componentId }) => {
+    if (!componentId) {
       return "--";
     } else {
-      return packageId.toString().substring(0, 2);
+      return componentId.toString().substring(0, 2);
     }
   }, []);
 
@@ -159,7 +164,7 @@ const PackageList = () => {
             " "
           ),
           userProfile.email,
-          packageToModify.packageId
+          packageToModify.componentId
         );
         setAlertCode(resp);
         loadPackageList();
@@ -185,7 +190,7 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const raiLink = correspondingRAILink[row.original.packageType];
+      const raiLink = correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
       const notWithdrawn = row.original.currentStatus !== "Withdrawn";
       let menuItems = [];
@@ -193,7 +198,7 @@ const PackageList = () => {
       if (raiLink && notWithdrawn) {
         const menuItemRai = {
           label: "Respond to RAI",
-          value: { link: raiLink, raiId: row.original.packageId },
+          value: { link: raiLink, raiId: row.original.componentId },
           handleSelected: onPopupActionRAI,
         };
         menuItems.push(menuItemRai);
@@ -219,14 +224,14 @@ const PackageList = () => {
     let tableColumns = [
       {
         Header: "ID/Number",
-        accessor: "packageId",
+        accessor: "componentId",
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
         accessor: getType,
-        id: "packageType",
+        id: "componentType",
         Cell: renderType,
       },
       {
