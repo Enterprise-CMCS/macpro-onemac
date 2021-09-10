@@ -30,7 +30,7 @@ class PackageApi {
    */
   async withdraw(submitterName, submitterEmail, packageId) {
     try {
-      return await API.post("changeRequestAPI", `/withdraw`, {
+      return await API.post("oneMacAPI", `/withdraw`, {
         body: {
           packageId,
           submitterEmail,
