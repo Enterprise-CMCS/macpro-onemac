@@ -933,7 +933,7 @@ article.form-container {
   z-index: 3;
   top: 0;
   left: 0;
-  background-color: #0071bc;
+  background-color: $color-primary-darkest;
   color: $color-white;
   overflow-x: hidden;
   transition: width 0.8s;
@@ -955,12 +955,25 @@ article.form-container {
   }
 }
 
+@media (min-width: 930px) {
+  .hamburger-content {
+    display: none;
+  }
+}
+
+.dots-vector {
+  position: fixed;
+  top: 410px;
+  transform: rotate(40deg);
+}
+
 .to-close-hamburger {
   color: $color-white;
   font-weight: bold;
   border: none;
   margin-left: 0px;
-  background-color: #0071bc;
+  background-color: $color-primary-darkest;
+  padding: 20px;
 
   &:active {
     background-color: transparent;
@@ -969,13 +982,18 @@ article.form-container {
 
 .hamburger-nav-links-list {
   list-style-type: none;
+  padding: 10px;
+
+  li {
+    padding: 5px;
+  }
 }
 
 .closed-hamburger {
   background-color: #0071bc;
   color: $color-white;
   border: none;
-  font-size: 32px;
+  padding-left: 0;
 
   &:hover {
     color: rgba($color-base-inverse, 0.8);

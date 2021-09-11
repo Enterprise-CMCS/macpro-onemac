@@ -1,9 +1,39 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Button } from "@cmsgov/design-system";
 import ClosingXLight from "../assets/images/closingXlight30x30.svg";
+import HamburgerMenuIcon from "../assets/images/HamburgerMenuIcon.svg";
+import DotsVector from "../assets/images/dotsvector.svg";
 
 function HamburgerMenu({ linksToDisplay }) {
   const [isMenuExpanded, setIsMenuExpanded] = useState(false);
+
+  useEffect(() => {
+    const listenToWidth = () => {
+      let widthToHideFrom = 933;
+      const winWidth = window.innerWidth;
+      if (winWidth < widthToHideFrom) {
+        isMenuExpanded && setIsMenuExpanded(true);
+      } else {
+        setIsMenuExpanded(false);
+      }
+    };
+    window.addEventListener("resize", listenToWidth);
+    return () => window.removeEventListener("resize", listenToWidth);
+  }, [isMenuExpanded]);
+
+  useEffect(() => {
+    const listenToClick = () => {
+      let ignoreClickElement = renderOpenMenu();
+      console.log(ignoreClickElement);
+      if (ignoreClickElement) {
+        isMenuExpanded && setIsMenuExpanded(false);
+      } else {
+        setIsMenuExpanded(true);
+      }
+    };
+    window.addEventListener("click", listenToClick);
+    return () => window.removeEventListener("click", listenToClick);
+  }, [isMenuExpanded]);
 
   function renderOpenMenu() {
     return (
@@ -31,6 +61,7 @@ function HamburgerMenu({ linksToDisplay }) {
               return <li key={index}>{link}</li>;
             })}
         </ul>
+        <img className="dots-vector" src={DotsVector} />
       </div>
     );
   }
@@ -45,10 +76,14 @@ function HamburgerMenu({ linksToDisplay }) {
           id="hamburger-menu"
           className="closed-hamburger"
           aria-controls="link-list"
-          aria-expanded="true"
+          aria-expanded="false"
           transparent="true"
         >
-          ☰
+          <img
+            aria-label="hamburger-icon-closed-nav"
+            alt="Open Hamburger Navigation"
+            src={HamburgerMenuIcon}
+          />
         </button>
       </nav>
     );
