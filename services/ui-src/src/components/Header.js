@@ -70,8 +70,6 @@ function Header(props) {
   const { isLoggedInAsDeveloper } = useAppContext();
   const { isAuthenticated } = useAppContext();
 
-  // const [hamburgerOpen, hamburgerClosed] = useState(false);
-
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef);
 

@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Button } from "@cmsgov/design-system";
 import ClosingXLight from "../assets/images/closingXlight30x30.svg";
 import HamburgerMenuIcon from "../assets/images/HamburgerMenuIcon.svg";
@@ -21,10 +21,35 @@ function HamburgerMenu({ linksToDisplay }) {
     return () => window.removeEventListener("resize", listenToWidth);
   }, [isMenuExpanded]);
 
+  // const hamburgerWrapperRef = useRef(null);
+  // useOutsideAlerter(hamburgerWrapperRef);
+
+  // function useOutsideAlerter(ref) {
+  //   useEffect(() => {
+  //     /**
+  //      * Alert if clicked on outside of element
+  //      */
+  //     function handleClickOutside(event) {
+  //       if (ref.current && !ref.current.contains(event.target)) {
+  //         setIsMenuExpanded(false);
+  //       } else {
+  //         setIsMenuExpanded(true);
+  //       }
+  //     }
+
+  //     document.addEventListener("mousedown", handleClickOutside);
+  //     return () => {
+  //       document.removeEventListener("mousedown", handleClickOutside);
+  //     };
+  //   }, [ref]);
+  // }
+
+  const hamburgerWrapperRef = useRef(null);
+  console.log(hamburgerWrapperRef);
+
   useEffect(() => {
-    const listenToClick = () => {
-      let ignoreClickElement = renderOpenMenu();
-      console.log(ignoreClickElement);
+    const listenToClick = (event) => {
+      let ignoreClickElement = hamburgerWrapperRef;
       if (ignoreClickElement) {
         isMenuExpanded && setIsMenuExpanded(false);
       } else {
@@ -33,11 +58,15 @@ function HamburgerMenu({ linksToDisplay }) {
     };
     window.addEventListener("click", listenToClick);
     return () => window.removeEventListener("click", listenToClick);
-  }, [isMenuExpanded]);
+  });
 
   function renderOpenMenu() {
     return (
-      <div id="hamburgerNav" className="hamburger-content">
+      <div
+        id="hamburgerNav"
+        className="hamburger-content"
+        ref={hamburgerWrapperRef}
+      >
         <Button
           onClick={() => setIsMenuExpanded(false)}
           type="button"
@@ -61,7 +90,7 @@ function HamburgerMenu({ linksToDisplay }) {
               return <li key={index}>{link}</li>;
             })}
         </ul>
-        <img className="dots-vector" src={DotsVector} />
+        <img className="dots-vector" alt="dots vector" src={DotsVector} />
       </div>
     );
   }
