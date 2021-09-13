@@ -47,14 +47,12 @@ export const decodeId = (inId, inType) => {
     case TYPE.WAIVER_BASE:
     case TYPE.WAIVER_AMENDMENT:
     case TYPE.WAIVER_RENEWAL:
+    case TYPE.WAIVER_EXTENSION:
+    case TYPE.WAIVER_APP_K:
       returnInfo.packageId = getBaseWaiverId(inId);
       returnInfo.parentType = TYPE.WAIVER_BASE;
       returnInfo.isNewPackage =
         returnInfo.packageId.length === returnInfo.componentId.length;
-      break;
-    case TYPE.WAIVER_EXTENSION:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
-      returnInfo.isNewPackage = false;
       break;
   }
   return returnInfo;
