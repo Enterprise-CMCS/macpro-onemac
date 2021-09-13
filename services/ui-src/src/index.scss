@@ -957,8 +957,15 @@ article.form-container {
 
 .dots-vector {
   position: fixed;
-  top: 410px;
+  top: 510px;
   transform: rotate(40deg);
+}
+
+.HamburgerOneMacLogo {
+  background: 40px 30px;
+  position: fixed;
+  top: 26px;
+  left: 130px;
 }
 
 .to-close-hamburger {
@@ -968,6 +975,7 @@ article.form-container {
   margin-left: 0px;
   background-color: $color-primary-darkest;
   padding: 20px;
+  margin-top: 10px;
 
   &:active {
     background-color: transparent;
