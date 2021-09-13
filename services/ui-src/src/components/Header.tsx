@@ -1,6 +1,12 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, {
+  RefObject,
+  useState,
+  useEffect,
+  useRef,
+} from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { AwsCognitoOAuthOpts } from "@aws-amplify/auth/lib-esm/types/Auth";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
@@ -16,7 +22,7 @@ import { ROUTES as RouteList } from "cmscommonlib";
  */
 function getSignInUrl() {
   const authConfig = Auth.configure();
-  const { domain, redirectSignIn, responseType } = authConfig.oauth;
+  const { domain, redirectSignIn, responseType } = authConfig.oauth as AwsCognitoOAuthOpts;
   const clientId = authConfig.userPoolWebClientId;
   const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
   return url;
@@ -47,61 +53,63 @@ function getRegisterUrl() {
 /**
  * Logout the user.
  */
-function logout(isLoggedInAsDeveloper) {
+function logout(isLoggedInAsDeveloper?: boolean) {
   const authConfig = Auth.configure();
   Auth.signOut();
   if (isLoggedInAsDeveloper) {
-    window.location.href = authConfig.oauth.redirectSignOut;
-    document.location.reload(true);
+    window.location.href = (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut;
+    document.location.reload();
   } else {
     window.location.href = getRegisterUrl();
   }
 }
 
 /**
+ * Hook that alerts clicks outside of the passed ref
+ */
+function useOutsideAlerter(
+  ref: RefObject<HTMLElement>,
+  setShowMenu: (status: boolean) => void
+) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    const handleClickOutside = (event: MouseEvent): void => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, setShowMenu]);
+}
+
+/**
  * Component containing header
  * @param {Object} props - component properties
  */
-function Header(props) {
+export function Header() {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
-  const { isLoggedInAsDeveloper } = useAppContext();
-  const { isAuthenticated } = useAppContext();
+  const { isAuthenticated, isLoggedInAsDeveloper } = useAppContext() ?? {};
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
-
-  /**
-   * Hook that alerts clicks outside of the passed ref
-   */
-  function useOutsideAlerter(ref) {
-    useEffect(() => {
-      /**
-       * Alert if clicked on outside of element
-       */
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setShowMenu(false);
-        }
-      }
-
-      // Bind the event listener
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        // Unbind the event listener on clean up
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
+  useOutsideAlerter(wrapperRef, setShowMenu);
 
   /**
    * Renders a navigation bar
    */
   function renderNavBar(
-    isLoggedInAsDeveloper,
-    currentRoute,
-    isAuthenticated,
-    userType
+    isLoggedInAsDeveloper: boolean | undefined,
+    currentRoute: string,
+    isAuthenticated: boolean | undefined,
+    userType: string
   ) {
     const userObj = getUserRoleObj(userType);
     switch (document.location.pathname) {
@@ -186,15 +194,15 @@ function Header(props) {
     }
   }
 
-  function getActiveClass(currentRoute, targetRoute) {
-    return currentRoute === targetRoute.split("/")[1].toUpperCase()
+  const getActiveClass = (currentRoute: string, targetRoute: string) =>
+    currentRoute === targetRoute.split("/")[1].toUpperCase()
       ? "activeLink"
       : "ds-u-text-decoration--none";
-  }
+
   /**
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
-  function renderAccountButtons(isLoggedInAsDeveloper) {
+  function renderAccountButtons(isLoggedInAsDeveloper?: boolean) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (isAuthenticated) {
       return (
@@ -292,7 +300,7 @@ function Header(props) {
     }
   }
 
-  const { userData } = useAppContext().userProfile || {};
+  const { userData } = useAppContext()?.userProfile ?? {};
   let userType = userData?.type ?? "user";
 
   return (
@@ -317,5 +325,3 @@ function Header(props) {
     </>
   );
 }
-
-export default Header;
