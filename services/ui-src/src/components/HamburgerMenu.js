@@ -21,45 +21,21 @@ function HamburgerMenu({ linksToDisplay }) {
     return () => window.removeEventListener("resize", listenToWidth);
   }, [isMenuExpanded]);
 
-  // const hamburgerWrapperRef = useRef(null);
-  // useOutsideAlerter(hamburgerWrapperRef);
-
-  // function useOutsideAlerter(ref) {
-  //   useEffect(() => {
-  //     /**
-  //      * Alert if clicked on outside of element
-  //      */
-  //     function handleClickOutside(event) {
-  //       if (ref.current && !ref.current.contains(event.target)) {
-  //         setIsMenuExpanded(false);
-  //       } else {
-  //         setIsMenuExpanded(true);
-  //       }
-  //     }
-
-  //     document.addEventListener("mousedown", handleClickOutside);
-  //     return () => {
-  //       document.removeEventListener("mousedown", handleClickOutside);
-  //     };
-  //   }, [ref]);
-  // }
-
   const hamburgerWrapperRef = useRef(null);
   console.log(hamburgerWrapperRef);
 
   useEffect(() => {
     const listenToClick = (event) => {
       let ignoreClickElement = hamburgerWrapperRef;
-      if (ignoreClickElement) {
-        isMenuExpanded && setIsMenuExpanded(false);
-      } else {
-        setIsMenuExpanded(true);
+      if (ignoreClickElement.current) {
+        isMenuExpanded &&
+          !ignoreClickElement.current.contains(event.target) &&
+          setIsMenuExpanded(false);
       }
     };
     window.addEventListener("click", listenToClick);
     return () => window.removeEventListener("click", listenToClick);
   });
-
   function renderOpenMenu() {
     return (
       <div
@@ -87,7 +63,11 @@ function HamburgerMenu({ linksToDisplay }) {
         >
           {linksToDisplay &&
             linksToDisplay.map((link, index) => {
-              return <li key={index}>{link}</li>;
+              return (
+                <li key={index} onClick={() => setIsMenuExpanded(false)}>
+                  {link}
+                </li>
+              );
             })}
         </ul>
         <img className="dots-vector" alt="dots vector" src={DotsVector} />
