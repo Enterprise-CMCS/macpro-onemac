@@ -128,7 +128,7 @@ export function Header() {
       <a
         href={ROUTES.FAQ}
         className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-        target="new"
+        target="_blank"
       >
         FAQ
       </a>
