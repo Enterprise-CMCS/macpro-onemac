@@ -16,7 +16,7 @@ const AUTHORITY_LABELS = {
 };
 
 const PAGE_DETAILS = {
-  [ChangeRequest.TYPE.WAIVER_NEW]: {
+  [ChangeRequest.TYPE.WAIVER_BASE]: {
     pageTitle: "Base Waiver Details",
     detailsHeader: "Base Waiver",
     idLabel: "Waiver Number",
