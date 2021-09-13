@@ -22,7 +22,6 @@ function HamburgerMenu({ linksToDisplay }) {
   }, [isMenuExpanded]);
 
   const hamburgerWrapperRef = useRef(null);
-  console.log(hamburgerWrapperRef);
 
   useEffect(() => {
     const listenToClick = (event) => {
