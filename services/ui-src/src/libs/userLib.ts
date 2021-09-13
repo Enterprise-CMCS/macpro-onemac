@@ -53,7 +53,7 @@ export const isPending = (userData: UserRecord): boolean => {
     );
   } else {
     return (
-      [...(userData.attributes as AccessHistoryEvent[])].sort(
+      [...((userData.attributes as AccessHistoryEvent[]) ?? [])].sort(
         sortDescendingOrder
       )[0]?.status === USER_STATUS.PENDING
     );
@@ -77,7 +77,7 @@ export const isActive = (userData: UserRecord): boolean => {
     return stateStatusSet.has(USER_STATUS.ACTIVE);
   } else {
     return (
-      [...(userData.attributes as AccessHistoryEvent[])].sort(
+      [...((userData.attributes as AccessHistoryEvent[]) ?? [])].sort(
         sortDescendingOrder
       )[0]?.status === USER_STATUS.ACTIVE
     );
