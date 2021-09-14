@@ -1,9 +1,4 @@
-import React, {
-  RefObject,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import React, { RefObject, useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { AwsCognitoOAuthOpts } from "@aws-amplify/auth/lib-esm/types/Auth";
@@ -20,9 +15,10 @@ import { ROUTES as RouteList } from "cmscommonlib";
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
  */
-function getSignInUrl() {
+export function getSignInUrl() {
   const authConfig = Auth.configure();
-  const { domain, redirectSignIn, responseType } = authConfig.oauth as AwsCognitoOAuthOpts;
+  const { domain, redirectSignIn, responseType } =
+    authConfig.oauth as AwsCognitoOAuthOpts;
   const clientId = authConfig.userPoolWebClientId;
   const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
   return url;
@@ -57,7 +53,9 @@ function logout(isLoggedInAsDeveloper?: boolean) {
   const authConfig = Auth.configure();
   Auth.signOut();
   if (isLoggedInAsDeveloper) {
-    window.location.href = (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut;
+    window.location.href = (
+      authConfig.oauth as AwsCognitoOAuthOpts
+    ).redirectSignOut;
     document.location.reload();
   } else {
     window.location.href = getRegisterUrl();

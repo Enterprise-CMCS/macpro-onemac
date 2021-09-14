@@ -28,4 +28,5 @@ export const ROUTES = {
   WAIVER_RAI: "/waiverrai",
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
+  ATTACHMENT_LANDING: "/legacy-attachments",
 };
