@@ -926,6 +926,92 @@ article.form-container {
   }
 }
 
+.hamburger-content {
+  height: 100%;
+  width: 280px;
+  position: fixed;
+  z-index: 3;
+  top: 0;
+  left: 0;
+  background-color: $color-primary-darkest;
+  color: $color-white;
+  overflow-x: hidden;
+  transition: width 0.8s;
+
+  li a {
+    padding: 15px;
+    margin: 15px;
+    font-weight: bold;
+    color: $color-white;
+    border: none;
+    margin-right: 50px;
+    &:hover {
+      color: rgba($color-base-inverse, 0.8);
+    }
+
+    &:active {
+      color: rgba($color-base-inverse, 0.6);
+    }
+  }
+}
+
+.dots-vector {
+  position: fixed;
+  top: 510px;
+  transform: rotate(40deg);
+}
+
+.HamburgerOneMacLogo {
+  background: 40px 30px;
+  position: fixed;
+  top: 26px;
+  left: 130px;
+}
+
+.to-close-hamburger {
+  color: $color-white;
+  font-weight: bold;
+  border: none;
+  margin-left: 0px;
+  background-color: $color-primary-darkest;
+  padding: 20px;
+  margin-top: 10px;
+
+  &:active {
+    background-color: transparent;
+  }
+}
+
+.hamburger-nav-links-list {
+  list-style-type: none;
+  padding: 10px;
+
+  li {
+    padding: 5px;
+  }
+}
+
+.closed-hamburger {
+  background-color: #0071bc;
+  color: $color-white;
+  border: none;
+  padding-left: 0;
+
+  &:hover {
+    color: rgba($color-base-inverse, 0.8);
+  }
+}
+
+.nav-left-burger {
+  z-index: 2;
+}
+
+@media (min-width: 934px) {
+  .nav-left-burger {
+    display: none;
+  }
+}
+
 .nav-bar {
   @extend .ds-u-align-items--center;
   @extend .ds-u-flex-wrap--nowrap;
@@ -942,6 +1028,20 @@ article.form-container {
     @extend .ds-u-flex-wrap--wrap;
     align-items: center;
     z-index: 1;
+
+    .nav-left-links {
+      display: flex;
+      justify-content: space-around;
+    }
+
+    @media (max-width: 933px) {
+      #oneMacLogo {
+        display: none;
+      }
+      .nav-left-links {
+        display: none;
+      }
+    }
 
     a {
       color: $color-white;
