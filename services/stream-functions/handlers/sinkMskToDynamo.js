@@ -119,7 +119,7 @@ function myHandler(event) {
 
     // update OneMAC Component
     const updatePk = SEAToolData.componentId;
-    const updateSk = SEAToolData.componentType;
+    const updateSk = SEAToolData.packageType;
     const updatePackageParams = {
       TableName: process.env.oneMacTableName,
       Key: {
