@@ -36,7 +36,10 @@ const withdrawMenuItem = {
 };
 
 const menuItemMap = {
-  "RAI Response Submitted": withdrawMenuItem,
+  "RAIResponse Submitted": withdrawMenuItem,
+  "waiverrenewal Submitted": withdrawMenuItem,
+  "waiveramendment Submitted": withdrawMenuItem,
+  "waiverextension Submitted": withdrawMenuItem,
   Submitted: withdrawMenuItem,
 };
 
@@ -159,7 +162,8 @@ const PackageList = () => {
             " "
           ),
           userProfile.email,
-          packageToModify.componentId
+          packageToModify.componentId,
+          packageToModify.componentType
         );
         setAlertCode(resp);
         loadPackageList();

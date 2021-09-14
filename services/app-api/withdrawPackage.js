@@ -37,7 +37,7 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
-  if (!validateUser(body.submitterEmail, body.packageId.substring(0, 2))) {
+  if (!validateUser(body.submitterEmail, body.componentId.substring(0, 2))) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
@@ -45,7 +45,9 @@ export const main = handler(async (event) => {
   try {
     updatedPackageData = await updateComponent({
       ...body,
-      packageStatus: "Withdrawn",
+      packageId: body.componentId,
+      parentType: body.componentType,
+      currentStatus: "Withdrawn",
       submissionTimestamp: Date.now(),
     });
   } catch (e) {

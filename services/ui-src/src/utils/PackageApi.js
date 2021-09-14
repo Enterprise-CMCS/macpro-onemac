@@ -71,11 +71,12 @@ class PackageApi {
    * @param {string} ID the package ID
    * @return {Promise<string>} the response code
    */
-  async withdraw(submitterName, submitterEmail, packageId) {
+  async withdraw(submitterName, submitterEmail, componentId, componentType) {
     try {
       return await API.post("oneMacAPI", `/withdraw`, {
         body: {
-          packageId,
+          componentId,
+          componentType,
           submitterEmail,
           submitterName,
         },
@@ -84,7 +85,7 @@ class PackageApi {
       handleApiError(
         err,
         "FETCH_ERROR",
-        `There was an error updating the status of package ${packageId}.`
+        `There was an error updating the status of package ${componentId}.`
       );
     }
   }
