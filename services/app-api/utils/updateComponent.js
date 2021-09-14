@@ -4,6 +4,13 @@ export default async function updateComponent({
   packageId: updatePk,
   ...updateData
 }) {
+  const changeData = {
+    componentType: updateData.componentType,
+    submitterName: updateData.submitterName,
+    componentTimestamp: updateData.submissionTimestamp,
+    componentId: updateData.componentId,
+  };
+
   const updateComponentParams = {
     TableName: process.env.oneMacTableName,
     Key: {
@@ -16,7 +23,7 @@ export default async function updateComponent({
     ExpressionAttributeValues: {
       ":pkVal": updatePk,
       ":skVal": updateData.parentType,
-      ":newChange": [updateData],
+      ":newChange": [changeData],
       ":emptyList": [],
     },
     ReturnValues: "ALL_NEW",
@@ -43,10 +50,7 @@ export default async function updateComponent({
       "#componentTypeName": updateData.componentType,
     };
     updateComponentParams.ExpressionAttributeValues[":thiscomponent"] = [
-      {
-        componentType: updateData.componentType,
-        componentTimestamp: updateData.submissionTimestamp,
-      },
+      changeData,
     ];
     updateComponentParams.UpdateExpression +=
       ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";

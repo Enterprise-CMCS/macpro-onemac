@@ -23,12 +23,12 @@ const PAGE_DETAILS = {
   },
   [ChangeRequest.TYPE.SPA]: {
     pageTitle: "Medicaid SPA Details",
-    detailsHeader: "Medicaid SPA Details",
+    detailsHeader: "Medicaid SPA",
     idLabel: "Medicaid SPA ID",
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
     pageTitle: "CHIP SPA Details",
-    detailsHeader: "CHIP SPA Details",
+    detailsHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
   },
 };
@@ -158,6 +158,29 @@ const DetailView = () => {
                   heading="Additional Information"
                 >
                   {details.additionalInformation}
+                </Review>
+              </section>
+            )}
+            {details.waiverrenewal && (
+              <section>
+                <Review
+                  className="original-review-component"
+                  headingLevel="2"
+                  heading="Waiver Renewals"
+                >
+                  <div className="details-card-container">
+                    <ChoiceList
+                      choices={details.waiverrenewal.map((item) => {
+                        return {
+                          title: "Waiver Renewal",
+                          description:
+                            "Date submitted: " +
+                            formatDate(item.componentTimestamp),
+                          linkTo: `/detail/waiverrenewal/${item.componentTimestamp}/${item.componentId}`,
+                        };
+                      })}
+                    />
+                  </div>
                 </Review>
               </section>
             )}
