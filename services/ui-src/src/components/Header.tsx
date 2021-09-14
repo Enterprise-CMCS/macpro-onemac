@@ -17,7 +17,7 @@ import HamburgerMenu from "../components/HamburgerMenu.js";
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
  */
-function getSignInUrl() {
+export function getSignInUrl() {
   const authConfig = Auth.configure();
   const { domain, redirectSignIn, responseType } =
     authConfig.oauth as AwsCognitoOAuthOpts;
@@ -55,10 +55,9 @@ function logout(isLoggedInAsDeveloper?: boolean) {
   const authConfig = Auth.configure();
   Auth.signOut();
   if (isLoggedInAsDeveloper) {
-    window.location.href = (
-      authConfig.oauth as AwsCognitoOAuthOpts
-    ).redirectSignOut;
-    document.location.reload();
+    window.location.replace(
+      (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut
+    );
   } else {
     window.location.href = getRegisterUrl();
   }

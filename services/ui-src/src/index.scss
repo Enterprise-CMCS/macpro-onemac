@@ -2003,3 +2003,23 @@ aside#faq-contact-info-box {
   background-color: transparent;
   color: change-color($color-gray, $alpha: 0.3);
 }
+
+.attachment-redirect {
+  @extend .app-bar;
+  @extend .ds-u-padding-top--3;
+
+  > * {
+    @extend .ds-u-measure--wide;
+  }
+
+  > ol {
+    padding-left: 2ch;
+  }
+
+  aside {
+    @extend .ds-u-margin--2;
+    @extend .ds-u-padding--1;
+    @extend .ds-u-border--1;
+    @extend .ds-u-radius;
+  }
+}

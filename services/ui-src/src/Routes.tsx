@@ -5,6 +5,7 @@ import { ROUTES } from "cmscommonlib";
 
 import Home from "./containers/Home";
 import FAQ from "./containers/FAQ";
+import { AttachmentLanding } from "./containers/AttachmentLanding";
 import NotFound from "./containers/NotFound";
 import UnauthenticatedRoute from "./components/UnauthenticatedRoute";
 import DevLogin from "./containers/DevLogin";
@@ -19,6 +20,9 @@ export const Routes = () => (
     </Route>
     <Route exact path={ROUTES.FAQ}>
       <FAQ />
+    </Route>
+    <Route exact path={ROUTES.ATTACHMENT_LANDING}>
+      <AttachmentLanding />
     </Route>
     <UnauthenticatedRoute exact path={ROUTES.DEVLOGIN}>
       <DevLogin />
