@@ -21,7 +21,6 @@ const getBaseWaiverId = (inId) => {
   if (inId[2] === "-") inId[2] = ".";
 
   const baseWaiver = baseRE.exec(inId);
-  console.log("waiver regex results: ", baseWaiver);
   return baseWaiver[0];
 };
 
