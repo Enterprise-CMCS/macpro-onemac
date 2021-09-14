@@ -11,6 +11,7 @@ export const main = handler(async (event) => {
 
   if (
     detailsk != "spa" &&
+    detailsk != "chipspa" &&
     detailsk != "waivernew" &&
     event.queryStringParameters.cNum
   )

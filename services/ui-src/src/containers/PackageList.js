@@ -46,7 +46,7 @@ const menuItemMap = {
 const correspondingRAILink = {
   [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
-  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+  [ChangeRequest.TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
 };
 
 /**
