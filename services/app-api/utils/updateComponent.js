@@ -64,8 +64,14 @@ export default async function updateComponent({
     const { Attributes } = await dynamoDb.update(updateComponentParams);
     return Attributes;
   } catch (error) {
-    console.log(`Error happened updating DB:  ${error.message}`);
-    console.log("update parameters tried: ", updateComponentParams);
-    throw error;
+    if (error.code === "ConditionalCheckFailedException") {
+      console.log(
+        `component is not (yet) a oneMAC component:  ${error.message}`
+      );
+    } else {
+      console.log(`Error happened updating DB:  ${error.message}`);
+      console.log("update parameters tried: ", updateComponentParams);
+      throw error;
+    }
   }
 }

@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { ChangeRequest, decodeId } = require("cmscommonlib");
+const { ChangeRequest } = require("cmscommonlib");
 
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
@@ -34,7 +34,7 @@ function myHandler(event) {
     stateCode = value.payload.State_Code.toString();
   } else stateCode = SEAToolId.substring(0,2);
 
-  const idInfo = decodeId(SEAToolId, planType);
+  const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
 
   const SEAToolData = {
     'packageStatus': packageStatusID,
@@ -117,9 +117,9 @@ function myHandler(event) {
 
     SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
 
-    // update OneMAC Package Item
-    const updatePk = SEAToolData.packageId;
-    const updateSk = idInfo.parentType;
+    // update OneMAC Component
+    const updatePk = SEAToolData.componentId;
+    const updateSk = SEAToolData.componentType;
     const updatePackageParams = {
       TableName: process.env.oneMacTableName,
       Key: {
