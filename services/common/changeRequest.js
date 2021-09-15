@@ -50,6 +50,7 @@ export const decodeId = (inId, inType) => {
       returnInfo.packageId = getBaseWaiverId(inId);
       returnInfo.isNewPackage = false;
     // falls through
+    case TYPE.WAIVER:
     case TYPE.WAIVER_BASE:
       returnInfo.parentType = TYPE.WAIVER_BASE;
       break;

@@ -111,7 +111,7 @@ function myHandler(event) {
     const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
       [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
       [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
-      [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER,
+      [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
       [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
     };
 

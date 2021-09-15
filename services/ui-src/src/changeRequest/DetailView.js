@@ -31,6 +31,21 @@ const PAGE_DETAILS = {
     detailsHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
   },
+  RAIResponse: {
+    pageTitle: "Response to RAI",
+    detailsHeader: "RAI Response",
+    idLabel: "ID (todo)",
+  },
+  waiverrenewal: {
+    pageTitle: "Waiver Renewal",
+    detailsHeader: "Waiver Renewal",
+    idLabel: "ID (todo)",
+  },
+  waiveramendment: {
+    pageTitle: "Waiver Amendment",
+    detailsHeader: "Waiver Amendment",
+    idLabel: "ID (todo)",
+  },
 };
 
 /**
@@ -88,6 +103,32 @@ const DetailView = () => {
     );
   };
 
+  const renderChildComponents = (childType) => {
+    if (details[childType]?.length > 0)
+      return (
+        <section>
+          <Review
+            className="original-review-component"
+            headingLevel="2"
+            heading={PAGE_DETAILS[childType].detailsHeader}
+          >
+            <div className="details-card-container">
+              <ChoiceList
+                choices={details[childType].map((item) => {
+                  return {
+                    title: PAGE_DETAILS[childType].pageTitle,
+                    description:
+                      "Date submitted: " + formatDate(item.componentTimestamp),
+                    linkTo: `/detail/${childType}/${item.submissionTimestamp}/${item.componentId}`,
+                  };
+                })}
+              />
+            </div>
+          </Review>
+        </section>
+      );
+  };
+
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar
@@ -97,29 +138,7 @@ const DetailView = () => {
       {details && (
         <article className="form-container">
           <div className="read-only-submission">
-            {details.RAIResponse && (
-              <section>
-                <Review
-                  className="original-review-component"
-                  headingLevel="2"
-                  heading="Request for Additional Information"
-                >
-                  <div className="details-card-container">
-                    <ChoiceList
-                      choices={details.RAIResponse.map((item, index) => {
-                        return {
-                          title: "RAI Response",
-                          description:
-                            "Date submitted: " +
-                            formatDate(item.componentTimestamp),
-                          linkTo: `/package/sparai/${details.packageId}/${index}`,
-                        };
-                      })}
-                    />
-                  </div>
-                </Review>
-              </section>
-            )}
+            {renderChildComponents("RAIResponse")}
             {details.submissionTimestamp && (
               <section>
                 <Review
@@ -161,29 +180,8 @@ const DetailView = () => {
                 </Review>
               </section>
             )}
-            {details.waiverrenewal && (
-              <section>
-                <Review
-                  className="original-review-component"
-                  headingLevel="2"
-                  heading="Waiver Renewals"
-                >
-                  <div className="details-card-container">
-                    <ChoiceList
-                      choices={details.waiverrenewal.map((item) => {
-                        return {
-                          title: "Waiver Renewal",
-                          description:
-                            "Date submitted: " +
-                            formatDate(item.componentTimestamp),
-                          linkTo: `/detail/waiverrenewal/${item.componentTimestamp}/${item.componentId}`,
-                        };
-                      })}
-                    />
-                  </div>
-                </Review>
-              </section>
-            )}
+            {renderChildComponents("waiverrenewal")}
+            {renderChildComponents("waiveramendment")}
             {details.changeHistory && (
               <section>
                 <Review
