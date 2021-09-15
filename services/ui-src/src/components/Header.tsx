@@ -1,9 +1,4 @@
-import React, {
-  RefObject,
-  useState,
-  useEffect,
-  useRef,
-} from "react";
+import React, { RefObject, useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { AwsCognitoOAuthOpts } from "@aws-amplify/auth/lib-esm/types/Auth";
@@ -16,13 +11,16 @@ import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
+import HamburgerMenu from "../components/HamburgerMenu.js";
+
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
  */
-function getSignInUrl() {
+export function getSignInUrl() {
   const authConfig = Auth.configure();
-  const { domain, redirectSignIn, responseType } = authConfig.oauth as AwsCognitoOAuthOpts;
+  const { domain, redirectSignIn, responseType } =
+    authConfig.oauth as AwsCognitoOAuthOpts;
   const clientId = authConfig.userPoolWebClientId;
   const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
   return url;
@@ -57,8 +55,9 @@ function logout(isLoggedInAsDeveloper?: boolean) {
   const authConfig = Auth.configure();
   Auth.signOut();
   if (isLoggedInAsDeveloper) {
-    window.location.href = (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut;
-    document.location.reload();
+    window.location.replace(
+      (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut
+    );
   } else {
     window.location.href = getRegisterUrl();
   }
@@ -105,6 +104,7 @@ export function Header() {
   /**
    * Renders a navigation bar
    */
+
   function renderNavBar(
     isLoggedInAsDeveloper: boolean | undefined,
     currentRoute: string,
@@ -112,13 +112,80 @@ export function Header() {
     userType: string
   ) {
     const userObj = getUserRoleObj(userType);
+
+    const homeLink = (
+      <Link
+        to={ROUTES.HOME}
+        className={getActiveClass(currentRoute, RouteList.HOME)}
+      >
+        Home
+      </Link>
+    );
+
+    // Target new ensures FAQ opens in new window.
+    const faq = (
+      <a
+        href={ROUTES.FAQ}
+        className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        FAQ
+      </a>
+    );
+
+    const dashboardLink = (
+      <Link
+        id="dashboardLink"
+        to={ROUTES.DASHBOARD}
+        className={getActiveClass(currentRoute, RouteList.DASHBOARD)}
+      >
+        Dashboard
+      </Link>
+    );
+
+    const userManagementLink = (
+      <Link
+        id="userManagementLink"
+        to={ROUTES.USER_MANAGEMENT}
+        className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}
+      >
+        User Management
+      </Link>
+    );
+
+    const packageListLink = (
+      <Link
+        id="packageListLink"
+        to={ROUTES.PACKAGE_LIST}
+        className={getActiveClass(currentRoute, RouteList.PACKAGE_LIST)}
+      >
+        Packages
+      </Link>
+    );
+
+    let linksToDisplay = [homeLink];
+    if (isAuthenticated) {
+      if (userObj.canAccessDashboard) {
+        linksToDisplay.push(dashboardLink);
+      }
+      if (isLoggedInAsDeveloper) {
+        linksToDisplay.push(packageListLink);
+      }
+      if (userObj.canAccessUserManagement) {
+        linksToDisplay.push(userManagementLink);
+      }
+    }
+    // This is to ensure FAQ shows up last in the link order.
+    linksToDisplay.push(faq);
+
     switch (document.location.pathname) {
       case ROUTES.FAQ:
       case ROUTES.FAQ + "/":
         return (
           <div className="nav-bar">
             <div className="header-wrapper">
-              <div className="nav-left">
+              <div className="nav-left-faq">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
               </div>
             </div>
@@ -128,63 +195,13 @@ export function Header() {
         return (
           <div className="nav-bar">
             <div className="header-wrapper">
+              <HamburgerMenu linksToDisplay={linksToDisplay} />
               <div className="nav-left">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
                 <div className="nav-left-links">
-                  <Link
-                    to={ROUTES.HOME}
-                    className={getActiveClass(currentRoute, RouteList.HOME)}
-                  >
-                    Home
-                  </Link>
-                  {isAuthenticated && (
-                    <>
-                      {userObj.canAccessDashboard && (
-                        <Link
-                          id="dashboardLink"
-                          to={ROUTES.DASHBOARD}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.DASHBOARD
-                          )}
-                        >
-                          Dashboard
-                        </Link>
-                      )}
-                      {isLoggedInAsDeveloper && (
-                        <Link
-                          id="packageListLink"
-                          to={ROUTES.PACKAGE_LIST}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.PACKAGE_LIST
-                          )}
-                        >
-                          Packages
-                        </Link>
-                      )}
-
-                      {userObj.canAccessUserManagement && (
-                        <Link
-                          id="userManagementLink"
-                          to={ROUTES.USER_MANAGEMENT}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.USER_MANAGEMENT
-                          )}
-                        >
-                          User Management
-                        </Link>
-                      )}
-                    </>
-                  )}
-                  <a
-                    href={ROUTES.FAQ}
-                    className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-                    target="new"
-                  >
-                    FAQ
-                  </a>
+                  {linksToDisplay.map((link, index) => {
+                    return <div key={index}>{link}</div>;
+                  })}
                 </div>
               </div>
               {renderAccountButtons(isLoggedInAsDeveloper)}

@@ -2,12 +2,14 @@ const TYPE_LABELS = {
   spa: "SPA",
   chipspa: "CHIP SPA",
   waiver: "Waiver",
+  waiverappk: "1915(c) Appendix K Amendment",
 };
 
 const ID_LABELS = {
   spa: "SPA Package ID",
   chipspa: "CHIP SPA Package ID",
   waiver: "Waiver Package #",
+  waiverappk: "Waiver #",
 };
 
 const compareSubmissionTimestamps = (a, b) =>

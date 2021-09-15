@@ -29,7 +29,11 @@ class UserDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get("oneMacAPI", `/getMyUserList?email=${userEmail}`, undefined);
+      return await API.get(
+        "oneMacAPI",
+        `/getMyUserList?email=${userEmail}`,
+        undefined
+      );
     } catch (error) {
       return handleApiError(
         error,
@@ -52,7 +56,11 @@ class UserDataApi {
     }
 
     try {
-      return await API.get("oneMacAPI", `/getUser?email=${userEmail}`, undefined);
+      return await API.get(
+        "oneMacAPI",
+        `/getUser?email=${userEmail}`,
+        undefined
+      );
     } catch (error) {
       return handleApiError(
         error,
@@ -134,7 +142,11 @@ class UserDataApi {
       for (const state of states) {
         params.append("state", state);
       }
-      return await API.get("oneMacAPI", `/getStateAdmins?${params.toString()}`, undefined);
+      return await API.get(
+        "oneMacAPI",
+        `/getStateAdmins?${params.toString()}`,
+        undefined
+      );
     } catch (error) {
       return handleApiError(
         error,
