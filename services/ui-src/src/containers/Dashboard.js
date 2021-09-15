@@ -56,7 +56,7 @@ const Dashboard = () => {
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
 
-    trackPage();
+    // trackPage();
 
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
 
