@@ -3,9 +3,7 @@ import { validateUserReadOnly, validateUserSubmitting } from "./validateUser";
 describe("user authorization for read only actions", () => {
   it("returns proper error message when user is null", () => {
     // NB: see example here https://jestjs.io/docs/expect#rejects
-    return expect(() => validateUserReadOnly(null, "ME")).rejects.toThrow(
-      "UR041"
-    );
+    return expect(() => validateUserReadOnly(null, "ME")).toThrow("UR041");
   });
 
   it.each(["statesubmitter", "stateadmin"])(
@@ -18,14 +16,19 @@ describe("user authorization for read only actions", () => {
           { stateCode: "OR", history: [{ date: 123456789, status: "active" }] },
         ],
       };
-      expect(validateUserReadOnly(type, "ME")).toBe(false);
+      expect(validateUserReadOnly(testUser, "ME")).toBe(false);
     }
   );
 
   it.each(["cmsroleapprover", "cmsreviewer", "systemadmin"])(
     "allows read only actions from %s",
     async (type) => {
-      expect(validateUserReadOnly(type, "ME")).toBe(true);
+      const testUser = {
+        type: type,
+        attributes: [{ date: 123456789, status: "active" }],
+      };
+
+      expect(validateUserReadOnly(testUser, "ME")).toBe(true);
     }
   );
 });
@@ -34,7 +37,12 @@ describe("user authorization for submitting actions", () => {
   it.each(["cmsroleapprover", "cmsreviewer", "systemadmin"])(
     "rejects submission actions from %s",
     async (type) => {
-      expect(validateUserSubmitting(type, "ME")).toBe(false);
+      const testUser = {
+        type: type,
+        attributes: [{ date: 123456789, status: "active" }],
+      };
+
+      expect(validateUserSubmitting(testUser, "ME")).toBe(false);
     }
   );
 
@@ -48,7 +56,7 @@ describe("user authorization for submitting actions", () => {
           { stateCode: "OR", history: [{ date: 123456789, status: "active" }] },
         ],
       };
-      expect(validateUserSubmitting(type, "ME")).toBe(false);
+      expect(validateUserSubmitting(testUser, "ME")).toBe(false);
     }
   );
 
