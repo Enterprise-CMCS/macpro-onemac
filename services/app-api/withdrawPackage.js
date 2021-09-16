@@ -1,28 +1,14 @@
 import handler from "./libs/handler-lib";
-import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 import {
   CMSWithdrawalEmail,
   StateWithdrawalEmail,
 } from "./changeRequest/formatWithdrawalEmails";
 import sendEmail from "./libs/email-lib";
-import getUser from "./utils/getUser";
-import { getAuthorizedStateList } from "./user/user-util";
 import updateComponent from "./utils/updateComponent";
-
-export const validateUser = async (email, territory) => {
-  const user = await getUser(email);
-
-  if (!user) throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
-
-  const userRoleObj = getUserRoleObj(user.type);
-  const territoryList = getAuthorizedStateList(user);
-  return (
-    userRoleObj.canAccessForms &&
-    Array.isArray(territoryList) &&
-    territoryList.includes(territory)
-  );
-};
+import validateUserSubmitting from "./utils/validateUser";
+import getUser from "./utils/getUser";
 
 export const main = handler(async (event) => {
   // If this invocation is a prewarm, do nothing and return.
@@ -33,12 +19,12 @@ export const main = handler(async (event) => {
   let body;
   try {
     body = JSON.parse(event.body);
+    const user = await getUser(body.submitterEmail);
+    if (!validateUserSubmitting(user, body.componentId.substring(0, 2))) {
+      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    }
   } catch (e) {
     return RESPONSE_CODE.VALIDATION_ERROR;
-  }
-
-  if (!validateUser(body.submitterEmail, body.componentId.substring(0, 2))) {
-    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
   let updatedPackageData;

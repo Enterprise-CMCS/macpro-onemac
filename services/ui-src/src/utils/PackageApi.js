@@ -1,4 +1,4 @@
-import { API, Storage } from "aws-amplify";
+import { API, Auth, Storage } from "aws-amplify";
 import handleApiError from "../libs/apiErrorHandler";
 /**
  * Singleton class to perform operations with the change request backend.
@@ -16,12 +16,12 @@ class PackageApi {
     }
 
     try {
-      console.log(
-        `/getDetail/${componentId}?cType=${componentType}#${componentTimestamp}`
-      );
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const userEmail = userAuth.signInUserSession.idToken.payload.email;
+
       let packageData = await API.get(
         "oneMacAPI",
-        `/getDetail/${componentId}?cType=${componentType}&cNum=${componentTimestamp}`
+        `/getDetail/${componentId}?cType=${componentType}&cNum=${componentTimestamp}&email=${userEmail}`
       );
       if (packageData.attachments) {
         let i;
@@ -37,6 +37,7 @@ class PackageApi {
           packageData.attachments[i].url = fromStorage.split("?", 1)[0];
         }
       }
+      if (typeof packageData === "string") throw new Error(packageData);
       return packageData;
     } catch (error) {
       handleApiError(
