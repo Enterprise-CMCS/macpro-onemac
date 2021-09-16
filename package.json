@@ -4,13 +4,11 @@
   "description": "",
   "main": "index.js",
   "directories": {
-    "test": "tests"
+    "test": "nightwatch"
   },
   "private": "true",
   "scripts": {
     "test": "node nightwatch.js -c nightwatch/conf/nightwatch.conf.js",
-    "test:cypress": "cd tests/cypress && npm test && cd -",
-    "test:cypress:ci": "cd tests/cypress && npm run test:ci && cd -",
     "chrome": "npm test -- -e chrome",
     "chromeHeadless": "npm test -- -e chromeHeadless",
     "cross-browser": "npm test -- -e chrome,firefox",
@@ -42,14 +40,11 @@
     "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.2.0",
     "chromedriver": ">=90.0.0",
-    "cypress": "^8.4.0",
-    "cypress-cucumber-preprocessor": "^4.2.0",
-    "cypress-xpath": "^1.6.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.24.0",
     "eslint-plugin-react-hooks": "^4.2.0",
-    "geckodriver": "^2.0.4",
+    "geckodriver": "^1.21.1",
     "husky": "^6.0.0",
     "lint-staged": "^11.0.0",
     "lodash": "^4.17.20",
@@ -64,8 +59,5 @@
     "*.{js,jsx,ts,tsx,scss,css,md}": [
       "prettier --write"
     ]
-  },
-  "cypress-cucumber-preprocessor": {
-    "nonGlobalStepDefinitions": true
   }
 }

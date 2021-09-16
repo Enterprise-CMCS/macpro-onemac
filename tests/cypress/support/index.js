@@ -12,11 +12,21 @@
 // You can read more here:
 // https://on.cypress.io/configuration
 // ***********************************************************
+<<<<<<< HEAD
 {
   require("cypress-xpath");
 }
+=======
+
+>>>>>>> b8967ae (fixing branch)
 // Import commands.js using ES2015 syntax:
 import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
+<<<<<<< HEAD
+=======
+{
+  require("cypress-xpath");
+}
+>>>>>>> b8967ae (fixing branch)
