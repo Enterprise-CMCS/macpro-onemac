@@ -1,10 +1,22 @@
 import React from "react";
 import { render, screen } from "@testing-library/react";
-import { Route, Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
 import { AppContext } from "../libs/contextLib";
 import DetailView from "./DetailView";
+import PackageApi from "../utils/PackageApi";
+jest.mock("../utils/PackageApi");
+
+jest.mock("react-router-dom", () => ({
+  useParams: () => {
+    return {
+      componentType: "spa",
+      componentTimestamp: 16746532223,
+      packageId: "MI-11-1111",
+    };
+  },
+  useHistory: jest.fn(),
+}));
 
 const initialAuthState = {
   isAuthenticating: false,
@@ -31,22 +43,22 @@ describe("Detail View Tests", () => {
   let history;
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push("/profile");
+    history.push("/detail/spahhh/2398423924/MI-11-1111");
   });
 
   it("renders", () => {
+    PackageApi.getDetail.mockResolvedValue({});
+
     render(
       <AppContext.Provider
         value={{
           ...initialAuthState,
         }}
       >
-        <Router history={history}>
-          <Route path="/detail/spahhh/2398423924/MI-11-1111">
-            <DetailView />
-          </Route>
-        </Router>
+        <DetailView />
       </AppContext.Provider>
     );
+
+    screen.debug();
   });
 });
