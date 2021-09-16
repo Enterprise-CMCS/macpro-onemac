@@ -9,8 +9,21 @@
   },
   "private": "true",
   "scripts": {
-    "test": "cd tests/cypress && npm test && cd -",
-    "test:ci": "cd tests/cypress && npm test:ci && cd -"
+    "test": "node nightwatch.js -c nightwatch/conf/nightwatch.conf.js",
+    "chrome": "npm test -- -e chrome",
+    "chromeHeadless": "npm test -- -e chromeHeadless",
+    "cross-browser": "npm test -- -e chrome,firefox",
+    "firefox": "npm test -- -e firefox",
+    "unit": "npm test -- -e unit-test --skiptags=smoke,regression,integration",
+    "login": "npm run chrome -- nightwatch/tests/cases/OY2-1494_Test_SPA_Login.js",
+    "regression": "npm run chrome -- --tag regression --skiptags unit,integration,devEnv",
+    "regression-dev": "npm run chromeHeadless -- nightwatch/tests/cases nightwatch/tests/suites",
+    "regression-soon": "npm run chrome -- --tag regression-soon --skiptags unit,integration,devEnv,regression",
+    "regression-master": "npm run chromeHeadless -- --tag regression-soon --skiptags unit,integration,devEnv,regression",
+    "smoke-test": "npm run chrome -- --tag smokeTest --skiptags unit,integration,regression",
+    "update": "npx npm-check-updates -u && npm install",
+    "integration": "npm test -- -e unit-test --tag integration --skiptags unit",
+    "prepare": "husky install"
   },
   "unsafe-perm": true,
   "repository": {
