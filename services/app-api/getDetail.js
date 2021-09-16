@@ -4,12 +4,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import getUser from "./utils/getUser";
 import { validateUserReadOnly } from "./utils/validateUser";
 
-export const main = handler(async (event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
+export const getDetails = async (event) => {
   console.log("user email is: ", event.queryStringParameters.email);
 
   const componentId = event.pathParameters.id;
@@ -41,10 +36,28 @@ export const main = handler(async (event) => {
     },
   };
   console.log("getDetail parameters: ", params);
-  const result = await dynamoDb.get(params);
-  if (!result.Item) {
+  try {
+    const result = await dynamoDb.get(params);
+    if (!result.Item) {
+      return {};
+    }
+    console.log("Sending back result:", JSON.stringify(result, null, 2));
+    return { ...result.Item };
+  } catch (e) {
+    console.log("Error is: ", e);
     return {};
   }
-  console.log("Sending back result:", JSON.stringify(result, null, 2));
-  return { ...result.Item };
+};
+
+export const main = handler(async (event) => {
+  // If this invokation is a prewarm, do nothing and return.
+  if (event.source == "serverless-plugin-warmup") {
+    console.log("Warmed up!");
+    return null;
+  }
+  try {
+    return getDetails(event);
+  } catch (e) {
+    console.log("error: ", e);
+  }
 });
