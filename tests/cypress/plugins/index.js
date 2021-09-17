@@ -1,4 +1,5 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
 module.exports = (on, config) => {
   config.baseUrl = process.env.APPLICATION_ENDPOINT || "http://localhost:3000";
 
@@ -26,6 +27,12 @@ module.exports = (on, config) => {
   // `on` is used to hook into various events Cypress emits
   // `config` is the resolved Cypress config
 >>>>>>> b8967ae (fixing branch)
+=======
+module.exports = (on, config) => {
+  config.baseUrl = process.env.APPLICATION_ENDPOINT || "http://localhost:3000";
+
+  return config;
+>>>>>>> 034bddb (Modifying structure)
 };
 const cucumber = require("cypress-cucumber-preprocessor").default;
 

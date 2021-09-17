@@ -13,20 +13,29 @@
 // https://on.cypress.io/configuration
 // ***********************************************************
 <<<<<<< HEAD
+<<<<<<< HEAD
 {
   require("cypress-xpath");
 }
 =======
 
 >>>>>>> b8967ae (fixing branch)
+=======
+{
+  require("cypress-xpath");
+}
+>>>>>>> 034bddb (Modifying structure)
 // Import commands.js using ES2015 syntax:
 import "./commands";
 
 // Alternatively you can use CommonJS syntax:
 // require('./commands')
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 {
   require("cypress-xpath");
 }
 >>>>>>> b8967ae (fixing branch)
+=======
+>>>>>>> 034bddb (Modifying structure)
