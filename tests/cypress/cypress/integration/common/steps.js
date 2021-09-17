@@ -1,6 +1,4 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import HomePage from "../../../support/pages/HomePage";
-import HomePage from "../../../support/pages/HomePage";
 import MedicaidSPARAIResponsePage from "../../../support/pages/MedicaidSPARAIResponsePage";
 import oneMacDashboardPage from "../../../support/pages/oneMacDashboardPage";
 import oneMacDevLoginPage from "../../../support/pages/oneMacDevLoginPage";
@@ -15,8 +13,6 @@ import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmit
 import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
 import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
 
-const homePage = new HomePage();
-const homePage = new HomePage();
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
 const OneMacDevLoginPage = new oneMacDevLoginPage();
