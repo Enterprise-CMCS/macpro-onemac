@@ -1,5 +1,4 @@
 import { Given, When, Then, And } from "cypress-cucumber-preprocessor/steps";
-import HomePage from "../../../support/pages/HomePage";
 import MedicaidSPARAIResponsePage from "../../../support/pages/MedicaidSPARAIResponsePage";
 import oneMacDashboardPage from "../../../support/pages/oneMacDashboardPage";
 import oneMacDevLoginPage from "../../../support/pages/oneMacDevLoginPage";
@@ -14,7 +13,6 @@ import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmit
 import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
 import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
 
-const homePage = new HomePage();
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
 const OneMacDevLoginPage = new oneMacDevLoginPage();
@@ -32,27 +30,6 @@ const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const SPAID = Utilities.SPAID("MD");
 const validWaiverNumberWith5Numbers =
   Utilities.generateWaiverNumberWith5Characters("MD");
-
-Given("I am on google landing page", () => {
-  homePage.launch();
-});
-
-When("I type in search bar and press on search button", () => {
-  homePage.typeSomethingInSearchBar(
-    "this is to show our example for cypress POM today"
-  );
-  homePage.clickSearchButton();
-});
-
-Then("Results will show", () => {
-  homePage.validateResultsShow();
-});
-
-And("click on back button to navigate back to main page", () => {
-  homePage.navigateBack();
-});
-
-//From here down is for Demo only some modifications needs to be made prior to pushing it.
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
