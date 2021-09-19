@@ -30,13 +30,6 @@ const correspondingRAILink = {
   [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
 };
 
-const trackPage = (page) => {
-  window.gtag('send', 'page_view', {
-      page_location: window.location.href,
-      page_path: window.location.pathname            
-  });
-};
-
 /**
  * Component containing dashboard
  */
@@ -53,6 +46,12 @@ const Dashboard = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData.type);
 
+  const trackPage = (page) => {
+    window.gtag('send', 'page_view', {
+        page_location: window.location.href,
+        page_path: window.location.pathname            
+    });
+  };
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
