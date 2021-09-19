@@ -21,3 +21,7 @@ node_modules/*
 /nightwatch/page_objects/*.txt
 /.nyc_output/*
 tests/cypress/node_modules
+node_modules
+package-lock.json
+tests/cypress/videos
+tests/cypress/package-lock.json
