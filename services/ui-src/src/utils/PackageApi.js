@@ -23,20 +23,16 @@ class PackageApi {
         "oneMacAPI",
         `/getDetail/${componentId}?cType=${componentType}&cNum=${componentTimestamp}&email=${userEmail}`
       );
-      if (packageData.attachments) {
-        let i;
-        // Use a for loop instead of forEach to stay in the context of this async function.
-        for (i = 0; i < packageData.attachments.length; i++) {
-          var fromStorage = await Storage.get(
-            packageData.attachments[i].s3Key,
-            {
-              level: "protected",
-              identityId: packageData.submitterId, // the identityId of that user
-            }
-          );
-          packageData.attachments[i].url = fromStorage.split("?", 1)[0];
-        }
-      }
+      packageData.attachments.map((file) => {
+        return Storage.get(file.s3Key, {
+          level: "protected",
+          identityId: packageData.submitterId,
+        }).then((fromStorage) => {
+          console.log("fromStorage is: ", fromStorage);
+          file.url = fromStorage.split("?", 1)[0];
+          return file;
+        });
+      });
       if (typeof packageData === "string") throw new Error(packageData);
       return packageData;
     } catch (error) {

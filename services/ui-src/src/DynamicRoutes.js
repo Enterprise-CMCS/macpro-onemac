@@ -90,6 +90,9 @@ export default function DynamicRoutes() {
         <Route exact path={ROUTES.DASHBOARD}>
           <Redirect to={ROUTES.SIGNUP} />
         </Route>
+        <Route exact path={ROUTES.PACKAGE_LIST}>
+          <Redirect to={ROUTES.SIGNUP} />
+        </Route>
       </>
     );
   }
