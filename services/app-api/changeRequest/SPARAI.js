@@ -1,6 +1,5 @@
 import { getLinksHtml } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
-import updatePackage from "../utils/updatePackage";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
@@ -106,11 +105,6 @@ class SPARAI {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "RAI Response Submitted";
-    return updatePackage(data);
   }
 }
 

@@ -1,5 +1,4 @@
 import { getLinksHtml } from "./changeRequest-util";
-import updatePackage from "../utils/updatePackage";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -110,11 +109,6 @@ class WaiverRAI {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "RAI Response Submitted";
-    return updatePackage(data);
   }
 }
 

@@ -1,5 +1,4 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
-import newPackage from "../utils/newPackage";
 
 /**
  * Waiver Appendix K Amendment specific functions.
@@ -97,11 +96,6 @@ class WaiverAppK {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "Submitted";
-    return newPackage(data);
   }
 }
 
