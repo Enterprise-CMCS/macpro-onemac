@@ -21,12 +21,7 @@ import LoadingScreen from "../components/LoadingScreen";
 import PackageAPI from "../utils/PackageApi";
 import PopupMenu from "../components/PopupMenu";
 import { useAppContext } from "../libs/contextLib";
-import {
-  pendingMessage,
-  deniedOrRevokedMessage,
-  isPending,
-  isActive,
-} from "../libs/userLib";
+import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const withdrawMenuItem = {
