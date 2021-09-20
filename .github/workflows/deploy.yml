@@ -183,22 +183,22 @@ jobs:
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
-        # name: Run Cypress Tests
-        # run: |
-        #   pushd services
-        #   export APPLICATION_ENDPOINT=`./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$branch_name`
-        #   popd
+        name: Run Cypress Tests
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$branch_name`
+          popd
 
-        #   pushd tests/cypress
-        #   if [ "$CI" == "true" ]; then # If we're in a CI system
-        #     if [ ! -d "node_modules" ]; then # If we don't have any node_modules (CircleCI cache miss scenario), run yarn install --frozen-lockfile.  Otherwise, we're all set, do nothing.
-        #       yarn install --frozen-lockfile
-        #     fi
-        #   else # We're not in a CI system, let's yarn install
-        #     yarn install
-        #   fi
-        #   npm run test:cypress:ci
-        #   popd      
+          pushd tests/cypress
+          if [ "$CI" == "true" ]; then # If we're in a CI system
+            if [ ! -d "node_modules" ]; then # and we don't have a cached node_modules directory
+              npm ci
+            fi
+          else # We're not in a CI system
+            npm install
+          fi
+          npm run test:cypress:ci
+          popd      
       - name: Run Nightwatch suite
         # do not run tests on val and production
         run: |
