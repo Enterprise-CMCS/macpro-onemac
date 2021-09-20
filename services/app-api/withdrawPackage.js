@@ -7,7 +7,7 @@ import {
 } from "./changeRequest/formatWithdrawalEmails";
 import sendEmail from "./libs/email-lib";
 import updateComponent from "./utils/updateComponent";
-import validateUserSubmitting from "./utils/validateUser";
+import { validateUserSubmitting } from "./utils/validateUser";
 import getUser from "./utils/getUser";
 
 export const main = handler(async (event) => {
