@@ -10,7 +10,7 @@
   "scripts": {
     "test": "node nightwatch.js -c nightwatch/conf/nightwatch.conf.js",
     "test:cypress": "cd tests/cypress && npm test && cd -",
-    "test:cypress:ci": "cd tests/cypress && npm run test:ci && cd -",
+    "test:cypress:ci": "cd tests/cypress && npm run test:ci",
     "chrome": "npm test -- -e chrome",
     "chromeHeadless": "npm test -- -e chromeHeadless",
     "cross-browser": "npm test -- -e chrome,firefox",
