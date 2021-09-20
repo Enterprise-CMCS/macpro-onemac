@@ -1,4 +1,9 @@
 import { USER_TYPE, USER_STATUS } from "cmscommonlib";
+import {
+  AccessHistoryEvent,
+  StateAccessAttribute,
+  UserRecord,
+} from "../domain-types";
 
 export const pendingMessage = {
   [USER_TYPE.STATE_SUBMITTER]:
@@ -30,55 +35,65 @@ export const deniedOrRevokedMessage = {
 
 /**
  * Determine the type of userData and sort corresponding arrays per state if needed.
- * @param {Object} userData object of history instance
- * @return {Boolean} a boolean on status pending
+ * @param userData object of history instance
+ * @return isPending
  */
 
-export const isPending = (userData) => {
+export const isPending = (userData: UserRecord): boolean => {
   if (
     userData.type === USER_TYPE.STATE_SUBMITTER ||
     userData.type === USER_TYPE.STATE_ADMIN
   ) {
-    userData.attributes.forEach(getStateStatus);
+    const stateStatusSet = (
+      userData.attributes as StateAccessAttribute[]
+    ).reduce(getStateStatus, new Set());
     return (
       !stateStatusSet.has(USER_STATUS.ACTIVE) &&
       stateStatusSet.has(USER_STATUS.PENDING)
     );
   } else {
-    userData.attributes.sort(sortDescendingOrder);
-    return userData.attributes[0].status === USER_STATUS.PENDING;
+    return (
+      [...((userData.attributes as AccessHistoryEvent[]) ?? [])].sort(
+        sortDescendingOrder
+      )[0]?.status === USER_STATUS.PENDING
+    );
   }
 };
 
 /**
  * is this CMS Role Approver active or does State Submitter / State Admin have any active territories?
- * @param {Object} userData object of history instance
- * @return {Boolean} a boolean on status pending
+ * @param userData object of history instance
+ * @return status
  */
 
-export const isActive = (userData) => {
+export const isActive = (userData: UserRecord): boolean => {
   if (
     userData.type === USER_TYPE.STATE_SUBMITTER ||
     userData.type === USER_TYPE.STATE_ADMIN
   ) {
-    userData.attributes.forEach(getStateStatus);
+    const stateStatusSet = (
+      userData.attributes as StateAccessAttribute[]
+    ).reduce(getStateStatus, new Set());
     return stateStatusSet.has(USER_STATUS.ACTIVE);
   } else {
-    userData.attributes.sort(sortDescendingOrder);
-    return userData.attributes[0].status === USER_STATUS.ACTIVE;
+    return (
+      [...((userData.attributes as AccessHistoryEvent[]) ?? [])].sort(
+        sortDescendingOrder
+      )[0]?.status === USER_STATUS.ACTIVE
+    );
   }
 };
 
 /**
  * Gets user status if user status is PENDING or ACTIVE. RETURNS NULL IF USER STATUS IS DENIED OR REVOKED.
- * @param {Object} userData user data
- * @return {String} the user status. Possible return values are pending, active, or null.
+ * @param userData user data
+ * @return userStatus Possible return values are pending, active, or null.
  */
 
-export const getUserStatus = (userData) => {
-  const hasNoUserData = !userData || Object.keys(userData).length === 0;
-
-  if (hasNoUserData) {
+export const getUserStatus = (
+  userData: UserRecord | undefined
+): USER_STATUS.ACTIVE | USER_STATUS.PENDING | null => {
+  if (!userData || Object.keys(userData).length === 0) {
     return null;
   }
 
@@ -96,23 +111,24 @@ export const getUserStatus = (userData) => {
 
 /**
  * Sort history of userData in descending order.
- * @param {Object} a object of history instance
- * @param {Object} b object of history instance
- * @return {Number} the order of which instance should come 1st based on greater value of effectiveDate
+ * @param a object of history instance
+ * @param b object of history instance
+ * @return diff the order of which instance should come 1st based on greater value of effectiveDate
  */
+const sortDescendingOrder = (
+  a: AccessHistoryEvent,
+  b: AccessHistoryEvent
+): number => b.date - a.date;
 
-const sortDescendingOrder = (a, b) => {
-  return b.date - a.date;
-};
-
-const stateStatusSet = new Set();
 /**
  * get the status of the sorted history array's 1st element and put them in a set.
- * @param {Object} attribute object of history instance
- * @return {Array} the most recent status values for each state
+ * @param attribute object of history instance
  */
-
-const getStateStatus = (attribute) => {
+const getStateStatus = (
+  stateStatusSet: Set<string>,
+  attribute: StateAccessAttribute
+): Set<string> => {
   attribute.history.sort(sortDescendingOrder);
   stateStatusSet.add(attribute.history[0].status);
+  return stateStatusSet;
 };

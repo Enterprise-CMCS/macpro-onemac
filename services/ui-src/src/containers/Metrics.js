@@ -24,7 +24,10 @@ export default function Metrics() {
         try {
           var data = await Auth.currentAuthenticatedUser();
           var metricEmail = config.METRICS_USERS;
-          const results = await ChangeRequestDataApi.listAll();
+          const results =
+            await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+              data.attributes.email
+            );
           console.log("DEBUG:(" + JSON.toString(results));
           setStateTotals(
             JSON.stringify(results.stateTotals).replaceAll('"', " ")

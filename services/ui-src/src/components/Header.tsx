@@ -1,6 +1,7 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { RefObject, useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
+import { AwsCognitoOAuthOpts } from "@aws-amplify/auth/lib-esm/types/Auth";
 import { Button } from "@cmsgov/design-system";
 import { ROUTES, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
@@ -10,13 +11,16 @@ import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
+import HamburgerMenu from "../components/HamburgerMenu.js";
+
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
  */
-function getSignInUrl() {
+export function getSignInUrl() {
   const authConfig = Auth.configure();
-  const { domain, redirectSignIn, responseType } = authConfig.oauth;
+  const { domain, redirectSignIn, responseType } =
+    authConfig.oauth as AwsCognitoOAuthOpts;
   const clientId = authConfig.userPoolWebClientId;
   const url = `https://${domain}/oauth2/authorize?identity_provider=Okta&redirect_uri=${redirectSignIn}&response_type=${responseType}&client_id=${clientId}`;
   return url;
@@ -47,70 +51,128 @@ function getRegisterUrl() {
 /**
  * Logout the user.
  */
-function logout(isLoggedInAsDeveloper) {
+function logout(isLoggedInAsDeveloper?: boolean) {
   const authConfig = Auth.configure();
   Auth.signOut();
   if (isLoggedInAsDeveloper) {
-    window.location.href = authConfig.oauth.redirectSignOut;
-    document.location.reload(true);
+    window.location.replace(
+      (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut
+    );
   } else {
     window.location.href = getRegisterUrl();
   }
 }
 
 /**
+ * Hook that alerts clicks outside of the passed ref
+ */
+function useOutsideAlerter(
+  ref: RefObject<HTMLElement>,
+  setShowMenu: (status: boolean) => void
+) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    const handleClickOutside = (event: MouseEvent): void => {
+      if (ref.current && !ref.current.contains(event.target as Node)) {
+        setShowMenu(false);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, setShowMenu]);
+}
+
+/**
  * Component containing header
  * @param {Object} props - component properties
  */
-function Header(props) {
+export function Header() {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
-  const { isLoggedInAsDeveloper } = useAppContext();
-  const { isAuthenticated } = useAppContext();
+  const { isAuthenticated, isLoggedInAsDeveloper } = useAppContext() ?? {};
 
   const wrapperRef = useRef(null);
-  useOutsideAlerter(wrapperRef);
-
-  /**
-   * Hook that alerts clicks outside of the passed ref
-   */
-  function useOutsideAlerter(ref) {
-    useEffect(() => {
-      /**
-       * Alert if clicked on outside of element
-       */
-      function handleClickOutside(event) {
-        if (ref.current && !ref.current.contains(event.target)) {
-          setShowMenu(false);
-        }
-      }
-
-      // Bind the event listener
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => {
-        // Unbind the event listener on clean up
-        document.removeEventListener("mousedown", handleClickOutside);
-      };
-    }, [ref]);
-  }
+  useOutsideAlerter(wrapperRef, setShowMenu);
 
   /**
    * Renders a navigation bar
    */
+
   function renderNavBar(
-    isLoggedInAsDeveloper,
-    currentRoute,
-    isAuthenticated,
-    userType
+    isLoggedInAsDeveloper: boolean | undefined,
+    currentRoute: string,
+    isAuthenticated: boolean | undefined,
+    userType: string
   ) {
     const userObj = getUserRoleObj(userType);
+
+    const homeLink = (
+      <Link
+        to={ROUTES.HOME}
+        className={getActiveClass(currentRoute, RouteList.HOME)}
+      >
+        Home
+      </Link>
+    );
+
+    // Target new ensures FAQ opens in new window.
+    const faq = (
+      <a
+        href={ROUTES.FAQ}
+        className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
+        target="_blank"
+        rel="noreferrer noopener"
+      >
+        FAQ
+      </a>
+    );
+
+    const dashboardLink = (
+      <Link
+        id="dashboardLink"
+        to={ROUTES.DASHBOARD}
+        className={getActiveClass(currentRoute, RouteList.DASHBOARD)}
+      >
+        Dashboard
+      </Link>
+    );
+
+    const userManagementLink = (
+      <Link
+        id="userManagementLink"
+        to={ROUTES.USER_MANAGEMENT}
+        className={getActiveClass(currentRoute, RouteList.USER_MANAGEMENT)}
+      >
+        User Management
+      </Link>
+    );
+
+    let linksToDisplay = [homeLink];
+    if (isAuthenticated) {
+      if (userObj.canAccessDashboard) {
+        linksToDisplay.push(dashboardLink);
+      }
+      if (userObj.canAccessUserManagement) {
+        linksToDisplay.push(userManagementLink);
+      }
+    }
+    // This is to ensure FAQ shows up last in the link order.
+    linksToDisplay.push(faq);
+
     switch (document.location.pathname) {
       case ROUTES.FAQ:
       case ROUTES.FAQ + "/":
         return (
           <div className="nav-bar">
             <div className="header-wrapper">
-              <div className="nav-left">
+              <div className="nav-left-faq">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
               </div>
             </div>
@@ -120,50 +182,13 @@ function Header(props) {
         return (
           <div className="nav-bar">
             <div className="header-wrapper">
+              <HamburgerMenu linksToDisplay={linksToDisplay} />
               <div className="nav-left">
                 <img id="oneMacLogo" alt="OneMac Logo" src={oneMacLogo} />
                 <div className="nav-left-links">
-                  <Link
-                    to={ROUTES.HOME}
-                    className={getActiveClass(currentRoute, RouteList.HOME)}
-                  >
-                    Home
-                  </Link>
-                  {isAuthenticated && (
-                    <>
-                      {userObj.canAccessDashboard && (
-                        <Link
-                          id="dashboardLink"
-                          to={ROUTES.DASHBOARD}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.DASHBOARD
-                          )}
-                        >
-                          Dashboard
-                        </Link>
-                      )}
-                      {userObj.canAccessUserManagement && (
-                        <Link
-                          id="userManagementLink"
-                          to={ROUTES.USER_MANAGEMENT}
-                          className={getActiveClass(
-                            currentRoute,
-                            RouteList.USER_MANAGEMENT
-                          )}
-                        >
-                          User Management
-                        </Link>
-                      )}
-                    </>
-                  )}
-                  <a
-                    href={ROUTES.FAQ}
-                    className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
-                    target="new"
-                  >
-                    FAQ
-                  </a>
+                  {linksToDisplay.map((link, index) => {
+                    return <div key={index}>{link}</div>;
+                  })}
                 </div>
               </div>
               {renderAccountButtons(isLoggedInAsDeveloper)}
@@ -173,15 +198,15 @@ function Header(props) {
     }
   }
 
-  function getActiveClass(currentRoute, targetRoute) {
-    return currentRoute === targetRoute.split("/")[1].toUpperCase()
+  const getActiveClass = (currentRoute: string, targetRoute: string) =>
+    currentRoute === targetRoute.split("/")[1].toUpperCase()
       ? "activeLink"
       : "ds-u-text-decoration--none";
-  }
+
   /**
    * Renders account related buttons based on whether the user is authenticated or not authenticated
    */
-  function renderAccountButtons(isLoggedInAsDeveloper) {
+  function renderAccountButtons(isLoggedInAsDeveloper?: boolean) {
     let showDevLogin = config.ALLOW_DEV_LOGIN === "true";
     if (isAuthenticated) {
       return (
@@ -279,7 +304,7 @@ function Header(props) {
     }
   }
 
-  const { userData } = useAppContext().userProfile || {};
+  const { userData } = useAppContext()?.userProfile ?? {};
   let userType = userData?.type ?? "user";
 
   return (
@@ -304,5 +329,3 @@ function Header(props) {
     </>
   );
 }
-
-export default Header;

@@ -9,7 +9,7 @@ import "core-js/es/array";
 import "core-js/es/object";
 import "isomorphic-fetch";
 import "./index.scss";
-import App from "./App";
+import { App } from "./App";
 import * as serviceWorker from "./serviceWorker";
 import { BrowserRouter as Router } from "react-router-dom";
 import { Amplify } from "aws-amplify";
@@ -41,12 +41,7 @@ let amplifyConfig = {
   API: {
     endpoints: [
       {
-        name: "changeRequestAPI",
-        endpoint: config.apiGateway.URL,
-        region: config.apiGateway.REGION,
-      },
-      {
-        name: "userDataAPI",
+        name: "oneMacAPI",
         endpoint: config.apiGateway.URL,
         region: config.apiGateway.REGION,
       },
