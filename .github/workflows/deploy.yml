@@ -183,7 +183,7 @@ jobs:
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd
-        name: Run onemac Cypress Tests
+        name: Run onemac Cypress Test
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui CloudFrontEndpointUrl $STAGE_PREFIX$branch_name`
