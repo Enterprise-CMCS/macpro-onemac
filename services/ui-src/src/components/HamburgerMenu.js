@@ -3,7 +3,7 @@ import { Button } from "@cmsgov/design-system";
 import ClosingXLight from "../assets/images/closingXlight30x30.svg";
 import HamburgerMenuIcon from "../assets/images/HamburgerMenuIcon.svg";
 import DotsVector from "../assets/images/dotsvector.svg";
-import oneMacLogo from "../assets/images/SMLogoOneMAC.svg";
+import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 
 function HamburgerMenu({ linksToDisplay }) {
   const [isMenuExpanded, setIsMenuExpanded] = useState(false);
@@ -73,7 +73,7 @@ function HamburgerMenu({ linksToDisplay }) {
         <img className="dots-vector" alt="dots vector" src={DotsVector} />
         <img
           className="HamburgerOneMacLogo"
-          alt="dots vector"
+          alt="oneMacLogo"
           src={oneMacLogo}
         />
       </div>
