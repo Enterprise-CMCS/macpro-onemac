@@ -39,12 +39,12 @@ const Dashboard = () => {
   const {
     userStatus,
     userProfile,
-    userProfile: { userData } = {},
+    userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type);
+  const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
@@ -54,7 +54,7 @@ const Dashboard = () => {
     const missingUserType = !userData?.type;
     const missingOtherUserData =
       userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (missingUserType || missingOtherUserData) {
+    if (cmsRoles && (missingUserType || missingOtherUserData)) {
       history.replace("/signup", location.state);
       return;
     }
@@ -81,7 +81,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData, userProfile]);
+  }, [cmsRoles, history, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -271,7 +271,7 @@ const Dashboard = () => {
     let rightSideContent = "";
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE) {
+    } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
       rightSideContent = csvExportSubmissions;
     }
 
@@ -284,7 +284,7 @@ const Dashboard = () => {
     }
 
     const userStatusNotActive =
-      !userStatus || userStatus !== USER_STATUS.ACTIVE;
+      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
     if (userStatusNotActive) {
       return (
         <EmptyList

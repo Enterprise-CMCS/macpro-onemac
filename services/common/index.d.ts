@@ -14,5 +14,6 @@ export class UserRole {
 }
 
 export const getUserRoleObj: (
-  role: typeof USER_TYPE[keyof typeof USER_TYPE]
+  role: typeof USER_TYPE[keyof typeof USER_TYPE],
+  isEua?: boolean
 ) => UserRole;

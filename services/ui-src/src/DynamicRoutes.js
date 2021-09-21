@@ -32,49 +32,64 @@ const FORM_TYPES = {
 };
 
 export default function DynamicRoutes() {
-  const { isAuthenticated, userProfile: { userData: { type } = {} } = {} } =
-    useAppContext();
+  const {
+    isAuthenticated,
+    userProfile: { cmsRoles, userData: { type } = {} } = {},
+  } = useAppContext();
   const history = useHistory();
 
-  async function checkRoute() {
-    let isValidURLPath = false;
-    const authUser = await Auth.currentAuthenticatedUser();
-    const email = authUser.signInUserSession.idToken.payload.email;
-    const userData = await UserDataApi.userProfile(email);
+  useEffect(() => {
+    (async function () {
+      const authUser = await Auth.currentAuthenticatedUser();
+      const email = authUser.signInUserSession.idToken.payload.email;
+      const { type, validRoutes } = await UserDataApi.userProfile(email);
 
-    if (userData.type !== undefined && userData.validRoutes !== undefined) {
-      const roleRoutes = userData.validRoutes;
+      if (!type || !validRoutes) return;
 
       // Loop check for allowed route base path
-      roleRoutes.forEach(checkBaseURLPath);
+      const isValidURLPath = validRoutes.some((item) =>
+        document.location.pathname.startsWith(item)
+      );
 
-      function checkBaseURLPath(item) {
-        let currentPath = document.location.pathname.substring(0, item.length);
-        if (item === currentPath) {
-          isValidURLPath = true;
-        }
-      }
       if (!isValidURLPath) {
         history.push(ROUTES.HOME);
-        return;
       }
-    }
-  }
+    })();
 
-  useEffect(() => {
     let mounted = true;
 
-    checkRoute();
     // Drop to home if user not logged in
     if (!isAuthenticated && mounted) {
       history.push(ROUTES.HOME);
     }
+
     return function cleanup() {
       mounted = false;
     };
   });
 
+  const readOnlySubmissionPages = Object.entries(FORM_TYPES).map(
+    ([route, type]) => (
+      <Route key={route} exact path={`${route}/:id/:userId`}>
+        <SubmissionView changeRequestType={type} />
+      </Route>
+    )
+  );
+
   if (!type) {
+    // This view is for users without a user record in our database OR a role defined in IDM
+    if (!cmsRoles) {
+      return (
+        <>
+          <Route exact path={ROUTES.DASHBOARD}>
+            <Dashboard />
+          </Route>
+          {readOnlySubmissionPages}
+        </>
+      );
+    }
+
+    // This view is for users who have not YET registered but have a role from IDM
     return (
       <>
         <Route exact path={ROUTES.SIGNUP}>
@@ -93,7 +108,7 @@ export default function DynamicRoutes() {
     );
   }
 
-  const userRoleObj = getUserRoleObj(type);
+  const userRoleObj = getUserRoleObj(type, !cmsRoles);
 
   return (
     <>
@@ -136,12 +151,7 @@ export default function DynamicRoutes() {
           </Route>
         ))}
       {/* read only view */}
-      {userRoleObj.canAccessDashboard &&
-        Object.entries(FORM_TYPES).map(([route, type]) => (
-          <Route key={route} exact path={`${route}/:id/:userId`}>
-            <SubmissionView changeRequestType={type} />
-          </Route>
-        ))}
+      {userRoleObj.canAccessDashboard && readOnlySubmissionPages}
       {userRoleObj.canAccessUserManagement && (
         <Route exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />

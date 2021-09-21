@@ -96,7 +96,8 @@ function useOutsideAlerter(
 export function Header() {
   const history = useHistory();
   const [showMenu, setShowMenu] = useState(false);
-  const { isAuthenticated, isLoggedInAsDeveloper } = useAppContext() ?? {};
+  const { isAuthenticated, isLoggedInAsDeveloper, userProfile } =
+    useAppContext() ?? {};
 
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowMenu);
@@ -111,7 +112,7 @@ export function Header() {
     isAuthenticated: boolean | undefined,
     userType: string
   ) {
-    const userObj = getUserRoleObj(userType);
+    const userObj = getUserRoleObj(userType, !userProfile?.cmsRoles);
 
     const homeLink = (
       <Link

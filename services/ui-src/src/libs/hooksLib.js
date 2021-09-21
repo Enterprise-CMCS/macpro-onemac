@@ -30,8 +30,10 @@ export function useSignupCallback(userType, processAttributes) {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation();
-  const { userProfile: { email, firstName, lastName } = {}, setUserInfo } =
-    useAppContext() ?? {};
+  const {
+    userProfile: { cmsRoles, email, firstName, lastName } = {},
+    setUserInfo,
+  } = useAppContext() ?? {};
 
   const signupUser = useCallback(
     async (payload, additionalProperties) => {
@@ -58,7 +60,7 @@ export function useSignupCallback(userType, processAttributes) {
 
         await setUserInfo();
 
-        const roleObj = getUserRoleObj(userType);
+        const roleObj = getUserRoleObj(userType, !cmsRoles);
         destination = roleObj.canAccessDashboard
           ? ROUTES.DASHBOARD
           : ROUTES.USER_MANAGEMENT;
@@ -90,6 +92,7 @@ export function useSignupCallback(userType, processAttributes) {
       }
     },
     [
+      cmsRoles,
       email,
       firstName,
       history,

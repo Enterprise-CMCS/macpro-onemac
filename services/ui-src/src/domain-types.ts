@@ -9,6 +9,7 @@ export type UserProfile = {
 export type UserRecord = {
   type: string;
   attributes: StateAccessAttribute[] | AccessHistoryEvent[];
+  validRoutes?: string[];
   phoneNumber?: string;
 };
 

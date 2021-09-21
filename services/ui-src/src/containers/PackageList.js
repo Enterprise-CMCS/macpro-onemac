@@ -52,11 +52,12 @@ const correspondingRAILink = {
 const PackageList = () => {
   const [changeRequestList, setChangeRequestList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userProfile: { userData } = {} } = useAppContext();
+  const { userProfile, userProfile: { cmsRoles, userData } = {} } =
+    useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type);
+  const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
 
   const loadPackageList = useCallback(
     async (ctrlr) => {
