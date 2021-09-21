@@ -44,6 +44,7 @@
     "chai": "^4.2.0",
     "chromedriver": ">=90.0.0",
     "cypress-cucumber-preprocessor": "^4.2.0",
+    "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^1.6.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.32.0",
