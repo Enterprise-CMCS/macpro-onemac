@@ -1,7 +1,7 @@
 import { ChangeRequest } from "cmscommonlib";
 
 import dynamoDb from "../libs/dynamodb-lib";
-import updateComponent from "./updateComponent";
+// import updateComponent from "./updateComponent";
 
 export default async function newSubmission(inData) {
   console.log("inData: ", inData);
@@ -50,7 +50,7 @@ export default async function newSubmission(inData) {
       if (!idInfo.isNewPackage) {
         data.currentStatus = `${data.componentType} Submitted`;
         data.parentType = idInfo.parentType;
-        return updateComponent(data);
+        //        return updateComponent(data);
       } else {
         return "Compnent is a Package.";
       }
