@@ -133,8 +133,8 @@ jobs:
       - name: Seed Data
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
-  nightwatch-test:
-    name: Nightwatch Tests
+  cypress-test:
+    name: Cypress Tests
     needs: deploy
     if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/master' }}
     runs-on: ubuntu-latest
