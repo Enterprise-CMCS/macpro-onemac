@@ -1,5 +1,7 @@
 const AWS = require('aws-sdk');
 
+import { ChangeRequest } from "cmscommonlib";
+
 let dbOptions = {};
 if (process.env.IS_OFFLINE) {
   dbOptions = {
@@ -79,6 +81,7 @@ async function updateComponent({
       ", attachments = list_append(if_not_exists(attachments,:emptyList), :newAttachments)";
   }
 
+  console.log("Update params: ", updateComponentParams);
   try {
     const { Attributes } = await ddb.update(updateComponentParams);
     return Attributes;
@@ -145,7 +148,12 @@ function myHandler(event) {
         console.log("that submission came from SEA Tool, don't send back: ", dbAction.dynamodb.NewImage);
       else 
         console.log("New oneMAC Record inserted?? ", JSON.stringify(dbAction.dynamodb.NewImage, null, 2));
-
+      
+        const idInfo = ChangeRequest.decodeId(
+          dbAction.dynamodb.NewImage.componentId,
+          dbAction.dynamodb.NewImage.componentType
+        );
+      dbAction.dynamodb.NewImage.parentType = idInfo.parentType;
       updateComponent(dbAction.dynamodb.NewImage).then( (result) => {
         console.log("Attributes returned are: ", result);
       });
