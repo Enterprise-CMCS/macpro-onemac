@@ -31,7 +31,7 @@ export const main = handler((event) => {
       }
 
       const baseParams = {
-        TableName: process.env.oneMacTableName,
+        TableName: process.env.oneMACTableName,
         IndexName: "GSI1",
         ExclusiveStartKey: null,
         ScanIndexForward: false,

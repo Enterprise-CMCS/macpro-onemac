@@ -39,7 +39,7 @@ export default async function newSubmission(inData) {
   }
 
   const params = {
-    TableName: process.env.oneMacTableName,
+    TableName: process.env.oneMACTableName,
     Item: data,
   };
 

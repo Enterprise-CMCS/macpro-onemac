@@ -92,12 +92,12 @@ Resources:
                   - dynamodb:Scan
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
-                Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+                Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMACTableName}
               - Effect: Allow
                 Action:
                   - dynamodb:Query
                 Resource:
-                  - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+                  - arn:aws:dynamodb:*:*:table/${self:custom.oneMACTableName}/index/*
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:

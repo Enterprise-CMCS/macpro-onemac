@@ -29,7 +29,7 @@ export const getDetails = async (event) => {
     detailsk += `#${event.queryStringParameters.cNum}`;
 
   const params = {
-    TableName: process.env.oneMacTableName,
+    TableName: process.env.oneMACTableName,
     Key: {
       pk: componentId,
       sk: detailsk,

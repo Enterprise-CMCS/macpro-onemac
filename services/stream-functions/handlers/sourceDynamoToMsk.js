@@ -45,7 +45,7 @@ function myHandler(event, context, callback) {
 
   console.log('Received event:', JSON.stringify(event, null, 2));
 
-  const kafka = new Kafka({
+/*  const kafka = new Kafka({
     clientId: 'dynamodb',
     brokers: bootstrapBrokerStringTls.split(','),
     ssl: {
@@ -69,6 +69,7 @@ function myHandler(event, context, callback) {
   };
 
   publish();
+  */
 }
 
 exports.handler = myHandler;

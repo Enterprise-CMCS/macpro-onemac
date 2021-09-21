@@ -29,11 +29,11 @@ custom:
     concurrency: 5
     folderName: node_modules/serverless-bundle/src/_warmup
     cleanFolder: false
-  tableStreamArn: ${cf:app-api-${self:custom.stage}.AmendmentsTableStreamArn}
+  tableStreamArn: ${cf:app-api-${self:custom.stage}.oneMACTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
-  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
-  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
+  oneMACTableName: ${cf:app-api-${self:custom.stage}.oneMACTableName}
+  oneMACTableArn: ${cf:app-api-${self:custom.stage}.oneMACTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
   dataSubnets:
@@ -69,9 +69,9 @@ functions:
     events:
       - stream:
           arn: ${self:custom.tableStreamArn}
-          startingPosition: LATEST
+          startingPosition: TRIM_HORIZON
           maximumRetryAttempts: 2
-          enabled: false
+          enabled: true
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
@@ -85,7 +85,7 @@ functions:
     role: LamdaSinkMskToDynamoRole
     environment:
       spaIdTableName: ${self:custom.spaIdTableName}
-      oneMacTableName: ${self:custom.oneMacTableName}
+      oneMACTableName: ${self:custom.oneMACTableName}
     maximumRetryAttempts: 2
     memorySize: 1024
   configureConnectors:
@@ -448,7 +448,7 @@ resources:
               - Effect: 'Allow'
                 Action:
                 - "dynamodb:*"
-                Resource: ${self:custom.oneMacTableArn}
+                Resource: ${self:custom.oneMACTableArn}
     LambdaWarmupRole:
       Type: 'AWS::IAM::Role'
       Properties:

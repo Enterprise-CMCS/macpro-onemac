@@ -9,7 +9,7 @@ export default async function packageExists(id) {
   //assume the territory is the first two chars
 
   let params = {
-    TableName: process.env.oneMacTableName,
+    TableName: process.env.oneMACTableName,
     KeyConditionExpression: "pk = :pk",
     ExpressionAttributeValues: {
       ":pk": id,

@@ -50,7 +50,7 @@ function myHandler(event) {
 
     // update the SEATool Entry
     const updateSEAToolParams = {
-      TableName: process.env.oneMacTableName,
+      TableName: process.env.oneMACTableName,
       Key: {
         pk: SEAToolId,
         sk: "SEATool",
@@ -121,7 +121,7 @@ function myHandler(event) {
     const updatePk = SEAToolData.componentId;
     const updateSk = SEAToolData.packageType;
     const updatePackageParams = {
-      TableName: process.env.oneMacTableName,
+      TableName: process.env.oneMACTableName,
       Key: {
         pk: updatePk,
         sk: updateSk,

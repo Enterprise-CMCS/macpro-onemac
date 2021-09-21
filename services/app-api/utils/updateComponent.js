@@ -12,7 +12,7 @@ export default async function updateComponent({
   };
 
   const updateComponentParams = {
-    TableName: process.env.oneMacTableName,
+    TableName: process.env.oneMACTableName,
     Key: {
       pk: updatePk,
       sk: updateData.parentType,

@@ -13,7 +13,7 @@ custom:
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   userTableName: cms-spa-form-${self:custom.stage}-user-profiles
-  oneMacTableName: onemac-${self:custom.stage}-one
+  oneMACTableName: onemac-${self:custom.stage}-one
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   userAccessEmailSource: ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
@@ -72,7 +72,7 @@ provider:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
     userTableName: ${self:custom.userTableName}
-    oneMacTableName: ${self:custom.oneMacTableName}
+    oneMACTableName: ${self:custom.oneMACTableName}
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
