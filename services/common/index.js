@@ -126,10 +126,13 @@ export class Role {
   getAccesses() {
     const accesses = [...ALL_USERS_ROUTES];
 
-    if (this.canAccessDashboard) accesses.push(ROUTES.DASHBOARD);
+    if (this.canAccessDashboard)
+      accesses.push(ROUTES.DASHBOARD, ROUTES.PACKAGE_LIST);
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,
+        ROUTES.PACKAGE_LIST,
+        ROUTES.DETAIL,
         ROUTES.NEW_SUBMISSION_SELECTION,
         ROUTES.SPA,
         ROUTES.SPA_RAI,

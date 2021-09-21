@@ -154,10 +154,23 @@ export function Header() {
       </Link>
     );
 
+    const packageListLink = (
+      <Link
+        id="packageListLink"
+        to={ROUTES.PACKAGE_LIST}
+        className={getActiveClass(currentRoute, RouteList.PACKAGE_LIST)}
+      >
+        Packages
+      </Link>
+    );
+
     let linksToDisplay = [homeLink];
     if (isAuthenticated) {
       if (userObj.canAccessDashboard) {
         linksToDisplay.push(dashboardLink);
+      }
+      if (isLoggedInAsDeveloper) {
+        linksToDisplay.push(packageListLink);
       }
       if (userObj.canAccessUserManagement) {
         linksToDisplay.push(userManagementLink);
