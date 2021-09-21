@@ -1,5 +1,5 @@
-const { Kafka } = require('kafkajs');
-const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
+//const { Kafka } = require('kafkajs');
+//const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
 const _ = require('lodash');
 
 const mappings = {
