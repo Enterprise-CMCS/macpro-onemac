@@ -1,6 +1,7 @@
 {
   "name": "macpro-quickstart-serverless",
   "version": "1.0.0",
+  "type": "module",
   "description": "",
   "main": "index.js",
   "directories": {
@@ -9,6 +10,8 @@
   "private": "true",
   "scripts": {
     "test": "node nightwatch.js -c nightwatch/conf/nightwatch.conf.js",
+    "test:cypress": "cd tests/cypress && npm test && cd -",
+    "test:cypress:ci": "cd tests/cypress && npm run test:ci",
     "chrome": "npm test -- -e chrome",
     "chromeHeadless": "npm test -- -e chromeHeadless",
     "cross-browser": "npm test -- -e chrome,firefox",
@@ -40,6 +43,9 @@
     "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.2.0",
     "chromedriver": ">=90.0.0",
+    "cypress-cucumber-preprocessor": "^4.2.0",
+    "cypress-file-upload": "^5.0.8",
+    "cypress-xpath": "^1.6.2",
     "dotenv": "^8.2.0",
     "eslint": "^7.32.0",
     "eslint-plugin-react": "^7.24.0",

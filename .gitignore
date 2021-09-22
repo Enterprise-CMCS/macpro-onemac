@@ -20,3 +20,7 @@ node_modules/*
 /nightwatch/screenshots/*
 /nightwatch/page_objects/*.txt
 /.nyc_output/*
+tests/cypress/node_modules
+node_modules
+tests/cypress/videos
+tests/cypress/screenshots
