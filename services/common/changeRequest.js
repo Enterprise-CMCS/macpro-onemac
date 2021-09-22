@@ -27,7 +27,7 @@ const getBaseWaiverId = (inId) => {
 export const transformSubmission = (inData) => {
   inData.pk = inData.componentId;
   inData.sk = inData.componentType;
-  inData.changeHistory.push(inData);
+  inData.changeHistory = [inData];
 
   inData.packageId = inData.componentId;
   inData.parentType = TYPE.SPA;
