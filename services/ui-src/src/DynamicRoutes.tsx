@@ -69,27 +69,7 @@ export default function DynamicRoutes() {
     };
   });
 
-  const readOnlySubmissionPages = Object.entries(FORM_TYPES).map(
-    ([route, type]) => (
-      <Route key={route} exact path={`${route}/:id/:userId`}>
-        <SubmissionView changeRequestType={type} />
-      </Route>
-    )
-  );
-
-  if (!type) {
-    // This view is for users without a user record in our database OR a role defined in IDM
-    if (!cmsRoles) {
-      return (
-        <>
-          <Route exact path={ROUTES.DASHBOARD}>
-            <Dashboard />
-          </Route>
-          {readOnlySubmissionPages}
-        </>
-      );
-    }
-
+  if (!type && cmsRoles) {
     // This view is for users who have not YET registered but have a role from IDM
     return (
       <>
@@ -155,9 +135,14 @@ export default function DynamicRoutes() {
           </Route>
         ))}
       {/* read only view */}
+      {userRoleObj.canAccessDashboard &&
+        Object.entries(FORM_TYPES).map(([route, type]) => (
+          <Route key={route} exact path={`${route}/:id/:userId`}>
+            <SubmissionView changeRequestType={type} />
+          </Route>
+        ))}
       {userRoleObj.canAccessDashboard && (
         <>
-          {readOnlySubmissionPages}
           <Route exact path={ROUTES.DETAIL + "/:componentType/:packageId"}>
             <DetailView />
           </Route>
