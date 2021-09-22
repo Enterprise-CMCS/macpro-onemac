@@ -46,7 +46,7 @@ export const main = handler((event) => {
             ...baseParams,
             KeyConditionExpression: "GSI1pk = :pk AND begins_with(GSI1sk,:t1)",
             ExpressionAttributeValues: {
-              ":pk": "OneMAC",
+              ":pk": "oneMAC",
               ":t1": territory,
             },
           };
@@ -57,7 +57,7 @@ export const main = handler((event) => {
             ...baseParams,
             KeyConditionExpression: "GSI1pk = :pk",
             ExpressionAttributeValues: {
-              ":pk": "OneMAC",
+              ":pk": "oneMAC",
             },
           },
         ];

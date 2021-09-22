@@ -60,7 +60,7 @@ export const transformSubmission = (inData) => {
   }
 
   if (isNewPackage) {
-    retData.GSI1pk = "OneMAC";
+    retData.GSI1pk = "oneMAC";
     retData.GSI1sk = retData.pk;
   } else {
     retData.sk += `#${inData.submissionTimestamp}`;

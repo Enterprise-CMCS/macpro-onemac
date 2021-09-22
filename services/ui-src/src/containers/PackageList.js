@@ -392,7 +392,7 @@ const PackageList = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar
-        heading="Submission List"
+        heading="Submission Dashboard"
         rightSideContent={getRightSideContent()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
