@@ -86,7 +86,7 @@ const PackageList = () => {
     const missingUserType = !userData?.type;
     const missingOtherUserData =
       userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (missingUserType || missingOtherUserData) {
+    if ((missingUserType || missingOtherUserData) && cmsRoles) {
       history.replace("/signup", location.state);
       return;
     }
@@ -97,7 +97,7 @@ const PackageList = () => {
     return function cleanup() {
       ctrlr.abort();
     };
-  }, [history, loadPackageList, location, userData, userProfile]);
+  }, [cmsRoles, history, loadPackageList, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -344,7 +344,7 @@ const PackageList = () => {
     let rightSideContent = "";
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE) {
+    } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
       rightSideContent = csvExportSubmissions;
     }
 
@@ -356,7 +356,7 @@ const PackageList = () => {
     }
 
     const userStatusNotActive =
-      !userStatus || userStatus !== USER_STATUS.ACTIVE;
+      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
     if (userStatusNotActive) {
       return (
         <EmptyList

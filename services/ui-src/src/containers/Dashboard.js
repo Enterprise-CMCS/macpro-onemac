@@ -70,11 +70,16 @@ const Dashboard = () => {
 
         if (typeof data === "string") throw data;
 
-        if (mounted) setChangeRequestList(data);
-        if (mounted) setIsLoading(false);
+        if (mounted) {
+          setChangeRequestList(data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
+        if (mounted) {
+          setAlertCode(RESPONSE_CODE[error.message]);
+          setIsLoading(false);
+        }
       }
     })();
 
