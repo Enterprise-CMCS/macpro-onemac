@@ -29,7 +29,7 @@ custom:
     concurrency: 5
     folderName: node_modules/serverless-bundle/src/_warmup
     cleanFolder: false
-  tableStreamArn: ${cf:app-api-${self:custom.stage}.AmendmentsTableStreamArn}
+  tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
@@ -71,7 +71,6 @@ functions:
           arn: ${self:custom.tableStreamArn}
           startingPosition: LATEST
           maximumRetryAttempts: 2
-          enabled: false
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}

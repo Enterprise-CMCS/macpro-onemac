@@ -1,4 +1,4 @@
-const { Kafka } = require('kafkajs');
+/*const { Kafka } = require('kafkajs');
 const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
 const _ = require('lodash');
 
@@ -34,17 +34,27 @@ function mapFields(event, callback) {
   });
   return event;
 }
-
+*/
 function myHandler(event, context, callback) {
   if (event.source == "serverless-plugin-warmup") {
     console.log("Warmed up!");
     return null;
   }
+  
   //map fields that don't directly correlate
-  event = mapFields(event, callback);
+  //event = mapFields(event, callback);
 
   console.log('Received event:', JSON.stringify(event, null, 2));
 
+  event.Records.forEach( (dbAction) => {
+    if (dbAction.eventName === "INSERT") {
+      if (dbAction.dynamodb.NewImage.sk === "SEATool")
+        console.log("that submission came from SEA Tool, don't send back: ", dbAction.dynamodb.NewImage);
+      else 
+        console.log("New oneMAC Record inserted?? ", JSON.stringify(dbAction.dynamodb.NewImage, null, 2));
+    }
+  });
+/*
   const kafka = new Kafka({
     clientId: 'dynamodb',
     brokers: bootstrapBrokerStringTls.split(','),
@@ -69,6 +79,7 @@ function myHandler(event, context, callback) {
   };
 
   publish();
+  */
 }
 
 exports.handler = myHandler;
