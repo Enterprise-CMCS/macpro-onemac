@@ -69,6 +69,14 @@ export default function DynamicRoutes() {
     };
   });
 
+  if (!isAuthenticated) {
+    return (
+      <Route path={ROUTES.DASHBOARD}>
+        <Redirect to={ROUTES.HOME} />
+      </Route>
+    );
+  }
+
   if (!type && cmsRoles) {
     // This view is for users who have not YET registered but have a role from IDM
     return (
