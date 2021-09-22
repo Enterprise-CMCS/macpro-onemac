@@ -96,22 +96,24 @@ async function getDataFromDB(user) {
       }
       return tempResults;
     } else {
-      return Promise.all(
-        // query dynamodb for each territory in the territiories array
-        getAuthorizedStateList(user).map(async (territory) => {
-          let tempResults = [];
-          let keepSearching = true;
-          while (keepSearching == true) {
-            [startingKey, keepSearching, tempResults] =
-              await stateSubmitterDynamoDbQuery(
-                startingKey,
-                territory,
-                keepSearching,
-                tempResults
-              );
-          }
-          return tempResults;
-        })
+      return (
+        await Promise.all(
+          // query dynamodb for each territory in the territiories array
+          getAuthorizedStateList(user).map(async (territory) => {
+            let tempResults = [];
+            let keepSearching = true;
+            while (keepSearching == true) {
+              [startingKey, keepSearching, tempResults] =
+                await stateSubmitterDynamoDbQuery(
+                  startingKey,
+                  territory,
+                  keepSearching,
+                  tempResults
+                );
+            }
+            return tempResults;
+          })
+        )
       ).flat();
     }
   } catch (error) {
