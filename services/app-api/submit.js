@@ -145,6 +145,7 @@ export const main = handler(async (event) => {
     submitterName: submitterName,
     submitterEmail: data.user.email,
     submitterId: data.userId,
+    currentStatus: "Submitted",
   };
 
   if (data.actionType) submissionData.submissionType += data.actionType;

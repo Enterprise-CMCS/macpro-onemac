@@ -24,38 +24,48 @@ const getBaseWaiverId = (inId) => {
   return baseWaiver[0];
 };
 
-export const decodeId = (inId, inType) => {
-  const returnInfo = {
-    packageId: inId,
-    parentType: TYPE.SPA,
-    componentId: inId,
-    componentType: inType,
-    isNewPackage: true,
-  };
-  switch (inType) {
+export const transformSubmission = (inData) => {
+  inData.pk = inData.componentId;
+  inData.sk = inData.componentType;
+  inData.changeHistory.push(inData);
+
+  inData.packageId = inData.componentId;
+  inData.parentType = TYPE.SPA;
+
+  let isNewPackage = true;
+  switch (inData.componentType) {
     case TYPE.WAIVER_RAI:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
+      inData.parentType = TYPE.WAIVER_BASE;
     // falls through
     case TYPE.CHIP_SPA_RAI:
-      if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
+      if (inData.componentType === TYPE.CHIP_SPA_RAI)
+        inData.parentType = TYPE.CHIP_SPA;
     // falls through
     case TYPE.SPA_RAI:
-      returnInfo.componentType = "RAIResponse";
-      returnInfo.isNewPackage = false;
+      inData.componentType = "RAIResponse";
+      isNewPackage = false;
       break;
     case TYPE.WAIVER_AMENDMENT:
     case TYPE.WAIVER_RENEWAL:
     case TYPE.WAIVER_EXTENSION:
     case TYPE.WAIVER_APP_K:
-      returnInfo.packageId = getBaseWaiverId(inId);
-      returnInfo.isNewPackage = false;
+      inData.packageId = getBaseWaiverId(inData.componentId);
+      isNewPackage = false;
     // falls through
     case TYPE.WAIVER:
     case TYPE.WAIVER_BASE:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
+      inData.parentType = TYPE.WAIVER_BASE;
       break;
   }
-  return returnInfo;
+
+  if (isNewPackage) {
+    inData.GSI1pk = "OneMAC";
+    inData.GSI1sk = inData.pk;
+  } else {
+    inData.sk += `#${inData.submissionTimestamp}`;
+  }
+
+  return inData;
 };
 
 const commonSubheaderMessage =
