@@ -1,3 +1,5 @@
+import { USER_TYPE } from "cmscommonlib";
+
 export type UserProfile = {
   cmsRoles: string;
   email: string;
@@ -7,7 +9,7 @@ export type UserProfile = {
 };
 
 export type UserRecord = {
-  type: string;
+  type: USER_TYPE;
   attributes: StateAccessAttribute[] | AccessHistoryEvent[];
   validRoutes?: string[];
   phoneNumber?: string;
@@ -28,7 +30,7 @@ export type AppContextValue = {
   isAuthenticated: boolean;
   isLoggedInAsDeveloper: boolean;
   isValidRoute: boolean;
-  userProfile: Partial<UserProfile> | null;
+  userProfile: Partial<UserProfile>;
   userStatus: string | null;
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;

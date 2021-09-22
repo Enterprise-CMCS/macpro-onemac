@@ -5,17 +5,25 @@ import { helpDeskContact } from "./helpDeskContact";
 /**
  * Alert types
  */
-export const ALERT_TYPES = {
-  INFO: null, // Per CMS Design System
-  WARNING: "warn",
-  ERROR: "error",
-  SUCCESS: "success",
-};
+export enum ALERT_TYPES {
+  WARNING = "warn",
+  ERROR = "error",
+  SUCCESS = "success",
+}
 
 /**
  * List of alert messages for the application.
  */
-export const ALERTS_MSG = {
+export const ALERTS_MSG: Record<
+  string,
+  {
+    type: ALERT_TYPES;
+    heading: string;
+    text: string;
+    linkURL?: string;
+    linkText?: string;
+  }
+> = {
   // DOn't show
   NONE: {
     type: ALERT_TYPES.SUCCESS,

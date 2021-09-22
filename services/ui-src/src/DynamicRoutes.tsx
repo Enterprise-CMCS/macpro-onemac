@@ -35,8 +35,8 @@ const FORM_TYPES = {
 export default function DynamicRoutes() {
   const {
     isAuthenticated,
-    userProfile: { cmsRoles, userData: { type } = {} } = {},
-  } = useAppContext();
+    userProfile: { cmsRoles = "", userData: { type = undefined } = {} } = {},
+  } = useAppContext() ?? {};
   const history = useHistory();
 
   useEffect(() => {

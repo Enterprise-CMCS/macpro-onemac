@@ -3,7 +3,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { AwsCognitoOAuthOpts } from "@aws-amplify/auth/lib-esm/types/Auth";
 import { Button } from "@cmsgov/design-system";
-import { ROUTES, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, USER_TYPE, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import config from "../utils/config";
 import { Alert, UsaBanner } from "@cmsgov/design-system";
@@ -110,7 +110,7 @@ export function Header() {
     isLoggedInAsDeveloper: boolean | undefined,
     currentRoute: string,
     isAuthenticated: boolean | undefined,
-    userType: string
+    userType?: USER_TYPE
   ) {
     const userObj = getUserRoleObj(userType, !userProfile?.cmsRoles);
 
@@ -319,7 +319,6 @@ export function Header() {
   }
 
   const { userData } = useAppContext()?.userProfile ?? {};
-  let userType = userData?.type ?? "user";
 
   return (
     <>
@@ -338,7 +337,7 @@ export function Header() {
         isLoggedInAsDeveloper,
         getCurrentRoute(useLocation().pathname),
         isAuthenticated,
-        userType
+        userData?.type
       )}
     </>
   );
