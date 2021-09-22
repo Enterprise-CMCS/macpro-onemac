@@ -36,7 +36,7 @@ export const main = handler((event) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "packageId,packageType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId",
+          "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId",
       };
 
       let paramList = [];

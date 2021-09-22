@@ -18,6 +18,7 @@ import NewSPA from "./changeRequest/NewSPA";
 import NewWaiver from "./changeRequest/NewWaiver";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
+import DetailView from "./changeRequest/DetailView";
 import UserPage from "./containers/UserPage";
 
 const FORM_TYPES = {
@@ -104,6 +105,9 @@ export default function DynamicRoutes() {
         <Route exact path={ROUTES.DASHBOARD}>
           <Redirect to={ROUTES.SIGNUP} />
         </Route>
+        <Route exact path={ROUTES.PACKAGE_LIST}>
+          <Redirect to={ROUTES.SIGNUP} />
+        </Route>
       </>
     );
   }
@@ -151,7 +155,22 @@ export default function DynamicRoutes() {
           </Route>
         ))}
       {/* read only view */}
-      {userRoleObj.canAccessDashboard && readOnlySubmissionPages}
+      {userRoleObj.canAccessDashboard && (
+        <>
+          {readOnlySubmissionPages}
+          <Route exact path={ROUTES.DETAIL + "/:componentType/:packageId"}>
+            <DetailView />
+          </Route>
+          <Route
+            exact
+            path={
+              ROUTES.DETAIL + "/:componentType/:componentTimestamp/:packageId"
+            }
+          >
+            <DetailView />
+          </Route>
+        </>
+      )}
       {userRoleObj.canAccessUserManagement && (
         <Route exact path={ROUTES.USER_MANAGEMENT}>
           <UserManagement />

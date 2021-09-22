@@ -1,5 +1,4 @@
 import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
-import newPackage from "../utils/newPackage";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
@@ -126,11 +125,6 @@ class Waiver {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "Submitted";
-    return newPackage(data);
   }
 }
 

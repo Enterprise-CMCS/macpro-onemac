@@ -1,5 +1,4 @@
 import { getLinksHtml } from "./changeRequest-util";
-import newPackage from "../utils/newPackage";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -105,11 +104,6 @@ class CHIPSPA {
     `;
 
     return stateEmail;
-  }
-
-  saveSubmission(data) {
-    data.packageStatus = "Submitted";
-    return newPackage(data);
   }
 }
 
