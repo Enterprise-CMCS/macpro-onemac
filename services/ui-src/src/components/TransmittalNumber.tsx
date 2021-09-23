@@ -1,19 +1,19 @@
 import React from "react";
-import PropTypes from "prop-types";
 import { Link } from "@material-ui/core";
 
 /**
  * Returns the ID specific form element
- * @param {string} idLabel the nice name to use for the id
- * @param {string} hintText the contents of the hint text under the label
- * @param {string} idFAQLink the link for additional help completing this id
- * @param {string} statusLevel error or warn (ing)
- * @param {string} statusMessage the message to show
- * @param {string} value current input value
- * @param {string} onChange the function name to show
- * @returns the HTML for the Transmittal Number
  */
-const TransmittalNumber = ({
+const TransmittalNumber: React.FC<{
+  idLabel: string;
+  hintText: string;
+  idFAQLink: string;
+  statusLevel: string;
+  statusMessage: string;
+  value: string;
+  onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
+  disabled: boolean;
+}> = ({
   idLabel,
   hintText,
   idFAQLink,
@@ -61,16 +61,6 @@ const TransmittalNumber = ({
       ></input>
     </div>
   );
-};
-
-TransmittalNumber.propTypes = {
-  idLabel: PropTypes.string,
-  hintText: PropTypes.string,
-  idFAQLink: PropTypes.string,
-  statusLevel: PropTypes.string,
-  statusMessage: PropTypes.string,
-  errorMessage: PropTypes.string,
-  value: PropTypes.string,
 };
 
 export default TransmittalNumber;

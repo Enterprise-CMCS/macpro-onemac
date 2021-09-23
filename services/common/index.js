@@ -151,6 +151,13 @@ export class Role {
   }
 }
 
+class DefaultUser extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+  }
+}
+
 class StateSubmitter extends Role {
   constructor() {
     super();
@@ -202,7 +209,7 @@ class Helpdesk extends Role {
   }
 }
 
-export const getUserRoleObj = (role) =>
+export const getUserRoleObj = (role, isEua = false) =>
   new ({
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
@@ -210,7 +217,7 @@ export const getUserRoleObj = (role) =>
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role] || Role)();
+  }[role] || (isEua ? DefaultUser : Role))();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 

@@ -1,17 +1,15 @@
 import React, { useState, useEffect } from "react";
-import PropTypes from "prop-types";
 import { Alert } from "@cmsgov/design-system";
 import { alertCodeAlerts, ALERTS_MSG } from "../libs/alertLib";
 import closingX from "../images/AlertClosingX.svg";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
-/**
- * RAI Form template to allow rendering for different types of RAI's.
- * @param {Object} formInfo - all the change request details specific to this submission
- * @param {String} changeRequestType - the type of change request
- */
-const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
+const AlertBar: React.FC<{
+  alertCode: string;
+  personalizedString?: string;
+  closeCallback?: () => void;
+}> = ({ alertCode, personalizedString = "", closeCallback }) => {
   const [alert, setAlert] = useState(alertCodeAlerts[alertCode]);
 
   useEffect(() => {
@@ -76,11 +74,6 @@ const AlertBar = ({ alertCode, personalizedString = "", closeCallback }) => {
       </Alert>
     </div>
   ) : null;
-};
-
-AlertBar.propTypes = {
-  alertCode: PropTypes.string,
-  personalizedString: PropTypes.string,
 };
 
 export default AlertBar;
