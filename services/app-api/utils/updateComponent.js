@@ -75,7 +75,7 @@ export default async function updateComponent({
     } else {
       console.log(`Error happened updating DB:  ${error.message}`);
       console.log("update parameters tried: ", updateComponentParams);
-      throw error;
+      // throw error;
     }
   }
 }
