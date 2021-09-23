@@ -151,7 +151,7 @@ export class Role {
   }
 }
 
-class EuaUser extends Role {
+class DefaultUser extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
@@ -217,7 +217,7 @@ export const getUserRoleObj = (role, isEua = false) =>
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role] || (isEua ? EuaUser : Role))();
+  }[role] || (isEua ? DefaultUser : Role))();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
