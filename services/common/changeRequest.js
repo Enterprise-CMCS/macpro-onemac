@@ -40,7 +40,6 @@ export const decodeId = (inId, inType) => {
       if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
     // falls through
     case TYPE.SPA_RAI:
-      returnInfo.componentType = "RAIResponse";
       returnInfo.isNewPackage = false;
       break;
     case TYPE.WAIVER_AMENDMENT:
@@ -57,6 +56,8 @@ export const decodeId = (inId, inType) => {
   }
   return returnInfo;
 };
+
+export const formatDynamoDbPut = () => {};
 
 const commonSubheaderMessage =
   "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.<b> If you leave this page, you will lose your progress on this form.</b>";

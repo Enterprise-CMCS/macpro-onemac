@@ -6,8 +6,8 @@ import updateComponent from "./updateComponent";
 export default async function newSubmission(inData) {
   console.log("inData: ", inData);
   const idInfo = ChangeRequest.decodeId(
-    inData.transmittalNumber,
-    inData.submissionType
+    inData.componentId,
+    inData.componentType
   );
 
   console.log("idInfo is: ", idInfo);
@@ -15,16 +15,7 @@ export default async function newSubmission(inData) {
     pk: idInfo.componentId,
     sk: idInfo.componentType,
     packageId: idInfo.packageId,
-    componentId: idInfo.componentId,
-    componentType: idInfo.componentType,
-    currentStatus: "Submitted",
-    submissionTimestamp: inData.submissionTimestamp,
-    submissionId: inData.submissionId,
-    submitterId: inData.submitterId,
-    submitterName: inData.submitterName,
-    submitterEmail: inData.submitterEmail,
-    attachments: inData.attachments,
-    additionalInformation: inData.additionalInformation,
+    ...inData,
     changeHistory: [inData],
   };
 

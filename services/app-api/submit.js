@@ -135,10 +135,11 @@ export const main = handler(async (event) => {
   // we do the data conversion here so the new functions only need the new way
   const submitterName = data.user.firstName + " " + data.user.lastName;
   const submissionData = {
-    transmittalNumber: data.transmittalNumber,
-    submissionType: data.type,
+    componentId: data.transmittalNumber,
+    componentType: data.type,
     clockEndTimestamp: data.ninetyDayClockEnd,
     submissionTimestamp: data.submittedAt,
+    currentStatus: "Submitted",
     attachments: data.uploads,
     additionalInformation: data.summary,
     submissionId: data.id,
@@ -159,6 +160,6 @@ export const main = handler(async (event) => {
     })
     .catch((error) => {
       console.log("Error is: ", error.message);
-      throw error;
+      // throw error;
     });
 });

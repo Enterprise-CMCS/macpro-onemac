@@ -32,7 +32,9 @@ const withdrawMenuItem = {
 };
 
 const menuItemMap = {
-  "RAIResponse Submitted": withdrawMenuItem,
+  "chipsparai Submitted": withdrawMenuItem,
+  "waiverrai Submitted": withdrawMenuItem,
+  "sparai Submitted": withdrawMenuItem,
   "waiverrenewal Submitted": withdrawMenuItem,
   "waiveramendment Submitted": withdrawMenuItem,
   "waiverextension Submitted": withdrawMenuItem,
