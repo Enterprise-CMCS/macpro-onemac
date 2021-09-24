@@ -18,6 +18,9 @@ custom:
   warmupEnabled:
     production: true
     development: false
+  seaToolWritingEnabled:
+    production: false
+    other: true
   warmup:
     enabled: ${self:custom.warmupEnabled.${self:custom.infrastructureType}}
     role: LambdaWarmupRole
@@ -71,9 +74,11 @@ functions:
           arn: ${self:custom.tableStreamArn}
           startingPosition: LATEST
           maximumRetryAttempts: 2
+          enabled: ${self:custom.seaToolWritingEnabled.${opt:stage}, self.seaToolWritingEnabled.other}
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
+      STAGE: ${self:custom.stage}
     maximumRetryAttempts: 2
     vpc:
       securityGroupIds:

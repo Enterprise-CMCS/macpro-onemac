@@ -1,7 +1,16 @@
 const { Kafka } = require('kafkajs');
+
+const { ChangeRequest } = require("cmscommonlib");
+
 const bootstrapBrokerStringTls = process.env.BOOTSTRAP_BROKER_STRING_TLS;
 const STAGE = process.env.STAGE;
 const ONEMAC_TOPIC = 'aws.submission_portal.submissions.cdc.submission';
+
+const ONEMAC_SUBMISSION_TYPE = {
+  [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
+  [ChangeRequest.TYPE.WAIVER]: "1915(b) Base Waiver",
+  [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
+};
 
 const kafka = new Kafka({
   clientId: `onemac-${STAGE}`,
@@ -27,12 +36,19 @@ signalTraps.map((type) => {
 });
 
 const publish = async (onemacActions) => {
-  await producer.connect();
-  await producer.send({
+  const toSend = {
     topic: ONEMAC_TOPIC,
     messages: onemacActions,
-  });
+  };
+  try {
+  console.log("toSend: ", toSend);
+  await producer.connect();
+  const sendResult = await producer.send(toSend);
+  console.log("Send result: ", sendResult);
   await producer.disconnect();
+  } catch(error) {
+    console.log("Got an error in publish: ", error);
+  }
 };
 
 function myHandler(event) {
@@ -40,18 +56,31 @@ function myHandler(event) {
     console.log("Warmed up!");
     return null;
   }
-  
   console.log('Received event:', JSON.stringify(event, null, 2));
+
+// a double-bind on keeping this from writing in Production
+  if (STAGE === 'seatool-write') {
+    console.log(`Branch: ${STAGE} should not have this enabled!`);
+  } else {
+    console.log("Enabled stage is: ", STAGE);
+  }
 
   const onemacActions = [];
 
   event.Records.forEach( (dbAction) => {
     if (dbAction.eventName === "INSERT") {
-      if (dbAction.dynamodb.NewImage.sk === "SEATool")
-        console.log("that submission came from SEA Tool, don't send back: ", dbAction.dynamodb.NewImage);
+      const oneMACSubmission = dbAction.dynamodb.NewImage;
+      if (oneMACSubmission.sk === "SEATool")
+        console.log("that submission came from SEA Tool, don't send back: ", oneMACSubmission);
       else {
-        console.log("New oneMAC Record inserted?? ", JSON.stringify(dbAction.dynamodb.NewImage, null, 2));
-        onemacActions.push({value: JSON.stringify(dbAction.dynamodb.NewImage, null, 2)});
+        console.log("New oneMAC Record inserted?? ", JSON.stringify(oneMACSubmission, null, 2));
+        const toPublish = {
+          PackageID: oneMACSubmission.pk,
+          SubmitterName: oneMACSubmission.submitterName,
+          SubmitterEmail: oneMACSubmission.submitterEmail,
+          PackageType: ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType],
+        }
+        onemacActions.push({value: JSON.stringify(toPublish)});
       }
     }
   });
