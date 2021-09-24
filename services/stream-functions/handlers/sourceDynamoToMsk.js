@@ -59,11 +59,10 @@ function myHandler(event) {
   console.log('Received event:', JSON.stringify(event, null, 2));
 
 // a double-bind on keeping this from writing in Production
-  if (STAGE === 'seatool-write') {
-    console.log(`Branch: ${STAGE} should not have this enabled!`);
-  } else {
-    console.log("Enabled stage is: ", STAGE);
-  }
+  if (STAGE === 'production') {
+    console.log(`Branch: ${STAGE} does not have this enabled!`);
+    return null;
+  } 
 
   const onemacActions = [];
 
