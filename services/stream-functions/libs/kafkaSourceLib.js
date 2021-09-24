@@ -88,7 +88,7 @@ class KafkaSourceLib {
   }
 
   createOutboundEvents(records) {
-    let outboundEvents = {};
+    const outboundEvents = {};
     for (const record of records) {
       const topicName = this.determineTopicName(
         String(record.eventSourceARN.toString())
