@@ -73,7 +73,7 @@ const alertCodes = {
  * User Management "Dashboard"
  */
 const UserManagement = () => {
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile, userStatus } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
