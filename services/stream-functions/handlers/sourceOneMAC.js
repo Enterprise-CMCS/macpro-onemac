@@ -7,6 +7,10 @@ class SourceOneMAC extends KafkaSourceLib {
     "updates"
   ];
 
+  createPayload(record) {
+    return record;
+  }
+
   createOutboundEvents(inRecords) {
     const records = [];
     
