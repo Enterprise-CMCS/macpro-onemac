@@ -1,4 +1,11 @@
-import React, { useRef, useState, useEffect, useCallback } from "react";
+import React, {
+  ChangeEvent,
+  SyntheticEvent,
+  useRef,
+  useState,
+  useEffect,
+  useCallback,
+} from "react";
 import { useHistory, useLocation } from "react-router-dom";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
@@ -27,28 +34,34 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
 
 /**
  * Parses out the two character state/territory at the beginning of the transmittal number.
- * @param {String} transmittalNumber the transmittal number
- * @returns {String} two character state/territory
+ * @param transmittalNumber the transmittal number
+ * @returns two character state/territory
  */
-function getTerritioryFromTransmittalNumber(transmittalNumber) {
+function getTerritoryFromTransmittalNumber(transmittalNumber: string): string {
   return transmittalNumber.toString().substring(0, 2);
 }
 
+type Message = {
+  statusLevel: string;
+  statusMessage: string;
+  warningMessageCode?: string;
+};
+
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
- * @param {String} changeRequestType - the type of change request
+ * @param changeRequestType - the type of change request
  */
-export const SubmissionForm = ({ changeRequestType }) => {
+export const SubmissionForm: React.FC<{
+  changeRequestType: string;
+}> = ({ changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
-  const {
-    userProfile: { userData },
-  } = useAppContext();
+  const { userProfile: { userData = undefined } = {} } = useAppContext() ?? {};
 
   const formInfo = ChangeRequest.CONFIG[changeRequestType];
 
   //Reference to the File Uploader.
-  const uploader = useRef(null);
+  const uploader = useRef<FileUploader>(null);
   // True when the required attachments have been selected.
   const [areUploadsReady, setAreUploadsReady] = useState(false);
   const [isSubmissionReady, setIsSubmissionReady] = useState(false);
@@ -60,7 +73,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     ...formInfo.transmittalNumber,
   });
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
-    useState({
+    useState<Message>({
       statusLevel: "error",
       statusMessage: "",
     });
@@ -79,7 +92,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     type: changeRequestType,
     territory:
       (initialTransmittalNumber &&
-        getTerritioryFromTransmittalNumber(initialTransmittalNumber)) ||
+        getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
       "",
     summary: "",
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
@@ -87,19 +100,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
     waiverAuthority: "",
   });
 
-  /**
-   * Callback for the uploader to set if the upload requirements are met.
-   * @param {Boolean} state true if the required uploads have been specified
-   */
-  function uploadsReadyCallbackFunction(state) {
-    setAreUploadsReady(state);
-  }
-
-  /**
-   * Validate Field
-   * @param {value} Transmittal Number Field Entered on Change Event.
-   */
-  function matchesRegex(fieldValue, regexFormatString) {
+  function matchesRegex(fieldValue: string, regexFormatString: string) {
     let fieldValidationRegEx = new RegExp(regexFormatString);
     let result = false;
 
@@ -140,30 +141,23 @@ export const SubmissionForm = ({ changeRequestType }) => {
     [transmittalNumberDetails, userData]
   );
 
-  /**
-   * Handle changes to the ID.
-   * @param {Object} event the event
-   */
-  async function handleTransmittalNumberChange(newTransmittalNumber) {
+  async function handleTransmittalNumberChange(newTransmittalNumber: string) {
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
 
     updatedRecord["transmittalNumber"] = newTransmittalNumber;
     updatedRecord["territory"] =
-      getTerritioryFromTransmittalNumber(newTransmittalNumber);
+      getTerritoryFromTransmittalNumber(newTransmittalNumber);
 
     setChangeRequest(updatedRecord);
   }
 
-  /**
-   * Handle changes to the action type.
-   * @param {Object} event the event
-   */
-  const handleActionTypeChange = (event) => {
+  const handleActionTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!event || !event.target) return;
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
 
-    updatedRecord[event.target.name] = event.target.value;
+    updatedRecord[event.target.name as keyof typeof updatedRecord] =
+      event.target.value;
 
     let transmittalNumberInfo;
 
@@ -182,20 +176,17 @@ export const SubmissionForm = ({ changeRequestType }) => {
         break;
     }
 
-    setTransmittalNumberDetails(transmittalNumberInfo);
+    setTransmittalNumberDetails(transmittalNumberInfo!);
     setChangeRequest(updatedRecord);
   };
 
-  /**
-   * Handle changes to the form.
-   * @param {Object} event the event
-   */
-  const handleInputChange = (event) => {
+  const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event || !event.target) return;
 
     let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
 
-    updatedRecord[event.target.name] = event.target.value;
+    updatedRecord[event.target.name as keyof typeof updatedRecord] =
+      event.target.value;
 
     setChangeRequest(updatedRecord);
   };
@@ -215,7 +206,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   useEffect(() => {
     // default display message settings with empty message
-    let displayMessage = {
+    let displayMessage: Message = {
       statusLevel: "error",
       statusMessage: "",
     };
@@ -226,7 +217,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
       warningMessageCode: "",
     };
 
-    let existMessages = [];
+    let existMessages: Message[] = [];
     let result = false;
     try {
       if (
@@ -240,13 +231,13 @@ export const SubmissionForm = ({ changeRequestType }) => {
             if (idExistValidation.existenceRegex !== undefined) {
               checkingNumber = changeRequest.transmittalNumber.match(
                 idExistValidation.existenceRegex
-              )[0];
+              )![0];
             }
             try {
               result = await ChangeRequestDataApi.packageExists(checkingNumber);
             } catch (e) {
-              console.log("error message is: ", e.message);
-              setAlertCode(RESPONSE_CODE[e.message]);
+              console.log("error message is: ", (e as Error).message);
+              setAlertCode(RESPONSE_CODE[(e as Error).message]);
             }
             return result;
           }
@@ -280,8 +271,8 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
               // if we got a message through checking, then we should add it to the existMessages array
               const messageToAdd = {
-                statusLevel: correspondingValidation.errorLevel,
-                statusMessage: tempMessage,
+                statusLevel: correspondingValidation.errorLevel!,
+                statusMessage: tempMessage as string,
                 warningMessageCode: tempCode,
               };
               tempMessage && existMessages.push(messageToAdd);
@@ -313,7 +304,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
       setIsSubmissionReady(formReady);
     } catch (err) {
       console.log("error is: ", err);
-      setAlertCode(RESPONSE_CODE[err.message]);
+      setAlertCode(RESPONSE_CODE[(err as Error).message]);
     }
   }, [
     areUploadsReady,
@@ -328,8 +319,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
 
   useEffect(() => {
     const saveForm = async () => {
-      let uploadRef = uploader.current;
-      let transmittalNumberWarningMessage = "";
+      let transmittalNumberWarningMessage: string | undefined = "";
 
       if (
         transmittalNumberStatusMessage.statusLevel === "warn" &&
@@ -339,44 +329,40 @@ export const SubmissionForm = ({ changeRequestType }) => {
           transmittalNumberStatusMessage.warningMessageCode;
       }
 
-      uploadRef
-        .uploadFiles()
-        .then((uploadedList) => {
-          return ChangeRequestDataApi.submit(
-            { ...changeRequest, transmittalNumberWarningMessage },
-            uploadedList
-          );
-        })
-        .then((returnCode) => {
-          setAlertCode(returnCode);
-        })
-        .catch((err) => {
-          console.log("error is: ", err);
-          setAlertCode(RESPONSE_CODE[err.message]);
-        })
-        .finally(() => {
-          setIsSubmitting(false);
-          limitSubmit.current = false;
-        });
+      if (uploader.current) {
+        uploader.current
+          .uploadFiles()
+          .then((uploadedList) => {
+            return ChangeRequestDataApi.submit(
+              { ...changeRequest, transmittalNumberWarningMessage },
+              uploadedList
+            );
+          })
+          .then((returnCode) => {
+            setAlertCode(returnCode);
+          })
+          .catch((err) => {
+            console.log("error is: ", err);
+            setAlertCode(RESPONSE_CODE[err.message]);
+          })
+          .finally(() => {
+            setIsSubmitting(false);
+            limitSubmit.current = false;
+          });
+      }
     };
 
     if (isSubmitting && !limitSubmit.current) {
       limitSubmit.current = true;
       saveForm();
     }
-  }, [
-    isSubmitting,
-    transmittalNumberStatusMessage,
-    changeRequest,
-    uploader,
-    alertCode,
-  ]);
+  }, [isSubmitting, transmittalNumberStatusMessage, changeRequest, alertCode]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  async function handleSubmit(event) {
+  function handleSubmit(event: SyntheticEvent) {
     event.preventDefault();
 
     setIsSubmitting(isSubmissionReady);
@@ -454,9 +440,9 @@ export const SubmissionForm = ({ changeRequestType }) => {
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }
-              disabled={initialTransmittalNumber}
+              disabled={!!initialTransmittalNumber}
               value={changeRequest.transmittalNumber}
-              onChange={(event) =>
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
               }
             />
@@ -466,7 +452,7 @@ export const SubmissionForm = ({ changeRequestType }) => {
             ref={uploader}
             requiredUploads={formInfo.requiredUploads}
             optionalUploads={formInfo.optionalUploads}
-            readyCallback={uploadsReadyCallbackFunction}
+            readyCallback={setAreUploadsReady}
           ></FileUploader>
           <div className="summary-box">
             <TextField

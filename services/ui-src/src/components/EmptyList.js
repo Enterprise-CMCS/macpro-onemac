@@ -27,7 +27,7 @@ export function EmptyList({ image, message, showProfileLink }) {
     return (
       <div className="empty-list">
         {image || DEFAULT_IMAGE}
-        <h4>{message}.</h4>
+        <h4>{message}</h4>
       </div>
     );
   }
