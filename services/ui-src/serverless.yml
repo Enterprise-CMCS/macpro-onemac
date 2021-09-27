@@ -30,8 +30,6 @@ custom:
     items:
       - "/*"
 
-  environment:
-      STAGE: ${self:custom.stage}
 
   scripts:
     hooks:
@@ -59,3 +57,5 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: dev
+  environment:
+      stage: ${self:custom.stage}
