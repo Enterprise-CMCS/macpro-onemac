@@ -21,17 +21,7 @@ class SourceOneMAC extends KafkaSourceLib {
           console.log("sourceOneMAC! that submission came from SEA Tool, don't send back: ", oneMACSubmission);
         else {
           console.log("sourceOneMAC! New oneMAC Record inserted?? ", JSON.stringify(oneMACSubmission, null, 2));
-          const toPublish = {
-            PackageID: oneMACSubmission.pk,
-            PackageStatus: oneMACSubmission.componentStatus,
-            PackageType: oneMACSubmission.componentType,
-            Territory: oneMACSubmission.territory,
-            SubmissionTimestamp: oneMACSubmission.submissionTimestamp,
-            SubmitterName: oneMACSubmission.submitterName,
-            SubmitterEmail: oneMACSubmission.submitterEmail,
-            AdditionalInformation: oneMACSubmission.AdditionalInformation,
-          }
-          records.push({value: JSON.stringify(toPublish)});
+          records.push(dbAction);
         }
       }
     });

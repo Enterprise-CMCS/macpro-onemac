@@ -19,7 +19,7 @@ custom:
     production: true
     development: false
   seaToolWritingEnabled:
-    seatool-write: false
+    production: false
     other: true
   warmup:
     enabled: ${self:custom.warmupEnabled.${self:custom.infrastructureType}}
