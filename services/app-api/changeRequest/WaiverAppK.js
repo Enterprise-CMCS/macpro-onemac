@@ -1,4 +1,8 @@
-import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
+import {
+  getAccessInstructions,
+  getCMSDateFormat,
+  getLinksHtml,
+} from "./changeRequest-util";
 
 /**
  * Waiver Appendix K Amendment specific functions.
@@ -25,10 +29,14 @@ class WaiverAppK {
       ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
       : "";
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
         <p>The Submission Portal received a 1915(b) waiver/1915(c) Appendix K Amendment Submission:</p>
+        ${getAccessInstructions()}
         <p>
             <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}

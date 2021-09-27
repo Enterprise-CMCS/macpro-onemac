@@ -1,4 +1,4 @@
-import { getLinksHtml } from "./changeRequest-util";
+import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -42,11 +42,15 @@ class WaiverRAI {
   getCMSEmail(data) {
     const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject =
       "New Waiver RAI " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
         <p>The Submission Portal received a Waiver RAI Submission:</p>
+        ${getAccessInstructions()}
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
