@@ -4,7 +4,7 @@ export default {
   MAX_ADDITIONAL_INFO_LENGTH: 4000,
   ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
   METRICS_USERS: window._env_.METRICS_USERS,
-  // GOOGLE_METRICS: window._env_.GOOGLE_METRICS,
+  // GOOGLE_METRICS: window._env_.STAGE,
   s3: {
     REGION: window._env_.S3_ATTACHMENTS_BUCKET_REGION,
     BUCKET: window._env_.S3_ATTACHMENTS_BUCKET_NAME,
