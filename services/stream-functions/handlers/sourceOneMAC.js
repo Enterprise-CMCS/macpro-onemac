@@ -1,4 +1,4 @@
-import KafkaSourceLib from "../../../libs/kafka-source-lib";
+import KafkaSourceLib from "../libs/kafka-source-lib";
 
 class SourceOneMAC extends KafkaSourceLib {
   topicPrefix = "aws.onemac.cdc";
