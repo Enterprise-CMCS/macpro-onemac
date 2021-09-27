@@ -19,9 +19,13 @@ class SourceOneMAC extends KafkaSourceLib {
           console.log("sourceOneMAC! New oneMAC Record inserted?? ", JSON.stringify(oneMACSubmission, null, 2));
           const toPublish = {
             PackageID: oneMACSubmission.pk,
+            PackageStatus: oneMACSubmission.componentStatus,
+            PackageType: oneMACSubmission.componentType,
+            Territory: oneMACSubmission.territory,
+            SubmissionTimestamp: oneMACSubmission.submissionTimestamp,
             SubmitterName: oneMACSubmission.submitterName,
             SubmitterEmail: oneMACSubmission.submitterEmail,
-            PackageType: ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType],
+            AdditionalInformation: oneMACSubmission.AdditionalInformation,
           }
           records.push({value: JSON.stringify(toPublish)});
         }
