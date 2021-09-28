@@ -68,7 +68,7 @@ provider:
 
 functions:
   sourceDynamoToMsk:
-    handler: handlers/sourceDynamoToMsk.handler
+    handler: handlers/sourceOneMAC.handler
     events:
       - stream:
           arn: ${self:custom.tableStreamArn}
