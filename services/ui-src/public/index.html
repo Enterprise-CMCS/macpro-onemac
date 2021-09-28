@@ -15,13 +15,15 @@
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script>alert("%NODE_ENV%");</script>
     <!--<% if ("%NODE_ENV%" === 'production') { %> -->
-      <script> if ("%NODE_ENV%" === 'production') theGoogleSrc = "https://www.googletagmanager.com/gtag/js?id=G-D3GK5GNG3R"</script>
+      <script> if("%NODE_ENV%" === 'production') theGoogleSrc = "https://www.googletagmanager.com/gtag/js?id=G-D3GK5GNG3R"</script>
       <script async src=theGoogleSrc></script>
       <script>
+        if("%NODE_ENV%" === 'production'){
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-D3GK5GNG3R', { 'anonymize_ip': true });
+        }
       </script>
     <!-- <% } %> -->
     <% if (process.env.NODE_ENV === 'master') { %>
