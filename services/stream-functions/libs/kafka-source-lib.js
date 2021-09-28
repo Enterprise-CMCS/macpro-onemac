@@ -94,7 +94,8 @@ class KafkaSourceLib {
   }
 
   shouldPayloadBeSent(record) {
-    return true;
+    if (record) return true;
+    else return false;
   }
 
   createOutboundEvents(records) {
