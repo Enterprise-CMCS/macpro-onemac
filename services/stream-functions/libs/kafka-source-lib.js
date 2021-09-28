@@ -100,11 +100,10 @@ class KafkaSourceLib {
   createOutboundEvents(records) {
     const outboundEvents = {};
     for (const record of records) {
-      const topicName = this.determineTopicName(record);
+      const dynamoPayload = this.createPayload(record);
+      const topicName = this.determineTopicName(dynamoPayload);
 
       if (topicName) {
-        const dynamoPayload = this.createPayload(record);
-
         //initialize configuration object keyed to topic for quick lookup
         if (!(outboundEvents[topicName] instanceof Object))
           outboundEvents[topicName] = {
@@ -128,16 +127,16 @@ class KafkaSourceLib {
 
     if (event.Records) {
       const outboundEvents = this.createOutboundEvents(event.Records);
-
+      console.log("outboundEvents are: ", outboundEvents);
       const topicMessages = Object.values(outboundEvents);
-      console.log(
-        `Batch configuration: ${this.stringify(topicMessages, true)}`
-      );
-
-      await producer.sendBatch({ topicMessages });
+      if (topicMessages.length > 0 ) {
+        console.log(`Batch configuration: ${this.stringify(topicMessages, true)}`);
+        await producer.sendBatch({
+          topicMessages
+        });
+        console.log(`Successfully processed ${topicMessages.length} records.`);
+      }
     }
-
-    console.log(`Successfully processed ${event.Records.length} records.`);
   }
 }
 
