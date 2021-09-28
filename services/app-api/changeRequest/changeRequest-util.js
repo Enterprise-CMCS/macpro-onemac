@@ -41,7 +41,7 @@ export function getAccessInstructions() {
     <ul>
       <li>
         The submission can be accessed in the OneMAC application, which you can
-        find at <a href="${process.env.applicationEndpoint}">this link</a>.
+        find at <a href="${process.env.applicationEndpoint}/dashboard">this link</a>.
       </li>
       <li>
         If you are not already logged in, please click the "Login" link at the
