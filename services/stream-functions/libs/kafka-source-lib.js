@@ -53,9 +53,8 @@ class KafkaSourceLib {
     return JSON.stringify(e);
   }
 
-  determineTopicName(streamARN) {
-    if (this.staticTopic) return this.staticTopic;
-
+  determineTopicName(record) {
+    const streamARN = String(record.eventSourceARN.toString());
     for (const table of this.tables) {
       if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
     }
@@ -101,22 +100,20 @@ class KafkaSourceLib {
   createOutboundEvents(records) {
     const outboundEvents = {};
     for (const record of records) {
-      const topicName = this.determineTopicName(
-        String(record.eventSourceARN.toString())
-      );
+      const topicName = this.determineTopicName(record);
 
-      if (this.shouldPayloadBeSent(record)) {
-      const dynamoPayload = this.createPayload(record);
+      if (topicName) {
+        const dynamoPayload = this.createPayload(record);
 
-      //initialize configuration object keyed to topic for quick lookup
-      if (!(outboundEvents[topicName] instanceof Object))
-        outboundEvents[topicName] = {
-          topic: topicName,
-          messages: [],
-        };
+        //initialize configuration object keyed to topic for quick lookup
+        if (!(outboundEvents[topicName] instanceof Object))
+          outboundEvents[topicName] = {
+            topic: topicName,
+            messages: [],
+          };
 
-      //add messages to messages array for corresponding topic
-      outboundEvents[topicName].messages.push(dynamoPayload);
+        //add messages to messages array for corresponding topic
+        outboundEvents[topicName].messages.push(dynamoPayload);
       }
     }
     return outboundEvents;
