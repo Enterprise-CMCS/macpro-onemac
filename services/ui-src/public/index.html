@@ -13,19 +13,17 @@
     <title>CMS SPA and Waiver Submission Form</title>
     <script src="%PUBLIC_URL%/env-config.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script>alert(process.gtag);</script>
-    <!--<% if ("%NODE_ENV%" === 'production') { %> -->
-      <script> if("%NODE_ENV%" === 'production') theGoogleSrc = "https://www.googletagmanager.com/gtag/js?id=G-D3GK5GNG3R"</script>
-      <script async src=theGoogleSrc></script>
+    <script>alert("%NODE_ENV%");</script>
+    <% if (process.env.NODE_ENV === 'production') { %>
+      <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3GK5GNG3R"></script>
       <script>
         if("%NODE_ENV%" === 'production'){
         window.dataLayer = window.dataLayer || [];
         function gtag(){dataLayer.push(arguments);}
         gtag('js', new Date());
         gtag('config', 'G-D3GK5GNG3R', { 'anonymize_ip': true });
-        }
       </script>
-    <!-- <% } %> -->
+    <% } %> 
     <% if (process.env.NODE_ENV === 'master') { %>
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-YJVWK0SDMP"></script>
     <script>
