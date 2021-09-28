@@ -7,9 +7,9 @@ const STAGE = process.env.STAGE;
 const ONEMAC_TOPIC = 'aws.submission_portal.submissions.cdc.submission';
 
 const ONEMAC_SUBMISSION_TYPE = {
-  [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
-  [ChangeRequest.TYPE.WAIVER]: "1915(b) Base Waiver",
-  [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
+  [ChangeRequest.TYPE.SPA]: 125,
+  [ChangeRequest.TYPE.WAIVER]: 122,
+  [ChangeRequest.TYPE.CHIP_SPA]: 124,
 };
 
 const kafka = new Kafka({
@@ -73,13 +73,14 @@ function myHandler(event) {
         console.log("that submission came from SEA Tool, don't send back: ", oneMACSubmission);
       else {
         console.log("New oneMAC Record inserted?? ", JSON.stringify(oneMACSubmission, null, 2));
-        const toPublish = {
+/*        const toPublish = {
           PackageID: oneMACSubmission.pk,
           SubmitterName: oneMACSubmission.submitterName,
           SubmitterEmail: oneMACSubmission.submitterEmail,
           PackageType: ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType],
-        }
-        onemacActions.push({value: JSON.stringify(toPublish)});
+        }  */
+        dbAction.dynamodb.NewImage.plan_type = ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType];
+        onemacActions.push(dbAction);
       }
     }
   });
