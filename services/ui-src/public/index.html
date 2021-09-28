@@ -13,6 +13,7 @@
     <title>CMS SPA and Waiver Submission Form</title>
     <script src="%PUBLIC_URL%/env-config.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script>alert(process.env.stage);</script>
     <% if (process.env.stage === 'production') { %>
       <script async src="https://www.googletagmanager.com/gtag/js?id=G-D3GK5GNG3R"></script>
       <script>
