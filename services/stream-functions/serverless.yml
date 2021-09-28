@@ -80,6 +80,7 @@ functions:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
       STAGE: ${self:custom.stage}
       oneMacTableName: ${self:custom.oneMacTableName}
+      CLIENT_ID_PREFIX: 'onemac'
     maximumRetryAttempts: 2
     vpc:
       securityGroupIds:

@@ -2,8 +2,12 @@ import AWS from "aws-sdk";
 const { Kafka } = require("kafkajs");
 
 const STAGE = process.env.STAGE;
+let CLIENT_ID_PREFIX = 'seds';
+if (process.env.CLIENT_ID_PREFIX)
+  CLIENT_ID_PREFIX = process.env.CLIENT_ID_PREFIX;
+  
 const kafka = new Kafka({
-  clientId: `onemac-${STAGE}`,
+  clientId: `${CLIENT_ID_PREFIX}-${STAGE}`,
   brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
   retry: {
     initialRetryTime: 300,
@@ -50,9 +54,9 @@ class KafkaSourceLib {
   }
 
   determineTopicName(streamARN) {
-    console.log("incoming stream ARN: ", streamARN);
+    if (this.staticTopic) return this.staticTopic;
+
     for (const table of this.tables) {
-      console.log("table to look for is: ", table);
       if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
     }
   }
@@ -89,6 +93,10 @@ class KafkaSourceLib {
     }
   }
 
+  shouldPayloadBeSent(record) {
+    return true;
+  }
+
   createOutboundEvents(records) {
     const outboundEvents = {};
     for (const record of records) {
@@ -96,6 +104,7 @@ class KafkaSourceLib {
         String(record.eventSourceARN.toString())
       );
 
+      if (this.shouldPayloadBeSent(record)) {
       const dynamoPayload = this.createPayload(record);
 
       //initialize configuration object keyed to topic for quick lookup
@@ -107,6 +116,7 @@ class KafkaSourceLib {
 
       //add messages to messages array for corresponding topic
       outboundEvents[topicName].messages.push(dynamoPayload);
+      }
     }
     return outboundEvents;
   }
