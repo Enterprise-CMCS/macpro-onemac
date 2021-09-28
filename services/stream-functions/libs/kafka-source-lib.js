@@ -3,7 +3,7 @@ const { Kafka } = require("kafkajs");
 
 const STAGE = process.env.STAGE;
 const kafka = new Kafka({
-  clientId: `seds-${STAGE}`,
+  clientId: `onemac-${STAGE}`,
   brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
   retry: {
     initialRetryTime: 300,
@@ -50,7 +50,9 @@ class KafkaSourceLib {
   }
 
   determineTopicName(streamARN) {
+    console.log("incoming stream ARN: ", streamARN);
     for (const table of this.tables) {
+      console.log("table to look for is: ", table);
       if (streamARN.includes(`/${STAGE}-${table}/`)) return this.topic(table);
     }
   }

@@ -1,10 +1,10 @@
 import KafkaSourceLib from "../libs/kafka-source-lib";
 
 class SourceOneMAC extends KafkaSourceLib {
-  topicPrefix = "aws.onemac.cdc";
+  topicPrefix = "aws.submission_portal.submissions.cdc.";
   version = "v0";
   tables = [
-    "updates"
+    process.env.oneMacTableName
   ];
 
   createPayload(record) {

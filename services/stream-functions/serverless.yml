@@ -79,6 +79,7 @@ functions:
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
       STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
     maximumRetryAttempts: 2
     vpc:
       securityGroupIds:
