@@ -109,27 +109,12 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-  const aclParams = {
-    Bucket: s3ObjectBucket,
-    Key: s3ObjectKey,
-    ACL: "public-read",
-  };
-
   //tag object with CLEAN tag upon successful av scan
   try {
     await s3.putObjectTagging(taggingParams).promise();
     utils.generateSystemMessage("Tagging successful");
   } catch (err) {
     console.log(err);
-  }
-  //change object ACL with public-read upon successful av scan
-  if (`${virusScanStatus}` == "CLEAN") {
-    try {
-      await s3.putObjectAcl(aclParams).promise();
-      utils.generateSystemMessage("ACL Param Update Successful");
-    } catch (err) {
-      console.log(err);
-    }
   }
   return virusScanStatus;
 }
