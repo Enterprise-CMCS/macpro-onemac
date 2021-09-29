@@ -61,7 +61,7 @@ then
    echo "Check the build logs and verify that the build is complete before using this tool."
    exit 1
 fi
-export IS_STAGE=$stage
+# export IS_STAGE=$stage
 export API_REGION=$api_region
 export API_URL=$api_url
 export COGNITO_REGION=$cognito_region
