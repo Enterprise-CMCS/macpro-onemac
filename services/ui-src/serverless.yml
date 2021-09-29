@@ -37,7 +37,7 @@ custom:
       package:initialize: |
         set -e
         CI=false npm run build
-        export STAGE = ${self:custom.stage}
+        export IS_STAGE = ${self:custom.stage}
         export API_REGION=${self:custom.api_region}
         export API_URL=${self:custom.api_url}
         export COGNITO_REGION=${self:custom.cognito_region}
@@ -58,5 +58,4 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: dev
-  environment:
-      stage: ${self:custom.stage}
+  
