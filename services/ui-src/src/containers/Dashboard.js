@@ -30,6 +30,7 @@ const correspondingRAILink = {
   [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
 };
 
+
 /**
  * Component containing dashboard
  */
@@ -46,8 +47,11 @@ const Dashboard = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
 
+  
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
+
+
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
 
     // Redirect new users to the signup flow.
