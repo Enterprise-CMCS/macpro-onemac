@@ -1,6 +1,6 @@
 import KafkaSourceLib from "../libs/kafka-source-lib";
 
-const staticTopic = "aws.submission_portal.submissions.cdc.submission";
+const staticTopic = "aws.onemac.updates.cdc.one";
 
 class SourceOneMAC extends KafkaSourceLib {
 
