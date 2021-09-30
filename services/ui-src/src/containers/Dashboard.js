@@ -47,17 +47,10 @@ const Dashboard = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
 
-  // const trackPage = (page) => {
-  //   window.gtag('send', 'page_view', {
-  //       page_location: window.location.href,
-  //       page_path: window.location.pathname            
-  //   });
-  // };
-
+  
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
 
-     // trackPage();
 
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
 
