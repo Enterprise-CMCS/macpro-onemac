@@ -126,10 +126,13 @@ export class Role {
   getAccesses() {
     const accesses = [...ALL_USERS_ROUTES];
 
-    if (this.canAccessDashboard) accesses.push(ROUTES.DASHBOARD);
+    if (this.canAccessDashboard)
+      accesses.push(ROUTES.DASHBOARD, ROUTES.PACKAGE_LIST);
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,
+        ROUTES.PACKAGE_LIST,
+        ROUTES.DETAIL,
         ROUTES.NEW_SUBMISSION_SELECTION,
         ROUTES.SPA,
         ROUTES.SPA_RAI,
@@ -145,6 +148,13 @@ export class Role {
     if (this.canAccessMetrics) accesses.push(ROUTES.METRICS);
 
     return accesses;
+  }
+}
+
+class DefaultUser extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
   }
 }
 
@@ -199,7 +209,7 @@ class Helpdesk extends Role {
   }
 }
 
-export const getUserRoleObj = (role) =>
+export const getUserRoleObj = (role, isEua = false) =>
   new ({
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
@@ -207,7 +217,7 @@ export const getUserRoleObj = (role) =>
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role] || Role)();
+  }[role] || (isEua ? DefaultUser : Role))();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 

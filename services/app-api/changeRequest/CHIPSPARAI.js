@@ -1,5 +1,4 @@
-import { getLinksHtml } from "./changeRequest-util";
-import updatePackage from "../utils/updatePackage";
+import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -44,11 +43,15 @@ class CHIPSPARAI {
   getCMSEmail(data) {
     const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerCHIPEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerCHIPEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject =
       "New CHIP SPA RAI " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
         <p>The Submission Portal received a CHIP SPA RAI Submission:</p>
+        ${getAccessInstructions()}
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
@@ -104,11 +107,6 @@ class CHIPSPARAI {
     `;
 
     return stateEmail;
-  }
-
-  saveSubmission(data) {
-    data.packageStatus = "RAI Response Submitted";
-    return updatePackage(data);
   }
 }
 

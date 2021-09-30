@@ -23,10 +23,10 @@ install_deps
 
 # Run deploy for each folder
 services=(
+  'ui'
   'uploads'
   'app-api'
   'stream-functions'
-  'ui'
   'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'

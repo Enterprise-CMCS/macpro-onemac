@@ -1,6 +1,5 @@
-import { getLinksHtml } from "./changeRequest-util";
+import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
-import updatePackage from "../utils/updatePackage";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
@@ -43,10 +42,14 @@ class SPARAI {
   getCMSEmail(data) {
     const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
         <p>The Submission Portal received a SPA RAI Submission:</p>
+        ${getAccessInstructions()}
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
@@ -106,11 +109,6 @@ class SPARAI {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "RAI Response Submitted";
-    return updatePackage(data);
   }
 }
 

@@ -40,12 +40,12 @@ const Dashboard = () => {
   const {
     userStatus,
     userProfile,
-    userProfile: { userData } = {},
+    userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type);
+  const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
 
   // const trackPage = (page) => {
   //   window.gtag('send', 'page_view', {
@@ -65,7 +65,7 @@ const Dashboard = () => {
     const missingUserType = !userData?.type;
     const missingOtherUserData =
       userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (missingUserType || missingOtherUserData) {
+    if (cmsRoles && (missingUserType || missingOtherUserData)) {
       history.replace("/signup", location.state);
       return;
     }
@@ -81,18 +81,23 @@ const Dashboard = () => {
 
         if (typeof data === "string") throw data;
 
-        if (mounted) setChangeRequestList(data);
-        if (mounted) setIsLoading(false);
+        if (mounted) {
+          setChangeRequestList(data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
+        if (mounted) {
+          setAlertCode(RESPONSE_CODE[error.message]);
+          setIsLoading(false);
+        }
       }
     })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData, userProfile]);
+  }, [cmsRoles, history, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -282,7 +287,7 @@ const Dashboard = () => {
     let rightSideContent = "";
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE) {
+    } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
       rightSideContent = csvExportSubmissions;
     }
 
@@ -295,7 +300,7 @@ const Dashboard = () => {
     }
 
     const userStatusNotActive =
-      !userStatus || userStatus !== USER_STATUS.ACTIVE;
+      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
     if (userStatusNotActive) {
       return (
         <EmptyList

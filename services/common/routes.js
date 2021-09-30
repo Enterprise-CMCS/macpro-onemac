@@ -7,6 +7,7 @@ export const ROUTES = {
   CHIP_SPA_RAI: "/chipsparai",
   DASHBOARD: "/dashboard",
   PACKAGE_LIST: "/packagelist",
+  DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
   FAQ_TOP: "/FAQ/#top",
@@ -28,4 +29,5 @@ export const ROUTES = {
   WAIVER_RAI: "/waiverrai",
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
+  ATTACHMENT_LANDING: "/legacy-attachments",
 };

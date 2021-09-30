@@ -33,11 +33,16 @@ function myHandler(event) {
   if (value.payload.State_Code) {
     stateCode = value.payload.State_Code.toString();
   } else stateCode = SEAToolId.substring(0,2);
+
+  const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
+
   const SEAToolData = {
     'packageStatus': packageStatusID,
     'stateCode': stateCode,
     'planType': planType,
-    'packageId': SEAToolId,
+    'packageId': idInfo.packageId,
+    'componentId': idInfo.componentId,
+    'componentType': idInfo.componentType,
     'clockEndTimestamp': value.payload.Alert_90_Days_Date,
   };
   if (SEAToolId != undefined) {
@@ -106,15 +111,15 @@ function myHandler(event) {
     const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
       [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
       [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
-      [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER,
+      [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
       [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
     };
 
     SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
 
-    // update OneMAC Package Item
-    const updatePk = SEAToolData.packageId;
-    const updateSk = "PACKAGE";
+    // update OneMAC Component
+    const updatePk = SEAToolData.componentId;
+    const updateSk = SEAToolData.packageType;
     const updatePackageParams = {
       TableName: process.env.oneMacTableName,
       Key: {

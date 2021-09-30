@@ -26,7 +26,7 @@ export default function Home() {
     },
     {
       image: "email",
-      subTitle: "Recieve an email confirmation",
+      subTitle: "Receive an email confirmation",
       text: `After you submit, you will receive an email confirmation that your submission was 
         successful, marking the start of the 90-day review process.`,
       verticalLineClass: "",

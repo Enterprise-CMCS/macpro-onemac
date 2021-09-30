@@ -3,3 +3,5 @@ rules:
   # TODO: remove this after fixing the names
   "@typescript-eslint/camelcase": off
   "@typescript-eslint/no-var-requires": off
+  # TODO turn this rule back on once we figure out types for this module
+  "@typescript-eslint/explicit-module-boundary-types": off

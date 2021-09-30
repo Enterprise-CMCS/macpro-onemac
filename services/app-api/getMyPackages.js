@@ -19,15 +19,14 @@ export const main = handler((event) => {
 
   return getUser(event.queryStringParameters.email)
     .then((user) => {
-      if (!user) {
-        throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
-      }
+      let territoryList = "this is for EUA users";
+      if (Object.keys(user).length > 0) {
+        const userRoleObj = getUserRoleObj(user.type);
 
-      const userRoleObj = getUserRoleObj(user.type);
-
-      const territoryList = getAuthorizedStateList(user);
-      if (!userRoleObj.canAccessDashboard || territoryList === []) {
-        throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+        territoryList = getAuthorizedStateList(user);
+        if (!userRoleObj.canAccessDashboard || territoryList === []) {
+          throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+        }
       }
 
       const baseParams = {
@@ -36,7 +35,7 @@ export const main = handler((event) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "packageId,packageType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId",
+          "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId",
       };
 
       let paramList = [];
