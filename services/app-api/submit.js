@@ -148,7 +148,7 @@ export const main = handler(async (event) => {
     submitterId: data.userId,
   };
 
-  if (data.actionType) submissionData.submissionType += data.actionType;
+  if (data.actionType) submissionData.componentType += data.actionType;
 
   if (data.waiverAuthority)
     submissionData.waiverAuthority = data.waiverAuthority;
