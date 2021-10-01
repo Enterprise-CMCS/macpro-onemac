@@ -21,6 +21,8 @@ custom:
   reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
+  testingEmail: ${opt:testingEmail, env:TESTING_TEAM_EMAIL, ""}
+  applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   warmupEnabled:
     production: true
     development: true
@@ -77,8 +79,10 @@ provider:
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
     reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
+    testingEmail: ${self:custom.testingEmail}
     systemAdminEmail: ${self:custom.systemAdminEmail}
     productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
+    applicationEndpoint: ${self:custom.applicationEndpoint}
 
 functions:
 

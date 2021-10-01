@@ -30,6 +30,7 @@ custom:
     items:
       - "/*"
 
+
   scripts:
     hooks:
       # Build the static archive and populate the config
@@ -56,3 +57,4 @@ provider:
   runtime: nodejs12.x
   region: us-east-1
   stage: dev
+  

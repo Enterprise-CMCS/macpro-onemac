@@ -1,4 +1,4 @@
-import { getLinksHtml } from "./changeRequest-util";
+import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -44,10 +44,14 @@ class CHIPSPA {
   getCMSEmail(data) {
     const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerCHIPEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerCHIPEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject = `New CHIP SPA ${data.transmittalNumber} submitted`;
     cmsEmail.HTML = `
       <p>The Submission Portal received a CHIP State Plan Amendment:</p>
+      ${getAccessInstructions()}
       <p>
         <br><b>State or territory</b>: ${data.territory}
         <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}

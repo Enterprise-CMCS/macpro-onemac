@@ -125,6 +125,9 @@ jobs:
       - name: Set dev login flag
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: echo "ALLOW_DEV_LOGIN=true" >> $GITHUB_ENV
+      - name: Set testing email address unless in prod
+        if: ${{ env.branch_name != 'production' }}
+        run: echo "TESTING_TEAM_EMAIL=macproemailnotification@gmail.com" >> $GITHUB_ENV
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
