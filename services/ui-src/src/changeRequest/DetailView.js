@@ -41,7 +41,7 @@ const PAGE_DETAILS = {
     detailsHeader: "RAI Response",
     idLabel: "CHIP SPA ID",
   },
-  [ChangeRequest.TYPE.WAIVER_RAI]: {
+  waiverrai: {
     pageTitle: "Response to RAI",
     detailsHeader: "RAI Response",
     idLabel: "Waiver Number",
@@ -144,6 +144,7 @@ const DetailView = () => {
         <article className="form-container">
           <div className="read-only-submission">
             {renderChildComponents(`${componentType}rai`)}
+            {renderChildComponents(`waiverrai`)}
             {details.submissionTimestamp && (
               <section>
                 <Review
