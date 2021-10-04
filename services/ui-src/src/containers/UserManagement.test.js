@@ -13,7 +13,6 @@ import UserDataApi from "../utils/UserDataApi";
 import UserManagement from "./UserManagement";
 
 import { LOADER_TEST_ID } from "../components/LoadingScreen";
-// import { POPUP_TRIGGER_TEST_ID } from "../components/PopupMenu";
 
 jest.mock("../utils/UserDataApi");
 
