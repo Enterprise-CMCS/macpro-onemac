@@ -245,6 +245,12 @@ const PackageList = () => {
         id: "territory",
       },
       {
+        Header: "90th Day",
+        accessor: "clockEndTimestamp",
+        id: "ninetiethDay",
+        Cell: renderDate,
+      },
+      {
         Header: "Status",
         accessor: "currentStatus",
         id: "packageStatus",
