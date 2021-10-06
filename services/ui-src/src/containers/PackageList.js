@@ -41,12 +41,6 @@ const menuItemMap = {
   Submitted: withdrawMenuItem,
 };
 
-const correspondingRAILink = {
-  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
-  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
-  [ChangeRequest.TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
-};
-
 const noClockStatuses = ["Withdrawn", "Terminated", "Unsubmitted"];
 
 /**
@@ -201,7 +195,8 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const raiLink = correspondingRAILink[row.original.componentType];
+      const raiLink =
+        ChangeRequest.correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
       const notWithdrawn = row.original.currentStatus !== "Withdrawn";
       let menuItems = [];

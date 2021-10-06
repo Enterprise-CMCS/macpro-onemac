@@ -19,19 +19,24 @@ import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
 jest.mock("../utils/PackageApi");
 
+const ContextWrapper = ({ children }) => {
+  return (
+    <MemoryRouter>
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        {children}
+      </AppContext.Provider>
+    </MemoryRouter>
+  );
+};
+
 it("renders with a New Submission button", async () => {
   PackageApi.getMyPackages.mockResolvedValue([]);
 
-  render(
-    <AppContext.Provider
-      value={{
-        ...stateSubmitterInitialAuthState,
-      }}
-    >
-      <PackageList />
-    </AppContext.Provider>,
-    { wrapper: MemoryRouter }
-  );
+  render(<PackageList />, { wrapper: ContextWrapper });
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   const newSubmissionButton = screen.getByText("New Submission");
@@ -43,16 +48,7 @@ it("renders with a New Submission button", async () => {
 it("renders table with columns", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
 
-  render(
-    <AppContext.Provider
-      value={{
-        ...stateSubmitterInitialAuthState,
-      }}
-    >
-      <PackageList />
-    </AppContext.Provider>,
-    { wrapper: MemoryRouter }
-  );
+  render(<PackageList />, { wrapper: ContextWrapper });
 
   // wait for loading screen to disappear so package table displays
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -81,16 +77,7 @@ it.each`
     testPackageList[0].clockEndTimestamp = ninetiethDayValue;
     PackageApi.getMyPackages.mockResolvedValue(testPackageList);
 
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateSubmitterInitialAuthState,
-        }}
-      >
-        <PackageList />
-      </AppContext.Provider>,
-      { wrapper: MemoryRouter }
-    );
+    render(<PackageList />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -99,8 +86,6 @@ it.each`
     const packageRow = within(
       screen.getAllByText(currentStatus)[0].closest("tr")
     );
-
-    // find the action button for the spa, click it to see the popup menu
     expect(packageRow.getByText(ninetiethDayShown)).toBeInTheDocument();
   }
 );
