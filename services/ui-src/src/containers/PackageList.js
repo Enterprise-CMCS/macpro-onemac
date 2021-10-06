@@ -47,6 +47,8 @@ const correspondingRAILink = {
   [ChangeRequest.TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
 };
 
+const noClockStatuses = ["Withdrawn", "Terminated", "Unsubmitted"];
+
 /**
  * Component containing dashboard
  */
@@ -70,7 +72,6 @@ const PackageList = () => {
         const data = await PackageAPI.getMyPackages(userProfile.email);
 
         if (typeof data === "string") throw data;
-        console.log("the data returned is: ", data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
         if (!ctrlr?.signal.aborted) setIsLoading(false);
       } catch (error) {
@@ -157,7 +158,6 @@ const PackageList = () => {
   }, []);
 
   const renderNinetiethDay = useCallback(({ value, row }) => {
-    const noClockStatuses = ["Withdrawn", "Terminated", "Unsubmitted"];
     let returnDay = "Pending";
     if (!noClockStatuses.includes(row.original.currentStatus)) {
       if (value) returnDay = format(value, "MMM d, yyyy");
