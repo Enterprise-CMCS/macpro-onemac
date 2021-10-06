@@ -30,7 +30,7 @@ it("renders table with columns", async () => {
     { wrapper: MemoryRouter }
   );
 
-  // wait for loading screen to disappear so submissions table displays
+  // wait for loading spinner to disappear so submissions table displays
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   screen.getByText("Name");
