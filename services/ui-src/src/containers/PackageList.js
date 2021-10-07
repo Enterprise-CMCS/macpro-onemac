@@ -252,6 +252,12 @@ const PackageList = () => {
         Cell: renderNinetiethDay,
       },
       {
+        Header: "Expiration Date",
+        accessor: "expirationTimestamp",
+        id: "expirationTimestamp",
+        Cell: renderNinetiethDay,
+      },
+      {
         Header: "Status",
         accessor: "currentStatus",
         id: "packageStatus",

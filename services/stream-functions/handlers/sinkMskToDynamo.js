@@ -44,6 +44,7 @@ function myHandler(event) {
     'componentId': idInfo.componentId,
     'componentType': idInfo.componentType,
     'clockEndTimestamp': value.payload.Alert_90_Days_Date,
+    'expirationTimestamp': value.payload.End_Date,
   };
   if (SEAToolId != undefined) {
     AWS.config.update({region: 'us-east-1'});
