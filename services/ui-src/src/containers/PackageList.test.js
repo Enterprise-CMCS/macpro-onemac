@@ -57,6 +57,7 @@ it("renders table with columns", async () => {
   screen.getByText("Type");
   screen.getByText("State");
   screen.getByText("90th Day");
+  screen.getByText("Expiration Date");
   screen.getByText("Date Submitted");
   screen.getByText("Submitted By");
   screen.getByText("Actions");
@@ -86,6 +87,6 @@ it.each`
     const packageRow = within(
       screen.getAllByText(currentStatus)[0].closest("tr")
     );
-    expect(packageRow.getByText(ninetiethDayShown)).toBeInTheDocument();
+    expect(packageRow.getAllByText(ninetiethDayShown)[0]).toBeInTheDocument();
   }
 );
