@@ -151,14 +151,14 @@
           },
           {
             "date": 1616544487,
-            "doneBy": "stateadminMI@cms.hhs.local",
+            "doneBy": "stateadminmi@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "MI"
       }
     ],
-    "id": "stateadminactiveMI@cms.hhs.local",
+    "id": "stateadminactivemi@cms.hhs.local",
     "firstName": "Abby",
     "lastName": "Active",
     "type": "stateadmin"
@@ -175,14 +175,14 @@
           },
           {
             "date": 1616544487,
-            "doneBy": "stateadminactiveMI2@cms.hhs.local",
+            "doneBy": "stateadminactivemi2@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "MI"
       }
     ],
-    "id": "stateadminactiveMI2@cms.hhs.local",
+    "id": "stateadminactivemi2@cms.hhs.local",
     "firstName": "Anthony",
     "lastName": "Active",
     "type": "stateadmin"
@@ -199,14 +199,14 @@
           },
           {
             "date": 1616544487,
-            "doneBy": "stateadminactiveVA2@cms.hhs.local",
+            "doneBy": "stateadminactiveva2@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "VA"
       }
     ],
-    "id": "stateadminactiveVA2@cms.hhs.local",
+    "id": "stateadminactiveva2@cms.hhs.local",
     "firstName": "Arlene",
     "lastName": "Active",
     "type": "stateadmin"
