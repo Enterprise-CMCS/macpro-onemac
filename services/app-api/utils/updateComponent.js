@@ -1,5 +1,7 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
+const topLevelUpdates = ["clockEndTimestamp", "currentStatus", "attachments"];
+
 export default async function updateComponent({
   packageId: updatePk,
   ...updateData
@@ -29,20 +31,17 @@ export default async function updateComponent({
     ReturnValues: "ALL_NEW",
   };
 
-  // only update clock if new Clock is sent
-  if (updateData.clockEndTimestamp) {
-    updateComponentParams.ExpressionAttributeValues[":newClockEnd"] =
-      updateData.clockEndTimestamp;
-    updateComponentParams.UpdateExpression +=
-      ", currentClockEnd = :newClockEnd";
-  }
-
-  // only update status if new Status is sent
-  if (updateData.currentStatus) {
-    updateComponentParams.ExpressionAttributeValues[":newStatus"] =
-      updateData.currentStatus;
-    updateComponentParams.UpdateExpression += ",currentStatus = :newStatus";
-  }
+  topLevelUpdates.forEach((attributeName) => {
+    if (updateData[attributeName]) {
+      const newLabel = `:new${attributeName}`;
+      updateComponentParams.ExpressionAttributeValues[newLabel] =
+        updateData[attributeName];
+      if (Array.isArray(updateData[attributeName]))
+        updateComponentParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
+      else
+        updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+    }
+  });
 
   // up the number in the component count for this component
   if (updateData.componentType) {
@@ -56,17 +55,11 @@ export default async function updateComponent({
       ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";
   }
 
-  // add the attachments to the list of attachments for the package
-  if (updateData.attachments) {
-    updateComponentParams.ExpressionAttributeValues[":newAttachments"] =
-      updateData.attachments;
-    updateComponentParams.UpdateExpression +=
-      ", attachments = list_append(if_not_exists(attachments,:emptyList), :newAttachments)";
-  }
-
   try {
-    const { Attributes } = await dynamoDb.update(updateComponentParams);
-    return Attributes;
+    console.log("updateParams: ", updateComponentParams);
+    const result = await dynamoDb.update(updateComponentParams);
+    console.log("Result is: ", result);
+    return result.Attributes;
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {
       console.log(
@@ -75,7 +68,7 @@ export default async function updateComponent({
     } else {
       console.log(`Error happened updating DB:  ${error.message}`);
       console.log("update parameters tried: ", updateComponentParams);
-      throw error;
+      // throw error;
     }
   }
 }

@@ -40,7 +40,6 @@ export const decodeId = (inId, inType) => {
       if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
     // falls through
     case TYPE.SPA_RAI:
-      returnInfo.componentType = "RAIResponse";
       returnInfo.isNewPackage = false;
       break;
     case TYPE.WAIVER_AMENDMENT:

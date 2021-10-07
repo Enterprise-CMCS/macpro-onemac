@@ -364,3 +364,32 @@ export const stateUserNoAuthState = {
     },
   },
 };
+
+export const systemAdminInitialAuthState = {
+  isAuthenticating: false,
+  isAuthenticated: true,
+  isLoggedInAsDeveloper: false,
+  isValidRoute: true,
+  userStatus: "active",
+  userProfile: {
+    cmsRoles: "onemac-authorizer",
+    email: "systemadmintest@cms.hhs.local",
+    firstName: "Allofit",
+    lastName: "Admining",
+    userData: {
+      firstName: "Allofit",
+      lastName: "Admining",
+      id: "systemadmintest@cms.hhs.local",
+      type: "systemadmin",
+      validRoutes: [
+        "/",
+        "/profile",
+        "/dashboard",
+        "/dashboard",
+        "/FAQ",
+        "/usermanagement",
+        "/metrics",
+      ],
+    },
+  },
+};
