@@ -41,17 +41,13 @@ const menuItemMap = {
   Submitted: withdrawMenuItem,
 };
 
-const correspondingRAILink = {
-  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
-  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
-  [ChangeRequest.TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
-};
+const noClockStatuses = ["Withdrawn", "Terminated", "Unsubmitted"];
 
 /**
  * Component containing dashboard
  */
 const PackageList = () => {
-  const [changeRequestList, setChangeRequestList] = useState([]);
+  const [packageList, setPackageList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
@@ -70,8 +66,7 @@ const PackageList = () => {
         const data = await PackageAPI.getMyPackages(userProfile.email);
 
         if (typeof data === "string") throw data;
-        console.log("the data returned is: ", data);
-        if (!ctrlr?.signal.aborted) setChangeRequestList(data);
+        if (!ctrlr?.signal.aborted) setPackageList(data);
         if (!ctrlr?.signal.aborted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
@@ -156,12 +151,22 @@ const PackageList = () => {
     }
   }, []);
 
+  const renderNinetiethDay = useCallback(({ value, row }) => {
+    let returnDay = "Pending";
+    if (!noClockStatuses.includes(row.original.currentStatus)) {
+      if (value) returnDay = format(value, "MMM d, yyyy");
+    } else {
+      returnDay = "N/A";
+    }
+    return returnDay;
+  }, []);
+
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
       // When we add another action to the menu, we will need to look at the action taken here.
 
-      const packageToModify = changeRequestList[rowNum];
+      const packageToModify = packageList[rowNum];
       try {
         const resp = await PackageAPI.withdraw(
           [userProfile.userData.firstName, userProfile.userData.lastName].join(
@@ -178,12 +183,7 @@ const PackageList = () => {
         setAlertCode(RESPONSE_CODE[e.message]);
       }
     },
-    [
-      changeRequestList,
-      loadPackageList,
-      userProfile.email,
-      userProfile.userData,
-    ]
+    [packageList, loadPackageList, userProfile.email, userProfile.userData]
   );
 
   const onPopupActionRAI = useCallback(
@@ -195,7 +195,8 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const raiLink = correspondingRAILink[row.original.componentType];
+      const raiLink =
+        ChangeRequest.correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
       const notWithdrawn = row.original.currentStatus !== "Withdrawn";
       let menuItems = [];
@@ -245,6 +246,12 @@ const PackageList = () => {
         id: "territory",
       },
       {
+        Header: "90th Day",
+        accessor: "clockEndTimestamp",
+        id: "ninetiethDay",
+        Cell: renderNinetiethDay,
+      },
+      {
         Header: "Status",
         accessor: "currentStatus",
         id: "packageStatus",
@@ -282,6 +289,7 @@ const PackageList = () => {
     renderType,
     renderDate,
     renderName,
+    renderNinetiethDay,
     userRoleObj.canAccessForms,
   ]);
 
@@ -295,11 +303,7 @@ const PackageList = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV(
-          "submission-table",
-          changeRequestList,
-          "SubmissionList"
-        );
+        tableListExportToCSV("submission-table", packageList, "SubmissionList");
       }}
       inversed
     >
@@ -372,15 +376,14 @@ const PackageList = () => {
       "submissions-table": true,
       "submissions-table-actions-column": userRoleObj.canAccessForms,
     });
-    const changeRequestListExists =
-      changeRequestList && changeRequestList.length > 0;
+    const packageListExists = packageList && packageList.length > 0;
     return (
       <LoadingScreen isLoading={isLoading}>
-        {changeRequestListExists ? (
+        {packageListExists ? (
           <PortalTable
             className={tableClassName}
             columns={columns}
-            data={changeRequestList}
+            data={packageList}
             initialState={initialTableState}
           />
         ) : (
