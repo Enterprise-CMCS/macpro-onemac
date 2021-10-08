@@ -42,6 +42,7 @@ const menuItemMap = {
 };
 
 const noClockStatuses = ["Withdrawn", "Terminated", "Unsubmitted"];
+const noExpirationTypes = [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA];
 
 /**
  * Component containing dashboard
@@ -161,6 +162,16 @@ const PackageList = () => {
     return returnDay;
   }, []);
 
+  const renderExpirationDate = useCallback(({ value, row }) => {
+    let expiration = "Pending";
+    if (!noExpirationTypes.includes(row.original.componentType)) {
+      if (value) expiration = format(value, "MMM d, yyyy");
+    } else {
+      expiration = "N/A";
+    }
+    return expiration;
+  }, []);
+
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
@@ -255,7 +266,7 @@ const PackageList = () => {
         Header: "Expiration Date",
         accessor: "expirationTimestamp",
         id: "expirationTimestamp",
-        Cell: renderNinetiethDay,
+        Cell: renderExpirationDate,
       },
       {
         Header: "Status",
