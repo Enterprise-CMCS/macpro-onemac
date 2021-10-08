@@ -43,7 +43,7 @@ Purely to demonstrate case insensitivity in email addresses.
 """
 UPPER_CASE_USER = [
     {
-        "id": "stateSUBMITTERactive@cms.hhs.gov",
+        "id": "stateSUBMITTERactive@cms.hhs.local",
         "type": "statesubmitter",
         "firstName": "Thiswill",
         "lastName": "Notshowupintheapp",
