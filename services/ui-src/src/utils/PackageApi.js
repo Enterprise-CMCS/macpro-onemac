@@ -13,10 +13,7 @@ class PackageApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get(
-        "changeRequestAPI",
-        `/getMyPackages?email=${userEmail}`
-      );
+      return await API.get("oneMacAPI", `/getMyPackages?email=${userEmail}`);
     } catch (error) {
       handleApiError(
         error,
@@ -33,7 +30,7 @@ class PackageApi {
    */
   async withdraw(submitterName, submitterEmail, packageId) {
     try {
-      return await API.post("changeRequestAPI", `/withdraw`, {
+      return await API.post("oneMacAPI", `/withdraw`, {
         body: {
           packageId,
           submitterEmail,

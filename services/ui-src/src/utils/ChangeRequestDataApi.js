@@ -44,7 +44,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      return await API.post("changeRequestAPI", "/submit", {
+      return await API.post("oneMacAPI", "/submit", {
         body: data,
       });
     } catch (error) {
@@ -69,10 +69,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      let changeRequest = await API.get(
-        "changeRequestAPI",
-        `/get/${id}/${userId}`
-      );
+      let changeRequest = await API.get("oneMacAPI", `/get/${id}/${userId}`);
       if (changeRequest.uploads) {
         let i;
         // Use a for loop instead of forEach to stay in the context of this async function.
@@ -106,7 +103,7 @@ class ChangeRequestDataApi {
     }
 
     try {
-      return await API.get("changeRequestAPI", `/package-exists/${id}`);
+      return await API.get("oneMacAPI", `/package-exists/${id}`);
     } catch (error) {
       handleApiError(
         error,
@@ -126,7 +123,7 @@ class ChangeRequestDataApi {
 
     try {
       return await API.get(
-        "changeRequestAPI",
+        "oneMacAPI",
         `/getAllByAuthorizedTerritories?email=${userEmail}`
       );
     } catch (error) {
@@ -134,22 +131,6 @@ class ChangeRequestDataApi {
         error,
         "FETCH_ERROR",
         `There was an error fetching the states/territories for ${userEmail}.`
-      );
-    }
-  }
-
-  /**
-   * Fetch a specific record from the backend.
-   * @return {Array} a list of change requests
-   */
-  async listAll() {
-    try {
-      return await API.get("changeRequestAPI", `/listall`);
-    } catch (error) {
-      handleApiError(
-        error,
-        "DASHBOARD_LIST_FETCH_ERROR",
-        `There was an error fetching Change requests`
       );
     }
   }
