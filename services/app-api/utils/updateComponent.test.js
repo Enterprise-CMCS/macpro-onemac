@@ -12,7 +12,7 @@ describe("components can be updated", () => {
       submitterId: "submitterId",
       submitterName: "submitterName",
       submitterEmail: "submitterEmail",
-      attachments: "attachments",
+      attachments: ["attachments"],
       additionalInformation: "additionalInformation",
     };
 

@@ -90,3 +90,5 @@ Outputs:
     Value: !Ref OneMacTable
   OneMacTableArn:
     Value: !GetAtt OneMacTable.Arn
+  OneMacTableStreamArn:
+    Value: !GetAtt OneMacTable.StreamArn

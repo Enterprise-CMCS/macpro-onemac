@@ -31,20 +31,30 @@ const PAGE_DETAILS = {
     detailsHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
   },
-  RAIResponse: {
+  [ChangeRequest.TYPE.SPA_RAI]: {
     pageTitle: "Response to RAI",
     detailsHeader: "RAI Response",
-    idLabel: "ID (todo)",
+    idLabel: "Medicaid SPA ID",
+  },
+  [ChangeRequest.TYPE.CHIP_SPA_RAI]: {
+    pageTitle: "Response to RAI",
+    detailsHeader: "RAI Response",
+    idLabel: "CHIP SPA ID",
+  },
+  waiverrai: {
+    pageTitle: "Response to RAI",
+    detailsHeader: "RAI Response",
+    idLabel: "Waiver Number",
   },
   waiverrenewal: {
     pageTitle: "Waiver Renewal",
     detailsHeader: "Waiver Renewal",
-    idLabel: "ID (todo)",
+    idLabel: "Waiver Number",
   },
   waiveramendment: {
     pageTitle: "Waiver Amendment",
     detailsHeader: "Waiver Amendment",
-    idLabel: "ID (todo)",
+    idLabel: "Waiver Number",
   },
 };
 
@@ -106,25 +116,20 @@ const DetailView = () => {
   const renderChildComponents = (childType) => {
     if (details[childType]?.length > 0)
       return (
-        <section>
-          <Review
-            className="original-review-component"
-            headingLevel="2"
-            heading={PAGE_DETAILS[childType].detailsHeader}
-          >
-            <div className="details-card-container">
-              <ChoiceList
-                choices={details[childType].map((item) => {
-                  return {
-                    title: PAGE_DETAILS[childType].pageTitle,
-                    description:
-                      "Date submitted: " + formatDate(item.componentTimestamp),
-                    linkTo: `/detail/${childType}/${item.submissionTimestamp}/${item.componentId}`,
-                  };
-                })}
-              />
-            </div>
-          </Review>
+        <section className="choice-container file-list-container">
+          <div className="choice-intro">
+            <h2>{PAGE_DETAILS[childType].detailsHeader}</h2>
+          </div>
+          <ChoiceList
+            choices={details[childType].map((item) => {
+              return {
+                title: PAGE_DETAILS[childType].pageTitle,
+                description:
+                  "Date submitted: " + formatDate(item.componentTimestamp),
+                linkTo: `/detail/${childType}/${item.componentTimestamp}/${item.componentId}`,
+              };
+            })}
+          />
         </section>
       );
   };
@@ -138,7 +143,8 @@ const DetailView = () => {
       {details && (
         <article className="form-container">
           <div className="read-only-submission">
-            {renderChildComponents("RAIResponse")}
+            {renderChildComponents(`${componentType}rai`)}
+            {renderChildComponents(`waiverrai`)}
             {details.submissionTimestamp && (
               <section>
                 <Review

@@ -135,10 +135,10 @@ export const main = handler(async (event) => {
   // we do the data conversion here so the new functions only need the new way
   const submitterName = data.user.firstName + " " + data.user.lastName;
   const submissionData = {
-    transmittalNumber: data.transmittalNumber,
-    submissionType: data.type,
-    clockEndTimestamp: data.ninetyDayClockEnd,
+    componentId: data.transmittalNumber,
+    componentType: data.type,
     submissionTimestamp: data.submittedAt,
+    currentStatus: "Submitted",
     attachments: data.uploads,
     additionalInformation: data.summary,
     submissionId: data.id,
@@ -147,7 +147,7 @@ export const main = handler(async (event) => {
     submitterId: data.userId,
   };
 
-  if (data.actionType) submissionData.submissionType += data.actionType;
+  if (data.actionType) submissionData.componentType += data.actionType;
 
   if (data.waiverAuthority)
     submissionData.waiverAuthority = data.waiverAuthority;
@@ -159,6 +159,6 @@ export const main = handler(async (event) => {
     })
     .catch((error) => {
       console.log("Error is: ", error.message);
-      throw error;
+      // throw error;
     });
 });

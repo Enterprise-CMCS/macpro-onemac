@@ -14,6 +14,13 @@ export const TYPE = {
   WAIVER_APP_K: "waiverappk",
 };
 
+export const correspondingRAILink = {
+  [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [TYPE.SPA]: ROUTES.SPA_RAI,
+  [TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+  [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+};
+
 const getBaseWaiverId = (inId) => {
   const baseRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
 
@@ -40,7 +47,6 @@ export const decodeId = (inId, inType) => {
       if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
     // falls through
     case TYPE.SPA_RAI:
-      returnInfo.componentType = "RAIResponse";
       returnInfo.isNewPackage = false;
       break;
     case TYPE.WAIVER_AMENDMENT:
