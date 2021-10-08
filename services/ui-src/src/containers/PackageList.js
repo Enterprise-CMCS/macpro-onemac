@@ -42,8 +42,8 @@ const menuItemMap = {
 };
 
 const filterArray = {
-  clockEndTimestamp: ["Withdrawn", "Terminated", "Unsubmitted"],
-  expirationTimestamp: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
+  currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
+  componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
 };
 
 /**
@@ -302,8 +302,7 @@ const PackageList = () => {
     renderType,
     renderDate,
     renderName,
-    renderNinetiethDay,
-    renderExpirationDate,
+    renderFilteredDate,
     userRoleObj.canAccessForms,
   ]);
 
