@@ -307,6 +307,7 @@ const PackageList = () => {
     renderDate,
     renderName,
     renderNinetiethDay,
+    renderExpirationDate,
     userRoleObj.canAccessForms,
   ]);
 
