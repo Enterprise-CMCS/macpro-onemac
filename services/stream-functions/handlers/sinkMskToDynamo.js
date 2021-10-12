@@ -142,7 +142,7 @@ function myHandler(event) {
     if (SEAToolData.clockEndTimestamp) {
       updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
       SEAToolData.clockEndTimestamp;
-      updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
+      updatePackageParams.UpdateExpression += ", clockEndTimestamp = :newClockEnd";
     }
 
     // only update status if new Status is sent
@@ -152,6 +152,13 @@ function myHandler(event) {
         newStatus = SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus];
       updatePackageParams.ExpressionAttributeValues[":newStatus"] = newStatus;
       updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
+    }
+
+    // only update expiration Date if new End_Date is sent
+    if (SEAToolData.expirationTimestamp) {
+      updatePackageParams.ExpressionAttributeValues[":newExpiration"] =
+      SEAToolData.expirationTimestamp;
+      updatePackageParams.UpdateExpression += ", expirationTimestamp = :newExpiration";
     }
 
     ddb.update(updatePackageParams, function(err, data) {
