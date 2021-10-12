@@ -12,6 +12,7 @@ import oneMacCHIPSPAPage from "../../../support/pages/oneMacCHIPSPAPage";
 import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmitNewWaiverActionPage";
 import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
 import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
+import oneMacPackagePage from "../../../support/pages/oneMacPackagePage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
@@ -26,6 +27,7 @@ const OneMacCHIPSPAPage = new oneMacCHIPSPAPage();
 const OneMacSubmitNewWaiverActionPage = new oneMacSubmitNewWaiverActionPage();
 const OneMacRequestWaiverTemporaryExtension =
   new oneMacRequestWaiverTemporaryExtension();
+const OneMacPackagePage = new oneMacPackagePage();
 const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const SPAID = Utilities.SPAID("MD");
 const validWaiverNumberWith5Numbers =
@@ -431,4 +433,34 @@ And("Type Valid Waiver Number With 5 Characters", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
     validWaiverNumberWith5Numbers
   );
+});
+
+And("click on Packages", () => {
+  OneMacDashboardPage.clickPackageTab();
+});
+
+When("Login with CMS Reviewer User", () => {
+  OneMacDevLoginPage.loginAsCMSReviewer();
+});
+
+And(
+  "verify 90th day column is available to the immediate left to the status column",
+  () => {
+    OneMacPackagePage.verify90thDayColumn();
+  }
+);
+
+And("verify that value of the column for the ID is Pending", (s) => {
+  OneMacPackagePage.verifyValue();
+});
+
+And(
+  "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
+  (s) => {
+    OneMacPackagePage.findIdNumberMD32560();
+  }
+);
+
+And("verify that 90th day value of WI-23-2222-MED1 is NA", (s) => {
+  OneMacPackagePage.findIdNumberWI232222MED1();
 });

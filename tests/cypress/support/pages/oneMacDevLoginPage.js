@@ -26,5 +26,10 @@ export class oneMacDevLoginPage {
     cy.get(PasswordInput).type("Passw0rd!");
     cy.get(LoginBtn).click();
   }
+  loginAsCMSReviewer() {
+    cy.get(EmailInput).type("cmsreviewer@nightwatch.test");
+    cy.get(PasswordInput).type("Passw0rd!");
+    cy.get(LoginBtn).click();
+  }
 }
 export default oneMacDevLoginPage;
