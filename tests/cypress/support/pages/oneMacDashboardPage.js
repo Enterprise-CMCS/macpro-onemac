@@ -26,6 +26,8 @@ const typeHeader = "#typeColHeader";
 const stateHeader = "#territoryColHeader";
 const dateSubmittedHeader = "#submittedAtColHeader";
 const submittedByHeader = "#submitterColHeader";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageTab = '//a[@id="packageListLink"]';
 
 export class oneMacDashboardPage {
   clickNewSubmission() {
@@ -99,6 +101,9 @@ export class oneMacDashboardPage {
 
   verifyIDNumberIsDisplayed() {
     cy.xpath(IDNUMBER).should("be.visible");
+  }
+  clickPackageTab() {
+    cy.xpath(packageTab).click();
   }
 }
 export default oneMacDashboardPage;
