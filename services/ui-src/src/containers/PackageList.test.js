@@ -62,18 +62,14 @@ it("renders table with columns", async () => {
   screen.getByText("Submitted By");
   screen.getByText("Actions");
 });
-/* fix after weekend!
-it.each`
-  filterFieldType    | filterFieldValue  | inName                   | inValue           | textShown
-  ${"currentStatus"} | ${"Withdrawn"}    | ${"clockEndTimestamp"}   | ${1570378876000}  | ${"N/A"}
-  ${"currentStatus"} | ${"Terminated"}   | ${"clockEndTimestamp"}   | ${1570378876000}  | ${"N/A"}
-  ${"currentStatus"} | ${"Unsubmitted"}  | ${"clockEndTimestamp"}   | ${1570378876000}  | ${"N/A"}
-  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"}   | ${1570378876000}  | ${"Oct 6, 2019"}
-  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"}   | ${""}             | ${"Pending"}
-  ${"componentType"} | ${"spa"}          | ${"expirationTimestamp"} | ${1570378876000}  | ${"N/A"}
-  ${"componentType"} | ${"chipspa"}      | ${"expirationTimestamp"} | ${1570378876000}  | ${"N/A"}
-  ${"componentType"} | ${"AnythingElse"} | ${"expirationTimestamp"} | ${1570378876000}  | ${"Oct 6, 2019"}
 
+it.each`
+  filterFieldType    | filterFieldValue  | inName                 | inValue          | textShown
+  ${"currentStatus"} | ${"Withdrawn"}    | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
+  ${"currentStatus"} | ${"Terminated"}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
+  ${"currentStatus"} | ${"Unsubmitted"}  | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
+  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
+  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"} | ${""}            | ${"Pending"}
 `(
   "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
   async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
@@ -92,6 +88,5 @@ it.each`
       screen.getAllByText(filterFieldValue)[0].closest("tr")
     );
     expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
-  } 
+  }
 );
-*/
