@@ -41,7 +41,10 @@ const menuItemMap = {
   Submitted: withdrawMenuItem,
 };
 
-const noClockStatuses = ["Withdrawn", "Terminated", "Unsubmitted"];
+const filterArray = {
+  currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
+  componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
+};
 
 /**
  * Component containing dashboard
@@ -151,15 +154,19 @@ const PackageList = () => {
     }
   }, []);
 
-  const renderNinetiethDay = useCallback(({ value, row }) => {
-    let returnDay = "Pending";
-    if (!noClockStatuses.includes(row.original.currentStatus)) {
-      if (value) returnDay = format(value, "MMM d, yyyy");
-    } else {
-      returnDay = "N/A";
-    }
-    return returnDay;
-  }, []);
+  const renderFilteredDate = useCallback(
+    (filterField) =>
+      ({ value, row }) => {
+        let returnDay = "Pending";
+        if (!filterArray[filterField].includes(row.original[filterField])) {
+          if (value) returnDay = format(value, "MMM d, yyyy");
+        } else {
+          returnDay = "N/A";
+        }
+        return returnDay;
+      },
+    []
+  );
 
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
@@ -249,7 +256,13 @@ const PackageList = () => {
         Header: "90th Day",
         accessor: "clockEndTimestamp",
         id: "ninetiethDay",
-        Cell: renderNinetiethDay,
+        Cell: renderFilteredDate("currentStatus"),
+      },
+      {
+        Header: "Expiration Date",
+        accessor: "expirationTimestamp",
+        id: "expirationTimestamp",
+        Cell: renderFilteredDate("componentType"),
       },
       {
         Header: "Status",
@@ -289,7 +302,7 @@ const PackageList = () => {
     renderType,
     renderDate,
     renderName,
-    renderNinetiethDay,
+    renderFilteredDate,
     userRoleObj.canAccessForms,
   ]);
 

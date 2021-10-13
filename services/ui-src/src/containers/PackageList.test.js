@@ -57,25 +57,26 @@ it("renders table with columns", async () => {
   screen.getByText("Type");
   screen.getByText("State");
   screen.getByText("90th Day");
+  screen.getByText("Expiration Date");
   screen.getByText("Date Submitted");
   screen.getByText("Submitted By");
   screen.getByText("Actions");
 });
 
 it.each`
-  currentStatus     | ninetiethDayValue | ninetiethDayShown
-  ${"Withdrawn"}    | ${1570378876000}  | ${"N/A"}
-  ${"Terminated"}   | ${1570378876000}  | ${"N/A"}
-  ${"Unsubmitted"}  | ${1570378876000}  | ${"N/A"}
-  ${"AnythingElse"} | ${1570378876000}  | ${"Oct 6, 2019"}
-  ${"AnythingElse"} | ${""}             | ${"Pending"}
+  filterFieldType    | filterFieldValue  | inName                 | inValue          | textShown
+  ${"currentStatus"} | ${"Withdrawn"}    | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
+  ${"currentStatus"} | ${"Terminated"}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
+  ${"currentStatus"} | ${"Unsubmitted"}  | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
+  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
+  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"} | ${""}            | ${"Pending"}
 `(
-  "shows $ninetiethDayShown in 90th day when status is $currentStatus and value is $ninetiethDayValue",
-  async ({ currentStatus, ninetiethDayValue, ninetiethDayShown }) => {
-    const testPackageList = packageList;
-    testPackageList[0].currentStatus = currentStatus;
-    testPackageList[0].clockEndTimestamp = ninetiethDayValue;
-    PackageApi.getMyPackages.mockResolvedValue(testPackageList);
+  "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
+  async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
+    const testPackage = packageList[0];
+    testPackage[filterFieldType] = filterFieldValue;
+    testPackage[inName] = inValue;
+    PackageApi.getMyPackages.mockResolvedValue([testPackage]);
 
     render(<PackageList />, { wrapper: ContextWrapper });
 
@@ -84,8 +85,8 @@ it.each`
 
     // get the row for the status
     const packageRow = within(
-      screen.getAllByText(currentStatus)[0].closest("tr")
+      screen.getAllByText(filterFieldValue)[0].closest("tr")
     );
-    expect(packageRow.getByText(ninetiethDayShown)).toBeInTheDocument();
+    expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
   }
 );

@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const { ChangeRequest } = require("cmscommonlib");
 
+AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
 const SEATOOL_PLAN_TYPE = {
@@ -9,6 +10,48 @@ const SEATOOL_PLAN_TYPE = {
   WAIVER: "122",
   WAIVER_APP_K: "123",
 };
+
+const SEATOOL_STATUS = {
+  PENDING: "Pending",
+  PENDING_RAI: "Pending-RAI",
+  PENDING_OFF_THE_CLOCK: "Pending-Off the Clock",
+  APPROVED: "Approved",
+  DISAPPROVED: "Disapproved",
+  WITHDRAWN: "Withdrawn",
+  TERMINATED: "Terminated",
+  PENDING_CONCURRANCE: "Pending-Concurrence",
+  UNSUBMITTED: "Unsubmitted",
+  PENDING_FINANCE: "Pending-Finance",
+  PENDING_APPROVAL: "Pending-Approval",
+};
+
+// check if the SEATool updates should be reflected in OneMAC
+const SEATOOL_TO_ONEMAC_STATUS = {
+  [SEATOOL_STATUS.PENDING]: "Package In Review",
+  [SEATOOL_STATUS.PENDING_RAI]: "RAI Issued",
+  [SEATOOL_STATUS.PENDING_OFF_THE_CLOCK]: "Response to RAI In Review",
+  [SEATOOL_STATUS.APPROVED]: "Package Approved",
+  [SEATOOL_STATUS.DISAPPROVED]: "Package Disapproved",
+  [SEATOOL_STATUS.WITHDRAWN]: "Package Withdrawn",
+  [SEATOOL_STATUS.TERMINATED]: "Amendmend Terminated",
+  [SEATOOL_STATUS.PENDING_CONCURRANCE]: "Package In Review",
+  [SEATOOL_STATUS.UNSUBMITTED]: "Draft",
+  [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
+  [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
+};
+
+const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
+  [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
+  [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
+  [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
+  [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
+};
+
+const topLevelUpdates = [
+  "clockEndTimestamp",
+  "expirationTimestamp",
+  "currentStatus",
+];
 
 function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
@@ -34,19 +77,25 @@ function myHandler(event) {
     stateCode = value.payload.State_Code.toString();
   } else stateCode = SEAToolId.substring(0,2);
 
+  let oneMACStatus = `SEATool Status: ${packageStatusID}`;
+  if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
+    oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
+
   const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
 
   const SEAToolData = {
     'packageStatus': packageStatusID,
+    'currentStatus': oneMACStatus,
     'stateCode': stateCode,
     'planType': planType,
+    'packageType': SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[planType],
     'packageId': idInfo.packageId,
     'componentId': idInfo.componentId,
     'componentType': idInfo.componentType,
     'clockEndTimestamp': value.payload.Alert_90_Days_Date,
+    'expirationTimestamp': value.payload.End_Date,
   };
   if (SEAToolId != undefined) {
-    AWS.config.update({region: 'us-east-1'});
 
     // update the SEATool Entry
     const updateSEAToolParams = {
@@ -79,44 +128,6 @@ function myHandler(event) {
       }
     });
 
-    const SEATOOL_STATUS = {
-      PENDING: "Pending",
-      PENDING_RAI: "Pending-RAI",
-      PENDING_OFF_THE_CLOCK: "Pending-Off the Clock",
-      APPROVED: "Approved",
-      DISAPPROVED: "Disapproved",
-      WITHDRAWN: "Withdrawn",
-      TERMINATED: "Terminated",
-      PENDING_CONCURRANCE: "Pending-Concurrence",
-      UNSUBMITTED: "Unsubmitted",
-      PENDING_FINANCE: "Pending-Finance",
-      PENDING_APPROVAL: "Pending-Approval",
-    };
-
-    // check if the SEATool updates should be reflected in OneMAC
-    const SEATOOL_TO_ONEMAC_STATUS = {
-      [SEATOOL_STATUS.PENDING]: "Package In Review",
-      [SEATOOL_STATUS.PENDING_RAI]: "RAI Issued",
-      [SEATOOL_STATUS.PENDING_OFF_THE_CLOCK]: "Response to RAI In Review",
-      [SEATOOL_STATUS.APPROVED]: "Package Approved",
-      [SEATOOL_STATUS.DISAPPROVED]: "Package Disapproved",
-      [SEATOOL_STATUS.WITHDRAWN]: "Package Withdrawn",
-      [SEATOOL_STATUS.TERMINATED]: "Amendmend Terminated",
-      [SEATOOL_STATUS.PENDING_CONCURRANCE]: "Package In Review",
-      [SEATOOL_STATUS.UNSUBMITTED]: "Draft",
-      [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
-      [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
-    };
-
-    const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
-      [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
-      [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
-      [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
-      [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
-    };
-
-    SEAToolData.packageType = SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[SEAToolData.planType];
-
     // update OneMAC Component
     const updatePk = SEAToolData.componentId;
     const updateSk = SEAToolData.packageType;
@@ -137,22 +148,18 @@ function myHandler(event) {
       },
     };
 
-    // only update clock if new Clock is sent
-    if (SEAToolData.clockEndTimestamp) {
-      updatePackageParams.ExpressionAttributeValues[":newClockEnd"] =
-      SEAToolData.clockEndTimestamp;
-      updatePackageParams.UpdateExpression += ", currentClockEnd = :newClockEnd";
-    }
-
-    // only update status if new Status is sent
-    if (SEAToolData.packageStatus) {
-      let newStatus = `SEATool Status: ${SEAToolData.packageStatus}`;
-      if (SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus])
-        newStatus = SEATOOL_TO_ONEMAC_STATUS[SEAToolData.packageStatus];
-      updatePackageParams.ExpressionAttributeValues[":newStatus"] = newStatus;
-      updatePackageParams.UpdateExpression += ",currentStatus = :newStatus";
-    }
-
+    topLevelUpdates.forEach((attributeName) => {
+      if (SEAToolData[attributeName]) {
+        const newLabel = `:new${attributeName}`;
+        updatePackageParams.ExpressionAttributeValues[newLabel] =
+        SEAToolData[attributeName];
+        if (Array.isArray(SEAToolData[attributeName]))
+          updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
+        else
+          updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+      }
+    });
+  
     ddb.update(updatePackageParams, function(err, data) {
       if (err) {
         console.log("Error", err);

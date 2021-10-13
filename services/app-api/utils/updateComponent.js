@@ -1,6 +1,11 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-const topLevelUpdates = ["clockEndTimestamp", "currentStatus", "attachments"];
+const topLevelUpdates = [
+  "clockEndTimestamp",
+  "expirationTimestamp",
+  "currentStatus",
+  "attachments",
+];
 
 export default async function updateComponent({
   packageId: updatePk,
