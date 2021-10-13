@@ -77,11 +77,15 @@ function myHandler(event) {
     stateCode = value.payload.State_Code.toString();
   } else stateCode = SEAToolId.substring(0,2);
 
+  let oneMACStatus = `SEATool Status: ${packageStatusID}`;
+  if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
+    oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
+
   const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
 
   const SEAToolData = {
     'packageStatus': packageStatusID,
-    'currentStatus': SEATOOL_TO_ONEMAC_STATUS[packageStatusID],
+    'currentStatus': oneMACStatus,
     'stateCode': stateCode,
     'planType': planType,
     'packageType': SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[planType],
