@@ -30,7 +30,7 @@ const FAQ = () => {
           <aside id="faq-contact-info-box">
             <div className="faq-border-box" />
             <div className="faq-info-box">
-              <h3>MACPro Help Desk Contact Info</h3>
+              <h3>OneMAC Help Desk Contact Info</h3>
               <dl>
                 <div className="faq-info-wrapper">
                   <dt>Phone Number</dt>
@@ -68,6 +68,168 @@ const FAQ = () => {
               <br />
               The submission portal works best on Google Chrome (Version
               91.0.4472.77 or later), Firefox (Version 89.0 or later).
+            </Collapsible>
+            <Collapsible
+              triggerWhenOpen={
+                <TriggerCB
+                  isOpen={false}
+                  text="What should we do if we don’t receive a confirmation email?"
+                />
+              }
+              trigger={
+                <TriggerCB
+                  isOpen={true}
+                  text="  What should we do if we don’t receive a confirmation email?"
+                />
+              }
+            >
+              <br />
+              Refresh your inbox, check your SPAM filters, then contact the
+              OneMAC Help Desk{" "}
+              <a href={`mailto:${helpDeskContact.email}`}>
+                {helpDeskContact.email}
+              </a>{" "}
+              or call {helpDeskContact.phone} or contact your state lead.
+            </Collapsible>
+            <Collapsible
+              triggerWhenOpen={
+                <TriggerCB
+                  isOpen={false}
+                  text="Is this considered the official state submission?"
+                />
+              }
+              trigger={
+                <TriggerCB
+                  isOpen={true}
+                  text="  Is this considered the official state submission?"
+                />
+              }
+            >
+              <br />
+              Yes, as long as you have the electronic receipt (confirmation
+              email). Your submission is considered your official state
+              submission and will only be considered received by CMS if you have
+              received the electronic receipt. You should receive an email
+              confirmation that the formal action was received along with
+              information about the 90th day. If you do not receive a
+              confirmation email for your SPA or waiver submissions, please
+              contact your state lead or your state’s CMS lead for HCBS or
+              managed care.
+            </Collapsible>
+            <Collapsible
+              triggerWhenOpen={
+                <TriggerCB
+                  isOpen={false}
+                  text="What are the OneMAC user roles?"
+                />
+              }
+              trigger={
+                <TriggerCB
+                  isOpen={true}
+                  text="  What are the OneMAC user roles?"
+                />
+              }
+            >
+              <br />
+
+              <table className="faq-table">
+                <colgroup>
+                  <col />
+                  <col />
+                  <col />
+                </colgroup>
+                <tbody>
+                  <tr>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>OneMAC Role</span>
+                        </strong>
+                      </p>
+                    </th>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>System Utilization</span>
+                        </strong>
+                      </p>
+                    </th>
+                    <th>
+                      <p>
+                        <strong>
+                          <span>Role Approver</span>
+                        </strong>
+                      </p>
+                    </th>
+                  </tr>
+                  <tr>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>State Submitter</span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>
+                          Creates new paper-based submissions and submits
+                          packages to CMS for review:
+                        </span>
+                      </p>
+                      <ul>
+                        <li>Medicaid State Plan Amendments (SPAs)</li>
+                        <li>1915(b) waivers</li>
+                        <li>1915(c) waivers</li>
+                      </ul>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>State System Administrator</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>State System Administrator</span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>
+                          Reviews and acts on State Submitter user role requests
+                          and system access, has all State Submitter permissions
+                          (above)
+                        </span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>CMS Role Approver</span>
+                      </p>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>CMS Role Approver</span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>
+                          Reviews and acts on State System Administrator user
+                          role requests
+                        </span>
+                      </p>
+                    </td>
+                    <td className="confluenceTd">
+                      <p>
+                        <span>CMS System Administrator</span>
+                      </p>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
             </Collapsible>
             <hr />
             <h3 className="topic-title">State Plan Amendments (SPAs)</h3>
@@ -1041,8 +1203,8 @@ const FAQ = () => {
                     <td className="confluenceTd">
                       <p>
                         <span>
-                          Supplemental documents for the 1915(c) Appendix K
-                          waiver amendment
+                          Supplemental documents for the Waiver Extension
+                          Request
                         </span>
                       </p>
                     </td>
@@ -1133,32 +1295,6 @@ const FAQ = () => {
                 </tbody>
               </table>
             </Collapsible>
-            <hr />
-            <div className="faq-misc-points">
-              <h4>
-                What should we do if we don’t receive a confirmation email?
-              </h4>
-              <p>
-                Refresh your inbox, check your SPAM filters, then contact the
-                MACPro Help Desk{" "}
-                <a href={`mailto:${helpDeskContact.email}`}>
-                  {helpDeskContact.email}
-                </a>{" "}
-                or call {helpDeskContact.phone} or contact your state lead.
-              </p>
-              <h4>Is this considered the official state submission?</h4>
-              <p>
-                Yes, as long as you have the electronic receipt (confirmation
-                email). Your submission is considered your official state
-                submission and will only be considered received by CMS if you
-                have received the electronic receipt. You should receive an
-                email confirmation that the formal action was received along
-                with information about the 90th day. If you do not receive a
-                confirmation email for your SPA or waiver submissions, please
-                contact your state lead or your state’s CMS lead for HCBS or
-                managed care.
-              </p>
-            </div>
           </div>
         </div>
       </div>
