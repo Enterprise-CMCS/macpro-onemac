@@ -105,5 +105,8 @@ export class oneMacDashboardPage {
   clickPackageTab() {
     cy.xpath(packageTab).click();
   }
+  navigatetoURL(s) {
+    cy.visit(s);
+  }
 }
 export default oneMacDashboardPage;

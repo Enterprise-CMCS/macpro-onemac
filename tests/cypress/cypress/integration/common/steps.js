@@ -450,7 +450,7 @@ And(
   }
 );
 
-And("verify that value of the column for the ID is Pending", (s) => {
+And("verify that value of the column for the ID is Pending", () => {
   OneMacPackagePage.verifyValue();
 });
 
@@ -461,6 +461,10 @@ And(
   }
 );
 
-And("verify that 90th day value of WI-23-2222-MED1 is NA", (s) => {
+And("verify that 90th day value of WI-23-2222-MED1 is NA", () => {
   OneMacPackagePage.findIdNumberWI232222MED1();
+});
+
+And("navigate to {string}", (s) => {
+  OneMacDashboardPage.navigatetoURL(s);
 });
