@@ -1,5 +1,8 @@
-import { getCMSDateFormat, getLinksHtml } from "./changeRequest-util";
-import newPackage from "../utils/newPackage";
+import {
+  getAccessInstructions,
+  getCMSDateFormat,
+  getLinksHtml,
+} from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
@@ -53,10 +56,14 @@ class Waiver {
       transmittalNumberWarningMessage = "";
     }
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject = "New Waiver " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
         <p>The Submission Portal received a Waiver Submission:</p>
+        ${getAccessInstructions()}
         <p>
             <br><b>State or territory</b>: ${data.territory}
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -126,11 +133,6 @@ class Waiver {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "Submitted";
-    return newPackage(data);
   }
 }
 

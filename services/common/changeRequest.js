@@ -6,9 +6,62 @@ export const TYPE = {
   SPA: "spa",
   SPA_RAI: "sparai",
   WAIVER: "waiver",
+  WAIVER_BASE: "waivernew",
+  WAIVER_AMENDMENT: "waiveramendment",
+  WAIVER_RENEWAL: "waiverrenewal",
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
   WAIVER_APP_K: "waiverappk",
+};
+
+export const correspondingRAILink = {
+  [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [TYPE.SPA]: ROUTES.SPA_RAI,
+  [TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+  [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+};
+
+const getBaseWaiverId = (inId) => {
+  const baseRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
+
+  // SEA Tool sometimes uses hyphens in Waiver Numbers
+  if (inId[2] === "-") inId[2] = ".";
+
+  const baseWaiver = baseRE.exec(inId);
+  return baseWaiver[0];
+};
+
+export const decodeId = (inId, inType) => {
+  const returnInfo = {
+    packageId: inId,
+    parentType: TYPE.SPA,
+    componentId: inId,
+    componentType: inType,
+    isNewPackage: true,
+  };
+  switch (inType) {
+    case TYPE.WAIVER_RAI:
+      returnInfo.parentType = TYPE.WAIVER_BASE;
+    // falls through
+    case TYPE.CHIP_SPA_RAI:
+      if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
+    // falls through
+    case TYPE.SPA_RAI:
+      returnInfo.isNewPackage = false;
+      break;
+    case TYPE.WAIVER_AMENDMENT:
+    case TYPE.WAIVER_RENEWAL:
+    case TYPE.WAIVER_EXTENSION:
+    case TYPE.WAIVER_APP_K:
+      returnInfo.packageId = getBaseWaiverId(inId);
+      returnInfo.isNewPackage = false;
+    // falls through
+    case TYPE.WAIVER:
+    case TYPE.WAIVER_BASE:
+      returnInfo.parentType = TYPE.WAIVER_BASE;
+      break;
+  }
+  return returnInfo;
 };
 
 const commonSubheaderMessage =

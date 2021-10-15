@@ -1,5 +1,8 @@
-import { getLinksHtml, getCMSDateFormat } from "./changeRequest-util";
-import newPackage from "../utils/newPackage";
+import {
+  getAccessInstructions,
+  getLinksHtml,
+  getCMSDateFormat,
+} from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
@@ -44,10 +47,14 @@ class SPA {
   getCMSEmail(data) {
     const cmsEmail = {};
 
-    cmsEmail.ToAddresses = [process.env.reviewerEmail];
+    cmsEmail.ToAddresses = [
+      process.env.reviewerEmail,
+      process.env.testingEmail,
+    ].filter(Boolean);
     cmsEmail.Subject = `New SPA ${data.transmittalNumber} submitted`;
     cmsEmail.HTML = `
-      <p>The Submission Portal received a State Plan Amendment:</p>
+      <p>The Submission Portal received a State Plan Amendment.</p>
+      ${getAccessInstructions()}
       <p>
         <br><b>State or territory</b>: ${data.territory}
         <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -113,11 +120,6 @@ class SPA {
     `;
 
     return stateEmail;
-  }
-
-  async saveSubmission(data) {
-    data.packageStatus = "Submitted";
-    return newPackage(data);
   }
 }
 

@@ -75,21 +75,17 @@ async function stateSubmitterDynamoDbQuery(
  * @returns Returns an array of change requests to display on users submission list.
  */
 async function getDataFromDB(user) {
-  let startingKey;
-  let promises;
-  let tempResults = [];
-  let allResults = [];
-  if (!startingKey) {
-    startingKey = null;
-  }
+  let startingKey = null;
+
   try {
-    let keepSearching;
     if (
+      !user.type ||
       user.type === USER_TYPE.HELPDESK ||
       user.type === USER_TYPE.CMS_REVIEWER ||
       user.type === USER_TYPE.SYSTEM_ADMIN
     ) {
-      keepSearching = true;
+      let keepSearching = true;
+      let tempResults = [];
       while (keepSearching == true) {
         [startingKey, keepSearching, tempResults] =
           await helpdeskOrReviewerDynamoDbQuery(
@@ -100,30 +96,25 @@ async function getDataFromDB(user) {
       }
       return tempResults;
     } else {
-      // query dynamodb for each territory in the territiories array
-      promises = getAuthorizedStateList(user).map(async (territory) => {
-        tempResults = [];
-        keepSearching = true;
-        while (keepSearching == true) {
-          [startingKey, keepSearching, tempResults] =
-            await stateSubmitterDynamoDbQuery(
-              startingKey,
-              territory,
-              keepSearching,
-              tempResults
-            );
-        }
-        return tempResults;
-      });
-      // resolve promises from all queries
-      allResults = await Promise.all(promises);
-      const concatResults = [];
-      for (let i = 0; i < allResults.length; i++) {
-        allResults[i].forEach((stateInfo) => {
-          concatResults.push(stateInfo);
-        });
-      }
-      return concatResults;
+      return (
+        await Promise.all(
+          // query dynamodb for each territory in the territiories array
+          getAuthorizedStateList(user).map(async (territory) => {
+            let tempResults = [];
+            let keepSearching = true;
+            while (keepSearching == true) {
+              [startingKey, keepSearching, tempResults] =
+                await stateSubmitterDynamoDbQuery(
+                  startingKey,
+                  territory,
+                  keepSearching,
+                  tempResults
+                );
+            }
+            return tempResults;
+          })
+        )
+      ).flat();
     }
   } catch (error) {
     console.error("Could not fetch results from Dynamo:", error);
@@ -143,15 +134,15 @@ export const main = handler(async (event) => {
   }
 
   const user = await getUser(event.queryStringParameters.email);
-  if (!user) {
-    return RESPONSE_CODE.USER_NOT_FOUND;
+  if (Object.keys(user).length === 0) {
+    console.info(
+      `User ${event.queryStringParameters.email} does not exist in database.`
+    );
   }
   const allResults = await getDataFromDB(user);
+  if (typeof allResults === "string") return allResults;
   // extracts items from each of the results
-  let items = [];
-  allResults.forEach((result) => {
-    items = items.concat(result.Items);
-  });
+  const items = allResults.flatMap(({ Items }) => Items);
   if (items.length === 0) {
     console.log(`No change requests found matching that query.`);
   }

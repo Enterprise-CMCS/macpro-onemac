@@ -129,7 +129,7 @@ const getUser = async (userEmail) => {
 // Create the user object for new users //
 const createUserObject = (input) => {
   const user = {
-    id: input.userEmail,
+    id: input.userEmail.toLowerCase(),
     type: input.type,
     attributes: [],
   };

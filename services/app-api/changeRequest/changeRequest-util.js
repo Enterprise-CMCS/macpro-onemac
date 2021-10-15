@@ -33,28 +33,46 @@ export default function getChangeRequestFunctions(type) {
 }
 
 /**
+ * Get HTML instructions for accessing submissions in the application.
+ * @returns {string}
+ */
+export function getAccessInstructions() {
+  return `
+    <ul>
+      <li>
+        The submission can be accessed in the OneMAC application, which you can
+        find at <a href="${process.env.applicationEndpoint}/dashboard">this link</a>.
+      </li>
+      <li>
+        If you are not already logged in, please click the "Login" link at the
+        top of the page and log in using your Enterprise User Administration
+        (EUA) credentials.
+      </li>
+      <li>
+        After you have logged in, you will be taken to the OneMAC application.
+        The submission will be listed on the dashboard page, and you can view
+        its details by clicking on its ID number.
+      </li>
+    </ul>
+  `;
+}
+
+/**
  * Get HTML containing links representing the attached documents.
  * @param {Object} uploads data describing the uploaded file, with title, url, and filename
  * @returns {String} HTML with the document links.
  */
 export function getLinksHtml(uploads) {
-  let html = "";
-  if (Array.isArray(uploads) && uploads.length > 0) {
-    html = "<ul>";
-    uploads.forEach(async (upload) => {
-      if (upload)
-        html +=
-          "<li>" +
-          upload.title +
-          ': <a href="' +
-          upload.url +
-          '">' +
-          upload.filename +
-          "</a></li>";
-    });
-    html += "</ul>";
-  }
-  return html;
+  if (!Array.isArray(uploads) || uploads.length === 0) return "";
+
+  return (
+    "<ul>" +
+    uploads
+      .filter((u) => u && u.title && u.filename)
+      .map(({ title, filename }) => `<li>${title}: ${filename}</li>`)
+      .join("") +
+    "</ul>"
+  );
 }
 
 /**

@@ -1,0 +1,32 @@
+export const packageList = [
+  {
+    componentType: "waivernew",
+    componentId: "MI.8999",
+    submissionId: "11300e80-263f-11ec-ab47-23c14df6b883",
+    currentStatus: "Submitted",
+    submitterId: "offlineContext_cognitoIdentityId",
+    submitterName: "Angie Active",
+    submissionTimestamp: 1633481285595,
+    submitterEmail: "statesubmitteractive@cms.hhs.local",
+  },
+  {
+    componentType: "chipspa",
+    componentId: "MI-98-2223",
+    submissionId: "d47e7d50-263e-11ec-ab47-23c14df6b883",
+    currentStatus: "Submitted",
+    submitterId: "offlineContext_cognitoIdentityId",
+    submitterName: "Angie Active",
+    submissionTimestamp: 1633481183766,
+    submitterEmail: "statesubmitteractive@cms.hhs.local",
+  },
+  {
+    componentType: "spa",
+    componentId: "MI-11-4444",
+    submissionId: "bbdab000-263b-11ec-ab47-23c14df6b883",
+    currentStatus: "Withdrawn",
+    submitterId: "offlineContext_cognitoIdentityId",
+    submitterName: "Angie Active",
+    submissionTimestamp: 1633479854023,
+    submitterEmail: "statesubmitteractive@cms.hhs.local",
+  },
+];

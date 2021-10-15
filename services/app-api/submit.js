@@ -12,6 +12,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
+import newSubmission from "./utils/newSubmission";
 
 /**
  * Submission states for the change requests.
@@ -131,12 +132,13 @@ export const main = handler(async (event) => {
     );
   }
 
+  // we do the data conversion here so the new functions only need the new way
   const submitterName = data.user.firstName + " " + data.user.lastName;
-  const packageData = {
-    packageId: data.transmittalNumber,
-    packageType: data.type,
-    clockEndTimestamp: data.ninetyDayClockEnd,
+  const submissionData = {
+    componentId: data.transmittalNumber,
+    componentType: data.type,
     submissionTimestamp: data.submittedAt,
+    currentStatus: "Submitted",
     attachments: data.uploads,
     additionalInformation: data.summary,
     submissionId: data.id,
@@ -145,17 +147,18 @@ export const main = handler(async (event) => {
     submitterId: data.userId,
   };
 
-  if (data.actiontype) packageData.actionType = data.actionType;
-  if (data.waiverAuthority) packageData.waiverAuthority = data.waiverAuthority;
+  if (data.actionType) submissionData.componentType += data.actionType;
 
-  return crFunctions
-    .saveSubmission(packageData)
+  if (data.waiverAuthority)
+    submissionData.waiverAuthority = data.waiverAuthority;
+
+  return newSubmission(submissionData)
     .then(() => {
       console.log("Successfully submitted the following:", data);
       return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
     })
     .catch((error) => {
       console.log("Error is: ", error.message);
-      throw error;
+      // throw error;
     });
 });
