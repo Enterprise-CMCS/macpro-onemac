@@ -42,6 +42,7 @@ export const RESPONSE_CODE = {
   DASHBOARD_LIST_FETCH_ERROR: "DB00",
   HELPDESK_USER_SUBMITTED: "HU000",
   CMS_REVIEWER_USER_SUBMITTED: "CU000",
+  CMS_ROLE_APPROVER_USER_SUBMITTED: "CU001",
   SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
   SUBMISSION_ID_EXIST_WARNING: "OMP003",
   PACKAGE_WITHDRAW_SUCCESS: "WP000",
@@ -209,16 +210,6 @@ class Helpdesk extends Role {
   }
 }
 
-export const getUserRoleObj = (role, isEua = false) =>
-  new ({
-    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
-    [USER_TYPE.STATE_ADMIN]: StateAdmin,
-    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
-    [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
-    [USER_TYPE.HELPDESK]: Helpdesk,
-    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role] || (isEua ? DefaultUser : Role))();
-
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
 /**
@@ -243,6 +234,18 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
     }
   }
 };
+
+export const getUserRoleObj = (role, isEua = false, attributes = []) =>
+  new ({
+    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
+    [USER_TYPE.STATE_ADMIN]: StateAdmin,
+    [USER_TYPE.CMS_ROLE_APPROVER]:
+      latestAccessStatus({ type: role, attributes }) === USER_STATUS.ACTIVE &&
+      CmsRoleApprover,
+    [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
+    [USER_TYPE.HELPDESK]: Helpdesk,
+    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
+  }[role] || (isEua ? DefaultUser : Role))();
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
 export const territoryList = [

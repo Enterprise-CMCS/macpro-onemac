@@ -84,6 +84,11 @@ export function useSignupCallback(
               passCode: RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED,
             };
             break;
+          case USER_TYPE.CMS_ROLE_APPROVER:
+            messageState = {
+              passCode: RESPONSE_CODE.CMS_ROLE_APPROVER_USER_SUBMITTED,
+            };
+            break;
           default:
             messageState = { passCode: RESPONSE_CODE.USER_SUBMITTED };
         }

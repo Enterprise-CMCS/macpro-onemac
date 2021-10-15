@@ -33,13 +33,14 @@ function StateUserSignup() {
 }
 
 function CMSSignup() {
+  const { isLoggedInAsDeveloper } = useAppContext() ?? {};
   const [, onClickCMS] = useSignupCallback(
     ROLES.CMS_ROLE_APPROVER,
     createAttribute
   );
 
   const CMS_CHOICES = [
-    {
+    isLoggedInAsDeveloper && {
       title: "CMS Reviewer",
       description: "Responsible for reviewing packages",
       linkTo: "signup/cmsreviewer",
@@ -51,7 +52,7 @@ function CMSSignup() {
       linkTo: "/usermanagement",
       onclick: onClickCMS,
     },
-  ];
+  ].filter(Boolean);
   return <ChoiceList choices={CMS_CHOICES} />;
 }
 function HelpdeskSignup() {
@@ -66,7 +67,7 @@ function HelpdeskSignup() {
 const isStateUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
 const isCmsUser = (cmsRoles) =>
-  !!cmsRoles.split(",").includes("onemac-cms-user");
+  !cmsRoles || !!cmsRoles.split(",").includes("onemac-cms-user");
 const isHelpdeskUser = (cmsRoles) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
