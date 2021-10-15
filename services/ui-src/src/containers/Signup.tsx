@@ -3,7 +3,7 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { ROLES, RESPONSE_CODE } from "cmscommonlib";
+import { USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
@@ -35,7 +35,7 @@ function StateUserSignup() {
 function CMSSignup() {
   const { isLoggedInAsDeveloper } = useAppContext() ?? {};
   const [, onClickCMS] = useSignupCallback(
-    ROLES.CMS_ROLE_APPROVER,
+    USER_TYPE.CMS_ROLE_APPROVER,
     createAttribute
   );
 
@@ -56,24 +56,27 @@ function CMSSignup() {
   return <ChoiceList choices={CMS_CHOICES} />;
 }
 function HelpdeskSignup() {
-  const [, onLoadHelpdesk] = useSignupCallback("helpdesk", createAttribute);
+  const [, onLoadHelpdesk] = useSignupCallback(
+    USER_TYPE.HELPDESK,
+    createAttribute
+  );
   useEffect(() => {
-    if (onLoadHelpdesk) onLoadHelpdesk();
+    onLoadHelpdesk?.({});
   }, [onLoadHelpdesk]);
   return null;
 }
 
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
-const isStateUser = (cmsRoles) =>
+const isStateUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
-const isCmsUser = (cmsRoles) =>
+const isCmsUser = (cmsRoles: string) =>
   !cmsRoles || !!cmsRoles.split(",").includes("onemac-cms-user");
-const isHelpdeskUser = (cmsRoles) =>
+const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
   const history = useHistory();
-  const { userProfile: { cmsRoles = "", userData: { type } } = {} } =
+  const { userProfile: { cmsRoles = "", userData: { type = "" } = {} } = {} } =
     useAppContext() ?? {};
 
   const signupOptions = useMemo(
