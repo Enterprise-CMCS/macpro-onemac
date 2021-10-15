@@ -468,3 +468,24 @@ And("verify that 90th day value of WI-23-2222-MED1 is NA", () => {
 And("navigate to {string}", (s) => {
   OneMacDashboardPage.navigatetoURL(s);
 });
+And(
+  "verify Expiration Date column is available to the immediate left to the status column",
+  () => {
+    OneMacPackagePage.verifyexpirationDateColumnHeaderExists();
+  }
+);
+And("expiration date on MD.32560 is Oct 14, 2026", () => {
+  OneMacPackagePage.verifyMD32560ExpirationDateIsSetTooct142026();
+});
+And("Expiration Date value for generated Record is {string}", (s) => {
+  OneMacPackagePage.verifyExpirationDateFirstValue(s);
+});
+And("Add file for Current State Plan", () => {
+  OneMacCHIPSPAPage.uploadCurrentStatePlanFile();
+});
+And("Add file for Amended State Plan Language", () => {
+  OneMacCHIPSPAPage.uploadAmendedStatePlanLanguageFile();
+});
+And("Add file for Cover Letter", () => {
+  OneMacCHIPSPAPage.uploadCoverLetterFile();
+});
