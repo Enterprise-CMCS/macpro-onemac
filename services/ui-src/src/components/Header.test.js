@@ -68,7 +68,7 @@ describe("left side navigation", () => {
 
   it.each`
     linkName             | userType
-    ${"Dashboard"}       | ${"statesubmitter"}
+    ${"Dashboard"}       | ${"cmsreviewer"}
     ${"User Management"} | ${"cmsroleapprover"}
   `(
     "renders a link to $linkName when user is authenticated and has access",
@@ -78,7 +78,9 @@ describe("left side navigation", () => {
         <AppContext.Provider
           value={{
             isAuthenticated: true,
-            userProfile: { userData: { type: userType } },
+            userProfile: {
+              userData: { type: userType, attributes: [{ status: "active" }] },
+            },
           }}
         >
           <Router history={history}>
@@ -91,13 +93,9 @@ describe("left side navigation", () => {
     }
   );
 
-  it.each`
-    linkName             | userType
-    ${"Dashboard"}       | ${"cmsroleapprover"}
-    ${"User Management"} | ${"statesubmitter"}
-  `(
-    "does not render a link to $linkName when user is authenticated but does not have access",
-    ({ linkName, userType }) => {
+  it.each(["cmsroleapprover", "statesubmitter"])(
+    "renders a link to Dashboard when %s user is authenticated but does not have access",
+    (userType) => {
       const history = createMemoryHistory();
       render(
         <AppContext.Provider
@@ -112,7 +110,30 @@ describe("left side navigation", () => {
         </AppContext.Provider>
       );
 
-      expect(screen.queryByText(linkName, { selector: "a" })).toBeNull();
+      expect(screen.getByText("Dashboard", { selector: "a" })).toBeVisible();
+    }
+  );
+
+  it.each(["cmsroleapprover", "statesubmitter"])(
+    "does not render a link to User Management when %s user is authenticated but does not have access",
+    (userType) => {
+      const history = createMemoryHistory();
+      render(
+        <AppContext.Provider
+          value={{
+            isAuthenticated: true,
+            userProfile: { userData: { type: userType } },
+          }}
+        >
+          <Router history={history}>
+            <Header />
+          </Router>
+        </AppContext.Provider>
+      );
+
+      expect(
+        screen.queryByText("User Management", { selector: "a" })
+      ).toBeNull();
     }
   );
 });
@@ -152,12 +173,13 @@ describe("right side account management", () => {
     }
   );
 
-  it("renders a Log out button when authenticated but no user type is present", () => {
+  it("renders a Log out button when authenticated as unregistered state user", () => {
     const history = createMemoryHistory();
     render(
       <AppContext.Provider
         value={{
           isAuthenticated: true,
+          userProfile: { cmsRoles: "onemac-state-user" },
         }}
       >
         <Router history={history}>
