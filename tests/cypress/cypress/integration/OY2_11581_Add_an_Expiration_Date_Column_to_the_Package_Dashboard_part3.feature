@@ -39,4 +39,3 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
-        And Expiration Date value for generated Record is "Pending"
