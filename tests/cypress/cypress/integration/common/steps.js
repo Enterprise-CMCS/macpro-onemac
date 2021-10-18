@@ -489,3 +489,11 @@ And("Add file for Amended State Plan Language", () => {
 And("Add file for Cover Letter", () => {
   OneMacCHIPSPAPage.uploadCoverLetterFile();
 });
+
+And("Add file for Revised Amended State Plan Language", () => {
+  medicaidSPARAIResponsePage.uploadAmendedStatePlanLanguageFile();
+});
+
+And("Add file for Official RAI Response", () => {
+  medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
+});
