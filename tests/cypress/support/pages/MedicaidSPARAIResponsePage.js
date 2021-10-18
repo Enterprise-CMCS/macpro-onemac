@@ -27,13 +27,13 @@ export class MedicaidSPARAIResponsePage {
   }
 
   uploadChipSPARAIRESPONSERevisedAmendedStatePlanLanguage() {
-    cy.get(RevisedAmendedStatePlanLanguageBTN).click();
+    cy.xpath(RevisedAmendedStatePlanLanguageBTN).click();
     const filePath = "/files/adobe.pdf";
     cy.get(RevisedAmendedStatePlanLanguageBTNUploadFile).attachFile(filePath);
   }
 
   uploadOfficialRAIResponse() {
-    cy.get(officialRAIResponseBTN).click();
+    cy.xpath(officialRAIResponseBTN).click();
     const filePath = "/files/adobe.pdf";
     cy.get(officialRAIResponseBTNUploadFile).attachFile(filePath);
   }
