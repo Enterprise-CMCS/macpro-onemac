@@ -119,6 +119,7 @@ const ALL_USERS_ROUTES = [
 export class Role {
   constructor() {
     this.canAccessDashboard = false;
+    this.canDownloadCsv = false;
     this.canAccessForms = false;
     this.canAccessUserManagement = false;
     this.canAccessMetrics = false;
@@ -156,6 +157,7 @@ class DefaultUser extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
+    this.canDownloadCsv = true;
   }
 }
 
@@ -178,17 +180,24 @@ class StateAdmin extends Role {
 }
 
 class CmsReviewer extends Role {
-  constructor() {
+  constructor(userStatus) {
     super();
     this.canAccessDashboard = true;
+    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
   }
 }
 
 class CmsRoleApprover extends Role {
-  constructor() {
+  constructor(userStatus) {
     super();
-    this.canAccessUserManagement = true;
-    this.canAccessMetrics = true;
+    this.canDownloadCsv = true;
+
+    if (userStatus === USER_STATUS.ACTIVE) {
+      this.canAccessUserManagement = true;
+      this.canAccessMetrics = true;
+    } else {
+      this.canAccessDashboard = true;
+    }
   }
 }
 
@@ -196,17 +205,19 @@ class SystemAdmin extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
+    this.canDownloadCsv = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
   }
 }
 
 class Helpdesk extends Role {
-  constructor() {
+  constructor(userStatus) {
     super();
     this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
   }
 }
 
@@ -235,17 +246,31 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
   }
 };
 
-export const getUserRoleObj = (role, isEua = false, attributes = []) =>
-  new ({
+export const getUserRoleObj = (role, isEua = false, attributes = []) => {
+  let roleMatch = {
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_ADMIN]: StateAdmin,
-    [USER_TYPE.CMS_ROLE_APPROVER]:
-      latestAccessStatus({ type: role, attributes }) === USER_STATUS.ACTIVE &&
-      CmsRoleApprover,
+    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role] || (isEua ? DefaultUser : Role))();
+  }[role];
+
+  if (!roleMatch) {
+    roleMatch = isEua ? DefaultUser : Role;
+  }
+
+  let userStatus;
+  switch (roleMatch) {
+    case StateSubmitter:
+    case StateAdmin:
+      break;
+    default:
+      userStatus = latestAccessStatus({ type: role, attributes });
+  }
+
+  return new roleMatch(userStatus);
+};
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
 export const territoryList = [

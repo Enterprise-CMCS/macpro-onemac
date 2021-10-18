@@ -46,7 +46,10 @@ const Dashboard = () => {
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
-    if (location?.state?.passCode !== undefined) location.state.passCode = null;
+    if (location?.state?.passCode !== undefined) {
+      setAlertCode(location.state.passCode);
+      history.location.state.passCode = null;
+    }
 
     // Redirect new users to the signup flow.
     const missingUserType = !userData?.type;
@@ -274,7 +277,7 @@ const Dashboard = () => {
     let rightSideContent = "";
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
+    } else if (userRoleObj.canDownloadCsv) {
       rightSideContent = csvExportSubmissions;
     }
 

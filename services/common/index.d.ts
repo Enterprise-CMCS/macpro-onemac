@@ -20,6 +20,7 @@ export class UserRole {
   canAccessForms: boolean;
   canAccessMetrics: boolean;
   canAccessUserManagement: boolean;
+  canDownloadCsv: boolean;
 }
 
 export const getUserRoleObj: (
