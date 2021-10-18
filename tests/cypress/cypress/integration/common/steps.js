@@ -491,7 +491,7 @@ And("Add file for Cover Letter", () => {
 });
 
 And("Add file for Revised Amended State Plan Language", () => {
-  medicaidSPARAIResponsePage.uploadAmendedStatePlanLanguageFile();
+  medicaidSPARAIResponsePage.uploadChipSPARAIRESPONSERevisedAmendedStatePlanLanguage();
 });
 
 And("Add file for Official RAI Response", () => {

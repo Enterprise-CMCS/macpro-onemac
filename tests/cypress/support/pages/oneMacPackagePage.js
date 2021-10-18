@@ -8,7 +8,7 @@ const WI232222MED1 = '//a[contains(text(),"WI-23-2222-MED1")]';
 //Element is Xpath use cy.xpath instead of cy.get
 const expirationDateColumnHeader = '//th[@id="expirationTimestampColHeader"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const firstExperationDate = '//td[@id="SexpirationTimestamp-0"]';
+const firstExperationDate = '//td[@id="expirationTimestamp-0"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const MD32560hrefValue =
   '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
