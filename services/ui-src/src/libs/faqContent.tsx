@@ -1,5 +1,5 @@
 import React from "react";
-import { helpDeskContact } from "../libs/helpDeskContact";
+import { helpDeskContact } from "./helpDeskContact";
 
 export const oneMACFAQContent = [
   {

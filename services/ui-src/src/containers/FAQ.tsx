@@ -6,13 +6,15 @@ import { oneMACFAQContent } from "../libs/faqContent";
 import { Accordion, AccordionItem } from "@cmsgov/design-system";
 
 const FAQ = () => {
-  var openId;
+  var openId: string | undefined;
 
   useEffect(() => {
     if (openId) {
       const el = document.getElementById(openId);
-      el.scrollIntoView();
-      el.focus();
+      if (el) {
+        el.scrollIntoView();
+        el.focus();
+      }
     }
   }, [openId]);
 

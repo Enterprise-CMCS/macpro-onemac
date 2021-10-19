@@ -1708,25 +1708,7 @@ article.form-container {
   }
 }
 
-.Collapsible {
-  font-family: Open Sans;
-  font-style: normal;
-  line-height: 24px;
-  /* identical to box height, or 150% */
-
-  /* Primary / Default */
-  width: 606px;
-}
-
-.Collapsible__contentInner {
-  padding-left: 40px;
-  font-size: 14px !important;
-  font-weight: normal;
-  color: black !important;
-}
-
 //The link which when clicked opens the collapsable area
-.Collapsible__trigger,
 .faq-question,
 .faq-question[aria-expanded="false"],
 .faq-question:hover {
@@ -1762,6 +1744,9 @@ article.form-container {
 }
 .faq-answer {
   max-height: 300rem;
+  padding-left: 62px;
+  font-size: 14px;
+  font-weight: 400;
 }
 
 .faq-left-column {
@@ -1823,23 +1808,6 @@ aside#faq-contact-info-box {
       }
     }
   }
-}
-
-.faq-collapsible-trigger {
-  display: flex;
-  align-items: flex-start;
-  cursor: pointer;
-
-  svg {
-    margin-top: 4px;
-  }
-
-  .text {
-    padding-left: 31px;
-  }
-}
-.Collapsible__contentOuter {
-  padding-left: 22px;
 }
 
 .vert-line-svg {
