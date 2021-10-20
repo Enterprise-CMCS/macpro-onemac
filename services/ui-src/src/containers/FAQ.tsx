@@ -48,33 +48,42 @@ const FAQ = () => {
     ));
   };
 
+  const infoDetails = [
+    {
+      label: "Phone Number",
+      linkType: "phone",
+      infoValue: helpDeskContact.phone,
+    },
+    { label: "Email", linkType: "mailto", infoValue: helpDeskContact.email },
+  ];
+
+  const renderInfo = () => {
+    return (
+      <dl>
+        {infoDetails.map((detail) => (
+          <div className="faq-info-wrapper">
+            <dt>{detail.label}</dt>
+            <dd>
+              <a href={`${detail.linkType}:${detail.infoValue}`}>
+                {detail.infoValue}
+              </a>
+            </dd>
+          </div>
+        ))}
+      </dl>
+    );
+  };
+
   return (
     <div>
       <PageTitleBar heading="Frequently Asked Questions" />
       <div className="form-container" id="top">
         <div className="faq-card">
           <aside id="faq-contact-info-box">
-            <div className="faq-border-box" />
+            <div className="faq-border-box"></div>
             <div className="faq-info-box">
               <h3>OneMAC Help Desk Contact Info</h3>
-              <dl>
-                <div className="faq-info-wrapper">
-                  <dt>Phone Number</dt>
-                  <dd>
-                    <a href={`phone:${helpDeskContact.phone}`}>
-                      {helpDeskContact.phone}
-                    </a>
-                  </dd>
-                </div>
-                <div className="faq-info-wrapper">
-                  <dt>Email</dt>
-                  <dd>
-                    <a href={`mailto:${helpDeskContact.email}`}>
-                      {helpDeskContact.email}
-                    </a>
-                  </dd>
-                </div>
-              </dl>
+              {renderInfo()}
             </div>
           </aside>
           <div className="faq-left-column">{renderFAQ()}</div>

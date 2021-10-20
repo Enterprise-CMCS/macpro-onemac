@@ -1,7 +1,21 @@
 import React from "react";
 import { helpDeskContact } from "./helpDeskContact";
 
-export const oneMACFAQContent = [
+interface QuestionAnswer {
+  anchorText: string;
+  question: string;
+  answerJSX: JSX.Element;
+}
+
+interface FAQContent {
+  sectionTitle: string;
+  qanda: QuestionAnswer[];
+}
+
+/**
+ * List of alert messages for the application.
+ */
+export const oneMACFAQContent: FAQContent[] = [
   {
     sectionTitle: "General",
     qanda: [
