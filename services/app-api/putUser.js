@@ -109,7 +109,7 @@ const getUser = async (userEmail) => {
   const params = {
     TableName: process.env.userTableName, // Todo : check for existance
     Key: {
-      id: userEmail,
+      id: userEmail.toLowerCase(),
     },
   };
   let result;
