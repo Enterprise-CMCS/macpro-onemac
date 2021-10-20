@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import PageTitleBar from "../components/PageTitleBar";
 import { helpDeskContact } from "../libs/helpDeskContact";
 import { oneMACFAQContent } from "../libs/faqContent";
@@ -6,43 +6,52 @@ import { oneMACFAQContent } from "../libs/faqContent";
 import { Accordion, AccordionItem } from "@cmsgov/design-system";
 
 const FAQ = () => {
-  var openId: string | undefined;
+  const [hash, setHash] = useState(window.location.hash.replace("#", ""));
+
+  const hashHandler = () => {
+    setHash((prev) => {
+      const newHash = window.location.hash.replace("#", "");
+      if (prev !== newHash) {
+        return newHash;
+      }
+      return prev;
+    });
+  };
+
+  window.addEventListener("hashchange", hashHandler);
 
   useEffect(() => {
-    if (openId) {
-      const el = document.getElementById(openId);
+    if (hash) {
+      const el = document.getElementById(`${hash}-button`);
       if (el) {
         el.scrollIntoView();
         el.focus();
+        el.click();
       }
     }
-  }, [openId]);
+    return () => {
+      window.removeEventListener("hashchange", hashHandler);
+    };
+  }, [hash]);
 
   const renderFAQ = () => {
     return oneMACFAQContent.map((section, index) => (
       <div key={index} className="faq-section">
         <h2 className="topic-title">{section.sectionTitle}</h2>
         <Accordion>
-          {section.qanda.map((questionAnswer, i) => {
-            let defaultOpen = null;
-            if (questionAnswer.anchorText === window.location.hash) {
-              openId = questionAnswer.anchorText;
-              defaultOpen = { defaultOpen: true };
-            }
-            return (
-              <div key={i} id={questionAnswer.anchorText}>
-                <AccordionItem
-                  heading={questionAnswer.question}
-                  buttonClassName="faq-question"
-                  contentClassName="faq-answer"
-                  {...defaultOpen}
-                >
-                  {questionAnswer.answerJSX}
-                </AccordionItem>
-                <hr></hr>
-              </div>
-            );
-          })}
+          {section.qanda.map((questionAnswer, i) => (
+            <div key={i}>
+              <AccordionItem
+                id={questionAnswer.anchorText}
+                heading={questionAnswer.question}
+                buttonClassName="faq-question"
+                contentClassName="faq-answer"
+              >
+                {questionAnswer.answerJSX}
+              </AccordionItem>
+              <hr></hr>
+            </div>
+          ))}
         </Accordion>
       </div>
     ));
@@ -60,8 +69,8 @@ const FAQ = () => {
   const renderInfo = () => {
     return (
       <dl>
-        {infoDetails.map((detail) => (
-          <div className="faq-info-wrapper">
+        {infoDetails.map((detail, i) => (
+          <div key={i} className="faq-info-wrapper">
             <dt>{detail.label}</dt>
             <dd>
               <a href={`${detail.linkType}:${detail.infoValue}`}>

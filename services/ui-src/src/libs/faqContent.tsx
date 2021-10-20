@@ -20,7 +20,7 @@ export const oneMACFAQContent: FAQContent[] = [
     sectionTitle: "General",
     qanda: [
       {
-        anchorText: "#browsers",
+        anchorText: "browsers",
         question: "What browsers can I use to access the system?",
         answerJSX: (
           <p>
@@ -30,7 +30,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#confirm-email",
+        anchorText: "confirm-email",
         question: "What should we do if we don’t receive a confirmation email?",
         answerJSX: (
           <p>
@@ -44,7 +44,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#is-official",
+        anchorText: "is-official",
         question: "Is this considered the official state submission?",
         answerJSX: (
           <p>
@@ -60,7 +60,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#onemac-roles",
+        anchorText: "onemac-roles",
         question: "What are the OneMAC user roles?",
         answerJSX: (
           <table className="faq-table">
@@ -111,7 +111,7 @@ export const oneMACFAQContent: FAQContent[] = [
     sectionTitle: "State Plan Amendments (SPAs)",
     qanda: [
       {
-        anchorText: "#spa-id-format",
+        anchorText: "spa-id-format",
         question: "What format is used to enter a SPA ID?",
         answerJSX: (
           <>
@@ -134,7 +134,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#medicaid-spa-attachments",
+        anchorText: "medicaid-spa-attachments",
         question: "What are the attachments for a Medicaid SPA?",
         answerJSX: (
           <>
@@ -233,7 +233,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#medicaid-spa-rai-attachments",
+        anchorText: "medicaid-spa-rai-attachments",
         question:
           "What are the attachments for a Medicaid response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -267,7 +267,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#chip-spa-attachments",
+        anchorText: "chip-spa-attachments",
         question: "What are the attachments for a CHIP SPA?",
         answerJSX: (
           <>
@@ -335,7 +335,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#chip-spa-rai-attachments",
+        anchorText: "chip-spa-rai-attachments",
         question:
           "What are the attachments for a CHIP SPA response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -399,7 +399,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#public-health-emergency",
+        anchorText: "public-health-emergency",
         question:
           "Can I submit SPAs relating to the Public Health Emergency (PHE) in OneMAC?",
         answerJSX: (
@@ -415,7 +415,7 @@ export const oneMACFAQContent: FAQContent[] = [
     sectionTitle: "Waivers",
     qanda: [
       {
-        anchorText: "#waiver-id-format",
+        anchorText: "waiver-id-format",
         question: "What format is used to enter a 1915(b) waiver number?",
         answerJSX: (
           <>
@@ -443,7 +443,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#waiver-id-help",
+        anchorText: "waiver-id-help",
         question:
           "Who can I contact to help me figure out the correct 1915(b) Waiver Number?",
         answerJSX: (
@@ -457,7 +457,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#waiver-c-id",
+        anchorText: "waiver-c-id",
         question: "What format is used to enter a 1915(c) waiver number?",
         answerJSX: (
           <>
@@ -485,7 +485,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#waiverb-attachments",
+        anchorText: "waiverb-attachments",
         question:
           "What attachments are needed to submit a 1915(b) waiver action?",
         answerJSX: (
@@ -568,7 +568,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#waiverb-rai-attachments",
+        anchorText: "waiverb-rai-attachments",
         question:
           "What are the attachments for a 1915(b) Waiver response to Request for Additional Information (RAI)?",
         answerJSX: (
@@ -604,7 +604,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#waiverb-extension-attachments",
+        anchorText: "waiverb-extension-attachments",
         question:
           "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
         answerJSX: (
@@ -639,7 +639,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#appk",
+        anchorText: "appk",
         question: "Can I submit Appendix K amendments in OneMAC?",
         answerJSX: (
           <p>
@@ -649,7 +649,7 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
-        anchorText: "#appk-attachments",
+        anchorText: "appk-attachments",
         question: "What are the attachments for a 1915(c) Appendix K Waiver?",
         answerJSX: (
           <>
