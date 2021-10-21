@@ -21,7 +21,7 @@ export const main = handler((event) => {
     .then((user) => {
       let territoryList = "this is for EUA users";
       if (Object.keys(user).length > 0) {
-        const userRoleObj = getUserRoleObj(user.type);
+        const userRoleObj = getUserRoleObj(user?.type, !user, user?.attributes);
 
         territoryList = getAuthorizedStateList(user);
         if (!userRoleObj.canAccessDashboard || territoryList === []) {

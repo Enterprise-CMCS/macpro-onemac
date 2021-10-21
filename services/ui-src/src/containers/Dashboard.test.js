@@ -9,6 +9,7 @@ import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
+import { set } from "lodash";
 
 import { ROUTES } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
@@ -51,6 +52,48 @@ it("renders with a New Submission button", async () => {
 
   // let promise resolve before test ends
   await act(() => promise);
+});
+
+describe("puzzle piece message", () => {
+  it.each`
+    status       | text
+    ${"pending"} | ${/access is pending approval/i}
+    ${"denied"}  | ${/don't have access/i}
+    ${"revoked"} | ${/don't have access/i}
+  `(
+    "renders the puzzle piece for a user in $status status",
+    async ({ status, text }) => {
+      const promise = Promise.resolve([]);
+      ChangeRequestDataApi.getAllByAuthorizedTerritories.mockImplementationOnce(
+        () => promise
+      );
+
+      render(
+        <AppContext.Provider
+          value={{
+            ...set(
+              stateSubmitterInitialAuthState,
+              "userProfile.userData.attributes",
+              [{ stateCode: "ME", history: [{ date: 1012, status }] }]
+            ),
+            userStatus: status,
+          }}
+        >
+          <Dashboard />
+        </AppContext.Provider>,
+        { wrapper: MemoryRouter }
+      );
+
+      // let promise resolve before checking for puzzle piece
+      await act(() => promise);
+
+      const textEl = screen.getByText(text);
+      const puzzlePieceEl = screen.getByAltText(/puzzle piece/i);
+      expect(textEl).toBeVisible();
+      expect(puzzlePieceEl).toBeVisible();
+      expect(textEl.parentNode).toContainElement(puzzlePieceEl);
+    }
+  );
 });
 
 it("renders table with columns", async () => {

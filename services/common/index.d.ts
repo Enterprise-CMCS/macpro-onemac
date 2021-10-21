@@ -20,11 +20,13 @@ export class UserRole {
   canAccessForms: boolean;
   canAccessMetrics: boolean;
   canAccessUserManagement: boolean;
+  canDownloadCsv: boolean;
 }
 
 export const getUserRoleObj: (
   role: USER_TYPE | undefined,
-  isEua?: boolean
+  isEua?: boolean,
+  attributes?: unknown[]
 ) => UserRole;
 
 export const latestAccessStatus: (

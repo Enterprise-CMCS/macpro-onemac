@@ -69,6 +69,13 @@ async function stateSubmitterDynamoDbQuery(
   }
 }
 
+const usersWhoSeeEverything = new Set([
+  USER_TYPE.HELPDESK,
+  USER_TYPE.CMS_REVIEWER,
+  USER_TYPE.CMS_ROLE_APPROVER,
+  USER_TYPE.SYSTEM_ADMIN,
+]);
+
 /**
  * Determines how to scan/query depending on the user role.
  * @param {Object} user the user to query or scan for.
@@ -78,12 +85,7 @@ async function getDataFromDB(user) {
   let startingKey = null;
 
   try {
-    if (
-      !user.type ||
-      user.type === USER_TYPE.HELPDESK ||
-      user.type === USER_TYPE.CMS_REVIEWER ||
-      user.type === USER_TYPE.SYSTEM_ADMIN
-    ) {
+    if (!user.type || usersWhoSeeEverything.has(user.type)) {
       let keepSearching = true;
       let tempResults = [];
       while (keepSearching == true) {
