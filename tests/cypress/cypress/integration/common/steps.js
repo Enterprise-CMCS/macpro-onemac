@@ -497,3 +497,19 @@ And("Add file for Revised Amended State Plan Language", () => {
 And("Add file for Official RAI Response", () => {
   medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
 });
+
+When("Login with cms role approver Revoked", () => {
+  OneMacDevLoginPage.loginAsCMSUserRevoked();
+});
+
+When("Login with cms role approver Denied", () => {
+  OneMacDevLoginPage.loginAsCMSUserDenied();
+});
+
+And("Actual Status is Displayed with Access Revoked", () => {
+  OneMacMyProfilePage.verifyAccessStatusRevoked();
+});
+
+And("Actual Status is Displayed with Access Denied", () => {
+  OneMacMyProfilePage.verifyAccessStatusDenied();
+});

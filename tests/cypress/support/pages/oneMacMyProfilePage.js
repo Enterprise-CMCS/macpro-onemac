@@ -16,6 +16,8 @@ const phoneNumberHeader = '//span[contains(text(),"Phone Number")]';
 const phoneNumberAddBTN = "#addButton";
 const statusHeader = "#accessHeader";
 const accessStatus = '//em[contains(text(),"Access Granted")]';
+const accessStatusDenied = '//em[contains(text(),"Access Denied")]';
+const accessStatusRevoked = '//em[contains(text(),"Access Revoked")]';
 
 export class oneMacMyProfilePage {
   verifyProfileInformationIsDisplayed() {
@@ -55,6 +57,14 @@ export class oneMacMyProfilePage {
   }
   verifyAccessStatus() {
     cy.xpath(accessStatus).should("be.visible");
+  }
+
+  verifyAccessStatusDenied() {
+    cy.xpath(accessStatusDenied).should("be.visible");
+  }
+
+  verifyAccessStatusRevoked() {
+    cy.xpath(accessStatusRevoked).should("be.visible");
   }
 }
 export default oneMacMyProfilePage;
