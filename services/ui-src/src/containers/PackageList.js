@@ -60,7 +60,11 @@ const PackageList = () => {
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
+  const userRoleObj = getUserRoleObj(
+    userData.type,
+    !cmsRoles,
+    userData?.attributes
+  );
 
   const loadPackageList = useCallback(
     async (ctrlr) => {

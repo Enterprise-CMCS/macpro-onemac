@@ -31,5 +31,17 @@ export class oneMacDevLoginPage {
     cy.get(PasswordInput).type("Passw0rd!");
     cy.get(LoginBtn).click();
   }
+
+  loginAsCMSUserRevoked() {
+    cy.get(EmailInput).type("cmsroleapproverrevoked@cms.hhs.local");
+    cy.get(PasswordInput).type("Passw0rd!");
+    cy.get(LoginBtn).click();
+  }
+
+  loginAsCMSUserDenied() {
+    cy.get(EmailInput).type("cmsapproverdenied@cms.hhs.local");
+    cy.get(PasswordInput).type("Passw0rd!");
+    cy.get(LoginBtn).click();
+  }
 }
 export default oneMacDevLoginPage;
