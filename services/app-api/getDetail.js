@@ -49,7 +49,7 @@ export const getDetails = async (event) => {
         result.Item.attachments.map(({ url }) =>
           s3.getSignedUrlPromise("getObject", {
             Bucket: process.env.attachmentsBucket,
-            Key: url.split("amazonaws.com/")[1],
+            Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
           })
         )
       );
