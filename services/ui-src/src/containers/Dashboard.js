@@ -38,11 +38,18 @@ const Dashboard = () => {
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type, !cmsRoles);
+  const userRoleObj = getUserRoleObj(
+    userData.type,
+    !cmsRoles,
+    userData?.attributes
+  );
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
-    if (location?.state?.passCode !== undefined) location.state.passCode = null;
+    if (location?.state?.passCode !== undefined) {
+      setAlertCode(location.state.passCode);
+      history.location.state.passCode = null;
+    }
 
     // Redirect new users to the signup flow.
     const missingUserType = !userData?.type;
@@ -270,7 +277,7 @@ const Dashboard = () => {
     let rightSideContent = "";
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
+    } else if (userRoleObj.canDownloadCsv) {
       rightSideContent = csvExportSubmissions;
     }
 
@@ -278,19 +285,23 @@ const Dashboard = () => {
   }
 
   function renderSubmissionList() {
-    if (userStatus === USER_STATUS.PENDING) {
-      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
-    }
+    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+      if (userStatus === USER_STATUS.PENDING) {
+        return (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        );
+      }
 
-    const userStatusNotActive =
-      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
-    if (userStatusNotActive) {
-      return (
-        <EmptyList
-          showProfileLink="true"
-          message={deniedOrRevokedMessage[userProfile.userData.type]}
-        />
-      );
+      const userStatusNotActive =
+        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+      if (userStatusNotActive) {
+        return (
+          <EmptyList
+            showProfileLink="true"
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        );
+      }
     }
 
     const tableClassName = classNames({

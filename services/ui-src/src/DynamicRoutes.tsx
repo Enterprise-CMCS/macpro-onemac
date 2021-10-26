@@ -35,7 +35,10 @@ const FORM_TYPES = {
 export default function DynamicRoutes() {
   const {
     isAuthenticated,
-    userProfile: { cmsRoles = "", userData: { type = undefined } = {} } = {},
+    userProfile: {
+      cmsRoles = "",
+      userData: { attributes = [], type = undefined } = {},
+    } = {},
   } = useAppContext() ?? {};
   const history = useHistory();
 
@@ -77,19 +80,25 @@ export default function DynamicRoutes() {
     );
   }
 
+  const signupRoutes = (
+    <>
+      <Route exact path={ROUTES.SIGNUP}>
+        <Signup />
+      </Route>
+      <Route exact path={ROUTES.STATE_SIGNUP}>
+        <StateSignup />
+      </Route>
+      <Route exact path={ROUTES.REVIEWER_SIGNUP}>
+        <GroupAndDivision />
+      </Route>
+    </>
+  );
+
   if (!type && cmsRoles) {
     // This view is for users who have not YET registered but have a role from IDM
     return (
       <>
-        <Route exact path={ROUTES.SIGNUP}>
-          <Signup />
-        </Route>
-        <Route exact path={ROUTES.STATE_SIGNUP}>
-          <StateSignup />
-        </Route>
-        <Route exact path={ROUTES.REVIEWER_SIGNUP}>
-          <GroupAndDivision />
-        </Route>
+        {signupRoutes}
         <Route exact path={ROUTES.DASHBOARD}>
           <Redirect to={ROUTES.SIGNUP} />
         </Route>
@@ -100,10 +109,11 @@ export default function DynamicRoutes() {
     );
   }
 
-  const userRoleObj = getUserRoleObj(type, !cmsRoles);
+  const userRoleObj = getUserRoleObj(type, !cmsRoles, attributes);
 
   return (
     <>
+      {!type && signupRoutes}
       <Route exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />
@@ -164,11 +174,15 @@ export default function DynamicRoutes() {
           </Route>
         </>
       )}
-      {userRoleObj.canAccessUserManagement && (
-        <Route exact path={ROUTES.USER_MANAGEMENT}>
+      <Route exact path={ROUTES.USER_MANAGEMENT}>
+        {userRoleObj.canAccessUserManagement ? (
           <UserManagement />
-        </Route>
-      )}
+        ) : userRoleObj.canAccessDashboard ? (
+          <Redirect to={ROUTES.DASHBOARD} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
       <Route exact path={ROUTES.PROFILE + "/:userId"}>
         <UserPage />
       </Route>

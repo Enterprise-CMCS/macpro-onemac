@@ -11,7 +11,11 @@ export const main = handler(async (event) => {
   }
 
   const userItem = await getUser(event.queryStringParameters.email);
-  userItem.validRoutes = getUserRoleObj(userItem.type).getAccesses();
+  userItem.validRoutes = getUserRoleObj(
+    userItem.type,
+    !userItem,
+    userItem.attributes
+  ).getAccesses();
 
   return userItem;
 });
