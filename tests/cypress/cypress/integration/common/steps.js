@@ -13,6 +13,7 @@ import oneMacSubmitNewWaiverActionPage from "../../../support/pages/oneMacSubmit
 import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMacRequestWaiverTemporaryExtension";
 import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
 import oneMacPackagePage from "../../../support/pages/oneMacPackagePage";
+import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
@@ -32,6 +33,7 @@ const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const SPAID = Utilities.SPAID("MD");
 const validWaiverNumberWith5Numbers =
   Utilities.generateWaiverNumberWith5Characters("MD");
+const OneMacFAQPage = new oneMacFAQPage();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -39,6 +41,10 @@ Given("I am on Login Page", () => {
 
 When("Clicking on Development Login", () => {
   OneMacHomePage.clickDevelopmentLogin();
+});
+
+When("Clicking on FAQ Tab", () => {
+  OneMacHomePage.clickFAQPage();
 });
 
 When("Login with state submitter user", () => {
@@ -512,4 +518,233 @@ And("Actual Status is Displayed with Access Revoked", () => {
 
 And("Actual Status is Displayed with Access Denied", () => {
   OneMacMyProfilePage.verifyAccessStatusDenied();
+});
+
+And("Verify General Section Exists", () => {
+  OneMacFAQPage.verifyGeneralSectionExists();
+});
+
+And(
+  "Verify What browsers can I use to access the system link is displayed and click it",
+  () => {
+    OneMacFAQPage.verifyVerifyWhatbrowserscanIusetoaccessthesystemlinkisdisplayedandclickit();
+  }
+);
+
+And(
+  "Verify text contains The submission portal works best on Google Chrome",
+  () => {
+    OneMacFAQPage.verifytextcontainsThesubmissionportalworksbestonGoogleChrome();
+  }
+);
+
+And(
+  "Verify What should we do if we don’t receive a confirmation email is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhatshouldwedoifwedontreceiveaconfirmationemailisdisplayedandclickit();
+  }
+);
+
+And(
+  "Verify text contains Refresh your inbox, check your SPAM filters, then contact the OneMAC Help Desk",
+  () => {
+    OneMacFAQPage.VerifytextcontainsRefreshyourinboxcheckyourSPAMfiltersthencontacttheOneMACHelpDesk();
+  }
+);
+
+And(
+  "Verify Is this considered the official state submission is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyIsthisconsideredtheofficialstatesubmissionisdisplayedandclickit();
+  }
+);
+And(
+  "Verify text contains Yes as long as you have the electronic receipt confirmation email Your submission is considered your official state submission",
+  () => {
+    OneMacFAQPage.VerifytextcontainsYesaslongasuouhavetheelectronicreceipt();
+  }
+);
+And("Verify What are the OneMAC user roles is displayed and click it", () => {
+  OneMacFAQPage.VerifyWhataretheOneMACuserrolesisdisplayedandclickit();
+});
+And("Verify text contains State Submitter", () => {
+  OneMacFAQPage.VerifytextcontainsStateSubmitter();
+});
+And("Verify text contains State System Administrator", () => {
+  OneMacFAQPage.VerifytextcontainsStateSystemAdministrator();
+});
+And("Verify text contains CMS Role Approver", () => {
+  OneMacFAQPage.VerifytextcontainsCMSRoleApprover();
+});
+And("Verify State Plan Amendments SPAs Section Exists", () => {
+  OneMacFAQPage.verifySPASectionExists();
+});
+And(
+  "Verify What What format is used to enter a SPA ID is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhatWhatformatisusedtoenteraSPAIDisdisplayedandclickit();
+  }
+);
+And(
+  "Verify text contains Enter the State Plan Amendment transmittal number Assign consecutive numbers on a calendar year basis",
+  () => {
+    OneMacFAQPage.VerifytextcontainsEntertheStatePlanAmendmenttransmittalnumberAssignconsecutivenumbersonacalendaryearbasis();
+  }
+);
+And(
+  "Verify What are the attachments for a Medicaid SPA is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsforaMedicaidSPAisdisplayedandclickit();
+  }
+);
+And(
+  "Verify text contains SPA submission requirements can be found in regulation",
+  () => {
+    OneMacFAQPage.VerifytextcontainsSPAsubmissionrequirementscanbefoundinregulation();
+  }
+);
+And(
+  "Verify What are the attachments for a Medicaid response to Request for Additional Information RAI is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsforaMedicaidresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit();
+  }
+);
+And('Verify text contains "indicates a required attachment"', () => {
+  OneMacFAQPage.VerifyWhatWhatformatisusedtoenteraSPAIDisdisplayedandclickit();
+});
+And(
+  "Verify What are the attachments for a CHIP SPA is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsforaCHIPSPAisdisplayedandclickit();
+  }
+);
+And(
+  "Verify What are the attachments for a CHIP SPA response to Request for Additional Information RAI is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsforaCHIPSPAresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit();
+  }
+);
+And(
+  "Verify Can I submit SPAs relating to the Public Health Emergency PHE in OneMAC is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyCanIsubmitSPAsrelatingtothePublicHealthEmergencyPHEinOneMACisdisplayedandclickit();
+  }
+);
+
+And(
+  'Verify text contains "Yes, all PHE-related SPAs should be submitted through OneMAC"',
+  () => {
+    OneMacFAQPage.VerifytextcontainsYesallPHErelatedSPAsshouldbesubmittedthroughOneMAC();
+  }
+);
+And("Verify Waivers Section Exists", () => {
+  OneMacFAQPage.verifyWaiversExists();
+});
+
+And(
+  "Verify What format is used to enter a 1915b waiver number is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhatformatisusedtoentera1915bwaivernumberisdisplayedandclickit();
+  }
+);
+
+And('Verify text contains "Waiver number must follow the format"', () => {
+  OneMacFAQPage.VerifytextcontainsWaivernumbermustfollowtheformat();
+});
+
+And(
+  "Verify Who can I contact to help me figure out the correct 1915b Waiver Number is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhocanIcontacttohelpmefigureoutthecorrect1915bWaiverNumberisdisplayedandclickit();
+  }
+);
+And(
+  'Verify text contains "Email MCOGDMCOActions@cms.hhs.gov to get support with determining the correct 1915b Waiver Number"',
+  () => {
+    OneMacFAQPage.VerifytextcontainsEmailMCOGDMCOActionscmshhsgovtogetsupportwithdeterminingthecorrect1915bWaiverNumber();
+  }
+);
+And(
+  "Verify What format is used to enter a 1915c waiver number is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhatformatisusedtoentera1915cwaivernumberisdisplayedandclickit();
+  }
+);
+And(
+  'Verify text contains "Waiver number must follow the format SS.####.R##.## or SS.#####.R##.## to include"',
+  () => {
+    OneMacFAQPage.VerifytextcontainsWaivernumbermustfollowtheformatSStoinclude();
+  }
+);
+And(
+  "Verify What attachments are needed to submit a 1915b waiver action is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhatattachmentsareneededtosubmita1915bwaiveractionisdisplayedandclickit();
+  }
+);
+And(
+  'Verify text contains "The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301"',
+  () => {
+    OneMacFAQPage.VerifytextcontainsTheregulationsat42CFR4302543155and42CFR441301();
+  }
+);
+And(
+  "Verify What are the attachments for a 1915b Waiver response to Request for Additional Information RAI is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsfora1915bWaiverresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit();
+  }
+);
+And(
+  "Verify What are the attachments for a 1915b Waiver Request for Temporary Extension is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsfora1915bWaiverRequestforTemporaryExtensionisdisplayedandclickit();
+  }
+);
+And(
+  "Verify Can I submit Appendix K amendments in OneMAC is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyCanIsubmitAppendixKamendmentsinOneMACisdisplayedandclickit();
+  }
+);
+And('Verify text contains "Yes, you can submit Appendix K amendments"', () => {
+  OneMacFAQPage.VerifytextcontainsYesyoucansubmitAppendixKamendments();
+});
+And(
+  "Verify What are the attachments for a 1915c Appendix K Waiver is displayed and click it",
+  () => {
+    OneMacFAQPage.VerifyWhataretheattachmentsfora1915cAppendixKWaiverisdisplayedandclickit();
+  }
+);
+And(
+  'Verify text contains "The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301 describe the"',
+  () => {
+    OneMacFAQPage.VerifytextcontainsTheregulationsat42CFR4302543155and42CFR441301describethe();
+  }
+);
+And("Verify OneMAC Help Desk Contact Info Section Exists", () => {
+  OneMacFAQPage.verifyOneMacHelpDeskInfoExists();
+});
+And("Verify Phone Number Exists", () => {
+  OneMacFAQPage.verifyOneMacHelpDeskInfoExists();
+});
+And("Verify actual Phone Number Exists", () => {
+  OneMacFAQPage.verifyActualphoneNumberExists();
+});
+And("Verify Email Exists", () => {
+  OneMacFAQPage.verifyemailExists();
+});
+And("Verify actual Email Exists", () => {
+  OneMacFAQPage.verifyActualemailExists();
+});
+And("Verify page title is FAQ", () => {
+  OneMacFAQPage.VerifypagetitleisFAQ();
+});
+And("Verify Frequently Asked Questions Exists", () => {
+  OneMacFAQPage.VerifyFrequentlyAskedQuestionsExists();
+});
+And("Click on What is my SPA ID link", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickWhatIsMySPAIDLink();
+});
+And("Click on What is my Waiver ID Link", () => {
+  OneMacSubmitNewWaiverActionPage.clickWhatIsMyWaiverIdLink();
 });

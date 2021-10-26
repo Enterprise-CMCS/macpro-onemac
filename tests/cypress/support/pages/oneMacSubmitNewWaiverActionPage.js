@@ -8,6 +8,8 @@ const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
 
 const existingWaiverNumber = "MD.11223";
+const whatIsMyWaiverIDLink =
+  "//body/reference[1]/div[1]/div[1]/div[4]/div[2]/form[1]/div[1]/div[3]/div[1]/div[2]/a[1]";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumber(s) {
@@ -58,6 +60,14 @@ export class oneMacSubmitNewWaiverActionPage {
 
   inputComments(s) {
     cy.get(commentsInputBox).type(s);
+  }
+
+  clickWhatIsMyWaiverIdLink() {
+    cy.xpath(whatIsMyWaiverIDLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.visit(href);
+      });
   }
 }
 export default oneMacSubmitNewWaiverActionPage;
