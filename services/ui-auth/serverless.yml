@@ -7,6 +7,9 @@
 # The `service` block is the name of the service
 service: ui-auth
 
+plugins:
+  - serverless-s3-bucket-helper
+
 custom:
   stage: ${opt:stage, self:provider.stage}
   attachments_bucket_arn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
