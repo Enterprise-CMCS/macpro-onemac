@@ -3,7 +3,7 @@ import { USER_TYPE, latestAccessStatus } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import { queryForUserType } from "./libs/user-table-lib";
 
-// Gets active state admins by state code
+// Gets active state system admins by state code
 export const main = handler(async (event) => {
   // If this invokation is a prewarm, do nothing and return.
   if (event.source == "serverless-plugin-warmup") {

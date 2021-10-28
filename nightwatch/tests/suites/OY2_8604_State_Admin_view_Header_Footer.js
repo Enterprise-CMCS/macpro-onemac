@@ -15,7 +15,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state admin user'](browser);
+        login['Login with state system admin user'](browser);
     },
 
     after: function (browser) {
@@ -23,7 +23,7 @@ module.exports = {
 
     },
 
-    'state admin user verify header after login': function (browser) {
+    'state system admin user verify header after login': function (browser) {
         let one_mac_logo = '(//img)[2]';
         let us_official_banner = '//section[@class="ds-c-usa-banner"]';
 
@@ -32,7 +32,7 @@ module.exports = {
         browser.useXpath().assert.containsText(us_official_banner, "An official website of the United States government");
     },
 
-    'state admin user verify footer after login': function (browser) {
+    'state system admin user verify footer after login': function (browser) {
         let my_account_button = 'button#myAccountLink';
         let manage_account_link = 'a#manageAccountLink';
 

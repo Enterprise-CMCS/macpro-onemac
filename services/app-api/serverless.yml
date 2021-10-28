@@ -196,12 +196,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getStateAdminList:
-    handler: getStateAdminList.main
+  getStateSystemAdminList:
+    handler: getStateSystemAdminList.main
     role: LambdaApiRole
     events:
       - http:
-          path: getStateAdmins
+          path: getStateSystemAdmins
           method: get
           cors: true
           authorizer: aws_iam

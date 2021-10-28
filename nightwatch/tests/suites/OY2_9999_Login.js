@@ -15,7 +15,7 @@ module.exports= {
         login['Login to SPA and Waiver Dashboard'](browser, testData);
     },
 
-    "Login with state admin user": function (browser) {
+    "Login with state system admin user": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.state_admin);
     },
 
@@ -38,7 +38,7 @@ module.exports= {
         this['Login with state submitter user'](browser, browser.globals.submitter_pending);
     },
 
-    "Login with state admin pending user": function (browser) {
+    "Login with state system admin pending user": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.state_admin_pending);
     },
 
@@ -50,7 +50,7 @@ module.exports= {
         this['Login with state submitter user'](browser, browser.globals.submitter_denied);
     },
 
-    "Login with state admin denied user": function (browser) {
+    "Login with state system admin denied user": function (browser) {
         this['Login with state submitter user'](browser, browser.globals.state_admin_denied);
     },
 

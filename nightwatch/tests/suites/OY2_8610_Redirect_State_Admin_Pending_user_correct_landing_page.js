@@ -6,7 +6,7 @@ module.exports = {
 
     before: function (browser) {
         login.beforeEach(browser);
-        login['Login with state admin pending user'](browser);
+        login['Login with state system admin pending user'](browser);
     },
 
     after: function (browser) {
@@ -14,11 +14,11 @@ module.exports = {
 
     },
 
-    'State Admin User pending status view system access is pending approval': function (browser) {
+    'State System Admin User pending status view system access is pending approval': function (browser) {
         //check on user management page 
         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";
-        // State Admin User does not see dashboard let dashboard_link = "//a[@id='dashboardLink']";
+        // State System Admin User does not see dashboard let dashboard_link = "//a[@id='dashboardLink']";
         let submission_list_title = "//h1";
         let puzzle_piece_image = "//div[@class='empty-list']/img";
         let pending_message = "//div[@class='empty-list']/h4";

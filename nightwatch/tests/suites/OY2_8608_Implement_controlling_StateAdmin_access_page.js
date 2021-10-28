@@ -5,7 +5,7 @@
 
 //     before: function (browser) {
 //         login.beforeEach(browser);
-//         login['Login with state admin user'](browser);
+//         login['Login with state system admin user'](browser);
 //     },
 
 //     after: function (browser) {
@@ -13,7 +13,7 @@
 
 //     },
 
-//     'State Admin User can view FAQ, Home, Account Management': function (browser) {
+//     'State System Admin User can view FAQ, Home, Account Management': function (browser) {
 //         //check on Submission List on the homepage
 //         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
 //         let user_management_link = "//a[@id='userManagementLink']";

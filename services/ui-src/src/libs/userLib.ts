@@ -61,7 +61,7 @@ export const isPending = (userData: UserRecord): boolean => {
 };
 
 /**
- * is this CMS Role Approver active or does State Submitter / State Admin have any active territories?
+ * is this CMS Role Approver active or does State Submitter / State System Admin have any active territories?
  * @param userData object of history instance
  * @return status
  */

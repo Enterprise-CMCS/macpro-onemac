@@ -300,7 +300,7 @@ const UserPage = () => {
         doneBy: userProfile.email,
         attributes: [
           {
-            stateCode: stateAccessToRemove, // required for state submitter and state admin
+            stateCode: stateAccessToRemove, // required for state submitter and state system admin
             status: "revoked",
           },
         ],
@@ -360,7 +360,7 @@ const UserPage = () => {
 
         switch (userType) {
           case ROLES.STATE_SUBMITTER: {
-            const adminsByState = await UserDataApi.getStateAdmins(
+            const adminsByState = await UserDataApi.getStateSystemAdmins(
               userData.attributes
                 .map(({ stateCode }) => stateCode)
                 .filter(Boolean)
@@ -474,7 +474,7 @@ const UserPage = () => {
           size="wide"
         >
           This action cannot be undone. {territoryMap[stateAccessToRemove]}{" "}
-          State Admin will be notified.
+          State System Admin will be notified.
         </ConfirmationDialog>
       )}
     </div>

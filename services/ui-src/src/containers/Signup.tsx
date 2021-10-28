@@ -25,7 +25,7 @@ function StateUserSignup() {
       description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
       onclick: () => {
-        history.replace("signup/state", { role: "stateadmin" });
+        history.replace("signup/state", { role: "statesystemadmin" });
       },
     },
   ];

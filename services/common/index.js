@@ -62,7 +62,7 @@ export const cmsEmailMapToFormWarningMessages = {
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
   STATE_ADMIN: "statesubmitter",
-  CMS_ROLE_APPROVER: "stateadmin",
+  CMS_ROLE_APPROVER: "statesystemadmin",
 };
 
 /**
@@ -71,7 +71,7 @@ export const USER_ADMIN_PERMISSION = {
 export const USER_TYPE = {
   STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
-  STATE_ADMIN: "stateadmin",
+  STATE_ADMIN: "statesystemadmin",
   CMS_ROLE_APPROVER: "cmsroleapprover",
   SYSTEM_ADMIN: "systemadmin",
   HELPDESK: "helpdesk",
@@ -102,7 +102,7 @@ export const USER_STATUS = {
  */
 export const roleLabels = {
   [ROLES.STATE_SUBMITTER]: "State Submitter",
-  [ROLES.STATE_ADMIN]: "State Admin",
+  [ROLES.STATE_ADMIN]: "State System Admin",
   [ROLES.CMS_ROLE_APPROVER]: "CMS Role Approver",
   [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
@@ -169,7 +169,7 @@ class StateSubmitter extends Role {
   }
 }
 
-class StateAdmin extends Role {
+class StateSystemAdmin extends Role {
   constructor() {
     super();
     this.canAccessUserManagement = true;
@@ -249,7 +249,7 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
 export const getUserRoleObj = (role, isEua = false, attributes = []) => {
   let roleMatch = {
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
-    [USER_TYPE.STATE_ADMIN]: StateAdmin,
+    [USER_TYPE.STATE_ADMIN]: StateSystemAdmin,
     [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
@@ -263,7 +263,7 @@ export const getUserRoleObj = (role, isEua = false, attributes = []) => {
   let userStatus;
   switch (roleMatch) {
     case StateSubmitter:
-    case StateAdmin:
+    case StateSystemAdmin:
       break;
     default:
       userStatus = latestAccessStatus({ type: role, attributes });

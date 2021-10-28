@@ -5,13 +5,13 @@ import { RESPONSE_CODE } from "cmscommonlib";
 /**
  * CMS Role Approver specific functions.
  *
- * all CMS Role Approvers manage all State Admin Users
+ * all CMS Role Approvers manage all State System Admin Users
  *
  * @class
  */
 class CMSRoleApprover {
   /**
-   * CMS Role Approvers manage the State Admins
+   * CMS Role Approvers manage the State System Admins
    * @returns {Object} Scan parameters for dynamodb
    */
   getScanParams() {
@@ -56,7 +56,7 @@ class CMSRoleApprover {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * CMS Role Approver gets all State Admins, regardless of State
+   * CMS Role Approver gets all State System Admins, regardless of State
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
@@ -72,7 +72,7 @@ class CMSRoleApprover {
     if (!userResult.Items) return userRows;
 
     userResult.Items.forEach((oneUser) => {
-      // State Admins must have the attribute section
+      // State System Admins must have the attribute section
       if (!oneUser.attributes) {
         errorList.push(
           "Attributes data required for this role, but not found ",
@@ -90,7 +90,7 @@ class CMSRoleApprover {
 
       if (oneUser.type === USER_TYPE.STATE_ADMIN) {
         oneUser.attributes.forEach((oneAttribute) => {
-          // State Admins must have the history section
+          // State System Admins must have the history section
           if (!oneAttribute.history) {
             errorList.push(
               "History data required for this role, but not found ",

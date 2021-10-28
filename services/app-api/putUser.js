@@ -213,7 +213,7 @@ export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
       !isLatestAttributeActive(doneByUser.attributes[index].history)
     ) {
       console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active stateadmin for the state ${userState}`
+        `Warning: The doneBy user ${doneByUser.id} must be an active statesystemadmin for the state ${userState}`
       );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }

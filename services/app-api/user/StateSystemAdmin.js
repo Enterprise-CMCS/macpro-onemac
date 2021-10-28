@@ -3,12 +3,12 @@ import { USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
 import { USER_STATUS } from "./userStatus";
 
 /**
- * State Admin specific functions.
+ * State System Admin specific functions.
  * @class
  */
-class StateAdmin {
+class StateSystemAdmin {
   /**
-   * State Admin "scan for" returns State Submitters
+   * State System Admin "scan for" returns State Submitters
    *
    * @returns {Object} Scan parameters for dynamodb
    */
@@ -23,7 +23,7 @@ class StateAdmin {
   }
 
   /**
-   * State Admins have to have one active state
+   * State System Admins have to have one active state
    * @returns {String} null if ok to go, the response code if not
    */
   canIRequestThis(doneBy) {
@@ -42,8 +42,8 @@ class StateAdmin {
   }
 
   /**
-   * State Admins can only manage their approved state
-   * @returns {true} check state for State Admins
+   * State System Admins can only manage their approved state
+   * @returns {true} check state for State System Admins
    */
   shouldICheckState() {
     return true;
@@ -53,7 +53,7 @@ class StateAdmin {
    * takes the raw user data and transforms into
    * what to send to front end.
    *
-   * State Admin gets all State Submitters for their State
+   * State System Admin gets all State Submitters for their State
    *
    * @param {userResult} Array of User Objects from database
    * @returns {userRows} the list of users
@@ -69,7 +69,7 @@ class StateAdmin {
     if (!userResult.Items) return userRows;
 
     userResult.Items.forEach((oneUser) => {
-      // State Admins must have the attribute section
+      // State System Admins must have the attribute section
       if (!oneUser.attributes) {
         errorList.push(
           "Attributes data required for this role, but not found ",
@@ -79,7 +79,7 @@ class StateAdmin {
       }
 
       oneUser.attributes.forEach((oneAttribute) => {
-        // State Admins must have the history section
+        // State System Admins must have the history section
         if (!oneAttribute.history) {
           errorList.push(
             "History data required for this role, but not found ",
@@ -112,6 +112,6 @@ class StateAdmin {
   }
 }
 
-const instance = new StateAdmin();
+const instance = new StateSystemAdmin();
 Object.freeze(instance);
 export default instance;

@@ -6,7 +6,7 @@
 
 //     before: function (browser) {
 //         login.beforeEach(browser);
-//         login['Login with state admin denied user'](browser);
+//         login['Login with state system admin denied user'](browser);
 //     },
 
 //     after: function (browser) {
@@ -14,7 +14,7 @@
 
 //     },
 
-//     'State Admin User denied status view system access is pending approval': function (browser) {
+//     'State System Admin User denied status view system access is pending approval': function (browser) {
 //         //check on user management page 
 //         let home_link = "(//a[@class='ds-u-text-decoration--none'])[1]";
 //         let faq_link = "(//a[@class='ds-u-text-decoration--none'])[2]";

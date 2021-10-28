@@ -73,8 +73,8 @@ module.exports = {
     browser.verify.containsText("h1", spaPageTitle);
   },
 
-  // login as state admin user for val environment
-  "Login to Medicaid as State Admin User in val environment": function (browser) {
+  // login as state system admin user for val environment
+  "Login to Medicaid as State System Admin User in val environment": function (browser) {
     // Test Data
     const username = browser.globals.state_admin_user;
     const password = browser.globals.state_admin_user_pass;

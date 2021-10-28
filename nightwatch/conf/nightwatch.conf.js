@@ -45,7 +45,7 @@ module.exports = {
                 },
 
                 state_admin:{
-                    username: "stateadmin@nightwatch.test",
+                    username: "statesystemadmin@nightwatch.test",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
@@ -73,7 +73,7 @@ module.exports = {
                 },
 
                 state_admin_pending:{
-                    username: "stateadminpending@cms.hhs.local",
+                    username: "statesystemadminpending@cms.hhs.local",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 
@@ -88,7 +88,7 @@ module.exports = {
                 },
 
                 state_admin_denied:{
-                    username: "stateadmindenied@cms.hhs.local",
+                    username: "statesystemadmindenied@cms.hhs.local",
                     password: `${process.env.COGNITO_TEST_USERS_PASSWORD}`,
                 },
 

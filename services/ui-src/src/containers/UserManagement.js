@@ -214,7 +214,7 @@ const UserManagement = () => {
                 role === USER_TYPE.STATE_SUBMITTER ||
                 role === USER_TYPE.STATE_ADMIN
                   ? stateCode
-                  : undefined, // required for state submitter and state admin
+                  : undefined, // required for state submitter and state system admin
               status: value,
             },
           ],
