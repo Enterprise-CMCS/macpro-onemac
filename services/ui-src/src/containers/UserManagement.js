@@ -82,7 +82,8 @@ const UserManagement = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
+  const showUserRole =
+    userProfile.userData.type !== USER_TYPE.STATE_SYSTEM_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
       userProfile.userData.type === USER_TYPE.CMS_ROLE_APPROVER ||
@@ -94,6 +95,7 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
+        console.log("user list: ", ul);
         setUserList(ul);
       })
       .catch((error) => {
@@ -212,7 +214,7 @@ const UserManagement = () => {
             {
               stateCode:
                 role === USER_TYPE.STATE_SUBMITTER ||
-                role === USER_TYPE.STATE_ADMIN
+                role === USER_TYPE.STATE_SYSTEM_ADMIN
                   ? stateCode
                   : undefined, // required for state submitter and state system admin
               status: value,

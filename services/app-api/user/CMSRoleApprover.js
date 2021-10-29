@@ -20,7 +20,7 @@ class CMSRoleApprover {
       FilterExpression: "#ty = :userType0 or #ty = :userType1",
       ExpressionAttributeNames: { "#ty": "type" },
       ExpressionAttributeValues: {
-        ":userType0": USER_TYPE.STATE_ADMIN,
+        ":userType0": USER_TYPE.STATE_SYSTEM_ADMIN,
         ":userType1": USER_TYPE.CMS_REVIEWER,
       },
     };
@@ -88,7 +88,7 @@ class CMSRoleApprover {
         role: oneUser.type,
       };
 
-      if (oneUser.type === USER_TYPE.STATE_ADMIN) {
+      if (oneUser.type === USER_TYPE.STATE_SYSTEM_ADMIN) {
         oneUser.attributes.forEach((oneAttribute) => {
           // State System Admins must have the history section
           if (!oneAttribute.history) {

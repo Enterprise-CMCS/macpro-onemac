@@ -27,7 +27,7 @@ export const validateInput = (input) => {
       .when("type", {
         is: Joi.string().valid(
           USER_TYPE.STATE_SUBMITTER,
-          USER_TYPE.STATE_ADMIN
+          USER_TYPE.STATE_SYSTEM_ADMIN
         ),
         then: Joi.array().items(
           Joi.object({
@@ -218,7 +218,7 @@ export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
-  if (userType === USER_TYPE.STATE_ADMIN) {
+  if (userType === USER_TYPE.STATE_SYSTEM_ADMIN) {
     if (!isLatestAttributeActive(doneByUser.attributes)) {
       console.log(
         `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
@@ -311,7 +311,7 @@ const populateUserAttributes = (
 
   if (
     input.type === USER_TYPE.STATE_SUBMITTER ||
-    input.type === USER_TYPE.STATE_ADMIN
+    input.type === USER_TYPE.STATE_SYSTEM_ADMIN
   ) {
     input.attributes.forEach((item) => {
       const index = user.attributes.findIndex(
@@ -453,7 +453,8 @@ const collectRoleAdminEmailIds = async (input) => {
   if (input.type === USER_TYPE.STATE_SUBMITTER) {
     const states = input.attributes.map((item) => item.stateCode);
     // get all stateAdmin email ids
-    const stateAdmins = (await getUsersByType(USER_TYPE.STATE_ADMIN)) || [];
+    const stateAdmins =
+      (await getUsersByType(USER_TYPE.STATE_SYSTEM_ADMIN)) || [];
     // fiter out by selected states with latest attribute status is active //
     stateAdmins.map((admin) => {
       const attributes = admin.attributes;
@@ -464,7 +465,7 @@ const collectRoleAdminEmailIds = async (input) => {
       });
     });
   } else if (
-    input.type === USER_TYPE.STATE_ADMIN ||
+    input.type === USER_TYPE.STATE_SYSTEM_ADMIN ||
     input.type === USER_TYPE.CMS_REVIEWER
   ) {
     // get all cms role approvers emails //
@@ -500,7 +501,7 @@ const collectRoleAdminEmailIds = async (input) => {
 export const constructRoleAdminEmails = (recipients, input) => {
   const userType = input.type;
   let stateText;
-  if (userType == USER_TYPE.STATE_ADMIN) {
+  if (userType == USER_TYPE.STATE_SYSTEM_ADMIN) {
     stateText = ` for ${input.attributes[0].stateCode}`;
   } else {
     stateText = "";

@@ -54,7 +54,7 @@ export const main = handler(async (event) => {
 
     if (
       (doneBy.type != USER_TYPE.STATE_SUBMITTER ||
-        doneBy.type != USER_TYPE.STATE_ADMIN) &&
+        doneBy.type != USER_TYPE.STATE_SYSTEM_ADMIN) &&
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;

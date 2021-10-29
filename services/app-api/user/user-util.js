@@ -1,4 +1,3 @@
-import StateSubmitter from "./StateSubmitter";
 import StateSystemAdmin from "./StateSystemAdmin";
 import CMSRoleApprover from "./CMSRoleApprover";
 import SystemAdmin from "./SystemAdmin";
@@ -18,10 +17,7 @@ export const getUserFunctions = (doneBy) => {
 
   // what users they see depends on what role they are
   switch (doneBy.type) {
-    case USER_TYPE.STATE_SUBMITTER:
-      retval = StateSubmitter;
-      break;
-    case USER_TYPE.STATE_ADMIN:
+    case USER_TYPE.STATE_SYSTEM_ADMIN:
       retval = StateSystemAdmin;
       break;
     case USER_TYPE.CMS_ROLE_APPROVER:

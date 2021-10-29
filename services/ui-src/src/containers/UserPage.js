@@ -42,7 +42,7 @@ export const ACCESS_LABELS = {
 const transformAccesses = (user = {}) => {
   switch (user.type) {
     case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_ADMIN:
+    case ROLES.STATE_SYSTEM_ADMIN:
       return user.attributes?.map(({ stateCode }) => ({
         state: stateCode,
         status: latestAccessStatus(user, stateCode),
@@ -87,7 +87,7 @@ export const AccessDisplay = ({
 
   switch (userType) {
     case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_ADMIN:
+    case ROLES.STATE_SYSTEM_ADMIN:
       accessHeading = "State Access Management";
       break;
     case ROLES.CMS_REVIEWER:
@@ -370,7 +370,7 @@ const UserPage = () => {
           }
 
           case ROLES.CMS_REVIEWER:
-          case ROLES.STATE_ADMIN: {
+          case ROLES.STATE_SYSTEM_ADMIN: {
             contacts = await UserDataApi.getCmsRoleApprovers();
             break;
           }

@@ -19,7 +19,7 @@ export const main = handler(async (event) => {
     return {};
   }
 
-  return (await queryForUserType(USER_TYPE.STATE_ADMIN)).reduce(
+  return (await queryForUserType(USER_TYPE.STATE_SYSTEM_ADMIN)).reduce(
     (output, admin) => {
       for (const state of states) {
         if (latestAccessStatus(admin, state) === "active") {

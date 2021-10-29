@@ -9,7 +9,7 @@ export enum USER_STATUS {
 export enum USER_TYPE {
   STATE_SUBMITTER = "statesubmitter",
   CMS_REVIEWER = "cmsreviewer",
-  STATE_ADMIN = "statesystemadmin",
+  STATE_SYSTEM_ADMIN = "statesystemadmin",
   CMS_ROLE_APPROVER = "cmsroleapprover",
   SYSTEM_ADMIN = "systemadmin",
   HELPDESK = "helpdesk",
