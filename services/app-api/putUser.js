@@ -1,5 +1,4 @@
 import handler from "./libs/handler-lib";
-import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import Joi from "joi";
@@ -579,7 +578,6 @@ const processEmail = async (input) => {
  */
 export const main = handler(async (event) => {
   try {
-    if (isLambdaWarmup(event)) return null;
     const input = isObject(event.body) ? event.body : JSON.parse(event.body);
     console.log("PutUser Lambda call for: ", JSON.stringify(input));
     // do a pre-check for things that should stop us immediately //

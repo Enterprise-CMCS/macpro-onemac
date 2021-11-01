@@ -67,11 +67,6 @@ export const getDetails = async (event) => {
 };
 
 export const main = handler(async (event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
   try {
     return getDetails(event);
   } catch (e) {
