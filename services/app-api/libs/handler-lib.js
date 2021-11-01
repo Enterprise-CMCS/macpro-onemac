@@ -7,6 +7,19 @@ export default function handler(lambda) {
     // Start debugger
     debug.init(event, context);
 
+    // If this invokation is a prewarm, do nothing and return.
+    if (event.source == "serverless-plugin-warmup") {
+      console.log("Warmed up!");
+      return {
+        statusCode: 200,
+        body: null,
+        headers: {
+          "Access-Control-Allow-Origin": "*",
+          "Access-Control-Allow-Credentials": true,
+        },
+      };
+    }
+
     try {
       // Run the Lambda
       body = await lambda(event, context);
