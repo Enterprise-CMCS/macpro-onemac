@@ -8,6 +8,7 @@
 service: uploads
 
 plugins:
+  - serverless-bundle
   - serverless-s3-local
   - serverless-offline
   - serverless-plugin-scripts
@@ -65,6 +66,16 @@ functions:
     environment:
       CLAMAV_BUCKET_NAME: !Ref ClamDefsBucket
       PATH_TO_AV_DEFINITIONS: "lambda/s3-antivirus/av-definitions"
+  removePublicReadTag:
+    handler: src/migrate.removePublicRead
+    name: ${self:service.name}-${self:custom.stage}-removePublicReadTag
+    role: BucketAVScanRole
+    timeout: 300
+    memorySize: 1024
+    environment:
+      ATTACHMENTS_BUCKET: !Ref AttachmentsBucket
+    events:
+      - schedule: rate(1 hour)
 
 resources:
   Conditions:
