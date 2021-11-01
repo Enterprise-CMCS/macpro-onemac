@@ -244,6 +244,7 @@ const UserManagement = () => {
         case APPROVING_USER_TYPE[row.original.role]:
           return (
             <PopupMenu
+              buttonLabel={`User management actions for ${row.values.name}`}
               selectedRow={row}
               menuItems={menuItems}
               variation="UserManagement"
