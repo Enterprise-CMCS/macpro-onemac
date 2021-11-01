@@ -1,8 +1,86 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
-import { getUserFunctions, getAuthorizedStateList } from "./user/user-util";
+import {
+  getUserFunctions,
+  getAuthorizedStateList,
+  getCurrentStatus,
+} from "./user/user-util";
 import getUser from "./utils/getUser";
+
+const transformUserList = (userResult, stateList) => {
+  const userRows = [];
+  const errorList = [];
+  let i = 1;
+
+  console.log("results:", JSON.stringify(userResult));
+
+  // if there are no items, return an empty user list
+  if (!userResult.Items) return userRows;
+
+  userResult.Items.forEach((oneUser) => {
+    // All users must have the attribute section
+    if (!oneUser.attributes) {
+      errorList.push(
+        "Attributes data required for this role, but not found ",
+        oneUser
+      );
+      return;
+    }
+    if (
+      oneUser.type === "statesubmitter" ||
+      oneUser.type === "statesystemadmin"
+    ) {
+      oneUser.attributes.forEach((oneAttribute) => {
+        // skip states not on the Admin's list, not an error
+        if (
+          stateList.length > 0 &&
+          stateList.indexOf(oneAttribute.stateCode) == -1
+        )
+          return;
+
+        // State System Admins and State Submitters must have the history section
+        if (!oneAttribute.history) {
+          errorList.push(
+            "History data required for this role, but not found ",
+            oneUser
+          );
+          return;
+        }
+
+        userRows.push({
+          id: i,
+          email: oneUser.id,
+          firstName: oneUser.firstName,
+          lastName: oneUser.lastName,
+          stateCode: oneAttribute.stateCode,
+          role: oneUser.type,
+          latest: getCurrentStatus(oneAttribute.history),
+        });
+        i++;
+      });
+    }
+    // Helpdesk users and CMS Role Approvers must not have the history section
+    else {
+      userRows.push({
+        id: i,
+        email: oneUser.id,
+        firstName: oneUser.firstName,
+        lastName: oneUser.lastName,
+        stateCode: "N/A",
+        role: oneUser.type,
+        latest: getCurrentStatus(oneUser.attributes),
+      });
+      i++;
+    }
+  });
+
+  console.log("error List is ", errorList);
+
+  console.log("Response:", userRows);
+
+  return userRows;
+};
 
 // Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
@@ -32,10 +110,7 @@ export const main = handler(async (event) => {
   }
 
   const userResult = await dynamoDb.scan(scanParams);
-  const transformedUserList = uFunctions.transformUserList(
-    userResult,
-    stateList
-  );
+  const transformedUserList = transformUserList(userResult, stateList);
   // Collect the unique doneBy user's email ids
   const doneByEmails = [
     ...new Set(transformedUserList.map((user) => user.latest.doneBy)),

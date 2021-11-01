@@ -1,6 +1,4 @@
-import { USER_STATUS, USER_TYPE } from "cmscommonlib";
-import { getCurrentStatus } from "./user-util";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { USER_TYPE } from "cmscommonlib";
 
 /**
  * CMS Role Approver specific functions.
@@ -33,77 +31,6 @@ class CMSRoleApprover {
    */
   shouldICheckState() {
     return false;
-  }
-
-  /**
-   * takes the raw user data and transforms into
-   * what to send to front end.
-   *
-   * CMS Role Approver gets all State System Admins, regardless of State
-   *
-   * @param {userResult} Array of User Objects from database
-   * @returns {userRows} the list of users
-   */
-  transformUserList(userResult) {
-    const userRows = [];
-    const errorList = [];
-    let i = 1;
-
-    console.log("results:", JSON.stringify(userResult));
-
-    // if there are no items, return an empty user list
-    if (!userResult.Items) return userRows;
-
-    userResult.Items.forEach((oneUser) => {
-      // State System Admins must have the attribute section
-      if (!oneUser.attributes) {
-        errorList.push(
-          "Attributes data required for this role, but not found ",
-          oneUser
-        );
-        return;
-      }
-
-      const baseRow = {
-        email: oneUser.id,
-        firstName: oneUser.firstName,
-        lastName: oneUser.lastName,
-        role: oneUser.type,
-      };
-
-      if (oneUser.type === USER_TYPE.STATE_SYSTEM_ADMIN) {
-        oneUser.attributes.forEach((oneAttribute) => {
-          // State System Admins must have the history section
-          if (!oneAttribute.history) {
-            errorList.push(
-              "History data required for this role, but not found ",
-              oneUser
-            );
-            return;
-          }
-
-          userRows.push({
-            ...baseRow,
-            id: i++,
-            stateCode: oneAttribute.stateCode,
-            latest: getCurrentStatus(oneAttribute.history),
-          });
-        });
-      } else {
-        userRows.push({
-          ...baseRow,
-          id: i++,
-          stateCode: "N/A",
-          latest: getCurrentStatus(oneUser.attributes),
-        });
-      }
-    });
-
-    console.log("error List is ", errorList);
-
-    console.log("Response:", userRows);
-
-    return userRows;
   }
 }
 
