@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, USER_TYPE, getUserRoleObj } from "cmscommonlib";
 import {
   getUserFunctions,
   getAuthorizedStateList,
@@ -105,7 +105,7 @@ export const main = handler(async (event) => {
 
   let scanParams = uFunctions.getScanParams();
   let stateList = [];
-  if (uFunctions.shouldICheckState()) {
+  if (doneBy.type === USER_TYPE.STATE_SYSTEM_ADMIN) {
     stateList = getAuthorizedStateList(doneBy);
   }
 
