@@ -1,14 +1,15 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, USER_TYPE, getUserRoleObj } from "cmscommonlib";
 import {
-  getUserFunctions,
-  getAuthorizedStateList,
-  getCurrentStatus,
-} from "./user/user-util";
+  RESPONSE_CODE,
+  USER_TYPE,
+  getUserRoleObj,
+  tableRoles,
+} from "cmscommonlib";
+import { getAuthorizedStateList, getCurrentStatus } from "./user/user-util";
 import getUser from "./utils/getUser";
 
-const transformUserList = (userResult, stateList) => {
+const transformUserList = (forType, userResult, stateList) => {
   const userRows = [];
   const errorList = [];
   let i = 1;
@@ -19,6 +20,9 @@ const transformUserList = (userResult, stateList) => {
   if (!userResult.Items) return userRows;
 
   userResult.Items.forEach((oneUser) => {
+    // check if this type should be on list
+    if (!tableRoles[forType].includes(oneUser.type)) return;
+
     // All users must have the attribute section
     if (!oneUser.attributes) {
       errorList.push(
@@ -28,8 +32,8 @@ const transformUserList = (userResult, stateList) => {
       return;
     }
     if (
-      oneUser.type === "statesubmitter" ||
-      oneUser.type === "statesystemadmin"
+      oneUser.type === USER_TYPE.STATE_SUBMITTER ||
+      oneUser.type === USER_TYPE.STATE_SYSTEM_ADMIN
     ) {
       oneUser.attributes.forEach((oneAttribute) => {
         // skip states not on the Admin's list, not an error
@@ -97,20 +101,23 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
-  // map the user functions from the type pulled in from tne current user
-  const uFunctions = getUserFunctions(doneBy);
-  if (!uFunctions || !getUserRoleObj(doneBy.type).canAccessUserManagement) {
+  if (!getUserRoleObj(doneBy.type).canAccessUserManagement) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
-  let scanParams = uFunctions.getScanParams();
   let stateList = [];
   if (doneBy.type === USER_TYPE.STATE_SYSTEM_ADMIN) {
     stateList = getAuthorizedStateList(doneBy);
   }
 
-  const userResult = await dynamoDb.scan(scanParams);
-  const transformedUserList = transformUserList(userResult, stateList);
+  const userResult = await dynamoDb.scan({
+    TableName: process.env.userTableName,
+  });
+  const transformedUserList = transformUserList(
+    doneBy.type,
+    userResult,
+    stateList
+  );
   // Collect the unique doneBy user's email ids
   const doneByEmails = [
     ...new Set(transformedUserList.map((user) => user.latest.doneBy)),
@@ -124,7 +131,7 @@ export const main = handler(async (event) => {
     }`;
     filterAttribValues[`:email${i}`] = email;
   });
-  scanParams = {
+  const scanParams = {
     TableName: process.env.userTableName,
     ProjectionExpression: "id, firstName, lastName",
     FilterExpression: `id IN (${filterAttributeNames})`,
