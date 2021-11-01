@@ -158,16 +158,11 @@ export const getMyUserList = async (event) => {
   });
 };
 
-// Gets owns user data from User DynamoDB table
 export const main = handler(async (event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
   try {
     return getMyUserList(event);
   } catch (e) {
     console.log("error: ", e);
+    return `Error ${e.message} in getMyUserList`;
   }
 });

@@ -20,11 +20,10 @@ describe("ID is checked in every table", () => {
     expect(packageExists(testID)).resolves.toBe(true);
   });
 
+  dynamoDb.query.mockResolvedValue({ Count: 0 });
+
   it("does a scan if the two queries fail", () => {
     const testID = "MD-22-1111";
-    dynamoDb.query
-      .mockResolvedValueOnce({ Count: 0 })
-      .mockResolvedValueOnce({ Count: 0 });
 
     dynamoDb.scan.mockResolvedValueOnce({ Count: 2 });
 
@@ -33,9 +32,6 @@ describe("ID is checked in every table", () => {
 
   it("returns false if none of the checks return anything", () => {
     const testID = "MD-22-1111";
-    dynamoDb.query
-      .mockResolvedValueOnce({ Count: 0 })
-      .mockResolvedValueOnce({ Count: 0 });
 
     dynamoDb.scan.mockResolvedValueOnce({ Count: 0 });
 
