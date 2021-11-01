@@ -32,14 +32,6 @@ class Helpdesk {
   }
 
   /**
-   * Helpdesk User have to be active to see user lists
-   * @returns {String} null always as Helpdesk User can have a read-only view of all users with any statuses
-   */
-  canIRequestThis() {
-    return undefined;
-  }
-
-  /**
    * takes the raw user data and transforms into
    * what to send to front end.
    *

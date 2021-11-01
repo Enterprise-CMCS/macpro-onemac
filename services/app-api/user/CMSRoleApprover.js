@@ -36,23 +36,6 @@ class CMSRoleApprover {
   }
 
   /**
-   * CMS Role Approvers have to be active to see user lists
-   * @returns {String} null if ok to go, the response code if not
-   */
-  canIRequestThis(doneBy) {
-    const myCurrentStatus = getCurrentStatus(doneBy.attributes).status;
-    switch (myCurrentStatus) {
-      case USER_STATUS.PENDING:
-        return RESPONSE_CODE.CALLING_USER_PENDING;
-      case USER_STATUS.REVOKED:
-        return RESPONSE_CODE.CALLING_USER_REVOKED;
-      case USER_STATUS.DENIED:
-        return RESPONSE_CODE.CALLING_USER_DENIED;
-    }
-    return undefined;
-  }
-
-  /**
    * takes the raw user data and transforms into
    * what to send to front end.
    *

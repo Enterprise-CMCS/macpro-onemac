@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 import { getUserFunctions, getAuthorizedStateList } from "./user/user-util";
 import getUser from "./utils/getUser";
 
@@ -21,12 +21,9 @@ export const main = handler(async (event) => {
 
   // map the user functions from the type pulled in from tne current user
   const uFunctions = getUserFunctions(doneBy);
-  if (!uFunctions) {
+  if (!uFunctions || !getUserRoleObj(doneBy.type).canAccessUserManagement) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
-
-  const reasonWhyNot = uFunctions.canIRequestThis(doneBy);
-  if (reasonWhyNot) return reasonWhyNot;
 
   let scanParams = uFunctions.getScanParams();
   let stateList = [];

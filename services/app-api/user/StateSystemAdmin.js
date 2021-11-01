@@ -23,25 +23,6 @@ class StateSystemAdmin {
   }
 
   /**
-   * State System Admins have to have one active state
-   * @returns {String} null if ok to go, the response code if not
-   */
-  canIRequestThis(doneBy) {
-    const myCurrentStatus = getCurrentStatus(
-      doneBy.attributes[0].history
-    ).status;
-    switch (myCurrentStatus) {
-      case USER_STATUS.PENDING:
-        return RESPONSE_CODE.CALLING_USER_PENDING;
-      case USER_STATUS.REVOKED:
-        return RESPONSE_CODE.CALLING_USER_REVOKED;
-      case USER_STATUS.DENIED:
-        return RESPONSE_CODE.CALLING_USER_DENIED;
-    }
-    return undefined;
-  }
-
-  /**
    * State System Admins can only manage their approved state
    * @returns {true} check state for State System Admins
    */
