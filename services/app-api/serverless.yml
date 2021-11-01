@@ -23,6 +23,8 @@ custom:
   productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
   testingEmail: ${opt:testingEmail, env:TESTING_TEAM_EMAIL, ""}
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
+  attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
+  attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   warmupEnabled:
     production: true
     development: true
@@ -83,6 +85,7 @@ provider:
     systemAdminEmail: ${self:custom.systemAdminEmail}
     productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
     applicationEndpoint: ${self:custom.applicationEndpoint}
+    attachmentsBucket: ${self:custom.attachmentsBucket}
 
 functions:
 

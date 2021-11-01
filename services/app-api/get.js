@@ -1,5 +1,10 @@
+import AWS from "aws-sdk";
+import { RESPONSE_CODE } from "cmscommonlib";
+
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
+
+const s3 = new AWS.S3();
 
 export const main = handler(async (event) => {
   // If this invokation is a prewarm, do nothing and return.
@@ -22,14 +27,29 @@ export const main = handler(async (event) => {
   const result = await dynamoDb.get(params);
   if (!result.Item) {
     throw new Error("Item not found.");
-  } else {
-    //Clear out the s3 URLs.  The UI will generate a temp one.
-    if (result.Item.uploads) {
-      result.Item.uploads.forEach((upload) => {
-        upload.url = null;
+  }
+
+  // Generate a pre-signed URL for each attachment.
+  if (Array.isArray(result.Item.uploads)) {
+    try {
+      const attachmentURLs = await Promise.all(
+        result.Item.uploads.map(({ s3Key }) =>
+          s3.getSignedUrlPromise("getObject", {
+            Bucket: process.env.attachmentsBucket,
+            Key: `protected/${result.Item.userId}/${s3Key}`,
+          })
+        )
+      );
+
+      attachmentURLs.forEach((url, idx) => {
+        result.Item.uploads[idx].url = url;
       });
+    } catch (e) {
+      console.error("Failed to pre-sign URLs for attachment links", e);
+      return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
     }
   }
+
   console.log("Sending back result:", JSON.stringify(result, null, 2));
   // Return the retrieved item
   return result.Item;
