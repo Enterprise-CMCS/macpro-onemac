@@ -2,7 +2,7 @@ import * as debug from "./debug-lib";
 
 export default function handler(lambda) {
   return async function (event, context) {
-    let response = {
+    const response = {
       statusCode: 200,
       body: null,
       headers: {
