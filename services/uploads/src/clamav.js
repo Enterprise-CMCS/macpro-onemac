@@ -1,9 +1,10 @@
-const AWS = require("aws-sdk");
-const fs = require("fs");
-const execSync = require("child_process").execSync;
-const path = require("path");
-const constants = require("./constants");
-const utils = require("./utils");
+import AWS from "aws-sdk";
+import fs from "fs";
+import { execSync } from "child_process";
+import path from "path";
+
+import * as constants from "./constants";
+import * as utils from "./utils";
 
 const S3 = new AWS.S3();
 
@@ -12,7 +13,7 @@ const S3 = new AWS.S3();
  *
  * It will download the definitions to the current work dir.
  */
-function updateAVDefinitonsWithFreshclam() {
+export function updateAVDefinitonsWithFreshclam() {
   try {
     const executionResult = execSync(
       `${constants.PATH_TO_FRESHCLAM} --config-file=${constants.FRESHCLAM_CONFIG} --datadir=${constants.FRESHCLAM_WORK_DIR}`
@@ -37,7 +38,7 @@ function updateAVDefinitonsWithFreshclam() {
  * Download the Antivirus definition from S3.
  * The definitions are stored on the local disk, ensure there's enough space.
  */
-async function downloadAVDefinitions() {
+export async function downloadAVDefinitions() {
   const downloadPromises = constants.CLAMAV_DEFINITIONS_FILES.map(
     (filenameToDownload) => {
       return new Promise((resolve, reject) => {
@@ -81,7 +82,7 @@ async function downloadAVDefinitions() {
 /**
  * Uploads the AV definitions to the S3 bucket.
  */
-async function uploadAVDefinitions() {
+export async function uploadAVDefinitions() {
   const uploadPromises = constants.CLAMAV_DEFINITIONS_FILES.map(
     (filenameToUpload) => {
       return new Promise((resolve, reject) => {
@@ -128,7 +129,7 @@ async function uploadAVDefinitions() {
  *
  * @param pathToFile Path in the filesystem where the file is stored.
  */
-function scanLocalFile(pathToFile) {
+export function scanLocalFile(pathToFile) {
   try {
     execSync(
       `${constants.PATH_TO_CLAMAV} -v -a --stdout -d /tmp/ '/tmp/download/${pathToFile}'`
@@ -149,10 +150,3 @@ function scanLocalFile(pathToFile) {
     }
   }
 }
-
-module.exports = {
-  updateAVDefinitonsWithFreshclam: updateAVDefinitonsWithFreshclam,
-  downloadAVDefinitions: downloadAVDefinitions,
-  uploadAVDefinitions: uploadAVDefinitions,
-  scanLocalFile: scanLocalFile,
-};
