@@ -33,7 +33,12 @@ const VARIATION_PROPS = {
   },
 };
 
-export default function PopupMenu({ variation, selectedRow, menuItems }) {
+export default function PopupMenu({
+  buttonLabel,
+  variation,
+  selectedRow,
+  menuItems,
+}) {
   const variationProps = VARIATION_PROPS[variation];
 
   const classes = useStyles();
@@ -55,6 +60,7 @@ export default function PopupMenu({ variation, selectedRow, menuItems }) {
     <>
       <Button
         aria-haspopup="true"
+        aria-label={buttonLabel}
         className="popup-menu-button"
         data-testid={POPUP_TRIGGER_TEST_ID}
         disabled={!menuItems || menuItems.length === 0}
