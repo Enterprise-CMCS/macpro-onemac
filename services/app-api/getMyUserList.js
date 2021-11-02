@@ -14,7 +14,7 @@ const transformUserList = (forType, userResult, stateList) => {
   const errorList = [];
   let i = 1;
 
-  console.log("results:", JSON.stringify(userResult));
+  //  console.log("results:", JSON.stringify(userResult));
 
   // if there are no items, return an empty user list
   if (!userResult.Items) return userRows;
@@ -79,9 +79,9 @@ const transformUserList = (forType, userResult, stateList) => {
     }
   });
 
-  console.log("error List is ", errorList);
+  // console.log("error List is ", errorList);
 
-  console.log("Response:", userRows);
+  // console.log("Response:", userRows);
 
   return userRows;
 };
