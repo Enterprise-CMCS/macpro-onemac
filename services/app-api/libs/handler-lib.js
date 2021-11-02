@@ -30,7 +30,7 @@ export default function handler(lambda) {
       response.body = { error: e.message };
       response.statusCode = 500;
     }
-
+    response.body = JSON.stringify(response.body);
     // Return HTTP response
     return response;
   };
