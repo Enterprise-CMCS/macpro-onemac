@@ -9,6 +9,7 @@
     "latest": {
       "date": 1617149287,
       "doneBy": "systemadmintest@cms.hhs.local",
+      "doneByName": "Teresa Test",
       "status": "active"
     }
   },
@@ -22,6 +23,7 @@
     "latest": {
       "date": 1617149287,
       "doneBy": "systemadmintest@cms.hhs.local",
+      "doneByName": "Teresa Test",
       "status": "pending"
     }
   },
@@ -35,6 +37,7 @@
     "latest": {
       "date": 1617149287,
       "doneBy": "systemadmintest@cms.hhs.local",
+      "doneByName": "Teresa Test",
       "status": "revoked"
     }
   },
@@ -48,6 +51,7 @@
     "latest": {
       "date": 1617149287,
       "doneBy": "systemadmintest@cms.hhs.local",
+      "doneByName": "Teresa Test",
       "status": "denied"
     }
   }

@@ -452,10 +452,10 @@ const collectRoleAdminEmailIds = async (input) => {
   if (input.type === USER_TYPE.STATE_SUBMITTER) {
     const states = input.attributes.map((item) => item.stateCode);
     // get all stateAdmin email ids
-    const stateAdmins =
+    const stateSystemAdmins =
       (await getUsersByType(USER_TYPE.STATE_SYSTEM_ADMIN)) || [];
     // fiter out by selected states with latest attribute status is active //
-    stateAdmins.map((admin) => {
+    stateSystemAdmins.map((admin) => {
       const attributes = admin.attributes;
       attributes.forEach((attr) => {
         states.includes(attr.stateCode) && isLatestAttributeActive(attr.history)
