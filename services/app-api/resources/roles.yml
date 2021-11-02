@@ -50,6 +50,12 @@ Resources:
                   - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
               - Effect: "Allow"
                 Action:
+                  - s3:GetObject
+                  - s3:GetObjectTagging
+                  - s3:ListBucket
+                Resource: !Sub ${self:custom.attachmentsBucketArn}/*
+              - Effect: "Allow"
+                Action:
                   - logs:CreateLogStream
                   - logs:CreateLogGroup
                 Resource:

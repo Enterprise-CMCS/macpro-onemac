@@ -30,7 +30,9 @@ const PENDING_CIRCLE_IMAGE = (
 const getName = ({ firstName, lastName }) =>
   [firstName, lastName].filter(Boolean).join(" ");
 const getAccessDescription = ({ stateCode }) =>
-  stateCode ? `${territoryMap[stateCode]} in OneMAC` : "OneMAC";
+  stateCode && territoryMap[stateCode]
+    ? `${territoryMap[stateCode]} in OneMAC`
+    : "OneMAC";
 
 const grant = {
     label: "Grant Access",
@@ -242,6 +244,7 @@ const UserManagement = () => {
         case APPROVING_USER_TYPE[row.original.role]:
           return (
             <PopupMenu
+              buttonLabel={`User management actions for ${row.values.name}`}
               selectedRow={row}
               menuItems={menuItems}
               variation="UserManagement"

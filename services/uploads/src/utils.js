@@ -1,12 +1,13 @@
-const constants = require("./constants");
-const execSync = require("child_process").execSync;
+import { execSync } from "child_process";
+
+import * as constants from "./constants";
 
 /**
  * Generates the set of tags that will be used to tag the files of S3.
  * @param virusScanStatus String representing the status.
  * @return {{TagSet: *[]}} TagSet ready to be attached to an S3 file.
  */
-function generateTagSet(virusScanStatus) {
+export function generateTagSet(virusScanStatus) {
   return {
     TagSet: [
       {
@@ -25,7 +26,7 @@ function generateTagSet(virusScanStatus) {
  * Cleanup the specific S3 folder by removing all of its content.
  * We need that to cleanup the /tmp/ folder after the download of the definitions.
  */
-function cleanupFolder(folderToClean) {
+export function cleanupFolder(folderToClean) {
   let result = execSync(`ls -l ${folderToClean}`);
 
   console.log("-- Folder before cleanup--");
@@ -44,7 +45,7 @@ function cleanupFolder(folderToClean) {
  * @param s3Event Inbound S3 event.
  * @return {string} decoded key.
  */
-function extractKeyFromS3Event(s3Event) {
+export function extractKeyFromS3Event(s3Event) {
   const key = s3Event["Records"][0]["s3"]["object"]["key"];
 
   if (!key) {
@@ -59,7 +60,7 @@ function extractKeyFromS3Event(s3Event) {
  * @param s3Event Inbound S3 event.
  * @return {string} Bucket
  */
-function extractBucketFromS3Event(s3Event) {
+export function extractBucketFromS3Event(s3Event) {
   const bucketName = s3Event["Records"][0]["s3"]["bucket"]["name"];
 
   if (!bucketName) {
@@ -74,7 +75,7 @@ function extractBucketFromS3Event(s3Event) {
  * @param  Invoked from 3rd party, Inbound Api event.
  * @return {string} decoded key.
  */
-function extractKeyFromApiEvent(s3Event) {
+export function extractKeyFromApiEvent(s3Event) {
   const key = s3Event.s3Key;
 
   if (!key) {
@@ -89,7 +90,7 @@ function extractKeyFromApiEvent(s3Event) {
  * @param  Invoked from 3rd party, Inbound Api event.
  * @return {string} Bucket
  */
-function extractBucketFromApiEvent(s3Event) {
+export function extractBucketFromApiEvent(s3Event) {
   const bucketName = s3Event.s3Bucket;
 
   if (!bucketName) {
@@ -104,18 +105,8 @@ function extractBucketFromApiEvent(s3Event) {
  * @param systemMessage Inbound message to log and generate.
  * @return {string} Formatted message.
  */
-function generateSystemMessage(systemMessage) {
+export function generateSystemMessage(systemMessage) {
   const finalMessage = `--- ${systemMessage} ---`;
   console.log(finalMessage);
   return finalMessage;
 }
-
-module.exports = {
-  generateTagSet: generateTagSet,
-  cleanupFolder: cleanupFolder,
-  extractKeyFromS3Event: extractKeyFromS3Event,
-  extractBucketFromS3Event: extractBucketFromS3Event,
-  extractKeyFromApiEvent: extractKeyFromApiEvent,
-  extractBucketFromApiEvent: extractBucketFromApiEvent,
-  generateSystemMessage: generateSystemMessage,
-};
