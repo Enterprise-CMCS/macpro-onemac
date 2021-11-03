@@ -135,6 +135,8 @@ jobs:
       - name: Seed Data
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
+      - name: Migrate Data
+        run: ./migrateData.py $STAGE_PREFIX$branch_name
   cypress-test:
     name: Cypress Tests
     needs: deploy

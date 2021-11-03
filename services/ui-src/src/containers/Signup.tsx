@@ -17,7 +17,7 @@ function StateUserSignup() {
       description: "Responsible for submitting packages",
       linkTo: "/state",
       onclick: () => {
-        history.replace("signup/state", { role: "statesubmitter" });
+        history.replace("signup/state", { role: USER_TYPE.STATE_SUBMITTER });
       },
     },
     {
@@ -25,7 +25,7 @@ function StateUserSignup() {
       description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
       onclick: () => {
-        history.replace("signup/state", { role: "statesystemadmin" });
+        history.replace("signup/state", { role: USER_TYPE.STATE_SYSTEM_ADMIN });
       },
     },
   ];

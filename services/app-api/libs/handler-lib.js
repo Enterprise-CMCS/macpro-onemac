@@ -1,4 +1,4 @@
-import * as debug from "./debug-lib";
+//import * as debug from "./debug-lib";
 
 export default function handler(lambda) {
   return async function (event, context) {
@@ -12,7 +12,7 @@ export default function handler(lambda) {
     };
 
     // Start debugger
-    debug.init(event, context);
+    //debug.init(event, context);
 
     // If this invokation is a prewarm, do nothing and return.
     if (event.source == "serverless-plugin-warmup") {
@@ -25,7 +25,7 @@ export default function handler(lambda) {
       response.body = await lambda(event, context);
     } catch (e) {
       // Print debug messages
-      debug.flush(e);
+      //debug.flush(e);
 
       response.body = { error: e.message };
       response.statusCode = 500;
