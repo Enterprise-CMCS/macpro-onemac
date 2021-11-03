@@ -82,11 +82,36 @@ And("verify submission Successful message", () => {
 And("verify SPA ID EXISTS", () => {
   OneMacDashboardPage.verifyIDNumber(SPAID);
 });
+
+And("verify CHIP ID EXISTS", () => {
+  OneMacDashboardPage.verifyIDNumber(SPAID);
+});
+
+And("type in CHIP ID", () => {
+  OneMacSubmitNewMedicaidSpaPage.inputSpaID(SPAID);
+});
+
+And("click on CHIP Respond to RAI", () => {
+  OneMacDashboardPage.clickOnrespondToRAI();
+});
+
+And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
+  OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(SPAID);
+});
+
 And("verify submission date", () => {
   OneMacDashboardPage.verifyDate();
 });
 And("Verify submission type", () => {
   OneMacDashboardPage.verifyType("Medicaid SPA");
+});
+
+And("Verify submission Waiver type", () => {
+  OneMacDashboardPage.verifyType("Waiver");
+});
+
+And("Verify submission CHIP type", () => {
+  OneMacDashboardPage.verifyType("CHIP SPA");
 });
 And("click on spa Respond to RAI", () => {
   OneMacDashboardPage.clickOnrespondToRAI();
@@ -106,6 +131,15 @@ And("verify submission Successful message after RAI", () => {
 And("Verify submission typeRAI", () => {
   OneMacDashboardPage.verifyType("SPA RAI");
 });
+
+And("Verify submission type Waiver RAI", () => {
+  OneMacDashboardPage.verifyType("Waiver RAI");
+});
+
+And("Verify submission typeCHIP SPA RAI", () => {
+  OneMacDashboardPage.verifyType("CHIP SPA RAI");
+});
+
 And("Verify SPA RAI ID number matches Medical SPA ID number", () => {
   // //This Needs to change
   // OneMacDashboardPage.verifyType("SPA RAI");
@@ -283,6 +317,43 @@ And(
 
 And("Click on Waiver Action", () => {
   OneMacSubmissionTypePage.clickwaiverAction();
+});
+
+And("click on Waiver Action on Waiver Action Type page", () => {
+  OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
+});
+
+And("select Action Type New Waiver", () => {
+  OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
+});
+
+And("select 1915b 4 FFS Selective Contracting waivers", () => {
+  OneMacSubmitNewWaiverActionPage.select1915b4FFSSelectiveContractingwaiversUnderWaiverAuthority();
+});
+
+And(
+  "Add file for 1915b 4 FFS Selective Contracting waiver application pre-print",
+  () => {
+    OneMacSubmitNewWaiverActionPage.upload1915B4File();
+  }
+);
+
+And("verify Waiver Number EXISTS", () => {
+  OneMacDashboardPage.verifyIDNumber(validWaiverNumberWith5Numbers);
+});
+
+And("click on Waiver Respond to RAI", () => {
+  OneMacDashboardPage.clickOnrespondToRAI();
+});
+
+And("Add file for Waiver RAI Response", () => {
+  medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
+});
+
+And("Verify Waiver RAI ID number matches Waiver number", () => {
+  OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(
+    validWaiverNumberWith5Numbers
+  );
 });
 
 And("Click on Waiver Action under Waiver Type", () => {
