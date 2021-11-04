@@ -22,14 +22,14 @@ def process_items(table_name, item_list):
     update_items = []
     if table_name.endswith("user-profiles"):
         for item in item_list['Items']:
-            if "type" not in item or item["type"] != {'S': 'statesystemadmin'}:
+            if "type" not in item or item["type"] != {'S': 'stateadmin'}:
                 pass
             else:
                 update_details = [
                 { "id": item['id']},
                 "SET #type=:newType",
                 { "#type":"type"},
-                { ":newType": { "S": 'stateadmin'}}
+                { ":newType": { "S": 'statesystemadmin'}}
                 ]
                 update_items.append(update_details)
     return update_items
