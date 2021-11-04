@@ -12,30 +12,30 @@ const SEATOOL_PLAN_TYPE = {
 };
 
 const SEATOOL_STATUS = {
-  PENDING: "Pending",
-  PENDING_RAI: "Pending-RAI",
-  PENDING_OFF_THE_CLOCK: "Pending-Off the Clock",
-  APPROVED: "Approved",
-  DISAPPROVED: "Disapproved",
-  WITHDRAWN: "Withdrawn",
-  TERMINATED: "Terminated",
-  PENDING_CONCURRANCE: "Pending-Concurrence",
-  UNSUBMITTED: "Unsubmitted",
-  PENDING_FINANCE: "Pending-Finance",
-  PENDING_APPROVAL: "Pending-Approval",
+  PENDING: "1",
+  PENDING_RAI: "2",
+  PENDING_OFF_THE_CLOCK: "3",
+  APPROVED: "4",
+  DISAPPROVED: "5",
+  WITHDRAWN: "6",
+  TERMINATED: "7",
+  PENDING_CONCURRANCE: "8",
+  UNSUBMITTED: "9",
+  PENDING_FINANCE: "10",
+  PENDING_APPROVAL: "11",
 };
 
 // check if the SEATool updates should be reflected in OneMAC
 const SEATOOL_TO_ONEMAC_STATUS = {
   [SEATOOL_STATUS.PENDING]: "Package In Review",
   [SEATOOL_STATUS.PENDING_RAI]: "RAI Issued",
-  [SEATOOL_STATUS.PENDING_OFF_THE_CLOCK]: "Response to RAI In Review",
+  [SEATOOL_STATUS.PENDING_OFF_THE_CLOCK]: "Review Paused, Off the Clock",
   [SEATOOL_STATUS.APPROVED]: "Package Approved",
   [SEATOOL_STATUS.DISAPPROVED]: "Package Disapproved",
   [SEATOOL_STATUS.WITHDRAWN]: "Package Withdrawn",
-  [SEATOOL_STATUS.TERMINATED]: "Amendmend Terminated",
+  [SEATOOL_STATUS.TERMINATED]: "Waiver Terminated",
   [SEATOOL_STATUS.PENDING_CONCURRANCE]: "Package In Review",
-  [SEATOOL_STATUS.UNSUBMITTED]: "Draft",
+  [SEATOOL_STATUS.UNSUBMITTED]: "Unsubmitted",
   [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
   [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
 };
