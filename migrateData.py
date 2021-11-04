@@ -1,11 +1,8 @@
 #!/usr/bin/env python3
 
 import argparse
-from itertools import cycle
 import json
-import os
 import subprocess
-import sys
 
 """
 Hard code details of the data migration.
@@ -69,6 +66,9 @@ def scan_dynamo(table_name):
 def perform_updates(table_name, update_items):
     """
     Run the batch update on the dynamodb table.
+    Sample update CLI (reference while building/testing)
+    
+     aws dynamodb update-item --table-name cms-spa-form-ssa-naming-user-profiles --key '{ "id": {"S": "statesystemadmindenied@cms.hhs.local"}}' --update-expression "SET #type=:newType" --expression-attribute-names '{"#type": "type"}' --expression-attribute-values '{":newType": {"S": "helpdesk"}}' --return-values All_NEW
     """
     for update in update_items:
         print(f"Perform_updates called with {table_name} and {update}")
@@ -128,4 +128,3 @@ if __name__ == "__main__":
 
     else:
         print(f"stage {args.stage} not being migrated")
-# aws dynamodb update-item --table-name cms-spa-form-ssa-naming-user-profiles --key '{ "id": {"S": "statesystemadmindenied@cms.hhs.local"}}' --update-expression "SET #type=:newType" --expression-attribute-names '{"#type": "type"}' --expression-attribute-values '{":newType": {"S": "helpdesk"}}' --return-values All_NEW
