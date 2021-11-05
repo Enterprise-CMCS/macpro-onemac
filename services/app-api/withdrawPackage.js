@@ -11,11 +11,6 @@ import { validateUserSubmitting } from "./utils/validateUser";
 import getUser from "./utils/getUser";
 
 export const main = handler(async (event) => {
-  // If this invocation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    return null;
-  }
-
   let body;
   try {
     body = JSON.parse(event.body);

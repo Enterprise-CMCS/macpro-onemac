@@ -15,10 +15,7 @@ scratch
 reports/
 reports/screenshots/
 node_modules/*
-/nightwatch/log/webDriver.log.txt
 /.github/
-/nightwatch/screenshots/*
-/nightwatch/page_objects/*.txt
 /.nyc_output/*
 tests/cypress/node_modules
 node_modules

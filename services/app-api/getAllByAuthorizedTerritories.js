@@ -129,12 +129,6 @@ async function getDataFromDB(user) {
  * that correspond to the user's active access to states/territories
  */
 export const main = handler(async (event) => {
-  // If this invocation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
-
   const user = await getUser(event.queryStringParameters.email);
   if (Object.keys(user).length === 0) {
     console.info(

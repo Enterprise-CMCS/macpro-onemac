@@ -20,7 +20,7 @@ UNREGISTERED_USERS = [
     for user_type, name in zip(
         [
             "statesubmitter",
-            "stateadmin",
+            "statesystemadmin",
             "cmsroleapprover",
             "cmsreviewer",
             "helpdesk",
