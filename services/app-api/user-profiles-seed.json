@@ -151,17 +151,17 @@
           },
           {
             "date": 1616544487,
-            "doneBy": "stateadminmi@cms.hhs.local",
+            "doneBy": "statesystemadminmi@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "MI"
       }
     ],
-    "id": "stateadminactivemi@cms.hhs.local",
+    "id": "statesystemadminactivemi@cms.hhs.local",
     "firstName": "Abby",
     "lastName": "Active",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -175,17 +175,17 @@
           },
           {
             "date": 1616544487,
-            "doneBy": "stateadminactivemi2@cms.hhs.local",
+            "doneBy": "statesystemadminactivemi2@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "MI"
       }
     ],
-    "id": "stateadminactivemi2@cms.hhs.local",
+    "id": "statesystemadminactivemi2@cms.hhs.local",
     "firstName": "Anthony",
     "lastName": "Active",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -199,17 +199,17 @@
           },
           {
             "date": 1616544487,
-            "doneBy": "stateadminactiveva2@cms.hhs.local",
+            "doneBy": "statesystemadminactiveva2@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "VA"
       }
     ],
-    "id": "stateadminactiveva2@cms.hhs.local",
+    "id": "statesystemadminactiveva2@cms.hhs.local",
     "firstName": "Arlene",
     "lastName": "Active",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -218,17 +218,17 @@
         "history": [
           {
             "date": 1617149287,
-            "doneBy": "stateadminpending@cms.hhs.local",
+            "doneBy": "statesystemadminpending@cms.hhs.local",
             "status": "pending"
           }
         ],
         "stateCode": "DE"
       }
     ],
-    "id": "stateadminpending@cms.hhs.local",
+    "id": "statesystemadminpending@cms.hhs.local",
     "firstName": "Patricia",
     "lastName": "Pending",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -254,10 +254,10 @@
         "stateCode": "VA"
       }
     ],
-    "id": "stateadmindenied@cms.hhs.local",
+    "id": "statesystemadmindenied@cms.hhs.local",
     "firstName": "Daniel",
     "lastName": "Denied",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -283,10 +283,10 @@
         "stateCode": "VA"
       }
     ],
-    "id": "stateadminrevoked@cms.hhs.local",
+    "id": "statesystemadminrevoked@cms.hhs.local",
     "firstName": "Ricky",
     "lastName": "Revoked",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -544,17 +544,17 @@
           },
           {
             "date": 1617148287,
-            "doneBy": "stateadmin@nightwatch.test",
+            "doneBy": "statesystemadmin@nightwatch.test",
             "status": "pending"
           }
         ],
         "stateCode": "MD"
       }
     ],
-    "id": "stateadmin@nightwatch.test",
-    "firstName": "Stateadmin",
+    "id": "statesystemadmin@nightwatch.test",
+    "firstName": "Statesystemadmin",
     "lastName": "Nightwatch",
-    "type": "stateadmin"
+    "type": "statesystemadmin"
   },
 
   {
@@ -563,7 +563,7 @@
         "history": [
           {
             "date": 1617149287,
-            "doneBy": "stateadmin@nightwatch.test",
+            "doneBy": "statesystemadmin@nightwatch.test",
             "status": "active"
           },
           {

@@ -1,5 +1,4 @@
 import handler from "./libs/handler-lib";
-import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import Joi from "joi";
@@ -27,7 +26,7 @@ export const validateInput = (input) => {
       .when("type", {
         is: Joi.string().valid(
           USER_TYPE.STATE_SUBMITTER,
-          USER_TYPE.STATE_ADMIN
+          USER_TYPE.STATE_SYSTEM_ADMIN
         ),
         then: Joi.array().items(
           Joi.object({
@@ -213,12 +212,12 @@ export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
       !isLatestAttributeActive(doneByUser.attributes[index].history)
     ) {
       console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active stateadmin for the state ${userState}`
+        `Warning: The doneBy user ${doneByUser.id} must be an active statesystemadmin for the state ${userState}`
       );
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
-  if (userType === USER_TYPE.STATE_ADMIN) {
+  if (userType === USER_TYPE.STATE_SYSTEM_ADMIN) {
     if (!isLatestAttributeActive(doneByUser.attributes)) {
       console.log(
         `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
@@ -311,7 +310,7 @@ const populateUserAttributes = (
 
   if (
     input.type === USER_TYPE.STATE_SUBMITTER ||
-    input.type === USER_TYPE.STATE_ADMIN
+    input.type === USER_TYPE.STATE_SYSTEM_ADMIN
   ) {
     input.attributes.forEach((item) => {
       const index = user.attributes.findIndex(
@@ -453,9 +452,10 @@ const collectRoleAdminEmailIds = async (input) => {
   if (input.type === USER_TYPE.STATE_SUBMITTER) {
     const states = input.attributes.map((item) => item.stateCode);
     // get all stateAdmin email ids
-    const stateAdmins = (await getUsersByType(USER_TYPE.STATE_ADMIN)) || [];
+    const stateSystemAdmins =
+      (await getUsersByType(USER_TYPE.STATE_SYSTEM_ADMIN)) || [];
     // fiter out by selected states with latest attribute status is active //
-    stateAdmins.map((admin) => {
+    stateSystemAdmins.map((admin) => {
       const attributes = admin.attributes;
       attributes.forEach((attr) => {
         states.includes(attr.stateCode) && isLatestAttributeActive(attr.history)
@@ -464,7 +464,7 @@ const collectRoleAdminEmailIds = async (input) => {
       });
     });
   } else if (
-    input.type === USER_TYPE.STATE_ADMIN ||
+    input.type === USER_TYPE.STATE_SYSTEM_ADMIN ||
     input.type === USER_TYPE.CMS_REVIEWER
   ) {
     // get all cms role approvers emails //
@@ -500,7 +500,7 @@ const collectRoleAdminEmailIds = async (input) => {
 export const constructRoleAdminEmails = (recipients, input) => {
   const userType = input.type;
   let stateText;
-  if (userType == USER_TYPE.STATE_ADMIN) {
+  if (userType == USER_TYPE.STATE_SYSTEM_ADMIN) {
     stateText = ` for ${input.attributes[0].stateCode}`;
   } else {
     stateText = "";
@@ -578,7 +578,6 @@ const processEmail = async (input) => {
  */
 export const main = handler(async (event) => {
   try {
-    if (isLambdaWarmup(event)) return null;
     const input = isObject(event.body) ? event.body : JSON.parse(event.body);
     console.log("PutUser Lambda call for: ", JSON.stringify(input));
     // do a pre-check for things that should stop us immediately //

@@ -1,0 +1,20 @@
+{
+  "type": "statesystemadmin",
+  "attributes": [
+    {
+      "stateCode": "MI",
+      "history": [
+        {
+          "date": 1617149287,
+          "doneBy": "systemadmintest@cms.hhs.local",
+          "status": "active"
+        },
+        {
+          "date": 1616544487,
+          "doneBy": "stateadminactiveva2@cms.hhs.local",
+          "status": "pending"
+        }
+      ]
+    }
+  ]
+}
