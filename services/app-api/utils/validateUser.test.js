@@ -6,7 +6,7 @@ describe("user authorization for read only actions", () => {
     return expect(() => validateUserReadOnly(null, "ME")).toThrow("UR041");
   });
 
-  it.each(["statesubmitter", "stateadmin"])(
+  it.each(["statesubmitter", "statesystemadmin"])(
     "rejects requests from %s if they are not active in the territory",
     async (type) => {
       const testUser = {
@@ -46,7 +46,7 @@ describe("user authorization for submitting actions", () => {
     }
   );
 
-  it.each(["statesubmitter", "stateadmin"])(
+  it.each(["statesubmitter", "statesystemadmin"])(
     "rejects submissions from %s if they are not active in the territory",
     async (type) => {
       const testUser = {
@@ -78,7 +78,7 @@ describe("user authorization for submitting actions", () => {
     expect(validateUserSubmitting(testUser, "ME")).toBe(false);
   });
 
-  it.each(["statesubmitter", "stateadmin"])(
+  it.each(["statesubmitter", "statesystemadmin"])(
     "allows state users with active access to the correct territory",
     async (type) => {
       const testUser = {

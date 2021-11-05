@@ -58,7 +58,7 @@ export function StateSignup() {
                 : "Please select one state."
             }
             loading={loading}
-            onlyOne={role === USER_TYPE.STATE_ADMIN}
+            onlyOne={role === USER_TYPE.STATE_SYSTEM_ADMIN}
             options={territoryList}
             placeholder="Select state here"
             required
