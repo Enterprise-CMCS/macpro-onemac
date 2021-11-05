@@ -9,6 +9,7 @@ plugins:
   - serverless-dotenv-plugin
   - serverless-plugin-scripts
   - serverless-plugin-warmup
+  - serverless-s3-bucket-helper
 
 custom:
   stage: ${opt:stage, self:provider.stage}
