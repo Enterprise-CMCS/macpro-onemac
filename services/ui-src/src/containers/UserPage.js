@@ -42,7 +42,7 @@ export const ACCESS_LABELS = {
 const transformAccesses = (user = {}) => {
   switch (user.type) {
     case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_ADMIN:
+    case ROLES.STATE_SYSTEM_ADMIN:
       return user.attributes?.map(({ stateCode }) => ({
         state: stateCode,
         status: latestAccessStatus(user, stateCode),
@@ -87,7 +87,7 @@ export const AccessDisplay = ({
 
   switch (userType) {
     case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_ADMIN:
+    case ROLES.STATE_SYSTEM_ADMIN:
       accessHeading = "State Access Management";
       break;
     case ROLES.CMS_REVIEWER:
@@ -300,7 +300,7 @@ const UserPage = () => {
         doneBy: userProfile.email,
         attributes: [
           {
-            stateCode: stateAccessToRemove, // required for state submitter and state admin
+            stateCode: stateAccessToRemove, // required for state submitter and state system admin
             status: "revoked",
           },
         ],
@@ -360,7 +360,7 @@ const UserPage = () => {
 
         switch (userType) {
           case ROLES.STATE_SUBMITTER: {
-            const adminsByState = await UserDataApi.getStateAdmins(
+            const adminsByState = await UserDataApi.getStateSystemAdmins(
               userData.attributes
                 .map(({ stateCode }) => stateCode)
                 .filter(Boolean)
@@ -370,7 +370,7 @@ const UserPage = () => {
           }
 
           case ROLES.CMS_REVIEWER:
-          case ROLES.STATE_ADMIN: {
+          case ROLES.STATE_SYSTEM_ADMIN: {
             contacts = await UserDataApi.getCmsRoleApprovers();
             break;
           }
@@ -474,7 +474,7 @@ const UserPage = () => {
           size="wide"
         >
           This action cannot be undone. {territoryMap[stateAccessToRemove]}{" "}
-          State Admin will be notified.
+          State System Admin will be notified.
         </ConfirmationDialog>
       )}
     </div>

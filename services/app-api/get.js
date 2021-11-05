@@ -7,12 +7,6 @@ import dynamoDb from "./libs/dynamodb-lib";
 const s3 = new AWS.S3();
 
 export const main = handler(async (event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
-
   const params = {
     TableName: process.env.tableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved

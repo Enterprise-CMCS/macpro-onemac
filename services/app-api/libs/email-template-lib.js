@@ -17,7 +17,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             <p>Hello,</p>
     
             <p>Your access to the information for [insert state] has been granted. 
-            If you have any questions, please reach out to your State Administrator.</p>
+            If you have any questions, please reach out to your State System Administrator.</p>
     
             <p>Thank you!</p>`,
     },
@@ -28,7 +28,7 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             <p>Hello,</p>
     
             <p>Your access to the information for [insert state] has been denied. 
-            If you have any questions, please reach out to your State Administrator.</p>
+            If you have any questions, please reach out to your State System Administrator.</p>
     
             <p>Thank you!</p>`,
     },
@@ -39,12 +39,12 @@ export const ACCESS_CONFIRMATION_EMAILS = {
             <p>Hello,</p>
     
             <p>Your access to the information for [insert state] has been revoked. 
-            If you have any questions, please reach out to your State Administrator.</p>
+            If you have any questions, please reach out to your State System Administrator.</p>
     
             <p>Thank you!</p>`,
     },
   },
-  stateadmin: {
+  statesystemadmin: {
     pending: {
       subjectLine: "Your OneMAC Role Access is Pending Review",
       bodyHTML: `

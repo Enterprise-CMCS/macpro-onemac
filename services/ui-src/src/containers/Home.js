@@ -10,8 +10,8 @@ import AlertBar from "../components/AlertBar";
 export default function Home() {
   const location = useLocation();
 
-  const submissionTitle = "How to create a submission";
-  const submissionsList = [
+  const stateSubmissionTitle = "How to create a submission";
+  const stateSubmissionsList = [
     {
       image: "login",
       subTitle: "Login with IDM",
@@ -33,24 +33,68 @@ export default function Home() {
     },
   ];
 
-  const paperSubmissionTitle =
-    "You can submit paper-based submissions, including:";
+  const statePaperSubmissionTitle = "Submission Types include:";
 
-  const paperSubmissionList = [
+  const statePaperSubmissionList = [
     {
-      text: "Amendments to your Medicaid and CHIP State Plans (not submitted through MACPro, MMDL or WMS)",
+      text: "Amendments to your Medicaid and CHIP State Plans (not submitted through MACPro, MMDL or WMS).",
     },
     {
-      text: "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro)",
+      text: "Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro).",
     },
     {
-      text: "Section 1915(b) waiver submissions (those not submitted through WMS)",
+      text: "Section 1915(b) waiver submissions (those not submitted through WMS).",
     },
     {
-      text: "Section 1915(c) Appendix K amendments (which cannot be submitted through WMS)",
+      text: "Section 1915(c) Appendix K amendments (which cannot be submitted through WMS).",
     },
     {
-      text: "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable)",
+      text: "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable).",
+    },
+    {
+      text: "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
+    },
+  ];
+
+  const cmsSubmissionTitle = "How to review a submission";
+  const cmsSubmissionsList = [
+    {
+      image: "attach",
+      subTitle: "Receive an email for submission notification",
+      text: "After a state adds a submission to OneMAC, you will receive an email notification that a submission was made requiring your review and the submission is on the clock.",
+      verticalLineClass: "vertical-line-65",
+    },
+    {
+      image: "login",
+      subTitle: "Login with EUA",
+      text: "Login with your EUA username and password to access the SPA and Waiver dashboard.",
+      verticalLineClass: "vertical-line-96",
+    },
+    {
+      image: "email",
+      subTitle: "Review your assigned submission",
+      text: `Search the submission ID from the email and click on the submission to view and review details and attachments.`,
+      verticalLineClass: "",
+    },
+  ];
+
+  const cmsPaperSubmissionTitle = "Submission Types include:";
+
+  const cmsPaperSubmissionList = [
+    {
+      text: "Amendments to your Medicaid and CHIP State Plans.",
+    },
+    {
+      text: "Official state responses to formal requests for additional information (RAIs) for SPAs.",
+    },
+    {
+      text: "Section 1915(b) waiver submissions. ",
+    },
+    {
+      text: "Section 1915(c) Appendix K amendments.",
+    },
+    {
+      text: "Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions.",
     },
     {
       text: "State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.",
@@ -82,7 +126,7 @@ export default function Home() {
             <div className="ds-l-col--1 ds-u-padding--0">
               <div className={item.verticalLineClass}></div>
             </div>
-            <div className="ds-l-col--11 ds-u-padding-left--1 text">
+            <div className="ds-l-col--11 ds-u-padding-left--1 ds-u-padding-bottom--1 text">
               {item.text}
             </div>
           </div>
@@ -112,17 +156,40 @@ export default function Home() {
     <>
       <HomeHeader />
       <AlertBar alertCode={location?.state?.passCode} />
+
+      <div className="home-content-user-header">
+        <h1 className="ds-text-heading--3xl ds-h1">State Users</h1>
+      </div>
       <div className="home-content-box">
         <div className="home-content-wrapper">
           <div className="home-content-left-box">
+            <div className="gradient-border-home" />
             <div className="ds-l-container ds-u-margin--0">
-              <div className="title">{submissionTitle}</div>
-              {renderSubmissionSteps(submissionsList)}
+              <div className="title-left">{stateSubmissionTitle}</div>
+              {renderSubmissionSteps(stateSubmissionsList)}
             </div>
           </div>
           <div className="home-content-right-box">
-            <div className="title">{paperSubmissionTitle}</div>
-            {renderPaperSubmissionInfo(paperSubmissionList)}
+            <div className="title">{statePaperSubmissionTitle}</div>
+            {renderPaperSubmissionInfo(statePaperSubmissionList)}
+          </div>
+        </div>
+      </div>
+      <div className="home-content-user-header">
+        <h1 className="ds-text-heading--3xl ds-h1">CMS Users</h1>
+      </div>
+      <div className="home-content-box">
+        <div className="home-content-wrapper">
+          <div className="home-content-left-box">
+            <div className="gradient-border-home" />
+            <div className="ds-l-container ds-u-margin--0">
+              <div className="title-left">{cmsSubmissionTitle}</div>
+              {renderSubmissionSteps(cmsSubmissionsList)}
+            </div>
+          </div>
+          <div className="home-content-right-box">
+            <div className="title">{cmsPaperSubmissionTitle}</div>
+            {renderPaperSubmissionInfo(cmsPaperSubmissionList)}
           </div>
         </div>
       </div>

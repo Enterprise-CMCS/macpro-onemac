@@ -6,10 +6,10 @@ import handleApiError from "../libs/apiErrorHandler";
 
 export const getAdminTypeByRole = (role: string): string | undefined => {
   switch (role) {
-    case USER_TYPE.STATE_ADMIN:
+    case USER_TYPE.STATE_SYSTEM_ADMIN:
       return USER_TYPE.STATE_SUBMITTER;
     case USER_TYPE.CMS_ROLE_APPROVER:
-      return USER_TYPE.STATE_ADMIN;
+      return USER_TYPE.STATE_SYSTEM_ADMIN;
     case USER_TYPE.SYSTEM_ADMIN:
       return USER_TYPE.CMS_ROLE_APPROVER;
     default:
@@ -136,7 +136,7 @@ class UserDataApi {
   /**
    * Get all active state system administrators' contact info for a list of states.
    */
-  async getStateAdmins(states: string[]): Promise<any[]> {
+  async getStateSystemAdmins(states: string[]): Promise<any[]> {
     try {
       const params = new URLSearchParams();
       for (const state of states) {
@@ -144,14 +144,14 @@ class UserDataApi {
       }
       return await API.get(
         "oneMacAPI",
-        `/getStateAdmins?${params.toString()}`,
+        `/getStateSystemAdmins?${params.toString()}`,
         undefined
       );
     } catch (error) {
       return handleApiError(
         error,
         "FETCH_ERROR",
-        "There was an error fetching the state admins."
+        "There was an error fetching the state system admins."
       );
     }
   }

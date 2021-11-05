@@ -3,7 +3,6 @@ import { isEmpty, isObject } from "lodash";
 import Joi from "joi";
 
 import handler from "./libs/handler-lib";
-import isLambdaWarmup from "./libs/lambda-warmup";
 import dynamoDb from "./libs/dynamodb-lib";
 
 const validateInput = (input) => {
@@ -29,8 +28,6 @@ const validateInput = (input) => {
  * Update a user's phone number
  */
 export const main = handler(async (event) => {
-  if (isLambdaWarmup(event)) return null;
-
   let input = event.body;
   if (!isObject(input)) input = JSON.parse(input);
 

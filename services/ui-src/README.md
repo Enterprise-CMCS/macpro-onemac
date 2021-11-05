@@ -24,11 +24,11 @@ statesubmitteractive@cms.hhs.local
 statesubmitterdenied@cms.hhs.local
 statesubmitterrevoked@cms.hhs.local
 statesubmitterunregistered@cms.hhs.local
-stateadminpending@cms.hhs.local
-stateadminactive@cms.hhs.local
-stateadmindenied@cms.hhs.local
-stateadminrevoked@cms.hhs.local
-stateadminunregistered@cms.hhs.local
+statesystemadminpending@cms.hhs.local
+statesystemadminactive@cms.hhs.local
+statesystemadmindenied@cms.hhs.local
+statesystemadminrevoked@cms.hhs.local
+statesystemadminunregistered@cms.hhs.local
 cmsroleapproverpending@cms.hhs.local
 cmsroleapproveractive@cms.hhs.local
 cmsroleapproverdenied@cms.hhs.local

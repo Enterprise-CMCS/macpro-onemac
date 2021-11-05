@@ -47,7 +47,7 @@ export const userList = [
     role: "statesubmitter",
     latest: {
       date: 1617149287,
-      doneBy: "stateadmin@nightwatch.test",
+      doneBy: "statesystemadmin@nightwatch.test",
       status: "active",
     },
   },
@@ -66,11 +66,11 @@ export const userList = [
   },
   {
     id: 6,
-    email: "stateadmin@nightwatch.test",
-    firstName: "Stateadmin",
+    email: "statesystemadmin@nightwatch.test",
+    firstName: "Statesystemadmin",
     lastName: "Nightwatch",
     stateCode: "MD",
-    role: "stateadmin",
+    role: "statesystemadmin",
     latest: {
       date: 1617149287,
       doneBy: "cmsroleapprover@nightwatch.test",
@@ -79,24 +79,24 @@ export const userList = [
   },
   {
     id: 7,
-    email: "stateadminpending@cms.hhs.local",
+    email: "statesystemadminpending@cms.hhs.local",
     firstName: "Patricia",
     lastName: "Pending",
     stateCode: "DE",
-    role: "stateadmin",
+    role: "statesystemadmin",
     latest: {
       date: 1617149287,
-      doneBy: "stateadminpending@cms.hhs.local",
+      doneBy: "statesystemadminpending@cms.hhs.local",
       status: "pending",
     },
   },
   {
     id: 8,
-    email: "stateadminactiveMI@cms.hhs.local",
+    email: "statesystemadminactiveMI@cms.hhs.local",
     firstName: "Abby",
     lastName: "Active",
     stateCode: "MI",
-    role: "stateadmin",
+    role: "statesystemadmin",
     latest: {
       date: 1617149287,
       doneBy: "systemadmintest@cms.hhs.local",
@@ -222,11 +222,11 @@ export const userList = [
   },
   {
     id: 18,
-    email: "stateadmindenied@cms.hhs.local",
+    email: "statesystemadmindenied@cms.hhs.local",
     firstName: "Daniel",
     lastName: "Denied",
     stateCode: "MI",
-    role: "stateadmin",
+    role: "statesystemadmin",
     latest: {
       date: 1617149287,
       doneBy: "systemadmintest@cms.hhs.local",
@@ -235,11 +235,11 @@ export const userList = [
   },
   {
     id: 19,
-    email: "stateadmindenied@cms.hhs.local",
+    email: "statesystemadmindenied@cms.hhs.local",
     firstName: "Daniel",
     lastName: "Denied",
     stateCode: "VA",
-    role: "stateadmin",
+    role: "statesystemadmin",
     latest: {
       date: 1617149287,
       doneBy: "systemadmintest@cms.hhs.local",
@@ -248,11 +248,11 @@ export const userList = [
   },
   {
     id: 20,
-    email: "stateadminactiveVA2@cms.hhs.local",
+    email: "statesystemadminactiveVA2@cms.hhs.local",
     firstName: "Arlene",
     lastName: "Active",
     stateCode: "VA",
-    role: "stateadmin",
+    role: "statesystemadmin",
     latest: {
       date: 1617149287,
       doneBy: "systemadmintest@cms.hhs.local",
