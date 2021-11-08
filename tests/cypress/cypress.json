@@ -11,5 +11,5 @@
   "videosFolder": "videos",
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
-  "defaultCommandTimeout": 25000
+  "defaultCommandTimeout": 30000
 }
