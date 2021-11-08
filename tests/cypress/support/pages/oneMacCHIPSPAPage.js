@@ -33,7 +33,7 @@ export class oneMacCHIPSPAPage {
 
   uploadCurrentStatePlanFile() {
     cy.xpath(addFileBTNCurrentStatePlan).click();
-    const filePath = "/files/adobe.pdf";
+    const filePath = "/files/picture.jpg";
     cy.get(addFileBTNCurrentStatePlanInnerBTN).attachFile(filePath);
   }
 
