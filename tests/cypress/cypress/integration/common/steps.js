@@ -819,3 +819,159 @@ And("Click on What is my SPA ID link", () => {
 And("Click on What is my Waiver ID Link", () => {
   OneMacSubmitNewWaiverActionPage.clickWhatIsMyWaiverIdLink();
 });
+
+And("Home tab exists", () => {
+  OneMacHomePage.verifyHomePageLinkExists();
+});
+
+And("FAQ tab exists", () => {
+  OneMacHomePage.verifyFAQLinkExists();
+});
+
+And("Register exists", () => {
+  OneMacHomePage.verifyRegisterLinkExists();
+});
+
+And("Login Exists", () => {
+  OneMacHomePage.verifyloginBTNExists();
+});
+
+And("welcome message exists", () => {
+  OneMacHomePage.verifywelcomeMSGExists();
+});
+
+And("state users section exists", () => {
+  OneMacHomePage.verifystateUsersSectionExists();
+});
+
+And("cms users section exists", () => {
+  OneMacHomePage.verifycmsUsersSectionExists();
+});
+
+And("do you have questions or need support exists", () => {
+  OneMacHomePage.verifydoYouHaveQuestionsOrNeedSupportExists();
+});
+
+And("View FAQ exists", () => {
+  OneMacHomePage.verifyviewFAQExists();
+});
+
+And("How to create a submission exists", () => {
+  OneMacHomePage.verifyhowToCreateASubmissionExists();
+});
+
+And("Login with IDM Exists", () => {
+  OneMacHomePage.verifyloginWithIDMExists();
+});
+
+And("Login with IDM Info Exists", () => {
+  OneMacHomePage.verifyloginWithIDMInfoExists();
+});
+
+And("Attach your documents Exists", () => {
+  OneMacHomePage.verifyAttachYourDocumentsExists();
+});
+
+And("Attach your documents info Exists", () => {
+  OneMacHomePage.verifyAttachYourDocumentsInfoExists();
+});
+
+And("Receive an email confirmation Exists", () => {
+  OneMacHomePage.verifyreceiveAnEmailConformationExists();
+});
+
+And("Receive an email confirmation details Exists", () => {
+  OneMacHomePage.verifyreceiveAnEmailConformationInfoExists();
+});
+
+And("Submission Types include Exists", () => {
+  OneMacHomePage.verifysubmissionTypesIncludeExists();
+});
+
+And(
+  "Amendments to your Medicaid and CHIP State Plans not submitted through MACPro MMDL or WMS Exists",
+  () => {
+    OneMacHomePage.verifyfirstBulletExists();
+  }
+);
+
+And(
+  "Official state responses to formal requests for additional information RAIs for SPAs not submitted through MACPro Exists",
+  () => {
+    OneMacHomePage.verifySecondBulletExists();
+  }
+);
+
+And(
+  "Section 1915b waiver submissions those not submitted through WMS Exists",
+  () => {
+    OneMacHomePage.verifyThirdBulletExists();
+  }
+);
+
+And(
+  "Section 1915c Appendix K amendments which cannot be submitted through WMS Exists",
+  () => {
+    OneMacHomePage.verifyForthBulletExists();
+  }
+);
+
+And(
+  "Official state responses to formal requests for additional information RAIs for Section 1915b waiver actions in addition to submitting waiver changes in WMS if applicable Exists",
+  () => {
+    OneMacHomePage.verifyFifthBulletExists();
+  }
+);
+
+And("How to review a submission exists", () => {
+  OneMacHomePage.verifyhowToReviewASubmissionExists();
+});
+
+And("Receive an email for submission notification exists", () => {
+  OneMacHomePage.verifyReceiveAnEmailForSubmissionNotificationExists();
+});
+And("Receive an email for submission notification information exists", () => {
+  OneMacHomePage.verifyReceiveAnEmailForSubmissionNotificationInfoExists();
+});
+And("Login with EUA exists", () => {
+  OneMacHomePage.verifyloginWithEUAExists();
+});
+And("Login with EUA information exists", () => {
+  OneMacHomePage.verifyloginWithEUAInfoExists();
+});
+And("Review your assigned submission exists", () => {
+  OneMacHomePage.verifyReviewYourAssignedSubmissionExists();
+});
+And("Review your assigned submission information exists", () => {
+  OneMacHomePage.verifyReviewYourAssignedSubmissionInfoExists();
+});
+And("Submission Types include exists", () => {
+  OneMacHomePage.verifyCMSUSERSsubmissionTypesIncludeExists();
+});
+And("Amendments to your Medicaid and CHIP State Plans exists", () => {
+  OneMacHomePage.verifyCMSBullet1Exists();
+});
+And(
+  "Official state responses to formal requests for additional information RAIs for SPAs exists",
+  () => {
+    OneMacHomePage.verifyCMSBullet2Exists();
+  }
+);
+And("Section 1915b waiver submissions exists", () => {
+  OneMacHomePage.verifyCMSBullet3Exists();
+});
+And("Section 1915c Appendix K amendments exists", () => {
+  OneMacHomePage.verifyCMSBullet4Exists();
+});
+And(
+  "Official state responses to formal requests for additional information RAIs for Section 1915b waiver actions exists",
+  () => {
+    OneMacHomePage.verifyCMSBullet5Exists();
+  }
+);
+And(
+  "State requests for Temporary Extensions for section 1915b and 1915c waivers exists",
+  () => {
+    OneMacHomePage.verifyCMSBullet6Exists();
+  }
+);

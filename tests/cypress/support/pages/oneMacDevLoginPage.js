@@ -39,7 +39,7 @@ export class oneMacDevLoginPage {
   }
 
   loginAsCMSUserDenied() {
-    cy.get(EmailInput).type("cmsapproverdenied@cms.hhs.local");
+    cy.get(EmailInput).type("cmsroleapproverdenied@cms.hhs.local");
     cy.get(PasswordInput).type("Passw0rd!");
     cy.get(LoginBtn).click();
   }
