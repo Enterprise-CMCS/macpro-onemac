@@ -12,6 +12,7 @@ plugins:
   - serverless-s3-local
   - serverless-offline
   - serverless-plugin-scripts
+  - serverless-s3-bucket-helper
 provider:
   name: aws
   runtime: nodejs12.x

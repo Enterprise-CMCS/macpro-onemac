@@ -20,6 +20,12 @@ Install the serverless plugin to handle the WAF association without the race con
 npm install serverless-associate-waf --save-dev
 ```
 
+Install the quick-start s3 bucket helper serverless plugin (in project root)
+
+```
+npm install serverless-s3-bucket-helper --save-dev
+```
+
 Run the software locally by running the following command:
 
 ```
