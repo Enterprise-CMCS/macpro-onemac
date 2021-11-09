@@ -23,18 +23,6 @@ export default async function packageExists(id) {
 
     if (result.Count <= 0) {
       params = {
-        TableName: process.env.spaIdTableName,
-        KeyConditionExpression: "id = :pk",
-        ExpressionAttributeValues: {
-          ":pk": id,
-        },
-      };
-      console.log("the params for checking", params);
-      result = await dynamoDb.query(params);
-    }
-
-    if (result.Count <= 0) {
-      params = {
         TableName: process.env.tableName,
         ExclusiveStartKey: null,
         ScanIndexForward: false,
