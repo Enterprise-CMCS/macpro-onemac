@@ -94,7 +94,10 @@ export const getMyUserList = async (event) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
-  if (!getUserRoleObj(doneBy.type).canAccessUserManagement) {
+  if (
+    !getUserRoleObj(doneBy.type, false, doneBy?.attributes)
+      .canAccessUserManagement
+  ) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
