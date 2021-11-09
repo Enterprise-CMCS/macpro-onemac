@@ -8,34 +8,15 @@ import subprocess
 Hard code details of the data migration.
 """
 STAGES_TO_MIGRATE = ['all']
-TABLES_TO_MIGRATE = ['user-profiles','spa-ids']
+TABLES_TO_MIGRATE = ['user-profiles']
 
 
-def process_items(table_name, item_list, stage):
+def process_items(table_name, item_list):
     """
     Modify this function to perform the data migrations.
     Migrate each table with the if blocks.
     """
     update_items = []
-    if table_name.endswith("spa-ids"):
-        one_table_name = build_table_name("one",stage)
-        for item in item_list['Items']:
-            outInfo = subprocess.run(
-                [
-                    "aws",
-                    "dynamodb",
-                    "get-item",
-                    "--table-name",
-                    one_table_name,
-                    "--key",
-                    json.dumps({ "pk": item['id'], "sk": { "S": "SEATool"}  })
-                ],
-                check=True,
-                capture_output=True,
-            ).stdout.decode("utf-8")
-            if (outInfo == "" ):
-                print(f"Id {item['id']} not in one table")
-
     if table_name.endswith("user-profiles"):
         for item in item_list['Items']:
             if "type" not in item or item["type"] != {'S': 'stateadmin'}:
@@ -132,7 +113,7 @@ if __name__ == "__main__":
         for table in TABLES_TO_MIGRATE:
             table_name = build_table_name(table, args.stage)
             all_items = scan_dynamo(table_name)
-            update_items = process_items(table_name, all_items, args.stage)
+            update_items = process_items(table_name, all_items)
 
             if args.dry_run:
                 print("migrate table:")
