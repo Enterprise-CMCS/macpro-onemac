@@ -1,17 +1,92 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
-import { getUserFunctions, getAuthorizedStateList } from "./user/user-util";
+import {
+  RESPONSE_CODE,
+  USER_TYPE,
+  getUserRoleObj,
+  tableRoles,
+} from "cmscommonlib";
+import { getAuthorizedStateList, getCurrentStatus } from "./user/user-util";
 import getUser from "./utils/getUser";
 
-// Gets owns user data from User DynamoDB table
-export const main = handler(async (event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
+const transformUserList = (forType, userResult, stateList) => {
+  const userRows = [];
+  const errorList = [];
+  let i = 1;
 
+  //  console.log("results:", JSON.stringify(userResult));
+
+  // if there are no items, return an empty user list
+  if (!userResult.Items) return userRows;
+
+  userResult.Items.forEach((oneUser) => {
+    // check if this type should be on list
+    if (!tableRoles[forType].includes(oneUser.type)) return;
+
+    // All users must have the attribute section
+    if (!oneUser.attributes) {
+      errorList.push(
+        "Attributes data required for this role, but not found ",
+        oneUser
+      );
+      return;
+    }
+    if (
+      oneUser.type === USER_TYPE.STATE_SUBMITTER ||
+      oneUser.type === USER_TYPE.STATE_SYSTEM_ADMIN
+    ) {
+      oneUser.attributes.forEach((oneAttribute) => {
+        // skip states not on the Admin's list, not an error
+        if (
+          stateList.length > 0 &&
+          stateList.indexOf(oneAttribute.stateCode) == -1
+        )
+          return;
+
+        // State System Admins and State Submitters must have the history section
+        if (!oneAttribute.history) {
+          errorList.push(
+            "History data required for this role, but not found ",
+            oneUser
+          );
+          return;
+        }
+
+        userRows.push({
+          id: i,
+          email: oneUser.id,
+          firstName: oneUser.firstName,
+          lastName: oneUser.lastName,
+          stateCode: oneAttribute.stateCode,
+          role: oneUser.type,
+          latest: getCurrentStatus(oneAttribute.history),
+        });
+        i++;
+      });
+    }
+    // Helpdesk users and CMS Role Approvers must not have the history section
+    else {
+      userRows.push({
+        id: i,
+        email: oneUser.id,
+        firstName: oneUser.firstName,
+        lastName: oneUser.lastName,
+        stateCode: "N/A",
+        role: oneUser.type,
+        latest: getCurrentStatus(oneUser.attributes),
+      });
+      i++;
+    }
+  });
+
+  // console.log("error List is ", errorList);
+
+  // console.log("Response:", userRows);
+
+  return userRows;
+};
+
+export const getMyUserList = async (event) => {
   // get the rest of the details about the current user
   const doneBy = await getUser(event.queryStringParameters.email);
 
@@ -19,23 +94,23 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
-  // map the user functions from the type pulled in from tne current user
-  const uFunctions = getUserFunctions(doneBy);
-  if (!uFunctions) {
+  if (
+    !getUserRoleObj(doneBy.type, false, doneBy?.attributes)
+      .canAccessUserManagement
+  ) {
     return RESPONSE_CODE.USER_NOT_AUTHORIZED;
   }
 
-  const reasonWhyNot = uFunctions.canIRequestThis(doneBy);
-  if (reasonWhyNot) return reasonWhyNot;
-
-  let scanParams = uFunctions.getScanParams();
   let stateList = [];
-  if (uFunctions.shouldICheckState()) {
+  if (doneBy.type === USER_TYPE.STATE_SYSTEM_ADMIN) {
     stateList = getAuthorizedStateList(doneBy);
   }
 
-  const userResult = await dynamoDb.scan(scanParams);
-  const transformedUserList = uFunctions.transformUserList(
+  const userResult = await dynamoDb.scan({
+    TableName: process.env.userTableName,
+  });
+  const transformedUserList = transformUserList(
+    doneBy.type,
     userResult,
     stateList
   );
@@ -52,7 +127,7 @@ export const main = handler(async (event) => {
     }`;
     filterAttribValues[`:email${i}`] = email;
   });
-  scanParams = {
+  const scanParams = {
     TableName: process.env.userTableName,
     ProjectionExpression: "id, firstName, lastName",
     FilterExpression: `id IN (${filterAttributeNames})`,
@@ -84,4 +159,13 @@ export const main = handler(async (event) => {
     }
     return user;
   });
+};
+
+export const main = handler(async (event) => {
+  try {
+    return getMyUserList(event);
+  } catch (e) {
+    console.log("error: ", e);
+    return `Error ${e.message} in getMyUserList`;
+  }
 });

@@ -117,7 +117,6 @@ jobs:
             services/ui-auth/node_modules
             services/ui-src/node_modules
             node_modules
-            tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: set path
         run: |
@@ -136,6 +135,8 @@ jobs:
       - name: Seed Data
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
+      - name: Migrate Data
+        run: ./migrateData.py $STAGE_PREFIX$branch_name
   cypress-test:
     name: Cypress Tests
     needs: deploy
@@ -173,7 +174,6 @@ jobs:
             services/ui-auth/node_modules
             services/ui-src/node_modules
             node_modules
-            tests/nightwatch/node_modules
           key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
         run: npm ci
@@ -186,13 +186,6 @@ jobs:
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd         
-      # - name: Run Nightwatch suite
-      #   # do not run tests on val and production
-      #   run: |
-      #     pushd services
-      #     export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
-      #     popd
-      #     ./test.sh
       - name: Run Cypress Tests
         run: |
           pushd services

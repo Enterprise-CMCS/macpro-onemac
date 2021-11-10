@@ -2,8 +2,8 @@
  * Lambda function handler that will update the definitions stored in S3.
  */
 
-const clamav = require("./clamav");
-const utils = require("./utils");
+import * as clamav from "./clamav";
+import * as utils from "./utils";
 
 /**
  * This function will do the following
@@ -16,7 +16,7 @@ const utils = require("./utils");
  * @param event Event fired to invoke the new update function.
  * @param context
  */
-async function lambdaHandleEvent() {
+export async function lambdaHandleEvent() {
   utils.generateSystemMessage(`AV definition update start time: ${new Date()}`);
 
   await utils.cleanupFolder("/tmp/");
@@ -32,8 +32,3 @@ async function lambdaHandleEvent() {
     return "DEFINITION UPDATE FAILED";
   }
 }
-
-// Export for AWS Lambda
-module.exports = {
-  lambdaHandleEvent: lambdaHandleEvent,
-};

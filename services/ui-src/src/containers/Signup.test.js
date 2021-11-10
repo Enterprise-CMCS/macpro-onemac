@@ -18,6 +18,7 @@ it("renders the new cms user options", async () => {
     <AppContext.Provider
       value={{
         ...cmsUserNoAuthState,
+        isLoggedInAsDeveloper: true,
       }}
     >
       <Router history={history}>
@@ -33,7 +34,30 @@ it("renders the new cms user options", async () => {
   userEvent.click(cmsReviewerOption);
   expect(history.location.pathname).toBe("/signup/cmsreviewer");
 });
+
 history = createMemoryHistory();
+
+it("only renders the new cms role approver option when logged in normally", async () => {
+  render(
+    <AppContext.Provider
+      value={{
+        ...cmsUserNoAuthState,
+      }}
+    >
+      <Router history={history}>
+        <Signup />
+      </Router>
+    </AppContext.Provider>,
+    { wrapper: MemoryRouter }
+  );
+  const cmsReviewerOption = screen.queryByText("CMS Reviewer");
+  const cmsRoleApproverOption = screen.getByText("CMS Role Approver");
+  expect(cmsReviewerOption).toBeNull();
+  expect(cmsRoleApproverOption).toBeInTheDocument();
+});
+
+history = createMemoryHistory();
+
 it("renders the state user options", async () => {
   render(
     <AppContext.Provider

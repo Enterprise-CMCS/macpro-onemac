@@ -36,6 +36,7 @@ export function useSignupCallback(
   const history = useHistory();
   const location = useLocation<{}>();
   const {
+    isLoggedInAsDeveloper,
     userProfile: {
       cmsRoles = "",
       email = "",
@@ -67,7 +68,7 @@ export function useSignupCallback(
         // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
 
-        await setUserInfo?.();
+        await setUserInfo?.(isLoggedInAsDeveloper);
 
         const roleObj = getUserRoleObj(userType, !cmsRoles);
         const destination = roleObj.canAccessDashboard
@@ -82,6 +83,11 @@ export function useSignupCallback(
           case USER_TYPE.CMS_REVIEWER:
             messageState = {
               passCode: RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED,
+            };
+            break;
+          case USER_TYPE.CMS_ROLE_APPROVER:
+            messageState = {
+              passCode: RESPONSE_CODE.CMS_ROLE_APPROVER_USER_SUBMITTED,
             };
             break;
           default:
@@ -111,6 +117,7 @@ export function useSignupCallback(
       email,
       firstName,
       history,
+      isLoggedInAsDeveloper,
       lastName,
       loading,
       location,

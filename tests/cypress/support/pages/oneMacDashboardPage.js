@@ -66,6 +66,11 @@ export class oneMacDashboardPage {
     cy.xpath(SecondIDNUMBER).contains(s);
   }
 
+  verifySPARAIIDNumberMatchesCHIPSPAIDNumber(s) {
+    cy.xpath(IDNUMBER).contains(s);
+    cy.xpath(SecondIDNUMBER).contains(s);
+  }
+
   clickUserManagementTab() {
     cy.get(userManagementTab).click();
   }

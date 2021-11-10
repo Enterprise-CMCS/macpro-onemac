@@ -1,5 +1,8 @@
 service: ui
 
+plugins:
+  - serverless-s3-bucket-helper
+
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${env:IAM_PATH, "/"}

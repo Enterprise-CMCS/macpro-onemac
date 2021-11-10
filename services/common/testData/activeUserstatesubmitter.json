@@ -1,0 +1,28 @@
+{
+    "id": "statesubmitteractive@cms.hhs.local",
+    "attributes": [
+     {
+      "stateCode": "MI",
+      "history": [
+       {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "active"
+       }
+      ]
+     },
+     {
+      "stateCode": "VA",
+      "history": [
+       {
+        "date": 1617149287,
+        "doneBy": "systemadmintest@cms.hhs.local",
+        "status": "active"
+       }
+      ]
+     }
+    ],
+    "firstName": "Angie",
+    "lastName": "Active",
+    "type": "statesubmitter"
+   }

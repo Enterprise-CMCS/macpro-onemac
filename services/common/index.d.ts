@@ -9,7 +9,7 @@ export enum USER_STATUS {
 export enum USER_TYPE {
   STATE_SUBMITTER = "statesubmitter",
   CMS_REVIEWER = "cmsreviewer",
-  STATE_ADMIN = "stateadmin",
+  STATE_SYSTEM_ADMIN = "statesystemadmin",
   CMS_ROLE_APPROVER = "cmsroleapprover",
   SYSTEM_ADMIN = "systemadmin",
   HELPDESK = "helpdesk",
@@ -20,11 +20,13 @@ export class UserRole {
   canAccessForms: boolean;
   canAccessMetrics: boolean;
   canAccessUserManagement: boolean;
+  canDownloadCsv: boolean;
 }
 
 export const getUserRoleObj: (
   role: USER_TYPE | undefined,
-  isEua?: boolean
+  isEua?: boolean,
+  attributes?: unknown[]
 ) => UserRole;
 
 export const latestAccessStatus: (

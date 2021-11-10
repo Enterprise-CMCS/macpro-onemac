@@ -10,18 +10,13 @@ import { getAuthorizedStateList } from "./user/user-util";
  */
 
 export const main = handler((event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    return null;
-  }
-
   if (!event?.queryStringParameters?.email) return RESPONSE_CODE.USER_NOT_FOUND;
 
   return getUser(event.queryStringParameters.email)
     .then((user) => {
       let territoryList = "this is for EUA users";
       if (Object.keys(user).length > 0) {
-        const userRoleObj = getUserRoleObj(user.type);
+        const userRoleObj = getUserRoleObj(user?.type, !user, user?.attributes);
 
         territoryList = getAuthorizedStateList(user);
         if (!userRoleObj.canAccessDashboard || territoryList === []) {

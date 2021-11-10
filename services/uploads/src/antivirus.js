@@ -2,13 +2,15 @@
  * Lambda function that will be perform the scan and tag the file accordingly.
  */
 
-const AWS = require("aws-sdk");
-const path = require("path");
-const fs = require("fs");
-const clamav = require("./clamav");
+import AWS from "aws-sdk";
+import path from "path";
+import fs from "fs";
+
+import * as clamav from "./clamav";
+import * as utils from "./utils";
+import * as constants from "./constants";
+
 const s3 = new AWS.S3();
-const utils = require("./utils");
-const constants = require("./constants");
 
 /**
  * Retrieve the file size of S3 object without downloading.
@@ -16,7 +18,7 @@ const constants = require("./constants");
  * @param {string} bucket Bucket of S3 Object
  * @return {int} Length of S3 object in bytes.
  */
-async function sizeOf(key, bucket) {
+export async function sizeOf(key, bucket) {
   console.log("key: " + key);
   console.log("bucket: " + bucket);
 
@@ -28,9 +30,9 @@ async function sizeOf(key, bucket) {
  * Check if S3 object is larger then the MAX_FILE_SIZE set.
  * @param {string} s3ObjectKey       Key of S3 Object
  * @param {string} s3ObjectBucket   Bucket of S3 object
- * @return {boolean} True if S3 object is larger then MAX_FILE_SIZE
+ * @return {Promise<boolean>} True if S3 object is larger then MAX_FILE_SIZE
  */
-async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
+export async function isS3FileTooBig(s3ObjectKey, s3ObjectBucket) {
   const fileSize = await sizeOf(s3ObjectKey, s3ObjectBucket);
   return fileSize > constants.MAX_FILE_SIZE;
 }
@@ -70,7 +72,7 @@ function downloadFileFromS3(s3ObjectKey, s3ObjectBucket) {
   });
 }
 
-async function lambdaHandleEvent(event) {
+export async function lambdaHandleEvent(event) {
   utils.generateSystemMessage("Start Antivirus Lambda function");
 
   const s3ObjectKey = utils.extractKeyFromS3Event(event);
@@ -109,12 +111,6 @@ async function lambdaHandleEvent(event) {
     Tagging: utils.generateTagSet(virusScanStatus),
   };
 
-  const aclParams = {
-    Bucket: s3ObjectBucket,
-    Key: s3ObjectKey,
-    ACL: "public-read",
-  };
-
   //tag object with CLEAN tag upon successful av scan
   try {
     await s3.putObjectTagging(taggingParams).promise();
@@ -122,19 +118,10 @@ async function lambdaHandleEvent(event) {
   } catch (err) {
     console.log(err);
   }
-  //change object ACL with public-read upon successful av scan
-  if (`${virusScanStatus}` == "CLEAN") {
-    try {
-      await s3.putObjectAcl(aclParams).promise();
-      utils.generateSystemMessage("ACL Param Update Successful");
-    } catch (err) {
-      console.log(err);
-    }
-  }
   return virusScanStatus;
 }
 
-async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
+export async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
   await clamav.downloadAVDefinitions(
     constants.CLAMAV_BUCKET_NAME,
     constants.PATH_TO_AV_DEFINITIONS
@@ -163,10 +150,3 @@ async function scanS3Object(s3ObjectKey, s3ObjectBucket) {
   }
   return virusScanStatus;
 }
-
-module.exports = {
-  lambdaHandleEvent: lambdaHandleEvent,
-  scanS3Object: scanS3Object,
-  isS3FileTooBig: isS3FileTooBig,
-  sizeOf: sizeOf,
-};
