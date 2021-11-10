@@ -404,15 +404,13 @@ const PackageList = () => {
     return (
       <LoadingScreen isLoading={isLoading}>
         {packageListExists ? (
-          <>
-            <PortalTable
-              className={tableClassName}
-              columns={columns}
-              data={packageList}
-              initialState={initialTableState}
-              withSearchBar
-            />
-          </>
+          <PortalTable
+            className={tableClassName}
+            columns={columns}
+            data={packageList}
+            initialState={initialTableState}
+            withSearchBar
+          />
         ) : (
           <EmptyList message="You have no submissions yet." />
         )}
