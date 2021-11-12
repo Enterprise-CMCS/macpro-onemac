@@ -59,6 +59,7 @@ function myHandler(event) {
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
   const value = JSON.parse(event.value);
+  const receivedTimestamp = event.timestamp;
   console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
 
   const SEAToolId = value.payload.ID_Number;
@@ -66,6 +67,7 @@ function myHandler(event) {
 
   let packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
+  else return;  // PROD data has no SEA Tool items without a status
 
   if (!value?.payload?.Plan_Type)  return;
   const planTypeList = ["122", "123", "124", "125"];
@@ -94,6 +96,7 @@ function myHandler(event) {
     'componentType': idInfo.componentType,
     'clockEndTimestamp': value.payload.Alert_90_Days_Date,
     'expirationTimestamp': value.payload.End_Date,
+    'updateReceived': receivedTimestamp,
   };
   if (SEAToolId != undefined) {
 

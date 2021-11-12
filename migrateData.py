@@ -21,7 +21,7 @@ def process_items(table_name, item_list):
         new_status = ""
         for item in item_list['Items']:
             if "currentStatus" not in item:
-                pass
+                continue
             elif item["currentStatus"] == {'S': 'SEATool Status: 1'}:
                 new_status = "Package In Review"
             elif item["currentStatus"] == {'S': 'SEATool Status: 2'}:
@@ -45,7 +45,7 @@ def process_items(table_name, item_list):
             elif item["currentStatus"] == {'S': 'SEATool Status: 11'}:
                 new_status = "Package In Review"
             else:
-                pass
+                continue
             update_details = [
             { "pk": item['pk'], "sk": item['sk'] },
             "SET #status=:newStatus",
