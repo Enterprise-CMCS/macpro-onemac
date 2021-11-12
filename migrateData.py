@@ -8,7 +8,7 @@ import subprocess
 Hard code details of the data migration.
 """
 STAGES_TO_MIGRATE = ['all']
-TABLES_TO_MIGRATE = ['user-profiles']
+TABLES_TO_MIGRATE = ['user-profiles', 'one']
 
 
 def process_items(table_name, item_list):
@@ -17,6 +17,43 @@ def process_items(table_name, item_list):
     Migrate each table with the if blocks.
     """
     update_items = []
+    if table_name.endswith("one"):
+        new_status = ""
+        for item in item_list['Items']:
+            if "currentStatus" not in item:
+                pass
+            elif item["currentStatus"] == {'S': 'SEATool Status: 1'}:
+                new_status = "Package In Review"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 2'}:
+                new_status = "RAI Issued"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 3'}:
+                new_status = "Review Paused, Off the Clock"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 4'}:
+                new_status = "Package Approved"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 5'}:
+                new_status = "Package Disapproved"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 6'}:
+                new_status = "Package Withdrawn"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 7'}:
+                new_status = "Waiver Terminated"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 8'}:
+                new_status = "Package In Review"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 9'}:
+                new_status = "Unsubmitted"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 10'}:
+                new_status = "Package In Review"
+            elif item["currentStatus"] == {'S': 'SEATool Status: 11'}:
+                new_status = "Package In Review"
+            else:
+                pass
+            update_details = [
+            { "pk": item['pk'], "sk": item['sk'] },
+            "SET #status=:newStatus",
+            { "#status":"currentStatus"},
+            { ":newStatus": { "S": new_status}}
+            ]
+            update_items.append(update_details)
+
     if table_name.endswith("user-profiles"):
         for item in item_list['Items']:
             if "type" not in item or item["type"] != {'S': 'stateadmin'}:
