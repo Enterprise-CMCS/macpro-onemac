@@ -62,7 +62,9 @@ Feature: OY2_5869_FileUpload_Attachment_Types
             And Click on State Plan Amendment SPA
             And click on Medicaid SPA
             And type in SPA ID
-            And Add "15MB.pdf" file to form 179
+            And Add "textnotes.txt" file to form 179
+            And Verify "textnotes.txt" is added to form 179
+            And Add file "15MB.pdf" for SPA Pages
             And Add file "textnotes.txt" for SPA Pages
             And Add file "picture.jpg" for SPA Pages
             And Add file "test3.docx" for SPA Pages

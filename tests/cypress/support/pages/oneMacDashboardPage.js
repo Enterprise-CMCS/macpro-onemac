@@ -119,10 +119,11 @@ export class oneMacDashboardPage {
 
   clickOnSpaID(){
     cy.get(spaIDLink).click();
+    cy.wait(5000);
   }
 
   verifyAttachmentExists(s) {
-    cy.xpath(uploadedAttachments).contains(s);
+    cy.get(uploadedAttachments).contains(s);
   }
 
 }
