@@ -10,11 +10,6 @@ import { getAuthorizedStateList } from "./user/user-util";
  */
 
 export const main = handler((event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    return null;
-  }
-
   if (!event?.queryStringParameters?.email) return RESPONSE_CODE.USER_NOT_FOUND;
 
   return getUser(event.queryStringParameters.email)

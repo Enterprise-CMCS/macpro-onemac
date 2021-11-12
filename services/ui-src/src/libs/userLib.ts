@@ -8,7 +8,7 @@ import {
 export const pendingMessage = {
   [USER_TYPE.STATE_SUBMITTER]:
     "Your system access is pending approval. Contact your State System Admin with any questions.",
-  [USER_TYPE.STATE_ADMIN]: "Your system access is pending approval.",
+  [USER_TYPE.STATE_SYSTEM_ADMIN]: "Your system access is pending approval.",
   [USER_TYPE.CMS_ROLE_APPROVER]:
     "Your system access is pending approval. Contact the CMS System Admin with any questions.",
   [USER_TYPE.CMS_REVIEWER]:
@@ -22,7 +22,7 @@ export const pendingMessage = {
 export const deniedOrRevokedMessage = {
   [USER_TYPE.STATE_SUBMITTER]:
     "Sorry, you don't have access. Please contact the State System Admin with any questions",
-  [USER_TYPE.STATE_ADMIN]:
+  [USER_TYPE.STATE_SYSTEM_ADMIN]:
     "Sorry, you don't have access. Please contact the CMS Role Approver with any questions",
   [USER_TYPE.CMS_ROLE_APPROVER]:
     "Sorry, you don't have access. Please contact the CMS System Admin with any questions",
@@ -42,7 +42,7 @@ export const deniedOrRevokedMessage = {
 export const isPending = (userData: UserRecord): boolean => {
   if (
     userData.type === USER_TYPE.STATE_SUBMITTER ||
-    userData.type === USER_TYPE.STATE_ADMIN
+    userData.type === USER_TYPE.STATE_SYSTEM_ADMIN
   ) {
     const stateStatusSet = (
       userData.attributes as StateAccessAttribute[]
@@ -61,7 +61,7 @@ export const isPending = (userData: UserRecord): boolean => {
 };
 
 /**
- * is this CMS Role Approver active or does State Submitter / State Admin have any active territories?
+ * is this CMS Role Approver active or does State Submitter / State System Admin have any active territories?
  * @param userData object of history instance
  * @return status
  */
@@ -69,7 +69,7 @@ export const isPending = (userData: UserRecord): boolean => {
 export const isActive = (userData: UserRecord): boolean => {
   if (
     userData.type === USER_TYPE.STATE_SUBMITTER ||
-    userData.type === USER_TYPE.STATE_ADMIN
+    userData.type === USER_TYPE.STATE_SYSTEM_ADMIN
   ) {
     const stateStatusSet = (
       userData.attributes as StateAccessAttribute[]

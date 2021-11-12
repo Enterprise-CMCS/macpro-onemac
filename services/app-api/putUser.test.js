@@ -28,8 +28,8 @@ const stateAdmin = {
       status: "active",
     },
   ],
-  id: "stateadminactiveVA2@cms.hhs.local",
-  type: "stateadmin",
+  id: "statesystemadminactiveVA2@cms.hhs.local",
+  type: "statesystemadmin",
 };
 
 const cmsRoleApprover = {
@@ -59,10 +59,10 @@ describe("Construction of role approver emails", () => {
     expect(result).toContain("State Submitter");
   });
 
-  it("Should show the full name in the email message for State Admin", async () => {
+  it("Should show the full name in the email message for State System Admin", async () => {
     const result = constructRoleAdminEmails([], stateAdmin).email.HTML;
     expect(result).toContain("John Doe");
-    expect(result).toContain("State Admin");
+    expect(result).toContain("State System Admin");
   });
 });
 
@@ -199,7 +199,12 @@ describe("Validating input from the UI", () => {
       });
     });
 
-    it.each(["statesubmitter", "stateadmin", "cmsroleapprover", "helpdesk"])(
+    it.each([
+      "statesubmitter",
+      "statesystemadmin",
+      "cmsroleapprover",
+      "helpdesk",
+    ])(
       "fails if group or division is provided for user type %s at user creation time",
       (type) => {
         const data = {
@@ -240,10 +245,10 @@ describe("doneBy user authorization check", () => {
     };
 
   describe.each`
-    doneByType           | doneByProps       | userTypes
-    ${"systemadmin"}     | ${undefined}      | ${["statesubmitter", "stateadmin", "cmsroleapprover", "cmsreviewer", "helpdesk"]}
-    ${"cmsroleapprover"} | ${cmsUserProps}   | ${["stateadmin", "cmsreviewer"]}
-    ${"stateadmin"}      | ${stateUserProps} | ${["statesubmitter"]}
+    doneByType            | doneByProps       | userTypes
+    ${"systemadmin"}      | ${undefined}      | ${["statesubmitter", "statesystemadmin", "cmsroleapprover", "cmsreviewer", "helpdesk"]}
+    ${"cmsroleapprover"}  | ${cmsUserProps}   | ${["statesystemadmin", "cmsreviewer"]}
+    ${"statesystemadmin"} | ${stateUserProps} | ${["statesubmitter"]}
   `(
     "allows active $doneByType to modify user access",
     ({ doneByType, doneByProps, userTypes }) => {
@@ -260,9 +265,9 @@ describe("doneBy user authorization check", () => {
   );
 
   describe.each`
-    doneByType           | doneByProps       | userTypes
-    ${"cmsroleapprover"} | ${cmsUserProps}   | ${["statesubmitter", "helpdesk"]}
-    ${"stateadmin"}      | ${stateUserProps} | ${["cmsroleapprover", "cmsreviewer", "helpdesk"]}
+    doneByType            | doneByProps       | userTypes
+    ${"cmsroleapprover"}  | ${cmsUserProps}   | ${["statesubmitter", "helpdesk"]}
+    ${"statesystemadmin"} | ${stateUserProps} | ${["cmsroleapprover", "cmsreviewer", "helpdesk"]}
   `(
     "restricts $doneByType ability to modify user access to specific user types",
     ({ doneByType, doneByProps, userTypes }) => {
@@ -280,9 +285,9 @@ describe("doneBy user authorization check", () => {
 
   describe.each`
     doneByType          | doneByProps       | userTypes
-    ${"cmsreviewer"}    | ${cmsUserProps}   | ${["statesubmitter", "stateadmin", "cmsroleapprover", "helpdesk"]}
-    ${"helpdesk"}       | ${cmsUserProps}   | ${["statesubmitter", "stateadmin", "cmsroleapprover", "cmsreviewer"]}
-    ${"statesubmitter"} | ${stateUserProps} | ${["stateadmin", "cmsroleapprover", "cmsreviewer", "helpdesk"]}
+    ${"cmsreviewer"}    | ${cmsUserProps}   | ${["statesubmitter", "statesystemadmin", "cmsroleapprover", "helpdesk"]}
+    ${"helpdesk"}       | ${cmsUserProps}   | ${["statesubmitter", "statesystemadmin", "cmsroleapprover", "cmsreviewer"]}
+    ${"statesubmitter"} | ${stateUserProps} | ${["statesystemadmin", "cmsroleapprover", "cmsreviewer", "helpdesk"]}
   `(
     "does not allow $doneByType ability to modify any user access besides their own",
     ({ doneByType, doneByProps, userTypes }) => {

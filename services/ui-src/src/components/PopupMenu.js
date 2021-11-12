@@ -73,6 +73,14 @@ export default function PopupMenu({
       <Menu
         id="simple-menu"
         anchorEl={anchorEl}
+        anchorOrigin={{
+          vertical: "center",
+          horizontal: "left",
+        }}
+        transformOrigin={{
+          vertical: "top",
+          horizontal: "center",
+        }}
         keepMounted
         open={Boolean(anchorEl)}
         onClose={handleClose}

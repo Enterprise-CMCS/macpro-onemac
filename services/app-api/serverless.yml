@@ -8,6 +8,7 @@ plugins:
   - serverless-associate-waf
   - serverless-offline
   - serverless-iam-helper
+  - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
@@ -199,12 +200,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getStateAdminList:
-    handler: getStateAdminList.main
+  getStateSystemAdminList:
+    handler: getStateSystemAdminList.main
     role: LambdaApiRole
     events:
       - http:
-          path: getStateAdmins
+          path: getStateSystemAdmins
           method: get
           cors: true
           authorizer: aws_iam
