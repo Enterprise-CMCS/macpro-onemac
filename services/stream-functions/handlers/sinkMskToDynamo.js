@@ -66,7 +66,7 @@ function myHandler(event) {
 
   let packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
-  else return;
+  else packageStatusID = "Submitted";
 
   if (!value?.payload?.Plan_Type)  return;
   const planTypeList = ["122", "123", "124", "125"];
