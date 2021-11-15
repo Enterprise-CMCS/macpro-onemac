@@ -23,6 +23,7 @@ const SEATOOL_STATUS = {
   UNSUBMITTED: "9",
   PENDING_FINANCE: "10",
   PENDING_APPROVAL: "11",
+  UNKNOWN: "unknown",
 };
 
 // check if the SEATool updates should be reflected in OneMAC
@@ -38,6 +39,7 @@ const SEATOOL_TO_ONEMAC_STATUS = {
   [SEATOOL_STATUS.UNSUBMITTED]: "Unsubmitted",
   [SEATOOL_STATUS.PENDING_FINANCE]: "Package In Review",
   [SEATOOL_STATUS.PENDING_APPROVAL]: "Package In Review",
+  [SEATOOL_STATUS.UNKNOWN]: "Submitted",
 };
 
 const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
@@ -66,7 +68,6 @@ function myHandler(event) {
 
   let packageStatusID = "unknown";
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
-  else packageStatusID = "Submitted";
 
   if (!value?.payload?.Plan_Type)  return;
   const planTypeList = ["122", "123", "124", "125"];
