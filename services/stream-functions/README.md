@@ -19,6 +19,7 @@ a lambda is configured (see stream functions) to trigger on each new event to th
 All of the above is on the cqrs and cqrs-dev branch.
 
 ### Connecting oneMAC branch to a BigMAC repo feature branch
+For sending only?? OR... maybe this has to be done BEFORE first deployment.... or some way to delete the connectors created by first deployment ??
 
 oneMAC feature branches default to connecting with the master-msk cluster in BigMAC.  
 To connect to a BigMAC feature branch environment instead:
@@ -33,3 +34,5 @@ To connect to a BigMAC feature branch environment instead:
 9. The parameter value should be the TLS information copied from BigMAC
 10. redeploy the github workflow to complete the connection.
 
+Adding a topic to listen to for the sink... 
+in serverless.yml, there is a topics: variable - I think you can add to this as a comma-delimited list?
