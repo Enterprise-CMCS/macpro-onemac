@@ -1,13 +1,19 @@
 const AWS = require('aws-sdk');
-const { ChangeRequest } = require("cmscommonlib");
+// const { ChangeRequest } = require("cmscommonlib");
 
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
+/* const SEATOOL_TABLES = {
+  STATE_PLAN: `State_Plan`,
+  RAI: `RAI`
+};
+*/
 const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
+/*
 const SEATOOL_TOPICS = {
-  STATE_PLAN: `${topicPrefix}State_Plan`,
-  RAI: `${topicPrefix}RAI`
+  STATE_PLAN: `${topicPrefix}${SEATOOL_TABLES.STATE_PLAN}`,
+  RAI: `${topicPrefix}${SEATOOL_TABLES.RAI}`
 };
 
 const SEATOOL_PLAN_TYPE = {
@@ -61,139 +67,87 @@ const topLevelUpdates = {
   ],
   [SEATOOL_TOPICS.RAI]: []
 };
-
-const getData = {
-  [SEATOOL_TOPICS.STATE_PLAN]: ((value) => {
-    let packageStatusID = "unknown";
-    if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
-  
-    if (!value?.payload?.Plan_Type)  return;
-    const planType = Object.values(SEATOOL_PLAN_TYPE).find( (pt) => (pt === value.payload.Plan_Type.toString()));
-    if (!planType) return;
-  
-    let stateCode;
-    if (value.payload.State_Code) {
-      stateCode = value.payload.State_Code.toString();
-    } else stateCode = value.payload.ID_Number.substring(0,2);
-  
-    let oneMACStatus = `SEATool Status: ${packageStatusID}`;
-    if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
-      oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
-  
-    const idInfo = ChangeRequest.decodeId(value.payload.ID_Number, planType);
-  
-    return {
-      'packageStatus': packageStatusID,
-      'currentStatus': oneMACStatus,
-      'stateCode': stateCode,
-      'planType': planType,
-      'packageType': SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[planType],
-      'packageId': idInfo.packageId,
-      'componentId': idInfo.componentId,
-      'componentType': idInfo.componentType,
-      'clockEndTimestamp': value.payload.Alert_90_Days_Date,
-      'expirationTimestamp': value.payload.End_Date,
-    };
-  }),
-  [SEATOOL_TOPICS.RAI]: ((value) => {
-    return {
-      'raiRequestedDate': value.payload.RAI_Requested_Date,
-      'raiReceivedDate': value.payload.RAI_Received_Date,
-      'raiWithdrawnDate': value.payload.RAI_Withdrawn_Date,
-    };
-  })
-};
-
+*/
 function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     return null;
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
-  const topic = event.topic;
+  const table = event.topic.replace(topicPrefix, "");
   const value = JSON.parse(event.value);
-  console.log(`Topic: ${topic} Event value: ${JSON.stringify(value, null, 2)}`);
+  console.log(`Topic: ${event.topic} Table: ${table} Event value: ${JSON.stringify(value, null, 2)}`);
 
-  const SEAToolId = value.payload.ID_Number;
-  if (!SEAToolId) return;
+  const pk = value.payload.ID_Number;
+  if (!pk || !value.payload.replica_id) return;
 
-  const SEAToolData = getData[topic](value);
-  
-  if (SEAToolId != undefined) {
+  const sk = `SEATool#${table}#${value.payload.replica_id}`
 
-    // update the SEATool Entry
-    const updateSEAToolParams = {
-      TableName: process.env.oneMacTableName,
-      Key: {
-        pk: SEAToolId,
-        sk: "SEATool",
-      },
-      UpdateExpression: "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
-      ExpressionAttributeValues: {
-        ":newChange": [SEAToolData],
-        ":emptyList": [],
-      },
-      ReturnValues: "UPDATED_NEW",
-    };
+  // update the SEATool Entry
+  const updateSEAToolParams = {
+    TableName: process.env.oneMacTableName,
+    Key: {
+      pk: pk,
+      sk: sk,
+    },
+    Item: {...value.payload},
+  };
 
-    ddb.update(updateSEAToolParams, function(err, data) {
+  ddb.put(updateSEAToolParams, function(err, data) {
       if (err) {
         console.log("Error", err);
       } else {
         console.log("Update Success, data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-
+/*
         // if the SEATool entry is new, do we need to add Paper IDs??
         if (data.Attributes.changeHistory.length === 1) {
           console.log("that was a new package from SEATool");
         } else {
           console.log("We have seen that package before!");
         }
+
+        // update OneMAC Component
+        const updatePk = SEAToolData.componentId;
+        const updateSk = data.packageType;
+        const updatePackageParams = {
+          TableName: process.env.oneMacTableName,
+          Key: {
+            pk: updatePk,
+            sk: updateSk,
+          },
+          ConditionExpression: "pk = :pkVal AND sk = :skVal",
+          UpdateExpression:
+            "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
+          ExpressionAttributeValues: {
+            ":pkVal": updatePk,
+            ":skVal": updateSk,
+            ":newChange": [SEAToolData],
+            ":emptyList": [],
+          },
+        };
+
+        topLevelUpdates[topic].forEach((attributeName) => {
+          if (SEAToolData[attributeName]) {
+            const newLabel = `:new${attributeName}`;
+            updatePackageParams.ExpressionAttributeValues[newLabel] =
+            SEAToolData[attributeName];
+            if (Array.isArray(SEAToolData[attributeName]))
+              updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
+            else
+              updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+          }
+        });
+
+        ddb.update(updatePackageParams, function(err, data) {
+          if (err) {
+            console.log("Error", err);
+          } else {
+            console.log("Update Success!  Returned data is: ", data);
+            console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+        }});
+        */
       }
-      return data;
-    }).then((data) => {
-
-      // update OneMAC Component
-      const updatePk = SEAToolData.componentId;
-      const updateSk = data.packageType;
-      const updatePackageParams = {
-        TableName: process.env.oneMacTableName,
-        Key: {
-          pk: updatePk,
-          sk: updateSk,
-        },
-        ConditionExpression: "pk = :pkVal AND sk = :skVal",
-        UpdateExpression:
-          "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
-        ExpressionAttributeValues: {
-          ":pkVal": updatePk,
-          ":skVal": updateSk,
-          ":newChange": [SEAToolData],
-          ":emptyList": [],
-        },
-      };
-
-      topLevelUpdates[topic].forEach((attributeName) => {
-        if (SEAToolData[attributeName]) {
-          const newLabel = `:new${attributeName}`;
-          updatePackageParams.ExpressionAttributeValues[newLabel] =
-          SEAToolData[attributeName];
-          if (Array.isArray(SEAToolData[attributeName]))
-            updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-          else
-            updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-        }
-      });
-
-      ddb.update(updatePackageParams, function(err, data) {
-        if (err) {
-          console.log("Error", err);
-        } else {
-          console.log("Update Success!  Returned data is: ", data);
-          console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-      }});
-
-    })
-  }
+  });
 }
 
 exports.handler = myHandler;
