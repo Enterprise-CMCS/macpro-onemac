@@ -74,13 +74,13 @@ const getData = {
     let stateCode;
     if (value.payload.State_Code) {
       stateCode = value.payload.State_Code.toString();
-    } else stateCode = SEAToolId.substring(0,2);
+    } else stateCode = value.payload.ID_Number.substring(0,2);
   
     let oneMACStatus = `SEATool Status: ${packageStatusID}`;
     if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
       oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
   
-    const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
+    const idInfo = ChangeRequest.decodeId(value.payload.ID_Number, planType);
   
     return {
       'packageStatus': packageStatusID,
@@ -149,48 +149,50 @@ function myHandler(event) {
           console.log("We have seen that package before!");
         }
       }
-    });
+      return data;
+    }).then((data) => {
 
-    // update OneMAC Component
-    const updatePk = SEAToolData.componentId;
-    const updateSk = data.packageType;
-    const updatePackageParams = {
-      TableName: process.env.oneMacTableName,
-      Key: {
-        pk: updatePk,
-        sk: updateSk,
-      },
-      ConditionExpression: "pk = :pkVal AND sk = :skVal",
-      UpdateExpression:
-        "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
-      ExpressionAttributeValues: {
-        ":pkVal": updatePk,
-        ":skVal": updateSk,
-        ":newChange": [SEAToolData],
-        ":emptyList": [],
-      },
-    };
+      // update OneMAC Component
+      const updatePk = SEAToolData.componentId;
+      const updateSk = data.packageType;
+      const updatePackageParams = {
+        TableName: process.env.oneMacTableName,
+        Key: {
+          pk: updatePk,
+          sk: updateSk,
+        },
+        ConditionExpression: "pk = :pkVal AND sk = :skVal",
+        UpdateExpression:
+          "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
+        ExpressionAttributeValues: {
+          ":pkVal": updatePk,
+          ":skVal": updateSk,
+          ":newChange": [SEAToolData],
+          ":emptyList": [],
+        },
+      };
 
-    topLevelUpdates[topic].forEach((attributeName) => {
-      if (SEAToolData[attributeName]) {
-        const newLabel = `:new${attributeName}`;
-        updatePackageParams.ExpressionAttributeValues[newLabel] =
-        SEAToolData[attributeName];
-        if (Array.isArray(SEAToolData[attributeName]))
-          updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-        else
-          updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-      }
-    });
-  
-    ddb.update(updatePackageParams, function(err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Update Success!  Returned data is: ", data);
-        console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-    }});
+      topLevelUpdates[topic].forEach((attributeName) => {
+        if (SEAToolData[attributeName]) {
+          const newLabel = `:new${attributeName}`;
+          updatePackageParams.ExpressionAttributeValues[newLabel] =
+          SEAToolData[attributeName];
+          if (Array.isArray(SEAToolData[attributeName]))
+            updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
+          else
+            updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+        }
+      });
 
+      ddb.update(updatePackageParams, function(err, data) {
+        if (err) {
+          console.log("Error", err);
+        } else {
+          console.log("Update Success!  Returned data is: ", data);
+          console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+      }});
+
+    })
   }
 }
 
