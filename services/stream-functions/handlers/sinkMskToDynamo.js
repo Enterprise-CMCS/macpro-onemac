@@ -4,18 +4,13 @@ const AWS = require('aws-sdk');
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
-/* const SEATOOL_TABLES = {
+/* const SEATOOL_TABLE = {
   STATE_PLAN: `State_Plan`,
   RAI: `RAI`
 };
 */
 const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
 /*
-const SEATOOL_TOPICS = {
-  STATE_PLAN: `${topicPrefix}${SEATOOL_TABLES.STATE_PLAN}`,
-  RAI: `${topicPrefix}${SEATOOL_TABLES.RAI}`
-};
-
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
   SPA: "125",
@@ -60,12 +55,12 @@ const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
 };
 
 const topLevelUpdates = {
-  [SEATOOL_TOPICS.STATE_PLAN]: [
+  [SEATOOL_TABLE.STATE_PLAN]: [
     "clockEndTimestamp",
     "expirationTimestamp",
     "currentStatus",
   ],
-  [SEATOOL_TOPICS.RAI]: []
+  [SEATOOL_TABLE.RAI]: []
 };
 */
 function myHandler(event) {
@@ -85,30 +80,44 @@ function myHandler(event) {
   // update the SEATool Entry
   const updateSEAToolParams = {
     TableName: process.env.oneMacTableName,
-    Key: {
-      pk: pk,
-      sk: sk,
-    },
-    Item: {...value.payload},
+    Item: {pk,sk,...value.payload},
   };
 
-  ddb.put(updateSEAToolParams, function(err, data) {
+  ddb.put(updateSEAToolParams, function(err) {
       if (err) {
         console.log("Error", err);
       } else {
-        console.log("Update Success, data is: ", data);
-        console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-/*
-        // if the SEATool entry is new, do we need to add Paper IDs??
-        if (data.Attributes.changeHistory.length === 1) {
-          console.log("that was a new package from SEATool");
-        } else {
-          console.log("We have seen that package before!");
-        }
+        // see if this updates a OneMAC package
+/*        let updatePackageParams;
+        
+        topLevelUpdates[topic].forEach((attributeName) => {
+          if (value.payload[SEATOOL_NAME[attributeName]]) {
+            const newLabel = `:new${attributeName}`;
+            updatePackageParams.ExpressionAttributeValues[newLabel] =
+            value.payload[attributeName];
+            if (Array.isArray(SEAToolData[attributeName]))
+              updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
+            else
+              updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+          }
 
-        // update OneMAC Component
-        const updatePk = SEAToolData.componentId;
-        const updateSk = data.packageType;
+        if (updatePackageParams.length() > 0) {
+          console.log("this should update a OneMAC package");
+        }
+       const searchParams = {
+          TableName: process.env.oneMacTableName,
+          IndexName: "GSI1",
+          KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
+          ExpressionAttributeValues: {
+            ":pk": "OneMAC",
+            ":sk": pk,
+          },
+
+          ProjectionExpression:
+            "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId,clockEndTimestamp,expirationTimestamp",
+        };
+  
+        }
         const updatePackageParams = {
           TableName: process.env.oneMacTableName,
           Key: {
