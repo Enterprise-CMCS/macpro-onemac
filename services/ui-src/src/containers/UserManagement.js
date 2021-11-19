@@ -30,7 +30,9 @@ const PENDING_CIRCLE_IMAGE = (
 const getName = ({ firstName, lastName }) =>
   [firstName, lastName].filter(Boolean).join(" ");
 const getAccessDescription = ({ stateCode }) =>
-  stateCode ? `${territoryMap[stateCode]} in OneMAC` : "OneMAC";
+  stateCode && territoryMap[stateCode]
+    ? `${territoryMap[stateCode]} in OneMAC`
+    : "OneMAC";
 
 const grant = {
     label: "Grant Access",
@@ -73,7 +75,7 @@ const alertCodes = {
  * User Management "Dashboard"
  */
 const UserManagement = () => {
-  const [userList, setUserList] = useState([]);
+  const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile, userStatus } = useAppContext();
   const [includeStateCode, setIncludeStateCode] = useState(true);
@@ -82,7 +84,8 @@ const UserManagement = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole = userProfile.userData.type !== USER_TYPE.STATE_ADMIN;
+  const showUserRole =
+    userProfile.userData.type !== USER_TYPE.STATE_SYSTEM_ADMIN;
   const updateList = useCallback(() => {
     setIncludeStateCode(
       userProfile.userData.type === USER_TYPE.CMS_ROLE_APPROVER ||
@@ -94,6 +97,7 @@ const UserManagement = () => {
           if (userStatus !== USER_STATUS.PENDING) setAlertCode(ul);
           ul = [];
         }
+        console.log("user list: ", ul);
         setUserList(ul);
       })
       .catch((error) => {
@@ -212,9 +216,9 @@ const UserManagement = () => {
             {
               stateCode:
                 role === USER_TYPE.STATE_SUBMITTER ||
-                role === USER_TYPE.STATE_ADMIN
+                role === USER_TYPE.STATE_SYSTEM_ADMIN
                   ? stateCode
-                  : undefined, // required for state submitter and state admin
+                  : undefined, // required for state submitter and state system admin
               status: value,
             },
           ],
@@ -242,6 +246,7 @@ const UserManagement = () => {
         case APPROVING_USER_TYPE[row.original.role]:
           return (
             <PopupMenu
+              buttonLabel={`User management actions for ${row.values.name}`}
               selectedRow={row}
               menuItems={menuItems}
               variation="UserManagement"

@@ -1,18 +1,14 @@
-const utils = require("./utils");
-const av = require("./antivirus");
-const constants = require("./constants");
+import { extractKeyFromApiEvent, extractBucketFromApiEvent } from "./utils";
+import { isS3FileTooBig, scanS3Object } from "./antivirus";
+import { STATUS_SKIPPED_FILE } from "./constants";
 
-async function lambdaHandleEvent(event) {
-  const s3ObjectKey = utils.extractKeyFromApiEvent(event);
-  const s3ObjectBucket = utils.extractBucketFromApiEvent(event);
+export async function lambdaHandleEvent(event) {
+  const s3ObjectKey = extractKeyFromApiEvent(event);
+  const s3ObjectBucket = extractBucketFromApiEvent(event);
 
-  const virusScanStatus = (await av.isS3FileTooBig(s3ObjectKey, s3ObjectBucket))
-    ? constants.STATUS_SKIPPED_FILE
-    : await av.scanS3Object(s3ObjectKey, s3ObjectBucket);
+  const virusScanStatus = (await isS3FileTooBig(s3ObjectKey, s3ObjectBucket))
+    ? STATUS_SKIPPED_FILE
+    : await scanS3Object(s3ObjectKey, s3ObjectBucket);
 
   return virusScanStatus;
 }
-
-module.exports = {
-  lambdaHandleEvent: lambdaHandleEvent,
-};

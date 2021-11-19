@@ -24,12 +24,6 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-const correspondingRAILink = {
-  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
-  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
-  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
-};
-
 /**
  * Component containing dashboard
  */
@@ -39,22 +33,29 @@ const Dashboard = () => {
   const {
     userStatus,
     userProfile,
-    userProfile: { userData } = {},
+    userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type);
+  const userRoleObj = getUserRoleObj(
+    userData.type,
+    !cmsRoles,
+    userData?.attributes
+  );
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
-    if (location?.state?.passCode !== undefined) location.state.passCode = null;
+    if (location?.state?.passCode !== undefined) {
+      setAlertCode(location.state.passCode);
+      history.location.state.passCode = null;
+    }
 
     // Redirect new users to the signup flow.
     const missingUserType = !userData?.type;
     const missingOtherUserData =
       userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (missingUserType || missingOtherUserData) {
+    if (cmsRoles && (missingUserType || missingOtherUserData)) {
       history.replace("/signup", location.state);
       return;
     }
@@ -70,18 +71,23 @@ const Dashboard = () => {
 
         if (typeof data === "string") throw data;
 
-        if (mounted) setChangeRequestList(data);
-        if (mounted) setIsLoading(false);
+        if (mounted) {
+          setChangeRequestList(data);
+          setIsLoading(false);
+        }
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
+        if (mounted) {
+          setAlertCode(RESPONSE_CODE[error.message]);
+          setIsLoading(false);
+        }
       }
     })();
 
     return function cleanup() {
       mounted = false;
     };
-  }, [history, location, userData, userProfile]);
+  }, [cmsRoles, history, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -143,7 +149,7 @@ const Dashboard = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const link = correspondingRAILink[row.original.type];
+      const link = ChangeRequest.correspondingRAILink[row.original.type];
       if (link) {
         const item = {
           label: "Respond to RAI",
@@ -271,7 +277,7 @@ const Dashboard = () => {
     let rightSideContent = "";
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
-    } else if (userStatus === USER_STATUS.ACTIVE) {
+    } else if (userRoleObj.canDownloadCsv) {
       rightSideContent = csvExportSubmissions;
     }
 
@@ -279,19 +285,23 @@ const Dashboard = () => {
   }
 
   function renderSubmissionList() {
-    if (userStatus === USER_STATUS.PENDING) {
-      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
-    }
+    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+      if (userStatus === USER_STATUS.PENDING) {
+        return (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        );
+      }
 
-    const userStatusNotActive =
-      !userStatus || userStatus !== USER_STATUS.ACTIVE;
-    if (userStatusNotActive) {
-      return (
-        <EmptyList
-          showProfileLink="true"
-          message={deniedOrRevokedMessage[userProfile.userData.type]}
-        />
-      );
+      const userStatusNotActive =
+        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+      if (userStatusNotActive) {
+        return (
+          <EmptyList
+            showProfileLink="true"
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        );
+      }
     }
 
     const tableClassName = classNames({

@@ -29,7 +29,7 @@ describe.each`
 `(
   "check for $status access",
   ({ fn, status, stateData, cmsData, resultWhenMixed }) => {
-    describe.each(["statesubmitter", "stateadmin"])(
+    describe.each(["statesubmitter", "statesystemadmin"])(
       "check %s access",
       (type) => {
         it("returns false when user has no access history", () => {

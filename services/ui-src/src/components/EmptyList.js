@@ -4,7 +4,7 @@ import PropTypes from "prop-types";
 import puzzlePiece from "../images/PuzzlePiece.svg";
 import { ROUTES } from "cmscommonlib";
 
-const DEFAULT_IMAGE = <img alt="" src={puzzlePiece} />;
+const DEFAULT_IMAGE = <img alt="Puzzle piece icon" src={puzzlePiece} />;
 
 /**
  * Display an image and a message. Intended as a placeholder for empty tables.
@@ -27,7 +27,7 @@ export function EmptyList({ image, message, showProfileLink }) {
     return (
       <div className="empty-list">
         {image || DEFAULT_IMAGE}
-        <h4>{message}.</h4>
+        <h4>{message}</h4>
       </div>
     );
   }

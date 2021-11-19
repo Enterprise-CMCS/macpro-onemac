@@ -10,24 +10,18 @@ import { getAuthorizedStateList } from "./user/user-util";
  */
 
 export const main = handler((event) => {
-  // If this invokation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    return null;
-  }
-
   if (!event?.queryStringParameters?.email) return RESPONSE_CODE.USER_NOT_FOUND;
 
   return getUser(event.queryStringParameters.email)
     .then((user) => {
-      if (!user) {
-        throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
-      }
+      let territoryList = "this is for EUA users";
+      if (Object.keys(user).length > 0) {
+        const userRoleObj = getUserRoleObj(user?.type, !user, user?.attributes);
 
-      const userRoleObj = getUserRoleObj(user.type);
-
-      const territoryList = getAuthorizedStateList(user);
-      if (!userRoleObj.canAccessDashboard || territoryList === []) {
-        throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+        territoryList = getAuthorizedStateList(user);
+        if (!userRoleObj.canAccessDashboard || territoryList === []) {
+          throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+        }
       }
 
       const baseParams = {
@@ -36,7 +30,7 @@ export const main = handler((event) => {
         ExclusiveStartKey: null,
         ScanIndexForward: false,
         ProjectionExpression:
-          "packageId,packageType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId",
+          "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId,clockEndTimestamp,expirationTimestamp",
       };
 
       let paramList = [];

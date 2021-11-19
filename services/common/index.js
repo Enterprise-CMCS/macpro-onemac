@@ -32,9 +32,6 @@ export const RESPONSE_CODE = {
   USER_NOT_FOUND: "UR041",
   USER_SUBMITTED: "UR000",
   USER_SUBMISSION_FAILED: "UR001",
-  CALLING_USER_PENDING: "UR043",
-  CALLING_USER_REVOKED: "UR044",
-  CALLING_USER_DENIED: "UR045",
   SUCCESS_USER_GRANTED: "UR046",
   SUCCESS_USER_REVOKED: "UR047",
   SUCCESS_USER_DENIED: "UR048",
@@ -42,6 +39,7 @@ export const RESPONSE_CODE = {
   DASHBOARD_LIST_FETCH_ERROR: "DB00",
   HELPDESK_USER_SUBMITTED: "HU000",
   CMS_REVIEWER_USER_SUBMITTED: "CU000",
+  CMS_ROLE_APPROVER_USER_SUBMITTED: "CU001",
   SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
   SUBMISSION_ID_EXIST_WARNING: "OMP003",
   PACKAGE_WITHDRAW_SUCCESS: "WP000",
@@ -60,8 +58,8 @@ export const cmsEmailMapToFormWarningMessages = {
 
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",
-  STATE_ADMIN: "statesubmitter",
-  CMS_ROLE_APPROVER: "stateadmin",
+  STATE_SYSTEM_ADMIN: "statesubmitter",
+  CMS_ROLE_APPROVER: "statesystemadmin",
 };
 
 /**
@@ -70,7 +68,7 @@ export const USER_ADMIN_PERMISSION = {
 export const USER_TYPE = {
   STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
-  STATE_ADMIN: "stateadmin",
+  STATE_SYSTEM_ADMIN: "statesystemadmin",
   CMS_ROLE_APPROVER: "cmsroleapprover",
   SYSTEM_ADMIN: "systemadmin",
   HELPDESK: "helpdesk",
@@ -79,11 +77,30 @@ export const USER_TYPE = {
 export const ROLES = USER_TYPE;
 
 export const APPROVING_USER_TYPE = {
-  [ROLES.STATE_SUBMITTER]: ROLES.STATE_ADMIN,
-  [ROLES.STATE_ADMIN]: ROLES.CMS_ROLE_APPROVER,
+  [ROLES.STATE_SUBMITTER]: ROLES.STATE_SYSTEM_ADMIN,
+  [ROLES.STATE_SYSTEM_ADMIN]: ROLES.CMS_ROLE_APPROVER,
   [ROLES.CMS_ROLE_APPROVER]: ROLES.SYSTEM_ADMIN,
   [ROLES.HELPDESK]: ROLES.SYSTEM_ADMIN,
   [ROLES.CMS_REVIEWER]: ROLES.CMS_ROLE_APPROVER,
+};
+
+export const tableRoles = {
+  [ROLES.STATE_SYSTEM_ADMIN]: [ROLES.STATE_SUBMITTER],
+  [ROLES.CMS_ROLE_APPROVER]: [ROLES.STATE_SYSTEM_ADMIN, ROLES.CMS_REVIEWER],
+  [ROLES.HELPDESK]: [
+    ROLES.STATE_SUBMITTER,
+    ROLES.CMS_REVIEWER,
+    ROLES.STATE_SYSTEM_ADMIN,
+    ROLES.CMS_ROLE_APPROVER,
+    ROLES.HELPDESK,
+  ],
+  [ROLES.SYSTEM_ADMIN]: [
+    ROLES.STATE_SUBMITTER,
+    ROLES.CMS_REVIEWER,
+    ROLES.STATE_SYSTEM_ADMIN,
+    ROLES.CMS_ROLE_APPROVER,
+    ROLES.HELPDESK,
+  ],
 };
 
 /**
@@ -101,7 +118,7 @@ export const USER_STATUS = {
  */
 export const roleLabels = {
   [ROLES.STATE_SUBMITTER]: "State Submitter",
-  [ROLES.STATE_ADMIN]: "State Admin",
+  [ROLES.STATE_SYSTEM_ADMIN]: "State System Admin",
   [ROLES.CMS_ROLE_APPROVER]: "CMS Role Approver",
   [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
   [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
@@ -118,6 +135,7 @@ const ALL_USERS_ROUTES = [
 export class Role {
   constructor() {
     this.canAccessDashboard = false;
+    this.canDownloadCsv = false;
     this.canAccessForms = false;
     this.canAccessUserManagement = false;
     this.canAccessMetrics = false;
@@ -126,10 +144,13 @@ export class Role {
   getAccesses() {
     const accesses = [...ALL_USERS_ROUTES];
 
-    if (this.canAccessDashboard) accesses.push(ROUTES.DASHBOARD);
+    if (this.canAccessDashboard)
+      accesses.push(ROUTES.DASHBOARD, ROUTES.PACKAGE_LIST);
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,
+        ROUTES.PACKAGE_LIST,
+        ROUTES.DETAIL,
         ROUTES.NEW_SUBMISSION_SELECTION,
         ROUTES.SPA,
         ROUTES.SPA_RAI,
@@ -148,6 +169,14 @@ export class Role {
   }
 }
 
+class DefaultUser extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+    this.canDownloadCsv = true;
+  }
+}
+
 class StateSubmitter extends Role {
   constructor() {
     super();
@@ -156,28 +185,33 @@ class StateSubmitter extends Role {
   }
 }
 
-class StateAdmin extends Role {
+class StateSystemAdmin extends Role {
   constructor() {
     super();
     this.canAccessUserManagement = true;
-    this.canAccessMetrics = true;
     this.canAccessDashboard = true;
     this.canAccessForms = true;
   }
 }
 
 class CmsReviewer extends Role {
-  constructor() {
+  constructor(userStatus) {
     super();
     this.canAccessDashboard = true;
+    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
   }
 }
 
 class CmsRoleApprover extends Role {
-  constructor() {
+  constructor(userStatus) {
     super();
-    this.canAccessUserManagement = true;
-    this.canAccessMetrics = true;
+    this.canDownloadCsv = true;
+
+    if (userStatus === USER_STATUS.ACTIVE) {
+      this.canAccessUserManagement = true;
+    } else {
+      this.canAccessDashboard = true;
+    }
   }
 }
 
@@ -185,29 +219,21 @@ class SystemAdmin extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
+    this.canDownloadCsv = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
   }
 }
 
 class Helpdesk extends Role {
-  constructor() {
+  constructor(userStatus) {
     super();
     this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
   }
 }
-
-export const getUserRoleObj = (role) =>
-  new ({
-    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
-    [USER_TYPE.STATE_ADMIN]: StateAdmin,
-    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
-    [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
-    [USER_TYPE.HELPDESK]: Helpdesk,
-    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role] || Role)();
 
 const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
 
@@ -221,7 +247,7 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
 
   switch (type) {
     case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_ADMIN: {
+    case ROLES.STATE_SYSTEM_ADMIN: {
       const stateObj = attributes.find(({ stateCode }) => stateCode === state);
       if (!stateObj) return null;
 
@@ -232,6 +258,32 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
       return attributes.sort(datesDescending)[0].status;
     }
   }
+};
+
+export const getUserRoleObj = (role, isEua = false, attributes = []) => {
+  let roleMatch = {
+    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
+    [USER_TYPE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
+    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
+    [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
+    [USER_TYPE.HELPDESK]: Helpdesk,
+    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
+  }[role];
+
+  if (!roleMatch) {
+    roleMatch = isEua ? DefaultUser : Role;
+  }
+
+  let userStatus;
+  switch (roleMatch) {
+    case StateSubmitter:
+    case StateSystemAdmin:
+      break;
+    default:
+      userStatus = latestAccessStatus({ type: role, attributes });
+  }
+
+  return new roleMatch(userStatus);
 };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.

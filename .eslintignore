@@ -1,2 +1,4 @@
 # test files
 *.test.js
+/services/*/build/
+/services/app-api/_warmup/

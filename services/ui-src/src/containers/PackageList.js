@@ -10,6 +10,7 @@ import {
   ChangeRequest,
   getUserRoleObj,
   USER_TYPE,
+  USER_STATUS,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -20,43 +21,50 @@ import LoadingScreen from "../components/LoadingScreen";
 import PackageAPI from "../utils/PackageApi";
 import PopupMenu from "../components/PopupMenu";
 import { useAppContext } from "../libs/contextLib";
-import {
-  pendingMessage,
-  deniedOrRevokedMessage,
-  isPending,
-  isActive,
-} from "../libs/userLib";
+import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const withdrawMenuItem = {
   label: "Withdraw Package",
   value: "Withdrawn",
-  formatConfirmationMessage: ({ packageId }) =>
-    `You are about to withdraw ${packageId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+  formatConfirmationMessage: ({ componentId }) =>
+    `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
 };
 
 const menuItemMap = {
-  "RAI Response Submitted": withdrawMenuItem,
+  "chipsparai Submitted": withdrawMenuItem,
+  "waiverrai Submitted": withdrawMenuItem,
+  "sparai Submitted": withdrawMenuItem,
+  "waiverrenewal Submitted": withdrawMenuItem,
+  "waiveramendment Submitted": withdrawMenuItem,
+  "waiverextension Submitted": withdrawMenuItem,
   Submitted: withdrawMenuItem,
 };
 
-const correspondingRAILink = {
-  [ChangeRequest.TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
-  [ChangeRequest.TYPE.SPA]: ROUTES.SPA_RAI,
-  [ChangeRequest.TYPE.WAIVER]: ROUTES.WAIVER_RAI,
+const filterArray = {
+  currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
+  componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
 };
 
 /**
  * Component containing dashboard
  */
 const PackageList = () => {
-  const [changeRequestList, setChangeRequestList] = useState([]);
+  const [packageList, setPackageList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userProfile: { userData } = {} } = useAppContext();
+  const {
+    userStatus,
+    userProfile,
+    userProfile: { cmsRoles, userData } = {},
+  } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(userData.type);
+  const userRoleObj = getUserRoleObj(
+    userData.type,
+    !cmsRoles,
+    userData?.attributes
+  );
 
   const loadPackageList = useCallback(
     async (ctrlr) => {
@@ -65,8 +73,7 @@ const PackageList = () => {
         const data = await PackageAPI.getMyPackages(userProfile.email);
 
         if (typeof data === "string") throw data;
-        console.log("the data returned is: ", data);
-        if (!ctrlr?.signal.aborted) setChangeRequestList(data);
+        if (!ctrlr?.signal.aborted) setPackageList(data);
         if (!ctrlr?.signal.aborted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
@@ -79,7 +86,11 @@ const PackageList = () => {
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
-    if (!userData?.type || !userData?.attributes) {
+
+    const missingUserType = !userData?.type;
+    const missingOtherUserData =
+      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
+    if ((missingUserType || missingOtherUserData) && cmsRoles) {
       history.replace("/signup", location.state);
       return;
     }
@@ -90,12 +101,12 @@ const PackageList = () => {
     return function cleanup() {
       ctrlr.abort();
     };
-  }, [history, loadPackageList, location, userData, userProfile]);
+  }, [cmsRoles, history, loadPackageList, location, userData, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
       <Link
-        to={`/${row.original.packageType}/${row.original.submissionId}/${row.original.submitterId}`}
+        to={`/detail/${row.original.componentType}/${row.original.submissionTimestamp}/${value}`}
       >
         {value}
       </Link>
@@ -104,17 +115,13 @@ const PackageList = () => {
   );
 
   const getType = useCallback(
-    ({ packageType }) =>
+    ({ componentType }) =>
       ({
         [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
-        [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
         [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
-        [ChangeRequest.TYPE.WAIVER]: "Waiver",
-        [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
-        [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
-        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
+        [ChangeRequest.TYPE.WAIVER_BASE]: "1915(b) Waiver",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-      }[packageType] ?? []),
+      }[componentType] ?? []),
     []
   );
 
@@ -123,11 +130,11 @@ const PackageList = () => {
     []
   );
 
-  const getState = useCallback(({ packageId }) => {
-    if (!packageId) {
+  const getState = useCallback(({ componentId }) => {
+    if (!componentId) {
       return "--";
     } else {
-      return packageId.toString().substring(0, 2);
+      return componentId.toString().substring(0, 2);
     }
   }, []);
 
@@ -151,19 +158,34 @@ const PackageList = () => {
     }
   }, []);
 
+  const renderFilteredDate = useCallback(
+    (filterField) =>
+      ({ value, row }) => {
+        let returnDay = "Pending";
+        if (!filterArray[filterField].includes(row.original[filterField])) {
+          if (value) returnDay = format(value, "MMM d, yyyy");
+        } else {
+          returnDay = "N/A";
+        }
+        return returnDay;
+      },
+    []
+  );
+
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
       // When we add another action to the menu, we will need to look at the action taken here.
 
-      const packageToModify = changeRequestList[rowNum];
+      const packageToModify = packageList[rowNum];
       try {
         const resp = await PackageAPI.withdraw(
           [userProfile.userData.firstName, userProfile.userData.lastName].join(
             " "
           ),
           userProfile.email,
-          packageToModify.packageId
+          packageToModify.componentId,
+          packageToModify.componentType
         );
         setAlertCode(resp);
         loadPackageList();
@@ -172,12 +194,7 @@ const PackageList = () => {
         setAlertCode(RESPONSE_CODE[e.message]);
       }
     },
-    [
-      changeRequestList,
-      loadPackageList,
-      userProfile.email,
-      userProfile.userData,
-    ]
+    [packageList, loadPackageList, userProfile.email, userProfile.userData]
   );
 
   const onPopupActionRAI = useCallback(
@@ -189,7 +206,8 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const raiLink = correspondingRAILink[row.original.packageType];
+      const raiLink =
+        ChangeRequest.correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
       const notWithdrawn = row.original.currentStatus !== "Withdrawn";
       let menuItems = [];
@@ -197,7 +215,7 @@ const PackageList = () => {
       if (raiLink && notWithdrawn) {
         const menuItemRai = {
           label: "Respond to RAI",
-          value: { link: raiLink, raiId: row.original.packageId },
+          value: { link: raiLink, raiId: row.original.componentId },
           handleSelected: onPopupActionRAI,
         };
         menuItems.push(menuItemRai);
@@ -223,20 +241,32 @@ const PackageList = () => {
     let tableColumns = [
       {
         Header: "ID/Number",
-        accessor: "packageId",
+        accessor: "componentId",
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
         accessor: getType,
-        id: "packageType",
+        id: "componentType",
         Cell: renderType,
       },
       {
         Header: "State",
         accessor: getState,
         id: "territory",
+      },
+      {
+        Header: "90th Day",
+        accessor: "clockEndTimestamp",
+        id: "ninetiethDay",
+        Cell: renderFilteredDate("currentStatus"),
+      },
+      {
+        Header: "Expiration Date",
+        accessor: "expirationTimestamp",
+        id: "expirationTimestamp",
+        Cell: renderFilteredDate("componentType"),
       },
       {
         Header: "Status",
@@ -276,6 +306,7 @@ const PackageList = () => {
     renderType,
     renderDate,
     renderName,
+    renderFilteredDate,
     userRoleObj.canAccessForms,
   ]);
 
@@ -289,11 +320,7 @@ const PackageList = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV(
-          "submission-table",
-          changeRequestList,
-          "SubmissionList"
-        );
+        tableListExportToCSV("submission-table", packageList, "SubmissionList");
       }}
       inversed
     >
@@ -333,49 +360,65 @@ const PackageList = () => {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  const isUserActive =
-    !!userProfile?.userData?.attributes && isActive(userProfile?.userData);
+  function getRightSideContent() {
+    const userCanSubmit =
+      userStatus === USER_STATUS.ACTIVE && userRoleObj.canAccessForms;
 
-  const tableClassName = classNames({
-    "submissions-table": true,
-    "submissions-table-actions-column": userRoleObj.canAccessForms,
-  });
+    let rightSideContent = "";
+    if (userCanSubmit) {
+      rightSideContent = newSubmissionButton;
+    } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
+      rightSideContent = csvExportSubmissions;
+    }
+
+    return rightSideContent;
+  }
+  function renderSubmissionList() {
+    if (userStatus === USER_STATUS.PENDING) {
+      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
+    }
+
+    const userStatusNotActive =
+      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+    if (userStatusNotActive) {
+      return (
+        <EmptyList
+          showProfileLink="true"
+          message={deniedOrRevokedMessage[userProfile.userData.type]}
+        />
+      );
+    }
+
+    const tableClassName = classNames({
+      "submissions-table": true,
+      "submissions-table-actions-column": userRoleObj.canAccessForms,
+    });
+    const packageListExists = packageList && packageList.length > 0;
+    return (
+      <LoadingScreen isLoading={isLoading}>
+        {packageListExists ? (
+          <PortalTable
+            className={tableClassName}
+            columns={columns}
+            data={packageList}
+            initialState={initialTableState}
+          />
+        ) : (
+          <EmptyList message="You have no submissions yet." />
+        )}
+      </LoadingScreen>
+    );
+  }
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
       <PageTitleBar
         heading="Submission Dashboard"
-        rightSideContent={
-          (isUserActive && userRoleObj.canAccessForms && newSubmissionButton) ||
-          (userData.type === USER_TYPE.HELPDESK &&
-            isUserActive &&
-            csvExportSubmissions)
-        }
+        rightSideContent={getRightSideContent()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-      <div className="dashboard-container">
-        {isUserActive ? (
-          <LoadingScreen isLoading={isLoading}>
-            {changeRequestList.length > 0 ? (
-              <PortalTable
-                className={tableClassName}
-                columns={columns}
-                data={changeRequestList}
-                initialState={initialTableState}
-              />
-            ) : (
-              <EmptyList message="You have no submissions yet." />
-            )}
-          </LoadingScreen>
-        ) : isPending(userProfile.userData) ? (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        ) : (
-          <EmptyList
-            showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userData.type]}
-          />
-        )}
-      </div>
+      <div className="dashboard-container">{renderSubmissionList()}</div>
     </div>
   );
 };

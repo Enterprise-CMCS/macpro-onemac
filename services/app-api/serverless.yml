@@ -8,6 +8,7 @@ plugins:
   - serverless-associate-waf
   - serverless-offline
   - serverless-iam-helper
+  - serverless-s3-bucket-helper
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
@@ -21,6 +22,10 @@ custom:
   reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
+  testingEmail: ${opt:testingEmail, env:TESTING_TEAM_EMAIL, ""}
+  applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
+  attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
+  attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   warmupEnabled:
     production: true
     development: true
@@ -77,8 +82,11 @@ provider:
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
     reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
+    testingEmail: ${self:custom.testingEmail}
     systemAdminEmail: ${self:custom.systemAdminEmail}
     productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
+    applicationEndpoint: ${self:custom.applicationEndpoint}
+    attachmentsBucket: ${self:custom.attachmentsBucket}
 
 functions:
 
@@ -98,6 +106,16 @@ functions:
     events:
       - http:
           path: get/{id}/{userId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  getDetail:
+    handler: getDetail.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: getDetail/{id}
           method: get
           cors: true
           authorizer: aws_iam
@@ -182,12 +200,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getStateAdminList:
-    handler: getStateAdminList.main
+  getStateSystemAdminList:
+    handler: getStateSystemAdminList.main
     role: LambdaApiRole
     events:
       - http:
-          path: getStateAdmins
+          path: getStateSystemAdmins
           method: get
           cors: true
           authorizer: aws_iam

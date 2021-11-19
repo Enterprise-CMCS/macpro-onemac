@@ -12,6 +12,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
+import newSubmission from "./utils/newSubmission";
 
 /**
  * Submission states for the change requests.
@@ -25,11 +26,6 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-  // If this invocation is a prewarm, do nothing and return.
-  if (event.source == "serverless-plugin-warmup") {
-    console.log("Warmed up!");
-    return null;
-  }
   const data = JSON.parse(event.body);
 
   // Add required data to the record before storing.
@@ -53,7 +49,7 @@ export const main = handler(async (event) => {
 
     if (
       (doneBy.type != USER_TYPE.STATE_SUBMITTER ||
-        doneBy.type != USER_TYPE.STATE_ADMIN) &&
+        doneBy.type != USER_TYPE.STATE_SYSTEM_ADMIN) &&
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
@@ -131,12 +127,13 @@ export const main = handler(async (event) => {
     );
   }
 
+  // we do the data conversion here so the new functions only need the new way
   const submitterName = data.user.firstName + " " + data.user.lastName;
-  const packageData = {
-    packageId: data.transmittalNumber,
-    packageType: data.type,
-    clockEndTimestamp: data.ninetyDayClockEnd,
+  const submissionData = {
+    componentId: data.transmittalNumber,
+    componentType: data.type,
     submissionTimestamp: data.submittedAt,
+    currentStatus: "Submitted",
     attachments: data.uploads,
     additionalInformation: data.summary,
     submissionId: data.id,
@@ -145,17 +142,18 @@ export const main = handler(async (event) => {
     submitterId: data.userId,
   };
 
-  if (data.actiontype) packageData.actionType = data.actionType;
-  if (data.waiverAuthority) packageData.waiverAuthority = data.waiverAuthority;
+  if (data.actionType) submissionData.componentType += data.actionType;
 
-  return crFunctions
-    .saveSubmission(packageData)
+  if (data.waiverAuthority)
+    submissionData.waiverAuthority = data.waiverAuthority;
+
+  return newSubmission(submissionData)
     .then(() => {
       console.log("Successfully submitted the following:", data);
       return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
     })
     .catch((error) => {
       console.log("Error is: ", error.message);
-      throw error;
+      // throw error;
     });
 });

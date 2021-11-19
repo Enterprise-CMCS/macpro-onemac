@@ -20,7 +20,7 @@ UNREGISTERED_USERS = [
     for user_type, name in zip(
         [
             "statesubmitter",
-            "stateadmin",
+            "statesystemadmin",
             "cmsroleapprover",
             "cmsreviewer",
             "helpdesk",
@@ -36,6 +36,18 @@ UNREGISTERED_USERS = [
             ]
         ),
     )
+]
+
+"""
+Purely to demonstrate case insensitivity in email addresses.
+"""
+UPPER_CASE_USER = [
+    {
+        "id": "stateSUBMITTERactive@cms.hhs.local",
+        "type": "statesubmitter",
+        "firstName": "Thiswill",
+        "lastName": "Notshowupintheapp",
+    }
 ]
 
 
@@ -212,7 +224,11 @@ if __name__ == "__main__":
             )
             sys.exit(101)
 
-        seed_cognito(seed_users + devs + UNREGISTERED_USERS, user_pool_id, os.environ.get("COGNITO_TEST_USERS_PASSWORD"))
+        seed_cognito(
+            seed_users + devs + UNREGISTERED_USERS + UPPER_CASE_USER,
+            user_pool_id,
+            os.environ.get("COGNITO_TEST_USERS_PASSWORD"),
+        )
 
         # system admin user is populated before this script is run
         if len(scan_dynamo(args.stage)["Items"]) < 2:

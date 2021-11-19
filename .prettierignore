@@ -16,8 +16,6 @@ coverage/
 build/
 
 # not ours to mess with
-/nightwatch/
-nightwatch.js
 /services/stream-functions/
 
 # contains invalid syntax

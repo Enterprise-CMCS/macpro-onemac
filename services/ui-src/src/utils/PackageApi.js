@@ -1,9 +1,39 @@
-import { API } from "aws-amplify";
+import { API, Auth } from "aws-amplify";
 import handleApiError from "../libs/apiErrorHandler";
 /**
  * Singleton class to perform operations with the change request backend.
  */
 class PackageApi {
+  /**
+   * Fetch a specific package from the backend.
+   * @param {string} id the ID of the package to fetch
+   * @return {Object} a change request
+   */
+  async getDetail(componentId, componentType, componentTimestamp) {
+    if (!componentId) {
+      console.log("ID  was not specified for get API call");
+      throw new Error("ID was not specified for get API call");
+    }
+
+    try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      const userEmail = userAuth.signInUserSession.idToken.payload.email;
+
+      let packageData = await API.get(
+        "oneMacAPI",
+        `/getDetail/${componentId}?cType=${componentType}&cNum=${componentTimestamp}&email=${userEmail}`
+      );
+      if (typeof packageData === "string") throw new Error(packageData);
+      return packageData;
+    } catch (error) {
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error fetching ID ${componentId}.`
+      );
+    }
+  }
+
   /**
    * Fetch all packages that correspond to the user's active access to states/territories
    * @param {string} email the user's email
@@ -28,11 +58,12 @@ class PackageApi {
    * @param {string} ID the package ID
    * @return {Promise<string>} the response code
    */
-  async withdraw(submitterName, submitterEmail, packageId) {
+  async withdraw(submitterName, submitterEmail, componentId, componentType) {
     try {
       return await API.post("oneMacAPI", `/withdraw`, {
         body: {
-          packageId,
+          componentId,
+          componentType,
           submitterEmail,
           submitterName,
         },
@@ -41,7 +72,7 @@ class PackageApi {
       handleApiError(
         err,
         "FETCH_ERROR",
-        `There was an error updating the status of package ${packageId}.`
+        `There was an error updating the status of package ${componentId}.`
       );
     }
   }
