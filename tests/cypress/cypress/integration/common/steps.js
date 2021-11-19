@@ -65,9 +65,48 @@ And("type in SPA ID", () => {
 And("Add file for CMS Form 179", () => {
   OneMacSubmitNewMedicaidSpaPage.uploadCMSForm179AddFile();
 });
+//OY2-5869
+And ("Add {string} file to form 179", (fileName)=>{
+  OneMacSubmitNewMedicaidSpaPage.addFileForForm179(fileName);
+});
+
+And ("Verify {string} is added to form 179", (fileName)=> {
+  OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForForm179(fileName);
+});
+
+And ("Verify {string} is not added to form 179", (fileName)=> {
+  OneMacSubmitNewMedicaidSpaPage.verifyFileNotAddedForForm179(fileName);
+});
+
+And ("Delete file from form 179", ()=>{
+  OneMacSubmitNewMedicaidSpaPage.deleteFileFromForm179();
+});
+
+//End OY2-5869
 And("Add file for SPA Pages", () => {
   OneMacSubmitNewMedicaidSpaPage.uploadSPAPagesAddFile();
 });
+
+And("Add file {string} for SPA Pages", (fileName) => {
+  OneMacSubmitNewMedicaidSpaPage.addFilesToSpaPages(fileName);
+});
+
+And("Add no files to SPA Pages", ()=> {
+  oneMacSubmitNewMedicaidSpaPage.addNoFilesToSpaPages();
+});
+
+And("Verify no files added to SPA Pages", ()=> {
+  oneMacSubmitNewMedicaidSpaPage.verifyNoFilesAttachedToSpaPages();
+});
+
+And ("Verify {string} is added to SPA Pages", (fileName)=> {
+  OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForSpaPages(fileName);
+});
+
+And("Verify file {string} exists in Spa Pages", (fileName)=> {
+  OneMacSubmitNewMedicaidSpaPage.verifyFileNameExistsInSpaPages(fileName);
+});
+
 And("Type Additonal Information Comments", () => {
   OneMacSubmitNewMedicaidSpaPage.AdditionalInformationTypeComment(
     "This is just a test"
@@ -229,6 +268,12 @@ And("verify Date Submitted is Displayed", () => {
 });
 And("verify Submitted By is Displayed", () => {
   OneMacDashboardPage.verifySubmittedByHeadersDisplayed();
+});
+And("Click on the SPA ID Link", ()=> {
+  OneMacDashboardPage.clickOnSpaID();
+});
+And("Verify {string} exists in the attachments", (fileName)=> {
+  OneMacDashboardPage.verifyAttachmentExists(fileName);
 });
 And("verify User Management is Displayed", () => {
   OneMacUserManagmentPage.verifyUserManagmentHeaderIsDisplayed();

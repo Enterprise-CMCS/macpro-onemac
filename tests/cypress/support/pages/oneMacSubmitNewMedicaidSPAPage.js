@@ -3,6 +3,14 @@ const additionalInformationCommentBox = "#field_2";
 const submitBTN = "#form-submission-button";
 const SPAIDErrorMessage = "#transmittalNumberStatusMsg";
 
+const uploadedFile = "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(1) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
+const uploadedSpaFile = "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(2) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
+const SPAPagesMainElement = "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(2)";
+
+
+const deleteForm179File = "//tbody/tr[1]/td[3]/div[1]/button[1]/*[1]";
+const deleteSpaPagesFile = "//tbody/tr[2]/td[3]/div[1]/button[1]/*[1]";
+
 //Element is Xpath use cy.xpath instead of cy.get
 const CMSForm179AddFileBTN =
   "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader table:nth-child(1) tbody:nth-child(1) tr:nth-child(1) td.uploader-input-cell:nth-child(2) > label.uploader-input-label-active";
@@ -25,10 +33,51 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(CMSForm179AddFileUpload).attachFile(filePath);
   }
 
+  addFileForForm179(fileName){
+    cy.get(CMSForm179AddFileBTN).click();
+    const filePath = "/files/";
+    cy.get(CMSForm179AddFileUpload).attachFile(filePath+fileName);
+  }
+
+  verifyFileAddedForForm179(fileName){
+    cy.get(uploadedFile).contains(fileName);
+  }
+
+  verifyFileNotAddedForForm179(fileName){
+    cy.get(uploadedFile).should("not.exist");
+  }
+
+  deleteFileFromForm179(){
+    cy.xpath(deleteForm179File).click();
+    cy.get(uploadedFile).should('not.exist');
+  }
+
   uploadSPAPagesAddFile() {
     cy.get(SPAPagesAddFileBTN).click();
     const filePath = "/files/adobe.pdf";
     cy.get(SPAPAgesAddFileUpload).attachFile(filePath);
+  }
+
+  addFilesToSpaPages(fileName){
+    cy.get(SPAPagesAddFileBTN).click();
+    const filePath = "/files/";
+    cy.get(SPAPAgesAddFileUpload).attachFile(filePath+fileName);
+  }
+
+  verifyFileAddedForSpaPages(fileName){
+    cy.get(SPAPAgesAddFileUpload).contains(fileName);
+  }
+
+  verifyFileNameExistsInSpaPages(fileName){
+    cy.get(SPAPagesMainElement).contains(fileName);
+  }
+
+  addNoFilesToSpaPages(){
+    cy.get(SPAPagesAddFileBTN).click();
+  }
+
+  verifyNoFilesAttachedToSpaPages(){
+    cy.get(SPAPagesMainElement).should("not.exist");
   }
 
   AdditionalInformationTypeComment(s) {
