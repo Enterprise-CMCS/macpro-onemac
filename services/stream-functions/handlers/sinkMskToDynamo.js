@@ -4,6 +4,12 @@ const { ChangeRequest } = require("cmscommonlib");
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
+const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
+const SEATOOL_TOPICS = {
+  STATE_PLAN: `${topicPrefix}State_Plan`,
+  RAI: `${topicPrefix}RAI`
+};
+
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
   SPA: "125",
@@ -47,19 +53,32 @@ const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
   [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
 };
 
-const topLevelUpdates = [
-  "clockEndTimestamp",
-  "expirationTimestamp",
-  "currentStatus",
-];
+const topLevelUpdates = {
+  [SEATOOL_TOPICS.STATE_PLAN]: [
+    "clockEndTimestamp",
+    "expirationTimestamp",
+    "currentStatus",
+  ],
+  [SEATOOL_TOPICS.RAI]: []
+};
+
+const getData = {
+  [SEATOOL_TOPICS.STATE_PLAN]: ((value) => {
+    return "This is the State_Plan";
+  }),
+  [SEATOOL_TOPICS.RAI]: ((value) => {
+    return "this is the RAI"
+  })
+};
 
 function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     return null;
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
+  const topic = event.topic;
   const value = JSON.parse(event.value);
-  console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
+  console.log(`Topic: ${topic} Event value: ${JSON.stringify(value, null, 2)}`);
 
   const SEAToolId = value.payload.ID_Number;
   if (!SEAToolId) return;
@@ -68,8 +87,7 @@ function myHandler(event) {
   if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
 
   if (!value?.payload?.Plan_Type)  return;
-  const planTypeList = ["122", "123", "124", "125"];
-  const planType = planTypeList.find( (pt) => (pt === value.payload.Plan_Type.toString()));
+  const planType = Object.values(SEATOOL_PLAN_TYPE).find( (pt) => (pt === value.payload.Plan_Type.toString()));
   if (!planType) return;
 
   let stateCode;
@@ -82,6 +100,8 @@ function myHandler(event) {
     oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
 
   const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
+
+  console.log(getData[topic](value));
 
   const SEAToolData = {
     'packageStatus': packageStatusID,
@@ -148,7 +168,7 @@ function myHandler(event) {
       },
     };
 
-    topLevelUpdates.forEach((attributeName) => {
+    topLevelUpdates[topic].forEach((attributeName) => {
       if (SEAToolData[attributeName]) {
         const newLabel = `:new${attributeName}`;
         updatePackageParams.ExpressionAttributeValues[newLabel] =

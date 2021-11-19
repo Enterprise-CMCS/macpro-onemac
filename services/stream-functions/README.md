@@ -1,7 +1,9 @@
 The Lambdas within stream-functions are specific to the movement of data to and from BigMAC.
 
 ### Subscribing to and handling events FROM BigMAC
-
+Adding a topic to listen to for the sink... 
+in serverless.yml, there is a topics: variable - add the new topic to the comma-delimited list?
+Modify sinkMskToDynamo handler to process the new topic events
 ### Announcing updates of oneMAC data TO BigMAC topics
 
 a Kafka Connect cluster is built, running on fargate
@@ -33,6 +35,3 @@ To connect to a BigMAC feature branch environment instead:
 8. Add a parameter called: /configuration/<STAGE>/bigmac/bootstrapBrokerStringTls with <STAGE> replaced by the stage name for the connecting branch.  Use "SecureString" as the type, but leave the other defaults.
 9. The parameter value should be the TLS information copied from BigMAC
 10. redeploy the github workflow to complete the connection.
-
-Adding a topic to listen to for the sink... 
-in serverless.yml, there is a topics: variable - I think you can add to this as a comma-delimited list?
