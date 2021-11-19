@@ -64,10 +64,10 @@ const topLevelUpdates = {
 
 const getData = {
   [SEATOOL_TOPICS.STATE_PLAN]: ((value) => {
-    return "This is the State_Plan";
+    return `This is the State_Plan with id: ${value.payload.ID_Number}`;
   }),
   [SEATOOL_TOPICS.RAI]: ((value) => {
-    return "this is the RAI"
+    return `this is the RAI payload: ${value.payload}`;
   })
 };
 
