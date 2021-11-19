@@ -64,10 +64,43 @@ const topLevelUpdates = {
 
 const getData = {
   [SEATOOL_TOPICS.STATE_PLAN]: ((value) => {
-    return `This is the State_Plan with id: ${value.payload.ID_Number}`;
+    let packageStatusID = "unknown";
+    if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
+  
+    if (!value?.payload?.Plan_Type)  return;
+    const planType = Object.values(SEATOOL_PLAN_TYPE).find( (pt) => (pt === value.payload.Plan_Type.toString()));
+    if (!planType) return;
+  
+    let stateCode;
+    if (value.payload.State_Code) {
+      stateCode = value.payload.State_Code.toString();
+    } else stateCode = SEAToolId.substring(0,2);
+  
+    let oneMACStatus = `SEATool Status: ${packageStatusID}`;
+    if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
+      oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
+  
+    const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
+  
+    return {
+      'packageStatus': packageStatusID,
+      'currentStatus': oneMACStatus,
+      'stateCode': stateCode,
+      'planType': planType,
+      'packageType': SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[planType],
+      'packageId': idInfo.packageId,
+      'componentId': idInfo.componentId,
+      'componentType': idInfo.componentType,
+      'clockEndTimestamp': value.payload.Alert_90_Days_Date,
+      'expirationTimestamp': value.payload.End_Date,
+    };
   }),
   [SEATOOL_TOPICS.RAI]: ((value) => {
-    return `this is the RAI payload: ${value.payload}`;
+    return {
+      'raiRequestedDate': value.payload.RAI_Requested_Date,
+      'raiReceivedDate': value.payload.RAI_Received_Date,
+      'raiWithdrawnDate': value.payload.RAI_Withdrawn_Date,
+    };
   })
 };
 
@@ -83,38 +116,8 @@ function myHandler(event) {
   const SEAToolId = value.payload.ID_Number;
   if (!SEAToolId) return;
 
-  let packageStatusID = "unknown";
-  if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
-
-  if (!value?.payload?.Plan_Type)  return;
-  const planType = Object.values(SEATOOL_PLAN_TYPE).find( (pt) => (pt === value.payload.Plan_Type.toString()));
-  if (!planType) return;
-
-  let stateCode;
-  if (value.payload.State_Code) {
-    stateCode = value.payload.State_Code.toString();
-  } else stateCode = SEAToolId.substring(0,2);
-
-  let oneMACStatus = `SEATool Status: ${packageStatusID}`;
-  if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
-    oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
-
-  const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
-
-  console.log(getData[topic](value));
-
-  const SEAToolData = {
-    'packageStatus': packageStatusID,
-    'currentStatus': oneMACStatus,
-    'stateCode': stateCode,
-    'planType': planType,
-    'packageType': SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[planType],
-    'packageId': idInfo.packageId,
-    'componentId': idInfo.componentId,
-    'componentType': idInfo.componentType,
-    'clockEndTimestamp': value.payload.Alert_90_Days_Date,
-    'expirationTimestamp': value.payload.End_Date,
-  };
+  const SEAToolData = getData[topic](value);
+  
   if (SEAToolId != undefined) {
 
     // update the SEATool Entry
@@ -150,7 +153,7 @@ function myHandler(event) {
 
     // update OneMAC Component
     const updatePk = SEAToolData.componentId;
-    const updateSk = SEAToolData.packageType;
+    const updateSk = data.packageType;
     const updatePackageParams = {
       TableName: process.env.oneMacTableName,
       Key: {
