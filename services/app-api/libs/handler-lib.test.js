@@ -16,8 +16,12 @@ describe("test the handler handling", () => {
     const event = { source: "serverless-plugin-warmup" };
     const main = handler(testLambda);
 
-    main(event).then((data) => {
-      expect(data).toMatchObject(warmupResponse);
-    });
+    main(event)
+      .then((data) => {
+        expect(data).toMatchObject(warmupResponse);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   });
 });
