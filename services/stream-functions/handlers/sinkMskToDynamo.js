@@ -1,5 +1,5 @@
 const AWS = require('aws-sdk');
-const { getUpdateParams } = require("cmscommonlib/update-lib");
+import { ChangeRequest } from "cmscommonlib";
 
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
@@ -95,7 +95,7 @@ function myHandler(event) {
           componentId: pk,
           expirationTimestamp: value.payload.End_Date,
         }
-        ddb.update(getUpdateParams(oneMACData,topLevelUpdates[table]), function(err, data) {
+        ddb.update(ChangeRequest.getUpdateParams(oneMACData,topLevelUpdates[table]), function(err, data) {
           if (err) {
             console.log("Error", err);
           } else {

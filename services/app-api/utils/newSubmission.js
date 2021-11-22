@@ -1,11 +1,14 @@
-import { decodeId } from "cmscommonlib/update-lib";
+import { ChangeRequest } from "cmscommonlib";
 
 import dynamoDb from "../libs/dynamodb-lib";
 import updateComponent from "./updateComponent";
 
 export default async function newSubmission(inData) {
   console.log("inData: ", inData);
-  const idInfo = decodeId(inData.componentId, inData.componentType);
+  const idInfo = ChangeRequest.decodeId(
+    inData.componentId,
+    inData.componentType
+  );
 
   console.log("idInfo is: ", idInfo);
   const data = {
