@@ -411,7 +411,7 @@ export const getUpdateParams = (inData, topLevelUpdates = []) => {
     },
   };
 
-  topLevelUpdates[topic].forEach((attributeName) => {
+  topLevelUpdates.forEach((attributeName) => {
     if (inData[attributeName]) {
       const newLabel = `:new${attributeName}`;
       updateParams.ExpressionAttributeValues[newLabel] = inData[attributeName];
