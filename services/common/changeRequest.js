@@ -31,39 +31,6 @@ const getBaseWaiverId = (inId) => {
   return baseWaiver[0];
 };
 
-export const decodeId = (inId, inType) => {
-  const returnInfo = {
-    packageId: inId,
-    parentType: TYPE.SPA,
-    componentId: inId,
-    componentType: inType,
-    isNewPackage: true,
-  };
-  switch (inType) {
-    case TYPE.WAIVER_RAI:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
-    // falls through
-    case TYPE.CHIP_SPA_RAI:
-      if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
-    // falls through
-    case TYPE.SPA_RAI:
-      returnInfo.isNewPackage = false;
-      break;
-    case TYPE.WAIVER_AMENDMENT:
-    case TYPE.WAIVER_RENEWAL:
-    case TYPE.WAIVER_EXTENSION:
-    case TYPE.WAIVER_APP_K:
-      returnInfo.packageId = getBaseWaiverId(inId);
-      returnInfo.isNewPackage = false;
-    // falls through
-    case TYPE.WAIVER:
-    case TYPE.WAIVER_BASE:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
-      break;
-  }
-  return returnInfo;
-};
-
 const commonSubheaderMessage =
   "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.<b> If you leave this page, you will lose your progress on this form.</b>";
 

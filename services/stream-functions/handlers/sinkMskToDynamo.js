@@ -1,16 +1,16 @@
 const AWS = require('aws-sdk');
-// const { ChangeRequest } = require("cmscommonlib");
+const { getUpdateParams } = require("cmscommonlib/update-lib");
 
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
-/* const SEATOOL_TABLE = {
-  STATE_PLAN: `State_Plan`,
-  RAI: `RAI`
-};
-*/
 const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
-/*
+
+const SEATOOL_TABLE = {
+  STATE_PLAN: "State_Plan",
+  RAI: "RAI",
+}
+
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
   SPA: "125",
@@ -62,7 +62,7 @@ const topLevelUpdates = {
   ],
   [SEATOOL_TABLE.RAI]: []
 };
-*/
+
 function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     return null;
@@ -75,9 +75,10 @@ function myHandler(event) {
   const pk = value.payload.ID_Number;
   if (!pk || !value.payload.replica_id) return;
 
+  // use the repllica id as a version number/event tracker... highest id is most recent
   const sk = `SEATool#${table}#${value.payload.replica_id}`
 
-  // update the SEATool Entry
+  // put the SEATool Entry - overwrites if already exists
   const updateSEAToolParams = {
     TableName: process.env.oneMacTableName,
     Item: {pk,sk,...value.payload},
@@ -86,75 +87,21 @@ function myHandler(event) {
   ddb.put(updateSEAToolParams, function(err) {
       if (err) {
         console.log("Error", err);
-      } else {
-        // see if this updates a OneMAC package
-/*        let updatePackageParams;
-        
-        topLevelUpdates[topic].forEach((attributeName) => {
-          if (value.payload[SEATOOL_NAME[attributeName]]) {
-            const newLabel = `:new${attributeName}`;
-            updatePackageParams.ExpressionAttributeValues[newLabel] =
-            value.payload[attributeName];
-            if (Array.isArray(SEAToolData[attributeName]))
-              updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-            else
-              updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-          }
-
-        if (updatePackageParams.length() > 0) {
-          console.log("this should update a OneMAC package");
+      } else if (table === "State_Plan") {
+        const oneMACData = {
+          currentStatus: SEATOOL_TO_ONEMAC_STATUS[value.payload.SPW_Status_ID],
+          clockEndTimestamp: value.payload.Alert_90_Days_Date,
+          componentType: SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[value.payload.Plan_Type],
+          componentId: pk,
+          expirationTimestamp: value.payload.End_Date,
         }
-       const searchParams = {
-          TableName: process.env.oneMacTableName,
-          IndexName: "GSI1",
-          KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
-          ExpressionAttributeValues: {
-            ":pk": "OneMAC",
-            ":sk": pk,
-          },
-
-          ProjectionExpression:
-            "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId,clockEndTimestamp,expirationTimestamp",
-        };
-  
-        }
-        const updatePackageParams = {
-          TableName: process.env.oneMacTableName,
-          Key: {
-            pk: updatePk,
-            sk: updateSk,
-          },
-          ConditionExpression: "pk = :pkVal AND sk = :skVal",
-          UpdateExpression:
-            "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
-          ExpressionAttributeValues: {
-            ":pkVal": updatePk,
-            ":skVal": updateSk,
-            ":newChange": [SEAToolData],
-            ":emptyList": [],
-          },
-        };
-
-        topLevelUpdates[topic].forEach((attributeName) => {
-          if (SEAToolData[attributeName]) {
-            const newLabel = `:new${attributeName}`;
-            updatePackageParams.ExpressionAttributeValues[newLabel] =
-            SEAToolData[attributeName];
-            if (Array.isArray(SEAToolData[attributeName]))
-              updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-            else
-              updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-          }
-        });
-
-        ddb.update(updatePackageParams, function(err, data) {
+        ddb.update(getUpdateParams(oneMACData,topLevelUpdates[table]), function(err, data) {
           if (err) {
             console.log("Error", err);
           } else {
             console.log("Update Success!  Returned data is: ", data);
             console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
         }});
-        */
       }
   });
 }
