@@ -26,6 +26,12 @@ Install the quick-start s3 bucket helper serverless plugin (in project root)
 npm install serverless-s3-bucket-helper --save-dev
 ```
 
+Might also need the serverless-bundle
+
+```
+npm install serverless-bundle --save-dev
+```
+
 Run the software locally by running the following command:
 
 ```
