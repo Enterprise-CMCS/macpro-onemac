@@ -12,6 +12,17 @@ const firstExperationDate = '//td[@id="expirationTimestamp-0"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const MD32560hrefValue =
   '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
+const searchbar = "#search-bar-input";
+//Element is Xpath use cy.xpath instead of cy.get
+const searchbarHeader = "//label[contains(text(),'Search')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const searchBarXBTN =
+  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/button[1]/*[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const noResultsFound = "//h4[contains(text(),'No Results Found')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const errorMessageForNoResultsFound =
+  "//p[contains(text(),'Adjust your search and filter to find what you are')]";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -39,6 +50,50 @@ export class oneMacPackagePage {
   }
   verifyExpirationDateFirstValue(s) {
     cy.xpath(firstExperationDate).contains(s);
+  }
+
+  typePendingInSearchBar() {
+    cy.get(searchbar).type("pending");
+  }
+
+  noResultsFoundErrorMessage() {
+    cy.xpath(noResultsFound).contains("No Results Found");
+  }
+
+  typeCreatedIDNumber(s) {
+    cy.get(searchbar).type(s);
+  }
+  verifyIDNumberExists(s) {
+    cy.xpath("//a[contains(text()," + s + ")]").should("be.visible");
+  }
+  clearSearchBar() {
+    cy.get(searchbar).clear();
+  }
+  typeSubmittersName() {
+    cy.get(searchbar).type("Angie Active");
+  }
+  typeNinExistingID() {
+    cy.get(searchbar).type("MD-91-9191");
+  }
+  typeSubmittersNameAllUpperCase() {
+    cy.get(searchbar).type("ANGIE ACTIVE");
+  }
+  typedashInSearchBar() {
+    cy.get(searchbar).type("-");
+  }
+  verifySearchBarExists() {
+    cy.get(searchbar).should("be.visible");
+  }
+  verifySearchisDisplayed() {
+    cy.xpath(searchbarHeader).should("be.visible");
+  }
+  verifyxexistsandClickIt() {
+    cy.xpath(searchBarXBTN).click();
+  }
+  verifyErrorMessageDetails() {
+    cy.xpath(errorMessageForNoResultsFound).contains(
+      "Adjust your search and filter to find what you are looking for."
+    );
   }
 }
 export default oneMacPackagePage;
