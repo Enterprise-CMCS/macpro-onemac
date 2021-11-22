@@ -381,19 +381,23 @@ const PackageList = () => {
     return rightSideContent;
   }
   function renderSubmissionList() {
-    if (userStatus === USER_STATUS.PENDING) {
-      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
-    }
+    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+      if (userStatus === USER_STATUS.PENDING) {
+        return (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        );
+      }
 
-    const userStatusNotActive =
-      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
-    if (userStatusNotActive) {
-      return (
-        <EmptyList
-          showProfileLink="true"
-          message={deniedOrRevokedMessage[userProfile.userData.type]}
-        />
-      );
+      const userStatusNotActive =
+        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+      if (userStatusNotActive) {
+        return (
+          <EmptyList
+            showProfileLink="true"
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        );
+      }
     }
 
     const tableClassName = classNames({
