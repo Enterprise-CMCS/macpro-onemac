@@ -66,19 +66,19 @@ And("Add file for CMS Form 179", () => {
   OneMacSubmitNewMedicaidSpaPage.uploadCMSForm179AddFile();
 });
 //OY2-5869
-And ("Add {string} file to form 179", (fileName)=>{
+And("Add {string} file to form 179", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.addFileForForm179(fileName);
 });
 
-And ("Verify {string} is added to form 179", (fileName)=> {
+And("Verify {string} is added to form 179", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForForm179(fileName);
 });
 
-And ("Verify {string} is not added to form 179", (fileName)=> {
+And("Verify {string} is not added to form 179", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.verifyFileNotAddedForForm179(fileName);
 });
 
-And ("Delete file from form 179", ()=>{
+And("Delete file from form 179", () => {
   OneMacSubmitNewMedicaidSpaPage.deleteFileFromForm179();
 });
 
@@ -91,19 +91,19 @@ And("Add file {string} for SPA Pages", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.addFilesToSpaPages(fileName);
 });
 
-And("Add no files to SPA Pages", ()=> {
+And("Add no files to SPA Pages", () => {
   oneMacSubmitNewMedicaidSpaPage.addNoFilesToSpaPages();
 });
 
-And("Verify no files added to SPA Pages", ()=> {
+And("Verify no files added to SPA Pages", () => {
   oneMacSubmitNewMedicaidSpaPage.verifyNoFilesAttachedToSpaPages();
 });
 
-And ("Verify {string} is added to SPA Pages", (fileName)=> {
+And("Verify {string} is added to SPA Pages", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.verifyFileAddedForSpaPages(fileName);
 });
 
-And("Verify file {string} exists in Spa Pages", (fileName)=> {
+And("Verify file {string} exists in Spa Pages", (fileName) => {
   OneMacSubmitNewMedicaidSpaPage.verifyFileNameExistsInSpaPages(fileName);
 });
 
@@ -269,10 +269,10 @@ And("verify Date Submitted is Displayed", () => {
 And("verify Submitted By is Displayed", () => {
   OneMacDashboardPage.verifySubmittedByHeadersDisplayed();
 });
-And("Click on the SPA ID Link", ()=> {
+And("Click on the SPA ID Link", () => {
   OneMacDashboardPage.clickOnSpaID();
 });
-And("Verify {string} exists in the attachments", (fileName)=> {
+And("Verify {string} exists in the attachments", (fileName) => {
   OneMacDashboardPage.verifyAttachmentExists(fileName);
 });
 And("verify User Management is Displayed", () => {
@@ -1020,3 +1020,46 @@ And(
     OneMacHomePage.verifyCMSBullet6Exists();
   }
 );
+
+And("type in search bar expiration status “pending”", () => {
+  OneMacPackagePage.typePendingInSearchBar();
+});
+And("verify Error message displayed should be No Results Found", () => {
+  OneMacPackagePage.noResultsFoundErrorMessage();
+});
+And("type in search bar ID Number created", () => {
+  OneMacPackagePage.typeCreatedIDNumber(SPAID);
+});
+And("verify user exists with id number searched", () => {
+  OneMacPackagePage.verifyIDNumberExists(SPAID);
+});
+And("clear search bar", () => {
+  OneMacPackagePage.clearSearchBar();
+});
+And("type in submitters name", () => {
+  OneMacPackagePage.typeSubmittersName();
+});
+And("verify user exists with waiver number searched", () => {
+  OneMacPackagePage.verifyIDNumberExists(validWaiverNumberWith5Numbers);
+});
+And("search existing user with all upper case", () => {
+  OneMacPackagePage.typeSubmittersNameAllUpperCase();
+});
+And("search existing user with dash", () => {
+  OneMacPackagePage.typedashInSearchBar();
+});
+And("verify search bar exists", () => {
+  OneMacPackagePage.verifySearchBarExists();
+});
+And("verify search is displayed ontop of search bar", () => {
+  OneMacPackagePage.verifySearchisDisplayed();
+});
+And("verify x in search bar exists to clear search and click it", () => {
+  OneMacPackagePage.verifyxexistsandClickIt();
+});
+And("verify Error message details is displayed", () => {
+  OneMacPackagePage.verifyErrorMessageDetails();
+});
+And("type in search bar not existing ID in search bar", () => {
+  OneMacPackagePage.typeNinExistingID();
+});
