@@ -1,3 +1,5 @@
+import { ChangeRequest } from "cmscommonlib";
+
 import dynamoDb from "../libs/dynamodb-lib";
 
 const topLevelUpdates = [
@@ -62,6 +64,10 @@ export default async function updateComponent({
 
   try {
     console.log("updateParams: ", updateComponentParams);
+    console.log(
+      "compare to: ",
+      ChangeRequest.updateParams(changeData, topLevelUpdates)
+    );
     const result = await dynamoDb.update(updateComponentParams);
     console.log("Result is: ", result);
     return result.Attributes;
