@@ -23,6 +23,9 @@ const noResultsFound = "//h4[contains(text(),'No Results Found')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const errorMessageForNoResultsFound =
   "//p[contains(text(),'Adjust your search and filter to find what you are')]";
+const stateColumnHeader = "#territoryColHeader";
+//Element is Xpath use cy.xpath instead of cy.get
+const arrowOnStateColumnHeader = "//thead/tr[1]/th[3]/span[1]/img[1]";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -94,6 +97,13 @@ export class oneMacPackagePage {
     cy.xpath(errorMessageForNoResultsFound).contains(
       "Adjust your search and filter to find what you are looking for."
     );
+  }
+  verifyStateColumnExists() {
+    cy.get(stateColumnHeader).should("be.visible");
+  }
+  verifyStateColumnIsSortable() {
+    cy.get(stateColumnHeader).click();
+    cy.xpath(arrowOnStateColumnHeader).should("be.visible");
   }
 }
 export default oneMacPackagePage;

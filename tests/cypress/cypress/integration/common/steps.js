@@ -1063,3 +1063,9 @@ And("verify Error message details is displayed", () => {
 And("type in search bar not existing ID in search bar", () => {
   OneMacPackagePage.typeNinExistingID();
 });
+And("Verify State Column Exists", () => {
+  OneMacPackagePage.verifyStateColumnExists();
+});
+And("Verify State Column is sortable", () => {
+  OneMacPackagePage.verifyStateColumnIsSortable();
+});
