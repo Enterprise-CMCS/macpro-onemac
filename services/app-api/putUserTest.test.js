@@ -48,6 +48,11 @@ const cmsRoleApprover = {
   type: "cmsroleapprover",
 };
 
+const validationError = (field) => ({
+  name: "ValidationError",
+  details: [{ message: expect.stringMatching(field), type: "any.required" }],
+});
+
 console.log = jest.fn();
 
 describe("Construction of role approver emails", () => {
@@ -96,12 +101,7 @@ describe("Validating input from the UI", () => {
     };
     delete data[field];
 
-    expect(validateInput(data)).toMatchObject({
-      name: "ValidationError",
-      details: [
-        { message: expect.stringMatching(field), type: "any.required" },
-      ],
-    });
+    expect(validateInput(data)).toMatchObject(validationError(field));
   });
 
   it.each`
@@ -119,12 +119,7 @@ describe("Validating input from the UI", () => {
     };
     delete data[field];
 
-    expect(validateInput(data)).toMatchObject({
-      name: "ValidationError",
-      details: [
-        { message: expect.stringMatching(field), type: "any.required" },
-      ],
-    });
+    expect(validateInput(data)).toMatchObject(validationError(field));
   });
 
   it.todo("validation for attributes per user type");
@@ -145,12 +140,7 @@ describe("Validating input from the UI", () => {
         };
         delete data[field];
 
-        expect(validateInput(data)).toMatchObject({
-          name: "ValidationError",
-          details: [
-            { message: expect.stringMatching(field), type: "any.required" },
-          ],
-        });
+        expect(validateInput(data)).toMatchObject(validationError(field));
       }
     );
 
