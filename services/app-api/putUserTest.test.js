@@ -7,10 +7,14 @@ import {
   validateInput,
 } from "./putUser";
 
-const stateSubmitter = {
+const baseUser = {
   firstName: "John",
   lastName: "Doe",
   doneBy: "systemadmintest@cms.hhs.local",
+};
+
+const stateSubmitter = {
+  ...baseUser,
   attributes: [
     {
       stateCode: "MI",
@@ -22,9 +26,7 @@ const stateSubmitter = {
 };
 
 const stateAdmin = {
-  firstName: "John",
-  lastName: "Doe",
-  doneBy: "systemadmintest@cms.hhs.local",
+  ...baseUser,
   attributes: [
     {
       stateCode: "VA",
@@ -36,9 +38,7 @@ const stateAdmin = {
 };
 
 const cmsRoleApprover = {
-  firstName: "John",
-  lastName: "Doe",
-  doneBy: "systemadmintest@cms.hhs.local",
+  ...baseUser,
   attributes: [
     {
       status: "active",
@@ -48,9 +48,9 @@ const cmsRoleApprover = {
   type: "cmsroleapprover",
 };
 
-const validationError = (field) => ({
+const validationError = (field, anyType = "required") => ({
   name: "ValidationError",
-  details: [{ message: expect.stringMatching(field), type: "any.required" }],
+  details: [{ message: expect.stringMatching(field), type: `any.${anyType}` }],
 });
 
 console.log = jest.fn();
@@ -82,10 +82,7 @@ describe("Validating input from the UI", () => {
         type: "systemadmin",
         doneBy: "otherperson@example.local",
       })
-    ).toMatchObject({
-      name: "ValidationError",
-      details: [{ message: expect.stringMatching("type"), type: "any.only" }],
-    });
+    ).toMatchObject(validationError("type", "only"));
   });
 
   it.each`
@@ -167,12 +164,7 @@ describe("Validating input from the UI", () => {
           isPutUser: false,
           group: -1,
         })
-      ).toMatchObject({
-        name: "ValidationError",
-        details: [
-          { message: expect.stringMatching("group"), type: "any.only" },
-        ],
-      });
+      ).toMatchObject(validationError("group", "only"));
     });
 
     it("requires division to be a valid division ID", () => {
@@ -184,12 +176,7 @@ describe("Validating input from the UI", () => {
           isPutUser: false,
           division: -1,
         })
-      ).toMatchObject({
-        name: "ValidationError",
-        details: [
-          { message: expect.stringMatching("division"), type: "any.only" },
-        ],
-      });
+      ).toMatchObject(validationError("division", "only"));
     });
 
     it.each([
@@ -210,22 +197,16 @@ describe("Validating input from the UI", () => {
           group: 0,
         };
 
-        expect(validateInput(data)).toMatchObject({
-          name: "ValidationError",
-          details: [
-            { message: expect.stringMatching("group"), type: "any.unknown" },
-          ],
-        });
+        expect(validateInput(data)).toMatchObject(
+          validationError("group", "unknown")
+        );
 
         delete data.group;
         data.division = 21;
 
-        expect(validateInput(data)).toMatchObject({
-          name: "ValidationError",
-          details: [
-            { message: expect.stringMatching("division"), type: "any.unknown" },
-          ],
-        });
+        expect(validateInput(data)).toMatchObject(
+          validationError("division", "unknown")
+        );
       }
     );
   });
