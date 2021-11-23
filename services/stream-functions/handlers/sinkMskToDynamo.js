@@ -4,6 +4,8 @@ const { ChangeRequest } = require("cmscommonlib");
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
 
+const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
+
 const SEATOOL_PLAN_TYPE = {
   CHIP_SPA: "124",
   SPA: "125",
@@ -58,75 +60,36 @@ function myHandler(event) {
     return null;
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
+  const table = event.topic.replace(topicPrefix, "");
   const value = JSON.parse(event.value);
-  console.log(`Event value: ${JSON.stringify(value, null, 2)}`);
+  console.log(`Topic: ${event.topic} Table: ${table} Event value: ${JSON.stringify(value, null, 2)}`);
 
   const SEAToolId = value.payload.ID_Number;
   if (!SEAToolId) return;
 
-  let packageStatusID = "unknown";
-  if (value.payload.SPW_Status_ID) packageStatusID = value.payload.SPW_Status_ID.toString();
+  const pk = value.payload.ID_Number;
+  if (!pk || !value.payload.replica_id) return;
 
-  if (!value?.payload?.Plan_Type)  return;
-  const planTypeList = ["122", "123", "124", "125"];
-  const planType = planTypeList.find( (pt) => (pt === value.payload.Plan_Type.toString()));
-  if (!planType) return;
+  // use the repllica id as a version number/event tracker... highest id is most recent
+  const sk = `SEATool#${table}#${value.payload.replica_id}`
 
-  let stateCode;
-  if (value.payload.State_Code) {
-    stateCode = value.payload.State_Code.toString();
-  } else stateCode = SEAToolId.substring(0,2);
-
-  let oneMACStatus = `SEATool Status: ${packageStatusID}`;
-  if (SEATOOL_TO_ONEMAC_STATUS[packageStatusID]) 
-    oneMACStatus = SEATOOL_TO_ONEMAC_STATUS[packageStatusID];
-
-  const idInfo = ChangeRequest.decodeId(SEAToolId, planType);
-
-  const SEAToolData = {
-    'packageStatus': packageStatusID,
-    'currentStatus': oneMACStatus,
-    'stateCode': stateCode,
-    'planType': planType,
-    'packageType': SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[planType],
-    'packageId': idInfo.packageId,
-    'componentId': idInfo.componentId,
-    'componentType': idInfo.componentType,
-    'clockEndTimestamp': value.payload.Alert_90_Days_Date,
-    'expirationTimestamp': value.payload.End_Date,
+  // put the SEATool Entry - overwrites if already exists
+  const updateSEAToolParams = {
+    TableName: process.env.oneMacTableName,
+    Item: {pk,sk,...value.payload},
   };
-  if (SEAToolId != undefined) {
 
-    // update the SEATool Entry
-    const updateSEAToolParams = {
-      TableName: process.env.oneMacTableName,
-      Key: {
-        pk: SEAToolId,
-        sk: "SEATool",
-      },
-      UpdateExpression: "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
-      ExpressionAttributeValues: {
-        ":newChange": [SEAToolData],
-        ":emptyList": [],
-      },
-      ReturnValues: "UPDATED_NEW",
-    };
-
-    ddb.update(updateSEAToolParams, function(err, data) {
-      if (err) {
-        console.log("Error", err);
-      } else {
-        console.log("Update Success, data is: ", data);
-        console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-
-        // if the SEATool entry is new, do we need to add Paper IDs??
-        if (data.Attributes.changeHistory.length === 1) {
-          console.log("that was a new package from SEATool");
-        } else {
-          console.log("We have seen that package before!");
-        }
+  ddb.put(updateSEAToolParams, function(err) {
+    if (err) {
+      console.log("Error", err);
+    } else if (table === "State_Plan") {
+      const SEAToolData = {
+        currentStatus: SEATOOL_TO_ONEMAC_STATUS[value.payload.SPW_Status_ID],
+        clockEndTimestamp: value.payload.Alert_90_Days_Date,
+        componentType: SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[value.payload.Plan_Type],
+        componentId: pk,
+        expirationTimestamp: value.payload.End_Date,
       }
-    });
 
     // update OneMAC Component
     const updatePk = SEAToolData.componentId;
@@ -167,8 +130,8 @@ function myHandler(event) {
         console.log("Update Success!  Returned data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
     }});
-
-  }
+    }
+  });
 }
 
 exports.handler = myHandler;
