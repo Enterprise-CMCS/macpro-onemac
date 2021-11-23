@@ -108,7 +108,7 @@ functions:
         - KafkaConnectWorkerRole
         - Arn
       sessionName: ${self:custom.stage}-sink-role
-      topics: lmdc.seatool.submission.cdc.sea-dbo-State_Plan
+      topics: lmdc.seatool.submission.cdc.sea-dbo-State_Plann,lmdc.seatool.submission.cdc.sea-dbo-RAI
       sinkPrefix: spa-${self:custom.stage}-
     maximumRetryAttempts: 2
     timeout: 120
