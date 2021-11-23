@@ -10,6 +10,7 @@ import {
 const baseUser = {
   firstName: "John",
   lastName: "Doe",
+  fullName: "John Doe",
   doneBy: "systemadmintest@cms.hhs.local",
 };
 
@@ -48,6 +49,14 @@ const cmsRoleApprover = {
   type: "cmsroleapprover",
 };
 
+const anotherUser = {
+  userEmail: "person@example.local",
+  doneBy: "otherperson@example.local",
+  isPutUser: true,
+  firstName: "Iama",
+  lastName: "Person",
+};
+
 const validationError = (field, anyType = "required") => ({
   name: "ValidationError",
   details: [{ message: expect.stringMatching(field), type: `any.${anyType}` }],
@@ -58,7 +67,7 @@ console.log = jest.fn();
 describe("Construction of role approver emails", () => {
   it("Should show the full name in the email message for CMSRoleApprover", async () => {
     const result = constructRoleAdminEmails([], cmsRoleApprover).email.HTML;
-    expect(result).toContain("John Doe");
+    expect(result).toContain(baseUser.fullName);
     expect(result).toContain("CMS Role Approver");
   });
 
@@ -69,7 +78,7 @@ describe("Construction of role approver emails", () => {
 
   it("Should show the full name in the email message for State System Admin", async () => {
     const result = constructRoleAdminEmails([], stateAdmin).email.HTML;
-    expect(result).toContain("John Doe");
+    expect(result).toContain(baseUser.fullName);
     expect(result).toContain("State System Admin");
   });
 });
@@ -78,9 +87,8 @@ describe("Validating input from the UI", () => {
   it("fails when you attempt to modify a system admin user", () => {
     expect(
       validateInput({
-        userEmail: "person@example.local",
+        ...anotherUser,
         type: "systemadmin",
-        doneBy: "otherperson@example.local",
       })
     ).toMatchObject(validationError("type", "only"));
   });
@@ -92,9 +100,8 @@ describe("Validating input from the UI", () => {
     ${"doneBy"}    | ${"done by user"}
   `("fails if $label is not provided", ({ field }) => {
     const data = {
-      userEmail: "person@example.local",
+      ...anotherUser,
       type: "statesubmitter",
-      doneBy: "otherperson@example.local",
     };
     delete data[field];
 
@@ -107,12 +114,8 @@ describe("Validating input from the UI", () => {
     ${"lastName"}  | ${"last name"}
   `("fails if $label is not provided when `isPutUser` is true", ({ field }) => {
     const data = {
-      userEmail: "person@example.local",
+      ...anotherUser,
       type: "statesubmitter",
-      doneBy: "otherperson@example.local",
-      isPutUser: true,
-      firstName: "Iama",
-      lastName: "Person",
     };
     delete data[field];
 
@@ -126,12 +129,8 @@ describe("Validating input from the UI", () => {
       "requires a %s for CMS Reviewer users at user creation time",
       (field) => {
         const data = {
-          userEmail: "person@example.local",
+          ...anotherUser,
           type: "cmsreviewer",
-          doneBy: "otherperson@example.local",
-          isPutUser: true,
-          firstName: "Iama",
-          lastName: "Person",
           group: 0,
           division: 21,
         };
@@ -143,9 +142,8 @@ describe("Validating input from the UI", () => {
 
     it("allows, but does not require, updates to group and/or division when the user already exists", () => {
       const data = {
-        userEmail: "person@example.local",
+        ...anotherUser,
         type: "cmsreviewer",
-        doneBy: "otherperson@example.local",
         isPutUser: false,
       };
 
@@ -158,9 +156,8 @@ describe("Validating input from the UI", () => {
     it("requires group to be a valid group ID", () => {
       expect(
         validateInput({
-          userEmail: "person@example.local",
+          ...anotherUser,
           type: "cmsreviewer",
-          doneBy: "otherperson@example.local",
           isPutUser: false,
           group: -1,
         })
@@ -170,9 +167,8 @@ describe("Validating input from the UI", () => {
     it("requires division to be a valid division ID", () => {
       expect(
         validateInput({
-          userEmail: "person@example.local",
+          ...anotherUser,
           type: "cmsreviewer",
-          doneBy: "otherperson@example.local",
           isPutUser: false,
           division: -1,
         })
@@ -188,12 +184,8 @@ describe("Validating input from the UI", () => {
       "fails if group or division is provided for user type %s at user creation time",
       (type) => {
         const data = {
-          userEmail: "person@example.local",
+          ...anotherUser,
           type,
-          doneBy: "otherperson@example.local",
-          isPutUser: true,
-          firstName: "Iama",
-          lastName: "Person",
           group: 0,
         };
 
