@@ -1,8 +1,7 @@
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
-import sendEmail from "./libs/email-lib";
 import Joi from "joi";
 import { isEmpty, isObject } from "lodash";
+import { createMachine } from "xstate";
+
 import {
   APPROVING_USER_TYPE,
   RESPONSE_CODE,
@@ -12,10 +11,28 @@ import {
   roleLabels,
 } from "cmscommonlib";
 import groupData from "cmscommonlib/groupDivision.json";
+
+import handler from "./libs/handler-lib";
+import dynamoDb from "./libs/dynamodb-lib";
+import sendEmail from "./libs/email-lib";
 import { ACCESS_CONFIRMATION_EMAILS } from "./libs/email-template-lib";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";
+import getUser from "./utils/getUser";
 
 const EMAIL_SCHEMA = { tlds: { allow: false } };
+
+const statusValidation = Joi.string().valid(
+  USER_STATUS.PENDING,
+  USER_STATUS.DENIED,
+  USER_STATUS.REVOKED,
+  USER_STATUS.ACTIVE
+);
+
+const nameValidation = Joi.any().when("isPutUser", {
+  is: true,
+  then: Joi.string().required(),
+  otherwise: Joi.string().optional(),
+});
 
 export const validateInput = (input) => {
   const userSchema = Joi.object().keys({
@@ -33,41 +50,19 @@ export const validateInput = (input) => {
             stateCode: Joi.string()
               .valid(...territoryCodeList)
               .required(),
-            status: Joi.string()
-              .valid(
-                USER_STATUS.PENDING,
-                USER_STATUS.DENIED,
-                USER_STATUS.REVOKED,
-                USER_STATUS.ACTIVE
-              )
-              .required(),
+            status: statusValidation.required(),
           })
         ),
         otherwise: Joi.array().items(
           Joi.object({
-            status: Joi.string()
-              .valid(
-                USER_STATUS.PENDING,
-                USER_STATUS.DENIED,
-                USER_STATUS.REVOKED,
-                USER_STATUS.ACTIVE
-              )
-              .required(),
+            status: statusValidation.required(),
             stateCode: Joi.string().optional(),
           })
         ),
       }),
     isPutUser: Joi.boolean().optional(),
-    firstName: Joi.any().when("isPutUser", {
-      is: true,
-      then: Joi.string().required(),
-      otherwise: Joi.string().optional(),
-    }),
-    lastName: Joi.any().when("isPutUser", {
-      is: true,
-      then: Joi.string().required(),
-      otherwise: Joi.string().optional(),
-    }),
+    firstName: nameValidation,
+    lastName: nameValidation,
     type: Joi.valid(
       ...Object.values(USER_TYPE).filter((v) => v !== USER_TYPE.SYSTEM_ADMIN)
     ).required(),
@@ -104,37 +99,6 @@ export const validateInput = (input) => {
   return result.error;
 };
 
-const getUser = async (userEmail) => {
-  const params = {
-    TableName: process.env.userTableName, // Todo : check for existance
-    Key: {
-      id: userEmail.toLowerCase(),
-    },
-  };
-  let result;
-  try {
-    result = await dynamoDb.get(params);
-  } catch (dbError) {
-    console.log(`Error happened while reading from DB: ${dbError}`);
-    throw new Error(RESPONSE_CODE.SYSTEM_ERROR);
-  }
-
-  if (!result.Item) {
-    return {};
-  }
-  return result.Item;
-};
-
-// Create the user object for new users //
-const createUserObject = (input) => {
-  const user = {
-    id: input.userEmail.toLowerCase(),
-    type: input.type,
-    attributes: [],
-  };
-  return user;
-};
-
 const retrieveUsers = async (input) => {
   // retrieve user and doneByUser from DynamoDb //
   let [user, doneByUser] = await Promise.all([
@@ -151,7 +115,12 @@ const retrieveUsers = async (input) => {
         );
         throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
       }
-      user = createUserObject(input);
+
+      user = {
+        id: input.userEmail.toLowerCase(),
+        type: input.type,
+        attributes: [],
+      };
     } else {
       console.log(`Warning: The user record does not exist with the id ${input.userEmail} in the db.
             So user status change cannot be performed`);
@@ -188,6 +157,22 @@ const isLatestAttributeActive = (attribs) => {
   return latestAttribute.status === USER_STATUS.ACTIVE;
 };
 
+const isUserActive = ({ attributes, type }, stateCode) => {
+  switch (type) {
+    case USER_TYPE.STATE_SUBMITTER:
+    case USER_TYPE.STATE_SYSTEM_ADMIN: {
+      attributes = attributes?.find(
+        (attr) => attr.stateCode === stateCode
+      )?.history;
+      break;
+    }
+    default:
+      break;
+  }
+
+  return attributes && isLatestAttributeActive(attributes);
+};
+
 // Ensure the DoneBy user has permission to execute the requested actions //
 export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
   switch (doneByUser.type) {
@@ -195,6 +180,12 @@ export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
       // System Admins can approve anyone
       return;
     case APPROVING_USER_TYPE[userType]:
+      if (!isUserActive(doneByUser, userState)) {
+        console.log(
+          `Warning: The doneBy user ${doneByUser.id} must be an active ${doneByUser.type} for the state ${userState}`
+        );
+        throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+      }
       break;
     default: {
       console.log(
@@ -203,32 +194,10 @@ export const ensureDonebyHasPrivilege = (doneByUser, userType, userState) => {
       throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
     }
   }
-  if (userType === USER_TYPE.STATE_SUBMITTER) {
-    const index = doneByUser.attributes.findIndex(
-      (attr) => attr.stateCode === userState
-    );
-    if (
-      index === -1 ||
-      !isLatestAttributeActive(doneByUser.attributes[index].history)
-    ) {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active statesystemadmin for the state ${userState}`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-  }
-  if (userType === USER_TYPE.STATE_SYSTEM_ADMIN) {
-    if (!isLatestAttributeActive(doneByUser.attributes)) {
-      console.log(
-        `Warning: The doneBy user ${doneByUser.id} must be an active cmsroleapprover`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-  }
 };
 
 // Check if the there is type mismatch between the request and current type of the user //
-const checkTypeMismatch = (inputType, userType) => {
+export const checkTypeMismatch = (inputType, userType) => {
   if (inputType && userType && inputType !== userType) {
     console.log(
       `Warning: Type mismatch. Current user type is ${userType} and requested type is ${inputType}`
@@ -239,42 +208,67 @@ const checkTypeMismatch = (inputType, userType) => {
   return true;
 };
 
-// transition chart of allowed next states based on current state
-const ALLOWED_NEXT_STATES = {
-  [USER_STATUS.PENDING]: [
-    USER_STATUS.ACTIVE,
-    USER_STATUS.DENIED,
-    USER_STATUS.REVOKED,
-  ],
-  [USER_STATUS.ACTIVE]: [USER_STATUS.REVOKED],
-  [USER_STATUS.DENIED]: [USER_STATUS.PENDING, USER_STATUS.ACTIVE],
-  [USER_STATUS.REVOKED]: [USER_STATUS.PENDING, USER_STATUS.ACTIVE],
-};
+const createStatusMachine = (currentState) =>
+  createMachine({
+    id: "userStatus",
+    initial: currentState,
+    states: {
+      unregistered: {
+        on: {
+          [USER_STATUS.PENDING]: USER_STATUS.PENDING,
+        },
+      },
+      [USER_STATUS.PENDING]: {
+        on: {
+          [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
+          [USER_STATUS.DENIED]: USER_STATUS.DENIED,
+          [USER_STATUS.REVOKED]: USER_STATUS.REVOKED,
+        },
+      },
+      [USER_STATUS.ACTIVE]: {
+        on: {
+          [USER_STATUS.REVOKED]: USER_STATUS.REVOKED,
+        },
+      },
+      [USER_STATUS.DENIED]: {
+        on: {
+          [USER_STATUS.PENDING]: USER_STATUS.PENDING,
+          [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
+        },
+      },
+      [USER_STATUS.REVOKED]: {
+        on: {
+          [USER_STATUS.PENDING]: USER_STATUS.PENDING,
+          [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
+        },
+      },
+    },
+  });
 
 // Ensure the status changes are legal //
-const ensureLegalStatusChange = (userAttribs = [], inputAttrib, isPutUser) => {
-  if (userAttribs.length === 0) {
-    if (inputAttrib.status !== USER_STATUS.PENDING) {
-      console.log(`Warning: Illegal status change request ${inputAttrib.status}, 
-                Only legally allowed status for the first attribute is pending`);
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-    if (!isPutUser) {
-      console.log(
-        `Warning: User attributes are request for status change request`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
-  } else {
-    // if existing attributes present, check if the latest entry is allowed to transition into the requested one
-    const currentStatus = getLatestAttribute(userAttribs).status;
+export const ensureLegalStatusChange = (
+  userAttribs = [],
+  inputAttrib,
+  isPutUser
+) => {
+  if (!isPutUser && userAttribs.length === 0) {
+    console.log(
+      `Warning: User attributes are request for status change request`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+  }
 
-    if (!ALLOWED_NEXT_STATES[currentStatus].includes(inputAttrib.status)) {
-      console.log(
-        `Warning: Illegal status change request from ${currentStatus}, to ${inputAttrib.status}`
-      );
-      throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-    }
+  const currentState = createStatusMachine(
+    userAttribs.length === 0
+      ? "unregistered"
+      : getLatestAttribute(userAttribs).status
+  ).initialState;
+
+  if (!currentState.can(inputAttrib.status)) {
+    console.log(
+      `Warning: Illegal status change request from ${currentState.value}, to ${inputAttrib.status}`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
   }
 };
 
@@ -284,20 +278,8 @@ const generateAttribute = (item, doneBy) => {
   return { date: currentTimestamp, status: item.status, doneBy: doneBy };
 };
 
-// ensure if the item is pending
-const ensurePendingStatus = (attrib) => {
-  // Todo: better logging by providing state //
-  if (attrib.status !== USER_STATUS.PENDING) {
-    console.log(`Warning: The status is: ${attrib.status}, 
-            must be a pending for a new user or first attribute for the state`);
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-  console.log("Pending status ensured");
-  return true;
-};
-
 // populate user atributes after ensuring data validity //
-const populateUserAttributes = (
+export const populateUserAttributes = (
   input,
   user = { attributes: [] },
   doneByUser = {}
@@ -308,44 +290,44 @@ const populateUserAttributes = (
   console.log("doneBy is: ", doneByUser);
   console.log("selfInflicted is: ", isSelfInflicted);
 
-  if (
-    input.type === USER_TYPE.STATE_SUBMITTER ||
-    input.type === USER_TYPE.STATE_SYSTEM_ADMIN
-  ) {
-    input.attributes.forEach((item) => {
-      const index = user.attributes.findIndex(
-        (attr) => attr.stateCode === item.stateCode
-      );
-      // Ensure the DoneBy user has permission to execute the requested actions //
-      if (!input.isPutUser && !isSelfInflicted)
-        ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
-      // Check if the there is type mismatch between the request and current type of the user //
-      checkTypeMismatch(input.type, user.type);
-      if (index !== -1) {
-        const userAttribs = user.attributes[index].history;
-        // if not allowed status change throw //
-        ensureLegalStatusChange(userAttribs, item, input.isPutUser);
-        // isOkToChange(item, userAttribs, doneByUser) //
-        userAttribs.push(generateAttribute(item, input.doneBy));
-      } else {
-        // ensure if the item is pending //
-        ensurePendingStatus(item);
+  switch (input.type) {
+    case USER_TYPE.STATE_SUBMITTER:
+    case USER_TYPE.STATE_SYSTEM_ADMIN: {
+      input.attributes.forEach((item) => {
+        // Ensure the DoneBy user has permission to execute the requested actions //
+        if (!input.isPutUser && !isSelfInflicted)
+          ensureDonebyHasPrivilege(doneByUser, input.type, item.stateCode);
+        // Check if the there is type mismatch between the request and current type of the user //
+        checkTypeMismatch(input.type, user.type);
 
-        user.attributes.push({
-          stateCode: item.stateCode,
-          history: [generateAttribute(item, input.doneBy)],
-        });
-      }
-    });
-  } else {
-    // CMSRoleApprover & systemadmin //
-    input.attributes.forEach((item) => {
+        const stateAttr = user.attributes.find(
+          (attr) => attr.stateCode === item.stateCode
+        );
+        // if not allowed status change throw //
+        ensureLegalStatusChange(stateAttr?.history, item, input.isPutUser);
+
+        if (stateAttr) {
+          stateAttr.history.push(generateAttribute(item, input.doneBy));
+        } else {
+          user.attributes.push({
+            stateCode: item.stateCode,
+            history: [generateAttribute(item, input.doneBy)],
+          });
+        }
+      });
+      break;
+    }
+    default: {
       if (!input.isPutUser && !isSelfInflicted)
         ensureDonebyHasPrivilege(doneByUser, input.type);
-      ensureLegalStatusChange(user.attributes, item, input.isPutUser);
-      user.attributes.push(generateAttribute(item, input.doneBy));
-    });
+
+      input.attributes.forEach((item) => {
+        ensureLegalStatusChange(user.attributes, item, input.isPutUser);
+        user.attributes.push(generateAttribute(item, input.doneBy));
+      });
+    }
   }
+
   console.log(
     "Successfully ensured Privileges, status change rules and populated user attributes"
   );

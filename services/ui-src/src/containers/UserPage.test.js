@@ -1,4 +1,5 @@
 import React from "react";
+import { act } from "react-dom/test-utils";
 import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
@@ -325,5 +326,48 @@ describe("access section", () => {
     fireEvent.click(screen.getByLabelText(/revoke.*access.*Utah/i));
     expect(selfRevoke).toBeCalledTimes(1);
     expect(selfRevoke).toBeCalledWith("UT");
+  });
+});
+
+describe("requesting new states", () => {
+  let history;
+  beforeEach(() => {
+    history = createMemoryHistory();
+    history.push("/profile");
+
+    window.HTMLElement.prototype.scrollIntoView = jest.fn();
+  });
+
+  it("allows users to request a single new state", async () => {
+    UserDataApi.updateUser = jest.fn(() => "UR000");
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+          setUserInfo: jest.fn(),
+        }}
+      >
+        <Router history={history}>
+          <UserPage />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: /add state/i }));
+      await screen.findByRole("list");
+      fireEvent.click(screen.getByRole("option", { name: /alaska/i }));
+      fireEvent.click(screen.getByRole("button", { name: /submit/i }));
+    });
+
+    expect(UserDataApi.updateUser).toBeCalledTimes(1);
+    expect(UserDataApi.updateUser).toBeCalledWith(
+      expect.objectContaining({
+        userEmail: initialAuthState.userProfile.email,
+        doneBy: initialAuthState.userProfile.email,
+        attributes: [{ stateCode: "AK", status: "pending" }],
+      })
+    );
   });
 });
