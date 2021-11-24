@@ -248,34 +248,40 @@ const PackageList = () => {
       {
         Header: "Type",
         accessor: getType,
+        disableGlobalFilter: true,
         id: "componentType",
         Cell: renderType,
       },
       {
         Header: "State",
         accessor: getState,
+        disableGlobalFilter: true,
         id: "territory",
       },
       {
         Header: "90th Day",
         accessor: "clockEndTimestamp",
+        disableGlobalFilter: true,
         id: "ninetiethDay",
         Cell: renderFilteredDate("currentStatus"),
       },
       {
         Header: "Expiration Date",
         accessor: "expirationTimestamp",
+        disableGlobalFilter: true,
         id: "expirationTimestamp",
         Cell: renderFilteredDate("componentType"),
       },
       {
         Header: "Status",
         accessor: "currentStatus",
+        disableGlobalFilter: true,
         id: "packageStatus",
       },
       {
         Header: "Date Submitted",
         accessor: "submissionTimestamp",
+        disableGlobalFilter: true,
         Cell: renderDate,
       },
       {
@@ -290,6 +296,7 @@ const PackageList = () => {
       const actionsColumn = {
         Header: "Actions",
         accessor: "actions",
+        disableGlobalFilter: true,
         disableSortBy: true,
         id: "packageActions",
         Cell: renderActions,
@@ -374,19 +381,23 @@ const PackageList = () => {
     return rightSideContent;
   }
   function renderSubmissionList() {
-    if (userStatus === USER_STATUS.PENDING) {
-      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
-    }
+    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+      if (userStatus === USER_STATUS.PENDING) {
+        return (
+          <EmptyList message={pendingMessage[userProfile.userData.type]} />
+        );
+      }
 
-    const userStatusNotActive =
-      userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
-    if (userStatusNotActive) {
-      return (
-        <EmptyList
-          showProfileLink="true"
-          message={deniedOrRevokedMessage[userProfile.userData.type]}
-        />
-      );
+      const userStatusNotActive =
+        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+      if (userStatusNotActive) {
+        return (
+          <EmptyList
+            showProfileLink="true"
+            message={deniedOrRevokedMessage[userProfile.userData.type]}
+          />
+        );
+      }
     }
 
     const tableClassName = classNames({
@@ -402,6 +413,7 @@ const PackageList = () => {
             columns={columns}
             data={packageList}
             initialState={initialTableState}
+            withSearchBar
           />
         ) : (
           <EmptyList message="You have no submissions yet." />

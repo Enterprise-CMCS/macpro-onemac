@@ -319,7 +319,7 @@ export function Header() {
       if (userObj.canAccessDashboard) {
         linksToDisplay.push(dashboardLink);
       }
-      if (isLoggedInAsDeveloper) {
+      if (userObj.canAccessDashboard && isLoggedInAsDeveloper) {
         linksToDisplay.push(packageListLink);
       }
       if (userObj.canAccessUserManagement) {

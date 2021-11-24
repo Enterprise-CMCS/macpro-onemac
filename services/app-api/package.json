@@ -19,7 +19,8 @@
     "serverless-dotenv-plugin": "^3.0.0",
     "serverless-iam-helper": "file:../../plugins/serverless-iam-helper",
     "serverless-offline": "^6.9.0",
-    "serverless-plugin-warmup": "^4.9.0"
+    "serverless-plugin-warmup": "^4.9.0",
+    "xstate": "^4.26.0"
   },
   "dependencies": {
     "cmscommonlib": "file:../common",

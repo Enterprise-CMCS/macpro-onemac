@@ -1,6 +1,9 @@
 import {
+  checkTypeMismatch,
   constructRoleAdminEmails,
   ensureDonebyHasPrivilege,
+  ensureLegalStatusChange,
+  populateUserAttributes,
   validateInput,
 } from "./putUser";
 
@@ -265,6 +268,25 @@ describe("doneBy user authorization check", () => {
   );
 
   describe.each`
+    doneByType            | doneByProps                                                               | userTypes
+    ${"cmsroleapprover"}  | ${{ attributes: [{ status: "denied" }] }}                                 | ${["statesystemadmin", "cmsreviewer"]}
+    ${"statesystemadmin"} | ${{ attributes: [{ stateCode: "OK", history: [{ status: "denied" }] }] }} | ${["statesubmitter"]}
+  `(
+    "forbids inactive $doneByType from modifying user access",
+    ({ doneByType, doneByProps, userTypes }) => {
+      it.each(userTypes)("can modify %s accesses", (type) => {
+        expect(() =>
+          ensureDonebyHasPrivilege(
+            { type: doneByType, ...doneByProps },
+            type,
+            "OK"
+          )
+        ).toThrow("VA000");
+      });
+    }
+  );
+
+  describe.each`
     doneByType            | doneByProps       | userTypes
     ${"cmsroleapprover"}  | ${cmsUserProps}   | ${["statesubmitter", "helpdesk"]}
     ${"statesystemadmin"} | ${stateUserProps} | ${["cmsroleapprover", "cmsreviewer", "helpdesk"]}
@@ -300,6 +322,165 @@ describe("doneBy user authorization check", () => {
           )
         ).toThrow("VA000");
       });
+    }
+  );
+});
+
+describe("user type cannot be changed", () => {
+  it("allows the same type to be passed in", () => {
+    expect(() =>
+      checkTypeMismatch("statesubmitter", "statesubmitter")
+    ).not.toThrow();
+  });
+
+  it("blocks a different type from being populated from what is already there", () => {
+    expect(() => checkTypeMismatch("statesubmitter", "helpdesk")).toThrow(
+      "VA000"
+    );
+  });
+});
+
+describe("ensure status changes are performed in the appropriate order", () => {
+  it("allows new user to be created with pending status", () => {
+    expect(() =>
+      ensureLegalStatusChange(undefined, { status: "pending" }, true)
+    ).not.toThrow();
+  });
+
+  it.each(["active", "denied", "revoked"])(
+    "forbids new user from being created with %s status",
+    (status) => {
+      expect(() =>
+        ensureLegalStatusChange(undefined, { status }, true)
+      ).toThrow("VA000");
+    }
+  );
+
+  it("forbids status changes without relevant attributes provided", () => {
+    expect(() =>
+      ensureLegalStatusChange(undefined, { status: "active" }, false)
+    ).toThrow("VA000");
+  });
+
+  it.each`
+    initialStatus | nextStatus
+    ${"pending"}  | ${"active"}
+    ${"pending"}  | ${"denied"}
+    ${"active"}   | ${"revoked"}
+    ${"denied"}   | ${"pending"}
+    ${"denied"}   | ${"active"}
+    ${"revoked"}  | ${"pending"}
+    ${"revoked"}  | ${"active"}
+  `(
+    "allows user in $initialStatus status to transition into $nextStatus",
+    ({ initialStatus, nextStatus }) => {
+      expect(() =>
+        ensureLegalStatusChange(
+          [{ status: initialStatus }],
+          { status: nextStatus },
+          true
+        )
+      ).not.toThrow();
+    }
+  );
+
+  it.each`
+    initialStatus | nextStatus
+    ${"active"}   | ${"pending"}
+    ${"active"}   | ${"denied"}
+    ${"denied"}   | ${"revoked"}
+    ${"revoked"}  | ${"denied"}
+  `(
+    "forbids user in $initialStatus status from transitioning into $nextStatus",
+    ({ initialStatus, nextStatus }) => {
+      expect(() =>
+        ensureLegalStatusChange(
+          [{ status: initialStatus }],
+          { status: nextStatus },
+          true
+        )
+      ).toThrow("VA000");
+    }
+  );
+});
+
+describe("updates to user data", () => {
+  it("adds a new state entry to a user without that state in their attributes", () => {
+    const doneBy = "me@test.example";
+    const prevAttr = { stateCode: "AK", history: [{ status: "active" }] };
+    expect(
+      populateUserAttributes(
+        {
+          doneBy,
+          type: "statesubmitter",
+          attributes: [{ stateCode: "MN", status: "pending" }],
+          isPutUser: true,
+        },
+        { attributes: [prevAttr] }
+      )
+    ).toEqual({
+      attributes: [
+        prevAttr,
+        {
+          history: [{ date: expect.any(Number), doneBy, status: "pending" }],
+          stateCode: "MN",
+        },
+      ],
+    });
+  });
+
+  it("appends new status onto existing state entry", () => {
+    const doneBy = "me@test.example";
+    expect(
+      populateUserAttributes(
+        {
+          doneBy,
+          type: "statesubmitter",
+          attributes: [{ stateCode: "MN", status: "active" }],
+        },
+        { attributes: [{ stateCode: "MN", history: [{ status: "pending" }] }] }
+      )
+    ).toEqual({
+      attributes: [
+        {
+          history: [
+            { status: "pending" },
+            { date: expect.any(Number), doneBy, status: "active" },
+          ],
+          stateCode: "MN",
+        },
+      ],
+    });
+  });
+
+  it("always appends entries to CMS users", () => {
+    const doneBy = "me@test.example";
+    expect(
+      populateUserAttributes(
+        {
+          doneBy,
+          type: "cmsroleapprover",
+          attributes: [{ status: "active" }],
+        },
+        { attributes: [{ status: "pending" }] }
+      )
+    ).toEqual({
+      attributes: [
+        { status: "pending" },
+        { date: expect.any(Number), doneBy, status: "active" },
+      ],
+    });
+  });
+
+  it.each(["firstName", "lastName", "group", "division"])(
+    "transfers new values of key %s directly from input into database",
+    (attrName) => {
+      expect(
+        populateUserAttributes(
+          { attributes: [], [attrName]: "new value" },
+          { type: "cmsreviewer" }
+        )
+      ).toEqual({ type: "cmsreviewer", [attrName]: "new value" });
     }
   );
 });
