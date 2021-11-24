@@ -78,7 +78,6 @@ const UserManagement = () => {
   const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { userProfile, userStatus } = useAppContext();
-  const [includeStateCode, setIncludeStateCode] = useState(true);
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
@@ -86,11 +85,16 @@ const UserManagement = () => {
 
   const showUserRole =
     userProfile.userData.type !== USER_TYPE.STATE_SYSTEM_ADMIN;
+  const includeStateCode = useMemo(
+    () =>
+      [
+        USER_TYPE.CMS_ROLE_APPROVER,
+        USER_TYPE.HELPDESK,
+        USER_TYPE.SYSTEM_ADMIN,
+      ].includes(userProfile?.userData?.type),
+    [userProfile?.userData?.type]
+  );
   const updateList = useCallback(() => {
-    setIncludeStateCode(
-      userProfile.userData.type === USER_TYPE.CMS_ROLE_APPROVER ||
-        userProfile.userData.type === USER_TYPE.HELPDESK
-    );
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         if (typeof ul === "string") {
@@ -104,7 +108,7 @@ const UserManagement = () => {
         console.log("Error while fetching user's list.", error);
         setAlertCode(RESPONSE_CODE[error.message]);
       });
-  }, [userProfile.email, userProfile.userData, userStatus]);
+  }, [userProfile.email, userStatus]);
 
   // Load the data from the backend.
   useEffect(() => {

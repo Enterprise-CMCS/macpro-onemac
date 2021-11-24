@@ -3,8 +3,27 @@
   "version": "1.0.0",
   "description": "Common Access Control Utils for CMS",
   "main": "index.js",
-  "scripts": {},
+  "scripts": {
+    "test": "NODE_OPTIONS=--experimental-vm-modules jest"
+  },
   "author": "",
   "type": "module",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "babel-jest": "^27.3.1",
+    "jest": "^27.3.1"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "clover"
+    ]
+  }
 }
