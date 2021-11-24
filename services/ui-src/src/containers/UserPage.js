@@ -316,6 +316,7 @@ const UserPage = () => {
     } catch (e) {
       setAlertCode(RESPONSE_CODE[e.message]);
     }
+    setUserInfo();
   }, [stateAccessToRemove, userProfile.email, userType, setUserInfo]);
 
   const renderSelectStateAccess = useMemo(() => {
