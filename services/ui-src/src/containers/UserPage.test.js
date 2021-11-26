@@ -14,9 +14,34 @@ import UserPage, {
   AccessDisplay,
   GroupDivisionDisplay,
   getUserGroup,
+  ContactList,
 } from "./UserPage";
 
 jest.mock("../utils/UserDataApi");
+
+const activeStateSubmitter = {
+  firstName: "Unita",
+  lastName: "Goodcode",
+  attributes: [],
+  id: "statesubmitteractive@cms.hhs.local",
+  type: "statesubmitter",
+  validRoutes: ["/", "/profile"],
+};
+
+const activeHelpDesk = {
+  firstName: "Arthur",
+  lastName: "Active",
+  attributes: [
+    {
+      date: 1617149287,
+      doneBy: "systemadmintest@cms.hhs.local",
+      status: "active",
+    },
+  ],
+  id: "helpdeskactive@cms.hhs.local",
+  type: "helpdesk",
+  validRoutes: ["/", "/profile"],
+};
 
 const initialAuthState = {
   isAuthenticating: false,
@@ -28,14 +53,7 @@ const initialAuthState = {
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
-    userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
-      attributes: [],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesubmitter",
-      validRoutes: ["/", "/profile"],
-    },
+    userData: activeStateSubmitter,
   },
 };
 
@@ -282,6 +300,17 @@ describe("group and division section", () => {
 });
 
 describe("access section", () => {
+  it("is titled Status for a Help Desk user", () => {
+    const accesses = [];
+
+    render(<AccessDisplay accesses={accesses} userType="helpdesk" />);
+
+    const stateLabelEl = screen.getByText("Status", {
+      selector: "h2",
+    });
+    expect(stateLabelEl).toBeVisible();
+  });
+
   it("renders access entry per state for a state user", () => {
     const accesses = [
       { state: "UT", status: "pending" },
@@ -370,4 +399,21 @@ describe("requesting new states", () => {
       })
     );
   });
+});
+
+it("renders the contact list properly", () => {
+  const contacts = [
+    { firstName: "firstOne", lastName: "lastOne", email: "emailOne" },
+    { firstName: "firstTwo", lastName: "lastTwo", email: "emailTwo" },
+  ];
+  const userType = "statesubmitter";
+
+  render(<ContactList contacts={contacts} userType={userType} />);
+
+  const contactsLabelEl = screen.getByText("State System Admins:", {
+    selector: "p",
+    exact: false,
+  });
+
+  expect(contactsLabelEl).toBeVisible();
 });

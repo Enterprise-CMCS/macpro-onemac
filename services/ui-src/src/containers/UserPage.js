@@ -59,7 +59,7 @@ const transformAccesses = (user = {}) => {
   }
 };
 
-const ContactList = ({ contacts, userType }) => {
+export const ContactList = ({ contacts, userType }) => {
   let label = roleLabels[APPROVING_USER_TYPE[userType]] ?? "Contact";
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
