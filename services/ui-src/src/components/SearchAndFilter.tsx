@@ -1,4 +1,5 @@
 import React, {
+  FC,
   RefObject,
   useCallback,
   useEffect,
@@ -10,7 +11,11 @@ import { createPortal } from "react-dom";
 import { ColumnInstance, Row, UseFiltersColumnProps } from "react-table";
 import { debounce } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faTimes,
+  faChevronDown,
+} from "@fortawesome/free-solid-svg-icons";
 import {
   Accordion,
   AccordionItem,
@@ -19,6 +24,82 @@ import {
 } from "@cmsgov/design-system";
 
 import { useToggle } from "../libs/hooksLib";
+import { PackageRowValue } from "../domain-types";
+
+export interface ColumnPickerProps {
+  columnsInternal: SearchFilterProps<any, any>["columnsInternal"];
+}
+
+const orderColumns = (a: { Header: string }, b: { Header: string }) => {
+  return a.Header.localeCompare(b.Header);
+};
+
+const ColumnPicker: FC<ColumnPickerProps> = ({ columnsInternal }) => {
+  const [
+    showColumnPickerDropdown,
+    toggleColumnPickerDropdown,
+    setShowColumnPicker,
+  ] = useToggle(false);
+  const dropdownButtonRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const listenToClick = (event: MouseEvent) => {
+      let ignoreClickElement = dropdownButtonRef;
+      if (ignoreClickElement.current) {
+        showColumnPickerDropdown &&
+          !ignoreClickElement.current.contains(event.target as Node) &&
+          setShowColumnPicker(false);
+      }
+    };
+    window.addEventListener("click", listenToClick);
+    return () => window.removeEventListener("click", listenToClick);
+  }, [setShowColumnPicker, showColumnPickerDropdown]);
+
+  return (
+    <>
+      <div className="picker-wrapper" ref={dropdownButtonRef}>
+        <Button onClick={toggleColumnPickerDropdown}>
+          Show/Hide Columns&nbsp;
+          <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
+        </Button>
+        {showColumnPickerDropdown && (
+          <div className="dropdown-column-picker-box">
+            {columnsInternal
+              .filter(
+                ({ id }: ColumnInstance<PackageRowValue>) =>
+                  //@ts-ignore
+                  !["componentId", "packageActions"].includes(id)
+              )
+              //@ts-ignore
+              .sort(orderColumns)
+              .map(
+                ({
+                  Header,
+                  id,
+                  //@ts-ignore
+                  toggleHidden,
+                  //@ts-ignore
+                  isVisible,
+                }: ColumnInstance<PackageRowValue>) => (
+                  <Choice
+                    className="dropdown-column-picker-button"
+                    label={Header}
+                    name={`columnPicker-${Header}`}
+                    value={Header as string}
+                    onChange={() => toggleHidden()}
+                    checked={isVisible}
+                    type="checkbox"
+                    size="small"
+                    key={id}
+                  />
+                )
+              )}
+          </div>
+        )}
+      </div>
+    </>
+  );
+};
 
 type FilterSectionProps<D extends {}, V extends {}> = {
   allRows: Row<D>[];
@@ -140,8 +221,11 @@ export function SearchAndFilter<D extends {} = {}, V extends {} = {}>({
           )}
         </div>
       </div>
-      <div className="filter-buttons">
-        <Button onClick={toggleShowFilters}>Filter</Button>
+      <div className="picker-filter-wrapper">
+        <ColumnPicker columnsInternal={columnsInternal} />
+        <div className="filter-buttons">
+          <Button onClick={toggleShowFilters}>Filter</Button>
+        </div>
       </div>
       {showFilters &&
         pageContentRef.current &&
