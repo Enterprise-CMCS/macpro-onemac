@@ -4,7 +4,7 @@ import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-import { territoryMap } from "cmscommonlib";
+import { territoryMap, RESPONSE_CODE } from "cmscommonlib";
 
 import { ALERTS_MSG } from "../libs/alertLib";
 import { AppContext } from "../libs/contextLib";
@@ -416,4 +416,54 @@ it("renders the contact list properly", () => {
   });
 
   expect(contactsLabelEl).toBeVisible();
+});
+
+describe("Alert Bar use on page", () => {
+  let history;
+  const alertState = { passCode: RESPONSE_CODE.USER_SUBMITTED };
+  const noAlertState = {};
+  beforeEach(() => {
+    history = createMemoryHistory();
+  });
+
+  it("shows the alert bar when called with an alert State", async () => {
+    history.push("/profile", alertState);
+    render(
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <UserPage />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    await waitFor(() => {
+      expect(screen.getByText("Submission Completed")).toBeInTheDocument();
+    });
+  });
+
+  it("closes the alert bar when the callback is called", async () => {
+    history.push("/profile", alertState);
+    render(
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <UserPage />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    fireEvent.click(screen.getByLabelText("Dismiss alert"));
+    await waitFor(() => {
+      expect(
+        screen.queryByText("Submission Completed")
+      ).not.toBeInTheDocument();
+    });
+  });
 });
