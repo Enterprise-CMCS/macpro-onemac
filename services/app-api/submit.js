@@ -26,6 +26,7 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
+  console.log("Received Event: ", JSON.stringify(event, null, 2));
   const data = JSON.parse(event.body);
 
   // Add required data to the record before storing.

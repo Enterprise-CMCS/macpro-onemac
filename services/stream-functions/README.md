@@ -1,3 +1,10 @@
+The Lambdas within stream-functions are specific to the movement of data to and from BigMAC.
+
+### Subscribing to and handling events FROM BigMAC
+Adding a topic to listen to for the sink... 
+in serverless.yml, there is a topics: variable - add the new topic to the comma-delimited list?
+Modify sinkMskToDynamo handler to process the new topic events
+### Announcing updates of oneMAC data TO BigMAC topics
 a Kafka Connect cluster is built, running on fargate
 
 a kafka-connect-lambda connector kafka-connect-is POSTed to the cluster; this connector is often referenced as the 'dynamo sink'.  This dynamo sink connector continuously watches a topic on the cms-bigmac master cluster.  This topic is a stream of all existing/new/modifications-to records in the SEATool State_Plan table.  A connector is always configured to <do something> when it sees an event in the topic that is hasn't processed.  In this case, when an event is seen, the dyanmodb sink connector triggers a lambda in the onemac account.... continued on the next bullet (see stream-functions service for all of this)
@@ -12,3 +19,18 @@ a lambda is configured (see stream functions) to trigger on each new event to th
 
 All of the above is on the cqrs and cqrs-dev branch.
 
+### Connecting oneMAC branch to a BigMAC repo feature branch
+For sending only?? OR... maybe this has to be done BEFORE first deployment.... or some way to delete the connectors created by first deployment ??
+
+oneMAC feature branches default to connecting with the master-msk cluster in BigMAC.  
+To connect to a BigMAC feature branch environment instead:
+1. Login to CloudTamer and select "Web Access" for BigMac Dev as a BigMac Developer Admin
+2. Select the Amazon MSK service
+3. Choose the name of the cluster you would like to connect to
+4. under "Cluster Summary," click "View client information"
+5. copy the TLS information under "Bootstrap servers"
+6. Login to CloudTamer and select "Web Access" for Macstack Dev as a Macstack Developer Admin
+7. Go to the Systems Manager->Parameter Store
+8. Add a parameter called: /configuration/<STAGE>/bigmac/bootstrapBrokerStringTls with <STAGE> replaced by the stage name for the connecting branch.  Use "SecureString" as the type, but leave the other defaults.
+9. The parameter value should be the TLS information copied from BigMAC
+10. redeploy the github workflow to complete the connection.
