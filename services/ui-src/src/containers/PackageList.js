@@ -209,10 +209,10 @@ const PackageList = () => {
       const raiLink =
         ChangeRequest.correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
-      const notWithdrawn = row.original.currentStatus !== "Withdrawn";
+      const canRespond = row.original.currentStatus === "RAI Issued";
       let menuItems = [];
 
-      if (raiLink && notWithdrawn) {
+      if (raiLink && canRespond) {
         const menuItemRai = {
           label: "Respond to RAI",
           value: { link: raiLink, raiId: row.original.componentId },
