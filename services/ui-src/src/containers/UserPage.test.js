@@ -448,7 +448,7 @@ describe("Alert Bar use on page", () => {
   it("closes the alert bar when the callback is called", async () => {
     render(renderJSX);
     await act(async () => {
-      fireEvent.click(screen.getByLabelText("Dismiss alert"));
+      fireEvent.click(screen.getByRole("button", { name: "Dismiss alert" }));
     });
     expect(screen.queryByText("Submission Completed")).not.toBeInTheDocument();
   });
