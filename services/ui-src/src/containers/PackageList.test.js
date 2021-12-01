@@ -18,6 +18,7 @@ import PackageList from "./PackageList";
 import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
 jest.mock("../utils/PackageApi");
+window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 const ContextWrapper = ({ children }) => {
   return (
@@ -43,6 +44,15 @@ it("renders with a New Submission button", async () => {
   expect(newSubmissionButton.getAttribute("href")).toBe(
     ROUTES.NEW_SUBMISSION_SELECTION
   );
+});
+
+it("passes a retrieval error up", async () => {
+  PackageApi.getMyPackages.mockResolvedValueOnce("UR040");
+
+  render(<PackageList />, { wrapper: ContextWrapper });
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  expect(screen.getByText("Submission Error")).toBeInTheDocument();
 });
 
 it("renders table with columns", async () => {
