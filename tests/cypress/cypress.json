@@ -9,6 +9,7 @@
   "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshots",
   "videosFolder": "videos",
+  "video": false,
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
   "defaultCommandTimeout": 30000
