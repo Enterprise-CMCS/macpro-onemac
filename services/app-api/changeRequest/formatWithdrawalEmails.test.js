@@ -2,11 +2,12 @@ import {StateWithdrawalEmail, CMSWithdrawalEmail} from "./formatWithdrawalEmails
 
 it('Change Request Types', async () => {
 
-    // TODO:  Get Test Data 
-    // const response = StateWithdrawalEmail( {"changeHistory": "xx", "submitterName": "name","data": {"packageID": "MI-11-1111-22"}})
-    expect(StateWithdrawalEmail).toBeInstanceOf(Function)
+    const testData = {"changeHistory": [{"submissionTimestamp": 1631626754502},{"submissionTimestamp": 1631626754502}], "submitterName": "name", "packageId": "MI-11-1111-22"}
+    // TODO:  Get Test Data
+    const response = StateWithdrawalEmail( testData)
+    expect(response.HTML.length).toBe(348)
 
-    //const response2 = CMSWithdrawalEmail([{ "changeHistory": "foox", "submitterName": "name","packageID": "MI-11-1111-22"}])
-    //expect(response2).toBe("Tuesday, September 14, 2021 @ 9:39 AM EDT")
+    const response2 = CMSWithdrawalEmail(testData)
+    expect(response2.HTML.length).toBe(349)
 
 });
