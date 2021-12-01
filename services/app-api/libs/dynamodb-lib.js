@@ -2,7 +2,7 @@ import AWS from "aws-sdk";
 
 //Setup the database connection for localhost when running in offline mode.
 let dbOptions = {};
-if (!process.env.IS_OFFLINE) {
+if (process.env.IS_OFFLINE) {
   dbOptions = {
     region: "localhost",
     endpoint: "http://localhost:8000",
