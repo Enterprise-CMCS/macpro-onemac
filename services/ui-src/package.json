@@ -71,6 +71,8 @@
     "@fortawesome/react-fontawesome": "^0.1.14",
     "@types/react-dom": "^17.0.9",
     "@types/react-router-dom": "^5.1.8",
+    "enzyme": "^3.11.0",
+    "enzyme-adapter-react-16": "^1.15.6",
     "jest-when": "^3.3.1",
     "react-select-event": "^5.3.0",
     "serverless-cloudfront-invalidate": "1.5.0",
