@@ -13,7 +13,7 @@ import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
 
 import PackageApi from "../utils/PackageApi";
-import PackageList from "./PackageList";
+import PackageList, { withdrawMenuItem } from "./PackageList";
 
 import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
@@ -100,3 +100,13 @@ it.each`
     expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
   }
 );
+
+it("has the correct package ID in the confirmation message with a withdrawal", () => {
+  const testPackageID = "XX-33-2221";
+
+  expect(
+    withdrawMenuItem.formatConfirmationMessage({ componentId: testPackageID })
+  ).toMatch(
+    `You are about to withdraw ${testPackageID}. Once complete, you will not be able to resubmit this package. CMS will be notified.`
+  );
+});

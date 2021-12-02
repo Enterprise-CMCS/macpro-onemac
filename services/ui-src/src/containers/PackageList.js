@@ -24,7 +24,7 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-const withdrawMenuItem = {
+export const withdrawMenuItem = {
   label: "Withdraw Package",
   value: "Withdrawn",
   formatConfirmationMessage: ({ componentId }) =>
