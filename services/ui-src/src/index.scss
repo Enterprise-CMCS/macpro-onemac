@@ -1517,12 +1517,15 @@ article.form-container {
 
 .home-content-user-header {
   @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--center;
   @extend .ds-u-margin-top--7;
   @extend .ds-u-padding-top--7;
-  @include max-width-ultra-wide;
-  @extend .ds-u-margin--auto;
-  justify-content: start;
-  padding-left: 6px;
+
+  h1 {
+    @include max-width-ultra-wide;
+    @extend .ds-u-padding-x--1;
+    flex: 1;
+  }
 }
 
 @media only screen and (max-width: 1024px) {
