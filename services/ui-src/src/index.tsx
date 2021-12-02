@@ -1,6 +1,6 @@
 import React from "react";
 import ReactDOM from "react-dom";
-import "promise-polyfill/src/polyfill";
+//import "promise-polyfill/src/polyfill";
 import "core-js/es/typed-array/uint32-array";
 import "core-js/es/array/find";
 import "core-js/es/object/assign";
