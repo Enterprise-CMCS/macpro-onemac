@@ -62,7 +62,7 @@ export default function PortalTable<D extends {} = {}, V extends {} = {}>({
     <>
       {withSearchBar && (
         <SearchAndFilter
-          allRows={preFilteredRows}
+          allRows={preGlobalFilteredRows}
           // @ts-ignore FIXME remove when react-table types are improved
           columnsInternal={columns}
           onSearch={setGlobalFilter}
