@@ -193,6 +193,12 @@ jobs:
           working-directory: tests/cypress
           browser: chrome
           headless: true
+          config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots/
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master", "production"]'), env.branch_name) && failure ()
