@@ -501,7 +501,9 @@ And("clear Waiver Number Input box On Appendix K Amendment Page", () => {
 And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.1234.R12.12");
+    OneMacAppendixKAmendmentPage.inputWaiverNumber(
+      `${validWaiverNumberWith5Numbers}.R00.12`
+    );
   }
 );
 
@@ -578,8 +580,8 @@ And("verify that value of the column for the ID is Pending", () => {
 
 And(
   "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
-  (s) => {
-    OneMacPackagePage.findIdNumberMD32560();
+  () => {
+    OneMacPackagePage.findIdNumberMD32560(validWaiverNumberWith5Numbers);
   }
 );
 
