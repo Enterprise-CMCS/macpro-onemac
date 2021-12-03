@@ -29,6 +29,9 @@ const submittedByHeader = "#submitterColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageTab = '//a[@id="packageListLink"]';
 
+const spaIDLink = "div.header-and-content:nth-child(1) div.dashboard-white div.dashboard-container table.submissions-table.submissions-table-actions-column tbody:nth-child(2) tr:nth-child(1) td:nth-child(1) > a:nth-child(1)";
+const uploadedAttachments = "div.header-and-content:nth-child(1) article.form-container div.read-only-submission section.choice-container.file-list-container:nth-child(3)";
+
 export class oneMacDashboardPage {
   clickNewSubmission() {
     cy.get(newSubmissionBTN).click();
@@ -113,5 +116,15 @@ export class oneMacDashboardPage {
   navigatetoURL(s) {
     cy.visit(s);
   }
+
+  clickOnSpaID(){
+    cy.get(spaIDLink).click();
+    cy.wait(5000);
+  }
+
+  verifyAttachmentExists(s) {
+    cy.get(uploadedAttachments).contains(s);
+  }
+
 }
 export default oneMacDashboardPage;
