@@ -9,7 +9,7 @@ checks:
       threshold: 15
   return-statements:
     enabled: false
-  identical-code:
+  similar-code:
     enabled: false
 exclude_patterns:
   - "services/ui-src/src/index.tsx"
