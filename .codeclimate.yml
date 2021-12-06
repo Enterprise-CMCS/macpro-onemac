@@ -9,6 +9,8 @@ checks:
       threshold: 15
   return-statements:
     enabled: false
+  identical-code:
+    enabled: false
 exclude_patterns:
   - "services/ui-src/src/index.tsx"
   - "services/common/changeRequest.test.js"
