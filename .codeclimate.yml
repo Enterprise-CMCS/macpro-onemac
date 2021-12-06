@@ -9,10 +9,3 @@ checks:
       threshold: 15
   return-statements:
     enabled: false
-exclude_patterns:
-  - "services/ui-src/src/index.tsx"
-  - "services/common/changeRequest.test.js"
-  - "services/ui-src/src/containers/Dashboard.test.js"
-  - "services/ui-src/src/changeRequest/SubmissionForm.test.js"
-  - "services/common/common.test.js"
-  - "services/app-api/putUser.test.js"
