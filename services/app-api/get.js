@@ -31,6 +31,7 @@ export const main = handler(async (event) => {
           s3.getSignedUrlPromise("getObject", {
             Bucket: process.env.attachmentsBucket,
             Key: `protected/${result.Item.userId}/${s3Key}`,
+            Expires: 3600,
           })
         )
       );

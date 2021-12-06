@@ -50,6 +50,7 @@ export const getDetails = async (event) => {
           s3.getSignedUrlPromise("getObject", {
             Bucket: process.env.attachmentsBucket,
             Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
+            Expires: 3600,
           })
         )
       );
