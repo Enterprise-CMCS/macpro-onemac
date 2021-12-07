@@ -1,23 +1,97 @@
 import React, {
-  FC,
+  RefObject,
   useCallback,
   useEffect,
   useMemo,
   useRef,
   useState,
 } from "react";
+import { createPortal } from "react-dom";
+import { ColumnInstance, Row, UseFiltersColumnProps } from "react-table";
 import { debounce } from "lodash";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch, faTimes } from "@fortawesome/free-solid-svg-icons";
+import {
+  Accordion,
+  AccordionItem,
+  Button,
+  Choice,
+} from "@cmsgov/design-system";
 
-export interface SearchFilterProps {
-  onSearch: (keyword: string) => void;
+import { useToggle } from "../libs/hooksLib";
+
+type FilterSectionProps<D extends {}, V extends {}> = {
+  allRows: Row<D>[];
+} & ColumnInstance<V> &
+  UseFiltersColumnProps<V>;
+
+function FilterSection<D extends {}, V extends {}>({
+  allRows,
+  Header,
+  filterValue,
+  id,
+  setFilter,
+}: FilterSectionProps<D, V>) {
+  const possibleValues = useMemo(
+    () => Array.from(new Set(allRows.map(({ values }) => values[id]))).sort(),
+    [allRows, id]
+  );
+
+  const onCheckboxSelect = useCallback(
+    ({ currentTarget: { checked, value } }) => {
+      setFilter((oldFilterValue?: string[]) => {
+        if (!oldFilterValue) oldFilterValue = [...possibleValues]; // begin with everything
+        const newFilterValue: Set<string> = new Set(oldFilterValue);
+        if (checked) newFilterValue.add(value);
+        else newFilterValue.delete(value);
+        return Array.from(newFilterValue);
+      });
+    },
+    [possibleValues, setFilter]
+  );
+
+  return (
+    <AccordionItem
+      buttonClassName="inversed-accordion-button"
+      contentClassName="inversed-accordion-content"
+      heading={Header}
+      headingLevel="6"
+    >
+      {possibleValues.map((value) => (
+        <Choice
+          checked={filterValue?.includes(value) ?? true}
+          inversed
+          key={value}
+          label={value}
+          name={`${Header}-${value}`}
+          onChange={onCheckboxSelect}
+          size="small"
+          type="checkbox"
+          value={value}
+        />
+      ))}
+    </AccordionItem>
+  );
 }
 
-export const SearchAndFilter: FC<SearchFilterProps> = ({ onSearch }) => {
+export type SearchFilterProps<D extends {}, V extends {}> = {
+  columnsInternal: (ColumnInstance<V> & UseFiltersColumnProps<V>)[];
+  onSearch: (keyword: string) => void;
+  pageContentRef: RefObject<HTMLElement>;
+  setAllFilters: (filters: any[]) => void;
+} & Pick<FilterSectionProps<D, V>, "allRows">;
+
+export function SearchAndFilter<D extends {} = {}, V extends {} = {}>({
+  allRows,
+  columnsInternal,
+  onSearch,
+  pageContentRef,
+  setAllFilters,
+}: SearchFilterProps<D, V>) {
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedSearch = useMemo(() => debounce(onSearch, 300), [onSearch]);
+  const [showFilters, toggleShowFilters] = useToggle(false);
 
   // cancel any dangling searches when component is destroyed
   useEffect(() => {
@@ -38,8 +112,10 @@ export const SearchAndFilter: FC<SearchFilterProps> = ({ onSearch }) => {
     [debouncedSearch]
   );
 
+  const onResetFilters = useCallback(() => setAllFilters([]), [setAllFilters]);
+
   return (
-    <div className="search-and-filter">
+    <div className="search-and-filter" role="search">
       <div className="search-bar">
         <label htmlFor="search-bar-input">Search</label>
         <div className="field" onClick={clickInsideBar}>
@@ -64,6 +140,49 @@ export const SearchAndFilter: FC<SearchFilterProps> = ({ onSearch }) => {
           )}
         </div>
       </div>
+      <div className="filter-buttons">
+        <Button onClick={toggleShowFilters}>Filter</Button>
+      </div>
+      {showFilters &&
+        pageContentRef.current &&
+        createPortal(
+          <div
+            aria-label="Filter Results"
+            className="filter-pane"
+            role="search"
+          >
+            <header>
+              <h4>Filter By</h4>
+              <Button
+                autoFocus
+                className="close-filter-pane"
+                inversed
+                onClick={toggleShowFilters}
+                size="small"
+                variation="transparent"
+              >
+                Close <FontAwesomeIcon icon={faTimes} />
+              </Button>
+            </header>
+            <Accordion className="filter-accordion">
+              {columnsInternal
+                ?.filter(({ canFilter }) => canFilter)
+                ?.map((columnProps) => (
+                  <FilterSection
+                    allRows={allRows}
+                    key={columnProps.id}
+                    {...columnProps}
+                  />
+                ))}
+            </Accordion>
+            <footer>
+              <Button inversed onClick={onResetFilters} variation="transparent">
+                Reset
+              </Button>
+            </footer>
+          </div>,
+          pageContentRef.current
+        )}
     </div>
   );
-};
+}
