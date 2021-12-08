@@ -2218,8 +2218,12 @@ aside#faq-contact-info-box {
     }
 
     .filter-accordion {
-      flex: 1;
+      flex: 0 1 calc(100vh - 325px);
       overflow-y: auto;
+
+      .ds-c-accordion__content {
+        max-height: unset;
+      }
     }
 
     > footer {
