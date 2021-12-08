@@ -17,7 +17,7 @@ const searchbar = "#search-bar-input";
 const searchbarHeader = "//label[contains(text(),'Search')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const searchBarXBTN =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/button[1]/*[1]";
+  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const noResultsFound = "//h4[contains(text(),'No Results Found')]";
 //Element is Xpath use cy.xpath instead of cy.get
