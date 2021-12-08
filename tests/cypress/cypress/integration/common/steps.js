@@ -1069,3 +1069,60 @@ And("Verify State Column Exists", () => {
 And("Verify State Column is sortable", () => {
   OneMacPackagePage.verifyStateColumnIsSortable();
 });
+And("Verify Filter button exists", () => {
+  OneMacPackagePage.verifyfilterButtonExists();
+});
+And("Click on Filter Button", () => {
+  OneMacPackagePage.clickOnfilterButton();
+});
+And("verify Filter By Exists", () => {
+  OneMacPackagePage.verifyfilterByExists();
+});
+And("verify Close Exists", () => {
+  OneMacPackagePage.verifycloseButtonExists();
+});
+And("verify Type Exists", () => {
+  OneMacPackagePage.verifytypeDropDownExists();
+});
+And("verify Status Exists", () => {
+  OneMacPackagePage.verifystatusDropDownExists();
+});
+And("verify reset Exists", () => {
+  OneMacPackagePage.verifyresetButtonExists();
+});
+And("click on Type", () => {
+  OneMacPackagePage.clickTypeDropDown();
+});
+And("verify 1915b waiver exists", () => {
+  OneMacPackagePage.verifywaiver1915bCheckBoxExists();
+});
+And("verify CHIP SPA Exists", () => {
+  OneMacPackagePage.verifyCHIPSPACheckBoxExists();
+});
+And("verify Medicaid SPA Exists", () => {
+  OneMacPackagePage.verifyMedicaidSPACheckBoxExists();
+});
+And("click on Status", () => {
+  OneMacPackagePage.clickstatusDropDown();
+});
+And("verify package approved exists", () => {
+  OneMacPackagePage.verifypackageApproveCheckBoxExists();
+});
+And("verify package in review exists", () => {
+  OneMacPackagePage.verifypackageInReviewcheckBoxExists();
+});
+And("verify withdrawn exists", () => {
+  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+});
+And("verify sparai submitted exists", () => {
+  OneMacPackagePage.verifysparaiSubmittedExists();
+});
+And("click 1915b waiver check box", () => {
+  OneMacPackagePage.clickwaiver1915bCheckBox();
+});
+And("click CHIP SPA check box", () => {
+  OneMacPackagePage.clickCHIPSPACheckBox();
+});
+And("click Medicaid SPA check box", () => {
+  OneMacPackagePage.clickMedicaidSPACheckBox();
+});

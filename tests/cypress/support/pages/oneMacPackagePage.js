@@ -26,6 +26,33 @@ const errorMessageForNoResultsFound =
 const stateColumnHeader = "#territoryColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const arrowOnStateColumnHeader = "//thead/tr[1]/th[3]/span[1]/img[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const filterButton = "//button[contains(text(),'Filter')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const filterByText = "//header//h4";
+//Element is Xpath use cy.xpath instead of cy.get
+const closeButton = "//header/button[1]";
+const typeDropDown = "#accordionItem_2-button";
+const statusDropDown = "#accordionItem_6-button";
+//Element is Xpath use cy.xpath instead of cy.get
+const resetButton = "//button[contains(text(),'Reset')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const waiver1915bCheckBox =
+  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]/span[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const CHIPSPACheckBox =
+  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]/span[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const MedicaidSPACheckBox =
+  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[3]/label[1]/span[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageApproveCheckBox = "//span[contains(text(),'Package Approved')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageInReviewcheckBox = "//span[contains(text(),'Package In Review')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const sparaiSubmitted = "//span[contains(text(),'sparai Submitted')]";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -104,6 +131,63 @@ export class oneMacPackagePage {
   verifyStateColumnIsSortable() {
     cy.get(stateColumnHeader).click();
     cy.xpath(arrowOnStateColumnHeader).should("be.visible");
+  }
+  verifyfilterButtonExists() {
+    cy.xpath(filterButton).should("be.visible");
+  }
+  clickOnfilterButton() {
+    cy.xpath(filterButton).click();
+  }
+  verifyfilterByExists() {
+    cy.xpath(filterByText).should("be.visible");
+  }
+  verifycloseButtonExists() {
+    cy.xpath(closeButton).should("be.visible");
+  }
+  verifytypeDropDownExists() {
+    cy.get(typeDropDown).should("be.visible");
+  }
+  verifystatusDropDownExists() {
+    cy.get(statusDropDown).should("be.visible");
+  }
+  verifyresetButtonExists() {
+    cy.xpath(resetButton).should("be.visible");
+  }
+  clickTypeDropDown() {
+    cy.get(typeDropDown).click();
+  }
+  verifywaiver1915bCheckBoxExists() {
+    cy.xpath(waiver1915bCheckBox).should("be.visible");
+  }
+  verifyCHIPSPACheckBoxExists() {
+    cy.xpath(CHIPSPACheckBox).should("be.visible");
+  }
+  verifyMedicaidSPACheckBoxExists() {
+    cy.xpath(MedicaidSPACheckBox).should("be.visible");
+  }
+  clickstatusDropDown() {
+    cy.get(statusDropDown).click();
+  }
+  verifypackageApproveCheckBoxExists() {
+    cy.xpath(packageApproveCheckBox).should("be.visible");
+  }
+  verifypackageInReviewcheckBoxExists() {
+    cy.xpath(packageInReviewcheckBox).should("be.visible");
+  }
+  verifywithdrawnCheckBoxExists() {
+    cy.xpath(withdrawnCheckBox).should("be.visible");
+  }
+  verifysparaiSubmittedExists() {
+    cy.xpath(sparaiSubmitted).should("be.visible");
+  }
+  clickwaiver1915bCheckBox() {
+    cy.xpath(waiver1915bCheckBox).click();
+  }
+  clickCHIPSPACheckBox() {
+    cy.xpath(CHIPSPACheckBox).click();
+  }
+  clickMedicaidSPACheckBox() {
+    cy.xpath(MedicaidSPACheckBox).click();
   }
 }
 export default oneMacPackagePage;
