@@ -181,7 +181,7 @@ resources:
             var response = event.response;
             var headers = response.headers;
             headers['strict-transport-security'] = { value: 'max-age=63072000; includeSubdomains; preload'};
-            headers['x-frame-options'] = [{key: 'X-Frame-Options', value: 'DENY'}];
+            headers['x-frame-options'] = [{key: 'X-Frame-Options', value: 'SAMEORIGIN'}];
             return response;
           }
         FunctionConfig:
