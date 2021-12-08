@@ -32,7 +32,7 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-const withdrawMenuItem = {
+export const withdrawMenuItem = {
   label: "Withdraw Package",
   value: "Withdrawn",
   formatConfirmationMessage: ({ componentId }) =>
@@ -81,13 +81,13 @@ const PackageList = () => {
       try {
         const data = await PackageAPI.getMyPackages(userProfile.email);
 
-        if (typeof data === "string") throw data;
+        if (typeof data === "string") throw new Error(data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
-        if (!ctrlr?.signal.aborted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
+        if (!ctrlr?.signal.aborted) setAlertCode(error.message);
       }
+      if (!ctrlr?.signal.aborted) setIsLoading(false);
     },
     [userProfile.email]
   );
@@ -218,10 +218,10 @@ const PackageList = () => {
       const raiLink =
         ChangeRequest.correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
-      const notWithdrawn = row.original.currentStatus !== "Withdrawn";
+      const canRespond = row.original.currentStatus === "RAI Issued";
       let menuItems = [];
 
-      if (raiLink && notWithdrawn) {
+      if (raiLink && canRespond) {
         const menuItemRai = {
           label: "Respond to RAI",
           value: { link: raiLink, raiId: row.original.componentId },
