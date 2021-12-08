@@ -1105,14 +1105,14 @@ And("verify Medicaid SPA Exists", () => {
 And("click on Status", () => {
   OneMacPackagePage.clickstatusDropDown();
 });
-And("verify package approved exists", () => {
-  OneMacPackagePage.verifypackageApproveCheckBoxExists();
+And("verify rai response submitted exists", () => {
+  OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
 });
 And("verify package in review exists", () => {
   OneMacPackagePage.verifypackageInReviewcheckBoxExists();
 });
-And("verify withdrawn exists", () => {
-  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+And("verify seatool status 1 exists", () => {
+  OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
 });
 And("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
@@ -1125,4 +1125,7 @@ And("click CHIP SPA check box", () => {
 });
 And("click Medicaid SPA check box", () => {
   OneMacPackagePage.clickMedicaidSPACheckBox();
+});
+And("verify Medicaid SPA Exists in list", () => {
+  OneMacPackagePage.verifyMedicaidSPAInListExists();
 });

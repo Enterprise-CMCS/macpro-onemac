@@ -24,7 +24,8 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Medicaid SPA Exists
         And click on Status
         And verify package in review exists
-        And verify sparai submitted exists
+        And verify rai response submitted exists
+        And verify seatool status 1 exists
 
     Scenario: deselect all and verify error message, then select one and verify it exists
         Given I am on Login Page
@@ -39,6 +40,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click Medicaid SPA check box
+        And verify Medicaid SPA Exists in list
 
 
     Scenario: verify one exists, deselct selection then verify error message
@@ -54,6 +56,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click Medicaid SPA check box
+        And verify Medicaid SPA Exists in list
         And click Medicaid SPA check box
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed

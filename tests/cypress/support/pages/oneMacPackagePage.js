@@ -53,6 +53,12 @@ const packageInReviewcheckBox = "//span[contains(text(),'Package In Review')]";
 const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const sparaiSubmitted = "//span[contains(text(),'sparai Submitted')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const raiResponseSubmitted = "//span[contains(text(),'RAIResponse Submitted')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const medicaidSPAInList = "//tbody/tr[1]/td[2]/span[1]";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -188,6 +194,15 @@ export class oneMacPackagePage {
   }
   clickMedicaidSPACheckBox() {
     cy.xpath(MedicaidSPACheckBox).click();
+  }
+  verifyraiResponseSubmittedCheckBoxExists() {
+    cy.xpath(raiResponseSubmitted).should("be.visible");
+  }
+  verifyseaToolStatus1CheckBoxExists() {
+    cy.xpath(seaToolStatus1).should("be.visible");
+  }
+  verifyMedicaidSPAInListExists() {
+    cy.xpath(medicaidSPAInList).should("be.visible");
   }
 }
 export default oneMacPackagePage;
