@@ -4,7 +4,7 @@ import { render, fireEvent, screen, waitFor } from "@testing-library/react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
 
-import { territoryMap } from "cmscommonlib";
+import { territoryMap, RESPONSE_CODE } from "cmscommonlib";
 
 import { ALERTS_MSG } from "../libs/alertLib";
 import { AppContext } from "../libs/contextLib";
@@ -14,9 +14,34 @@ import UserPage, {
   AccessDisplay,
   GroupDivisionDisplay,
   getUserGroup,
+  ContactList,
 } from "./UserPage";
 
 jest.mock("../utils/UserDataApi");
+
+const activeStateSubmitter = {
+  firstName: "Unita",
+  lastName: "Goodcode",
+  attributes: [],
+  id: "statesubmitteractive@cms.hhs.local",
+  type: "statesubmitter",
+  validRoutes: ["/", "/profile"],
+};
+
+const activeHelpDesk = {
+  firstName: "Arthur",
+  lastName: "Active",
+  attributes: [
+    {
+      date: 1617149287,
+      doneBy: "systemadmintest@cms.hhs.local",
+      status: "active",
+    },
+  ],
+  id: "helpdeskactive@cms.hhs.local",
+  type: "helpdesk",
+  validRoutes: ["/", "/profile"],
+};
 
 const initialAuthState = {
   isAuthenticating: false,
@@ -28,14 +53,7 @@ const initialAuthState = {
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
-    userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
-      attributes: [],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesubmitter",
-      validRoutes: ["/", "/profile"],
-    },
+    userData: activeStateSubmitter,
   },
 };
 
@@ -282,6 +300,17 @@ describe("group and division section", () => {
 });
 
 describe("access section", () => {
+  it("is titled Status for a Help Desk user", () => {
+    const accesses = [];
+
+    render(<AccessDisplay accesses={accesses} userType="helpdesk" />);
+
+    const stateLabelEl = screen.getByText("Status", {
+      selector: "h2",
+    });
+    expect(stateLabelEl).toBeVisible();
+  });
+
   it("renders access entry per state for a state user", () => {
     const accesses = [
       { state: "UT", status: "pending" },
@@ -369,5 +398,58 @@ describe("requesting new states", () => {
         attributes: [{ stateCode: "AK", status: "pending" }],
       })
     );
+  });
+});
+
+it("renders the contact list properly", () => {
+  const contacts = [
+    { firstName: "firstOne", lastName: "lastOne", email: "emailOne" },
+    { firstName: "firstTwo", lastName: "lastTwo", email: "emailTwo" },
+  ];
+  const userType = "statesubmitter";
+
+  render(<ContactList contacts={contacts} userType={userType} />);
+
+  const contactsLabelEl = screen.getByText("State System Admins:", {
+    selector: "p",
+    exact: false,
+  });
+
+  expect(contactsLabelEl).toBeVisible();
+});
+
+describe("Alert Bar use on page", () => {
+  let history, renderJSX;
+  const alertState = { passCode: RESPONSE_CODE.USER_SUBMITTED };
+
+  beforeEach(() => {
+    history = createMemoryHistory();
+    history.push("/profile", alertState);
+    renderJSX = (
+      <AppContext.Provider
+        value={{
+          ...initialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <UserPage />
+        </Router>
+      </AppContext.Provider>
+    );
+  });
+
+  it("shows the alert bar when called with an alert State", async () => {
+    render(renderJSX);
+    await waitFor(() => {
+      expect(screen.getByText("Submission Completed")).toBeInTheDocument();
+    });
+  });
+
+  it("closes the alert bar when the callback is called", async () => {
+    render(renderJSX);
+    await act(async () => {
+      fireEvent.click(screen.getByRole("button", { name: "Dismiss alert" }));
+    });
+    expect(screen.queryByText("Submission Completed")).not.toBeInTheDocument();
   });
 });

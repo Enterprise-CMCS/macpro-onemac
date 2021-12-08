@@ -15,7 +15,6 @@ scratch
 reports/
 reports/screenshots/
 node_modules/*
-/.github/
 /.nyc_output/*
 tests/cypress/node_modules
 node_modules
