@@ -1,4 +1,8 @@
-import { ensureLowerCaseFileExtension } from "./s3Uploader";
+import {
+  ensureLowerCaseFileExtension,
+  uploadFile,
+  uploadFiles,
+} from "./s3Uploader";
 
 describe("ensureLowerCaseFileExtension function", () => {
   it("returns the original file if the extension is already lowercase", () => {
@@ -31,5 +35,13 @@ describe("ensureLowerCaseFileExtension function", () => {
     const returnedFile = ensureLowerCaseFileExtension(originalFile);
 
     expect(returnedFile.title).toBe(title);
+  });
+
+  it("exists without crashing", () => {
+    const response = uploadFiles(["foo"]);
+    expect(response).toBeInstanceOf(Promise);
+
+    const response2 = uploadFile("foo");
+    expect(response2).toBeInstanceOf(Promise);
   });
 });

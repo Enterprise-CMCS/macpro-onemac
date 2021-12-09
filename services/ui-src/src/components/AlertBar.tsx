@@ -63,6 +63,7 @@ const AlertBar: React.FC<{
       <Alert variation={alert.type} heading={alert.heading}>
         <p className="ds-c-alert__text">{renderText()}</p>
         <button
+          aria-label={"Dismiss alert"}
           className="close-button"
           onClick={() => {
             setAlert(ALERTS_MSG.NONE);

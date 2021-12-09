@@ -35,3 +35,14 @@ export type AppContextValue = {
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;
 };
+
+export type PackageRowValue = {
+  componentId: string;
+  componentType: string;
+  expirationTimestamp?: number;
+  ninetiethDay?: number;
+  packageStatus: string;
+  submissionTimestamp: number;
+  submitter: string;
+  territory: string;
+};

@@ -59,7 +59,7 @@ const transformAccesses = (user = {}) => {
   }
 };
 
-const ContactList = ({ contacts, userType }) => {
+export const ContactList = ({ contacts, userType }) => {
   let label = roleLabels[APPROVING_USER_TYPE[userType]] ?? "Contact";
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
@@ -316,7 +316,14 @@ const UserPage = () => {
     } catch (e) {
       setAlertCode(RESPONSE_CODE[e.message]);
     }
-  }, [stateAccessToRemove, userProfile.email, userType, setUserInfo]);
+    closeConfirmation();
+  }, [
+    closeConfirmation,
+    stateAccessToRemove,
+    userProfile.email,
+    userType,
+    setUserInfo,
+  ]);
 
   const renderSelectStateAccess = useMemo(() => {
     return (
