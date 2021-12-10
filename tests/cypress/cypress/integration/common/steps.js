@@ -553,6 +553,12 @@ And("type in Existing Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumber();
 });
 
+And("Type Unique Valid Waiver Number With 5 Characters", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+    Utilities.generateWaiverNumberWith5Characters("MD")
+  );
+});
+
 And("Type Valid Waiver Number With 5 Characters", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
     validWaiverNumberWith5Numbers
