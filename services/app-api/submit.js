@@ -27,6 +27,7 @@ const SUBMISSION_STATES = {
  */
 export const main = handler(async (event) => {
   const data = JSON.parse(event.body);
+  console.log("Received Event: ", JSON.stringify(event, null, 2));
 
   // Add required data to the record before storing.
   data.id = uuid.v1();
