@@ -34,7 +34,7 @@ const orderColumns = (a: { Header: string }, b: { Header: string }) => {
   return a.Header.localeCompare(b.Header);
 };
 
-const ColumnPicker: FC<ColumnPickerProps> = ({ columnsInternal }) => {
+export const ColumnPicker: FC<ColumnPickerProps> = ({ columnsInternal }) => {
   const [
     showColumnPickerDropdown,
     toggleColumnPickerDropdown,
@@ -58,12 +58,17 @@ const ColumnPicker: FC<ColumnPickerProps> = ({ columnsInternal }) => {
   return (
     <>
       <div className="picker-wrapper" ref={dropdownButtonRef}>
-        <Button onClick={toggleColumnPickerDropdown}>
+        <Button aria-expanded="false" onClick={toggleColumnPickerDropdown}>
           Show/Hide Columns&nbsp;
           <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
         </Button>
         {showColumnPickerDropdown && (
-          <div className="dropdown-column-picker-box">
+          <div
+            aria-expanded="true"
+            role="listbox"
+            aria-label="Column Picker For Table"
+            className="dropdown-column-picker-box"
+          >
             {columnsInternal
               .filter(
                 ({ id }: ColumnInstance<PackageRowValue>) =>
