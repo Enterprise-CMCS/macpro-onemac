@@ -16,6 +16,14 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(waiverNumberInputBox).type(s);
   }
 
+  getSharedWaiverNumber() {
+    return cy.get("@sharedWaiverNumber");
+  }
+
+  setSharedWaiverNumber(num) {
+    cy.wrap(num).as("sharedWaiverNumber");
+  }
+
   inputExistingWaiverNumber() {
     cy.get(waiverNumberInputBox).type(existingWaiverNumber);
   }

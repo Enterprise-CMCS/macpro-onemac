@@ -31,8 +31,6 @@ const OneMacRequestWaiverTemporaryExtension =
 const OneMacPackagePage = new oneMacPackagePage();
 const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const SPAID = Utilities.SPAID("MD");
-const validWaiverNumberWith5Numbers =
-  Utilities.generateWaiverNumberWith5Characters("MD");
 const OneMacFAQPage = new oneMacFAQPage();
 
 Given("I am on Login Page", () => {
@@ -384,7 +382,9 @@ And(
 );
 
 And("verify Waiver Number EXISTS", () => {
-  OneMacDashboardPage.verifyIDNumber(validWaiverNumberWith5Numbers);
+  OneMacDashboardPage.verifyIDNumber(
+    OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
+  );
 });
 
 And("click on Waiver Respond to RAI", () => {
@@ -397,7 +397,7 @@ And("Add file for Waiver RAI Response", () => {
 
 And("Verify Waiver RAI ID number matches Waiver number", () => {
   OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(
-    validWaiverNumberWith5Numbers
+    OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
   );
 });
 
@@ -502,7 +502,7 @@ And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
     OneMacAppendixKAmendmentPage.inputWaiverNumber(
-      `${validWaiverNumberWith5Numbers}.R00.12`
+      `${OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()}.R00.12`
     );
   }
 );
@@ -560,9 +560,13 @@ And("Type Unique Valid Waiver Number With 5 Characters", () => {
 });
 
 And("Type Valid Waiver Number With 5 Characters", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-    validWaiverNumberWith5Numbers
-  );
+  let num = OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber();
+  if (!num) {
+    num = Utilities.generateWaiverNumberWith5Characters("MD");
+    OneMacSubmitNewWaiverActionPage.setSharedWaiverNumber(num);
+  }
+
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
 });
 
 And("click on Packages", () => {
@@ -587,7 +591,9 @@ And("verify that value of the column for the ID is Pending", () => {
 And(
   "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
   () => {
-    OneMacPackagePage.findIdNumberMD32560(validWaiverNumberWith5Numbers);
+    OneMacPackagePage.findIdNumberMD32560(
+      OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
+    );
   }
 );
 
@@ -1048,7 +1054,9 @@ And("type in submitters name", () => {
   OneMacPackagePage.typeSubmittersName();
 });
 And("verify user exists with waiver number searched", () => {
-  OneMacPackagePage.verifyIDNumberExists(validWaiverNumberWith5Numbers);
+  OneMacPackagePage.verifyIDNumberExists(
+    OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
+  );
 });
 And("search existing user with all upper case", () => {
   OneMacPackagePage.typeSubmittersNameAllUpperCase();
