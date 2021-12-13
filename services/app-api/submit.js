@@ -26,10 +26,10 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
+  const data = JSON.parse(event.body);
+  let crFunctions;
+  console.log("Received Event: ", JSON.stringify(event, null, 2));
   try {
-    const data = JSON.parse(event.body);
-    console.log("Received Event: ", JSON.stringify(event, null, 2));
-
     // Add required data to the record before storing.
     data.id = uuid.v1();
     data.createdAt = Date.now();
@@ -58,7 +58,7 @@ export const main = handler(async (event) => {
     }
 
     // map the changeRequest functions from the data.type
-    const crFunctions = getChangeRequestFunctions(data.type);
+    crFunctions = getChangeRequestFunctions(data.type);
     if (!crFunctions) {
       throw RESPONSE_CODE.VALIDATION_ERROR;
     }
