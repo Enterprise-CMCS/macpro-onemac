@@ -382,9 +382,9 @@ And(
 );
 
 And("verify Waiver Number EXISTS", () => {
-  OneMacDashboardPage.verifyIDNumber(
-    OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
-  );
+  cy.fixture("raiWaiverNumber.txt").then((num) => {
+    OneMacDashboardPage.verifyIDNumber(num);
+  });
 });
 
 And("click on Waiver Respond to RAI", () => {
@@ -396,9 +396,9 @@ And("Add file for Waiver RAI Response", () => {
 });
 
 And("Verify Waiver RAI ID number matches Waiver number", () => {
-  OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(
-    OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
-  );
+  cy.fixture("sharedWaiverNumber.txt").then((num) => {
+    OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(num);
+  });
 });
 
 And("Click on Waiver Action under Waiver Type", () => {
@@ -501,9 +501,9 @@ And("clear Waiver Number Input box On Appendix K Amendment Page", () => {
 And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber(
-      `${OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()}.R00.12`
-    );
+    cy.fixture("sharedWaiverNumber.txt").then((num) => {
+      OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.R00.12`);
+    });
   }
 );
 
@@ -560,13 +560,15 @@ And("Type Unique Valid Waiver Number With 5 Characters", () => {
 });
 
 And("Type Valid Waiver Number With 5 Characters", () => {
-  let num = OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber();
-  if (!num) {
-    num = Utilities.generateWaiverNumberWith5Characters("MD");
-    OneMacSubmitNewWaiverActionPage.setSharedWaiverNumber(num);
-  }
+  cy.fixture("sharedWaiverNumber.txt").then((num) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
+  });
+});
 
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
+And("Type Valid Waiver Number With 5 Characters for RAI", () => {
+  cy.fixture("raiWaiverNumber.txt").then((num) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
+  });
 });
 
 And("click on Packages", () => {
@@ -591,9 +593,9 @@ And("verify that value of the column for the ID is Pending", () => {
 And(
   "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
   () => {
-    OneMacPackagePage.findIdNumberMD32560(
-      OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
-    );
+    cy.fixture("sharedWaiverNumber.txt").then((num) => {
+      OneMacPackagePage.findIdNumberMD32560(num);
+    });
   }
 );
 
@@ -1054,9 +1056,9 @@ And("type in submitters name", () => {
   OneMacPackagePage.typeSubmittersName();
 });
 And("verify user exists with waiver number searched", () => {
-  OneMacPackagePage.verifyIDNumberExists(
-    OneMacSubmitNewWaiverActionPage.getSharedWaiverNumber()
-  );
+  cy.fixture("sharedWaiverNumber.txt").then((num) => {
+    OneMacPackagePage.verifyIDNumberExists(num);
+  });
 });
 And("search existing user with all upper case", () => {
   OneMacPackagePage.typeSubmittersNameAllUpperCase();

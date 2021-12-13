@@ -28,6 +28,10 @@ before(() => {
   // root-level hook
   // runs once before all tests
 
+  // generate waiver numbers to be used across tests
+  cy.task("generateWaiverNumber", "sharedWaiverNumber");
+  cy.task("generateWaiverNumber", "raiWaiverNumber");
+
   // waits up to 5 mins for serverless to boot up all services and web page
   cy.visit("/", { timeout: 60000 * 5 });
 });
