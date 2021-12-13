@@ -26,26 +26,27 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-  const data = JSON.parse(event.body);
-  console.log("Received Event: ", JSON.stringify(event, null, 2));
-
-  // Add required data to the record before storing.
-  data.id = uuid.v1();
-  data.createdAt = Date.now();
-  data.state = SUBMISSION_STATES.CREATED;
-  data.userId = event.requestContext.identity.cognitoIdentityId;
-
   try {
+    const data = JSON.parse(event.body);
+    console.log("Received Event: ", JSON.stringify(event, null, 2));
+
+    // Add required data to the record before storing.
+    data.id = uuid.v1();
+    data.createdAt = Date.now();
+    data.state = SUBMISSION_STATES.CREATED;
+    data.userId = event.requestContext.identity.cognitoIdentityId;
+
     // do a pre-check for things that should stop us immediately
-    if (validateSubmission(data)) {
-      return RESPONSE_CODE.VALIDATION_ERROR;
+    if (!validateSubmission(data)) {
+      throw RESPONSE_CODE.VALIDATION_ERROR;
     }
+    //console.log("Validate returns: ", validateSubmission(data));
 
     // get the rest of the details about the current user
     const doneBy = await getUser(data.user.email);
     console.log("done by: ", doneBy);
     if (!doneBy) {
-      return RESPONSE_CODE.USER_NOT_FOUND;
+      throw RESPONSE_CODE.USER_NOT_FOUND;
     }
 
     if (
@@ -53,29 +54,29 @@ export const main = handler(async (event) => {
         doneBy.type != USER_TYPE.STATE_SYSTEM_ADMIN) &&
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
-      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+      throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    }
+
+    // map the changeRequest functions from the data.type
+    const crFunctions = getChangeRequestFunctions(data.type);
+    if (!crFunctions) {
+      throw RESPONSE_CODE.VALIDATION_ERROR;
+    }
+
+    const crVerifyTransmittalIdStateCode = hasValidStateCode(
+      data.transmittalNumber
+    );
+    if (!crVerifyTransmittalIdStateCode) {
+      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
+    }
+
+    const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
+    if (!crVerifyTerritoryStateCode) {
+      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
     }
   } catch (error) {
-    console.error("Could not get user from database:", error);
-    return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
-  }
-
-  // map the changeRequest functions from the data.type
-  const crFunctions = getChangeRequestFunctions(data.type);
-  if (!crFunctions) {
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  }
-
-  const crVerifyTransmittalIdStateCode = hasValidStateCode(
-    data.transmittalNumber
-  );
-  if (!crVerifyTransmittalIdStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
-  }
-
-  const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
-  if (!crVerifyTerritoryStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
+    // these are application errors, 200 level response
+    return error;
   }
 
   try {
@@ -155,6 +156,7 @@ export const main = handler(async (event) => {
     })
     .catch((error) => {
       console.log("Error is: ", error.message);
-      // throw error;
+      // submitting to the package model doesn't matter... all returns are success by this point
+      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
     });
 });
