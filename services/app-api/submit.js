@@ -47,7 +47,7 @@ export const main = handler(async (event) => {
     data.userId = event.requestContext.identity.cognitoIdentityId;
 
     // returns undefined if no errors found, or the first error found.
-    if (!validateSubmission(data)) {
+    if (validateSubmission(data)) {
       throw RESPONSE_CODE.VALIDATION_ERROR;
     }
 

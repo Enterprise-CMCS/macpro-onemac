@@ -18,8 +18,7 @@ export default function handler(lambda) {
         response.body = { error: e.message };
         response.statusCode = 500;
       }
-      if (typeof response.body !== "string")
-        response.body = JSON.stringify(response.body);
+      response.body = JSON.stringify(response.body);
     }
     // Return HTTP response
     return response;

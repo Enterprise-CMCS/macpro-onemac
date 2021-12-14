@@ -1,12 +1,9 @@
 import handler from "./handler-lib";
 
-it("Handler Code Stub", async () => {
-  const response = handler("");
-  const response2 = response({ source: "serverless-plugin-warmup" }, "foo");
-  expect(response).toBeInstanceOf(Function);
-  expect(response2).toBeInstanceOf(Promise);
-});
 const testLambda = jest.fn();
+const successLambda = () => {
+  return "Success";
+};
 
 const warmupResponse = {
   statusCode: 200,
@@ -17,6 +14,11 @@ const warmupResponse = {
   },
 };
 
+const successResponse = {
+  ...warmupResponse,
+  body: '"Success"',
+};
+
 describe("test the handler handling", () => {
   it("returns null with source of warmup", () => {
     const event = { source: "serverless-plugin-warmup" };
@@ -25,6 +27,19 @@ describe("test the handler handling", () => {
     main(event)
       .then((data) => {
         expect(data).toMatchObject(warmupResponse);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  });
+
+  it("gives a 200 response for a regular return", () => {
+    const event = {};
+    const main = handler(successLambda);
+
+    main(event)
+      .then((data) => {
+        expect(data).toMatchObject(successResponse);
       })
       .catch((err) => {
         console.log(err);
