@@ -37,7 +37,7 @@ before(() => {
 });
 
 Cypress.Commands.add("waitForSpinners", () => {
-  cy.get(".loader__container", { timeout: 10_000 }).should("not.exist");
+  cy.get(".loader__container", { timeout: 30_000 }).should("not.exist");
 });
 
 import "cypress-file-upload";
