@@ -40,6 +40,8 @@ function HamburgerMenu({ linksToDisplay }) {
     return (
       <div
         id="hamburgerNav"
+        role="listbox"
+        aria-label="Opened Hamburger Menu"
         className="hamburger-content"
         ref={hamburgerWrapperRef}
       >
@@ -64,7 +66,11 @@ function HamburgerMenu({ linksToDisplay }) {
           {linksToDisplay &&
             linksToDisplay.map((link, index) => {
               return (
-                <li key={index} onClick={() => setIsMenuExpanded(false)}>
+                <li
+                  data-testid="li-element"
+                  key={index}
+                  onClick={() => setIsMenuExpanded(false)}
+                >
                   {link}
                 </li>
               );
