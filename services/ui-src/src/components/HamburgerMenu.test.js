@@ -5,17 +5,7 @@ import HamburgerMenu from "./HamburgerMenu";
 import { act } from "react-dom/test-utils";
 
 describe("HamburgerMenu", () => {
-  it("renders a hamburger menu button when window shrinks", () => {
-    render(<HamburgerMenu />);
-    global.innerWidth = 940;
-    global.dispatchEvent(new Event("resize"));
-    const hamburgerMenuIcon = screen.getByRole("button", {
-      name: /hamburger menu/i,
-    });
-    expect(hamburgerMenuIcon).toBeVisible();
-  });
-
-  it("opens a menu on click of icon", () => {
+  it("opens a menu on click of icon and renders link array", () => {
     const linksToDisplay = [<a>testing</a>, <a>testing</a>];
     render(<HamburgerMenu linksToDisplay={linksToDisplay} />);
     const hamburgerButton = screen.getByRole("button", {
