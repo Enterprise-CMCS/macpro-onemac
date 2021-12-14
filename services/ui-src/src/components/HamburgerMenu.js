@@ -66,11 +66,7 @@ function HamburgerMenu({ linksToDisplay }) {
           {linksToDisplay &&
             linksToDisplay.map((link, index) => {
               return (
-                <li
-                  data-testid="li-element"
-                  key={index}
-                  onClick={() => setIsMenuExpanded(false)}
-                >
+                <li key={index} onClick={() => setIsMenuExpanded(false)}>
                   {link}
                 </li>
               );
