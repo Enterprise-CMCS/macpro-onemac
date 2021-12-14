@@ -396,7 +396,7 @@ And("Add file for Waiver RAI Response", () => {
 });
 
 And("Verify Waiver RAI ID number matches Waiver number", () => {
-  cy.fixture("sharedWaiverNumber.txt").then((num) => {
+  cy.fixture("raiWaiverNumber.txt").then((num) => {
     OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(num);
   });
 });
