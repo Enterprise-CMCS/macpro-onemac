@@ -59,6 +59,33 @@ const raiResponseSubmitted = "//span[contains(text(),'RAIResponse Submitted')]";
 const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const medicaidSPAInList = "//tbody/tr[1]/td[2]/span[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const ShowHideColumnsBTN =
+  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/button[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkBox90thDay = "//span[contains(text(),'90th Day')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkBoxDateSubmitted = "//span[contains(text(),'Date Submitted')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkBoxexpirationDate = "//span[contains(text(),'Expiration Date')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkboxState = "//span[text()='State']";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkBoxStatus = "//span[contains(text(),'Status')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkBoxSubmittedBy = "//span[contains(text(),'Submitted By')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const checkBoxType = "//span[contains(text(),'Type')]";
+const IDNumberColumn = "#componentIdColHeader";
+const typeColumn = "#componentTypeColHeader";
+const stateColumn = "#territoryColHeader";
+const expirationDateColumn = "#expirationTimestampColHeader";
+const statusColumn = "#packageStatusColHeader";
+const dateSubmittedColumn = "#submissionTimestampColHeader";
+const submittedByColumn = "#submitterColHeader";
+const actionsColumn = "#packageActionsColHeader";
+const packageRowOneType = "#componentType-0";
+const packageRowOneState = "#territory-0";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -203,6 +230,117 @@ export class oneMacPackagePage {
   }
   verifyMedicaidSPAInListExists() {
     cy.xpath(medicaidSPAInList).should("be.visible");
+  }
+  verifyShowHideColumnsBTNExists() {
+    cy.xpath(ShowHideColumnsBTN).should("be.visible");
+  }
+  clickShowHideColumnsBTN() {
+    cy.xpath(ShowHideColumnsBTN).click();
+  }
+  verifycheckBox90thDayExists() {
+    cy.xpath(checkBox90thDay).should("be.visible");
+  }
+  clickCheckBox90thDay() {
+    cy.xpath(checkBox90thDay).click();
+  }
+  verifycheckBoxDateSubmittedExists() {
+    cy.xpath(checkBoxDateSubmitted).should("be.visible");
+  }
+  clickCheckBoxDateSubmitted() {
+    cy.xpath(checkBoxDateSubmitted).click();
+  }
+  verifycheckBoxexpirationDateBTNExists() {
+    cy.xpath(checkBoxexpirationDate).should("be.visible");
+  }
+  clickCheckBoxexpirationDate() {
+    cy.xpath(checkBoxexpirationDate).click();
+  }
+  verifycheckboxStateExists() {
+    cy.xpath(checkboxState).should("be.visible");
+  }
+  clickCheckboxState() {
+    cy.xpath(checkboxState).click();
+  }
+  verifycheckBoxStatusExists() {
+    cy.xpath(checkBoxStatus).should("be.visible");
+  }
+  clickCheckboxStatus() {
+    cy.xpath(checkBoxStatus).click();
+  }
+  verifycheckBoxSubmittedByExists() {
+    cy.xpath(checkBoxSubmittedBy).should("be.visible");
+  }
+  clickCheckBoxSubmittedBy() {
+    cy.xpath(checkBoxSubmittedBy).click();
+  }
+  verifycheckBoxTypeExists() {
+    cy.xpath(checkBoxType).should("be.visible");
+  }
+  clickCheckBoxType() {
+    cy.xpath(checkBoxType).click();
+  }
+  verifyIDNumberColumnExists() {
+    cy.get(IDNumberColumn).should("be.visible");
+  }
+  verifytypeColumnExists() {
+    cy.get(typeColumn).should("be.visible");
+  }
+  verifystateColumnExists() {
+    cy.get(stateColumn).should("be.visible");
+  }
+  verifyexpirationDateColumnExists() {
+    cy.get(expirationDateColumn).should("be.visible");
+  }
+  verifystatusColumnExists() {
+    cy.get(statusColumn).should("be.visible");
+  }
+  verifydateSubmittedColumnExists() {
+    cy.get(dateSubmittedColumn).should("be.visible");
+  }
+  verifysubmittedByColumnExists() {
+    cy.get(submittedByColumn).should("be.visible");
+  }
+  verifyactionsColumnExists() {
+    cy.get(actionsColumn).should("be.visible");
+  }
+  verifyIDNumberColumnDoesNotExist() {
+    cy.get(IDNumberColumn).should("not.exist");
+  }
+  verifytypeColumnDoesNotExist() {
+    cy.get(typeColumn).should("not.exist");
+  }
+  verifystateColumnDoesNotExist() {
+    cy.get(stateColumn).should("not.exist");
+  }
+  verify90thDayColumnDoesNotExist() {
+    cy.get(stateColumn).should("not.exist");
+  }
+  verifyexpirationDateColumnDoesNotExist() {
+    cy.get(expirationDateColumn).should("not.exist");
+  }
+  verifystatusColumnDoesNotExist() {
+    cy.get(statusColumn).should("not.exist");
+  }
+  verifydateSubmittedColumnDoesNotExist() {
+    cy.get(dateSubmittedColumn).should("not.exist");
+  }
+  verifysubmittedByColumnDoesNotExist() {
+    cy.get(submittedByColumn).should("not.exist");
+  }
+  verifyactionsColumnDoesNotExist() {
+    cy.get(actionsColumn).should("not.exist");
+  }
+  verifypackageRowOneTypeExists() {
+    cy.get(packageRowOneType).should("be.visible");
+  }
+  verifypackageRowOneStateExists() {
+    cy.get(packageRowOneState).should("be.visible");
+  }
+  verifypackageRowOneTypeHasTextMedicaidSPA() {
+    cy.get(packageRowOneType).should("have.text", "Medicaid SPA");
+  }
+  typePartialExistingID() {
+    cy.get(searchbar).type("MD-10");
   }
 }
 export default oneMacPackagePage;

@@ -1129,3 +1129,111 @@ And("click Medicaid SPA check box", () => {
 And("verify Medicaid SPA Exists in list", () => {
   OneMacPackagePage.verifyMedicaidSPAInListExists();
 });
+And("verify show hide columns button exists", () => {
+  OneMacPackagePage.verifyShowHideColumnsBTNExists();
+});
+And("click show hide columns button", () => {
+  OneMacPackagePage.clickShowHideColumnsBTN();
+});
+And("verify 90th day exists", () => {
+  OneMacPackagePage.verifycheckBox90thDayExists();
+});
+And("verify date submitted exists", () => {
+  OneMacPackagePage.verifycheckBoxDateSubmittedExists();
+});
+And("verify expiration date exists", () => {
+  OneMacPackagePage.verifycheckBoxexpirationDateBTNExists();
+});
+And("verify state exists", () => {
+  OneMacPackagePage.verifycheckboxStateExists();
+});
+And("verify status exists", () => {
+  OneMacPackagePage.verifycheckBoxStatusExists();
+});
+And("verify submitted by exists", () => {
+  OneMacPackagePage.verifycheckBoxSubmittedByExists();
+});
+And("verify type exists", () => {
+  OneMacPackagePage.verifycheckBoxTypeExists();
+});
+And("verify 90th day column exists", () => {
+  OneMacPackagePage.verify90thDayColumn();
+});
+And("verify date submitted column exists", () => {
+  OneMacPackagePage.verifydateSubmittedColumnExists();
+});
+And("verify expiration date column exists", () => {
+  OneMacPackagePage.verifyexpirationDateColumnExists();
+});
+And("verify state column exists", () => {
+  OneMacPackagePage.verifystateColumnExists();
+});
+And("verify status column exists", () => {
+  OneMacPackagePage.verifystatusColumnExists();
+});
+And("verify submitted by column exists", () => {
+  OneMacPackagePage.verifysubmittedByColumnExists();
+});
+And("verify type column exists", () => {
+  OneMacPackagePage.verifytypeColumnExists();
+});
+And("verify IDNumber column exists", () => {
+  OneMacPackagePage.verifyIDNumberColumnExists();
+});
+And("verify actions column exists", () => {
+  OneMacPackagePage.verifyactionsColumnExists();
+});
+And("click 90th day checkbox", () => {
+  OneMacPackagePage.clickCheckBox90thDay();
+});
+And("click date submitted checkbox", () => {
+  OneMacPackagePage.clickCheckBoxDateSubmitted();
+});
+And("click expiration date checkbox", () => {
+  OneMacPackagePage.clickCheckBoxexpirationDate();
+});
+And("click state checkbox", () => {
+  OneMacPackagePage.clickCheckboxState();
+});
+And("click status checkbox", () => {
+  OneMacPackagePage.clickCheckboxStatus();
+});
+And("click submitted by checkbox", () => {
+  OneMacPackagePage.clickCheckBoxSubmittedBy();
+});
+And("click type checkbox", () => {
+  OneMacPackagePage.clickCheckBoxType();
+});
+And("verify type column does not exist", () => {
+  OneMacPackagePage.verifytypeColumnDoesNotExist();
+});
+And("verify state column does not exist", () => {
+  OneMacPackagePage.verifystateColumnDoesNotExist();
+});
+And("verify 90th day column does not exist", () => {
+  OneMacPackagePage.verify90thDayColumnDoesNotExist();
+});
+And("verify expiration date column does not exist", () => {
+  OneMacPackagePage.verifyexpirationDateColumnDoesNotExist();
+});
+And("verify status column does not exist", () => {
+  OneMacPackagePage.verifystatusColumnDoesNotExist();
+});
+And("verify date submitted column does not exist", () => {
+  OneMacPackagePage.verifydateSubmittedColumnDoesNotExist();
+});
+And("verify submitted by column does not exist", () => {
+  OneMacPackagePage.verifysubmittedByColumnDoesNotExist();
+});
+And("verify the type on row one exists", () => {
+  OneMacPackagePage.verifypackageRowOneTypeExists();
+});
+And("verify the type on row one is Medicaid SPA", () => {
+  OneMacPackagePage.verifypackageRowOneTypeHasTextMedicaidSPA();
+});
+And("type partial existing ID in search bar", () => {
+  OneMacPackagePage.typePartialExistingID();
+});
+And("verify the state on row one exists", () => {
+  OneMacPackagePage.verifypackageRowOneStateExists();
+});
