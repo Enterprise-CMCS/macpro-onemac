@@ -52,10 +52,9 @@ Feature: OY2_3900_SPA_Waivers_FormatTest
     Scenario: Verify the Waiver Number format on Temporary Extension Form
         And Click on Waiver Action
         And Click on Request Temporary Extension
-        # TODO: need a waiver number with 4 characters to exist in the system for this to work
-        # And Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page
-        # And verify error message is not present on Request Waiver Temporary Extenstion Page
-        # And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
+        And Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page
+        And verify error message is not present on Request Waiver Temporary Extenstion Page
+        And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And Type Valid Waiver Number With 5 Characters
         And verify error message is not present on Request Waiver Temporary Extenstion Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
@@ -66,10 +65,9 @@ Feature: OY2_3900_SPA_Waivers_FormatTest
     Scenario: Verify the Waiver Number format on Appendix K Form
         And Click on Waiver Action
         And Click on Appendix K Amendment
-        # TODO: need a waiver number with 4 characters to exist in the system for this to work
-        # And type in Waiver Number with 4 characters On Appendix K Amendment Page
-        # And verify error message is not present On Appendix K Amendment Page
-        # And clear Waiver Number Input box On Appendix K Amendment Page
+        And type in Waiver Number with 4 characters On Appendix K Amendment Page
+        And verify error message is not present On Appendix K Amendment Page
+        And clear Waiver Number Input box On Appendix K Amendment Page
         And type in Waiver Number with 5 characters On Appendix K Amendment Page
         And verify error message is not present On Appendix K Amendment Page
         And clear Waiver Number Input box On Appendix K Amendment Page

@@ -1,5 +1,4 @@
 {
-  "nodeVersion": "system",
   "baseUrl": "https://d2dr7dgo9g0124.cloudfront.net/",
   "redirectionLimit": 20,
   "retries": 2,
@@ -12,5 +11,5 @@
   "video": false,
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
-  "defaultCommandTimeout": 50000
+  "defaultCommandTimeout": 60000
 }

@@ -382,7 +382,7 @@ And(
 );
 
 And("verify Waiver Number EXISTS", () => {
-  cy.fixture("raiWaiverNumber.txt").then((num) => {
+  cy.fixture("raiWaiverNumber5.txt").then((num) => {
     OneMacDashboardPage.verifyIDNumber(num);
   });
 });
@@ -396,7 +396,7 @@ And("Add file for Waiver RAI Response", () => {
 });
 
 And("Verify Waiver RAI ID number matches Waiver number", () => {
-  cy.fixture("raiWaiverNumber.txt").then((num) => {
+  cy.fixture("raiWaiverNumber5.txt").then((num) => {
     OneMacDashboardPage.verifySPARAIIDNumberMatchesMedicalSPAIDNumber(num);
   });
 });
@@ -410,7 +410,9 @@ And("Click on New Waiver under Action type", () => {
 });
 
 And("type in a correct Waiver Number with 4 characters", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.7298");
+  cy.fixture("raiWaiverNumber4.txt", (num) => {
+    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(num);
+  });
 });
 
 And("verify error message is not present on New Waiver Page", () => {
@@ -440,7 +442,9 @@ And("Click on Request Temporary Extension", () => {
 And(
   "Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page",
   () => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("MD.1234");
+    cy.fixture("raiWaiverNumber4.txt", (num) => {
+      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(num);
+    });
   }
 );
 
@@ -486,7 +490,9 @@ And("Click on Appendix K Amendment", () => {
 And(
   "type in Waiver Number with 4 characters On Appendix K Amendment Page",
   () => {
-    OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.1234.R12.12");
+    cy.fixture("raiWaiverNumber4.txt", (num) => {
+      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(`${num}.R00.12`);
+    });
   }
 );
 
@@ -501,7 +507,7 @@ And("clear Waiver Number Input box On Appendix K Amendment Page", () => {
 And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
-    cy.fixture("sharedWaiverNumber.txt").then((num) => {
+    cy.fixture("sharedWaiverNumber5.txt").then((num) => {
       OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.R00.12`);
     });
   }
@@ -560,13 +566,13 @@ And("Type Unique Valid Waiver Number With 5 Characters", () => {
 });
 
 And("Type Valid Waiver Number With 5 Characters", () => {
-  cy.fixture("sharedWaiverNumber.txt").then((num) => {
+  cy.fixture("sharedWaiverNumber5.txt").then((num) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
   });
 });
 
 And("Type Valid Waiver Number With 5 Characters for RAI", () => {
-  cy.fixture("raiWaiverNumber.txt").then((num) => {
+  cy.fixture("raiWaiverNumber5.txt").then((num) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
   });
 });
@@ -593,7 +599,7 @@ And("verify that value of the column for the ID is Pending", () => {
 And(
   "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
   () => {
-    cy.fixture("sharedWaiverNumber.txt").then((num) => {
+    cy.fixture("sharedWaiverNumber5.txt").then((num) => {
       OneMacPackagePage.findIdNumberMD32560(num);
     });
   }
@@ -1056,7 +1062,7 @@ And("type in submitters name", () => {
   OneMacPackagePage.typeSubmittersName();
 });
 And("verify user exists with waiver number searched", () => {
-  cy.fixture("sharedWaiverNumber.txt").then((num) => {
+  cy.fixture("sharedWaiverNumber5.txt").then((num) => {
     OneMacPackagePage.verifyIDNumberExists(num);
   });
 });
