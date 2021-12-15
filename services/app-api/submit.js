@@ -28,7 +28,7 @@ const SUBMISSION_STATES = {
 export const main = handler(async (event) => {
   let data;
   let crFunctions;
-  console.log("Received Event: ", JSON.stringify(event, null, 2));
+  //console.log("Received Event: ", JSON.stringify(event, null, 2));
 
   // the event parse failure is an exception that should "break" the lambda
   try {
@@ -54,7 +54,7 @@ export const main = handler(async (event) => {
     // get the rest of the details about the current user
     const doneBy = await getUser(data?.user?.email);
 
-    if (!doneBy) {
+    if (JSON.stringify(doneBy) === "{}") {
       throw RESPONSE_CODE.USER_NOT_FOUND;
     }
 
