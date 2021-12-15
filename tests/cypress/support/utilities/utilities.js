@@ -1,7 +1,7 @@
 //Here we can add all common utilities then export and import in other files as we need them.
 //We can also move these files to Common package under integration. Both are considered best practices.
 
-export class utilities {
+class utilities {
   SPAID(state) {
     let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
     let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
@@ -25,4 +25,6 @@ export class utilities {
     return waiverNumber;
   }
 }
-export default utilities;
+
+module.exports = utilities;
+module.exports.utilities = utilities;
