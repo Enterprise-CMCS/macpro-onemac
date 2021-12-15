@@ -40,6 +40,8 @@ function HamburgerMenu({ linksToDisplay }) {
     return (
       <div
         id="hamburgerNav"
+        role="listbox"
+        aria-label="Opened Hamburger Menu"
         className="hamburger-content"
         ref={hamburgerWrapperRef}
       >

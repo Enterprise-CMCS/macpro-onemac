@@ -10,7 +10,7 @@ export class oneMacDevLoginPage {
   }
 
   loginAsCMSRoleApprover() {
-    cy.get(EmailInput).type("cmsapprover@nightwatch.test");
+    cy.get(EmailInput).type("cmsroleapprover@nightwatch.test");
     cy.get(PasswordInput).type("Passw0rd!");
     cy.get(LoginBtn).click();
   }

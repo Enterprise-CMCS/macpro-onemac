@@ -8,7 +8,7 @@ Feature: OY2_13234_Waiver_RAI
     And click on Waiver Action on Waiver Action Type page
     And select Action Type New Waiver
     And select 1915b 4 FFS Selective Contracting waivers
-    And Type Valid Waiver Number With 5 Characters
+    And Type Valid Waiver Number With 5 Characters for RAI
     And Add file for 1915b 4 FFS Selective Contracting waiver application pre-print
     And Type Additonal Information Comments
     And Click on Submit Button

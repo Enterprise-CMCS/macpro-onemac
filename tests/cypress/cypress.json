@@ -1,8 +1,7 @@
 {
-  "nodeVersion": "system",
   "baseUrl": "https://d2dr7dgo9g0124.cloudfront.net/",
   "redirectionLimit": 20,
-  "retries": 5,
+  "retries": 2,
   "watchForFileChanges": true,
   "testFiles": "**/*.feature",
   "fixturesFolder": "fixtures",
@@ -12,7 +11,5 @@
   "video": false,
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
-  "defaultCommandTimeout": 30000,
-  "viewportWidth": 1200,
-  "viewportHeight": 720
+  "defaultCommandTimeout": 60000
 }

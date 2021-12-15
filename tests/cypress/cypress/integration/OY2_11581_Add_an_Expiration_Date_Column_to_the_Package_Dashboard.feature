@@ -7,12 +7,13 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard
         And click on Packages
         And verify Expiration Date column is available to the immediate left to the status column
 
-    Scenario: Display expiration date is visible on MD.32560
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        And click on Packages
-        And expiration date on MD.32560 is Oct 14, 2026
+    # TODO: figure out how to seed a Waiver with an expiration date
+    # Scenario: Display expiration date is visible on MD.32560
+    #     Given I am on Login Page
+    #     When Clicking on Development Login
+    #     When Login with state submitter user
+    #     And click on Packages
+    #     And expiration date on MD.32560 is Oct 14, 2026
 
     Scenario: Expiration Date column should Show N/A for Medicaid SPA
         Given I am on Login Page
