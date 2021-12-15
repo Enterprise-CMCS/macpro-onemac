@@ -1,10 +1,10 @@
 import { main } from "./submit";
 import { validateSubmission } from "./changeRequest/changeRequest-util";
 import { RESPONSE_CODE } from "cmscommonlib";
-//import getUser from "./utils/getUser";
+import getUser from "./utils/getUser";
 
 jest.mock("./changeRequest/changeRequest-util");
-//jest.mock("./utils/getUser");
+jest.mock("./utils/getUser");
 
 const expectedResponse = {
   statusCode: 200,
@@ -125,11 +125,12 @@ const testUserEvent = {
     domainName: "je8lkoa2u9.execute-api.us-east-1.amazonaws.com",
     apiId: "je8lkoa2u9",
   },
-  body: '{"type":"spa"}',
+  body: '{"type":"spa","territory":"MI","summary":"valid submission data for testing.","transmittalNumber":"MI-22-0897","actionType":"","waiverAuthority":"","transmittalNumberWarningMessage":"","user":{"email":"statesubmitteractive@cms.hhs.local","firstName":"Angie","lastName":"Active"},"uploads":[{"s3Key":"1639488614688/CMS 179 Form Acronym Removal Signed.pdf","filename":"CMS 179 Form Acronym Removal Signed.pdf","contentType":"application/pdf","url":"https://uploads-add-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A54fb74ef-1d89-4528-bb26-24926cbc5eef/1639488614688/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf","title":"CMS Form 179"},{"s3Key":"1639488614690/Attachment 3.1-A, #4b, Page 3f Track.pdf","filename":"Attachment 3.1-A, #4b, Page 3f Track.pdf","contentType":"application/pdf","url":"https://uploads-add-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A54fb74ef-1d89-4528-bb26-24926cbc5eef/1639488614690/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf","title":"SPA Pages"}]}',
   isBase64Encoded: false,
 };
 
 //body: '{"type":"spa","territory":"MI","summary":"valid submission data for testing.","transmittalNumber":"MI-22-0897","actionType":"","waiverAuthority":"","transmittalNumberWarningMessage":"","user":{"email":"statesubmitteractive@cms.hhs.local","firstName":"Angie","lastName":"Active"},"uploads":[{"s3Key":"1639488614688/CMS 179 Form Acronym Removal Signed.pdf","filename":"CMS 179 Form Acronym Removal Signed.pdf","contentType":"application/pdf","url":"https://uploads-add-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A54fb74ef-1d89-4528-bb26-24926cbc5eef/1639488614688/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf","title":"CMS Form 179"},{"s3Key":"1639488614690/Attachment 3.1-A, #4b, Page 3f Track.pdf","filename":"Attachment 3.1-A, #4b, Page 3f Track.pdf","contentType":"application/pdf","url":"https://uploads-add-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A54fb74ef-1d89-4528-bb26-24926cbc5eef/1639488614690/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf","title":"SPA Pages"}]}',
+//  body: '{"type":"spa"}',
 
 it("tests the warmup", async () => {
   const response = main({ source: "serverless-plugin-warmup" }, "foo");
@@ -139,7 +140,7 @@ it("tests the warmup", async () => {
 it(`returns an error for invalid submission`, async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.VALIDATION_ERROR);
 
-  validateSubmission.mockReturnValue(null);
+  validateSubmission.mockReturnValue("VA000");
 
   const response = main(testUserEvent, "foo");
 
@@ -149,11 +150,11 @@ it(`returns an error for invalid submission`, async () => {
       console.log("caught test error: ", error);
     });
 });
-/*
+
 it(`returns an error for unknown user`, async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_NOT_FOUND);
   console.log("expect: ", expectedResponse);
-  validateSubmission.mockReturnValueOnce(true);
+  validateSubmission.mockReturnValueOnce(null);
   getUser.mockResolvedValueOnce(null);
 
   const response = main(testUserEvent, "foo");
@@ -164,4 +165,3 @@ it(`returns an error for unknown user`, async () => {
       console.log("caught test error: ", error);
     });
 });
-*/

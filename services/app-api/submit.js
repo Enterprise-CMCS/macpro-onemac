@@ -52,8 +52,8 @@ export const main = handler(async (event) => {
     }
 
     // get the rest of the details about the current user
-    const doneBy = await getUser(data.user.email);
-    console.log("done by: ", doneBy);
+    const doneBy = await getUser(data?.user?.email);
+
     if (!doneBy) {
       throw RESPONSE_CODE.USER_NOT_FOUND;
     }
