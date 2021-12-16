@@ -96,8 +96,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click status checkbox
         And click submitted by checkbox
         And click show hide columns button
-        And verify the type on row one exists
-        And verify the type on row one is Medicaid SPA
+        # And verify the type on row one exists
+        # And verify the type on row one is Medicaid SPA
 
     Scenario: Search with no results and verify error message is correct, verify columns are existing per selection on filter
         Given I am on Login Page
@@ -131,11 +131,11 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And type partial existing ID in search bar
         And verify type column exists
         And verify state column exists
-        And verify the type on row one exists
-        And verify the state on row one exists
+        #And verify the type on row one exists
+        #And verify the state on row one exists
         And click show hide columns button
         And click state checkbox
         And click show hide columns button
         And verify state column does not exist
         And verify type column exists
-        And verify the type on row one exists
+        #And verify the type on row one exists
