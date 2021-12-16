@@ -9,6 +9,7 @@ import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { format } from "date-fns";
 import classNames from "classnames";
+//import { createMachine } from "xstate";
 
 import {
   RESPONSE_CODE,
@@ -31,6 +32,39 @@ import PopupMenu from "../components/PopupMenu";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
+
+//const createActionMachine = (currentState) =>
+// createMachine(statusActionMachine);
+
+// List the legal actions for this package status //
+/*
+export const ensureLegalActions = (
+  userAttribs = [],
+  inputAttrib,
+  isPutUser
+) => {
+  if (!isPutUser && userAttribs.length === 0) {
+    console.log(
+      `Warning: User attributes are request for status change request`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+  }
+
+  const currentState = createStatusMachine(
+    userAttribs.length === 0
+      ? "unregistered"
+      : getLatestAttribute(userAttribs).status
+  ).initialState;
+
+  if (!currentState.can(inputAttrib.status)) {
+    console.log(
+      `Warning: Illegal status change request from ${currentState.value}, to ${inputAttrib.status}`
+    );
+    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
+  }
+};
+*/
+// generate the user attribute object using the provided details //
 
 export const withdrawMenuItem = {
   label: "Withdraw Package",

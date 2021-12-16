@@ -14,6 +14,52 @@ export const TYPE = {
   WAIVER_APP_K: "waiverappk",
 };
 
+export const ONEMAC_STATUS = {
+  SUBMITTED: "Submitted",
+  IN_REVIEW: "Package In Review",
+  RAI_ISSUED: "RAI Issued",
+  APPROVED: "Package Approved",
+  DISAPPROVED: "Package Disapproved",
+  WITHDRAWN: "Package Withdrawn",
+  TERMINATED: "Waiver Terminated",
+};
+/*
+export const statusActionMachine = {
+  id: "packageActions",
+  initial: currentState,
+  states: {
+    unregistered: {
+      on: {
+        [ONEMAC_STATUS.SUBMITTED]: USER_STATUS.PENDING,
+      },
+    },
+    [ONEMAC_STATUS.SUBMITTED]: {
+      on: {
+        [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
+        [USER_STATUS.DENIED]: USER_STATUS.DENIED,
+        [USER_STATUS.REVOKED]: USER_STATUS.REVOKED,
+      },
+    },
+    [USER_STATUS.ACTIVE]: {
+      on: {
+        [USER_STATUS.REVOKED]: USER_STATUS.REVOKED,
+      },
+    },
+    [USER_STATUS.DENIED]: {
+      on: {
+        [USER_STATUS.PENDING]: USER_STATUS.PENDING,
+        [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
+      },
+    },
+    [USER_STATUS.REVOKED]: {
+      on: {
+        [USER_STATUS.PENDING]: USER_STATUS.PENDING,
+        [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
+      },
+    },
+  },
+};
+*/
 export const correspondingRAILink = {
   [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [TYPE.SPA]: ROUTES.SPA_RAI,
