@@ -23,7 +23,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify CHIP SPA Exists
         And verify Medicaid SPA Exists
         And click on Status
-        And verify package in review exists
+        # And verify package in review exists
         # TODO: see what other statuses are possible in test sequence once we finalize them
         # And verify rai response submitted exists
         # And verify seatool status 1 exists
