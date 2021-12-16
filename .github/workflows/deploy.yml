@@ -184,6 +184,7 @@ jobs:
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT" >> $GITHUB_ENV
           echo "Application endpoint: $APPLICATION_ENDPOINT"
           popd         
       - name: Run Cypress Tests
@@ -192,6 +193,13 @@ jobs:
           working-directory: tests/cypress
           browser: chrome
           headless: true
+          config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
+      - name: Upload screenshots
+        uses: actions/upload-artifact@v2
+        if: failure()
+        with:
+          name: cypress-screenshots
+          path: tests/cypress/screenshots/
       - name: Slack Notification
         uses: rtCamp/action-slack-notify@v2
         if: env.SLACK_WEBHOOK_URL != '' && contains(fromJson('["develop", "master", "production"]'), env.branch_name) && failure ()

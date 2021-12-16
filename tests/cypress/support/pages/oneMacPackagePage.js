@@ -2,7 +2,8 @@
 const nintieththDayColumn = '//th[@id="ninetiethDayColHeader"]';
 const nintiethDayColumnFirstValue = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
-const MD32560Value = '//a[contains(text(),"MD.32560")]';
+const MD32560Value = (waiverNumber) =>
+  `//a[contains(text(),"${waiverNumber}")]`;
 //Element is Xpath use cy.xpath instead of cy.get
 const WI232222MED1 = '//a[contains(text(),"WI-23-2222-MED1")]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -69,8 +70,8 @@ export class oneMacPackagePage {
     cy.get(nintiethDayColumnFirstValue).contains("Pending");
   }
 
-  findIdNumberMD32560() {
-    cy.xpath(MD32560Value).contains("MD.32560");
+  findIdNumberMD32560(waiverNumber) {
+    cy.xpath(MD32560Value(waiverNumber)).contains(waiverNumber);
   }
 
   findIdNumberWI232222MED1() {
