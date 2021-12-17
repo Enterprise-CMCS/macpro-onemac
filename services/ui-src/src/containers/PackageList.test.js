@@ -45,7 +45,7 @@ it("renders with a New Submission button", async () => {
     ROUTES.NEW_SUBMISSION_SELECTION
   );
 });
-
+/*
 it("passes a retrieval error up", async () => {
   PackageApi.getMyPackages.mockResolvedValueOnce("UR040");
 
@@ -110,3 +110,4 @@ it("has the correct package ID in the confirmation message with a withdrawal", (
     `You are about to withdraw ${testPackageID}. Once complete, you will not be able to resubmit this package. CMS will be notified.`
   );
 });
+*/
