@@ -199,7 +199,7 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
+      const packageConfig = ChangeRequest?.CONFIG[row.original.componentType];
       let menuItems = [];
       packageConfig.actionsByStatus[row.original.currentStatus].forEach(
         (actionLabel) => {

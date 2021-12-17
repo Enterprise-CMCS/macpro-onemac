@@ -1,0 +1,186 @@
+[{
+ "pk": "MD-13-1122",
+ "sk": "spa",
+ "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+ "changeHistory": [
+  {
+   "componentType": "sparai",
+   "componentTimestamp": 1639696189171,
+   "submitterName": "StateSubmitter Nightwatch",
+   "componentId": "MD-13-1122"
+  },
+  {
+   "componentType": "spa",
+   "additionalInformation": "This is just a test",
+   "componentId": "MD-13-1122",
+   "attachments": [
+    {
+     "s3Key": "1639696180278/15MB.pdf",
+     "filename": "15MB.pdf",
+     "title": "CMS Form 179",
+     "contentType": "application/pdf",
+     "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/15MB.pdf"
+    },
+    {
+     "s3Key": "1639696180278/adobe.pdf",
+     "filename": "adobe.pdf",
+     "title": "SPA Pages",
+     "contentType": "application/pdf",
+     "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf"
+    }
+   ],
+   "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d",
+   "currentStatus": "Submitted",
+   "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+   "submitterName": "StateSubmitter Nightwatch",
+   "submissionTimestamp": 1639696185888,
+   "submitterEmail": "statesubmitter@nightwatch.test"
+  }
+ ],
+ "componentType": "spa",
+ "currentStatus": "sparai Submitted",
+ "attachments": [
+  {
+   "s3Key": "1639696180278/15MB.pdf",
+   "filename": "15MB.pdf",
+   "title": "CMS Form 179",
+   "contentType": "application/pdf",
+   "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/15MB.pdf"
+  },
+  {
+   "s3Key": "1639696180278/adobe.pdf",
+   "filename": "adobe.pdf",
+   "title": "SPA Pages",
+   "contentType": "application/pdf",
+   "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf"
+  },
+  {
+   "s3Key": "1639696188378/adobe.pdf",
+   "filename": "adobe.pdf",
+   "title": "RAI Response",
+   "contentType": "application/pdf",
+   "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696188378/adobe.pdf"
+  }
+ ],
+ "GSI1sk": "MD-13-1122",
+ "sparai": [
+  {
+   "componentType": "sparai",
+   "componentTimestamp": 1639696189171,
+   "submitterName": "StateSubmitter Nightwatch",
+   "componentId": "MD-13-1122"
+  }
+ ],
+ "additionalInformation": "This is just a test",
+ "submissionTimestamp": 1639696185888,
+ "GSI1pk": "OneMAC",
+ "packageId": "MD-13-1122",
+ "submitterEmail": "statesubmitter@nightwatch.test",
+ "componentId": "MD-13-1122",
+ "submitterName": "StateSubmitter Nightwatch",
+ "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+},
+{
+    "pk": "MD-77-2985",
+    "sk": "chipspa",
+    "chipsparai": [
+     {
+      "componentType": "chipsparai",
+      "componentTimestamp": 1639695915718,
+      "submitterName": "StateSubmitter Nightwatch",
+      "componentId": "MD-77-2985"
+     }
+    ],
+    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+    "changeHistory": [
+     {
+      "componentType": "chipsparai",
+      "componentTimestamp": 1639695915718,
+      "submitterName": "StateSubmitter Nightwatch",
+      "componentId": "MD-77-2985"
+     },
+     {
+      "componentType": "chipspa",
+      "additionalInformation": "This is just a test",
+      "componentId": "MD-77-2985",
+      "attachments": [
+       {
+        "s3Key": "1639695907350/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "Current State Plan",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+       },
+       {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+       },
+       {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+       }
+      ],
+      "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+      "submitterName": "StateSubmitter Nightwatch",
+      "submissionTimestamp": 1639695908900,
+      "submitterEmail": "statesubmitter@nightwatch.test"
+     }
+    ],
+    "componentType": "chipspa",
+    "currentStatus": "chipsparai Submitted",
+    "attachments": [
+     {
+      "s3Key": "1639695907350/picture.jpg",
+      "filename": "picture.jpg",
+      "title": "Current State Plan",
+      "contentType": "image/jpeg",
+      "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+     },
+     {
+      "s3Key": "1639695907351/adobe.pdf",
+      "filename": "adobe.pdf",
+      "title": "Amended State Plan Language",
+      "contentType": "application/pdf",
+      "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+     },
+     {
+      "s3Key": "1639695907351/adobe.pdf",
+      "filename": "adobe.pdf",
+      "title": "Cover Letter",
+      "contentType": "application/pdf",
+      "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+     },
+     {
+      "s3Key": "1639695913999/adobe.pdf",
+      "filename": "adobe.pdf",
+      "title": "Revised Amended State Plan Language",
+      "contentType": "application/pdf",
+      "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695913999/adobe.pdf"
+     },
+     {
+      "s3Key": "1639695913999/adobe.pdf",
+      "filename": "adobe.pdf",
+      "title": "Official RAI Response",
+      "contentType": "application/pdf",
+      "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695913999/adobe.pdf"
+     }
+    ],
+    "GSI1sk": "MD-77-2985",
+    "additionalInformation": "This is just a test",
+    "submissionTimestamp": 1639695908900,
+    "GSI1pk": "OneMAC",
+    "packageId": "MD-77-2985",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "componentId": "MD-77-2985",
+    "submitterName": "StateSubmitter Nightwatch",
+    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+   }
+]
