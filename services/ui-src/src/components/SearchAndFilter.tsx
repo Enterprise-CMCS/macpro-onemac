@@ -206,11 +206,13 @@ function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
 
 export const dateFilterColumnProps = {
   Filter: DateFilter,
+  disableFilters: false,
   filter: filterFromDateRange,
 };
 
 export const textFilterColumnProps = {
   Filter: TextFilter,
+  disableFilters: false,
   filter: filterFromMultiCheckbox,
 };
 

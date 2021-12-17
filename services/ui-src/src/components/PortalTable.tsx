@@ -15,6 +15,12 @@ export type TableProps<V> = {
   withSearchBar?: boolean;
 } & Pick<SearchFilterProps<V>, "pageContentRef">;
 
+const defaultColumn = {
+  Filter: () => null,
+  disableFilters: true,
+  disableGlobalFilter: true,
+};
+
 export default function PortalTable<V extends {} = {}>({
   pageContentRef,
   withSearchBar,
@@ -43,6 +49,8 @@ export default function PortalTable<V extends {} = {}>({
       // once a column has been sorted, only toggle between sort orders - do
       // not go to original state
       disableSortRemove: true,
+      // @ts-ignore not passing enough default props per column for it to recognize
+      defaultColumn,
       ...props,
     },
     useGlobalFilter,

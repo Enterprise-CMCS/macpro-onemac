@@ -237,14 +237,13 @@ const PackageList = () => {
       {
         Header: "ID/Number",
         accessor: "componentId",
-        disableFilters: true,
+        disableGlobalFilter: false,
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
         accessor: getType,
-        disableGlobalFilter: true,
         id: "componentType",
         Cell: renderType,
         ...textFilterColumnProps,
@@ -252,14 +251,11 @@ const PackageList = () => {
       {
         Header: "State",
         accessor: getState,
-        disableFilters: true,
-        disableGlobalFilter: true,
         id: "territory",
       },
       {
         Header: "90th Day",
         accessor: "clockEndTimestamp",
-        disableGlobalFilter: true,
         id: "ninetiethDay",
         Cell: renderFilteredDate("currentStatus"),
         ...dateFilterColumnProps,
@@ -267,7 +263,6 @@ const PackageList = () => {
       {
         Header: "Expiration Date",
         accessor: "expirationTimestamp",
-        disableGlobalFilter: true,
         id: "expirationTimestamp",
         Cell: renderFilteredDate("componentType"),
         ...dateFilterColumnProps,
@@ -275,21 +270,19 @@ const PackageList = () => {
       {
         Header: "Status",
         accessor: "currentStatus",
-        disableGlobalFilter: true,
         id: "packageStatus",
         ...textFilterColumnProps,
       },
       {
         Header: "Date Submitted",
         accessor: "submissionTimestamp",
-        disableGlobalFilter: true,
         Cell: renderDate,
         ...dateFilterColumnProps,
       },
       {
         Header: "Submitted By",
         accessor: "submitterName",
-        disableFilters: true,
+        disableGlobalFilter: false,
         id: "submitter",
         Cell: renderName,
       },
@@ -299,8 +292,6 @@ const PackageList = () => {
       const actionsColumn = {
         Header: "Actions",
         accessor: "actions",
-        disableFilters: true,
-        disableGlobalFilter: true,
         disableSortBy: true,
         id: "packageActions",
         Cell: renderActions,
