@@ -3,7 +3,7 @@ import { act } from "react-dom/test-utils";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import PortalTable from "./PortalTable";
+import PortalTable, { textFilterColumnProps } from "./PortalTable";
 
 it("renders without crashing", () => {
   render(<PortalTable columns={[]} data={[]} />);
@@ -182,8 +182,8 @@ describe("search and filter features", () => {
         <div id="myContainer">
           <PortalTable
             columns={[
-              { Header: "Foo", accessor: "foo", disableFilters: true },
-              { Header: "Bar", accessor: "bar" },
+              { Header: "Foo", accessor: "foo" },
+              { Header: "Bar", accessor: "bar", ...textFilterColumnProps },
             ]}
             data={[
               { foo: 1, bar: "two" },

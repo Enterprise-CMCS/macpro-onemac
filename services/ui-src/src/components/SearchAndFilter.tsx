@@ -216,26 +216,6 @@ export const textFilterColumnProps = {
   filter: filterFromMultiCheckbox,
 };
 
-type FilterSectionProps<V extends {}> = {
-  column: ColumnInstance<V> & UseFiltersColumnProps<V>;
-};
-
-function FilterSection<V extends {}>({
-  column,
-  column: { Header },
-}: FilterSectionProps<V>) {
-  return (
-    <AccordionItem
-      buttonClassName="inversed-accordion-button"
-      contentClassName="inversed-accordion-content"
-      heading={Header}
-      headingLevel="6"
-    >
-      {column.render("Filter")}
-    </AccordionItem>
-  );
-}
-
 type FilterPaneProps<V extends {}> = {
   columnsInternal: (ColumnInstance<V> &
     UseFiltersColumnOptions<V> &
@@ -291,8 +271,16 @@ function FilterPane<V extends {}>({
             <Accordion className="filter-accordion">
               {columnsInternal
                 ?.filter(({ canFilter }) => canFilter)
-                ?.map((columnProps) => (
-                  <FilterSection column={columnProps} key={columnProps.id} />
+                ?.map((column) => (
+                  <AccordionItem
+                    buttonClassName="inversed-accordion-button"
+                    contentClassName="inversed-accordion-content"
+                    heading={column.render("Header")}
+                    headingLevel="6"
+                    key={column.id}
+                  >
+                    {column.render("Filter")}
+                  </AccordionItem>
                 ))}
             </Accordion>
             <footer>
