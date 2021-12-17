@@ -15,6 +15,7 @@ export const TYPE = {
 };
 
 export const ONEMAC_STATUS = {
+  UNSUBMITTED: "Submitted",
   SUBMITTED: "Submitted",
   IN_REVIEW: "Package In Review",
   RAI_ISSUED: "RAI Issued",
@@ -23,48 +24,10 @@ export const ONEMAC_STATUS = {
   WITHDRAWN: "Package Withdrawn",
   TERMINATED: "Waiver Terminated",
 };
-/*
-export const statusActionMachine = {
-  id: "packageActions",
-  initial: currentState,
-  states: {
-    unregistered: {
-      on: {
-        [ONEMAC_STATUS.SUBMITTED]: USER_STATUS.PENDING,
-      },
-    },
-    [ONEMAC_STATUS.SUBMITTED]: {
-      on: {
-        [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
-        [USER_STATUS.DENIED]: USER_STATUS.DENIED,
-        [USER_STATUS.REVOKED]: USER_STATUS.REVOKED,
-      },
-    },
-    [USER_STATUS.ACTIVE]: {
-      on: {
-        [USER_STATUS.REVOKED]: USER_STATUS.REVOKED,
-      },
-    },
-    [USER_STATUS.DENIED]: {
-      on: {
-        [USER_STATUS.PENDING]: USER_STATUS.PENDING,
-        [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
-      },
-    },
-    [USER_STATUS.REVOKED]: {
-      on: {
-        [USER_STATUS.PENDING]: USER_STATUS.PENDING,
-        [USER_STATUS.ACTIVE]: USER_STATUS.ACTIVE,
-      },
-    },
-  },
-};
-*/
-export const correspondingRAILink = {
-  [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
-  [TYPE.SPA]: ROUTES.SPA_RAI,
-  [TYPE.WAIVER]: ROUTES.WAIVER_RAI,
-  [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+
+export const PACKAGE_ACTION = {
+  RESPOND_TO_RAI: "Respond to RAI",
+  WITHDRAW: "Withdraw Package",
 };
 
 const getBaseWaiverId = (inId) => {
@@ -119,6 +82,20 @@ const waiverBaseTransmittalNumber = {
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
 };
 
+const defaultActionsByStatus = {
+  [ONEMAC_STATUS.UNSUBMITTED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.RAI_ISSUED]: [
+    PACKAGE_ACTION.WITHDRAW,
+    PACKAGE_ACTION.RESPOND_TO_RAI,
+  ],
+  [ONEMAC_STATUS.APPROVED]: [],
+  [ONEMAC_STATUS.DISAPPROVED]: [],
+  [ONEMAC_STATUS.WITHDRAWN]: [],
+  [ONEMAC_STATUS.TERMINATED]: [],
+};
+
 export const CONFIG = {
   [TYPE.CHIP_SPA]: {
     pageTitle: "Submit New CHIP SPA",
@@ -153,6 +130,8 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.CHIP_SPA_RAI,
   },
 
   [TYPE.CHIP_SPA_RAI]: {
@@ -224,6 +203,8 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.SPA_RAI,
   },
 
   [TYPE.SPA_RAI]: {
@@ -353,6 +334,8 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.WAIVER_RAI,
   },
 
   [TYPE.WAIVER_APP_K]: {
@@ -436,3 +419,5 @@ export const CONFIG = {
     },
   },
 };
+
+CONFIG[TYPE.WAIVER_BASE] = CONFIG[TYPE.WAIVER];

@@ -33,56 +33,6 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-//const createActionMachine = (currentState) =>
-// createMachine(statusActionMachine);
-
-// List the legal actions for this package status //
-/*
-export const ensureLegalActions = (
-  userAttribs = [],
-  inputAttrib,
-  isPutUser
-) => {
-  if (!isPutUser && userAttribs.length === 0) {
-    console.log(
-      `Warning: User attributes are request for status change request`
-    );
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-
-  const currentState = createStatusMachine(
-    userAttribs.length === 0
-      ? "unregistered"
-      : getLatestAttribute(userAttribs).status
-  ).initialState;
-
-  if (!currentState.can(inputAttrib.status)) {
-    console.log(
-      `Warning: Illegal status change request from ${currentState.value}, to ${inputAttrib.status}`
-    );
-    throw new Error(RESPONSE_CODE.VALIDATION_ERROR);
-  }
-};
-*/
-// generate the user attribute object using the provided details //
-
-export const withdrawMenuItem = {
-  label: "Withdraw Package",
-  value: "Withdrawn",
-  formatConfirmationMessage: ({ componentId }) =>
-    `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-};
-
-const menuItemMap = {
-  "chipsparai Submitted": withdrawMenuItem,
-  "waiverrai Submitted": withdrawMenuItem,
-  "sparai Submitted": withdrawMenuItem,
-  "waiverrenewal Submitted": withdrawMenuItem,
-  "waiveramendment Submitted": withdrawMenuItem,
-  "waiverextension Submitted": withdrawMenuItem,
-  Submitted: withdrawMenuItem,
-};
-
 const filterArray = {
   currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
   componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
@@ -249,25 +199,25 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const raiLink =
-        ChangeRequest.correspondingRAILink[row.original.componentType];
-      const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
-      const canRespond = row.original.currentStatus === "RAI Issued";
+      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
-
-      if (raiLink && canRespond) {
-        const menuItemRai = {
-          label: "Respond to RAI",
-          value: { link: raiLink, raiId: row.original.componentId },
-          handleSelected: onPopupActionRAI,
-        };
-        menuItems.push(menuItemRai);
-      }
-
-      if (menuItemBasedOnStatus) {
-        menuItemBasedOnStatus.handleSelected = onPopupActionWithdraw;
-        menuItems.push(menuItemBasedOnStatus);
-      }
+      packageConfig.actionsByStatus[row.original.currentStatus].forEach(
+        (actionLabel) => {
+          const newItem = { label: actionLabel };
+          if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+            newItem.value = "Withdrawn";
+            newItem.formatConfirmationMessage = ({ componentId }) =>
+              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+            newItem.handleSelected = onPopupActionWithdraw;
+          } else {
+            const raiLink =
+              ChangeRequest.correspondingRAILink[row.original.componentType];
+            newItem.value = { link: raiLink, raiId: row.original.componentId };
+            newItem.handleSelected = onPopupActionRAI;
+          }
+          menuItems.push(newItem);
+        }
+      );
 
       return (
         <PopupMenu
