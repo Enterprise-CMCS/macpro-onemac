@@ -222,5 +222,49 @@ describe("search and filter features", () => {
         within(barOptionSection).getByRole("checkbox", { name: /four/i })
       ).toBeVisible();
     });
+
+    it("displays a reset button for all filters", () => {
+      const myRef = {};
+      render(
+        <div id="myContainer">
+          <PortalTable
+            columns={[
+              { Header: "Foo", accessor: "foo" },
+              { Header: "Bar", accessor: "bar", ...textFilterColumnProps },
+            ]}
+            data={[
+              { foo: 1, bar: "two" },
+              { foo: 3, bar: "four" },
+            ]}
+            withSearchBar
+            pageContentRef={myRef}
+          />
+        </div>
+      );
+      myRef.current = document.getElementById("myContainer");
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+
+      fireEvent.click(screen.getByRole("button", { name: /filter/i }));
+      const filterPane = screen.getByRole("search", { name: /filter/i });
+      const barButton = within(filterPane).getByRole("button", {
+        name: /bar/i,
+      });
+      fireEvent.click(barButton);
+      fireEvent.click(
+        within(
+          document.getElementById(barButton.getAttribute("aria-controls"))
+        ).getByRole("checkbox", { name: /four/i })
+      );
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
+
+      const resetButton = within(filterPane).getByRole("button", {
+        name: /reset/i,
+      });
+      fireEvent.click(resetButton);
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+    });
   });
 });
