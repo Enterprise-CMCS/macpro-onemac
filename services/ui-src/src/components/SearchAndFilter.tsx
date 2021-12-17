@@ -8,8 +8,14 @@ import React, {
   useState,
 } from "react";
 import { createPortal } from "react-dom";
-import { ColumnInstance, Row, UseFiltersColumnProps } from "react-table";
+import {
+  ColumnInstance,
+  Row,
+  UseFiltersColumnOptions,
+  UseFiltersColumnProps,
+} from "react-table";
 import { debounce } from "lodash";
+import { DateRangePicker } from "rsuite";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -26,15 +32,19 @@ import {
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
-export interface ColumnPickerProps {
-  columnsInternal: SearchFilterProps<any, any>["columnsInternal"];
+const { afterToday } = DateRangePicker;
+
+export interface ColumnPickerProps<V extends {}> {
+  columnsInternal: ColumnInstance<V>[];
 }
 
 const orderColumns = (a: { Header: string }, b: { Header: string }) => {
   return a.Header.localeCompare(b.Header);
 };
 
-export const ColumnPicker: FC<ColumnPickerProps> = ({ columnsInternal }) => {
+export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
+  columnsInternal,
+}) => {
   const [
     showColumnPickerDropdown,
     toggleColumnPickerDropdown,
@@ -106,21 +116,49 @@ export const ColumnPicker: FC<ColumnPickerProps> = ({ columnsInternal }) => {
   );
 };
 
-type FilterSectionProps<D extends {}, V extends {}> = {
-  allRows: Row<D>[];
-} & ColumnInstance<V> &
-  UseFiltersColumnProps<V>;
+const filterFromMultiCheckbox = <
+  R extends { values: V },
+  V extends Record<string, any>
+>(
+  rows: R[],
+  [columnId]: [string],
+  filterValue: string[] = []
+): R[] =>
+  rows.filter(({ values: { [columnId]: cellValue } }) =>
+    filterValue.includes(cellValue)
+  );
 
-function FilterSection<D extends {}, V extends {}>({
-  allRows,
-  Header,
-  filterValue,
-  id,
-  setFilter,
-}: FilterSectionProps<D, V>) {
+const filterFromDateRange = <
+  R extends { values: V },
+  V extends Record<string, any>
+>(
+  rows: R[],
+  [columnId]: [string],
+  [dateA, dateB]: [Date, Date]
+) => {
+  if (!dateA && !dateB) return rows;
+
+  return rows.filter(({ values: { [columnId]: cellValue } }) => {
+    const dateFromValue = new Date(cellValue);
+    return dateFromValue > dateA && dateFromValue < dateB;
+  });
+};
+
+type FilterProps = {
+  column: ColumnInstance & UseFiltersColumnProps<any>;
+  preGlobalFilteredRows: Row[];
+};
+
+function TextFilter({
+  column: { filterValue, setFilter, id },
+  preGlobalFilteredRows,
+}: FilterProps) {
   const possibleValues = useMemo(
-    () => Array.from(new Set(allRows.map(({ values }) => values[id]))).sort(),
-    [allRows, id]
+    () =>
+      Array.from(
+        new Set(preGlobalFilteredRows.map(({ values }) => values[id]))
+      ).sort(),
+    [preGlobalFilteredRows, id]
   );
 
   const onCheckboxSelect = useCallback(
@@ -136,6 +174,54 @@ function FilterSection<D extends {}, V extends {}>({
     [possibleValues, setFilter]
   );
 
+  return possibleValues.map((value) => (
+    <Choice
+      checked={filterValue?.includes(value) ?? true}
+      inversed
+      key={value}
+      label={value}
+      name={`${id}-${value}`}
+      onChange={onCheckboxSelect}
+      size="small"
+      type="checkbox"
+      value={value}
+    />
+  ));
+}
+
+function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
+  const onCleanValue = useCallback(() => setFilter([]), [setFilter]);
+  return (
+    <DateRangePicker
+      block
+      disabledDate={afterToday!()}
+      onClean={onCleanValue}
+      onOk={setFilter}
+      placeholder="Select Date Range"
+      showOneCalendar
+      value={filterValue}
+    />
+  );
+}
+
+export const dateFilterColumnProps = {
+  Filter: DateFilter,
+  filter: filterFromDateRange,
+};
+
+export const textFilterColumnProps = {
+  Filter: TextFilter,
+  filter: filterFromMultiCheckbox,
+};
+
+type FilterSectionProps<V extends {}> = {
+  column: ColumnInstance<V> & UseFiltersColumnProps<V>;
+};
+
+function FilterSection<V extends {}>({
+  column,
+  column: { Header },
+}: FilterSectionProps<V>) {
   return (
     <AccordionItem
       buttonClassName="inversed-accordion-button"
@@ -143,41 +229,95 @@ function FilterSection<D extends {}, V extends {}>({
       heading={Header}
       headingLevel="6"
     >
-      {possibleValues.map((value) => (
-        <Choice
-          checked={filterValue?.includes(value) ?? true}
-          inversed
-          key={value}
-          label={value}
-          name={`${Header}-${value}`}
-          onChange={onCheckboxSelect}
-          size="small"
-          type="checkbox"
-          value={value}
-        />
-      ))}
+      {column.render("Filter")}
     </AccordionItem>
   );
 }
 
-export type SearchFilterProps<D extends {}, V extends {}> = {
-  columnsInternal: (ColumnInstance<V> & UseFiltersColumnProps<V>)[];
-  onSearch: (keyword: string) => void;
+type FilterPaneProps<V extends {}> = {
+  columnsInternal: (ColumnInstance<V> &
+    UseFiltersColumnOptions<V> &
+    UseFiltersColumnProps<V>)[];
   pageContentRef: RefObject<HTMLElement>;
   setAllFilters: (filters: any[]) => void;
-} & Pick<FilterSectionProps<D, V>, "allRows">;
+};
 
-export function SearchAndFilter<D extends {} = {}, V extends {} = {}>({
-  allRows,
+function FilterPane<V extends {}>({
+  columnsInternal,
+  pageContentRef,
+  setAllFilters,
+}: FilterPaneProps<V>) {
+  const [showFilters, toggleShowFilters] = useToggle(false);
+  const onResetFilters = useCallback(
+    () =>
+      setAllFilters(
+        // this awful complicated dance is because the DateRangePicker gets
+        // confused on reset if you don't explicitly pass an empty array
+        columnsInternal.flatMap(({ canFilter, filter, id }) =>
+          canFilter
+            ? { id, value: filter === filterFromDateRange ? [] : undefined }
+            : []
+        )
+      ),
+    [columnsInternal, setAllFilters]
+  );
+
+  return (
+    <>
+      <Button onClick={toggleShowFilters}>Filter</Button>
+      {showFilters &&
+        pageContentRef.current &&
+        createPortal(
+          <div
+            aria-label="Filter Results"
+            className="filter-pane"
+            role="search"
+          >
+            <header>
+              <h4>Filter By</h4>
+              <Button
+                autoFocus
+                className="close-filter-pane"
+                inversed
+                onClick={toggleShowFilters}
+                size="small"
+                variation="transparent"
+              >
+                Close <FontAwesomeIcon icon={faTimes} />
+              </Button>
+            </header>
+            <Accordion className="filter-accordion">
+              {columnsInternal
+                ?.filter(({ canFilter }) => canFilter)
+                ?.map((columnProps) => (
+                  <FilterSection column={columnProps} key={columnProps.id} />
+                ))}
+            </Accordion>
+            <footer>
+              <Button inversed onClick={onResetFilters} variation="transparent">
+                Reset
+              </Button>
+            </footer>
+          </div>,
+          pageContentRef.current
+        )}
+    </>
+  );
+}
+
+export type SearchFilterProps<V extends {}> = {
+  onSearch: (keyword: string) => void;
+} & FilterPaneProps<V>;
+
+export function SearchAndFilter<V extends {} = {}>({
   columnsInternal,
   onSearch,
   pageContentRef,
   setAllFilters,
-}: SearchFilterProps<D, V>) {
+}: SearchFilterProps<V>) {
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
   const debouncedSearch = useMemo(() => debounce(onSearch, 300), [onSearch]);
-  const [showFilters, toggleShowFilters] = useToggle(false);
 
   // cancel any dangling searches when component is destroyed
   useEffect(() => {
@@ -197,8 +337,6 @@ export function SearchAndFilter<D extends {} = {}, V extends {} = {}>({
     },
     [debouncedSearch]
   );
-
-  const onResetFilters = useCallback(() => setAllFilters([]), [setAllFilters]);
 
   return (
     <div className="search-and-filter" role="search">
@@ -229,49 +367,13 @@ export function SearchAndFilter<D extends {} = {}, V extends {} = {}>({
       <div className="picker-filter-wrapper">
         <ColumnPicker columnsInternal={columnsInternal} />
         <div className="filter-buttons">
-          <Button onClick={toggleShowFilters}>Filter</Button>
+          <FilterPane
+            columnsInternal={columnsInternal}
+            pageContentRef={pageContentRef}
+            setAllFilters={setAllFilters}
+          />
         </div>
       </div>
-      {showFilters &&
-        pageContentRef.current &&
-        createPortal(
-          <div
-            aria-label="Filter Results"
-            className="filter-pane"
-            role="search"
-          >
-            <header>
-              <h4>Filter By</h4>
-              <Button
-                autoFocus
-                className="close-filter-pane"
-                inversed
-                onClick={toggleShowFilters}
-                size="small"
-                variation="transparent"
-              >
-                Close <FontAwesomeIcon icon={faTimes} />
-              </Button>
-            </header>
-            <Accordion className="filter-accordion">
-              {columnsInternal
-                ?.filter(({ canFilter }) => canFilter)
-                ?.map((columnProps) => (
-                  <FilterSection
-                    allRows={allRows}
-                    key={columnProps.id}
-                    {...columnProps}
-                  />
-                ))}
-            </Accordion>
-            <footer>
-              <Button inversed onClick={onResetFilters} variation="transparent">
-                Reset
-              </Button>
-            </footer>
-          </div>,
-          pageContentRef.current
-        )}
     </div>
   );
 }

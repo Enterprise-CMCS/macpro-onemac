@@ -5,29 +5,21 @@ import { faSearch } from "@fortawesome/free-solid-svg-icons";
 
 import Expand from "../images/Expand.svg";
 import { SearchAndFilter, SearchFilterProps } from "./SearchAndFilter";
+export {
+  dateFilterColumnProps,
+  textFilterColumnProps,
+} from "./SearchAndFilter";
 
-export const filterFromMultiCheckbox = <
-  R extends { values: V },
-  V extends Record<string, any>
->(
-  rows: R[],
-  [columnId]: [string],
-  filterValue: string[] = []
-): R[] =>
-  rows.filter(({ values: { [columnId]: cellValue } }) =>
-    filterValue.includes(cellValue)
-  );
-
-export type TableProps<D, V> = {
+export type TableProps<V> = {
   className?: string;
   withSearchBar?: boolean;
-} & Pick<SearchFilterProps<D, V>, "pageContentRef">;
+} & Pick<SearchFilterProps<V>, "pageContentRef">;
 
-export default function PortalTable<D extends {} = {}, V extends {} = {}>({
+export default function PortalTable<V extends {} = {}>({
   pageContentRef,
   withSearchBar,
   ...props
-}: TableProps<D, V>) {
+}: TableProps<V>) {
   const {
     columns,
     getTableProps,

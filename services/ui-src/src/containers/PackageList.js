@@ -21,7 +21,8 @@ import {
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable, {
-  filterFromMultiCheckbox,
+  dateFilterColumnProps,
+  textFilterColumnProps,
 } from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
@@ -244,9 +245,9 @@ const PackageList = () => {
         Header: "Type",
         accessor: getType,
         disableGlobalFilter: true,
-        filter: filterFromMultiCheckbox,
         id: "componentType",
         Cell: renderType,
+        ...textFilterColumnProps,
       },
       {
         Header: "State",
@@ -258,32 +259,32 @@ const PackageList = () => {
       {
         Header: "90th Day",
         accessor: "clockEndTimestamp",
-        disableFilters: true,
         disableGlobalFilter: true,
         id: "ninetiethDay",
         Cell: renderFilteredDate("currentStatus"),
+        ...dateFilterColumnProps,
       },
       {
         Header: "Expiration Date",
         accessor: "expirationTimestamp",
-        disableFilters: true,
         disableGlobalFilter: true,
         id: "expirationTimestamp",
         Cell: renderFilteredDate("componentType"),
+        ...dateFilterColumnProps,
       },
       {
         Header: "Status",
         accessor: "currentStatus",
         disableGlobalFilter: true,
-        filter: filterFromMultiCheckbox,
         id: "packageStatus",
+        ...textFilterColumnProps,
       },
       {
         Header: "Date Submitted",
         accessor: "submissionTimestamp",
-        disableFilters: true,
         disableGlobalFilter: true,
         Cell: renderDate,
+        ...dateFilterColumnProps,
       },
       {
         Header: "Submitted By",
