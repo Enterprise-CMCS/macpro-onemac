@@ -12,6 +12,14 @@ export function useFlag(initialState = false) {
   return [value, setValueFalse, setValueTrue, setValue];
 }
 
+export function useToggle(
+  initialState: boolean
+): [boolean, () => void, (newState: boolean) => void] {
+  const [value, setValue] = useState(initialState);
+  const toggleValue = useCallback(() => setValue((v) => !v), []);
+  return [value, toggleValue, setValue];
+}
+
 export function useFormFields(
   initialState: Record<string, string>
 ): [Record<string, string>, (event: ChangeEvent<HTMLFormElement>) => void] {

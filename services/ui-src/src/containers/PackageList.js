@@ -1,4 +1,10 @@
-import React, { useCallback, useState, useEffect, useMemo } from "react";
+import React, {
+  useCallback,
+  useState,
+  useEffect,
+  useMemo,
+  useRef,
+} from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { format } from "date-fns";
@@ -14,7 +20,9 @@ import {
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
-import PortalTable from "../components/PortalTable";
+import PortalTable, {
+  filterFromMultiCheckbox,
+} from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
@@ -24,7 +32,7 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-const withdrawMenuItem = {
+export const withdrawMenuItem = {
   label: "Withdraw Package",
   value: "Withdrawn",
   formatConfirmationMessage: ({ componentId }) =>
@@ -50,6 +58,7 @@ const filterArray = {
  * Component containing dashboard
  */
 const PackageList = () => {
+  const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const {
@@ -72,13 +81,13 @@ const PackageList = () => {
       try {
         const data = await PackageAPI.getMyPackages(userProfile.email);
 
-        if (typeof data === "string") throw data;
+        if (typeof data === "string") throw new Error(data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
-        if (!ctrlr?.signal.aborted) setIsLoading(false);
       } catch (error) {
         console.log("Error while fetching user's list.", error);
-        setAlertCode(RESPONSE_CODE[error.message]);
+        if (!ctrlr?.signal.aborted) setAlertCode(error.message);
       }
+      if (!ctrlr?.signal.aborted) setIsLoading(false);
     },
     [userProfile.email]
   );
@@ -209,10 +218,10 @@ const PackageList = () => {
       const raiLink =
         ChangeRequest.correspondingRAILink[row.original.componentType];
       const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
-      const notWithdrawn = row.original.currentStatus !== "Withdrawn";
+      const canRespond = row.original.currentStatus === "RAI Issued";
       let menuItems = [];
 
-      if (raiLink && notWithdrawn) {
+      if (raiLink && canRespond) {
         const menuItemRai = {
           label: "Respond to RAI",
           value: { link: raiLink, raiId: row.original.componentId },
@@ -242,6 +251,7 @@ const PackageList = () => {
       {
         Header: "ID/Number",
         accessor: "componentId",
+        disableFilters: true,
         disableSortBy: true,
         Cell: renderId,
       },
@@ -249,18 +259,21 @@ const PackageList = () => {
         Header: "Type",
         accessor: getType,
         disableGlobalFilter: true,
+        filter: filterFromMultiCheckbox,
         id: "componentType",
         Cell: renderType,
       },
       {
         Header: "State",
         accessor: getState,
+        disableFilters: true,
         disableGlobalFilter: true,
         id: "territory",
       },
       {
         Header: "90th Day",
         accessor: "clockEndTimestamp",
+        disableFilters: true,
         disableGlobalFilter: true,
         id: "ninetiethDay",
         Cell: renderFilteredDate("currentStatus"),
@@ -268,6 +281,7 @@ const PackageList = () => {
       {
         Header: "Expiration Date",
         accessor: "expirationTimestamp",
+        disableFilters: true,
         disableGlobalFilter: true,
         id: "expirationTimestamp",
         Cell: renderFilteredDate("componentType"),
@@ -276,17 +290,20 @@ const PackageList = () => {
         Header: "Status",
         accessor: "currentStatus",
         disableGlobalFilter: true,
+        filter: filterFromMultiCheckbox,
         id: "packageStatus",
       },
       {
         Header: "Date Submitted",
         accessor: "submissionTimestamp",
+        disableFilters: true,
         disableGlobalFilter: true,
         Cell: renderDate,
       },
       {
         Header: "Submitted By",
         accessor: "submitterName",
+        disableFilters: true,
         id: "submitter",
         Cell: renderName,
       },
@@ -296,6 +313,7 @@ const PackageList = () => {
       const actionsColumn = {
         Header: "Actions",
         accessor: "actions",
+        disableFilters: true,
         disableGlobalFilter: true,
         disableSortBy: true,
         id: "packageActions",
@@ -413,6 +431,7 @@ const PackageList = () => {
             columns={columns}
             data={packageList}
             initialState={initialTableState}
+            pageContentRef={dashboardRef}
             withSearchBar
           />
         ) : (
@@ -429,8 +448,12 @@ const PackageList = () => {
         heading="Submission Dashboard"
         rightSideContent={getRightSideContent()}
       />
-      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-      <div className="dashboard-container">{renderSubmissionList()}</div>
+      <div className="dash-and-filters" ref={dashboardRef}>
+        <div className="dashboard-and-alert-bar">
+          <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
+          <div className="dashboard-container">{renderSubmissionList()}</div>
+        </div>
+      </div>
     </div>
   );
 };
