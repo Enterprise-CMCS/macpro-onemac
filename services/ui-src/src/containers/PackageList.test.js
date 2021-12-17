@@ -7,7 +7,7 @@ import {
 } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 
-import { ROUTES } from "cmscommonlib";
+import { ROUTES, ChangeRequest } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
@@ -19,6 +19,12 @@ import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
 jest.mock("../utils/PackageApi");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
+ChangeRequest.CONFIG = {
+  [ChangeRequest.TYPE.SPA]: {
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.CHIP_SPA_RAI,
+  },
+};
 
 const ContextWrapper = ({ children }) => {
   return (
