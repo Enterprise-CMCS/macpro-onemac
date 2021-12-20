@@ -45,8 +45,5 @@ describe("FileList", () => {
     } catch (error) {
       console.log("Error thrown", error);
     }
-
-    // expect().toMatch(`${zipId} || "onemac"`)
-    // screen.debug();
   });
 });
