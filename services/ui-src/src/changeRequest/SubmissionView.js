@@ -40,23 +40,20 @@ const SubmissionView = ({ changeRequestType }) => {
     let mounted = true;
 
     if (!id || !userId) return;
-
-    ChangeRequestDataApi.get(id, userId)
-      .then((fetchedChangeRequest) => {
+    (async () => {
+      try {
+        const fetchedChangeRequest = await ChangeRequestDataApi.get(id, userId);
         if (mounted) setChangeRequest(fetchedChangeRequest);
-      })
-      .then(() => {
         if (mounted) setIsLoading(false);
-      })
-      .catch(() => {
+      } catch (e) {
         history.push({
           pathname: ROUTES.DASHBOARD,
           state: {
             passCode: RESPONSE_CODE.SYSTEM_ERROR,
           },
         });
-      });
-
+      }
+    })();
     return function cleanup() {
       mounted = false;
     };
