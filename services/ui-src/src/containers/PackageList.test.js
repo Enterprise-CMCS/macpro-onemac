@@ -45,7 +45,7 @@ it("renders with a New Submission button", async () => {
     ROUTES.NEW_SUBMISSION_SELECTION
   );
 });
-/*
+
 it("passes a retrieval error up", async () => {
   PackageApi.getMyPackages.mockResolvedValueOnce("UR040");
 
@@ -100,7 +100,7 @@ it.each`
     expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
   }
 );
-
+/*
 it("has the correct package ID in the confirmation message with a withdrawal", () => {
   const testPackageID = "XX-33-2221";
 
