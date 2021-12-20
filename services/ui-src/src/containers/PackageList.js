@@ -210,9 +210,10 @@ const PackageList = () => {
               `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
             newItem.handleSelected = onPopupActionWithdraw;
           } else {
-            const raiLink =
-              ChangeRequest.correspondingRAILink[row.original.componentType];
-            newItem.value = { link: raiLink, raiId: row.original.componentId };
+            newItem.value = {
+              link: packageConfig?.raiLink,
+              raiId: row.original.componentId,
+            };
             newItem.handleSelected = onPopupActionRAI;
           }
           menuItems.push(newItem);

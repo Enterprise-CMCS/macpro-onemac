@@ -56,7 +56,7 @@ custom:
           sources: [./spa-ids-seed.json]
         - table: ${self:custom.userTableName}
           sources: [./user-profiles-seed.json]
-        - table: ${self:custom.oneMACTableName}
+        - table: ${self:custom.oneMacTableName}
           sources: [./one-seed.json]
   serverless-offline:
     allowCache: true

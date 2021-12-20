@@ -15,7 +15,7 @@ export const TYPE = {
 };
 
 export const ONEMAC_STATUS = {
-  UNSUBMITTED: "Submitted",
+  UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
   IN_REVIEW: "Package In Review",
   RAI_ISSUED: "RAI Issued",
@@ -426,3 +426,5 @@ export const CONFIG = {
     },
   },
 };
+
+CONFIG[TYPE.WAIVER_BASE] = CONFIG[TYPE.WAIVER];
