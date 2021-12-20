@@ -32,14 +32,14 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
-    userProfile,
+    userProfile = {},
     userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(
-    userData.type,
+    userData?.type,
     !cmsRoles,
     userData?.attributes
   );
@@ -285,15 +285,13 @@ const Dashboard = () => {
   }
 
   function renderSubmissionList() {
-    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+    if (userData?.type !== USER_TYPE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
-        return (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        );
+        return <EmptyList message={pendingMessage[userData?.type]} />;
       }
 
       const userStatusNotActive =
-        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+        userData?.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
       if (userStatusNotActive) {
         return (
           <EmptyList
