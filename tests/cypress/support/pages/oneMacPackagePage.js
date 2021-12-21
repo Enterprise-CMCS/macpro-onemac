@@ -87,6 +87,21 @@ const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
+//Element is Xpath use cy.xpath instead of cy.get
+const PackageApproved =
+  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[8]/button";
+//Element is Xpath use cy.xpath instead of cy.get
+const PackageDisapproved =
+  "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[8]/button";
+//Element is Xpath use cy.xpath instead of cy.get
+const PackageWithdrawn =
+  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[8]/button";
+//Element is Xpath use cy.xpath instead of cy.get
+const waiverTerminated =
+  "//a[contains(text(),'MD.10330')]/../following-sibling::td[8]/button";
+//Element is Xpath use cy.xpath instead of cy.get
+const Unsubmitted =
+  "//a[contains(text(),'MD.83420')]/../following-sibling::td[8]/button";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -342,6 +357,21 @@ export class oneMacPackagePage {
   }
   typePartialExistingID() {
     cy.get(searchbar).type("MD-10");
+  }
+  checkforPackageApprovedIsNotClickable() {
+    cy.xpath(PackageApproved).should("be.disabled");
+  }
+  checkforPackageDisapprovedIsNotClickable() {
+    cy.xpath(PackageDisapproved).should("be.disabled");
+  }
+  checkforPackageWithdrawnIsNotClickable() {
+    cy.xpath(PackageWithdrawn).should("be.disabled");
+  }
+  checkforWaiverTerminatedIsNotClickable() {
+    cy.xpath(waiverTerminated).should("be.disabled");
+  }
+  checkforUnsubmittedIsNotClickable() {
+    cy.xpath(Unsubmitted).should("be.disabled");
   }
 }
 export default oneMacPackagePage;
