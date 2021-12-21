@@ -7,15 +7,25 @@ describe("HomeHeader", () => {
     render(<HomeHeader />);
   });
 
-  it("looks for image, visibility and tests useEffect logic from event listener on scroll", () => {
+  it("image disappears with scrollTop too large", () => {
     render(<HomeHeader />);
-    const scrollMock = { addEventListener: jest.fn() };
     const polygonGroupImage = screen.getByAltText("polygon-img");
     expect(polygonGroupImage).toBeVisible();
-    jest.spyOn(React, "useEffect").mockImplementation(() => scrollMock);
+    document.documentElement.scrollTop = 1000;
     act(() => {
-      fireEvent.scroll(global, { target: { scrollY: 700 } });
+      fireEvent.scroll(global, { target: { scrollY: 70 } });
     });
-    expect(scrollMock.addEventListener).toBeTruthy();
+    expect(polygonGroupImage).not.toBeVisible();
+  });
+
+  it("image remains with scrollTop less than 500", () => {
+    render(<HomeHeader />);
+    const polygonGroupImage = screen.getByAltText("polygon-img");
+    expect(polygonGroupImage).toBeVisible();
+    document.documentElement.scrollTop = 100;
+    act(() => {
+      fireEvent.scroll(global, { target: { scrollY: 70 } });
+    });
+    expect(polygonGroupImage).toBeVisible();
   });
 });
