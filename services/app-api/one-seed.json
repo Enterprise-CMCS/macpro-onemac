@@ -1802,7 +1802,7 @@
         "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
        },
        {
-        "pk": "MD.10330",
+        "pk": "MI.10330",
         "sk": "waivernew",
         "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
         "changeHistory": [
@@ -1810,10 +1810,10 @@
           "componentType": "122",
           "clockEndTimestamp": null,
           "planType": "122",
-          "componentId": "MD.10330",
+          "componentId": "MI.10330",
           "currentStatus": "SEATool Status: 1",
-          "packageId": "MD.10330",
-          "stateCode": "MD",
+          "packageId": "MI.10330",
+          "stateCode": "MI",
           "expirationTimestamp": null,
           "packageStatus": "1",
           "packageType": "waivernew"
@@ -1822,10 +1822,10 @@
           "componentType": "122",
           "clockEndTimestamp": null,
           "planType": "122",
-          "componentId": "MD.10330",
+          "componentId": "MI.10330",
           "currentStatus": "SEATool Status: 1",
-          "packageId": "MD.10330",
-          "stateCode": "MD",
+          "packageId": "MI.10330",
+          "stateCode": "MI",
           "expirationTimestamp": null,
           "packageStatus": "1",
           "packageType": "waivernew"
