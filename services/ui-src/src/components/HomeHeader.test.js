@@ -7,7 +7,7 @@ describe("HomeHeader", () => {
     render(<HomeHeader />);
   });
 
-  it("show/hide image when scrolling from top", () => {
+  it("looks for image, visibility and tests useEffect logic from event listener on scroll", () => {
     render(<HomeHeader />);
     const scrollMock = { addEventListener: jest.fn() };
     const polygonGroupImage = screen.getByAltText("polygon-img");
