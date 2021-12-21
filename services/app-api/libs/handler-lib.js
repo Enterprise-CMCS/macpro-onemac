@@ -10,20 +10,16 @@ export default function handler(lambda) {
     };
 
     // If this invokation is a prewarm, do nothing and return.
-    if (event.source == "serverless-plugin-warmup") {
-      console.log("Warmed up!");
-      return response;
+    if (event.source != "serverless-plugin-warmup") {
+      try {
+        // Run the Lambda
+        response.body = await lambda(event, context);
+      } catch (e) {
+        response.body = { error: e.message };
+        response.statusCode = 500;
+      }
+      response.body = JSON.stringify(response.body);
     }
-
-    try {
-      // Run the Lambda
-      response.body = await lambda(event, context);
-    } catch (e) {
-      response.body = { error: e.message };
-      response.statusCode = 500;
-    }
-    response.body = JSON.stringify(response.body);
-
     // Return HTTP response
     return response;
   };

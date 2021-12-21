@@ -9,6 +9,7 @@ const ONEMAC_TOPIC = 'aws.submission_portal.submissions.cdc.submission';
 const ONEMAC_SUBMISSION_TYPE = {
   [ChangeRequest.TYPE.SPA]: 125,
   [ChangeRequest.TYPE.WAIVER]: 122,
+  [ChangeRequest.TYPE.WAIVER_BASE]: 122,
   [ChangeRequest.TYPE.CHIP_SPA]: 124,
 };
 
@@ -69,23 +70,20 @@ function myHandler(event) {
   event.Records.forEach( (dbAction) => {
     if (dbAction.eventName === "INSERT") {
       const oneMACSubmission = dbAction.dynamodb.NewImage;
-      if (oneMACSubmission.sk === "SEATool")
+      if (oneMACSubmission?.sk.slice(0,7) === "SEATool")
         console.log("that submission came from SEA Tool, don't send back: ", oneMACSubmission);
       else {
         console.log("New oneMAC Record inserted?? ", JSON.stringify(oneMACSubmission, null, 2));
-/*        const toPublish = {
-          PackageID: oneMACSubmission.pk,
-          SubmitterName: oneMACSubmission.submitterName,
-          SubmitterEmail: oneMACSubmission.submitterEmail,
-          PackageType: ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType],
-        }  */
-        dbAction.dynamodb.NewImage.plan_type = ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType];
-        onemacActions.push(dbAction);
+
+        if (ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType]) {
+          dbAction.dynamodb.NewImage.plan_type = ONEMAC_SUBMISSION_TYPE[oneMACSubmission.componentType];
+          onemacActions.push(dbAction);
+        }
       }
     }
   });
 
-  publish(onemacActions);
+  if (onemacActions.length > 0) publish(onemacActions);
 }
 
 exports.handler = myHandler;
