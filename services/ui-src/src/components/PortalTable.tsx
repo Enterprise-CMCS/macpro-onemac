@@ -1,4 +1,4 @@
-import React from "react";
+import * as React from "react";
 import { useFilters, useGlobalFilter, useSortBy, useTable } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
