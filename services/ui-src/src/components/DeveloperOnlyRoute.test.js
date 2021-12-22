@@ -1,16 +1,12 @@
 import React from "react";
-import { render } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { AppContext } from "../libs/contextLib";
 
 import DeveloperOnlyRoute from "./DeveloperOnlyRoute";
 
-beforeEach(() => {
-  jest.clearAllMocks();
-});
-
 describe("Developer Only Route", () => {
-  it("asserts that a user is logged in as a developer", async () => {
+  it("asserts that a user is logged in as a developer through verifying a div child", async () => {
     render(
       <AppContext.Provider
         value={{
@@ -27,7 +23,7 @@ describe("Developer Only Route", () => {
     expect(testDiv).toBeVisible();
   });
 
-  it("asserts that a user isn't logged in as a developer and drops them on home page", async () => {
+  it("asserts that a user isn't logged in as a developer through verifying an empty div", async () => {
     render(
       <AppContext.Provider
         value={{
