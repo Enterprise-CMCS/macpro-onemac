@@ -197,6 +197,8 @@ const UserPage = () => {
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
+  const [territoryRequestList, setTerritoryRequestList] =
+    useState(territoryList);
 
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
@@ -207,6 +209,8 @@ const UserPage = () => {
   useEffect(() => {
     if (!isReadOnly) {
       setUserData(userProfile.userData);
+      console.log("the user profile is:", userProfile);
+      setTerritoryRequestList();
       return;
     }
 
