@@ -199,7 +199,6 @@ const UserPage = () => {
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const [territoryRequestList, setTerritoryRequestList] =
     useState(territoryList);
-
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
@@ -209,8 +208,8 @@ const UserPage = () => {
   useEffect(() => {
     if (!isReadOnly) {
       setUserData(userProfile.userData);
-      console.log("the user profile is:", userProfile);
-      setTerritoryRequestList();
+      console.log("the userData is:", userProfile?.userData);
+      // setTerritoryRequestList();
       return;
     }
 
