@@ -197,8 +197,6 @@ const UserPage = () => {
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
-  const [territoryRequestList, setTerritoryRequestList] =
-    useState(territoryList);
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
@@ -208,8 +206,6 @@ const UserPage = () => {
   useEffect(() => {
     if (!isReadOnly) {
       setUserData(userProfile.userData);
-      console.log("the userData is:", userProfile?.userData);
-      setTerritoryRequestList(territoryList);
       return;
     }
 
@@ -329,6 +325,18 @@ const UserPage = () => {
   ]);
 
   const renderSelectStateAccess = useMemo(() => {
+    const territoryRequestList = [];
+    const activeStateList = [];
+
+    accesses.forEach(({ state, status }) => {
+      if (status === "active" || status === "pending")
+        activeStateList.push(state);
+    });
+    territoryList.forEach(({ label, value }) => {
+      if (activeStateList.includes(value) === false)
+        territoryRequestList.push({ label, value });
+    });
+
     return (
       <div className="profile-signup-container">
         <MultiSelectDropDown
@@ -346,7 +354,7 @@ const UserPage = () => {
         />
       </div>
     );
-  }, [loading, signupUser, setIsStateSelectorVisible, territoryRequestList]);
+  }, [loading, signupUser, setIsStateSelectorVisible, accesses]);
 
   const renderAddStateButton = useMemo(() => {
     return (
