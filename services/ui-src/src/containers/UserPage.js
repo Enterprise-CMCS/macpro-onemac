@@ -209,7 +209,7 @@ const UserPage = () => {
     if (!isReadOnly) {
       setUserData(userProfile.userData);
       console.log("the userData is:", userProfile?.userData);
-      // setTerritoryRequestList();
+      setTerritoryRequestList(territoryList);
       return;
     }
 
