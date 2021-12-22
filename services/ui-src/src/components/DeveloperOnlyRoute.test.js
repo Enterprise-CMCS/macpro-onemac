@@ -2,16 +2,8 @@ import React from "react";
 import { render, screen } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { AppContext } from "../libs/contextLib";
-import { createMemoryHistory } from "history";
-import { Router, Route } from "react-router-dom";
+
 import DeveloperOnlyRoute from "./DeveloperOnlyRoute";
-
-let history = createMemoryHistory();
-jest.mock("aws-amplify");
-
-beforeEach(() => {
-  history = createMemoryHistory();
-});
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -25,13 +17,9 @@ describe("Developer Only Route", () => {
           isLoggedInAsDeveloper: true,
         }}
       >
-        <Router history={history}>
-          <Route>
-            <DeveloperOnlyRoute>
-              <div data-testid="testMockDiv">Mock</div>
-            </DeveloperOnlyRoute>
-          </Route>
-        </Router>
+        <DeveloperOnlyRoute>
+          <div data-testid="testMockDiv">Mock</div>
+        </DeveloperOnlyRoute>
       </AppContext.Provider>,
       { wrapper: MemoryRouter }
     );
@@ -46,11 +34,7 @@ describe("Developer Only Route", () => {
           isLoggedInAsDeveloper: false,
         }}
       >
-        <Router history={history}>
-          <Route>
-            <DeveloperOnlyRoute />
-          </Route>
-        </Router>
+        <DeveloperOnlyRoute />
       </AppContext.Provider>,
       { wrapper: MemoryRouter }
     );
