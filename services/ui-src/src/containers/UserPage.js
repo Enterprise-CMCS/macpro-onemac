@@ -336,7 +336,7 @@ const UserPage = () => {
           cancelFn={() => setIsStateSelectorVisible(false)}
           errorMessage="Please select at least one state."
           loading={loading}
-          options={territoryList}
+          options={territoryRequestList}
           placeholder="Select state here"
           required
           showCancelButton
@@ -347,7 +347,7 @@ const UserPage = () => {
         />
       </div>
     );
-  }, [loading, signupUser, setIsStateSelectorVisible]);
+  }, [loading, signupUser, setIsStateSelectorVisible, territoryRequestList]);
 
   const renderAddStateButton = useMemo(() => {
     return (
