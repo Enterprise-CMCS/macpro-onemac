@@ -1165,7 +1165,7 @@
          }
         ],
         "componentType": "spa",
-        "currentStatus": "Approved",
+        "currentStatus": "Package Approved",
         "attachments": [
          {
           "s3Key": "1639690300084/textnotes.txt",
@@ -1371,7 +1371,7 @@
          }
         ],
         "componentType": "spa",
-        "currentStatus": "Disapproved",
+        "currentStatus": "Package Disapproved",
         "attachments": [
          {
           "s3Key": "1639609654211/textnotes.txt",
@@ -1577,7 +1577,7 @@
          }
         ],
         "componentType": "spa",
-        "currentStatus": "Withdrawn",
+        "currentStatus": "Package Withdrawn",
         "attachments": [
          {
           "s3Key": "1639595173888/textnotes.txt",
@@ -1729,210 +1729,150 @@
         "submissionId": "18858520-5dda-11ec-b9f1-03b9820992ae"
        },
        {
-        "pk": "MD-16-5847",
-        "sk": "spa",
+        "pk": "MD.10330",
+        "sk": "waivernew",
         "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
         "changeHistory": [
          {
-          "componentType": "spa",
+          "componentType": "122",
+          "clockEndTimestamp": null,
+          "planType": "122",
+          "componentId": "MD.10330",
+          "currentStatus": "SEATool Status: 1",
+          "packageId": "MD.10330",
+          "stateCode": "MD",
+          "expirationTimestamp": null,
+          "packageStatus": "1",
+          "packageType": "waivernew"
+         },
+         {
+          "componentType": "122",
+          "clockEndTimestamp": null,
+          "planType": "122",
+          "componentId": "MD.10330",
+          "currentStatus": "SEATool Status: 1",
+          "packageId": "MD.10330",
+          "stateCode": "MD",
+          "expirationTimestamp": null,
+          "packageStatus": "1",
+          "packageType": "waivernew"
+         },
+         {
+          "componentType": "waivernew",
           "additionalInformation": "This is just a test",
-          "componentId": "MD-16-5847",
+          "componentId": "MD.10330",
           "attachments": [
            {
-            "s3Key": "1639524691918/textnotes.txt",
-            "filename": "textnotes.txt",
-            "title": "CMS Form 179",
-            "contentType": "text/plain",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691918/textnotes.txt"
-           },
-           {
-            "s3Key": "1639524691919/15MB.pdf",
+            "s3Key": "1636137484260/15MB.pdf",
             "filename": "15MB.pdf",
-            "title": "SPA Pages",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
             "contentType": "application/pdf",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/15MB.pdf"
-           },
-           {
-            "s3Key": "1639524691919/textnotes.txt",
-            "filename": "textnotes.txt",
-            "title": "SPA Pages",
-            "contentType": "text/plain",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/textnotes.txt"
-           },
-           {
-            "s3Key": "1639524691919/picture.jpg",
-            "filename": "picture.jpg",
-            "title": "SPA Pages",
-            "contentType": "image/jpeg",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/picture.jpg"
-           },
-           {
-            "s3Key": "1639524691919/test3.docx",
-            "filename": "test3.docx",
-            "title": "SPA Pages",
-            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/test3.docx"
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
            }
           ],
-          "submissionId": "f9bff700-5d35-11ec-9e4f-e5f84089a3ae",
+          "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8",
+          "waiverAuthority": "1915(b)(4)",
           "currentStatus": "Submitted",
           "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
           "submitterName": "Statesubmitter Nightwatch",
-          "submissionTimestamp": 1639524695228,
+          "submissionTimestamp": 1636137490470,
           "submitterEmail": "statesubmitter@nightwatch.test"
          }
         ],
-        "componentType": "spa",
-        "currentStatus": "Terminated",
+        "componentType": "waivernew",
+        "currentStatus": "Waiver Terminated",
         "attachments": [
          {
-          "s3Key": "1639524691918/textnotes.txt",
-          "filename": "textnotes.txt",
-          "title": "CMS Form 179",
-          "contentType": "text/plain",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691918/textnotes.txt"
-         },
-         {
-          "s3Key": "1639524691919/15MB.pdf",
+          "s3Key": "1636137484260/15MB.pdf",
           "filename": "15MB.pdf",
-          "title": "SPA Pages",
+          "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
           "contentType": "application/pdf",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/15MB.pdf"
-         },
-         {
-          "s3Key": "1639524691919/textnotes.txt",
-          "filename": "textnotes.txt",
-          "title": "SPA Pages",
-          "contentType": "text/plain",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/textnotes.txt"
-         },
-         {
-          "s3Key": "1639524691919/picture.jpg",
-          "filename": "picture.jpg",
-          "title": "SPA Pages",
-          "contentType": "image/jpeg",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/picture.jpg"
-         },
-         {
-          "s3Key": "1639524691919/test3.docx",
-          "filename": "test3.docx",
-          "title": "SPA Pages",
-          "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/test3.docx"
+          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
          }
         ],
-        "GSI1sk": "MD-16-5847",
+        "GSI1sk": "MD.10330",
         "additionalInformation": "This is just a test",
-        "submissionTimestamp": 1639524695228,
+        "submissionTimestamp": 1636137490470,
+        "waiverAuthority": "1915(b)(4)",
         "GSI1pk": "OneMAC",
-        "packageId": "MD-16-5847",
+        "packageId": "MD.10330",
         "submitterEmail": "statesubmitter@nightwatch.test",
-        "componentId": "MD-16-5847",
+        "componentId": "MD.10330",
         "submitterName": "Statesubmitter Nightwatch",
-        "submissionId": "f9bff700-5d35-11ec-9e4f-e5f84089a3ae"
+        "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
        },
        {
-        "pk": "MI-16-5847",
-        "sk": "spa",
+        "pk": "MI.10330",
+        "sk": "waivernew",
         "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
         "changeHistory": [
          {
-          "componentType": "spa",
+          "componentType": "122",
+          "clockEndTimestamp": null,
+          "planType": "122",
+          "componentId": "MI.10330",
+          "currentStatus": "SEATool Status: 1",
+          "packageId": "MI.10330",
+          "stateCode": "MI",
+          "expirationTimestamp": null,
+          "packageStatus": "1",
+          "packageType": "waivernew"
+         },
+         {
+          "componentType": "122",
+          "clockEndTimestamp": null,
+          "planType": "122",
+          "componentId": "MI.10330",
+          "currentStatus": "SEATool Status: 1",
+          "packageId": "MI.10330",
+          "stateCode": "MI",
+          "expirationTimestamp": null,
+          "packageStatus": "1",
+          "packageType": "waivernew"
+         },
+         {
+          "componentType": "waivernew",
           "additionalInformation": "This is just a test",
-          "componentId": "MI-16-5847",
+          "componentId": "MI.10330",
           "attachments": [
            {
-            "s3Key": "1639524691918/textnotes.txt",
-            "filename": "textnotes.txt",
-            "title": "CMS Form 179",
-            "contentType": "text/plain",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691918/textnotes.txt"
-           },
-           {
-            "s3Key": "1639524691919/15MB.pdf",
+            "s3Key": "1636137484260/15MB.pdf",
             "filename": "15MB.pdf",
-            "title": "SPA Pages",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
             "contentType": "application/pdf",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/15MB.pdf"
-           },
-           {
-            "s3Key": "1639524691919/textnotes.txt",
-            "filename": "textnotes.txt",
-            "title": "SPA Pages",
-            "contentType": "text/plain",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/textnotes.txt"
-           },
-           {
-            "s3Key": "1639524691919/picture.jpg",
-            "filename": "picture.jpg",
-            "title": "SPA Pages",
-            "contentType": "image/jpeg",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/picture.jpg"
-           },
-           {
-            "s3Key": "1639524691919/test3.docx",
-            "filename": "test3.docx",
-            "title": "SPA Pages",
-            "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/test3.docx"
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
            }
           ],
-          "submissionId": "f9bff700-5d35-11ec-9e4f-e5f84089a3ae",
+          "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8",
+          "waiverAuthority": "1915(b)(4)",
           "currentStatus": "Submitted",
           "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
           "submitterName": "Statesubmitter Nightwatch",
-          "submissionTimestamp": 1639524695228,
+          "submissionTimestamp": 1636137490470,
           "submitterEmail": "statesubmitter@nightwatch.test"
          }
         ],
-        "componentType": "spa",
-        "currentStatus": "Terminated",
+        "componentType": "waivernew",
+        "currentStatus": "Waiver Terminated",
         "attachments": [
          {
-          "s3Key": "1639524691918/textnotes.txt",
-          "filename": "textnotes.txt",
-          "title": "CMS Form 179",
-          "contentType": "text/plain",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691918/textnotes.txt"
-         },
-         {
-          "s3Key": "1639524691919/15MB.pdf",
+          "s3Key": "1636137484260/15MB.pdf",
           "filename": "15MB.pdf",
-          "title": "SPA Pages",
+          "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
           "contentType": "application/pdf",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/15MB.pdf"
-         },
-         {
-          "s3Key": "1639524691919/textnotes.txt",
-          "filename": "textnotes.txt",
-          "title": "SPA Pages",
-          "contentType": "text/plain",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/textnotes.txt"
-         },
-         {
-          "s3Key": "1639524691919/picture.jpg",
-          "filename": "picture.jpg",
-          "title": "SPA Pages",
-          "contentType": "image/jpeg",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/picture.jpg"
-         },
-         {
-          "s3Key": "1639524691919/test3.docx",
-          "filename": "test3.docx",
-          "title": "SPA Pages",
-          "contentType": "application/vnd.openxmlformats-officedocument.wordprocessingml.document",
-          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639524691919/test3.docx"
+          "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
          }
         ],
-        "GSI1sk": "MI-16-5847",
+        "GSI1sk": "MI.10330",
         "additionalInformation": "This is just a test",
-        "submissionTimestamp": 1639524695228,
+        "submissionTimestamp": 1636137490470,
+        "waiverAuthority": "1915(b)(4)",
         "GSI1pk": "OneMAC",
-        "packageId": "MI-16-5847",
+        "packageId": "MI.10330",
         "submitterEmail": "statesubmitter@nightwatch.test",
-        "componentId": "MI-16-5847",
+        "componentId": "MI.10330",
         "submitterName": "Statesubmitter Nightwatch",
-        "submissionId": "f9bff700-5d35-11ec-9e4f-e5f84089a3ae"
+        "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
        },{
         "pk": "MD.83420",
         "sk": "waivernew",
