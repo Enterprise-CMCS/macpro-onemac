@@ -1261,3 +1261,34 @@ And("type partial existing ID in search bar", () => {
 And("verify the state on row one exists", () => {
   OneMacPackagePage.verifypackageRowOneStateExists();
 });
+
+And(
+  "verify that the 3 dots next to Package Approved status is not clickable",
+  () => {
+    OneMacPackagePage.checkforPackageApprovedIsNotClickable();
+  }
+);
+And(
+  "verify that the 3 dots next to Package Disapproved status is not clickable",
+  () => {
+    OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
+  }
+);
+And(
+  "verify that the 3 dots next to Package Withdrawn status is not clickable",
+  () => {
+    OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
+  }
+);
+And(
+  "verify that the 3 dots next to Waiver Terminated status is not clickable",
+  () => {
+    OneMacPackagePage.checkforWaiverTerminatedIsNotClickable();
+  }
+);
+And(
+  "verify that the 3 dots next to Unsubmitted status is not clickable",
+  () => {
+    OneMacPackagePage.checkforUnsubmittedIsNotClickable();
+  }
+);
