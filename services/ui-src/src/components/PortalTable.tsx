@@ -2,6 +2,7 @@ import * as React from "react";
 import { useFilters, useGlobalFilter, useSortBy, useTable } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { constant } from "lodash";
 
 import Expand from "../images/Expand.svg";
 import { SearchAndFilter, SearchFilterProps } from "./SearchAndFilter";
@@ -17,7 +18,7 @@ export type TableProps<V> = {
 } & Pick<SearchFilterProps<V>, "pageContentRef">;
 
 const defaultColumn = {
-  Filter: () => null,
+  Filter: constant(null),
   disableFilters: true,
   disableGlobalFilter: true,
 };

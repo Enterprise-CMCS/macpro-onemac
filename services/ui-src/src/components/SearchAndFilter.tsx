@@ -211,13 +211,15 @@ function TextFilter({
 }
 
 function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
-  const onCleanValue = useCallback(() => setFilter([]), [setFilter]);
+  const onChangeSelection = useCallback(
+    (value) => setFilter(value ?? []),
+    [setFilter]
+  );
   return (
     <DateRangePicker
       block
       disabledDate={afterToday!()}
-      onClean={onCleanValue}
-      onOk={setFilter}
+      onChange={onChangeSelection}
       placeholder="Select Date Range"
       showOneCalendar
       value={filterValue}
