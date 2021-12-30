@@ -7,6 +7,7 @@ import Expand from "../images/Expand.svg";
 import { SearchAndFilter, SearchFilterProps } from "./SearchAndFilter";
 export {
   dateFilterColumnProps,
+  dateFilterWithPausedOptionColumnProps,
   textFilterColumnProps,
 } from "./SearchAndFilter";
 

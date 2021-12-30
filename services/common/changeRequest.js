@@ -23,6 +23,7 @@ export const ONEMAC_STATUS = {
   DISAPPROVED: "Package Disapproved",
   WITHDRAWN: "Package Withdrawn",
   TERMINATED: "Waiver Terminated",
+  PAUSED: "Review Paused, Off the Clock",
 };
 
 export const PACKAGE_ACTION = {

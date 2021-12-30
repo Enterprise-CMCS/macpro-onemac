@@ -2251,6 +2251,10 @@ aside#faq-contact-info-box {
       .ds-c-accordion__content {
         max-height: unset;
       }
+
+      .paused-filter-option {
+        @extend .ds-u-margin-bottom--2;
+      }
     }
 
     > footer {

@@ -22,6 +22,7 @@ import {
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable, {
   dateFilterColumnProps,
+  dateFilterWithPausedOptionColumnProps,
   textFilterColumnProps,
 } from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
@@ -258,7 +259,7 @@ const PackageList = () => {
         accessor: "clockEndTimestamp",
         id: "ninetiethDay",
         Cell: renderFilteredDate("currentStatus"),
-        ...dateFilterColumnProps,
+        ...dateFilterWithPausedOptionColumnProps,
       },
       {
         Header: "Expiration Date",

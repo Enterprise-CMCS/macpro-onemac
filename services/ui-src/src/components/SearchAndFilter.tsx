@@ -29,6 +29,7 @@ import {
   Choice,
 } from "@cmsgov/design-system";
 
+import { ChangeRequest } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
@@ -144,6 +145,26 @@ const filterFromDateRange = <
   });
 };
 
+const filterFromDateRangeWithPausedOption = <
+  R extends { values: V },
+  V extends Record<string, any>
+>(
+  rows: R[],
+  [columnId]: [string],
+  filterValue: [string] | [Date, Date]
+) => {
+  if (!filterValue || !Array.isArray(filterValue)) return rows;
+
+  if (filterValue.length === 1) {
+    return rows.filter(
+      ({ values: { currentStatus } }) =>
+        currentStatus === ChangeRequest.ONEMAC_STATUS.PAUSED
+    );
+  }
+
+  return filterFromDateRange(rows, [columnId], filterValue);
+};
+
 type FilterProps = {
   column: ColumnInstance & UseFiltersColumnProps<any>;
   preGlobalFilteredRows: Row[];
@@ -204,10 +225,58 @@ function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
   );
 }
 
+function DateFilterWithPausedOption({
+  column,
+  column: { filterValue, id, setFilter },
+  ...rest
+}: FilterProps) {
+  const isPaused = useMemo(
+    () =>
+      Array.isArray(filterValue) &&
+      filterValue.length === 1 &&
+      filterValue[0] === "paused",
+    [filterValue]
+  );
+  const onPausedChange = useCallback(
+    ({ currentTarget: { checked, value } }) => {
+      if (checked) setFilter([value]);
+      else setFilter([]);
+    },
+    [setFilter]
+  );
+  const dateFilterColumnProp = useMemo(
+    () => ({ ...column, filterValue: isPaused ? [] : column.filterValue }),
+    [column, isPaused]
+  );
+
+  return (
+    <>
+      <Choice
+        checked={isPaused}
+        className="paused-filter-option"
+        inversed
+        label="Paused Packages"
+        name={`${id}-paused-packages`}
+        onChange={onPausedChange}
+        size="small"
+        type="checkbox"
+        value="paused"
+      />
+      <DateFilter column={dateFilterColumnProp} {...rest} />
+    </>
+  );
+}
+
 export const dateFilterColumnProps = {
   Filter: DateFilter,
   disableFilters: false,
   filter: filterFromDateRange,
+};
+
+export const dateFilterWithPausedOptionColumnProps = {
+  Filter: DateFilterWithPausedOption,
+  disableFilters: false,
+  filter: filterFromDateRangeWithPausedOption,
 };
 
 export const textFilterColumnProps = {
