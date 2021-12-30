@@ -10,71 +10,69 @@ import { MemoryRouter } from "react-router-dom";
 
 import userEvent from "@testing-library/user-event";
 
-describe("StateSignup", () => {
-  let history;
+let history;
 
-  beforeEach(() => {
-    history = createMemoryHistory();
+beforeEach(() => {
+  history = createMemoryHistory();
+});
+
+it("renders user role and makes sure a list is visible", () => {
+  const route = "mockPath/mocksignup/mockstate";
+  history.push(route, { role: "State Submitter" });
+  render(
+    <AppContext.Provider
+      value={{
+        ...stateUserNoAuthState,
+      }}
+    >
+      <Router history={history}>
+        <Route path="/mockPath/:signup/:state">
+          <StateSignup />
+        </Route>
+      </Router>
+    </AppContext.Provider>,
+    { wrapper: MemoryRouter }
+  );
+  const stateSignup = screen.getByText("User Role:");
+  expect(stateSignup).toBeVisible();
+  const userRole = screen.getByText("State Submitter");
+  expect(userRole).toBeVisible();
+  const stateList = screen.getByRole("list");
+  expect(stateList).toBeVisible();
+  const stateOption = screen.getByRole("option", { name: "Alabama" });
+  expect(stateOption.parentNode).toBeVisible();
+});
+
+it("locates cancel button and invokes cancel confirmation box", async () => {
+  const route = "mockPath/mocksignup/mockstate";
+  history.push(route, { role: "State Submitter" });
+  render(
+    <AppContext.Provider
+      value={{
+        ...stateUserNoAuthState,
+      }}
+    >
+      <Router history={history}>
+        <Route path="/mockPath/:signup/:state">
+          <StateSignup />
+        </Route>
+      </Router>
+    </AppContext.Provider>,
+    { wrapper: MemoryRouter }
+  );
+
+  expect(history.location.pathname).toBe("/mockPath/mocksignup/mockstate");
+  const cancelConfirmButton = screen.getByRole("button", { name: "Cancel" });
+  act(() => {
+    userEvent.click(cancelConfirmButton);
   });
-
-  it("renders user role and makes sure a list is visible", () => {
-    const route = "mockPath/mocksignup/mockstate";
-    history.push(route, { role: "State Submitter" });
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateUserNoAuthState,
-        }}
-      >
-        <Router history={history}>
-          <Route path="/mockPath/:signup/:state">
-            <StateSignup />
-          </Route>
-        </Router>
-      </AppContext.Provider>,
-      { wrapper: MemoryRouter }
-    );
-    const stateSignup = screen.getByText("User Role:");
-    expect(stateSignup).toBeVisible();
-    const userRole = screen.getByText("State Submitter");
-    expect(userRole).toBeVisible();
-    const stateList = screen.getByRole("list");
-    expect(stateList).toBeVisible();
-    const stateOption = screen.getByRole("option", { name: "Alabama" });
-    expect(stateOption.parentNode).toBeVisible();
+  const cancelConfirmBox = screen.getByRole("dialog");
+  expect(cancelConfirmBox).toBeVisible();
+  const confirmDialogButton = screen.getByRole("button", {
+    name: /confirm/i,
   });
-
-  it("locates cancel button and invokes cancel confirmation box", async () => {
-    const route = "mockPath/mocksignup/mockstate";
-    history.push(route, { role: "State Submitter" });
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateUserNoAuthState,
-        }}
-      >
-        <Router history={history}>
-          <Route path="/mockPath/:signup/:state">
-            <StateSignup />
-          </Route>
-        </Router>
-      </AppContext.Provider>,
-      { wrapper: MemoryRouter }
-    );
-
-    expect(history.location.pathname).toBe("/mockPath/mocksignup/mockstate");
-    const cancelConfirmButton = screen.getByRole("button", { name: "Cancel" });
-    act(() => {
-      userEvent.click(cancelConfirmButton);
-    });
-    const cancelConfirmBox = screen.getByRole("dialog");
-    expect(cancelConfirmBox).toBeVisible();
-    const confirmDialogButton = screen.getByRole("button", {
-      name: /confirm/i,
-    });
-    act(() => {
-      userEvent.click(confirmDialogButton);
-    });
-    expect(history.location.pathname).toBe("/");
+  act(() => {
+    userEvent.click(confirmDialogButton);
   });
+  expect(history.location.pathname).toBe("/");
 });
