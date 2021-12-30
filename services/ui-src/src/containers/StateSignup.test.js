@@ -5,74 +5,61 @@ import { AppContext } from "../libs/contextLib";
 import { stateUserNoAuthState } from "../libs/testDataAppContext";
 import { createMemoryHistory } from "history";
 import { StateSignup } from "./StateSignup";
-import { Router, Route } from "react-router-dom";
-import { MemoryRouter } from "react-router-dom";
+import { Router, Route, MemoryRouter } from "react-router-dom";
 
 import userEvent from "@testing-library/user-event";
 
-let history;
+describe("StateSignup", () => {
+  let history;
 
-beforeEach(() => {
-  history = createMemoryHistory();
-});
-
-it("renders user role and makes sure a list is visible", () => {
-  const route = "mockPath/mocksignup/mockstate";
-  history.push(route, { role: "State Submitter" });
-  render(
-    <AppContext.Provider
-      value={{
-        ...stateUserNoAuthState,
-      }}
-    >
-      <Router history={history}>
-        <Route path="/mockPath/:signup/:state">
-          <StateSignup />
-        </Route>
-      </Router>
-    </AppContext.Provider>,
-    { wrapper: MemoryRouter }
-  );
-  const stateSignup = screen.getByText("User Role:");
-  expect(stateSignup).toBeVisible();
-  const userRole = screen.getByText("State Submitter");
-  expect(userRole).toBeVisible();
-  const stateList = screen.getByRole("list");
-  expect(stateList).toBeVisible();
-  const stateOption = screen.getByRole("option", { name: "Alabama" });
-  expect(stateOption.parentNode).toBeVisible();
-});
-
-it("locates cancel button and invokes cancel confirmation box", async () => {
-  const route = "mockPath/mocksignup/mockstate";
-  history.push(route, { role: "State Submitter" });
-  render(
-    <AppContext.Provider
-      value={{
-        ...stateUserNoAuthState,
-      }}
-    >
-      <Router history={history}>
-        <Route path="/mockPath/:signup/:state">
-          <StateSignup />
-        </Route>
-      </Router>
-    </AppContext.Provider>,
-    { wrapper: MemoryRouter }
-  );
-
-  expect(history.location.pathname).toBe("/mockPath/mocksignup/mockstate");
-  const cancelConfirmButton = screen.getByRole("button", { name: "Cancel" });
-  act(() => {
-    userEvent.click(cancelConfirmButton);
+  beforeEach(() => {
+    history = createMemoryHistory();
   });
-  const cancelConfirmBox = screen.getByRole("dialog");
-  expect(cancelConfirmBox).toBeVisible();
-  const confirmDialogButton = screen.getByRole("button", {
-    name: /confirm/i,
+
+  beforeEach(() => {
+    const route = "/signup/state";
+    history.push(route, { role: "State Submitter" });
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateUserNoAuthState,
+        }}
+      >
+        <Router history={history}>
+          <Route path="/signup/state">
+            <StateSignup />
+          </Route>
+        </Router>
+      </AppContext.Provider>,
+      { wrapper: MemoryRouter }
+    );
   });
-  act(() => {
-    userEvent.click(confirmDialogButton);
+
+  it("renders user role and makes sure a list is visible", () => {
+    const stateSignup = screen.getByText("User Role:");
+    expect(stateSignup).toBeVisible();
+    const userRole = screen.getByText("State Submitter");
+    expect(userRole).toBeVisible();
+    const stateList = screen.getByRole("list");
+    expect(stateList).toBeVisible();
+    const stateOption = screen.getByRole("option", { name: "Alabama" });
+    expect(stateOption).toBeVisible();
   });
-  expect(history.location.pathname).toBe("/");
+
+  it("locates cancel button and invokes cancel confirmation box", async () => {
+    expect(history.location.pathname).toBe("/signup/state");
+    const cancelConfirmButton = screen.getByRole("button", { name: "Cancel" });
+    act(() => {
+      userEvent.click(cancelConfirmButton);
+    });
+    const cancelConfirmBox = screen.getByRole("dialog");
+    expect(cancelConfirmBox).toBeVisible();
+    const confirmDialogButton = screen.getByRole("button", {
+      name: /confirm/i,
+    });
+    act(() => {
+      userEvent.click(confirmDialogButton);
+    });
+    expect(cancelConfirmBox).not.toBeVisible();
+  });
 });
