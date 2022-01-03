@@ -18,6 +18,8 @@ export default function DeveloperOnlyRoute({ children, ...rest }) {
   });
 
   return (
-    <Route {...rest}>{isLoggedInAsDeveloper ? children : <div></div>}</Route>
+    <Route {...rest}>
+      {isLoggedInAsDeveloper ? children : <div data-testid="emptyDiv"></div>}
+    </Route>
   );
 }
