@@ -32,8 +32,6 @@ import {
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
-const { afterToday } = DateRangePicker;
-
 export interface ColumnPickerProps<V extends {}> {
   columnsInternal: ColumnInstance<V>[];
 }
@@ -154,13 +152,22 @@ const filterFromDateRangeAndText = <
 >(
   rows: R[],
   [columnId]: [string],
-  [dateA, dateB, ...textFilters]: [Date, Date, ...string[]]
-) =>
-  rows.filter(({ values: { [columnId]: cellValue } }) => {
+  filterValue: [Date, Date, ...string[]]
+) => {
+  if (filterValue.length === 0) return rows;
+
+  const [dateA, dateB, ...textFilters] = filterValue;
+  const noDatesSpecified = !dateA && !dateB;
+
+  return rows.filter(({ values: { [columnId]: cellValue } }) => {
     const matchesText = textFilters.includes(cellValue);
-    if (!dateA && !dateB) return matchesText;
-    return betweenDates(dateA, dateB, cellValue) || matchesText;
+    return noDatesSpecified
+      ? // if date range is blank, only filter by text - include all dates
+        matchesText || typeof cellValue !== "string"
+      : // if date range is specified, filter by that, but also include text matching checkboxes
+        betweenDates(dateA, dateB, cellValue) || matchesText;
   });
+};
 
 type FilterProps = {
   column: ColumnInstance & UseFiltersColumnProps<any>;
@@ -223,7 +230,6 @@ function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
   return (
     <DateRangePicker
       block
-      disabledDate={afterToday!()}
       onChange={onChangeSelection}
       placeholder="Select Date Range"
       showOneCalendar
@@ -232,10 +238,14 @@ function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
   );
 }
 
-function DateAndTextFilter(props: FilterProps) {
+function DateAndTextFilter({
+  column,
+  column: { filterValue, setFilter },
+  ...props
+}: FilterProps) {
   const onChangeTextFilter = useCallback(
     (transformer) => {
-      props.column.setFilter(
+      setFilter(
         typeof transformer === "function"
           ? (oldFilterValue: [Date, Date, ...string[]]) => {
               const [dateA, dateB, ...oldTextFilters] = oldFilterValue ?? [
@@ -254,7 +264,7 @@ function DateAndTextFilter(props: FilterProps) {
           : transformer
       );
     },
-    [props.column]
+    [setFilter]
   );
 
   const onChangeDateFilter = useCallback(
@@ -263,51 +273,72 @@ function DateAndTextFilter(props: FilterProps) {
         newDates = [undefined, undefined];
       }
 
-      props.column.setFilter(
+      setFilter(
         (
           [, , ...rest]: [Date, Date, ...string[]] = [undefined!, undefined!]
         ) => [...newDates, ...rest]
       );
     },
-    [props.column]
+    [setFilter]
   );
+
+  const isEmptyFilter =
+    !filterValue ||
+    filterValue?.length === 0 ||
+    (filterValue?.length === 2 &&
+      filterValue[0] === undefined &&
+      filterValue[1] === undefined);
 
   return (
     <>
       <TextFilter
+        column={{
+          ...column,
+          filterValue: isEmptyFilter ? undefined : filterValue,
+          setFilter: onChangeTextFilter,
+        }}
         {...props}
-        column={{ ...props.column, setFilter: onChangeTextFilter }}
       />
       <DateFilter
+        column={{
+          ...column,
+          filterValue: isEmptyFilter ? [] : filterValue,
+          setFilter: onChangeDateFilter,
+        }}
         {...props}
-        column={{ ...props.column, setFilter: onChangeDateFilter }}
       />
     </>
   );
 }
 
+enum CustomFilters {
+  MULTI_CHECKBOX = "matchingTokens",
+  DATE_RANGE = "betweenDates",
+  DATE_RANGE_AND_TEXT = "betweenDatesOrMatchingTokens",
+}
+
 export const customFilterTypes = {
-  matchingTokens: filterFromMultiCheckbox,
-  betweenDates: filterFromDateRange,
-  betweenDatesOrMatchingTokens: filterFromDateRangeAndText,
+  [CustomFilters.MULTI_CHECKBOX]: filterFromMultiCheckbox,
+  [CustomFilters.DATE_RANGE]: filterFromDateRange,
+  [CustomFilters.DATE_RANGE_AND_TEXT]: filterFromDateRangeAndText,
 };
 
 export const dateFilterColumnProps = {
   Filter: DateFilter,
   disableFilters: false,
-  filter: "betweenDates",
+  filter: CustomFilters.DATE_RANGE,
 };
 
 export const dateAndTextFilterColumnProps = {
   Filter: DateAndTextFilter,
   disableFilters: false,
-  filter: "betweenDatesOrMatchingTokens",
+  filter: CustomFilters.DATE_RANGE_AND_TEXT,
 };
 
 export const textFilterColumnProps = {
   Filter: TextFilter,
   disableFilters: false,
-  filter: "matchingTokens",
+  filter: CustomFilters.MULTI_CHECKBOX,
 };
 
 type FilterPaneProps<V extends {}> = {
@@ -329,18 +360,16 @@ function FilterPane<V extends {}>({
       setAllFilters(
         // this awful complicated dance is because the DateRangePicker gets
         // confused on reset if you don't explicitly pass an empty array
-        columnsInternal.flatMap(({ canFilter, filter, id }) =>
-          canFilter
-            ? {
-                id,
-                value:
-                  filter === "betweenDates" ||
-                  filter === "betweenDatesOrMatchingTokens"
-                    ? []
-                    : undefined,
-              }
-            : []
-        )
+        columnsInternal.flatMap(({ canFilter, filter, id }) => {
+          if (!canFilter) return [];
+          switch (filter) {
+            case CustomFilters.DATE_RANGE:
+            case CustomFilters.DATE_RANGE_AND_TEXT:
+              return { id, value: [] };
+            default:
+              return { id, value: undefined };
+          }
+        })
       ),
     [columnsInternal, setAllFilters]
   );

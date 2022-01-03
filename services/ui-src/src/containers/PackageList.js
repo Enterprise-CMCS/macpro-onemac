@@ -43,12 +43,15 @@ const getFilteredDate =
   (valueField, filterField) =>
   ({ [valueField]: value, [filterField]: filterValue }) => {
     if (!filterArray[filterField].includes(filterValue)) {
-      if (value) return format(value, "MMM d, yyyy");
+      if (value) return value;
     } else {
       return "N/A";
     }
     return "Pending";
   };
+
+const renderDate = ({ value }) =>
+  typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
 /**
  * Component containing dashboard
@@ -155,14 +158,6 @@ const PackageList = () => {
     []
   );
 
-  const renderDate = useCallback(({ value }) => {
-    if (value) {
-      return format(value, "MMM d, yyyy");
-    } else {
-      return "N/A";
-    }
-  }, []);
-
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
@@ -255,12 +250,14 @@ const PackageList = () => {
         Header: "90th Day",
         accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
         id: "ninetiethDay",
+        Cell: renderDate,
         ...dateAndTextFilterColumnProps,
       },
       {
         Header: "Expiration Date",
         accessor: getFilteredDate("expirationTimestamp", "componentType"),
         id: "expirationTimestamp",
+        Cell: renderDate,
         ...dateFilterColumnProps,
       },
       {
@@ -302,7 +299,6 @@ const PackageList = () => {
     getState,
     renderId,
     renderType,
-    renderDate,
     renderName,
     userRoleObj.canAccessForms,
   ]);
