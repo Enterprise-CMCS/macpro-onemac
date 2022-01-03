@@ -1,21 +1,32 @@
-import * as React from "react";
-import { useFilters, useGlobalFilter, useSortBy, useTable } from "react-table";
+import React from "react";
+import {
+  TableOptions,
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  useTable,
+} from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { constant } from "lodash";
 
 import Expand from "../images/Expand.svg";
-import { SearchAndFilter, SearchFilterProps } from "./SearchAndFilter";
+import {
+  SearchAndFilter,
+  SearchFilterProps,
+  customFilterTypes,
+} from "./SearchAndFilter";
 export {
   dateFilterColumnProps,
-  dateFilterWithPausedOptionColumnProps,
+  dateAndTextFilterColumnProps,
   textFilterColumnProps,
 } from "./SearchAndFilter";
 
-export type TableProps<V> = {
+export type TableProps<V extends {}> = {
   className?: string;
   withSearchBar?: boolean;
-} & Pick<SearchFilterProps<V>, "pageContentRef">;
+} & Pick<SearchFilterProps<V>, "pageContentRef"> &
+  TableOptions<V>;
 
 const defaultColumn = {
   Filter: constant(null),
@@ -53,6 +64,7 @@ export default function PortalTable<V extends {} = {}>({
       disableSortRemove: true,
       // @ts-ignore not passing enough default props per column for it to recognize
       defaultColumn,
+      filterTypes: customFilterTypes,
       ...props,
     },
     useGlobalFilter,

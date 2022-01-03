@@ -29,7 +29,6 @@ import {
   Choice,
 } from "@cmsgov/design-system";
 
-import { ChangeRequest } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
@@ -129,6 +128,11 @@ const filterFromMultiCheckbox = <
     filterValue.includes(cellValue)
   );
 
+const betweenDates = (dateA: Date, dateB: Date, epoch: number) => {
+  const dateFromValue = new Date(epoch);
+  return dateFromValue > dateA && dateFromValue < dateB;
+};
+
 const filterFromDateRange = <
   R extends { values: V },
   V extends Record<string, any>
@@ -139,31 +143,24 @@ const filterFromDateRange = <
 ) => {
   if (!dateA && !dateB) return rows;
 
-  return rows.filter(({ values: { [columnId]: cellValue } }) => {
-    const dateFromValue = new Date(cellValue);
-    return dateFromValue > dateA && dateFromValue < dateB;
-  });
+  return rows.filter(({ values: { [columnId]: cellValue } }) =>
+    betweenDates(dateA, dateB, cellValue)
+  );
 };
 
-const filterFromDateRangeWithPausedOption = <
+const filterFromDateRangeAndText = <
   R extends { values: V },
   V extends Record<string, any>
 >(
   rows: R[],
   [columnId]: [string],
-  filterValue: [string] | [Date, Date]
-) => {
-  if (!filterValue || !Array.isArray(filterValue)) return rows;
-
-  if (filterValue.length === 1) {
-    return rows.filter(
-      ({ values: { currentStatus } }) =>
-        currentStatus === ChangeRequest.ONEMAC_STATUS.PAUSED
-    );
-  }
-
-  return filterFromDateRange(rows, [columnId], filterValue);
-};
+  [dateA, dateB, ...textFilters]: [Date, Date, ...string[]]
+) =>
+  rows.filter(({ values: { [columnId]: cellValue } }) => {
+    const matchesText = textFilters.includes(cellValue);
+    if (!dateA && !dateB) return matchesText;
+    return betweenDates(dateA, dateB, cellValue) || matchesText;
+  });
 
 type FilterProps = {
   column: ColumnInstance & UseFiltersColumnProps<any>;
@@ -177,7 +174,11 @@ function TextFilter({
   const possibleValues = useMemo(
     () =>
       Array.from(
-        new Set(preGlobalFilteredRows.map(({ values }) => values[id]))
+        new Set(
+          preGlobalFilteredRows
+            .map(({ values }) => values[id])
+            .filter((value) => typeof value === "string")
+        )
       ).sort(),
     [preGlobalFilteredRows, id]
   );
@@ -195,19 +196,23 @@ function TextFilter({
     [possibleValues, setFilter]
   );
 
-  return possibleValues.map((value) => (
-    <Choice
-      checked={filterValue?.includes(value) ?? true}
-      inversed
-      key={value}
-      label={value}
-      name={`${id}-${value}`}
-      onChange={onCheckboxSelect}
-      size="small"
-      type="checkbox"
-      value={value}
-    />
-  ));
+  return (
+    <>
+      {possibleValues.map((value) => (
+        <Choice
+          checked={filterValue?.includes(value) ?? true}
+          inversed
+          key={value}
+          label={value}
+          name={`${id}-${value}`}
+          onChange={onCheckboxSelect}
+          size="small"
+          type="checkbox"
+          value={value}
+        />
+      ))}
+    </>
+  );
 }
 
 function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
@@ -222,69 +227,87 @@ function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
       onChange={onChangeSelection}
       placeholder="Select Date Range"
       showOneCalendar
-      value={filterValue}
+      value={filterValue?.slice(0, 2)}
     />
   );
 }
 
-function DateFilterWithPausedOption({
-  column,
-  column: { filterValue, id, setFilter },
-  ...rest
-}: FilterProps) {
-  const isPaused = useMemo(
-    () =>
-      Array.isArray(filterValue) &&
-      filterValue.length === 1 &&
-      filterValue[0] === "paused",
-    [filterValue]
-  );
-  const onPausedChange = useCallback(
-    ({ currentTarget: { checked, value } }) => {
-      if (checked) setFilter([value]);
-      else setFilter([]);
+function DateAndTextFilter(props: FilterProps) {
+  const onChangeTextFilter = useCallback(
+    (transformer) => {
+      props.column.setFilter(
+        typeof transformer === "function"
+          ? (oldFilterValue: [Date, Date, ...string[]]) => {
+              const [dateA, dateB, ...oldTextFilters] = oldFilterValue ?? [
+                undefined,
+                undefined,
+              ];
+              return [
+                dateA,
+                dateB,
+                ...transformer(
+                  // pass in undefined so TextFilter knows no filters are active
+                  (oldFilterValue?.length ?? 0) < 2 ? undefined : oldTextFilters
+                ),
+              ];
+            }
+          : transformer
+      );
     },
-    [setFilter]
+    [props.column]
   );
-  const dateFilterColumnProp = useMemo(
-    () => ({ ...column, filterValue: isPaused ? [] : column.filterValue }),
-    [column, isPaused]
+
+  const onChangeDateFilter = useCallback(
+    (newDates) => {
+      if (newDates.length === 0) {
+        newDates = [undefined, undefined];
+      }
+
+      props.column.setFilter(
+        (
+          [, , ...rest]: [Date, Date, ...string[]] = [undefined!, undefined!]
+        ) => [...newDates, ...rest]
+      );
+    },
+    [props.column]
   );
 
   return (
     <>
-      <Choice
-        checked={isPaused}
-        className="paused-filter-option"
-        inversed
-        label="Paused Packages"
-        name={`${id}-paused-packages`}
-        onChange={onPausedChange}
-        size="small"
-        type="checkbox"
-        value="paused"
+      <TextFilter
+        {...props}
+        column={{ ...props.column, setFilter: onChangeTextFilter }}
       />
-      <DateFilter column={dateFilterColumnProp} {...rest} />
+      <DateFilter
+        {...props}
+        column={{ ...props.column, setFilter: onChangeDateFilter }}
+      />
     </>
   );
 }
 
+export const customFilterTypes = {
+  matchingTokens: filterFromMultiCheckbox,
+  betweenDates: filterFromDateRange,
+  betweenDatesOrMatchingTokens: filterFromDateRangeAndText,
+};
+
 export const dateFilterColumnProps = {
   Filter: DateFilter,
   disableFilters: false,
-  filter: filterFromDateRange,
+  filter: "betweenDates",
 };
 
-export const dateFilterWithPausedOptionColumnProps = {
-  Filter: DateFilterWithPausedOption,
+export const dateAndTextFilterColumnProps = {
+  Filter: DateAndTextFilter,
   disableFilters: false,
-  filter: filterFromDateRangeWithPausedOption,
+  filter: "betweenDatesOrMatchingTokens",
 };
 
 export const textFilterColumnProps = {
   Filter: TextFilter,
   disableFilters: false,
-  filter: filterFromMultiCheckbox,
+  filter: "matchingTokens",
 };
 
 type FilterPaneProps<V extends {}> = {
@@ -308,7 +331,14 @@ function FilterPane<V extends {}>({
         // confused on reset if you don't explicitly pass an empty array
         columnsInternal.flatMap(({ canFilter, filter, id }) =>
           canFilter
-            ? { id, value: filter === filterFromDateRange ? [] : undefined }
+            ? {
+                id,
+                value:
+                  filter === "betweenDates" ||
+                  filter === "betweenDatesOrMatchingTokens"
+                    ? []
+                    : undefined,
+              }
             : []
         )
       ),

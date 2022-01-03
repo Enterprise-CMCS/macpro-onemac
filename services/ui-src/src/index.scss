@@ -2252,8 +2252,8 @@ aside#faq-contact-info-box {
         max-height: unset;
       }
 
-      .paused-filter-option {
-        @extend .ds-u-margin-bottom--2;
+      .rs-picker-daterange:not(:first-child) {
+        @extend .ds-u-margin-top--2;
       }
     }
 

@@ -22,7 +22,7 @@ import {
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable, {
   dateFilterColumnProps,
-  dateFilterWithPausedOptionColumnProps,
+  dateAndTextFilterColumnProps,
   textFilterColumnProps,
 } from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
@@ -38,6 +38,17 @@ const filterArray = {
   currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
   componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
 };
+
+const getFilteredDate =
+  (valueField, filterField) =>
+  ({ [valueField]: value, [filterField]: filterValue }) => {
+    if (!filterArray[filterField].includes(filterValue)) {
+      if (value) return format(value, "MMM d, yyyy");
+    } else {
+      return "N/A";
+    }
+    return "Pending";
+  };
 
 /**
  * Component containing dashboard
@@ -152,20 +163,6 @@ const PackageList = () => {
     }
   }, []);
 
-  const renderFilteredDate = useCallback(
-    (filterField) =>
-      ({ value, row }) => {
-        let returnDay = "Pending";
-        if (!filterArray[filterField].includes(row.original[filterField])) {
-          if (value) returnDay = format(value, "MMM d, yyyy");
-        } else {
-          returnDay = "N/A";
-        }
-        return returnDay;
-      },
-    []
-  );
-
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
@@ -256,16 +253,14 @@ const PackageList = () => {
       },
       {
         Header: "90th Day",
-        accessor: "clockEndTimestamp",
+        accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
         id: "ninetiethDay",
-        Cell: renderFilteredDate("currentStatus"),
-        ...dateFilterWithPausedOptionColumnProps,
+        ...dateAndTextFilterColumnProps,
       },
       {
         Header: "Expiration Date",
-        accessor: "expirationTimestamp",
+        accessor: getFilteredDate("expirationTimestamp", "componentType"),
         id: "expirationTimestamp",
-        Cell: renderFilteredDate("componentType"),
         ...dateFilterColumnProps,
       },
       {
@@ -309,7 +304,6 @@ const PackageList = () => {
     renderType,
     renderDate,
     renderName,
-    renderFilteredDate,
     userRoleObj.canAccessForms,
   ]);
 
