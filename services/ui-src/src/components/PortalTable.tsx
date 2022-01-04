@@ -1,33 +1,40 @@
-import * as React from "react";
-import { useFilters, useGlobalFilter, useSortBy, useTable } from "react-table";
+import React from "react";
+import {
+  TableOptions,
+  useFilters,
+  useGlobalFilter,
+  useSortBy,
+  useTable,
+} from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faSearch } from "@fortawesome/free-solid-svg-icons";
+import { constant } from "lodash";
 
 import Expand from "../images/Expand.svg";
-import { SearchAndFilter, SearchFilterProps } from "./SearchAndFilter";
+import {
+  SearchAndFilter,
+  SearchFilterProps,
+  customFilterTypes,
+} from "./SearchAndFilter";
+export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
-export const filterFromMultiCheckbox = <
-  R extends { values: V },
-  V extends Record<string, any>
->(
-  rows: R[],
-  [columnId]: [string],
-  filterValue: string[] = []
-): R[] =>
-  rows.filter(({ values: { [columnId]: cellValue } }) =>
-    filterValue.includes(cellValue)
-  );
-
-export type TableProps<D, V> = {
+export type TableProps<V extends {}> = {
   className?: string;
   withSearchBar?: boolean;
-} & Pick<SearchFilterProps<D, V>, "pageContentRef">;
+} & Pick<SearchFilterProps<V>, "pageContentRef"> &
+  TableOptions<V>;
 
-export default function PortalTable<D extends {} = {}, V extends {} = {}>({
+const defaultColumn = {
+  Filter: constant(null),
+  disableFilters: true,
+  disableGlobalFilter: true,
+};
+
+export default function PortalTable<V extends {} = {}>({
   pageContentRef,
   withSearchBar,
   ...props
-}: TableProps<D, V>) {
+}: TableProps<V>) {
   const {
     columns,
     getTableProps,
@@ -51,6 +58,9 @@ export default function PortalTable<D extends {} = {}, V extends {} = {}>({
       // once a column has been sorted, only toggle between sort orders - do
       // not go to original state
       disableSortRemove: true,
+      // @ts-ignore not passing enough default props per column for it to recognize
+      defaultColumn,
+      filterTypes: customFilterTypes,
       ...props,
     },
     useGlobalFilter,
