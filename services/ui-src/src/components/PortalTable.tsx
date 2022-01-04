@@ -16,11 +16,7 @@ import {
   SearchFilterProps,
   customFilterTypes,
 } from "./SearchAndFilter";
-export {
-  dateFilterColumnProps,
-  dateAndTextFilterColumnProps,
-  textFilterColumnProps,
-} from "./SearchAndFilter";
+export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
   className?: string;

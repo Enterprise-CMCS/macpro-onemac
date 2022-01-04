@@ -3,10 +3,7 @@ import { act } from "react-dom/test-utils";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import PortalTable, {
-  dateFilterColumnProps,
-  textFilterColumnProps,
-} from "./PortalTable";
+import PortalTable, { CustomFilterTypes, CustomFilterUi } from "./PortalTable";
 
 it("renders without crashing", () => {
   render(<PortalTable columns={[]} data={[]} />);
@@ -186,7 +183,13 @@ describe("search and filter features", () => {
           <PortalTable
             columns={[
               { Header: "Foo", accessor: "foo" },
-              { Header: "Bar", accessor: "bar", ...textFilterColumnProps },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
             ]}
             data={[
               { foo: 1, bar: "two" },
@@ -233,8 +236,20 @@ describe("search and filter features", () => {
           <PortalTable
             columns={[
               { Header: "Foo", accessor: "foo" },
-              { Header: "Bar", accessor: "bar", ...textFilterColumnProps },
-              { Header: "Baz", accessor: "baz", ...dateFilterColumnProps },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
+              {
+                Header: "Baz",
+                accessor: "baz",
+                disableFilters: false,
+                filter: CustomFilterTypes.DateRange,
+                Filter: CustomFilterUi.DateRange,
+              },
             ]}
             data={[
               { foo: 1, bar: "two", baz: "2021-01-02" },
@@ -287,7 +302,13 @@ describe("search and filter features", () => {
           <PortalTable
             columns={[
               { Header: "Foo", accessor: "foo" },
-              { Header: "Bar", accessor: "bar", ...textFilterColumnProps },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
             ]}
             data={[
               { foo: 1, bar: "two" },
@@ -332,7 +353,13 @@ describe("search and filter features", () => {
           <PortalTable
             columns={[
               { Header: "Foo", accessor: "foo" },
-              { Header: "Bar", accessor: "bar", ...textFilterColumnProps },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
             ]}
             data={[
               { foo: 1, bar: "two" },

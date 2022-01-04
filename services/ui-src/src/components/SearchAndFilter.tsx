@@ -16,6 +16,16 @@ import {
 } from "react-table";
 import { debounce } from "lodash";
 import { DateRangePicker } from "rsuite";
+import {
+  addWeeks,
+  endOfDay,
+  endOfMonth,
+  endOfQuarter,
+  startOfDay,
+  startOfMonth,
+  startOfQuarter,
+  subDays,
+} from "date-fns";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
@@ -31,6 +41,8 @@ import {
 
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
+
+const { afterToday } = DateRangePicker;
 
 export interface ColumnPickerProps<V extends {}> {
   columnsInternal: ColumnInstance<V>[];
@@ -169,6 +181,18 @@ const filterFromDateRangeAndText = <
   });
 };
 
+export enum CustomFilterTypes {
+  MultiCheckbox = "matchingTokens",
+  DateRange = "betweenDates",
+  DateRangeAndMultiCheckbox = "betweenDatesOrMatchingTokens",
+}
+
+export const customFilterTypes = {
+  [CustomFilterTypes.MultiCheckbox]: filterFromMultiCheckbox,
+  [CustomFilterTypes.DateRange]: filterFromDateRange,
+  [CustomFilterTypes.DateRangeAndMultiCheckbox]: filterFromDateRangeAndText,
+};
+
 type FilterProps = {
   column: ColumnInstance & UseFiltersColumnProps<any>;
   preGlobalFilteredRows: Row[];
@@ -222,16 +246,58 @@ function TextFilter({
   );
 }
 
-function DateFilter({ column: { filterValue, setFilter } }: FilterProps) {
+function DateFilter({
+  column: { filterValue, setFilter },
+  inThePast,
+}: FilterProps & { inThePast?: boolean }) {
   const onChangeSelection = useCallback(
     (value) => setFilter(value ?? []),
     [setFilter]
   );
+  const ranges: { label: string; value: [Date, Date] }[] = useMemo(
+    () =>
+      inThePast
+        ? [
+            {
+              label: "Today",
+              value: [startOfDay(new Date()), endOfDay(new Date())],
+            },
+            {
+              label: "Last 7 Days",
+              value: [startOfDay(subDays(new Date(), 6)), endOfDay(new Date())],
+            },
+            {
+              label: "Month To Date",
+              value: [startOfMonth(new Date()), endOfDay(new Date())],
+            },
+            {
+              label: "Quarter To Date",
+              value: [startOfQuarter(new Date()), endOfDay(new Date())],
+            },
+          ]
+        : [
+            {
+              label: "Next 7 Days",
+              value: [startOfDay(new Date()), addWeeks(new Date(), 1)],
+            },
+            {
+              label: "This Month",
+              value: [startOfDay(new Date()), endOfMonth(new Date())],
+            },
+            {
+              label: "This Quarter",
+              value: [startOfDay(new Date()), endOfQuarter(new Date())],
+            },
+          ],
+    [inThePast]
+  );
   return (
     <DateRangePicker
       block
+      disabledDate={inThePast ? afterToday!() : undefined}
       onChange={onChangeSelection}
       placeholder="Select Date Range"
+      ranges={ranges}
       showOneCalendar
       value={filterValue?.slice(0, 2)}
     />
@@ -311,34 +377,11 @@ function DateAndTextFilter({
   );
 }
 
-enum CustomFilters {
-  MULTI_CHECKBOX = "matchingTokens",
-  DATE_RANGE = "betweenDates",
-  DATE_RANGE_AND_TEXT = "betweenDatesOrMatchingTokens",
-}
-
-export const customFilterTypes = {
-  [CustomFilters.MULTI_CHECKBOX]: filterFromMultiCheckbox,
-  [CustomFilters.DATE_RANGE]: filterFromDateRange,
-  [CustomFilters.DATE_RANGE_AND_TEXT]: filterFromDateRangeAndText,
-};
-
-export const dateFilterColumnProps = {
-  Filter: DateFilter,
-  disableFilters: false,
-  filter: CustomFilters.DATE_RANGE,
-};
-
-export const dateAndTextFilterColumnProps = {
-  Filter: DateAndTextFilter,
-  disableFilters: false,
-  filter: CustomFilters.DATE_RANGE_AND_TEXT,
-};
-
-export const textFilterColumnProps = {
-  Filter: TextFilter,
-  disableFilters: false,
-  filter: CustomFilters.MULTI_CHECKBOX,
+export const CustomFilterUi: Record<string, FC<FilterProps>> = {
+  MultiCheckbox: TextFilter,
+  DateRange: DateFilter,
+  DateRangeInPast: (props) => <DateFilter inThePast {...props} />,
+  DateRangeAndMultiCheckbox: DateAndTextFilter,
 };
 
 type FilterPaneProps<V extends {}> = {
@@ -363,8 +406,8 @@ function FilterPane<V extends {}>({
         columnsInternal.flatMap(({ canFilter, filter, id }) => {
           if (!canFilter) return [];
           switch (filter) {
-            case CustomFilters.DATE_RANGE:
-            case CustomFilters.DATE_RANGE_AND_TEXT:
+            case CustomFilterTypes.DateRange:
+            case CustomFilterTypes.DateRangeAndMultiCheckbox:
               return { id, value: [] };
             default:
               return { id, value: undefined };

@@ -21,9 +21,8 @@ import {
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable, {
-  dateFilterColumnProps,
-  dateAndTextFilterColumnProps,
-  textFilterColumnProps,
+  CustomFilterTypes,
+  CustomFilterUi,
 } from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
@@ -239,7 +238,9 @@ const PackageList = () => {
         accessor: getType,
         id: "componentType",
         Cell: renderType,
-        ...textFilterColumnProps,
+        disableFilters: false,
+        filter: CustomFilterTypes.MultiCheckbox,
+        Filter: CustomFilterUi.MultiCheckbox,
       },
       {
         Header: "State",
@@ -251,26 +252,34 @@ const PackageList = () => {
         accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
         id: "ninetiethDay",
         Cell: renderDate,
-        ...dateAndTextFilterColumnProps,
+        disableFilters: false,
+        filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
+        Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
       },
       {
         Header: "Expiration Date",
         accessor: getFilteredDate("expirationTimestamp", "componentType"),
         id: "expirationTimestamp",
         Cell: renderDate,
-        ...dateFilterColumnProps,
+        disableFilters: false,
+        filter: CustomFilterTypes.DateRange,
+        Filter: CustomFilterUi.DateRange,
       },
       {
         Header: "Status",
         accessor: "currentStatus",
         id: "packageStatus",
-        ...textFilterColumnProps,
+        disableFilters: false,
+        filter: CustomFilterTypes.MultiCheckbox,
+        Filter: CustomFilterUi.MultiCheckbox,
       },
       {
         Header: "Date Submitted",
         accessor: "submissionTimestamp",
         Cell: renderDate,
-        ...dateFilterColumnProps,
+        disableFilters: false,
+        filter: CustomFilterTypes.DateRange,
+        Filter: CustomFilterUi.DateRangeInPast,
       },
       {
         Header: "Submitted By",
