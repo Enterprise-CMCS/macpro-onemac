@@ -348,12 +348,11 @@ function DateAndTextFilter({
     [setFilter]
   );
 
-  const isEmptyFilter =
-    !filterValue ||
-    filterValue?.length === 0 ||
-    (filterValue?.length === 2 &&
-      filterValue[0] === undefined &&
-      filterValue[1] === undefined);
+  const isEmptyFilter = !filterValue || filterValue?.length === 0;
+  const dateFiltersEmpty =
+    filterValue?.length >= 2 &&
+    filterValue[0] === undefined &&
+    filterValue[1] === undefined;
 
   return (
     <>
@@ -368,7 +367,7 @@ function DateAndTextFilter({
       <DateFilter
         column={{
           ...column,
-          filterValue: isEmptyFilter ? [] : filterValue,
+          filterValue: isEmptyFilter || dateFiltersEmpty ? [] : filterValue,
           setFilter: onChangeDateFilter,
         }}
         {...props}
