@@ -92,4 +92,4 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         And click on quarter to date date picker button
         And click on OK date picker button
         And Click on Filter Button
-        And verify date submitted column one date is this quarter
+        #And verify date submitted column one date is this quarter
