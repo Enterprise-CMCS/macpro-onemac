@@ -34,7 +34,9 @@ const filterByText = "//header//h4";
 //Element is Xpath use cy.xpath instead of cy.get
 const closeButton = "//header/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
-const typeDropDown = "//button[text()='Type']";
+const typeDropDownFilter = "//button[text()='Type']";
+const typeDropDown = "#accordionItem_2-button";
+const statusDropDown = "#accordionItem_6-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -51,7 +53,7 @@ const expirationDateDatePickerFilter =
 //Element is Xpath use cy.xpath instead of cy.get
 const dateSubmittedFilterDropdown = "//button[text()='Date Submitted']";
 const dateSubmittedDatePickerFilter =
-  "#accordionItem_27 > .rs-picker > .rs-picker-toggle";
+  "#accordionItem_19 > .rs-picker > .rs-picker-toggle";
 //Element is Xpath use cy.xpath instead of cy.get
 const thisQuarterDatePickerBtn = "//button[contains(text(),'This Quarter')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -62,7 +64,7 @@ const okDatePickerBtn = "//button[text()='OK']";
 //Element is Xpath use cy.xpath instead of cy.get
 const todayPickerBtn = "//button[text()='Today']";
 //Element is Xpath use cy.xpath instead of cy.get
-const statusDropDown = "//button[text()='Status']";
+const statusDropDownFilter = "//button[text()='Status']";
 const packageRowOneDateSubmitted = "submissionTimestamp-0";
 const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -226,7 +228,10 @@ export class oneMacPackagePage {
     cy.xpath(closeButton).should("be.visible");
   }
   verifytypeDropDownExists() {
-    cy.xpath(typeDropDown).should("be.visible");
+    cy.get(typeDropDown).should("be.visible");
+  }
+  verifytypeDropDownFilterExists() {
+    cy.xpath(typeDropDownFilter).should("be.visible");
   }
   verify90thDayFilterDropDownExists() {
     cy.xpath(ninetiethDayFilterDropdown).should("be.visible");
@@ -308,8 +313,11 @@ export class oneMacPackagePage {
         expect(dateQuarter).to.eq(todaysQuarter);
       });
   }
+  verifystatusDropDownFilterExists() {
+    cy.xpath(statusDropDownFilter).should("be.visible");
+  }
   verifystatusDropDownExists() {
-    cy.xpath(statusDropDown).should("be.visible");
+    cy.get(statusDropDown).should("be.visible");
   }
   verifyresetButtonExists() {
     cy.xpath(resetButton).should("be.visible");
