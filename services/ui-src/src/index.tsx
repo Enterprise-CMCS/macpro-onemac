@@ -8,6 +8,7 @@ import "core-js/es/object/entries";
 import "core-js/es/array";
 import "core-js/es/object";
 import "isomorphic-fetch";
+import "rsuite/dist/rsuite.min.css";
 import "./index.scss";
 import { App } from "./App";
 import { BrowserRouter as Router } from "react-router-dom";
