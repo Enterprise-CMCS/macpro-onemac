@@ -1292,3 +1292,78 @@ And(
     OneMacPackagePage.checkforUnsubmittedIsNotClickable();
   }
 );
+And("verify 90th day filter dropdown exists", () => {
+  OneMacPackagePage.verify90thDayFilterDropDownExists();
+});
+And("verify expiration date filter dropdown exists", () => {
+  OneMacPackagePage.verifyExpirationDateFilterDropDownExists();
+});
+And("verify date submitted filter dropdown exists", () => {
+  OneMacPackagePage.verifyDateSubmittedFilterDropDownExists();
+});
+And("click on 90th day filter dropdown", () => {
+  OneMacPackagePage.clickOn90thDayFilterDropDown();
+});
+And("verify 90th day na checkbox exists", () => {
+  OneMacPackagePage.verifyNinetiethDayNACheckboxExists();
+});
+And("click on 90th day na checkbox", () => {
+  OneMacPackagePage.clickOnNinetiethDayNACheckbox();
+});
+And("verify 90th day pending checkbox exists", () => {
+  OneMacPackagePage.verifyNinetiethDayPendingCheckboxExists();
+});
+And("click on 90th day pending checkbox", () => {
+  OneMacPackagePage.clickOnNinetiethDayPendingCheckbox();
+});
+And("verify 90th day date picker exists", () => {
+  OneMacPackagePage.verifyNinetiethDayDatePickerFilterExists();
+});
+And("click on 90th day date picker filter", () => {
+  OneMacPackagePage.clickOnNinetiethDayDatePickerFilter();
+});
+And("click on expiration date filter dropdown", () => {
+  OneMacPackagePage.clickOnExpirationDateFilterDropDown();
+});
+And("verify expiration date date picker exists", () => {
+  OneMacPackagePage.verifyExpirationDateDatePickerFilterExists();
+});
+And("click on expiration date date picker filter", () => {
+  OneMacPackagePage.clickOnExpirationDateDatePickerFilter();
+});
+And("click on date submitted filter dropdown", () => {
+  OneMacPackagePage.clickOnDateSubmittedFilterDropDown();
+});
+And("verify date submitted date picker filter exists", () => {
+  OneMacPackagePage.verifyDateSubmittedDatePickerFilterExists();
+});
+And("click on date submitted date picker filter", () => {
+  OneMacPackagePage.clickOnDateSubmittedDatePickerFilter();
+});
+And("click on this quarter date picker button", () => {
+  OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
+});
+And("click on quarter to date date picker button", () => {
+  OneMacPackagePage.clickOnQuarterToDateDatePickerBtn();
+});
+And("click on OK date picker button", () => {
+  OneMacPackagePage.clickOnOkDatePickerBtn();
+});
+And("click on today date picker button", () => {
+  OneMacPackagePage.clickOntodayPickerBtn();
+});
+And("click on reset button", () => {
+  OneMacPackagePage.clickOnResetButton();
+});
+And("verify package row one exists", () => {
+  OneMacPackagePage.verifyPackageRowOneExists();
+});
+And("verify 90th day column one is not na", () => {
+  OneMacPackagePage.verify90thDayRowOneIsNotNA();
+});
+And("verify 90th day column one is not Pending", () => {
+  OneMacPackagePage.verify90thDayRowOneIsNotPending();
+});
+And("verify date submitted column one date is this quarter", () => {
+  OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
+});
