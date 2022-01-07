@@ -119,6 +119,8 @@ const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
+//first obj is a header and second obj is row if there are results
+const packageRows = "tr";
 const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageApproved =
@@ -496,7 +498,8 @@ export class oneMacPackagePage {
     cy.xpath(Unsubmitted).should("be.disabled");
   }
   checkIfPackageListResultsExist() {
-    if (cy.get("table").find(packageRowOne).length > 0) {
+    //must check if length is greater than 1 because 1 is the header which is always visible.
+    if (cy.get("table").find(packageRows).length > 1) {
       return true;
     } //else
     return false;
