@@ -65,7 +65,7 @@ const okDatePickerBtn = "//button[text()='OK']";
 const todayPickerBtn = "//button[text()='Today']";
 //Element is Xpath use cy.xpath instead of cy.get
 const statusDropDownFilter = "//button[text()='Status']";
-const packageRowOneDateSubmitted = "submissionTimestamp-0";
+const packageRowOneDateSubmitted = "#submissionTimestamp-0";
 const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
@@ -119,8 +119,7 @@ const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
-//Element is Xpath use cy.xpath instead of cy.get
-const packageRowOne = "//tbody/tr[1]";
+const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageApproved =
   "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[8]/button";
@@ -294,7 +293,7 @@ export class oneMacPackagePage {
     cy.xpath(todayPickerBtn).click();
   }
   verifyPackageRowOneExists() {
-    cy.xpath(packageRowOne).should("be.visible");
+    cy.get(packageRowOne).should("be.visible");
   }
   verify90thDayRowOneIsNotPending() {
     cy.get(packageRowOne90thDay).should("not.have.text", "Pending");
@@ -495,6 +494,12 @@ export class oneMacPackagePage {
   }
   checkforUnsubmittedIsNotClickable() {
     cy.xpath(Unsubmitted).should("be.disabled");
+  }
+  checkIfPackageListResultsExist() {
+    if (cy.get("table").find(packageRowOne).length > 0) {
+      return true;
+    } //else
+    return false;
   }
 }
 export default oneMacPackagePage;

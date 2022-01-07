@@ -1359,11 +1359,17 @@ And("verify package row one exists", () => {
   OneMacPackagePage.verifyPackageRowOneExists();
 });
 And("verify 90th day column one is not na", () => {
-  OneMacPackagePage.verify90thDayRowOneIsNotNA();
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verify90thDayRowOneIsNotNA();
+  }
 });
 And("verify 90th day column one is not Pending", () => {
-  OneMacPackagePage.verify90thDayRowOneIsNotPending();
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verify90thDayRowOneIsNotPending();
+  }
 });
 And("verify date submitted column one date is this quarter", () => {
-  OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
+  }
 });
