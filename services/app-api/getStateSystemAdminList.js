@@ -7,7 +7,6 @@ import { queryForUserType } from "./libs/user-table-lib";
 export const main = handler(async (event) => {
   // get the list of states we care about
   const states = event.multiValueQueryStringParameters.state;
-
   if (!Array.isArray(states) || !states.length) {
     console.warn("No states passed to query on.");
     return {};
