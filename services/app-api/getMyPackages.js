@@ -20,7 +20,7 @@ export const main = handler((event) => {
 
         territoryList = getAuthorizedStateList(user);
         if (!userRoleObj.canAccessDashboard || territoryList === []) {
-          throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+          throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
         }
       }
 
@@ -76,6 +76,6 @@ export const main = handler((event) => {
     })
     .catch((error) => {
       console.log("error is: ", error);
-      throw error;
+      return error;
     });
 });

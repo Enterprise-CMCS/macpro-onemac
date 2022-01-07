@@ -35,7 +35,7 @@ export const main = handler(async (event) => {
     console.error("Failed to update package", e);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
-
+  console.log("update Package Data is: ", updatedPackageData);
   try {
     await Promise.all(
       [CMSWithdrawalEmail, StateWithdrawalEmail]
