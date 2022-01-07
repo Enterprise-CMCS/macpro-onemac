@@ -33,8 +33,40 @@ const filterButton = "//button[contains(text(),'Filter')]";
 const filterByText = "//header//h4";
 //Element is Xpath use cy.xpath instead of cy.get
 const closeButton = "//header/button[1]";
+//Element is Xpath use cy.xpath instead of cy.get
+const typeDropDownFilter = "//button[text()='Type']";
 const typeDropDown = "#accordionItem_2-button";
 const statusDropDown = "#accordionItem_6-button";
+//Element is Xpath use cy.xpath instead of cy.get
+const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
+//Element is Xpath use cy.xpath instead of cy.get
+const ninetiethDayNACheckbox = "//label[@for='checkbox_ninetiethDay-N/A_7']";
+//Element is Xpath use cy.xpath instead of cy.get
+const ninetiethDayPendingCheckbox =
+  "//label[@for='checkbox_ninetiethDay-Pending_8']";
+const ninetiethDayDatePickerFilter =
+  "#accordionItem_6 > .rs-picker > .rs-picker-toggle";
+//Element is Xpath use cy.xpath instead of cy.get
+const expirationDateFilterDropdown = "//button[text()='Expiration Date']";
+const expirationDateDatePickerFilter =
+  "#accordionItem_9 > .rs-picker > .rs-picker-toggle";
+//Element is Xpath use cy.xpath instead of cy.get
+const dateSubmittedFilterDropdown = "//button[text()='Date Submitted']";
+//Element is Xpath use cy.xpath(***).last() instead of cy.get
+const dateSubmittedDatePickerFilter = "//span[text()='Select Date Range']";
+//Element is Xpath use cy.xpath instead of cy.get
+const thisQuarterDatePickerBtn = "//button[contains(text(),'This Quarter')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const quarterToDateDatePickerBtn =
+  "//button[contains(text(),'Quarter To Date')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const okDatePickerBtn = "//button[text()='OK']";
+//Element is Xpath use cy.xpath instead of cy.get
+const todayPickerBtn = "//button[text()='Today']";
+//Element is Xpath use cy.xpath instead of cy.get
+const statusDropDownFilter = "//button[text()='Status']";
+const packageRowOneDateSubmitted = "#submissionTimestamp-0";
+const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -87,6 +119,9 @@ const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
+//first obj is a header and second obj is row if there are results
+const packageRows = "tr";
+const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageApproved =
   "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[8]/button";
@@ -196,11 +231,100 @@ export class oneMacPackagePage {
   verifytypeDropDownExists() {
     cy.get(typeDropDown).should("be.visible");
   }
+  verifytypeDropDownFilterExists() {
+    cy.xpath(typeDropDownFilter).should("be.visible");
+  }
+  verify90thDayFilterDropDownExists() {
+    cy.xpath(ninetiethDayFilterDropdown).should("be.visible");
+  }
+  clickOn90thDayFilterDropDown() {
+    cy.xpath(ninetiethDayFilterDropdown).click();
+  }
+  verifyExpirationDateFilterDropDownExists() {
+    cy.xpath(expirationDateFilterDropdown).should("be.visible");
+  }
+  clickOnExpirationDateFilterDropDown() {
+    cy.xpath(expirationDateFilterDropdown).click();
+  }
+  verifyDateSubmittedFilterDropDownExists() {
+    cy.xpath(dateSubmittedFilterDropdown).should("be.visible");
+  }
+  clickOnDateSubmittedFilterDropDown() {
+    cy.xpath(dateSubmittedFilterDropdown).click();
+  }
+  verifyNinetiethDayNACheckboxExists() {
+    cy.xpath(ninetiethDayNACheckbox).should("exist");
+  }
+  clickOnNinetiethDayNACheckbox() {
+    cy.xpath(ninetiethDayNACheckbox).click();
+  }
+  verifyNinetiethDayPendingCheckboxExists() {
+    cy.xpath(ninetiethDayPendingCheckbox).should("exist");
+  }
+  clickOnNinetiethDayPendingCheckbox() {
+    cy.xpath(ninetiethDayPendingCheckbox).click();
+  }
+  verifyNinetiethDayDatePickerFilterExists() {
+    cy.get(ninetiethDayDatePickerFilter).should("exist");
+  }
+  clickOnNinetiethDayDatePickerFilter() {
+    cy.get(ninetiethDayDatePickerFilter).click();
+  }
+  verifyExpirationDateDatePickerFilterExists() {
+    cy.get(expirationDateDatePickerFilter).should("exist");
+  }
+  clickOnExpirationDateDatePickerFilter() {
+    cy.get(expirationDateDatePickerFilter).click();
+  }
+  verifyDateSubmittedDatePickerFilterExists() {
+    cy.xpath(dateSubmittedDatePickerFilter).last().should("exist");
+  }
+  clickOnDateSubmittedDatePickerFilter() {
+    cy.xpath(dateSubmittedDatePickerFilter).last().click();
+  }
+  clickOnThisQuarterDatePickerBtn() {
+    cy.xpath(thisQuarterDatePickerBtn).click();
+  }
+  clickOnQuarterToDateDatePickerBtn() {
+    cy.xpath(quarterToDateDatePickerBtn).click();
+  }
+  clickOnOkDatePickerBtn() {
+    cy.xpath(okDatePickerBtn).click();
+  }
+  clickOntodayPickerBtn() {
+    cy.xpath(todayPickerBtn).click();
+  }
+  verifyPackageRowOneExists() {
+    cy.get(packageRowOne).should("be.visible");
+  }
+  verify90thDayRowOneIsNotPending() {
+    cy.get(packageRowOne90thDay).should("not.have.text", "Pending");
+  }
+  verify90thDayRowOneIsNotNA() {
+    cy.get(packageRowOne90thDay).should("not.have.text", "N/A");
+  }
+  verifypackageRowOneDateSubmittedIsThisQuarter() {
+    cy.get(packageRowOneDateSubmitted, { timeout: 15000 })
+      .invoke("text")
+      .then((dateText) => {
+        const date = new Date(packageRowOneDateSubmitted);
+        const today = new Date();
+        let dateQuarter = Math.floor((date.getMonth() + 3) / 3);
+        let todaysQuarter = Math.floor((today.getMonth() + 3) / 3);
+        expect(dateQuarter).to.eq(todaysQuarter);
+      });
+  }
+  verifystatusDropDownFilterExists() {
+    cy.xpath(statusDropDownFilter).should("be.visible");
+  }
   verifystatusDropDownExists() {
     cy.get(statusDropDown).should("be.visible");
   }
   verifyresetButtonExists() {
     cy.xpath(resetButton).should("be.visible");
+  }
+  clickOnResetButton() {
+    cy.xpath(resetButton).click();
   }
   clickTypeDropDown() {
     cy.get(typeDropDown).click();
@@ -372,6 +496,13 @@ export class oneMacPackagePage {
   }
   checkforUnsubmittedIsNotClickable() {
     cy.xpath(Unsubmitted).should("be.disabled");
+  }
+  checkIfPackageListResultsExist() {
+    //must check if length is greater than 1 because 1 is the header which is always visible.
+    if (cy.get("table").find(packageRows).length > 1) {
+      return true;
+    } //else
+    return false;
   }
 }
 export default oneMacPackagePage;
