@@ -197,7 +197,6 @@ const UserPage = () => {
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
-
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
@@ -326,13 +325,25 @@ const UserPage = () => {
   ]);
 
   const renderSelectStateAccess = useMemo(() => {
+    const territoryRequestList = [];
+    const activeStateList = [];
+
+    accesses.forEach(({ state, status }) => {
+      if (status === "active" || status === "pending")
+        activeStateList.push(state);
+    });
+    territoryList.forEach(({ label, value }) => {
+      if (activeStateList.includes(value) === false)
+        territoryRequestList.push({ label, value });
+    });
+
     return (
       <div className="profile-signup-container">
         <MultiSelectDropDown
           cancelFn={() => setIsStateSelectorVisible(false)}
           errorMessage="Please select at least one state."
           loading={loading}
-          options={territoryList}
+          options={territoryRequestList}
           placeholder="Select state here"
           required
           showCancelButton
@@ -343,7 +354,7 @@ const UserPage = () => {
         />
       </div>
     );
-  }, [loading, signupUser, setIsStateSelectorVisible]);
+  }, [loading, signupUser, setIsStateSelectorVisible, accesses]);
 
   const renderAddStateButton = useMemo(() => {
     return (

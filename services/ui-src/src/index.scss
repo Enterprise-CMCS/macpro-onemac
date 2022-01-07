@@ -2247,6 +2247,14 @@ aside#faq-contact-info-box {
     .filter-accordion {
       flex: 1;
       overflow-y: auto;
+
+      .ds-c-accordion__content {
+        max-height: unset;
+      }
+
+      .rs-picker-daterange:not(:first-child) {
+        @extend .ds-u-margin-top--2;
+      }
     }
 
     > footer {

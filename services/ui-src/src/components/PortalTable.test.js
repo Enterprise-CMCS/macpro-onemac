@@ -3,7 +3,7 @@ import { act } from "react-dom/test-utils";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 
-import PortalTable from "./PortalTable";
+import PortalTable, { CustomFilterTypes, CustomFilterUi } from "./PortalTable";
 
 it("renders without crashing", () => {
   render(<PortalTable columns={[]} data={[]} />);
@@ -182,8 +182,14 @@ describe("search and filter features", () => {
         <div id="myContainer">
           <PortalTable
             columns={[
-              { Header: "Foo", accessor: "foo", disableFilters: true },
-              { Header: "Bar", accessor: "bar" },
+              { Header: "Foo", accessor: "foo" },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
             ]}
             data={[
               { foo: 1, bar: "two" },
@@ -221,6 +227,173 @@ describe("search and filter features", () => {
       expect(
         within(barOptionSection).getByRole("checkbox", { name: /four/i })
       ).toBeVisible();
+    });
+
+    it("supports date range filters", () => {
+      const myRef = {};
+      render(
+        <div id="myContainer">
+          <PortalTable
+            columns={[
+              { Header: "Foo", accessor: "foo" },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
+              {
+                Header: "Baz",
+                accessor: "baz",
+                disableFilters: false,
+                filter: CustomFilterTypes.DateRange,
+                Filter: CustomFilterUi.DateRange,
+              },
+            ]}
+            data={[
+              { foo: 1, bar: "two", baz: "2021-01-02" },
+              { foo: 3, bar: "four", baz: "2021-03-04" },
+            ]}
+            withSearchBar
+            pageContentRef={myRef}
+          />
+        </div>
+      );
+      myRef.current = document.getElementById("myContainer");
+
+      fireEvent.click(screen.getByRole("button", { name: /filter/i }));
+
+      const filterPane = screen.getByRole("search", { name: /filter/i });
+      const bazButton = within(filterPane).getByRole("button", {
+        name: /baz/i,
+      });
+      expect(bazButton).toBeVisible();
+
+      const bazOptionSection = document.getElementById(
+        bazButton.getAttribute("aria-controls")
+      );
+      expect(bazOptionSection).not.toBeVisible();
+
+      fireEvent.click(bazButton);
+      expect(bazOptionSection).toBeVisible();
+
+      const bazDateContainer = within(bazOptionSection).getByRole("combobox");
+      expect(bazDateContainer).toBeVisible();
+      const bazDateInput =
+        within(bazDateContainer).getByPlaceholderText(/select date range/i);
+
+      fireEvent.click(bazDateInput);
+      userEvent.type(bazDateInput, "2021010120210201{enter}");
+
+      expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
+      expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
+
+      fireEvent.click(within(bazDateContainer).getByRole("button"));
+
+      expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+    });
+
+    it("filters the table based on user selection", () => {
+      const myRef = {};
+      render(
+        <div id="myContainer">
+          <PortalTable
+            columns={[
+              { Header: "Foo", accessor: "foo" },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
+            ]}
+            data={[
+              { foo: 1, bar: "two" },
+              { foo: 3, bar: "four" },
+            ]}
+            withSearchBar
+            pageContentRef={myRef}
+          />
+        </div>
+      );
+      myRef.current = document.getElementById("myContainer");
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+
+      fireEvent.click(screen.getByRole("button", { name: /filter/i }));
+      const filterPane = screen.getByRole("search", { name: /filter/i });
+      const barButton = within(filterPane).getByRole("button", {
+        name: /bar/i,
+      });
+      fireEvent.click(barButton);
+      fireEvent.click(
+        within(
+          document.getElementById(barButton.getAttribute("aria-controls"))
+        ).getByRole("checkbox", { name: /four/i })
+      );
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
+
+      fireEvent.click(
+        within(
+          document.getElementById(barButton.getAttribute("aria-controls"))
+        ).getByRole("checkbox", { name: /four/i })
+      );
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+    });
+
+    it("displays a reset button for all filters", () => {
+      const myRef = {};
+      render(
+        <div id="myContainer">
+          <PortalTable
+            columns={[
+              { Header: "Foo", accessor: "foo" },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
+            ]}
+            data={[
+              { foo: 1, bar: "two" },
+              { foo: 3, bar: "four" },
+            ]}
+            withSearchBar
+            pageContentRef={myRef}
+          />
+        </div>
+      );
+      myRef.current = document.getElementById("myContainer");
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+
+      fireEvent.click(screen.getByRole("button", { name: /filter/i }));
+      const filterPane = screen.getByRole("search", { name: /filter/i });
+      const barButton = within(filterPane).getByRole("button", {
+        name: /bar/i,
+      });
+      fireEvent.click(barButton);
+      fireEvent.click(
+        within(
+          document.getElementById(barButton.getAttribute("aria-controls"))
+        ).getByRole("checkbox", { name: /four/i })
+      );
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
+
+      const resetButton = within(filterPane).getByRole("button", {
+        name: /reset/i,
+      });
+      fireEvent.click(resetButton);
+
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
     });
   });
 });
