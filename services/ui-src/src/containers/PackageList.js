@@ -409,6 +409,7 @@ const PackageList = () => {
             data={packageList}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
+            searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
           />
         ) : (
