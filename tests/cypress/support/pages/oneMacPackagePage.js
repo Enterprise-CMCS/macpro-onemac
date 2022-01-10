@@ -15,7 +15,8 @@ const MD32560hrefValue =
   '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
 const searchbar = "#search-bar-input";
 //Element is Xpath use cy.xpath instead of cy.get
-const searchbarHeader = "//label[contains(text(),'Search')]";
+const searchbarHeader =
+  "//label[text()='Search by Package ID or Submitter Name']";
 //Element is Xpath use cy.xpath instead of cy.get
 const searchBarXBTN =
   "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]";
