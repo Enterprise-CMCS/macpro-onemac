@@ -11,10 +11,10 @@ dynamoDb.update.mockImplementation(() => {
 
 const mockObject = {
   statusCode: 200,
-  body: JSON.stringify({
+  body: {
     id: "",
     phoneNumber: "",
-  }),
+  },
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": true,
@@ -23,10 +23,10 @@ const mockObject = {
 
 const expectedResponse = {
   statusCode: 200,
-  body: JSON.stringify({
+  body: {
     id: "",
     phoneNumber: "",
-  }),
+  },
   headers: {
     "Access-Control-Allow-Origin": "*",
     "Access-Control-Allow-Credentials": true,
