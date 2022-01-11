@@ -9,95 +9,79 @@ dynamoDb.update.mockImplementation(() => {
   return true;
 });
 
-it("validation of input", async () => {
-  const mockObject = {
-    statusCode: 200,
-    body: {},
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
+const mockObject = {
+  statusCode: 200,
+  body: JSON.stringify({
+    id: "",
+    phoneNumber: "",
+  }),
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true,
+  },
+};
 
-  const expectedResponse = {
-    id: "statesubmitteractive@cms.hhs.local",
-    statusCode: 200,
-    body: RESPONSE_CODE.VALIDATION_ERROR,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
+const expectedResponse = {
+  statusCode: 200,
+  body: JSON.stringify({
+    id: "",
+    phoneNumber: "",
+  }),
+  headers: {
+    "Access-Control-Allow-Origin": "*",
+    "Access-Control-Allow-Credentials": true,
+  },
+};
 
-  await expect(main(mockObject))
-    .resolves.toStrictEqual(expectedResponse)
-    .catch((e) => {
-      RESPONSE_CODE.VALIDATION_ERROR, e;
-    });
+afterEach(() => {
+  jest.clearAllMocks();
 });
 
-it("runs through validation of input and tries to update dynamoDb, exception", async () => {
-  dynamoDb.update.mockImplementation(() => {
-    throw "Error";
-  });
-
-  const mockObject = {
-    statusCode: 200,
-    body: JSON.stringify({
-      id: "statesubmitteractive@cms.hhs.local",
-      phoneNumber: "5558773444",
-    }),
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
-
-  const expectedResponse = {
-    statusCode: 200,
-    body: RESPONSE_CODE.USER_SUBMISSION_FAILED,
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
-
-  await expect(main(mockObject))
-    .resolves.toStrictEqual(expectedResponse)
-    .catch((e) => {
-      RESPONSE_CODE.USER_SUBMISSION_FAILED, e;
-    });
-});
-
-it("runs through validation of input and tries to update dynamoDb, success", async () => {
-  dynamoDb.update.mockImplementation(() => {
-    return "true";
-  });
-
-  const mockObject = {
-    statusCode: 200,
-    body: JSON.stringify({
-      id: "statesubmitteractive@cms.hhs.local",
-      phoneNumber: "5558773444",
-    }),
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
-
-  const expectedResponse = {
-    statusCode: 200,
-    body: JSON.stringify(RESPONSE_CODE.USER_SUBMITTED),
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
+it("validation of input", () => {
+  mockObject.body = {};
+  expectedResponse.body = JSON.stringify(RESPONSE_CODE.VALIDATION_ERROR);
 
   expect(main(mockObject))
     .resolves.toStrictEqual(expectedResponse)
     .catch((e) => {
-      console.log("error", e);
+      console.log("error test", e);
+    });
+});
+
+it("runs through validation of input and tries to update dynamoDb, exception", () => {
+  dynamoDb.update.mockImplementation(() => {
+    throw "Error";
+  });
+
+  mockObject.body = JSON.stringify({
+    id: "statesubmitteractive@cms.hhs.local",
+    phoneNumber: "5558773444",
+  });
+
+  expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_SUBMISSION_FAILED);
+
+  expect(main(mockObject))
+    .resolves.toStrictEqual(expectedResponse)
+    .catch((e) => {
+      console.log("error test", e);
+    });
+});
+
+it("runs through validation of input and tries to update dynamoDb, success", () => {
+  dynamoDb.update.mockImplementation(() => {
+    return true;
+  });
+
+  mockObject.body = JSON.stringify({
+    id: "statesubmitteractive@cms.hhs.local",
+    phoneNumber: "5558773444",
+  });
+
+  expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_SUBMITTED);
+
+  expect(main(mockObject))
+    .resolves.toStrictEqual(expectedResponse)
+    .catch((e) => {
+      console.log("error test", e);
     });
 });
