@@ -1075,9 +1075,12 @@ And("search existing user with dash", () => {
 And("verify search bar exists", () => {
   OneMacPackagePage.verifySearchBarExists();
 });
-And("verify search is displayed ontop of search bar", () => {
-  OneMacPackagePage.verifySearchisDisplayed();
-});
+And(
+  "verify search by package id or submitter name is displayed ontop of search bar",
+  () => {
+    OneMacPackagePage.verifySearchisDisplayed();
+  }
+);
 And("verify x in search bar exists to clear search and click it", () => {
   OneMacPackagePage.verifyxexistsandClickIt();
 });

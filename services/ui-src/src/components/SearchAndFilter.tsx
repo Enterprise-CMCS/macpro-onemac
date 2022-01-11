@@ -1,5 +1,6 @@
 import React, {
   FC,
+  ReactNode,
   RefObject,
   useCallback,
   useEffect,
@@ -469,12 +470,14 @@ function FilterPane<V extends {}>({
 
 export type SearchFilterProps<V extends {}> = {
   onSearch: (keyword: string) => void;
+  searchBarTitle: ReactNode;
 } & FilterPaneProps<V>;
 
 export function SearchAndFilter<V extends {} = {}>({
   columnsInternal,
   onSearch,
   pageContentRef,
+  searchBarTitle,
   setAllFilters,
 }: SearchFilterProps<V>) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -503,7 +506,7 @@ export function SearchAndFilter<V extends {} = {}>({
   return (
     <div className="search-and-filter" role="search">
       <div className="search-bar">
-        <label htmlFor="search-bar-input">Search</label>
+        <label htmlFor="search-bar-input">{searchBarTitle || "Search"}</label>
         <div className="field" onClick={clickInsideBar}>
           <FontAwesomeIcon icon={faSearch} />
           <input
