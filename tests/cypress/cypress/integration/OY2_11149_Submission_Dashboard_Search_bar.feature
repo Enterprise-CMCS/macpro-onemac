@@ -82,6 +82,8 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with cms Help Desk User
         And click on Packages
         And verify search bar exists
+        And verify search bar exists
+        And verify search by package id or submitter name is displayed ontop of search bar
 
     Scenario: log in with system admin user
         Given I am on Login Page
@@ -89,6 +91,8 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with cms System Admin
         And click on Packages
         And verify search bar exists
+        And verify search bar exists
+        And verify search by package id or submitter name is displayed ontop of search bar
 
     Scenario: Screen Enhancement
         Given I am on Login Page
@@ -96,6 +100,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with state submitter user
         And click on Packages
         And verify search bar exists
-        And verify search is displayed ontop of search bar
+        And verify search by package id or submitter name is displayed ontop of search bar
         And search existing user with all upper case
         And verify x in search bar exists to clear search and click it

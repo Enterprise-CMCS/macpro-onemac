@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactNode } from "react";
 import {
   TableOptions,
   useFilters,
@@ -20,6 +20,7 @@ export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
   className?: string;
+  searchBarTitle: ReactNode;
   withSearchBar?: boolean;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &
   TableOptions<V>;
@@ -32,6 +33,7 @@ const defaultColumn = {
 
 export default function PortalTable<V extends {} = {}>({
   pageContentRef,
+  searchBarTitle,
   withSearchBar,
   ...props
 }: TableProps<V>) {
@@ -77,6 +79,7 @@ export default function PortalTable<V extends {} = {}>({
           columnsInternal={columns}
           onSearch={setGlobalFilter}
           pageContentRef={pageContentRef}
+          searchBarTitle={searchBarTitle}
           setAllFilters={setAllFilters}
         />
       )}
