@@ -29,9 +29,14 @@ const validateInput = (input) => {
  */
 export const main = handler(async (event) => {
   let input = event.body;
-  if (!isObject(input)) input = JSON.parse(input);
+  try {
+    if (!isObject(input)) input = JSON.parse(input);
 
-  if (!validateInput(input)) {
+    if (!validateInput(input)) {
+      throw "Validate input returned undefined";
+    }
+  } catch (e) {
+    console.log("Error is", e);
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
 
