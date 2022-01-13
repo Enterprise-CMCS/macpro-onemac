@@ -2298,3 +2298,25 @@ aside#faq-contact-info-box {
     }
   }
 }
+
+.tab-bar {
+  @extend .ds-u-margin-bottom--4;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-align-items--start;
+  @include max-width-ultra-wide;
+  width: 100%;
+}
+.tab-button {
+  width: 120px;
+  background-color: $color-primary-alt-lightest;
+  color: $color-primary;
+  border-top: none;
+  border-left: none;
+  border-right: none;
+  border-bottom: 3px solid $color-primary;
+}
+.tab-button:disabled {
+  background-color: $color-white;
+  color: black;
+  border-bottom: 3px solid $color-gray-lighter;
+}

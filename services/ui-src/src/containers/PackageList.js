@@ -434,29 +434,31 @@ const PackageList = () => {
       <div className="dash-and-filters" ref={dashboardRef}>
         <div className="dashboard-and-alert-bar">
           <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-          <div className="tab-bar">
-            <Button
-              id="show-spas-button"
-              aria-label="switch to showing spa packages"
-              className="tab-button"
-              disabled={tab === ChangeRequest.PACKAGE_GROUP.SPA}
-              onClick={switchTo}
-              value={ChangeRequest.PACKAGE_GROUP.SPA}
-            >
-              SPAs
-            </Button>
-            <Button
-              id="show-waivers-button"
-              aria-label="switch to showing waiver packages"
-              className="tab-button"
-              disabled={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
-              onClick={switchTo}
-              value={ChangeRequest.PACKAGE_GROUP.WAIVER}
-            >
-              Waivers
-            </Button>
+          <div className="dashboard-container">
+            <div className="tab-bar">
+              <Button
+                id="show-spas-button"
+                aria-label="switch to showing spa packages"
+                className="tab-button"
+                disabled={tab === ChangeRequest.PACKAGE_GROUP.SPA}
+                onClick={switchTo}
+                value={ChangeRequest.PACKAGE_GROUP.SPA}
+              >
+                SPAs
+              </Button>
+              <Button
+                id="show-waivers-button"
+                aria-label="switch to showing waiver packages"
+                className="tab-button"
+                disabled={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
+                onClick={switchTo}
+                value={ChangeRequest.PACKAGE_GROUP.WAIVER}
+              >
+                Waivers
+              </Button>
+            </div>
+            {renderSubmissionList()}
           </div>
-          <div className="dashboard-container">{renderSubmissionList()}</div>
         </div>
       </div>
     </div>
