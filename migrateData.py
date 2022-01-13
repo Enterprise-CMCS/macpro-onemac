@@ -30,7 +30,7 @@ def process_items(table_name, item_list):
                     if item['componentType'] in WAIVER_PACKAGES:
                         newGSI1pk = "OneMAC#waiver"
                 update_details = [
-                { "id": item['id']},
+                { "pk": item['pk']},
                 "SET #newgsipk=:newGSI1pk",
                 { "#newgsipk":"GSI1pk"},
                 { ":newGSI1pk": { "S": newGSI1pk }}
