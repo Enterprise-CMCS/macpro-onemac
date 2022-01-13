@@ -9,8 +9,8 @@ Hard code details of the data migration.
 """
 STAGES_TO_MIGRATE = ['all']
 TABLES_TO_MIGRATE = ['one']
-SPA_PACKAGES = ['spa','chipspa']
-WAIVER_PACKAGES = ['waiver','waivernew']
+SPA_PACKAGES = ['{"S": "spa"}','{"S":"chipspa"}']
+WAIVER_PACKAGES = ['{"S":"waiver"}','{"S":"waivernew"}']
 
 def process_items(table_name, item_list):
     """
@@ -24,14 +24,16 @@ def process_items(table_name, item_list):
                 pass
             else:
                 newGSI1pk = "CHECK"
-                if item['componentType'] in SPA_PACKAGES:
+                print(f"Item is: {item}")
+
+                if item['sk'] in SPA_PACKAGES:
                     newGSI1pk = "OneMAC#spa"
                 else:
-                    if item['componentType'] in WAIVER_PACKAGES:
+                    if item['sk'] in WAIVER_PACKAGES:
                         newGSI1pk = "OneMAC#waiver"
                 update_details = [
-                { "pk": item['pk']},
-                "SET #newgsipk=:newGSI1pk",
+                { "pk": item['pk'], "sk": item['sk']},
+                "SET GSI1pk=:newGSI1pk",
                 { "#newgsipk":"GSI1pk"},
                 { ":newGSI1pk": { "S": newGSI1pk }}
                 ]

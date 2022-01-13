@@ -2308,15 +2308,16 @@ aside#faq-contact-info-box {
 }
 .tab-button {
   width: 120px;
-  background-color: $color-primary-alt-lightest;
-  color: $color-primary;
+  background-color: $color-white;
+  color: black;
   border-top: none;
   border-left: none;
   border-right: none;
+  border-bottom: 3px solid $color-gray-lighter;
   border-bottom: 3px solid $color-primary;
 }
 .tab-button:disabled {
-  background-color: $color-white;
-  color: black;
-  border-bottom: 3px solid $color-gray-lighter;
+  background-color: $color-primary-alt-lightest;
+  color: $color-primary;
+  border-bottom: 3px solid $color-primary;
 }

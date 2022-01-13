@@ -5,6 +5,7 @@ import {
   within,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
 import { ROUTES } from "cmscommonlib";
@@ -55,7 +56,7 @@ it("passes a retrieval error up", async () => {
   expect(screen.getByText("Submission Error")).toBeInTheDocument();
 });
 
-it("renders table with columns", async () => {
+it("renders table with spa columns", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
 
   render(<PackageList />, { wrapper: ContextWrapper });
@@ -71,7 +72,30 @@ it("renders table with columns", async () => {
   screen.getByText("Submitted By");
   screen.getByText("Actions");
 });
+/*
+it("switches to waiver columns if wavier tab selected", async () => {
+  PackageApi.getMyPackages.mockResolvedValue(packageList);
 
+  render(<PackageList />, { wrapper: ContextWrapper });
+
+  // wait for loading screen to disappear so package table displays
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  const waiversButtonEl = screen.getByText("Waivers");
+
+  userEvent.click(waiversButtonEl);
+
+  await waitFor(() => screen.getByText("Waiver Number"));
+
+  screen.getByText("Type");
+  screen.getByText("State");
+  screen.getByText("90th Day");
+  screen.getByText("Expiration Date");
+  screen.getByText("Date Submitted");
+  screen.getByText("Submitted By");
+  screen.getByText("Actions");
+});
+*/
 it.each`
   filterFieldType    | filterFieldValue  | inName                 | inValue          | textShown
   ${"currentStatus"} | ${"Withdrawn"}    | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
