@@ -63,11 +63,10 @@ it("renders table with columns", async () => {
   // wait for loading screen to disappear so package table displays
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  screen.getByText("ID/Number");
+  screen.getByText("SPA ID");
   screen.getByText("Type");
   screen.getByText("State");
   screen.getByText("90th Day");
-  screen.getByText("Expiration Date");
   screen.getByText("Date Submitted");
   screen.getByText("Submitted By");
   screen.getByText("Actions");

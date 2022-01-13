@@ -8,8 +8,9 @@ import subprocess
 Hard code details of the data migration.
 """
 STAGES_TO_MIGRATE = ['all']
-TABLES_TO_MIGRATE = ['user-profiles']
-
+TABLES_TO_MIGRATE = ['one']
+SPA_PACKAGES = ['spa','chipspa']
+WAIVER_PACKAGES = ['waiver','waivernew']
 
 def process_items(table_name, item_list):
     """
@@ -17,16 +18,22 @@ def process_items(table_name, item_list):
     Migrate each table with the if blocks.
     """
     update_items = []
-    if table_name.endswith("user-profiles"):
+    if table_name.endswith("one"):
         for item in item_list['Items']:
-            if "type" not in item or item["type"] != {'S': 'stateadmin'}:
+            if "GSI1pk" not in item or item["GSI1pk"] != {'S': 'OneMAC'}:
                 pass
             else:
+                newGSI1pk = "CHECK"
+                if item['componentType'] in SPA_PACKAGES:
+                    newGSI1pk = "OneMAC#spa"
+                else:
+                    if item['componentType'] in WAIVER_PACKAGES:
+                        newGSI1pk = "OneMAC#waiver"
                 update_details = [
                 { "id": item['id']},
-                "SET #type=:newType",
-                { "#type":"type"},
-                { ":newType": { "S": 'statesystemadmin'}}
+                "SET #newgsipk=:newGSI1pk",
+                { "#newgsipk":"GSI1pk"},
+                { ":newGSI1pk": { "S": newGSI1pk }}
                 ]
                 update_items.append(update_details)
     return update_items
