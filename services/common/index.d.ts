@@ -34,7 +34,9 @@ export const latestAccessStatus: (
   territory: string
 ) => USER_STATUS;
 
-type SelectOption = { label: string; value: string };
+export type SelectOption = { label: string; value: string };
+
+export const territoryList: SelectOption[];
 
 export namespace ChangeRequest {
   type TransmittalNumberInfo = {

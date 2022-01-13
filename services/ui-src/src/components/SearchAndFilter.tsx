@@ -15,6 +15,7 @@ import {
   UseFiltersColumnOptions,
   UseFiltersColumnProps,
 } from "react-table";
+import Select from "react-select";
 import { debounce } from "lodash";
 import { DateRangePicker } from "rsuite";
 import {
@@ -33,12 +34,9 @@ import {
   faTimes,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  Accordion,
-  AccordionItem,
-  Button,
-  Choice,
-} from "@cmsgov/design-system";
+import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
+
+import { SelectOption, territoryList } from "cmscommonlib";
 
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
@@ -377,10 +375,50 @@ function DateAndTextFilter({
   );
 }
 
-export const CustomFilterUi: Record<string, FC<FilterProps>> = {
+const customComponents = {
+  IndicatorSeparator: () => null,
+};
+
+const MultiSelectList = ({
+  column: { filterValue, id, setFilter },
+  options,
+}: FilterProps & {
+  options: SelectOption[];
+}) => {
+  const onSelect = useCallback(
+    (selected) => {
+      setFilter(selected.map(({ value }: SelectOption) => value));
+    },
+    [setFilter]
+  );
+  const selectedOptions = useMemo(
+    () =>
+      options && filterValue
+        ? options.filter(({ value }) => filterValue.includes(value))
+        : null,
+    [options, filterValue]
+  );
+
+  return (
+    <Select
+      className="custom-multi-select"
+      components={customComponents}
+      isMulti
+      name={id}
+      onChange={onSelect}
+      options={options}
+      value={selectedOptions}
+    />
+  );
+};
+
+export const CustomFilterUi = {
   MultiCheckbox: TextFilter,
+  TerritorySelect: (props: FilterProps) => (
+    <MultiSelectList options={territoryList} {...props} />
+  ),
   DateRange: DateFilter,
-  DateRangeInPast: (props) => <DateFilter inThePast {...props} />,
+  DateRangeInPast: (props: FilterProps) => <DateFilter inThePast {...props} />,
   DateRangeAndMultiCheckbox: DateAndTextFilter,
 };
 
@@ -441,7 +479,8 @@ function FilterPane<V extends {}>({
                 Close <FontAwesomeIcon icon={faTimes} />
               </Button>
             </header>
-            <Accordion className="filter-accordion">
+            {/* Did not use CMS Accordion component because it steals KeyDown events */}
+            <div className="ds-c-accordion filter-accordion">
               {columnsInternal
                 ?.filter(({ canFilter }) => canFilter)
                 ?.map((column) => (
@@ -455,7 +494,7 @@ function FilterPane<V extends {}>({
                     {column.render("Filter")}
                   </AccordionItem>
                 ))}
-            </Accordion>
+            </div>
             <footer>
               <Button inversed onClick={onResetFilters} variation="transparent">
                 Reset

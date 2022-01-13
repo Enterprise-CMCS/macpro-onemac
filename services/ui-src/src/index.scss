@@ -2119,7 +2119,9 @@ aside#faq-contact-info-box {
   @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
+  min-width: 700px;
   width: 100%;
+  align-self: flex-start;
 
   > .search-bar {
     > label {
@@ -2250,6 +2252,8 @@ aside#faq-contact-info-box {
 
       .ds-c-accordion__content {
         max-height: unset;
+        overflow: visible;
+        overflow-y: visible;
       }
 
       .rs-picker-daterange:not(:first-child) {
@@ -2297,4 +2301,8 @@ aside#faq-contact-info-box {
       transform: rotateZ(180deg);
     }
   }
+}
+
+.custom-multi-select {
+  color: $color-black;
 }
