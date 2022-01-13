@@ -403,6 +403,7 @@ const MultiSelectList = ({
     <Select
       className="custom-multi-select"
       components={customComponents}
+      inputId={`${id}-filter-select`}
       isMulti
       name={id}
       onChange={onSelect}
