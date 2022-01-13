@@ -85,8 +85,7 @@ it("switches to waiver columns if wavier tab selected", async () => {
 
   userEvent.click(waiversButtonEl);
 
-  await waitFor(() => screen.getByText("Waiver Number"));
-
+  screen.getByText("Waiver Number");
   screen.getByText("Type");
   screen.getByText("State");
   screen.getByText("90th Day");
