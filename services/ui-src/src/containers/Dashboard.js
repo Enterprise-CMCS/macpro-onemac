@@ -324,6 +324,10 @@ const Dashboard = () => {
     );
   }
 
+  function switchTo(type) {
+    alert(`clicked ${type} button`);
+  }
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
@@ -332,6 +336,28 @@ const Dashboard = () => {
         rightSideContent={getRightSideContent()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
+      <div>
+        <Button
+          id="show-spas-button"
+          aria-label="show-spas"
+          className="ds-c-button ds-c-button--primary"
+          disabled={true}
+          onClick={switchTo("spa")}
+          value="SPA"
+        >
+          SPA
+        </Button>
+        <Button
+          id="show-waivers-button"
+          aria-label="show-waivers"
+          className="ds-c-button ds-c-button--primary"
+          disabled={false}
+          onClick={switchTo("waiver")}
+          value="Waiver"
+        >
+          Waiver
+        </Button>
+      </div>
       <div className="dashboard-container">{renderSubmissionList()}</div>
     </div>
   );
