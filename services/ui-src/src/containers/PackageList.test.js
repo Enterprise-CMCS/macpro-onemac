@@ -75,18 +75,20 @@ it("renders table with spa columns", async () => {
 
 it("switches to waiver columns if wavier tab selected", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
-  let switchTo = jest.fn();
 
   render(<PackageList />, { wrapper: ContextWrapper });
 
   // wait for loading screen to disappear so package table displays
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  const waiversButtonEl = screen.getByText("Waivers");
+  const waiversButtonEl = screen.getByRole("button", {
+    name: "switch to showing waiver packages",
+  });
 
   userEvent.click(waiversButtonEl);
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  expect(switchTo).toBeCalled();
+  screen.getByText("Waiver Number");
 });
 
 it.each`

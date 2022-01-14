@@ -92,6 +92,16 @@ provider:
 
 functions:
 
+  migrate:
+    handler: migrate.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: migrate
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   submit:
     handler: submit.main
     role: LambdaApiRole
