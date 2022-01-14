@@ -72,9 +72,10 @@ it("renders table with spa columns", async () => {
   screen.getByText("Submitted By");
   screen.getByText("Actions");
 });
-/*
+
 it("switches to waiver columns if wavier tab selected", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
+  let switchTo = jest.fn();
 
   render(<PackageList />, { wrapper: ContextWrapper });
 
@@ -85,16 +86,9 @@ it("switches to waiver columns if wavier tab selected", async () => {
 
   userEvent.click(waiversButtonEl);
 
-  screen.getByText("Waiver Number");
-  screen.getByText("Type");
-  screen.getByText("State");
-  screen.getByText("90th Day");
-  screen.getByText("Expiration Date");
-  screen.getByText("Date Submitted");
-  screen.getByText("Submitted By");
-  screen.getByText("Actions");
+  expect(switchTo).toBeCalled();
 });
-*/
+
 it.each`
   filterFieldType    | filterFieldValue  | inName                 | inValue          | textShown
   ${"currentStatus"} | ${"Withdrawn"}    | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
