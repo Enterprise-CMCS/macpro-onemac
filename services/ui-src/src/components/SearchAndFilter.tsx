@@ -246,7 +246,7 @@ function TextFilter({
 }
 
 function DateFilter({
-  column: { filterValue, setFilter },
+  column: { filterValue, id, setFilter },
   inThePast,
 }: FilterProps & { inThePast?: boolean }) {
   const onChangeSelection = useCallback(
@@ -294,6 +294,7 @@ function DateFilter({
     <DateRangePicker
       block
       disabledDate={inThePast ? afterToday!() : undefined}
+      id={`${id}-date-filter`}
       onChange={onChangeSelection}
       placeholder="Select Date Range"
       ranges={ranges}
@@ -490,6 +491,7 @@ function FilterPane<V extends {}>({
                     contentClassName="inversed-accordion-content"
                     heading={column.render("Header")}
                     headingLevel="6"
+                    id={column.id}
                     key={column.id}
                   >
                     {column.render("Filter")}

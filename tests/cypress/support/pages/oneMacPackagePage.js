@@ -36,21 +36,22 @@ const filterByText = "//header//h4";
 const closeButton = "//header/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const typeDropDownFilter = "//button[text()='Type']";
-const typeDropDown = "#accordionItem_2-button";
-const statusDropDown = "#accordionItem_6-button";
+const typeDropDown = "#componentType-button";
+const statusDropDown = "#packageStatus-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
 //Element is Xpath use cy.xpath instead of cy.get
-const ninetiethDayNACheckbox = "//label[@for='checkbox_ninetiethDay-N/A_7']";
+const ninetiethDayNACheckbox =
+  "//label[contains(@for,'checkbox_ninetiethDay-N/A_')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayPendingCheckbox =
-  "//label[@for='checkbox_ninetiethDay-Pending_8']";
+  "//label[contains(@for,'checkbox_ninetiethDay-Pending_')]";
 const ninetiethDayDatePickerFilter =
-  "#accordionItem_6 > .rs-picker > .rs-picker-toggle";
+  '*[role=combobox][aria-owns^="ninetiethDay-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const expirationDateFilterDropdown = "//button[text()='Expiration Date']";
 const expirationDateDatePickerFilter =
-  "#accordionItem_9 > .rs-picker > .rs-picker-toggle";
+  '*[role=combobox][aria-owns^="expirationTimestamp-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const dateSubmittedFilterDropdown = "//button[text()='Date Submitted']";
 //Element is Xpath use cy.xpath(***).last() instead of cy.get
