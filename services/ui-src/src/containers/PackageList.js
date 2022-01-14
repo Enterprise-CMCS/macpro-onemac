@@ -95,14 +95,6 @@ const PackageList = () => {
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
 
-    const missingUserType = !userData?.type;
-    const missingOtherUserData =
-      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if ((missingUserType || missingOtherUserData) && cmsRoles) {
-      history.replace("/signup", location.state);
-      return;
-    }
-
     const ctrlr = new AbortController();
     loadPackageList(ctrlr);
 

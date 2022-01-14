@@ -7,10 +7,14 @@ import {
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
+import { createMemoryHistory } from "history";
 
 import { ROUTES } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
-import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
+import {
+  stateUserBrandNewAuthState,
+  stateSubmitterInitialAuthState,
+} from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
 
 import PackageApi from "../utils/PackageApi";
