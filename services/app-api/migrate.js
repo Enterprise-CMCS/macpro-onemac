@@ -33,7 +33,7 @@ export const main = handler(async (event) => {
 
   const updateParams = {
     TableName: process.env.oneMacTableName,
-    ConditionExpression: "GSI1pk='OneMAC'",
+    ConditionExpression: "GSI1pk=:onemac",
     UpdateExpression: "SET GSI1pk = :newGSIwithGroup",
     ReturnValues: "ALL_NEW",
   };
@@ -50,6 +50,7 @@ export const main = handler(async (event) => {
       };
 
       updateParams.ExpressionAttributeValues = {
+        ":onemac": "OneMAC",
         ":newGSIwithGroup": newGSI1,
       };
       try {

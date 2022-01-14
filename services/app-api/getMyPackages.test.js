@@ -21,6 +21,7 @@ const expectedResponse = {
 const testUserEvent = {
   queryStringParameters: {
     email: "testEmail",
+    group: "spa",
   },
 };
 
