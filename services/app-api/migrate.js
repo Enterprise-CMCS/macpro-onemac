@@ -39,31 +39,33 @@ export const main = handler(async (event) => {
   };
 
   // convert GSI1pl from OneMAC to OneMAC#spa or OneMAC#waiver based on component type
-  promiseItems.forEach((item, index) => {
-    // get the package group of the item
-    const newGSI1 =
-      "OneMAC#" + ChangeRequest.MY_PACKAGE_GROUP[item.componentType];
-    updateParams.Key = {
-      pk: item.pk,
-      sk: item.sk,
-    };
+  await Promise.all(
+    promiseItems.map(async (item, index) => {
+      // get the package group of the item
+      const newGSI1 =
+        "OneMAC#" + ChangeRequest.MY_PACKAGE_GROUP[item.componentType];
+      updateParams.Key = {
+        pk: item.pk,
+        sk: item.sk,
+      };
 
-    updateParams.ExpressionAttributeValues = {
-      ":newGSIwithGroup": newGSI1,
-    };
-    try {
-      console.log(
-        `Update Params for ${JSON.stringify(item)} are ${JSON.stringify(
-          updateParams
-        )}`
-      );
-      if (index > 0) return;
-      const result = await dynamoDb.update(updateParams);
-      console.log("Result is: ", result);
-    } catch (e) {
-      console.log("update error: ", e);
-    }
-  });
+      updateParams.ExpressionAttributeValues = {
+        ":newGSIwithGroup": newGSI1,
+      };
+      try {
+        console.log(
+          `Update Params for ${JSON.stringify(item)} are ${JSON.stringify(
+            updateParams
+          )}`
+        );
+        if (index > 0) return;
+        const result = await dynamoDb.update(updateParams);
+        console.log("Result is: ", result);
+      } catch (e) {
+        console.log("update error: ", e);
+      }
+    })
+  );
 
   return "Done";
 });

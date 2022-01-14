@@ -49,6 +49,7 @@ beforeEach(() => {
     Count: 3,
     ScannedCount: 3,
   });
+  dynamoDb.update.mockResolvedValue({ Actual: "Trash" });
 });
 it(`returns Done`, async () => {
   expectedResponse.body = '"Done"';
