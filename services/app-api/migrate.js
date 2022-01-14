@@ -13,6 +13,10 @@ export const main = handler(async (event) => {
   const params = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk = :pk",
+    ExpressionAttributeValues: {
+      ":pk": "OneMAC",
+    },
     ExclusiveStartKey: null,
     ScanIndexForward: false,
     ProjectionExpression: "pk, sk, componentType, GSI1pk",
@@ -35,7 +39,7 @@ export const main = handler(async (event) => {
   };
 
   // convert GSI1pl from OneMAC to OneMAC#spa or OneMAC#waiver based on component type
-  promiseItems.forEach((item) => {
+  promiseItems.forEach((item, index) => {
     // get the package group of the item
     const newGSI1 =
       "OneMAC#" + ChangeRequest.MY_PACKAGE_GROUP[item.componentType];
@@ -48,11 +52,18 @@ export const main = handler(async (event) => {
       ":newGSIwithGroup": newGSI1,
     };
     try {
-      console.log(`Update Params for ${item} are ${updateParams}`);
-      //      const result = await dynamoDb.update(updateParams);
-      //    console.log("Result is: ", result);
+      console.log(
+        `Update Params for ${JSON.stringify(item)} are ${JSON.stringify(
+          updateParams
+        )}`
+      );
+      if (index > 0) return;
+      const result = await dynamoDb.update(updateParams);
+      console.log("Result is: ", result);
     } catch (e) {
       console.log("update error: ", e);
     }
   });
+
+  return "Done";
 });
