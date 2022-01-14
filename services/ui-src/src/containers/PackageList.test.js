@@ -100,12 +100,12 @@ it("switches to waiver columns if wavier tab selected", async () => {
 });
 
 it.each`
-  filterFieldType    | filterFieldValue  | inName                 | inValue          | textShown
-  ${"currentStatus"} | ${"Withdrawn"}    | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
-  ${"currentStatus"} | ${"Terminated"}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
-  ${"currentStatus"} | ${"Unsubmitted"}  | ${"clockEndTimestamp"} | ${1570378876000} | ${"N/A"}
-  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
-  ${"currentStatus"} | ${"AnythingElse"} | ${"clockEndTimestamp"} | ${""}            | ${"Pending"}
+  filterFieldType    | filterFieldValue       | inName                 | inValue          | textShown
+  ${"currentStatus"} | ${"Package Withdrawn"} | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${"Waiver Terminated"} | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${"Unsubmitted"}       | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+  ${"currentStatus"} | ${"AnythingElse"}      | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
+  ${"currentStatus"} | ${"AnythingElse"}      | ${"clockEndTimestamp"} | ${""}            | ${"Pending"}
 `(
   "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
   async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
