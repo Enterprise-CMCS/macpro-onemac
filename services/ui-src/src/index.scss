@@ -843,6 +843,8 @@ article.form-container {
 
 .submissions-table {
   @include custom-table;
+  width: unset;
+  min-width: 970px;
 
   th,
   td {
@@ -2119,9 +2121,7 @@ aside#faq-contact-info-box {
   @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
-  min-width: 700px;
-  width: 100%;
-  align-self: flex-start;
+  min-width: 970px;
 
   > .search-bar {
     > label {
