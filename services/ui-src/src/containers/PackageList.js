@@ -52,6 +52,9 @@ const getFilteredDate =
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
+export const getState = ({ componentId }) =>
+  componentId ? componentId.toString().substring(0, 2) : "--";
+
 /**
  * Component containing dashboard
  */
@@ -129,14 +132,6 @@ const PackageList = () => {
     ({ value }) => <span className="type-badge">{value}</span>,
     []
   );
-
-  const getState = useCallback(({ componentId }) => {
-    if (!componentId) {
-      return "--";
-    } else {
-      return componentId.toString().substring(0, 2);
-    }
-  }, []);
 
   const renderName = useCallback(
     ({ value, row }) => (
@@ -296,7 +291,6 @@ const PackageList = () => {
     [
       getType,
       renderActions,
-      getState,
       renderId,
       renderName,
       renderType,

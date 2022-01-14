@@ -6,7 +6,7 @@ import { ChangeRequest } from "cmscommonlib";
  * Perform data migrations
  */
 
-export const main = handler((event) => {
+export const main = handler(async (event) => {
   console.log("Migrate was called with event: ", event);
 
   // scan one table index as only indexed items need migration in this case

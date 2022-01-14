@@ -18,7 +18,7 @@ import {
 import { packageList } from "../libs/testDataPackages";
 
 import PackageApi from "../utils/PackageApi";
-import PackageList, { withdrawMenuItem } from "./PackageList";
+import PackageList, { getState } from "./PackageList";
 
 import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
@@ -38,6 +38,10 @@ const ContextWrapper = ({ children }) => {
     </MemoryRouter>
   );
 };
+
+it("getState returns '--' if not given a componentId", () => {
+  expect(getState({ componentId: null })).toBe("--");
+});
 
 it("renders with a New Submission button", async () => {
   PackageApi.getMyPackages.mockResolvedValue([]);
