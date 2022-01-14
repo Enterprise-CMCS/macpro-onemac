@@ -68,5 +68,6 @@ export namespace ChangeRequest {
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;
+  export const ONEMAC_STATUS: Record<string, string>;
   export const TYPE: Record<string, string>;
 }

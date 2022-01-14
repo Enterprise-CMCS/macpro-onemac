@@ -26,25 +26,36 @@ const SUBMISSION_STATES = {
  * Submit a new record for storage.
  */
 export const main = handler(async (event) => {
-  const data = JSON.parse(event.body);
+  let data;
+  let crFunctions;
+  //console.log("Received Event: ", JSON.stringify(event, null, 2));
 
-  // Add required data to the record before storing.
-  data.id = uuid.v1();
-  data.createdAt = Date.now();
-  data.state = SUBMISSION_STATES.CREATED;
-  data.userId = event.requestContext.identity.cognitoIdentityId;
-
+  // the event parse failure is an exception that should "break" the lambda
   try {
-    // do a pre-check for things that should stop us immediately
+    data = JSON.parse(event.body);
+  } catch (error) {
+    console.log("event couldn't parse: ", error);
+    throw error;
+  }
+
+  // these errors are application errors, so are returned, instead
+  try {
+    // Add required data to the record before storing.
+    data.id = uuid.v1();
+    data.createdAt = Date.now();
+    data.state = SUBMISSION_STATES.CREATED;
+    data.userId = event.requestContext.identity.cognitoIdentityId;
+
+    // returns undefined if no errors found, or the first error found.
     if (validateSubmission(data)) {
-      return RESPONSE_CODE.VALIDATION_ERROR;
+      throw RESPONSE_CODE.VALIDATION_ERROR;
     }
 
     // get the rest of the details about the current user
-    const doneBy = await getUser(data.user.email);
-    console.log("done by: ", doneBy);
-    if (!doneBy) {
-      return RESPONSE_CODE.USER_NOT_FOUND;
+    const doneBy = await getUser(data?.user?.email);
+
+    if (JSON.stringify(doneBy) === "{}") {
+      throw RESPONSE_CODE.USER_NOT_FOUND;
     }
 
     if (
@@ -52,39 +63,34 @@ export const main = handler(async (event) => {
         doneBy.type != USER_TYPE.STATE_SYSTEM_ADMIN) &&
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
-      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+      throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
     }
-  } catch (error) {
-    console.error("Could not get user from database:", error);
-    return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
-  }
 
-  // map the changeRequest functions from the data.type
-  const crFunctions = getChangeRequestFunctions(data.type);
-  if (!crFunctions) {
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  }
+    // map the changeRequest functions from the data.type
+    crFunctions = getChangeRequestFunctions(data.type);
+    if (!crFunctions) {
+      throw RESPONSE_CODE.VALIDATION_ERROR;
+    }
 
-  const crVerifyTransmittalIdStateCode = hasValidStateCode(
-    data.transmittalNumber
-  );
-  if (!crVerifyTransmittalIdStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
-  }
+    const crVerifyTransmittalIdStateCode = hasValidStateCode(
+      data.transmittalNumber
+    );
+    if (!crVerifyTransmittalIdStateCode) {
+      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
+    }
 
-  const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
-  if (!crVerifyTerritoryStateCode) {
-    return RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
-  }
+    const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
+    if (!crVerifyTerritoryStateCode) {
+      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
+    }
 
-  try {
     // check for submission-specific validation (uses database)
     const validationResponse = await crFunctions.fieldsValid(data);
     console.log("validation Response: ", validationResponse);
 
     if (validationResponse.areFieldsValid === false) {
       console.log("Message from fieldsValid: ", validationResponse);
-      return validationResponse.whyNot;
+      throw validationResponse.whyNot;
     }
 
     await dynamoDb.put({
@@ -93,7 +99,7 @@ export const main = handler(async (event) => {
     });
   } catch (error) {
     console.log("Error is: ", error);
-    throw error;
+    return error;
   }
 
   // Now send the CMS email
@@ -154,6 +160,7 @@ export const main = handler(async (event) => {
     })
     .catch((error) => {
       console.log("Error is: ", error.message);
-      // throw error;
+      // submitting to the package model doesn't matter... all returns are success by this point
+      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
     });
 });

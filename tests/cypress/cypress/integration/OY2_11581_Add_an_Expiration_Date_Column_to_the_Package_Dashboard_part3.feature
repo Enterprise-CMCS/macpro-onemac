@@ -33,7 +33,7 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
         And Click on Waiver Action under Waiver Type
         And Click on New Waiver under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Valid Waiver Number With 5 Characters
+        And Type Unique Valid Waiver Number With 5 Characters
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button

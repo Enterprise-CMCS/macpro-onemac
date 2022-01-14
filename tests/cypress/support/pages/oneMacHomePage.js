@@ -110,7 +110,7 @@ const CMSBullet6 =
 
 export class oneMacHomePage {
   launch() {
-    cy.visit("https://d2dr7dgo9g0124.cloudfront.net/");
+    cy.visit("/");
   }
 
   clickDevelopmentLogin() {

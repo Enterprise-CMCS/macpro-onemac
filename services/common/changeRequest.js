@@ -14,6 +14,23 @@ export const TYPE = {
   WAIVER_APP_K: "waiverappk",
 };
 
+export const ONEMAC_STATUS = {
+  UNSUBMITTED: "Unsubmitted",
+  SUBMITTED: "Submitted",
+  IN_REVIEW: "Package In Review",
+  RAI_ISSUED: "RAI Issued",
+  APPROVED: "Package Approved",
+  DISAPPROVED: "Package Disapproved",
+  WITHDRAWN: "Package Withdrawn",
+  TERMINATED: "Waiver Terminated",
+  PAUSED: "Review Paused, Off the Clock",
+};
+
+export const PACKAGE_ACTION = {
+  RESPOND_TO_RAI: "Respond to RAI",
+  WITHDRAW: "Withdraw Package",
+};
+
 export const correspondingRAILink = {
   [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [TYPE.SPA]: ROUTES.SPA_RAI,
@@ -73,6 +90,20 @@ const waiverBaseTransmittalNumber = {
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
 };
 
+const defaultActionsByStatus = {
+  [ONEMAC_STATUS.UNSUBMITTED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.RAI_ISSUED]: [
+    PACKAGE_ACTION.WITHDRAW,
+    PACKAGE_ACTION.RESPOND_TO_RAI,
+  ],
+  [ONEMAC_STATUS.APPROVED]: [],
+  [ONEMAC_STATUS.DISAPPROVED]: [],
+  [ONEMAC_STATUS.WITHDRAWN]: [],
+  [ONEMAC_STATUS.TERMINATED]: [],
+};
+
 export const CONFIG = {
   [TYPE.CHIP_SPA]: {
     pageTitle: "Submit New CHIP SPA",
@@ -107,6 +138,8 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.CHIP_SPA_RAI,
   },
 
   [TYPE.CHIP_SPA_RAI]: {
@@ -178,6 +211,8 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.SPA_RAI,
   },
 
   [TYPE.SPA_RAI]: {
@@ -307,6 +342,8 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.WAIVER_RAI,
   },
 
   [TYPE.WAIVER_APP_K]: {
@@ -390,3 +427,5 @@ export const CONFIG = {
     },
   },
 };
+
+CONFIG[TYPE.WAIVER_BASE] = CONFIG[TYPE.WAIVER];

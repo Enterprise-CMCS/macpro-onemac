@@ -21,7 +21,8 @@ import {
 
 import PageTitleBar from "../components/PageTitleBar";
 import PortalTable, {
-  filterFromMultiCheckbox,
+  CustomFilterTypes,
+  CustomFilterUi,
 } from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
@@ -32,27 +33,24 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-export const withdrawMenuItem = {
-  label: "Withdraw Package",
-  value: "Withdrawn",
-  formatConfirmationMessage: ({ componentId }) =>
-    `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-};
-
-const menuItemMap = {
-  "chipsparai Submitted": withdrawMenuItem,
-  "waiverrai Submitted": withdrawMenuItem,
-  "sparai Submitted": withdrawMenuItem,
-  "waiverrenewal Submitted": withdrawMenuItem,
-  "waiveramendment Submitted": withdrawMenuItem,
-  "waiverextension Submitted": withdrawMenuItem,
-  Submitted: withdrawMenuItem,
-};
-
 const filterArray = {
   currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
   componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
 };
+
+const getFilteredDate =
+  (valueField, filterField) =>
+  ({ [valueField]: value, [filterField]: filterValue }) => {
+    if (!filterArray[filterField].includes(filterValue)) {
+      if (value) return value;
+    } else {
+      return "N/A";
+    }
+    return "Pending";
+  };
+
+const renderDate = ({ value }) =>
+  typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
 /**
  * Component containing dashboard
@@ -159,28 +157,6 @@ const PackageList = () => {
     []
   );
 
-  const renderDate = useCallback(({ value }) => {
-    if (value) {
-      return format(value, "MMM d, yyyy");
-    } else {
-      return "N/A";
-    }
-  }, []);
-
-  const renderFilteredDate = useCallback(
-    (filterField) =>
-      ({ value, row }) => {
-        let returnDay = "Pending";
-        if (!filterArray[filterField].includes(row.original[filterField])) {
-          if (value) returnDay = format(value, "MMM d, yyyy");
-        } else {
-          returnDay = "N/A";
-        }
-        return returnDay;
-      },
-    []
-  );
-
   const onPopupActionWithdraw = useCallback(
     async (rowNum) => {
       // For now, the second argument is constant.
@@ -215,25 +191,27 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const raiLink =
-        ChangeRequest.correspondingRAILink[row.original.componentType];
-      const menuItemBasedOnStatus = menuItemMap[row.original.currentStatus];
-      const canRespond = row.original.currentStatus === "RAI Issued";
+      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
-      if (raiLink && canRespond) {
-        const menuItemRai = {
-          label: "Respond to RAI",
-          value: { link: raiLink, raiId: row.original.componentId },
-          handleSelected: onPopupActionRAI,
-        };
-        menuItems.push(menuItemRai);
-      }
-
-      if (menuItemBasedOnStatus) {
-        menuItemBasedOnStatus.handleSelected = onPopupActionWithdraw;
-        menuItems.push(menuItemBasedOnStatus);
-      }
+      packageConfig?.actionsByStatus[row.original.currentStatus]?.forEach(
+        (actionLabel) => {
+          const newItem = { label: actionLabel };
+          if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+            newItem.value = "Withdrawn";
+            newItem.formatConfirmationMessage = ({ componentId }) =>
+              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+            newItem.handleSelected = onPopupActionWithdraw;
+          } else {
+            newItem.value = {
+              link: packageConfig?.raiLink,
+              raiId: row.original.componentId,
+            };
+            newItem.handleSelected = onPopupActionRAI;
+          }
+          menuItems.push(newItem);
+        }
+      );
 
       return (
         <PopupMenu
@@ -251,59 +229,62 @@ const PackageList = () => {
       {
         Header: "ID/Number",
         accessor: "componentId",
-        disableFilters: true,
+        disableGlobalFilter: false,
         disableSortBy: true,
         Cell: renderId,
       },
       {
         Header: "Type",
         accessor: getType,
-        disableGlobalFilter: true,
-        filter: filterFromMultiCheckbox,
         id: "componentType",
         Cell: renderType,
+        disableFilters: false,
+        filter: CustomFilterTypes.MultiCheckbox,
+        Filter: CustomFilterUi.MultiCheckbox,
       },
       {
         Header: "State",
         accessor: getState,
-        disableFilters: true,
-        disableGlobalFilter: true,
         id: "territory",
       },
       {
         Header: "90th Day",
-        accessor: "clockEndTimestamp",
-        disableFilters: true,
-        disableGlobalFilter: true,
+        accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
         id: "ninetiethDay",
-        Cell: renderFilteredDate("currentStatus"),
+        Cell: renderDate,
+        disableFilters: false,
+        filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
+        Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
       },
       {
         Header: "Expiration Date",
-        accessor: "expirationTimestamp",
-        disableFilters: true,
-        disableGlobalFilter: true,
+        accessor: getFilteredDate("expirationTimestamp", "componentType"),
         id: "expirationTimestamp",
-        Cell: renderFilteredDate("componentType"),
+        Cell: renderDate,
+        disableFilters: false,
+        filter: CustomFilterTypes.DateRange,
+        Filter: CustomFilterUi.DateRange,
       },
       {
         Header: "Status",
         accessor: "currentStatus",
-        disableGlobalFilter: true,
-        filter: filterFromMultiCheckbox,
         id: "packageStatus",
+        disableFilters: false,
+        filter: CustomFilterTypes.MultiCheckbox,
+        Filter: CustomFilterUi.MultiCheckbox,
       },
       {
         Header: "Date Submitted",
         accessor: "submissionTimestamp",
-        disableFilters: true,
-        disableGlobalFilter: true,
         Cell: renderDate,
+        disableFilters: false,
+        filter: CustomFilterTypes.DateRange,
+        Filter: CustomFilterUi.DateRangeInPast,
       },
       {
         Header: "Submitted By",
         accessor: "submitterName",
-        disableFilters: true,
+        disableGlobalFilter: false,
         id: "submitter",
         Cell: renderName,
       },
@@ -313,8 +294,6 @@ const PackageList = () => {
       const actionsColumn = {
         Header: "Actions",
         accessor: "actions",
-        disableFilters: true,
-        disableGlobalFilter: true,
         disableSortBy: true,
         id: "packageActions",
         Cell: renderActions,
@@ -329,9 +308,7 @@ const PackageList = () => {
     getState,
     renderId,
     renderType,
-    renderDate,
     renderName,
-    renderFilteredDate,
     userRoleObj.canAccessForms,
   ]);
 

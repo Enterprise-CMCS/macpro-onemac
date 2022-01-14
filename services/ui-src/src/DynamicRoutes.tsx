@@ -52,7 +52,7 @@ export default function DynamicRoutes() {
 
       // Loop check for allowed route base path
       const isValidURLPath = validRoutes.some((item) =>
-        document.location.pathname.startsWith(item)
+        history.location.pathname.startsWith(item)
       );
 
       if (!isValidURLPath) {
