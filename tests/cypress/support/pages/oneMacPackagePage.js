@@ -125,13 +125,13 @@ const packageRows = "tr";
 const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageApproved =
-  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageDisapproved =
-  "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageWithdrawn =
-  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
   "//a[contains(text(),'MD.10330')]/../following-sibling::td[8]/button";
@@ -526,6 +526,18 @@ export class oneMacPackagePage {
     cy.get(IDNumberColumn)
       .should("be.visible")
       .and("have.text", "Waiver Number");
+  }
+  verifySPAsTabIsDisabled() {
+    cy.get(spasTab).should("be.disabled");
+  }
+  verifySPAsTabIsClickable() {
+    cy.get(spasTab).should("not.be.disabled");
+  }
+  verifyWaiversTabIsDisabled() {
+    cy.get(waiversTab).should("be.disabled");
+  }
+  verifyWaiversTabIsClickable() {
+    cy.get(waiversTab).should("not.be.disabled");
   }
 }
 export default oneMacPackagePage;
