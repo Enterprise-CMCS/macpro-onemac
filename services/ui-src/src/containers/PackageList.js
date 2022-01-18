@@ -52,6 +52,10 @@ const getFilteredDate =
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
+const baseWaiverRegex = "^[A-Z]{2}[.][0-9]{4,5})";
+const renderFamily = ({ waiverNumber }) =>
+  waiverNumber.match(baseWaiverRegex)[0];
+
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
@@ -224,6 +228,13 @@ const PackageList = () => {
           disableGlobalFilter: false,
           disableSortBy: true,
           Cell: renderId,
+        },
+        tab === ChangeRequest.PACKAGE_GROUP.WAIVER && {
+          Header: "Waiver Family #",
+          accessor: "componentId",
+          disableGlobalFilter: false,
+          disableSortBy: true,
+          Cell: renderFamily,
         },
         {
           Header: "Type",
