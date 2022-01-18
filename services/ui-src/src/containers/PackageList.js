@@ -238,6 +238,9 @@ const PackageList = () => {
           Header: "State",
           accessor: getState,
           id: "territory",
+          disableFilters: false,
+          filter: "includesValue",
+          Filter: CustomFilterUi.TerritorySelect,
         },
         {
           Header: "90th Day",
@@ -292,8 +295,8 @@ const PackageList = () => {
       getType,
       renderActions,
       renderId,
-      renderName,
       renderType,
+      renderName,
       tab,
       userRoleObj.canAccessForms,
     ]
