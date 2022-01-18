@@ -2,6 +2,7 @@ import React from "react";
 import { act } from "react-dom/test-utils";
 import { fireEvent, render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import selectEvent from "react-select-event";
 
 import PortalTable, { CustomFilterTypes, CustomFilterUi } from "./PortalTable";
 
@@ -292,6 +293,75 @@ describe("search and filter features", () => {
       fireEvent.click(within(bazDateContainer).getByRole("button"));
 
       expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+    });
+
+    it("supports territory filters", async () => {
+      const myRef = {};
+      render(
+        <div id="myContainer">
+          <PortalTable
+            columns={[
+              { Header: "Foo", accessor: "foo" },
+              {
+                Header: "Bar",
+                accessor: "bar",
+                disableFilters: false,
+                filter: CustomFilterTypes.MultiCheckbox,
+                Filter: CustomFilterUi.MultiCheckbox,
+              },
+              {
+                Header: "Baz",
+                accessor: "baz",
+                disableFilters: false,
+                filter: "includesValue",
+                Filter: CustomFilterUi.TerritorySelect,
+              },
+            ]}
+            data={[
+              { foo: 1, bar: "two", baz: "MD" },
+              { foo: 3, bar: "four", baz: "VA" },
+            ]}
+            withSearchBar
+            pageContentRef={myRef}
+          />
+        </div>
+      );
+      myRef.current = document.getElementById("myContainer");
+
+      fireEvent.click(screen.getByRole("button", { name: /filter/i }));
+
+      const filterPane = screen.getByRole("search", { name: /filter/i });
+      const bazButton = within(filterPane).getByRole("button", {
+        name: /baz/i,
+      });
+      expect(bazButton).toBeVisible();
+
+      const bazOptionSection = document.getElementById(
+        bazButton.getAttribute("aria-controls")
+      );
+      expect(bazOptionSection).not.toBeVisible();
+
+      fireEvent.click(bazButton);
+      expect(bazOptionSection).toBeVisible();
+
+      await selectEvent.select(document.getElementById("baz-filter-select"), [
+        "Maryland",
+      ]);
+
+      expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
+      expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
+
+      await selectEvent.clearAll(document.getElementById("baz-filter-select"));
+
+      expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
+      expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
+
+      await selectEvent.select(document.getElementById("baz-filter-select"), [
+        "Virginia",
+      ]);
+
+      expect(screen.queryByText(/two/i, { selector: "td" })).toBeNull();
       expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
     });
 
