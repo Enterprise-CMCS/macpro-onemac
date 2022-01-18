@@ -18,8 +18,7 @@ const searchbar = "#search-bar-input";
 const searchbarHeader =
   "//label[text()='Search by Package ID or Submitter Name']";
 //Element is Xpath use cy.xpath instead of cy.get
-const searchBarXBTN =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]";
+const searchBarXBTN = "//button[@aria-label='Clear Search']";
 //Element is Xpath use cy.xpath instead of cy.get
 const noResultsFound = "//h4[contains(text(),'No Results Found')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -46,6 +45,7 @@ const ninetiethDayNACheckbox =
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayPendingCheckbox =
   "//label[contains(@for,'checkbox_ninetiethDay-Pending_')]";
+
 const ninetiethDayDatePickerFilter =
   '*[role=combobox][aria-owns^="ninetiethDay-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -73,13 +73,13 @@ const packageRowOne90thDay = "#ninetiethDay-0";
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiver1915bCheckBox =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]/span[1]";
+  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]/span[1]";
+  "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const MedicaidSPACheckBox =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[3]/label[1]/span[1]";
+  "//label[contains(@for,'checkbox_componentType-Medicaid SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageApproveCheckBox = "//span[contains(text(),'Package Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -95,8 +95,7 @@ const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const medicaidSPAInList = "//tbody/tr[1]/td[2]/span[1]";
 //Element is Xpath use cy.xpath instead of cy.get
-const ShowHideColumnsBTN =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/button[1]";
+const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBox90thDay = "//span[contains(text(),'90th Day')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -139,6 +138,8 @@ const waiverTerminated =
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
   "//a[contains(text(),'MD.83420')]/../following-sibling::td[8]/button";
+const waiversTab = "#show-waivers-button";
+const spasTab = "#show-spas-button";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -505,6 +506,26 @@ export class oneMacPackagePage {
       return true;
     } //else
     return false;
+  }
+  verifyWaiversTabExists() {
+    cy.get(waiversTab).should("be.visible");
+  }
+  clickOnWaiversTab() {
+    cy.get(waiversTab).click();
+  }
+  verifySPAsTabExists() {
+    cy.get(spasTab).should("be.visible");
+  }
+  clickOnSPAsTab() {
+    cy.get(spasTab).click();
+  }
+  verifySPAIDColumnExists() {
+    cy.get(IDNumberColumn).should("be.visible").and("have.text", "SPA ID");
+  }
+  verifyWaiverNumberColumnExists() {
+    cy.get(IDNumberColumn)
+      .should("be.visible")
+      .and("have.text", "Waiver Number");
   }
 }
 export default oneMacPackagePage;

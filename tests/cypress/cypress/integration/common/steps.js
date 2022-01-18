@@ -1376,3 +1376,18 @@ And("verify date submitted column one date is this quarter", () => {
     OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
   }
 });
+And("click on Waivers tab", () => {
+  OneMacPackagePage.clickOnWaiversTab();
+});
+And("click on SPAs tab", () => {
+  OneMacPackagePage.clickOnSPAsTab();
+});
+And("verify SPA ID column exists", () => {
+  OneMacPackagePage.verifySPAIDColumnExists();
+});
+And("verify Waiver Number column exists", () => {
+  OneMacPackagePage.verifyWaiverNumberColumnExists();
+});
+And("verify status DropDown Filter exists", () => {
+  OneMacPackagePage.verifystatusDropDownFilterExists();
+});

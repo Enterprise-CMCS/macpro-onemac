@@ -54,6 +54,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
+        And click on Waivers tab
         And verify user exists with waiver number searched
         And clear search bar
         And type in submitters name
