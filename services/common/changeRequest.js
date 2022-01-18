@@ -1,5 +1,10 @@
 import { ROUTES } from "./routes";
 
+export const PACKAGE_GROUP = {
+  SPA: "spa",
+  WAIVER: "waiver",
+};
+
 export const TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
@@ -12,6 +17,14 @@ export const TYPE = {
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
   WAIVER_APP_K: "waiverappk",
+};
+
+export const MY_PACKAGE_GROUP = {
+  [TYPE.CHIP_SPA]: PACKAGE_GROUP.SPA,
+  [TYPE.SPA]: PACKAGE_GROUP.SPA,
+  [TYPE.WAIVER]: PACKAGE_GROUP.WAIVER,
+  [TYPE.WAIVER_BASE]: PACKAGE_GROUP.WAIVER,
+  [TYPE.WAIVER_RENEWAL]: PACKAGE_GROUP.WAIVER,
 };
 
 export const ONEMAC_STATUS = {

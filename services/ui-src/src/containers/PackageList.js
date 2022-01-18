@@ -52,12 +52,16 @@ const getFilteredDate =
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
+export const getState = ({ componentId }) =>
+  componentId ? componentId.toString().substring(0, 2) : "--";
+
 /**
  * Component containing dashboard
  */
 const PackageList = () => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
+  const [tab, setTab] = useState(ChangeRequest.PACKAGE_GROUP.SPA);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
@@ -77,7 +81,7 @@ const PackageList = () => {
     async (ctrlr) => {
       setIsLoading(true);
       try {
-        const data = await PackageAPI.getMyPackages(userProfile.email);
+        const data = await PackageAPI.getMyPackages(userProfile.email, tab);
 
         if (typeof data === "string") throw new Error(data);
         if (!ctrlr?.signal.aborted) setPackageList(data);
@@ -87,20 +91,12 @@ const PackageList = () => {
       }
       if (!ctrlr?.signal.aborted) setIsLoading(false);
     },
-    [userProfile.email]
+    [tab, userProfile.email]
   );
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
-
-    const missingUserType = !userData?.type;
-    const missingOtherUserData =
-      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if ((missingUserType || missingOtherUserData) && cmsRoles) {
-      history.replace("/signup", location.state);
-      return;
-    }
 
     const ctrlr = new AbortController();
     loadPackageList(ctrlr);
@@ -136,14 +132,6 @@ const PackageList = () => {
     ({ value }) => <span className="type-badge">{value}</span>,
     []
   );
-
-  const getState = useCallback(({ componentId }) => {
-    if (!componentId) {
-      return "--";
-    } else {
-      return componentId.toString().substring(0, 2);
-    }
-  }, []);
 
   const renderName = useCallback(
     ({ value, row }) => (
@@ -224,96 +212,95 @@ const PackageList = () => {
     [onPopupActionWithdraw, onPopupActionRAI]
   );
 
-  const columns = useMemo(() => {
-    let tableColumns = [
-      {
-        Header: "ID/Number",
-        accessor: "componentId",
-        disableGlobalFilter: false,
-        disableSortBy: true,
-        Cell: renderId,
-      },
-      {
-        Header: "Type",
-        accessor: getType,
-        id: "componentType",
-        Cell: renderType,
-        disableFilters: false,
-        filter: CustomFilterTypes.MultiCheckbox,
-        Filter: CustomFilterUi.MultiCheckbox,
-      },
-      {
-        Header: "State",
-        accessor: getState,
-        id: "territory",
-        disableFilters: false,
-        filter: "includesValue",
-        Filter: CustomFilterUi.TerritorySelect,
-      },
-      {
-        Header: "90th Day",
-        accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
-        id: "ninetiethDay",
-        Cell: renderDate,
-        disableFilters: false,
-        filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
-        Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
-      },
-      {
-        Header: "Expiration Date",
-        accessor: getFilteredDate("expirationTimestamp", "componentType"),
-        id: "expirationTimestamp",
-        Cell: renderDate,
-        disableFilters: false,
-        filter: CustomFilterTypes.DateRange,
-        Filter: CustomFilterUi.DateRange,
-      },
-      {
-        Header: "Status",
-        accessor: "currentStatus",
-        id: "packageStatus",
-        disableFilters: false,
-        filter: CustomFilterTypes.MultiCheckbox,
-        Filter: CustomFilterUi.MultiCheckbox,
-      },
-      {
-        Header: "Date Submitted",
-        accessor: "submissionTimestamp",
-        Cell: renderDate,
-        disableFilters: false,
-        filter: CustomFilterTypes.DateRange,
-        Filter: CustomFilterUi.DateRangeInPast,
-      },
-      {
-        Header: "Submitted By",
-        accessor: "submitterName",
-        disableGlobalFilter: false,
-        id: "submitter",
-        Cell: renderName,
-      },
-    ];
-
-    if (userRoleObj.canAccessForms) {
-      const actionsColumn = {
-        Header: "Actions",
-        accessor: "actions",
-        disableSortBy: true,
-        id: "packageActions",
-        Cell: renderActions,
-      };
-      tableColumns.push(actionsColumn);
-    }
-
-    return tableColumns;
-  }, [
-    getType,
-    renderActions,
-    getState,
-    renderId,
-    renderType,
-    renderName,
-    userRoleObj.canAccessForms,
-  ]);
+  const columns = useMemo(
+    () =>
+      [
+        {
+          Header:
+            tab === ChangeRequest.PACKAGE_GROUP.SPA
+              ? "SPA ID"
+              : "Waiver Number",
+          accessor: "componentId",
+          disableGlobalFilter: false,
+          disableSortBy: true,
+          Cell: renderId,
+        },
+        {
+          Header: "Type",
+          accessor: getType,
+          id: "componentType",
+          Cell: renderType,
+          disableFilters: false,
+          filter: CustomFilterTypes.MultiCheckbox,
+          Filter: CustomFilterUi.MultiCheckbox,
+        },
+        {
+          Header: "State",
+          accessor: getState,
+          id: "territory",
+          disableFilters: false,
+          filter: "includesValue",
+          Filter: CustomFilterUi.TerritorySelect,
+        },
+        {
+          Header: "90th Day",
+          accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
+          id: "ninetiethDay",
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
+          Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
+        },
+        tab === ChangeRequest.PACKAGE_GROUP.WAIVER && {
+          Header: "Expiration Date",
+          accessor: getFilteredDate("expirationTimestamp", "componentType"),
+          id: "expirationTimestamp",
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRange,
+        },
+        {
+          Header: "Status",
+          accessor: "currentStatus",
+          id: "packageStatus",
+          disableFilters: false,
+          filter: CustomFilterTypes.MultiCheckbox,
+          Filter: CustomFilterUi.MultiCheckbox,
+        },
+        {
+          Header: "Date Submitted",
+          accessor: "submissionTimestamp",
+          Cell: renderDate,
+          disableFilters: false,
+          filter: CustomFilterTypes.DateRange,
+          Filter: CustomFilterUi.DateRangeInPast,
+        },
+        {
+          Header: "Submitted By",
+          accessor: "submitterName",
+          disableGlobalFilter: false,
+          id: "submitter",
+          Cell: renderName,
+        },
+        userRoleObj.canAccessForms && {
+          Header: "Actions",
+          accessor: "actions",
+          disableSortBy: true,
+          id: "packageActions",
+          Cell: renderActions,
+        },
+      ].filter(Boolean),
+    [
+      getType,
+      renderActions,
+      renderId,
+      renderType,
+      renderName,
+      tab,
+      userRoleObj.canAccessForms,
+    ]
+  );
 
   const initialTableState = useMemo(
     () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
@@ -422,6 +409,10 @@ const PackageList = () => {
     );
   }
 
+  function switchTo(event) {
+    setTab(event.currentTarget.value);
+  }
+
   // Render the dashboard
   return (
     <div className="dashboard-white">
@@ -432,7 +423,31 @@ const PackageList = () => {
       <div className="dash-and-filters" ref={dashboardRef}>
         <div className="dashboard-and-alert-bar">
           <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-          <div className="dashboard-container">{renderSubmissionList()}</div>
+          <div className="dashboard-container">
+            <div className="tab-bar">
+              <Button
+                id="show-spas-button"
+                aria-label="switch to showing spa packages"
+                className="tab-button"
+                disabled={tab === ChangeRequest.PACKAGE_GROUP.SPA}
+                onClick={switchTo}
+                value={ChangeRequest.PACKAGE_GROUP.SPA}
+              >
+                SPAs
+              </Button>
+              <Button
+                id="show-waivers-button"
+                aria-label="switch to showing waiver packages"
+                className="tab-button"
+                disabled={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
+                onClick={switchTo}
+                value={ChangeRequest.PACKAGE_GROUP.WAIVER}
+              >
+                Waivers
+              </Button>
+            </div>
+            {renderSubmissionList()}
+          </div>
         </div>
       </div>
     </div>
