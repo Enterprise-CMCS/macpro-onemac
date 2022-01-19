@@ -75,6 +75,7 @@
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639696185888,
     "GSI1pk": "OneMAC#spa",
+    "clockEndTimestamp": 1647286706000,
     "packageId": "MD-13-1122",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-13-1122",
@@ -158,6 +159,7 @@
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639696185888,
     "GSI1pk": "OneMAC#spa",
+    "clockEndTimestamp": 1647286706000,
     "packageId": "MI-13-1122",
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MI-13-1122",
@@ -262,6 +264,7 @@
        "additionalInformation": "This is just a test",
        "submissionTimestamp": 1639695908900,
        "GSI1pk": "OneMAC#spa",
+       "clockEndTimestamp": 1646941106000,
        "packageId": "MD-77-2985",
        "submitterEmail": "statesubmitter@nightwatch.test",
        "componentId": "MD-77-2985",
@@ -366,6 +369,7 @@
         "additionalInformation": "This is just a test",
         "submissionTimestamp": 1639695908900,
         "GSI1pk": "OneMAC#spa",
+        "clockEndTimestamp": 1646941106000,
         "packageId": "MI-77-2985",
         "submitterEmail": "statesubmitter@nightwatch.test",
         "componentId": "MI-77-2985",
@@ -699,6 +703,7 @@
         "GSI1sk": "VA.1117",
         "additionalInformation": "Base waiver for testing the waiver renewals",
         "submissionTimestamp": 1638473560098,
+        "clockEndTimestamp": 1645990706000,
         "waiverAuthority": "1915(b)(4)",
         "GSI1pk": "OneMAC#waiver",
         "packageId": "VA.1117",
@@ -794,6 +799,7 @@
         "GSI1sk": "MD.1117",
         "additionalInformation": "Base waiver for testing the waiver renewals",
         "submissionTimestamp": 1638473560098,
+        "clockEndTimestamp": 1645990706000,
         "waiverAuthority": "1915(b)(4)",
         "GSI1pk": "OneMAC#waiver",
         "packageId": "MD.1117",
@@ -1029,6 +1035,7 @@
         "additionalInformation": "Need a Package In Review.....",
         "submissionTimestamp": 1640014690892,
         "GSI1pk": "OneMAC#spa",
+        "clockEndTimestamp": 1647545906000,
         "packageId": "MI-42-1122",
         "submitterEmail": "statesubmitteractive@cms.hhs.local",
         "componentId": "MI-42-1122",
@@ -1104,6 +1111,7 @@
         "additionalInformation": "Need a Package In Review.....",
         "submissionTimestamp": 1640014690892,
         "GSI1pk": "OneMAC#spa",
+        "clockEndTimestamp": 1647545906000,
         "packageId": "MD-42-1122",
         "submitterEmail": "statesubmitteractive@cms.hhs.local",
         "componentId": "MD-42-1122",
@@ -1268,7 +1276,7 @@
          }
         ],
         "componentType": "spa",
-        "currentStatus": "Approved",
+        "currentStatus": "Package Approved",
         "attachments": [
          {
           "s3Key": "1639690300084/textnotes.txt",
@@ -1474,7 +1482,7 @@
          }
         ],
         "componentType": "spa",
-        "currentStatus": "Disapproved",
+        "currentStatus": "Package Disapproved",
         "attachments": [
          {
           "s3Key": "1639609654211/textnotes.txt",
@@ -1680,7 +1688,7 @@
          }
         ],
         "componentType": "spa",
-        "currentStatus": "Withdrawn",
+        "currentStatus": "Package Withdrawn",
         "attachments": [
          {
           "s3Key": "1639595173888/textnotes.txt",

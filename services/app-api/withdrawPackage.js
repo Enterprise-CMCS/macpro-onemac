@@ -1,5 +1,5 @@
 import handler from "./libs/handler-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, ChangeRequest } from "cmscommonlib";
 
 import {
   CMSWithdrawalEmail,
@@ -28,7 +28,7 @@ export const main = handler(async (event) => {
       ...body,
       packageId: body.componentId,
       parentType: body.componentType,
-      currentStatus: "Withdrawn",
+      currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
       submissionTimestamp: Date.now(),
     });
   } catch (e) {

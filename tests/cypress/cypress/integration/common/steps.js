@@ -592,7 +592,7 @@ And(
   }
 );
 
-And("verify that value of the column for the ID is Pending", () => {
+And("verify that value of the column for the ID is NA", () => {
   OneMacPackagePage.verifyValue();
 });
 
