@@ -139,6 +139,11 @@ const waiverTerminated =
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
   "//a[contains(text(),'MD.83420')]/../following-sibling::td[8]/button";
+const stateDropdownFilter = "#territory-button";
+const stateFilterSelect = "#territory-filter-select";
+const statesSelected = "#territory";
+//Element is Xpath use cy.xpath instead of cy.get
+const removeBtn = (state) => `//*[@aria-label='Remove ${state}']`;
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -505,6 +510,43 @@ export class oneMacPackagePage {
       return true;
     } //else
     return false;
+  }
+  verifyStateDropdownFilterExists() {
+    cy.get(stateDropdownFilter).should("be.visible");
+  }
+  clickStateDropdownFilter() {
+    cy.get(stateDropdownFilter).click();
+  }
+  verifyStateFilterSelectExists() {
+    cy.get(stateFilterSelect).should("be.visible");
+  }
+  clickStateFilterSelect() {
+    cy.get(stateFilterSelect).click();
+  }
+  verifyStatesSelectedExists() {
+    cy.get(statesSelected).should("be.visible");
+  }
+  verifyStatesSelectedIncludes(state) {
+    cy.get(statesSelected).contains(state);
+  }
+  verifyStateFilterSelectIsEmpty() {
+    cy.get(stateFilterSelect).should(
+      "have.attr",
+      "aria-describedby",
+      "react-select-2-placeholder"
+    );
+  }
+  typeStateToSelect(state) {
+    cy.get(stateFilterSelect).focus().type(state);
+  }
+  verifypackageRowOneValueIs(state) {
+    cy.get(packageRowOneState).contains(state);
+  }
+  verifyremoveBtnExistsFor(state) {
+    cy.xpath(removeBtn(state)).should("be.visible");
+  }
+  clickRemoveBtnFor(state) {
+    cy.xpath(removeBtn(state)).click();
   }
 }
 export default oneMacPackagePage;

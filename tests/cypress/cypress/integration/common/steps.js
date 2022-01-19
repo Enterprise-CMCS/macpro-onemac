@@ -1376,3 +1376,33 @@ And("verify date submitted column one date is this quarter", () => {
     OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
   }
 });
+And("verify states selected includes {string}", (state) => {
+  OneMacPackagePage.verifyStatesSelectedIncludes(state);
+});
+And("verify state dropdown filter exists", () => {
+  OneMacPackagePage.verifyStateDropdownFilterExists();
+});
+And("click on state dropdown filter", () => {
+  OneMacPackagePage.clickStateDropdownFilter();
+});
+And("verify state filter select exists", () => {
+  OneMacPackagePage.verifyStateFilterSelectExists();
+});
+And("click on state filter select", () => {
+  OneMacPackagePage.clickStateFilterSelect();
+});
+And("verify no states are selected", () => {
+  OneMacPackagePage.verifyStateFilterSelectIsEmpty();
+});
+And("set value on state filter select to {string}", (state) => {
+  OneMacPackagePage.typeStateToSelect(state + "{enter}");
+});
+And("verify {string} is showing in the state column", (state) => {
+  OneMacPackagePage.verifypackageRowOneValueIs(state);
+});
+And("verify remove {string} button exists", (state) => {
+  OneMacPackagePage.verifyremoveBtnExistsFor(state);
+});
+And("click remove {string} button", (state) => {
+  OneMacPackagePage.clickRemoveBtnFor(state);
+});
