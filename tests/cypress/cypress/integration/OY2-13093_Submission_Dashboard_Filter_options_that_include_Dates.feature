@@ -19,7 +19,7 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-        And click on Waivers tab
+        And click on the Waivers tab
         And Click on Filter Button
         And verify 90th day filter dropdown exists
         And click on 90th day filter dropdown
@@ -38,7 +38,7 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-        And click on Waivers tab
+        And click on the Waivers tab
         And Click on Filter Button
         And click on 90th day filter dropdown
         And click on 90th day pending checkbox

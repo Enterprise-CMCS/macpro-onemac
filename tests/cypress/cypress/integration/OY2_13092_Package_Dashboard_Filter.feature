@@ -19,7 +19,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-        And click on Waivers tab
+        And click on the Waivers tab
         And Verify Filter button exists
         And Click on Filter Button
         And verify Filter By Exists
@@ -51,7 +51,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-        And click on Waivers tab
+        And click on the Waivers tab
         And Click on Filter Button
         And click on Type
         And verify 1915b waiver exists
@@ -75,7 +75,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-        And click on Waivers tab
+        And click on the Waivers tab
         And Click on Filter Button
         And click on Type
         And click 1915b waiver check box

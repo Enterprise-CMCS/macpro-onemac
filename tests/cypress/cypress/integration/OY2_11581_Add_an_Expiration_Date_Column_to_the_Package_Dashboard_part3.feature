@@ -39,5 +39,5 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
-        And click on Waivers tab
+        And click on the Waivers tab
         And verify expiration date column exists
