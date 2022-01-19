@@ -72,4 +72,8 @@ export namespace ChangeRequest {
   export const CONFIG: Record<string, FormInfo>;
   export const ONEMAC_STATUS: Record<string, string>;
   export const TYPE: Record<string, string>;
+  export enum PACKAGE_GROUP {
+    SPA = "spa",
+    WAIVER = "waiver",
+  }
 }

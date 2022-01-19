@@ -152,7 +152,7 @@ export class oneMacPackagePage {
   }
 
   verifyValue() {
-    cy.get(nintiethDayColumnFirstValue).contains("Pending");
+    cy.get(nintiethDayColumnFirstValue).contains("N/A");
   }
 
   findIdNumberMD32560(waiverNumber) {

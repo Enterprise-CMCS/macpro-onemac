@@ -34,20 +34,8 @@ import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const filterArray = {
-  currentStatus: ["Withdrawn", "Terminated", "Unsubmitted"],
   componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
 };
-
-const getFilteredDate =
-  (valueField, filterField) =>
-  ({ [valueField]: value, [filterField]: filterValue }) => {
-    if (!filterArray[filterField].includes(filterValue)) {
-      if (value) return value;
-    } else {
-      return "N/A";
-    }
-    return "Pending";
-  };
 
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
@@ -244,7 +232,20 @@ const PackageList = () => {
         },
         {
           Header: "90th Day",
-          accessor: getFilteredDate("clockEndTimestamp", "currentStatus"),
+          accessor: ({ clockEndTimestamp, currentStatus }) => {
+            switch (currentStatus) {
+              case ChangeRequest.ONEMAC_STATUS.RAI_ISSUED:
+                return "Clock Stopped";
+              case ChangeRequest.ONEMAC_STATUS.APPROVED:
+              case ChangeRequest.ONEMAC_STATUS.DISAPPROVED:
+                return "N/A";
+              case ChangeRequest.ONEMAC_STATUS.SUBMITTED:
+              case ChangeRequest.ONEMAC_STATUS.UNSUBMITTED:
+                return "Pending";
+              default:
+                return clockEndTimestamp ?? "N/A";
+            }
+          },
           id: "ninetiethDay",
           Cell: renderDate,
           disableFilters: false,
@@ -253,7 +254,14 @@ const PackageList = () => {
         },
         tab === ChangeRequest.PACKAGE_GROUP.WAIVER && {
           Header: "Expiration Date",
-          accessor: getFilteredDate("expirationTimestamp", "componentType"),
+          accessor: ({ expirationTimestamp, componentType }) => {
+            if (!filterArray.componentType.includes(componentType)) {
+              if (expirationTimestamp) return expirationTimestamp;
+            } else {
+              return "N/A";
+            }
+            return "Pending";
+          },
           id: "expirationTimestamp",
           Cell: renderDate,
           disableFilters: false,
