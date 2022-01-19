@@ -95,6 +95,7 @@ functions:
   migrate:
     handler: migrate.main
     role: LambdaApiRole
+    timeout: 180
     events:
       - http:
           path: migrate
