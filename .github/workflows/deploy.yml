@@ -136,7 +136,7 @@ jobs:
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
       - name: Migrate Data
-        run: ./migrateData.py $STAGE_PREFIX$branch_name
+        run: echo "Run a data migration script for this deployment here" # example: ./migrateData.py $STAGE_PREFIX$branch_name
   cypress-test:
     name: Cypress Tests
     needs: deploy

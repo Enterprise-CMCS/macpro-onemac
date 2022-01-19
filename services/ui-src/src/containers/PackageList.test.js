@@ -5,15 +5,20 @@ import {
   within,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
+import { createMemoryHistory } from "history";
 
 import { ROUTES } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
-import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
+import {
+  stateUserBrandNewAuthState,
+  stateSubmitterInitialAuthState,
+} from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
 
 import PackageApi from "../utils/PackageApi";
-import PackageList, { withdrawMenuItem } from "./PackageList";
+import PackageList, { getState } from "./PackageList";
 
 import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
@@ -33,6 +38,10 @@ const ContextWrapper = ({ children }) => {
     </MemoryRouter>
   );
 };
+
+it("getState returns '--' if not given a componentId", () => {
+  expect(getState({ componentId: null })).toBe("--");
+});
 
 it("renders with a New Submission button", async () => {
   PackageApi.getMyPackages.mockResolvedValue([]);
@@ -55,7 +64,7 @@ it("passes a retrieval error up", async () => {
   expect(screen.getByText("Submission Error")).toBeInTheDocument();
 });
 
-it("renders table with columns", async () => {
+it("renders table with spa columns", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);
 
   render(<PackageList />, { wrapper: ContextWrapper });
@@ -63,14 +72,31 @@ it("renders table with columns", async () => {
   // wait for loading screen to disappear so package table displays
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-  screen.getByText("ID/Number");
+  screen.getByText("SPA ID");
   screen.getByText("Type");
   screen.getByText("State");
   screen.getByText("90th Day");
-  screen.getByText("Expiration Date");
   screen.getByText("Date Submitted");
   screen.getByText("Submitted By");
   screen.getByText("Actions");
+});
+
+it("switches to waiver columns if wavier tab selected", async () => {
+  PackageApi.getMyPackages.mockResolvedValue(packageList);
+
+  render(<PackageList />, { wrapper: ContextWrapper });
+
+  // wait for loading screen to disappear so package table displays
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  const waiversButtonEl = screen.getByRole("button", {
+    name: "switch to showing waiver packages",
+  });
+
+  userEvent.click(waiversButtonEl);
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  screen.getByText("Waiver Number");
 });
 
 it.each`
