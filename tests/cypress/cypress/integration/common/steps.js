@@ -1445,3 +1445,36 @@ And("verify the Waivers tab is clickable", () => {
 And("refresh the page", () => {
   cy.reload();
 });
+And("verify that Clock Stopped checkbox exists", () => {
+  OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
+});
+And("click all of the status checkboxes", () => {
+  OneMacPackagePage.clickAllStatusFilterCheckboxes();
+});
+And("click RAI Issued checkbox", () => {
+  OneMacPackagePage.clickRaiIssuedCheckbox();
+});
+And(
+  "verify that the value of the column for the 90th day is Clock Stopped",
+  () => {
+    OneMacPackagePage.verify90thDayRowOneIsClockStopped();
+  }
+);
+And("click Package Approved checkbox", () => {
+  OneMacPackagePage.clickPackageApprovedCheckbox();
+});
+And("verify that the value of the column for the 90th day is NA", () => {
+  OneMacPackagePage.verify90thDayRowOneIsNA();
+});
+And("click Package Disapproved checkbox", () => {
+  OneMacPackagePage.clickPackageDisapprovedCheckbox();
+});
+And("click Submitted checkbox", () => {
+  OneMacPackagePage.clickSubmittedCheckbox();
+});
+And("verify that the value of the column for the 90th day is Pending", () => {
+  OneMacPackagePage.verify90thDayRowOneIsPending();
+});
+And("click Unsubmitted checkbox", () => {
+  OneMacPackagePage.clickUnsubmittedCheckbox();
+});
