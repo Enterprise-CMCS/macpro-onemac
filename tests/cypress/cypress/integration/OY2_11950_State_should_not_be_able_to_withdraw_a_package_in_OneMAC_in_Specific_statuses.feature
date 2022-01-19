@@ -26,6 +26,7 @@ Feature: OY2-11950 State should not be able to withdraw a package in OneMAC in S
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
+        And click on the Waivers tab
         And verify that the 3 dots next to Waiver Terminated status is not clickable
 
     Scenario: Demonstrate that withdraw a package is not available on Unsubmitted status
@@ -33,4 +34,5 @@ Feature: OY2-11950 State should not be able to withdraw a package in OneMAC in S
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
+        And click on the Waivers tab
         And verify that the 3 dots next to Unsubmitted status is not clickable
