@@ -48,12 +48,13 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And Click on Waiver Action under Waiver Type
         And Click on New Waiver under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Valid Waiver Number With 5 Characters
+        And Type Unique Valid Waiver Number With 5 Characters
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
+        And click on the Waivers tab
         And verify user exists with waiver number searched
         And clear search bar
         And type in submitters name
