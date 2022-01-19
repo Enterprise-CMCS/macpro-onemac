@@ -2,7 +2,7 @@
 Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
 
 
-    Scenario: Respond to SPARAI and check status is still NA
+    Scenario: Respond to SPARAI and verify expiration date column does not exist
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -22,7 +22,7 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
         And Click on Submit Button
         And verify submission Successful message after RAI
         And click on Packages
-        And Expiration Date value for generated Record is "N/A"
+        And verify expiration date column does not exist
 
     Scenario: Expiration Date column should Show Pending for waiver packages
         Given I am on Login Page
@@ -39,3 +39,5 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
+        And click on the Waivers tab
+        And verify expiration date column exists

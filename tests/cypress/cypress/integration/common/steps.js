@@ -592,7 +592,7 @@ And(
   }
 );
 
-And("verify that value of the column for the ID is Pending", () => {
+And("verify that value of the column for the ID is NA", () => {
   OneMacPackagePage.verifyValue();
 });
 
@@ -1375,4 +1375,73 @@ And("verify date submitted column one date is this quarter", () => {
   if (OneMacPackagePage.checkIfPackageListResultsExist()) {
     OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
   }
+});
+And("verify states selected includes {string}", (state) => {
+  OneMacPackagePage.verifyStatesSelectedIncludes(state);
+});
+And("verify state dropdown filter exists", () => {
+  OneMacPackagePage.verifyStateDropdownFilterExists();
+});
+And("click on state dropdown filter", () => {
+  OneMacPackagePage.clickStateDropdownFilter();
+});
+And("verify state filter select exists", () => {
+  OneMacPackagePage.verifyStateFilterSelectExists();
+});
+And("click on state filter select", () => {
+  OneMacPackagePage.clickStateFilterSelect();
+});
+And("verify no states are selected", () => {
+  OneMacPackagePage.verifyStateFilterSelectIsEmpty();
+});
+And("set value on state filter select to {string}", (state) => {
+  OneMacPackagePage.typeStateToSelect(state + "{enter}");
+});
+And("verify {string} is showing in the state column", (state) => {
+  OneMacPackagePage.verifypackageRowOneValueIs(state);
+});
+And("verify remove {string} button exists", (state) => {
+  OneMacPackagePage.verifyremoveBtnExistsFor(state);
+});
+And("click remove {string} button", (state) => {
+  OneMacPackagePage.clickRemoveBtnFor(state);
+});
+And("verify the Waivers tab exists", () => {
+  OneMacPackagePage.verifyWaiversTabExists();
+});
+And("click on the Waivers tab", () => {
+  OneMacPackagePage.clickOnWaiversTab();
+});
+And("verify the SPAs tab exists", () => {
+  OneMacPackagePage.verifySPAsTabExists();
+});
+And("click on SPAs tab", () => {
+  OneMacPackagePage.clickOnSPAsTab();
+});
+And("verify SPA ID column exists", () => {
+  OneMacPackagePage.verifySPAIDColumnExists();
+});
+And("verify Waiver Number column exists", () => {
+  OneMacPackagePage.verifyWaiverNumberColumnExists();
+});
+And("verify status DropDown Filter exists", () => {
+  OneMacPackagePage.verifystatusDropDownFilterExists();
+});
+And("verify the SPAs tab is selected", () => {
+  //if it's disabled then it is selected.
+  OneMacPackagePage.verifySPAsTabIsDisabled();
+});
+And("verify the SPAs tab is clickable", () => {
+  //if it's disabled then it is selected.
+  OneMacPackagePage.verifySPAsTabIsClickable();
+});
+And("verify the Waivers tab is selected", () => {
+  //if it's disabled then it is selected.
+  OneMacPackagePage.verifyWaiversTabIsDisabled();
+});
+And("verify the Waivers tab is clickable", () => {
+  OneMacPackagePage.verifyWaiversTabIsClickable();
+});
+And("refresh the page", () => {
+  cy.reload();
 });
