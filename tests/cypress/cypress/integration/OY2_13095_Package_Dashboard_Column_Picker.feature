@@ -5,14 +5,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         When Login with state submitter user
         And click on Packages
         And verify show hide columns button exists
-        And click show hide columns button
-        And verify 90th day exists
-        And verify date submitted exists
-        And verify state exists
-        And verify status exists
-        And verify submitted by exists
-        And verify type exists
-        And click show hide columns button
         And verify SPA ID column exists
         And verify type column exists
         And verify state column exists
@@ -21,6 +13,14 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify date submitted column exists
         And verify submitted by column exists
         And verify actions column exists
+        And click show hide columns button
+        And verify 90th day exists
+        And verify date submitted exists
+        And verify state exists
+        And verify status exists
+        And verify submitted by exists
+        And verify type exists
+        And click show hide columns button
     
         Scenario: Waivers Tab - Screen enhancement
         Given I am on Login Page
@@ -29,15 +29,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click on Packages
         And click on the Waivers tab
         And verify show hide columns button exists
-        And click show hide columns button
-        And verify 90th day exists
-        And verify date submitted exists
-        And verify expiration date exists
-        And verify state exists
-        And verify status exists
-        And verify submitted by exists
-        And verify type exists
-        And click show hide columns button
         And verify IDNumber column exists
         And verify type column exists
         And verify state column exists
@@ -47,6 +38,15 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify date submitted column exists
         And verify submitted by column exists
         And verify actions column exists
+        And click show hide columns button
+        And verify 90th day exists
+        And verify date submitted exists
+        And verify expiration date exists
+        And verify state exists
+        And verify status exists
+        And verify submitted by exists
+        And verify type exists
+        And click show hide columns button
 
     Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
         Given I am on Login Page
