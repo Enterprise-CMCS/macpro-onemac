@@ -51,14 +51,16 @@ export const correspondingRAILink = {
   [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
 };
 
-const getBaseWaiverId = (inId) => {
+export const getBaseWaiverId = (inId) => {
   const baseRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
 
-  // SEA Tool sometimes uses hyphens in Waiver Numbers
-  if (inId[2] === "-") inId[2] = ".";
+  if (!inId) return null;
 
-  const baseWaiver = baseRE.exec(inId);
-  return baseWaiver[0];
+  // SEA Tool sometimes uses hyphens in Waiver Numbers
+  const waiverNumber = inId.replace("-", ".");
+
+  const returnValue = baseRE.exec(waiverNumber);
+  return returnValue && returnValue[0];
 };
 
 export const decodeId = (inId, inType) => {
