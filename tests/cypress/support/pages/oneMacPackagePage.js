@@ -136,10 +136,10 @@ const PackageWithdrawn =
   "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
-  "//a[contains(text(),'MD.10330')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD.10330')]/../following-sibling::td[9]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
-  "//a[contains(text(),'MD.83420')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD.83420')]/../following-sibling::td[9]/button";
 const stateDropdownFilter = "#territory-button";
 const stateFilterSelect = "#territory-filter-select";
 const statesSelected = "#territory";
