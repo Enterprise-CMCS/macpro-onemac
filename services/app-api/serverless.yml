@@ -95,12 +95,7 @@ functions:
   migrate:
     handler: migrate.main
     role: LambdaApiRole
-    events:
-      - http:
-          path: migrate
-          method: post
-          cors: true
-          authorizer: aws_iam
+    timeout: 180
 
   submit:
     handler: submit.main

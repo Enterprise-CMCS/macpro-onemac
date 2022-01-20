@@ -40,6 +40,9 @@ const filterArray = {
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
+const getFamily = ({ componentId }) =>
+  componentId ? ChangeRequest.getBaseWaiverId(componentId) : "";
+
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
@@ -212,6 +215,13 @@ const PackageList = () => {
           disableGlobalFilter: false,
           disableSortBy: true,
           Cell: renderId,
+        },
+        tab === ChangeRequest.PACKAGE_GROUP.WAIVER && {
+          Header: "Waiver Family #",
+          id: "familyNumber",
+          accessor: getFamily,
+          disableGlobalFilter: true,
+          disableFilters: true,
         },
         {
           Header: "Type",
