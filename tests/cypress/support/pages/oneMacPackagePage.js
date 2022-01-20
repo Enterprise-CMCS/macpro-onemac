@@ -37,6 +37,7 @@ const closeButton = "//header/button[1]";
 const typeDropDownFilter = "//button[text()='Type']";
 const typeDropDown = "#componentType-button";
 const statusDropDown = "#packageStatus-button";
+const statusFilterCheckboxes = "#packageStatus label";
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -45,7 +46,8 @@ const ninetiethDayNACheckbox =
 //Element is Xpath use cy.xpath instead of cy.get
 const ninetiethDayPendingCheckbox =
   "//label[contains(@for,'checkbox_ninetiethDay-Pending_')]";
-
+const ninetiethDayClockStoppedCheckbox =
+  "//label[contains(@for,'checkbox_ninetiethDay-Clock Stopped')]";
 const ninetiethDayDatePickerFilter =
   '*[role=combobox][aria-owns^="ninetiethDay-date-filter"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -150,6 +152,20 @@ const waiverFamilyNumColumn = "#familyNumberColHeader";
 const waiverFamilyCheckbox =
   "//label[contains(@for,'checkbox_columnPicker-Waiver Family')]";
 const waiverFamilyRowOne = "#familyNumber-0";
+//Element is Xpath use cy.xpath instead of cy.get
+const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageApprovedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Package Approved')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageDisapprovedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Package Disapproved')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const submittedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Submitted')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const unsubmittedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -157,7 +173,9 @@ export class oneMacPackagePage {
   }
 
   verifyValue() {
-    cy.get(nintiethDayColumnFirstValue).contains("N/A");
+    cy.get(nintiethDayColumnFirstValue).contains(
+      /N\/A|Pending|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
+    );
   }
 
   findIdNumberMD32560(waiverNumber) {
@@ -276,6 +294,12 @@ export class oneMacPackagePage {
   }
   clickOnNinetiethDayPendingCheckbox() {
     cy.xpath(ninetiethDayPendingCheckbox).click();
+  }
+  verifyNinetiethDayClockStoppedCheckboxExists() {
+    cy.xpath(ninetiethDayClockStoppedCheckbox).should("exist");
+  }
+  clickOnNinetiethDayClockStoppedCheckbox() {
+    cy.xpath(ninetiethDayClockStoppedCheckbox).click();
   }
   verifyNinetiethDayDatePickerFilterExists() {
     cy.get(ninetiethDayDatePickerFilter).should("exist");
@@ -606,6 +630,50 @@ export class oneMacPackagePage {
   }
   verifyWaiverFamilyRowOneFormat() {
     cy.get(waiverFamilyRowOne).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
+  }
+  verifyRaiIssuedCheckboxExists() {
+    cy.xpath(raiIssuedCheckbox).should("be.visible");
+  }
+  clickRaiIssuedCheckbox() {
+    cy.xpath(raiIssuedCheckbox).click();
+  }
+  verifyPackageApprovedCheckboxExists() {
+    cy.xpath(packageApprovedCheckbox).should("be.visible");
+  }
+  clickPackageApprovedCheckbox() {
+    cy.xpath(packageApprovedCheckbox).click();
+  }
+  verifyPackageDisapprovedCheckboxExists() {
+    cy.xpath(packageDisapprovedCheckbox).should("be.visible");
+  }
+  clickPackageDisapprovedCheckbox() {
+    cy.xpath(packageDisapprovedCheckbox).click();
+  }
+  verifySubmittedCheckboxExists() {
+    cy.xpath(submittedCheckbox).should("be.visible");
+  }
+  clickSubmittedCheckbox() {
+    cy.xpath(submittedCheckbox).click();
+  }
+  verifyUnsubmittedCheckboxExists() {
+    cy.xpath(unsubmittedCheckbox).should("be.visible");
+  }
+  clickUnsubmittedCheckbox() {
+    cy.xpath(unsubmittedCheckbox).click();
+  }
+  clickAllStatusFilterCheckboxes() {
+    cy.get(statusFilterCheckboxes).each(($el) => {
+      cy.wrap($el).click();
+    });
+  }
+  verify90thDayRowOneIsPending() {
+    cy.get(packageRowOne90thDay).should("have.text", "Pending");
+  }
+  verify90thDayRowOneIsNA() {
+    cy.get(packageRowOne90thDay).should("have.text", "N/A");
+  }
+  verify90thDayRowOneIsClockStopped() {
+    cy.get(packageRowOne90thDay).should("have.text", "Clock Stopped");
   }
 }
 export default oneMacPackagePage;
