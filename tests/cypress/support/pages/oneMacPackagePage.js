@@ -168,7 +168,9 @@ export class oneMacPackagePage {
   }
 
   verifyValue() {
-    cy.get(nintiethDayColumnFirstValue).contains("N/A");
+    cy.get(nintiethDayColumnFirstValue).contains(
+      /N\/A|Pending|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
+    );
   }
 
   findIdNumberMD32560(waiverNumber) {

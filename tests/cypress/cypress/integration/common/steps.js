@@ -592,9 +592,12 @@ And(
   }
 );
 
-And("verify that value of the column for the ID is NA", () => {
-  OneMacPackagePage.verifyValue();
-});
+And(
+  "verify that value of the column for the ID is NA Pending or a date",
+  () => {
+    OneMacPackagePage.verifyValue();
+  }
+);
 
 And(
   "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
