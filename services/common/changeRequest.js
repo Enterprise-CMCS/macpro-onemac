@@ -82,7 +82,6 @@ export const decodeId = (inId, inType) => {
       returnInfo.isNewPackage = false;
       break;
     case TYPE.WAIVER_AMENDMENT:
-    case TYPE.WAIVER_RENEWAL:
     case TYPE.WAIVER_EXTENSION:
     case TYPE.WAIVER_APP_K:
       returnInfo.packageId = getBaseWaiverId(inId);
@@ -90,7 +89,8 @@ export const decodeId = (inId, inType) => {
     // falls through
     case TYPE.WAIVER:
     case TYPE.WAIVER_BASE:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
+    case TYPE.WAIVER_RENEWAL:
+      returnInfo.parentType = inType;
       break;
   }
   return returnInfo;
