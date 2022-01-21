@@ -1,5 +1,5 @@
 import { TYPE, decodeId } from "./changeRequest";
-/*
+
 describe("decodeId SPA ID", () => {
   const myId = decodeId("MI-11-1119", TYPE.SPA);
   it("SPA", () => {
@@ -25,7 +25,7 @@ describe("decodeId SPA_RAI ID", () => {
     expect(myIdnull.componentType).toBe(undefined);
   });
 });
-
+/*
 describe("decodeId Wavier ID", () => {
   const myId = decodeId("MI.77777", TYPE.WAIVER_BASE);
   it("WAIVER", () => {
