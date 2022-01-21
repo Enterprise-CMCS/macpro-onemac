@@ -111,9 +111,9 @@ export const oneMACFAQContent: FAQContent[] = [
         answerJSX: (
           <ul>
             {[
-              ["WelcomeToOneMAC.pdf", "Welcome to OneMAC"],
+              ["WelcometoOneMAC.pdf", "Welcome to OneMAC"],
               [
-                "IDMInstructionsForOneMACUsers.pdf",
+                "IDMInstructionsforOneMACUsers.pdf",
                 "IDM Instructions for OneMAC Users",
               ],
               ["OneMACIDMGuide.pdf", "OneMAC IDM Guide"],
