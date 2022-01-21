@@ -63,19 +63,29 @@ export const getBaseWaiverId = (inId) => {
   return returnValue && returnValue[0];
 };
 
-export const getParentPackageId = (inId) => {
+export const getParentPackage = (inId) => {
   // amendments can have parents that are bases or renewals
   // base if no R section or R00
   // renewal if R section has a number
-  const baseRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
+  //const waiverRegex = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
+  if (!inId) return [null, TYPE.WAIVER_BASE];
 
-  if (!inId) return null;
+  // clean user entered errors, if possible
+  const waiverNumber = inId.replace(".R.", ".R");
 
-  // SEA Tool sometimes uses hyphens in Waiver Numbers
-  const waiverNumber = inId.replace("-", ".");
+  const waiverRegex = new RegExp(
+    "([A-Z]{2}[.-]\\d{2,5})(\\.R?(\\d{2})(\\.M?(\\d{2}))?)?"
+  );
 
-  const returnValue = baseRE.exec(waiverNumber);
-  return returnValue && returnValue[0];
+  const results = waiverRegex.exec(waiverNumber);
+
+  if (!results) return ["FakeID", TYPE.WAIVER_BASE];
+
+  const [, family, , renewal] = results;
+
+  if (results[3] === "00") return [family, TYPE.WAIVER_BASE];
+  const renewalNumber = family + ".R" + renewal;
+  return [renewalNumber, TYPE.WAIVER_RENEWAL];
 };
 
 export const decodeId = (inId, inType) => {
@@ -99,9 +109,8 @@ export const decodeId = (inId, inType) => {
     case TYPE.WAIVER_AMENDMENT:
     case TYPE.WAIVER_EXTENSION:
     case TYPE.WAIVER_APP_K:
-      returnInfo.packageId = getBaseWaiverId(inId);
+      [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
       returnInfo.isNewPackage = false;
-      returnInfo.parentType = TYPE.WAIVER_BASE;
       break;
     case TYPE.WAIVER:
     case TYPE.WAIVER_BASE:
