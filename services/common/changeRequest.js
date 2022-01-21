@@ -63,6 +63,21 @@ export const getBaseWaiverId = (inId) => {
   return returnValue && returnValue[0];
 };
 
+export const getParentPackageId = (inId) => {
+  // amendments can have parents that are bases or renewals
+  // base if no R section or R00
+  // renewal if R section has a number
+  const baseRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
+
+  if (!inId) return null;
+
+  // SEA Tool sometimes uses hyphens in Waiver Numbers
+  const waiverNumber = inId.replace("-", ".");
+
+  const returnValue = baseRE.exec(waiverNumber);
+  return returnValue && returnValue[0];
+};
+
 export const decodeId = (inId, inType) => {
   const returnInfo = {
     packageId: inId,
@@ -86,7 +101,8 @@ export const decodeId = (inId, inType) => {
     case TYPE.WAIVER_APP_K:
       returnInfo.packageId = getBaseWaiverId(inId);
       returnInfo.isNewPackage = false;
-    // falls through
+      returnInfo.parentType = TYPE.WAIVER_BASE;
+      break;
     case TYPE.WAIVER:
     case TYPE.WAIVER_BASE:
     case TYPE.WAIVER_RENEWAL:
