@@ -1,10 +1,43 @@
 Feature: OY2-13095 Package Dashboard - Column Picker
-    Scenario: Screen enhancement
+    Scenario: SPAs Tab - Screen enhancement
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
         And verify show hide columns button exists
+        And verify SPA ID column exists
+        And verify type column exists
+        And verify state column exists
+        And verify 90th day column exists
+        And verify status column exists
+        And verify date submitted column exists
+        And verify submitted by column exists
+        And verify actions column exists
+        And click show hide columns button
+        And verify 90th day exists
+        And verify date submitted exists
+        And verify state exists
+        And verify status exists
+        And verify submitted by exists
+        And verify type exists
+        And click show hide columns button
+    
+        Scenario: Waivers Tab - Screen enhancement
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        And click on Packages
+        And click on the Waivers tab
+        And verify show hide columns button exists
+        And verify IDNumber column exists
+        And verify type column exists
+        And verify state column exists
+        And verify 90th day column exists
+        And verify Waiver Number column exists
+        And verify status column exists
+        And verify date submitted column exists
+        And verify submitted by column exists
+        And verify actions column exists
         And click show hide columns button
         And verify 90th day exists
         And verify date submitted exists
@@ -14,21 +47,36 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify submitted by exists
         And verify type exists
         And click show hide columns button
-        And verify IDNumber column exists
-        And verify type column exists
-        And verify state column exists
-        And verify 90th day column exists
-        And verify expiration date column exists
-        And verify status column exists
-        And verify date submitted column exists
-        And verify submitted by column exists
-        And verify actions column exists
 
-    Scenario: Uncheck all and verify id number and actions exists
+    Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
+        And click show hide columns button
+        And click 90th day checkbox
+        And click date submitted checkbox
+        And click state checkbox
+        And click status checkbox
+        And click submitted by checkbox
+        And click type checkbox
+        And click show hide columns button
+        And verify SPA ID column exists
+        And verify actions column exists
+        And verify type column does not exist
+        And verify state column does not exist
+        And verify 90th day column does not exist
+        And verify expiration date column does not exist
+        And verify status column does not exist
+        And verify date submitted column does not exist
+        And verify submitted by column does not exist
+
+    Scenario: Waivers Tab - Uncheck all and verify Waiver Number and actions exists
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with state submitter user
+        And click on Packages
+        And click on the Waivers tab
         And click show hide columns button
         And click 90th day checkbox
         And click date submitted checkbox
@@ -38,7 +86,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click submitted by checkbox
         And click type checkbox
         And click show hide columns button
-        And verify IDNumber column exists
+        And verify Waiver Number column exists
         And verify actions column exists
         And verify type column does not exist
         And verify state column does not exist
@@ -47,6 +95,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status column does not exist
         And verify date submitted column does not exist
         And verify submitted by column does not exist
+
 
     Scenario: Verify state exists, click state from drop down, verify it no longer exists, click it again, verify it exists again.
         Given I am on Login Page
@@ -85,13 +134,11 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click on Packages
         And Click on Filter Button
         And click on Type
-        And click 1915b waiver check box
         And click CHIP SPA check box
         And Click on Filter Button
         And click show hide columns button
         And click 90th day checkbox
         And click date submitted checkbox
-        And click expiration date checkbox
         And click state checkbox
         And click status checkbox
         And click submitted by checkbox
@@ -110,7 +157,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify type column exists
         And verify state column exists
         And verify 90th day column exists
-        And verify expiration date column exists
         And verify status column exists
         And verify date submitted column exists
         And verify submitted by column exists
@@ -124,7 +170,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click show hide columns button
         And click 90th day checkbox
         And click date submitted checkbox
-        And click expiration date checkbox
         And click status checkbox
         And click submitted by checkbox
         And click show hide columns button

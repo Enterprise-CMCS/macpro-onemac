@@ -39,11 +39,14 @@ class PackageApi {
    * @param {string} email the user's email
    * @return {Promise<Array>} a list of change requests
    */
-  async getMyPackages(userEmail) {
-    if (!userEmail) return [];
+  async getMyPackages(userEmail, tab) {
+    if (!userEmail || !tab) return [];
 
     try {
-      return await API.get("oneMacAPI", `/getMyPackages?email=${userEmail}`);
+      return await API.get(
+        "oneMacAPI",
+        `/getMyPackages?email=${userEmail}&group=${tab}`
+      );
     } catch (error) {
       handleApiError(
         error,

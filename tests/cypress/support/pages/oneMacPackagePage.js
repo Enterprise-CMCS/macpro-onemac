@@ -15,10 +15,10 @@ const MD32560hrefValue =
   '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
 const searchbar = "#search-bar-input";
 //Element is Xpath use cy.xpath instead of cy.get
-const searchbarHeader = "//label[contains(text(),'Search')]";
+const searchbarHeader =
+  "//label[text()='Search by Package ID or Submitter Name']";
 //Element is Xpath use cy.xpath instead of cy.get
-const searchBarXBTN =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/button[1]";
+const searchBarXBTN = "//button[@aria-label='Clear Search']";
 //Element is Xpath use cy.xpath instead of cy.get
 const noResultsFound = "//h4[contains(text(),'No Results Found')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -33,19 +33,55 @@ const filterButton = "//button[contains(text(),'Filter')]";
 const filterByText = "//header//h4";
 //Element is Xpath use cy.xpath instead of cy.get
 const closeButton = "//header/button[1]";
-const typeDropDown = "#accordionItem_2-button";
-const statusDropDown = "#accordionItem_6-button";
+//Element is Xpath use cy.xpath instead of cy.get
+const typeDropDownFilter = "//button[text()='Type']";
+const typeDropDown = "#componentType-button";
+const statusDropDown = "#packageStatus-button";
+const statusFilterCheckboxes = "#packageStatus label";
+//Element is Xpath use cy.xpath instead of cy.get
+const ninetiethDayFilterDropdown = "//button[text()='90th Day']";
+//Element is Xpath use cy.xpath instead of cy.get
+const ninetiethDayNACheckbox =
+  "//label[contains(@for,'checkbox_ninetiethDay-N/A_')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const ninetiethDayPendingCheckbox =
+  "//label[contains(@for,'checkbox_ninetiethDay-Pending_')]";
+const ninetiethDayClockStoppedCheckbox =
+  "//label[contains(@for,'checkbox_ninetiethDay-Clock Stopped')]";
+const ninetiethDayDatePickerFilter =
+  '*[role=combobox][aria-owns^="ninetiethDay-date-filter"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const expirationDateFilterDropdown = "//button[text()='Expiration Date']";
+const expirationDateDatePickerFilter =
+  '*[role=combobox][aria-owns^="expirationTimestamp-date-filter"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const dateSubmittedFilterDropdown = "//button[text()='Date Submitted']";
+//Element is Xpath use cy.xpath(***).last() instead of cy.get
+const dateSubmittedDatePickerFilter = "//span[text()='Select Date Range']";
+//Element is Xpath use cy.xpath instead of cy.get
+const thisQuarterDatePickerBtn = "//button[contains(text(),'This Quarter')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const quarterToDateDatePickerBtn =
+  "//button[contains(text(),'Quarter To Date')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const okDatePickerBtn = "//button[text()='OK']";
+//Element is Xpath use cy.xpath instead of cy.get
+const todayPickerBtn = "//button[text()='Today']";
+//Element is Xpath use cy.xpath instead of cy.get
+const statusDropDownFilter = "//button[text()='Status']";
+const packageRowOneDateSubmitted = "#submissionTimestamp-0";
+const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiver1915bCheckBox =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[1]/label[1]/span[1]";
+  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[2]/label[1]/span[1]";
+  "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const MedicaidSPACheckBox =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[2]/div[1]/div[1]/div[3]/label[1]/span[1]";
+  "//label[contains(@for,'checkbox_componentType-Medicaid SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageApproveCheckBox = "//span[contains(text(),'Package Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -61,8 +97,7 @@ const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const medicaidSPAInList = "//tbody/tr[1]/td[2]/span[1]";
 //Element is Xpath use cy.xpath instead of cy.get
-const ShowHideColumnsBTN =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[2]/div[1]/button[1]";
+const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const checkBox90thDay = "//span[contains(text(),'90th Day')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -87,21 +122,50 @@ const submittedByColumn = "#submitterColHeader";
 const actionsColumn = "#packageActionsColHeader";
 const packageRowOneType = "#componentType-0";
 const packageRowOneState = "#territory-0";
+//first obj is a header and second obj is row if there are results
+const packageRows = "tr";
+const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageApproved =
-  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageDisapproved =
-  "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageWithdrawn =
-  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
-  "//a[contains(text(),'MD.10330')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD.10330')]/../following-sibling::td[9]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
-  "//a[contains(text(),'MD.83420')]/../following-sibling::td[8]/button";
+  "//a[contains(text(),'MD.83420')]/../following-sibling::td[9]/button";
+const stateDropdownFilter = "#territory-button";
+const stateFilterSelect = "#territory-filter-select";
+const statesSelected = "#territory";
+//Element is Xpath use cy.xpath instead of cy.get
+const removeBtn = (state) => `//*[@aria-label='Remove ${state}']`;
+const waiversTab = "#show-waivers-button";
+const spasTab = "#show-spas-button";
+const waiverFamilyNumColumn = "#familyNumberColHeader";
+//Element is Xpath use cy.xpath instead of cy.get
+const waiverFamilyCheckbox =
+  "//label[contains(@for,'checkbox_columnPicker-Waiver Family')]";
+const waiverFamilyRowOne = "#familyNumber-0";
+//Element is Xpath use cy.xpath instead of cy.get
+const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageApprovedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Package Approved')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageDisapprovedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Package Disapproved')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const submittedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Submitted')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const unsubmittedCheckbox =
+  "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -109,7 +173,9 @@ export class oneMacPackagePage {
   }
 
   verifyValue() {
-    cy.get(nintiethDayColumnFirstValue).contains("Pending");
+    cy.get(nintiethDayColumnFirstValue).contains(
+      /N\/A|Pending|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
+    );
   }
 
   findIdNumberMD32560(waiverNumber) {
@@ -196,11 +262,106 @@ export class oneMacPackagePage {
   verifytypeDropDownExists() {
     cy.get(typeDropDown).should("be.visible");
   }
+  verifytypeDropDownFilterExists() {
+    cy.xpath(typeDropDownFilter).should("be.visible");
+  }
+  verify90thDayFilterDropDownExists() {
+    cy.xpath(ninetiethDayFilterDropdown).should("be.visible");
+  }
+  clickOn90thDayFilterDropDown() {
+    cy.xpath(ninetiethDayFilterDropdown).click();
+  }
+  verifyExpirationDateFilterDropDownExists() {
+    cy.xpath(expirationDateFilterDropdown).should("be.visible");
+  }
+  clickOnExpirationDateFilterDropDown() {
+    cy.xpath(expirationDateFilterDropdown).click();
+  }
+  verifyDateSubmittedFilterDropDownExists() {
+    cy.xpath(dateSubmittedFilterDropdown).should("be.visible");
+  }
+  clickOnDateSubmittedFilterDropDown() {
+    cy.xpath(dateSubmittedFilterDropdown).click();
+  }
+  verifyNinetiethDayNACheckboxExists() {
+    cy.xpath(ninetiethDayNACheckbox).should("exist");
+  }
+  clickOnNinetiethDayNACheckbox() {
+    cy.xpath(ninetiethDayNACheckbox).click();
+  }
+  verifyNinetiethDayPendingCheckboxExists() {
+    cy.xpath(ninetiethDayPendingCheckbox).should("exist");
+  }
+  clickOnNinetiethDayPendingCheckbox() {
+    cy.xpath(ninetiethDayPendingCheckbox).click();
+  }
+  verifyNinetiethDayClockStoppedCheckboxExists() {
+    cy.xpath(ninetiethDayClockStoppedCheckbox).should("exist");
+  }
+  clickOnNinetiethDayClockStoppedCheckbox() {
+    cy.xpath(ninetiethDayClockStoppedCheckbox).click();
+  }
+  verifyNinetiethDayDatePickerFilterExists() {
+    cy.get(ninetiethDayDatePickerFilter).should("exist");
+  }
+  clickOnNinetiethDayDatePickerFilter() {
+    cy.get(ninetiethDayDatePickerFilter).click();
+  }
+  verifyExpirationDateDatePickerFilterExists() {
+    cy.get(expirationDateDatePickerFilter).should("exist");
+  }
+  clickOnExpirationDateDatePickerFilter() {
+    cy.get(expirationDateDatePickerFilter).click();
+  }
+  verifyDateSubmittedDatePickerFilterExists() {
+    cy.xpath(dateSubmittedDatePickerFilter).last().should("exist");
+  }
+  clickOnDateSubmittedDatePickerFilter() {
+    cy.xpath(dateSubmittedDatePickerFilter).last().click();
+  }
+  clickOnThisQuarterDatePickerBtn() {
+    cy.xpath(thisQuarterDatePickerBtn).click();
+  }
+  clickOnQuarterToDateDatePickerBtn() {
+    cy.xpath(quarterToDateDatePickerBtn).click();
+  }
+  clickOnOkDatePickerBtn() {
+    cy.xpath(okDatePickerBtn).click();
+  }
+  clickOntodayPickerBtn() {
+    cy.xpath(todayPickerBtn).click();
+  }
+  verifyPackageRowOneExists() {
+    cy.get(packageRowOne).should("be.visible");
+  }
+  verify90thDayRowOneIsNotPending() {
+    cy.get(packageRowOne90thDay).should("not.have.text", "Pending");
+  }
+  verify90thDayRowOneIsNotNA() {
+    cy.get(packageRowOne90thDay).should("not.have.text", "N/A");
+  }
+  verifypackageRowOneDateSubmittedIsThisQuarter() {
+    cy.get(packageRowOneDateSubmitted, { timeout: 15000 })
+      .invoke("text")
+      .then((dateText) => {
+        const date = new Date(packageRowOneDateSubmitted);
+        const today = new Date();
+        let dateQuarter = Math.floor((date.getMonth() + 3) / 3);
+        let todaysQuarter = Math.floor((today.getMonth() + 3) / 3);
+        expect(dateQuarter).to.eq(todaysQuarter);
+      });
+  }
+  verifystatusDropDownFilterExists() {
+    cy.xpath(statusDropDownFilter).should("be.visible");
+  }
   verifystatusDropDownExists() {
     cy.get(statusDropDown).should("be.visible");
   }
   verifyresetButtonExists() {
     cy.xpath(resetButton).should("be.visible");
+  }
+  clickOnResetButton() {
+    cy.xpath(resetButton).click();
   }
   clickTypeDropDown() {
     cy.get(typeDropDown).click();
@@ -372,6 +533,147 @@ export class oneMacPackagePage {
   }
   checkforUnsubmittedIsNotClickable() {
     cy.xpath(Unsubmitted).should("be.disabled");
+  }
+  checkIfPackageListResultsExist() {
+    //must check if length is greater than 1 because 1 is the header which is always visible.
+    if (cy.get("table").find(packageRows).length > 1) {
+      return true;
+    } //else
+    return false;
+  }
+  verifyStateDropdownFilterExists() {
+    cy.get(stateDropdownFilter).should("be.visible");
+  }
+  clickStateDropdownFilter() {
+    cy.get(stateDropdownFilter).click();
+  }
+  verifyStateFilterSelectExists() {
+    cy.get(stateFilterSelect).should("be.visible");
+  }
+  clickStateFilterSelect() {
+    cy.get(stateFilterSelect).click();
+  }
+  verifyStatesSelectedExists() {
+    cy.get(statesSelected).should("be.visible");
+  }
+  verifyStatesSelectedIncludes(state) {
+    cy.get(statesSelected).contains(state);
+  }
+  verifyStateFilterSelectIsEmpty() {
+    cy.get(stateFilterSelect).should(
+      "have.attr",
+      "aria-describedby",
+      "react-select-2-placeholder"
+    );
+  }
+  typeStateToSelect(state) {
+    cy.get(stateFilterSelect).focus().type(state);
+  }
+  verifypackageRowOneValueIs(state) {
+    cy.get(packageRowOneState).contains(state);
+  }
+  verifyremoveBtnExistsFor(state) {
+    cy.xpath(removeBtn(state)).should("be.visible");
+  }
+  clickRemoveBtnFor(state) {
+    cy.xpath(removeBtn(state)).click();
+  }
+  verifyWaiversTabExists() {
+    cy.get(waiversTab).should("be.visible");
+  }
+  clickOnWaiversTab() {
+    cy.get(waiversTab).click();
+  }
+  verifySPAsTabExists() {
+    cy.get(spasTab).should("be.visible");
+  }
+  clickOnSPAsTab() {
+    cy.get(spasTab).click();
+  }
+  verifySPAIDColumnExists() {
+    cy.get(IDNumberColumn).should("be.visible").and("have.text", "SPA ID");
+  }
+  verifyWaiverNumberColumnExists() {
+    cy.get(IDNumberColumn)
+      .should("be.visible")
+      .and("have.text", "Waiver Number");
+  }
+  verifySPAsTabIsDisabled() {
+    cy.get(spasTab).should("be.disabled");
+  }
+  verifySPAsTabIsClickable() {
+    cy.get(spasTab).should("not.be.disabled");
+  }
+  verifyWaiversTabIsDisabled() {
+    cy.get(waiversTab).should("be.disabled");
+  }
+  verifyWaiversTabIsClickable() {
+    cy.get(waiversTab).should("not.be.disabled");
+  }
+  verifyWaiverFamilyNumColumnExists() {
+    cy.get(waiverFamilyNumColumn).should("be.visible");
+  }
+  verifyWaiverFamilyNumColumnDoesNotExists() {
+    cy.get(waiverFamilyNumColumn).should("not.exist");
+  }
+  verifyWaiverFamilyNumColumnIsSortable() {
+    cy.get(waiverFamilyNumColumn).should("have.attr", "title", "Toggle SortBy");
+  }
+  verifyWaiverFamilyCheckboxExists() {
+    cy.xpath(waiverFamilyCheckbox).should("be.visible");
+  }
+  verifyWaiverFamilyCheckboxDoesNotExists() {
+    cy.xpath(waiverFamilyCheckbox).should("not.exist");
+  }
+  clickOnWaiverFamilyCheckbox() {
+    cy.xpath(waiverFamilyCheckbox).click();
+  }
+  verifyWaiverFamilyRowOneFormat() {
+    cy.get(waiverFamilyRowOne).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
+  }
+  verifyRaiIssuedCheckboxExists() {
+    cy.xpath(raiIssuedCheckbox).should("be.visible");
+  }
+  clickRaiIssuedCheckbox() {
+    cy.xpath(raiIssuedCheckbox).click();
+  }
+  verifyPackageApprovedCheckboxExists() {
+    cy.xpath(packageApprovedCheckbox).should("be.visible");
+  }
+  clickPackageApprovedCheckbox() {
+    cy.xpath(packageApprovedCheckbox).click();
+  }
+  verifyPackageDisapprovedCheckboxExists() {
+    cy.xpath(packageDisapprovedCheckbox).should("be.visible");
+  }
+  clickPackageDisapprovedCheckbox() {
+    cy.xpath(packageDisapprovedCheckbox).click();
+  }
+  verifySubmittedCheckboxExists() {
+    cy.xpath(submittedCheckbox).should("be.visible");
+  }
+  clickSubmittedCheckbox() {
+    cy.xpath(submittedCheckbox).click();
+  }
+  verifyUnsubmittedCheckboxExists() {
+    cy.xpath(unsubmittedCheckbox).should("be.visible");
+  }
+  clickUnsubmittedCheckbox() {
+    cy.xpath(unsubmittedCheckbox).click();
+  }
+  clickAllStatusFilterCheckboxes() {
+    cy.get(statusFilterCheckboxes).each(($el) => {
+      cy.wrap($el).click();
+    });
+  }
+  verify90thDayRowOneIsPending() {
+    cy.get(packageRowOne90thDay).should("have.text", "Pending");
+  }
+  verify90thDayRowOneIsNA() {
+    cy.get(packageRowOne90thDay).should("have.text", "N/A");
+  }
+  verify90thDayRowOneIsClockStopped() {
+    cy.get(packageRowOne90thDay).should("have.text", "Clock Stopped");
   }
 }
 export default oneMacPackagePage;

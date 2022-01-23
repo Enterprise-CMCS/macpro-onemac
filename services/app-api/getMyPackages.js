@@ -11,6 +11,7 @@ import { getAuthorizedStateList } from "./user/user-util";
 
 export const main = handler((event) => {
   if (!event?.queryStringParameters?.email) return RESPONSE_CODE.USER_NOT_FOUND;
+  if (!event?.queryStringParameters?.group) return RESPONSE_CODE.DATA_MISSING;
 
   return getUser(event.queryStringParameters.email)
     .then((user) => {
@@ -20,7 +21,7 @@ export const main = handler((event) => {
 
         territoryList = getAuthorizedStateList(user);
         if (!userRoleObj.canAccessDashboard || territoryList === []) {
-          throw new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+          throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
         }
       }
 
@@ -32,7 +33,7 @@ export const main = handler((event) => {
         ProjectionExpression:
           "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId,clockEndTimestamp,expirationTimestamp",
       };
-
+      const grouppk = "OneMAC#" + event.queryStringParameters.group;
       let paramList = [];
       if (typeof territoryList !== "string") {
         paramList = territoryList.map((territory) => {
@@ -40,7 +41,7 @@ export const main = handler((event) => {
             ...baseParams,
             KeyConditionExpression: "GSI1pk = :pk AND begins_with(GSI1sk,:t1)",
             ExpressionAttributeValues: {
-              ":pk": "OneMAC",
+              ":pk": grouppk,
               ":t1": territory,
             },
           };
@@ -51,7 +52,7 @@ export const main = handler((event) => {
             ...baseParams,
             KeyConditionExpression: "GSI1pk = :pk",
             ExpressionAttributeValues: {
-              ":pk": "OneMAC",
+              ":pk": grouppk,
             },
           },
         ];
@@ -76,6 +77,6 @@ export const main = handler((event) => {
     })
     .catch((error) => {
       console.log("error is: ", error);
-      throw error;
+      return error;
     });
 });

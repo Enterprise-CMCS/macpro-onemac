@@ -34,7 +34,9 @@ export const latestAccessStatus: (
   territory: string
 ) => USER_STATUS;
 
-type SelectOption = { label: string; value: string };
+export type SelectOption = { label: string; value: string };
+
+export const territoryList: SelectOption[];
 
 export namespace ChangeRequest {
   type TransmittalNumberInfo = {
@@ -70,4 +72,8 @@ export namespace ChangeRequest {
   export const CONFIG: Record<string, FormInfo>;
   export const ONEMAC_STATUS: Record<string, string>;
   export const TYPE: Record<string, string>;
+  export enum PACKAGE_GROUP {
+    SPA = "spa",
+    WAIVER = "waiver",
+  }
 }
