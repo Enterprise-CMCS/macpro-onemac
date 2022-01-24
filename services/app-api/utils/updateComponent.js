@@ -11,9 +11,12 @@ export default async function updateComponent({
   packageId: updatePk,
   ...updateData
 }) {
+  const { renewal, amendment } = decodeWaiverNumber(updateData.componentId);
   const changeData = {
     componentType: updateData.componentType,
     submitterName: updateData.submitterName,
+    shortId: "R" + renewal + "." + amendment,
+    componentStatus: updateData.currentStatus,
     componentTimestamp: updateData.submissionTimestamp,
     componentId: updateData.componentId,
   };
@@ -52,12 +55,13 @@ export default async function updateComponent({
   if (updateData.componentType) {
     updateComponentParams.ExpressionAttributeNames = {
       "#componentTypeName": updateData.componentType,
+      "#childList": "children",
     };
     updateComponentParams.ExpressionAttributeValues[":thiscomponent"] = [
       changeData,
     ];
     updateComponentParams.UpdateExpression +=
-      ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";
+      ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :thiscomponent)";
   }
 
   try {
