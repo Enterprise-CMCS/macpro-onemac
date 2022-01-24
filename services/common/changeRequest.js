@@ -96,6 +96,16 @@ export const getParentPackage = (inId) => {
   return [renewalNumber, TYPE.WAIVER_RENEWAL];
 };
 
+export const getWaiverRAIParent = (inId) => {
+  const results = decodeWaiverNumber(inId);
+  if (!results) return TYPE.WAIVER_BASE;
+  const { renewal, amendment } = results;
+
+  if (amendment) return TYPE.WAIVER_AMENDMENT;
+  if (!amendment && renewal !== "00") return TYPE.WAIVER_RENEWAL;
+  return TYPE.WAIVER_BASE;
+};
+
 export const decodeId = (inId, inType) => {
   const returnInfo = {
     packageId: inId,
@@ -105,17 +115,18 @@ export const decodeId = (inId, inType) => {
     isNewPackage: true,
   };
   switch (inType) {
-    case TYPE.WAIVER_RAI:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
-    // falls through
     case TYPE.CHIP_SPA_RAI:
-      if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
+      returnInfo.parentType = TYPE.CHIP_SPA;
     // falls through
     case TYPE.SPA_RAI:
       returnInfo.isNewPackage = false;
       break;
-    case TYPE.WAIVER_AMENDMENT:
+    case TYPE.WAIVER_RAI:
     case TYPE.WAIVER_EXTENSION:
+      returnInfo.parentType = getWaiverRAIParent(inId);
+      returnInfo.isNewPackage = false;
+      break;
+    case TYPE.WAIVER_AMENDMENT:
     case TYPE.WAIVER_APP_K:
       [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
       returnInfo.isNewPackage = false;

@@ -1,83 +1,136 @@
 import { TYPE, decodeId } from "./changeRequest";
 
-describe("decodeId SPA ID", () => {
-  const myId = decodeId("MI-11-1119", TYPE.SPA);
-  it("SPA", () => {
+describe("decodeId for SPA IDs", () => {
+  it("handles a null component type", () => {
+    const myIdnull = decodeId("Anything");
+    expect(myIdnull.componentType).toBe(undefined);
+  });
+
+  it("decodes SPA ID", () => {
+    const myId = decodeId("MI-11-1119", TYPE.SPA);
     expect(myId.componentId).toBe("MI-11-1119");
     expect(myId.componentType).toBe("spa");
     expect(myId.isNewPackage).toBe(true);
     expect(myId.packageId).toBe("MI-11-1119");
     expect(myId.parentType).toBe("spa");
-    const myIdnull = decodeId("MI-11-1119");
-    expect(myIdnull.componentType).toBe(undefined);
   });
-});
 
-describe("decodeId SPA_RAI ID", () => {
-  const myId = decodeId("MI-11-1119", TYPE.SPA_RAI);
-  it("SPA", () => {
+  it("decodes SPA RAI ID", () => {
+    const myId = decodeId("MI-11-1119", TYPE.SPA_RAI);
     expect(myId.componentId).toBe("MI-11-1119");
     expect(myId.componentType).toBe("sparai");
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI-11-1119");
     expect(myId.parentType).toBe("spa");
-    const myIdnull = decodeId("MI-11-1119");
-    expect(myIdnull.componentType).toBe(undefined);
+  });
+
+  it("decodes CHIP SPA ID", () => {
+    const myId = decodeId("MI-00-1234-CHIP", TYPE.CHIP_SPA);
+    expect(myId.packageId).toBe("MI-00-1234-CHIP");
+  });
+
+  it("decodes CHIP SPA RAI ID", () => {
+    const myId = decodeId("MI-00-1234-CHIP", TYPE.CHIP_SPA_RAI);
+    expect(myId.componentId).toBe("MI-00-1234-CHIP");
+    expect(myId.componentType).toBe("chipsparai");
+    expect(myId.isNewPackage).toBe(false);
+    expect(myId.packageId).toBe("MI-00-1234-CHIP");
+    expect(myId.parentType).toBe("chipspa");
   });
 });
-/*
-describe("decodeId Wavier ID", () => {
-  const myId = decodeId("MI.77777", TYPE.WAIVER_BASE);
-  it("WAIVER", () => {
+
+describe("decodeId for Waiver Numbers", () => {
+  it("decodes base WAIVER NUMBER", () => {
+    const myId = decodeId("MI.77777", TYPE.WAIVER_BASE);
     expect(myId.componentId).toBe("MI.77777");
     expect(myId.componentType).toBe("waivernew");
     expect(myId.isNewPackage).toBe(true);
     expect(myId.packageId).toBe("MI.77777");
     expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.77777");
-    expect(myIdnull.componentType).toBe(undefined);
   });
-});
 
-describe("decodeId Wavier RAI ID", () => {
-  const myId = decodeId("MI.77777", TYPE.WAIVER_RAI);
-  it("WAIVER", () => {
+  it("decodes BASE WAIVER RAI NUMBER", () => {
+    const myId = decodeId("MI.77777", TYPE.WAIVER_RAI);
     expect(myId.componentId).toBe("MI.77777");
     expect(myId.componentType).toBe("waiverrai");
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI.77777");
     expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.77777");
-    expect(myIdnull.componentType).toBe(undefined);
   });
-});
 
-describe("decodeId Wavier RAI ID", () => {
-  const myId = decodeId("MI.77777", TYPE.WAIVER_RAI);
-  it("WAIVER", () => {
+  it("decodes BASE WAIVER EXTENSION NUMBER", () => {
+    const myId = decodeId("MI.77777", TYPE.WAIVER_EXTENSION);
     expect(myId.componentId).toBe("MI.77777");
-    expect(myId.componentType).toBe("waiverrai");
+    expect(myId.componentType).toBe("waiverextension");
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI.77777");
     expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.77777");
-    expect(myIdnull.componentType).toBe(undefined);
   });
-});
 
-describe("decodeId WAIVER_AMENDMENT", () => {
-  const myId = decodeId("MI.77777", TYPE.WAIVER_AMENDMENT);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI.77777");
+  it("decodes BASE WAIVER AMENDMENT NUMBER", () => {
+    const myId = decodeId("MI.77777.R00.M01", TYPE.WAIVER_AMENDMENT);
+    expect(myId.componentId).toBe("MI.77777.R00.M01");
     expect(myId.componentType).toBe("waiveramendment");
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI.77777");
     expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.77777");
-    expect(myIdnull.componentType).toBe(undefined);
+  });
+
+  it("decodes BASE WAIVER AMENDMENT RAI NUMBER", () => {
+    const myId = decodeId("MI.77777.R00.M01", TYPE.WAIVER_RAI);
+    expect(myId.componentId).toBe("MI.77777.R00.M01");
+    expect(myId.componentType).toBe("waiverrai");
+    expect(myId.isNewPackage).toBe(false);
+    expect(myId.packageId).toBe("MI.77777.R00.M01");
+    expect(myId.parentType).toBe("waiveramendment");
+  });
+
+  it("decodes RENEWAL WAIVER NUMBER", () => {
+    const myId = decodeId("MI.77777.R01", TYPE.WAIVER_RENEWAL);
+    expect(myId.componentId).toBe("MI.77777.R01");
+    expect(myId.componentType).toBe("waiverrenewal");
+    expect(myId.isNewPackage).toBe(true);
+    expect(myId.packageId).toBe("MI.77777.R01");
+    expect(myId.parentType).toBe("waiverrenewal");
+  });
+
+  it("decodes RENEWAL WAIVER NUMBER RAI", () => {
+    const myId = decodeId("MI.77777.R01", TYPE.WAIVER_RAI);
+    expect(myId.componentId).toBe("MI.77777.R01");
+    expect(myId.componentType).toBe("waiverrai");
+    expect(myId.isNewPackage).toBe(false);
+    expect(myId.packageId).toBe("MI.77777.R01");
+    expect(myId.parentType).toBe("waiverrenewal");
+  });
+
+  it("decodes RENEWAL WAIVER EXTENSION NUMBER", () => {
+    const myId = decodeId("MI.77777.R01", TYPE.WAIVER_EXTENSION);
+    expect(myId.componentId).toBe("MI.77777.R01");
+    expect(myId.componentType).toBe("waiverextension");
+    expect(myId.isNewPackage).toBe(false);
+    expect(myId.packageId).toBe("MI.77777.R01");
+    expect(myId.parentType).toBe("waiverrenewal");
+  });
+
+  it("decodes RENEWAL WAIVER AMENDMENT NUMBER", () => {
+    const myId = decodeId("MI.77777.R01.M01", TYPE.WAIVER_AMENDMENT);
+    expect(myId.componentId).toBe("MI.77777.R01.M01");
+    expect(myId.componentType).toBe("waiveramendment");
+    expect(myId.isNewPackage).toBe(false);
+    expect(myId.packageId).toBe("MI.77777.R01");
+    expect(myId.parentType).toBe("waiverrenewal");
+  });
+
+  it("decodes RENEWAL WAIVER AMENDMENT NUMBER RAI", () => {
+    const myId = decodeId("MI.77777.R01.M01", TYPE.WAIVER_RAI);
+    expect(myId.componentId).toBe("MI.77777.R01.M01");
+    expect(myId.componentType).toBe("waiverrai");
+    expect(myId.isNewPackage).toBe(false);
+    expect(myId.packageId).toBe("MI.77777.R01.M01");
+    expect(myId.parentType).toBe("waiveramendment");
   });
 });
-
+/*
 describe("decodeId WAIVER_APP_K", () => {
   const myId = decodeId("MI.1111.R11.22", TYPE.WAIVER_APP_K);
   it("WAIVER", () => {
@@ -117,49 +170,4 @@ describe("decodeId WAIVER_APP_K Seatool dash", () => {
   });
 });
 
-describe("decodeId WAIVER_EXTENSION", () => {
-  const myId = decodeId("MI.77777", TYPE.WAIVER_EXTENSION);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI.77777");
-    expect(myId.componentType).toBe("waiverextension");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777");
-    expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.77777");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-});
-
-describe("decodeId WAIVER_RENEWAL", () => {
-  const myId = decodeId("MI.77777", TYPE.WAIVER_RENEWAL);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI.77777");
-    expect(myId.componentType).toBe("waiverrenewal");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777");
-    expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.77777");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-});
-
-describe("decodeId SPA CHIP RAI ID", () => {
-  const myId = decodeId("MI-00-1234-CHIP", TYPE.CHIP_SPA_RAI);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI-00-1234-CHIP");
-    expect(myId.componentType).toBe("chipsparai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI-00-1234-CHIP");
-    expect(myId.parentType).toBe("chipspa");
-    const myIdnull = decodeId("MI-00-1234-CHIP");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-});
-
-describe("decodeId SPA CHIP ID", () => {
-  const myId = decodeId("MI-00-1234-CHIP", TYPE.CHIP_SPA);
-  it("WAIVER", () => {
-    expect(myId.packageId).toBe("MI-00-1234-CHIP");
-  });
-});
 */
