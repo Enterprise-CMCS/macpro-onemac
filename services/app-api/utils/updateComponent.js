@@ -12,18 +12,22 @@ export default async function updateComponent({
   packageId: updatePk,
   ...updateData
 }) {
-  const { renewal, amendment } = ChangeRequest.decodeWaiverNumber(
-    updateData.componentId
-  );
   const changeData = {
     componentType: updateData.componentType,
     submitterName: updateData.submitterName,
     submitterEmail: updateData.submitterEmail,
-    shortId: "R" + renewal + "." + amendment,
     currentStatus: updateData.currentStatus,
     submissionTimestamp: updateData.submissionTimestamp,
     componentId: updateData.componentId,
+    displayId: updateData.componentId,
   };
+
+  if (updateData.componentType === ChangeRequest.TYPE.WAIVER_AMENDMENT) {
+    const { renewal, amendment } = ChangeRequest.decodeWaiverNumber(
+      updateData.componentId
+    );
+    changeData.displayId = "R" + renewal + "." + amendment;
+  }
 
   const updateComponentParams = {
     TableName: process.env.oneMacTableName,
