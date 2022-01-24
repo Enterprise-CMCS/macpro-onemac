@@ -63,32 +63,7 @@ export const getBaseWaiverId = (inId) => {
   return returnValue && returnValue[0];
 };
 
-export const getParentPackage = (inId) => {
-  // amendments can have parents that are bases or renewals
-  // base if no R section or R00
-  // renewal if R section has a number
-  //const waiverRegex = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
-  if (!inId) return [null, TYPE.WAIVER_BASE];
-
-  // clean user entered errors, if possible
-  const waiverNumber = inId.replace(".R.", ".R");
-
-  const waiverRegex = new RegExp(
-    "([A-Z]{2}[.-]\\d{2,5})(\\.R?(\\d{2})(\\.M?(\\d{2}))?)?"
-  );
-
-  const results = waiverRegex.exec(waiverNumber);
-
-  if (!results) return ["FakeID", TYPE.WAIVER_BASE];
-
-  const [, family, , renewal] = results;
-
-  if (results[3] === "00") return [family, TYPE.WAIVER_BASE];
-  const renewalNumber = family + ".R" + renewal;
-  return [renewalNumber, TYPE.WAIVER_RENEWAL];
-};
-
-export const decodeWaiverNumber = (inNumber) => {
+export const decodeWaiverNumber = (inId) => {
   // amendments can have parents that are bases or renewals
   // base if no R section or R00
   // renewal if R section has a number

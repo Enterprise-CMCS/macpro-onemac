@@ -1,4 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
+import { ChangeRequest } from "cmscommonlib";
 
 const topLevelUpdates = [
   "clockEndTimestamp",
@@ -11,7 +12,9 @@ export default async function updateComponent({
   packageId: updatePk,
   ...updateData
 }) {
-  const { renewal, amendment } = decodeWaiverNumber(updateData.componentId);
+  const { renewal, amendment } = ChangeRequest.decodeWaiverNumber(
+    updateData.componentId
+  );
   const changeData = {
     componentType: updateData.componentType,
     submitterName: updateData.submitterName,
