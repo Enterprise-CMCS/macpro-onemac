@@ -105,6 +105,42 @@ export const oneMACFAQContent: FAQContent[] = [
           </table>
         ),
       },
+      {
+        anchorText: "onboarding-materials",
+        question: "Onboarding Materials",
+        answerJSX: (
+          <ul>
+            {[
+              ["WelcometoOneMAC.pdf", "Welcome to OneMAC"],
+              [
+                "IDMInstructionsforOneMACUsers.pdf",
+                "IDM Instructions for OneMAC Users",
+              ],
+              ["OneMACIDMGuide.pdf", "OneMAC IDM Guide"],
+              ["OneMACStateSubmitterGuide.pdf", "OneMAC State Submitter Guide"],
+              [
+                "OneMACStateAdministratorGuide.pdf",
+                "OneMAC State Administrator Guide",
+              ],
+              ["OneMACCMSUserGuide.pdf", "OneMAC CMS User Guide"],
+              [
+                "OneMACCMSRoleApproverGuide.pdf",
+                "OneMAC CMS Role Approver Guide",
+              ],
+            ].map(([filename, label]) => (
+              <li key={filename}>
+                <a
+                  href={`${process.env.PUBLIC_URL}assets/onboarding/${filename}`}
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  {label}
+                </a>
+              </li>
+            ))}
+          </ul>
+        ),
+      },
     ],
   },
   {
