@@ -102,7 +102,7 @@ export const getWaiverRAIParent = (inId) => {
   const { renewal, amendment } = results;
 
   if (amendment) return TYPE.WAIVER_AMENDMENT;
-  if (!amendment && renewal !== "00") return TYPE.WAIVER_RENEWAL;
+  if (!amendment && renewal && renewal !== "00") return TYPE.WAIVER_RENEWAL;
   return TYPE.WAIVER_BASE;
 };
 
