@@ -15,9 +15,10 @@ export default async function updateComponent({
   const changeData = {
     componentType: updateData.componentType,
     submitterName: updateData.submitterName,
+    submitterEmail: updateData.submitterEmail,
     shortId: "R" + renewal + "." + amendment,
-    componentStatus: updateData.currentStatus,
-    componentTimestamp: updateData.submissionTimestamp,
+    currentStatus: updateData.currentStatus,
+    submissionTimestamp: updateData.submissionTimestamp,
     componentId: updateData.componentId,
   };
 
