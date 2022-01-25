@@ -84,6 +84,21 @@ const canISubmitAppendixKAmmendmentsInOneMac = "#appk-button";
 const canISubmitAppendixKAmmendmentsInOneMacValue = "#appk";
 const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments-button";
 const whatAreTheAttachmentsForAppendixKWaiverValue = "#appk-attachments";
+const onboardingMaterialsBtn = "#onboarding-materials-button";
+const welcomeToOneMacLink =
+  "//div[@id='onboarding-materials']//a[text() = 'Welcome to OneMAC']";
+const idmInstructionsLink =
+  "//div[@id='onboarding-materials']//a[text() = 'IDM Instructions for OneMAC Users']";
+const idmGuideLink =
+  "//div[@id='onboarding-materials']//a[text() = 'OneMAC IDM Guide']";
+const stateSubmitterGuideLink =
+  "//div[@id='onboarding-materials']//a[text() = 'OneMAC State Submitter Guide']";
+const stateAdminGuideLink =
+  "//div[@id='onboarding-materials']//a[text() = 'OneMAC State Administrator Guide']";
+const cmsUserGuideLink =
+  "//div[@id='onboarding-materials']//a[text() = 'OneMAC CMS User Guide']";
+const cmsRoleApproverGuideLink =
+  "//div[@id='onboarding-materials']//a[text() = 'OneMAC CMS Role Approver Guide']";
 
 export class oneMacFAQPage {
   verifyGeneralSectionExists() {
@@ -242,6 +257,82 @@ export class oneMacFAQPage {
   }
   VerifyFrequentlyAskedQuestionsExists() {
     cy.xpath(frequentlyAskedQuestionHeader).should("be.visible");
+  }
+  verifyOnboardingMaterialsBtnExists() {
+    cy.get(onboardingMaterialsBtn).should("be.visible");
+  }
+  clickOnboardingMaterialsBtn() {
+    cy.get(onboardingMaterialsBtn).click();
+  }
+  verifyWelcomeToOneMacLinkExists() {
+    cy.xpath(welcomeToOneMacLink).should("be.visible");
+  }
+  verifyIdmInstructionsLinkExists() {
+    cy.xpath(idmInstructionsLink).should("be.visible");
+  }
+  verifyIdmGuideLinkExists() {
+    cy.xpath(idmGuideLink).should("be.visible");
+  }
+  verifyStateSubmitterGuideLinkExists() {
+    cy.xpath(stateSubmitterGuideLink).should("be.visible");
+  }
+  verifyStateAdminGuideLinkExists() {
+    cy.xpath(stateAdminGuideLink).should("be.visible");
+  }
+  verifyCmsUserGuideLinkExists() {
+    cy.xpath(cmsUserGuideLink).should("be.visible");
+  }
+  verifyCmsRoleApproverGuideLinkExists() {
+    cy.xpath(cmsRoleApproverGuideLink).should("be.visible");
+  }
+  verifyWelcomeToOneMacLinkIsValid() {
+    cy.xpath(welcomeToOneMacLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
+  }
+  verifyIdmInstructionsLinkIsValid() {
+    cy.xpath(idmInstructionsLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
+  }
+  verifyIdmGuideLinkIsValid() {
+    cy.xpath(idmGuideLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
+  }
+  verifyStateSubmitterGuideLinkIsValid() {
+    cy.xpath(stateSubmitterGuideLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
+  }
+  verifyStateAdminGuideLinkIsValid() {
+    cy.xpath(stateAdminGuideLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
+  }
+  verifyCmsUserGuideLinkIsValid() {
+    cy.xpath(cmsUserGuideLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
+  }
+  verifyCmsRoleApproverGuideLinkIsValid() {
+    cy.xpath(cmsRoleApproverGuideLink)
+      .invoke("attr", "href")
+      .then((href) => {
+        cy.request(href).its("status").should("eq", 200);
+      });
   }
 }
 export default oneMacFAQPage;

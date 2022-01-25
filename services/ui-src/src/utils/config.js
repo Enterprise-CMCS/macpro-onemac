@@ -1,5 +1,4 @@
-// eslint-disable-next-line import/no-anonymous-default-export
-export default {
+const config = {
   MAX_ATTACHMENT_SIZE_MB: 80,
   MAX_ADDITIONAL_INFO_LENGTH: 4000,
   ALLOW_DEV_LOGIN: window._env_.ALLOW_DEV_LOGIN,
@@ -20,3 +19,5 @@ export default {
     IDENTITY_POOL_ID: window._env_.COGNITO_IDENTITY_POOL_ID,
   },
 };
+
+export default config;

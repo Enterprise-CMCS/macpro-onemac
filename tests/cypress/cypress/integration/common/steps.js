@@ -1502,3 +1502,51 @@ And("verify that the value of the column for the 90th day is Pending", () => {
 And("click Unsubmitted checkbox", () => {
   OneMacPackagePage.clickUnsubmittedCheckbox();
 });
+And("verify Onboarding Materials exists", () => {
+  OneMacFAQPage.verifyOnboardingMaterialsBtnExists();
+});
+And("click on Onboarding Materials", () => {
+  OneMacFAQPage.clickOnboardingMaterialsBtn();
+});
+And("verify Welcome to OneMac link exists", () => {
+  OneMacFAQPage.verifyWelcomeToOneMacLinkExists();
+});
+And("verify Welcome to OneMac link is valid", () => {
+  OneMacFAQPage.verifyWelcomeToOneMacLinkIsValid();
+});
+And("verify IDM Instructions for OneMAC Users link exists", () => {
+  OneMacFAQPage.verifyIdmInstructionsLinkExists();
+});
+And("verify OneMAC IDM Guide link exists", () => {
+  OneMacFAQPage.verifyIdmGuideLinkExists();
+});
+And("verify OneMAC State Submitter Guide link exists", () => {
+  OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
+});
+And("verify OneMAC State Administrator Guide link exists", () => {
+  OneMacFAQPage.verifyStateAdminGuideLinkExists();
+});
+And("verify OneMAC CMS User Guide link exists", () => {
+  OneMacFAQPage.verifyCmsUserGuideLinkExists();
+});
+And("verify OneMAC CMS Role Approver Guide link exists", () => {
+  OneMacFAQPage.verifyCmsRoleApproverGuideLinkExists();
+});
+And("verify IDM Instructions for OneMAC Users is valid", () => {
+  OneMacFAQPage.verifyIdmInstructionsLinkIsValid();
+});
+And("verify OneMAC IDM Guide is valid", () => {
+  OneMacFAQPage.verifyIdmGuideLinkIsValid();
+});
+And("verify OneMAC State Submitter Guide is valid", () => {
+  OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
+});
+And("verify OneMAC State Administrator Guide is valid", () => {
+  OneMacFAQPage.verifyStateAdminGuideLinkIsValid();
+});
+And("verify OneMAC CMS User Guide is valid", () => {
+  OneMacFAQPage.verifyCmsUserGuideLinkIsValid();
+});
+And("verify OneMAC CMS Role Approver Guide is valid", () => {
+  OneMacFAQPage.verifyCmsRoleApproverGuideLinkIsValid();
+});
