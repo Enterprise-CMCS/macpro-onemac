@@ -113,7 +113,8 @@ const PackageList = () => {
       ({
         [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
         [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
-        [ChangeRequest.TYPE.WAIVER_BASE]: "1915(b) Waiver",
+        [ChangeRequest.TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
+        [ChangeRequest.TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
       }[componentType] ?? []),
     []
