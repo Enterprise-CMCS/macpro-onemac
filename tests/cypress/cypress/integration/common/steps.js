@@ -1123,8 +1123,11 @@ And("verify reset Exists", () => {
 And("click on Type", () => {
   OneMacPackagePage.clickTypeDropDown();
 });
-And("verify 1915b waiver exists", () => {
-  OneMacPackagePage.verifywaiver1915bCheckBoxExists();
+And("verify 1915b Base Waiver exists", () => {
+  OneMacPackagePage.verifyBaseWaiver1915bCheckBoxExists();
+});
+And("verify 1915b Waiver Renewal exists", () => {
+  OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
 });
 And("verify CHIP SPA Exists", () => {
   OneMacPackagePage.verifyCHIPSPACheckBoxExists();
@@ -1147,8 +1150,11 @@ And("verify seatool status 1 exists", () => {
 And("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
 });
-And("click 1915b waiver check box", () => {
-  OneMacPackagePage.clickwaiver1915bCheckBox();
+And("click 1915b Base Waiver check box", () => {
+  OneMacPackagePage.clickBaseWaiver1915bCheckBox();
+});
+And("click 1915b Waiver Renewal check box", () => {
+  OneMacPackagePage.clickWaiverRenewal1915bCheckBox();
 });
 And("click CHIP SPA check box", () => {
   OneMacPackagePage.clickCHIPSPACheckBox();
@@ -1460,7 +1466,7 @@ And("verify the Waivers Family # column exists", () => {
 And("verify Waiver Family # column is sortable", () => {
   OneMacPackagePage.verifyWaiverFamilyNumColumnIsSortable();
 });
-And("verify the Waiver format in column one is SS.#### or SS.#####", () => {
+And("verify the Waiver family format in row one is SS.#### or SS.#####", () => {
   OneMacPackagePage.verifyWaiverFamilyRowOneFormat();
 });
 And("verify the Waivers Family checkbox exists", () => {
@@ -1501,4 +1507,19 @@ And("verify that the value of the column for the 90th day is Pending", () => {
 });
 And("click Unsubmitted checkbox", () => {
   OneMacPackagePage.clickUnsubmittedCheckbox();
+});
+And("verify the type in row one is some kind of 1915b Waiver", () => {
+  OneMacPackagePage.verifypackageRowOneTypeContains1915bWaiver();
+});
+And("verify the type in row one is Base Waiver", () => {
+  OneMacPackagePage.verifypackageRowOneTypeHasTextBaseWaiver();
+});
+And("verify the type in row one is Waiver Renewal", () => {
+  OneMacPackagePage.verifypackageRowOneTypeHasTextWaiverRenewal();
+});
+And("verify the waiver number format in row one is SS.#### or SS.#####", () => {
+  OneMacPackagePage.verifypackageRowOneIDBaseWaiverFormat();
+});
+And("verify the waiver number format in row one is SS.#####.S##", () => {
+  OneMacPackagePage.verifypackageRowOneIDWaiverRenewalFormat();
 });

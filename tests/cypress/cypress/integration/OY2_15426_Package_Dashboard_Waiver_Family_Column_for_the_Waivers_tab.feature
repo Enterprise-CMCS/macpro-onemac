@@ -10,7 +10,7 @@ Feature: OY2-15426 Package Dashboard: Waiver Family Column for the Waivers tab
         And click on the Waivers tab
         And verify the Waivers Family # column exists
         And verify Waiver Family # column is sortable
-        And verify the Waiver format in column one is SS.#### or SS.##### 
+        And verify the Waiver family format in row one is SS.#### or SS.#####
         And click show hide columns button
         And verify the Waivers Family checkbox exists
     

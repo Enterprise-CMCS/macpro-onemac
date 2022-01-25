@@ -74,8 +74,10 @@ const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const waiver1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver')]";
+const baseWaiver1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Base Waiver')]";
+const waiverRenewal1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -166,6 +168,7 @@ const submittedCheckbox =
 //Element is Xpath use cy.xpath instead of cy.get
 const unsubmittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
+const packageRowOneID = "#componentId-0";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -366,8 +369,11 @@ export class oneMacPackagePage {
   clickTypeDropDown() {
     cy.get(typeDropDown).click();
   }
-  verifywaiver1915bCheckBoxExists() {
-    cy.xpath(waiver1915bCheckBox).should("be.visible");
+  verifyWaiverRenewal1915bCheckBoxExists() {
+    cy.xpath(waiverRenewal1915bCheckBox).should("be.visible");
+  }
+  verifyBaseWaiver1915bCheckBoxExists() {
+    cy.xpath(baseWaiver1915bCheckBox).should("be.visible");
   }
   verifyCHIPSPACheckBoxExists() {
     cy.xpath(CHIPSPACheckBox).should("be.visible");
@@ -390,8 +396,11 @@ export class oneMacPackagePage {
   verifysparaiSubmittedExists() {
     cy.xpath(sparaiSubmitted).should("be.visible");
   }
-  clickwaiver1915bCheckBox() {
-    cy.xpath(waiver1915bCheckBox).click();
+  clickBaseWaiver1915bCheckBox() {
+    cy.xpath(baseWaiver1915bCheckBox).click();
+  }
+  clickWaiverRenewal1915bCheckBox() {
+    cy.xpath(waiverRenewal1915bCheckBox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();
@@ -674,6 +683,23 @@ export class oneMacPackagePage {
   }
   verify90thDayRowOneIsClockStopped() {
     cy.get(packageRowOne90thDay).should("have.text", "Clock Stopped");
+  }
+  verifypackageRowOneIDBaseWaiverFormat() {
+    cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
+  }
+  verifypackageRowOneIDWaiverRenewalFormat() {
+    cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}/);
+  }
+  verifypackageRowOneTypeContains1915bWaiver() {
+    cy.get(packageRowOneType)
+      .should("contain.text", "1915(b)")
+      .and("contain.text", "Waiver");
+  }
+  verifypackageRowOneTypeHasTextBaseWaiver() {
+    cy.get(packageRowOneType).should("contain.text", "Base Waiver");
+  }
+  verifypackageRowOneTypeHasTextWaiverRenewal() {
+    cy.get(packageRowOneType).should("contain.text", "Waiver Renewal");
   }
 }
 export default oneMacPackagePage;
