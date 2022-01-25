@@ -75,7 +75,7 @@ const packageRowOne90thDay = "#ninetiethDay-0";
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiver1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver')]";
+  "//label[contains(@for,'checkbox_componentType-1915(b)')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";

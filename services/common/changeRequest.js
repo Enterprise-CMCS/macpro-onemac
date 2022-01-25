@@ -63,6 +63,49 @@ export const getBaseWaiverId = (inId) => {
   return returnValue && returnValue[0];
 };
 
+export const decodeWaiverNumber = (inId) => {
+  // amendments can have parents that are bases or renewals
+  // base if no R section or R00
+  // renewal if R section has a number
+  //const waiverRegex = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
+  if (!inId) return null;
+
+  // clean user entered errors, if possible
+  const waiverNumber = inId.replace(".R.", ".R");
+
+  const waiverRegex = new RegExp(
+    "([A-Z]{2}[.-]\\d{2,5})(\\.R?(\\d{2})(\\.M?(\\d{2}))?)?"
+  );
+
+  const results = waiverRegex.exec(waiverNumber);
+
+  if (!results) return null;
+
+  const [, family, , renewal, , amendment] = results;
+
+  return { family, renewal, amendment };
+};
+
+export const getParentPackage = (inId) => {
+  const results = decodeWaiverNumber(inId);
+  if (!results) return ["FakeID", TYPE.WAIVER_BASE];
+  const { family, renewal } = results;
+
+  if (renewal === "00") return [family, TYPE.WAIVER_BASE];
+  const renewalNumber = family + ".R" + renewal;
+  return [renewalNumber, TYPE.WAIVER_RENEWAL];
+};
+
+export const getWaiverRAIParent = (inId) => {
+  const results = decodeWaiverNumber(inId);
+  if (!results) return TYPE.WAIVER_BASE;
+  const { renewal, amendment } = results;
+
+  if (amendment) return TYPE.WAIVER_AMENDMENT;
+  if (!amendment && renewal && renewal !== "00") return TYPE.WAIVER_RENEWAL;
+  return TYPE.WAIVER_BASE;
+};
+
 export const decodeId = (inId, inType) => {
   const returnInfo = {
     packageId: inId,
@@ -72,25 +115,26 @@ export const decodeId = (inId, inType) => {
     isNewPackage: true,
   };
   switch (inType) {
-    case TYPE.WAIVER_RAI:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
-    // falls through
     case TYPE.CHIP_SPA_RAI:
-      if (inType === TYPE.CHIP_SPA_RAI) returnInfo.parentType = TYPE.CHIP_SPA;
+      returnInfo.parentType = TYPE.CHIP_SPA;
     // falls through
     case TYPE.SPA_RAI:
       returnInfo.isNewPackage = false;
       break;
-    case TYPE.WAIVER_AMENDMENT:
-    case TYPE.WAIVER_RENEWAL:
+    case TYPE.WAIVER_RAI:
     case TYPE.WAIVER_EXTENSION:
-    case TYPE.WAIVER_APP_K:
-      returnInfo.packageId = getBaseWaiverId(inId);
+      returnInfo.parentType = getWaiverRAIParent(inId);
       returnInfo.isNewPackage = false;
-    // falls through
+      break;
+    case TYPE.WAIVER_AMENDMENT:
+    case TYPE.WAIVER_APP_K:
+      [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
+      returnInfo.isNewPackage = false;
+      break;
     case TYPE.WAIVER:
     case TYPE.WAIVER_BASE:
-      returnInfo.parentType = TYPE.WAIVER_BASE;
+    case TYPE.WAIVER_RENEWAL:
+      returnInfo.parentType = inType;
       break;
   }
   return returnInfo;
@@ -444,3 +488,4 @@ export const CONFIG = {
 };
 
 CONFIG[TYPE.WAIVER_BASE] = CONFIG[TYPE.WAIVER];
+CONFIG[TYPE.WAIVER_RENEWAL] = CONFIG[TYPE.WAIVER];

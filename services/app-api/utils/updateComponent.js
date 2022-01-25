@@ -1,4 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
+import { ChangeRequest } from "cmscommonlib";
 
 const topLevelUpdates = [
   "clockEndTimestamp",
@@ -14,9 +15,19 @@ export default async function updateComponent({
   const changeData = {
     componentType: updateData.componentType,
     submitterName: updateData.submitterName,
-    componentTimestamp: updateData.submissionTimestamp,
+    submitterEmail: updateData.submitterEmail,
+    currentStatus: updateData.currentStatus,
+    submissionTimestamp: updateData.submissionTimestamp,
     componentId: updateData.componentId,
+    displayId: updateData.componentId,
   };
+
+  if (updateData.componentType === ChangeRequest.TYPE.WAIVER_AMENDMENT) {
+    const { renewal, amendment } = ChangeRequest.decodeWaiverNumber(
+      updateData.componentId
+    );
+    changeData.displayId = "R" + renewal + "." + amendment;
+  }
 
   const updateComponentParams = {
     TableName: process.env.oneMacTableName,
@@ -52,12 +63,13 @@ export default async function updateComponent({
   if (updateData.componentType) {
     updateComponentParams.ExpressionAttributeNames = {
       "#componentTypeName": updateData.componentType,
+      "#childList": "children",
     };
     updateComponentParams.ExpressionAttributeValues[":thiscomponent"] = [
       changeData,
     ];
     updateComponentParams.UpdateExpression +=
-      ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent)";
+      ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :thiscomponent)";
   }
 
   try {
