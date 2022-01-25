@@ -55,7 +55,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And Click on Filter Button
         And click on Type
         And verify 1915b Base Waiver exists
-        And verify 1915b Waiver Renewal exists
+        #And verify 1915b Waiver Renewal exists
 
     Scenario: SPAs tab - deselect all and verify error message, then select one and verify it exists
         Given I am on Login Page
@@ -80,11 +80,11 @@ Feature: OY2-13092 Package Dashboard - Filter
         And Click on Filter Button
         And click on Type
         And click 1915b Base Waiver check box
-        And click 1915b Waiver Renewal check box
+        #And click 1915b Waiver Renewal check box
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
         And click 1915b Base Waiver check box
-        And click 1915b Waiver Renewal check box
+        #And click 1915b Waiver Renewal check box
 
 
     Scenario: SPAs tab - verify one exists, deselct selection then verify error message
