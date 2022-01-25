@@ -116,6 +116,7 @@ const PackageList = () => {
         [ChangeRequest.TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
         [ChangeRequest.TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
       }[componentType] ?? []),
     []
   );
@@ -174,24 +175,24 @@ const PackageList = () => {
       const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
-      packageConfig?.actionsByStatus[row.original.currentStatus]?.forEach(
-        (actionLabel) => {
-          const newItem = { label: actionLabel };
-          if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
-            newItem.value = "Withdrawn";
-            newItem.formatConfirmationMessage = ({ componentId }) =>
-              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-            newItem.handleSelected = onPopupActionWithdraw;
-          } else {
-            newItem.value = {
-              link: packageConfig?.raiLink,
-              raiId: row.original.componentId,
-            };
-            newItem.handleSelected = onPopupActionRAI;
-          }
-          menuItems.push(newItem);
+      (packageConfig?.actionsByStatus ?? ChangeRequest.defaultActionsByStatus)[
+        row.original.currentStatus
+      ]?.forEach((actionLabel) => {
+        const newItem = { label: actionLabel };
+        if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+          newItem.value = "Withdrawn";
+          newItem.formatConfirmationMessage = ({ componentId }) =>
+            `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+          newItem.handleSelected = onPopupActionWithdraw;
+        } else {
+          newItem.value = {
+            link: packageConfig?.raiLink,
+            raiId: row.original.componentId,
+          };
+          newItem.handleSelected = onPopupActionRAI;
         }
-      );
+        menuItems.push(newItem);
+      });
 
       return (
         <PopupMenu
@@ -384,6 +385,9 @@ const PackageList = () => {
 
     return rightSideContent;
   }
+
+  const [tableKey, updateTableKey] = useState(0);
+
   function renderSubmissionList() {
     if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
@@ -416,10 +420,14 @@ const PackageList = () => {
             className={tableClassName}
             columns={columns}
             data={packageList}
+            expandable={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
+            getSubRows={({ children }) => children}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
+            key={tableKey}
+            TEMP_onReset={() => updateTableKey((k) => k + 1)}
           />
         ) : (
           <EmptyList message="You have no submissions yet." />

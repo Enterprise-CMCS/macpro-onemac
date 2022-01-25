@@ -1888,6 +1888,17 @@
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
          }
         ],
+        "children": [
+          {
+            "componentType": "waiverextension",
+            "componentId": "MD.10330",
+            "currentStatus": "Submitted",
+            "submitterName": "Statesubmitter Nightwatch",
+            "displayId": "MD.10330",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643138320362
+          }
+        ],
         "GSI1sk": "MD.10330",
         "additionalInformation": "This is just a test",
         "submissionTimestamp": 1636137490470,
