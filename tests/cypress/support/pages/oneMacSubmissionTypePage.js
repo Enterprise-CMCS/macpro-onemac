@@ -1,19 +1,23 @@
 //Element is Xpath use cy.xpath instead of cy.get
-const statePlanAmendmentSPA =
-  '//h4[contains(text(),"State Plan Amendment (SPA)")]';
+const statePlanAmendmentSPA = '//h4[text()="State Plan Amendment (SPA)"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const waiverAction = '//h4[contains(text(),"Waiver Action")]';
+const waiverAction = '//h4[text()="Waiver Action"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const MedicalSPA = '//h4[text()="Medicaid SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const ChipSPA = '//h4[text()="CHIP SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const waiverActionWaiverAction = '//h4[contains(text(),"Waiver Action")]';
+const waiverActionWaiverAction = '//h4[text()="Waiver Action"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const RequestTemporaryExtension =
-  '//h4[contains(text(),"Request Temporary Extension")]';
+const RequestTemporaryExtension = '//h4[text()="Request Temporary Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const AppendixKAmendment = '//h4[contains(text(),"Appendix K Amendment")]';
+const AppendixKAmendment = '//h4[text()="Appendix K Amendment"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const respondToMedicaidSPARAI = '//h4[text()="Respond to Medicaid SPA RAI"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const respondToCHIPSPARAI = '//h4[text()="Respond to CHIP SPA RAI"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const respondToWaiverRAI = '//h4[text()="Respond to Waiver RAI"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
@@ -42,6 +46,15 @@ export class oneMacSubmissionTypePage {
 
   clickAppendixKAmendment() {
     cy.xpath(AppendixKAmendment).click();
+  }
+  clickRespondToMedicaidSPARAI() {
+    cy.xpath(respondToMedicaidSPARAI).click();
+  }
+  clickRespondToCHIPSPARAI() {
+    cy.xpath(respondToCHIPSPARAI).click();
+  }
+  clickRespondToWaiverRAI() {
+    cy.xpath(respondToWaiverRAI).click();
   }
 }
 export default oneMacSubmissionTypePage;
