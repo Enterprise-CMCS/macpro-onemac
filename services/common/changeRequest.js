@@ -477,7 +477,7 @@ export const CONFIG = {
       idHintText: "Please use the exact Waiver Number sent with the RAI",
       idFormat: "the Number format sent with the RAI",
       idRegex:
-        "(^[A-Z]{2}[.-][0-9]{4,5}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$)",
+        "(^[A-Z]{2}[.-][0-9]{4,5}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}[.]M?[0-9]{2}$)",
       idExistValidations: [
         {
           idMustExist: true,
