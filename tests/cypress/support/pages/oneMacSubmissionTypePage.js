@@ -4,9 +4,9 @@ const statePlanAmendmentSPA =
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverAction = '//h4[contains(text(),"Waiver Action")]';
 //Element is Xpath use cy.xpath instead of cy.get
-const MedicalSPA = '//h4[contains(text(),"Medicaid SPA")]';
+const MedicalSPA = '//h4[text()="Medicaid SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const ChipSPA = '//h4[contains(text(),"CHIP SPA")]';
+const ChipSPA = '//h4[text()="CHIP SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverActionWaiverAction = '//h4[contains(text(),"Waiver Action")]';
 //Element is Xpath use cy.xpath instead of cy.get
