@@ -46,6 +46,8 @@ const getFamily = ({ componentId }) =>
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
+const getChildren = ({ children }) => children;
+
 /**
  * Component containing dashboard
  */
@@ -387,6 +389,8 @@ const PackageList = () => {
     return rightSideContent;
   }
 
+  const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
+
   function renderSubmissionList() {
     if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
@@ -420,12 +424,12 @@ const PackageList = () => {
             columns={columns}
             data={packageList}
             expandable={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
-            getSubRows={({ children }) => children}
+            getSubRows={getChildren}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
-            TEMP_onReset={() => setPackageList((d) => [...d])}
+            TEMP_onReset={TEMP_onReset}
           />
         ) : (
           <EmptyList message="You have no submissions yet." />
