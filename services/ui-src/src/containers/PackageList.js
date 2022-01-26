@@ -117,6 +117,7 @@ const PackageList = () => {
         [ChangeRequest.TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
         [ChangeRequest.TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
+        [ChangeRequest.TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
       }[componentType] ?? []),
     []
   );
@@ -386,8 +387,6 @@ const PackageList = () => {
     return rightSideContent;
   }
 
-  const [tableKey, updateTableKey] = useState(0);
-
   function renderSubmissionList() {
     if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
@@ -426,8 +425,7 @@ const PackageList = () => {
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
-            key={tableKey}
-            TEMP_onReset={() => updateTableKey((k) => k + 1)}
+            TEMP_onReset={() => setPackageList((d) => [...d])}
           />
         ) : (
           <EmptyList message="You have no submissions yet." />

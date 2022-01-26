@@ -1831,6 +1831,15 @@
         "sk": "waivernew",
         "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
         "changeHistory": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R00.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R00.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212119072
+          },
          {
           "componentType": "122",
           "clockEndTimestamp": null,
@@ -1886,6 +1895,13 @@
           "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
           "contentType": "application/pdf",
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
+          },
+          {
+            "s3Key": "1643212113804/IMG_0954.jpg",
+            "filename": "IMG_0954.jpg",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212113804/IMG_0954.jpg"
          }
         ],
         "children": [
@@ -1897,6 +1913,15 @@
             "displayId": "MD.10330",
             "submitterEmail": "statesubmitter@nightwatch.test",
             "submissionTimestamp": 1643138320362
+          },
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R00.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R00.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212119072
           }
         ],
         "GSI1sk": "MD.10330",
@@ -1907,9 +1932,107 @@
         "packageId": "MD.10330",
         "submitterEmail": "statesubmitter@nightwatch.test",
         "componentId": "MD.10330",
+        "waiveramendment": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R00.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R00.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212119072
+          }
+        ],
         "submitterName": "Statesubmitter Nightwatch",
         "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
        },
+      {
+        "pk": "MD.10330.R01",
+        "sk": "waiverrenewal",
+        "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
+        "changeHistory": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R01.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R01.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212212642
+          },
+          {
+            "componentType": "waiverrenewal",
+            "additionalInformation": "renew",
+            "componentId": "MD.10330.R01",
+            "attachments": [
+              {
+                "s3Key": "1643212168056/IMG_3202.jpg",
+                "filename": "IMG_3202.jpg",
+                "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+                "contentType": "image/jpeg",
+                "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212168056/IMG_3202.jpg"
+              }
+            ],
+            "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b",
+            "waiverAuthority": "1915(b)(4)",
+            "currentStatus": "Submitted",
+            "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
+            "submitterName": "StateSubmitter Nightwatch",
+            "submissionTimestamp": 1643212170520,
+            "submitterEmail": "statesubmitter@nightwatch.test"
+          }
+        ],
+        "componentType": "waiverrenewal",
+        "currentStatus": "Submitted",
+        "attachments": [
+          {
+            "s3Key": "1643212168056/IMG_3202.jpg",
+            "filename": "IMG_3202.jpg",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212168056/IMG_3202.jpg"
+          },
+          {
+            "s3Key": "1643212211505/plain.pdf",
+            "filename": "plain.pdf",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "application/pdf",
+            "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212211505/plain.pdf"
+          }
+        ],
+        "GSI1sk": "MD.10330.R01",
+        "additionalInformation": "renew",
+        "children": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R01.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R01.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212212642
+          }
+        ],
+        "submissionTimestamp": 1643212170520,
+        "waiverAuthority": "1915(b)(4)",
+        "GSI1pk": "OneMAC#waiver",
+        "packageId": "MD.10330.R01",
+        "submitterEmail": "statesubmitter@nightwatch.test",
+        "componentId": "MD.10330.R01",
+        "waiveramendment": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R01.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R01.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212212642
+          }
+        ],
+        "submitterName": "StateSubmitter Nightwatch",
+        "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+      },
        {
         "pk": "MI.10330",
         "sk": "waivernew",

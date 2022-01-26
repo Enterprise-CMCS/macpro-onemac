@@ -8,11 +8,7 @@ import {
   useTable,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import {
-  faSearch,
-  faLevelUpAlt,
-  faChevronDown,
-} from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
 import { constant, noop } from "lodash";
 import cx from "classnames";
 
@@ -143,7 +139,7 @@ export default function PortalTable<V extends {} = {}>({
               return (
                 <tr
                   {...row.getRowProps()}
-                  className={cx(row.getRowProps().className, {
+                  className={cx({
                     // @ts-ignore FIXME remove when react-table types are improved
                     "parent-row-expanded": row.isExpanded,
                     // @ts-ignore FIXME remove when react-table types are improved
@@ -153,7 +149,7 @@ export default function PortalTable<V extends {} = {}>({
                   {expandable && (
                     <td className="row-expander-cell">
                       {/* @ts-ignore */}
-                      {row.depth === 0 ? (
+                      {row.depth === 0 && (
                         <button
                           aria-label="Expand row"
                           // @ts-ignore FIXME remove when react-table types are improved
@@ -163,8 +159,6 @@ export default function PortalTable<V extends {} = {}>({
                         >
                           <FontAwesomeIcon icon={faChevronDown} />
                         </button>
-                      ) : (
-                        <FontAwesomeIcon icon={faLevelUpAlt} />
                       )}
                     </td>
                   )}
