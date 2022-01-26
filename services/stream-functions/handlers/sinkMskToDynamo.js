@@ -58,24 +58,24 @@ const topLevelUpdates = [
   "currentStatus",
 ];
 
-function createTestEvent(event) {
+function createTestEvent(event, value) {
 
   const testEvent = {
     "topic": event.topic,
     "partition": event.partition,
     "offset": event.offset,
-    "value": { 
+    "value": JSON.stringify({ 
       "payload": {
-        "ID_Number": event.payload.ID_Number,
-        "Submission_Date": event.payload.Submission_Date,
-        "Plan_Type": event.payload.Plan_Type,
-        "Action_Type": event.payload.Action_Type,
-        "Alert_90_Days_Date": event.payload.Alert_90_Days_Date,
-        "Summary_Memo": event.payload.Summary_Memo,
-        "SPW_Status_ID": event.payload.SPW_Status_ID,
-        "replica_id": event.payload.replica_id
+        "ID_Number": value.payload.ID_Number,
+        "Submission_Date": value.payload.Submission_Date,
+        "Plan_Type": value.payload.Plan_Type,
+        "Action_Type": value.payload.Action_Type,
+        "Alert_90_Days_Date": value.payload.Alert_90_Days_Date,
+        "Summary_Memo": value.payload.Summary_Memo,
+        "SPW_Status_ID": value.payload.SPW_Status_ID,
+        "replica_id": value.payload.replica_id
       }
-    }
+    }),
   };
 
   return testEvent;
@@ -87,9 +87,9 @@ function myHandler(event) {
   }
   console.log('Received event:', JSON.stringify(event, null, 2));
   const table = event.topic.replace(topicPrefix, "");
-  if (table === "State_Plan") console.log('Test State_Plan Event: ',JSON.stringify(createTestEvent(event), null, 2));
   const value = JSON.parse(event.value);
   const eventId = event.offset;
+  if (table === "State_Plan") console.log('Test State_Plan Event: ',JSON.stringify(createTestEvent(event, value), null, 2));
   console.log(`Topic: ${event.topic} Table: ${table} Event value: ${JSON.stringify(value, null, 2)}`);
 
   const SEAToolId = value.payload.ID_Number;
@@ -153,7 +153,10 @@ function myHandler(event) {
   
     ddb.update(updatePackageParams, function(err, data) {
       if (err) {
-        console.log("Error", err);
+        if (err.code === "ConditionalCheckFailedException")
+          console.log("Not a OneMAC package: ", updatePk);
+        else 
+          console.log("Error", err);
       } else {
         console.log("Update Success!  Returned data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);

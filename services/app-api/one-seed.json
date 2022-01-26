@@ -6,7 +6,7 @@
     "changeHistory": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
+      "componentTimestamp": 1643218567141,
       "submitterName": "StateSubmitter Nightwatch",
       "componentId": "MD-13-1122"
      },
@@ -67,7 +67,7 @@
     "sparai": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
+      "componentTimestamp": 1643218567141,
       "submitterName": "StateSubmitter Nightwatch",
       "componentId": "MD-13-1122"
      }
@@ -83,6 +83,51 @@
     "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
    },
    {
+    "pk": "MD-13-1122",
+    "sk": "sparai#1643218567141",
+    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+    "changeHistory": [
+     {
+      "componentType": "sparai",
+      "additionalInformation": "Seed Data response to the RAI for MD-13-1122",
+      "componentId": "MD-13-1122",
+      "attachments": [
+       {
+        "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "title": "RAI Response",
+        "contentType": "application/pdf",
+        "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+       }
+      ],
+      "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+      "submitterName": "Kristin Grue",
+      "submissionTimestamp": 1643218567141,
+      "submitterEmail": "k.grue@theta-llc.com"
+     }
+    ],
+    "componentType": "sparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+     {
+      "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "title": "RAI Response",
+      "contentType": "application/pdf",
+      "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+     }
+    ],
+    "additionalInformation": "Seed Data response to the RAI for MD-13-1122",
+    "submissionTimestamp": 1643218567141,
+    "packageId": "MD-13-1122",
+    "submitterEmail": "k.grue@theta-llc.com",
+    "componentId": "MD-13-1122",
+    "submitterName": "Kristin Grue",
+    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
+   },
+   {
     "pk": "MI-13-1122",
     "sk": "spa",
     "devComment": "Package added via seed data for application testing",
@@ -90,8 +135,8 @@
     "changeHistory": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
-      "submitterName": "StateSubmitter Nightwatch",
+      "componentTimestamp": 1643218567141,
+      "submitterName": "Kristin Grue",
       "componentId": "MD-13-1122"
      },
      {
@@ -151,8 +196,8 @@
     "sparai": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
-      "submitterName": "StateSubmitter Nightwatch",
+      "componentTimestamp": 1643218567141,
+      "submitterName": "Kristin Grue",
       "componentId": "MI-13-1122"
      }
     ],
@@ -165,6 +210,51 @@
     "componentId": "MI-13-1122",
     "submitterName": "StateSubmitter Nightwatch",
     "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+   },
+   {
+    "pk": "MI-13-1122",
+    "sk": "sparai#1643218567141",
+    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+    "changeHistory": [
+     {
+      "componentType": "sparai",
+      "additionalInformation": "Seed Data response to the RAI for MI-13-1122",
+      "componentId": "MI-13-1122",
+      "attachments": [
+       {
+        "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "title": "RAI Response",
+        "contentType": "application/pdf",
+        "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+       }
+      ],
+      "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+      "submitterName": "Kristin Grue",
+      "submissionTimestamp": 1643218567141,
+      "submitterEmail": "k.grue@theta-llc.com"
+     }
+    ],
+    "componentType": "sparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+     {
+      "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "title": "RAI Response",
+      "contentType": "application/pdf",
+      "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+     }
+    ],
+    "additionalInformation": "Seed Data response to the RAI for MI-13-1122",
+    "submissionTimestamp": 1643218567141,
+    "packageId": "MI-13-1122",
+    "submitterEmail": "k.grue@theta-llc.com",
+    "componentId": "MI-13-1122",
+    "submitterName": "Kristin Grue",
+    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
    },
    {
        "pk": "MD-77-2985",
