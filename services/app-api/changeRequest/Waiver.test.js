@@ -1,14 +1,37 @@
 import Waiver from "./Waiver";
-import spaData from "../unit-test/testSubmitData.json"
+import spaData from "../unit-test/testSubmitData.json";
+import packageExists from "../utils/packageExists";
 
-it('Waiver Stub', async () => {
+jest.mock("../utils/packageExists");
 
-    const response = Waiver.fieldsValid(spaData)
-    expect(response).toBeInstanceOf(Promise)
+it("Waiver Stub", async () => {
+  spaData.actionType = "new";
 
-    const response2 = Waiver.getCMSEmail(spaData)
-    expect(response2.HTML.length).toBe(1440)
+  packageExists.mockImplementationOnce(() => true);
+  const response = Waiver.fieldsValid(spaData);
+  expect(response).toBeInstanceOf(Promise);
 
-    const response3 = Waiver.getStateEmail({ spaData, "ninetyDayClockEnd": 1631626754502,"user": { "email": "foo" } })
-    expect(response3.HTML.length).toBe(1279)
+  packageExists.mockImplementationOnce(() => false);
+  const responsef = Waiver.fieldsValid(spaData);
+  expect(responsef).toBeInstanceOf(Promise);
+
+  packageExists.mockImplementationOnce(() => {
+    throw "Ouch!";
+  });
+  const responset = Waiver.fieldsValid(spaData);
+  expect(responset).toBeInstanceOf(Promise);
+
+  const response2 = Waiver.getCMSEmail(spaData);
+  expect(response2.HTML.length).toBe(1443);
+
+  spaData.transmittalNumberWarningMessage = "0000";
+  const responsew = Waiver.getCMSEmail(spaData);
+  expect(responsew.HTML.length).toBe(1452);
+
+  const response3 = Waiver.getStateEmail({
+    spaData,
+    ninetyDayClockEnd: 1631626754502,
+    user: { email: "foo" },
+  });
+  expect(response3.HTML.length).toBe(1279);
 });
