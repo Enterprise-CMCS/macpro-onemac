@@ -64,7 +64,7 @@ function createTestEvent(event, value) {
     "topic": event.topic,
     "partition": event.partition,
     "offset": event.offset,
-    "value": { 
+    "value": JSON.stringify({ 
       "payload": {
         "ID_Number": value.payload.ID_Number,
         "Submission_Date": value.payload.Submission_Date,
@@ -75,7 +75,7 @@ function createTestEvent(event, value) {
         "SPW_Status_ID": value.payload.SPW_Status_ID,
         "replica_id": value.payload.replica_id
       }
-    }
+    }),
   };
 
   return testEvent;
@@ -153,7 +153,10 @@ function myHandler(event) {
   
     ddb.update(updatePackageParams, function(err, data) {
       if (err) {
-        console.log("Error", err);
+        if (err.code === "ConditionalCheckFailedException")
+          console.log("Not a OneMAC package: ", updatePk);
+        else 
+          console.log("Error", err);
       } else {
         console.log("Update Success!  Returned data is: ", data);
         console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
