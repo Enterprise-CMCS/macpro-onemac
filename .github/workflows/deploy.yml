@@ -133,6 +133,14 @@ jobs:
           # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
       - name: Seed Data
+        # this "resets" any data explicitly provided in the seed files to what
+        # is in the committed code
+        if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
+        env:
+          SLS_DEBUG: 'true'
+          BRANCH: ${{ env.STAGE_PREFIX }}
+        run: cd services/app-api && serverless dynamodb seed --stage="$STAGE_PREFIX$branch_name" --region="$AWS_REGION" --seed=domain --online
+      - name: Load Test Users
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
       - name: Migrate Data
