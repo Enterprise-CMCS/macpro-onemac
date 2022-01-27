@@ -1571,3 +1571,15 @@ And("verify OneMAC CMS User Guide is valid", () => {
 And("verify OneMAC CMS Role Approver Guide is valid", () => {
   OneMacFAQPage.verifyCmsRoleApproverGuideLinkIsValid();
 });
+And("click on Respond to Medicaid SPA RAI", () => {
+  OneMacSubmissionTypePage.clickRespondToMedicaidSPARAI();
+});
+And("click on Respond to CHIP SPA RAI", () => {
+  OneMacSubmissionTypePage.clickRespondToCHIPSPARAI();
+});
+And("click on Respond to Waiver RAI", () => {
+  OneMacSubmissionTypePage.clickRespondToWaiverRAI();
+});
+And("verify ID field is empty and not disabled", () => {
+  medicaidSPARAIResponsePage.verifySPAIDFieldIsEmptyAndNotDisabled();
+});
