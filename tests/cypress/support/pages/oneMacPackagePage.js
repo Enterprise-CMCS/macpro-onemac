@@ -487,6 +487,7 @@ export class oneMacPackagePage {
     cy.get(submittedByColumn).should("be.visible");
   }
   verifyactionsColumnExists() {
+    cy.get(actionsColumn).scrollIntoView();
     cy.get(actionsColumn).should("be.visible");
   }
   verifyIDNumberColumnDoesNotExist() {
