@@ -15,6 +15,11 @@ const WAIVER_CHOICES = [
     linkTo: "/waiverextension",
   },
   {
+    title: "Respond to Waiver RAI",
+    description: "Submit additional information",
+    linkTo: "/waiverrai",
+  },
+  {
     title: "Appendix K Amendment",
     description: "Submit Appendix K Amendment",
     linkTo: "/waiverappk",
