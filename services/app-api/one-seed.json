@@ -763,6 +763,17 @@
             "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1638473559097/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
            }
           ],
+          "children": [
+            {
+              "componentType": "waiverrai",
+              "componentId": "VA.1117",
+              "currentStatus": "Submitted",
+              "submitterName": "Angie Active",
+              "displayId": "VA.1117",
+              "submitterEmail": "statesubmitteractive@cms.hhs.local",
+              "submissionTimestamp": 1643296612626
+            }
+          ],
           "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278",
           "waiverAuthority": "1915(b)(4)",
           "currentStatus": "Submitted",
@@ -2075,6 +2086,26 @@
             "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
            }
           ],
+          "children": [
+            {
+              "componentType": "waiverextension",
+              "componentId": "MI.10330",
+              "currentStatus": "Submitted",
+              "submitterName": "Statesubmitter Nightwatch",
+              "displayId": "MI.10330",
+              "submitterEmail": "statesubmitter@nightwatch.test",
+              "submissionTimestamp": 1643138320362
+            },
+            {
+              "componentType": "waiveramendment",
+              "componentId": "MI.10330.R00.M01",
+              "currentStatus": "Submitted",
+              "submitterName": "StateSubmitter Nightwatch",
+              "displayId": "R00.01",
+              "submitterEmail": "statesubmitter@nightwatch.test",
+              "submissionTimestamp": 1643212119072
+            }
+          ],
           "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8",
           "waiverAuthority": "1915(b)(4)",
           "currentStatus": "Submitted",
@@ -2142,6 +2173,17 @@
           "contentType": "application/pdf",
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
          }
+        ],
+        "children": [
+          {
+            "componentType": "waiverrai",
+            "componentId": "MD.83420",
+            "currentStatus": "Submitted",
+            "submitterName": "Statesubmitter Nightwatch",
+            "displayId": "MD.83420",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643296612626
+          }
         ],
         "GSI1sk": "MD.83420",
         "additionalInformation": "This is just a test",

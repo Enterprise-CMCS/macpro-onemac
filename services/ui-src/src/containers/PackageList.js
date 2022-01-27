@@ -120,6 +120,7 @@ const PackageList = () => {
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
         [ChangeRequest.TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
         [ChangeRequest.TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
+        [ChangeRequest.TYPE.WAIVER_RAI]: "1915(b) RAI Response",
       }[componentType] ?? []),
     []
   );
