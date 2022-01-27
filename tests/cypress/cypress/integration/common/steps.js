@@ -1583,3 +1583,51 @@ And("click on Respond to Waiver RAI", () => {
 And("verify ID field is empty and not disabled", () => {
   medicaidSPARAIResponsePage.verifySPAIDFieldIsEmptyAndNotDisabled();
 });
+And("search for {string}", (part) => {
+  OneMacPackagePage.searchFor(part);
+});
+And("verify parent row expander exists", () => {
+  OneMacPackagePage.verifyFirstParentRowExpanderExists();
+});
+And("verify parent row expander is disabled", () => {
+  OneMacPackagePage.verifyFirstParentRowExpanderIsDisabled();
+});
+And("verify the next row is not a child", () => {
+  OneMacPackagePage.verifyTheNextRowIsNotAChild();
+});
+And("click parent row expander", () => {
+  OneMacPackagePage.clickFirstParentRowExpander();
+});
+And("verify the next row is a child", () => {
+  OneMacPackagePage.verifyTheNextRowIsAChild();
+});
+And("verify all children start with {string}", (part) => {
+  OneMacPackagePage.verifyAllChildrenStartWith(part);
+});
+And("verify Waiver Number column exists for the child", () => {
+  OneMacPackagePage.verifyWaiverNumberColumnExistsForChild();
+});
+And("verify type column exists for the child", () => {
+  OneMacPackagePage.verifytypeColumnExistsForChild();
+});
+And("verify state column exists for the child", () => {
+  OneMacPackagePage.verifystateColumnExistsForChild();
+});
+And("verify 90th day column exists for the child", () => {
+  OneMacPackagePage.verify90thDayColumnExistsForChild();
+});
+And("verify status column exists for the child", () => {
+  OneMacPackagePage.verifystatusColumnExistsForChild();
+});
+And("verify date submitted column exists for the child", () => {
+  OneMacPackagePage.verifyDateSubmittedColumnExistsForChild();
+});
+And("verify submitted by column exists for the child", () => {
+  OneMacPackagePage.verifysubmittedByColumnExistsForChild();
+});
+And("verify actions column exists for the child", () => {
+  OneMacPackagePage.verifyactionsColumnExistsForChild();
+});
+And("verify expiration date column exists for the child", () => {
+  OneMacPackagePage.verifyexpirationDateColumnExistsForChild();
+});

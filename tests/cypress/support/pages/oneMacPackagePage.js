@@ -169,6 +169,19 @@ const submittedCheckbox =
 const unsubmittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
 const packageRowOneID = "#componentId-0";
+const packageRowTwoID = "#componentId-1";
+const packageRowTwoDateSubmitted = "#submissionTimestamp-1";
+const packageRowTwo90thDay = "#ninetiethDay-1";
+const packageRowTwoType = "#componentType-1";
+const packageRowTwoState = "#territory-1";
+//Element is Xpath use cy.xpath instead of cy.get
+const parentRowExpander = "//button[@aria-label='Expand row']";
+const rowTwo = "tbody > tr:nth-child(2)";
+const packageRowTwoSubmittedBy = "#submitter-1";
+const packageRowTwoActions = "#packageActions-1";
+const packageRowTwoExpirationDate = "#expirationTimestamp-1";
+//Element is Xpath use cy.xpath instead of cy.get
+const childRows = "//tr[@class = 'child-row-expanded']";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -700,6 +713,56 @@ export class oneMacPackagePage {
   }
   verifypackageRowOneTypeHasTextWaiverRenewal() {
     cy.get(packageRowOneType).should("contain.text", "Waiver Renewal");
+  }
+  searchFor(part) {
+    cy.get(searchbar).type(part);
+  }
+  verifyFirstParentRowExpanderExists() {
+    cy.xpath(parentRowExpander).first().should("be.visible");
+  }
+  verifyTheNextRowIsNotAChild() {
+    cy.get(rowTwo).should("not.have.class", "child-row-expanded");
+  }
+  clickFirstParentRowExpander() {
+    cy.xpath(parentRowExpander).first().click();
+  }
+  verifyTheNextRowIsAChild() {
+    cy.get(rowTwo).should("have.class", "child-row-expanded");
+  }
+  verifyAllChildrenStartWith(part) {
+    cy.xpath(childRows).each(($el) => {
+      cy.wrap($el).find("td:nth-of-type(2)").should("contain.text", part);
+    });
+  }
+  verifyWaiverNumberColumnExistsForChild() {
+    cy.get(packageRowTwoID).should("be.visible");
+  }
+  verifytypeColumnExistsForChild() {
+    cy.get(packageRowTwoType).should("be.visible");
+  }
+  verifystateColumnExistsForChild() {
+    cy.get(packageRowTwoState).should("be.visible");
+  }
+  verify90thDayColumnExistsForChild() {
+    cy.get(packageRowTwo90thDay).should("be.visible");
+  }
+  verifystatusColumnExistsForChild() {
+    cy.get(packageRowOneType).should("be.visible");
+  }
+  verifyDateSubmittedColumnExistsForChild() {
+    cy.get(packageRowTwoDateSubmitted).should("be.visible");
+  }
+  verifysubmittedByColumnExistsForChild() {
+    cy.get(packageRowTwoSubmittedBy).should("be.visible");
+  }
+  verifyactionsColumnExistsForChild() {
+    cy.get(packageRowTwoActions).should("be.visible");
+  }
+  verifyexpirationDateColumnExistsForChild() {
+    cy.get(packageRowTwoExpirationDate).should("be.visible");
+  }
+  verifyFirstParentRowExpanderIsDisabled() {
+    cy.xpath(parentRowExpander).should("be.disabled");
   }
 }
 export default oneMacPackagePage;
