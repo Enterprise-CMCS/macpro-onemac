@@ -1,0 +1,87 @@
+service: database
+
+frameworkVersion: "2"
+
+plugins:
+  - serverless-dynamodb-local
+  - serverless-stack-termination-protection
+  - serverless-s3-bucket-helper
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  region: ${opt:region, self:provider.region}
+  serverlessTerminationProtection:
+    stages:
+      - master
+      - val
+      - production
+  oneMacTableName: onemac-${self:custom.stage}-one
+  #Dynamo DB local configuration
+  dynamodb:
+    stages:
+      - dev
+      - ${env:BRANCH, ""}
+    start:
+      inMemory: true
+      migrate: true
+      seed: true
+    seed:
+      domain:
+        sources:
+        - table: ${self:custom.oneMacTableName}
+          sources: [./one-seed.json]
+  serverless-offline:
+    allowCache: true
+
+provider:
+  name: aws
+  runtime: nodejs12.x
+  region: us-east-1
+  stage: dev
+  environment:
+    oneMacTableName: ${self:custom.oneMacTableName}
+
+resources:
+  Resources:
+    OneMacTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.oneMacTableName}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+          - AttributeName: GSI1pk
+            AttributeType: S
+          - AttributeName: GSI1sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        # GlobalSecondaryIndex on the territory with submittedAt as the sort key
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: GSI1pk
+                KeyType: HASH
+              - AttributeName: GSI1sk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL # Makes all columns available in the index
+        # Set the capacity to auto-scale
+        BillingMode: PAY_PER_REQUEST
+
+  Outputs:
+    OneMacTableName:
+      Value: !Ref OneMacTable
+    OneMacTableArn:
+      Value: !GetAtt OneMacTable.Arn
+    OneMacTableStreamArn:
+      Value: !GetAtt OneMacTable.StreamArn
+    Region:
+      Value: !Sub ${AWS::Region}

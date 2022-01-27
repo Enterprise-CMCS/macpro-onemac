@@ -47,38 +47,7 @@ Resources:
           KeyType: HASH
       # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
-  OneMacTable:
-    Type: AWS::DynamoDB::Table
-    Properties:
-      TableName: ${self:custom.oneMacTableName}
-      StreamSpecification:
-        StreamViewType: NEW_AND_OLD_IMAGES
-      AttributeDefinitions:
-        - AttributeName: pk
-          AttributeType: S
-        - AttributeName: sk
-          AttributeType: S
-        - AttributeName: GSI1pk
-          AttributeType: S
-        - AttributeName: GSI1sk
-          AttributeType: S
-      KeySchema:
-        - AttributeName: pk
-          KeyType: HASH
-        - AttributeName: sk
-          KeyType: RANGE
-      # GlobalSecondaryIndex on the territory with submittedAt as the sort key
-      GlobalSecondaryIndexes:
-        - IndexName: GSI1
-          KeySchema:
-            - AttributeName: GSI1pk
-              KeyType: HASH
-            - AttributeName: GSI1sk
-              KeyType: RANGE
-          Projection:
-            ProjectionType: ALL # Makes all columns available in the index
-      # Set the capacity to auto-scale
-      BillingMode: PAY_PER_REQUEST
+
 Outputs:
   AmendmentsTableStreamArn:
     Value: !GetAtt AmendmentsTable.StreamArn
@@ -86,9 +55,3 @@ Outputs:
     Value: !Ref SpaIdTable
   SpaIdTableArn:
     Value: !GetAtt SpaIdTable.Arn
-  OneMacTableName:
-    Value: !Ref OneMacTable
-  OneMacTableArn:
-    Value: !GetAtt OneMacTable.Arn
-  OneMacTableStreamArn:
-    Value: !GetAtt OneMacTable.StreamArn
