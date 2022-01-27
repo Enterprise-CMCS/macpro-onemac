@@ -194,24 +194,33 @@ export const customFilterTypes = {
 
 type FilterProps = {
   column: ColumnInstance & UseFiltersColumnProps<any>;
-  preGlobalFilteredRows: Row[];
+  preGlobalFilteredFlatRows: Row[];
 };
 
 function TextFilter({
   column: { filterValue, setFilter, id },
-  preGlobalFilteredRows,
+  preGlobalFilteredFlatRows,
 }: FilterProps) {
-  const possibleValues = useMemo(
-    () =>
-      Array.from(
-        new Set(
-          preGlobalFilteredRows
-            .map(({ values }) => values[id])
-            .filter((value) => typeof value === "string")
-        )
-      ).sort(),
-    [preGlobalFilteredRows, id]
-  );
+  const [possibleValues, hiddenValues] = useMemo(() => {
+    const possibleUnique = new Set();
+    const notHiddenUnique = new Set();
+
+    for (const {
+      values: { [id]: value },
+      // @ts-ignore
+      depth,
+    } of preGlobalFilteredFlatRows) {
+      if (typeof value === "string") possibleUnique.add(value);
+
+      if (depth === 0) notHiddenUnique.add(value);
+    }
+
+    const valuesOut = Array.from(possibleUnique).sort();
+    return [
+      valuesOut,
+      new Set(valuesOut.filter((v) => !notHiddenUnique.has(v))),
+    ];
+  }, [preGlobalFilteredFlatRows, id]) as [string[], Set<string>];
 
   const onCheckboxSelect = useCallback(
     ({ currentTarget: { checked, value } }) => {
@@ -228,19 +237,21 @@ function TextFilter({
 
   return (
     <>
-      {possibleValues.map((value) => (
-        <Choice
-          checked={filterValue?.includes(value) ?? true}
-          inversed
-          key={value}
-          label={value}
-          name={`${id}-${value}`}
-          onChange={onCheckboxSelect}
-          size="small"
-          type="checkbox"
-          value={value}
-        />
-      ))}
+      {possibleValues
+        .filter((value) => !hiddenValues.has(value))
+        .map((value) => (
+          <Choice
+            checked={filterValue?.includes(value) ?? true}
+            inversed
+            key={value}
+            label={value}
+            name={`${id}-${value}`}
+            onChange={onCheckboxSelect}
+            size="small"
+            type="checkbox"
+            value={value}
+          />
+        ))}
     </>
   );
 }
@@ -430,32 +441,33 @@ type FilterPaneProps<V extends {}> = {
     UseFiltersColumnProps<V>)[];
   pageContentRef: RefObject<HTMLElement>;
   setAllFilters: (filters: any[]) => void;
+  TEMP_onReset: () => void;
 };
 
 function FilterPane<V extends {}>({
   columnsInternal,
   pageContentRef,
   setAllFilters,
+  TEMP_onReset,
 }: FilterPaneProps<V>) {
   const [showFilters, toggleShowFilters] = useToggle(false);
-  const onResetFilters = useCallback(
-    () =>
-      setAllFilters(
-        // this awful complicated dance is because the DateRangePicker gets
-        // confused on reset if you don't explicitly pass an empty array
-        columnsInternal.flatMap(({ canFilter, filter, id }) => {
-          if (!canFilter) return [];
-          switch (filter) {
-            case CustomFilterTypes.DateRange:
-            case CustomFilterTypes.DateRangeAndMultiCheckbox:
-              return { id, value: [] };
-            default:
-              return { id, value: undefined };
-          }
-        })
-      ),
-    [columnsInternal, setAllFilters]
-  );
+  const onResetFilters = useCallback(() => {
+    setAllFilters(
+      // this awful complicated dance is because the DateRangePicker gets
+      // confused on reset if you don't explicitly pass an empty array
+      columnsInternal.flatMap(({ canFilter, filter, id }) => {
+        if (!canFilter) return [];
+        switch (filter) {
+          case CustomFilterTypes.DateRange:
+          case CustomFilterTypes.DateRangeAndMultiCheckbox:
+            return { id, value: [] };
+          default:
+            return { id, value: undefined };
+        }
+      })
+    );
+    TEMP_onReset();
+  }, [columnsInternal, setAllFilters, TEMP_onReset]);
 
   return (
     <>
@@ -513,6 +525,7 @@ function FilterPane<V extends {}>({
 export type SearchFilterProps<V extends {}> = {
   onSearch: (keyword: string) => void;
   searchBarTitle: ReactNode;
+  TEMP_onReset: () => void;
 } & FilterPaneProps<V>;
 
 export function SearchAndFilter<V extends {} = {}>({
@@ -521,6 +534,7 @@ export function SearchAndFilter<V extends {} = {}>({
   pageContentRef,
   searchBarTitle,
   setAllFilters,
+  TEMP_onReset,
 }: SearchFilterProps<V>) {
   const [searchTerm, setSearchTerm] = useState("");
   const inputRef = useRef<HTMLInputElement>(null);
@@ -578,6 +592,7 @@ export function SearchAndFilter<V extends {} = {}>({
             columnsInternal={columnsInternal}
             pageContentRef={pageContentRef}
             setAllFilters={setAllFilters}
+            TEMP_onReset={TEMP_onReset}
           />
         </div>
       </div>

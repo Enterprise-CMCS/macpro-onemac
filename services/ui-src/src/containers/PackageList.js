@@ -46,6 +46,8 @@ const getFamily = ({ componentId }) =>
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
+const getChildren = ({ children }) => children;
+
 /**
  * Component containing dashboard
  */
@@ -116,6 +118,9 @@ const PackageList = () => {
         [ChangeRequest.TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
         [ChangeRequest.TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
+        [ChangeRequest.TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
+        [ChangeRequest.TYPE.WAIVER_RAI]: "1915(b) RAI Response",
       }[componentType] ?? []),
     []
   );
@@ -174,24 +179,24 @@ const PackageList = () => {
       const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
-      packageConfig?.actionsByStatus[row.original.currentStatus]?.forEach(
-        (actionLabel) => {
-          const newItem = { label: actionLabel };
-          if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
-            newItem.value = "Withdrawn";
-            newItem.formatConfirmationMessage = ({ componentId }) =>
-              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-            newItem.handleSelected = onPopupActionWithdraw;
-          } else {
-            newItem.value = {
-              link: packageConfig?.raiLink,
-              raiId: row.original.componentId,
-            };
-            newItem.handleSelected = onPopupActionRAI;
-          }
-          menuItems.push(newItem);
+      (packageConfig?.actionsByStatus ?? ChangeRequest.defaultActionsByStatus)[
+        row.original.currentStatus
+      ]?.forEach((actionLabel) => {
+        const newItem = { label: actionLabel };
+        if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+          newItem.value = "Withdrawn";
+          newItem.formatConfirmationMessage = ({ componentId }) =>
+            `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+          newItem.handleSelected = onPopupActionWithdraw;
+        } else {
+          newItem.value = {
+            link: packageConfig?.raiLink,
+            raiId: row.original.componentId,
+          };
+          newItem.handleSelected = onPopupActionRAI;
         }
-      );
+        menuItems.push(newItem);
+      });
 
       return (
         <PopupMenu
@@ -384,6 +389,9 @@ const PackageList = () => {
 
     return rightSideContent;
   }
+
+  const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
+
   function renderSubmissionList() {
     if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
@@ -416,10 +424,13 @@ const PackageList = () => {
             className={tableClassName}
             columns={columns}
             data={packageList}
+            expandable={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
+            getSubRows={getChildren}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
             withSearchBar
+            TEMP_onReset={TEMP_onReset}
           />
         ) : (
           <EmptyList message="You have no submissions yet." />
