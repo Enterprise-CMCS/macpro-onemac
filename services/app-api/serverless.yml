@@ -14,8 +14,8 @@ custom:
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   userTableName: cms-spa-form-${self:custom.stage}-user-profiles
-  oneMacTableName: ${env:ONE_TABLE_NAME, cf:database-${self:custom.stage}.OneMacTableName}
-  oneMacTableArn: ${env:ONE_TABLE_ARN, cf:database-${self:custom.stage}.OneMacTableArn}
+  oneMacTableName: ${cf:database-${self:custom.stage}.OneMacTableName}
+  oneMacTableArn: ${cf:database-${self:custom.stage}.OneMacTableArn}
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   userAccessEmailSource: ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
