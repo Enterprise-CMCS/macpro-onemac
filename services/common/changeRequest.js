@@ -149,7 +149,7 @@ const waiverBaseTransmittalNumber = {
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
 };
 
-const defaultActionsByStatus = {
+export const defaultActionsByStatus = {
   [ONEMAC_STATUS.UNSUBMITTED]: [],
   [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],

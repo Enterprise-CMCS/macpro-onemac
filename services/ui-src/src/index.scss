@@ -2328,3 +2328,27 @@ aside#faq-contact-info-box {
 .custom-multi-select {
   color: $color-black;
 }
+
+.parent-row-expanded .row-expander-cell button svg {
+  transform: rotateZ(180deg);
+}
+
+.child-row-expanded {
+  background-color: $color-primary-alt-lightest;
+
+  button {
+    @extend .ds-u-fill--transparent;
+  }
+}
+
+.row-expander-cell {
+  @extend .ds-u-color--gray;
+
+  button {
+    @extend .ds-u-fill--transparent;
+
+    &:disabled {
+      color: $color-gray-lightest;
+    }
+  }
+}
