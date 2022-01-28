@@ -130,13 +130,13 @@ export const main = handler(async (event) => {
               },
             });
 
-            const latest_version = response["Attributes"]["Latest"];
+            const latestVersion = response["Attributes"]["Latest"];
 
             await dynamoDb.put({
               TableName: process.env.oneMacTableName,
               Item: {
                 pk: item.id,
-                sk: `v${latest_version}#${item.type}#${thing.territory}`,
+                sk: `v${latestVersion}#${item.type}#${thing.territory}`,
                 status: thing.status,
                 doneBy: thing.doneBy,
                 role: item.type,
