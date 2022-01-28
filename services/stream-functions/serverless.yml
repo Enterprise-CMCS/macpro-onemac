@@ -371,7 +371,7 @@ resources:
                 - dynamodb:GetRecords
                 - dynamodb:GetShardIterator
                 - dynamodb:ListStreams
-                Resource: ${self:custom.tableStreamArn}
+                Resource: ${self:custom.oneMacTableStreamArn}
               - Effect: 'Allow'
                 Action:
                 - "ec2:CreateNetworkInterface"
