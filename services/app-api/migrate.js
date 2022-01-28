@@ -1,6 +1,17 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { ChangeRequest } from "cmscommonlib";
+
+const buildSK = (role, territory) => {
+  switch (role) {
+    case "statesubmitter":
+      return `statesystemadmin#${territory}`;
+    case "cmsreviewer":
+    case "statesystemadmin":
+      return "cmsroleapprover";
+    default:
+      return "Boss";
+  }
+};
 
 /**
  * Perform data migrations
@@ -9,64 +20,136 @@ import { ChangeRequest } from "cmscommonlib";
 export const main = handler(async (event) => {
   console.log("Migrate was called with event: ", event);
 
-  // scan one table index as only indexed items need migration in this case
   const params = {
-    TableName: process.env.oneMacTableName,
-    IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :pk",
-    ExpressionAttributeValues: {
-      ":pk": "OneMAC",
-    },
+    TableName: process.env.userTableName,
     ExclusiveStartKey: null,
     ScanIndexForward: false,
-    ProjectionExpression: "pk, sk, componentType, GSI1pk",
   };
 
   const promiseItems = [];
+
   do {
-    const results = await dynamoDb.query(params);
-    console.log("params are: ", params);
-    console.log("results are: ", results);
+    const results = await dynamoDb.scan(params);
     promiseItems.push(...results.Items);
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
 
-  const updateParams = {
-    TableName: process.env.oneMacTableName,
-    ConditionExpression: "GSI1pk=:onemac",
-    UpdateExpression: "SET GSI1pk = :newGSIwithGroup",
-    ReturnValues: "ALL_NEW",
-  };
-
-  // convert GSI1pl from OneMAC to OneMAC#spa or OneMAC#waiver based on component type
+  // convert UserTable to OneTable
   await Promise.all(
-    promiseItems.map(async (item, index) => {
-      // get the package group of the item
-      const newGSI1 =
-        "OneMAC#" + ChangeRequest.MY_PACKAGE_GROUP[item.componentType];
-      updateParams.Key = {
-        pk: item.pk,
-        sk: item.sk,
-      };
+    promiseItems.map(async (item) => {
+      const updateList = [];
 
-      updateParams.ExpressionAttributeValues = {
-        ":onemac": "OneMAC",
-        ":newGSIwithGroup": newGSI1,
+      const contactParams = {
+        TableName: process.env.oneMacTableName,
+        Item: {
+          pk: item.id,
+          sk: "ContactInfo",
+          firstName: item.firstName,
+          lastName: item.lastName,
+          email: item.id,
+          phoneNumber: item.phoneNumber,
+          group: item.group,
+          division: item.division,
+        },
       };
       try {
-        console.log(
-          `Update Params for ${JSON.stringify(item)} are ${JSON.stringify(
-            updateParams
-          )}`
-        );
-        if (index > 0) return;
-        const result = await dynamoDb.update(updateParams);
-        console.log("Result is: ", result);
+        await dynamoDb.put(contactParams);
       } catch (e) {
-        console.log("update error: ", e);
+        console.log("error!", e);
+      }
+
+      switch (item.type) {
+        case "systemadmin":
+          updateList.push({
+            territory: "All",
+            status: "active",
+            date: 1584194366,
+            doneBy: item.id,
+          });
+          break;
+        case "helpdesk":
+        case "cmsreviewer":
+        case "cmsroleapprover":
+          item.attributes
+            .sort(
+              (attribute, nextAttribute) => attribute.date - nextAttribute.date
+            )
+            .forEach((attribute) => {
+              updateList.push({
+                territory: "All",
+                ...attribute,
+              });
+            });
+          break;
+        case "statesystemadmin":
+        case "statesubmitter":
+          item.attributes.forEach((attribute) => {
+            attribute.history
+              .sort((one, next) => one.date - next.date)
+              .forEach((event) => {
+                updateList.push({
+                  territory: attribute.stateCode,
+                  ...event,
+                });
+              });
+          });
+          break;
+      }
+
+      try {
+        await Promise.all(
+          updateList.map(async (thing) => {
+            const response = await dynamoDb.update({
+              TableName: process.env.oneMacTableName,
+              ReturnValues: "UPDATED_NEW",
+              Key: {
+                pk: item.id,
+                sk: `v0#${item.type}#${thing.territory}`,
+              },
+              UpdateExpression:
+                "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #status = :status, #doneBy = :doneBy, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
+              ExpressionAttributeNames: {
+                "#status": "status",
+                "#doneBy": "doneBy",
+                "#role": "role",
+                "#territory": "territory",
+                "#date": "date",
+                "#GSI1pk": "GSI1pk",
+                "#GSI1sk": "GSI1sk",
+              },
+              ExpressionAttributeValues: {
+                ":status": thing.status,
+                ":doneBy": thing.doneBy,
+                ":role": item.type,
+                ":territory": thing.territory,
+                ":date": thing.date,
+                ":GSI1pk": "USER",
+                ":GSI1sk": buildSK(item.type, thing.territory),
+                ":defaultval": 0,
+                ":incrval": 1,
+              },
+            });
+
+            const latest_version = response["Attributes"]["Latest"];
+
+            await dynamoDb.put({
+              TableName: process.env.oneMacTableName,
+              Item: {
+                pk: item.id,
+                sk: `v${latest_version}#${item.type}#${thing.territory}`,
+                status: thing.status,
+                doneBy: thing.doneBy,
+                role: item.type,
+                territory: thing.territory,
+                date: thing.date,
+              },
+            });
+          })
+        );
+      } catch (e) {
+        console.log("migrate error: ", e);
       }
     })
   );
-
   return "Done";
 });
