@@ -1583,6 +1583,7 @@ And("click on Respond to Waiver RAI", () => {
 And("verify ID field is empty and not disabled", () => {
   medicaidSPARAIResponsePage.verifySPAIDFieldIsEmptyAndNotDisabled();
 });
+
 And("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
 });
@@ -1591,6 +1592,9 @@ And("verify parent row expander exists", () => {
 });
 And("verify parent row expander is disabled", () => {
   OneMacPackagePage.verifyFirstParentRowExpanderIsDisabled();
+});
+And("wait for parent row expander to be enabled", () => {
+  OneMacPackagePage.verifyFirstParentRowExpanderIsNotDisabled();
 });
 And("verify the next row is not a child", () => {
   OneMacPackagePage.verifyTheNextRowIsNotAChild();

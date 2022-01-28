@@ -175,7 +175,7 @@ const packageRowTwo90thDay = "#ninetiethDay-1";
 const packageRowTwoType = "#componentType-1";
 const packageRowTwoState = "#territory-1";
 //Element is Xpath use cy.xpath instead of cy.get
-const parentRowExpander = "//button[@aria-label='Expand row']";
+const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
 const rowTwo = "tbody > tr:nth-child(2)";
 const packageRowTwoSubmittedBy = "#submitter-1";
 const packageRowTwoActions = "#packageActions-1";
@@ -719,13 +719,13 @@ export class oneMacPackagePage {
     cy.get(searchbar).type(part);
   }
   verifyFirstParentRowExpanderExists() {
-    cy.xpath(parentRowExpander).first().should("be.visible");
+    cy.xpath(parentRowExpander).should("be.visible");
   }
   verifyTheNextRowIsNotAChild() {
     cy.get(rowTwo).should("not.have.class", "child-row-expanded");
   }
   clickFirstParentRowExpander() {
-    cy.xpath(parentRowExpander).first().click();
+    cy.xpath(parentRowExpander).invoke("show").click();
   }
   verifyTheNextRowIsAChild() {
     cy.get(rowTwo).should("have.class", "child-row-expanded");
@@ -764,6 +764,9 @@ export class oneMacPackagePage {
   }
   verifyFirstParentRowExpanderIsDisabled() {
     cy.xpath(parentRowExpander).should("be.disabled");
+  }
+  verifyFirstParentRowExpanderIsNotDisabled() {
+    cy.xpath(parentRowExpander).should("not.be.disabled");
   }
 }
 export default oneMacPackagePage;
