@@ -25,6 +25,7 @@ install_deps
 services=(
   'ui'
   'uploads'
+  'database'
   'app-api'
   'stream-functions'
   'ui-waf-log-assoc'
