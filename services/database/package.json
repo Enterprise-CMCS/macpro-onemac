@@ -1,0 +1,10 @@
+{
+  "name": "database",
+  "description": "",
+  "version": "0.1.0",
+  "dependencies": {},
+  "devDependencies": {
+    "serverless-dynamodb-local": "^0.2.40",
+    "serverless-stack-termination-protection": "^1.0.4"
+  }
+}
