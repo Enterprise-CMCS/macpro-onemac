@@ -23,7 +23,7 @@ export default async function newSubmission(inData) {
 
   // use the scarce index for anything marked as a package.
   if (idInfo.isNewPackage) {
-    data.GSI1pk = "OneMAC";
+    data.GSI1pk = `OneMAC#${ChangeRequest.MY_PACKAGE_GROUP[data.sk]}`;
     data.GSI1sk = data.pk;
   } else {
     data.sk += `#${inData.submissionTimestamp}`;

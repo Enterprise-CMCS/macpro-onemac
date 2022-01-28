@@ -1,5 +1,6 @@
 import React, {
   FC,
+  ReactNode,
   RefObject,
   useCallback,
   useEffect,
@@ -14,6 +15,7 @@ import {
   UseFiltersColumnOptions,
   UseFiltersColumnProps,
 } from "react-table";
+import Select from "react-select";
 import { debounce } from "lodash";
 import { DateRangePicker } from "rsuite";
 import {
@@ -32,12 +34,9 @@ import {
   faTimes,
   faChevronDown,
 } from "@fortawesome/free-solid-svg-icons";
-import {
-  Accordion,
-  AccordionItem,
-  Button,
-  Choice,
-} from "@cmsgov/design-system";
+import { AccordionItem, Button, Choice } from "@cmsgov/design-system";
+
+import { SelectOption, territoryList } from "cmscommonlib";
 
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
@@ -247,7 +246,7 @@ function TextFilter({
 }
 
 function DateFilter({
-  column: { filterValue, setFilter },
+  column: { filterValue, id, setFilter },
   inThePast,
 }: FilterProps & { inThePast?: boolean }) {
   const onChangeSelection = useCallback(
@@ -295,6 +294,7 @@ function DateFilter({
     <DateRangePicker
       block
       disabledDate={inThePast ? afterToday!() : undefined}
+      id={`${id}-date-filter`}
       onChange={onChangeSelection}
       placeholder="Select Date Range"
       ranges={ranges}
@@ -376,10 +376,51 @@ function DateAndTextFilter({
   );
 }
 
-export const CustomFilterUi: Record<string, FC<FilterProps>> = {
+const customComponents = {
+  IndicatorSeparator: () => null,
+};
+
+const MultiSelectList = ({
+  column: { filterValue, id, setFilter },
+  options,
+}: FilterProps & {
+  options: SelectOption[];
+}) => {
+  const onSelect = useCallback(
+    (selected) => {
+      setFilter(selected.map(({ value }: SelectOption) => value));
+    },
+    [setFilter]
+  );
+  const selectedOptions = useMemo(
+    () =>
+      options && filterValue
+        ? options.filter(({ value }) => filterValue.includes(value))
+        : null,
+    [options, filterValue]
+  );
+
+  return (
+    <Select
+      className="custom-multi-select"
+      components={customComponents}
+      inputId={`${id}-filter-select`}
+      isMulti
+      name={id}
+      onChange={onSelect}
+      options={options}
+      value={selectedOptions}
+    />
+  );
+};
+
+export const CustomFilterUi = {
   MultiCheckbox: TextFilter,
+  TerritorySelect: (props: FilterProps) => (
+    <MultiSelectList options={territoryList} {...props} />
+  ),
   DateRange: DateFilter,
-  DateRangeInPast: (props) => <DateFilter inThePast {...props} />,
+  DateRangeInPast: (props: FilterProps) => <DateFilter inThePast {...props} />,
   DateRangeAndMultiCheckbox: DateAndTextFilter,
 };
 
@@ -440,7 +481,8 @@ function FilterPane<V extends {}>({
                 Close <FontAwesomeIcon icon={faTimes} />
               </Button>
             </header>
-            <Accordion className="filter-accordion">
+            {/* Did not use CMS Accordion component because it steals KeyDown events */}
+            <div className="ds-c-accordion filter-accordion">
               {columnsInternal
                 ?.filter(({ canFilter }) => canFilter)
                 ?.map((column) => (
@@ -449,12 +491,13 @@ function FilterPane<V extends {}>({
                     contentClassName="inversed-accordion-content"
                     heading={column.render("Header")}
                     headingLevel="6"
+                    id={column.id}
                     key={column.id}
                   >
                     {column.render("Filter")}
                   </AccordionItem>
                 ))}
-            </Accordion>
+            </div>
             <footer>
               <Button inversed onClick={onResetFilters} variation="transparent">
                 Reset
@@ -469,12 +512,14 @@ function FilterPane<V extends {}>({
 
 export type SearchFilterProps<V extends {}> = {
   onSearch: (keyword: string) => void;
+  searchBarTitle: ReactNode;
 } & FilterPaneProps<V>;
 
 export function SearchAndFilter<V extends {} = {}>({
   columnsInternal,
   onSearch,
   pageContentRef,
+  searchBarTitle,
   setAllFilters,
 }: SearchFilterProps<V>) {
   const [searchTerm, setSearchTerm] = useState("");
@@ -503,7 +548,7 @@ export function SearchAndFilter<V extends {} = {}>({
   return (
     <div className="search-and-filter" role="search">
       <div className="search-bar">
-        <label htmlFor="search-bar-input">Search</label>
+        <label htmlFor="search-bar-input">{searchBarTitle || "Search"}</label>
         <div className="field" onClick={clickInsideBar}>
           <FontAwesomeIcon icon={faSearch} />
           <input

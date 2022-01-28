@@ -5,6 +5,13 @@ import { RESPONSE_CODE } from "cmscommonlib";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
 
+const commonQueryConfig = {
+  TableName: process.env.tableName,
+  ExpressionAttributeNames: { "#type": "type", "#user": "user" },
+  ProjectionExpression:
+    "transmittalNumber,#type,territory,submittedAt,#user.firstName,#user.lastName,#user.email,userId,id",
+};
+
 /**
  * Returns an array of updated parameters for querying a helpdesk or reviewer role
  * Will stop once entire dynamoDB has been scanned
@@ -19,7 +26,7 @@ async function helpdeskOrReviewerDynamoDbQuery(
   allResults
 ) {
   const results = await dynamoDb.scan({
-    TableName: process.env.tableName,
+    ...commonQueryConfig,
     ExclusiveStartKey: startingKey,
   });
   allResults.push(results);
@@ -48,7 +55,7 @@ async function stateSubmitterDynamoDbQuery(
   allResults
 ) {
   const results = await dynamoDb.query({
-    TableName: process.env.tableName,
+    ...commonQueryConfig,
     ExclusiveStartKey: startingKey,
     IndexName: "territory-submittedAt-index",
     KeyConditionExpression:

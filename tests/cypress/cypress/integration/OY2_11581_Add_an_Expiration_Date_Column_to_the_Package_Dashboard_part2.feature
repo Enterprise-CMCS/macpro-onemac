@@ -1,6 +1,6 @@
 Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 2
 
-    Scenario: Expiration Date column should Show N/A for CHIP SPA
+    Scenario: Expiration Date column should not exist for CHIP SPA
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -15,4 +15,4 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 2
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
-        And Expiration Date value for generated Record is "N/A"
+        And verify expiration date column does not exist

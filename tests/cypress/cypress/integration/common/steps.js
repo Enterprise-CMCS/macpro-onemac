@@ -592,9 +592,12 @@ And(
   }
 );
 
-And("verify that value of the column for the ID is Pending", () => {
-  OneMacPackagePage.verifyValue();
-});
+And(
+  "verify that value of the column for the ID is NA Pending or a date",
+  () => {
+    OneMacPackagePage.verifyValue();
+  }
+);
 
 And(
   "verify that 90th day value is Jan 5, 2022 for the Id Number MD.32560",
@@ -1075,9 +1078,12 @@ And("search existing user with dash", () => {
 And("verify search bar exists", () => {
   OneMacPackagePage.verifySearchBarExists();
 });
-And("verify search is displayed ontop of search bar", () => {
-  OneMacPackagePage.verifySearchisDisplayed();
-});
+And(
+  "verify search by package id or submitter name is displayed ontop of search bar",
+  () => {
+    OneMacPackagePage.verifySearchisDisplayed();
+  }
+);
 And("verify x in search bar exists to clear search and click it", () => {
   OneMacPackagePage.verifyxexistsandClickIt();
 });
@@ -1292,3 +1298,207 @@ And(
     OneMacPackagePage.checkforUnsubmittedIsNotClickable();
   }
 );
+And("verify 90th day filter dropdown exists", () => {
+  OneMacPackagePage.verify90thDayFilterDropDownExists();
+});
+And("verify expiration date filter dropdown exists", () => {
+  OneMacPackagePage.verifyExpirationDateFilterDropDownExists();
+});
+And("verify date submitted filter dropdown exists", () => {
+  OneMacPackagePage.verifyDateSubmittedFilterDropDownExists();
+});
+And("click on 90th day filter dropdown", () => {
+  OneMacPackagePage.clickOn90thDayFilterDropDown();
+});
+And("verify 90th day na checkbox exists", () => {
+  OneMacPackagePage.verifyNinetiethDayNACheckboxExists();
+});
+And("click on 90th day na checkbox", () => {
+  OneMacPackagePage.clickOnNinetiethDayNACheckbox();
+});
+And("verify 90th day pending checkbox exists", () => {
+  OneMacPackagePage.verifyNinetiethDayPendingCheckboxExists();
+});
+And("click on 90th day pending checkbox", () => {
+  OneMacPackagePage.clickOnNinetiethDayPendingCheckbox();
+});
+And("verify 90th day date picker exists", () => {
+  OneMacPackagePage.verifyNinetiethDayDatePickerFilterExists();
+});
+And("click on 90th day date picker filter", () => {
+  OneMacPackagePage.clickOnNinetiethDayDatePickerFilter();
+});
+And("click on expiration date filter dropdown", () => {
+  OneMacPackagePage.clickOnExpirationDateFilterDropDown();
+});
+And("verify expiration date date picker exists", () => {
+  OneMacPackagePage.verifyExpirationDateDatePickerFilterExists();
+});
+And("click on expiration date date picker filter", () => {
+  OneMacPackagePage.clickOnExpirationDateDatePickerFilter();
+});
+And("click on date submitted filter dropdown", () => {
+  OneMacPackagePage.clickOnDateSubmittedFilterDropDown();
+});
+And("verify date submitted date picker filter exists", () => {
+  OneMacPackagePage.verifyDateSubmittedDatePickerFilterExists();
+});
+And("click on date submitted date picker filter", () => {
+  OneMacPackagePage.clickOnDateSubmittedDatePickerFilter();
+});
+And("click on this quarter date picker button", () => {
+  OneMacPackagePage.clickOnThisQuarterDatePickerBtn();
+});
+And("click on quarter to date date picker button", () => {
+  OneMacPackagePage.clickOnQuarterToDateDatePickerBtn();
+});
+And("click on OK date picker button", () => {
+  OneMacPackagePage.clickOnOkDatePickerBtn();
+});
+And("click on today date picker button", () => {
+  OneMacPackagePage.clickOntodayPickerBtn();
+});
+And("click on reset button", () => {
+  OneMacPackagePage.clickOnResetButton();
+});
+And("verify package row one exists", () => {
+  OneMacPackagePage.verifyPackageRowOneExists();
+});
+And("verify 90th day column one is not na", () => {
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verify90thDayRowOneIsNotNA();
+  }
+});
+And("verify 90th day column one is not Pending", () => {
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verify90thDayRowOneIsNotPending();
+  }
+});
+And("verify date submitted column one date is this quarter", () => {
+  if (OneMacPackagePage.checkIfPackageListResultsExist()) {
+    OneMacPackagePage.verifypackageRowOneDateSubmittedIsThisQuarter();
+  }
+});
+And("verify states selected includes {string}", (state) => {
+  OneMacPackagePage.verifyStatesSelectedIncludes(state);
+});
+And("verify state dropdown filter exists", () => {
+  OneMacPackagePage.verifyStateDropdownFilterExists();
+});
+And("click on state dropdown filter", () => {
+  OneMacPackagePage.clickStateDropdownFilter();
+});
+And("verify state filter select exists", () => {
+  OneMacPackagePage.verifyStateFilterSelectExists();
+});
+And("click on state filter select", () => {
+  OneMacPackagePage.clickStateFilterSelect();
+});
+And("verify no states are selected", () => {
+  OneMacPackagePage.verifyStateFilterSelectIsEmpty();
+});
+And("set value on state filter select to {string}", (state) => {
+  OneMacPackagePage.typeStateToSelect(state + "{enter}");
+});
+And("verify {string} is showing in the state column", (state) => {
+  OneMacPackagePage.verifypackageRowOneValueIs(state);
+});
+And("verify remove {string} button exists", (state) => {
+  OneMacPackagePage.verifyremoveBtnExistsFor(state);
+});
+And("click remove {string} button", (state) => {
+  OneMacPackagePage.clickRemoveBtnFor(state);
+});
+And("verify the Waivers tab exists", () => {
+  OneMacPackagePage.verifyWaiversTabExists();
+});
+And("click on the Waivers tab", () => {
+  OneMacPackagePage.clickOnWaiversTab();
+});
+And("verify the SPAs tab exists", () => {
+  OneMacPackagePage.verifySPAsTabExists();
+});
+And("click on SPAs tab", () => {
+  OneMacPackagePage.clickOnSPAsTab();
+});
+And("verify SPA ID column exists", () => {
+  OneMacPackagePage.verifySPAIDColumnExists();
+});
+And("verify Waiver Number column exists", () => {
+  OneMacPackagePage.verifyWaiverNumberColumnExists();
+});
+And("verify status DropDown Filter exists", () => {
+  OneMacPackagePage.verifystatusDropDownFilterExists();
+});
+And("verify the SPAs tab is selected", () => {
+  //if it's disabled then it is selected.
+  OneMacPackagePage.verifySPAsTabIsDisabled();
+});
+And("verify the SPAs tab is clickable", () => {
+  //if it's disabled then it is selected.
+  OneMacPackagePage.verifySPAsTabIsClickable();
+});
+And("verify the Waivers tab is selected", () => {
+  //if it's disabled then it is selected.
+  OneMacPackagePage.verifyWaiversTabIsDisabled();
+});
+And("verify the Waivers tab is clickable", () => {
+  OneMacPackagePage.verifyWaiversTabIsClickable();
+});
+And("refresh the page", () => {
+  cy.reload();
+});
+And("verify the Waiver Family # column does not exist", () => {
+  OneMacPackagePage.verifyWaiverFamilyNumColumnDoesNotExists();
+});
+And("verify the Waiver Family checkbox does not exist", () => {
+  OneMacPackagePage.verifyWaiverFamilyCheckboxDoesNotExists();
+});
+And("verify the Waivers Family # column exists", () => {
+  OneMacPackagePage.verifyWaiverFamilyNumColumnExists();
+});
+And("verify Waiver Family # column is sortable", () => {
+  OneMacPackagePage.verifyWaiverFamilyNumColumnIsSortable();
+});
+And("verify the Waiver format in column one is SS.#### or SS.#####", () => {
+  OneMacPackagePage.verifyWaiverFamilyRowOneFormat();
+});
+And("verify the Waivers Family checkbox exists", () => {
+  OneMacPackagePage.verifyWaiverFamilyCheckboxExists();
+});
+And("click the Waivers Family checkbox", () => {
+  OneMacPackagePage.clickOnWaiverFamilyCheckbox();
+});
+And("verify that Clock Stopped checkbox exists", () => {
+  OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
+});
+And("click all of the status checkboxes", () => {
+  OneMacPackagePage.clickAllStatusFilterCheckboxes();
+});
+And("click RAI Issued checkbox", () => {
+  OneMacPackagePage.clickRaiIssuedCheckbox();
+});
+And(
+  "verify that the value of the column for the 90th day is Clock Stopped",
+  () => {
+    OneMacPackagePage.verify90thDayRowOneIsClockStopped();
+  }
+);
+And("click Package Approved checkbox", () => {
+  OneMacPackagePage.clickPackageApprovedCheckbox();
+});
+And("verify that the value of the column for the 90th day is NA", () => {
+  OneMacPackagePage.verify90thDayRowOneIsNA();
+});
+And("click Package Disapproved checkbox", () => {
+  OneMacPackagePage.clickPackageDisapprovedCheckbox();
+});
+And("click Submitted checkbox", () => {
+  OneMacPackagePage.clickSubmittedCheckbox();
+});
+And("verify that the value of the column for the 90th day is Pending", () => {
+  OneMacPackagePage.verify90thDayRowOneIsPending();
+});
+And("click Unsubmitted checkbox", () => {
+  OneMacPackagePage.clickUnsubmittedCheckbox();
+});

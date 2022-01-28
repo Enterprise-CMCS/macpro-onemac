@@ -92,6 +92,11 @@ provider:
 
 functions:
 
+  migrate:
+    handler: migrate.main
+    role: LambdaApiRole
+    timeout: 180
+
   submit:
     handler: submit.main
     role: LambdaApiRole
