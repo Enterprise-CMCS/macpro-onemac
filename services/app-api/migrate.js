@@ -43,7 +43,7 @@ export const main = handler(async (event) => {
         TableName: process.env.oneMacTableName,
         Item: {
           pk: item.id,
-          sk: "ContactInfo",
+          sk: "v0#ContactInfo",
           firstName: item.firstName,
           lastName: item.lastName,
           email: item.id,
