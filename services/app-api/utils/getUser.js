@@ -6,31 +6,53 @@ import dynamoDb from "../libs/dynamodb-lib";
  * @returns {Object} the User json object
  */
 export default async function getUser(userEmail) {
-  const params = {
-    TableName: process.env.userTableName,
+  const cParams = {
+    TableName: process.env.oneMacTableName,
     // 'Key' defines the partition key and sort key of the item to be retrieved
     // - 'userId': Identity Pool identity id of the authenticated user
     Key: {
-      id: userEmail.toLowerCase(),
+      pk: userEmail.toLowerCase(),
+      sk: "ContactInfo",
     },
+    ProjectionExpression: "email, lastName, firstName, phoneNumber",
   };
 
+  const params = {
+    TableName: process.env.oneMacTableName,
+    // 'Key' defines the partition key and sort key of the item to be retrieved
+    // - 'userId': Identity Pool identity id of the authenticated user
+    KeyConditionExpression: "pk = :pk AND begins_with(sk,:version)",
+    ExpressionAttributeValues: {
+      ":pk": userEmail.toLowerCase(),
+      ":version": "v0",
+    },
+    ExpressionAttributeNames: {
+      "#role": "role",
+      "#status": "status",
+    },
+    ProjectionExpression: "#role, territory, #status",
+  };
   let result;
+  let cResult;
+
   try {
-    result = await dynamoDb.get(params);
+    cResult = await dynamoDb.get(cParams);
+
+    result = await dynamoDb.query(params);
   } catch (dbError) {
     console.log(`Error happened while reading from DB:  ${dbError}`);
     throw dbError;
   }
 
-  if (!result.Item) {
+  if (!cResult.Item) {
     console.log(
       `The user does not exists with the id: ${userEmail} in the User table`
     );
-    return result;
+    return cResult;
   }
 
-  console.log(`Selected User ${userEmail}: ${JSON.stringify(result)}`);
-
-  return result.Item;
+  const returnUser = cResult.Item;
+  returnUser.roleList = result.Items;
+  console.log(`Selected User ${userEmail}: ${JSON.stringify(returnUser)}`);
+  return returnUser;
 }
