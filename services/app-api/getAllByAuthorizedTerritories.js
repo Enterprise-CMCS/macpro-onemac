@@ -1,7 +1,7 @@
 import { USER_TYPE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
 import getUser from "./utils/getUser";
 import { getAuthorizedStateList } from "./user/user-util";
 
@@ -91,8 +91,10 @@ const usersWhoSeeEverything = new Set([
 async function getDataFromDB(user) {
   let startingKey = null;
 
+  const userAccess = effectiveRoleForUser(user.roleList);
+
   try {
-    if (!user.type || usersWhoSeeEverything.has(user.type)) {
+    if (userAccess === null || usersWhoSeeEverything.has(userAccess[0])) {
       let keepSearching = true;
       let tempResults = [];
       while (keepSearching == true) {
@@ -108,20 +110,22 @@ async function getDataFromDB(user) {
       return (
         await Promise.all(
           // query dynamodb for each territory in the territiories array
-          getAuthorizedStateList(user).map(async (territory) => {
-            let tempResults = [];
-            let keepSearching = true;
-            while (keepSearching == true) {
-              [startingKey, keepSearching, tempResults] =
-                await stateSubmitterDynamoDbQuery(
-                  startingKey,
-                  territory,
-                  keepSearching,
-                  tempResults
-                );
-            }
-            return tempResults;
-          })
+          user.roleList
+            .filter(({ status }) => status === USER_STATUS.ACTIVE)
+            .map(async ({ territory }) => {
+              let tempResults = [];
+              let keepSearching = true;
+              while (keepSearching == true) {
+                [startingKey, keepSearching, tempResults] =
+                  await stateSubmitterDynamoDbQuery(
+                    startingKey,
+                    territory,
+                    keepSearching,
+                    tempResults
+                  );
+              }
+              return tempResults;
+            })
         )
       ).flat();
     }

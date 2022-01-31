@@ -1,9 +1,5 @@
-import { USER_TYPE, USER_STATUS } from "cmscommonlib";
-import {
-  AccessHistoryEvent,
-  StateAccessAttribute,
-  UserRecord,
-} from "../domain-types";
+import { USER_TYPE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
+import { UserRecord } from "../domain-types";
 
 export const pendingMessage = {
   [USER_TYPE.STATE_SUBMITTER]:
@@ -40,24 +36,9 @@ export const deniedOrRevokedMessage = {
  */
 
 export const isPending = (userData: UserRecord): boolean => {
-  if (
-    userData.type === USER_TYPE.STATE_SUBMITTER ||
-    userData.type === USER_TYPE.STATE_SYSTEM_ADMIN
-  ) {
-    const stateStatusSet = (
-      userData.attributes as StateAccessAttribute[]
-    ).reduce(getStateStatus, new Set());
-    return (
-      !stateStatusSet.has(USER_STATUS.ACTIVE) &&
-      stateStatusSet.has(USER_STATUS.PENDING)
-    );
-  } else {
-    return (
-      [...((userData.attributes as AccessHistoryEvent[]) ?? [])].sort(
-        sortDescendingOrder
-      )[0]?.status === USER_STATUS.PENDING
-    );
-  }
+  const roleResult = effectiveRoleForUser(userData.roleList);
+  if (roleResult === null) return false;
+  return roleResult[1] === USER_STATUS.PENDING;
 };
 
 /**
@@ -67,21 +48,9 @@ export const isPending = (userData: UserRecord): boolean => {
  */
 
 export const isActive = (userData: UserRecord): boolean => {
-  if (
-    userData.type === USER_TYPE.STATE_SUBMITTER ||
-    userData.type === USER_TYPE.STATE_SYSTEM_ADMIN
-  ) {
-    const stateStatusSet = (
-      userData.attributes as StateAccessAttribute[]
-    ).reduce(getStateStatus, new Set());
-    return stateStatusSet.has(USER_STATUS.ACTIVE);
-  } else {
-    return (
-      [...((userData.attributes as AccessHistoryEvent[]) ?? [])].sort(
-        sortDescendingOrder
-      )[0]?.status === USER_STATUS.ACTIVE
-    );
-  }
+  const roleResult = effectiveRoleForUser(userData.roleList);
+  if (roleResult === null) return false;
+  return roleResult[1] === USER_STATUS.ACTIVE;
 };
 
 /**
@@ -98,37 +67,11 @@ export const getUserStatus = (
   }
 
   // System admins are active by default since they are hardcoded into the data via seeding.
-  if (userData.type === USER_TYPE.SYSTEM_ADMIN) {
-    return USER_STATUS.ACTIVE;
-  } else if (isActive(userData)) {
+  if (isActive(userData)) {
     return USER_STATUS.ACTIVE;
   } else if (isPending(userData)) {
     return USER_STATUS.PENDING;
   } else {
     return null;
   }
-};
-
-/**
- * Sort history of userData in descending order.
- * @param a object of history instance
- * @param b object of history instance
- * @return diff the order of which instance should come 1st based on greater value of effectiveDate
- */
-const sortDescendingOrder = (
-  a: AccessHistoryEvent,
-  b: AccessHistoryEvent
-): number => b.date - a.date;
-
-/**
- * get the status of the sorted history array's 1st element and put them in a set.
- * @param attribute object of history instance
- */
-const getStateStatus = (
-  stateStatusSet: Set<string>,
-  attribute: StateAccessAttribute
-): Set<string> => {
-  attribute.history.sort(sortDescendingOrder);
-  stateStatusSet.add(attribute.history[0].status);
-  return stateStatusSet;
 };

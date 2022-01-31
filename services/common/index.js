@@ -260,31 +260,73 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
   }
 };
 
-export const getUserRoleObj = (role, isEua = false, attributes = []) => {
-  let roleMatch = {
+/**
+ * Finds out what a user's most relevant role information is.
+ */
+export const effectiveRoleForUser = (roleList = []) => {
+  let pendingRole;
+  let otherOutput = null;
+
+  for (const { role, status } of roleList) {
+    switch (status) {
+      case USER_STATUS.ACTIVE:
+        return [role, status];
+      case USER_STATUS.PENDING:
+        pendingRole = role;
+        break;
+      default:
+        otherOutput = [role, status];
+        break;
+    }
+  }
+
+  if (pendingRole) return [pendingRole, USER_STATUS.PENDING];
+
+  return otherOutput;
+};
+
+export const getUserRoleObj = (roleInfo) => {
+  if (Array.isArray(roleInfo)) {
+    const roleResult = effectiveRoleForUser(roleInfo);
+    if (roleResult === null) return new DefaultUser();
+    [roleInfo] = roleResult;
+  }
+
+  return new {
     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
     [USER_TYPE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
     [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_TYPE.HELPDESK]: Helpdesk,
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role];
-
-  if (!roleMatch) {
-    roleMatch = isEua ? DefaultUser : Role;
-  }
-
-  let userStatus;
-  switch (roleMatch) {
-    case StateSubmitter:
-    case StateSystemAdmin:
-      break;
-    default:
-      userStatus = latestAccessStatus({ type: role, attributes });
-  }
-
-  return new roleMatch(userStatus);
+  }[roleInfo]();
 };
+
+// export const getUserRoleObj = (role, isEua = false, attributes = []) => {
+//   let roleMatch = {
+//     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
+//     [USER_TYPE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
+//     [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
+//     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
+//     [USER_TYPE.HELPDESK]: Helpdesk,
+//     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
+//   }[role];
+
+//   if (!roleMatch) {
+//     roleMatch = isEua ? DefaultUser : Role;
+//   }
+
+//   let userStatus;
+//   switch (roleMatch) {
+//     case StateSubmitter:
+//     case StateSystemAdmin:
+//       break;
+//     default:
+//       userStatus = latestAccessStatus({ type: role, attributes });
+//   }
+
+//   return new roleMatch(userStatus);
+// };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
 export const territoryList = [

@@ -75,8 +75,8 @@ const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
-  const history = useHistory();
-  const { userProfile: { cmsRoles = "", userData: { type = "" } = {} } = {} } =
+  // const history = useHistory();
+  const { userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
   const signupOptions = useMemo(
@@ -100,9 +100,9 @@ export function Signup() {
     [cmsRoles]
   );
 
-  useEffect(() => {
-    if (type) history.replace("/dashboard");
-  }, [history, type]);
+  // useEffect(() => {
+  //   if (type) history.replace("/dashboard");
+  // }, [history, type]);
 
   // //<p className="signup-prompt">
   // Select the user role you're registering for.

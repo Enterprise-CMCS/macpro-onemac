@@ -45,12 +45,7 @@ export function useSignupCallback(
   const location = useLocation<{}>();
   const {
     isLoggedInAsDeveloper,
-    userProfile: {
-      cmsRoles = "",
-      email = "",
-      firstName = "",
-      lastName = "",
-    } = {},
+    userProfile: { email = "", firstName = "", lastName = "" } = {},
     setUserInfo,
   } = useAppContext() ?? {};
 
@@ -78,7 +73,7 @@ export function useSignupCallback(
 
         await setUserInfo?.(isLoggedInAsDeveloper);
 
-        const roleObj = getUserRoleObj(userType, !cmsRoles);
+        const roleObj = getUserRoleObj(userType);
         const destination = roleObj.canAccessDashboard
           ? ROUTES.DASHBOARD
           : ROUTES.USER_MANAGEMENT;
@@ -121,7 +116,6 @@ export function useSignupCallback(
       }
     },
     [
-      cmsRoles,
       email,
       firstName,
       history,

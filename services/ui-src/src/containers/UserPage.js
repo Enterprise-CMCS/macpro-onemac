@@ -7,6 +7,7 @@ import {
   RESPONSE_CODE,
   ROLES,
   ROUTES,
+  effectiveRoleForUser,
   latestAccessStatus,
   roleLabels,
   territoryMap,
@@ -37,26 +38,6 @@ export const ACCESS_LABELS = {
   pending: "Pending Access",
   denied: "Access Denied",
   revoked: "Access Revoked",
-};
-
-const transformAccesses = (user = {}) => {
-  switch (user.type) {
-    case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_SYSTEM_ADMIN:
-      return user.attributes?.map(({ stateCode }) => ({
-        state: stateCode,
-        status: latestAccessStatus(user, stateCode),
-      }));
-
-    case ROLES.CMS_REVIEWER:
-    case ROLES.CMS_ROLE_APPROVER:
-    case ROLES.HELPDESK:
-      return [{ status: latestAccessStatus(user) }];
-
-    case ROLES.SYSTEM_ADMIN:
-    default:
-      return [];
-  }
 };
 
 export const ContactList = ({ contacts, userType }) => {
@@ -103,23 +84,23 @@ export const AccessDisplay = ({
     <>
       <h2 id="accessHeader">{accessHeading}</h2>
       <dl>
-        {accesses.map(({ state, status, contacts }) => (
-          <div className="access-card-container" key={state ?? "only-one"}>
+        {accesses.map(({ territory, status, contacts }) => (
+          <div className="access-card-container" key={territory ?? "only-one"}>
             <div className="gradient-border" />
             <div className="state-access-card">
               {!isReadOnly &&
                 userType === ROLES.STATE_SUBMITTER &&
                 (status === "active" || status === "pending") && (
                   <button
-                    aria-label={`Self-revoke access to ${territoryMap[state]}`}
+                    aria-label={`Self-revoke access to ${territoryMap[territory]}`}
                     disabled={isReadOnly}
                     className="close-button"
-                    onClick={() => selfRevoke(state)}
+                    onClick={() => selfRevoke(territory)}
                   >
                     {CLOSING_X_IMAGE}
                   </button>
                 )}
-              {!!state && <dt>{territoryMap[state] || state}</dt>}
+              {!!territory && <dt>{territoryMap[territory] || territory}</dt>}
               <dd>
                 <em>{ACCESS_LABELS[status] || status}</em>
                 <br />
@@ -193,14 +174,16 @@ const UserPage = () => {
   const [userData, setUserData] = useState({});
   const [loading, setLoading] = useState(false);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [accesses, setAccesses] = useState(transformAccesses(userData));
+  const [accesses, setAccesses] = useState(userData?.roleList ?? []);
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
-  let userType = userData?.type ?? "user";
+  let userType = "user";
+  const userAccess = effectiveRoleForUser(userData?.roleList);
+  if (userAccess !== null) [userType] = userAccess;
   const userTypeDisplayText = roleLabels[userType];
 
   useEffect(() => {
@@ -365,7 +348,7 @@ const UserPage = () => {
           setIsStateSelectorVisible(true);
         }}
       >
-        <img src={addStateButton} alt="add state or territiory" />
+        <img src={addStateButton} alt="add state or territory" />
       </Button>
     );
   }, [setIsEditingPhone, setIsStateSelectorVisible]);
@@ -379,8 +362,8 @@ const UserPage = () => {
         switch (userType) {
           case ROLES.STATE_SUBMITTER: {
             const adminsByState = await UserDataApi.getStateSystemAdmins(
-              userData.attributes
-                .map(({ stateCode }) => stateCode)
+              userData.roleList
+                .map(({ territory }) => territory)
                 .filter(Boolean)
             );
             getContacts = ({ state }) => adminsByState[state];
@@ -403,7 +386,7 @@ const UserPage = () => {
         }
 
         setAccesses(
-          transformAccesses(userData).map((access) => ({
+          userData?.roleList.map((access) => ({
             ...access,
             contacts: getContacts(access),
           }))
@@ -435,11 +418,11 @@ const UserPage = () => {
               {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
             </Review>
             <Review heading="Email">
-              {userData.id ? (
+              {userData.email ? (
                 isReadOnly ? (
-                  <a href={`mailto:${userData.id}`}>{userData.id}</a>
+                  <a href={`mailto:${userData.email}`}>{userData.email}</a>
                 ) : (
-                  userData.id
+                  userData.email
                 )
               ) : (
                 ""

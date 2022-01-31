@@ -8,6 +8,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ChangeRequest,
+  effectiveRoleForUser,
   getUserRoleObj,
   USER_STATUS,
   USER_TYPE,
@@ -38,11 +39,7 @@ const Dashboard = () => {
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(
-    userData?.type,
-    !cmsRoles,
-    userData?.attributes
-  );
+  const userRoleObj = getUserRoleObj(userData?.roleList);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
@@ -52,10 +49,8 @@ const Dashboard = () => {
     }
 
     // Redirect new users to the signup flow.
-    const missingUserType = !userData?.type;
-    const missingOtherUserData =
-      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (cmsRoles && (missingUserType || missingOtherUserData)) {
+    const userAccess = effectiveRoleForUser(userData?.roleList);
+    if (cmsRoles && userAccess === null) {
       history.replace("/signup", location.state);
       return;
     }

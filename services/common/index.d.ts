@@ -23,11 +23,17 @@ export class UserRole {
   canDownloadCsv: boolean;
 }
 
-export const getUserRoleObj: (
-  role: USER_TYPE | undefined,
-  isEua?: boolean,
-  attributes?: unknown[]
-) => UserRole;
+export type RoleEntry = {
+  role: USER_TYPE;
+  status: USER_STATUS;
+  territory?: string;
+};
+
+export const effectiveRoleForUser: (
+  roleList: RoleEntry[]
+) => [USER_TYPE, USER_STATUS] | null;
+
+export const getUserRoleObj: (roleInfo: USER_TYPE | RoleEntry[]) => UserRole;
 
 export const latestAccessStatus: (
   userData: Record<string, unknown> | undefined,

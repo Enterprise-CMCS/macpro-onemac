@@ -2,7 +2,12 @@ import React, { useEffect } from "react";
 import { Route, Redirect, useHistory } from "react-router-dom";
 import { Auth } from "aws-amplify";
 
-import { ROUTES, ChangeRequest, getUserRoleObj } from "cmscommonlib";
+import {
+  ROUTES,
+  ChangeRequest,
+  effectiveRoleForUser,
+  getUserRoleObj,
+} from "cmscommonlib";
 import UserDataApi from "./utils/UserDataApi";
 
 import { Signup } from "./containers/Signup";
@@ -35,10 +40,7 @@ const FORM_TYPES = {
 export default function DynamicRoutes() {
   const {
     isAuthenticated,
-    userProfile: {
-      cmsRoles = "",
-      userData: { attributes = [], type = undefined } = {},
-    } = {},
+    userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
   const history = useHistory();
 
@@ -46,9 +48,9 @@ export default function DynamicRoutes() {
     (async function () {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
-      const { type, validRoutes } = await UserDataApi.userProfile(email);
+      const { roleList, validRoutes } = await UserDataApi.userProfile(email);
 
-      if (!type || !validRoutes) return;
+      if (effectiveRoleForUser(roleList) === null || !validRoutes) return;
 
       // Loop check for allowed route base path
       const isValidURLPath = validRoutes.some((item) =>
@@ -94,7 +96,7 @@ export default function DynamicRoutes() {
     </>
   );
 
-  if (!type && cmsRoles) {
+  if (effectiveRoleForUser(roleList) === null && cmsRoles) {
     // This view is for users who have not YET registered but have a role from IDM
     return (
       <>
@@ -109,11 +111,11 @@ export default function DynamicRoutes() {
     );
   }
 
-  const userRoleObj = getUserRoleObj(type, !cmsRoles, attributes);
+  const userRoleObj = getUserRoleObj(roleList);
 
   return (
     <>
-      {!type && signupRoutes}
+      {effectiveRoleForUser(roleList) === null && signupRoutes}
       <Route exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />

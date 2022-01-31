@@ -10,7 +10,7 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { ROUTES, USER_TYPE, getUserRoleObj } from "cmscommonlib";
+import { ROUTES, getUserRoleObj } from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import config from "../utils/config";
 import { Alert, UsaBanner } from "@cmsgov/design-system";
@@ -144,7 +144,7 @@ const AccountButtons: React.FC<{
     ),
   };
 
-  if (userProfile?.userData?.type) {
+  if (userProfile?.userData) {
     // users who already have a role
     buttonContents.profile = (
       <>
@@ -254,14 +254,9 @@ export function Header() {
   function renderNavBar(
     isLoggedInAsDeveloper: boolean | undefined,
     currentRoute: string,
-    isAuthenticated: boolean | undefined,
-    userType?: USER_TYPE
+    isAuthenticated: boolean | undefined
   ) {
-    const userObj = getUserRoleObj(
-      userType,
-      !userProfile?.cmsRoles,
-      userProfile?.userData?.attributes
-    );
+    const userObj = getUserRoleObj(userProfile?.userData?.roleList!);
 
     const homeLink = (
       <Link
@@ -368,8 +363,6 @@ export function Header() {
       ? "activeLink"
       : "ds-u-text-decoration--none";
 
-  const { userData } = useAppContext()?.userProfile ?? {};
-
   return (
     <>
       <div className="usa-banner-custom">
@@ -386,8 +379,7 @@ export function Header() {
       {renderNavBar(
         isLoggedInAsDeveloper,
         getCurrentRoute(useLocation().pathname),
-        isAuthenticated,
-        userData?.type
+        isAuthenticated
       )}
     </>
   );

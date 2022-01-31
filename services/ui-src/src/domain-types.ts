@@ -1,4 +1,4 @@
-import { USER_TYPE } from "cmscommonlib";
+import { RoleEntry } from "cmscommonlib";
 
 export type UserProfile = {
   cmsRoles: string;
@@ -9,8 +9,7 @@ export type UserProfile = {
 };
 
 export type UserRecord = {
-  type: USER_TYPE;
-  attributes: StateAccessAttribute[] | AccessHistoryEvent[];
+  roleList: RoleEntry[];
   validRoutes?: string[];
   phoneNumber?: string;
 };
