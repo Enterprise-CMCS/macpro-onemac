@@ -1,64 +1,20 @@
 import { main } from "./getStateSystemAdminList";
 
-import { queryForUserType } from "./libs/user-table-lib";
-import { USER_STATUS, latestAccessStatus } from "cmscommonlib";
+import { queryForUserRole } from "./libs/user-table-lib";
 
 jest.mock("./libs/user-table-lib");
-jest.mock("cmscommonlib");
 
-latestAccessStatus.mockImplementation(() => {
-  return USER_STATUS.ACTIVE;
-});
-
-queryForUserType.mockImplementation(() => {
+queryForUserRole.mockImplementation(() => {
   return [
     {
-      id: "statesystemadmindenied@cms.hhs.local",
-      attributes: [
-        {
-          stateCode: "MI",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemadmintest@cms.hhs.local",
-              status: "denied",
-            },
-            {
-              date: 1625671916,
-              doneBy: "cmsapproveractive@cms.hhs.local",
-              status: "active",
-            },
-            {
-              date: 1625671930,
-              doneBy: "cmsapproveractive@cms.hhs.local",
-              status: "revoked",
-            },
-          ],
-        },
-        {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemadmintest@cms.hhs.local",
-              status: "denied",
-            },
-            {
-              date: 1625672025,
-              doneBy: "cmsapproveractive@cms.hhs.local",
-              status: "active",
-            },
-            {
-              date: 1625672054,
-              doneBy: "cmsapproveractive@cms.hhs.local",
-              status: "revoked",
-            },
-          ],
-        },
-      ],
-      lastName: "Denied",
-      firstName: "Daniel",
-      type: "statesystemadmin",
+      email: "sabrina.mccrae@cms.hhs.gov",
+      firstName: "Sabrina",
+      lastName: "McCrae",
+    },
+    {
+      email: "systemadmintest@cms.hhs.local",
+      firstName: "Teresa",
+      lastName: "Test",
     },
   ];
 });
@@ -73,7 +29,7 @@ it("gets list of State System Admins", async () => {
   };
   const expectedResponse = {
     statusCode: 200,
-    body: '{"MI":[{"email":"statesystemadmindenied@cms.hhs.local","firstName":"Daniel","lastName":"Denied"}],"VA":[{"email":"statesystemadmindenied@cms.hhs.local","firstName":"Daniel","lastName":"Denied"}]}',
+    body: '[{"MI":[{"email":"sabrina.mccrae@cms.hhs.gov","firstName":"Sabrina","lastName":"McCrae"},{"email":"systemadmintest@cms.hhs.local","firstName":"Teresa","lastName":"Test"}],"VA":[{"email":"sabrina.mccrae@cms.hhs.gov","firstName":"Sabrina","lastName":"McCrae"},{"email":"systemadmintest@cms.hhs.local","firstName":"Teresa","lastName":"Test"}]},{"MI":[{"email":"sabrina.mccrae@cms.hhs.gov","firstName":"Sabrina","lastName":"McCrae"},{"email":"systemadmintest@cms.hhs.local","firstName":"Teresa","lastName":"Test"}],"VA":[{"email":"sabrina.mccrae@cms.hhs.gov","firstName":"Sabrina","lastName":"McCrae"},{"email":"systemadmintest@cms.hhs.local","firstName":"Teresa","lastName":"Test"}]}]',
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
