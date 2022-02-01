@@ -139,6 +139,7 @@ export class Role {
     this.canAccessForms = false;
     this.canAccessUserManagement = false;
     this.canAccessMetrics = false;
+    this.canManageUsers = false;
   }
 
   getAccesses() {
@@ -191,6 +192,7 @@ class StateSystemAdmin extends Role {
     this.canAccessUserManagement = true;
     this.canAccessDashboard = true;
     this.canAccessForms = true;
+    this.canManageUsers = true;
   }
 }
 
@@ -209,6 +211,7 @@ class CmsRoleApprover extends Role {
 
     if (userStatus === USER_STATUS.ACTIVE) {
       this.canAccessUserManagement = true;
+      this.canManageUsers = true;
     } else {
       this.canAccessDashboard = true;
     }
@@ -222,6 +225,7 @@ class SystemAdmin extends Role {
     this.canDownloadCsv = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canManageUsers = true;
   }
 }
 
