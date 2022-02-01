@@ -34,6 +34,13 @@ export const main = handler(async (event) => {
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
 
+  const approverNamesById = Object.fromEntries(
+    promiseItems.map(({ id, firstName, lastName }) => [
+      id,
+      `${firstName} ${lastName}`,
+    ])
+  );
+
   // convert UserTable to OneTable
   await Promise.all(
     promiseItems.map(async (item) => {
@@ -90,10 +97,13 @@ export const main = handler(async (event) => {
               sk: `v0#${item.type}#${thing.territory}`,
             },
             UpdateExpression:
-              "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #status = :status, #doneBy = :doneBy, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
+              "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #email = :email, #status = :status, #fullName = :fullName, #doneByEmail = :doneByEmail, #doneByName = :doneByName, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
             ExpressionAttributeNames: {
+              "#email": "email",
               "#status": "status",
-              "#doneBy": "doneBy",
+              "#fullName": "fullName",
+              "#doneByEmail": "doneByEmail",
+              "#doneByName": "doneByName",
               "#role": "role",
               "#territory": "territory",
               "#date": "date",
@@ -101,8 +111,11 @@ export const main = handler(async (event) => {
               "#GSI1sk": "GSI1sk",
             },
             ExpressionAttributeValues: {
+              ":email": item.id,
               ":status": thing.status,
-              ":doneBy": thing.doneBy,
+              ":fullName": `${item.firstName} ${item.lastName}`,
+              ":doneByEmail": thing.doneBy,
+              ":doneByName": approverNamesById[thing.doneBy] ?? "",
               ":role": item.type,
               ":territory": thing.territory,
               ":date": thing.date,
@@ -121,7 +134,7 @@ export const main = handler(async (event) => {
               pk: item.id,
               sk: `v${latestVersion}#${item.type}#${thing.territory}`,
               status: thing.status,
-              doneBy: thing.doneBy,
+              doneByEmail: thing.doneBy,
               role: item.type,
               territory: thing.territory,
               date: thing.date,
@@ -156,5 +169,6 @@ export const main = handler(async (event) => {
         });
     })
   );
+
   return "Done";
 });

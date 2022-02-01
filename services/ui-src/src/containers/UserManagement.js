@@ -1,11 +1,11 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocation, useHistory, Link } from "react-router-dom";
 import {
-  APPROVING_USER_TYPE,
   RESPONSE_CODE,
   ROUTES,
   USER_STATUS,
   USER_TYPE,
+  getUserRoleObj,
   roleLabels,
   territoryMap,
 } from "cmscommonlib";
@@ -27,8 +27,6 @@ const PENDING_CIRCLE_IMAGE = (
   <img alt="" className="pending-circle" src={pendingCircle} />
 );
 
-const getName = ({ firstName, lastName }) =>
-  [firstName, lastName].filter(Boolean).join(" ");
 const getAccessDescription = ({ stateCode }) =>
   stateCode && territoryMap[stateCode]
     ? `${territoryMap[stateCode]} in OneMAC`
@@ -38,7 +36,7 @@ const grant = {
     label: "Grant Access",
     value: "active",
     formatConfirmationMessage: (rowData) =>
-      `This will grant ${getName(rowData)} access to ${getAccessDescription(
+      `This will grant ${rowData.fullName} access to ${getAccessDescription(
         rowData
       )}.`,
   },
@@ -46,15 +44,15 @@ const grant = {
     label: "Deny Access",
     value: "denied",
     formatConfirmationMessage: (rowData) =>
-      `This will deny ${getName(
-        rowData
-      )}'s request for access to ${getAccessDescription(rowData)}.`,
+      `This will deny ${
+        rowData.fullName
+      }'s request for access to ${getAccessDescription(rowData)}.`,
   },
   revoke = {
     label: "Revoke Access",
     value: "revoked",
     formatConfirmationMessage: (rowData) =>
-      `This will revoke ${getName(rowData)}'s access to ${getAccessDescription(
+      `This will revoke ${rowData.fullName}'s access to ${getAccessDescription(
         rowData
       )}.`,
   },
@@ -117,9 +115,7 @@ const UserManagement = () => {
     if (
       !userProfile ||
       !userProfile.userData ||
-      (userProfile.userData.type !== USER_TYPE.SYSTEM_ADMIN &&
-        (!userProfile.userData.attributes ||
-          userProfile.userData.type === USER_TYPE.STATE_SUBMITTER))
+      !getUserRoleObj(userProfile.userData.roleList).canAccessUserManagement
     ) {
       history.push(ROUTES.DASHBOARD);
     }
@@ -209,7 +205,7 @@ const UserManagement = () => {
   const onPopupAction = useCallback(
     async (rowNum, value) => {
       const { role, stateCode, ...restOfUser } = userList[rowNum];
-      setDoneToName(getName(restOfUser));
+      setDoneToName(restOfUser.fullName);
 
       try {
         const returnCode = await UserDataApi.setUserStatus({
@@ -245,29 +241,23 @@ const UserManagement = () => {
         menuItem.handleSelected = onPopupAction;
       }
 
-      switch (userProfile.userData.type) {
-        case USER_TYPE.SYSTEM_ADMIN:
-        case APPROVING_USER_TYPE[row.original.role]:
-          return (
-            <PopupMenu
-              buttonLabel={`User management actions for ${row.values.name}`}
-              selectedRow={row}
-              menuItems={menuItems}
-              variation="UserManagement"
-            />
-          );
-        default:
-          return null;
-      }
+      return (
+        <PopupMenu
+          buttonLabel={`User management actions for ${row.values.name}`}
+          selectedRow={row}
+          menuItems={menuItems}
+          variation="UserManagement"
+        />
+      );
     },
-    [onPopupAction, userProfile?.userData?.type]
+    [onPopupAction]
   );
 
   const columns = useMemo(() => {
     let columnList = [
       {
         Header: "Name",
-        accessor: getName,
+        accessor: "fullName",
         defaultCanSort: true,
         id: "name",
         Cell: renderName,
@@ -275,14 +265,14 @@ const UserManagement = () => {
       includeStateCode
         ? {
             Header: "State",
-            accessor: "stateCode",
+            accessor: "territory",
             defaultCanSort: true,
             id: "state",
           }
         : null,
       {
         Header: "Status",
-        accessor: "latest.status",
+        accessor: "status",
         id: "status",
         sortType: sortStatus,
         Cell: renderStatus,
@@ -297,18 +287,18 @@ const UserManagement = () => {
         : null,
       {
         Header: "Last Modified",
-        accessor: "latest.date",
+        accessor: "date",
         Cell: renderDate,
         id: "lastModified",
         disableSortBy: true,
       },
       {
         Header: "Modified By",
-        accessor: "latest.doneByName",
+        accessor: "doneByName",
         disableSortBy: true,
         id: "doneByName",
       },
-      userProfile.userData.type !== USER_TYPE.HELPDESK
+      getUserRoleObj(userProfile.userData.roleList).canManageUsers
         ? {
             Header: "Actions",
             disableSortBy: true,
@@ -328,7 +318,7 @@ const UserManagement = () => {
     renderActions,
     getRoleLabel,
     renderDate,
-    userProfile.userData.type,
+    userProfile.userData.roleList,
   ]);
 
   const initialTableState = useMemo(
