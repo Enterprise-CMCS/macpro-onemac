@@ -78,84 +78,82 @@ export const main = handler(async (event) => {
       }
 
       let contactInfoGSI;
+      await Promise.all(
+        updateList.map(async (thing) => {
+          if (item.type !== "statesubmitter" && thing.status === "active")
+            contactInfoGSI = `${item.type}#${thing.territory}`;
+          const response = await dynamoDb.update({
+            TableName: process.env.oneMacTableName,
+            ReturnValues: "UPDATED_NEW",
+            Key: {
+              pk: item.id,
+              sk: `v0#${item.type}#${thing.territory}`,
+            },
+            UpdateExpression:
+              "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #status = :status, #doneBy = :doneBy, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
+            ExpressionAttributeNames: {
+              "#status": "status",
+              "#doneBy": "doneBy",
+              "#role": "role",
+              "#territory": "territory",
+              "#date": "date",
+              "#GSI1pk": "GSI1pk",
+              "#GSI1sk": "GSI1sk",
+            },
+            ExpressionAttributeValues: {
+              ":status": thing.status,
+              ":doneBy": thing.doneBy,
+              ":role": item.type,
+              ":territory": thing.territory,
+              ":date": thing.date,
+              ":GSI1pk": "USER",
+              ":GSI1sk": buildSK(item.type, thing.territory),
+              ":defaultval": 0,
+              ":incrval": 1,
+            },
+          });
 
-      try {
-        await Promise.all(
-          updateList.map(async (thing) => {
-            if (item.type !== "statesubmitter" && thing.status === "active")
-              contactInfoGSI = `${item.type}#${thing.territory}`;
-            const response = await dynamoDb.update({
-              TableName: process.env.oneMacTableName,
-              ReturnValues: "UPDATED_NEW",
-              Key: {
-                pk: item.id,
-                sk: `v0#${item.type}#${thing.territory}`,
-              },
-              UpdateExpression:
-                "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #status = :status, #doneBy = :doneBy, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
-              ExpressionAttributeNames: {
-                "#status": "status",
-                "#doneBy": "doneBy",
-                "#role": "role",
-                "#territory": "territory",
-                "#date": "date",
-                "#GSI1pk": "GSI1pk",
-                "#GSI1sk": "GSI1sk",
-              },
-              ExpressionAttributeValues: {
-                ":status": thing.status,
-                ":doneBy": thing.doneBy,
-                ":role": item.type,
-                ":territory": thing.territory,
-                ":date": thing.date,
-                ":GSI1pk": "USER",
-                ":GSI1sk": buildSK(item.type, thing.territory),
-                ":defaultval": 0,
-                ":incrval": 1,
-              },
-            });
+          const latestVersion = response["Attributes"]["Latest"];
 
-            const latestVersion = response["Attributes"]["Latest"];
+          await dynamoDb.put({
+            TableName: process.env.oneMacTableName,
+            Item: {
+              pk: item.id,
+              sk: `v${latestVersion}#${item.type}#${thing.territory}`,
+              status: thing.status,
+              doneBy: thing.doneBy,
+              role: item.type,
+              territory: thing.territory,
+              date: thing.date,
+            },
+          });
 
-            await dynamoDb.put({
-              TableName: process.env.oneMacTableName,
-              Item: {
-                pk: item.id,
-                sk: `v${latestVersion}#${item.type}#${thing.territory}`,
-                status: thing.status,
-                doneBy: thing.doneBy,
-                role: item.type,
-                territory: thing.territory,
-                date: thing.date,
-              },
-            });
-          })
-        );
-      } catch (e) {
-        console.log("migrate error: ", e);
-      }
+          return contactInfoGSI;
+        })
+      )
+        .then((contactInfoGSI) => {
+          console.log("contactInfoGSI: ", contactInfoGSI);
+          const contactParams = {
+            TableName: process.env.oneMacTableName,
+            Item: {
+              pk: item.id,
+              sk: "ContactInfo",
+              firstName: item.firstName,
+              lastName: item.lastName,
+              email: item.id,
+              phoneNumber: item.phoneNumber,
+              group: item.group,
+              division: item.division,
+            },
+          };
 
-      const contactParams = {
-        TableName: process.env.oneMacTableName,
-        Item: {
-          pk: item.id,
-          sk: "ContactInfo",
-          firstName: item.firstName,
-          lastName: item.lastName,
-          email: item.id,
-          phoneNumber: item.phoneNumber,
-          group: item.group,
-          division: item.division,
-        },
-      };
+          if (contactInfoGSI) contactParams.GSI1pk = contactInfoGSI;
 
-      if (contactInfoGSI) contactParams.GSI1pk = contactInfoGSI;
-
-      try {
-        await dynamoDb.put(contactParams);
-      } catch (e) {
-        console.log("error!", e);
-      }
+          dynamoDb.put(contactParams);
+        })
+        .catch((e) => {
+          console.log("migrate error: ", e);
+        });
     })
   );
   return "Done";
