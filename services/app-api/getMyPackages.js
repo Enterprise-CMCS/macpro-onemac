@@ -1,8 +1,7 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, USER_STATUS, getUserRoleObj } from "cmscommonlib";
 import getUser from "./utils/getUser";
-import { getAuthorizedStateList } from "./user/user-util";
 
 /**
  * Gets all packages from the DynamoDB one table
@@ -17,9 +16,11 @@ export const main = handler((event) => {
     .then((user) => {
       let territoryList = "this is for EUA users";
       if (Object.keys(user).length > 0) {
-        const userRoleObj = getUserRoleObj(user?.type, !user, user?.attributes);
+        const userRoleObj = getUserRoleObj(user?.roleList);
 
-        territoryList = getAuthorizedStateList(user);
+        territoryList = user.roleList
+          .filter(({ status }) => status === USER_STATUS.ACTIVE)
+          .map(({ territory }) => territory);
         if (!userRoleObj.canAccessDashboard || territoryList === []) {
           throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
         }

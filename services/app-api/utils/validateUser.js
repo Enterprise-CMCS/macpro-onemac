@@ -13,6 +13,6 @@ export const validateUserReadOnly = (user, territory) => {
 };
 
 export const validateUserSubmitting = (user, territory) => {
-  const userRoleObj = getUserRoleObj(user.type);
+  const userRoleObj = getUserRoleObj(user.roleList);
   return validateUserReadOnly(user, territory) && userRoleObj.canAccessForms;
 };

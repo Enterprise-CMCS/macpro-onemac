@@ -33,7 +33,9 @@ export const effectiveRoleForUser: (
   roleList: RoleEntry[]
 ) => [USER_TYPE, USER_STATUS] | null;
 
-export const getUserRoleObj: (roleInfo: USER_TYPE | RoleEntry[]) => UserRole;
+export const getUserRoleObj: (
+  roleInfo: USER_TYPE | RoleEntry[] | undefined
+) => UserRole;
 
 export const latestAccessStatus: (
   userData: Record<string, unknown> | undefined,

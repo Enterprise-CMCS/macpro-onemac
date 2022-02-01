@@ -290,6 +290,8 @@ export const getUserRoleObj = (roleInfo) => {
     const roleResult = effectiveRoleForUser(roleInfo);
     if (roleResult === null) return new DefaultUser();
     [roleInfo] = roleResult;
+  } else if (!roleInfo) {
+    return new DefaultUser();
   }
 
   return new {
@@ -301,32 +303,6 @@ export const getUserRoleObj = (roleInfo) => {
     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
   }[roleInfo]();
 };
-
-// export const getUserRoleObj = (role, isEua = false, attributes = []) => {
-//   let roleMatch = {
-//     [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
-//     [USER_TYPE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
-//     [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
-//     [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
-//     [USER_TYPE.HELPDESK]: Helpdesk,
-//     [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-//   }[role];
-
-//   if (!roleMatch) {
-//     roleMatch = isEua ? DefaultUser : Role;
-//   }
-
-//   let userStatus;
-//   switch (roleMatch) {
-//     case StateSubmitter:
-//     case StateSystemAdmin:
-//       break;
-//     default:
-//       userStatus = latestAccessStatus({ type: role, attributes });
-//   }
-
-//   return new roleMatch(userStatus);
-// };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
 export const territoryList = [
