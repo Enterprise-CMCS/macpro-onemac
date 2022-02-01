@@ -8,7 +8,6 @@ import {
   ROLES,
   ROUTES,
   effectiveRoleForUser,
-  latestAccessStatus,
   roleLabels,
   territoryMap,
   territoryList,
@@ -356,46 +355,18 @@ const UserPage = () => {
   useEffect(() => {
     (async () => {
       try {
-        let contacts = [],
-          getContacts = () => contacts;
-
-        switch (userType) {
-          case ROLES.STATE_SUBMITTER: {
-            const adminsByState = await UserDataApi.getStateSystemAdmins(
-              userData.roleList
-                .map(({ territory }) => territory)
-                .filter(Boolean)
-            );
-            getContacts = ({ state }) => adminsByState[state];
-            break;
-          }
-
-          case ROLES.CMS_REVIEWER:
-          case ROLES.STATE_SYSTEM_ADMIN: {
-            contacts = await UserDataApi.getCmsRoleApprovers();
-            break;
-          }
-          case ROLES.HELPDESK:
-          case ROLES.CMS_ROLE_APPROVER: {
-            contacts = await UserDataApi.getCmsSystemAdmins();
-            break;
-          }
-
-          default:
-            return;
-        }
-
         setAccesses(
           userData?.roleList.map((access) => ({
             ...access,
-            contacts: getContacts(access),
+            contacts: async () =>
+              await UserDataApi.getMyApprovers(access.territory),
           }))
         );
       } catch (e) {
         console.error(e);
       }
     })();
-  }, [userData, userType]);
+  }, [userData]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);

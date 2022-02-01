@@ -39,25 +39,6 @@ export const main = handler(async (event) => {
     promiseItems.map(async (item) => {
       const updateList = [];
 
-      const contactParams = {
-        TableName: process.env.oneMacTableName,
-        Item: {
-          pk: item.id,
-          sk: "ContactInfo",
-          firstName: item.firstName,
-          lastName: item.lastName,
-          email: item.id,
-          phoneNumber: item.phoneNumber,
-          group: item.group,
-          division: item.division,
-        },
-      };
-      try {
-        await dynamoDb.put(contactParams);
-      } catch (e) {
-        console.log("error!", e);
-      }
-
       switch (item.type) {
         case "systemadmin":
           updateList.push({
@@ -96,9 +77,13 @@ export const main = handler(async (event) => {
           break;
       }
 
+      let contactInfoGSI;
+
       try {
         await Promise.all(
           updateList.map(async (thing) => {
+            if (item.type !== "statesubmitter" && thing.status === "active")
+              contactInfoGSI = `${item.type}#${thing.territory}`;
             const response = await dynamoDb.update({
               TableName: process.env.oneMacTableName,
               ReturnValues: "UPDATED_NEW",
@@ -148,6 +133,28 @@ export const main = handler(async (event) => {
         );
       } catch (e) {
         console.log("migrate error: ", e);
+      }
+
+      const contactParams = {
+        TableName: process.env.oneMacTableName,
+        Item: {
+          pk: item.id,
+          sk: "ContactInfo",
+          firstName: item.firstName,
+          lastName: item.lastName,
+          email: item.id,
+          phoneNumber: item.phoneNumber,
+          group: item.group,
+          division: item.division,
+        },
+      };
+
+      if (contactInfoGSI) contactParams.GSI1pk = contactInfoGSI;
+
+      try {
+        await dynamoDb.put(contactParams);
+      } catch (e) {
+        console.log("error!", e);
       }
     })
   );

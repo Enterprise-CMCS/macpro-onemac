@@ -1,6 +1,6 @@
 import { main } from "./getCmsRoleApproverList";
 
-import { queryForUserType } from "./libs/user-table-lib";
+import { queryForUserRole } from "./libs/user-table-lib";
 import { USER_STATUS, latestAccessStatus } from "cmscommonlib";
 
 jest.mock("./libs/user-table-lib");
@@ -10,53 +10,65 @@ latestAccessStatus.mockImplementation(() => {
   return USER_STATUS.ACTIVE;
 });
 
-queryForUserType.mockImplementation(() => {
+queryForUserRole.mockImplementation(() => {
   return [
     {
-      id: "pboggarapu@collabralink.com",
+      email: "pboggarapu@collabralink.com",
       firstName: "CMS",
       lastName: "Reviewer",
     },
-    { id: "ssierra@collabralink.com", firstName: "Samuel", lastName: "Sierra" },
-    { id: "kgrue@collabralink.com", firstName: "Kristin", lastName: "Heeth" },
     {
-      id: "cmsroleapprover@nightwatch.test",
+      email: "ssierra@collabralink.com",
+      firstName: "Samuel",
+      lastName: "Sierra",
+    },
+    {
+      email: "kgrue@collabralink.com",
+      firstName: "Kristin",
+      lastName: "Heeth",
+    },
+    {
+      email: "cmsroleapprover@nightwatch.test",
       firstName: "CMSApprover",
       lastName: "Nightwatch",
     },
     {
-      id: "cmsroleapproveractive@cms.hhs.local",
+      email: "cmsroleapproveractive@cms.hhs.local",
       firstName: "Arnold",
       lastName: "Active",
     },
-    { id: "nkrishnanov@gmail.com", firstName: "Nagaraju", lastName: "Krishna" },
     {
-      id: "nwcmsapprover@gmail.com",
+      email: "nkrishnanov@gmail.com",
+      firstName: "Nagaraju",
+      lastName: "Krishna",
+    },
+    {
+      email: "nwcmsapprover@gmail.com",
       firstName: "NIGHTWATCHCMS",
       lastName: "APPROVER",
     },
     {
-      id: "cmsroleapproverpending@cms.hhs.local",
+      email: "cmsroleapproverpending@cms.hhs.local",
       firstName: "Peter",
       lastName: "Pending",
     },
     {
-      id: "ohstateuser@gmail.com",
+      email: "ohstateuser@gmail.com",
       firstName: "ONEMAC",
       lastName: "CMSAPPROVERTEST",
     },
     {
-      id: "nagaraju.krishna@esimplicity.com",
+      email: "nagaraju.krishna@esimplicity.com",
       firstName: "ONEMAC",
       lastName: "CMSUSER",
     },
     {
-      id: "cmsapprover@nightwatch.test",
+      email: "cmsapprover@nightwatch.test",
       firstName: "CMSApprover",
       lastName: "Nightwatch",
     },
     {
-      id: "onemacapprover@gmail.com",
+      email: "onemacapprover@gmail.com",
       firstName: "NIGHTWATCHCMS",
       lastName: "APPROVER",
     },

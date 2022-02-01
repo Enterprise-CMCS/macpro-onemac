@@ -1,27 +1,27 @@
 import { main } from "./getCmsSystemAdminList";
-import { queryForUserType } from "./libs/user-table-lib";
+import { queryForUserRole } from "./libs/user-table-lib";
 
 jest.mock("./libs/user-table-lib");
 
-queryForUserType.mockImplementation(() => {
+queryForUserRole.mockImplementation(() => {
   return [
     {
-      id: "sabrina.mccrae@cms.hhs.gov",
+      email: "sabrina.mccrae@cms.hhs.gov",
       firstName: "Sabrina",
       lastName: "McCrae",
     },
     {
-      id: "systemadmintest@cms.hhs.local",
+      email: "systemadmintest@cms.hhs.local",
       firstName: "Teresa",
       lastName: "Test",
     },
     {
-      id: "systemadmin@nightwatch.test",
+      email: "systemadmin@nightwatch.test",
       firstName: "Systemadmin",
       lastName: "Nightwatch",
     },
     {
-      id: "ONEMACUSERCMS@gmail.com",
+      email: "ONEMACUSERCMS@gmail.com",
       firstName: "NWCMSADMIN",
       lastName: "ADMINUSER",
     },

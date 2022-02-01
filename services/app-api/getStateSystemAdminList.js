@@ -1,33 +1,36 @@
-import { USER_TYPE, latestAccessStatus } from "cmscommonlib";
+import { USER_TYPE } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import { queryForUserType } from "./libs/user-table-lib";
+import { queryForUserRole } from "./libs/user-table-lib";
 
 // Gets active state system admins by state code
 export const main = handler(async (event) => {
   // get the list of states we care about
-  const states = event.multiValueQueryStringParameters.state;
-  if (!Array.isArray(states) || !states.length) {
+  const territories = event.multiValueQueryStringParameters.state;
+  if (!Array.isArray(territories) || !territories.length) {
     console.warn("No states passed to query on.");
     return {};
   }
 
-  return (await queryForUserType(USER_TYPE.STATE_SYSTEM_ADMIN)).reduce(
-    (output, admin) => {
-      for (const state of states) {
-        if (latestAccessStatus(admin, state) === "active") {
-          if (!output[state]) output[state] = [];
+  const ssaList = {};
 
-          output[state].push({
-            email: admin.id,
-            firstName: admin.firstName,
-            lastName: admin.lastName,
-          });
-        }
-      }
+  return Promise.all(
+    territories.map(async (territory) => {
+      ssaList[territory] = await queryForUserRole(
+        USER_TYPE.STATE_SYSTEM_ADMIN,
+        territory
+      );
+      console.log("results are: ", ssaList[territory]);
 
-      return output;
-    },
-    {}
-  );
+      return ssaList;
+    })
+  )
+    .then((values) => {
+      console.log("the promises resolve to: ", values);
+      return values;
+    })
+    .catch((error) => {
+      console.log("error is: ", error);
+      return error;
+    });
 });

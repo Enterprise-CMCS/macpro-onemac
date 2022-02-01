@@ -3,7 +3,6 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
 import getUser from "./utils/getUser";
-import { getAuthorizedStateList } from "./user/user-util";
 
 const commonQueryConfig = {
   TableName: process.env.tableName,

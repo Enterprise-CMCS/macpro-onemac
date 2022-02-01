@@ -186,7 +186,6 @@ class UserDataApi {
     }
   }
 }
-
 const instance = new UserDataApi();
 if (process.env.NODE_ENV !== "test") Object.freeze(instance);
 

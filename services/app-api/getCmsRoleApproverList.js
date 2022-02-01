@@ -1,11 +1,9 @@
-import { USER_TYPE, latestAccessStatus } from "cmscommonlib";
+import { USER_TYPE } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import { queryForUserType } from "./libs/user-table-lib";
+import { queryForUserRole } from "./libs/user-table-lib";
 
 // Gets active CMS role approvers
-export const main = handler(async () => {
-  return (await queryForUserType(USER_TYPE.CMS_ROLE_APPROVER))
-    .filter((admin) => latestAccessStatus(admin) === "active")
-    .map(({ id, firstName, lastName }) => ({ email: id, firstName, lastName }));
-});
+export const main = handler(
+  async () => await queryForUserRole(USER_TYPE.CMS_ROLE_APPROVER)
+);
