@@ -132,7 +132,6 @@ export const main = handler(async (event) => {
         })
       )
         .then((contactInfoGSI) => {
-          console.log("contactInfoGSI: ", contactInfoGSI);
           const contactParams = {
             TableName: process.env.oneMacTableName,
             Item: {
@@ -147,7 +146,8 @@ export const main = handler(async (event) => {
             },
           };
 
-          if (contactInfoGSI) contactParams.GSI1pk = contactInfoGSI;
+          if (contactInfoGSI[0] !== undefined)
+            contactParams.Item.GSI1pk = contactInfoGSI[0];
 
           dynamoDb.put(contactParams);
         })
