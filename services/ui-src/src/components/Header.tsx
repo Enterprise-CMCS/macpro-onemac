@@ -256,7 +256,7 @@ export function Header() {
     currentRoute: string,
     isAuthenticated: boolean | undefined
   ) {
-    const userObj = getUserRoleObj(userProfile?.userData?.roleList!);
+    const userObj = getUserRoleObj(userProfile?.userData?.roleList);
 
     const homeLink = (
       <Link
