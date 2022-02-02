@@ -156,40 +156,6 @@ def seed_cognito(test_users, user_pool_id, password):
             pass
 
 
-def scan_dynamo(stage):
-    """
-    Retrieve a full scan of the User Profile table for this stage.
-    """
-    return json.loads(
-        subprocess.run(
-            [
-                "aws",
-                "dynamodb",
-                "scan",
-                "--table-name",
-                f"cms-spa-form-{stage}-user-profiles",
-            ],
-            check=True,
-            capture_output=True,
-        ).stdout.decode("utf-8")
-    )
-
-
-def seed_dynamo(stage):
-    """
-    Use Serverless to seed the User Profile table.
-    """
-    old_dir = os.getcwd()
-    os.chdir("services/app-api")
-    region = os.environ.get("AWS_REGION", os.environ.get("AWS_DEFAULT_REGION"))
-    subprocess.run(
-        f'SLS_DEBUG=true BRANCH={stage} serverless dynamodb seed --stage="{stage}" --region="{region}" --seed=domain --online',
-        check=True,
-        shell=True,
-    )
-    os.chdir(old_dir)
-
-
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(
         description="Load test users into Cognito and Dynamo."
@@ -229,12 +195,3 @@ if __name__ == "__main__":
             user_pool_id,
             os.environ.get("COGNITO_TEST_USERS_PASSWORD"),
         )
-
-        # system admin user is populated before this script is run
-        if len(scan_dynamo(args.stage)["Items"]) < 2:
-            seed_dynamo(args.stage)
-        else:
-            print("User table is already populated.", file=sys.stderr)
-
-        print("User table contents:")
-        print(scan_dynamo(args.stage))

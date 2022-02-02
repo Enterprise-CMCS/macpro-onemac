@@ -1,14 +1,16 @@
 import React, { ReactNode } from "react";
 import {
   TableOptions,
+  useExpanded,
   useFilters,
   useGlobalFilter,
   useSortBy,
   useTable,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch } from "@fortawesome/free-solid-svg-icons";
-import { constant } from "lodash";
+import { faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { constant, noop } from "lodash";
+import cx from "classnames";
 
 import Expand from "../images/Expand.svg";
 import {
@@ -20,8 +22,10 @@ export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
   className?: string;
+  expandable?: boolean;
   searchBarTitle: ReactNode;
   withSearchBar?: boolean;
+  TEMP_onReset?: () => void;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &
   TableOptions<V>;
 
@@ -32,9 +36,11 @@ const defaultColumn = {
 };
 
 export default function PortalTable<V extends {} = {}>({
+  expandable,
   pageContentRef,
   searchBarTitle,
   withSearchBar,
+  TEMP_onReset = noop,
   ...props
 }: TableProps<V>) {
   const {
@@ -67,7 +73,8 @@ export default function PortalTable<V extends {} = {}>({
     },
     useGlobalFilter,
     useFilters,
-    useSortBy
+    useSortBy,
+    useExpanded
   );
 
   return (
@@ -81,12 +88,14 @@ export default function PortalTable<V extends {} = {}>({
           pageContentRef={pageContentRef}
           searchBarTitle={searchBarTitle}
           setAllFilters={setAllFilters}
+          TEMP_onReset={TEMP_onReset}
         />
       )}
       <table className={props.className} {...getTableProps()}>
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
+              {expandable && <th />}
               {headerGroup.headers.map((column) => (
                 <th
                   // @ts-ignore FIXME remove when react-table types are improved
@@ -128,7 +137,31 @@ export default function PortalTable<V extends {} = {}>({
               // @ts-ignore FIXME remove when react-table types are improved
               prepareRow(row, rowIndex);
               return (
-                <tr {...row.getRowProps()}>
+                <tr
+                  {...row.getRowProps()}
+                  className={cx({
+                    // @ts-ignore FIXME remove when react-table types are improved
+                    "parent-row-expanded": row.isExpanded,
+                    // @ts-ignore FIXME remove when react-table types are improved
+                    "child-row-expanded": row.depth > 0,
+                  })}
+                >
+                  {expandable && (
+                    <td className="row-expander-cell">
+                      {/* @ts-ignore */}
+                      {row.depth === 0 && (
+                        <button
+                          aria-label="Expand row"
+                          // @ts-ignore FIXME remove when react-table types are improved
+                          disabled={!row.canExpand}
+                          // @ts-ignore FIXME remove when react-table types are improved
+                          onClick={() => row.toggleRowExpanded()}
+                        >
+                          <FontAwesomeIcon icon={faChevronDown} />
+                        </button>
+                      )}
+                    </td>
+                  )}
                   {row.cells.map((cell, index) => {
                     return (
                       <td

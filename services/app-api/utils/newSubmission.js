@@ -39,7 +39,6 @@ export default async function newSubmission(inData) {
     .put(params)
     .then(() => {
       if (!idInfo.isNewPackage) {
-        data.currentStatus = `${data.componentType} Submitted`;
         data.parentType = idInfo.parentType;
         return updateComponent(data);
       } else {
