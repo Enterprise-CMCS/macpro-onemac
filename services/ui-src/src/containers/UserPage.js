@@ -7,6 +7,7 @@ import {
   RESPONSE_CODE,
   ROLES,
   ROUTES,
+  USER_STATUS,
   effectiveRoleForUser,
   roleLabels,
   territoryMap,
@@ -271,16 +272,12 @@ const UserPage = () => {
 
   const onRemoveAccess = useCallback(() => {
     try {
-      UserDataApi.setUserStatus({
-        userEmail: userProfile.email,
-        doneBy: userProfile.email,
-        attributes: [
-          {
-            stateCode: stateAccessToRemove, // required for state submitter and state system admin
-            status: "revoked",
-          },
-        ],
-        type: userType,
+      UserDataApi.updateUserStatus({
+        email: userProfile.email,
+        doneByEmail: userProfile.email,
+        role: userType,
+        territory: stateAccessToRemove,
+        status: USER_STATUS.REVOKED,
       }).then(function (returnCode) {
         if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
           setUserInfo();
