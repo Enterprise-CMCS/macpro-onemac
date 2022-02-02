@@ -8,9 +8,9 @@ import {
   useTable,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import { faSearch } from "@fortawesome/free-solid-svg-icons";
 import { constant, noop } from "lodash";
-import cx from "classnames";
+// import cx from "classnames";
 
 import Expand from "../images/Expand.svg";
 import {

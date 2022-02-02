@@ -2135,6 +2135,8 @@ aside#faq-contact-info-box {
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
   width: -webkit-fill-available;
+  width: -moz-available;
+  flex-wrap: inherit;
 
   > .search-bar {
     > label {
@@ -2252,6 +2254,7 @@ aside#faq-contact-info-box {
 
       .close-filter-pane {
         text-decoration: none;
+        font-weight: 700;
 
         svg {
           margin-left: 1ch;
@@ -2286,6 +2289,14 @@ aside#faq-contact-info-box {
   }
 }
 
+.reset-button-filter {
+  text-decoration: none;
+  background-color: $color-primary-darkest;
+  color: $color-white;
+  margin-left: 25px;
+  margin-right: 23px;
+}
+
 .inversed-accordion-button,
 .inversed-accordion-button:hover,
 .inversed-accordion-button[aria-expanded="false"],
@@ -2299,6 +2310,7 @@ aside#faq-contact-info-box {
   @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @extend .ds-u-padding-x--3;
+  @extend .ds-u-margin-top--1;
 
   &::after {
     font-family: "Font Awesome 5 Free";
