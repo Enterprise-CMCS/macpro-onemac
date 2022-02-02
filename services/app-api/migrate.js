@@ -76,8 +76,7 @@ export const main = handler(async (event) => {
 
       try {
         const contactDetails = {
-          firstName: item.firstName,
-          lastName: item.lastName,
+          fullName: `${item.firstName} ${item.lastName}`,
           email: item.id,
           phoneNumber: item.phoneNumber,
           group: item.group,
@@ -88,8 +87,8 @@ export const main = handler(async (event) => {
 
         for (const thing of updateList) {
           await changeUserStatus({
+            fullName: contactDetails.fullName,
             email: item.id,
-            fullName: `${item.firstName} ${item.lastName}`,
             doneByEmail: thing.doneBy,
             doneByName: approverNamesById[thing.doneBy] ?? "",
             date: thing.date,

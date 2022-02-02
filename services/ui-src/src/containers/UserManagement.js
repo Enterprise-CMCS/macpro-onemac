@@ -208,20 +208,12 @@ const UserManagement = () => {
       setDoneToName(restOfUser.fullName);
 
       try {
-        const returnCode = await UserDataApi.setUserStatus({
-          userEmail: userList[rowNum].email,
-          doneBy: userProfile.userData.id,
-          type: role,
-          attributes: [
-            {
-              stateCode:
-                role === USER_TYPE.STATE_SUBMITTER ||
-                role === USER_TYPE.STATE_SYSTEM_ADMIN
-                  ? stateCode
-                  : undefined, // required for state submitter and state system admin
-              status: value,
-            },
-          ],
+        const returnCode = await UserDataApi.updateUserStatus({
+          email: userList[rowNum].email,
+          doneByEmail: userProfile.userData.email,
+          role,
+          territory: stateCode ?? "All",
+          status: value,
         });
 
         updateList();
@@ -231,7 +223,7 @@ const UserManagement = () => {
         setAlertCode(RESPONSE_CODE[e.message]);
       }
     },
-    [updateList, userList, userProfile.userData.id]
+    [updateList, userList, userProfile.userData.email]
   );
 
   const renderActions = useCallback(

@@ -133,6 +133,24 @@ class UserDataApi {
     }
   }
 
+  async updateUserStatus(updateStatusRequest: any): Promise<string> {
+    if (!updateStatusRequest) {
+      throw new Error("setUserStatus API call required parameters missing");
+    }
+
+    try {
+      return await API.post("oneMacAPI", "/updateUserStatus", {
+        body: updateStatusRequest,
+      });
+    } catch (error) {
+      return handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error changing the user status."
+      );
+    }
+  }
+
   /**
    * Get all active state system administrators' contact info for a list of states.
    */

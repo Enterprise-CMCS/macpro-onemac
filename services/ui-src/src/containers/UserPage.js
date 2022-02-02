@@ -27,11 +27,6 @@ import groupData from "cmscommonlib/groupDivision.json";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
-/**
- * Formats multi-part name into single full name
- */
-const getFullName = (...names) => names.filter(Boolean).join(" ");
-
 export const ACCESS_LABELS = {
   active: "Access Granted",
   pending: "Pending Access",
@@ -47,9 +42,9 @@ export const ContactList = ({ contacts, userType }) => {
   return (
     <p>
       {label}:{" "}
-      {contacts.map(({ firstName, lastName, email }, idx) => (
+      {contacts.map(({ fullName, email }, idx) => (
         <React.Fragment key={email}>
-          <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
+          <a href={`mailto:${email}`}>{fullName}</a>
           {idx < contacts.length - 1 && ", "}
         </React.Fragment>
       ))}
@@ -410,9 +405,7 @@ const UserPage = () => {
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
             </h2>
-            <Review heading="Full Name">
-              {getFullName(userData.firstName, userData.lastName)}
-            </Review>
+            <Review heading="Full Name">{userData.fullName}</Review>
             <Review heading="Role">
               {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
             </Review>
