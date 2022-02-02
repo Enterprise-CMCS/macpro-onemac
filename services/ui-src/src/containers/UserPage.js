@@ -353,19 +353,25 @@ const UserPage = () => {
   }, [setIsEditingPhone, setIsStateSelectorVisible]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        setAccesses(
-          userData?.roleList.map((access) => ({
-            ...access,
-            contacts: async () =>
-              await UserDataApi.getMyApprovers(access.territory),
-          }))
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    })();
+    const createAccessList = async (inRoles) => {
+      if (!inRoles) return [];
+
+      return await Promise.all(
+        inRoles.map((access) =>
+          UserDataApi.getMyApprovers(access.role, access.territory).then(
+            (result) => {
+              return { ...access, contacts: result };
+            }
+          )
+        )
+      );
+    };
+
+    createAccessList(userData?.roleList)
+      .then(setAccesses)
+      .catch((e) => {
+        console.log("error:  ", e);
+      });
   }, [userData]);
 
   function closedAlert() {

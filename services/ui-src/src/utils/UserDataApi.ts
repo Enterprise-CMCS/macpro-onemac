@@ -185,6 +185,34 @@ class UserDataApi {
       );
     }
   }
+
+  /**
+   * Get the Approver List for a given role and territory
+   * Throws an exception if the API throws an exception
+   * @param role the role of the user
+   * @param territory the territory for the approvers
+   * @return the returned user item
+   */
+  async getMyApprovers(role: string, territory: string): Promise<any[]> {
+    if (!role) {
+      console.log("role needed to find approvers");
+      throw new Error("user role was not specified for userProfile API call");
+    }
+
+    try {
+      return await API.get(
+        "oneMacAPI",
+        `/getMyApprovers?role=${role}&territory=${territory}`,
+        undefined
+      );
+    } catch (error) {
+      return handleApiError(
+        error,
+        "FETCH_ERROR",
+        "There was an error fetching approvers for the user."
+      );
+    }
+  }
 }
 const instance = new UserDataApi();
 if (process.env.NODE_ENV !== "test") Object.freeze(instance);

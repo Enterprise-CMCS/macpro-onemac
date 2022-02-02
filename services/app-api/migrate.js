@@ -159,8 +159,10 @@ export const main = handler(async (event) => {
             },
           };
 
-          if (contactInfoGSI[0] !== undefined)
+          if (contactInfoGSI[0] !== undefined) {
             contactParams.Item.GSI1pk = contactInfoGSI[0];
+            contactParams.Item.GSI1sk = item.id;
+          }
 
           dynamoDb.put(contactParams);
         })

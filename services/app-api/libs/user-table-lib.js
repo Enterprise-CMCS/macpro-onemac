@@ -7,7 +7,7 @@ export const queryForUserRole = async (role, territory) => {
   if (!territory) territory = "All";
   let adminList;
   try {
-    adminList = await dynamoDb.query({
+    const queryParams = {
       TableName: process.env.oneMacTableName,
       IndexName: "GSI1",
       KeyConditionExpression: "GSI1pk = :pk",
@@ -15,10 +15,14 @@ export const queryForUserRole = async (role, territory) => {
         ":pk": `${role}#${territory}`,
       },
       ProjectionExpression: "email,firstName,lastName",
-    });
+    };
+    console.log("Query Params: ", queryParams);
+    adminList = await dynamoDb.query(queryParams);
   } catch (e) {
     console.log("Error is: ", e);
   }
+
+  console.log("Returns: ", adminList);
 
   return adminList.Items;
 };
