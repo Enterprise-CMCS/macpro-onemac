@@ -2,7 +2,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { APPROVING_USER_TYPE } from "cmscommonlib";
 
-export const queryForUserRole2 = async (role, territory) => {
+export const getMyApprovers = async (role, territory) => {
   if (!territory) territory = "All";
   let adminList;
   const adminRole = APPROVING_USER_TYPE[role];
@@ -30,9 +30,8 @@ export const queryForUserRole2 = async (role, territory) => {
 // get the approver list for a rols and possibly a territory
 export const main = handler(async (event) => {
   // get the list of states we care about
-  console.log("Event in is: ", event);
   const role = event.queryStringParameters.role;
   const territory = event.queryStringParameters.territory;
 
-  return await queryForUserRole2(role, territory);
+  return await getMyApprovers(role, territory);
 });
