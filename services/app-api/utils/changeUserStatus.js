@@ -34,7 +34,11 @@ export const changeUserStatus = async ({
         sk: `v0#${role}#${territory}`,
       },
       UpdateExpression:
-        "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #email = :email, #status = :status, #fullName = :fullName, #doneByEmail = :doneByEmail, #doneByName = :doneByName, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
+        "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, " +
+        "#email = :email, #status = :status, #fullName = :fullName, " +
+        "#doneByEmail = :doneByEmail, #doneByName = :doneByName, " +
+        "#role = :role, #territory = :territory, #date = :date, " +
+        "#GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
       ExpressionAttributeNames: {
         "#email": "email",
         "#status": "status",
@@ -50,7 +54,7 @@ export const changeUserStatus = async ({
       ExpressionAttributeValues: {
         ":email": email,
         ":status": status,
-        ":fullName": `${fullName}`,
+        ":fullName": fullName,
         ":doneByEmail": doneByEmail,
         ":doneByName": doneByName,
         ":role": role,

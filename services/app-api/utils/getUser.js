@@ -14,7 +14,7 @@ export default async function getUser(userEmail) {
       pk: userEmail.toLowerCase(),
       sk: "ContactInfo",
     },
-    ProjectionExpression: "email, lastName, firstName, phoneNumber",
+    ProjectionExpression: "email, fullName, phoneNumber",
   };
 
   const params = {

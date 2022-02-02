@@ -197,24 +197,18 @@ class StateSystemAdmin extends Role {
 }
 
 class CmsReviewer extends Role {
-  constructor(userStatus) {
+  constructor() {
     super();
     this.canAccessDashboard = true;
-    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
   }
 }
 
 class CmsRoleApprover extends Role {
-  constructor(userStatus) {
+  constructor() {
     super();
     this.canDownloadCsv = true;
-
-    if (userStatus === USER_STATUS.ACTIVE) {
-      this.canAccessUserManagement = true;
-      this.canManageUsers = true;
-    } else {
-      this.canAccessDashboard = true;
-    }
+    this.canAccessUserManagement = true;
+    this.canManageUsers = true;
   }
 }
 
