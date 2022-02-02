@@ -1,17 +1,7 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-
-const buildSK = (role, territory) => {
-  switch (role) {
-    case "statesubmitter":
-      return `statesystemadmin#${territory}`;
-    case "cmsreviewer":
-    case "statesystemadmin":
-      return "cmsroleapprover";
-    default:
-      return "Boss";
-  }
-};
+import { newUser } from "./utils/newUser";
+import { changeUserStatus } from "./utils/changeUserStatus";
 
 /**
  * Perform data migrations
@@ -84,91 +74,33 @@ export const main = handler(async (event) => {
           break;
       }
 
-      let contactInfoGSI;
-      await Promise.all(
-        updateList.map(async (thing) => {
-          if (item.type !== "statesubmitter" && thing.status === "active")
-            contactInfoGSI = `${item.type}#${thing.territory}`;
-          const response = await dynamoDb.update({
-            TableName: process.env.oneMacTableName,
-            ReturnValues: "UPDATED_NEW",
-            Key: {
-              pk: item.id,
-              sk: `v0#${item.type}#${thing.territory}`,
-            },
-            UpdateExpression:
-              "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, #email = :email, #status = :status, #fullName = :fullName, #doneByEmail = :doneByEmail, #doneByName = :doneByName, #role = :role, #territory = :territory, #date = :date, #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk",
-            ExpressionAttributeNames: {
-              "#email": "email",
-              "#status": "status",
-              "#fullName": "fullName",
-              "#doneByEmail": "doneByEmail",
-              "#doneByName": "doneByName",
-              "#role": "role",
-              "#territory": "territory",
-              "#date": "date",
-              "#GSI1pk": "GSI1pk",
-              "#GSI1sk": "GSI1sk",
-            },
-            ExpressionAttributeValues: {
-              ":email": item.id,
-              ":status": thing.status,
-              ":fullName": `${item.firstName} ${item.lastName}`,
-              ":doneByEmail": thing.doneBy,
-              ":doneByName": approverNamesById[thing.doneBy] ?? "",
-              ":role": item.type,
-              ":territory": thing.territory,
-              ":date": thing.date,
-              ":GSI1pk": "USER",
-              ":GSI1sk": buildSK(item.type, thing.territory),
-              ":defaultval": 0,
-              ":incrval": 1,
-            },
+      try {
+        const contactDetails = {
+          firstName: item.firstName,
+          lastName: item.lastName,
+          email: item.id,
+          phoneNumber: item.phoneNumber,
+          group: item.group,
+          division: item.division,
+        };
+
+        newUser(contactDetails);
+
+        for (const thing of updateList) {
+          await changeUserStatus({
+            email: item.id,
+            fullName: `${item.firstName} ${item.lastName}`,
+            doneByEmail: thing.doneBy,
+            doneByName: approverNamesById[thing.doneBy] ?? "",
+            date: thing.date,
+            role: item.type,
+            territory: thing.territory,
+            status: thing.status,
           });
-
-          const latestVersion = response["Attributes"]["Latest"];
-
-          await dynamoDb.put({
-            TableName: process.env.oneMacTableName,
-            Item: {
-              pk: item.id,
-              sk: `v${latestVersion}#${item.type}#${thing.territory}`,
-              status: thing.status,
-              doneByEmail: thing.doneBy,
-              role: item.type,
-              territory: thing.territory,
-              date: thing.date,
-            },
-          });
-
-          return contactInfoGSI;
-        })
-      )
-        .then((contactInfoGSI) => {
-          const contactParams = {
-            TableName: process.env.oneMacTableName,
-            Item: {
-              pk: item.id,
-              sk: "ContactInfo",
-              firstName: item.firstName,
-              lastName: item.lastName,
-              email: item.id,
-              phoneNumber: item.phoneNumber,
-              group: item.group,
-              division: item.division,
-            },
-          };
-
-          if (contactInfoGSI[0] !== undefined) {
-            contactParams.Item.GSI1pk = contactInfoGSI[0];
-            contactParams.Item.GSI1sk = item.id;
-          }
-
-          dynamoDb.put(contactParams);
-        })
-        .catch((e) => {
-          console.log("migrate error: ", e);
-        });
+        }
+      } catch (e) {
+        console.log("migrate error: ", e);
+      }
     })
   );
 
