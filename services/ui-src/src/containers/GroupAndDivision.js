@@ -3,14 +3,14 @@ import { useHistory } from "react-router-dom";
 import Select, { components } from "react-select";
 import { Button, FormLabel } from "@cmsgov/design-system";
 import cx from "classnames";
-import { ROLES, USER_STATUS } from "cmscommonlib";
+import { ROLES } from "cmscommonlib";
 import groupData from "cmscommonlib/groupDivision.json";
 
 import PageTitleBar from "../components/PageTitleBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { useFlag, useSignupCallback } from "../libs/hooksLib";
 
-const createAttribute = () => [{ status: USER_STATUS.PENDING }];
+const createAttribute = () => undefined;
 const customComponents = {
   IndicatorSeparator: () => null,
   Option: (props) => (
