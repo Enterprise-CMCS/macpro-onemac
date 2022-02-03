@@ -1,7 +1,7 @@
 import dynamoDb from "./libs/dynamodb-lib";
 import getUser from "./utils/getUser";
 import { getMyUserList, buildParams } from "./getMyUserList";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 
 /*
 var fs = require("fs");
@@ -24,8 +24,23 @@ const parseTestData = (filename) => {
 const testDBUsers = parseTestData(`${testFileLocation}usersFromDynamo.json`);
 */
 jest.mock("./utils/getUser");
+jest.mock("./libs/dynamodb-lib");
 
-//jest.mock("./libs/dynamodb-lib");
+beforeEach(() => {
+  getUser.mockImplementation(() => {
+    return testDoneBy;
+  });
+  getUserRoleObj.mockImplementation(() => {
+    return { canAccessUserManagement: true };
+  });
+  getChangeRequestFunctions.mockImplementation(() => {
+    return "something";
+  });
+  hasValidStateCode.mockImplementation(() => {
+    return true;
+  });
+});
+
 //dynamoDb.query.mockResolvedValue(testDBUsers);
 
 it("builds the correct paramaters", () => {

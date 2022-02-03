@@ -138,8 +138,6 @@ export function getUserGroup(profileData) {
 }
 
 export const GroupDivisionDisplay = ({ profileData = {} }) => {
-  if (profileRole !== ROLES.CMS_REVIEWER) return null;
-
   const groupInfo = getUserGroup(profileData);
 
   return (
@@ -438,7 +436,9 @@ const UserPage = () => {
                     : renderAddStateButton}
                 </div>
               )}
-              <GroupDivisionDisplay profileData={profileData} />
+              {profileRole === ROLES.STATE_SUBMITTER && (
+                <GroupDivisionDisplay profileData={profileData} />
+              )}
             </div>
           )}
           {!isReadOnly && (
