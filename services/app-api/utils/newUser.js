@@ -1,6 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export const newUser = (userDetails) => {
+export const newUser = async (userDetails) => {
   try {
     const contactParams = {
       TableName: process.env.oneMacTableName,
@@ -11,7 +11,7 @@ export const newUser = (userDetails) => {
       },
     };
 
-    dynamoDb.put(contactParams);
+    await dynamoDb.put(contactParams);
   } catch (e) {
     console.log("newUser put error: ", e);
     throw e;

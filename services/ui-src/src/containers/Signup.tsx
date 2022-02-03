@@ -7,7 +7,7 @@ import { USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
-const createAttribute = () => [{ status: "pending" }];
+const ignoreEventPayload = () => undefined;
 
 function StateUserSignup() {
   const history = useHistory();
@@ -36,7 +36,7 @@ function CMSSignup() {
   const { isLoggedInAsDeveloper } = useAppContext() ?? {};
   const [, onClickCMS] = useSignupCallback(
     USER_TYPE.CMS_ROLE_APPROVER,
-    createAttribute
+    ignoreEventPayload
   );
 
   const CMS_CHOICES = [
@@ -58,7 +58,7 @@ function CMSSignup() {
 function HelpdeskSignup() {
   const [, onLoadHelpdesk] = useSignupCallback(
     USER_TYPE.HELPDESK,
-    createAttribute
+    ignoreEventPayload
   );
   useEffect(() => {
     onLoadHelpdesk?.({});

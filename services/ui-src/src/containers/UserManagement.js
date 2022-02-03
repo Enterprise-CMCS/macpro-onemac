@@ -5,6 +5,7 @@ import {
   ROUTES,
   USER_STATUS,
   USER_TYPE,
+  effectiveRoleForUser,
   getUserRoleObj,
   roleLabels,
   territoryMap,
@@ -89,8 +90,8 @@ const UserManagement = () => {
         USER_TYPE.CMS_ROLE_APPROVER,
         USER_TYPE.HELPDESK,
         USER_TYPE.SYSTEM_ADMIN,
-      ].includes(userProfile?.userData?.type),
-    [userProfile?.userData?.type]
+      ].includes(effectiveRoleForUser(userProfile?.userData?.roleList)?.[0]),
+    [userProfile?.userData?.roleList]
   );
   const updateList = useCallback(() => {
     UserDataApi.getMyUserList(userProfile.email)
@@ -204,7 +205,7 @@ const UserManagement = () => {
 
   const onPopupAction = useCallback(
     async (rowNum, value) => {
-      const { role, stateCode, ...restOfUser } = userList[rowNum];
+      const { role, territory, ...restOfUser } = userList[rowNum];
       setDoneToName(restOfUser.fullName);
 
       try {
@@ -212,7 +213,7 @@ const UserManagement = () => {
           email: userList[rowNum].email,
           doneByEmail: userProfile.userData.email,
           role,
-          territory: stateCode ?? "All",
+          territory: territory ?? "All",
           status: value,
         });
 

@@ -133,6 +133,38 @@ class UserDataApi {
     }
   }
 
+  async setContactInfo(contactInfo: any): Promise<string> {
+    try {
+      return await API.put("oneMacAPI", "/contactInfo", {
+        body: contactInfo,
+      });
+    } catch (error) {
+      return handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error changing the user status."
+      );
+    }
+  }
+
+  async requestAccess(
+    email: string,
+    role: USER_TYPE,
+    territories?: string[]
+  ): Promise<string> {
+    try {
+      return await API.post("oneMacAPI", "/requestAccess", {
+        body: { email, role, territories },
+      });
+    } catch (error) {
+      return handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error changing the user status."
+      );
+    }
+  }
+
   async updateUserStatus(updateStatusRequest: any): Promise<string> {
     if (!updateStatusRequest) {
       throw new Error("setUserStatus API call required parameters missing");

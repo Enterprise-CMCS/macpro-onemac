@@ -38,19 +38,19 @@ export function useFormFields(
 
 export function useSignupCallback(
   userType: USER_TYPE,
-  processAttributes: (payload: {}) => {}[]
+  processAttributes?: (payload: {}) => string[] | undefined
 ): [boolean, (payload: {}, additionalProperties?: {}) => void] {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation<{}>();
   const {
     isLoggedInAsDeveloper,
-    userProfile: { email = "", firstName = "", lastName = "" } = {},
+    userProfile: { email = "" } = {},
     setUserInfo,
   } = useAppContext() ?? {};
 
   const signupUser = useCallback(
-    async (payload, additionalProperties) => {
+    async (payload) => {
       if (loading) return;
       try {
         setLoading(true);
@@ -59,15 +59,7 @@ export function useSignupCallback(
           payload = processAttributes(payload);
         }
 
-        let answer = await UserDataApi.updateUser({
-          userEmail: email,
-          doneBy: email,
-          firstName,
-          lastName,
-          type: userType,
-          attributes: payload,
-          ...additionalProperties,
-        });
+        let answer = await UserDataApi.requestAccess(email, userType, payload);
         // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
 
@@ -117,10 +109,8 @@ export function useSignupCallback(
     },
     [
       email,
-      firstName,
       history,
       isLoggedInAsDeveloper,
-      lastName,
       loading,
       location,
       processAttributes,

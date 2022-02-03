@@ -232,19 +232,11 @@ const UserPage = () => {
       try {
         setLoading(true);
 
-        payload = payload.map(({ value }) => ({
-          stateCode: value,
-          status: "pending",
-        }));
-
-        let answer = await UserDataApi.updateUser({
-          userEmail: userProfile.email,
-          doneBy: userProfile.email,
-          firstName: userProfile.firstName,
-          lastName: userProfile.lastName,
-          type: userType,
-          attributes: payload,
-        });
+        let answer = await UserDataApi.requestAccess(
+          userProfile.email,
+          userType,
+          payload.map(({ value }) => value)
+        );
 
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
         setAlertCode(RESPONSE_CODE.USER_SUBMITTED);
@@ -259,8 +251,6 @@ const UserPage = () => {
     },
     [
       userProfile.email,
-      userProfile.firstName,
-      userProfile.lastName,
       userType,
       setIsStateSelectorVisible,
       setLoading,
