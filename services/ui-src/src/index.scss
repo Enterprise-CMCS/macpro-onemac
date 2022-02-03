@@ -2112,6 +2112,10 @@ aside#faq-contact-info-box {
   position: relative;
 }
 
+.picker-button {
+  display: flex;
+}
+
 .dropdown-column-picker-box {
   @extend .ds-u-align-items--center;
   background-color: $color-white;

@@ -70,6 +70,9 @@ export default function PortalTable<V extends {} = {}>({
       defaultColumn,
       filterTypes: customFilterTypes,
       ...props,
+      initialState: {
+        hiddenColumns: ["territory", "familyNumber"],
+      },
     },
     useGlobalFilter,
     useFilters,

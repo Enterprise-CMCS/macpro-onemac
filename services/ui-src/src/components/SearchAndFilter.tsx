@@ -41,7 +41,7 @@ import { SelectOption, territoryList } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
-import { animated, useTransition, easings } from "@react-spring/web";
+import { animated, useTransition, easings, useSpring } from "@react-spring/web";
 
 const { afterToday } = DateRangePicker;
 
@@ -76,12 +76,23 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
     return () => window.removeEventListener("click", listenToClick);
   }, [setShowColumnPicker, showColumnPickerDropdown]);
 
+  const iconRotateAnimation = useSpring({
+    transform: showColumnPickerDropdown ? "rotateZ(180deg)" : "rotateZ(0deg)",
+    duration: 35,
+  });
+
   return (
     <>
       <div className="picker-wrapper" ref={dropdownButtonRef}>
-        <Button aria-expanded="false" onClick={toggleColumnPickerDropdown}>
+        <Button
+          className="picker-button"
+          aria-expanded="false"
+          onClick={toggleColumnPickerDropdown}
+        >
           Show/Hide Columns&nbsp;
-          <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
+          <animated.div style={iconRotateAnimation}>
+            <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
+          </animated.div>
         </Button>
         {showColumnPickerDropdown && (
           <div
