@@ -8,7 +8,7 @@ import {
 } from "cmscommonlib";
 import getUser from "./utils/getUser";
 
-const buildParams = (role, territory) => {
+export const buildParams = (role, territory) => {
   // default for CSA and HD
   let KeyConditionExpression = "GSI1pk=:user";
   const ExpressionAttributeValues = { ":user": "USER" };
@@ -41,39 +41,37 @@ const buildParams = (role, territory) => {
 };
 
 export const getMyUserList = async (event) => {
-  // get the rest of the details about the current user
-  const doneBy = await getUser(event.queryStringParameters.email);
+  try {
+    // get the rest of the details about the current user
+    const doneBy = await getUser(event.queryStringParameters.email);
 
-  if (!doneBy) {
-    return RESPONSE_CODE.USER_NOT_FOUND;
+    if (!doneBy) {
+      return RESPONSE_CODE.USER_NOT_FOUND;
+    }
+
+    if (!getUserRoleObj(doneBy?.roleList).canAccessUserManagement) {
+      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    }
+
+    const [territory] = Array.from(
+      new Set(
+        doneBy.roleList
+          .filter(({ status }) => status === USER_STATUS.ACTIVE)
+          .map(({ territory }) => territory)
+      )
+    );
+
+    console.debug(buildParams(doneBy.roleList[0].role, territory));
+
+    const listResult = await dynamoDb.query(
+      buildParams(doneBy.roleList[0].role, territory)
+    );
+
+    return listResult.Items;
+  } catch (e) {
+    console.log("getMyUserList exception? ", e);
+    return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
-
-  if (!getUserRoleObj(doneBy?.roleList).canAccessUserManagement) {
-    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
-  }
-
-  const [territory] = Array.from(
-    new Set(
-      doneBy.roleList
-        .filter(({ status }) => status === USER_STATUS.ACTIVE)
-        .map(({ territory }) => territory)
-    )
-  );
-
-  console.debug(buildParams(doneBy.roleList[0].role, territory));
-
-  const listResult = await dynamoDb.query(
-    buildParams(doneBy.roleList[0].role, territory)
-  );
-
-  return listResult.Items;
 };
 
-export const main = handler(async (event) => {
-  try {
-    return getMyUserList(event);
-  } catch (e) {
-    console.log("error: ", e);
-    return `Error ${e.message} in getMyUserList`;
-  }
-});
+export const main = handler(getMyUserList);

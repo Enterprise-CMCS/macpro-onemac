@@ -8,7 +8,6 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ChangeRequest,
-  effectiveRoleForUser,
   getUserRoleObj,
   USER_STATUS,
   USER_TYPE,
@@ -33,6 +32,7 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
+    userRole,
     userProfile = {},
     userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
@@ -49,8 +49,8 @@ const Dashboard = () => {
     }
 
     // Redirect new users to the signup flow.
-    const userAccess = effectiveRoleForUser(userData?.roleList);
-    if (cmsRoles && userAccess === null) {
+    //    const userAccess = effectiveRoleForUser(userData?.roleList);
+    if (cmsRoles && userRole === null) {
       history.replace("/signup", location.state);
       return;
     }
@@ -280,18 +280,18 @@ const Dashboard = () => {
   }
 
   function renderSubmissionList() {
-    if (userData?.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+    if (userRole !== USER_TYPE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
-        return <EmptyList message={pendingMessage[userData?.type]} />;
+        return <EmptyList message={pendingMessage[userRole]} />;
       }
 
       const userStatusNotActive =
-        userData?.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+        userRole && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
       if (userStatusNotActive) {
         return (
           <EmptyList
             showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userData.type]}
+            message={deniedOrRevokedMessage[userProfile.userRole]}
           />
         );
       }

@@ -152,59 +152,6 @@ class UserDataApi {
   }
 
   /**
-   * Get all active state system administrators' contact info for a list of states.
-   */
-  async getStateSystemAdmins(states: string[]): Promise<any[]> {
-    try {
-      const params = new URLSearchParams();
-      for (const state of states) {
-        params.append("state", state);
-      }
-      return await API.get(
-        "oneMacAPI",
-        `/getStateSystemAdmins?${params.toString()}`,
-        undefined
-      );
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the state system admins."
-      );
-    }
-  }
-
-  /**
-   * Get all active CMS role approvers' contact info.
-   */
-  async getCmsRoleApprovers(): Promise<any[]> {
-    try {
-      return await API.get("oneMacAPI", "/getCmsRoleApprovers", undefined);
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the CMS role approvers."
-      );
-    }
-  }
-
-  /**
-   * Get all active CMS system admins' contact info.
-   */
-  async getCmsSystemAdmins(): Promise<any[]> {
-    try {
-      return await API.get("oneMacAPI", "/getCmsSystemAdmins", undefined);
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the CMS admins."
-      );
-    }
-  }
-
-  /**
    * Get the Approver List for a given role and territory
    * Throws an exception if the API throws an exception
    * @param role the role of the user

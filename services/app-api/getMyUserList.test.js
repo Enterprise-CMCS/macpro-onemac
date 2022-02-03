@@ -1,7 +1,9 @@
 import dynamoDb from "./libs/dynamodb-lib";
 import getUser from "./utils/getUser";
-import { getMyUserList } from "./getMyUserList";
+import { getMyUserList, buildParams } from "./getMyUserList";
+import { RESPONSE_CODE } from "cmscommonlib";
 
+/*
 var fs = require("fs");
 const testFileLocation = "../common/testData/";
 
@@ -20,13 +22,44 @@ const parseTestData = (filename) => {
 };
 
 const testDBUsers = parseTestData(`${testFileLocation}usersFromDynamo.json`);
-
+*/
 jest.mock("./utils/getUser");
 
-jest.mock("./libs/dynamodb-lib");
-dynamoDb.scan.mockResolvedValue(testDBUsers);
+//jest.mock("./libs/dynamodb-lib");
+//dynamoDb.query.mockResolvedValue(testDBUsers);
 
-describe("request from user management page", () => {
+it("builds the correct paramaters", () => {
+  const expectedParams = {
+    ExpressionAttributeNames: {
+      "#date": "date",
+      "#role": "role",
+      "#status": "status",
+    },
+    ExpressionAttributeValues: {
+      ":sk": "statesystemadmin#Territory",
+      ":user": "USER",
+    },
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk=:user AND GSI1sk=:sk",
+    ProjectionExpression:
+      "#date, doneByName, email, fullName, #role, #status, territory",
+    TableName: undefined,
+  };
+  expect(buildParams("Role", "Territory")).toStrictEqual(expectedParams);
+});
+
+it("errors when no email provided", async () => {
+  getUser.mockImplementationOnce(() => {
+    return null;
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_NOT_FOUND;
+  expect(
+    getMyUserList({ queryStringParameters: { email: "" } })
+  ).resolves.toStrictEqual(expectedReturn);
+});
+
+/*
   it.each(["statesystemadmin", "statesubmitter"])(
     "returns correct user list for %s",
     (userType) => {
@@ -50,4 +83,4 @@ describe("request from user management page", () => {
         });
     }
   );
-});
+*/

@@ -14,6 +14,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ChangeRequest,
+  effectiveRoleForUser,
   getUserRoleObj,
   USER_TYPE,
   USER_STATUS,
@@ -64,11 +65,7 @@ const PackageList = () => {
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(
-    userData.type,
-    !cmsRoles,
-    userData?.attributes
-  );
+  const userRoleObj = getUserRoleObj(userData?.roleList);
 
   const loadPackageList = useCallback(
     async (ctrlr) => {
@@ -393,20 +390,17 @@ const PackageList = () => {
   const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
 
   function renderSubmissionList() {
-    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
-      if (userStatus === USER_STATUS.PENDING) {
-        return (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        );
+    const { effRole, effStatus } = effectiveRoleForUser(userData.roleList);
+    if (effRole !== USER_TYPE.CMS_ROLE_APPROVER) {
+      if (effStatus === USER_STATUS.PENDING) {
+        return <EmptyList message={pendingMessage[effRole]} />;
       }
 
-      const userStatusNotActive =
-        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
-      if (userStatusNotActive) {
+      if (effStatus !== USER_STATUS.ACTIVE) {
         return (
           <EmptyList
             showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userData.type]}
+            message={deniedOrRevokedMessage[effRole]}
           />
         );
       }

@@ -137,7 +137,8 @@ export function getUserGroup(userData) {
 }
 
 export const GroupDivisionDisplay = ({ userData = {} }) => {
-  if (userData.type !== ROLES.CMS_REVIEWER) return null;
+  if (effectiveRoleForUser(userData.roleList).role !== ROLES.CMS_REVIEWER)
+    return null;
 
   const groupInfo = getUserGroup(userData);
 

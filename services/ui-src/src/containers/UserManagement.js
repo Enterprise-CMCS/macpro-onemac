@@ -75,22 +75,21 @@ const alertCodes = {
 const UserManagement = () => {
   const [userList, setUserList] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { userProfile, userStatus } = useAppContext();
+  const { userProfile, userStatus, userRole } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole =
-    userProfile.userData.type !== USER_TYPE.STATE_SYSTEM_ADMIN;
+  const showUserRole = userRole !== USER_TYPE.STATE_SYSTEM_ADMIN;
   const includeStateCode = useMemo(
     () =>
       [
         USER_TYPE.CMS_ROLE_APPROVER,
         USER_TYPE.HELPDESK,
         USER_TYPE.SYSTEM_ADMIN,
-      ].includes(userProfile?.userData?.type),
-    [userProfile?.userData?.type]
+      ].includes(userRole),
+    [userRole]
   );
   const updateList = useCallback(() => {
     UserDataApi.getMyUserList(userProfile.email)
@@ -349,7 +348,9 @@ const UserManagement = () => {
 
   function renderUserList() {
     if (userStatus === USER_STATUS.PENDING) {
-      return <EmptyList message={pendingMessage[userProfile.userData.type]} />;
+      return (
+        <EmptyList message={pendingMessage[userProfile.userData.effRole]} />
+      );
     }
 
     const userStatusNotActive =
@@ -357,7 +358,7 @@ const UserManagement = () => {
     if (userStatusNotActive) {
       return (
         <EmptyList
-          message={deniedOrRevokedMessage[userProfile.userData.type]}
+          message={deniedOrRevokedMessage[userProfile.userData.effRole]}
         />
       );
     }
@@ -387,8 +388,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          (userProfile.userData.type === USER_TYPE.HELPDESK ||
-            userProfile.userData.type === USER_TYPE.SYSTEM_ADMIN) &&
+          (userRole === USER_TYPE.HELPDESK ||
+            userRole === USER_TYPE.SYSTEM_ADMIN) &&
           userStatus === USER_STATUS.ACTIVE &&
           csvExportSubmissions
         }
