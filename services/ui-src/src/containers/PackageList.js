@@ -230,6 +230,14 @@ const PackageList = () => {
           disableFilters: true,
         },
         {
+          Header: "State",
+          accessor: getState,
+          id: "territory",
+          disableFilters: false,
+          filter: "includesValue",
+          Filter: CustomFilterUi.TerritorySelect,
+        },
+        {
           Header: "Type",
           accessor: getType,
           id: "componentType",
@@ -239,12 +247,12 @@ const PackageList = () => {
           Filter: CustomFilterUi.MultiCheckbox,
         },
         {
-          Header: "State",
-          accessor: getState,
-          id: "territory",
+          Header: "Status",
+          accessor: "currentStatus",
+          id: "packageStatus",
           disableFilters: false,
-          filter: "includesValue",
-          Filter: CustomFilterUi.TerritorySelect,
+          filter: CustomFilterTypes.MultiCheckbox,
+          Filter: CustomFilterUi.MultiCheckbox,
         },
         {
           Header: "90th Day",
@@ -283,14 +291,6 @@ const PackageList = () => {
           disableFilters: false,
           filter: CustomFilterTypes.DateRange,
           Filter: CustomFilterUi.DateRange,
-        },
-        {
-          Header: "Status",
-          accessor: "currentStatus",
-          id: "packageStatus",
-          disableFilters: false,
-          filter: CustomFilterTypes.MultiCheckbox,
-          Filter: CustomFilterUi.MultiCheckbox,
         },
         {
           Header: "Date Submitted",

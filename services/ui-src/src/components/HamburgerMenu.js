@@ -4,9 +4,20 @@ import ClosingXLight from "../assets/images/closingXlight30x30.svg";
 import HamburgerMenuIcon from "../assets/images/HamburgerMenuIcon.svg";
 import DotsVector from "../assets/images/dotsvector.svg";
 import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
+import { animated, useTransition, easings } from "@react-spring/web";
 
 function HamburgerMenu({ linksToDisplay }) {
   const [isMenuExpanded, setIsMenuExpanded] = useState(false);
+
+  //Mount transitions animation
+  const transitionHamburger = useTransition(isMenuExpanded, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    config: {
+      duration: 95,
+      easing: easings.easeInOutQuad,
+    },
+  });
 
   useEffect(() => {
     const listenToWidth = () => {
@@ -36,14 +47,16 @@ function HamburgerMenu({ linksToDisplay }) {
     window.addEventListener("click", listenToClick);
     return () => window.removeEventListener("click", listenToClick);
   });
-  function renderOpenMenu() {
+
+  function renderOpenMenu(style) {
     return (
-      <div
+      <animated.div
         id="hamburgerNav"
         role="listbox"
         aria-label="Opened Hamburger Menu"
         className="hamburger-content"
         ref={hamburgerWrapperRef}
+        style={style}
       >
         <Button
           onClick={() => setIsMenuExpanded(false)}
@@ -78,7 +91,7 @@ function HamburgerMenu({ linksToDisplay }) {
           alt="oneMacLogo"
           src={oneMacLogo}
         />
-      </div>
+      </animated.div>
     );
   }
 
@@ -105,7 +118,13 @@ function HamburgerMenu({ linksToDisplay }) {
     );
   }
 
-  return <>{isMenuExpanded ? renderOpenMenu() : renderMenuButton()}</>;
+  return (
+    <>
+      {transitionHamburger((style, isMenuExpanded) =>
+        isMenuExpanded ? renderOpenMenu(style) : renderMenuButton()
+      )}
+    </>
+  );
 }
 
 export default HamburgerMenu;

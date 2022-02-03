@@ -41,6 +41,8 @@ import { SelectOption, territoryList } from "cmscommonlib";
 import { useToggle } from "../libs/hooksLib";
 import { PackageRowValue } from "../domain-types";
 
+import { animated, useTransition, easings, useSpring } from "@react-spring/web";
+
 const { afterToday } = DateRangePicker;
 
 export interface ColumnPickerProps<V extends {}> {
@@ -74,12 +76,23 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
     return () => window.removeEventListener("click", listenToClick);
   }, [setShowColumnPicker, showColumnPickerDropdown]);
 
+  const iconRotateAnimation = useSpring({
+    transform: showColumnPickerDropdown ? "rotateZ(180deg)" : "rotateZ(0deg)",
+    config: { duration: 150 },
+  });
+
   return (
     <>
       <div className="picker-wrapper" ref={dropdownButtonRef}>
-        <Button aria-expanded="false" onClick={toggleColumnPickerDropdown}>
+        <Button
+          className="picker-button"
+          aria-expanded="false"
+          onClick={toggleColumnPickerDropdown}
+        >
           Show/Hide Columns&nbsp;
-          <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
+          <animated.div style={iconRotateAnimation}>
+            <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
+          </animated.div>
         </Button>
         {showColumnPickerDropdown && (
           <div
@@ -469,55 +482,74 @@ function FilterPane<V extends {}>({
     TEMP_onReset();
   }, [columnsInternal, setAllFilters, TEMP_onReset]);
 
+  //Mount transition animation
+
+  const transitionFilterPane = useTransition(showFilters, {
+    from: { opacity: 0 },
+    enter: { opacity: 1 },
+    leave: { opacity: 0 },
+    config: {
+      duration: 95,
+      easing: easings.easeInOutQuad,
+    },
+  });
+
   return (
     <>
       <Button onClick={toggleShowFilters}>Filter</Button>
-      {showFilters &&
-        pageContentRef.current &&
-        createPortal(
-          <div
-            aria-label="Filter Results"
-            className="filter-pane"
-            role="search"
-          >
-            <header>
-              <h4>Filter By</h4>
-              <Button
-                autoFocus
-                className="close-filter-pane"
-                inversed
-                onClick={toggleShowFilters}
-                size="small"
-                variation="transparent"
+
+      {transitionFilterPane((style, showFilters) =>
+        showFilters
+          ? pageContentRef.current &&
+            createPortal(
+              <animated.div
+                aria-label="Filter Results"
+                className="filter-pane"
+                role="search"
+                style={style}
               >
-                Close <FontAwesomeIcon icon={faTimes} />
-              </Button>
-            </header>
-            {/* Did not use CMS Accordion component because it steals KeyDown events */}
-            <div className="ds-c-accordion filter-accordion">
-              {columnsInternal
-                ?.filter(({ canFilter }) => canFilter)
-                ?.map((column) => (
-                  <AccordionItem
-                    buttonClassName="inversed-accordion-button"
-                    contentClassName="inversed-accordion-content"
-                    heading={column.render("Header")}
-                    headingLevel="6"
-                    id={column.id}
-                    key={column.id}
+                <header>
+                  <h4>Filter By</h4>
+                  <Button
+                    autoFocus
+                    className="close-filter-pane"
+                    inversed
+                    onClick={toggleShowFilters}
+                    size="small"
+                    variation="transparent"
                   >
-                    {column.render("Filter")}
-                  </AccordionItem>
-                ))}
-            </div>
-            <footer>
-              <Button inversed onClick={onResetFilters} variation="transparent">
-                Reset
-              </Button>
-            </footer>
-          </div>,
-          pageContentRef.current
-        )}
+                    Close <FontAwesomeIcon icon={faTimes} />
+                  </Button>
+                </header>
+                <Button
+                  className="reset-button-filter"
+                  onClick={onResetFilters}
+                  inversed
+                >
+                  Reset
+                </Button>
+                {/* Did not use CMS Accordion component because it steals KeyDown events */}
+                <div className="ds-c-accordion filter-accordion">
+                  {columnsInternal
+                    ?.filter(({ canFilter }) => canFilter)
+                    ?.map((column) => (
+                      <AccordionItem
+                        buttonClassName="inversed-accordion-button"
+                        contentClassName="inversed-accordion-content"
+                        heading={column.render("Header")}
+                        headingLevel="6"
+                        id={column.id}
+                        key={column.id}
+                      >
+                        {column.render("Filter")}
+                      </AccordionItem>
+                    ))}
+                </div>
+              </animated.div>,
+              pageContentRef.current
+            )
+          : ""
+      )}
     </>
   );
 }
