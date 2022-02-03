@@ -5,6 +5,7 @@ import {
   ROUTES,
   USER_STATUS,
   USER_TYPE,
+  effectiveRoleForUser,
   getUserRoleObj,
   roleLabels,
   territoryMap,
@@ -203,7 +204,7 @@ const UserManagement = () => {
 
   const onPopupAction = useCallback(
     async (rowNum, value) => {
-      const { role, stateCode, ...restOfUser } = userList[rowNum];
+      const { role, territory, ...restOfUser } = userList[rowNum];
       setDoneToName(restOfUser.fullName);
 
       try {
@@ -211,7 +212,7 @@ const UserManagement = () => {
           email: userList[rowNum].email,
           doneByEmail: userProfile.userData.email,
           role,
-          territory: stateCode ?? "All",
+          territory: territory ?? "All",
           status: value,
         });
 

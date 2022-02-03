@@ -83,7 +83,7 @@ export const main = handler(async (event) => {
           division: item.division,
         };
 
-        newUser(contactDetails);
+        await newUser(contactDetails);
 
         for (const thing of updateList) {
           await changeUserStatus({

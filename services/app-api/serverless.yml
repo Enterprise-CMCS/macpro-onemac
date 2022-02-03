@@ -187,6 +187,26 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  setContactInfo:
+    handler: setContactInfo.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: contactInfo
+          method: put
+          cors: true
+          authorizer: aws_iam
+
+  requestAccess:
+    handler: requestAccess.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: requestAccess
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   updateUserStatus:
     handler: updateUserStatus.main
     role: LambdaApiRole

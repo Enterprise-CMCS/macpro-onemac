@@ -94,6 +94,13 @@ export function App() {
     setUserInfo();
   }, [setUserInfo]);
 
+  const { email, firstName, lastName } = authState.userProfile;
+  useEffect(() => {
+    // When user's email or name changes, create a record of their info if it
+    // does not already exist
+    if (email) UserDataApi.setContactInfo({ email, firstName, lastName });
+  }, [email, firstName, lastName]);
+
   /**
    * Updates phone number in the user profile,
    * @param phoneNumber is used to update the user profile

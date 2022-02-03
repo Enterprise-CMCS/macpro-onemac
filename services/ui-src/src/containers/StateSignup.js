@@ -14,10 +14,7 @@ export function StateSignup() {
   } = useLocation();
 
   const expandStatesToAttributes = useCallback((values) => {
-    return values.map(({ value }) => ({
-      stateCode: value,
-      status: "pending",
-    }));
+    return values.map(({ value }) => value);
   }, []);
 
   const [loading, onSubmit] = useSignupCallback(role, expandStatesToAttributes);
