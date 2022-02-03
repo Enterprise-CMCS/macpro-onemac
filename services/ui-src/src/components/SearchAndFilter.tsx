@@ -78,7 +78,7 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
 
   const iconRotateAnimation = useSpring({
     transform: showColumnPickerDropdown ? "rotateZ(180deg)" : "rotateZ(0deg)",
-    duration: 35,
+    config: { duration: 150 },
   });
 
   return (
