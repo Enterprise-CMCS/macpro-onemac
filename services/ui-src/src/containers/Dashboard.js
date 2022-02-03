@@ -82,7 +82,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [cmsRoles, history, location, userData, userProfile]);
+  }, [cmsRoles, history, location, userRole, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -291,7 +291,7 @@ const Dashboard = () => {
         return (
           <EmptyList
             showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userRole]}
+            message={deniedOrRevokedMessage[userRole]}
           />
         );
       }
