@@ -12,6 +12,8 @@ export type UserRecord = {
   roleList: RoleEntry[];
   validRoutes?: string[];
   phoneNumber?: string;
+  effRole?: string;
+  effStatus?: string;
 };
 
 export type AccessHistoryEvent = {
@@ -30,6 +32,7 @@ export type AppContextValue = {
   isLoggedInAsDeveloper: boolean;
   isValidRoute: boolean;
   userProfile: Partial<UserProfile>;
+  userRole: string | null;
   userStatus: string | null;
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;

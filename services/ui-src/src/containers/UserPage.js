@@ -35,8 +35,8 @@ export const ACCESS_LABELS = {
   revoked: "Access Revoked",
 };
 
-export const ContactList = ({ contacts, userType }) => {
-  let label = roleLabels[APPROVING_USER_TYPE[userType]] ?? "Contact";
+export const ContactList = ({ contacts, profileRole }) => {
+  let label = roleLabels[APPROVING_USER_TYPE[profileRole]] ?? "Contact";
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
 
@@ -56,12 +56,12 @@ export const ContactList = ({ contacts, userType }) => {
 export const AccessDisplay = ({
   isReadOnly,
   selfRevoke,
-  userType,
+  profileRole,
   accesses = [],
 }) => {
   let accessHeading;
 
-  switch (userType) {
+  switch (profileRole) {
     case ROLES.STATE_SUBMITTER:
     case ROLES.STATE_SYSTEM_ADMIN:
       accessHeading = "State Access Management";
@@ -84,8 +84,9 @@ export const AccessDisplay = ({
             <div className="gradient-border" />
             <div className="state-access-card">
               {!isReadOnly &&
-                userType === ROLES.STATE_SUBMITTER &&
-                (status === "active" || status === "pending") && (
+                profileRole === ROLES.STATE_SUBMITTER &&
+                (status === USER_STATUS.ACTIVE ||
+                  status === USER_STATUS.PENDING) && (
                   <button
                     aria-label={`Self-revoke access to ${territoryMap[territory]}`}
                     disabled={isReadOnly}
@@ -95,12 +96,14 @@ export const AccessDisplay = ({
                     {CLOSING_X_IMAGE}
                   </button>
                 )}
-              {!!territory && <dt>{territoryMap[territory] || territory}</dt>}
+              {!!territory && territory !== "All" && (
+                <dt>{territoryMap[territory] || territory}</dt>
+              )}
               <dd>
                 <em>{ACCESS_LABELS[status] || status}</em>
                 <br />
                 <br />
-                <ContactList contacts={contacts} userType={userType} />
+                <ContactList contacts={contacts} profileRole={profileRole} />
               </dd>
             </div>
           </div>
@@ -110,14 +113,14 @@ export const AccessDisplay = ({
   );
 };
 
-export function getUserGroup(userData) {
-  const group = groupData.find(({ id }) => id === userData.group);
+export function getUserGroup(profileData) {
+  const group = groupData.find(({ id }) => id === profileData.group);
   let division;
 
-  if (!userData.division) return { group };
+  if (!profileData.division) return { group };
 
   const getDivisionFromGroup = ({ divisions }) =>
-    divisions.find(({ id }) => id === userData.division);
+    divisions.find(({ id }) => id === profileData.division);
 
   // first, try the group found above. if the org chart has not changed since
   // the user last modified their info, it should succeed
@@ -136,10 +139,8 @@ export function getUserGroup(userData) {
   return { group, division };
 }
 
-export const GroupDivisionDisplay = ({ userData = {} }) => {
-  if (userData.type !== ROLES.CMS_REVIEWER) return null;
-
-  const groupInfo = getUserGroup(userData);
+export const GroupDivisionDisplay = ({ profileData = {} }) => {
+  const groupInfo = getUserGroup(profileData);
 
   return (
     <div className="access-card-container">
@@ -163,39 +164,55 @@ export const GroupDivisionDisplay = ({ userData = {} }) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile, setUserInfo, updatePhoneNumber } = useAppContext();
+  const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus } =
+    useAppContext();
   const location = useLocation();
   const { userId } = useParams() ?? {};
-  const [userData, setUserData] = useState({});
+  const [profileData, setProfileData] = useState({});
+  const [profileRole, setProfileRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [accesses, setAccesses] = useState(userData?.roleList ?? []);
+  const [accesses, setAccesses] = useState(
+    userProfile?.userData?.roleList ?? []
+  );
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
-  let userType = "user";
-  const userAccess = effectiveRoleForUser(userData?.roleList);
-  if (userAccess !== null) [userType] = userAccess;
-  const userTypeDisplayText = roleLabels[userType];
 
   useEffect(() => {
-    if (!isReadOnly) {
-      setUserData(userProfile.userData);
-      return;
-    }
+    const getProfile = async (profileEmail) => {
+      if (!isReadOnly) {
+        return [{ ...userProfile.userData }, userRole];
+      }
 
-    (async () => {
+      let tempProfileData = {},
+        tempProfileRole = "user";
+
       try {
-        setUserData(await UserDataApi.userProfile(userId));
+        tempProfileData = await UserDataApi.userProfile(profileEmail);
+        const profileAccess = effectiveRoleForUser(tempProfileData?.roleList);
+        if (profileAccess !== null) [tempProfileRole] = profileAccess;
       } catch (e) {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
-    })();
-  }, [isReadOnly, userId, userProfile]);
+
+      return [tempProfileData, tempProfileRole];
+    };
+
+    getProfile(userId)
+      .then(([newProfileData, newProfileRole]) => {
+        setProfileData(newProfileData);
+        setProfileRole(newProfileRole);
+      })
+      .catch((e) => {
+        console.error("Error fetching user data", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      });
+  }, [isReadOnly, userId, userProfile, userRole, userStatus]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);
@@ -216,7 +233,7 @@ const UserPage = () => {
         if (result === RESPONSE_CODE.USER_SUBMITTED)
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
-        setUserData((data) => ({ ...data, phoneNumber: newNumber }));
+        setProfileData((data) => ({ ...data, phoneNumber: newNumber }));
         updatePhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
@@ -224,7 +241,7 @@ const UserPage = () => {
       }
       setIsEditingPhone(false);
     },
-    [userProfile.email, setUserData, updatePhoneNumber]
+    [userProfile.email, setProfileData, updatePhoneNumber]
   );
 
   const signupUser = useCallback(
@@ -234,7 +251,7 @@ const UserPage = () => {
 
         let answer = await UserDataApi.requestAccess(
           userProfile.email,
-          userType,
+          userRole,
           payload.map(({ value }) => value)
         );
 
@@ -251,7 +268,7 @@ const UserPage = () => {
     },
     [
       userProfile.email,
-      userType,
+      userRole,
       setIsStateSelectorVisible,
       setLoading,
       setUserInfo,
@@ -265,7 +282,7 @@ const UserPage = () => {
       UserDataApi.updateUserStatus({
         email: userProfile.email,
         doneByEmail: userProfile.email,
-        role: userType,
+        role: userRole,
         territory: stateAccessToRemove,
         status: USER_STATUS.REVOKED,
       }).then(function (returnCode) {
@@ -284,7 +301,7 @@ const UserPage = () => {
     closeConfirmation,
     stateAccessToRemove,
     userProfile.email,
-    userType,
+    userRole,
     setUserInfo,
   ]);
 
@@ -335,48 +352,26 @@ const UserPage = () => {
   }, [setIsEditingPhone, setIsStateSelectorVisible]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        let contacts = [],
-          getContacts = () => contacts;
+    const createAccessList = async (inRoles) => {
+      if (!inRoles) return [];
 
-        switch (userType) {
-          case ROLES.STATE_SUBMITTER: {
-            const adminsByState = await UserDataApi.getStateSystemAdmins(
-              userData.roleList
-                .map(({ territory }) => territory)
-                .filter(Boolean)
-            );
-            getContacts = ({ state }) => adminsByState[state];
-            break;
-          }
+      return await Promise.all(
+        inRoles.map((access) =>
+          UserDataApi.getMyApprovers(access.role, access.territory).then(
+            (result) => {
+              return { ...access, contacts: result };
+            }
+          )
+        )
+      );
+    };
 
-          case ROLES.CMS_REVIEWER:
-          case ROLES.STATE_SYSTEM_ADMIN: {
-            contacts = await UserDataApi.getCmsRoleApprovers();
-            break;
-          }
-          case ROLES.HELPDESK:
-          case ROLES.CMS_ROLE_APPROVER: {
-            contacts = await UserDataApi.getCmsSystemAdmins();
-            break;
-          }
-
-          default:
-            return;
-        }
-
-        setAccesses(
-          userData?.roleList.map((access) => ({
-            ...access,
-            contacts: getContacts(access),
-          }))
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, [userData, userType]);
+    createAccessList(profileData?.roleList)
+      .then(setAccesses)
+      .catch((e) => {
+        console.log("error:  ", e);
+      });
+  }, [profileData]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -392,16 +387,22 @@ const UserPage = () => {
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
             </h2>
-            <Review heading="Full Name">{userData.fullName}</Review>
+            <Review heading="Full Name">
+              {profileData.fullName ? profileData.fullName : "Unknown"}
+            </Review>
             <Review heading="Role">
-              {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
+              {roleLabels[profileRole]
+                ? roleLabels[profileRole]
+                : "Unregistered"}
             </Review>
             <Review heading="Email">
-              {userData.email ? (
+              {profileData.email ? (
                 isReadOnly ? (
-                  <a href={`mailto:${userData.email}`}>{userData.email}</a>
+                  <a href={`mailto:${profileData.email}`}>
+                    {profileData.email}
+                  </a>
                 ) : (
-                  userData.email
+                  profileData.email
                 )
               ) : (
                 ""
@@ -409,38 +410,40 @@ const UserPage = () => {
             </Review>
             <PhoneNumber
               isEditing={isEditingPhone}
-              phoneNumber={userData.phoneNumber}
+              phoneNumber={profileData.phoneNumber}
               onCancel={onPhoneNumberCancel}
               onEdit={onPhoneNumberEdit}
               onSubmit={onPhoneNumberSubmit}
               readOnly={isReadOnly}
             />
           </div>
-          {userType !== ROLES.SYSTEM_ADMIN && (
+          {profileRole !== ROLES.SYSTEM_ADMIN && (
             <div className="right-column">
               <AccessDisplay
                 accesses={accesses}
                 isReadOnly={isReadOnly}
                 selfRevoke={setStateAccessToRemove}
-                userType={userType}
+                profileRole={profileRole}
               />
-              {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
+              {!isReadOnly && profileRole === ROLES.STATE_SUBMITTER && (
                 <div className="add-access-container">
                   {isStateSelectorVisible
                     ? renderSelectStateAccess
                     : renderAddStateButton}
                 </div>
               )}
-              <GroupDivisionDisplay userData={userData} />
+              {profileRole === ROLES.CMS_REVIEWER && (
+                <GroupDivisionDisplay profileData={profileData} />
+              )}
             </div>
           )}
           {!isReadOnly && (
             <div id="profileDisclaimer" className="disclaimer-message">
               This page contains Profile Information for the{" "}
-              {userTypeDisplayText ?? userType}. The information cannot be
-              changed in the portal. However, the{" "}
-              {userTypeDisplayText ?? userType} can change their contact phone
-              number in their account.
+              {roleLabels[profileRole] ?? profileRole}. The information cannot
+              be changed in the portal. However, the{" "}
+              {roleLabels[profileRole] ?? profileRole} can change their contact
+              phone number in their account.
             </div>
           )}
         </div>

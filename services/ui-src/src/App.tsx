@@ -5,11 +5,11 @@ import { set } from "lodash";
 import { AppContextValue } from "./domain-types";
 import { AppContext } from "./libs/contextLib";
 import { devUsers } from "./libs/devUsers";
-import { getUserStatus } from "./libs/userLib";
 import UserDataApi from "./utils/UserDataApi";
 import { Routes } from "./Routes";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { effectiveRoleForUser } from "cmscommonlib";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -20,6 +20,7 @@ const DEFAULT_AUTH_STATE: Omit<
   isLoggedInAsDeveloper: false,
   isValidRoute: false,
   userProfile: {},
+  userRole: null,
   userStatus: null,
 };
 
@@ -41,6 +42,13 @@ export function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
+      const roleResult = effectiveRoleForUser(userData?.roleList);
+      let userRole = null,
+        userStatus = null;
+      if (roleResult) {
+        userRole = roleResult[0];
+        userStatus = roleResult[1];
+      }
 
       setAuthState({
         ...DEFAULT_AUTH_STATE,
@@ -59,7 +67,8 @@ export function App() {
           // Note that userData comes back as an empty object if there is none.
           userData,
         },
-        userStatus: getUserStatus(userData),
+        userRole,
+        userStatus,
       });
     } catch (error) {
       if (

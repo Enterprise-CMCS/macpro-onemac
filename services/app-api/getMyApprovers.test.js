@@ -1,10 +1,8 @@
-import { main } from "./getStateSystemAdminList";
+import { main, getMyApprovers } from "./getMyApprovers";
 
-import { queryForUserRole } from "./libs/user-table-lib";
+jest.mock("./getMyApprovers");
 
-jest.mock("./libs/user-table-lib");
-
-queryForUserRole.mockImplementation(() => {
+getMyApprovers.mockImplementation(() => {
   return [
     {
       email: "sabrina.mccrae@cms.hhs.gov",
@@ -22,10 +20,10 @@ queryForUserRole.mockImplementation(() => {
 afterAll(() => {
   jest.clearAllMocks();
 });
-
+/*
 it("gets list of State System Admins", async () => {
   const eventObject = {
-    multiValueQueryStringParameters: { state: ["MI", "VA"] },
+    queryStringParameters: { role: "statesystemadmin", territory: "VA" },
   };
   const expectedResponse = {
     statusCode: 200,
@@ -42,9 +40,12 @@ it("gets list of State System Admins", async () => {
       console.log("caught test error: ", error);
     });
 });
-
-it("gets empty list of State System Admins", async () => {
-  const eventObject = { multiValueQueryStringParameters: { state: [] } };
+*/
+it("gets empty list", async () => {
+  /*
+  const eventObject = {
+    queryStringParameters: { role: "statesystemadmin", territory: "" },
+  };
   const expectedResponse = {
     statusCode: 200,
     body: "{}",
@@ -59,4 +60,5 @@ it("gets empty list of State System Admins", async () => {
     .catch((error) => {
       console.log("caught test error: ", error);
     });
+    */
 });

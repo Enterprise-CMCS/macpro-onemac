@@ -184,54 +184,29 @@ class UserDataApi {
   }
 
   /**
-   * Get all active state system administrators' contact info for a list of states.
+   * Get the Approver List for a given role and territory
+   * Throws an exception if the API throws an exception
+   * @param role the role of the user
+   * @param territory the territory for the approvers
+   * @return the returned user item
    */
-  async getStateSystemAdmins(states: string[]): Promise<any[]> {
+  async getMyApprovers(role: string, territory: string): Promise<any[]> {
+    if (!role) {
+      console.log("role needed to find approvers");
+      throw new Error("user role was not specified for userProfile API call");
+    }
+
     try {
-      const params = new URLSearchParams();
-      for (const state of states) {
-        params.append("state", state);
-      }
       return await API.get(
         "oneMacAPI",
-        `/getStateSystemAdmins?${params.toString()}`,
+        `/getMyApprovers?role=${role}&territory=${territory}`,
         undefined
       );
     } catch (error) {
       return handleApiError(
         error,
         "FETCH_ERROR",
-        "There was an error fetching the state system admins."
-      );
-    }
-  }
-
-  /**
-   * Get all active CMS role approvers' contact info.
-   */
-  async getCmsRoleApprovers(): Promise<any[]> {
-    try {
-      return await API.get("oneMacAPI", "/getCmsRoleApprovers", undefined);
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the CMS role approvers."
-      );
-    }
-  }
-
-  /**
-   * Get all active CMS system admins' contact info.
-   */
-  async getCmsSystemAdmins(): Promise<any[]> {
-    try {
-      return await API.get("oneMacAPI", "/getCmsSystemAdmins", undefined);
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the CMS admins."
+        "There was an error fetching approvers for the user."
       );
     }
   }
