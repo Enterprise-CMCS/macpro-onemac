@@ -219,6 +219,7 @@ resources:
                     - s3:PutObject
                     - s3:PutObjectAcl
                     - s3:PutObjectTagging
+                    - s3:DeleteObject
                     - s3:PutObjectVersionTagging
                     - s3:ListBucket
                   Resource: !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*
@@ -265,6 +266,7 @@ resources:
                     - s3:PutObjectAcl
                     - s3:PutObjectTagging
                     - s3:PutObjectVersionTagging
+                    - s3:DeleteObject
                     - s3:ListBucket
                   Resource: !Sub ${ClamDefsBucket.Arn}/*
                 - Effect: "Allow"
