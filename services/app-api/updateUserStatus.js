@@ -1,8 +1,31 @@
-import { RESPONSE_CODE } from "cmscommonlib";
-
+import { RESPONSE_CODE, USER_STATUS, territoryMap } from "cmscommonlib";
 import handler from "./libs/handler-lib";
+import sendEmail from "./libs/email-lib";
+
 import getUser from "./utils/getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
+import { getMyApprovers } from "./getMyApprovers";
+
+export const selfRevokeAdminNotice = (territory, fullName, approverList) => {
+  const email = {
+    fromAddressSource: "userAccessEmailSource",
+    ToAddresses: approverList.map(
+      ({ fullName, email }) => `${fullName} <${email}>`
+    ),
+  };
+
+  email.Subject = `OneMAC State access for ${territoryMap[territory]} was self-revoked by ${fullName}`;
+  email.HTML = `
+    <p>Hello,</p>
+
+    The OneMAC State access for ${territoryMap[territory]}
+    has been self-revoked by ${fullName}. Please log into your User
+    Management Dashboard to see the updated access.
+
+    <p>Thank you!</p>`;
+
+  return email;
+};
 
 export const updateUserStatus = async (event) => {
   let body;
@@ -34,6 +57,28 @@ export const updateUserStatus = async (event) => {
     console.error(`Could not update user ${body.email}'s status`, e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
+
+  try {
+    if (
+      body.email === body.doneByEmail &&
+      body.status === USER_STATUS.REVOKED
+    ) {
+      const approverList = await getMyApprovers(body.role, body.territory);
+      const selfRevokeEmail = selfRevokeAdminNotice(
+        body.territory,
+        doneTo.fullName,
+        approverList
+      );
+      await sendEmail(selfRevokeEmail);
+    }
+  } catch (e) {
+    console.log("failed to send email: ", e);
+  }
+  // largest case: state submitter request, system admin acts
+  // send confirmation to acted upon, maybe
+  // IGNORE (probably): send notice to actor
+  // send notice to admin users
+  // bcc the every transaction
 
   return RESPONSE_CODE.USER_SUBMITTED;
 };
