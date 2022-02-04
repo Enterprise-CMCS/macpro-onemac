@@ -891,9 +891,15 @@ article.form-container {
 }
 
 .new-submission-icon {
-  padding-left: 8px;
-  width: 23px !important;
+  padding-left: 4px;
+  margin-left: 4px;
+  fill: white;
+
+  :hover {
+    fill: rgba($color-base-inverse, 0.8);
+  }
 }
+
 .user-table {
   @include custom-table;
   td:last-child {
@@ -2128,6 +2134,8 @@ aside#faq-contact-info-box {
 
 .picker-button {
   display: flex;
+  flex: nowrap;
+  gap: 4px;
 }
 
 .dropdown-column-picker-box {

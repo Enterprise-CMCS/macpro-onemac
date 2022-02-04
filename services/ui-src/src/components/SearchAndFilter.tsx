@@ -89,7 +89,7 @@ export const ColumnPicker: FC<ColumnPickerProps<any>> = ({
           aria-expanded="false"
           onClick={toggleColumnPickerDropdown}
         >
-          Show/Hide Columns&nbsp;
+          Show/Hide Columns
           <animated.div style={iconRotateAnimation}>
             <FontAwesomeIcon icon={faChevronDown} className="fa-fw" />
           </animated.div>
