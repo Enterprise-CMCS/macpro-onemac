@@ -211,7 +211,7 @@ const UserManagement = () => {
           email: userList[rowNum].email,
           doneByEmail: userProfile.userData.email,
           role,
-          territory: territory ?? "All",
+          territory: territory,
           status: value,
         });
 

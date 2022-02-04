@@ -39,7 +39,7 @@ export const main = handler(async (event) => {
       switch (item.type) {
         case "systemadmin":
           updateList.push({
-            territory: "All",
+            territory: "N/A",
             status: "active",
             date: 1584194366,
             doneBy: item.id,
@@ -54,7 +54,7 @@ export const main = handler(async (event) => {
             )
             .forEach((attribute) => {
               updateList.push({
-                territory: "All",
+                territory: "N/A",
                 ...attribute,
               });
             });

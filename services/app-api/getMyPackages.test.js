@@ -52,7 +52,7 @@ beforeEach(() => {
   });
 
   getAuthorizedStateList.mockImplementation(() => {
-    return "All";
+    return "N/A";
   });
 
   dynamoDb.query.mockResolvedValue({

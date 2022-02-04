@@ -96,7 +96,7 @@ export const AccessDisplay = ({
                     {CLOSING_X_IMAGE}
                   </button>
                 )}
-              {!!territory && territory !== "All" && (
+              {!!territory && territory !== "N/A" && (
                 <dt>{territoryMap[territory] || territory}</dt>
               )}
               <dd>
