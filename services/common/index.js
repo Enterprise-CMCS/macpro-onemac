@@ -259,6 +259,24 @@ export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
   }
 };
 
+export const inFlightRoleRequestForUser = (roleList) => {
+  const [effectiveRole, effectiveStatus] = effectiveRoleForUser(roleList);
+
+  switch (effectiveStatus) {
+    case USER_STATUS.PENDING:
+      return effectiveRole;
+    case USER_STATUS.ACTIVE: {
+      const pendingRole = roleList.find(
+        ({ status, role }) =>
+          status === USER_STATUS.PENDING && role !== effectiveRole
+      );
+      return pendingRole && pendingRole.role;
+    }
+    default:
+      return null;
+  }
+};
+
 /**
  * Finds out what a user's most relevant role information is.
  */

@@ -28,6 +28,9 @@ export type RoleEntry = {
   status: USER_STATUS;
   territory?: string;
 };
+export const inFlightRoleRequestForUser: (
+  roleList: RoleEntry[]
+) => USER_TYPE | null;
 
 export const effectiveRoleForUser: (
   roleList: RoleEntry[]

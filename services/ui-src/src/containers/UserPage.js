@@ -79,35 +79,40 @@ export const AccessDisplay = ({
     <>
       <h2 id="accessHeader">{accessHeading}</h2>
       <dl>
-        {accesses.map(({ territory, status, contacts }) => (
-          <div className="access-card-container" key={territory ?? "only-one"}>
-            <div className="gradient-border" />
-            <div className="state-access-card">
-              {!isReadOnly &&
-                profileRole === ROLES.STATE_SUBMITTER &&
-                (status === USER_STATUS.ACTIVE ||
-                  status === USER_STATUS.PENDING) && (
-                  <button
-                    aria-label={`Self-revoke access to ${territoryMap[territory]}`}
-                    disabled={isReadOnly}
-                    className="close-button"
-                    onClick={() => selfRevoke(territory)}
-                  >
-                    {CLOSING_X_IMAGE}
-                  </button>
+        {accesses
+          .filter(({ role }) => role === profileRole)
+          .map(({ territory, status, contacts }) => (
+            <div
+              className="access-card-container"
+              key={territory ?? "only-one"}
+            >
+              <div className="gradient-border" />
+              <div className="state-access-card">
+                {!isReadOnly &&
+                  profileRole === ROLES.STATE_SUBMITTER &&
+                  (status === USER_STATUS.ACTIVE ||
+                    status === USER_STATUS.PENDING) && (
+                    <button
+                      aria-label={`Self-revoke access to ${territoryMap[territory]}`}
+                      disabled={isReadOnly}
+                      className="close-button"
+                      onClick={() => selfRevoke(territory)}
+                    >
+                      {CLOSING_X_IMAGE}
+                    </button>
+                  )}
+                {!!territory && territory !== "N/A" && (
+                  <dt>{territoryMap[territory] || territory}</dt>
                 )}
-              {!!territory && territory !== "N/A" && (
-                <dt>{territoryMap[territory] || territory}</dt>
-              )}
-              <dd>
-                <em>{ACCESS_LABELS[status] || status}</em>
-                <br />
-                <br />
-                <ContactList contacts={contacts} profileRole={profileRole} />
-              </dd>
+                <dd>
+                  <em>{ACCESS_LABELS[status] || status}</em>
+                  <br />
+                  <br />
+                  <ContactList contacts={contacts} profileRole={profileRole} />
+                </dd>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </dl>
     </>
   );

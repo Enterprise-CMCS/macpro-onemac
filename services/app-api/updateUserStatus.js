@@ -65,6 +65,33 @@ export const selfRevokeAdminNotice = (territory, fullName, approverList) => {
   return email;
 };
 
+const doUpdate = async (body, doneBy, doneTo) => {
+  try {
+    await changeUserStatus({
+      ...body,
+      date: Math.floor(Date.now() / 1000),
+      doneByName: doneBy.fullName,
+      fullName: doneTo.fullName,
+    });
+  } catch (e) {
+    console.error(`Could not update user ${body.email}'s status`, e);
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  }
+
+  try {
+    const accessChangeEmail = accessChangeNotice(
+      body.territory,
+      doneTo.fullName,
+      body.role,
+      doneTo.email,
+      body.status
+    );
+    await sendEmail(accessChangeEmail);
+  } catch (e) {
+    console.log("failed to send email: ", e);
+  }
+};
+
 export const updateUserStatus = async (event) => {
   let body;
   try {
@@ -84,17 +111,19 @@ export const updateUserStatus = async (event) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
-  try {
-    await changeUserStatus({
-      ...body,
-      date: Math.floor(Date.now() / 1000),
-      doneByName: doneBy.fullName,
-      fullName: doneTo.fullName,
-    });
-  } catch (e) {
-    console.error(`Could not update user ${body.email}'s status`, e);
-    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  if (body.status === USER_STATUS.ACTIVE) {
+    for (const { role, status, territory } of doneTo.roleList) {
+      if (role !== body.role && status === USER_STATUS.ACTIVE) {
+        await doUpdate(
+          { ...body, role, territory, status: USER_STATUS.REVOKED },
+          doneBy,
+          doneTo
+        );
+      }
+    }
   }
+
+  await doUpdate(body, doneBy, doneTo);
 
   try {
     if (
@@ -109,23 +138,9 @@ export const updateUserStatus = async (event) => {
       );
       await sendEmail(selfRevokeEmail);
     }
-
-    const accessChangeEmail = accessChangeNotice(
-      body.territory,
-      doneTo.fullName,
-      body.role,
-      doneTo.email,
-      body.status
-    );
-    await sendEmail(accessChangeEmail);
   } catch (e) {
     console.log("failed to send email: ", e);
   }
-  // largest case: state submitter request, system admin acts
-  // send confirmation to acted upon, maybe
-  // IGNORE (probably): send notice to actor
-  // send notice to admin users
-  // bcc the every transaction
 
   return RESPONSE_CODE.USER_SUBMITTED;
 };

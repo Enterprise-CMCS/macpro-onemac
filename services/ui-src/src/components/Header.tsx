@@ -10,7 +10,12 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { ROUTES, getUserRoleObj } from "cmscommonlib";
+import {
+  ROUTES,
+  USER_TYPE,
+  getUserRoleObj,
+  inFlightRoleRequestForUser,
+} from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import config from "../utils/config";
 import { Alert, UsaBanner } from "@cmsgov/design-system";
@@ -104,8 +109,12 @@ const AccountButtons: React.FC<{
   setShowMenu: (newValue: boolean) => void;
 }> = ({ showMenu, setShowMenu }) => {
   const history = useHistory();
-  const { isAuthenticated, isLoggedInAsDeveloper, userProfile } =
-    useAppContext() ?? {};
+  const {
+    isAuthenticated,
+    isLoggedInAsDeveloper,
+    userRole,
+    userProfile: { userData: { roleList = [] } = {} } = {},
+  } = useAppContext() ?? {};
 
   if (!isAuthenticated) {
     return (
@@ -131,52 +140,8 @@ const AccountButtons: React.FC<{
     );
   }
 
-  const buttonContents: {
-    logout: JSX.Element;
-    profile?: JSX.Element;
-    signup?: JSX.Element;
-  } = {
-    logout: (
-      <>
-        <FontAwesomeIcon icon={faSignOutAlt} />
-        &nbsp; Log out
-      </>
-    ),
-  };
-
-  if (userProfile?.userData) {
-    // users who already have a role
-    buttonContents.profile = (
-      <>
-        <FontAwesomeIcon icon={faUserEdit} />
-        &nbsp; Manage Profile
-      </>
-    );
-  } else if (!userProfile?.cmsRoles) {
-    // users from CMS who are in the "default" role
-    buttonContents.signup = (
-      <>
-        <FontAwesomeIcon icon={faUserPlus} />
-        &nbsp; Request OneMAC Role
-      </>
-    );
-  }
-
-  // state users who have not yet requested a role
-  if (!buttonContents.signup && !buttonContents.profile) {
-    return (
-      <Button
-        inversed
-        href={ROUTES.HOME}
-        id="logoutLink"
-        onClick={() => {
-          logout(isLoggedInAsDeveloper);
-        }}
-      >
-        {buttonContents.logout}
-      </Button>
-    );
-  }
+  const shouldShowSignupLink =
+    userRole !== USER_TYPE.HELPDESK && !inFlightRoleRequestForUser(roleList);
 
   return (
     <>
@@ -201,22 +166,22 @@ const AccountButtons: React.FC<{
       </button>
       {showMenu && (
         <div className="dropdown-content">
-          {buttonContents.profile && (
-            <Link
-              to={ROUTES.PROFILE}
-              id="manageAccountLink"
-              onClick={() => setShowMenu(false)}
-            >
-              {buttonContents.profile}
-            </Link>
-          )}
-          {buttonContents.signup && (
+          <Link
+            to={ROUTES.PROFILE}
+            id="manageAccountLink"
+            onClick={() => setShowMenu(false)}
+          >
+            <FontAwesomeIcon icon={faUserEdit} />
+            &nbsp; Manage Profile
+          </Link>
+          {shouldShowSignupLink && (
             <Link
               to={ROUTES.SIGNUP}
               id="requestRoleLink"
               onClick={() => setShowMenu(false)}
             >
-              {buttonContents.signup}
+              <FontAwesomeIcon icon={faUserPlus} />
+              &nbsp; Request {userRole ? "a Role Change" : "OneMAC Role"}
             </Link>
           )}
           <Link
@@ -227,7 +192,8 @@ const AccountButtons: React.FC<{
               logout(isLoggedInAsDeveloper);
             }}
           >
-            {buttonContents.logout}
+            <FontAwesomeIcon icon={faSignOutAlt} />
+            &nbsp; Log out
           </Link>
         </div>
       )}
