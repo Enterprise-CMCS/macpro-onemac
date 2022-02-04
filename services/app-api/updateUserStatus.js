@@ -1,10 +1,48 @@
-import { RESPONSE_CODE, USER_STATUS, territoryMap } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  USER_STATUS,
+  territoryMap,
+  roleLabels,
+  APPROVING_USER_TYPE,
+} from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
 
 import getUser from "./utils/getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
+
+const statusLabels = {
+  [USER_STATUS.ACTIVE]: "granted",
+  [USER_STATUS.DENIED]: "denied",
+  [USER_STATUS.REVOKED]: "revoked",
+};
+
+export const accessChangeNotice = (
+  territory,
+  fullName,
+  role,
+  email,
+  status
+) => {
+  const moreSpecificAccess =
+    territory === "N/A" ? "" : ` for ${territoryMap[territory]}`;
+
+  return {
+    fromAddressSource: "userAccessEmailSource",
+    ToAddresses: [`${fullName} <${email}>`],
+    Subject: `Your OneMAC ${roleLabels[role]} Access${moreSpecificAccess} has been ${statusLabels[status]}`,
+    HTML: `
+  <p>Hello,</p>
+  <p>Your access as a ${roleLabels[role]}${moreSpecificAccess} has been ${
+      statusLabels[status]
+    }.
+  If you have any questions, please reach out to your ${
+    roleLabels[APPROVING_USER_TYPE[role]]
+  }.</p>
+  <p>Thank you!</p>`,
+  };
+};
 
 export const selfRevokeAdminNotice = (territory, fullName, approverList) => {
   const email = {
@@ -71,6 +109,15 @@ export const updateUserStatus = async (event) => {
       );
       await sendEmail(selfRevokeEmail);
     }
+
+    const accessChangeEmail = accessChangeNotice(
+      body.territory,
+      doneTo.fullName,
+      body.role,
+      doneTo.email,
+      body.status
+    );
+    await sendEmail(accessChangeEmail);
   } catch (e) {
     console.log("failed to send email: ", e);
   }

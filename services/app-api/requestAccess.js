@@ -11,28 +11,44 @@ import sendEmail from "./libs/email-lib";
 import getUser from "./utils/getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
+import { getCMSDateFormatNow } from "./changeRequest/email-util";
+
+export const accessPendingNotice = (fullName, role, email) => {
+  return {
+    fromAddressSource: "userAccessEmailSource",
+    ToAddresses: [`${fullName} <${email}>`],
+    Subject: "Your OneMAC Role Access is Pending Review",
+    HTML: `
+  <p>Hello,</p>
+  
+  <p>We received your request as a ${roleLabels[role]} on ${getCMSDateFormatNow(
+      Date.now()
+    )}. 
+  Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
+
+  <p>Thank you!</p>`,
+  };
+};
 
 export const adminNotice = (territory, fullName, approverList, role) => {
   const moreSpecificAccess =
     territory === "N/A" ? "" : ` for ${territoryMap[territory]}`;
 
-  const email = {
+  return {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: approverList.map(
       ({ fullName, email }) => `${fullName} <${email}>`
     ),
-  };
-  email.Subject = `New OneMAC ${roleLabels[role]} Access Request`;
-  email.HTML = `
+    Subject: `New OneMAC ${roleLabels[role]} Access Request`,
+    HTML: `
     <p>Hello,</p>
 
     There is a new OneMAC ${roleLabels[role]} access request${moreSpecificAccess} from
     ${fullName} waiting for your review.  Please log into your
     User Management Dashboard to see the pending request.
 
-    <p>Thank you!</p>`;
-
-  return email;
+    <p>Thank you!</p>`,
+  };
 };
 
 export const requestAccess = async (event) => {
@@ -73,13 +89,22 @@ export const requestAccess = async (event) => {
 
     try {
       const approverList = await getMyApprovers(body.role, territory);
-      const toAdminEmail = adminNotice(
-        territory,
+      if (approverList.length > 0) {
+        const toAdminEmail = adminNotice(
+          territory,
+          user.fullName,
+          approverList,
+          body.role
+        );
+        await sendEmail(toAdminEmail);
+      }
+
+      const toSelfEmail = accessPendingNotice(
         user.fullName,
-        approverList,
-        body.role
+        body.role,
+        user.email
       );
-      await sendEmail(toAdminEmail);
+      await sendEmail(toSelfEmail);
     } catch (e) {
       console.log("failed to send email: ", e);
     }
