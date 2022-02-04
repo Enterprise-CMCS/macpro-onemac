@@ -174,6 +174,7 @@ async function uploadAVDefinitions() {
                     return;
                 }
                 resolve();
+                console.log(data.toString());
                 utils.generateSystemMessage(
                     `--- Finished uploading ${filenameToUpload} ---`
                 );
