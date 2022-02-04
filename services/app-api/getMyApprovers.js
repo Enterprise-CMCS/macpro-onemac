@@ -1,11 +1,12 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { APPROVING_USER_TYPE } from "cmscommonlib";
+import { APPROVING_USER_TYPE, USER_TYPE } from "cmscommonlib";
 
 export const getMyApprovers = async (role, territory) => {
   if (!territory) territory = "All";
   let adminList;
   const adminRole = APPROVING_USER_TYPE[role];
+  if (adminRole === USER_TYPE.CMS_ROLE_APPROVER) territory = "All";
   try {
     const queryParams = {
       TableName: process.env.oneMacTableName,
@@ -14,7 +15,7 @@ export const getMyApprovers = async (role, territory) => {
       ExpressionAttributeValues: {
         ":pk": `${adminRole}#${territory}`,
       },
-      ProjectionExpression: "email,firstName,lastName",
+      ProjectionExpression: "email,firstName,lastName, fullName",
     };
     console.log("Query Params: ", queryParams);
     adminList = await dynamoDb.query(queryParams);

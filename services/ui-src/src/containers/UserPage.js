@@ -96,7 +96,9 @@ export const AccessDisplay = ({
                     {CLOSING_X_IMAGE}
                   </button>
                 )}
-              {!!territory && <dt>{territoryMap[territory] || territory}</dt>}
+              {!!territory && territory !== "All" && (
+                <dt>{territoryMap[territory] || territory}</dt>
+              )}
               <dd>
                 <em>{ACCESS_LABELS[status] || status}</em>
                 <br />
@@ -167,11 +169,12 @@ const UserPage = () => {
   const location = useLocation();
   const { userId } = useParams() ?? {};
   const [profileData, setProfileData] = useState({});
-  const [profileRole, setProfileRole] = useState({});
-  const [profileStatus, setProfileStatus] = useState({});
+  const [profileRole, setProfileRole] = useState("");
   const [loading, setLoading] = useState(false);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [accesses, setAccesses] = useState(userData?.roleList ?? []);
+  const [accesses, setAccesses] = useState(
+    userProfile?.userData?.roleList ?? []
+  );
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
@@ -182,31 +185,28 @@ const UserPage = () => {
   useEffect(() => {
     const getProfile = async (profileEmail) => {
       if (!isReadOnly) {
-        return [{ ...userProfile.userData }, userRole, userStatus];
+        return [{ ...userProfile.userData }, userRole];
       }
 
-      let tempProfileData = {};
-      let tempProfileRole = "user",
-        tempProfileStatus = "unknown";
+      let tempProfileData = {},
+        tempProfileRole = "user";
 
       try {
         tempProfileData = await UserDataApi.userProfile(profileEmail);
         const profileAccess = effectiveRoleForUser(tempProfileData?.roleList);
-        if (profileAccess !== null)
-          [tempProfileRole, tempProfileStatus] = profileAccess;
+        if (profileAccess !== null) [tempProfileRole] = profileAccess;
       } catch (e) {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
 
-      return [tempProfileData, tempProfileRole, tempProfileStatus];
+      return [tempProfileData, tempProfileRole];
     };
 
     getProfile(userId)
-      .then((results) => {
-        setProfileData(results[0]);
-        setProfileRole(results[1]);
-        setProfileStatus(results[2]);
+      .then(([newProfileData, newProfileRole]) => {
+        setProfileData(newProfileData);
+        setProfileRole(newProfileRole);
       })
       .catch((e) => {
         console.error("Error fetching user data", e);
@@ -366,12 +366,12 @@ const UserPage = () => {
       );
     };
 
-    createAccessList(userData?.roleList)
+    createAccessList(profileData?.roleList)
       .then(setAccesses)
       .catch((e) => {
         console.log("error:  ", e);
       });
-  }, [userData]);
+  }, [profileData]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -387,16 +387,22 @@ const UserPage = () => {
             <h2 id="profileInfoHeader" className="profileTest">
               Profile Information
             </h2>
-            <Review heading="Full Name">{userData.fullName}</Review>
+            <Review heading="Full Name">
+              {profileData.fullName ? profileData.fullName : "Unknown"}
+            </Review>
             <Review heading="Role">
-              {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
+              {roleLabels[profileRole]
+                ? roleLabels[profileRole]
+                : "Unregistered"}
             </Review>
             <Review heading="Email">
-              {userData.email ? (
+              {profileData.email ? (
                 isReadOnly ? (
-                  <a href={`mailto:${userData.email}`}>{userData.email}</a>
+                  <a href={`mailto:${profileData.email}`}>
+                    {profileData.email}
+                  </a>
                 ) : (
-                  userData.email
+                  profileData.email
                 )
               ) : (
                 ""
@@ -404,14 +410,14 @@ const UserPage = () => {
             </Review>
             <PhoneNumber
               isEditing={isEditingPhone}
-              phoneNumber={userData.phoneNumber}
+              phoneNumber={profileData.phoneNumber}
               onCancel={onPhoneNumberCancel}
               onEdit={onPhoneNumberEdit}
               onSubmit={onPhoneNumberSubmit}
               readOnly={isReadOnly}
             />
           </div>
-          {userRole !== ROLES.SYSTEM_ADMIN && (
+          {profileRole !== ROLES.SYSTEM_ADMIN && (
             <div className="right-column">
               <AccessDisplay
                 accesses={accesses}
@@ -426,7 +432,7 @@ const UserPage = () => {
                     : renderAddStateButton}
                 </div>
               )}
-              {profileRole === ROLES.STATE_SUBMITTER && (
+              {profileRole === ROLES.CMS_REVIEWER && (
                 <GroupDivisionDisplay profileData={profileData} />
               )}
             </div>
@@ -434,10 +440,10 @@ const UserPage = () => {
           {!isReadOnly && (
             <div id="profileDisclaimer" className="disclaimer-message">
               This page contains Profile Information for the{" "}
-              {userTypeDisplayText ?? userType}. The information cannot be
-              changed in the portal. However, the{" "}
-              {userTypeDisplayText ?? userType} can change their contact phone
-              number in their account.
+              {roleLabels[profileRole] ?? profileRole}. The information cannot
+              be changed in the portal. However, the{" "}
+              {roleLabels[profileRole] ?? profileRole} can change their contact
+              phone number in their account.
             </div>
           )}
         </div>

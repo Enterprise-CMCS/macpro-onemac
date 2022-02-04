@@ -5,7 +5,6 @@ import {
   ROUTES,
   USER_STATUS,
   USER_TYPE,
-  effectiveRoleForUser,
   getUserRoleObj,
   roleLabels,
   territoryMap,
