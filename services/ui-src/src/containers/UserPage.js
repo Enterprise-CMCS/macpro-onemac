@@ -9,6 +9,7 @@ import {
   ROUTES,
   USER_STATUS,
   effectiveRoleForUser,
+  inFlightRoleRequestForUser,
   roleLabels,
   territoryMap,
   territoryList,
@@ -343,18 +344,26 @@ const UserPage = () => {
   }, [loading, signupUser, setIsStateSelectorVisible, accesses]);
 
   const renderAddStateButton = useMemo(() => {
+    if (
+      profileData.roleList &&
+      !inFlightRoleRequestForUser(profileData.roleList)
+    )
+      return (
+        <Button
+          className="add-state-button"
+          onClick={() => {
+            setIsEditingPhone(false); // closes out the phone edit mode if we want to modify state access through state selector
+            setIsStateSelectorVisible(true);
+          }}
+        >
+          <img src={addStateButton} alt="add state or territory" />
+        </Button>
+      );
+
     return (
-      <Button
-        className="add-state-button"
-        onClick={() => {
-          setIsEditingPhone(false); // closes out the phone edit mode if we want to modify state access through state selector
-          setIsStateSelectorVisible(true);
-        }}
-      >
-        <img src={addStateButton} alt="add state or territory" />
-      </Button>
+      <p>State Access Requests Disabled while New Role Request is Pending.</p>
     );
-  }, [setIsEditingPhone, setIsStateSelectorVisible]);
+  }, [setIsEditingPhone, setIsStateSelectorVisible, profileData.roleList]);
 
   useEffect(() => {
     const createAccessList = async (inRoles) => {
