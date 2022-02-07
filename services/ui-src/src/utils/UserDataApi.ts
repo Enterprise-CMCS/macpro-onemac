@@ -71,25 +71,6 @@ class UserDataApi {
   }
 
   /**
-   * Create or update a user's profile
-   * @param userRecord to create or update in Dynamo
-   * @return errorCode An error code, or nothing at all if it succeeds
-   */
-  async updateUser(userRecord: Partial<UserRecord>): Promise<string> {
-    try {
-      return await API.put("oneMacAPI", "/putUser", {
-        body: { ...userRecord, isPutUser: true },
-      });
-    } catch (error) {
-      return handleApiError(
-        error,
-        "USER_SUBMISSION_FAILED",
-        "There was an error submitting data for the user."
-      );
-    }
-  }
-
-  /**
    * Update a user's phone number
    * @param userId to update
    * @param phoneNumber

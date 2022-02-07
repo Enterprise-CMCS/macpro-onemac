@@ -217,16 +217,6 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  putUser:
-    handler: putUser.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: putUser
-          method: put
-          cors: true
-          authorizer: aws_iam
-
   setUserPhoneNumber:
     handler: putPhoneNumber.main
     role: LambdaApiRole

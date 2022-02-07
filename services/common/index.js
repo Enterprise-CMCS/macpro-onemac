@@ -289,7 +289,7 @@ export const inFlightRoleRequestForUser = (roleList) => {
 
   if (!effectiveAccess) return null;
 
-  const [effectiveRole, effectiveStatus] = effectiveRole;
+  const [effectiveRole, effectiveStatus] = effectiveAccess;
   switch (effectiveStatus) {
     case USER_STATUS.PENDING:
       return effectiveRole;
