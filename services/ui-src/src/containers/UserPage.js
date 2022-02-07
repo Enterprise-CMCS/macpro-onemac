@@ -9,6 +9,7 @@ import {
   ROUTES,
   USER_STATUS,
   effectiveRoleForUser,
+  inFlightRoleRequestForUser,
   roleLabels,
   territoryMap,
   territoryList,
@@ -430,13 +431,15 @@ const UserPage = () => {
                 selfRevoke={setStateAccessToRemove}
                 profileRole={profileRole}
               />
-              {!isReadOnly && profileRole === ROLES.STATE_SUBMITTER && (
-                <div className="add-access-container">
-                  {isStateSelectorVisible
-                    ? renderSelectStateAccess
-                    : renderAddStateButton}
-                </div>
-              )}
+              {!isReadOnly &&
+                profileRole === ROLES.STATE_SUBMITTER &&
+                !inFlightRoleRequestForUser(profileData.roleList)(
+                  <div className="add-access-container">
+                    {isStateSelectorVisible
+                      ? renderSelectStateAccess
+                      : renderAddStateButton}
+                  </div>
+                )}
               {profileRole === ROLES.CMS_REVIEWER && (
                 <GroupDivisionDisplay profileData={profileData} />
               )}
