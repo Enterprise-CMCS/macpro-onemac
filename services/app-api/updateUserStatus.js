@@ -32,37 +32,25 @@ export const accessChangeNotice = (
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: [`${fullName} <${email}>`],
     Subject: `Your OneMAC ${roleLabels[role]} Access${moreSpecificAccess} has been ${statusLabels[status]}`,
-    HTML: `
-  <p>Hello,</p>
-  <p>Your access as a ${roleLabels[role]}${moreSpecificAccess} has been ${
+    HTML: `<p>Hello,</p><p>Your access as a ${
+      roleLabels[role]
+    }${moreSpecificAccess} has been ${
       statusLabels[status]
-    }.
-  If you have any questions, please reach out to your ${
-    roleLabels[APPROVING_USER_TYPE[role]]
-  }.</p>
-  <p>Thank you!</p>`,
+    }. If you have any questions, please reach out to your ${
+      roleLabels[APPROVING_USER_TYPE[role]]
+    }.</p><p>Thank you!</p>`,
   };
 };
 
 export const selfRevokeAdminNotice = (territory, fullName, approverList) => {
-  const email = {
+  return {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: approverList.map(
       ({ fullName, email }) => `${fullName} <${email}>`
     ),
+    Subject: `OneMAC State access for ${territoryMap[territory]} was self-revoked by ${fullName}`,
+    HTML: `<p>Hello,</p><p>The OneMAC State access for ${territoryMap[territory]} has been self-revoked by ${fullName}. Please log into your User Management Dashboard to see the updated access.</p><p>Thank you!</p>`,
   };
-
-  email.Subject = `OneMAC State access for ${territoryMap[territory]} was self-revoked by ${fullName}`;
-  email.HTML = `
-    <p>Hello,</p>
-
-    The OneMAC State access for ${territoryMap[territory]}
-    has been self-revoked by ${fullName}. Please log into your User
-    Management Dashboard to see the updated access.
-
-    <p>Thank you!</p>`;
-
-  return email;
 };
 
 const doUpdate = async (body, doneBy, doneTo) => {

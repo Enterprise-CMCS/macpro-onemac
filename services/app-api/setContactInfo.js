@@ -15,14 +15,11 @@ export const setContactInfo = async (event) => {
   try {
     const existingUser = await getUser(body.email);
     if (existingUser !== null) {
-      console.log(`User ${body.email} exists, skipping creation.`);
       return RESPONSE_CODE.USER_EXISTS;
     }
-
-    console.log("User not found, proceeding to create user.");
   } catch (e) {
     console.error("Could not fetch relevant user info", e);
-    return RESPONSE_CODE.USER_NOT_FOUND;
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
   try {

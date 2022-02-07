@@ -18,15 +18,11 @@ export const accessPendingNotice = (fullName, role, email) => {
     fromAddressSource: "userAccessEmailSource",
     ToAddresses: [`${fullName} <${email}>`],
     Subject: "Your OneMAC Role Access is Pending Review",
-    HTML: `
-  <p>Hello,</p>
-  
-  <p>We received your request as a ${roleLabels[role]} on ${getCMSDateFormatNow(
+    HTML: `<p>Hello,</p><p>We received your request as a ${
+      roleLabels[role]
+    } on ${getCMSDateFormatNow(
       Date.now()
-    )}. 
-  Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p>
-
-  <p>Thank you!</p>`,
+    )}. Your request is pending review and you will receive a confirmation receipt when your status is reviewed.</p><p>Thank you!</p>`,
   };
 };
 
@@ -40,14 +36,7 @@ export const adminNotice = (territory, fullName, approverList, role) => {
       ({ fullName, email }) => `${fullName} <${email}>`
     ),
     Subject: `New OneMAC ${roleLabels[role]} Access Request`,
-    HTML: `
-    <p>Hello,</p>
-
-    There is a new OneMAC ${roleLabels[role]} access request${moreSpecificAccess} from
-    ${fullName} waiting for your review.  Please log into your
-    User Management Dashboard to see the pending request.
-
-    <p>Thank you!</p>`,
+    HTML: `<p>Hello,</p><p>There is a new OneMAC ${roleLabels[role]} access request${moreSpecificAccess} from ${fullName} waiting for your review.  Please log into your User Management Dashboard to see the pending request.</p><p>Thank you!</p>`,
   };
 };
 
@@ -62,6 +51,9 @@ export const requestAccess = async (event) => {
   let user;
   try {
     user = await getUser(body.email);
+    if (!user) {
+      return RESPONSE_CODE.USER_NOT_FOUND;
+    }
   } catch (e) {
     console.error("Could not fetch relevant user info", e);
     return RESPONSE_CODE.USER_NOT_FOUND;
@@ -83,9 +75,6 @@ export const requestAccess = async (event) => {
       console.error(`Could not update user ${body.email}'s status`, e);
       return RESPONSE_CODE.USER_SUBMISSION_FAILED;
     }
-
-    // send notice to actor
-    // send notice to admin users
 
     try {
       const approverList = await getMyApprovers(body.role, territory);
@@ -109,7 +98,6 @@ export const requestAccess = async (event) => {
       console.log("failed to send email: ", e);
     }
   }
-  // bcc the every transaction
 
   return RESPONSE_CODE.USER_SUBMITTED;
 };

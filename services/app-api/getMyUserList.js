@@ -61,8 +61,6 @@ export const getMyUserList = async (event) => {
       )
     );
 
-    console.debug(buildParams(doneBy.roleList[0].role, territory));
-
     const listResult = await dynamoDb.query(
       buildParams(doneBy.roleList[0].role, territory)
     );

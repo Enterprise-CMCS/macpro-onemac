@@ -17,13 +17,10 @@ export const getMyApprovers = async (role, territory) => {
       },
       ProjectionExpression: "email,firstName,lastName, fullName",
     };
-    console.log("Query Params: ", queryParams);
     adminList = await dynamoDb.query(queryParams);
   } catch (e) {
     console.log("Error is: ", e);
   }
-
-  console.log("Returns: ", adminList);
 
   return adminList.Items;
 };
@@ -31,8 +28,7 @@ export const getMyApprovers = async (role, territory) => {
 // get the approver list for a rols and possibly a territory
 export const main = handler(async (event) => {
   // get the list of states we care about
-  const role = event.queryStringParameters.role;
-  const territory = event.queryStringParameters.territory;
+  const { role, territory } = event.queryStringParameters;
 
   return await getMyApprovers(role, territory);
 });
