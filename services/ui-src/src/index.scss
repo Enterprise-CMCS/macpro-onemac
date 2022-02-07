@@ -863,9 +863,17 @@ article.form-container {
   }
 
   th:first-child,
-  td:first-child,
-  th:nth-child(2),
-  td:nth-child(2) {
+  td:first-child {
+    padding-left: 0.5px;
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+  }
+
+  [id^="componentId"],
+  [className^="row-expander-cell"] {
     padding-left: 0.5px;
     position: sticky;
     left: 0;
