@@ -1,8 +1,96 @@
-import { RESPONSE_CODE } from "cmscommonlib";
-
+import {
+  RESPONSE_CODE,
+  USER_STATUS,
+  territoryMap,
+  roleLabels,
+  APPROVING_USER_TYPE,
+} from "cmscommonlib";
 import handler from "./libs/handler-lib";
+import sendEmail from "./libs/email-lib";
+
 import getUser from "./utils/getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
+import { getMyApprovers } from "./getMyApprovers";
+
+const statusLabels = {
+  [USER_STATUS.ACTIVE]: "granted",
+  [USER_STATUS.DENIED]: "denied",
+  [USER_STATUS.REVOKED]: "revoked",
+};
+
+export const accessChangeNotice = (
+  territory,
+  fullName,
+  role,
+  email,
+  status
+) => {
+  const moreSpecificAccess =
+    territory === "N/A" ? "" : ` for ${territoryMap[territory]}`;
+
+  return {
+    fromAddressSource: "userAccessEmailSource",
+    ToAddresses: [`${fullName} <${email}>`],
+    Subject: `Your OneMAC ${roleLabels[role]} Access${moreSpecificAccess} has been ${statusLabels[status]}`,
+    HTML: `
+  <p>Hello,</p>
+  <p>Your access as a ${roleLabels[role]}${moreSpecificAccess} has been ${
+      statusLabels[status]
+    }.
+  If you have any questions, please reach out to your ${
+    roleLabels[APPROVING_USER_TYPE[role]]
+  }.</p>
+  <p>Thank you!</p>`,
+  };
+};
+
+export const selfRevokeAdminNotice = (territory, fullName, approverList) => {
+  const email = {
+    fromAddressSource: "userAccessEmailSource",
+    ToAddresses: approverList.map(
+      ({ fullName, email }) => `${fullName} <${email}>`
+    ),
+  };
+
+  email.Subject = `OneMAC State access for ${territoryMap[territory]} was self-revoked by ${fullName}`;
+  email.HTML = `
+    <p>Hello,</p>
+
+    The OneMAC State access for ${territoryMap[territory]}
+    has been self-revoked by ${fullName}. Please log into your User
+    Management Dashboard to see the updated access.
+
+    <p>Thank you!</p>`;
+
+  return email;
+};
+
+const doUpdate = async (body, doneBy, doneTo) => {
+  try {
+    await changeUserStatus({
+      ...body,
+      date: Math.floor(Date.now() / 1000),
+      doneByName: doneBy.fullName,
+      fullName: doneTo.fullName,
+    });
+  } catch (e) {
+    console.error(`Could not update user ${body.email}'s status`, e);
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  }
+
+  try {
+    const accessChangeEmail = accessChangeNotice(
+      body.territory,
+      doneTo.fullName,
+      body.role,
+      doneTo.email,
+      body.status
+    );
+    await sendEmail(accessChangeEmail);
+  } catch (e) {
+    console.log("failed to send email: ", e);
+  }
+};
 
 export const updateUserStatus = async (event) => {
   let body;
@@ -23,16 +111,35 @@ export const updateUserStatus = async (event) => {
     return RESPONSE_CODE.USER_NOT_FOUND;
   }
 
+  if (body.status === USER_STATUS.ACTIVE) {
+    for (const { role, status, territory } of doneTo.roleList) {
+      if (role !== body.role && status === USER_STATUS.ACTIVE) {
+        await doUpdate(
+          { ...body, role, territory, status: USER_STATUS.REVOKED },
+          doneBy,
+          doneTo
+        );
+      }
+    }
+  }
+
+  await doUpdate(body, doneBy, doneTo);
+
   try {
-    await changeUserStatus({
-      ...body,
-      date: Math.floor(Date.now() / 1000),
-      doneByName: doneBy.fullName,
-      fullName: doneTo.fullName,
-    });
+    if (
+      body.email === body.doneByEmail &&
+      body.status === USER_STATUS.REVOKED
+    ) {
+      const approverList = await getMyApprovers(body.role, body.territory);
+      const selfRevokeEmail = selfRevokeAdminNotice(
+        body.territory,
+        doneTo.fullName,
+        approverList
+      );
+      await sendEmail(selfRevokeEmail);
+    }
   } catch (e) {
-    console.error(`Could not update user ${body.email}'s status`, e);
-    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
+    console.log("failed to send email: ", e);
   }
 
   return RESPONSE_CODE.USER_SUBMITTED;

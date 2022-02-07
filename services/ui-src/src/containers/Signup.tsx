@@ -3,16 +3,19 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
+import { USER_STATUS, USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
 const ignoreEventPayload = () => undefined;
+const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
 
 function StateUserSignup() {
   const history = useHistory();
+  const { userRole, userStatus } = useAppContext() ?? {};
   const STATE_CHOICES = [
-    {
+    (userRole !== USER_TYPE.STATE_SUBMITTER ||
+      !activeOrPending.has(userStatus!)) && {
       title: "State Submitter",
       description: "Responsible for submitting packages",
       linkTo: "/state",
@@ -20,32 +23,38 @@ function StateUserSignup() {
         history.replace("signup/state", { role: USER_TYPE.STATE_SUBMITTER });
       },
     },
-    {
+    (userRole !== USER_TYPE.STATE_SYSTEM_ADMIN ||
+      !activeOrPending.has(userStatus!)) && {
       title: "State System Administrator",
       description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
       onclick: () => {
-        history.replace("signup/state", { role: USER_TYPE.STATE_SYSTEM_ADMIN });
+        history.replace("signup/state", {
+          role: USER_TYPE.STATE_SYSTEM_ADMIN,
+        });
       },
     },
-  ];
+  ].filter(Boolean);
   return <ChoiceList choices={STATE_CHOICES} />;
 }
 
 function CMSSignup() {
-  const { isLoggedInAsDeveloper } = useAppContext() ?? {};
+  const { isLoggedInAsDeveloper, userRole, userStatus } = useAppContext() ?? {};
   const [, onClickCMS] = useSignupCallback(
     USER_TYPE.CMS_ROLE_APPROVER,
     ignoreEventPayload
   );
 
   const CMS_CHOICES = [
-    isLoggedInAsDeveloper && {
-      title: "CMS Reviewer",
-      description: "Responsible for reviewing packages",
-      linkTo: "signup/cmsreviewer",
-    },
-    {
+    isLoggedInAsDeveloper &&
+      (userRole !== USER_TYPE.CMS_REVIEWER ||
+        !activeOrPending.has(userStatus!)) && {
+        title: "CMS Reviewer",
+        description: "Responsible for reviewing packages",
+        linkTo: "signup/cmsreviewer",
+      },
+    (userRole !== USER_TYPE.CMS_ROLE_APPROVER ||
+      !activeOrPending.has(userStatus!)) && {
       title: "CMS Role Approver",
       description:
         "Responsible for managing CMS Reviewers and State System Admins",

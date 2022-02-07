@@ -13,7 +13,7 @@ export const buildParams = (role, territory) => {
   let KeyConditionExpression = "GSI1pk=:user";
   const ExpressionAttributeValues = { ":user": "USER" };
 
-  if (territory !== "All") {
+  if (territory !== "N/A") {
     // get statesystemadmin#<territory>
     KeyConditionExpression += ` AND GSI1sk=:sk`;
     ExpressionAttributeValues[

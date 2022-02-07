@@ -284,6 +284,24 @@ export const effectiveRoleForUser = (roleList = []) => {
   return otherOutput;
 };
 
+export const inFlightRoleRequestForUser = (roleList) => {
+  const [effectiveRole, effectiveStatus] = effectiveRoleForUser(roleList);
+
+  switch (effectiveStatus) {
+    case USER_STATUS.PENDING:
+      return effectiveRole;
+    case USER_STATUS.ACTIVE: {
+      const pendingRole = roleList.find(
+        ({ status, role }) =>
+          status === USER_STATUS.PENDING && role !== effectiveRole
+      );
+      return pendingRole && pendingRole.role;
+    }
+    default:
+      return null;
+  }
+};
+
 export const getUserRoleObj = (roleInfo) => {
   if (Array.isArray(roleInfo)) {
     const roleResult = effectiveRoleForUser(roleInfo);

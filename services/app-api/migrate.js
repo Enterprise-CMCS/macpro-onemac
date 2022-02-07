@@ -26,7 +26,7 @@ export const main = handler(async (event) => {
 
   const approverNamesById = Object.fromEntries(
     promiseItems.map(({ id, firstName, lastName }) => [
-      id,
+      id.toLowerCase(),
       `${firstName} ${lastName}`,
     ])
   );
@@ -39,7 +39,7 @@ export const main = handler(async (event) => {
       switch (item.type) {
         case "systemadmin":
           updateList.push({
-            territory: "All",
+            territory: "N/A",
             status: "active",
             date: 1584194366,
             doneBy: item.id,
@@ -54,7 +54,7 @@ export const main = handler(async (event) => {
             )
             .forEach((attribute) => {
               updateList.push({
-                territory: "All",
+                territory: "N/A",
                 ...attribute,
               });
             });
@@ -86,11 +86,12 @@ export const main = handler(async (event) => {
         await newUser(contactDetails);
 
         for (const thing of updateList) {
+          const doneBy = thing.doneBy.toLowerCase();
           await changeUserStatus({
             fullName: contactDetails.fullName,
             email: item.id,
-            doneByEmail: thing.doneBy,
-            doneByName: approverNamesById[thing.doneBy] ?? "",
+            doneByEmail: doneBy,
+            doneByName: approverNamesById[doneBy] ?? "",
             date: thing.date,
             role: item.type,
             territory: thing.territory,

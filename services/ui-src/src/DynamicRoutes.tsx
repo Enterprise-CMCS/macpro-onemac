@@ -115,7 +115,7 @@ export default function DynamicRoutes() {
 
   return (
     <>
-      {effectiveRoleForUser(roleList) === null && signupRoutes}
+      {signupRoutes}
       <Route exact path={ROUTES.DASHBOARD}>
         {userRoleObj.canAccessDashboard ? (
           <Dashboard />

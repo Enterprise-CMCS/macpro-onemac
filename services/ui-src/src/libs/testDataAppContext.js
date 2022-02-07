@@ -169,7 +169,7 @@ export const cmsRoleApproverDeniedInitialAuthState = {
       roleList: [
         {
           role: "cmsroleapprover",
-          territory: "All",
+          territory: "N/A",
           status: "denied",
         },
       ],
@@ -204,7 +204,7 @@ export const cmsRoleApproverRevokedInitialAuthState = {
       roleList: [
         {
           role: "cmsroleapprover",
-          territory: "All",
+          territory: "N/A",
           status: "revoked",
         },
       ],
@@ -238,7 +238,7 @@ export const helpDeskDeniedInitialAuthState = {
       roleList: [
         {
           role: "helpdesk",
-          territory: "All",
+          territory: "N/A",
           status: "denied",
         },
       ],
@@ -266,7 +266,7 @@ export const helpDeskRevokedInitialAuthState = {
       roleList: [
         {
           role: "helpdesk",
-          territory: "All",
+          territory: "N/A",
           status: "revoked",
         },
       ],
@@ -351,7 +351,7 @@ export const systemAdminInitialAuthState = {
       firstName: "Allofit",
       email: "systemadmintest@cms.hhs.local",
       lastName: "Admining",
-      roleList: [{ role: "systemadmin", status: "active", territory: "All" }],
+      roleList: [{ role: "systemadmin", status: "active", territory: "N/A" }],
       validRoutes: [
         "/",
         "/profile",

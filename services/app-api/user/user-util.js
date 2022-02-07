@@ -18,7 +18,7 @@ export const getAuthorizedStateList = (user) => {
     !user?.attributes ||
     (!user?.attributes?.history && isLatestAttributeActive(user.attributes))
   )
-    return "All";
+    return "N/A";
 
   user.attributes.forEach((attribute) => {
     isLatestAttributeActive(attribute.history)
