@@ -8,11 +8,11 @@ import { getUser } from "./getUser";
  * that correspond to the user's active access to states/territories
  */
 
-export const main = handler((event) => {
-  if (!event?.queryStringParameters?.email) return RESPONSE_CODE.USER_NOT_FOUND;
-  if (!event?.queryStringParameters?.group) return RESPONSE_CODE.DATA_MISSING;
+export const getMyPackages = async (email, group) => {
+  if (!email) return RESPONSE_CODE.USER_NOT_FOUND;
+  if (!group) return RESPONSE_CODE.DATA_MISSING;
 
-  return getUser(event.queryStringParameters.email)
+  return getUser(email)
     .then((user) => {
       let territoryList = "this is for EUA users";
       if (Object.keys(user).length > 0) {
@@ -34,7 +34,7 @@ export const main = handler((event) => {
         ProjectionExpression:
           "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId,clockEndTimestamp,expirationTimestamp,children",
       };
-      const grouppk = "OneMAC#" + event.queryStringParameters.group;
+      const grouppk = "OneMAC#" + group;
       let paramList = [];
       if (typeof territoryList !== "string") {
         paramList = territoryList.map((territory) => {
@@ -80,4 +80,12 @@ export const main = handler((event) => {
       console.log("error is: ", error);
       return error;
     });
+};
+
+// get the approver list for a rols and possibly a territory
+export const main = handler(async (event) => {
+  return await getMyPackages(
+    event?.queryStringParameters?.email,
+    event?.queryStringParameters?.group
+  );
 });

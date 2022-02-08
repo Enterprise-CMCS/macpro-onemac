@@ -1,10 +1,4 @@
-import {
-  RESPONSE_CODE,
-  USER_STATUS,
-  territoryMap,
-  roleLabels,
-  APPROVING_USER_TYPE,
-} from "cmscommonlib";
+import { RESPONSE_CODE, USER_STATUS } from "cmscommonlib";
 import sendEmail from "./libs/email-lib";
 
 import { getUser } from "./getUser";
@@ -164,4 +158,30 @@ it("handles getUser exceptions", async () => {
     .catch((error) => {
       console.log("caught test error: ", error);
     });
+});
+
+it("ignores sendEmail exception", async () => {
+  sendEmail.mockImplementationOnce(() => {
+    throw "an Exception!";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_SUBMITTED;
+  expect(updateUserStatus(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("returns User Submitted when complete", async () => {
+  const expectedReturn = {
+    statusCode: 200,
+    body: JSON.stringify(RESPONSE_CODE.USER_SUBMITTED),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
+  };
+
+  expect(main(testEvent)).resolves.toStrictEqual(expectedReturn);
 });

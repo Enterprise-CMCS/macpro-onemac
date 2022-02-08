@@ -26,22 +26,11 @@ const testUserEvent = {
 };
 
 const testDoneBy = {
-  firstName: "Unit",
-  lastName: "Tester",
-  attributes: [
-    {
-      stateCode: "VA",
-      history: [
-        {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
-          status: "active",
-        },
-      ],
-    },
-  ],
-  id: "statesubmitteractive@cms.hhs.local",
-  type: USER_TYPE.STATE_SUBMITTER,
+  roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
+  email: "myemail@email.com",
+  firstName: "firsty",
+  lastName: "lasty",
+  fullName: "firsty lastly",
 };
 
 beforeEach(() => {
@@ -92,6 +81,7 @@ beforeEach(() => {
     ScannedCount: 3,
   });
 });
+
 it(`returns an error if no user email is sent`, async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_NOT_FOUND);
   const thisTestUserEvent = {
