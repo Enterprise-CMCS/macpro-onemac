@@ -3,9 +3,9 @@ import { useLocation, useParams } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 import {
-  APPROVING_USER_TYPE,
+  APPROVING_USER_ROLE,
   RESPONSE_CODE,
-  ROLES,
+  USER_ROLE,
   ROUTES,
   USER_STATUS,
   effectiveRoleForUser,
@@ -37,7 +37,7 @@ export const ACCESS_LABELS = {
 };
 
 export const ContactList = ({ contacts, profileRole }) => {
-  let label = roleLabels[APPROVING_USER_TYPE[profileRole]] ?? "Contact";
+  let label = roleLabels[APPROVING_USER_ROLE[profileRole]] ?? "Contact";
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
 
@@ -63,13 +63,13 @@ export const AccessDisplay = ({
   let accessHeading;
 
   switch (profileRole) {
-    case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_SYSTEM_ADMIN:
+    case USER_ROLE.STATE_SUBMITTER:
+    case USER_ROLE.STATE_SYSTEM_ADMIN:
       accessHeading = "State Access Management";
       break;
-    case ROLES.CMS_REVIEWER:
-    case ROLES.CMS_ROLE_APPROVER:
-    case ROLES.HELPDESK:
+    case USER_ROLE.CMS_REVIEWER:
+    case USER_ROLE.CMS_ROLE_APPROVER:
+    case USER_ROLE.HELPDESK:
       accessHeading = "Status";
       break;
     default:
@@ -90,7 +90,7 @@ export const AccessDisplay = ({
               <div className="gradient-border" />
               <div className="state-access-card">
                 {!isReadOnly &&
-                  profileRole === ROLES.STATE_SUBMITTER &&
+                  profileRole === USER_ROLE.STATE_SUBMITTER &&
                   (status === USER_STATUS.ACTIVE ||
                     status === USER_STATUS.PENDING) && (
                     <button
@@ -431,7 +431,7 @@ const UserPage = () => {
               readOnly={isReadOnly}
             />
           </div>
-          {profileRole !== ROLES.SYSTEM_ADMIN && (
+          {profileRole !== USER_ROLE.SYSTEM_ADMIN && (
             <div className="right-column">
               <AccessDisplay
                 accesses={accesses}
@@ -439,14 +439,14 @@ const UserPage = () => {
                 selfRevoke={setStateAccessToRemove}
                 profileRole={profileRole}
               />
-              {!isReadOnly && profileRole === ROLES.STATE_SUBMITTER && (
+              {!isReadOnly && profileRole === USER_ROLE.STATE_SUBMITTER && (
                 <div className="add-access-container">
                   {isStateSelectorVisible
                     ? renderSelectStateAccess
                     : renderAddStateButton}
                 </div>
               )}
-              {profileRole === ROLES.CMS_REVIEWER && (
+              {profileRole === USER_ROLE.CMS_REVIEWER && (
                 <GroupDivisionDisplay profileData={profileData} />
               )}
             </div>

@@ -6,7 +6,7 @@ export enum USER_STATUS {
   DENIED = "denied",
   REVOKED = "revoked",
 }
-export enum USER_TYPE {
+export enum USER_ROLE {
   STATE_SUBMITTER = "statesubmitter",
   CMS_REVIEWER = "cmsreviewer",
   STATE_SYSTEM_ADMIN = "statesystemadmin",
@@ -24,20 +24,20 @@ export class UserRole {
 }
 
 export type RoleEntry = {
-  role: USER_TYPE;
+  role: USER_ROLE;
   status: USER_STATUS;
   territory?: string;
 };
 export const inFlightRoleRequestForUser: (
   roleList: RoleEntry[]
-) => USER_TYPE | null;
+) => USER_ROLE | null;
 
 export const effectiveRoleForUser: (
   roleList: RoleEntry[]
-) => [USER_TYPE, USER_STATUS] | null;
+) => [USER_ROLE, USER_STATUS] | null;
 
 export const getUserRoleObj: (
-  roleInfo: USER_TYPE | RoleEntry[] | undefined
+  roleInfo: USER_ROLE | RoleEntry[] | undefined
 ) => UserRole;
 
 export const latestAccessStatus: (

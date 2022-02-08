@@ -1,4 +1,4 @@
-import { USER_STATUS, USER_TYPE, RoleEntry } from "cmscommonlib";
+import { USER_STATUS, USER_ROLE, RoleEntry } from "cmscommonlib";
 
 export type UserProfile = {
   cmsRoles: string;
@@ -30,9 +30,8 @@ export type AppContextValue = {
   isAuthenticating: boolean;
   isAuthenticated: boolean;
   isLoggedInAsDeveloper: boolean;
-  isValidRoute: boolean;
   userProfile: Partial<UserProfile>;
-  userRole: USER_TYPE | null;
+  userRole: USER_ROLE | null;
   userStatus: USER_STATUS | null;
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;

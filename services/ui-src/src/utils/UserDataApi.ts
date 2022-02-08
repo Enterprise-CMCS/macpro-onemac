@@ -1,21 +1,8 @@
-import { USER_TYPE } from "cmscommonlib";
+import { USER_ROLE } from "cmscommonlib";
 import { API } from "aws-amplify";
 
 import { UserRecord } from "../domain-types";
 import handleApiError from "../libs/apiErrorHandler";
-
-export const getAdminTypeByRole = (role: string): string | undefined => {
-  switch (role) {
-    case USER_TYPE.STATE_SYSTEM_ADMIN:
-      return USER_TYPE.STATE_SUBMITTER;
-    case USER_TYPE.CMS_ROLE_APPROVER:
-      return USER_TYPE.STATE_SYSTEM_ADMIN;
-    case USER_TYPE.SYSTEM_ADMIN:
-      return USER_TYPE.CMS_ROLE_APPROVER;
-    default:
-      return undefined;
-  }
-};
 
 /**
  * Singleton class to perform operations with the user tables backend.
@@ -130,7 +117,7 @@ class UserDataApi {
 
   async requestAccess(
     email: string,
-    role: USER_TYPE,
+    role: USER_ROLE,
     territories?: string[]
   ): Promise<string> {
     try {

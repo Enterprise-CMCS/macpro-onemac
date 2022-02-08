@@ -3,7 +3,7 @@ import {
   USER_STATUS,
   territoryMap,
   roleLabels,
-  APPROVING_USER_TYPE,
+  APPROVING_USER_ROLE,
 } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
@@ -37,7 +37,7 @@ export const accessChangeNotice = (
     }${moreSpecificAccess} has been ${
       statusLabels[status]
     }. If you have any questions, please reach out to your ${
-      roleLabels[APPROVING_USER_TYPE[role]]
+      roleLabels[APPROVING_USER_ROLE[role]]
     }.</p><p>Thank you!</p>`,
   };
 };

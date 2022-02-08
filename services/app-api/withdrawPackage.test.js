@@ -1,5 +1,5 @@
 import { main } from "./withdrawPackage";
-import { RESPONSE_CODE, USER_TYPE } from "cmscommonlib";
+import { RESPONSE_CODE, USER_ROLE } from "cmscommonlib";
 import { getUser } from "./getUser";
 import { validateUserSubmitting } from "./utils/validateUser";
 import updateComponent from "./utils/updateComponent";
@@ -39,7 +39,7 @@ const testDoneBy = {
     },
   ],
   id: "statesubmitteractive@cms.hhs.local",
-  type: USER_TYPE.STATE_SUBMITTER,
+  type: USER_ROLE.STATE_SUBMITTER,
 };
 
 beforeEach(() => {

@@ -1,12 +1,10 @@
 import { main } from "./getMyPackages";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, USER_TYPE, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, USER_ROLE, getUserRoleObj } from "cmscommonlib";
 import { getUser } from "./getUser";
-import { getAuthorizedStateList } from "./user/user-util";
 
 jest.mock("./getUser");
 jest.mock("cmscommonlib");
-jest.mock("./user/user-util");
 jest.mock("./libs/dynamodb-lib");
 
 const expectedResponse = {
@@ -38,10 +36,6 @@ beforeEach(() => {
 
   getUserRoleObj.mockImplementation(() => {
     return { canAccessDashboard: true };
-  });
-
-  getAuthorizedStateList.mockImplementation(() => {
-    return "N/A";
   });
 
   dynamoDb.query.mockResolvedValue({

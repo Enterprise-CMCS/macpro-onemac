@@ -4,7 +4,6 @@ export const stateSubmitterInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "statesubmitter",
   userStatus: USER_STATUS.ACTIVE,
   userProfile: {
@@ -45,7 +44,6 @@ export const statesubmitterRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "statesubmitter",
   userStatus: "revoked",
   userProfile: {
@@ -73,7 +71,6 @@ export const statesubmitterDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "statesubmitter",
   userStatus: "denied",
   userProfile: {
@@ -101,7 +98,6 @@ export const stateAdminRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "statesystemadmin",
   userStatus: "revoked",
   userProfile: {
@@ -129,7 +125,6 @@ export const stateAdminDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "statesystemadmin",
   userStatus: "denied",
   userProfile: {
@@ -157,7 +152,6 @@ export const cmsRoleApproverDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "cmsroleapprover",
   userStatus: "denied",
   userProfile: {
@@ -192,7 +186,6 @@ export const cmsRoleApproverRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "cmsroleapprover",
   userStatus: "revoked",
   userProfile: {
@@ -226,7 +219,6 @@ export const helpDeskDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "helpdesk",
   userStatus: "denied",
   userProfile: {
@@ -254,7 +246,6 @@ export const helpDeskRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "helpdesk",
   userStatus: "revoked",
   userProfile: {
@@ -282,7 +273,6 @@ export const cmsUserNoAuthState = {
   isAuthenticating: true,
   isAuthenticated: false,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userProfile: {
     cmsRoles: "onemac-cms-user",
     email: "cmsroleapproverunregistered@cms.hhs.local",
@@ -311,7 +301,6 @@ export const stateUserNoAuthState = {
   isAuthenticating: true,
   isAuthenticated: false,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "stateuserunregistered@cms.hhs.local",
@@ -339,7 +328,6 @@ export const systemAdminInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userRole: "systemadmin",
   userStatus: "active",
   userProfile: {

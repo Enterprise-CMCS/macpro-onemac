@@ -1,6 +1,6 @@
 import React, { useCallback } from "react";
 import { useLocation, useHistory } from "react-router-dom";
-import { roleLabels, territoryList, USER_TYPE } from "cmscommonlib";
+import { roleLabels, territoryList, USER_ROLE } from "cmscommonlib";
 
 import { useFlag, useSignupCallback } from "../libs/hooksLib";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
@@ -50,12 +50,12 @@ export function StateSignup() {
           <MultiSelectDropDown
             cancelFn={openCancelConfirmation}
             errorMessage={
-              role === USER_TYPE.STATE_SUBMITTER
+              role === USER_ROLE.STATE_SUBMITTER
                 ? "Please select at least one state."
                 : "Please select one state."
             }
             loading={loading}
-            onlyOne={role === USER_TYPE.STATE_SYSTEM_ADMIN}
+            onlyOne={role === USER_ROLE.STATE_SYSTEM_ADMIN}
             options={territoryList}
             placeholder="Select state here"
             required

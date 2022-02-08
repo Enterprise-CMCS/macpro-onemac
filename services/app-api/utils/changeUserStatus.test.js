@@ -3,10 +3,14 @@ import { buildSK, changeUserStatus } from "./changeUserStatus";
 
 jest.mock("../libs/dynamodb-lib");
 
-dynamoDb.update.mockImplementation(() => {
-  return { Attributes: { Latest: 2 } };
+beforeAll(() => {
+  jest.clearAllMocks();
+
+  dynamoDb.update.mockImplementation(() => {
+    return { Attributes: { Latest: 2 } };
+  });
+  dynamoDb.put.mockImplementation(() => {});
 });
-dynamoDb.put.mockImplementation(() => {});
 
 const testParams = {
   email: "testemail",
@@ -33,6 +37,27 @@ it("runs without crashing", async () => {
   const expectedReturn = undefined;
   expect(changeUserStatus(testParams))
     .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("runs without crashing with different variables", async () => {
+  const expectedReturn = undefined;
+  testParams.status = "active";
+  expect(changeUserStatus(testParams))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles a put exception", () => {
+  dynamoDb.put.mockImplementationOnce(() => {
+    throw new Error("an exception");
+  });
+  expect(() => changeUserStatus(testParams))
+    .rejects.toThrow("an exception")
     .catch((error) => {
       console.log("caught test error: ", error);
     });

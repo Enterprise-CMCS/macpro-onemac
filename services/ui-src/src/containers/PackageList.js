@@ -15,7 +15,7 @@ import {
   ROUTES,
   ChangeRequest,
   getUserRoleObj,
-  USER_TYPE,
+  USER_ROLE,
   USER_STATUS,
 } from "cmscommonlib";
 
@@ -390,7 +390,7 @@ const PackageList = () => {
   const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
 
   function renderSubmissionList() {
-    if (userRole !== USER_TYPE.CMS_ROLE_APPROVER) {
+    if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
       }

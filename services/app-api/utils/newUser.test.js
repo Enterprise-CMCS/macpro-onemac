@@ -2,7 +2,12 @@ import dynamoDb from "../libs/dynamodb-lib";
 import { newUser } from "./newUser";
 
 jest.mock("../libs/dynamodb-lib");
-dynamoDb.put.mockResolvedValue({});
+
+beforeAll(() => {
+  jest.clearAllMocks();
+
+  dynamoDb.put.mockResolvedValue({});
+});
 
 const testData = {
   email: "testemail",
@@ -22,13 +27,14 @@ it("calls the update", () => {
       console.log("caught test error: ", error);
     });
 });
-/*
+
 it("handles a put exception", () => {
-  dynamoDb.put.mockRejectedValueOnce("an exception");
+  dynamoDb.put.mockImplementationOnce(() => {
+    throw new Error("an exception");
+  });
   expect(() => newUser(testData))
     .rejects.toThrow("an exception")
     .catch((error) => {
       console.log("caught test error: ", error);
     });
 });
-*/

@@ -7,7 +7,7 @@ import {
   RESPONSE_CODE,
   USER_STATUS,
   latestAccessStatus,
-  USER_TYPE,
+  USER_ROLE,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
 
@@ -59,7 +59,7 @@ const testDoneBy = {
     },
   ],
   id: "statesubmitteractive@cms.hhs.local",
-  type: USER_TYPE.STATE_SUBMITTER,
+  type: USER_ROLE.STATE_SUBMITTER,
 };
 
 beforeEach(() => {

@@ -1,12 +1,12 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { APPROVING_USER_TYPE, USER_TYPE } from "cmscommonlib";
+import { APPROVING_USER_ROLE, USER_ROLE } from "cmscommonlib";
 
 export const getMyApprovers = async (role, territory) => {
   if (!territory) territory = "N/A";
   let adminList;
-  const adminRole = APPROVING_USER_TYPE[role];
-  if (adminRole === USER_TYPE.CMS_ROLE_APPROVER) territory = "N/A";
+  const adminRole = APPROVING_USER_ROLE[role];
+  if (adminRole === USER_ROLE.CMS_ROLE_APPROVER) territory = "N/A";
   try {
     const queryParams = {
       TableName: process.env.oneMacTableName,

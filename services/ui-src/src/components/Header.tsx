@@ -12,7 +12,7 @@ import {
 
 import {
   ROUTES,
-  USER_TYPE,
+  USER_ROLE,
   getUserRoleObj,
   inFlightRoleRequestForUser,
 } from "cmscommonlib";
@@ -141,7 +141,7 @@ const AccountButtons: React.FC<{
   }
 
   const shouldShowSignupLink =
-    userRole !== USER_TYPE.HELPDESK && !inFlightRoleRequestForUser(roleList);
+    userRole !== USER_ROLE.HELPDESK && !inFlightRoleRequestForUser(roleList);
 
   return (
     <>

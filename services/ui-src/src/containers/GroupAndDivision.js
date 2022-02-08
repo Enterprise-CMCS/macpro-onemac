@@ -3,7 +3,7 @@ import { useHistory } from "react-router-dom";
 import Select, { components } from "react-select";
 import { Button, FormLabel } from "@cmsgov/design-system";
 import cx from "classnames";
-import { ROLES } from "cmscommonlib";
+import { USER_ROLE } from "cmscommonlib";
 import groupData from "cmscommonlib/groupDivision.json";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -67,7 +67,7 @@ const groupDivisionReducer = (state, [field, value]) => {
 export const GroupAndDivision = () => {
   const history = useHistory();
   const [, onSubmitUser] = useSignupCallback(
-    ROLES.CMS_REVIEWER,
+    USER_ROLE.CMS_REVIEWER,
     createAttribute
   );
   const [

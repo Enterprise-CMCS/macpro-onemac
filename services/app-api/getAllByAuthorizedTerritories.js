@@ -1,4 +1,4 @@
-import { USER_TYPE } from "cmscommonlib";
+import { USER_ROLE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
@@ -76,10 +76,10 @@ async function stateSubmitterDynamoDbQuery(
 }
 
 const usersWhoSeeEverything = new Set([
-  USER_TYPE.HELPDESK,
-  USER_TYPE.CMS_REVIEWER,
-  USER_TYPE.CMS_ROLE_APPROVER,
-  USER_TYPE.SYSTEM_ADMIN,
+  USER_ROLE.HELPDESK,
+  USER_ROLE.CMS_REVIEWER,
+  USER_ROLE.CMS_ROLE_APPROVER,
+  USER_ROLE.SYSTEM_ADMIN,
 ]);
 
 /**

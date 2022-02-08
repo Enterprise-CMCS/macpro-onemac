@@ -4,7 +4,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   USER_STATUS,
-  USER_TYPE,
+  USER_ROLE,
   getUserRoleObj,
   roleLabels,
   territoryMap,
@@ -81,13 +81,13 @@ const UserManagement = () => {
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [doneToName, setDoneToName] = useState("");
 
-  const showUserRole = userRole !== USER_TYPE.STATE_SYSTEM_ADMIN;
+  const showUserRole = userRole !== USER_ROLE.STATE_SYSTEM_ADMIN;
   const includeStateCode = useMemo(
     () =>
       [
-        USER_TYPE.CMS_ROLE_APPROVER,
-        USER_TYPE.HELPDESK,
-        USER_TYPE.SYSTEM_ADMIN,
+        USER_ROLE.CMS_ROLE_APPROVER,
+        USER_ROLE.HELPDESK,
+        USER_ROLE.SYSTEM_ADMIN,
       ].includes(userRole),
     [userRole]
   );
@@ -388,8 +388,8 @@ const UserManagement = () => {
       <PageTitleBar
         heading="User Management"
         rightSideContent={
-          (userRole === USER_TYPE.HELPDESK ||
-            userRole === USER_TYPE.SYSTEM_ADMIN) &&
+          (userRole === USER_ROLE.HELPDESK ||
+            userRole === USER_ROLE.SYSTEM_ADMIN) &&
           userStatus === USER_STATUS.ACTIVE &&
           csvExportSubmissions
         }

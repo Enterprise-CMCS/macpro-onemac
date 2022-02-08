@@ -88,12 +88,12 @@ describe("dropdown logic", () => {
 });
 
 describe("submission and navigation", () => {
-  let putUserSpy;
+  let requestAccessSpy;
   beforeAll(() => {
-    putUserSpy = jest.spyOn(UserDataApi, "updateUser");
+    requestAccessSpy = jest.spyOn(UserDataApi, "requestAccess");
   });
   afterAll(() => {
-    putUserSpy.mockRestore();
+    requestAccessSpy.mockRestore();
   });
 
   it("lets you cancel and returns you to the previous page", () => {
@@ -159,7 +159,7 @@ describe("submission and navigation", () => {
       </MemoryRouter>
     );
     fireEvent.submit(screen.getByRole("form"));
-    expect(putUserSpy).not.toBeCalled();
+    expect(requestAccessSpy).not.toBeCalled();
   });
 
   it("does not let you submit if no division is selected", async () => {
@@ -172,11 +172,11 @@ describe("submission and navigation", () => {
     const group = groupData[2];
     await selectEvent.select(screen.getByLabelText(/group/i), group.name);
     fireEvent.submit(screen.getByRole("form"));
-    expect(putUserSpy).not.toBeCalled();
+    expect(requestAccessSpy).not.toBeCalled();
   });
 
   it("allows you to submit once both group and division are selected", async () => {
-    putUserSpy.mockImplementation(jest.fn());
+    requestAccessSpy.mockImplementation(jest.fn());
     render(
       <AppContext.Provider value={{ setUserInfo: jest.fn() }}>
         <MemoryRouter>
@@ -196,7 +196,7 @@ describe("submission and navigation", () => {
       );
       fireEvent.submit(screen.getByRole("form"));
     });
-    expect(putUserSpy).toBeCalledWith(
+    expect(requestAccessSpy).toBeCalledWith(
       expect.objectContaining({ group: group.id, division: division.id })
     );
   });

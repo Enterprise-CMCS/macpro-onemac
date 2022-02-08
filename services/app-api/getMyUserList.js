@@ -3,7 +3,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import {
   RESPONSE_CODE,
   USER_STATUS,
-  USER_TYPE,
+  USER_ROLE,
   getUserRoleObj,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
@@ -18,11 +18,11 @@ export const buildParams = (role, territory) => {
     KeyConditionExpression += ` AND GSI1sk=:sk`;
     ExpressionAttributeValues[
       ":sk"
-    ] = `${USER_TYPE.STATE_SYSTEM_ADMIN}#${territory}`;
-  } else if (role === USER_TYPE.CMS_ROLE_APPROVER) {
+    ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
+  } else if (role === USER_ROLE.CMS_ROLE_APPROVER) {
     // get cmsroleapprover
     KeyConditionExpression += ` AND GSI1sk=:sk`;
-    ExpressionAttributeValues[":sk"] = USER_TYPE.CMS_ROLE_APPROVER;
+    ExpressionAttributeValues[":sk"] = USER_ROLE.CMS_ROLE_APPROVER;
   }
 
   return {

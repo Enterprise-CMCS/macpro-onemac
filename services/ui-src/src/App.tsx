@@ -18,7 +18,6 @@ const DEFAULT_AUTH_STATE: Omit<
   isAuthenticating: true,
   isAuthenticated: false,
   isLoggedInAsDeveloper: false,
-  isValidRoute: false,
   userProfile: {},
   userRole: null,
   userStatus: null,

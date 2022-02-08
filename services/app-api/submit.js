@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import * as uuid from "uuid";
 
-import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
+import { latestAccessStatus, USER_STATUS, USER_ROLE } from "cmscommonlib";
 
 import getChangeRequestFunctions, {
   validateSubmission,
@@ -59,8 +59,8 @@ export const main = handler(async (event) => {
     }
 
     if (
-      (doneBy.type != USER_TYPE.STATE_SUBMITTER ||
-        doneBy.type != USER_TYPE.STATE_SYSTEM_ADMIN) &&
+      (doneBy.type != USER_ROLE.STATE_SUBMITTER ||
+        doneBy.type != USER_ROLE.STATE_SYSTEM_ADMIN) &&
       latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
     ) {
       throw RESPONSE_CODE.USER_NOT_AUTHORIZED;

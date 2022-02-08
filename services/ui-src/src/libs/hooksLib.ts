@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { RESPONSE_CODE, USER_TYPE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, USER_ROLE, ROUTES, getUserRoleObj } from "cmscommonlib";
 
 import UserDataApi from "../utils/UserDataApi";
 import { useAppContext } from "./contextLib";
@@ -37,7 +37,7 @@ export function useFormFields(
 }
 
 export function useSignupCallback(
-  userType: USER_TYPE,
+  userType: USER_ROLE,
   processAttributes?: (payload: {}) => string[] | undefined
 ): [boolean, (payload: {}, additionalProperties?: {}) => void] {
   const [loading, setLoading] = useState(false);
@@ -72,15 +72,15 @@ export function useSignupCallback(
 
         let messageState;
         switch (userType) {
-          case USER_TYPE.HELPDESK:
+          case USER_ROLE.HELPDESK:
             messageState = { passCode: RESPONSE_CODE.HELPDESK_USER_SUBMITTED };
             break;
-          case USER_TYPE.CMS_REVIEWER:
+          case USER_ROLE.CMS_REVIEWER:
             messageState = {
               passCode: RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED,
             };
             break;
-          case USER_TYPE.CMS_ROLE_APPROVER:
+          case USER_ROLE.CMS_ROLE_APPROVER:
             messageState = {
               passCode: RESPONSE_CODE.CMS_ROLE_APPROVER_USER_SUBMITTED,
             };
@@ -99,7 +99,7 @@ export function useSignupCallback(
             passCode: error, // ALERTS_MSG.SUBMISSION_ERROR,
           },
         };
-        if (userType === USER_TYPE.HELPDESK) {
+        if (userType === USER_ROLE.HELPDESK) {
           destination.pathname = "/";
         }
 

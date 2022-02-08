@@ -10,7 +10,7 @@ import {
   ChangeRequest,
   getUserRoleObj,
   USER_STATUS,
-  USER_TYPE,
+  USER_ROLE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -280,7 +280,7 @@ const Dashboard = () => {
   }
 
   function renderSubmissionList() {
-    if (userRole !== USER_TYPE.CMS_ROLE_APPROVER) {
+    if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
       }
