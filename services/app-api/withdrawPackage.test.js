@@ -1,11 +1,11 @@
 import { main } from "./withdrawPackage";
 import { RESPONSE_CODE, USER_TYPE } from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { validateUserSubmitting } from "./utils/validateUser";
 import updateComponent from "./utils/updateComponent";
 import sendEmail from "./libs/email-lib";
 
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("./utils/validateUser");
 jest.mock("./utils/updateComponent");
 jest.mock("./libs/email-lib");

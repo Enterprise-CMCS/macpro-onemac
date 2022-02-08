@@ -8,7 +8,7 @@ import {
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
 
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";

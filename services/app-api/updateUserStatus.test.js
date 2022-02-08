@@ -7,7 +7,7 @@ import {
 } from "cmscommonlib";
 import sendEmail from "./libs/email-lib";
 
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { getMyApprovers } from "./getMyApprovers";
 import {
   main,
@@ -24,7 +24,7 @@ const testDoneBy = {
   fullName: "firsty lastly",
 };
 
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("./getMyApprovers");
 jest.mock("./libs/email-lib");
 

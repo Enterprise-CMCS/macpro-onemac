@@ -6,7 +6,7 @@ import {
   USER_TYPE,
   getUserRoleObj,
 } from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 
 export const buildParams = (role, territory) => {
   // default for CSA and HD

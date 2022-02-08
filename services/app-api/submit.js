@@ -11,7 +11,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import newSubmission from "./utils/newSubmission";
 
 /**

@@ -6,7 +6,7 @@ import {
   adminNotice,
 } from "./requestAccess";
 import { getCMSDateFormatNow } from "./changeRequest/email-util";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 import { getMyApprovers } from "./getMyApprovers";
 import sendEmail from "./libs/email-lib";
@@ -20,7 +20,7 @@ const testDoneBy = {
 };
 
 jest.mock("./changeRequest/email-util");
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("./utils/changeUserStatus");
 jest.mock("./getMyApprovers");
 jest.mock("./libs/email-lib");
@@ -83,7 +83,11 @@ it("errors when no email provided", async () => {
 
   const testEvent = { body: '{"email":"testEmail"}' };
   const expectedReturn = RESPONSE_CODE.USER_NOT_FOUND;
-  expect(requestAccess(testEvent)).resolves.toStrictEqual(expectedReturn);
+  expect(requestAccess(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("returns User Submitted when complete", async () => {
@@ -97,5 +101,9 @@ it("returns User Submitted when complete", async () => {
     },
   };
 
-  expect(main(testEvent)).resolves.toStrictEqual(expectedReturn);
+  expect(main(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

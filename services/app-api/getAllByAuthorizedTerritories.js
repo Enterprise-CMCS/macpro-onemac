@@ -2,7 +2,7 @@ import { USER_TYPE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { RESPONSE_CODE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 
 const commonQueryConfig = {
   TableName: process.env.tableName,

@@ -9,10 +9,10 @@ import {
   latestAccessStatus,
   USER_TYPE,
 } from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 
 jest.mock("./changeRequest/changeRequest-util");
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("cmscommonlib");
 
 const expectedResponse = {

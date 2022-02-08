@@ -2,7 +2,7 @@ import AWS from "aws-sdk";
 import { RESPONSE_CODE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { validateUserReadOnly } from "./utils/validateUser";
 
 const s3 = new AWS.S3();

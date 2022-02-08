@@ -1,7 +1,7 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { newUser } from "./utils/newUser";
 
 export const setContactInfo = async (event) => {

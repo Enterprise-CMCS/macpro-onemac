@@ -1,5 +1,5 @@
 import dynamoDb from "./libs/dynamodb-lib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { getMyUserList, buildParams } from "./getMyUserList";
 import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 
@@ -10,7 +10,7 @@ const testDoneBy = {
   lastName: "lasty",
   fullName: "firsty lastly",
 };
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("./libs/dynamodb-lib");
 jest.mock("cmscommonlib");
 
@@ -52,9 +52,11 @@ it("errors when no email provided", async () => {
   });
 
   const expectedReturn = RESPONSE_CODE.USER_NOT_FOUND;
-  expect(
-    getMyUserList({ queryStringParameters: { email: "" } })
-  ).resolves.toStrictEqual(expectedReturn);
+  expect(getMyUserList({ queryStringParameters: { email: "" } }))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("errors when user lacks authority", async () => {
@@ -63,15 +65,19 @@ it("errors when user lacks authority", async () => {
   });
 
   const expectedReturn = RESPONSE_CODE.USER_NOT_AUTHORIZED;
-  expect(
-    getMyUserList({ queryStringParameters: { email: "" } })
-  ).resolves.toStrictEqual(expectedReturn);
+  expect(getMyUserList({ queryStringParameters: { email: "" } }))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("returns Items when successful", async () => {
   const expectedReturn = "something";
 
-  expect(
-    getMyUserList({ queryStringParameters: { email: "" } })
-  ).resolves.toStrictEqual(expectedReturn);
+  expect(getMyUserList({ queryStringParameters: { email: "" } }))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

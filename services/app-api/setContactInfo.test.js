@@ -1,9 +1,9 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { main, setContactInfo } from "./setContactInfo";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import { newUser } from "./utils/newUser";
 
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("./utils/newUser");
 
 getUser.mockImplementation(() => {
