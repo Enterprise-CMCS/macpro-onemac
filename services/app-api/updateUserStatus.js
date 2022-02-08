@@ -53,7 +53,7 @@ export const selfRevokeAdminNotice = (territory, fullName, approverList) => {
   };
 };
 
-const doUpdate = async (body, doneBy, doneTo) => {
+export const doUpdate = async (body, doneBy, doneTo) => {
   try {
     await changeUserStatus({
       ...body,
@@ -86,6 +86,7 @@ export const updateUserStatus = async (event) => {
     body = JSON.parse(event.body);
   } catch (e) {
     console.error("Failed to parse body", e);
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
   let doneBy, doneTo;

@@ -10,6 +10,7 @@ export const setContactInfo = async (event) => {
     body = JSON.parse(event.body);
   } catch (e) {
     console.error("Failed to parse body", e);
+    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
   try {

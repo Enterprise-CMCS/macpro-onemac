@@ -3,25 +3,25 @@ import { main } from "./getMyApprovers";
 
 jest.mock("./libs/dynamodb-lib");
 
-dynamoDb.query.mockImplementation(() => {
-  return {
-    Items: [
-      {
-        email: "sabrina.mccrae@cms.hhs.gov",
-        firstName: "Sabrina",
-        lastName: "McCrae",
-      },
-      {
-        email: "systemadmintest@cms.hhs.local",
-        firstName: "Teresa",
-        lastName: "Test",
-      },
-    ],
-  };
-});
-
-afterAll(() => {
+beforeAll(() => {
   jest.clearAllMocks();
+
+  dynamoDb.query.mockImplementation(() => {
+    return {
+      Items: [
+        {
+          email: "sabrina.mccrae@cms.hhs.gov",
+          firstName: "Sabrina",
+          lastName: "McCrae",
+        },
+        {
+          email: "systemadmintest@cms.hhs.local",
+          firstName: "Teresa",
+          lastName: "Test",
+        },
+      ],
+    };
+  });
 });
 
 it("gets approver list from role and territory", async () => {

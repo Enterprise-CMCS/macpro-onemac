@@ -13,18 +13,18 @@ newUser.mockImplementation(() => {
   return null;
 });
 
+const testEvent = { body: '{"email":"testEmail"}' };
+
 it("errors when user exists", async () => {
   getUser.mockImplementationOnce(() => {
     return { email: "testemail", fullName: "I exist" };
   });
 
-  const testEvent = { body: '{"email":"testEmail"}' };
   const expectedReturn = RESPONSE_CODE.USER_EXISTS;
   expect(setContactInfo(testEvent)).resolves.toStrictEqual(expectedReturn);
 });
 
 it("returns User Submitted when complete", async () => {
-  const testEvent = { body: '{"email":"testEmail"}' };
   const expectedReturn = {
     statusCode: 200,
     body: JSON.stringify(RESPONSE_CODE.USER_SUBMITTED),
@@ -35,4 +35,40 @@ it("returns User Submitted when complete", async () => {
   };
 
   expect(main(testEvent)).resolves.toStrictEqual(expectedReturn);
+});
+
+it("handles JSON.parse exceptions", async () => {
+  const badParse = "bleh";
+  const expectedReturn = RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  expect(setContactInfo(badParse))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles getUser exceptions", async () => {
+  getUser.mockImplementationOnce(() => {
+    throw "an Exception!";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  expect(setContactInfo(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles newUser exceptions", async () => {
+  newUser.mockImplementationOnce(() => {
+    throw "an Exception!";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  expect(setContactInfo(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

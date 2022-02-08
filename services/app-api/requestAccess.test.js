@@ -42,6 +42,8 @@ sendEmail.mockImplementation(() => {
   return null;
 });
 
+const testEvent = { body: '{"email":"testEmail"}' };
+
 it("builds the pending notice", () => {
   const expectedResponse = {
     fromAddressSource: "userAccessEmailSource",
@@ -81,7 +83,6 @@ it("errors when no email provided", async () => {
     return null;
   });
 
-  const testEvent = { body: '{"email":"testEmail"}' };
   const expectedReturn = RESPONSE_CODE.USER_NOT_FOUND;
   expect(requestAccess(testEvent))
     .resolves.toStrictEqual(expectedReturn)
@@ -90,8 +91,46 @@ it("errors when no email provided", async () => {
     });
 });
 
+it("handles getUser exceptions", async () => {
+  getUser.mockImplementationOnce(() => {
+    throw "getUser Error";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_NOT_FOUND;
+  expect(requestAccess(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles changeUserStatus exceptions", async () => {
+  changeUserStatus.mockImplementationOnce(() => {
+    throw "getUser Error";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  expect(requestAccess(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles sendEmail exceptions", async () => {
+  sendEmail.mockImplementationOnce(() => {
+    throw "getUser Error";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_SUBMITTED;
+  expect(requestAccess(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
 it("returns User Submitted when complete", async () => {
-  const testEvent = { body: '{"email":"testEmail"}' };
   const expectedReturn = {
     statusCode: 200,
     body: JSON.stringify(RESPONSE_CODE.USER_SUBMITTED),

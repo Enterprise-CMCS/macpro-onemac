@@ -9,10 +9,12 @@ import sendEmail from "./libs/email-lib";
 
 import { getUser } from "./getUser";
 import { getMyApprovers } from "./getMyApprovers";
+import { changeUserStatus } from "./utils/changeUserStatus";
 import {
   main,
   accessChangeNotice,
   selfRevokeAdminNotice,
+  doUpdate,
   updateUserStatus,
 } from "./updateUserStatus";
 
@@ -27,19 +29,31 @@ const testDoneBy = {
 jest.mock("./getUser");
 jest.mock("./getMyApprovers");
 jest.mock("./libs/email-lib");
+jest.mock("./utils/changeUserStatus");
 
-getUser.mockImplementation(() => {
-  return testDoneBy;
+beforeAll(() => {
+  jest.clearAllMocks();
+
+  getUser.mockImplementation(() => {
+    return testDoneBy;
+  });
+  getMyApprovers.mockImplementation(() => {
+    return [
+      { fullName: "admin One", email: "email1" },
+      { fullName: "admin Two", email: "email2" },
+    ];
+  });
+  sendEmail.mockImplementation(() => {
+    return null;
+  });
+  changeUserStatus.mockImplementation(() => {
+    return null;
+  });
 });
-getMyApprovers.mockImplementation(() => {
-  return [
-    { fullName: "admin One", email: "email1" },
-    { fullName: "admin Two", email: "email2" },
-  ];
-});
-sendEmail.mockImplementation(() => {
-  return null;
-});
+
+const testEvent = {
+  body: '{"doneByEmail":"testDoneByEmail","email":"testEmail","role":"testRole", "territory":"MD", "status": "active"}',
+};
 
 it("builds the access change notice", () => {
   const expectedResponse = {
@@ -75,28 +89,79 @@ it("builds the self-revoke admin notice", () => {
     ])
   ).toStrictEqual(expectedResponse);
 });
-/*
-it("errors when user exists", async () => {
-  getUser.mockImplementationOnce(() => {
-    return { email: "testemail", fullName: "I exist" };
+
+it("does the updates", async () => {
+  const expectedReturn = undefined;
+  expect(
+    doUpdate(
+      "test body",
+      { fullName: "doneBy fullName", email: "email1" },
+      { fullName: "doneTo fullName", email: "email2" }
+    )
+  )
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles doUpdate exception 1", async () => {
+  changeUserStatus.mockImplementationOnce(() => {
+    throw "an exception";
   });
 
-  const testEvent = { body: '{"email":"testEmail"}' };
-  const expectedReturn = RESPONSE_CODE.USER_EXISTS;
-  expect(setContactInfo(testEvent)).resolves.toStrictEqual(expectedReturn);
+  const expectedReturn = RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  expect(
+    doUpdate(
+      "test body",
+      { fullName: "doneBy fullName", email: "email1" },
+      { fullName: "doneTo fullName", email: "email2" }
+    )
+  )
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
-it("returns User Submitted when complete", async () => {
-  const testEvent = { body: '{"email":"testEmail"}' };
-  const expectedReturn = {
-    statusCode: 200,
-    body: JSON.stringify(RESPONSE_CODE.USER_SUBMITTED),
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Access-Control-Allow-Credentials": true,
-    },
-  };
+it("ignores doUpdate exception 2", async () => {
+  sendEmail.mockImplementationOnce(() => {
+    throw "an exception";
+  });
 
-  expect(main(testEvent)).resolves.toStrictEqual(expectedReturn);
+  const expectedReturn = undefined;
+  expect(
+    doUpdate(
+      "test body",
+      { fullName: "doneBy fullName", email: "email1" },
+      { fullName: "doneTo fullName", email: "email2" }
+    )
+  )
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
-*/
+
+it("handles JSON.parse exceptions", async () => {
+  const badParse = "bleh";
+  const expectedReturn = RESPONSE_CODE.USER_SUBMISSION_FAILED;
+  expect(updateUserStatus(badParse))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles getUser exceptions", async () => {
+  getUser.mockImplementationOnce(() => {
+    throw "an Exception!";
+  });
+
+  const expectedReturn = RESPONSE_CODE.USER_NOT_FOUND;
+  expect(updateUserStatus(testEvent))
+    .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
