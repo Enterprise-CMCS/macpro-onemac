@@ -2142,7 +2142,6 @@ aside#faq-contact-info-box {
 
 .picker-button {
   display: flex;
-  flex: nowrap;
   gap: 4px;
 }
 
@@ -2273,6 +2272,7 @@ aside#faq-contact-info-box {
     width: 320px;
     background-color: $color-primary-darkest;
     color: $color-white;
+    padding-bottom: 300px;
 
     > header {
       @extend .ds-u-margin-y--4;
@@ -2337,6 +2337,8 @@ aside#faq-contact-info-box {
 .inversed-accordion-content {
   background: transparent;
   color: $color-white;
+  @extend .ds-u-margin-top--1;
+  @extend .ds-u-margin-bottom--1;
 }
 
 .inversed-accordion-button {

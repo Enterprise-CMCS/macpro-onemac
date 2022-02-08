@@ -314,6 +314,7 @@ function DateFilter({
           ],
     [inThePast]
   );
+
   return (
     <DateRangePicker
       block
