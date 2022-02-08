@@ -5,6 +5,12 @@ import HamburgerMenu from "./HamburgerMenu";
 import { act } from "react-dom/test-utils";
 import "@testing-library/jest-dom";
 
+import { Globals } from "@react-spring/web";
+
+Globals.assign({
+  skipAnimation: true,
+});
+
 it("opens a menu on click of icon and renders link array", async () => {
   const linksToDisplay = [<a>testing</a>, <a>testing</a>];
   render(<HamburgerMenu linksToDisplay={linksToDisplay} />);
