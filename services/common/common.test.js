@@ -1,6 +1,6 @@
 // import { Role, USER_ROLE, getUserRoleObj } from ".";
 
-describe("getUserRoleObj Null Role Test", () => {
+it("getUserRoleObj Null Role Test", () => {
   /*
   const myRole = new Role();
   expect(myRole.getAccesses()[0]).toBe("/");

@@ -118,11 +118,13 @@ class UserDataApi {
   async requestAccess(
     email: string,
     role: USER_ROLE,
-    territories?: string[]
+    territories?: string[],
+    division?: number,
+    group?: number
   ): Promise<string> {
     try {
       return await API.post("oneMacAPI", "/requestAccess", {
-        body: { email, role, territories },
+        body: { email, role, territories, division, group },
       });
     } catch (error) {
       return handleApiError(

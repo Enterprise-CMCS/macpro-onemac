@@ -102,7 +102,7 @@ const UserManagement = () => {
         setUserList(ul);
       })
       .catch((error) => {
-        console.log("Error while fetching user's list.", error);
+        console.log("Error while fetching user list.", error);
         setAlertCode(RESPONSE_CODE[error.message]);
       });
   }, [userProfile.email, userStatus]);

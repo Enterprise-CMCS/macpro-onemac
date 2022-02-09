@@ -9,20 +9,25 @@ import { App } from "./App";
 jest.mock("aws-amplify");
 jest.mock("./utils/UserDataApi");
 
-it("renders without crashing", async () => {
-  /*  Auth.currentAuthenticatedUser.mockResolvedValueOnce({
+beforeEach(() => {
+  jest.clearAllMocks();
+
+  Auth.currentAuthenticatedUser.mockResolvedValue({
     signInUserSession: { idToken: { payload: {} } },
   });
+  Auth.configure.mockReturnValue({ oauth: {} });
+});
+
+it("renders without crashing", async () => {
   render(
     <MemoryRouter>
       <App />
     </MemoryRouter>
   );
-  await act(async () => {}); */
+  await act(async () => {});
 });
 
 it("handles error on fetch", async () => {
-  Auth.configure.mockReturnValueOnce({ oauth: {} });
   render(
     <MemoryRouter>
       <App />
