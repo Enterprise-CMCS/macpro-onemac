@@ -1,6 +1,10 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, USER_STATUS, getUserRoleObj } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  getActiveTerritories,
+  getUserRoleObj,
+} from "cmscommonlib";
 import { getUser } from "./getUser";
 
 /**

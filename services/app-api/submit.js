@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import * as uuid from "uuid";
 
-import { getUserRoleObj, getActiveTerritories, USER_ROLE } from "cmscommonlib";
+import { getUserRoleObj, getActiveTerritories } from "cmscommonlib";
 
 import getChangeRequestFunctions, {
   validateSubmission,
@@ -13,7 +13,6 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import { getUser } from "./getUser";
 import newSubmission from "./utils/newSubmission";
-import { territoryList } from "cmscommonlib";
 
 /**
  * Submission states for the change requests.
@@ -62,11 +61,11 @@ export const main = handler(async (event) => {
     if (Object.keys(doneBy).length > 0) {
       const userRoleObj = getUserRoleObj(doneBy?.roleList);
 
-      territoryList = getActiveTerritories(doneBy?.roleList);
+      const activeTerritories = getActiveTerritories(doneBy?.roleList);
       if (
         !userRoleObj.canAccessForms ||
-        territoryList === [] ||
-        !territoryList.includes(data.territory)
+        activeTerritories === [] ||
+        !activeTerritories.includes(data.territory)
       ) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
