@@ -9,7 +9,7 @@ import UserDataApi from "./utils/UserDataApi";
 import { Routes } from "./Routes";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { effectiveRoleForUser } from "cmscommonlib";
+import { effectiveRoleForUser, getActiveTerritories } from "cmscommonlib";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -21,6 +21,7 @@ const DEFAULT_AUTH_STATE: Omit<
   userProfile: {},
   userRole: null,
   userStatus: null,
+  activeTerritories: null,
 };
 
 export function App() {
@@ -48,6 +49,7 @@ export function App() {
         userRole = roleResult[0];
         userStatus = roleResult[1];
       }
+      const activeTerritories = getActiveTerritories(userData?.roleList);
 
       setAuthState({
         ...DEFAULT_AUTH_STATE,
@@ -68,6 +70,7 @@ export function App() {
         },
         userRole,
         userStatus,
+        activeTerritories,
       });
     } catch (error) {
       if (

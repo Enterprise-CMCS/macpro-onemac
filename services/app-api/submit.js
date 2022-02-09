@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import * as uuid from "uuid";
 
-import { latestAccessStatus, USER_STATUS, USER_ROLE } from "cmscommonlib";
+import { getUserRoleObj, getActiveTerritories, USER_ROLE } from "cmscommonlib";
 
 import getChangeRequestFunctions, {
   validateSubmission,
@@ -13,6 +13,7 @@ import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import { getUser } from "./getUser";
 import newSubmission from "./utils/newSubmission";
+import { territoryList } from "cmscommonlib";
 
 /**
  * Submission states for the change requests.
@@ -58,12 +59,17 @@ export const main = handler(async (event) => {
       throw RESPONSE_CODE.USER_NOT_FOUND;
     }
 
-    if (
-      (doneBy.type != USER_ROLE.STATE_SUBMITTER ||
-        doneBy.type != USER_ROLE.STATE_SYSTEM_ADMIN) &&
-      latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
-    ) {
-      throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    if (Object.keys(doneBy).length > 0) {
+      const userRoleObj = getUserRoleObj(doneBy?.roleList);
+
+      territoryList = getActiveTerritories(doneBy?.roleList);
+      if (
+        !userRoleObj.canAccessForms ||
+        territoryList === [] ||
+        !territoryList.includes(data.territory)
+      ) {
+        throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
+      }
     }
 
     // map the changeRequest functions from the data.type
@@ -77,11 +83,6 @@ export const main = handler(async (event) => {
     );
     if (!crVerifyTransmittalIdStateCode) {
       throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
-    }
-
-    const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
-    if (!crVerifyTerritoryStateCode) {
-      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
     }
 
     // check for submission-specific validation (uses database)

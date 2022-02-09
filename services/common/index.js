@@ -240,31 +240,6 @@ class Helpdesk extends Role {
   }
 }
 
-const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
-
-/**
- * Finds a user's most recent approval status. For state submitters and admins, it takes an optional state code to search for.
- * @param user - The user object to inspect.
- * @param [state] - A two-letter territory code to search for (only for state submitters and admins).
- */
-export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
-  if (!attributes.length) return null;
-
-  switch (type) {
-    case USER_ROLE.STATE_SUBMITTER:
-    case USER_ROLE.STATE_SYSTEM_ADMIN: {
-      const stateObj = attributes.find(({ stateCode }) => stateCode === state);
-      if (!stateObj) return null;
-
-      return stateObj.history.sort(datesDescending)[0].status;
-    }
-
-    default: {
-      return attributes.sort(datesDescending)[0].status;
-    }
-  }
-};
-
 /**
  * Finds out what a user's most relevant role information is.
  */
@@ -328,6 +303,16 @@ export const getUserRoleObj = (roleInfo) => {
     [USER_ROLE.HELPDESK]: Helpdesk,
     [USER_ROLE.CMS_REVIEWER]: CmsReviewer,
   }[roleInfo]();
+};
+
+export const getActiveTerritories = (roleList) => {
+  let activeTerritories = "EUA user";
+  if (Object.keys(roleList).length > 0) {
+    activeTerritories = roleList
+      .filter(({ status }) => status === USER_STATUS.ACTIVE)
+      .map(({ territory }) => territory);
+  }
+  return activeTerritories;
 };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.
