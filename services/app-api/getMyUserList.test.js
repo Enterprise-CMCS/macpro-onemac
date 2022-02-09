@@ -1,26 +1,36 @@
 import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import { getMyUserList, buildParams } from "./getMyUserList";
-import { RESPONSE_CODE, getUserRoleObj, USER_ROLE } from "cmscommonlib";
+import { RESPONSE_CODE, /*getUserRoleObj,*/ USER_ROLE } from "cmscommonlib";
 
 const testDoneBy = {
+  roleList: [{ role: "statesystemadmin", status: "active", territory: "MD" }],
+  email: "myemail@email.com",
+  firstName: "firsty",
+  lastName: "lasty",
+  fullName: "firsty lastly",
+};
+const testCantBeDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
   email: "myemail@email.com",
   firstName: "firsty",
   lastName: "lasty",
   fullName: "firsty lastly",
 };
+
 jest.mock("./getUser");
 jest.mock("./libs/dynamodb-lib");
-jest.mock("cmscommonlib");
+//jest.mock("cmscommonlib");
 
-beforeEach(() => {
+beforeAll(() => {
+  jest.clearAllMocks();
+
   getUser.mockImplementation(() => {
     return testDoneBy;
   });
-  getUserRoleObj.mockImplementation(() => {
+  /* getUserRoleObj.mockImplementation(() => {
     return { canAccessUserManagement: true };
-  });
+  }); */
   dynamoDb.query.mockImplementation(() => {
     return { Items: "something" };
   });
@@ -82,9 +92,13 @@ it("errors when no email provided", async () => {
 });
 
 it("errors when user lacks authority", async () => {
-  getUserRoleObj.mockImplementationOnce(() => {
-    return { canAccessUserManagement: false };
+  getUser.mockImplementationOnce(() => {
+    return testCantBeDoneBy;
   });
+
+  /*getUserRoleObj.mockImplementationOnce(() => {
+    return { canAccessUserManagement: false };
+  });*/
 
   const expectedReturn = RESPONSE_CODE.USER_NOT_AUTHORIZED;
   expect(getMyUserList({ queryStringParameters: { email: "" } }))

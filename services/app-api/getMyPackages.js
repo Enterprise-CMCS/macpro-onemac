@@ -66,8 +66,6 @@ export const getMyPackages = async (email, group) => {
           const promiseItems = [];
           do {
             const results = await dynamoDb.query(params);
-            console.log("params are: ", params);
-            console.log("results are: ", results);
             promiseItems.push(...results.Items);
             params.ExclusiveStartKey = results.LastEvaluatedKey;
           } while (params.ExclusiveStartKey);

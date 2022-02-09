@@ -9,20 +9,32 @@ import {
 import { getUser } from "./getUser";
 
 export const buildParams = (role, territory) => {
-  // default for CSA and HD
   let KeyConditionExpression = "GSI1pk=:user";
   const ExpressionAttributeValues = { ":user": "USER" };
+  //let FilterExpression = null;
 
-  if (territory !== "N/A") {
-    // get statesystemadmin#<territory>
-    KeyConditionExpression += ` AND GSI1sk=:sk`;
-    ExpressionAttributeValues[
-      ":sk"
-    ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
-  } else if (role === USER_ROLE.CMS_ROLE_APPROVER) {
-    // get cmsroleapprover
-    KeyConditionExpression += ` AND GSI1sk=:sk`;
-    ExpressionAttributeValues[":sk"] = USER_ROLE.CMS_ROLE_APPROVER;
+  switch (role) {
+    // CSA gets everyone, which is the base params
+    case USER_ROLE.SYSTEM_ADMIN:
+    case USER_ROLE.HELPDESK:
+      break;
+    // HD gets everyone but CSA - have to use FilterExpression to get more than one role
+    //    case USER_ROLE.HELPDESK:
+    //     FilterExpression = "#role <> :role";
+    //     ExpressionAttributeValues[":role"] = USER_ROLE.SYSTEM_ADMIN;
+    //   break;
+    // CMS Role Approvers can see anyone that their role can approve
+    case USER_ROLE.CMS_ROLE_APPROVER:
+      KeyConditionExpression += ` AND GSI1sk=:sk`;
+      ExpressionAttributeValues[":sk"] = USER_ROLE.CMS_ROLE_APPROVER;
+      break;
+    // State System Admins can see anyone their role can approver for their territory
+    case USER_ROLE.STATE_SYSTEM_ADMIN:
+      KeyConditionExpression += ` AND GSI1sk=:sk`;
+      ExpressionAttributeValues[
+        ":sk"
+      ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
+      break;
   }
 
   return {
