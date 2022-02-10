@@ -148,7 +148,7 @@ jobs:
   cypress-test:
     name: Cypress Tests
     needs: deploy
-    if: ${{ false }}
+    if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/master' }}
     runs-on: ubuntu-latest
     steps:
       - name: set branch_name
