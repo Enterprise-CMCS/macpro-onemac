@@ -18,7 +18,6 @@ import { LOADER_TEST_ID } from "../components/LoadingScreen";
 jest.mock("../utils/UserDataApi");
 
 it("renders table with columns", async () => {
-  /*
   UserDataApi.getMyUserList.mockResolvedValue(userList);
 
   render(
@@ -41,11 +40,9 @@ it("renders table with columns", async () => {
   screen.getByText("Last Modified");
   screen.getByText("Modified By");
   screen.getByText("Actions");
-  */
 });
 
 it("confirms user actions with popup", async () => {
-  /*
   UserDataApi.getMyUserList.mockResolvedValue(userList);
 
   render(
@@ -63,13 +60,12 @@ it("confirms user actions with popup", async () => {
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   fireEvent.click(
-    screen.getByLabelText(/actions for Peter Pending/, { selector: "button" })
+    screen.getByLabelText(/actions for Perry Pending/, { selector: "button" })
   );
   fireEvent.click(screen.getAllByText(/grant access/i)[0]);
 
   const modalHeader = screen.getByText(/Modify/).closest("header");
   expect(modalHeader.nextElementSibling).toHaveTextContent(
-    "This will grant Peter Pending access to OneMAC."
+    "This will grant Perry Pending access to OneMAC."
   );
-  */
 });

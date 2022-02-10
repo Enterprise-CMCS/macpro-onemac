@@ -9,39 +9,11 @@ import {
 import { getUser } from "./getUser";
 
 export const buildParams = (role, territory) => {
-  let KeyConditionExpression = "GSI1pk=:user";
-  const ExpressionAttributeValues = { ":user": "USER" };
-  //let FilterExpression = null;
-
-  switch (role) {
-    // CSA gets everyone, which is the base params
-    case USER_ROLE.SYSTEM_ADMIN:
-    case USER_ROLE.HELPDESK:
-      break;
-    // HD gets everyone but CSA - have to use FilterExpression to get more than one role
-    //    case USER_ROLE.HELPDESK:
-    //     FilterExpression = "#role <> :role";
-    //     ExpressionAttributeValues[":role"] = USER_ROLE.SYSTEM_ADMIN;
-    //   break;
-    // CMS Role Approvers can see anyone that their role can approve
-    case USER_ROLE.CMS_ROLE_APPROVER:
-      KeyConditionExpression += ` AND GSI1sk=:sk`;
-      ExpressionAttributeValues[":sk"] = USER_ROLE.CMS_ROLE_APPROVER;
-      break;
-    // State System Admins can see anyone their role can approver for their territory
-    case USER_ROLE.STATE_SYSTEM_ADMIN:
-      KeyConditionExpression += ` AND GSI1sk=:sk`;
-      ExpressionAttributeValues[
-        ":sk"
-      ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
-      break;
-  }
-
-  return {
+  const startParams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
-    KeyConditionExpression,
-    ExpressionAttributeValues,
+    KeyConditionExpression: "GSI1pk=:user",
+    ExpressionAttributeValues: { ":user": "USER" },
     ProjectionExpression:
       "#date, doneByName, email, fullName, #role, #status, territory",
     ExpressionAttributeNames: {
@@ -50,6 +22,32 @@ export const buildParams = (role, territory) => {
       "#status": "status",
     },
   };
+
+  switch (role) {
+    // CSA gets everyone, which is the base params
+    case USER_ROLE.SYSTEM_ADMIN:
+      break;
+    // HD gets everyone but CSA - have to use FilterExpression to get more than one role
+    case USER_ROLE.HELPDESK:
+      startParams.FilterExpression = "#role <> :role";
+      startParams.ExpressionAttributeValues[":role"] = USER_ROLE.SYSTEM_ADMIN;
+      break;
+    // CMS Role Approvers can see anyone that their role can approve
+    case USER_ROLE.CMS_ROLE_APPROVER:
+      startParams.KeyConditionExpression += ` AND GSI1sk=:sk`;
+      startParams.ExpressionAttributeValues[":sk"] =
+        USER_ROLE.CMS_ROLE_APPROVER;
+      break;
+    // State System Admins can see anyone their role can approver for their territory
+    case USER_ROLE.STATE_SYSTEM_ADMIN:
+      startParams.KeyConditionExpression += ` AND GSI1sk=:sk`;
+      startParams.ExpressionAttributeValues[
+        ":sk"
+      ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
+      break;
+  }
+  console.log("build params: ", startParams);
+  return startParams;
 };
 
 export const getMyUserList = async (event) => {
@@ -72,7 +70,7 @@ export const getMyUserList = async (event) => {
           .map(({ territory }) => territory)
       )
     );
-
+    console.log("territory is: ", territory);
     const listResult = await dynamoDb.query(
       buildParams(doneBy.roleList[0].role, territory)
     );

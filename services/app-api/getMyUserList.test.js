@@ -36,7 +36,7 @@ beforeAll(() => {
   });
 });
 
-it("builds the correct paramaters", () => {
+it("builds the correct paramaters for system admin", () => {
   const expectedParams = {
     ExpressionAttributeNames: {
       "#date": "date",
@@ -44,16 +44,17 @@ it("builds the correct paramaters", () => {
       "#status": "status",
     },
     ExpressionAttributeValues: {
-      ":sk": "statesystemadmin#Territory",
       ":user": "USER",
     },
     IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk=:user AND GSI1sk=:sk",
+    KeyConditionExpression: "GSI1pk=:user",
     ProjectionExpression:
       "#date, doneByName, email, fullName, #role, #status, territory",
     TableName: undefined,
   };
-  expect(buildParams("Role", "Territory")).toStrictEqual(expectedParams);
+  expect(buildParams(USER_ROLE.SYSTEM_ADMIN, "Territory")).toStrictEqual(
+    expectedParams
+  );
 });
 
 it("builds the correct paramaters for CMS Role Approvers", () => {
@@ -64,7 +65,7 @@ it("builds the correct paramaters for CMS Role Approvers", () => {
       "#status": "status",
     },
     ExpressionAttributeValues: {
-      ":sk": "statesystemadmin#Territory",
+      ":sk": "cmsroleapprover",
       ":user": "USER",
     },
     IndexName: "GSI1",
@@ -74,6 +75,28 @@ it("builds the correct paramaters for CMS Role Approvers", () => {
     TableName: undefined,
   };
   expect(buildParams(USER_ROLE.CMS_ROLE_APPROVER, "Territory")).toStrictEqual(
+    expectedParams
+  );
+});
+
+it("builds the correct paramaters for State System Admins", () => {
+  const expectedParams = {
+    ExpressionAttributeNames: {
+      "#date": "date",
+      "#role": "role",
+      "#status": "status",
+    },
+    ExpressionAttributeValues: {
+      ":sk": "statesystemadmin#VA",
+      ":user": "USER",
+    },
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk=:user AND GSI1sk=:sk",
+    ProjectionExpression:
+      "#date, doneByName, email, fullName, #role, #status, territory",
+    TableName: undefined,
+  };
+  expect(buildParams(USER_ROLE.STATE_SYSTEM_ADMIN, "VA")).toStrictEqual(
     expectedParams
   );
 });
