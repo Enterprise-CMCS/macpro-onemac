@@ -141,7 +141,9 @@ const AccountButtons: React.FC<{
   }
 
   const shouldShowSignupLink =
-    userRole !== USER_ROLE.HELPDESK && !inFlightRoleRequestForUser(roleList);
+    userRole !== USER_ROLE.HELPDESK &&
+    userRole !== USER_ROLE.SYSTEM_ADMIN &&
+    !inFlightRoleRequestForUser(roleList);
 
   return (
     <>

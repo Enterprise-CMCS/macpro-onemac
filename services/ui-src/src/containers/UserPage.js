@@ -176,6 +176,7 @@ const UserPage = () => {
   const { userId } = useParams() ?? {};
   const [profileData, setProfileData] = useState({});
   const [profileRole, setProfileRole] = useState("");
+  const [profileStatus, setProfileStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [accesses, setAccesses] = useState(
@@ -191,28 +192,32 @@ const UserPage = () => {
   useEffect(() => {
     const getProfile = async (profileEmail) => {
       if (!isReadOnly) {
-        return [{ ...userProfile.userData }, userRole];
+        return [{ ...userProfile.userData }, userRole, userStatus];
       }
 
       let tempProfileData = {},
-        tempProfileRole = "user";
+        tempProfileRole = "user",
+        tempProfileStatus = "status";
 
       try {
         tempProfileData = await UserDataApi.userProfile(profileEmail);
         const profileAccess = effectiveRoleForUser(tempProfileData?.roleList);
-        if (profileAccess !== null) [tempProfileRole] = profileAccess;
+        if (profileAccess !== null)
+          [tempProfileRole, tempProfileStatus] = profileAccess;
       } catch (e) {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
 
-      return [tempProfileData, tempProfileRole];
+      return [tempProfileData, tempProfileRole, tempProfileStatus];
     };
 
     getProfile(userId)
-      .then(([newProfileData, newProfileRole]) => {
+      .then(([newProfileData, newProfileRole, newProfileStatus]) => {
         setProfileData(newProfileData);
         setProfileRole(newProfileRole);
+        console.log("profile status is: ", newProfileStatus);
+        setProfileStatus(newProfileStatus);
       })
       .catch((e) => {
         console.error("Error fetching user data", e);
@@ -346,6 +351,7 @@ const UserPage = () => {
   const renderAddStateButton = useMemo(() => {
     if (
       profileData.roleList &&
+      profileStatus === USER_STATUS.ACTIVE &&
       !inFlightRoleRequestForUser(profileData.roleList)
     )
       return (
@@ -361,9 +367,14 @@ const UserPage = () => {
       );
 
     return (
-      <p>State Access Requests Disabled while New Role Request is Pending.</p>
+      <p>State Access Requests Disabled until Role Request is finalized.</p>
     );
-  }, [setIsEditingPhone, setIsStateSelectorVisible, profileData.roleList]);
+  }, [
+    setIsEditingPhone,
+    setIsStateSelectorVisible,
+    profileData.roleList,
+    profileStatus,
+  ]);
 
   useEffect(() => {
     const createAccessList = async (inRoles) => {

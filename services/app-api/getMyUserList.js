@@ -5,10 +5,12 @@ import {
   USER_STATUS,
   USER_ROLE,
   getUserRoleObj,
+  effectiveRoleForUser,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
 
 export const buildParams = (role, territory) => {
+  console.log("build params for: ", role, territory);
   const startParams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
@@ -63,17 +65,23 @@ export const getMyUserList = async (event) => {
       return RESPONSE_CODE.USER_NOT_AUTHORIZED;
     }
 
+    const umAccess = effectiveRoleForUser(doneBy.roleList);
+    if (!umAccess) return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+
+    const umRole = umAccess[0];
+
     const [territory] = Array.from(
       new Set(
         doneBy.roleList
-          .filter(({ status }) => status === USER_STATUS.ACTIVE)
+          .filter(
+            ({ role, status }) =>
+              role === umRole && status === USER_STATUS.ACTIVE
+          )
           .map(({ territory }) => territory)
       )
     );
     console.log("territory is: ", territory);
-    const listResult = await dynamoDb.query(
-      buildParams(doneBy.roleList[0].role, territory)
-    );
+    const listResult = await dynamoDb.query(buildParams(umRole, territory));
 
     return listResult.Items;
   } catch (e) {

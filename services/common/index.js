@@ -279,6 +279,7 @@ export const inFlightRoleRequestForUser = (roleList) => {
         ({ status, role }) =>
           status === USER_STATUS.PENDING && role !== effectiveRole
       );
+      console.log("PendingRold: ", pendingRole, effectiveRole);
       return pendingRole && pendingRole.role;
     }
     default:
