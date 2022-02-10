@@ -77,30 +77,6 @@ class UserDataApi {
     }
   }
 
-  /**
-   * Tell the back end to update the status of a given user
-   * Throws an exception if the API throws an exception
-   * @param updateRequest
-   * @return errorCode
-   */
-  async setUserStatus(updateStatusRequest: any): Promise<string> {
-    if (!updateStatusRequest) {
-      throw new Error("setUserStatus API call required parameters missing");
-    }
-
-    try {
-      return await API.put("oneMacAPI", "/putUser", {
-        body: updateStatusRequest,
-      });
-    } catch (error) {
-      return handleApiError(
-        error,
-        "USER_SUBMISSION_FAILED",
-        "There was an error changing the user status."
-      );
-    }
-  }
-
   async setContactInfo(contactInfo: any): Promise<string> {
     try {
       return await API.put("oneMacAPI", "/contactInfo", {
@@ -137,7 +113,9 @@ class UserDataApi {
 
   async updateUserStatus(updateStatusRequest: any): Promise<string> {
     if (!updateStatusRequest) {
-      throw new Error("setUserStatus API call required parameters missing");
+      throw new Error(
+        "updateStatusRequest API call required parameters missing"
+      );
     }
 
     try {

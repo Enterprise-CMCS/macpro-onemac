@@ -9,7 +9,7 @@ describe("FileList", () => {
   });
 
   it("mocks a list of attachments from a download list and allows the creation of a zip file", async () => {
-    /*  global.fetch = jest.fn(() =>
+    global.fetch = jest.fn(() =>
       Promise.resolve({
         ok: true,
         blob: () =>
@@ -44,6 +44,6 @@ describe("FileList", () => {
       expect(global.fetch).toBeCalled();
     } catch (error) {
       console.log("Error thrown: ", error);
-    } */
+    }
   });
 });

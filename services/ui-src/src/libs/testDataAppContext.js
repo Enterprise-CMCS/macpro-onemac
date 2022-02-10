@@ -73,6 +73,7 @@ export const statesubmitterDeniedInitialAuthState = {
   isLoggedInAsDeveloper: false,
   userRole: "statesubmitter",
   userStatus: "denied",
+  activeTerritories: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -100,6 +101,7 @@ export const stateAdminRevokedInitialAuthState = {
   isLoggedInAsDeveloper: false,
   userRole: "statesystemadmin",
   userStatus: "revoked",
+  activeTerritories: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -127,6 +129,7 @@ export const stateAdminDeniedInitialAuthState = {
   isLoggedInAsDeveloper: false,
   userRole: "statesystemadmin",
   userStatus: "denied",
+  activeTerritories: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
