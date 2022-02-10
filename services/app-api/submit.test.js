@@ -3,16 +3,11 @@ import getChangeRequestFunctions, {
   validateSubmission,
   hasValidStateCode,
 } from "./changeRequest/changeRequest-util";
-import {
-  RESPONSE_CODE,
-  USER_STATUS,
-  latestAccessStatus,
-  USER_TYPE,
-} from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { RESPONSE_CODE, USER_STATUS, USER_ROLE } from "cmscommonlib";
+import { getUser } from "./getUser";
 
 jest.mock("./changeRequest/changeRequest-util");
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("cmscommonlib");
 
 const expectedResponse = {
@@ -59,7 +54,7 @@ const testDoneBy = {
     },
   ],
   id: "statesubmitteractive@cms.hhs.local",
-  type: USER_TYPE.STATE_SUBMITTER,
+  type: USER_ROLE.STATE_SUBMITTER,
 };
 
 beforeEach(() => {
@@ -68,9 +63,6 @@ beforeEach(() => {
   });
   getUser.mockImplementation(() => {
     return testDoneBy;
-  });
-  latestAccessStatus.mockImplementation(() => {
-    return USER_STATUS.ACTIVE;
   });
   getChangeRequestFunctions.mockImplementation(() => {
     return "something";
@@ -104,10 +96,6 @@ it(`returns an error for invalid submission`, async () => {
 
 it("returns an error if submitter does not have access", async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_NOT_AUTHORIZED);
-
-  latestAccessStatus.mockImplementation(() => {
-    return USER_STATUS.DENIED;
-  });
 
   expect(main(testUserEvent))
     .resolves.toStrictEqual(expectedResponse)

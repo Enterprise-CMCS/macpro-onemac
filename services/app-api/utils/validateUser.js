@@ -1,18 +1,28 @@
-import { getUserRoleObj, RESPONSE_CODE } from "cmscommonlib";
+import { getUserRoleObj, RESPONSE_CODE, USER_STATUS } from "cmscommonlib";
 
-import { getAuthorizedStateList } from "../user/user-util";
+export const validateUserReadOnly = (user, checkTerritory) => {
+  if (!user || Object.keys(user).length === 0)
+    throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
 
-export const validateUserReadOnly = (user, territory) => {
-  if (!user) throw new Error(RESPONSE_CODE.USER_NOT_FOUND);
+  const userRoleObj = getUserRoleObj(user.roleList);
 
-  const userTerritoryList = getAuthorizedStateList(user);
-  return (
-    typeof userTerritoryList === "string" ||
-    (Array.isArray(userTerritoryList) && userTerritoryList.includes(territory))
-  );
+  let territoryList = "this is for EUA users";
+  territoryList = user.roleList
+    .filter(({ status }) => status === USER_STATUS.ACTIVE)
+    .map(({ territory }) => territory);
+
+  if (!userRoleObj.canAccessDashboard || territoryList === []) return false;
+
+  if (
+    Array.isArray(territoryList) &&
+    !(territoryList.includes(checkTerritory) || territoryList.includes("N/A"))
+  )
+    return false;
+
+  return true;
 };
 
 export const validateUserSubmitting = (user, territory) => {
-  const userRoleObj = getUserRoleObj(user.type);
+  const userRoleObj = getUserRoleObj(user.roleList);
   return validateUserReadOnly(user, territory) && userRoleObj.canAccessForms;
 };

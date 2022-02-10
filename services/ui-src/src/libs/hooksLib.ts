@@ -1,6 +1,6 @@
 import { ChangeEvent, useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { RESPONSE_CODE, USER_TYPE, ROUTES, getUserRoleObj } from "cmscommonlib";
+import { RESPONSE_CODE, USER_ROLE, ROUTES, getUserRoleObj } from "cmscommonlib";
 
 import UserDataApi from "../utils/UserDataApi";
 import { useAppContext } from "./contextLib";
@@ -37,25 +37,20 @@ export function useFormFields(
 }
 
 export function useSignupCallback(
-  userType: USER_TYPE,
-  processAttributes: (payload: {}) => {}[]
+  userType: USER_ROLE,
+  processAttributes?: (payload: {}) => string[] | undefined
 ): [boolean, (payload: {}, additionalProperties?: {}) => void] {
   const [loading, setLoading] = useState(false);
   const history = useHistory();
   const location = useLocation<{}>();
   const {
     isLoggedInAsDeveloper,
-    userProfile: {
-      cmsRoles = "",
-      email = "",
-      firstName = "",
-      lastName = "",
-    } = {},
+    userProfile: { email = "" } = {},
     setUserInfo,
   } = useAppContext() ?? {};
 
   const signupUser = useCallback(
-    async (payload, additionalProperties) => {
+    async (payload) => {
       if (loading) return;
       try {
         setLoading(true);
@@ -64,36 +59,28 @@ export function useSignupCallback(
           payload = processAttributes(payload);
         }
 
-        let answer = await UserDataApi.updateUser({
-          userEmail: email,
-          doneBy: email,
-          firstName,
-          lastName,
-          type: userType,
-          attributes: payload,
-          ...additionalProperties,
-        });
+        let answer = await UserDataApi.requestAccess(email, userType, payload);
         // TODO use RESPONSE_CODE.USER_SUBMITTED when it is exported from common package
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
 
         await setUserInfo?.(isLoggedInAsDeveloper);
 
-        const roleObj = getUserRoleObj(userType, !cmsRoles);
+        const roleObj = getUserRoleObj(userType);
         const destination = roleObj.canAccessDashboard
           ? ROUTES.DASHBOARD
           : ROUTES.USER_MANAGEMENT;
 
         let messageState;
         switch (userType) {
-          case USER_TYPE.HELPDESK:
+          case USER_ROLE.HELPDESK:
             messageState = { passCode: RESPONSE_CODE.HELPDESK_USER_SUBMITTED };
             break;
-          case USER_TYPE.CMS_REVIEWER:
+          case USER_ROLE.CMS_REVIEWER:
             messageState = {
               passCode: RESPONSE_CODE.CMS_REVIEWER_USER_SUBMITTED,
             };
             break;
-          case USER_TYPE.CMS_ROLE_APPROVER:
+          case USER_ROLE.CMS_ROLE_APPROVER:
             messageState = {
               passCode: RESPONSE_CODE.CMS_ROLE_APPROVER_USER_SUBMITTED,
             };
@@ -112,7 +99,7 @@ export function useSignupCallback(
             passCode: error, // ALERTS_MSG.SUBMISSION_ERROR,
           },
         };
-        if (userType === USER_TYPE.HELPDESK) {
+        if (userType === USER_ROLE.HELPDESK) {
           destination.pathname = "/";
         }
 
@@ -121,12 +108,9 @@ export function useSignupCallback(
       }
     },
     [
-      cmsRoles,
       email,
-      firstName,
       history,
       isLoggedInAsDeveloper,
-      lastName,
       loading,
       location,
       processAttributes,

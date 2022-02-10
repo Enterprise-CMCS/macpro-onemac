@@ -187,13 +187,33 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  putUser:
-    handler: putUser.main
+  setContactInfo:
+    handler: setContactInfo.main
     role: LambdaApiRole
     events:
       - http:
-          path: putUser
+          path: contactInfo
           method: put
+          cors: true
+          authorizer: aws_iam
+
+  requestAccess:
+    handler: requestAccess.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: requestAccess
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  updateUserStatus:
+    handler: updateUserStatus.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: updateUserStatus
+          method: post
           cors: true
           authorizer: aws_iam
 
@@ -207,32 +227,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  getStateSystemAdminList:
-    handler: getStateSystemAdminList.main
+  getMyApprovers:
+    handler: getMyApprovers.main
     role: LambdaApiRole
     events:
       - http:
-          path: getStateSystemAdmins
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getCmsRoleApproverList:
-    handler: getCmsRoleApproverList.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getCmsRoleApprovers
-          method: get
-          cors: true
-          authorizer: aws_iam
-
-  getCmsSystemAdminList:
-    handler: getCmsSystemAdminList.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: getCmsSystemAdmins
+          path: getMyApprovers
           method: get
           cors: true
           authorizer: aws_iam
