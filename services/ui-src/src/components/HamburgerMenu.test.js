@@ -58,3 +58,26 @@ it("resize of window hamburger open", async () => {
   });
   await waitFor(() => expect(menuOpen).toBeVisible());
 });
+
+it("clicks outside of hamburger menu to close it", async () => {
+  render(
+    <div data-testid="testclick">
+      <HamburgerMenu />
+    </div>
+  );
+  act(() => {
+    global.innerWidth = 920;
+    global.dispatchEvent(new Event("resize"));
+  });
+  const hamburgerButton = screen.getByRole("button", {
+    name: /hamburger menu/i,
+  });
+  fireEvent.click(hamburgerButton);
+  const menuOpen = screen.getByRole("listbox", {
+    name: /opened hamburger menu/i,
+  });
+  await waitFor(() => expect(menuOpen).toBeVisible());
+  const testDiv = screen.getByTestId("testclick");
+  fireEvent.click(testDiv);
+  await waitFor(() => expect(menuOpen).not.toBeVisible());
+});
