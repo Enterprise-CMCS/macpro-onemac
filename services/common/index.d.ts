@@ -40,7 +40,7 @@ export const getUserRoleObj: (
   roleInfo: USER_ROLE | RoleEntry[] | undefined
 ) => UserRole;
 
-export const getActiveTerritories: (roleList: RoleEntry[]) => string[] | string;
+export const getActiveTerritories: (roleList: RoleEntry[]) => string[];
 
 export type SelectOption = { label: string; value: string };
 

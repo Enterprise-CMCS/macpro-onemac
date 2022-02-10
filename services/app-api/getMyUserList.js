@@ -2,15 +2,14 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import {
   RESPONSE_CODE,
-  USER_STATUS,
   USER_ROLE,
   getUserRoleObj,
   effectiveRoleForUser,
+  getActiveTerritories,
 } from "cmscommonlib";
 import { getUser } from "./getUser";
 
 export const buildParams = (role, territory) => {
-  console.log("build params for: ", role, territory);
   const startParams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
@@ -48,7 +47,7 @@ export const buildParams = (role, territory) => {
       ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
       break;
   }
-  console.log("build params: ", startParams);
+
   return startParams;
 };
 
@@ -68,20 +67,14 @@ export const getMyUserList = async (event) => {
     const umAccess = effectiveRoleForUser(doneBy.roleList);
     if (!umAccess) return RESPONSE_CODE.USER_NOT_AUTHORIZED;
 
-    const umRole = umAccess[0];
+    const umRole = umAccess.shift();
 
-    const [territory] = Array.from(
-      new Set(
-        doneBy.roleList
-          .filter(
-            ({ role, status }) =>
-              role === umRole && status === USER_STATUS.ACTIVE
-          )
-          .map(({ territory }) => territory)
-      )
+    const territories = getActiveTerritories(doneBy.roleList);
+    if (territories.length > 1) return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+
+    const listResult = await dynamoDb.query(
+      buildParams(umRole, territories.shift())
     );
-    console.log("territory is: ", territory);
-    const listResult = await dynamoDb.query(buildParams(umRole, territory));
 
     return listResult.Items;
   } catch (e) {

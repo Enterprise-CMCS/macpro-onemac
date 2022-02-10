@@ -306,7 +306,7 @@ export const getUserRoleObj = (roleInfo) => {
 };
 
 export const getActiveTerritories = (roleList) => {
-  let activeTerritories = "EUA user";
+  let activeTerritories = [];
 
   if (roleList && Object.keys(roleList).length > 0) {
     activeTerritories = roleList

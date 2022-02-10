@@ -78,7 +78,6 @@ async function stateSubmitterDynamoDbQuery(
 const usersWhoSeeEverything = new Set([
   USER_ROLE.HELPDESK,
   USER_ROLE.CMS_REVIEWER,
-  USER_ROLE.CMS_ROLE_APPROVER,
   USER_ROLE.SYSTEM_ADMIN,
 ]);
 
