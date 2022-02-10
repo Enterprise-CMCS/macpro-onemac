@@ -291,17 +291,13 @@ describe("search and filter features", () => {
       expect(bazDateContainer).toBeVisible();
       const bazDateInput =
         within(bazDateContainer).getByPlaceholderText(/select date range/i);
-      await waitFor(() => fireEvent.click(bazDateInput));
-      await waitFor(() =>
-        userEvent.type(bazDateInput, "2021010120210201{enter}")
-      );
+      fireEvent.click(bazDateInput);
+      userEvent.type(bazDateInput, "2021010120210201{enter}");
 
       expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
-      // expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
+      expect(screen.queryByText(/four/i, { selector: "td" })).toBeNull();
 
-      //   fireEvent.click(within(bazDateContainer).getByRole("button", {
-      //     name: /04 Jan 2021/i,
-      //   }))
+      fireEvent.click(screen.getByRole("button", { name: /reset/i }));
 
       expect(screen.queryByText(/two/i, { selector: "td" })).not.toBeNull();
       expect(screen.queryByText(/four/i, { selector: "td" })).not.toBeNull();
