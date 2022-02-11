@@ -24,12 +24,15 @@ export const main = handler(async (event) => {
 
   let updatedPackageData;
   try {
+    const { componentId, submitterEmail, submitterName } = body;
     updatedPackageData = await updateComponent({
-      ...body,
-      packageId: body.componentId,
+      componentId,
+      packageId: componentId,
       parentType: body.componentType,
       currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
       submissionTimestamp: Date.now(),
+      submitterEmail,
+      submitterName,
     });
   } catch (e) {
     console.error("Failed to update package", e);

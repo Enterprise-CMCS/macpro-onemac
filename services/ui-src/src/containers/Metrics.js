@@ -18,31 +18,27 @@ export default function Metrics() {
 
   useEffect(() => {
     async function onLoad() {
-      if (!isAuthenticated) {
-        return;
-      } else {
-        try {
-          var data = await Auth.currentAuthenticatedUser();
-          var metricEmail = config.METRICS_USERS;
-          const results =
-            await ChangeRequestDataApi.getAllByAuthorizedTerritories(
-              data.attributes.email
-            );
-          console.log("DEBUG:(" + JSON.toString(results));
-          setStateTotals(
-            JSON.stringify(results.stateTotals).replaceAll('"', " ")
+      if (!isAuthenticated) return;
+
+      try {
+        var data = await Auth.currentAuthenticatedUser();
+        var metricEmail = config.METRICS_USERS;
+        const results =
+          await ChangeRequestDataApi.getAllByAuthorizedTerritories(
+            data.attributes.email
           );
-          setMetrics(results);
-          if (!metricEmail.includes(data.attributes.email)) {
-            window.location = "/dashboard";
-            return;
-          }
-        } catch {
+        console.log("DEBUG:(" + JSON.stringify(results));
+        setStateTotals(JSON.stringify(results.stateTotals).replace('"', " "));
+        setMetrics(results);
+        if (!metricEmail.includes(data.attributes.email)) {
           window.location = "/dashboard";
           return;
         }
-        setIsLoading(false);
+      } catch {
+        window.location = "/dashboard";
+        return;
       }
+      setIsLoading(false);
     }
 
     onLoad();

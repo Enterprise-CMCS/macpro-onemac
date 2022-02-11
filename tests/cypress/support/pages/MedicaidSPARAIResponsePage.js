@@ -11,6 +11,8 @@ const RevisedAmendedStatePlanLanguageBTNUploadFile = "#uploader-input-0";
 const officialRAIResponseBTN = "//tbody/tr[2]/td[2]/label[1]";
 const officialRAIResponseBTNUploadFile = "#uploader-input-1";
 
+const spaIDField = "#transmittalNumber";
+
 export class MedicaidSPARAIResponsePage {
   uploadRAIResponseAddFile() {
     cy.get(RAIResponseAddFileBTN).click();
@@ -36,6 +38,9 @@ export class MedicaidSPARAIResponsePage {
     cy.xpath(officialRAIResponseBTN).click();
     const filePath = "/files/adobe.pdf";
     cy.get(officialRAIResponseBTNUploadFile).attachFile(filePath);
+  }
+  verifySPAIDFieldIsEmptyAndNotDisabled() {
+    cy.get(spaIDField).should("be.empty").and("not.be.disabled");
   }
 }
 export default MedicaidSPARAIResponsePage;

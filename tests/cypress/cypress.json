@@ -12,6 +12,6 @@
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
   "defaultCommandTimeout": 60000,
-  "viewportWidth": 1200,
-  "viewportHeight": 720
+  "viewportWidth": 1440,
+  "viewportHeight": 900
 }

@@ -4,7 +4,7 @@
  * The following variables have to be set:
  *
  * CLAMAV_BUCKET_NAME: Name of the bucket where ClamAV and its definitions are stored
- * PATH_TO_AV_DEFINITIONS: Path in S3 where the definitions are stored. 3 files are expected (see CLAMAV_DEFINITIONS_FILES)
+ * PATH_TO_AV_DEFINITIONS: Path in S3 where the definitions are stored.
  *
  * The following variables can be overridden:
  *
@@ -39,9 +39,3 @@ export const VIRUS_SCAN_TIMESTAMP_KEY =
   process.env.VIRUS_SCAN_TIMESTAMP_KEY || "virusScanTimestamp";
 export const MAX_FILE_SIZE = process.env.MAX_FILE_SIZE || "314572800";
 
-// List of CLAMAV definition files. These are the compressed files.
-export const CLAMAV_DEFINITIONS_FILES = [
-  "main.cvd",
-  "daily.cvd",
-  "bytecode.cvd",
-];

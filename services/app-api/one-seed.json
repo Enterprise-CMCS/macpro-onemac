@@ -6,7 +6,7 @@
     "changeHistory": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
+      "componentTimestamp": 1643218567141,
       "submitterName": "StateSubmitter Nightwatch",
       "componentId": "MD-13-1122"
      },
@@ -67,7 +67,7 @@
     "sparai": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
+      "componentTimestamp": 1643218567141,
       "submitterName": "StateSubmitter Nightwatch",
       "componentId": "MD-13-1122"
      }
@@ -83,6 +83,51 @@
     "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
    },
    {
+    "pk": "MD-13-1122",
+    "sk": "sparai#1643218567141",
+    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+    "changeHistory": [
+     {
+      "componentType": "sparai",
+      "additionalInformation": "Seed Data response to the RAI for MD-13-1122",
+      "componentId": "MD-13-1122",
+      "attachments": [
+       {
+        "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "title": "RAI Response",
+        "contentType": "application/pdf",
+        "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+       }
+      ],
+      "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+      "submitterName": "Kristin Grue",
+      "submissionTimestamp": 1643218567141,
+      "submitterEmail": "k.grue@theta-llc.com"
+     }
+    ],
+    "componentType": "sparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+     {
+      "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "title": "RAI Response",
+      "contentType": "application/pdf",
+      "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+     }
+    ],
+    "additionalInformation": "Seed Data response to the RAI for MD-13-1122",
+    "submissionTimestamp": 1643218567141,
+    "packageId": "MD-13-1122",
+    "submitterEmail": "k.grue@theta-llc.com",
+    "componentId": "MD-13-1122",
+    "submitterName": "Kristin Grue",
+    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
+   },
+   {
     "pk": "MI-13-1122",
     "sk": "spa",
     "devComment": "Package added via seed data for application testing",
@@ -90,8 +135,8 @@
     "changeHistory": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
-      "submitterName": "StateSubmitter Nightwatch",
+      "componentTimestamp": 1643218567141,
+      "submitterName": "Kristin Grue",
       "componentId": "MD-13-1122"
      },
      {
@@ -151,8 +196,8 @@
     "sparai": [
      {
       "componentType": "sparai",
-      "componentTimestamp": 1639696189171,
-      "submitterName": "StateSubmitter Nightwatch",
+      "componentTimestamp": 1643218567141,
+      "submitterName": "Kristin Grue",
       "componentId": "MI-13-1122"
      }
     ],
@@ -165,6 +210,51 @@
     "componentId": "MI-13-1122",
     "submitterName": "StateSubmitter Nightwatch",
     "submissionId": "4240e440-5ec5-11ec-b2ea-eb35c89f340d"
+   },
+   {
+    "pk": "MI-13-1122",
+    "sk": "sparai#1643218567141",
+    "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+    "changeHistory": [
+     {
+      "componentType": "sparai",
+      "additionalInformation": "Seed Data response to the RAI for MI-13-1122",
+      "componentId": "MI-13-1122",
+      "attachments": [
+       {
+        "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "title": "RAI Response",
+        "contentType": "application/pdf",
+        "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+       }
+      ],
+      "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
+      "submitterName": "Kristin Grue",
+      "submissionTimestamp": 1643218567141,
+      "submitterEmail": "k.grue@theta-llc.com"
+     }
+    ],
+    "componentType": "sparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+     {
+      "s3Key": "1643218566081/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "title": "RAI Response",
+      "contentType": "application/pdf",
+      "url": "https://uploads-return-rai-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A17735f75-6535-4e48-bc51-c224a6d2a2d9/1643218566081/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+     }
+    ],
+    "additionalInformation": "Seed Data response to the RAI for MI-13-1122",
+    "submissionTimestamp": 1643218567141,
+    "packageId": "MI-13-1122",
+    "submitterEmail": "k.grue@theta-llc.com",
+    "componentId": "MI-13-1122",
+    "submitterName": "Kristin Grue",
+    "submissionId": "710db810-7ece-11ec-b6d3-3bd98b0823f6"
    },
    {
        "pk": "MD-77-2985",
@@ -672,6 +762,17 @@
             "contentType": "application/pdf",
             "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1638473559097/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
            }
+          ],
+          "children": [
+            {
+              "componentType": "waiverrai",
+              "componentId": "VA.1117",
+              "currentStatus": "Submitted",
+              "submitterName": "Angie Active",
+              "displayId": "VA.1117",
+              "submitterEmail": "statesubmitteractive@cms.hhs.local",
+              "submissionTimestamp": 1643296612626
+            }
           ],
           "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278",
           "waiverAuthority": "1915(b)(4)",
@@ -1741,6 +1842,15 @@
         "sk": "waivernew",
         "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
         "changeHistory": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R00.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R00.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212119072
+          },
          {
           "componentType": "122",
           "clockEndTimestamp": null,
@@ -1796,7 +1906,34 @@
           "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
           "contentType": "application/pdf",
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
+          },
+          {
+            "s3Key": "1643212113804/IMG_0954.jpg",
+            "filename": "IMG_0954.jpg",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212113804/IMG_0954.jpg"
          }
+        ],
+        "children": [
+          {
+            "componentType": "waiverextension",
+            "componentId": "MD.10330",
+            "currentStatus": "Submitted",
+            "submitterName": "Statesubmitter Nightwatch",
+            "displayId": "MD.10330",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643138320362
+          },
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R00.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R00.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212119072
+          }
         ],
         "GSI1sk": "MD.10330",
         "additionalInformation": "This is just a test",
@@ -1806,9 +1943,107 @@
         "packageId": "MD.10330",
         "submitterEmail": "statesubmitter@nightwatch.test",
         "componentId": "MD.10330",
+        "waiveramendment": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R00.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R00.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212119072
+          }
+        ],
         "submitterName": "Statesubmitter Nightwatch",
         "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
        },
+      {
+        "pk": "MD.10330.R01",
+        "sk": "waiverrenewal",
+        "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
+        "changeHistory": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R01.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R01.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212212642
+          },
+          {
+            "componentType": "waiverrenewal",
+            "additionalInformation": "renew",
+            "componentId": "MD.10330.R01",
+            "attachments": [
+              {
+                "s3Key": "1643212168056/IMG_3202.jpg",
+                "filename": "IMG_3202.jpg",
+                "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+                "contentType": "image/jpeg",
+                "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212168056/IMG_3202.jpg"
+              }
+            ],
+            "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b",
+            "waiverAuthority": "1915(b)(4)",
+            "currentStatus": "Submitted",
+            "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
+            "submitterName": "StateSubmitter Nightwatch",
+            "submissionTimestamp": 1643212170520,
+            "submitterEmail": "statesubmitter@nightwatch.test"
+          }
+        ],
+        "componentType": "waiverrenewal",
+        "currentStatus": "Submitted",
+        "attachments": [
+          {
+            "s3Key": "1643212168056/IMG_3202.jpg",
+            "filename": "IMG_3202.jpg",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212168056/IMG_3202.jpg"
+          },
+          {
+            "s3Key": "1643212211505/plain.pdf",
+            "filename": "plain.pdf",
+            "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+            "contentType": "application/pdf",
+            "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212211505/plain.pdf"
+          }
+        ],
+        "GSI1sk": "MD.10330.R01",
+        "additionalInformation": "renew",
+        "children": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R01.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R01.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212212642
+          }
+        ],
+        "submissionTimestamp": 1643212170520,
+        "waiverAuthority": "1915(b)(4)",
+        "GSI1pk": "OneMAC#waiver",
+        "packageId": "MD.10330.R01",
+        "submitterEmail": "statesubmitter@nightwatch.test",
+        "componentId": "MD.10330.R01",
+        "waiveramendment": [
+          {
+            "componentType": "waiveramendment",
+            "componentId": "MD.10330.R01.M01",
+            "currentStatus": "Submitted",
+            "submitterName": "StateSubmitter Nightwatch",
+            "displayId": "R01.01",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643212212642
+          }
+        ],
+        "submitterName": "StateSubmitter Nightwatch",
+        "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
+      },
        {
         "pk": "MI.10330",
         "sk": "waivernew",
@@ -1850,6 +2085,26 @@
             "contentType": "application/pdf",
             "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
            }
+          ],
+          "children": [
+            {
+              "componentType": "waiverextension",
+              "componentId": "MI.10330",
+              "currentStatus": "Submitted",
+              "submitterName": "Statesubmitter Nightwatch",
+              "displayId": "MI.10330",
+              "submitterEmail": "statesubmitter@nightwatch.test",
+              "submissionTimestamp": 1643138320362
+            },
+            {
+              "componentType": "waiveramendment",
+              "componentId": "MI.10330.R00.M01",
+              "currentStatus": "Submitted",
+              "submitterName": "StateSubmitter Nightwatch",
+              "displayId": "R00.01",
+              "submitterEmail": "statesubmitter@nightwatch.test",
+              "submissionTimestamp": 1643212119072
+            }
           ],
           "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8",
           "waiverAuthority": "1915(b)(4)",
@@ -1918,6 +2173,17 @@
           "contentType": "application/pdf",
           "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
          }
+        ],
+        "children": [
+          {
+            "componentType": "waiverrai",
+            "componentId": "MD.83420",
+            "currentStatus": "Submitted",
+            "submitterName": "Statesubmitter Nightwatch",
+            "displayId": "MD.83420",
+            "submitterEmail": "statesubmitter@nightwatch.test",
+            "submissionTimestamp": 1643296612626
+          }
         ],
         "GSI1sk": "MD.83420",
         "additionalInformation": "This is just a test",

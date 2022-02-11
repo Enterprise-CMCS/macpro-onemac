@@ -1123,8 +1123,11 @@ And("verify reset Exists", () => {
 And("click on Type", () => {
   OneMacPackagePage.clickTypeDropDown();
 });
-And("verify 1915b waiver exists", () => {
-  OneMacPackagePage.verifywaiver1915bCheckBoxExists();
+And("verify 1915b Base Waiver exists", () => {
+  OneMacPackagePage.verifyBaseWaiver1915bCheckBoxExists();
+});
+And("verify 1915b Waiver Renewal exists", () => {
+  OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
 });
 And("verify CHIP SPA Exists", () => {
   OneMacPackagePage.verifyCHIPSPACheckBoxExists();
@@ -1147,8 +1150,11 @@ And("verify seatool status 1 exists", () => {
 And("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
 });
-And("click 1915b waiver check box", () => {
-  OneMacPackagePage.clickwaiver1915bCheckBox();
+And("click 1915b Base Waiver check box", () => {
+  OneMacPackagePage.clickBaseWaiver1915bCheckBox();
+});
+And("click 1915b Waiver Renewal check box", () => {
+  OneMacPackagePage.clickWaiverRenewal1915bCheckBox();
 });
 And("click CHIP SPA check box", () => {
   OneMacPackagePage.clickCHIPSPACheckBox();
@@ -1460,7 +1466,7 @@ And("verify the Waivers Family # column exists", () => {
 And("verify Waiver Family # column is sortable", () => {
   OneMacPackagePage.verifyWaiverFamilyNumColumnIsSortable();
 });
-And("verify the Waiver format in column one is SS.#### or SS.#####", () => {
+And("verify the Waiver family format in row one is SS.#### or SS.#####", () => {
   OneMacPackagePage.verifyWaiverFamilyRowOneFormat();
 });
 And("verify the Waivers Family checkbox exists", () => {
@@ -1501,4 +1507,131 @@ And("verify that the value of the column for the 90th day is Pending", () => {
 });
 And("click Unsubmitted checkbox", () => {
   OneMacPackagePage.clickUnsubmittedCheckbox();
+});
+And("verify the type in row one is some kind of 1915b Waiver", () => {
+  OneMacPackagePage.verifypackageRowOneTypeContains1915bWaiver();
+});
+And("verify the type in row one is Base Waiver", () => {
+  OneMacPackagePage.verifypackageRowOneTypeHasTextBaseWaiver();
+});
+And("verify the type in row one is Waiver Renewal", () => {
+  OneMacPackagePage.verifypackageRowOneTypeHasTextWaiverRenewal();
+});
+And("verify the waiver number format in row one is SS.#### or SS.#####", () => {
+  OneMacPackagePage.verifypackageRowOneIDBaseWaiverFormat();
+});
+And("verify the waiver number format in row one is SS.#####.S##", () => {
+  OneMacPackagePage.verifypackageRowOneIDWaiverRenewalFormat();
+});
+And("verify Onboarding Materials exists", () => {
+  OneMacFAQPage.verifyOnboardingMaterialsBtnExists();
+});
+And("click on Onboarding Materials", () => {
+  OneMacFAQPage.clickOnboardingMaterialsBtn();
+});
+And("verify Welcome to OneMac link exists", () => {
+  OneMacFAQPage.verifyWelcomeToOneMacLinkExists();
+});
+And("verify Welcome to OneMac link is valid", () => {
+  OneMacFAQPage.verifyWelcomeToOneMacLinkIsValid();
+});
+And("verify IDM Instructions for OneMAC Users link exists", () => {
+  OneMacFAQPage.verifyIdmInstructionsLinkExists();
+});
+And("verify OneMAC IDM Guide link exists", () => {
+  OneMacFAQPage.verifyIdmGuideLinkExists();
+});
+And("verify OneMAC State Submitter Guide link exists", () => {
+  OneMacFAQPage.verifyStateSubmitterGuideLinkExists();
+});
+And("verify OneMAC State Administrator Guide link exists", () => {
+  OneMacFAQPage.verifyStateAdminGuideLinkExists();
+});
+And("verify OneMAC CMS User Guide link exists", () => {
+  OneMacFAQPage.verifyCmsUserGuideLinkExists();
+});
+And("verify OneMAC CMS Role Approver Guide link exists", () => {
+  OneMacFAQPage.verifyCmsRoleApproverGuideLinkExists();
+});
+And("verify IDM Instructions for OneMAC Users is valid", () => {
+  OneMacFAQPage.verifyIdmInstructionsLinkIsValid();
+});
+And("verify OneMAC IDM Guide is valid", () => {
+  OneMacFAQPage.verifyIdmGuideLinkIsValid();
+});
+And("verify OneMAC State Submitter Guide is valid", () => {
+  OneMacFAQPage.verifyStateSubmitterGuideLinkIsValid();
+});
+And("verify OneMAC State Administrator Guide is valid", () => {
+  OneMacFAQPage.verifyStateAdminGuideLinkIsValid();
+});
+And("verify OneMAC CMS User Guide is valid", () => {
+  OneMacFAQPage.verifyCmsUserGuideLinkIsValid();
+});
+And("verify OneMAC CMS Role Approver Guide is valid", () => {
+  OneMacFAQPage.verifyCmsRoleApproverGuideLinkIsValid();
+});
+And("click on Respond to Medicaid SPA RAI", () => {
+  OneMacSubmissionTypePage.clickRespondToMedicaidSPARAI();
+});
+And("click on Respond to CHIP SPA RAI", () => {
+  OneMacSubmissionTypePage.clickRespondToCHIPSPARAI();
+});
+And("click on Respond to Waiver RAI", () => {
+  OneMacSubmissionTypePage.clickRespondToWaiverRAI();
+});
+And("verify ID field is empty and not disabled", () => {
+  medicaidSPARAIResponsePage.verifySPAIDFieldIsEmptyAndNotDisabled();
+});
+
+And("search for {string}", (part) => {
+  OneMacPackagePage.searchFor(part);
+});
+And("verify parent row expander exists", () => {
+  OneMacPackagePage.verifyFirstParentRowExpanderExists();
+});
+And("verify parent row expander is disabled", () => {
+  OneMacPackagePage.verifyFirstParentRowExpanderIsDisabled();
+});
+And("wait for parent row expander to be enabled", () => {
+  OneMacPackagePage.verifyFirstParentRowExpanderIsNotDisabled();
+});
+And("verify the next row is not a child", () => {
+  OneMacPackagePage.verifyTheNextRowIsNotAChild();
+});
+And("click parent row expander", () => {
+  OneMacPackagePage.clickFirstParentRowExpander();
+});
+And("verify the next row is a child", () => {
+  OneMacPackagePage.verifyTheNextRowIsAChild();
+});
+And("verify all children start with {string}", (part) => {
+  OneMacPackagePage.verifyAllChildrenStartWith(part);
+});
+And("verify Waiver Number column exists for the child", () => {
+  OneMacPackagePage.verifyWaiverNumberColumnExistsForChild();
+});
+And("verify type column exists for the child", () => {
+  OneMacPackagePage.verifytypeColumnExistsForChild();
+});
+And("verify state column exists for the child", () => {
+  OneMacPackagePage.verifystateColumnExistsForChild();
+});
+And("verify 90th day column exists for the child", () => {
+  OneMacPackagePage.verify90thDayColumnExistsForChild();
+});
+And("verify status column exists for the child", () => {
+  OneMacPackagePage.verifystatusColumnExistsForChild();
+});
+And("verify date submitted column exists for the child", () => {
+  OneMacPackagePage.verifyDateSubmittedColumnExistsForChild();
+});
+And("verify submitted by column exists for the child", () => {
+  OneMacPackagePage.verifysubmittedByColumnExistsForChild();
+});
+And("verify actions column exists for the child", () => {
+  OneMacPackagePage.verifyactionsColumnExistsForChild();
+});
+And("verify expiration date column exists for the child", () => {
+  OneMacPackagePage.verifyexpirationDateColumnExistsForChild();
 });

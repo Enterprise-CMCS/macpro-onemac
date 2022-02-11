@@ -74,8 +74,10 @@ const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const waiver1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver')]";
+const baseWaiver1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Base Waiver')]";
+const waiverRenewal1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -166,6 +168,20 @@ const submittedCheckbox =
 //Element is Xpath use cy.xpath instead of cy.get
 const unsubmittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Unsubmitted')]";
+const packageRowOneID = "#componentId-0";
+const packageRowTwoID = "#componentId-1";
+const packageRowTwoDateSubmitted = "#submissionTimestamp-1";
+const packageRowTwo90thDay = "#ninetiethDay-1";
+const packageRowTwoType = "#componentType-1";
+const packageRowTwoState = "#territory-1";
+//Element is Xpath use cy.xpath instead of cy.get
+const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
+const rowTwo = "tbody > tr:nth-child(2)";
+const packageRowTwoSubmittedBy = "#submitter-1";
+const packageRowTwoActions = "#packageActions-1";
+const packageRowTwoExpirationDate = "#expirationTimestamp-1";
+//Element is Xpath use cy.xpath instead of cy.get
+const childRows = "//tr[@class = 'child-row-expanded']";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -366,8 +382,11 @@ export class oneMacPackagePage {
   clickTypeDropDown() {
     cy.get(typeDropDown).click();
   }
-  verifywaiver1915bCheckBoxExists() {
-    cy.xpath(waiver1915bCheckBox).should("be.visible");
+  verifyWaiverRenewal1915bCheckBoxExists() {
+    cy.xpath(waiverRenewal1915bCheckBox).should("be.visible");
+  }
+  verifyBaseWaiver1915bCheckBoxExists() {
+    cy.xpath(baseWaiver1915bCheckBox).should("be.visible");
   }
   verifyCHIPSPACheckBoxExists() {
     cy.xpath(CHIPSPACheckBox).should("be.visible");
@@ -390,8 +409,11 @@ export class oneMacPackagePage {
   verifysparaiSubmittedExists() {
     cy.xpath(sparaiSubmitted).should("be.visible");
   }
-  clickwaiver1915bCheckBox() {
-    cy.xpath(waiver1915bCheckBox).click();
+  clickBaseWaiver1915bCheckBox() {
+    cy.xpath(baseWaiver1915bCheckBox).click();
+  }
+  clickWaiverRenewal1915bCheckBox() {
+    cy.xpath(waiverRenewal1915bCheckBox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();
@@ -478,6 +500,7 @@ export class oneMacPackagePage {
     cy.get(submittedByColumn).should("be.visible");
   }
   verifyactionsColumnExists() {
+    cy.get(actionsColumn).scrollIntoView();
     cy.get(actionsColumn).should("be.visible");
   }
   verifyIDNumberColumnDoesNotExist() {
@@ -674,6 +697,76 @@ export class oneMacPackagePage {
   }
   verify90thDayRowOneIsClockStopped() {
     cy.get(packageRowOne90thDay).should("have.text", "Clock Stopped");
+  }
+  verifypackageRowOneIDBaseWaiverFormat() {
+    cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
+  }
+  verifypackageRowOneIDWaiverRenewalFormat() {
+    cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}/);
+  }
+  verifypackageRowOneTypeContains1915bWaiver() {
+    cy.get(packageRowOneType)
+      .should("contain.text", "1915(b)")
+      .and("contain.text", "Waiver");
+  }
+  verifypackageRowOneTypeHasTextBaseWaiver() {
+    cy.get(packageRowOneType).should("contain.text", "Base Waiver");
+  }
+  verifypackageRowOneTypeHasTextWaiverRenewal() {
+    cy.get(packageRowOneType).should("contain.text", "Waiver Renewal");
+  }
+  searchFor(part) {
+    cy.get(searchbar).type(part);
+  }
+  verifyFirstParentRowExpanderExists() {
+    cy.xpath(parentRowExpander).should("be.visible");
+  }
+  verifyTheNextRowIsNotAChild() {
+    cy.get(rowTwo).should("not.have.class", "child-row-expanded");
+  }
+  clickFirstParentRowExpander() {
+    cy.xpath(parentRowExpander).invoke("show").click();
+  }
+  verifyTheNextRowIsAChild() {
+    cy.get(rowTwo).should("have.class", "child-row-expanded");
+  }
+  verifyAllChildrenStartWith(part) {
+    cy.xpath(childRows).each(($el) => {
+      cy.wrap($el).find("td:nth-of-type(2)").should("contain.text", part);
+    });
+  }
+  verifyWaiverNumberColumnExistsForChild() {
+    cy.get(packageRowTwoID).should("be.visible");
+  }
+  verifytypeColumnExistsForChild() {
+    cy.get(packageRowTwoType).should("be.visible");
+  }
+  verifystateColumnExistsForChild() {
+    cy.get(packageRowTwoState).should("be.visible");
+  }
+  verify90thDayColumnExistsForChild() {
+    cy.get(packageRowTwo90thDay).should("be.visible");
+  }
+  verifystatusColumnExistsForChild() {
+    cy.get(packageRowOneType).should("be.visible");
+  }
+  verifyDateSubmittedColumnExistsForChild() {
+    cy.get(packageRowTwoDateSubmitted).should("be.visible");
+  }
+  verifysubmittedByColumnExistsForChild() {
+    cy.get(packageRowTwoSubmittedBy).should("be.visible");
+  }
+  verifyactionsColumnExistsForChild() {
+    cy.get(packageRowTwoActions).should("be.visible");
+  }
+  verifyexpirationDateColumnExistsForChild() {
+    cy.get(packageRowTwoExpirationDate).should("be.visible");
+  }
+  verifyFirstParentRowExpanderIsDisabled() {
+    cy.xpath(parentRowExpander).should("be.disabled");
+  }
+  verifyFirstParentRowExpanderIsNotDisabled() {
+    cy.xpath(parentRowExpander).should("not.be.disabled");
   }
 }
 export default oneMacPackagePage;
