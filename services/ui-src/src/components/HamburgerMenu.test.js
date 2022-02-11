@@ -11,8 +11,8 @@ Globals.assign({
   skipAnimation: true,
 });
 
-it("opens a menu on click of icon and renders link array", async () => {
-  const linksToDisplay = [<a>testing</a>, <a>testing</a>];
+it("opens a menu on click of icon and renders link array, closes hamburger menu when link is clicked", async () => {
+  const linksToDisplay = [<a>testing1</a>, <a>testing2</a>];
   render(<HamburgerMenu linksToDisplay={linksToDisplay} />);
   const hamburgerButton = screen.getByRole("button", {
     name: /hamburger menu/i,
@@ -24,6 +24,9 @@ it("opens a menu on click of icon and renders link array", async () => {
   await waitFor(() => expect(menuOpen).toBeVisible());
   const links = screen.getByRole("navigation").childNodes;
   expect(links).toHaveLength(linksToDisplay.length);
+  const linkToClick = screen.getByText(/testing1/i);
+  fireEvent.click(linkToClick);
+  expect(menuOpen).not.toBeVisible();
 });
 
 it("resize of window and opening/closing of menu", async () => {
@@ -57,6 +60,9 @@ it("resize of window hamburger open", async () => {
     name: /opened hamburger menu/i,
   });
   await waitFor(() => expect(menuOpen).toBeVisible());
+  const buttonCloseClick = screen.getByRole("button");
+  fireEvent.click(buttonCloseClick);
+  expect(menuOpen).not.toBeVisible();
 });
 
 it("clicks outside of hamburger menu to close it", async () => {
