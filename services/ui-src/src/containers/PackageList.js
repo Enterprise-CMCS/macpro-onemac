@@ -146,6 +146,8 @@ const PackageList = () => {
 
       const packageToModify = packageList[rowNum];
       try {
+        console.log("rowNum: ", rowNum);
+        console.log("package to modify ", packageToModify);
         const resp = await PackageAPI.withdraw(
           [userProfile.userData.firstName, userProfile.userData.lastName].join(
             " "
