@@ -30,7 +30,7 @@ export const changeUserStatus = async ({
       TableName: process.env.oneMacTableName,
       ReturnValues: "UPDATED_NEW",
       Key: {
-        pk: email,
+        pk: email.toLowerCase(),
         sk: `v0#${role}#${territory}`,
       },
       UpdateExpression:
@@ -52,10 +52,10 @@ export const changeUserStatus = async ({
         "#GSI1sk": "GSI1sk",
       },
       ExpressionAttributeValues: {
-        ":email": email,
+        ":email": email.toLowerCase(),
         ":status": status,
         ":fullName": fullName,
-        ":doneByEmail": doneByEmail,
+        ":doneByEmail": doneByEmail.toLowerCase(),
         ":doneByName": doneByName,
         ":role": role,
         ":territory": territory,
@@ -74,10 +74,10 @@ export const changeUserStatus = async ({
     const putParams = {
       TableName: process.env.oneMacTableName,
       Item: {
-        pk: email,
+        pk: email.toLowerCase(),
         sk: `v${latestVersion}#${role}#${territory}`,
         status,
-        doneByEmail,
+        doneByEmail: doneByEmail.toLowerCase(),
         doneByName,
         role,
         territory,
@@ -93,7 +93,7 @@ export const changeUserStatus = async ({
   const contactParams = {
     TableName: process.env.oneMacTableName,
     Key: {
-      pk: email,
+      pk: email.toLowerCase(),
       sk: "ContactInfo",
     },
   };
@@ -101,7 +101,7 @@ export const changeUserStatus = async ({
     contactParams.UpdateExpression = "SET GSI1pk = :newPk, GSI1sk = :newSk";
     contactParams.ExpressionAttributeValues = {
       ":newPk": `${role}#${territory}`,
-      ":newSk": email,
+      ":newSk": email.toLowerCase(),
     };
   } else {
     contactParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";

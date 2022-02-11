@@ -38,7 +38,7 @@ export const getMyPackages = async (email, group) => {
       };
       const grouppk = "OneMAC#" + group;
       let paramList = [];
-      if (typeof territoryList !== "string") {
+      if (territoryList[0] !== "N/A") {
         paramList = territoryList.map((territory) => {
           return {
             ...baseParams,

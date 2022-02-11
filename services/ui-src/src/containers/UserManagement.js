@@ -92,6 +92,7 @@ const UserManagement = () => {
     [userRole]
   );
   const updateList = useCallback(() => {
+    if (userStatus !== USER_STATUS.ACTIVE) return;
     UserDataApi.getMyUserList(userProfile.email)
       .then((ul) => {
         if (typeof ul === "string") {
@@ -348,19 +349,13 @@ const UserManagement = () => {
 
   function renderUserList() {
     if (userStatus === USER_STATUS.PENDING) {
-      return (
-        <EmptyList message={pendingMessage[userProfile.userData.effRole]} />
-      );
+      return <EmptyList message={pendingMessage[userRole]} />;
     }
 
     const userStatusNotActive =
       !userStatus || userStatus !== USER_STATUS.ACTIVE;
     if (userStatusNotActive) {
-      return (
-        <EmptyList
-          message={deniedOrRevokedMessage[userProfile.userData.effRole]}
-        />
-      );
+      return <EmptyList message={deniedOrRevokedMessage[userRole]} />;
     }
 
     const userListExists = userList && userList.length !== 0;
