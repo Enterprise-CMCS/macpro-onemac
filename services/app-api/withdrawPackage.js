@@ -31,7 +31,7 @@ export const main = handler(async (event) => {
       parentType: body.componentType,
       currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
       submissionTimestamp: Date.now(),
-      submitterEmail,
+      submitterEmail: submitterEmail.toLowerCase(),
       submitterName,
     });
   } catch (e) {
