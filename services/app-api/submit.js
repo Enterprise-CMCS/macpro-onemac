@@ -1,7 +1,7 @@
 import { DateTime } from "luxon";
 import * as uuid from "uuid";
 
-import { latestAccessStatus, USER_STATUS, USER_TYPE } from "cmscommonlib";
+import { getUserRoleObj, getActiveTerritories } from "cmscommonlib";
 
 import getChangeRequestFunctions, {
   validateSubmission,
@@ -11,7 +11,7 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 import newSubmission from "./utils/newSubmission";
 
 /**
@@ -58,12 +58,17 @@ export const main = handler(async (event) => {
       throw RESPONSE_CODE.USER_NOT_FOUND;
     }
 
-    if (
-      (doneBy.type != USER_TYPE.STATE_SUBMITTER ||
-        doneBy.type != USER_TYPE.STATE_SYSTEM_ADMIN) &&
-      latestAccessStatus(doneBy, data.territory) !== USER_STATUS.ACTIVE
-    ) {
-      throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    if (Object.keys(doneBy).length > 0) {
+      const userRoleObj = getUserRoleObj(doneBy?.roleList);
+
+      const activeTerritories = getActiveTerritories(doneBy?.roleList);
+      if (
+        !userRoleObj.canAccessForms ||
+        activeTerritories === [] ||
+        !activeTerritories.includes(data.territory)
+      ) {
+        throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
+      }
     }
 
     // map the changeRequest functions from the data.type
@@ -77,11 +82,6 @@ export const main = handler(async (event) => {
     );
     if (!crVerifyTransmittalIdStateCode) {
       throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
-    }
-
-    const crVerifyTerritoryStateCode = hasValidStateCode(data.territory);
-    if (!crVerifyTerritoryStateCode) {
-      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID; // if ever NOT from ID... should change error :)
     }
 
     // check for submission-specific validation (uses database)

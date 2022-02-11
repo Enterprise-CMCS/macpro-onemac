@@ -42,8 +42,8 @@ export const main = handler(async (event) => {
 
   try {
     await dynamoDb.update({
-      TableName: process.env.userTableName,
-      Key: { id: input.id },
+      TableName: process.env.oneMacTableName,
+      Key: { pk: input.id, sk: "ContactInfo" },
       UpdateExpression: "SET phoneNumber = :phoneNumber",
       ExpressionAttributeValues: { ":phoneNumber": input.phoneNumber },
     });

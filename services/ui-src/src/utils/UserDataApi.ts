@@ -1,21 +1,8 @@
-import { USER_TYPE } from "cmscommonlib";
+import { USER_ROLE } from "cmscommonlib";
 import { API } from "aws-amplify";
 
 import { UserRecord } from "../domain-types";
 import handleApiError from "../libs/apiErrorHandler";
-
-export const getAdminTypeByRole = (role: string): string | undefined => {
-  switch (role) {
-    case USER_TYPE.STATE_SYSTEM_ADMIN:
-      return USER_TYPE.STATE_SUBMITTER;
-    case USER_TYPE.CMS_ROLE_APPROVER:
-      return USER_TYPE.STATE_SYSTEM_ADMIN;
-    case USER_TYPE.SYSTEM_ADMIN:
-      return USER_TYPE.CMS_ROLE_APPROVER;
-    default:
-      return undefined;
-  }
-};
 
 /**
  * Singleton class to perform operations with the user tables backend.
@@ -71,25 +58,6 @@ class UserDataApi {
   }
 
   /**
-   * Create or update a user's profile
-   * @param userRecord to create or update in Dynamo
-   * @return errorCode An error code, or nothing at all if it succeeds
-   */
-  async updateUser(userRecord: Partial<UserRecord>): Promise<string> {
-    try {
-      return await API.put("oneMacAPI", "/putUser", {
-        body: { ...userRecord, isPutUser: true },
-      });
-    } catch (error) {
-      return handleApiError(
-        error,
-        "USER_SUBMISSION_FAILED",
-        "There was an error submitting data for the user."
-      );
-    }
-  }
-
-  /**
    * Update a user's phone number
    * @param userId to update
    * @param phoneNumber
@@ -109,19 +77,49 @@ class UserDataApi {
     }
   }
 
-  /**
-   * Tell the back end to update the status of a given user
-   * Throws an exception if the API throws an exception
-   * @param updateRequest
-   * @return errorCode
-   */
-  async setUserStatus(updateStatusRequest: any): Promise<string> {
+  async setContactInfo(contactInfo: any): Promise<string> {
+    try {
+      return await API.put("oneMacAPI", "/contactInfo", {
+        body: contactInfo,
+      });
+    } catch (error) {
+      return handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error changing the user status."
+      );
+    }
+  }
+
+  async requestAccess(
+    email: string,
+    role: USER_ROLE,
+    territories?: string[],
+    division?: number,
+    group?: number
+  ): Promise<string> {
+    try {
+      return await API.post("oneMacAPI", "/requestAccess", {
+        body: { email, role, territories, division, group },
+      });
+    } catch (error) {
+      return handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "There was an error changing the user status."
+      );
+    }
+  }
+
+  async updateUserStatus(updateStatusRequest: any): Promise<string> {
     if (!updateStatusRequest) {
-      throw new Error("setUserStatus API call required parameters missing");
+      throw new Error(
+        "updateStatusRequest API call required parameters missing"
+      );
     }
 
     try {
-      return await API.put("oneMacAPI", "/putUser", {
+      return await API.post("oneMacAPI", "/updateUserStatus", {
         body: updateStatusRequest,
       });
     } catch (error) {
@@ -134,59 +132,33 @@ class UserDataApi {
   }
 
   /**
-   * Get all active state system administrators' contact info for a list of states.
+   * Get the Approver List for a given role and territory
+   * Throws an exception if the API throws an exception
+   * @param role the role of the user
+   * @param territory the territory for the approvers
+   * @return the returned user item
    */
-  async getStateSystemAdmins(states: string[]): Promise<any[]> {
+  async getMyApprovers(role: string, territory: string): Promise<any[]> {
+    if (!role) {
+      console.log("role needed to find approvers");
+      throw new Error("user role was not specified for userProfile API call");
+    }
+
     try {
-      const params = new URLSearchParams();
-      for (const state of states) {
-        params.append("state", state);
-      }
       return await API.get(
         "oneMacAPI",
-        `/getStateSystemAdmins?${params.toString()}`,
+        `/getMyApprovers?role=${role}&territory=${territory}`,
         undefined
       );
     } catch (error) {
       return handleApiError(
         error,
         "FETCH_ERROR",
-        "There was an error fetching the state system admins."
-      );
-    }
-  }
-
-  /**
-   * Get all active CMS role approvers' contact info.
-   */
-  async getCmsRoleApprovers(): Promise<any[]> {
-    try {
-      return await API.get("oneMacAPI", "/getCmsRoleApprovers", undefined);
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the CMS role approvers."
-      );
-    }
-  }
-
-  /**
-   * Get all active CMS system admins' contact info.
-   */
-  async getCmsSystemAdmins(): Promise<any[]> {
-    try {
-      return await API.get("oneMacAPI", "/getCmsSystemAdmins", undefined);
-    } catch (error) {
-      return handleApiError(
-        error,
-        "FETCH_ERROR",
-        "There was an error fetching the CMS admins."
+        "There was an error fetching approvers for the user."
       );
     }
   }
 }
-
 const instance = new UserDataApi();
 if (process.env.NODE_ENV !== "test") Object.freeze(instance);
 

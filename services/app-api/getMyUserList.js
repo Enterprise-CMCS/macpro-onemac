@@ -2,170 +2,85 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import {
   RESPONSE_CODE,
-  USER_TYPE,
+  USER_ROLE,
   getUserRoleObj,
-  tableRoles,
+  effectiveRoleForUser,
+  getActiveTerritories,
 } from "cmscommonlib";
-import { getAuthorizedStateList, getCurrentStatus } from "./user/user-util";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 
-const transformUserList = (forType, userResult, stateList) => {
-  const userRows = [];
-  const errorList = [];
-  let i = 1;
+export const buildParams = (role, territory) => {
+  const startParams = {
+    TableName: process.env.oneMacTableName,
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk=:user",
+    ExpressionAttributeValues: { ":user": "USER" },
+    ProjectionExpression:
+      "#date, doneByName, email, fullName, #role, #status, territory",
+    ExpressionAttributeNames: {
+      "#date": "date",
+      "#role": "role",
+      "#status": "status",
+    },
+  };
 
-  //  console.log("results:", JSON.stringify(userResult));
+  switch (role) {
+    // CSA gets everyone, which is the base params
+    case USER_ROLE.SYSTEM_ADMIN:
+      break;
+    // HD gets everyone but CSA - have to use FilterExpression to get more than one role
+    case USER_ROLE.HELPDESK:
+      startParams.FilterExpression = "#role <> :role";
+      startParams.ExpressionAttributeValues[":role"] = USER_ROLE.SYSTEM_ADMIN;
+      break;
+    // CMS Role Approvers can see anyone that their role can approve
+    case USER_ROLE.CMS_ROLE_APPROVER:
+      startParams.KeyConditionExpression += ` AND GSI1sk=:sk`;
+      startParams.ExpressionAttributeValues[":sk"] =
+        USER_ROLE.CMS_ROLE_APPROVER;
+      break;
+    // State System Admins can see anyone their role can approver for their territory
+    case USER_ROLE.STATE_SYSTEM_ADMIN:
+      startParams.KeyConditionExpression += ` AND GSI1sk=:sk`;
+      startParams.ExpressionAttributeValues[
+        ":sk"
+      ] = `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
+      break;
+  }
 
-  // if there are no items, return an empty user list
-  if (!userResult.Items) return userRows;
-
-  userResult.Items.forEach((oneUser) => {
-    // check if this type should be on list
-    if (!tableRoles[forType].includes(oneUser.type)) return;
-
-    // All users must have the attribute section
-    if (!oneUser.attributes) {
-      errorList.push(
-        "Attributes data required for this role, but not found ",
-        oneUser
-      );
-      return;
-    }
-    if (
-      oneUser.type === USER_TYPE.STATE_SUBMITTER ||
-      oneUser.type === USER_TYPE.STATE_SYSTEM_ADMIN
-    ) {
-      oneUser.attributes.forEach((oneAttribute) => {
-        // skip states not on the Admin's list, not an error
-        if (
-          stateList.length > 0 &&
-          stateList.indexOf(oneAttribute.stateCode) == -1
-        )
-          return;
-
-        // State System Admins and State Submitters must have the history section
-        if (!oneAttribute.history) {
-          errorList.push(
-            "History data required for this role, but not found ",
-            oneUser
-          );
-          return;
-        }
-
-        userRows.push({
-          id: i,
-          email: oneUser.id,
-          firstName: oneUser.firstName,
-          lastName: oneUser.lastName,
-          stateCode: oneAttribute.stateCode,
-          role: oneUser.type,
-          latest: getCurrentStatus(oneAttribute.history),
-        });
-        i++;
-      });
-    }
-    // Helpdesk users and CMS Role Approvers must not have the history section
-    else {
-      userRows.push({
-        id: i,
-        email: oneUser.id,
-        firstName: oneUser.firstName,
-        lastName: oneUser.lastName,
-        stateCode: "N/A",
-        role: oneUser.type,
-        latest: getCurrentStatus(oneUser.attributes),
-      });
-      i++;
-    }
-  });
-
-  // console.log("error List is ", errorList);
-
-  // console.log("Response:", userRows);
-
-  return userRows;
+  return startParams;
 };
 
 export const getMyUserList = async (event) => {
-  // get the rest of the details about the current user
-  const doneBy = await getUser(event.queryStringParameters.email);
+  try {
+    // get the rest of the details about the current user
+    const doneBy = await getUser(event.queryStringParameters.email);
 
-  if (!doneBy) {
-    return RESPONSE_CODE.USER_NOT_FOUND;
-  }
-
-  if (
-    !getUserRoleObj(doneBy.type, false, doneBy?.attributes)
-      .canAccessUserManagement
-  ) {
-    return RESPONSE_CODE.USER_NOT_AUTHORIZED;
-  }
-
-  let stateList = [];
-  if (doneBy.type === USER_TYPE.STATE_SYSTEM_ADMIN) {
-    stateList = getAuthorizedStateList(doneBy);
-  }
-
-  const userResult = await dynamoDb.scan({
-    TableName: process.env.userTableName,
-  });
-  const transformedUserList = transformUserList(
-    doneBy.type,
-    userResult,
-    stateList
-  );
-  // Collect the unique doneBy user's email ids
-  const doneByEmails = [
-    ...new Set(transformedUserList.map((user) => user.latest.doneBy)),
-  ];
-  let filterAttributeNames = "";
-  const filterAttribValues = {};
-  // Generate filter expression attribute names and values for retreving the doneBy user names
-  doneByEmails.map((email, i) => {
-    filterAttributeNames += `:email${i}${
-      i < doneByEmails.length - 1 ? "," : ""
-    }`;
-    filterAttribValues[`:email${i}`] = email;
-  });
-  const scanParams = {
-    TableName: process.env.userTableName,
-    ProjectionExpression: "id, firstName, lastName",
-    FilterExpression: `id IN (${filterAttributeNames})`,
-    ExpressionAttributeValues: filterAttribValues,
-  };
-  let userNames;
-  if (filterAttributeNames) {
-    try {
-      userNames = await dynamoDb.scan(scanParams);
-    } catch (dbError) {
-      console.log(`Error happened while reading from DB:  ${dbError}`);
-      throw dbError;
+    if (!doneBy) {
+      return RESPONSE_CODE.USER_NOT_FOUND;
     }
-  }
-  // Populate doneBy Name
-  return transformedUserList.map((user) => {
-    const doneBy = userNames.Items.find(
-      (item) => item.id === user.latest.doneBy
+
+    if (!getUserRoleObj(doneBy?.roleList).canAccessUserManagement) {
+      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    }
+
+    const umAccess = effectiveRoleForUser(doneBy.roleList);
+    if (!umAccess) return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+
+    const umRole = umAccess.shift();
+
+    const territories = getActiveTerritories(doneBy.roleList);
+    if (territories.length > 1) return RESPONSE_CODE.USER_NOT_AUTHORIZED;
+
+    const listResult = await dynamoDb.query(
+      buildParams(umRole, territories.shift())
     );
-    if (doneBy) {
-      user.latest.doneByName = [doneBy.firstName, doneBy.lastName]
-        .filter(Boolean)
-        .join(" ");
-    } else {
-      console.log(
-        `User id: ${user.email} has the doneBy id as ${user.latest.doneBy}, which does not have a user record of it's own in the DB`
-      );
-      user.latest.doneByName = "";
-    }
-    return user;
-  });
+
+    return listResult.Items;
+  } catch (e) {
+    console.log("getMyUserList exception? ", e);
+    return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
+  }
 };
 
-export const main = handler(async (event) => {
-  try {
-    return getMyUserList(event);
-  } catch (e) {
-    console.log("error: ", e);
-    return `Error ${e.message} in getMyUserList`;
-  }
-});
+export const main = handler(getMyUserList);
