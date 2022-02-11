@@ -219,7 +219,7 @@ const AccountButtons: React.FC<{
         <RotateIcon />
       </button>
       {showMenu && (
-        <div className="dropdown-content">
+        <div data-testid="dropdown-content-test" className="dropdown-content">
           {buttonContents.profile && (
             <Link
               to={ROUTES.PROFILE}

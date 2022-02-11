@@ -350,7 +350,7 @@ describe("search and filter features", () => {
       expect(bazOptionSection).not.toBeVisible();
 
       fireEvent.click(bazButton);
-      expect(bazOptionSection).toBeVisible();
+      await waitFor(() => expect(bazOptionSection).toBeVisible());
 
       await selectEvent.select(document.getElementById("baz-filter-select"), [
         "Maryland",
