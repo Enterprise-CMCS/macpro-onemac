@@ -228,6 +228,5 @@ describe("right side account management", () => {
     const dropdownContent = screen.getByTestId("dropdown-content-test");
     fireEvent.click(myAccountLink);
     expect(dropdownContent).not.toBeVisible();
-    // screen.debug(testDivMenuClose);
   });
 });
