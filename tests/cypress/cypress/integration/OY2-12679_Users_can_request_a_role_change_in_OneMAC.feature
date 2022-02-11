@@ -77,11 +77,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         When Login with cms System Admin
         Then i am on Dashboard Page
         Then Click on My Account
-        And verify that Request a Role Change button exists
-        And click on Request a Role Change button
-        And verify Select the role for which you are registering is visible
-        And verify the CMS Reviewer role is available
-        And verify the CMS Role Approver role is available
+        And verify that Request a Role Change button does not exist
 
         Scenario: Screen enhance - Help Desk User role change
         Given I am on Login Page
