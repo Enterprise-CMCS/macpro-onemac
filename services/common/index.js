@@ -236,7 +236,7 @@ class Helpdesk extends Role {
     this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
-    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
+    this.canDownloadCsv = true;
   }
 }
 
