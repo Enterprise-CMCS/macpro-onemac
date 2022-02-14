@@ -4,7 +4,6 @@ import dynamoDb from "../libs/dynamodb-lib";
 import updateComponent from "./updateComponent";
 
 export default async function newSubmission(inData) {
-  console.log("inData: ", inData);
   const idInfo = ChangeRequest.decodeId(
     inData.componentId,
     inData.componentType
@@ -18,7 +17,6 @@ export default async function newSubmission(inData) {
       newSk += `#${inData.submissionTimestamp}`;
   }
 
-  console.log("idInfo is: ", idInfo);
   const data = {
     pk: idInfo.componentId,
     sk: newSk,
@@ -42,7 +40,6 @@ export default async function newSubmission(inData) {
     Item: data,
   };
 
-  console.log("params is: ", params);
   return dynamoDb
     .put(params)
     .then(() => {
