@@ -864,7 +864,7 @@ article.form-container {
 
   th:first-child,
   td:first-child {
-    padding-left: 0.5px;
+    padding-left: 8px;
     position: sticky;
     left: 0;
     top: 0;
@@ -886,15 +886,11 @@ article.form-container {
 .submissions-table-actions-column {
   th:last-child {
     text-align: right;
-    padding-right: 16px;
+    padding-right: 8px;
   }
 
   td:last-child button {
     width: 100%;
-
-    &:focus {
-      box-shadow: none;
-    }
   }
 }
 
@@ -950,11 +946,6 @@ article.form-container {
   td:last-child button {
     color: $color-black;
     width: 100%;
-
-    &:focus {
-      // remove hideous magenta outline
-      box-shadow: none;
-    }
   }
 }
 
