@@ -10,11 +10,18 @@ export default async function newSubmission(inData) {
     inData.componentType
   );
 
+  let newSk = inData.componentType;
+  switch (inData.componentType) {
+    case ChangeRequest.TYPE.WAIVER_RAI:
+    case ChangeRequest.TYPE.SPA_RAI:
+    case ChangeRequest.TYPE.CHIP_SPA_RAI:
+      newSk += `#${inData.submissionTimestamp}`;
+  }
+
   console.log("idInfo is: ", idInfo);
   const data = {
     pk: idInfo.componentId,
-    sk: idInfo.componentType,
-    packageId: idInfo.packageId,
+    sk: newSk,
     ...inData,
     changeHistory: [inData],
   };
@@ -26,7 +33,8 @@ export default async function newSubmission(inData) {
     data.GSI1pk = `OneMAC#${ChangeRequest.MY_PACKAGE_GROUP[data.sk]}`;
     data.GSI1sk = data.pk;
   } else {
-    data.sk += `#${inData.submissionTimestamp}`;
+    data.parentId = idInfo.packageId;
+    data.parentType = idInfo.parentType;
   }
 
   const params = {
@@ -39,8 +47,13 @@ export default async function newSubmission(inData) {
     .put(params)
     .then(() => {
       if (!idInfo.isNewPackage) {
-        data.parentType = idInfo.parentType;
-        return updateComponent(data);
+        const parentToUpdate = {
+          componentId: data.parentId,
+          componentType: data.parentType,
+          attachments: data.attachments,
+          newChild: data,
+        };
+        return updateComponent(parentToUpdate);
       } else {
         return "Compnent is a Package.";
       }

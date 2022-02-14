@@ -9,7 +9,7 @@ const topLevelUpdates = [
 ];
 
 export default async function updateComponent({
-  packageId: updatePk,
+  componentId: updatePk,
   ...updateData
 }) {
   const changeData = {
@@ -22,10 +22,16 @@ export default async function updateComponent({
     displayId: updateData.componentId,
   };
 
+  let updateSk = updateData.componentType;
+  switch (updateData.componentType) {
+    case ChangeRequest.TYPE.WAIVER_RAI:
+    case ChangeRequest.TYPE.SPA_RAI:
+    case ChangeRequest.TYPE.CHIP_SPA_RAI:
+      updateSk += `#${updateData.submissionTimestamp}`;
+  }
+
   if (updateData.componentType === ChangeRequest.TYPE.WAIVER_AMENDMENT) {
-    const { renewal, amendment } = ChangeRequest.decodeWaiverNumber(
-      updateData.componentId
-    );
+    const { renewal, amendment } = ChangeRequest.decodeWaiverNumber(updatePk);
     changeData.displayId = "R" + renewal + "." + amendment;
   }
 
@@ -33,15 +39,15 @@ export default async function updateComponent({
     TableName: process.env.oneMacTableName,
     Key: {
       pk: updatePk,
-      sk: updateData.parentType,
+      sk: updateSk,
     },
     ConditionExpression: "pk = :pkVal AND sk = :skVal",
     UpdateExpression:
       "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
     ExpressionAttributeValues: {
       ":pkVal": updatePk,
-      ":skVal": updateData.parentType,
-      ":newChange": [changeData],
+      ":skVal": updateSk,
+      ":newChange": [changeData.changeHistory],
       ":emptyList": [],
     },
     ReturnValues: "ALL_NEW",
@@ -59,17 +65,17 @@ export default async function updateComponent({
     }
   });
 
-  // up the number in the component count for this component
-  if (updateData.componentType) {
+  // add the child details
+  if (updateData.newChild) {
     updateComponentParams.ExpressionAttributeNames = {
-      "#componentTypeName": updateData.componentType,
+      "#childTypeName": updateData.newChild.componentType,
       "#childList": "children",
     };
-    updateComponentParams.ExpressionAttributeValues[":thiscomponent"] = [
-      changeData,
+    updateComponentParams.ExpressionAttributeValues[":childcomponent"] = [
+      updateData.newChild,
     ];
     updateComponentParams.UpdateExpression +=
-      ", #componentTypeName = list_append(if_not_exists(#componentTypeName,:emptyList), :thiscomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :thiscomponent)";
+      ", #childTypeName = list_append(if_not_exists(#childTypeName,:emptyList), :childcomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :childcomponent)";
   }
 
   try {
