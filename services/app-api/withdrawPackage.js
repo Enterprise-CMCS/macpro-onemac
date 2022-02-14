@@ -33,7 +33,7 @@ export const main = handler(async (event) => {
       currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
       changeHistory: [
         {
-          submitterEmail,
+          submitterEmail: submitterEmail.toLowerCase(),
           submitterName,
           submissionTimestamp: Date.now(),
           action: "Withdraw",

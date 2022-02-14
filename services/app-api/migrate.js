@@ -42,7 +42,7 @@ export const main = handler(async (event) => {
             territory: "N/A",
             status: "active",
             date: 1584194366,
-            doneBy: item.id,
+            doneBy: item.id.toLowerCase(),
           });
           break;
         case "helpdesk":
@@ -77,7 +77,7 @@ export const main = handler(async (event) => {
       try {
         const contactDetails = {
           fullName: `${item.firstName} ${item.lastName}`,
-          email: item.id,
+          email: item.id.toLowerCase(),
           phoneNumber: item.phoneNumber,
           group: item.group,
           division: item.division,
@@ -89,7 +89,7 @@ export const main = handler(async (event) => {
           const doneBy = thing.doneBy.toLowerCase();
           await changeUserStatus({
             fullName: contactDetails.fullName,
-            email: item.id,
+            email: item.id.toLowerCase(),
             doneByEmail: doneBy,
             doneByName: approverNamesById[doneBy] ?? "",
             date: thing.date,

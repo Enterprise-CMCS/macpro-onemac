@@ -5,7 +5,7 @@ export const newUser = async (userDetails) => {
     const contactParams = {
       TableName: process.env.oneMacTableName,
       Item: {
-        pk: userDetails.email,
+        pk: userDetails.email.toLowerCase(),
         sk: "ContactInfo",
         ...userDetails,
       },
