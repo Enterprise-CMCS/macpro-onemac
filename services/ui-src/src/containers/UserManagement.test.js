@@ -60,12 +60,12 @@ it("confirms user actions with popup", async () => {
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   fireEvent.click(
-    screen.getByLabelText(/actions for Pamela Pending/, { selector: "button" })
+    screen.getByLabelText(/actions for Perry Pending/, { selector: "button" })
   );
   fireEvent.click(screen.getAllByText(/grant access/i)[0]);
 
   const modalHeader = screen.getByText(/Modify/).closest("header");
   expect(modalHeader.nextElementSibling).toHaveTextContent(
-    "This will grant Pamela Pending access to OneMAC."
+    "This will grant Perry Pending access to OneMAC."
   );
 });

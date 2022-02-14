@@ -3,7 +3,7 @@ Feature: OY2_12596_CMSUserDenied
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms role approver Denied
-        Then i am on Dashboard Page
+        Then i am on User Management Page
         Then Click on My Account
         Then Click on Manage Profile
         When I am on My Profile Page

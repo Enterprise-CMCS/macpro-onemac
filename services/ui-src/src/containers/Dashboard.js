@@ -10,7 +10,7 @@ import {
   ChangeRequest,
   getUserRoleObj,
   USER_STATUS,
-  USER_TYPE,
+  USER_ROLE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -32,17 +32,14 @@ const Dashboard = () => {
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
+    userRole,
     userProfile = {},
     userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(
-    userData?.type,
-    !cmsRoles,
-    userData?.attributes
-  );
+  const userRoleObj = getUserRoleObj(userData?.roleList);
 
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
@@ -52,10 +49,8 @@ const Dashboard = () => {
     }
 
     // Redirect new users to the signup flow.
-    const missingUserType = !userData?.type;
-    const missingOtherUserData =
-      userData?.type !== USER_TYPE.SYSTEM_ADMIN && !userData?.attributes;
-    if (cmsRoles && (missingUserType || missingOtherUserData)) {
+    //    const userAccess = effectiveRoleForUser(userData?.roleList);
+    if (cmsRoles && userRole === null) {
       history.replace("/signup", location.state);
       return;
     }
@@ -87,7 +82,7 @@ const Dashboard = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [cmsRoles, history, location, userData, userProfile]);
+  }, [cmsRoles, history, location, userRole, userProfile]);
 
   const renderId = useCallback(
     ({ row, value }) => (
@@ -283,18 +278,18 @@ const Dashboard = () => {
   }
 
   function renderSubmissionList() {
-    if (userData?.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+    if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
-        return <EmptyList message={pendingMessage[userData?.type]} />;
+        return <EmptyList message={pendingMessage[userRole]} />;
       }
 
       const userStatusNotActive =
-        userData?.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
+        userRole && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
       if (userStatusNotActive) {
         return (
           <EmptyList
             showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userData.type]}
+            message={deniedOrRevokedMessage[userRole]}
           />
         );
       }

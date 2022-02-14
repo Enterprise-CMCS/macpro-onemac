@@ -5,11 +5,11 @@ import { set } from "lodash";
 import { AppContextValue } from "./domain-types";
 import { AppContext } from "./libs/contextLib";
 import { devUsers } from "./libs/devUsers";
-import { getUserStatus } from "./libs/userLib";
 import UserDataApi from "./utils/UserDataApi";
 import { Routes } from "./Routes";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
+import { effectiveRoleForUser, getActiveTerritories } from "cmscommonlib";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -18,9 +18,10 @@ const DEFAULT_AUTH_STATE: Omit<
   isAuthenticating: true,
   isAuthenticated: false,
   isLoggedInAsDeveloper: false,
-  isValidRoute: false,
   userProfile: {},
+  userRole: null,
   userStatus: null,
+  activeTerritories: null,
 };
 
 export function App() {
@@ -41,6 +42,14 @@ export function App() {
       const authUser = await Auth.currentAuthenticatedUser();
       const email = authUser.signInUserSession.idToken.payload.email;
       const userData = await UserDataApi.userProfile(email);
+      const roleResult = effectiveRoleForUser(userData?.roleList);
+      let userRole = null,
+        userStatus = null;
+      if (roleResult) {
+        userRole = roleResult[0];
+        userStatus = roleResult[1];
+      }
+      const activeTerritories = getActiveTerritories(userData?.roleList);
 
       setAuthState({
         ...DEFAULT_AUTH_STATE,
@@ -59,7 +68,9 @@ export function App() {
           // Note that userData comes back as an empty object if there is none.
           userData,
         },
-        userStatus: getUserStatus(userData),
+        userRole,
+        userStatus,
+        activeTerritories,
       });
     } catch (error) {
       if (
@@ -84,6 +95,13 @@ export function App() {
     // It will capture info if they are logged in from a previous session.
     setUserInfo();
   }, [setUserInfo]);
+
+  const { email, firstName, lastName } = authState.userProfile;
+  useEffect(() => {
+    // When user's email or name changes, create a record of their info if it
+    // does not already exist
+    if (email) UserDataApi.setContactInfo({ email, firstName, lastName });
+  }, [email, firstName, lastName]);
 
   /**
    * Updates phone number in the user profile,

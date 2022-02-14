@@ -1,25 +1,28 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
-import getUser from "./utils/getUser";
-import { getAuthorizedStateList } from "./user/user-util";
+import {
+  RESPONSE_CODE,
+  getActiveTerritories,
+  getUserRoleObj,
+} from "cmscommonlib";
+import { getUser } from "./getUser";
 
 /**
  * Gets all packages from the DynamoDB one table
  * that correspond to the user's active access to states/territories
  */
 
-export const main = handler((event) => {
-  if (!event?.queryStringParameters?.email) return RESPONSE_CODE.USER_NOT_FOUND;
-  if (!event?.queryStringParameters?.group) return RESPONSE_CODE.DATA_MISSING;
+export const getMyPackages = async (email, group) => {
+  if (!email) return RESPONSE_CODE.USER_NOT_FOUND;
+  if (!group) return RESPONSE_CODE.DATA_MISSING;
 
-  return getUser(event.queryStringParameters.email)
+  return getUser(email)
     .then((user) => {
       let territoryList = "this is for EUA users";
       if (Object.keys(user).length > 0) {
-        const userRoleObj = getUserRoleObj(user?.type, !user, user?.attributes);
+        const userRoleObj = getUserRoleObj(user?.roleList);
 
-        territoryList = getAuthorizedStateList(user);
+        territoryList = getActiveTerritories(user?.roleList);
         if (!userRoleObj.canAccessDashboard || territoryList === []) {
           throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
         }
@@ -33,9 +36,9 @@ export const main = handler((event) => {
         ProjectionExpression:
           "componentId,componentType,currentStatus,submissionTimestamp,submitterName,submitterEmail,submissionId,submitterId,clockEndTimestamp,expirationTimestamp,children",
       };
-      const grouppk = "OneMAC#" + event.queryStringParameters.group;
+      const grouppk = "OneMAC#" + group;
       let paramList = [];
-      if (typeof territoryList !== "string") {
+      if (territoryList[0] !== "N/A") {
         paramList = territoryList.map((territory) => {
           return {
             ...baseParams,
@@ -63,8 +66,6 @@ export const main = handler((event) => {
           const promiseItems = [];
           do {
             const results = await dynamoDb.query(params);
-            console.log("params are: ", params);
-            console.log("results are: ", results);
             promiseItems.push(...results.Items);
             params.ExclusiveStartKey = results.LastEvaluatedKey;
           } while (params.ExclusiveStartKey);
@@ -79,4 +80,12 @@ export const main = handler((event) => {
       console.log("error is: ", error);
       return error;
     });
+};
+
+// get the approver list for a rols and possibly a territory
+export const main = handler(async (event) => {
+  return await getMyPackages(
+    event?.queryStringParameters?.email,
+    event?.queryStringParameters?.group
+  );
 });

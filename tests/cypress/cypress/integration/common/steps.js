@@ -14,6 +14,7 @@ import oneMacRequestWaiverTemporaryExtension from "../../../support/pages/oneMac
 import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixKAmendmentPage";
 import oneMacPackagePage from "../../../support/pages/oneMacPackagePage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
+import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
@@ -32,6 +33,7 @@ const OneMacPackagePage = new oneMacPackagePage();
 const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const SPAID = Utilities.SPAID("MD");
 const OneMacFAQPage = new oneMacFAQPage();
+const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -242,6 +244,9 @@ And("Click on User Management Tab", () => {
 // this is for oy2_10093
 When("Login with cms Help Desk User", () => {
   OneMacDevLoginPage.loginAsHelpDeskUser();
+});
+When("Login as a State System Admin", () => {
+  OneMacDevLoginPage.loginAsStateSystemAdmin();
 });
 Then("i am on Dashboard Page", () => {
   OneMacDashboardPage.verifyWeAreOnDashboardPage();
@@ -1634,4 +1639,97 @@ And("verify actions column exists for the child", () => {
 });
 And("verify expiration date column exists for the child", () => {
   OneMacPackagePage.verifyexpirationDateColumnExistsForChild();
+});
+
+And("verify that Request a Role Change button exists", () => {
+  OneMacUserManagmentPage.verifyRequestARoleChangeBtnExists();
+});
+
+And("click on Request a Role Change button", () => {
+  OneMacUserManagmentPage.clickRequestARoleChangeBtn();
+});
+
+And("verify Select the role for which you are registering is visible", () => {
+  OneMacRequestARoleChangePage.verifySelectTheRoleTextExists();
+});
+
+And("verify SSA is the role available", () => {
+  OneMacRequestARoleChangePage.verifySSARoleBtnExists();
+});
+
+And("click on the SSA role", () => {
+  OneMacRequestARoleChangePage.clickSSARoleBtn();
+});
+
+And("verify the user role is {string}", (string) => {
+  OneMacRequestARoleChangePage.verifyUserRoleHeaderIs(string);
+});
+
+And("verify the error message says {string}", (string) => {
+  OneMacRequestARoleChangePage.verifyErrorMessageTextIs(string);
+});
+
+And("verify the submit button is disabled", () => {
+  OneMacRequestARoleChangePage.verifySubmitBtnIsDisabled();
+});
+And("verify the submit button is disabled via class", () => {
+  OneMacRequestARoleChangePage.verifySubmitBtnIsDisabledViaClass();
+});
+And("select {string} for state access", (state) => {
+  OneMacRequestARoleChangePage.clickStateForStateAccess(state);
+});
+
+And("verify the submit button is enabled", () => {
+  OneMacRequestARoleChangePage.verifySubmitBtnIsEnabled();
+});
+
+And("verify there is no error message", () => {
+  OneMacRequestARoleChangePage.verifyErrorMsgDoesNotExist();
+});
+
+And("click on cancel", () => {
+  OneMacRequestARoleChangePage.clickCancelBtn();
+});
+
+And("verify the cancel button is clickable", () => {
+  OneMacRequestARoleChangePage.verifyCancelBtnIsEnabled();
+});
+And("click stay on page in the modal", () => {
+  OneMacRequestARoleChangePage.clickStayOnPageBtn();
+});
+
+And("click confirm in the modal", () => {
+  OneMacRequestARoleChangePage.clickConfirmBtn();
+});
+
+And("verify State Submitter is the role available", () => {
+  OneMacRequestARoleChangePage.verifyStateSubmitterRoleBtnExists();
+});
+
+And("click on the State Submitter role", () => {
+  OneMacRequestARoleChangePage.clickStateSubmitterRoleBtn();
+});
+
+And("verify the CMS Reviewer role is available", () => {
+  OneMacRequestARoleChangePage.verifyCMSReviewerRoleBtnExists();
+});
+
+And("click on the CMS Reviewer role", () => {
+  OneMacRequestARoleChangePage.clickCMSReviewerRoleBtn();
+});
+
+And("verify the group dropdown exists", () => {
+  OneMacRequestARoleChangePage.verifyGroupDropdownExists();
+});
+
+And("verify the CMS Role Approver role is available", () => {
+  OneMacRequestARoleChangePage.verifyCMSRoleApproverBtnExists();
+});
+
+And("click on the CMS Role Approver role", () => {
+  OneMacRequestARoleChangePage.clickCMSRoleApproverBtn();
+});
+
+And("verify that Request a Role Change button does not exist", () => {
+  OneMacUserManagmentPage.verifyRequestARoleChangeBtnDoesNotExist();
 });

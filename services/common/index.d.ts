@@ -6,7 +6,7 @@ export enum USER_STATUS {
   DENIED = "denied",
   REVOKED = "revoked",
 }
-export enum USER_TYPE {
+export enum USER_ROLE {
   STATE_SUBMITTER = "statesubmitter",
   CMS_REVIEWER = "cmsreviewer",
   STATE_SYSTEM_ADMIN = "statesystemadmin",
@@ -23,16 +23,24 @@ export class UserRole {
   canDownloadCsv: boolean;
 }
 
+export type RoleEntry = {
+  role: USER_ROLE;
+  status: USER_STATUS;
+  territory?: string;
+};
+export const inFlightRoleRequestForUser: (
+  roleList: RoleEntry[]
+) => USER_ROLE | null;
+
+export const effectiveRoleForUser: (
+  roleList: RoleEntry[]
+) => [USER_ROLE, USER_STATUS] | null;
+
 export const getUserRoleObj: (
-  role: USER_TYPE | undefined,
-  isEua?: boolean,
-  attributes?: unknown[]
+  roleInfo: USER_ROLE | RoleEntry[] | undefined
 ) => UserRole;
 
-export const latestAccessStatus: (
-  userData: Record<string, unknown> | undefined,
-  territory: string
-) => USER_STATUS;
+export const getActiveTerritories: (roleList: RoleEntry[]) => string[];
 
 export type SelectOption = { label: string; value: string };
 

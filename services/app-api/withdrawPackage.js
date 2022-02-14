@@ -8,7 +8,7 @@ import {
 import sendEmail from "./libs/email-lib";
 import updateComponent from "./utils/updateComponent";
 import { validateUserSubmitting } from "./utils/validateUser";
-import getUser from "./utils/getUser";
+import { getUser } from "./getUser";
 
 export const main = handler(async (event) => {
   let body;
@@ -31,7 +31,7 @@ export const main = handler(async (event) => {
       parentType: body.componentType,
       currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
       submissionTimestamp: Date.now(),
-      submitterEmail,
+      submitterEmail: submitterEmail.toLowerCase(),
       submitterName,
     });
   } catch (e) {

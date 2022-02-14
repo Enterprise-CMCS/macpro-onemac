@@ -48,7 +48,7 @@ describe("FileList", () => {
       fireEvent.click(downloadAllButton);
       expect(global.fetch).toBeCalled();
     } catch (error) {
-      console.log("Error thrown", error);
+      console.log("Error thrown: ", error);
     }
   });
 });

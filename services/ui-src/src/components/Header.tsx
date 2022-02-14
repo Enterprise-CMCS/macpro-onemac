@@ -10,7 +10,12 @@ import {
   faUserPlus,
 } from "@fortawesome/free-solid-svg-icons";
 
-import { ROUTES, USER_TYPE, getUserRoleObj } from "cmscommonlib";
+import {
+  ROUTES,
+  USER_ROLE,
+  getUserRoleObj,
+  inFlightRoleRequestForUser,
+} from "cmscommonlib";
 import { getCurrentRoute } from "../utils/routeUtils";
 import config from "../utils/config";
 import { Alert, UsaBanner } from "@cmsgov/design-system";
@@ -106,8 +111,12 @@ const AccountButtons: React.FC<{
   setShowMenu: (newValue: boolean) => void;
 }> = ({ showMenu, setShowMenu }) => {
   const history = useHistory();
-  const { isAuthenticated, isLoggedInAsDeveloper, userProfile } =
-    useAppContext() ?? {};
+  const {
+    isAuthenticated,
+    isLoggedInAsDeveloper,
+    userRole,
+    userProfile: { userData: { roleList = [] } = {} } = {},
+  } = useAppContext() ?? {};
 
   if (!isAuthenticated) {
     return (
@@ -133,52 +142,10 @@ const AccountButtons: React.FC<{
     );
   }
 
-  const buttonContents: {
-    logout: JSX.Element;
-    profile?: JSX.Element;
-    signup?: JSX.Element;
-  } = {
-    logout: (
-      <>
-        <FontAwesomeIcon icon={faSignOutAlt} />
-        &nbsp; Log out
-      </>
-    ),
-  };
-
-  if (userProfile?.userData?.type) {
-    // users who already have a role
-    buttonContents.profile = (
-      <>
-        <FontAwesomeIcon icon={faUserEdit} />
-        &nbsp; Manage Profile
-      </>
-    );
-  } else if (!userProfile?.cmsRoles) {
-    // users from CMS who are in the "default" role
-    buttonContents.signup = (
-      <>
-        <FontAwesomeIcon icon={faUserPlus} />
-        &nbsp; Request OneMAC Role
-      </>
-    );
-  }
-
-  // state users who have not yet requested a role
-  if (!buttonContents.signup && !buttonContents.profile) {
-    return (
-      <Button
-        inversed
-        href={ROUTES.HOME}
-        id="logoutLink"
-        onClick={() => {
-          logout(isLoggedInAsDeveloper);
-        }}
-      >
-        {buttonContents.logout}
-      </Button>
-    );
-  }
+  const shouldShowSignupLink =
+    userRole !== USER_ROLE.HELPDESK &&
+    userRole !== USER_ROLE.SYSTEM_ADMIN &&
+    !inFlightRoleRequestForUser(roleList);
 
   const RotateIcon: React.FC<{
     transform?: boolean | string;
@@ -220,22 +187,22 @@ const AccountButtons: React.FC<{
       </button>
       {showMenu && (
         <div data-testid="dropdown-content-test" className="dropdown-content">
-          {buttonContents.profile && (
-            <Link
-              to={ROUTES.PROFILE}
-              id="manageAccountLink"
-              onClick={() => setShowMenu(false)}
-            >
-              {buttonContents.profile}
-            </Link>
-          )}
-          {buttonContents.signup && (
+          <Link
+            to={ROUTES.PROFILE}
+            id="manageAccountLink"
+            onClick={() => setShowMenu(false)}
+          >
+            <FontAwesomeIcon icon={faUserEdit} />
+            &nbsp; Manage Profile
+          </Link>
+          {shouldShowSignupLink && (
             <Link
               to={ROUTES.SIGNUP}
               id="requestRoleLink"
               onClick={() => setShowMenu(false)}
             >
-              {buttonContents.signup}
+              <FontAwesomeIcon icon={faUserPlus} />
+              &nbsp; Request {userRole ? "a Role Change" : "OneMAC Role"}
             </Link>
           )}
           <Link
@@ -246,7 +213,8 @@ const AccountButtons: React.FC<{
               logout(isLoggedInAsDeveloper);
             }}
           >
-            {buttonContents.logout}
+            <FontAwesomeIcon icon={faSignOutAlt} />
+            &nbsp; Log out
           </Link>
         </div>
       )}
@@ -273,14 +241,9 @@ export function Header() {
   function renderNavBar(
     isLoggedInAsDeveloper: boolean | undefined,
     currentRoute: string,
-    isAuthenticated: boolean | undefined,
-    userType?: USER_TYPE
+    isAuthenticated: boolean | undefined
   ) {
-    const userObj = getUserRoleObj(
-      userType,
-      !userProfile?.cmsRoles,
-      userProfile?.userData?.attributes
-    );
+    const userObj = getUserRoleObj(userProfile?.userData?.roleList);
 
     const homeLink = (
       <Link
@@ -387,8 +350,6 @@ export function Header() {
       ? "activeLink"
       : "ds-u-text-decoration--none";
 
-  const { userData } = useAppContext()?.userProfile ?? {};
-
   return (
     <>
       <div className="usa-banner-custom">
@@ -405,8 +366,7 @@ export function Header() {
       {renderNavBar(
         isLoggedInAsDeveloper,
         getCurrentRoute(useLocation().pathname),
-        isAuthenticated,
-        userData?.type
+        isAuthenticated
       )}
     </>
   );

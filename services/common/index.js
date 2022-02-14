@@ -29,6 +29,7 @@ export const RESPONSE_CODE = {
   DUPLICATE_ID: "ID002",
   ID_NOT_FOUND: "ID000",
   USER_NOT_AUTHORIZED: "UR040",
+  USER_EXISTS: "UR002",
   USER_NOT_FOUND: "UR041",
   USER_SUBMITTED: "UR000",
   USER_SUBMISSION_FAILED: "UR001",
@@ -65,7 +66,7 @@ export const USER_ADMIN_PERMISSION = {
 /**
  * Possible user types
  */
-export const USER_TYPE = {
+export const USER_ROLE = {
   STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
   STATE_SYSTEM_ADMIN: "statesystemadmin",
@@ -74,32 +75,38 @@ export const USER_TYPE = {
   HELPDESK: "helpdesk",
 };
 
-export const ROLES = USER_TYPE;
+export const APPROVING_USER_ROLE = {
+  [USER_ROLE.STATE_SUBMITTER]: USER_ROLE.STATE_SYSTEM_ADMIN,
+  [USER_ROLE.STATE_SYSTEM_ADMIN]: USER_ROLE.CMS_ROLE_APPROVER,
+  [USER_ROLE.CMS_ROLE_APPROVER]: USER_ROLE.SYSTEM_ADMIN,
+  [USER_ROLE.HELPDESK]: USER_ROLE.SYSTEM_ADMIN,
+  [USER_ROLE.CMS_REVIEWER]: USER_ROLE.CMS_ROLE_APPROVER,
+};
 
-export const APPROVING_USER_TYPE = {
-  [ROLES.STATE_SUBMITTER]: ROLES.STATE_SYSTEM_ADMIN,
-  [ROLES.STATE_SYSTEM_ADMIN]: ROLES.CMS_ROLE_APPROVER,
-  [ROLES.CMS_ROLE_APPROVER]: ROLES.SYSTEM_ADMIN,
-  [ROLES.HELPDESK]: ROLES.SYSTEM_ADMIN,
-  [ROLES.CMS_REVIEWER]: ROLES.CMS_ROLE_APPROVER,
+export const HELPING_USER_ROLE = {
+  ...APPROVING_USER_ROLE,
+  [USER_ROLE.SYSTEM_ADMIN]: USER_ROLE.HELP_DESK,
 };
 
 export const tableRoles = {
-  [ROLES.STATE_SYSTEM_ADMIN]: [ROLES.STATE_SUBMITTER],
-  [ROLES.CMS_ROLE_APPROVER]: [ROLES.STATE_SYSTEM_ADMIN, ROLES.CMS_REVIEWER],
-  [ROLES.HELPDESK]: [
-    ROLES.STATE_SUBMITTER,
-    ROLES.CMS_REVIEWER,
-    ROLES.STATE_SYSTEM_ADMIN,
-    ROLES.CMS_ROLE_APPROVER,
-    ROLES.HELPDESK,
+  [USER_ROLE.STATE_SYSTEM_ADMIN]: [USER_ROLE.STATE_SUBMITTER],
+  [USER_ROLE.CMS_ROLE_APPROVER]: [
+    USER_ROLE.STATE_SYSTEM_ADMIN,
+    USER_ROLE.CMS_REVIEWER,
   ],
-  [ROLES.SYSTEM_ADMIN]: [
-    ROLES.STATE_SUBMITTER,
-    ROLES.CMS_REVIEWER,
-    ROLES.STATE_SYSTEM_ADMIN,
-    ROLES.CMS_ROLE_APPROVER,
-    ROLES.HELPDESK,
+  [USER_ROLE.HELPDESK]: [
+    USER_ROLE.STATE_SUBMITTER,
+    USER_ROLE.CMS_REVIEWER,
+    USER_ROLE.STATE_SYSTEM_ADMIN,
+    USER_ROLE.CMS_ROLE_APPROVER,
+    USER_ROLE.HELPDESK,
+  ],
+  [USER_ROLE.SYSTEM_ADMIN]: [
+    USER_ROLE.STATE_SUBMITTER,
+    USER_ROLE.CMS_REVIEWER,
+    USER_ROLE.STATE_SYSTEM_ADMIN,
+    USER_ROLE.CMS_ROLE_APPROVER,
+    USER_ROLE.HELPDESK,
   ],
 };
 
@@ -117,12 +124,12 @@ export const USER_STATUS = {
  * Possible user role labels
  */
 export const roleLabels = {
-  [ROLES.STATE_SUBMITTER]: "State Submitter",
-  [ROLES.STATE_SYSTEM_ADMIN]: "State System Admin",
-  [ROLES.CMS_ROLE_APPROVER]: "CMS Role Approver",
-  [USER_TYPE.CMS_REVIEWER]: "CMS Reviewer",
-  [USER_TYPE.SYSTEM_ADMIN]: "CMS System Admin",
-  [ROLES.HELPDESK]: "Help Desk",
+  [USER_ROLE.STATE_SUBMITTER]: "State Submitter",
+  [USER_ROLE.STATE_SYSTEM_ADMIN]: "State System Admin",
+  [USER_ROLE.CMS_ROLE_APPROVER]: "CMS Role Approver",
+  [USER_ROLE.CMS_REVIEWER]: "CMS Reviewer",
+  [USER_ROLE.SYSTEM_ADMIN]: "CMS System Admin",
+  [USER_ROLE.HELPDESK]: "Help Desk",
 };
 
 const ALL_USERS_ROUTES = [
@@ -139,6 +146,7 @@ export class Role {
     this.canAccessForms = false;
     this.canAccessUserManagement = false;
     this.canAccessMetrics = false;
+    this.canManageUsers = false;
   }
 
   getAccesses() {
@@ -191,27 +199,23 @@ class StateSystemAdmin extends Role {
     this.canAccessUserManagement = true;
     this.canAccessDashboard = true;
     this.canAccessForms = true;
+    this.canManageUsers = true;
   }
 }
 
 class CmsReviewer extends Role {
-  constructor(userStatus) {
+  constructor() {
     super();
     this.canAccessDashboard = true;
-    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
   }
 }
 
 class CmsRoleApprover extends Role {
-  constructor(userStatus) {
+  constructor() {
     super();
     this.canDownloadCsv = true;
-
-    if (userStatus === USER_STATUS.ACTIVE) {
-      this.canAccessUserManagement = true;
-    } else {
-      this.canAccessDashboard = true;
-    }
+    this.canAccessUserManagement = true;
+    this.canManageUsers = true;
   }
 }
 
@@ -222,68 +226,94 @@ class SystemAdmin extends Role {
     this.canDownloadCsv = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
+    this.canManageUsers = true;
   }
 }
 
 class Helpdesk extends Role {
-  constructor(userStatus) {
+  constructor() {
     super();
     this.canAccessDashboard = true;
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
-    this.canDownloadCsv = userStatus === USER_STATUS.ACTIVE;
+    this.canDownloadCsv = true;
   }
 }
 
-const datesDescending = ({ date: dateA }, { date: dateB }) => dateB - dateA;
-
 /**
- * Finds a user's most recent approval status. For state submitters and admins, it takes an optional state code to search for.
- * @param user - The user object to inspect.
- * @param [state] - A two-letter territory code to search for (only for state submitters and admins).
+ * Finds out what a user's most relevant role information is.
  */
-export const latestAccessStatus = ({ type, attributes = [] }, state = "") => {
-  if (!attributes.length) return null;
+export const effectiveRoleForUser = (roleList = []) => {
+  let pendingRole;
+  let otherOutput = null;
 
-  switch (type) {
-    case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_SYSTEM_ADMIN: {
-      const stateObj = attributes.find(({ stateCode }) => stateCode === state);
-      if (!stateObj) return null;
-
-      return stateObj.history.sort(datesDescending)[0].status;
+  for (const { role, status } of roleList) {
+    switch (status) {
+      case USER_STATUS.ACTIVE:
+        return [role, status];
+      case USER_STATUS.PENDING:
+        pendingRole = role;
+        break;
+      default:
+        otherOutput = [role, status];
+        break;
     }
+  }
 
-    default: {
-      return attributes.sort(datesDescending)[0].status;
+  if (pendingRole) return [pendingRole, USER_STATUS.PENDING];
+
+  return otherOutput;
+};
+
+export const inFlightRoleRequestForUser = (roleList) => {
+  const effectiveAccess = effectiveRoleForUser(roleList);
+
+  if (!effectiveAccess) return null;
+
+  const [effectiveRole, effectiveStatus] = effectiveAccess;
+  switch (effectiveStatus) {
+    case USER_STATUS.PENDING:
+      return effectiveRole;
+    case USER_STATUS.ACTIVE: {
+      const pendingRole = roleList.find(
+        ({ status, role }) =>
+          status === USER_STATUS.PENDING && role !== effectiveRole
+      );
+      return pendingRole && pendingRole.role;
     }
+    default:
+      return null;
   }
 };
 
-export const getUserRoleObj = (role, isEua = false, attributes = []) => {
-  let roleMatch = {
-    [USER_TYPE.STATE_SUBMITTER]: StateSubmitter,
-    [USER_TYPE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
-    [USER_TYPE.CMS_ROLE_APPROVER]: CmsRoleApprover,
-    [USER_TYPE.SYSTEM_ADMIN]: SystemAdmin,
-    [USER_TYPE.HELPDESK]: Helpdesk,
-    [USER_TYPE.CMS_REVIEWER]: CmsReviewer,
-  }[role];
-
-  if (!roleMatch) {
-    roleMatch = isEua ? DefaultUser : Role;
+export const getUserRoleObj = (roleInfo) => {
+  if (Array.isArray(roleInfo)) {
+    const roleResult = effectiveRoleForUser(roleInfo);
+    if (roleResult === null) return new DefaultUser();
+    [roleInfo] = roleResult;
+  } else if (!roleInfo) {
+    return new DefaultUser();
   }
 
-  let userStatus;
-  switch (roleMatch) {
-    case StateSubmitter:
-    case StateSystemAdmin:
-      break;
-    default:
-      userStatus = latestAccessStatus({ type: role, attributes });
-  }
+  return new {
+    [USER_ROLE.STATE_SUBMITTER]: StateSubmitter,
+    [USER_ROLE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
+    [USER_ROLE.CMS_ROLE_APPROVER]: CmsRoleApprover,
+    [USER_ROLE.SYSTEM_ADMIN]: SystemAdmin,
+    [USER_ROLE.HELPDESK]: Helpdesk,
+    [USER_ROLE.CMS_REVIEWER]: CmsReviewer,
+  }[roleInfo]();
+};
 
-  return new roleMatch(userStatus);
+export const getActiveTerritories = (roleList) => {
+  let activeTerritories = [];
+
+  if (roleList && Object.keys(roleList).length > 0) {
+    activeTerritories = roleList
+      .filter(({ status }) => status === USER_STATUS.ACTIVE)
+      .map(({ territory }) => territory);
+  }
+  return activeTerritories;
 };
 
 // NOTE: In Future this may come from SeaTool or Backend Process.

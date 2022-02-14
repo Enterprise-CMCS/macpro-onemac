@@ -1,9 +1,8 @@
-import { USER_TYPE } from "cmscommonlib";
+import { USER_ROLE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
-import getUser from "./utils/getUser";
-import { getAuthorizedStateList } from "./user/user-util";
+import { RESPONSE_CODE, USER_STATUS, effectiveRoleForUser } from "cmscommonlib";
+import { getUser } from "./getUser";
 
 const commonQueryConfig = {
   TableName: process.env.tableName,
@@ -77,10 +76,9 @@ async function stateSubmitterDynamoDbQuery(
 }
 
 const usersWhoSeeEverything = new Set([
-  USER_TYPE.HELPDESK,
-  USER_TYPE.CMS_REVIEWER,
-  USER_TYPE.CMS_ROLE_APPROVER,
-  USER_TYPE.SYSTEM_ADMIN,
+  USER_ROLE.HELPDESK,
+  USER_ROLE.CMS_REVIEWER,
+  USER_ROLE.SYSTEM_ADMIN,
 ]);
 
 /**
@@ -91,8 +89,10 @@ const usersWhoSeeEverything = new Set([
 async function getDataFromDB(user) {
   let startingKey = null;
 
+  const userAccess = effectiveRoleForUser(user.roleList);
+
   try {
-    if (!user.type || usersWhoSeeEverything.has(user.type)) {
+    if (userAccess === null || usersWhoSeeEverything.has(userAccess[0])) {
       let keepSearching = true;
       let tempResults = [];
       while (keepSearching == true) {
@@ -108,20 +108,22 @@ async function getDataFromDB(user) {
       return (
         await Promise.all(
           // query dynamodb for each territory in the territiories array
-          getAuthorizedStateList(user).map(async (territory) => {
-            let tempResults = [];
-            let keepSearching = true;
-            while (keepSearching == true) {
-              [startingKey, keepSearching, tempResults] =
-                await stateSubmitterDynamoDbQuery(
-                  startingKey,
-                  territory,
-                  keepSearching,
-                  tempResults
-                );
-            }
-            return tempResults;
-          })
+          user.roleList
+            .filter(({ status }) => status === USER_STATUS.ACTIVE)
+            .map(async ({ territory }) => {
+              let tempResults = [];
+              let keepSearching = true;
+              while (keepSearching == true) {
+                [startingKey, keepSearching, tempResults] =
+                  await stateSubmitterDynamoDbQuery(
+                    startingKey,
+                    territory,
+                    keepSearching,
+                    tempResults
+                  );
+              }
+              return tempResults;
+            })
         )
       ).flat();
     }
