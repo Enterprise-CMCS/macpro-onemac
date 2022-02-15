@@ -12,7 +12,7 @@ jest.mock("react-router-dom", () => ({
     return {
       componentType: "spa",
       componentTimestamp: 16746532223,
-      packageId: "MI-11-1111",
+      componentId: "MI-11-1111",
     };
   },
   useHistory: jest.fn(),
@@ -59,7 +59,7 @@ describe("Detail View Tests", () => {
     );
 
     await waitFor(() =>
-      expect(screen.getByText("Medicaid SPA Details", { selector: "h1" }))
+      expect(screen.getByText("MI-11-1111", { selector: "h1" }))
     );
   });
 });

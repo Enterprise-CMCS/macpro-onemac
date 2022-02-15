@@ -17,42 +17,34 @@ const AUTHORITY_LABELS = {
 
 const PAGE_DETAILS = {
   [ChangeRequest.TYPE.WAIVER_BASE]: {
-    pageTitle: "Base Waiver Details",
     detailsHeader: "Base Waiver",
     idLabel: "Waiver Number",
   },
   [ChangeRequest.TYPE.SPA]: {
-    pageTitle: "Medicaid SPA Details",
     detailsHeader: "Medicaid SPA",
     idLabel: "Medicaid SPA ID",
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
-    pageTitle: "CHIP SPA Details",
     detailsHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
   },
   [ChangeRequest.TYPE.SPA_RAI]: {
-    pageTitle: "Response to RAI",
     detailsHeader: "RAI Response",
     idLabel: "Medicaid SPA ID",
   },
   [ChangeRequest.TYPE.CHIP_SPA_RAI]: {
-    pageTitle: "Response to RAI",
     detailsHeader: "RAI Response",
     idLabel: "CHIP SPA ID",
   },
   waiverrai: {
-    pageTitle: "Response to RAI",
     detailsHeader: "RAI Response",
     idLabel: "Waiver Number",
   },
   waiverrenewal: {
-    pageTitle: "Waiver Renewal",
     detailsHeader: "Waiver Renewal",
     idLabel: "Waiver Number",
   },
   waiveramendment: {
-    pageTitle: "Waiver Amendment",
     detailsHeader: "Waiver Amendment",
     idLabel: "Waiver Number",
   },
@@ -60,28 +52,24 @@ const PAGE_DETAILS = {
 
 /**
  * Given an id and the relevant submission type forminfo, show the details
- * @param {Object} formInfo - all the change request details specific to this submission
  */
 const DetailView = () => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-  const { componentType, componentTimestamp, packageId } = useParams();
+  const { componentType, componentTimestamp, componentId } = useParams();
 
-  console.log("component type is: ", componentType);
-  console.log("component timestamp is: ", componentTimestamp);
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
   // The record we are using for the form.
   const [details, setDetails] = useState();
 
-  console.log("here in DetailView with Package ID: ", packageId);
   useEffect(() => {
     let mounted = true;
 
-    if (!packageId) return;
+    if (!componentId) return;
 
-    PackageApi.getDetail(packageId, componentType, componentTimestamp)
+    PackageApi.getDetail(componentId, componentType, componentTimestamp)
       .then((fetchedDetail) => {
         console.log("got the package: ", fetchedDetail);
         if (mounted) setDetails(fetchedDetail);
@@ -101,7 +89,7 @@ const DetailView = () => {
     return function cleanup() {
       mounted = false;
     };
-  }, [packageId, history, componentType, componentTimestamp]);
+  }, [componentId, history, componentType, componentTimestamp]);
 
   const renderChangeHistory = (changeHistory) => {
     return (
@@ -136,10 +124,7 @@ const DetailView = () => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar
-        heading={PAGE_DETAILS[componentType].pageTitle}
-        enableBackNav
-      />
+      <PageTitleBar heading={componentId} enableBackNav />
       {details && (
         <article className="form-container">
           <div className="read-only-submission">
@@ -164,16 +149,16 @@ const DetailView = () => {
                     details.waiverAuthority}
                 </Review>
               )}
-              {details.packageId && (
+              {details.componentId && (
                 <Review heading={PAGE_DETAILS[componentType].idLabel}>
-                  {details.packageId}
+                  {details.componentId}
                 </Review>
               )}
             </section>
             <FileList
               heading="Attachments"
               uploadList={details.attachments}
-              zipId={details.packageId}
+              zipId={details.componentId}
             />
             {details.additionalInformation && (
               <section>
