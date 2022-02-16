@@ -18,6 +18,7 @@ import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import { Review } from "@cmsgov/design-system";
 import { getTerritoryFromTransmittalNumber } from "./SubmissionForm";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
@@ -69,6 +70,7 @@ const DetailView = () => {
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const { userProfile } = useAppContext();
+  const [confirmItem, setConfirmItem] = useState(null);
 
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
@@ -79,6 +81,32 @@ const DetailView = () => {
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
+  const closeConfirmation = useCallback(() => setConfirmItem(null), []);
+
+  const onLinkActionWithdraw = useCallback(async () => {
+    // For now, the second argument is constant.
+    // When we add another action to the menu, we will need to look at the action taken here.
+
+    try {
+      const resp = await PackageApi.withdraw(
+        userProfile.userData.fullName,
+        userProfile.email,
+        detail.componentId,
+        detail.componentType
+      );
+      setAlertCode(resp);
+    } catch (e) {
+      console.log("Error while updating package.", e);
+      setAlertCode(RESPONSE_CODE[e.message]);
+    }
+  }, [detail, userProfile]);
+
+  const onLinkActionRAI = useCallback(
+    (value) => {
+      history.push(`${value.href}`);
+    },
+    [history]
+  );
 
   const loadDetail = useCallback(
     async (ctrlr) => {
@@ -105,11 +133,11 @@ const DetailView = () => {
           ]?.forEach((actionLabel) => {
             const newItem = { label: actionLabel };
             if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
-              newItem.formatConfirmationMessage = ({ componentId }) =>
-                `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-              // newItem.handleClick = onLinkActionWithdraw;
+              newItem.confirmationMessage = `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+              newItem.onAccept = onLinkActionWithdraw;
             } else {
               newItem.href = `${packageConfig?.raiLink}?transmittalNumber=${componentId}`;
+              newItem.onAccept = onLinkActionRAI;
             }
             fetchedDetail.actionItems.push(newItem);
           });
@@ -127,7 +155,14 @@ const DetailView = () => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [history, componentId, componentType, componentTimestamp]
+    [
+      history,
+      componentId,
+      componentType,
+      componentTimestamp,
+      onLinkActionRAI,
+      onLinkActionWithdraw,
+    ]
   );
 
   useEffect(() => {
@@ -139,25 +174,6 @@ const DetailView = () => {
       ctrlr.abort();
     };
   }, [componentId, componentType, componentTimestamp, loadDetail]);
-
-  const onLinkActionWithdraw = useCallback(async () => {
-    // For now, the second argument is constant.
-    // When we add another action to the menu, we will need to look at the action taken here.
-
-    try {
-      const resp = await PackageApi.withdraw(
-        userProfile.userData.fullName,
-        userProfile.email,
-        detail.componentId,
-        detail.componentType
-      );
-      setAlertCode(resp);
-      loadDetail();
-    } catch (e) {
-      console.log("Error while updating package.", e);
-      setAlertCode(RESPONSE_CODE[e.message]);
-    }
-  }, [detail, userProfile, loadDetail]);
 
   return (
     <LoadingScreen isLoading={isLoading}>
@@ -182,11 +198,15 @@ const DetailView = () => {
                   <ul className="action-list">
                     {detail.actionItems &&
                       detail.actionItems.map((actionDetail, index) => (
-                        <li>
+                        <li key={index}>
                           <Button
                             className="package-action-link"
                             href={actionDetail.href}
-                            key={index}
+                            onClick={() => {
+                              actionDetail.confirmationMessage
+                                ? setConfirmItem(actionDetail)
+                                : actionDetail.onAccept();
+                            }}
                           >
                             {actionDetail.label}
                           </Button>
@@ -245,6 +265,18 @@ const DetailView = () => {
             </div>
           </article>
         </div>
+      )}
+      {confirmItem && (
+        <ConfirmationDialog
+          acceptText={confirmItem.label + "?"}
+          heading={confirmItem.label}
+          onAccept={() => {
+            confirmItem.onAccept();
+          }}
+          onCancel={closeConfirmation}
+        >
+          {confirmItem.confirmationMessage}
+        </ConfirmationDialog>
       )}
     </LoadingScreen>
   );
