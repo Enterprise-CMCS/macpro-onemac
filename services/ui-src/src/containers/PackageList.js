@@ -199,6 +199,7 @@ const PackageList = () => {
 
       return (
         <PopupMenu
+          buttonLabel={`Actions for ${row.original.componentId}`}
           selectedRow={row}
           menuItems={menuItems}
           variation="PackageList"
