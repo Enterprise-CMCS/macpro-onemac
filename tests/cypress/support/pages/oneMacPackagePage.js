@@ -174,6 +174,7 @@ const packageRowTwoDateSubmitted = "#submissionTimestamp-1";
 const packageRowTwo90thDay = "#ninetiethDay-1";
 const packageRowTwoType = "#componentType-1";
 const packageRowTwoState = "#territory-1";
+const packageRowTwoStatus = "#packageStatus-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
 const rowTwo = "tbody > tr:nth-child(2)";
@@ -182,6 +183,10 @@ const packageRowTwoActions = "#packageActions-1";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
+const withdrawPackageBtn =
+  "//li[text()='Withdraw Package'][@aria-disabled='false']";
+const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
+const successMessage = "#alert-bar";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -759,6 +764,9 @@ export class oneMacPackagePage {
   verifyactionsColumnExistsForChild() {
     cy.get(packageRowTwoActions).should("be.visible");
   }
+  clickActionsColumnForChild() {
+    cy.get(packageRowTwoActions).scrollIntoView().click();
+  }
   verifyexpirationDateColumnExistsForChild() {
     cy.get(packageRowTwoExpirationDate).should("be.visible");
   }
@@ -767,6 +775,27 @@ export class oneMacPackagePage {
   }
   verifyFirstParentRowExpanderIsNotDisabled() {
     cy.xpath(parentRowExpander).should("not.be.disabled");
+  }
+  clickWithdrawPackageBtn() {
+    cy.xpath(withdrawPackageBtn)
+      .filter(":visible")
+      .each(($clickable) => {
+        if ($clickable) {
+          cy.wrap($clickable).click();
+          return false; //quit after finding the right element
+        }
+      });
+  }
+  clickConfirmWithdrawPackageBtn() {
+    cy.xpath(withdrawPackageConfirmBtn).click();
+  }
+  verifyChildRowStatusIs(status) {
+    cy.get(packageRowTwoStatus).should("contain.text", status);
+  }
+  verifyPackageWithdrawalMessageIsDisplayed() {
+    cy.get(successMessage).contains(
+      "Your submission package has successfully been withdrawn."
+    );
   }
 }
 export default oneMacPackagePage;

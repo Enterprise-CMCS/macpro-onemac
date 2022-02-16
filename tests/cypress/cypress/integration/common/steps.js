@@ -565,9 +565,48 @@ And("type in Existing Waiver Number", () => {
 });
 
 And("Type Unique Valid Waiver Number With 5 Characters", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
-    Utilities.generateWaiverNumberWith5Characters("MD")
-  );
+  var number = Utilities.generateWaiverNumberWith5Characters("MD");
+  var f = "./fixtures/sharedWaiverNumber.json";
+  cy.readFile(f)
+    .then((data) => {
+      // write the merged object
+      cy.writeFile(f, { newWaiverNumber: number });
+    })
+    .then(() => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
+    });
+});
+And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber);
+  });
+});
+And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    var number = `${data.newWaiverNumber}.R00.M00`;
+    var f = "./fixtures/sharedWaiverNumber.json";
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
+    cy.readFile(f).then((d) => {
+      d.waiverAmendmentNumber = number;
+      // write the merged object
+      cy.writeFile(f, d);
+    });
+  });
+});
+And("search for Unique Valid Waiver Number with 5 Characters", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newWaiverNumber);
+  });
+  cy.wait(1000);
+});
+And("click actions button on the child row", () => {
+  OneMacPackagePage.clickActionsColumnForChild();
+});
+And("verify child row has status {string}", (status) => {
+  OneMacPackagePage.verifyChildRowStatusIs(status);
+});
+And("verify success message for Package Withdrawal", () => {
+  OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
 });
 
 And("Type Valid Waiver Number With 5 Characters", () => {
@@ -1732,4 +1771,10 @@ And("click on the CMS Role Approver role", () => {
 
 And("verify that Request a Role Change button does not exist", () => {
   OneMacUserManagmentPage.verifyRequestARoleChangeBtnDoesNotExist();
+});
+And("click withdraw package button", () => {
+  OneMacPackagePage.clickWithdrawPackageBtn();
+});
+And("click yes, withdraw package button", () => {
+  OneMacPackagePage.clickConfirmWithdrawPackageBtn();
 });
