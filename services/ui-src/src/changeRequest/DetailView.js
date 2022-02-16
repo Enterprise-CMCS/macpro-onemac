@@ -1,191 +1,250 @@
-import React, { useState, useEffect } from "react";
-import { useHistory, useParams } from "react-router-dom";
+import React, { useState, useCallback, useEffect } from "react";
+import { useHistory, useParams, useLocation } from "react-router-dom";
 
-import { RESPONSE_CODE, ROUTES, ChangeRequest } from "cmscommonlib";
+import { Button } from "@cmsgov/design-system";
+
+import {
+  RESPONSE_CODE,
+  ROUTES,
+  ChangeRequest,
+  territoryMap,
+} from "cmscommonlib";
 import LoadingScreen from "../components/LoadingScreen";
-import ChoiceList from "../components/ChoiceList";
 import FileList from "../components/FileList";
 import PackageApi from "../utils/PackageApi";
-import { formatDate } from "../utils/date-utils";
+import { formatDetailViewDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
+import AlertBar from "../components/AlertBar";
+import { useAppContext } from "../libs/contextLib";
 import { Review } from "@cmsgov/design-system";
+import { getTerritoryFromTransmittalNumber } from "./SubmissionForm";
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
   "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
 };
 
-const PAGE_DETAILS = {
+const PAGE_detail = {
   [ChangeRequest.TYPE.WAIVER_BASE]: {
-    detailsHeader: "Base Waiver",
+    detailHeader: "Base Waiver",
     idLabel: "Waiver Number",
   },
   [ChangeRequest.TYPE.SPA]: {
-    detailsHeader: "Medicaid SPA",
+    detailHeader: "Medicaid SPA",
     idLabel: "Medicaid SPA ID",
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
-    detailsHeader: "CHIP SPA",
+    detailHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
   },
   [ChangeRequest.TYPE.SPA_RAI]: {
-    detailsHeader: "RAI Response",
+    detailHeader: "RAI Response",
     idLabel: "Medicaid SPA ID",
   },
   [ChangeRequest.TYPE.CHIP_SPA_RAI]: {
-    detailsHeader: "RAI Response",
+    detailHeader: "RAI Response",
     idLabel: "CHIP SPA ID",
   },
   waiverrai: {
-    detailsHeader: "RAI Response",
+    detailHeader: "RAI Response",
     idLabel: "Waiver Number",
   },
   waiverrenewal: {
-    detailsHeader: "Waiver Renewal",
+    detailHeader: "Waiver Renewal",
     idLabel: "Waiver Number",
   },
   waiveramendment: {
-    detailsHeader: "Waiver Amendment",
+    detailHeader: "Waiver Amendment",
     idLabel: "Waiver Number",
   },
 };
 
 /**
- * Given an id and the relevant submission type forminfo, show the details
+ * Given an id and the relevant submission type forminfo, show the detail
  */
 const DetailView = () => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
   const { componentType, componentTimestamp, componentId } = useParams();
+  const location = useLocation();
+  const [alertCode, setAlertCode] = useState(location?.state?.passCode);
+  const { userProfile } = useAppContext();
 
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
   // The record we are using for the form.
-  const [details, setDetails] = useState();
+  const [detail, setDetail] = useState();
+
+  function closedAlert() {
+    setAlertCode(RESPONSE_CODE.NONE);
+  }
+
+  const loadDetail = useCallback(
+    async (ctrlr) => {
+      let fetchedDetail;
+      let stillLoading = true;
+      if (componentId) {
+        try {
+          fetchedDetail = await PackageApi.getDetail(
+            componentId,
+            componentType,
+            componentTimestamp
+          );
+          if (!fetchedDetail.territory)
+            fetchedDetail.territory =
+              getTerritoryFromTransmittalNumber(componentId);
+
+          const packageConfig =
+            ChangeRequest.CONFIG[fetchedDetail.componentType];
+          fetchedDetail.actionItems = [];
+
+          (packageConfig?.actionsByStatus ??
+            ChangeRequest.defaultActionsByStatus)[
+            fetchedDetail.currentStatus
+          ]?.forEach((actionLabel) => {
+            const newItem = { label: actionLabel };
+            if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+              newItem.formatConfirmationMessage = ({ componentId }) =>
+                `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+              // newItem.handleClick = onLinkActionWithdraw;
+            } else {
+              newItem.href = `${packageConfig?.raiLink}?transmittalNumber=${componentId}`;
+            }
+            fetchedDetail.actionItems.push(newItem);
+          });
+          console.log("got the package: ", fetchedDetail);
+          stillLoading = false;
+        } catch (e) {
+          history.push({
+            pathname: ROUTES.DASHBOARD,
+            state: {
+              passCode: RESPONSE_CODE.SYSTEM_ERROR,
+            },
+          });
+        }
+      }
+      if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
+      if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
+    },
+    [history, componentId, componentType, componentTimestamp]
+  );
 
   useEffect(() => {
-    let mounted = true;
+    const ctrlr = new AbortController();
 
-    if (!componentId) return;
-
-    PackageApi.getDetail(componentId, componentType, componentTimestamp)
-      .then((fetchedDetail) => {
-        console.log("got the package: ", fetchedDetail);
-        if (mounted) setDetails(fetchedDetail);
-      })
-      .then(() => {
-        if (mounted) setIsLoading(false);
-      })
-      .catch(() => {
-        history.push({
-          pathname: ROUTES.DASHBOARD,
-          state: {
-            passCode: RESPONSE_CODE.SYSTEM_ERROR,
-          },
-        });
-      });
+    loadDetail(ctrlr);
 
     return function cleanup() {
-      mounted = false;
+      ctrlr.abort();
     };
-  }, [componentId, history, componentType, componentTimestamp]);
+  }, [componentId, componentType, componentTimestamp, loadDetail]);
 
-  const renderChangeHistory = (changeHistory) => {
-    return (
-      <ul>
-        {changeHistory.map((oneEvent, index) => {
-          return <li key={index}>{JSON.stringify(oneEvent, null, 2)}</li>;
-        })}
-      </ul>
-    );
-  };
+  const onLinkActionWithdraw = useCallback(async () => {
+    // For now, the second argument is constant.
+    // When we add another action to the menu, we will need to look at the action taken here.
 
-  const renderChildComponents = (childType) => {
-    if (details[childType]?.length > 0)
-      return (
-        <section className="choice-container file-list-container">
-          <div className="choice-intro">
-            <h2>{PAGE_DETAILS[childType].detailsHeader}</h2>
-          </div>
-          <ChoiceList
-            choices={details[childType].map((item) => {
-              return {
-                title: PAGE_DETAILS[childType].pageTitle,
-                description:
-                  "Date submitted: " + formatDate(item.componentTimestamp),
-                linkTo: `/detail/${childType}/${item.componentTimestamp}/${item.componentId}`,
-              };
-            })}
-          />
-        </section>
+    try {
+      const resp = await PackageApi.withdraw(
+        userProfile.userData.fullName,
+        userProfile.email,
+        detail.componentId,
+        detail.componentType
       );
-  };
+      setAlertCode(resp);
+      loadDetail();
+    } catch (e) {
+      console.log("Error while updating package.", e);
+      setAlertCode(RESPONSE_CODE[e.message]);
+    }
+  }, [detail, userProfile, loadDetail]);
 
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar heading={componentId} enableBackNav />
-      {details && (
-        <article className="form-container">
-          <div className="read-only-submission">
-            {renderChildComponents(`${componentType}rai`)}
-            {renderChildComponents(`waiverrai`)}
-            {details.submissionTimestamp && (
-              <section>
-                <Review
-                  className="original-review-component"
-                  headingLevel="2"
-                  heading="Date Submitted"
-                >
-                  {formatDate(details.submissionTimestamp)}
-                </Review>
-              </section>
-            )}
+      <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
+      {detail && (
+        <div className="form-container">
+          <article className="component-detail">
             <section>
-              <h2>{PAGE_DETAILS[componentType].detailsHeader} Details</h2>
-              {details.waiverAuthority && (
-                <Review heading="Waiver Authority">
-                  {AUTHORITY_LABELS[details.waiverAuthority] ??
-                    details.waiverAuthority}
-                </Review>
-              )}
-              {details.componentId && (
-                <Review heading={PAGE_DETAILS[componentType].idLabel}>
-                  {details.componentId}
-                </Review>
-              )}
+              <div className="detail-card-top"></div>
+              <div className="detail-card">
+                <section>
+                  <h2>{detail.currentStatus}</h2>
+                  {detail.clockEndTimestamp && (
+                    <Review heading="90th Day">
+                      {formatDetailViewDate(detail.clockEndTimestamp)}
+                    </Review>
+                  )}
+                </section>
+                <section className="package-actions">
+                  <h2>Package Actions</h2>
+                  <ul className="action-list">
+                    {detail.actionItems &&
+                      detail.actionItems.map((actionDetail, index) => (
+                        <li>
+                          <Button
+                            className="package-action-link"
+                            href={actionDetail.href}
+                            key={index}
+                          >
+                            {actionDetail.label}
+                          </Button>
+                        </li>
+                      ))}
+                  </ul>
+                </section>
+              </div>
             </section>
-            <FileList
-              heading="Attachments"
-              uploadList={details.attachments}
-              zipId={details.componentId}
-            />
-            {details.additionalInformation && (
-              <section>
-                <Review
-                  className="original-review-component"
-                  headingLevel="2"
-                  heading="Additional Information"
-                >
-                  {details.additionalInformation}
-                </Review>
+            <div className="read-only-submission">
+              <section className="detail-section">
+                <h2>Package Details</h2>
+                {detail.waiverAuthority && (
+                  <Review heading="Waiver Authority">
+                    {AUTHORITY_LABELS[detail.waiverAuthority] ??
+                      detail.waiverAuthority}
+                  </Review>
+                )}
+                {detail.componentId && (
+                  <Review heading={PAGE_detail[componentType].idLabel}>
+                    {detail.componentId}
+                  </Review>
+                )}
+                {detail.componentType && (
+                  <Review heading="Type">
+                    {PAGE_detail[componentType].detailHeader}
+                  </Review>
+                )}
+                {detail.territory && (
+                  <Review heading="State">
+                    {territoryMap[detail.territory]}
+                  </Review>
+                )}
+                {detail.submissionTimestamp && (
+                  <Review heading="Date Submitted">
+                    {formatDetailViewDate(detail.submissionTimestamp)}
+                  </Review>
+                )}
               </section>
-            )}
-            {renderChildComponents("waiverrenewal")}
-            {renderChildComponents("waiveramendment")}
-            {details.changeHistory && (
-              <section>
-                <Review
-                  className="original-review-component"
-                  headingLevel="2"
-                  heading="Change History"
-                >
-                  {renderChangeHistory(details.changeHistory)}
-                </Review>
-              </section>
-            )}
-          </div>
-        </article>
+              <FileList
+                heading="Base Supporting Documentation"
+                uploadList={detail.attachments}
+                zipId={detail.componentId}
+              />
+              {detail.additionalInformation && (
+                <section className="detail-section">
+                  <h2>Additional Information</h2>
+                  <Review
+                    className="original-review-component"
+                    headingLevel="2"
+                  >
+                    {detail.additionalInformation}
+                  </Review>
+                </section>
+              )}
+            </div>
+          </article>
+        </div>
       )}
     </LoadingScreen>
   );
