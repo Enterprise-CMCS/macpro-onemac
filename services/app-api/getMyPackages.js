@@ -72,7 +72,6 @@ export const getMyPackages = async (email, group) => {
           return promiseItems;
         })
       ).then((values) => {
-        console.log("the promises resolve to: ", values);
         return values.flat();
       });
     })

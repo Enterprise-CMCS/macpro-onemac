@@ -1,3 +1,5 @@
+import dynamoDb from "./libs/dynamodb-lib";
+
 import handler from "./libs/handler-lib";
 import { RESPONSE_CODE, ChangeRequest } from "cmscommonlib";
 
@@ -23,31 +25,69 @@ export const main = handler(async (event) => {
   }
 
   let updatedPackageData;
+  const { componentId, componentType, submitterEmail, submitterName } = body;
   try {
-    const { componentId, submitterEmail, submitterName } = body;
     updatedPackageData = await updateComponent({
       componentId,
-      packageId: componentId,
-      parentType: body.componentType,
+      componentType,
       currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
-      submissionTimestamp: Date.now(),
-      submitterEmail: submitterEmail.toLowerCase(),
-      submitterName,
+      changeHistory: [
+        {
+          submitterEmail: submitterEmail.toLowerCase(),
+          submitterName,
+          submissionTimestamp: Date.now(),
+          action: "Withdraw",
+        },
+      ],
     });
+
+    if (updatedPackageData.parentId) {
+      const params = {
+        TableName: process.env.oneMacTableName,
+        Key: {
+          pk: updatedPackageData.parentId,
+          sk: updatedPackageData.parentType,
+        },
+      };
+
+      const parentComponent = await dynamoDb.get(params);
+      if (parentComponent.Item) {
+        console.log("parent Component: ", parentComponent);
+        const favoriteChild = parentComponent.Item.children.findIndex(
+          (child) => {
+            return (
+              child.componentId === componentId &&
+              child.componentType === componentType &&
+              child.submissionTimestamp ===
+                updatedPackageData.submissionTimestamp
+            );
+          }
+        );
+        const updateParams = {
+          ...params,
+          UpdateExpression: `SET children[${favoriteChild}].currentStatus = :newStatus`,
+          ExpressionAttributeValues: {
+            ":newStatus": ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
+          },
+          ReturnValues: "ALL_NEW",
+        };
+
+        console.log(await dynamoDb.update(updateParams));
+      }
+    }
   } catch (e) {
     console.error("Failed to update package", e);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
-  console.log("update Package Data is: ", updatedPackageData);
+
   try {
     await Promise.all(
       [CMSWithdrawalEmail, StateWithdrawalEmail]
-        .map((f) => f(updatedPackageData))
+        .map((f) => f(updatedPackageData, submitterName, submitterEmail))
         .map(sendEmail)
     );
   } catch (e) {
     console.error("Failed to send acknowledgement emails", e);
-    return RESPONSE_CODE.EMAIL_NOT_SENT;
   }
 
   return RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS;
