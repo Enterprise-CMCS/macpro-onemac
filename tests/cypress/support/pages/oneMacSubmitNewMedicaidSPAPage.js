@@ -90,7 +90,7 @@ export class oneMacSubmitNewMedicaidSPAPage {
 
   clicksubmitBTN() {
     cy.get(submitBTN).click();
-    cy.wait(10000);
+    cy.wait(8000);
   }
 
   verifySPAIDErrorMessageIsNotDisplayed() {

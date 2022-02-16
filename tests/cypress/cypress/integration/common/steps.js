@@ -1564,9 +1564,12 @@ And("verify the type in row one is Waiver Renewal", () => {
 And("verify the waiver number format in row one is SS.#### or SS.#####", () => {
   OneMacPackagePage.verifypackageRowOneIDBaseWaiverFormat();
 });
-And("verify the waiver number format in row one is SS.#####.S##", () => {
-  OneMacPackagePage.verifypackageRowOneIDWaiverRenewalFormat();
-});
+And(
+  "verify the waiver number format in row one is SS.#####.S## or SS.####.S##",
+  () => {
+    OneMacPackagePage.verifypackageRowOneIDWaiverRenewalFormat();
+  }
+);
 And("verify Onboarding Materials exists", () => {
   OneMacFAQPage.verifyOnboardingMaterialsBtnExists();
 });
@@ -1630,6 +1633,7 @@ And("verify ID field is empty and not disabled", () => {
 
 And("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
+  cy.wait(1000);
 });
 And("verify parent row expander exists", () => {
   OneMacPackagePage.verifyFirstParentRowExpanderExists();

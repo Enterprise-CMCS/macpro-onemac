@@ -707,7 +707,9 @@ export class oneMacPackagePage {
     cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
   }
   verifypackageRowOneIDWaiverRenewalFormat() {
-    cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}/);
+    cy.get(packageRowOneID).contains(
+      /[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}||[A-Z]{2}\.\d{4}\.[A-Z]{1}\d{2}/
+    );
   }
   verifypackageRowOneTypeContains1915bWaiver() {
     cy.get(packageRowOneType)
@@ -730,7 +732,7 @@ export class oneMacPackagePage {
     cy.get(rowTwo).should("not.have.class", "child-row-expanded");
   }
   clickFirstParentRowExpander() {
-    cy.xpath(parentRowExpander).invoke("show").click();
+    cy.xpath(parentRowExpander).not(":disabled").click();
   }
   verifyTheNextRowIsAChild() {
     cy.get(rowTwo).should("have.class", "child-row-expanded");
