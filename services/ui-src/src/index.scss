@@ -448,6 +448,7 @@ input[type="file"] {
 
   form,
   .faq-card,
+  .component-detail,
   .form-subheader-message {
     @include max-width-ultra-wide;
     width: 100%;
@@ -1956,6 +1957,7 @@ aside#faq-contact-info-box {
     .choice-intro {
       @extend .ds-u-margin-bottom--2;
       @extend .ds-u-padding-bottom--0;
+      @extend .ds-u-margin-top--7;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -2351,4 +2353,36 @@ aside#faq-contact-info-box {
       color: $color-gray-lightest;
     }
   }
+}
+
+.detail-card-top {
+  @include gradient-top-border;
+}
+
+.detail-card {
+  @extend .ds-u-display--flex;
+  @extend .ds-u-padding--4;
+  justify-content: space-between;
+  background: $color-white;
+  border: 1px solid $color-gray-lighter;
+  border-radius: 0 0 3px 3px;
+  border-top: none;
+}
+.package-actions {
+  @extend .ds-u-flex-direction--column;
+  width: 50%;
+}
+.package-action-link {
+  @extend .ds-c-button--transparent;
+  @extend .ds-u-text-decoration--none;
+  @extend .ds-u-padding--0;
+}
+.action-list {
+  list-style-type: none;
+  @extend .ds-u-padding--0;
+  @extend .ds-u-padding-top--2;
+  @extend .ds-u-margin--0;
+}
+.detail-section {
+  @extend .ds-u-margin-top--7;
 }

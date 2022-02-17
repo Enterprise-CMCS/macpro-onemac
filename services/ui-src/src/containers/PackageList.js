@@ -98,11 +98,7 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link
-        to={`/detail/${row.original.componentType}/${row.original.submissionTimestamp}/${value}`}
-      >
-        {value}
-      </Link>
+      <Link to={`/detail/${row.original.componentType}/${value}`}>{value}</Link>
     ),
     []
   );

@@ -31,7 +31,9 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @param transmittalNumber the transmittal number
  * @returns two character state/territory
  */
-function getTerritoryFromTransmittalNumber(transmittalNumber: string): string {
+export function getTerritoryFromTransmittalNumber(
+  transmittalNumber: string
+): string {
   return transmittalNumber.toString().substring(0, 2);
 }
 
