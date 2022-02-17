@@ -3,10 +3,12 @@ const additionalInformationCommentBox = "#field_2";
 const submitBTN = "#form-submission-button";
 const SPAIDErrorMessage = "#transmittalNumberStatusMsg";
 
-const uploadedFile = "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(1) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
-const uploadedSpaFile = "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(2) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
-const SPAPagesMainElement = "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(2)";
-
+const uploadedFile =
+  "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(1) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
+const uploadedSpaFile =
+  "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(2) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
+const SPAPagesMainElement =
+  "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(2)";
 
 const deleteForm179File = "//tbody/tr[1]/td[3]/div[1]/button[1]/*[1]";
 const deleteSpaPagesFile = "//tbody/tr[2]/td[3]/div[1]/button[1]/*[1]";
@@ -22,6 +24,8 @@ const SPAPAgesAddFileUpload = "#uploader-input-1";
 const dashboardTabBTN = "#dashboardLink";
 const whatIsMySPAIDLink =
   "//body/reference[1]/div[1]/div[1]/div[4]/div[2]/form[1]/div[1]/div[1]/div[1]/div[2]/a[1]";
+const page = "//div[@class='dashboard-container']";
+
 export class oneMacSubmitNewMedicaidSPAPage {
   inputSpaID(s) {
     cy.get(SpaIDInput).type(s);
@@ -33,23 +37,23 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(CMSForm179AddFileUpload).attachFile(filePath);
   }
 
-  addFileForForm179(fileName){
+  addFileForForm179(fileName) {
     cy.get(CMSForm179AddFileBTN).click();
     const filePath = "/files/";
-    cy.get(CMSForm179AddFileUpload).attachFile(filePath+fileName);
+    cy.get(CMSForm179AddFileUpload).attachFile(filePath + fileName);
   }
 
-  verifyFileAddedForForm179(fileName){
+  verifyFileAddedForForm179(fileName) {
     cy.get(uploadedFile).contains(fileName);
   }
 
-  verifyFileNotAddedForForm179(fileName){
+  verifyFileNotAddedForForm179(fileName) {
     cy.get(uploadedFile).should("not.exist");
   }
 
-  deleteFileFromForm179(){
+  deleteFileFromForm179() {
     cy.xpath(deleteForm179File).click();
-    cy.get(uploadedFile).should('not.exist');
+    cy.get(uploadedFile).should("not.exist");
   }
 
   uploadSPAPagesAddFile() {
@@ -58,25 +62,25 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(SPAPAgesAddFileUpload).attachFile(filePath);
   }
 
-  addFilesToSpaPages(fileName){
+  addFilesToSpaPages(fileName) {
     cy.get(SPAPagesAddFileBTN).click();
     const filePath = "/files/";
-    cy.get(SPAPAgesAddFileUpload).attachFile(filePath+fileName);
+    cy.get(SPAPAgesAddFileUpload).attachFile(filePath + fileName);
   }
 
-  verifyFileAddedForSpaPages(fileName){
+  verifyFileAddedForSpaPages(fileName) {
     cy.get(SPAPAgesAddFileUpload).contains(fileName);
   }
 
-  verifyFileNameExistsInSpaPages(fileName){
+  verifyFileNameExistsInSpaPages(fileName) {
     cy.get(SPAPagesMainElement).contains(fileName);
   }
 
-  addNoFilesToSpaPages(){
+  addNoFilesToSpaPages() {
     cy.get(SPAPagesAddFileBTN).click();
   }
 
-  verifyNoFilesAttachedToSpaPages(){
+  verifyNoFilesAttachedToSpaPages() {
     cy.get(SPAPagesMainElement).should("not.exist");
   }
 
@@ -86,7 +90,7 @@ export class oneMacSubmitNewMedicaidSPAPage {
 
   clicksubmitBTN() {
     cy.get(submitBTN).click();
-    cy.wait(5000);
+    cy.wait(8000);
   }
 
   verifySPAIDErrorMessageIsNotDisplayed() {
