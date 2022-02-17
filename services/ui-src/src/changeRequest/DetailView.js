@@ -83,32 +83,6 @@ const DetailView = () => {
   }
   const closeConfirmation = useCallback(() => setConfirmItem(null), []);
 
-  const onLinkActionWithdraw = useCallback(async () => {
-    // For now, the second argument is constant.
-    // When we add another action to the menu, we will need to look at the action taken here.
-
-    try {
-      const resp = await PackageApi.withdraw(
-        userProfile.userData.fullName,
-        userProfile.email,
-        detail.componentId,
-        detail.componentType
-      );
-      setAlertCode(resp);
-      loadDetail();
-    } catch (e) {
-      console.log("Error while updating package.", e);
-      setAlertCode(RESPONSE_CODE[e.message]);
-    }
-  }, [detail, userProfile]);
-
-  const onLinkActionRAI = useCallback(
-    (value) => {
-      history.push(`${value.href}`);
-    },
-    [history]
-  );
-
   const loadDetail = useCallback(
     async (ctrlr) => {
       let fetchedDetail;
@@ -140,6 +114,32 @@ const DetailView = () => {
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
     [history, componentId, componentType, componentTimestamp]
+  );
+
+  const onLinkActionWithdraw = useCallback(async () => {
+    // For now, the second argument is constant.
+    // When we add another action to the menu, we will need to look at the action taken here.
+
+    try {
+      const resp = await PackageApi.withdraw(
+        userProfile.userData.fullName,
+        userProfile.email,
+        detail.componentId,
+        detail.componentType
+      );
+      setAlertCode(resp);
+      loadDetail();
+    } catch (e) {
+      console.log("Error while updating package.", e);
+      setAlertCode(RESPONSE_CODE[e.message]);
+    }
+  }, [detail, userProfile, loadDetail]);
+
+  const onLinkActionRAI = useCallback(
+    (value) => {
+      history.push(`${value.href}`);
+    },
+    [history]
   );
 
   const renderActionList = () => {
