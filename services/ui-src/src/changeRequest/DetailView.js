@@ -87,29 +87,29 @@ const DetailView = () => {
     async (ctrlr) => {
       let fetchedDetail;
       let stillLoading = true;
-      if (componentId) {
-        try {
-          fetchedDetail = await PackageApi.getDetail(
-            componentId,
-            componentType,
-            componentTimestamp
-          );
-          if (!fetchedDetail.territory)
-            fetchedDetail.territory = getTerritoryFromTransmittalNumber(
-              fetchedDetail.componentId
-            );
 
-          console.log("got the package: ", fetchedDetail);
-          stillLoading = false;
-        } catch (e) {
-          history.push({
-            pathname: ROUTES.DASHBOARD,
-            state: {
-              passCode: RESPONSE_CODE.SYSTEM_ERROR,
-            },
-          });
-        }
+      try {
+        fetchedDetail = await PackageApi.getDetail(
+          componentId,
+          componentType,
+          componentTimestamp
+        );
+        if (!fetchedDetail.territory)
+          fetchedDetail.territory = getTerritoryFromTransmittalNumber(
+            fetchedDetail.componentId
+          );
+
+        console.log("got the package: ", fetchedDetail);
+        stillLoading = false;
+      } catch (e) {
+        history.push({
+          pathname: ROUTES.DASHBOARD,
+          state: {
+            passCode: RESPONSE_CODE.SYSTEM_ERROR,
+          },
+        });
       }
+
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
@@ -162,7 +162,9 @@ const DetailView = () => {
                       });
                     }
                   : () => {
-                      onLinkActionRAI();
+                      onLinkActionRAI({
+                        href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                      });
                     }
               }
             >
@@ -186,7 +188,7 @@ const DetailView = () => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={componentId} enableBackNav />
+      <PageTitleBar heading={detail && detail.componentId} enableBackNav />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       {detail && (
         <div className="form-container">
