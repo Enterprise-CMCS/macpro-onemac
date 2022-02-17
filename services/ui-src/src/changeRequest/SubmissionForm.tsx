@@ -127,6 +127,7 @@ export const SubmissionForm: React.FC<{
       }
       // must match the associated Regex string for format
       else if (
+        transmittalNumberDetails.idRegex &&
         !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
       ) {
         errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
@@ -218,7 +219,8 @@ export const SubmissionForm: React.FC<{
     try {
       if (
         formatMessage.statusMessage === "" &&
-        changeRequest.transmittalNumber
+        changeRequest.transmittalNumber &&
+        transmittalNumberDetails.idExistValidations
       ) {
         const promises = transmittalNumberDetails.idExistValidations.map(
           async (idExistValidation) => {
