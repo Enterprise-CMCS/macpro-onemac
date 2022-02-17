@@ -1,6 +1,4 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
-import packageExists from "../utils/packageExists";
-import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * Waiver Extension submission specific email generation functions.
@@ -23,9 +21,6 @@ class WaiverExtension {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
-      ? `<br/>${data.transmittalNumberWarningMessage}`
-      : "";
 
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,
