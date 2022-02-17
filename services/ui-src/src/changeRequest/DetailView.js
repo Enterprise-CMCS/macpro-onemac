@@ -95,6 +95,7 @@ const DetailView = () => {
         detail.componentType
       );
       setAlertCode(resp);
+      loadDetail();
     } catch (e) {
       console.log("Error while updating package.", e);
       setAlertCode(RESPONSE_CODE[e.message]);
@@ -120,27 +121,10 @@ const DetailView = () => {
             componentTimestamp
           );
           if (!fetchedDetail.territory)
-            fetchedDetail.territory =
-              getTerritoryFromTransmittalNumber(componentId);
+            fetchedDetail.territory = getTerritoryFromTransmittalNumber(
+              fetchedDetail.componentId
+            );
 
-          const packageConfig =
-            ChangeRequest.CONFIG[fetchedDetail.componentType];
-          fetchedDetail.actionItems = [];
-
-          (packageConfig?.actionsByStatus ??
-            ChangeRequest.defaultActionsByStatus)[
-            fetchedDetail.currentStatus
-          ]?.forEach((actionLabel) => {
-            const newItem = { label: actionLabel };
-            if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
-              newItem.confirmationMessage = `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-              newItem.onAccept = onLinkActionWithdraw;
-            } else {
-              newItem.href = `${packageConfig?.raiLink}?transmittalNumber=${componentId}`;
-              newItem.onAccept = onLinkActionRAI;
-            }
-            fetchedDetail.actionItems.push(newItem);
-          });
           console.log("got the package: ", fetchedDetail);
           stillLoading = false;
         } catch (e) {
@@ -155,15 +139,40 @@ const DetailView = () => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [
-      history,
-      componentId,
-      componentType,
-      componentTimestamp,
-      onLinkActionRAI,
-      onLinkActionWithdraw,
-    ]
+    [history, componentId, componentType, componentTimestamp]
   );
+
+  const renderActionList = () => {
+    const packageConfig = ChangeRequest.CONFIG[detail.componentType];
+
+    return (packageConfig?.actionsByStatus ??
+      ChangeRequest.defaultActionsByStatus)[detail.currentStatus]?.map(
+      (actionLabel, index) => {
+        return (
+          <li key={index}>
+            <Button
+              className="package-action-link"
+              onClick={
+                actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW
+                  ? () => {
+                      setConfirmItem({
+                        label: actionLabel,
+                        confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                        onAccept: onLinkActionWithdraw,
+                      });
+                    }
+                  : () => {
+                      onLinkActionRAI();
+                    }
+              }
+            >
+              {actionLabel}
+            </Button>
+          </li>
+        );
+      }
+    );
+  };
 
   useEffect(() => {
     const ctrlr = new AbortController();
@@ -195,24 +204,7 @@ const DetailView = () => {
                 </section>
                 <section className="package-actions">
                   <h2>Package Actions</h2>
-                  <ul className="action-list">
-                    {detail.actionItems &&
-                      detail.actionItems.map((actionDetail, index) => (
-                        <li key={index}>
-                          <Button
-                            className="package-action-link"
-                            href={actionDetail.href}
-                            onClick={() => {
-                              actionDetail.confirmationMessage
-                                ? setConfirmItem(actionDetail)
-                                : actionDetail.onAccept();
-                            }}
-                          >
-                            {actionDetail.label}
-                          </Button>
-                        </li>
-                      ))}
-                  </ul>
+                  <ul className="action-list">{renderActionList()}</ul>
                 </section>
               </div>
             </section>
@@ -272,6 +264,7 @@ const DetailView = () => {
           heading={confirmItem.label}
           onAccept={() => {
             confirmItem.onAccept();
+            closeConfirmation();
           }}
           onCancel={closeConfirmation}
         >
