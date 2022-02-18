@@ -187,6 +187,8 @@ const withdrawPackageBtn =
   "//li[text()='Withdraw Package'][@aria-disabled='false']";
 const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -408,8 +410,14 @@ export class oneMacPackagePage {
   verifypackageInReviewcheckBoxExists() {
     cy.xpath(packageInReviewcheckBox).should("be.visible");
   }
+  clickPackageInReviewcheckBox() {
+    cy.xpath(packageInReviewcheckBox).click();
+  }
   verifywithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
+  }
+  clickWithdrawnCheckBoxExists() {
+    cy.xpath(withdrawnCheckBox).first().click();
   }
   verifysparaiSubmittedExists() {
     cy.xpath(sparaiSubmitted).should("be.visible");
@@ -798,6 +806,9 @@ export class oneMacPackagePage {
     cy.get(successMessage).contains(
       "Your submission package has successfully been withdrawn."
     );
+  }
+  clickSPAIDLinkInFirstRow() {
+    cy.xpath(packageRowOneSPAIDLink).click();
   }
 }
 export default oneMacPackagePage;
