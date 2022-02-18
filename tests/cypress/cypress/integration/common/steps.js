@@ -454,6 +454,13 @@ And(
 );
 
 And(
+  "type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber("JK");
+  }
+);
+
+And(
   "verify error message is not present on Request Waiver Temporary Extenstion Page",
   () => {
     OneMacRequestWaiverTemporaryExtension.verifyErrorMessageIsNotDisplayed();
