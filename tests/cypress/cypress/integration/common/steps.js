@@ -15,6 +15,8 @@ import oneMacAppendixKAmendmentPage from "../../../support/pages/oneMacAppendixK
 import oneMacPackagePage from "../../../support/pages/oneMacPackagePage";
 import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
+import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
+import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
@@ -34,6 +36,8 @@ const OneMacAppendixKAmendmentPage = new oneMacAppendixKAmendmentPage();
 const SPAID = Utilities.SPAID("MD");
 const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
+const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
+const OneMacRespondToRAIPage = new oneMacRespondToRAIPage();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -1195,6 +1199,9 @@ And("verify rai response submitted exists", () => {
 And("verify package in review exists", () => {
   OneMacPackagePage.verifypackageInReviewcheckBoxExists();
 });
+And("click Package In Review checkbox", () => {
+  OneMacPackagePage.clickPackageInReviewcheckBox();
+});
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
 });
@@ -1550,14 +1557,20 @@ And("verify that the value of the column for the 90th day is NA", () => {
 And("click Package Disapproved checkbox", () => {
   OneMacPackagePage.clickPackageDisapprovedCheckbox();
 });
-And("click Submitted checkbox", () => {
-  OneMacPackagePage.clickSubmittedCheckbox();
+And("click the SPA ID link in the first row", () => {
+  OneMacPackagePage.clickSPAIDLinkInFirstRow();
+});
+And("click the Package Withdrawn checkbox", () => {
+  OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
 And("verify that the value of the column for the 90th day is Pending", () => {
   OneMacPackagePage.verify90thDayRowOneIsPending();
 });
 And("click Unsubmitted checkbox", () => {
   OneMacPackagePage.clickUnsubmittedCheckbox();
+});
+And("click Submitted checkbox", () => {
+  OneMacPackagePage.clickSubmittedCheckbox();
 });
 And("verify the type in row one is some kind of 1915b Waiver", () => {
   OneMacPackagePage.verifypackageRowOneTypeContains1915bWaiver();
@@ -1788,4 +1801,67 @@ And("click withdraw package button", () => {
 });
 And("click yes, withdraw package button", () => {
   OneMacPackagePage.clickConfirmWithdrawPackageBtn();
+});
+And("verify the package details page is visible", () => {
+  OneMacPackageDetailsPage.verifyPackageDetailsPageIsVisible();
+});
+And("verify action card exists", () => {
+  OneMacPackageDetailsPage.verifyActionCardExists();
+});
+And("verify the status on the card is {string}", (status) => {
+  OneMacPackageDetailsPage.verifyStatusIs(status);
+});
+And("verify there is not a 90th day date on the card", () => {
+  OneMacPackageDetailsPage.verify90thDayDateDoesntExist();
+});
+And("verify package actions header is visible", () => {
+  OneMacPackageDetailsPage.verifyPackageActionsHeaderIsVisible();
+});
+And("verify there are no package actions available", () => {
+  OneMacPackageDetailsPage.verifyNoPackageActionsAvailable();
+});
+And("verify Respond to RAI action exists", () => {
+  OneMacPackageDetailsPage.verifyRespondtoRAIActionExists();
+});
+And("verify withdraw package action exists", () => {
+  OneMacPackageDetailsPage.verifyWithdrawPackageActionExists();
+});
+And("click on Respond to RAI package action", () => {
+  OneMacPackageDetailsPage.clickRespondToRAIAction();
+});
+And("verify the details section exists", () => {
+  OneMacPackageDetailsPage.verifyDetailSectionExists();
+});
+And("verify there is a CHIP SPA ID header in the details section", () => {
+  OneMacPackageDetailsPage.verifyCHIPSPAIDHeaderExists();
+});
+And("verify an ID exists for the CHIP SPA ID", () => {
+  OneMacPackageDetailsPage.verifyIDExists();
+});
+And("verify there is a Type header in the details section", () => {
+  OneMacPackageDetailsPage.verifyTypeHeaderExists();
+});
+And("verify a type containing SPA exists for the Type", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsSPA();
+});
+And("verify there is a State header in the details section", () => {
+  OneMacPackageDetailsPage.verifyStateHeaderExists();
+});
+And("verify a state exists for the State", () => {
+  OneMacPackageDetailsPage.verifyStateExists();
+});
+And("verify there is a Date Submitted header in the details section", () => {
+  OneMacPackageDetailsPage.verifyDateSubmittedHeaderExists();
+});
+And("verify a date exists for the Date Submitted", () => {
+  OneMacPackageDetailsPage.verifyDateExists();
+});
+And("verify the Respond to RAI form loads", () => {
+  OneMacRespondToRAIPage.verifyPageLoads();
+});
+And("click back arrow", () => {
+  OneMacRespondToRAIPage.clickBackArrow();
+});
+And("click Leave, anyway", () => {
+  OneMacRespondToRAIPage.clickLeaveAnyway();
 });
