@@ -123,7 +123,7 @@ Feature: OY2-15620 Updated SPA Package Details View - Card View with Actions
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
-@focus 
+
     Scenario: Screen Enhance - RAI Issued SPA
         And click RAI Issued checkbox
         And Click on Filter Button
