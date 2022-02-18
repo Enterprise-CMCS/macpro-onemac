@@ -150,6 +150,49 @@ jobs:
     needs: deploy
     if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/master' }}
     runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers:
+          [
+            OY2_3900_SPA_Waivers_FormatTest.spec.feature,
+            OY2_4807_Validate_Waiver_Form_Logic.spec.feature,
+            OY2_5868_Submission_List_Verification.spec.feature,
+            OY2_5869_FileUpload_Attachment_Types.spec.feature,
+            OY2_7522_Verify_Invalid_CHIP_SPAID_Message.spec.feature,
+            OY2_8618_CMS_Approver.spec.feature,
+            OY2_8618_CMS_System_Admin.spec.feature,
+            OY2_9990_State_Submitter_Profile_Screen_Enhancements.spec.feature,
+            OY2_9990_State_System_Admin_Profile_Screen_Enhancements.spec.feature,
+            OY2_10093_Helpdesk_User.spec.feature,
+            OY2_11149_Submission_Dashboard_Search_bar.spec.feature,
+            OY2_11159_Case_sensitive_emails_causing_login_error.spec.feature,
+            OY2_11469_Display_State_column_for_the_CMS_System_Admin.spec.feature,
+            OY2_11581_Add_an_Expiration_Date_Column_to_the_Package_Dashboard_part2.spec.feature,
+            OY2_11581_Add_an_Expiration_Date_Column_to_the_Package_Dashboard_part3.spec.feature,
+            OY2_11581_Add_an_Expiration_Date_Column_to_the_Package_Dashboard.spec.feature,
+            OY2_11676_Package_Dashboard_New_Waiver_tab_layout.spec.feature,
+            OY2_11950_State_should_not_be_able_to_withdraw_a_package_in_OneMAC_in_Specific_statuses.spec.feature,
+            OY2_12297_Home_Page_Update_Include_guidance_for_CMS_User.spec.feature,
+            OY2_12596_CMSUserDenied.spec.feature,
+            OY2_12596_CMSUserRevoked.spec.feature,
+            OY2_12642 _Update_Text_on_FAQ_Page.spec.feature,
+            OY2_12735_Additional_90th_Day_statuses_for_the_Package_Dashboard.spec.feature,
+            OY2_13092_Package_Dashboard_Filter.spec.feature,
+            OY2_13094_Package_Dashboard_Filter_By_State.spec.feature,
+            OY2_13095_Package_Dashboard_Column_Picker.spec.feature,
+            OY2_13517_FAQ_Page_Update_Host_Onboarding_and_Quickstart_docs_material.spec.feature,
+            OY2_14464_Package_Dashboard_Separate_Tab_for_Waivers_and_SPAs.spec.feature,
+            OY2_15426_Package_Dashboard_Waiver_Family_Column_for_the_Waivers_tab.spec.feature,
+            OY2_15620_Updated_SPA_Package_Details_View_Card_View_with_Actions.spec.feature,
+            OY2_15647_State_User_can_Respond_to_RAI.spec.feature,
+            OY2_16294_Withdraw_action_on_waiver_component.spec.feature,
+            OY2-11116_Package_Dashboard_Updates_90th_Day_Data_from_SEATool.spec.feature,
+            OY2-12679_Users_can_request_a_role_change_in_OneMAC.spec.feature,
+            OY2-13093_Submission_Dashboard_Filter_options_that_include_Dates.spec.feature,
+            OY2-13234_CHIP_SPA_RAI.spec.feature,
+            OY2-13234_Waiver_RAI.spec.feature,
+          ]
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
@@ -199,6 +242,7 @@ jobs:
         uses: cypress-io/github-action@v2.11.7
         with:
           working-directory: tests/cypress
+          spec: cypress/integration/${{ matrix.containers }}
           browser: chrome
           headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
