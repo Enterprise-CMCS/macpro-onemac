@@ -6,6 +6,7 @@ export const stateSubmitterInitialAuthState = {
   isLoggedInAsDeveloper: false,
   userRole: "statesubmitter",
   userStatus: USER_STATUS.ACTIVE,
+  activeTerritories: ["MI", "VA"],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",

@@ -119,9 +119,11 @@ export const SubmissionForm: React.FC<{
       }
       // state code must be on the User's active state list
       else if (
-        newTransmittalNumber.length >= 2 &&
-        activeTerritories &&
-        !activeTerritories.includes(newTransmittalNumber.substring(0, 2))
+        (newTransmittalNumber.length >= 2 && !activeTerritories) ||
+        (activeTerritories &&
+          !activeTerritories.includes(
+            getTerritoryFromTransmittalNumber(newTransmittalNumber)
+          ))
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
