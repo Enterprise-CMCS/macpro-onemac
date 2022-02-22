@@ -4,17 +4,22 @@ import dynamoDb from "../libs/dynamodb-lib";
 import updateComponent from "./updateComponent";
 
 export default async function newSubmission(inData) {
-  console.log("inData: ", inData);
   const idInfo = ChangeRequest.decodeId(
     inData.componentId,
     inData.componentType
   );
 
-  console.log("idInfo is: ", idInfo);
+  let newSk = inData.componentType;
+  switch (inData.componentType) {
+    case ChangeRequest.TYPE.WAIVER_RAI:
+    case ChangeRequest.TYPE.SPA_RAI:
+    case ChangeRequest.TYPE.CHIP_SPA_RAI:
+      newSk += `#${inData.submissionTimestamp}`;
+  }
+
   const data = {
     pk: idInfo.componentId,
-    sk: idInfo.componentType,
-    packageId: idInfo.packageId,
+    sk: newSk,
     ...inData,
     changeHistory: [inData],
   };
@@ -26,7 +31,8 @@ export default async function newSubmission(inData) {
     data.GSI1pk = `OneMAC#${ChangeRequest.MY_PACKAGE_GROUP[data.sk]}`;
     data.GSI1sk = data.pk;
   } else {
-    data.sk += `#${inData.submissionTimestamp}`;
+    data.parentId = idInfo.packageId;
+    data.parentType = idInfo.parentType;
   }
 
   const params = {
@@ -34,13 +40,17 @@ export default async function newSubmission(inData) {
     Item: data,
   };
 
-  console.log("params is: ", params);
   return dynamoDb
     .put(params)
     .then(() => {
       if (!idInfo.isNewPackage) {
-        data.parentType = idInfo.parentType;
-        return updateComponent(data);
+        const parentToUpdate = {
+          componentId: data.parentId,
+          componentType: data.parentType,
+          attachments: data.attachments,
+          newChild: data,
+        };
+        return updateComponent(parentToUpdate);
       } else {
         return "Compnent is a Package.";
       }

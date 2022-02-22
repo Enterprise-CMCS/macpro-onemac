@@ -37,6 +37,7 @@ Resources:
                 - UM # US Minor Outlying Islands
                 - VI # US Virgin Islands
                 - MP # Northern Mariana Islands
+                - AS # American Samoa
           VisibilityConfig:
             SampledRequestsEnabled: true
             CloudWatchMetricsEnabled: true

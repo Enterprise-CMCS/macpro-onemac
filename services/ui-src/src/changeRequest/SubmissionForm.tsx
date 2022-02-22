@@ -31,7 +31,9 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @param transmittalNumber the transmittal number
  * @returns two character state/territory
  */
-function getTerritoryFromTransmittalNumber(transmittalNumber: string): string {
+export function getTerritoryFromTransmittalNumber(
+  transmittalNumber: string
+): string {
   return transmittalNumber.toString().substring(0, 2);
 }
 
@@ -117,14 +119,17 @@ export const SubmissionForm: React.FC<{
       }
       // state code must be on the User's active state list
       else if (
-        newTransmittalNumber.length >= 2 &&
-        activeTerritories &&
-        !activeTerritories.includes(newTransmittalNumber.substring(0, 2))
+        (newTransmittalNumber.length >= 2 && !activeTerritories) ||
+        (activeTerritories &&
+          !activeTerritories.includes(
+            getTerritoryFromTransmittalNumber(newTransmittalNumber)
+          ))
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
       // must match the associated Regex string for format
       else if (
+        transmittalNumberDetails.idRegex &&
         !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
       ) {
         errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
@@ -216,7 +221,8 @@ export const SubmissionForm: React.FC<{
     try {
       if (
         formatMessage.statusMessage === "" &&
-        changeRequest.transmittalNumber
+        changeRequest.transmittalNumber &&
+        transmittalNumberDetails.idExistValidations
       ) {
         const promises = transmittalNumberDetails.idExistValidations.map(
           async (idExistValidation) => {

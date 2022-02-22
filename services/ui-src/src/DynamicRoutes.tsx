@@ -163,13 +163,13 @@ export default function DynamicRoutes() {
         ))}
       {userRoleObj.canAccessDashboard && (
         <>
-          <Route exact path={ROUTES.DETAIL + "/:componentType/:packageId"}>
+          <Route exact path={ROUTES.DETAIL + "/:componentType/:componentId"}>
             <DetailView />
           </Route>
           <Route
             exact
             path={
-              ROUTES.DETAIL + "/:componentType/:componentTimestamp/:packageId"
+              ROUTES.DETAIL + "/:componentType/:componentTimestamp/:componentId"
             }
           >
             <DetailView />

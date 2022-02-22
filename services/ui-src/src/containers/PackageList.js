@@ -98,11 +98,7 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link
-        to={`/detail/${row.original.componentType}/${row.original.submissionTimestamp}/${value}`}
-      >
-        {value}
-      </Link>
+      <Link to={`/detail/${row.original.componentType}/${value}`}>{value}</Link>
     ),
     []
   );
@@ -143,13 +139,15 @@ const PackageList = () => {
     async (rowNum) => {
       // For now, the second argument is constant.
       // When we add another action to the menu, we will need to look at the action taken here.
-
-      const packageToModify = packageList[rowNum];
+      const [row, child] = rowNum.split(".");
+      let packageToModify;
+      if (child) packageToModify = packageList[row].children[child];
+      else packageToModify = packageList[row];
       try {
+        console.log("rowNum: ", rowNum);
+        console.log("package to modify ", packageToModify);
         const resp = await PackageAPI.withdraw(
-          [userProfile.userData.firstName, userProfile.userData.lastName].join(
-            " "
-          ),
+          userProfile.userData.fullName,
           userProfile.email,
           packageToModify.componentId,
           packageToModify.componentType
@@ -197,6 +195,7 @@ const PackageList = () => {
 
       return (
         <PopupMenu
+          buttonLabel={`Actions for ${row.original.componentId}`}
           selectedRow={row}
           menuItems={menuItems}
           variation="PackageList"
