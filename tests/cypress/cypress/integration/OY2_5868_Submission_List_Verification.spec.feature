@@ -13,14 +13,14 @@ Feature: OY2_5868_Submission_List_Verification
         And Click on Submit Button
         And verify submission Successful message
         # And verify SPA ID EXISTS
-        And verify submission date
-        And Verify submission type
+        # And verify submission date
+        # And Verify submission type
         And click on spa Respond to RAI
         And Add file for RAI Response
         And Add Additional Comments
         And Click on Submit Button
         And verify submission Successful message after RAI
-        And Verify submission typeRAI
-        And Verify SPA RAI ID number matches Medical SPA ID number
-        And verify submission date
+# And Verify submission typeRAI
+# And Verify SPA RAI ID number matches Medical SPA ID number
+# And verify submission date
 
