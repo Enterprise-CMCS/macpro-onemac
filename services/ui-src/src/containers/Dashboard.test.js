@@ -73,8 +73,8 @@ describe("puzzle piece message", () => {
           value={{
             ...set(
               stateSubmitterInitialAuthState,
-              "userProfile.userData.attributes",
-              [{ stateCode: "ME", history: [{ date: 1012, status }] }]
+              "userProfile.userData.roleList",
+              [{ territory: "ME", status, role: "statesubmitter" }]
             ),
             userStatus: status,
           }}

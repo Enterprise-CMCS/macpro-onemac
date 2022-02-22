@@ -174,6 +174,7 @@ const packageRowTwoDateSubmitted = "#submissionTimestamp-1";
 const packageRowTwo90thDay = "#ninetiethDay-1";
 const packageRowTwoType = "#componentType-1";
 const packageRowTwoState = "#territory-1";
+const packageRowTwoStatus = "#packageStatus-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
 const rowTwo = "tbody > tr:nth-child(2)";
@@ -182,6 +183,12 @@ const packageRowTwoActions = "#packageActions-1";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
+const withdrawPackageBtn =
+  "//li[text()='Withdraw Package'][@aria-disabled='false']";
+const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
+const successMessage = "#alert-bar";
+//Element is Xpath use cy.xpath instead of cy.get
+const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -403,8 +410,14 @@ export class oneMacPackagePage {
   verifypackageInReviewcheckBoxExists() {
     cy.xpath(packageInReviewcheckBox).should("be.visible");
   }
+  clickPackageInReviewcheckBox() {
+    cy.xpath(packageInReviewcheckBox).click();
+  }
   verifywithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
+  }
+  clickWithdrawnCheckBoxExists() {
+    cy.xpath(withdrawnCheckBox).first().click();
   }
   verifysparaiSubmittedExists() {
     cy.xpath(sparaiSubmitted).should("be.visible");
@@ -702,7 +715,9 @@ export class oneMacPackagePage {
     cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
   }
   verifypackageRowOneIDWaiverRenewalFormat() {
-    cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}/);
+    cy.get(packageRowOneID).contains(
+      /[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}||[A-Z]{2}\.\d{4}\.[A-Z]{1}\d{2}/
+    );
   }
   verifypackageRowOneTypeContains1915bWaiver() {
     cy.get(packageRowOneType)
@@ -725,7 +740,7 @@ export class oneMacPackagePage {
     cy.get(rowTwo).should("not.have.class", "child-row-expanded");
   }
   clickFirstParentRowExpander() {
-    cy.xpath(parentRowExpander).invoke("show").click();
+    cy.xpath(parentRowExpander).not(":disabled").click();
   }
   verifyTheNextRowIsAChild() {
     cy.get(rowTwo).should("have.class", "child-row-expanded");
@@ -759,6 +774,9 @@ export class oneMacPackagePage {
   verifyactionsColumnExistsForChild() {
     cy.get(packageRowTwoActions).should("be.visible");
   }
+  clickActionsColumnForChild() {
+    cy.get(packageRowTwoActions).scrollIntoView().click();
+  }
   verifyexpirationDateColumnExistsForChild() {
     cy.get(packageRowTwoExpirationDate).should("be.visible");
   }
@@ -767,6 +785,30 @@ export class oneMacPackagePage {
   }
   verifyFirstParentRowExpanderIsNotDisabled() {
     cy.xpath(parentRowExpander).should("not.be.disabled");
+  }
+  clickWithdrawPackageBtn() {
+    cy.xpath(withdrawPackageBtn)
+      .filter(":visible")
+      .each(($clickable) => {
+        if ($clickable) {
+          cy.wrap($clickable).click();
+          return false; //quit after finding the right element
+        }
+      });
+  }
+  clickConfirmWithdrawPackageBtn() {
+    cy.xpath(withdrawPackageConfirmBtn).click();
+  }
+  verifyChildRowStatusIs(status) {
+    cy.get(packageRowTwoStatus).should("contain.text", status);
+  }
+  verifyPackageWithdrawalMessageIsDisplayed() {
+    cy.get(successMessage).contains(
+      "Your submission package has successfully been withdrawn."
+    );
+  }
+  clickSPAIDLinkInFirstRow() {
+    cy.xpath(packageRowOneSPAIDLink).click();
   }
 }
 export default oneMacPackagePage;

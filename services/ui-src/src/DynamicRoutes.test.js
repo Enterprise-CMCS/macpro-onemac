@@ -111,11 +111,13 @@ it("renders dashboard for registered state users", async () => {
 
   const ctxValue = {
     isAuthenticated: true,
+    userRole: "statesubmitter",
     userStatus: "active",
     userProfile: {
       userData: {
-        type: "statesubmitter",
-        attributes: [{ stateCode: "ME", history: [{ status: "active" }] }],
+        roleList: [
+          { territory: "ME", role: "statesubmitter", status: "active" },
+        ],
       },
     },
   };

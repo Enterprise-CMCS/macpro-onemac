@@ -1,12 +1,14 @@
 import { main } from "./getMyPackages";
 import dynamoDb from "./libs/dynamodb-lib";
-import { RESPONSE_CODE, USER_TYPE, getUserRoleObj } from "cmscommonlib";
-import getUser from "./utils/getUser";
-import { getAuthorizedStateList } from "./user/user-util";
+import {
+  RESPONSE_CODE,
+  getActiveTerritories,
+  getUserRoleObj,
+} from "cmscommonlib";
+import { getUser } from "./getUser";
 
-jest.mock("./utils/getUser");
+jest.mock("./getUser");
 jest.mock("cmscommonlib");
-jest.mock("./user/user-util");
 jest.mock("./libs/dynamodb-lib");
 
 const expectedResponse = {
@@ -26,33 +28,27 @@ const testUserEvent = {
 };
 
 const testDoneBy = {
-  firstName: "Unit",
-  lastName: "Tester",
-  attributes: [
-    {
-      stateCode: "VA",
-      history: [
-        {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
-          status: "active",
-        },
-      ],
-    },
+  roleList: [
+    { role: "statesubmitter", status: "active", territory: "VA" },
+    { role: "statesubmitter", status: "active", territory: "MD" },
   ],
-  id: "statesubmitteractive@cms.hhs.local",
-  type: USER_TYPE.STATE_SUBMITTER,
+  email: "myemail@email.com",
+  firstName: "firsty",
+  lastName: "lasty",
+  fullName: "firsty lastly",
 };
 
-beforeEach(() => {
+beforeAll(() => {
+  jest.clearAllMocks();
+
   getUser.mockResolvedValue(testDoneBy);
 
   getUserRoleObj.mockImplementation(() => {
     return { canAccessDashboard: true };
   });
 
-  getAuthorizedStateList.mockImplementation(() => {
-    return "All";
+  getActiveTerritories.mockImplementation(() => {
+    return ["VA"];
   });
 
   dynamoDb.query.mockResolvedValue({
@@ -92,6 +88,7 @@ beforeEach(() => {
     ScannedCount: 3,
   });
 });
+
 it(`returns an error if no user email is sent`, async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_NOT_FOUND);
   const thisTestUserEvent = {
@@ -110,7 +107,7 @@ it(`returns an error if no user email is sent`, async () => {
 it(`returns an error if user has wrong access`, async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.USER_NOT_AUTHORIZED);
 
-  getUserRoleObj.mockImplementation(() => {
+  getUserRoleObj.mockImplementationOnce(() => {
     return { canAccessDashboard: false };
   });
 
@@ -122,38 +119,8 @@ it(`returns an error if user has wrong access`, async () => {
 });
 
 it(`returns the list of packages`, async () => {
-  expectedResponse.body = JSON.stringify([
-    {
-      componentType: "waivernew",
-      componentId: "VA.1117",
-      submissionId: "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278",
-      currentStatus: "Package In Review",
-      submitterId: "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-      submitterName: "Angie Active",
-      submissionTimestamp: 1638473560098,
-      submitterEmail: "statesubmitteractive@cms.hhs.local",
-    },
-    {
-      componentType: "spa",
-      componentId: "VA-45-5913",
-      submissionId: "cb9978d0-5dfb-11ec-a7a2-c5995198046c",
-      currentStatus: "Disapproved",
-      submitterId: "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-      submitterName: "Statesubmitter Nightwatch",
-      submissionTimestamp: 1639609658284,
-      submitterEmail: "statesubmitter@nightwatch.test",
-    },
-    {
-      componentType: "chipspa",
-      componentId: "VA-33-2244-CHIP",
-      submissionId: "41103ac0-61aa-11ec-af2f-49cb8bfb8860",
-      currentStatus: "Submitted",
-      submitterId: "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-      submitterName: "Angie Active",
-      submissionTimestamp: 1640014441278,
-      submitterEmail: "statesubmitteractive@cms.hhs.local",
-    },
-  ]);
+  expectedResponse.body =
+    '[{"componentType":"waivernew","componentId":"VA.1117","submissionId":"9c5c8b70-53a6-11ec-b5bc-c9173b9fa278","currentStatus":"Package In Review","submitterId":"us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5","submitterName":"Angie Active","submissionTimestamp":1638473560098,"submitterEmail":"statesubmitteractive@cms.hhs.local"},{"componentType":"spa","componentId":"VA-45-5913","submissionId":"cb9978d0-5dfb-11ec-a7a2-c5995198046c","currentStatus":"Disapproved","submitterId":"us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b","submitterName":"Statesubmitter Nightwatch","submissionTimestamp":1639609658284,"submitterEmail":"statesubmitter@nightwatch.test"},{"componentType":"chipspa","componentId":"VA-33-2244-CHIP","submissionId":"41103ac0-61aa-11ec-af2f-49cb8bfb8860","currentStatus":"Submitted","submitterId":"us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5","submitterName":"Angie Active","submissionTimestamp":1640014441278,"submitterEmail":"statesubmitteractive@cms.hhs.local"}]';
 
   expect(main(testUserEvent))
     .resolves.toStrictEqual(expectedResponse)

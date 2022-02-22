@@ -3,49 +3,58 @@ import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { USER_TYPE, RESPONSE_CODE } from "cmscommonlib";
+import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
-const createAttribute = () => [{ status: "pending" }];
+const ignoreEventPayload = () => undefined;
+const activeOrPending = new Set([USER_STATUS.ACTIVE, USER_STATUS.PENDING]);
 
 function StateUserSignup() {
   const history = useHistory();
+  const { userRole, userStatus } = useAppContext() ?? {};
   const STATE_CHOICES = [
-    {
+    (userRole !== USER_ROLE.STATE_SUBMITTER ||
+      !activeOrPending.has(userStatus!)) && {
       title: "State Submitter",
       description: "Responsible for submitting packages",
       linkTo: "/state",
       onclick: () => {
-        history.replace("signup/state", { role: USER_TYPE.STATE_SUBMITTER });
+        history.replace("signup/state", { role: USER_ROLE.STATE_SUBMITTER });
       },
     },
-    {
+    (userRole !== USER_ROLE.STATE_SYSTEM_ADMIN ||
+      !activeOrPending.has(userStatus!)) && {
       title: "State System Administrator",
       description: "Ability to approve state submitters and submit packages",
       linkTo: "/state",
       onclick: () => {
-        history.replace("signup/state", { role: USER_TYPE.STATE_SYSTEM_ADMIN });
+        history.replace("signup/state", {
+          role: USER_ROLE.STATE_SYSTEM_ADMIN,
+        });
       },
     },
-  ];
+  ].filter(Boolean);
   return <ChoiceList choices={STATE_CHOICES} />;
 }
 
 function CMSSignup() {
-  const { isLoggedInAsDeveloper } = useAppContext() ?? {};
+  const { isLoggedInAsDeveloper, userRole, userStatus } = useAppContext() ?? {};
   const [, onClickCMS] = useSignupCallback(
-    USER_TYPE.CMS_ROLE_APPROVER,
-    createAttribute
+    USER_ROLE.CMS_ROLE_APPROVER,
+    ignoreEventPayload
   );
 
   const CMS_CHOICES = [
-    isLoggedInAsDeveloper && {
-      title: "CMS Reviewer",
-      description: "Responsible for reviewing packages",
-      linkTo: "signup/cmsreviewer",
-    },
-    {
+    isLoggedInAsDeveloper &&
+      (userRole !== USER_ROLE.CMS_REVIEWER ||
+        !activeOrPending.has(userStatus!)) && {
+        title: "CMS Reviewer",
+        description: "Responsible for reviewing packages",
+        linkTo: "signup/cmsreviewer",
+      },
+    (userRole !== USER_ROLE.CMS_ROLE_APPROVER ||
+      !activeOrPending.has(userStatus!)) && {
       title: "CMS Role Approver",
       description:
         "Responsible for managing CMS Reviewers and State System Admins",
@@ -57,8 +66,8 @@ function CMSSignup() {
 }
 function HelpdeskSignup() {
   const [, onLoadHelpdesk] = useSignupCallback(
-    USER_TYPE.HELPDESK,
-    createAttribute
+    USER_ROLE.HELPDESK,
+    ignoreEventPayload
   );
   useEffect(() => {
     onLoadHelpdesk?.({});
@@ -75,8 +84,8 @@ const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
-  const history = useHistory();
-  const { userProfile: { cmsRoles = "", userData: { type = "" } = {} } = {} } =
+  // const history = useHistory();
+  const { userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
   const signupOptions = useMemo(
@@ -100,9 +109,9 @@ export function Signup() {
     [cmsRoles]
   );
 
-  useEffect(() => {
-    if (type) history.replace("/dashboard");
-  }, [history, type]);
+  // useEffect(() => {
+  //   if (type) history.replace("/dashboard");
+  // }, [history, type]);
 
   // //<p className="signup-prompt">
   // Select the user role you're registering for.

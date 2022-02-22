@@ -1,9 +1,9 @@
-Feature: OY2_12596_CMSUserRevoked
+Feature: OY2_12596_CMSUserDenied
     Scenario: Denied CMS user can see the text, profile information and status card
         Given I am on Login Page
         When Clicking on Development Login
-        When Login with cms role approver Revoked
-        Then i am on Dashboard Page
+        When Login with cms role approver Denied
+        Then i am on User Management Page
         Then Click on My Account
         Then Click on Manage Profile
         When I am on My Profile Page
@@ -17,4 +17,4 @@ Feature: OY2_12596_CMSUserRevoked
         And Phone Number text is Displayed
         And Phone Number Add Button is Displayed
         And Status text is Displayed
-        And Actual Status is Displayed with Access Revoked
+        And Actual Status is Displayed with Access Denied

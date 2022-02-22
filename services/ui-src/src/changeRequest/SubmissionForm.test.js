@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, forwardRef } from "react";
 import {
   render,
   screen,
@@ -9,7 +9,8 @@ import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { when } from "jest-when";
 import { createMemoryHistory } from "history";
-import { Router } from "react-router-dom";
+import { Router, MemoryRouter } from "react-router-dom";
+import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
 import { ChangeRequest } from "cmscommonlib";
 
@@ -25,63 +26,6 @@ import { RESPONSE_CODE } from "cmscommonlib";
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-const initialAuthState = {
-  isAuthenticating: false,
-  isAuthenticated: true,
-  isLoggedInAsDeveloper: false,
-  isValidRoute: true,
-  userProfile: {
-    cmsRoles: "onemac-state-user",
-    email: "statesubmitteractive@cms.hhs.local",
-    firstName: "Unit",
-    lastName: "Tester",
-    userData: {
-      firstName: "Unita",
-      lastName: "Goodcode",
-      attributes: [
-        {
-          stateCode: "MI",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "active",
-            },
-          ],
-        },
-        {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "active",
-            },
-          ],
-        },
-      ],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesubmitter",
-      validRoutes: [
-        "/",
-        "/profile",
-        "/devlogin",
-        "/FAQ",
-        "/dashboard",
-        "/dashboard",
-        "/spa",
-        "/sparai",
-        "/chipspa",
-        "/chipsparai",
-        "/waiver",
-        "/waiverappk",
-        "/waiverextension",
-        "/waiverrai",
-      ],
-    },
-  },
-};
-
 describe("Submission Form", () => {
   let history;
 
@@ -96,7 +40,7 @@ describe("Submission Form", () => {
       render(
         <AppContext.Provider
           value={{
-            ...initialAuthState,
+            ...stateSubmitterInitialAuthState,
           }}
         >
           <Router history={history}>
@@ -118,7 +62,7 @@ describe("Submission Form", () => {
       render(
         <AppContext.Provider
           value={{
-            ...initialAuthState,
+            ...stateSubmitterInitialAuthState,
           }}
         >
           <Router history={history}>
@@ -156,7 +100,7 @@ describe("Submission Form", () => {
       render(
         <AppContext.Provider
           value={{
-            ...initialAuthState,
+            ...stateSubmitterInitialAuthState,
           }}
         >
           <Router history={history}>
@@ -212,7 +156,7 @@ describe("Submission Form", () => {
       render(
         <AppContext.Provider
           value={{
-            ...initialAuthState,
+            ...stateSubmitterInitialAuthState,
           }}
         >
           <Router history={history}>
@@ -229,6 +173,33 @@ describe("Submission Form", () => {
     });
 
     describe("Transmittal Number Validation", () => {
+      it("informs user that they cannot submit for an unauthorized territory", async () => {
+        history.push("/chipspa");
+        const chipSpaTransmittalNumberDetails =
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber;
+        const territoryMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
+        const invalidFormatId = "SS-12-1312";
+
+        render(
+          <AppContext.Provider
+            value={{
+              ...stateSubmitterInitialAuthState,
+            }}
+          >
+            <Router history={history}>
+              <SubmissionForm changeRequestType={ChangeRequest.TYPE.CHIP_SPA} />
+            </Router>
+          </AppContext.Provider>
+        );
+
+        const transmittalNumberEl = screen.getByLabelText(
+          chipSpaTransmittalNumberDetails.idLabel
+        );
+
+        userEvent.type(transmittalNumberEl, invalidFormatId);
+        await waitFor(() => screen.getByText(territoryMessage));
+      });
+
       it("displays error message when the format id is invalid (but not when it's valid)", async () => {
         history.push("/chipspa");
         const chipSpaTransmittalNumberDetails =
@@ -242,7 +213,7 @@ describe("Submission Form", () => {
         render(
           <AppContext.Provider
             value={{
-              ...initialAuthState,
+              ...stateSubmitterInitialAuthState,
             }}
           >
             <Router history={history}>
@@ -282,7 +253,7 @@ describe("Submission Form", () => {
         render(
           <AppContext.Provider
             value={{
-              ...initialAuthState,
+              ...stateSubmitterInitialAuthState,
             }}
           >
             <Router history={history}>
@@ -292,6 +263,37 @@ describe("Submission Form", () => {
         );
 
         const transmittalNumberEl = screen.getByLabelText(spaIdLabel);
+
+        userEvent.type(transmittalNumberEl, testId);
+        await waitFor(() => screen.getByText(existErrorMessage));
+      });
+
+      it("displays error message when new Waiver Number SHOULD NOT exist but it does", async () => {
+        history.push("/waiver");
+        const idLabel =
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
+            .idLabel;
+        const testId = "MI.4444";
+        const existErrorMessage = `According to our records, this ${idLabel} already exists. Please check the ${idLabel} and try entering it again.`;
+
+        // id will exist
+        ChangeRequestDataApi.packageExists.mockResolvedValue(true);
+
+        render(
+          <AppContext.Provider
+            value={{
+              ...stateSubmitterInitialAuthState,
+            }}
+          >
+            <Router history={history}>
+              <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+            </Router>
+          </AppContext.Provider>
+        );
+
+        const transmittalNumberEl = screen.getByLabelText(idLabel);
+        const actionTypeEl = screen.getByLabelText("Action Type");
+        userEvent.selectOptions(actionTypeEl, "new");
 
         userEvent.type(transmittalNumberEl, testId);
         await waitFor(() => screen.getByText(existErrorMessage));
@@ -311,7 +313,7 @@ describe("Submission Form", () => {
         render(
           <AppContext.Provider
             value={{
-              ...initialAuthState,
+              ...stateSubmitterInitialAuthState,
             }}
           >
             <Router history={history}>
@@ -351,7 +353,7 @@ describe("Submission Form", () => {
         render(
           <AppContext.Provider
             value={{
-              ...initialAuthState,
+              ...stateSubmitterInitialAuthState,
             }}
           >
             <Router history={history}>
@@ -392,7 +394,7 @@ describe("Submission Form", () => {
         render(
           <AppContext.Provider
             value={{
-              ...initialAuthState,
+              ...stateSubmitterInitialAuthState,
             }}
           >
             <Router history={history}>
@@ -427,7 +429,7 @@ describe("Submission Form", () => {
       render(
         <AppContext.Provider
           value={{
-            ...initialAuthState,
+            ...stateSubmitterInitialAuthState,
           }}
         >
           <Router history={history}>
@@ -453,4 +455,54 @@ describe("Submission Form", () => {
       );
     });
   });
+});
+
+it("successfully submits the form", async () => {
+  //  history.push("/waiver");
+
+  const testValues = {
+    transmittalNumber: "MI.17234.R03.M22",
+    actionType: "amendment",
+    waiverAuthority: "1915(b)",
+  };
+
+  render(
+    <AppContext.Provider
+      value={{
+        ...stateSubmitterInitialAuthState,
+      }}
+    >
+      <MemoryRouter>
+        <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+      </MemoryRouter>
+    </AppContext.Provider>
+  );
+
+  const transmittalNumberEl = screen.getByLabelText("Waiver Number");
+  const actionTypeEl = screen.getByLabelText("Action Type");
+  const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+  const submitButtonEl = screen.getByText("Submit");
+
+  // values start out empty
+  expect(transmittalNumberEl.value).toBe("");
+  expect(actionTypeEl.value).toBe("");
+  expect(waiverAuthorityEl.value).toBe("");
+
+  userEvent.selectOptions(actionTypeEl, testValues.actionType);
+  await screen.findByText("Waiver amendment");
+
+  userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+  await screen.findByText("All other 1915(b) Waivers");
+
+  // Don't find the package
+  ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+  userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+  await screen.findByText(
+    `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
+  );
+  expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+
+  // click the submit button
+  //userEvent.click(submitButtonEl);
+  screen.debug();
 });
