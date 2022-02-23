@@ -66,7 +66,11 @@ def seed_data():
         }
 
     with open("services/app-api/one-seed.json") as f:
-        return [process_item(item) for item in json.load(f) if item["GSI1pk"] == "USER"]
+        return [
+            process_item(item)
+            for item in json.load(f)
+            if "GSI1pk" in item and item["GSI1pk"] == "USER"
+        ]
 
 
 def git_committers():
