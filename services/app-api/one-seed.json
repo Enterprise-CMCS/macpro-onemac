@@ -720,31 +720,6 @@
     "pk": "cmsrevieweractive@cms.hhs.local"
   },
   {
-    "doneByName": "Sabrina McCrae",
-    "status": "active",
-    "Latest": "1",
-    "GSI1sk": "Boss",
-    "email": "sabrina.mccrae@cms.hhs.gov",
-    "fullName": "Sabrina McCrae",
-    "doneByEmail": "sabrina.mccrae@cms.hhs.gov",
-    "GSI1pk": "USER",
-    "date": "1584194366",
-    "role": "systemadmin",
-    "territory": "N/A",
-    "sk": "v0#systemadmin#N/A",
-    "pk": "sabrina.mccrae@cms.hhs.gov"
-  },
-  {
-    "doneByEmail": "sabrina.mccrae@cms.hhs.gov",
-    "doneByName": "Sabrina McCrae",
-    "date": "1584194366",
-    "role": "systemadmin",
-    "territory": "N/A",
-    "status": "active",
-    "sk": "v1#systemadmin#N/A",
-    "pk": "sabrina.mccrae@cms.hhs.gov"
-  },
-  {
     "doneByName": "Teresa Test",
     "status": "active",
     "Latest": "2",
@@ -1165,14 +1140,6 @@
     "fullName": "Amanda Active",
     "pk": "cmsrevieweractive@cms.hhs.local",
     "division": "12"
-  },
-  {
-    "GSI1pk": "systemadmin#N/A",
-    "sk": "ContactInfo",
-    "GSI1sk": "sabrina.mccrae@cms.hhs.gov",
-    "email": "sabrina.mccrae@cms.hhs.gov",
-    "fullName": "Sabrina McCrae",
-    "pk": "sabrina.mccrae@cms.hhs.gov"
   },
   {
     "GSI1pk": "statesystemadmin#VA",
