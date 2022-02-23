@@ -115,8 +115,8 @@ export default function PortalTable<V extends {} = {}>({
                     <span className="sort-icons-table">
                       {/* @ts-ignore FIXME remove when react-table types are improved */}
                       {column.isSorted ? (
-                        // @ts-ignore FIXME remove when react-table types are improved
                         <FontAwesomeIcon
+                          // @ts-ignore FIXME remove when react-table types are improved
                           icon={column.isSortedDesc ? faSortDown : faSortUp}
                         />
                       ) : (
