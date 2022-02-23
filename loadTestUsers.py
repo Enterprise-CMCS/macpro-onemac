@@ -57,16 +57,16 @@ def seed_data():
     """
 
     def process_item(item):
-        name_parts = item.fullName.split(" ")
+        name_parts = item["fullName"].split(" ")
         return {
-            "email": item.email,
-            "role": item.role,
+            "email": item["email"],
+            "role": item["role"],
             "firstName": name_parts[0],
             "lastName": name_parts[1],
         }
 
     with open("services/app-api/one-seed.json") as f:
-        return [process_item(item) for item in json.load(f) if item.GSI1pk == "USER"]
+        return [process_item(item) for item in json.load(f) if item["GSI1pk"] == "USER"]
 
 
 def git_committers():
