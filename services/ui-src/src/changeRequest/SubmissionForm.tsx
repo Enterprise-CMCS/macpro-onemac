@@ -455,7 +455,7 @@ export const SubmissionForm: React.FC<{
             </div>
           </div>
           <div className="form-buttons">
-            <p>
+            <p className="submission-message">
               Once you submit this form, a confirmation email is sent to you and
               to CMS. CMS will use this content to review your package, and you
               will not be able to edit this form. If CMS needs any additional
@@ -465,7 +465,7 @@ export const SubmissionForm: React.FC<{
             <Button
               id="form-submission-button"
               aria-label="submit-form"
-              className="ds-c-button ds-c-button--primary"
+              className="ds-c-button ds-c-button--success"
               disabled={!isSubmissionReady}
               onClick={handleSubmit}
               value="Submit"
