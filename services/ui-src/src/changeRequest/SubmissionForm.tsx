@@ -368,28 +368,12 @@ export const SubmissionForm: React.FC<{
     setIsSubmitting(isSubmissionReady);
   }
 
-  function renderSubmissionButton() {
-    return (
-      <Button
-        id="form-submission-button"
-        aria-label="submit-form"
-        className="ds-c-button ds-c-button--primary"
-        disabled={!isSubmissionReady}
-        onClick={handleSubmit}
-        value="Submit"
-      >
-        Submit
-      </Button>
-    );
-  }
-
   return (
     <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
         heading={formInfo.pageTitle}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
-        rightSideContent={renderSubmissionButton()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
@@ -469,6 +453,32 @@ export const SubmissionForm: React.FC<{
             <div className="char-count">
               {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
+          </div>
+          <div className="form-buttons">
+            <p>
+              Once you submit this form, a confirmation email is sent to you and
+              to CMS. CMS will use this content to review your package, and you
+              will not be able to edit this form. If CMS needs any additional
+              information, they will follow up by email. If you leave this page,
+              you will lose your progress on this form.
+            </p>
+            <Button
+              id="form-submission-button"
+              aria-label="submit-form"
+              className="ds-c-button ds-c-button--primary"
+              disabled={!isSubmissionReady}
+              onClick={handleSubmit}
+              value="Submit"
+            >
+              Submit
+            </Button>
+            <Button
+              id="form-cancel-button"
+              aria-label="cancel-form"
+              className="ds-c-button ds-c-button--transparent"
+            >
+              Cancel
+            </Button>
           </div>
         </form>
         <ScrollToTop />
