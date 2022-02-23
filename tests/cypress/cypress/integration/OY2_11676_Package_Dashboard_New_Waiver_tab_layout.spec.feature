@@ -32,7 +32,7 @@ Feature: OY2-11676 Package Dashboard: New Waiver tab layout
         And click 1915b Base Waiver check box
         And Click on Filter Button
         And verify the type in row one is Waiver Renewal
-        And verify the waiver number format in row one is SS.#####.S##
+        And verify the waiver number format in row one is SS.#####.S## or SS.####.S##
 
     Scenario: verify clicking the caret controls when the child row is displayed for a parent row
         Given I am on Login Page
