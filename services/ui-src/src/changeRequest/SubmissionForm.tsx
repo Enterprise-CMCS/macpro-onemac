@@ -23,6 +23,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
 import ScrollToTop from "../components/ScrollToTop";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
@@ -63,6 +64,7 @@ export const SubmissionForm: React.FC<{
   const [isSubmissionReady, setIsSubmissionReady] = useState(false);
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
 
   // because the transmittal number has state
   const [transmittalNumberDetails, setTransmittalNumberDetails] = useState({
@@ -476,6 +478,7 @@ export const SubmissionForm: React.FC<{
               id="form-cancel-button"
               aria-label="cancel-form"
               className="ds-c-button ds-c-button--transparent"
+              onClick={() => setConfirmCancel(true)}
             >
               Cancel
             </Button>
@@ -492,6 +495,18 @@ export const SubmissionForm: React.FC<{
             View FAQ
           </a>
         </div>
+        {confirmCancel && (
+          <ConfirmationDialog
+            className=""
+            acceptText="Leave Anyway"
+            cancelText="Stay on Page"
+            heading="Leave this page?"
+            onAccept={() => history.goBack()}
+            onCancel={() => setConfirmCancel(false)}
+          >
+            Leave this page? Changes you made will not be saved.
+          </ConfirmationDialog>
+        )}
       </div>
     </LoadingOverlay>
   );
