@@ -8,11 +8,16 @@ import {
   useTable,
 } from "react-table";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faSearch, faChevronDown } from "@fortawesome/free-solid-svg-icons";
+import {
+  faSearch,
+  faChevronDown,
+  faSort,
+  faSortDown,
+  faSortUp,
+} from "@fortawesome/free-solid-svg-icons";
 import { constant, noop } from "lodash";
 import cx from "classnames";
 
-import Expand from "../images/Expand.svg";
 import {
   SearchAndFilter,
   SearchFilterProps,
@@ -107,27 +112,16 @@ export default function PortalTable<V extends {} = {}>({
                     id={`${column.id}ColHeader`}
                   >
                     {column.render("Header")}
-                    <span>
+                    <span className="sort-icons-table">
                       {/* @ts-ignore FIXME remove when react-table types are improved */}
                       {column.isSorted ? (
                         // @ts-ignore FIXME remove when react-table types are improved
-                        column.isSortedDesc ? (
-                          <>
-                            {" "}
-                            <img
-                              src={Expand}
-                              alt="🔼"
-                              style={{ transform: "rotate(180deg)" }}
-                            />
-                          </>
-                        ) : (
-                          <>
-                            {" "}
-                            <img src={Expand} alt="🔽" />
-                          </>
-                        )
+                        <FontAwesomeIcon
+                          icon={column.isSortedDesc ? faSortDown : faSortUp}
+                        />
                       ) : (
-                        ""
+                        // @ts-ignore FIXME remove when react-table types are improved
+                        column.canSort && <FontAwesomeIcon icon={faSort} />
                       )}
                     </span>
                   </th>
