@@ -12,12 +12,12 @@ Hard coded here as there is no record of them elsewhere.
 """
 UNREGISTERED_USERS = [
     {
-        "id": f"{user_type}unregistered@cms.hhs.local",
-        "type": user_type,
+        "email": f"{user_role}unregistered@cms.hhs.local",
+        "role": user_role,
         "firstName": name,
         "lastName": "Unregistered",
     }
-    for user_type, name in zip(
+    for user_role, name in zip(
         [
             "statesubmitter",
             "statesystemadmin",
@@ -43,8 +43,8 @@ Purely to demonstrate case insensitivity in email addresses.
 """
 UPPER_CASE_USER = [
     {
-        "id": "stateSUBMITTERactive@cms.hhs.local",
-        "type": "statesubmitter",
+        "email": "stateSUBMITTERactive@cms.hhs.local",
+        "role": "statesubmitter",
         "firstName": "Thiswill",
         "lastName": "Notshowupintheapp",
     }
@@ -55,8 +55,22 @@ def seed_data():
     """
     Read the seed data file for our User Profile table.
     """
-    with open("services/app-api/user-profiles-seed.json") as f:
-        return json.load(f)
+
+    def process_item(item):
+        name_parts = item["fullName"].split(" ")
+        return {
+            "email": item["email"],
+            "role": item["role"],
+            "firstName": name_parts[0],
+            "lastName": name_parts[1],
+        }
+
+    with open("services/app-api/one-seed.json") as f:
+        return [
+            process_item(item)
+            for item in json.load(f)
+            if "GSI1pk" in item and item["GSI1pk"] == "USER"
+        ]
 
 
 def git_committers():
@@ -79,7 +93,7 @@ def git_committers():
 
     return [
         {
-            "id": email,
+            "email": email,
             "firstName": name[0] if len(name) else email.split("@")[0],
             "lastName": name[1] if len(name) > 1 else "TestUser",
         }
@@ -104,15 +118,15 @@ def seed_cognito(test_users, user_pool_id, password):
     Populate test users into Cognito and set their passwords.
     """
     for user in test_users:
-        print(f'Creating user with ID {user["id"]}')
+        print(f'Creating user with ID {user["email"]}')
         role = ""
-        if "type" not in user:
+        if "role" not in user:
             pass
-        elif user["type"].startswith("state"):
+        elif user["role"].startswith("state"):
             role = "onemac-state-user"
-        elif user["type"].startswith("cms") or user["type"] == "systemadmin":
+        elif user["role"].startswith("cms") or user["role"] == "systemadmin":
             role = "onemac-cms-user"
-        elif user["type"] == "helpdesk":
+        elif user["role"] == "helpdesk":
             role = "onemac-helpdesk"
 
         # checking errors so we do not set the password when the first call
@@ -129,7 +143,7 @@ def seed_cognito(test_users, user_pool_id, password):
                     "--message-action",
                     "SUPPRESS",
                     "--username",
-                    user["id"],
+                    user["email"],
                     "--user-attributes",
                     f'Name=given_name,Value={user["firstName"]}',
                     f'Name=family_name,Value={user["lastName"]}',
@@ -145,7 +159,7 @@ def seed_cognito(test_users, user_pool_id, password):
                     "--user-pool-id",
                     user_pool_id,
                     "--username",
-                    user["id"],
+                    user["email"],
                     "--password",
                     password,
                     "--permanent",

@@ -13,7 +13,6 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
-  userTableName: cms-spa-form-${self:custom.stage}-user-profiles
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
@@ -54,8 +53,6 @@ custom:
           sources: [./change-requests-seed.json]
         - table: ${self:custom.spaIdTableName}
           sources: [./spa-ids-seed.json]
-        - table: ${self:custom.userTableName}
-          sources: [./user-profiles-seed.json]
         - table: ${self:custom.oneMacTableName}
           sources: [./one-seed.json]
   serverless-offline:
@@ -78,7 +75,6 @@ provider:
   environment:
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
-    userTableName: ${self:custom.userTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
     emailSource: ${self:custom.emailSource}
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
@@ -242,9 +238,6 @@ resources:
 
   # Uploads S3 bucket
   - ${file(resources/spa-form-tables.yml)}
-
-  # User data DynamoDB table
-  - ${file(resources/user-table.yml)}
 
   # Roles
   - ${file(resources/roles.yml)}
