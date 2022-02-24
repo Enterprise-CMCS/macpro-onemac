@@ -273,9 +273,9 @@ jobs:
       fail-fast: false
       matrix:
         containers: 
-        [
-          homePage,
-        ]
+          [
+            homePage,
+          ]
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
