@@ -193,6 +193,7 @@ jobs:
             OY2-13234_CHIP_SPA_RAI.spec.feature,
             OY2-13234_Waiver_RAI.spec.feature,
             OY2_16347_Temporary_Extension_form_validations.spec.feature,
+            OY2_16029_Submission_Form_Submit_button_updates_and_Warning_Text.spec.feature,
           ]
     steps:
       - name: set branch_name
