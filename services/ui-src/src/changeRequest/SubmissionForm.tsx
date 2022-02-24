@@ -22,7 +22,6 @@ import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
-import ScrollToTop from "../components/ScrollToTop";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
@@ -484,7 +483,6 @@ export const SubmissionForm: React.FC<{
             </Button>
           </div>
         </form>
-        <ScrollToTop />
         <div className="faq-container">
           <span>Do you have questions or need support?</span>
           <a
