@@ -273,7 +273,7 @@ jobs:
       fail-fast: false
       matrix:
         containers: [
-          homePage.spec,
+          homePage
         ]
     steps:
       - name: set branch_name
