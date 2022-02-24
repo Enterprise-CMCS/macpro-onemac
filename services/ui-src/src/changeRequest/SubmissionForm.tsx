@@ -22,7 +22,7 @@ import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
-import ScrollToTop from "../components/ScrollToTop";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
@@ -63,6 +63,7 @@ export const SubmissionForm: React.FC<{
   const [isSubmissionReady, setIsSubmissionReady] = useState(false);
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [confirmCancel, setConfirmCancel] = useState(false);
 
   // because the transmittal number has state
   const [transmittalNumberDetails, setTransmittalNumberDetails] = useState({
@@ -368,28 +369,12 @@ export const SubmissionForm: React.FC<{
     setIsSubmitting(isSubmissionReady);
   }
 
-  function renderSubmissionButton() {
-    return (
-      <Button
-        id="form-submission-button"
-        aria-label="submit-form"
-        className="ds-c-button ds-c-button--primary"
-        disabled={!isSubmissionReady}
-        onClick={handleSubmit}
-        value="Submit"
-      >
-        Submit
-      </Button>
-    );
-  }
-
   return (
     <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
         heading={formInfo.pageTitle}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
-        rightSideContent={renderSubmissionButton()}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
@@ -470,8 +455,34 @@ export const SubmissionForm: React.FC<{
               {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>
+          <div className="form-buttons">
+            <p className="submission-message">
+              Once you submit this form, a confirmation email is sent to you and
+              to CMS. CMS will use this content to review your package, and you
+              will not be able to edit this form. If CMS needs any additional
+              information, they will follow up by email. If you leave this page,
+              you will lose your progress on this form.
+            </p>
+            <Button
+              id="form-submission-button"
+              aria-label="submit-form"
+              className="ds-c-button ds-c-button--success"
+              disabled={!isSubmissionReady}
+              onClick={handleSubmit}
+              value="Submit"
+            >
+              Submit
+            </Button>
+            <Button
+              id="form-cancel-button"
+              aria-label="cancel-form"
+              className="ds-c-button ds-c-button--transparent"
+              onClick={() => setConfirmCancel(true)}
+            >
+              Cancel
+            </Button>
+          </div>
         </form>
-        <ScrollToTop />
         <div className="faq-container">
           <span>Do you have questions or need support?</span>
           <a
@@ -482,6 +493,18 @@ export const SubmissionForm: React.FC<{
             View FAQ
           </a>
         </div>
+        {confirmCancel && (
+          <ConfirmationDialog
+            className=""
+            acceptText="Leave Anyway"
+            cancelText="Stay on Page"
+            heading="Leave this page?"
+            onAccept={() => history.goBack()}
+            onCancel={() => setConfirmCancel(false)}
+          >
+            Leave this page? Changes you made will not be saved.
+          </ConfirmationDialog>
+        )}
       </div>
     </LoadingOverlay>
   );
