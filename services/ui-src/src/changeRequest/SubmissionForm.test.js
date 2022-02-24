@@ -506,3 +506,83 @@ it("successfully submits the form", async () => {
   //userEvent.click(submitButtonEl);
   screen.debug();
 });
+
+describe("cancelling the form submission", () => {
+  it("keeps the form information if cancel is cancelled", async () => {
+    const testValues = {
+      transmittalNumber: "MI.17234.R03.M22",
+      actionType: "amendment",
+      waiverAuthority: "1915(b)",
+    };
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <MemoryRouter>
+          <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+        </MemoryRouter>
+      </AppContext.Provider>
+    );
+
+    const transmittalNumberEl = screen.getByLabelText("Waiver Number");
+    const actionTypeEl = screen.getByLabelText("Action Type");
+    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    const cancelButtonEl = screen.getByText("Cancel");
+
+    // values start out empty
+    expect(transmittalNumberEl.value).toBe("");
+    expect(actionTypeEl.value).toBe("");
+    expect(waiverAuthorityEl.value).toBe("");
+
+    userEvent.selectOptions(actionTypeEl, testValues.actionType);
+    await screen.findByText("Waiver amendment");
+
+    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+    await screen.findByText("All other 1915(b) Waivers");
+
+    // Don't find the package
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+    await screen.findByText(
+      `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
+    );
+    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+
+    // click the submit button
+    userEvent.click(cancelButtonEl);
+    screen.findByText("Stay on Page");
+    const cancelCancelEl = screen.getByText("Stay on Page");
+    userEvent.click(cancelCancelEl);
+    expect(cancelCancelEl).not.toBeInTheDocument();
+    // the transmittal number still contains the value
+    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+    expect(actionTypeEl.value).toBe(testValues.actionType);
+    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+  });
+
+  it("leaves the page when cancel is confirmed", async () => {
+    const herstory = createMemoryHistory();
+    herstory.push("/previousPage");
+    herstory.push("/currentPage");
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={herstory}>
+          <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+        </Router>
+      </AppContext.Provider>
+    );
+    const cancelButtonEl = screen.getByText("Cancel");
+    userEvent.click(cancelButtonEl);
+    screen.findByText("Leave Anyway", { selector: "button" });
+    userEvent.click(screen.getByText("Leave Anyway", { selector: "button" }));
+    expect(herstory.location.pathname).toBe("/previousPage");
+  });
+});
