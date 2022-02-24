@@ -294,8 +294,8 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: "12.x"
-      - name: Combine yarn.lock files to single file
-        run: find services -maxdepth 3 -name yarn.lock | xargs cat yarn.lock > combined-yarn.txt
+      - name: Combine package-lock.json files to single file
+        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
         uses: actions/cache@v2
         with:
@@ -307,9 +307,9 @@ jobs:
             services/ui-auth/node_modules
             services/ui-src/node_modules
             node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-yarn.txt') }}
+          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm install --frozen-lockfile
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
