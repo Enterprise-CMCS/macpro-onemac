@@ -272,8 +272,9 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        containers: [
-          homePage
+        containers: 
+        [
+          homePage,
         ]
     steps:
       - name: set branch_name
