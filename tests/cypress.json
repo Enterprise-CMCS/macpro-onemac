@@ -4,7 +4,7 @@
   "redirectionLimit": 20,
   "retries": 5,
   "watchForFileChanges": true,
-  "testFiles": "**/*.feature",
+  "testFiles": ["**/*.feature", "**/*.spec.js"],
   "fixturesFolder": "fixtures",
   "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshots",
