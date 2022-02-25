@@ -274,7 +274,7 @@ jobs:
       matrix:
         containers: 
           [
-            homePage.spec.feature,
+            homePage,
           ]
     steps:
       - name: set branch_name
@@ -325,7 +325,7 @@ jobs:
         uses: cypress-io/github-action@v2.11.7
         with:
           working-directory: tests/cypress
-          spec: cypress/integration/${{ matrix.containers }}
+          spec: cypress/integration/a11y/${{ matrix.containers }}.spec.js
           browser: chrome
           headless: true
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
