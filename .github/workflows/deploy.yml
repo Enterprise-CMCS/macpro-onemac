@@ -274,7 +274,7 @@ jobs:
       matrix:
         containers: 
           [
-            homePage.spec,
+            homePage.spec.feature,
           ]
     steps:
       - name: set branch_name
