@@ -5,7 +5,6 @@ import { getUserRoleObj, getActiveTerritories } from "cmscommonlib";
 
 import getChangeRequestFunctions, {
   validateSubmission,
-  hasValidStateCode,
 } from "./changeRequest/changeRequest-util";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
@@ -73,16 +72,6 @@ export const main = handler(async (event) => {
 
     // map the changeRequest functions from the data.type
     crFunctions = getChangeRequestFunctions(data.type);
-    if (!crFunctions) {
-      throw RESPONSE_CODE.VALIDATION_ERROR;
-    }
-
-    const crVerifyTransmittalIdStateCode = hasValidStateCode(
-      data.transmittalNumber
-    );
-    if (!crVerifyTransmittalIdStateCode) {
-      throw RESPONSE_CODE.TRANSMITTAL_ID_TERRITORY_NOT_VALID;
-    }
 
     // check for submission-specific validation (uses database)
     const validationResponse = await crFunctions.fieldsValid(data);
