@@ -15,7 +15,7 @@ class ChangeRequestDataApi {
       const userAuth = await Auth.currentAuthenticatedUser();
       //Normalize the user data.
       data.user = {
-        email: userAuth.signInUserSession.idToken.payload.email,
+        email: userAuth.signInUserSession.idToken.payload.email.toLowerCase(),
         firstName: userAuth.signInUserSession.idToken.payload.given_name,
         lastName: userAuth.signInUserSession.idToken.payload.family_name,
       };

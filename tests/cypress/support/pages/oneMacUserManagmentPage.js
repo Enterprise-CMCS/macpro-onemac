@@ -14,6 +14,7 @@ const dashboardTab = "#dashboardLink";
 //Element is Xpath use cy.xpath instead of cy.get
 const FAQTab = '//a[contains(text(),"FAQ")]';
 const actionsHeader = "#personnelActionsColHeader";
+const requestARoleBtn = "#requestRoleLink";
 
 export class oneMacUserManagmentPage {
   clickMyAccountDropDown() {
@@ -22,7 +23,15 @@ export class oneMacUserManagmentPage {
   clickmanageProfileBTN() {
     cy.get(manageProfileBTN).click();
   }
-
+  verifyRequestARoleChangeBtnExists() {
+    cy.get(requestARoleBtn).should("be.visible");
+  }
+  clickRequestARoleChangeBtn() {
+    cy.get(requestARoleBtn).click();
+  }
+  verifyRequestARoleChangeBtnDoesNotExist() {
+    cy.get(requestARoleBtn).should("not.exist");
+  }
   verifyWeAreOnUserManagmentPage() {
     cy.url().should("include", "/usermanagement");
   }

@@ -15,7 +15,7 @@ import {
   ROUTES,
   ChangeRequest,
   getUserRoleObj,
-  USER_TYPE,
+  USER_ROLE,
   USER_STATUS,
 } from "cmscommonlib";
 
@@ -58,17 +58,14 @@ const PackageList = () => {
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
+    userRole,
     userProfile,
     userProfile: { cmsRoles, userData } = {},
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const userRoleObj = getUserRoleObj(
-    userData.type,
-    !cmsRoles,
-    userData?.attributes
-  );
+  const userRoleObj = getUserRoleObj(userData?.roleList);
 
   const loadPackageList = useCallback(
     async (ctrlr) => {
@@ -101,11 +98,7 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link
-        to={`/detail/${row.original.componentType}/${row.original.submissionTimestamp}/${value}`}
-      >
-        {value}
-      </Link>
+      <Link to={`/detail/${row.original.componentType}/${value}`}>{value}</Link>
     ),
     []
   );
@@ -146,13 +139,15 @@ const PackageList = () => {
     async (rowNum) => {
       // For now, the second argument is constant.
       // When we add another action to the menu, we will need to look at the action taken here.
-
-      const packageToModify = packageList[rowNum];
+      const [row, child] = rowNum.split(".");
+      let packageToModify;
+      if (child) packageToModify = packageList[row].children[child];
+      else packageToModify = packageList[row];
       try {
+        console.log("rowNum: ", rowNum);
+        console.log("package to modify ", packageToModify);
         const resp = await PackageAPI.withdraw(
-          [userProfile.userData.firstName, userProfile.userData.lastName].join(
-            " "
-          ),
+          userProfile.userData.fullName,
           userProfile.email,
           packageToModify.componentId,
           packageToModify.componentType
@@ -200,6 +195,7 @@ const PackageList = () => {
 
       return (
         <PopupMenu
+          buttonLabel={`Actions for ${row.original.componentId}`}
           selectedRow={row}
           menuItems={menuItems}
           variation="PackageList"
@@ -393,20 +389,16 @@ const PackageList = () => {
   const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
 
   function renderSubmissionList() {
-    if (userData.type !== USER_TYPE.CMS_ROLE_APPROVER) {
+    if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
-        return (
-          <EmptyList message={pendingMessage[userProfile.userData.type]} />
-        );
+        return <EmptyList message={pendingMessage[userRole]} />;
       }
 
-      const userStatusNotActive =
-        userData.type && (!userStatus || userStatus !== USER_STATUS.ACTIVE);
-      if (userStatusNotActive) {
+      if (userStatus !== USER_STATUS.ACTIVE) {
         return (
           <EmptyList
             showProfileLink="true"
-            message={deniedOrRevokedMessage[userProfile.userData.type]}
+            message={deniedOrRevokedMessage[userRole]}
           />
         );
       }

@@ -448,15 +448,9 @@ export const CONFIG = {
       idType: "waiver",
       idLabel: "Waiver Number",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idHintText: "Must follow the format SS.#### or SS.#####",
-      idFormat: "SS.#### or SS.#####",
-      idRegex: "(^[A-Z]{2}[.-][0-9]{4,5}$)",
-      idExistValidations: [
-        {
-          idMustExist: true,
-          errorLevel: "error",
-        },
-      ],
+      idHintText:
+        "Please enter the waiver number used on your initial submission",
+      idFormat: "the Number format used on the initial submission",
     },
   },
 

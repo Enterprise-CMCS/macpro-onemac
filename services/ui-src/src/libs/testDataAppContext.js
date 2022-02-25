@@ -4,8 +4,9 @@ export const stateSubmitterInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "statesubmitter",
   userStatus: USER_STATUS.ACTIVE,
+  activeTerritories: ["MI", "VA"],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -14,30 +15,11 @@ export const stateSubmitterInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [
-        {
-          stateCode: "MI",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "active",
-            },
-          ],
-        },
-        {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "active",
-            },
-          ],
-        },
+      roleList: [
+        { role: "statesubmitter", status: "active", territory: "MI" },
+        { role: "statesubmitter", status: "active", territory: "VA" },
       ],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesubmitter",
+      email: "statesubmitteractive@cms.hhs.local",
       validRoutes: [
         "/",
         "/profile",
@@ -63,7 +45,8 @@ export const statesubmitterRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "statesubmitter",
+  userStatus: "revoked",
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -72,20 +55,14 @@ export const statesubmitterRevokedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [
+      roleList: [
         {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "revoked",
-            },
-          ],
+          role: "statesubmitter",
+          territory: "VA",
+          status: "revoked",
         },
       ],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesubmitter",
+      email: "statesubmitteractive@cms.hhs.local",
       validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
@@ -95,7 +72,9 @@ export const statesubmitterDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "statesubmitter",
+  userStatus: "denied",
+  activeTerritories: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -104,20 +83,14 @@ export const statesubmitterDeniedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [
+      roleList: [
         {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "denied",
-            },
-          ],
+          territory: "VA",
+          status: "denied",
+          role: "statesubmitter",
         },
       ],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesubmitter",
+      email: "statesubmitteractive@cms.hhs.local",
       validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
@@ -127,7 +100,9 @@ export const stateAdminRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "statesystemadmin",
+  userStatus: "revoked",
+  activeTerritories: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -136,20 +111,14 @@ export const stateAdminRevokedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [
+      roleList: [
         {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "revoked",
-            },
-          ],
+          territory: "VA",
+          status: "revoked",
+          role: "statesubmitter",
         },
       ],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesystemadmin",
+      email: "statesubmitteractive@cms.hhs.local",
       validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
@@ -159,7 +128,9 @@ export const stateAdminDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "statesystemadmin",
+  userStatus: "denied",
+  activeTerritories: [],
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
@@ -168,20 +139,14 @@ export const stateAdminDeniedInitialAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [
+      roleList: [
         {
-          stateCode: "VA",
-          history: [
-            {
-              date: 1617149287,
-              doneBy: "systemsadmin@cms.hhs.local",
-              status: "denied",
-            },
-          ],
+          territory: "VA",
+          role: "statesystemadmin",
+          status: "denied",
         },
       ],
-      id: "statesubmitteractive@cms.hhs.local",
-      type: "statesystemadmin",
+      email: "statesubmitteractive@cms.hhs.local",
       validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
@@ -191,24 +156,24 @@ export const cmsRoleApproverDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "cmsroleapprover",
+  userStatus: "denied",
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      attributes: [
+      roleList: [
         {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
+          role: "cmsroleapprover",
+          territory: "N/A",
           status: "denied",
         },
       ],
-      id: "cmsroleapproverrevoked@cms.hhs.local",
+      email: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Denied",
-      type: "cmsroleapprover",
       validRoutes: [
         "/",
         "/profile",
@@ -225,24 +190,24 @@ export const cmsRoleApproverRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "cmsroleapprover",
+  userStatus: "revoked",
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      attributes: [
+      roleList: [
         {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
+          role: "cmsroleapprover",
+          territory: "N/A",
           status: "revoked",
         },
       ],
-      id: "cmsroleapproverrevoked@cms.hhs.local",
+      email: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Revoked",
-      type: "cmsroleapprover",
       validRoutes: [
         "/",
         "/profile",
@@ -258,24 +223,24 @@ export const helpDeskDeniedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "helpdesk",
+  userStatus: "denied",
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      attributes: [
+      roleList: [
         {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
-          status: "revoked",
+          role: "helpdesk",
+          territory: "N/A",
+          status: "denied",
         },
       ],
-      id: "cmsroleapproverrevoked@cms.hhs.local",
+      email: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Revoked",
-      type: "helpdesk",
       validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
@@ -285,24 +250,24 @@ export const helpDeskRevokedInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "helpdesk",
+  userStatus: "revoked",
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
-      attributes: [
+      roleList: [
         {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
-          status: "denied",
+          role: "helpdesk",
+          territory: "N/A",
+          status: "revoked",
         },
       ],
-      id: "cmsroleapproverrevoked@cms.hhs.local",
+      email: "cmsroleapproverrevoked@cms.hhs.local",
       firstName: "Rhonda",
       lastName: "Denied",
-      type: "helpdesk",
       validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
     },
   },
@@ -312,7 +277,6 @@ export const cmsUserNoAuthState = {
   isAuthenticating: true,
   isAuthenticated: false,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userProfile: {
     cmsRoles: "onemac-cms-user",
     email: "cmsroleapproverunregistered@cms.hhs.local",
@@ -321,8 +285,8 @@ export const cmsUserNoAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [],
-      id: "cmsroleapproverunregistered@cms.hhs.local",
+      roleList: [],
+      email: "cmsroleapproverunregistered@cms.hhs.local",
       validRoutes: [
         "/",
         "/profile",
@@ -341,7 +305,6 @@ export const stateUserNoAuthState = {
   isAuthenticating: true,
   isAuthenticated: false,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "stateuserunregistered@cms.hhs.local",
@@ -350,8 +313,8 @@ export const stateUserNoAuthState = {
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
-      attributes: [],
-      id: "stateuserunregistered@cms.hhs.local",
+      roleList: [],
+      email: "stateuserunregistered@cms.hhs.local",
       validRoutes: [
         "/",
         "/profile",
@@ -369,7 +332,7 @@ export const systemAdminInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  isValidRoute: true,
+  userRole: "systemadmin",
   userStatus: "active",
   userProfile: {
     cmsRoles: "onemac-authorizer",
@@ -378,9 +341,9 @@ export const systemAdminInitialAuthState = {
     lastName: "Admining",
     userData: {
       firstName: "Allofit",
+      email: "systemadmintest@cms.hhs.local",
       lastName: "Admining",
-      id: "systemadmintest@cms.hhs.local",
-      type: "systemadmin",
+      roleList: [{ role: "systemadmin", status: "active", territory: "N/A" }],
       validRoutes: [
         "/",
         "/profile",

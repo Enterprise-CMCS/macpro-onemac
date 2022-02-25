@@ -10,13 +10,7 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
-import {
-  latestAccessStatus,
-  ChangeRequest,
-  RESPONSE_CODE,
-  ROUTES,
-  USER_STATUS,
-} from "cmscommonlib";
+import { ChangeRequest, RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import config from "../utils/config";
@@ -37,7 +31,9 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @param transmittalNumber the transmittal number
  * @returns two character state/territory
  */
-function getTerritoryFromTransmittalNumber(transmittalNumber: string): string {
+export function getTerritoryFromTransmittalNumber(
+  transmittalNumber: string
+): string {
   return transmittalNumber.toString().substring(0, 2);
 }
 
@@ -56,7 +52,7 @@ export const SubmissionForm: React.FC<{
 }> = ({ changeRequestType }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
-  const { userProfile: { userData = undefined } = {} } = useAppContext() ?? {};
+  const { activeTerritories } = useAppContext() ?? {};
 
   const formInfo = ChangeRequest.CONFIG[changeRequestType];
 
@@ -123,14 +119,17 @@ export const SubmissionForm: React.FC<{
       }
       // state code must be on the User's active state list
       else if (
-        newTransmittalNumber.length >= 2 &&
-        latestAccessStatus(userData, newTransmittalNumber.substring(0, 2)) !==
-          USER_STATUS.ACTIVE
+        (newTransmittalNumber.length >= 2 && !activeTerritories) ||
+        (activeTerritories &&
+          !activeTerritories.includes(
+            getTerritoryFromTransmittalNumber(newTransmittalNumber)
+          ))
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
       // must match the associated Regex string for format
       else if (
+        transmittalNumberDetails.idRegex &&
         !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
       ) {
         errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
@@ -138,7 +137,7 @@ export const SubmissionForm: React.FC<{
 
       return errorMessage;
     },
-    [transmittalNumberDetails, userData]
+    [transmittalNumberDetails, activeTerritories]
   );
 
   async function handleTransmittalNumberChange(newTransmittalNumber: string) {
@@ -222,7 +221,8 @@ export const SubmissionForm: React.FC<{
     try {
       if (
         formatMessage.statusMessage === "" &&
-        changeRequest.transmittalNumber
+        changeRequest.transmittalNumber &&
+        transmittalNumberDetails.idExistValidations
       ) {
         const promises = transmittalNumberDetails.idExistValidations.map(
           async (idExistValidation) => {

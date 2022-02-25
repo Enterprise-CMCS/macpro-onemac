@@ -69,5 +69,14 @@ export class oneMacSubmitNewWaiverActionPage {
         cy.visit(href);
       });
   }
+  errorMsgExists() {
+    cy.wrap(errorMessageForWaiverNumber).then(($el) => {
+      if ($el.length > 0) {
+        return true;
+      } else {
+        return false;
+      }
+    });
+  }
 }
 export default oneMacSubmitNewWaiverActionPage;

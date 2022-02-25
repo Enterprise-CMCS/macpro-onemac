@@ -3,11 +3,13 @@ import { useLocation, useParams } from "react-router-dom";
 import { Button, Review } from "@cmsgov/design-system";
 
 import {
-  APPROVING_USER_TYPE,
+  APPROVING_USER_ROLE,
   RESPONSE_CODE,
-  ROLES,
+  USER_ROLE,
   ROUTES,
-  latestAccessStatus,
+  USER_STATUS,
+  effectiveRoleForUser,
+  inFlightRoleRequestForUser,
   roleLabels,
   territoryMap,
   territoryList,
@@ -27,11 +29,6 @@ import groupData from "cmscommonlib/groupDivision.json";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
-/**
- * Formats multi-part name into single full name
- */
-const getFullName = (...names) => names.filter(Boolean).join(" ");
-
 export const ACCESS_LABELS = {
   active: "Access Granted",
   pending: "Pending Access",
@@ -39,37 +36,17 @@ export const ACCESS_LABELS = {
   revoked: "Access Revoked",
 };
 
-const transformAccesses = (user = {}) => {
-  switch (user.type) {
-    case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_SYSTEM_ADMIN:
-      return user.attributes?.map(({ stateCode }) => ({
-        state: stateCode,
-        status: latestAccessStatus(user, stateCode),
-      }));
-
-    case ROLES.CMS_REVIEWER:
-    case ROLES.CMS_ROLE_APPROVER:
-    case ROLES.HELPDESK:
-      return [{ status: latestAccessStatus(user) }];
-
-    case ROLES.SYSTEM_ADMIN:
-    default:
-      return [];
-  }
-};
-
-export const ContactList = ({ contacts, userType }) => {
-  let label = roleLabels[APPROVING_USER_TYPE[userType]] ?? "Contact";
+export const ContactList = ({ contacts, profileRole }) => {
+  let label = roleLabels[APPROVING_USER_ROLE[profileRole]] ?? "Contact";
   if (!contacts) return null;
   if (contacts.length > 1) label += "s";
 
   return (
     <p>
       {label}:{" "}
-      {contacts.map(({ firstName, lastName, email }, idx) => (
+      {contacts.map(({ fullName, email }, idx) => (
         <React.Fragment key={email}>
-          <a href={`mailto:${email}`}>{getFullName(firstName, lastName)}</a>
+          <a href={`mailto:${email}`}>{fullName}</a>
           {idx < contacts.length - 1 && ", "}
         </React.Fragment>
       ))}
@@ -80,19 +57,19 @@ export const ContactList = ({ contacts, userType }) => {
 export const AccessDisplay = ({
   isReadOnly,
   selfRevoke,
-  userType,
+  profileRole,
   accesses = [],
 }) => {
   let accessHeading;
 
-  switch (userType) {
-    case ROLES.STATE_SUBMITTER:
-    case ROLES.STATE_SYSTEM_ADMIN:
+  switch (profileRole) {
+    case USER_ROLE.STATE_SUBMITTER:
+    case USER_ROLE.STATE_SYSTEM_ADMIN:
       accessHeading = "State Access Management";
       break;
-    case ROLES.CMS_REVIEWER:
-    case ROLES.CMS_ROLE_APPROVER:
-    case ROLES.HELPDESK:
+    case USER_ROLE.CMS_REVIEWER:
+    case USER_ROLE.CMS_ROLE_APPROVER:
+    case USER_ROLE.HELPDESK:
       accessHeading = "Status";
       break;
     default:
@@ -103,45 +80,53 @@ export const AccessDisplay = ({
     <>
       <h2 id="accessHeader">{accessHeading}</h2>
       <dl>
-        {accesses.map(({ state, status, contacts }) => (
-          <div className="access-card-container" key={state ?? "only-one"}>
-            <div className="gradient-border" />
-            <div className="state-access-card">
-              {!isReadOnly &&
-                userType === ROLES.STATE_SUBMITTER &&
-                (status === "active" || status === "pending") && (
-                  <button
-                    aria-label={`Self-revoke access to ${territoryMap[state]}`}
-                    disabled={isReadOnly}
-                    className="close-button"
-                    onClick={() => selfRevoke(state)}
-                  >
-                    {CLOSING_X_IMAGE}
-                  </button>
+        {accesses
+          .filter(({ role }) => role === profileRole)
+          .map(({ territory, status, contacts }) => (
+            <div
+              className="access-card-container"
+              key={territory ?? "only-one"}
+            >
+              <div className="gradient-border" />
+              <div className="state-access-card">
+                {!isReadOnly &&
+                  profileRole === USER_ROLE.STATE_SUBMITTER &&
+                  (status === USER_STATUS.ACTIVE ||
+                    status === USER_STATUS.PENDING) && (
+                    <button
+                      aria-label={`Self-revoke access to ${territoryMap[territory]}`}
+                      disabled={isReadOnly}
+                      className="close-button"
+                      onClick={() => selfRevoke(territory)}
+                    >
+                      {CLOSING_X_IMAGE}
+                    </button>
+                  )}
+                {!!territory && territory !== "N/A" && (
+                  <dt>{territoryMap[territory] || territory}</dt>
                 )}
-              {!!state && <dt>{territoryMap[state] || state}</dt>}
-              <dd>
-                <em>{ACCESS_LABELS[status] || status}</em>
-                <br />
-                <br />
-                <ContactList contacts={contacts} userType={userType} />
-              </dd>
+                <dd>
+                  <em>{ACCESS_LABELS[status] || status}</em>
+                  <br />
+                  <br />
+                  <ContactList contacts={contacts} profileRole={profileRole} />
+                </dd>
+              </div>
             </div>
-          </div>
-        ))}
+          ))}
       </dl>
     </>
   );
 };
 
-export function getUserGroup(userData) {
-  const group = groupData.find(({ id }) => id === userData.group);
+export function getUserGroup(profileData) {
+  const group = groupData.find(({ id }) => id === profileData.group);
   let division;
 
-  if (!userData.division) return { group };
+  if (!profileData.division) return { group };
 
   const getDivisionFromGroup = ({ divisions }) =>
-    divisions.find(({ id }) => id === userData.division);
+    divisions.find(({ id }) => id === profileData.division);
 
   // first, try the group found above. if the org chart has not changed since
   // the user last modified their info, it should succeed
@@ -160,10 +145,8 @@ export function getUserGroup(userData) {
   return { group, division };
 }
 
-export const GroupDivisionDisplay = ({ userData = {} }) => {
-  if (userData.type !== ROLES.CMS_REVIEWER) return null;
-
-  const groupInfo = getUserGroup(userData);
+export const GroupDivisionDisplay = ({ profileData = {} }) => {
+  const groupInfo = getUserGroup(profileData);
 
   return (
     <div className="access-card-container">
@@ -187,37 +170,60 @@ export const GroupDivisionDisplay = ({ userData = {} }) => {
  * Component housing data belonging to a particular user
  */
 const UserPage = () => {
-  const { userProfile, setUserInfo, updatePhoneNumber } = useAppContext();
+  const { userProfile, setUserInfo, updatePhoneNumber, userRole, userStatus } =
+    useAppContext();
   const location = useLocation();
   const { userId } = useParams() ?? {};
-  const [userData, setUserData] = useState({});
+  const [profileData, setProfileData] = useState({});
+  const [profileRole, setProfileRole] = useState("");
+  const [profileStatus, setProfileStatus] = useState("");
   const [loading, setLoading] = useState(false);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [accesses, setAccesses] = useState(transformAccesses(userData));
+  const [accesses, setAccesses] = useState(
+    userProfile?.userData?.roleList ?? []
+  );
   const [isStateSelectorVisible, setIsStateSelectorVisible] = useState(false);
   const [stateAccessToRemove, setStateAccessToRemove] = useState(null);
   const [isEditingPhone, setIsEditingPhone] = useState(false);
   const isReadOnly =
     location.pathname !== ROUTES.PROFILE &&
     decodeURIComponent(userId) !== userProfile.email;
-  let userType = userData?.type ?? "user";
-  const userTypeDisplayText = roleLabels[userType];
 
   useEffect(() => {
-    if (!isReadOnly) {
-      setUserData(userProfile.userData);
-      return;
-    }
+    const getProfile = async (profileEmail) => {
+      if (!isReadOnly) {
+        return [{ ...userProfile.userData }, userRole, userStatus];
+      }
 
-    (async () => {
+      let tempProfileData = {},
+        tempProfileRole = "user",
+        tempProfileStatus = "status";
+
       try {
-        setUserData(await UserDataApi.userProfile(userId));
+        tempProfileData = await UserDataApi.userProfile(profileEmail);
+        const profileAccess = effectiveRoleForUser(tempProfileData?.roleList);
+        if (profileAccess !== null)
+          [tempProfileRole, tempProfileStatus] = profileAccess;
       } catch (e) {
         console.error("Error fetching user data", e);
         setAlertCode(RESPONSE_CODE[e.message]);
       }
-    })();
-  }, [isReadOnly, userId, userProfile]);
+
+      return [tempProfileData, tempProfileRole, tempProfileStatus];
+    };
+
+    getProfile(userId)
+      .then(([newProfileData, newProfileRole, newProfileStatus]) => {
+        setProfileData(newProfileData);
+        setProfileRole(newProfileRole);
+        console.log("profile status is: ", newProfileStatus);
+        setProfileStatus(newProfileStatus);
+      })
+      .catch((e) => {
+        console.error("Error fetching user data", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      });
+  }, [isReadOnly, userId, userProfile, userRole, userStatus]);
 
   const onPhoneNumberCancel = useCallback(() => {
     setIsEditingPhone(false);
@@ -238,7 +244,7 @@ const UserPage = () => {
         if (result === RESPONSE_CODE.USER_SUBMITTED)
           result = RESPONSE_CODE.NONE; // do not show success message
         setAlertCode(result);
-        setUserData((data) => ({ ...data, phoneNumber: newNumber }));
+        setProfileData((data) => ({ ...data, phoneNumber: newNumber }));
         updatePhoneNumber(newNumber);
       } catch (e) {
         console.error("Error updating phone number", e);
@@ -246,7 +252,7 @@ const UserPage = () => {
       }
       setIsEditingPhone(false);
     },
-    [userProfile.email, setUserData, updatePhoneNumber]
+    [userProfile.email, setProfileData, updatePhoneNumber]
   );
 
   const signupUser = useCallback(
@@ -254,19 +260,11 @@ const UserPage = () => {
       try {
         setLoading(true);
 
-        payload = payload.map(({ value }) => ({
-          stateCode: value,
-          status: "pending",
-        }));
-
-        let answer = await UserDataApi.updateUser({
-          userEmail: userProfile.email,
-          doneBy: userProfile.email,
-          firstName: userProfile.firstName,
-          lastName: userProfile.lastName,
-          type: userType,
-          attributes: payload,
-        });
+        let answer = await UserDataApi.requestAccess(
+          userProfile.email,
+          userRole,
+          payload.map(({ value }) => value)
+        );
 
         if (answer && answer !== RESPONSE_CODE.USER_SUBMITTED) throw answer;
         setAlertCode(RESPONSE_CODE.USER_SUBMITTED);
@@ -281,9 +279,7 @@ const UserPage = () => {
     },
     [
       userProfile.email,
-      userProfile.firstName,
-      userProfile.lastName,
-      userType,
+      userRole,
       setIsStateSelectorVisible,
       setLoading,
       setUserInfo,
@@ -294,16 +290,12 @@ const UserPage = () => {
 
   const onRemoveAccess = useCallback(() => {
     try {
-      UserDataApi.setUserStatus({
-        userEmail: userProfile.email,
-        doneBy: userProfile.email,
-        attributes: [
-          {
-            stateCode: stateAccessToRemove, // required for state submitter and state system admin
-            status: "revoked",
-          },
-        ],
-        type: userType,
+      UserDataApi.updateUserStatus({
+        email: userProfile.email,
+        doneByEmail: userProfile.email,
+        role: userRole,
+        territory: stateAccessToRemove,
+        status: USER_STATUS.REVOKED,
       }).then(function (returnCode) {
         if (alertCodeAlerts[returnCode] === ALERTS_MSG.SUBMISSION_SUCCESS) {
           setUserInfo();
@@ -320,7 +312,7 @@ const UserPage = () => {
     closeConfirmation,
     stateAccessToRemove,
     userProfile.email,
-    userType,
+    userRole,
     setUserInfo,
   ]);
 
@@ -357,62 +349,54 @@ const UserPage = () => {
   }, [loading, signupUser, setIsStateSelectorVisible, accesses]);
 
   const renderAddStateButton = useMemo(() => {
+    if (
+      profileData.roleList &&
+      profileStatus === USER_STATUS.ACTIVE &&
+      !inFlightRoleRequestForUser(profileData.roleList)
+    )
+      return (
+        <Button
+          className="add-state-button"
+          onClick={() => {
+            setIsEditingPhone(false); // closes out the phone edit mode if we want to modify state access through state selector
+            setIsStateSelectorVisible(true);
+          }}
+        >
+          <img src={addStateButton} alt="add state or territory" />
+        </Button>
+      );
+
     return (
-      <Button
-        className="add-state-button"
-        onClick={() => {
-          setIsEditingPhone(false); // closes out the phone edit mode if we want to modify state access through state selector
-          setIsStateSelectorVisible(true);
-        }}
-      >
-        <img src={addStateButton} alt="add state or territiory" />
-      </Button>
+      <p>State Access Requests Disabled until Role Request is finalized.</p>
     );
-  }, [setIsEditingPhone, setIsStateSelectorVisible]);
+  }, [
+    setIsEditingPhone,
+    setIsStateSelectorVisible,
+    profileData.roleList,
+    profileStatus,
+  ]);
 
   useEffect(() => {
-    (async () => {
-      try {
-        let contacts = [],
-          getContacts = () => contacts;
+    const createAccessList = async (inRoles) => {
+      if (!inRoles) return [];
 
-        switch (userType) {
-          case ROLES.STATE_SUBMITTER: {
-            const adminsByState = await UserDataApi.getStateSystemAdmins(
-              userData.attributes
-                .map(({ stateCode }) => stateCode)
-                .filter(Boolean)
-            );
-            getContacts = ({ state }) => adminsByState[state];
-            break;
-          }
+      return await Promise.all(
+        inRoles.map((access) =>
+          UserDataApi.getMyApprovers(access.role, access.territory).then(
+            (result) => {
+              return { ...access, contacts: result };
+            }
+          )
+        )
+      );
+    };
 
-          case ROLES.CMS_REVIEWER:
-          case ROLES.STATE_SYSTEM_ADMIN: {
-            contacts = await UserDataApi.getCmsRoleApprovers();
-            break;
-          }
-          case ROLES.HELPDESK:
-          case ROLES.CMS_ROLE_APPROVER: {
-            contacts = await UserDataApi.getCmsSystemAdmins();
-            break;
-          }
-
-          default:
-            return;
-        }
-
-        setAccesses(
-          transformAccesses(userData).map((access) => ({
-            ...access,
-            contacts: getContacts(access),
-          }))
-        );
-      } catch (e) {
-        console.error(e);
-      }
-    })();
-  }, [userData, userType]);
+    createAccessList(profileData?.roleList)
+      .then(setAccesses)
+      .catch((e) => {
+        console.log("error:  ", e);
+      });
+  }, [profileData]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -429,17 +413,21 @@ const UserPage = () => {
               Profile Information
             </h2>
             <Review heading="Full Name">
-              {getFullName(userData.firstName, userData.lastName)}
+              {profileData.fullName ? profileData.fullName : "Unknown"}
             </Review>
             <Review heading="Role">
-              {userTypeDisplayText ? userTypeDisplayText : "Unregistered"}
+              {roleLabels[profileRole]
+                ? roleLabels[profileRole]
+                : "Unregistered"}
             </Review>
             <Review heading="Email">
-              {userData.id ? (
+              {profileData.email ? (
                 isReadOnly ? (
-                  <a href={`mailto:${userData.id}`}>{userData.id}</a>
+                  <a href={`mailto:${profileData.email}`}>
+                    {profileData.email}
+                  </a>
                 ) : (
-                  userData.id
+                  profileData.email
                 )
               ) : (
                 ""
@@ -447,38 +435,40 @@ const UserPage = () => {
             </Review>
             <PhoneNumber
               isEditing={isEditingPhone}
-              phoneNumber={userData.phoneNumber}
+              phoneNumber={profileData.phoneNumber}
               onCancel={onPhoneNumberCancel}
               onEdit={onPhoneNumberEdit}
               onSubmit={onPhoneNumberSubmit}
               readOnly={isReadOnly}
             />
           </div>
-          {userType !== ROLES.SYSTEM_ADMIN && (
+          {profileRole !== USER_ROLE.SYSTEM_ADMIN && (
             <div className="right-column">
               <AccessDisplay
                 accesses={accesses}
                 isReadOnly={isReadOnly}
                 selfRevoke={setStateAccessToRemove}
-                userType={userType}
+                profileRole={profileRole}
               />
-              {!isReadOnly && userType === ROLES.STATE_SUBMITTER && (
+              {!isReadOnly && profileRole === USER_ROLE.STATE_SUBMITTER && (
                 <div className="add-access-container">
                   {isStateSelectorVisible
                     ? renderSelectStateAccess
                     : renderAddStateButton}
                 </div>
               )}
-              <GroupDivisionDisplay userData={userData} />
+              {profileRole === USER_ROLE.CMS_REVIEWER && (
+                <GroupDivisionDisplay profileData={profileData} />
+              )}
             </div>
           )}
           {!isReadOnly && (
             <div id="profileDisclaimer" className="disclaimer-message">
               This page contains Profile Information for the{" "}
-              {userTypeDisplayText ?? userType}. The information cannot be
-              changed in the portal. However, the{" "}
-              {userTypeDisplayText ?? userType} can change their contact phone
-              number in their account.
+              {roleLabels[profileRole] ?? profileRole}. The information cannot
+              be changed in the portal. However, the{" "}
+              {roleLabels[profileRole] ?? profileRole} can change their contact
+              phone number in their account.
             </div>
           )}
         </div>

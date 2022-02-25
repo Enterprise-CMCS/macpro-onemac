@@ -1,4 +1,5 @@
 import React from "react";
+import { act } from "react-dom/test-utils";
 import {
   render,
   screen,
@@ -122,14 +123,31 @@ it.each`
     expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
   }
 );
-/*
-it("has the correct package ID in the confirmation message with a withdrawal", () => {
-  const testPackageID = "XX-33-2221";
 
-  expect(
-    withdrawMenuItem.formatConfirmationMessage({ componentId: testPackageID })
-  ).toMatch(
-    `You are about to withdraw ${testPackageID}. Once complete, you will not be able to resubmit this package. CMS will be notified.`
+it("provides option to withdraw packages", async () => {
+  PackageApi.getMyPackages.mockResolvedValue(packageList);
+  PackageApi.withdraw.mockResolvedValueOnce("WP000");
+
+  render(<PackageList />, { wrapper: ContextWrapper });
+
+  // wait for loading screen to disappear so package table displays
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  await act(async () => {
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: "Actions for MI-98-2223",
+      })
+    );
+    await userEvent.click(
+      screen.getByRole("menuitem", { name: "Withdraw Package" })
+    );
+    await userEvent.click(
+      screen.getByRole("button", { name: "Yes, withdraw" })
+    );
+  });
+
+  expect(document.getElementById("alert-bar")).toHaveTextContent(
+    "Your submission package has successfully been withdrawn."
   );
 });
-*/

@@ -43,5 +43,11 @@ export class oneMacDevLoginPage {
     cy.get(PasswordInput).type("Passw0rd!");
     cy.get(LoginBtn).click();
   }
+
+  loginAsStateSystemAdmin() {
+    cy.get(EmailInput).type("statesystemadmin@nightwatch.test");
+    cy.get(PasswordInput).type("Passw0rd!");
+    cy.get(LoginBtn).click();
+  }
 }
 export default oneMacDevLoginPage;

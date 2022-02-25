@@ -1,6 +1,4 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
-import packageExists from "../utils/packageExists";
-import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * Waiver Extension submission specific email generation functions.
@@ -12,26 +10,8 @@ class WaiverExtension {
    * @param {Object} data the received data
    * @returns {String} any errors
    */
-  async fieldsValid(data) {
-    let areFieldsValid = false;
-    let whyNot = "";
-    let doesExist = false;
-    try {
-      doesExist = await packageExists(data.transmittalNumber);
-    } catch (error) {
-      console.log("WaiverExtension packageExists call error: ", error);
-      throw error;
-    }
-    if (doesExist) {
-      console.log("the Item exists");
-      areFieldsValid = true;
-    } else {
-      console.log("result.Item does not exist");
-      areFieldsValid = false;
-      whyNot = RESPONSE_CODE.ID_NOT_FOUND;
-    }
-
-    return { areFieldsValid, whyNot };
+  async fieldsValid() {
+    return { areFieldsValid: true, whyNot: "" };
   }
 
   /**
@@ -41,9 +21,6 @@ class WaiverExtension {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
-      ? `<br/>${data.transmittalNumberWarningMessage}`
-      : "";
 
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,
@@ -51,17 +28,15 @@ class WaiverExtension {
     ].filter(Boolean);
     cmsEmail.Subject =
       "New Waiver Extension for " + data.transmittalNumber + " submitted";
-    cmsEmail.HTML =
-      `
+    cmsEmail.HTML = `
         <p>The Submission Portal received a Request for Waiver Extension Submission:</p>
         ${getAccessInstructions()}
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}` +
-      transmittalNumberWarningMessage +
-      `
+            <br><b>Waiver #</b>: ${data.transmittalNumber}
         </p>
+        <p><b>Please review the waiver number for correctness as OneMAC did not validate the waiver number entered by the state.</b></p>
         <p>
             <b>Additional Information</b>:
             <br>${data.summary}
