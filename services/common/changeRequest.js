@@ -163,6 +163,17 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.TERMINATED]: [],
 };
 
+export const raiActionsByStatus = {
+  [ONEMAC_STATUS.UNSUBMITTED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [],
+  [ONEMAC_STATUS.IN_REVIEW]: [],
+  [ONEMAC_STATUS.RAI_ISSUED]: [],
+  [ONEMAC_STATUS.APPROVED]: [],
+  [ONEMAC_STATUS.DISAPPROVED]: [],
+  [ONEMAC_STATUS.WITHDRAWN]: [],
+  [ONEMAC_STATUS.TERMINATED]: [],
+};
+
 export const CONFIG = {
   [TYPE.CHIP_SPA]: {
     pageTitle: "Submit New CHIP SPA",
@@ -233,6 +244,7 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: raiActionsByStatus,
   },
 
   [TYPE.SPA]: {
@@ -299,6 +311,7 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: raiActionsByStatus,
   },
 
   [TYPE.WAIVER]: {
@@ -478,6 +491,7 @@ export const CONFIG = {
         },
       ],
     },
+    actionsByStatus: raiActionsByStatus,
   },
 };
 

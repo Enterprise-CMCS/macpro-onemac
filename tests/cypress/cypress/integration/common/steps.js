@@ -119,6 +119,27 @@ And("Type Additonal Information Comments", () => {
 And("Click on Submit Button", () => {
   OneMacSubmitNewMedicaidSpaPage.clicksubmitBTN();
 });
+And("verify submission warning text is visible", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningTextIsVisible();
+});
+And("verify submission warning text", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningText();
+});
+And("verify the form Submit Button exists", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifySubmitBtnExists();
+});
+And("verify form cancel button exists", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifyCancelBtnExists();
+});
+And("click form cancel button", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickCancelBtn();
+});
+And("click Leave Anyway form button", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickLeaveAnywayBtn();
+});
+And("click Stay on Page", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
+});
 And("verify submission Successful message", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayed();
 });
@@ -1864,4 +1885,10 @@ And("click back arrow", () => {
 });
 And("click Leave, anyway", () => {
   OneMacRespondToRAIPage.clickLeaveAnyway();
+});
+And("verify user is on new spa page", () => {
+  OneMacSubmissionTypePage.verifyNewSPAPage();
+});
+And("verify user is on new waiver page", () => {
+  OneMacSubmissionTypePage.verifyNewWaiverPage();
 });

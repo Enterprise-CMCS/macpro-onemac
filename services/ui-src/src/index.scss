@@ -1933,19 +1933,6 @@ aside#faq-contact-info-box {
 
   color: $color-primary;
 }
-.scrollToTop {
-  @extend .portalTable;
-  @extend .ds-u-margin-top--7;
-  @extend .ds-u-margin-bottom--3;
-  @extend .ds-u-display--flex;
-  @extend .ds-u-justify-content--around;
-  @include max-width-ultra-wide;
-  padding: 8px 0 8px 0;
-  cursor: pointer;
-  span {
-    margin-left: 7.5px;
-  }
-}
 
 .group-division-selection {
   @extend .ds-u-margin-y--5;
@@ -2447,4 +2434,13 @@ aside#faq-contact-info-box {
 }
 .detail-section {
   @extend .ds-u-margin-top--7;
+}
+
+.submission-message {
+  @extend .ds-u-margin-top--5;
+  @extend .ds-u-margin-bottom--3;
+  @extend .ds-text-body--md;
+  @extend .ds-u-measure--wide;
+  @extend .ds-u-font-style--italic;
+  color: $color-gray;
 }
