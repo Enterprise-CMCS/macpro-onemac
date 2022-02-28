@@ -26,9 +26,8 @@ const testUserEvent = {
 const testDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
   email: "myemail@email.com",
-  firstName: "firsty",
-  lastName: "lasty",
-  fullName: "firsty lastly",
+  fullName: "firsty lasty",
+  phoneNumber: "555-1212",
 };
 
 beforeEach(() => {
