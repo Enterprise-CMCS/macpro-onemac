@@ -1,11 +1,11 @@
-// import AWS from "aws-sdk";
+import AWS from "aws-sdk";
 import { RESPONSE_CODE } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import { validateUserReadOnly } from "./utils/validateUser";
 
-// const s3 = new AWS.S3();
+const s3 = new AWS.S3();
 
 export const getDetails = async (event) => {
   const componentId = event?.pathParameters?.id;
@@ -43,7 +43,7 @@ export const getDetails = async (event) => {
     if (!result.Item) {
       return {};
     }
-    /*
+
     if (Array.isArray(result.Item.attachments)) {
       const attachmentURLs = await Promise.all(
         result.Item.attachments.map(({ url }) =>
@@ -59,7 +59,7 @@ export const getDetails = async (event) => {
         result.Item.attachments[idx].url = url;
       });
     }
-    */
+
     console.log("Sending back result:", JSON.stringify(result, null, 2));
     return { ...result.Item };
   } catch (e) {
