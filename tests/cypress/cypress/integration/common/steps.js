@@ -634,6 +634,9 @@ And("search for Unique Valid Waiver Number with 5 Characters", () => {
 And("click actions button on the child row", () => {
   OneMacPackagePage.clickActionsColumnForChild();
 });
+And("verify actions button on the child row is disabled", () => {
+  OneMacPackagePage.verifyChildActionsBtnIsDisabled();
+});
 And("verify child row has status {string}", (status) => {
   OneMacPackagePage.verifyChildRowStatusIs(status);
 });
