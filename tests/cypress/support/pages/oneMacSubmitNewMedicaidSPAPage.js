@@ -2,7 +2,12 @@ const SpaIDInput = "#transmittalNumber";
 const additionalInformationCommentBox = "#field_2";
 const submitBTN = "#form-submission-button";
 const SPAIDErrorMessage = "#transmittalNumberStatusMsg";
-
+const cancelBTN = "#form-cancel-button";
+const warningText = "//p[@class='submission-message']";
+//Element is Xpath use cy.xpath instead of cy.get
+const stayOnPageBtn = "//button[contains(text(),'Stay on Page')]";
+//Element is Xpath use cy.xpath instead of cy.get
+const leaveAnywayBtn = "//button[contains(text(),'Leave Anyway')]";
 const uploadedFile =
   "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader tbody:nth-child(1) tr:nth-child(1) td:nth-child(3) div.uploader-file-items > span:nth-child(1)";
 const uploadedSpaFile =
@@ -92,7 +97,32 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(submitBTN).click();
     cy.wait(8000);
   }
-
+  verifySubmitBtnExists() {
+    cy.get(submitBTN).scrollIntoView().should("be.visible");
+  }
+  verifyCancelBtnExists() {
+    cy.get(cancelBTN).scrollIntoView().should("be.visible");
+  }
+  clickCancelBtn() {
+    cy.get(cancelBTN).scrollIntoView().click();
+  }
+  clickStayOnPageBtn() {
+    cy.xpath(stayOnPageBtn).click();
+  }
+  clickLeaveAnywayBtn() {
+    cy.xpath(leaveAnywayBtn).click();
+  }
+  verifySubmissionWarningTextIsVisible() {
+    cy.xpath(warningText).scrollIntoView().should("be.visible");
+  }
+  verifySubmissionWarningText() {
+    cy.xpath(warningText)
+      .scrollIntoView()
+      .contains("Once you submit this form");
+    cy.xpath(warningText)
+      .scrollIntoView()
+      .contains("you will lose your progress on this form.");
+  }
   verifySPAIDErrorMessageIsNotDisplayed() {
     cy.get(SPAIDErrorMessage).should("not.exist");
   }
