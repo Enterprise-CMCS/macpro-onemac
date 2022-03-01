@@ -6,6 +6,9 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
+        And click show hide columns button
+        And click expiration date checkbox
+        And click show hide columns button
         And verify Expiration Date column is available to the immediate left to the status column
 
     # TODO: figure out how to seed a Waiver with an expiration date

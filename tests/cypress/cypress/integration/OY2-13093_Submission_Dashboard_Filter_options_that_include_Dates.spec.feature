@@ -97,7 +97,7 @@ Feature: OY2-13093 Submission Dashboard - Filter options that include Dates
         And Click on Filter Button
         And verify 90th day column one is not na
         And verify 90th day column one is not Pending
-        
+
     Scenario: Filter by date submitted - Date picker
         Given I am on Login Page
         When Clicking on Development Login
