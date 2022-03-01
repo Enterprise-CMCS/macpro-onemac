@@ -5,7 +5,6 @@ const topLevelUpdates = [
   "clockEndTimestamp",
   "expirationTimestamp",
   "currentStatus",
-  "attachments",
 ];
 
 export default async function updateComponent({
