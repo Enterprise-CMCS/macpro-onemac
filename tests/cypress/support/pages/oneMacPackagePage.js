@@ -181,6 +181,8 @@ const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
 const rowTwo = "tbody > tr:nth-child(2)";
 const packageRowTwoSubmittedBy = "#submitter-1";
 const packageRowTwoActions = "#packageActions-1";
+//Element is Xpath use cy.xpath instead of cy.get
+const allPackageRowActions = "//td[contains(@id,'packageActions')]";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
@@ -786,6 +788,13 @@ export class oneMacPackagePage {
   }
   clickActionsColumnForChild() {
     cy.get(packageRowTwoActions).scrollIntoView().click();
+  }
+  clickActionsBtnForTempExtensionChild() {
+    cy.xpath(childRows)
+      .filter(":contains('Temporary Extension')")
+      .then(($el) => {
+        cy.wrap($el).find("button").first().scrollIntoView().click();
+      });
   }
   verifyexpirationDateColumnExistsForChild() {
     cy.get(packageRowTwoExpirationDate).should("be.visible");
