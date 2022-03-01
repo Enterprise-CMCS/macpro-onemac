@@ -194,6 +194,7 @@ jobs:
             OY2-13234_Waiver_RAI.spec.feature,
             OY2_16347_Temporary_Extension_form_validations.spec.feature,
             OY2_16029_Submission_Form_Submit_button_updates_and_Warning_Text.spec.feature,
+            OY2_16471_State_should_not_be_able_to_withdraw_RAI_Responses_in_OneMAC.spec.feature,
           ]
     steps:
       - name: set branch_name

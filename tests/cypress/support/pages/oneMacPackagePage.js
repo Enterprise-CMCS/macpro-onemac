@@ -789,6 +789,13 @@ export class oneMacPackagePage {
   clickActionsColumnForChild() {
     cy.get(packageRowTwoActions).scrollIntoView().click();
   }
+  verifyChildActionsBtnIsDisabled() {
+    cy.get(packageRowTwoActions)
+      .scrollIntoView()
+      .children("button")
+      .first()
+      .should("be.disabled");
+  }
   clickActionsBtnForTempExtensionChild() {
     cy.xpath(childRows)
       .filter(":contains('Temporary Extension')")
