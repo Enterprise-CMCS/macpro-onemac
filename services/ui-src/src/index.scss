@@ -781,7 +781,9 @@ article.form-container {
 
 .dashboard-container {
   @extend .app-bar;
-  @extend .ds-u-flex-direction--column;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
   @extend .ds-u-padding-top--7;
   @extend .ds-u-padding-bottom--7;
   background-color: $color-white;
@@ -842,10 +844,15 @@ article.form-container {
   }
 }
 
+.table-wrapper {
+  display: block;
+  max-width: 1024px;
+  overflow: auto;
+}
+
 .submissions-table {
   @include custom-table;
-  width: unset;
-  min-width: 970px;
+  min-width: 1024px;
 
   th,
   td {
@@ -856,30 +863,48 @@ article.form-container {
     }
   }
 
-  th:first-child {
-    white-space: initial;
+  th:first-child,
+  td:first-child {
+    padding-left: 8px;
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: white;
+  }
+
+  [id^="componentId"],
+  [className^="row-expander-cell"] {
+    padding-left: 0.5px;
+    position: sticky;
+    left: 0;
+    top: 0;
+    z-index: 2;
+    background-color: white;
   }
 }
 
 .submissions-table-actions-column {
   th:last-child {
     text-align: right;
+    padding-right: 8px;
   }
 
   td:last-child button {
     width: 100%;
-    padding-left: 25px;
-
-    &:focus {
-      box-shadow: none;
-    }
   }
 }
 
 .new-submission-icon {
-  padding-left: 8px;
-  width: 23px !important;
+  padding-left: 4px;
+  margin-left: 4px;
+  fill: white;
+
+  :hover {
+    fill: rgba($color-base-inverse, 0.8);
+  }
 }
+
 .user-table {
   @include custom-table;
   td:last-child {
@@ -922,11 +947,6 @@ article.form-container {
   td:last-child button {
     color: $color-black;
     width: 100%;
-
-    &:focus {
-      // remove hideous magenta outline
-      box-shadow: none;
-    }
   }
 }
 
@@ -1177,6 +1197,18 @@ article.form-container {
   font-weight: normal;
   min-width: 160px;
   z-index: 2;
+  animation-duration: 0.2s;
+  animation-name: dropdownContent;
+}
+
+@keyframes dropdownContent {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }
 
 .dropdown-content a {
@@ -1665,6 +1697,10 @@ article.form-container {
   }
 }
 
+.sort-icons-table {
+  padding-left: 5px;
+}
+
 .portalTable {
   font-family: Open Sans;
   font-style: normal;
@@ -2088,6 +2124,11 @@ aside#faq-contact-info-box {
   position: relative;
 }
 
+.picker-button {
+  display: flex;
+  gap: 4px;
+}
+
 .dropdown-column-picker-box {
   @extend .ds-u-align-items--center;
   background-color: $color-white;
@@ -2110,7 +2151,9 @@ aside#faq-contact-info-box {
   @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @include max-width-ultra-wide;
-  min-width: 970px;
+  width: -webkit-fill-available;
+  width: -moz-available;
+  flex-wrap: inherit;
 
   > .search-bar {
     > label {
@@ -2213,6 +2256,7 @@ aside#faq-contact-info-box {
     width: 320px;
     background-color: $color-primary-darkest;
     color: $color-white;
+    padding-bottom: 300px;
 
     > header {
       @extend .ds-u-margin-y--4;
@@ -2228,6 +2272,7 @@ aside#faq-contact-info-box {
 
       .close-filter-pane {
         text-decoration: none;
+        font-weight: 700;
 
         svg {
           margin-left: 1ch;
@@ -2262,12 +2307,22 @@ aside#faq-contact-info-box {
   }
 }
 
+.reset-button-filter {
+  text-decoration: none;
+  background-color: $color-primary-darkest;
+  color: $color-white;
+  margin-left: 25px;
+  margin-right: 23px;
+}
+
 .inversed-accordion-button,
 .inversed-accordion-button:hover,
 .inversed-accordion-button[aria-expanded="false"],
 .inversed-accordion-content {
   background: transparent;
   color: $color-white;
+  @extend .ds-u-margin-top--1;
+  @extend .ds-u-margin-bottom--1;
 }
 
 .inversed-accordion-button {
@@ -2275,6 +2330,7 @@ aside#faq-contact-info-box {
   @extend .ds-u-justify-content--between;
   @extend .ds-u-align-items--center;
   @extend .ds-u-padding-x--3;
+  @extend .ds-u-margin-top--1;
 
   &::after {
     font-family: "Font Awesome 5 Free";
@@ -2300,6 +2356,7 @@ aside#faq-contact-info-box {
   width: 100%;
 }
 .tab-button {
+  border-radius: 0;
   width: 120px;
   background-color: $color-white;
   color: black;
@@ -2324,6 +2381,11 @@ aside#faq-contact-info-box {
 
 .child-row-expanded {
   background-color: $color-primary-alt-lightest;
+
+  td:nth-child(1),
+  td:nth-child(2) {
+    background-color: $color-primary-alt-lightest;
+  }
 
   button {
     @extend .ds-u-fill--transparent;
