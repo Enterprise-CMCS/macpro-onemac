@@ -198,7 +198,7 @@ export class oneMacPackagePage {
 
   verifyValue() {
     cy.get(nintiethDayColumnFirstValue).contains(
-      /N\/A|Pending|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
+      /N\/A|Pending|Clock Stopped|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
     );
   }
 
@@ -590,6 +590,7 @@ export class oneMacPackagePage {
     cy.get(stateDropdownFilter).should("be.visible");
   }
   clickStateDropdownFilter() {
+    cy.get(stateDropdownFilter).wait(1000);
     cy.get(stateDropdownFilter).click();
   }
   verifyStateFilterSelectExists() {
@@ -608,7 +609,7 @@ export class oneMacPackagePage {
     cy.get(stateFilterSelect).should(
       "have.attr",
       "aria-describedby",
-      "react-select-2-placeholder"
+      "react-select-3-placeholder"
     );
   }
   typeStateToSelect(state) {
