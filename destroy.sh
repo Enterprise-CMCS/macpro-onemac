@@ -59,6 +59,38 @@ fi
 for i in "${filteredBucketList[@]}"
 do
   echo $i
+  set -e
+
+   #---New code to remove versioning ---
+   
+   # Suspend bucket versioning.
+  aws s3api put-bucket-versioning --bucket $i --versioning-configuration Status=Suspended
+
+  # Remove all bucket versions.
+  versions=`aws s3api list-object-versions \
+    --bucket "$i" \
+    --output=json \
+    --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}'`
+  if ! echo $versions | grep -q '"Objects": null'; then
+    aws s3api delete-objects \
+      --bucket $i \
+      --delete "$versions" > /dev/null 2>&1
+  fi
+
+  # Remove all bucket delete markers.
+  markers=`aws s3api list-object-versions \
+    --bucket "$i" \
+    --output=json \
+    --query='{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId} }'`
+  if ! echo $markers | grep -q '"Objects": null'; then
+    aws s3api delete-objects \
+      --bucket $i \
+      --delete "$markers" > /dev/null 2>&1
+  fi
+
+  #----End of new code to remove versioning -----
+  
+  #remove the buckets
   aws s3 rm s3://$i/ --recursive
 done
 
@@ -66,5 +98,7 @@ done
 for i in "${filteredStackList[@]}"
 do
   echo $i
+   set -e
+
   aws cloudformation delete-stack --stack-name $i
 done
