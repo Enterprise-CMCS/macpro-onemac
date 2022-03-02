@@ -1,7 +1,12 @@
 import React, { useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 
-import { Button, VerticalNav } from "@cmsgov/design-system";
+import {
+  Button,
+  VerticalNav,
+  Accordion,
+  AccordionItem,
+} from "@cmsgov/design-system";
 
 import {
   RESPONSE_CODE,
@@ -38,6 +43,7 @@ type ComponentDetail = {
   clockEndTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
   territory: string;
+  children: any[];
 };
 
 const AUTHORITY_LABELS = {
@@ -199,17 +205,59 @@ const DetailSection = ({
             </Review>
           )}
         </section>
-        <FileList
-          heading="Base Supporting Documentation"
-          uploadList={detail.attachments}
-          zipId={detail.componentId}
-        />
+        <section className="detail-section">
+          <FileList
+            heading="Base Supporting Documentation"
+            uploadList={detail.attachments}
+            zipId={detail.componentId}
+          />
+        </section>
         {detail.additionalInformation && (
           <section className="detail-section">
             <h2>Additional Information</h2>
             <Review className="original-review-component" headingLevel="2">
               {detail.additionalInformation}
             </Review>
+          </section>
+        )}
+        {detail.children && (
+          <section className="detail-section">
+            <h2>RAI Responses</h2>
+            <Accordion>
+              {detail.children?.map((child, index) => {
+                let raiNumber = (detail.children.length - index)
+                  .toString()
+                  .padStart(2, "0");
+                return (
+                  <AccordionItem
+                    buttonClassName="accordion-button"
+                    contentClassName="accordion-content"
+                    heading={"RAI - " + raiNumber}
+                    headingLevel="6"
+                    id={child.componentType + index + "_caret"}
+                    key={child.componentType + index}
+                    defaultOpen={index === 0}
+                  >
+                    <FileList
+                      heading={"RAI Response Documentation"}
+                      uploadList={child.attachments}
+                      zipId={child.componentType + index}
+                    />
+                    {child.additionalInformation && (
+                      <section className="detail-section">
+                        <h2>Additional Information</h2>
+                        <Review
+                          className="original-review-component"
+                          headingLevel="2"
+                        >
+                          {child.additionalInformation}
+                        </Review>
+                      </section>
+                    )}
+                  </AccordionItem>
+                );
+              })}
+            </Accordion>
           </section>
         )}
       </div>

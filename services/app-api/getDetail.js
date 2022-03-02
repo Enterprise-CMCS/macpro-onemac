@@ -7,6 +7,24 @@ import { validateUserReadOnly } from "./utils/validateUser";
 
 const s3 = new AWS.S3();
 
+async function assignAttachmentUrls(item) {
+  console.log("url item", JSON.stringify(item, null, 2));
+  if (Array.isArray(item.attachments)) {
+    const attachmentURLs = await Promise.all(
+      item.attachments.map(({ url }) =>
+        s3.getSignedUrlPromise("getObject", {
+          Bucket: process.env.attachmentsBucket,
+          Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
+          Expires: 3600,
+        })
+      )
+    );
+
+    attachmentURLs.forEach((url, idx) => {
+      item.attachments[idx].url = url;
+    });
+  }
+}
 export const getDetails = async (event) => {
   const componentId = event?.pathParameters?.id;
   if (!componentId) return RESPONSE_CODE.VALIDATION_ERROR;
@@ -20,8 +38,8 @@ export const getDetails = async (event) => {
     console.log("error : ", e);
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
-
-  let detailsk = event.queryStringParameters.cType;
+  const componentType = event.queryStringParameters.cType;
+  let detailsk = componentType;
   if (
     detailsk != "spa" &&
     detailsk != "chipspa" &&
@@ -38,26 +56,32 @@ export const getDetails = async (event) => {
     },
   };
 
+  const componentSubType = event.queryStringParameters?.csubtype || "rai"; //default subtype to rai
+  const childSk = componentType + "" + componentSubType;
+  const childParams = {
+    TableName: process.env.oneMacTableName,
+    KeyConditionExpression: "pk = :pk AND begins_with(sk,:sk)",
+    ExpressionAttributeValues: {
+      ":pk": componentId,
+      ":sk": childSk,
+    },
+    ScanIndexForward: false, //get records in reverse chronological order
+  };
+
   try {
     const result = await dynamoDb.get(params);
     if (!result.Item) {
       return {};
     }
 
-    if (Array.isArray(result.Item.attachments)) {
-      const attachmentURLs = await Promise.all(
-        result.Item.attachments.map(({ url }) =>
-          s3.getSignedUrlPromise("getObject", {
-            Bucket: process.env.attachmentsBucket,
-            Key: decodeURIComponent(url.split("amazonaws.com/")[1]),
-            Expires: 3600,
-          })
-        )
-      );
+    await assignAttachmentUrls(result.Item);
 
-      attachmentURLs.forEach((url, idx) => {
-        result.Item.attachments[idx].url = url;
-      });
+    const childResult = await dynamoDb.query(childParams);
+    if (childResult.Count > 0) {
+      for (let child of childResult.Items) {
+        await assignAttachmentUrls(child);
+      }
+      result.Item.children = childResult.Items.slice(0); //replace the static children with fresh result from query
     }
 
     console.log("Sending back result:", JSON.stringify(result, null, 2));
