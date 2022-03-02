@@ -78,7 +78,7 @@ export const getDetails = async (event) => {
 
     const childResult = await dynamoDb.query(childParams);
     if (childResult.Count > 0) {
-      for (let child of childResult.Items) {
+      for (const child of childResult.Items) {
         await assignAttachmentUrls(child);
       }
       result.Item.children = childResult.Items.slice(0); //replace the static children with fresh result from query
