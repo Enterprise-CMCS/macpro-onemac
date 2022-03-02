@@ -90,8 +90,8 @@ do
 
   #----End of new code to remove versioning -----
   
-  #remove the buckets
-  aws s3 rm s3://$i/ --recursive
+  #remove the bucket
+  aws s3 rb s3://$i
 done
 
 
