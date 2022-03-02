@@ -448,10 +448,23 @@ input[type="file"] {
 
   form,
   .faq-card,
-  .component-detail,
+  .component-detail-wrapper,
   .form-subheader-message {
     @include max-width-ultra-wide;
     width: 100%;
+  }
+
+  .component-detail-wrapper {
+    @extend .ds-u-display--flex;
+
+    .ds-c-vertical-nav {
+      @extend .ds-u-margin-right--2;
+      flex-basis: 275px;
+    }
+
+    .component-detail {
+      flex: 1 1;
+    }
   }
 
   .form-subheader-message {

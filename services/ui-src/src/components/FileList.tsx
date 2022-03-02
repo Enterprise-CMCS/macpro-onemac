@@ -1,18 +1,26 @@
-import React, { useCallback } from "react";
+import React, { ReactNode, useCallback } from "react";
 import JSZip from "jszip";
 import { saveAs } from "file-saver";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faDownload } from "@fortawesome/free-solid-svg-icons";
 
+type FileListProps = {
+  heading: ReactNode;
+  uploadList: { filename: string; title: string; url: string }[];
+  zipId?: string;
+};
+
 /**
  * Read only component to list the attachments.
- * @param {Object} props component properties
- * @returns the component
  */
-export default function FileList({ heading, uploadList, zipId }) {
+export default function FileList({
+  heading,
+  uploadList,
+  zipId,
+}: FileListProps) {
   const onDownloadAll = useCallback(async () => {
-    const downloadList = await Promise.all(
+    const downloadList = (await Promise.all(
       uploadList
         .map(async ({ filename, title, url }) => {
           try {
@@ -28,7 +36,7 @@ export default function FileList({ heading, uploadList, zipId }) {
           }
         })
         .filter(Boolean)
-    );
+    )) as { filename: string; title: string; contents: Blob }[];
     const zip = new JSZip();
     for (const { filename, title, contents } of downloadList) {
       zip.file(filename, contents, { comment: title });
