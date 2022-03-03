@@ -19,6 +19,9 @@ const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
 const dateSubmittedHeader = "//h3[text()='Date Submitted']";
 const raiResponsesHeader = "//section//h2[text()='RAI Responses']";
+const packageOverviewNavBtn = "//button[text()='Package Overview']";
+const packageDetailsNavBtn =
+  "//li[contains(@class, 'nav')]//div[text()='Package Details']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -94,6 +97,22 @@ export class oneMacPackageDetailsPage {
   }
   verifyTopRaiRespAddInfoExists() {
     cy.get(topRaiRespAddInfo).scrollIntoView().should("be.visible");
+  }
+  verifyPackageOverviewNavBtnExists() {
+    cy.xpath(packageOverviewNavBtn).should("be.visible");
+  }
+  verifyPackageOverviewNavBtnIsEnabled() {
+    cy.xpath(packageOverviewNavBtn).should("be.enabled");
+  }
+  verifyPackageOverviewNavBtnIsExpanded() {
+    cy.xpath(packageOverviewNavBtn).should(
+      "have.attr",
+      "aria-expanded",
+      "true"
+    );
+  }
+  verifyPackageDetailsNavBtnExists() {
+    cy.xpath(packageDetailsNavBtn).should("be.visible");
   }
 }
 export default oneMacPackageDetailsPage;

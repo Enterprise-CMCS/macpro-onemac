@@ -1587,6 +1587,9 @@ And("click Package Disapproved checkbox", () => {
 And("click the SPA ID link in the first row", () => {
   OneMacPackagePage.clickSPAIDLinkInFirstRow();
 });
+And("click the Waiver Number link in the first row", () => {
+  OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
+});
 And("click the Package Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
@@ -1922,10 +1925,21 @@ And("verify the first RAI response does not have Additional Info", () => {
 And("verify the first RAI response has Additional Info", () => {
   OneMacPackageDetailsPage.verifyTopRaiRespAddInfoExists();
 });
-And;
 And("click the actions button in row one", () => {
   OneMacPackagePage.clickPackageRowOneActionsBtn();
 });
 And("click the Respond to RAI button", () => {
   OneMacPackagePage.clickRespondToRAIBtn();
+});
+And("verify Package Overview navigation button exists", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnExists();
+});
+And("verify Package Overview navigation button is enabled", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsEnabled();
+});
+And("verify Package Overview navigation button is expanded", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsExpanded();
+});
+And("verify Package Details is listed under Package Overview", () => {
+  OneMacPackageDetailsPage.verifyPackageDetailsNavBtnExists();
 });
