@@ -192,6 +192,7 @@ const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
+const packageRowOneWaiverNumLink = "//td[@id='componentId-0']//a";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -835,6 +836,9 @@ export class oneMacPackagePage {
   }
   clickSPAIDLinkInFirstRow() {
     cy.xpath(packageRowOneSPAIDLink).click();
+  }
+  clickWaiverNumberLinkInFirstRow() {
+    cy.xpath(packageRowOneWaiverNumLink).click();
   }
 }
 export default oneMacPackagePage;
