@@ -213,7 +213,7 @@ const DetailSection = ({
           />
         </section>
         {detail.additionalInformation && (
-          <section className="detail-section">
+          <section id="addl-info-base" className="detail-section">
             <h2>Additional Information</h2>
             <Review className="original-review-component" headingLevel="2">
               {detail.additionalInformation}
@@ -244,7 +244,10 @@ const DetailSection = ({
                       zipId={child.componentType + index}
                     />
                     {child.additionalInformation && (
-                      <section className="detail-section">
+                      <section
+                        id={"addl-info-rai-" + index}
+                        className="detail-section"
+                      >
                         <h2>Additional Information</h2>
                         <Review
                           className="original-review-component"
