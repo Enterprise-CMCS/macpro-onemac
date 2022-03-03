@@ -52,7 +52,11 @@ export default function FileList({
       {heading && (
         <div className="choice-intro">
           <h2>{heading}</h2>
-          <Button onClick={onDownloadAll} variation="primary">
+          <Button
+            onClick={onDownloadAll}
+            variation="primary"
+            id={"dl_" + zipId}
+          >
             <FontAwesomeIcon icon={faDownload} /> Download All
           </Button>
         </div>

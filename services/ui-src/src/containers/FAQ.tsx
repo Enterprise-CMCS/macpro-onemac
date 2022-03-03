@@ -44,8 +44,8 @@ const FAQ = () => {
               <AccordionItem
                 id={questionAnswer.anchorText}
                 heading={questionAnswer.question}
-                buttonClassName="faq-question"
-                contentClassName="faq-answer"
+                buttonClassName="accordion-button"
+                contentClassName="accordion-content"
               >
                 {questionAnswer.answerJSX}
               </AccordionItem>
