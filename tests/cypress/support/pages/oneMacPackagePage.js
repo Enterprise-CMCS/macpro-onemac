@@ -192,6 +192,8 @@ const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
+const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
+const respondToRAIBtn = "//li[text()='Respond to RAI'][@aria-disabled='false']";
 const packageRowOneWaiverNumLink = "//td[@id='componentId-0']//a";
 
 export class oneMacPackagePage {
@@ -836,6 +838,12 @@ export class oneMacPackagePage {
   }
   clickSPAIDLinkInFirstRow() {
     cy.xpath(packageRowOneSPAIDLink).click();
+  }
+  clickPackageRowOneActionsBtn() {
+    cy.xpath(packageRowOneActionsBtn).click();
+  }
+  clickRespondToRAIBtn() {
+    cy.xpath(respondToRAIBtn).click();
   }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneWaiverNumLink).click();
