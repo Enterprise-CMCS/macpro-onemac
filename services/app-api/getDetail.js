@@ -56,14 +56,13 @@ export const getDetails = async (event) => {
     },
   };
 
-  const componentSubType = event.queryStringParameters?.csubtype || "rai"; //default subtype to rai
-  const childSk = componentType + "" + componentSubType;
-  const childParams = {
+  const raiSk = componentType + "rai";
+  const raiParams = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk AND begins_with(sk,:sk)",
     ExpressionAttributeValues: {
       ":pk": componentId,
-      ":sk": childSk,
+      ":sk": raiSk,
     },
     ScanIndexForward: false, //get records in reverse chronological order
   };
@@ -76,12 +75,12 @@ export const getDetails = async (event) => {
 
     await assignAttachmentUrls(result.Item);
 
-    const childResult = await dynamoDb.query(childParams);
-    if (childResult.Count > 0) {
-      for (const child of childResult.Items) {
+    const raiResult = await dynamoDb.query(raiParams);
+    if (raiResult.Count > 0) {
+      for (const child of raiResult.Items) {
         await assignAttachmentUrls(child);
       }
-      result.Item.children = childResult.Items.slice(0); //replace the static children with fresh result from query
+      result.Item.raiResponses = raiResult.Items.slice(0); //replace the static children with fresh result from query
     }
 
     console.log("Sending back result:", JSON.stringify(result, null, 2));

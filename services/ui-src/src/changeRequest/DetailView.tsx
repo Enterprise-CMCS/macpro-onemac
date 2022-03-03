@@ -43,7 +43,7 @@ type ComponentDetail = {
   clockEndTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
   territory: string;
-  children: any[];
+  raiResponses: any[];
 };
 
 const AUTHORITY_LABELS = {
@@ -220,12 +220,12 @@ const DetailSection = ({
             </Review>
           </section>
         )}
-        {detail.children && (
+        {detail.raiResponses && (
           <section className="detail-section">
             <h2>RAI Responses</h2>
             <Accordion>
-              {detail.children?.map((child, index) => {
-                let raiNumber = (detail.children.length - index)
+              {detail.raiResponses?.map((raiResponse, index) => {
+                let raiNumber = (detail.raiResponses.length - index)
                   .toString()
                   .padStart(2, "0");
                 return (
@@ -234,16 +234,16 @@ const DetailSection = ({
                     contentClassName="accordion-content"
                     heading={"RAI - " + raiNumber}
                     headingLevel="6"
-                    id={child.componentType + index + "_caret"}
-                    key={child.componentType + index}
+                    id={raiResponse.componentType + index + "_caret"}
+                    key={raiResponse.componentType + index}
                     defaultOpen={index === 0}
                   >
                     <FileList
                       heading={"RAI Response Documentation"}
-                      uploadList={child.attachments}
-                      zipId={child.componentType + index}
+                      uploadList={raiResponse.attachments}
+                      zipId={raiResponse.componentType + index}
                     />
-                    {child.additionalInformation && (
+                    {raiResponse.additionalInformation && (
                       <section
                         id={"addl-info-rai-" + index}
                         className="detail-section"
@@ -253,7 +253,7 @@ const DetailSection = ({
                           className="original-review-component"
                           headingLevel="2"
                         >
-                          {child.additionalInformation}
+                          {raiResponse.additionalInformation}
                         </Review>
                       </section>
                     )}
