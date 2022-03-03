@@ -636,7 +636,7 @@ And("click actions button on the child row", () => {
 });
 And("verify actions button on the child row is disabled", () => {
   OneMacPackagePage.verifyChildActionsBtnIsDisabled();
-  });
+});
 And("click actions button for Temporary Extension in Child Row", () => {
   OneMacPackagePage.clickActionsBtnForTempExtensionChild();
 });
@@ -1587,6 +1587,9 @@ And("click Package Disapproved checkbox", () => {
 And("click the SPA ID link in the first row", () => {
   OneMacPackagePage.clickSPAIDLinkInFirstRow();
 });
+And("click the Waiver Number link in the first row", () => {
+  OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
+});
 And("click the Package Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
@@ -1897,4 +1900,16 @@ And("verify user is on new spa page", () => {
 });
 And("verify user is on new waiver page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverPage();
+});
+And("verify Package Overview navigation button exists", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnExists();
+});
+And("verify Package Overview navigation button is enabled", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsEnabled();
+});
+And("verify Package Overview navigation button is expanded", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsExpanded();
+});
+And("verify Package Details is listed under Package Overview", () => {
+  OneMacPackageDetailsPage.verifyPackageDetailsNavBtnExists();
 });

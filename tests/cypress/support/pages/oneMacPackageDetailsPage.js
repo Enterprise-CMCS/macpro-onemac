@@ -13,6 +13,9 @@ const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
 const dateSubmittedHeader = "//h3[text()='Date Submitted']";
+const packageOverviewNavBtn = "//button[text()='Package Overview']";
+const packageDetailsNavBtn =
+  "//li[contains(@class, 'nav')]//div[text()='Package Details']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -68,6 +71,22 @@ export class oneMacPackageDetailsPage {
   }
   verifyDateExists() {
     cy.xpath(dateSubmittedHeader).next().should("be.visible");
+  }
+  verifyPackageOverviewNavBtnExists() {
+    cy.xpath(packageOverviewNavBtn).should("be.visible");
+  }
+  verifyPackageOverviewNavBtnIsEnabled() {
+    cy.xpath(packageOverviewNavBtn).should("be.enabled");
+  }
+  verifyPackageOverviewNavBtnIsExpanded() {
+    cy.xpath(packageOverviewNavBtn).should(
+      "have.attr",
+      "aria-expanded",
+      "true"
+    );
+  }
+  verifyPackageDetailsNavBtnExists() {
+    cy.xpath(packageDetailsNavBtn).should("be.visible");
   }
 }
 export default oneMacPackageDetailsPage;
