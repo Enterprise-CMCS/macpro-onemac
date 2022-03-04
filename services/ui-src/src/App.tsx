@@ -113,11 +113,11 @@ export function App() {
           cmsRoles,
         });
         if (retResponse === RESPONSE_CODE.USER_SUBMITTED) {
-          window.location.reload();
+          await setUserInfo();
         }
       }
     })();
-  }, [email, firstName, lastName, cmsRoles]);
+  }, [email, firstName, lastName, cmsRoles, setUserInfo]);
 
   /**
    * Updates phone number in the user profile,

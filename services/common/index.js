@@ -296,9 +296,9 @@ export const getUserRoleObj = (roleInfo) => {
 };
 
 export const getActiveTerritories = (roleList) => {
-  let activeTerritories = [];
+  let activeTerritories = ["N/A"];
 
-  if (roleList && Object.keys(roleList).length > 0) {
+  if (roleList && roleList.length > 0) {
     activeTerritories = roleList
       .filter(({ status }) => status === USER_STATUS.ACTIVE)
       .map(({ territory }) => territory);
