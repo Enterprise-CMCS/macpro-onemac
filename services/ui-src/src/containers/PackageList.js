@@ -392,7 +392,7 @@ const PackageList = () => {
         return <EmptyList message={pendingMessage[userRole]} />;
       }
 
-      if (userStatus !== USER_STATUS.ACTIVE) {
+      if (userStatus && userStatus !== USER_STATUS.ACTIVE) {
         return (
           <EmptyList
             showProfileLink="true"

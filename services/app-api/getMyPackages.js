@@ -18,14 +18,13 @@ export const getMyPackages = async (email, group) => {
 
   return getUser(email)
     .then((user) => {
-      let territoryList = "this is for EUA users";
-      if (Object.keys(user).length > 0) {
-        const userRoleObj = getUserRoleObj(user?.roleList);
+      if (!user) throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
 
-        territoryList = getActiveTerritories(user?.roleList);
-        if (!userRoleObj.canAccessDashboard || territoryList === []) {
-          throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
-        }
+      const userRoleObj = getUserRoleObj(user.roleList);
+
+      const territoryList = getActiveTerritories(user.roleList);
+      if (!userRoleObj.canAccessDashboard || territoryList === []) {
+        throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
 
       const baseParams = {

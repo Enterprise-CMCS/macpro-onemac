@@ -252,7 +252,11 @@ export const effectiveRoleForUser = (roleList = []) => {
       case USER_STATUS.ACTIVE:
         return [role, status];
       case USER_STATUS.PENDING:
-        pendingRole = role;
+        if (role !== USER_ROLE.CMS_ROLE_APPROVER) pendingRole = role;
+        break;
+      case USER_STATUS.REVOKED:
+      case USER_STATUS.DENIED:
+        if (role !== USER_ROLE.CMS_ROLE_APPROVER) otherOutput = [role, status];
         break;
       default:
         otherOutput = [role, status];
@@ -266,9 +270,13 @@ export const effectiveRoleForUser = (roleList = []) => {
 };
 
 export const inFlightRoleRequestForUser = (roleList) => {
+  if (!roleList || roleList.length === 0) return null;
+
   const effectiveAccess = effectiveRoleForUser(roleList);
 
-  if (!effectiveAccess) return null;
+  if (!effectiveAccess) {
+    return roleList.find(({ status }) => status === USER_STATUS.PENDING);
+  }
 
   const [effectiveRole, effectiveStatus] = effectiveAccess;
   switch (effectiveStatus) {
@@ -306,7 +314,7 @@ export const getUserRoleObj = (roleInfo) => {
 };
 
 export const getActiveTerritories = (roleList) => {
-  let activeTerritories = [];
+  let activeTerritories = ["N/A"];
 
   if (roleList && Object.keys(roleList).length > 0) {
     activeTerritories = roleList
