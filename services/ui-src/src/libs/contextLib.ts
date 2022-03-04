@@ -6,6 +6,6 @@ export const AppContext = createContext(
   null
 ) as Context<AppContextValue | null>;
 
-export function useAppContext() {
+export function useAppContext(): AppContextValue | null {
   return useContext(AppContext);
 }

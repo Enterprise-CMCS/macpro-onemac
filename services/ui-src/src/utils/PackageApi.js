@@ -7,7 +7,7 @@ class PackageApi {
   /**
    * Fetch a specific package from the backend.
    * @param {string} id the ID of the package to fetch
-   * @return {Object} a change request
+   * @return {Promise<Object>} a change request
    */
   async getDetail(componentId, componentType, componentTimestamp) {
     if (!componentId) {

@@ -24,22 +24,10 @@ const testUserEvent = {
 };
 
 const testDoneBy = {
-  firstName: "Unit",
-  lastName: "Tester",
-  attributes: [
-    {
-      stateCode: "VA",
-      history: [
-        {
-          date: 1617149287,
-          doneBy: "systemadmintest@cms.hhs.local",
-          status: "active",
-        },
-      ],
-    },
-  ],
-  id: "statesubmitteractive@cms.hhs.local",
-  type: USER_ROLE.STATE_SUBMITTER,
+  roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
+  email: "myemail@email.com",
+  fullName: "firsty lasty",
+  phoneNumber: "555-1212",
 };
 
 beforeEach(() => {
@@ -189,7 +177,9 @@ it(`handles exceptions for updateComponent`, async () => {
 });
 
 it(`returns if the email was not sent`, async () => {
-  expectedResponse.body = JSON.stringify(RESPONSE_CODE.EMAIL_NOT_SENT);
+  expectedResponse.body = JSON.stringify(
+    RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS
+  );
 
   sendEmail.mockImplementation(() => {
     throw "The sendEmail error thrown!";

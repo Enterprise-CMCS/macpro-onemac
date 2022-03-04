@@ -37,11 +37,12 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status column exists
         And verify date submitted column exists
         And verify submitted by column exists
+        And verify expiration date column does not exist
         And verify actions column exists
         And click show hide columns button
         And verify 90th day exists
         And verify date submitted exists
-        And verify expiration date exists
+        And verify expiration date exists 
         And verify state exists
         And verify status exists
         And verify submitted by exists
@@ -80,7 +81,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click show hide columns button
         And click 90th day checkbox
         And click date submitted checkbox
-        And click expiration date checkbox
         And click state checkbox
         And click status checkbox
         And click submitted by checkbox

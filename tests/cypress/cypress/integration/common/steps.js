@@ -119,6 +119,27 @@ And("Type Additonal Information Comments", () => {
 And("Click on Submit Button", () => {
   OneMacSubmitNewMedicaidSpaPage.clicksubmitBTN();
 });
+And("verify submission warning text is visible", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningTextIsVisible();
+});
+And("verify submission warning text", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningText();
+});
+And("verify the form Submit Button exists", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifySubmitBtnExists();
+});
+And("verify form cancel button exists", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifyCancelBtnExists();
+});
+And("click form cancel button", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickCancelBtn();
+});
+And("click Leave Anyway form button", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickLeaveAnywayBtn();
+});
+And("click Stay on Page", () => {
+  OneMacSubmitNewMedicaidSpaPage.clickStayOnPageBtn();
+});
 And("verify submission Successful message", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayed();
 });
@@ -612,6 +633,12 @@ And("search for Unique Valid Waiver Number with 5 Characters", () => {
 });
 And("click actions button on the child row", () => {
   OneMacPackagePage.clickActionsColumnForChild();
+});
+And("verify actions button on the child row is disabled", () => {
+  OneMacPackagePage.verifyChildActionsBtnIsDisabled();
+});
+And("click actions button for Temporary Extension in Child Row", () => {
+  OneMacPackagePage.clickActionsBtnForTempExtensionChild();
 });
 And("verify child row has status {string}", (status) => {
   OneMacPackagePage.verifyChildRowStatusIs(status);
@@ -1560,6 +1587,9 @@ And("click Package Disapproved checkbox", () => {
 And("click the SPA ID link in the first row", () => {
   OneMacPackagePage.clickSPAIDLinkInFirstRow();
 });
+And("click the Waiver Number link in the first row", () => {
+  OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
+});
 And("click the Package Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
@@ -1864,4 +1894,52 @@ And("click back arrow", () => {
 });
 And("click Leave, anyway", () => {
   OneMacRespondToRAIPage.clickLeaveAnyway();
+});
+And("verify user is on new spa page", () => {
+  OneMacSubmissionTypePage.verifyNewSPAPage();
+});
+And("verify user is on new waiver page", () => {
+  OneMacSubmissionTypePage.verifyNewWaiverPage();
+});
+And("verify RAI Responses header exists", () => {
+  OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
+});
+And(
+  "verify the RAI Responses caret at the top of the list exists and is enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyTopRaiRespCaretExistsAndEnabled();
+  }
+);
+And("verify the RAI response card at the top of the list exists", () => {
+  OneMacPackageDetailsPage.verifyTopRaiRespCardExists();
+});
+And(
+  "verify the download button for the RAI response at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyTopRaiRespDownloadBtnExistsAndEnabled();
+  }
+);
+And("verify the first RAI response does not have Additional Info", () => {
+  OneMacPackageDetailsPage.verifyTopRaiRespAddInfoDoesNotExist();
+});
+And("verify the first RAI response has Additional Info", () => {
+  OneMacPackageDetailsPage.verifyTopRaiRespAddInfoExists();
+});
+And("click the actions button in row one", () => {
+  OneMacPackagePage.clickPackageRowOneActionsBtn();
+});
+And("click the Respond to RAI button", () => {
+  OneMacPackagePage.clickRespondToRAIBtn();
+});
+And("verify Package Overview navigation button exists", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnExists();
+});
+And("verify Package Overview navigation button is enabled", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsEnabled();
+});
+And("verify Package Overview navigation button is expanded", () => {
+  OneMacPackageDetailsPage.verifyPackageOverviewNavBtnIsExpanded();
+});
+And("verify Package Details is listed under Package Overview", () => {
+  OneMacPackageDetailsPage.verifyPackageDetailsNavBtnExists();
 });

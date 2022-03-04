@@ -37,18 +37,6 @@ for i in "${services[@]}"; do
     deploy $i
 done
 
-#
-#Add System Admin User
-
-#
-#
-# This user is available in both DEV and PROD
-#
-echo '{  "id": { "S": "sabrina.mccrae@cms.hhs.gov" }, "firstName": { "S": "Sabrina" }, "lastName": { "S": "McCrae" },  "type": { "S": "systemadmin" } }' > user.json
-userTable=cms-spa-form-${stage}-user-profiles
-aws dynamodb put-item --table-name $userTable --item file://user.json
-
-
 echo """
 ------------------------------------------------------------------------------------------------
 ------------------------------------------------------------------------------------------------

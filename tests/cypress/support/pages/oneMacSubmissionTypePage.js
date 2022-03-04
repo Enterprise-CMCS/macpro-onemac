@@ -23,7 +23,12 @@ export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
     cy.xpath(statePlanAmendmentSPA).click();
   }
-
+  verifyNewWaiverPage() {
+    cy.url().should("include", "/newwaiver");
+  }
+  verifyNewSPAPage() {
+    cy.url().should("include", "/newspa");
+  }
   clickwaiverAction() {
     cy.xpath(waiverAction).click();
   }

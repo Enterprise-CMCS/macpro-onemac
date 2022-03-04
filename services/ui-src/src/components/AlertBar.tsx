@@ -6,11 +6,11 @@ import closingX from "../images/AlertClosingX.svg";
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 
 const AlertBar: React.FC<{
-  alertCode: string;
+  alertCode?: string;
   personalizedString?: string;
   closeCallback?: () => void;
 }> = ({ alertCode, personalizedString = "", closeCallback }) => {
-  const [alert, setAlert] = useState(alertCodeAlerts[alertCode]);
+  const [alert, setAlert] = useState(alertCodeAlerts[alertCode ?? ""]);
 
   useEffect(() => {
     let mounted = true;

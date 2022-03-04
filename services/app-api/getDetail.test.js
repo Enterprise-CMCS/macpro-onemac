@@ -1,37 +1,88 @@
 import dynamoDb from "./libs/dynamodb-lib";
-import { validateUserReadOnly } from "./utils/validateUser";
 import { getDetails } from "./getDetail";
 import { getUser } from "./getUser";
 import { RESPONSE_CODE } from "cmscommonlib";
 
-const testDoneBy = {
-  roleList: [
-    { role: "statesubmitter", status: "active", territory: "VA" },
-    { role: "statesubmitter", status: "active", territory: "MD" },
-  ],
+jest.mock("./getUser");
+jest.mock("./libs/dynamodb-lib");
+
+beforeAll(() => {
+  jest.clearAllMocks();
+});
+
+const validDoneBy = {
+  roleList: [{ role: "statesubmitter", status: "active", territory: "MI" }],
   email: "myemail@email.com",
-  firstName: "firsty",
-  lastName: "lasty",
   fullName: "firsty lastly",
 };
 
-jest.mock("./getUser");
-jest.mock("./utils/validateUser");
-jest.mock("./libs/dynamodb-lib");
+const unauthorizedDoneBy = {
+  roleList: [{ role: "cmsroleapprover", status: "active", territory: "N/A" }],
+  email: "myemail@email.com",
+  fullName: "firsty lastly",
+};
+
+const invalidDoneBy = {
+  roleList: [{ role: "statesubmitter", status: "denied", territory: "MI" }],
+  email: "myemail@email.com",
+  fullName: "firsty lastly",
+};
+
+const validEvent = {
+  queryStringParameters: {
+    email: "email",
+    cType: "spa",
+    cNum: 18274923435,
+  },
+  pathParameters: {
+    id: "MInumber",
+  },
+};
+const noPathEvent = {
+  queryStringParameters: {
+    email: "email",
+    cType: "spa",
+    cNum: 18274923435,
+  },
+};
+
+beforeEach(() => {
+  getUser.mockResolvedValue(validDoneBy);
+
+  dynamoDb.get.mockResolvedValue({
+    Item: {
+      field1: "one",
+    },
+  });
+});
 
 describe("handles errors and exceptions", () => {
   it("checks incoming parameters", async () => {
-    const testEvent = {
-      queryStringParameters: {
-        email: "email",
-        cType: "spa",
-        cNum: 18274923435,
-      },
-    };
-
     const expectedReturn = RESPONSE_CODE.VALIDATION_ERROR;
 
-    expect(getDetails(testEvent))
+    expect(getDetails(noPathEvent))
+      .resolves.toStrictEqual(expectedReturn)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
+  it("checks for valid user", async () => {
+    const expectedReturn = RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    getUser.mockResolvedValueOnce(invalidDoneBy);
+
+    expect(getDetails(validEvent))
+      .resolves.toStrictEqual(expectedReturn)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
+  it("checks for authorized user", async () => {
+    const expectedReturn = RESPONSE_CODE.USER_NOT_AUTHORIZED;
+    getUser.mockResolvedValueOnce(unauthorizedDoneBy);
+
+    expect(getDetails(validEvent))
       .resolves.toStrictEqual(expectedReturn)
       .catch((error) => {
         console.log("caught test error: ", error);
@@ -40,28 +91,18 @@ describe("handles errors and exceptions", () => {
 });
 
 describe("component details are returned", () => {
+  it("returns empty object if no results", async () => {
+    dynamoDb.get.mockResolvedValueOnce({ notAnItem: "something" });
+
+    expect(getDetails(validEvent))
+      .resolves.toStrictEqual({})
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
   it("returns details", async () => {
-    const testEvent = {
-      queryStringParameters: {
-        email: "email",
-        cType: "spa",
-        cNum: 18274923435,
-      },
-      pathParameters: {
-        id: "id",
-      },
-    };
-
-    getUser.mockResolvedValue(testDoneBy);
-    validateUserReadOnly.mockReturnValue(true);
-
-    dynamoDb.get.mockResolvedValue({
-      Item: {
-        field1: "one",
-      },
-    });
-
-    expect(getDetails(testEvent))
+    expect(getDetails(validEvent))
       .resolves.toStrictEqual({
         field1: "one",
       })

@@ -46,6 +46,8 @@ export type SelectOption = { label: string; value: string };
 
 export const territoryList: SelectOption[];
 
+export const territoryMap: Record<string, string>;
+
 export namespace ChangeRequest {
   type TransmittalNumberInfo = {
     idLabel: string;
@@ -68,6 +70,11 @@ export namespace ChangeRequest {
     renewalTransmittalNumber: TransmittalNumberInfo;
   };
 
+  export enum PACKAGE_ACTION {
+    RESPOND_TO_RAI = "Respond to RAI",
+    WITHDRAW = "Withdraw Package",
+  }
+
   export type FormInfo = {
     pageTitle: string;
     subheaderMessage?: { __html: string };
@@ -75,6 +82,8 @@ export namespace ChangeRequest {
     transmittalNumber: TransmittalNumberInfo;
     requiredUploads: unknown;
     optionalUploads: unknown;
+    actionsByStatus: Record<string, PACKAGE_ACTION[]>;
+    raiLink: string;
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;
@@ -84,4 +93,6 @@ export namespace ChangeRequest {
     SPA = "spa",
     WAIVER = "waiver",
   }
+
+  export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
 }
