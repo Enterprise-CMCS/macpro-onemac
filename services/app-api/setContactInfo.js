@@ -1,11 +1,12 @@
-import { RESPONSE_CODE } from "cmscommonlib";
+import { effectiveRoleForUser, RESPONSE_CODE, USER_ROLE } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
 import { getUser } from "./getUser";
 import { newUser } from "./utils/newUser";
 
 export const setContactInfo = async (event) => {
-  let body;
+  let body,
+    apiResponse = RESPONSE_CODE.USER_EXISTS;
   try {
     body = JSON.parse(event.body);
   } catch (e) {
@@ -15,25 +16,39 @@ export const setContactInfo = async (event) => {
 
   try {
     const existingUser = await getUser(body.email);
-    if (existingUser !== null) {
-      return RESPONSE_CODE.USER_EXISTS;
-    }
-  } catch (e) {
-    console.error("Could not fetch relevant user info", e);
-    return RESPONSE_CODE.USER_SUBMISSION_FAILED;
-  }
+    const fullName = body.fullName ?? `${body.firstName} ${body.lastName}`;
 
-  try {
-    await newUser({
-      fullName: body.fullName ?? `${body.firstName} ${body.lastName}`,
-      email: body.email,
-    });
+    if (!existingUser) {
+      await newUser({
+        fullName,
+        email: body.email,
+      });
+      apiResponse = RESPONSE_CODE.USER_SUBMITTED;
+    }
+    if (
+      !effectiveRoleForUser(existingUser?.roleList) &&
+      !body.cmsRoles.includes("onemac-stateuser") &&
+      !body.cmsRoles.includes("onemac-helpdesk")
+    ) {
+      await changeUserStatus({
+        email: body.email,
+        fullName,
+        doneByEmail: body.email,
+        doneByName: fullName,
+        date: Date.now(),
+        role: USER_ROLE.DEFAULT_CMS_USER,
+        territory: "N/A",
+        status: USER_STATUS.ACTIVE,
+      });
+
+      apiResponse = RESPONSE_CODE.USER_SUBMITTED;
+    }
   } catch (e) {
     console.error(`Could not create user ${body.email}`, e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
-  return RESPONSE_CODE.USER_SUBMITTED;
+  return apiResponse;
 };
 
 export const main = handler(setContactInfo);
