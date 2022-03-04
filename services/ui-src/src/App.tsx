@@ -117,7 +117,7 @@ export function App() {
         }
       }
     })();
-  }, [email, firstName, lastName]);
+  }, [email, firstName, lastName, cmsRoles]);
 
   /**
    * Updates phone number in the user profile,

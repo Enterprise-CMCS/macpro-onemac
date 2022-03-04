@@ -1,8 +1,14 @@
-import { effectiveRoleForUser, RESPONSE_CODE, USER_ROLE } from "cmscommonlib";
+import {
+  effectiveRoleForUser,
+  RESPONSE_CODE,
+  USER_ROLE,
+  USER_STATUS,
+} from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
 import { getUser } from "./getUser";
 import { newUser } from "./utils/newUser";
+import { changeUserStatus } from "./utils/changeUserStatus";
 
 export const setContactInfo = async (event) => {
   let body,
