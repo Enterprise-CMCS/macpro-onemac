@@ -33,8 +33,9 @@ export const setContactInfo = async (event) => {
     }
     if (
       !effectiveRoleForUser(existingUser?.roleList) &&
-      !body.cmsRoles.includes("onemac-stateuser") &&
-      !body.cmsRoles.includes("onemac-helpdesk")
+      (!body.cmsRoles ||
+        (!body.cmsRoles.includes("onemac-stateuser") &&
+          !body.cmsRoles.includes("onemac-helpdesk")))
     ) {
       await changeUserStatus({
         email: body.email,
