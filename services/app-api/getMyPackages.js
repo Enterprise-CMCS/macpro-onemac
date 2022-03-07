@@ -20,9 +20,9 @@ export const getMyPackages = async (email, group) => {
     .then((user) => {
       if (!user) throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
 
-      const userRoleObj = getUserRoleObj(user?.roleList);
+      const userRoleObj = getUserRoleObj(user.roleList);
+      const territoryList = getActiveTerritories(user.roleList);
 
-      territoryList = getActiveTerritories(user?.roleList);
       if (!userRoleObj.canAccessDashboard || territoryList === []) {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
