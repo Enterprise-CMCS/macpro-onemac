@@ -42,16 +42,16 @@ const rowTransformer = {
     submissionTypes[row.type],
     row.territory,
     serializeDate(row.submittedAt),
-    row.submitterName,
+    JSON.stringify(row.submitterName),
   ],
   "user-table": (row) => [
-    row.fullName,
+    JSON.stringify(row.fullName),
     row.email,
-    row.stateCode,
-    userStatus[row.latest.status],
+    row.territory,
+    userStatus[row.status],
     roleLabels[row.role],
-    serializeDate(row.latest.date * 1000),
-    JSON.stringify(row.latest.doneByName),
+    serializeDate(row.date * 1000),
+    JSON.stringify(row.doneByName),
   ],
 };
 
