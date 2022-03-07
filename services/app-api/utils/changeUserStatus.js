@@ -5,10 +5,10 @@ export const buildSK = (role, territory) => {
   switch (role) {
     case USER_ROLE.STATE_SUBMITTER:
       return `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
-    case USER_ROLE.DEFAULT_CMS_USER:
     case USER_ROLE.CMS_REVIEWER:
     case USER_ROLE.STATE_SYSTEM_ADMIN:
       return USER_ROLE.CMS_ROLE_APPROVER;
+    case USER_ROLE.DEFAULT_CMS_USER:
     default:
       return "Boss";
   }
