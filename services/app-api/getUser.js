@@ -2,7 +2,6 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
 import { getUserRoleObj } from "cmscommonlib";
-import { ServerlessApplicationRepository } from "aws-sdk";
 
 /**
  * returns the User Table entry who's id is this email
