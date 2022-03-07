@@ -1822,9 +1822,9 @@ article.form-container {
 }
 
 //The link which when clicked opens the collapsable area
-.faq-question,
-.faq-question[aria-expanded="false"],
-.faq-question:hover {
+.accordion-button,
+.accordion-button[aria-expanded="false"],
+.accordion-button:hover {
   display: block;
   font-weight: 700;
   font-size: 18px;
@@ -1849,13 +1849,13 @@ article.form-container {
   }
 
   &.is-open,
-  &.faq-question[aria-expanded="true"] {
+  &.accordion-button[aria-expanded="true"] {
     &:before {
       transform: rotateZ(180deg);
     }
   }
 }
-.faq-answer {
+.accordion-content {
   max-height: 300rem;
   padding-left: 62px;
   font-size: 14px;
@@ -1996,7 +1996,6 @@ aside#faq-contact-info-box {
     .choice-intro {
       @extend .ds-u-margin-bottom--2;
       @extend .ds-u-padding-bottom--0;
-      @extend .ds-u-margin-top--7;
       display: flex;
       justify-content: space-between;
       align-items: center;
