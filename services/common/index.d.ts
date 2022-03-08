@@ -72,7 +72,7 @@ export namespace ChangeRequest {
 
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
-    WITHDRAW = "Withdraw Package",
+    WITHDRAW = "Withdraw",
   }
 
   export type FormInfo = {
