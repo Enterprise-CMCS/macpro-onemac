@@ -40,7 +40,10 @@ export class oneMacUserManagmentPage {
     cy.url().should("include", "/usermanagement");
   }
   clickPendingUserActionBtn() {
-    cy.xpath(modifiedBy).scrollIntoView().next("td").click();
+    cy.xpath(modifiedBy)
+      .next("td")
+      .scrollIntoView({ easing: "linear" })
+      .click();
   }
   clickDenyAccessBtn() {
     cy.xpath(denyAccessBtn).click();
