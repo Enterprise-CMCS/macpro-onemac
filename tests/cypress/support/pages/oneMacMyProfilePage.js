@@ -55,6 +55,9 @@ export class oneMacMyProfilePage {
   verifyStatusHeader() {
     cy.get(statusHeader).should("be.visible");
   }
+  verifyStatusHeaderDoesNotExist() {
+    cy.get(statusHeader).should("not.exist");
+  }
   verifyAccessStatus() {
     cy.xpath(accessStatus).should("be.visible");
   }
