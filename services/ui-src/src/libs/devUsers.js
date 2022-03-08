@@ -16,6 +16,6 @@ export const devUsers = [
   "cmsroleapproverdenied@cms.hhs.local",
   "cmsroleapproverrevoked@cms.hhs.local",
   "systemadmintest@cms.hhs.local",
-  "cmsroleapproverunregistered@cms.hhs.local",
+  "cmsuserunregistered@cms.hhs.local",
   "statesubmitter@nightwatch.test",
 ];
