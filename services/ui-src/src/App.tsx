@@ -9,7 +9,11 @@ import UserDataApi from "./utils/UserDataApi";
 import { Routes } from "./Routes";
 import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
-import { effectiveRoleForUser, getActiveTerritories } from "cmscommonlib";
+import {
+  effectiveRoleForUser,
+  getActiveTerritories,
+  RESPONSE_CODE,
+} from "cmscommonlib";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
@@ -96,12 +100,24 @@ export function App() {
     setUserInfo();
   }, [setUserInfo]);
 
-  const { email, firstName, lastName } = authState.userProfile;
+  const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
     // When user's email or name changes, create a record of their info if it
     // does not already exist
-    if (email) UserDataApi.setContactInfo({ email, firstName, lastName });
-  }, [email, firstName, lastName]);
+    (async () => {
+      if (email) {
+        const retResponse = await UserDataApi.setContactInfo({
+          email,
+          firstName,
+          lastName,
+          cmsRoles,
+        });
+        if (retResponse === RESPONSE_CODE.USER_SUBMITTED) {
+          await setUserInfo();
+        }
+      }
+    })();
+  }, [email, firstName, lastName, cmsRoles, setUserInfo]);
 
   /**
    * Updates phone number in the user profile,

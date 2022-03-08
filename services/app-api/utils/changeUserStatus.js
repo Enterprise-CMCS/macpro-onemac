@@ -1,12 +1,14 @@
 import dynamoDb from "../libs/dynamodb-lib";
+import { USER_ROLE, USER_STATUS } from "cmscommonlib";
 
 export const buildSK = (role, territory) => {
   switch (role) {
-    case "statesubmitter":
-      return `statesystemadmin#${territory}`;
-    case "cmsreviewer":
-    case "statesystemadmin":
-      return "cmsroleapprover";
+    case USER_ROLE.STATE_SUBMITTER:
+      return `${USER_ROLE.STATE_SYSTEM_ADMIN}#${territory}`;
+    case USER_ROLE.CMS_REVIEWER:
+    case USER_ROLE.STATE_SYSTEM_ADMIN:
+      return USER_ROLE.CMS_ROLE_APPROVER;
+    case USER_ROLE.DEFAULT_CMS_USER:
     default:
       return "Boss";
   }
@@ -23,8 +25,6 @@ export const changeUserStatus = async ({
   status,
 }) => {
   // add a new v0 and v latest
-
-  // update contactInfo GSI
   try {
     const updateParams = {
       TableName: process.env.oneMacTableName,
@@ -90,6 +90,7 @@ export const changeUserStatus = async ({
     throw e;
   }
 
+  // update contactInfo GSI
   const contactParams = {
     TableName: process.env.oneMacTableName,
     Key: {
@@ -97,7 +98,7 @@ export const changeUserStatus = async ({
       sk: "ContactInfo",
     },
   };
-  if (role !== "statesubmitter" && status === "active") {
+  if (role !== USER_ROLE.STATE_SUBMITTER && status === USER_STATUS.ACTIVE) {
     contactParams.UpdateExpression = "SET GSI1pk = :newPk, GSI1sk = :newSk";
     contactParams.ExpressionAttributeValues = {
       ":newPk": `${role}#${territory}`,
