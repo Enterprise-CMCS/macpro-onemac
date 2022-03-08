@@ -29,7 +29,7 @@ const VARIATION_PROPS = {
   },
   PackageList: {
     acceptText: "Yes, withdraw",
-    dialogTitle: "Withdraw Package?",
+    dialogTitle: "Withdraw?",
   },
 };
 
