@@ -175,6 +175,31 @@ export const raiActionsByStatus = {
 };
 
 export const CONFIG = {
+  [""]: {
+    pageTitle: "New Submission",
+    readOnlyPageTitle: "Details",
+    detailsHeader: "Details",
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
+    transmittalNumber: {
+      idType: "chipspa",
+      idLabel: "ID",
+      idHintText: "Must follow the proper format",
+      idFAQLink: ROUTES.FAQ_SPA_ID,
+      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
+      idRegex:
+        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
+    },
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.CHIP_SPA_RAI,
+  },
   [TYPE.CHIP_SPA]: {
     pageTitle: "Submit New CHIP SPA",
     readOnlyPageTitle: "CHIP SPA Submission Details",
