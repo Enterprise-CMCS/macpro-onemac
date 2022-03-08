@@ -29,8 +29,11 @@ const submittedByHeader = "#submitterColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageTab = '//a[@id="packageListLink"]';
 
-const spaIDLink = "div.header-and-content:nth-child(1) div.dashboard-white div.dashboard-container table.submissions-table.submissions-table-actions-column tbody:nth-child(2) tr:nth-child(1) td:nth-child(1) > a:nth-child(1)";
-const uploadedAttachments = "div.header-and-content:nth-child(1) article.form-container div.read-only-submission section.choice-container.file-list-container:nth-child(3)";
+const spaIDLink =
+  "div.header-and-content:nth-child(1) div.dashboard-white div.dashboard-container table.submissions-table.submissions-table-actions-column tbody:nth-child(2) tr:nth-child(1) td:nth-child(1) > a:nth-child(1)";
+const uploadedAttachments =
+  "div.header-and-content:nth-child(1) article.form-container div.read-only-submission section.choice-container.file-list-container:nth-child(3)";
+const logoutBtn = "//a[@id='logoutLink']";
 
 export class oneMacDashboardPage {
   clickNewSubmission() {
@@ -117,7 +120,7 @@ export class oneMacDashboardPage {
     cy.visit(s);
   }
 
-  clickOnSpaID(){
+  clickOnSpaID() {
     cy.get(spaIDLink).click();
     cy.wait(5000);
   }
@@ -125,6 +128,8 @@ export class oneMacDashboardPage {
   verifyAttachmentExists(s) {
     cy.get(uploadedAttachments).contains(s);
   }
-
+  clickLogoutBtn() {
+    cy.xpath(logoutBtn).click();
+  }
 }
 export default oneMacDashboardPage;
