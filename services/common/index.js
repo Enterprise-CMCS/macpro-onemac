@@ -70,6 +70,7 @@ export const USER_ROLE = {
   STATE_SUBMITTER: "statesubmitter",
   CMS_REVIEWER: "cmsreviewer",
   STATE_SYSTEM_ADMIN: "statesystemadmin",
+  DEFAULT_CMS_USER: "defaultcmsuser",
   CMS_ROLE_APPROVER: "cmsroleapprover",
   SYSTEM_ADMIN: "systemadmin",
   HELPDESK: "helpdesk",
@@ -79,6 +80,7 @@ export const APPROVING_USER_ROLE = {
   [USER_ROLE.STATE_SUBMITTER]: USER_ROLE.STATE_SYSTEM_ADMIN,
   [USER_ROLE.STATE_SYSTEM_ADMIN]: USER_ROLE.CMS_ROLE_APPROVER,
   [USER_ROLE.CMS_ROLE_APPROVER]: USER_ROLE.SYSTEM_ADMIN,
+  [USER_ROLE.DEFAULT_CMS_USER]: USER_ROLE.CMS_ROLE_APPROVER,
   [USER_ROLE.HELPDESK]: USER_ROLE.SYSTEM_ADMIN,
   [USER_ROLE.CMS_REVIEWER]: USER_ROLE.CMS_ROLE_APPROVER,
 };
@@ -86,28 +88,6 @@ export const APPROVING_USER_ROLE = {
 export const HELPING_USER_ROLE = {
   ...APPROVING_USER_ROLE,
   [USER_ROLE.SYSTEM_ADMIN]: USER_ROLE.HELP_DESK,
-};
-
-export const tableRoles = {
-  [USER_ROLE.STATE_SYSTEM_ADMIN]: [USER_ROLE.STATE_SUBMITTER],
-  [USER_ROLE.CMS_ROLE_APPROVER]: [
-    USER_ROLE.STATE_SYSTEM_ADMIN,
-    USER_ROLE.CMS_REVIEWER,
-  ],
-  [USER_ROLE.HELPDESK]: [
-    USER_ROLE.STATE_SUBMITTER,
-    USER_ROLE.CMS_REVIEWER,
-    USER_ROLE.STATE_SYSTEM_ADMIN,
-    USER_ROLE.CMS_ROLE_APPROVER,
-    USER_ROLE.HELPDESK,
-  ],
-  [USER_ROLE.SYSTEM_ADMIN]: [
-    USER_ROLE.STATE_SUBMITTER,
-    USER_ROLE.CMS_REVIEWER,
-    USER_ROLE.STATE_SYSTEM_ADMIN,
-    USER_ROLE.CMS_ROLE_APPROVER,
-    USER_ROLE.HELPDESK,
-  ],
 };
 
 /**
@@ -126,6 +106,7 @@ export const USER_STATUS = {
 export const roleLabels = {
   [USER_ROLE.STATE_SUBMITTER]: "State Submitter",
   [USER_ROLE.STATE_SYSTEM_ADMIN]: "State System Admin",
+  [USER_ROLE.DEFAULT_CMS_USER]: "CMS Read-only User",
   [USER_ROLE.CMS_ROLE_APPROVER]: "CMS Role Approver",
   [USER_ROLE.CMS_REVIEWER]: "CMS Reviewer",
   [USER_ROLE.SYSTEM_ADMIN]: "CMS System Admin",
@@ -178,6 +159,14 @@ export class Role {
 }
 
 class DefaultUser extends Role {
+  constructor() {
+    super();
+    this.canAccessDashboard = true;
+    this.canDownloadCsv = true;
+  }
+}
+
+class DefaultCMSUser extends Role {
   constructor() {
     super();
     this.canAccessDashboard = true;
@@ -299,6 +288,7 @@ export const getUserRoleObj = (roleInfo) => {
     [USER_ROLE.STATE_SUBMITTER]: StateSubmitter,
     [USER_ROLE.STATE_SYSTEM_ADMIN]: StateSystemAdmin,
     [USER_ROLE.CMS_ROLE_APPROVER]: CmsRoleApprover,
+    [USER_ROLE.DEFAULT_CMS_USER]: DefaultCMSUser,
     [USER_ROLE.SYSTEM_ADMIN]: SystemAdmin,
     [USER_ROLE.HELPDESK]: Helpdesk,
     [USER_ROLE.CMS_REVIEWER]: CmsReviewer,
@@ -306,9 +296,9 @@ export const getUserRoleObj = (roleInfo) => {
 };
 
 export const getActiveTerritories = (roleList) => {
-  let activeTerritories = [];
+  let activeTerritories = ["N/A"];
 
-  if (roleList && Object.keys(roleList).length > 0) {
+  if (roleList && roleList.length > 0) {
     activeTerritories = roleList
       .filter(({ status }) => status === USER_STATUS.ACTIVE)
       .map(({ territory }) => territory);
