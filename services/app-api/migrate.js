@@ -10,53 +10,64 @@ export const main = handler(async (event) => {
   // scan one table index as only indexed items need migration in this case
   const params = {
     TableName: process.env.oneMacTableName,
-    FilterExpression: "currentStatus = :withdrawnStatus",
-    ExpressionAttributeValues: {
-      ":withdrawnStatus": "Package Withdrawn",
-    },
     ExclusiveStartKey: null,
     ScanIndexForward: false,
-    ProjectionExpression: "pk, sk, currentStatus",
+    ProjectionExpression: "pk, sk, currentStatus, children",
   };
 
   const promiseItems = [];
   do {
-    const results = dynamoDb.scan(params);
-    console.log("params are: ", params);
-    console.log("results are: ", results);
-    promiseItems.push(...results.Items);
+    const results = await dynamodb.scan(params);
+
+    for (let item of results.Items) {
+      let updateParams = {
+        TableName: process.env.oneMacTableName,
+        ReturnValues: "ALL_NEW",
+        Key: {
+          pk: item.pk,
+          sk: item.sk,
+        },
+        ExpressionAttributeValues: {},
+      };
+
+      let updateExpressions = [];
+
+      //check if item status needs to be modified
+      if (item.currentStatus === "Package Withdrawn") {
+        updateExpressions.push("currentStatus = :newStatus");
+        updateParams.ExpressionAttributeValues[":newStatus"] = "Withdrawn";
+      }
+
+      //check if children statuses need to be modified
+      if (item.children) {
+        let childUpdated = false;
+        for (let child of item.children) {
+          if (child.currentStatus === "Package Withdrawn") {
+            child.currentStatus = "Withdrawn";
+            childUpdated = true;
+          }
+        }
+        if (childUpdated) {
+          updateExpressions.push("children = :newChildren");
+          updateParams.ExpressionAttributeValues[":newChildren"] =
+            item.children;
+        }
+      }
+
+      if (updateExpressions.length > 0) {
+        updateParams.UpdateExpression = "SET " + updateExpressions.join(",");
+        promiseItems.push(updateParams);
+      }
+    }
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
 
-  const updateParams = {
-    TableName: process.env.oneMacTableName,
-    ConditionExpression: "currentStatus=:currentStatus",
-    UpdateExpression: "SET currentStatus = :newStatus",
-    ReturnValues: "ALL_NEW",
-  };
-
-  // convert GSI1pl from OneMAC to OneMAC#spa or OneMAC#waiver based on component type
   await Promise.all(
-    promiseItems.map(async (item, index) => {
-      // get the package group of the item
-      updateParams.Key = {
-        pk: item.pk,
-        sk: item.sk,
-      };
-
-      updateParams.ExpressionAttributeValues = {
-        ":currentStatus": "Package Withdrawn",
-        ":newStatus": "Withdrawn",
-      };
-
+    promiseItems.map(async (updateParams, index) => {
       try {
-        console.log(
-          `Update Params for ${JSON.stringify(item)} are ${JSON.stringify(
-            updateParams
-          )}`
-        );
-        if (index >= 0) return;
-        const result = await dynamoDb.update(updateParams);
+        console.log(`Update Params are ${JSON.stringify(updateParams)}`);
+
+        const result = await dynamodb.update(updateParams);
         console.log("Result is: ", result);
       } catch (e) {
         console.log("update error: ", e);
