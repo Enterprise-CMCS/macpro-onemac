@@ -1,9 +1,11 @@
 Feature: OY2_12596_CMSUserRevoked
-    Scenario: Denied CMS user can see the text, profile information and status card
+    Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms role approver Revoked
-        Then i am on User Management Page
+
+    Scenario: Screen Enhance - Revoked CMS user can see the text and profile information
+        Then i am on Dashboard Page
         Then Click on My Account
         Then Click on Manage Profile
         When I am on My Profile Page
@@ -16,5 +18,11 @@ Feature: OY2_12596_CMSUserRevoked
         And Actual Email is Displayed
         And Phone Number text is Displayed
         And Phone Number Add Button is Displayed
-        And Status text is Displayed
-        And Actual Status is Displayed with Access Revoked
+        And Status text is not displayed
+
+    Scenario: Screen Enhance - Revoked CMS user can request CMS Role Approver
+        Then Click on My Account
+        And verify that Request a Role Change button exists
+        And click on Request a Role Change button
+        And verify Select the role for which you are registering is visible
+        And verify the CMS Role Approver role is available

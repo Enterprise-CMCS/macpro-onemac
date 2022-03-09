@@ -213,6 +213,9 @@ And("Verify SPA RAI ID number matches Medical SPA ID number", () => {
 When("Login with cms role approver", () => {
   OneMacDevLoginPage.loginAsCMSRoleApprover();
 });
+When("Login as EUA CMS Read Only User", () => {
+  OneMacDevLoginPage.loginAsEUACMSReadOnlyUser();
+});
 Then("i am on User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
@@ -240,6 +243,9 @@ And("Role text is Displayed", () => {
 And("Actual Role is Displayed", () => {
   OneMacMyProfilePage.verifyRole();
 });
+And("User Role is Read Only User", () => {
+  OneMacMyProfilePage.verifyRole();
+});
 And("Email text is Displayed", () => {
   OneMacMyProfilePage.verifyEmailHeader();
 });
@@ -254,6 +260,9 @@ And("Phone Number Add Button is Displayed", () => {
 });
 And("Status text is Displayed", () => {
   OneMacMyProfilePage.verifyStatusHeader();
+});
+And("Status text is not displayed", () => {
+  OneMacMyProfilePage.verifyStatusHeaderDoesNotExist();
 });
 And("Actual Status is Displayed with Access Granted", () => {
   OneMacMyProfilePage.verifyAccessStatus();
@@ -1942,4 +1951,13 @@ And("verify Package Overview navigation button is expanded", () => {
 });
 And("verify Package Details is listed under Package Overview", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsNavBtnExists();
+});
+And("click the pending user action button", () => {
+  OneMacUserManagmentPage.clickPendingUserActionBtn();
+});
+And("click the deny access button", () => {
+  OneMacUserManagmentPage.clickDenyAccessBtn();
+});
+And("click the logout button", () => {
+  OneMacDashboardPage.clickLogoutBtn();
 });
