@@ -275,6 +275,23 @@ jobs:
         containers: 
           [
             homePage,
+            AppendixKAmmendmentPage,
+            CHIPSPAPage,
+            dashboardPage,
+            faqPage,
+            manageProfilePage,
+            MedicaidSpaPage,
+            packagePageSpas,
+            packagePageWaivers,
+            RequestRoleChangePage,
+            requestTempExtentionPage,
+            RespondToCHIPSPAPage,
+            RespondToMedicaidSpaTest,
+            RespondToWaiverRaiPage,
+            spaTypePage,
+            submissionType,
+            waiverActionPage,
+            waiverActionTypePage,
           ]
     steps:
       - name: set branch_name
