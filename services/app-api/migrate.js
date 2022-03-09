@@ -17,10 +17,10 @@ export const main = handler(async (event) => {
 
   const promiseItems = [];
   do {
-    const results = await dynamodb.scan(params);
+    const results = await dynamoDb.scan(params);
 
-    for (let item of results.Items) {
-      let updateParams = {
+    for (const item of results.Items) {
+      const updateParams = {
         TableName: process.env.oneMacTableName,
         ReturnValues: "ALL_NEW",
         Key: {
@@ -30,7 +30,7 @@ export const main = handler(async (event) => {
         ExpressionAttributeValues: {},
       };
 
-      let updateExpressions = [];
+      const updateExpressions = [];
 
       //check if item status needs to be modified
       if (item.currentStatus === "Package Withdrawn") {
@@ -41,7 +41,7 @@ export const main = handler(async (event) => {
       //check if children statuses need to be modified
       if (item.children) {
         let childUpdated = false;
-        for (let child of item.children) {
+        for (const child of item.children) {
           if (child.currentStatus === "Package Withdrawn") {
             child.currentStatus = "Withdrawn";
             childUpdated = true;
@@ -67,7 +67,7 @@ export const main = handler(async (event) => {
       try {
         console.log(`Update Params are ${JSON.stringify(updateParams)}`);
 
-        const result = await dynamodb.update(updateParams);
+        const result = await dynamoDb.update(updateParams);
         console.log("Result is: ", result);
       } catch (e) {
         console.log("update error: ", e);
