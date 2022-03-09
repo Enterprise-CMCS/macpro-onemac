@@ -44,7 +44,7 @@ it("formats submission data", () => {
       territory: "ZZ",
 
       submittedAt: 1234567898765,
-      user: { firstName: "Me", lastName: "Myself" },
+      submitterName: "Me Myself",
     },
   ]);
   expect(output.split("\n")[1].trim()).toBe(
@@ -55,15 +55,12 @@ it("formats submission data", () => {
 it("formats user data", () => {
   const output = tableToCSV("user-table", [
     {
-      firstName: "You",
-      lastName: "Yourself",
+      fullName: "You Yourself",
       email: "you@example.com",
-      stateCode: "ZZ",
-      latest: {
-        date: 987654321,
-        status: "pending",
-        doneByName: "Someone Else",
-      },
+      territory: "ZZ",
+      date: 987654321,
+      status: "pending",
+      doneByName: "Someone Else",
       role: "statesubmitter",
     },
   ]);

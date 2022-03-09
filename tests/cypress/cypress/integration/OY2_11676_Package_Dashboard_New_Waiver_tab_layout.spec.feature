@@ -65,6 +65,9 @@ Feature: OY2-11676 Package Dashboard: New Waiver tab layout
         And verify date submitted column exists for the child
         And verify submitted by column exists for the child
         And verify actions column exists for the child
+        And click show hide columns button
+        And click expiration date checkbox
+        And click show hide columns button
         And verify expiration date column exists for the child
 
     Scenario: verify the caret is disabled for a row without children

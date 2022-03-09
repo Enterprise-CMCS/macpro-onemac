@@ -25,6 +25,8 @@ import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
 import { ROUTES as RouteList } from "cmscommonlib";
 import HamburgerMenu from "../components/HamburgerMenu.js";
 
+import { animated, useSpring } from "@react-spring/web";
+
 /**
  * Get the sign in URL used with OKTA.
  * @returns the signin URL
@@ -145,6 +147,34 @@ const AccountButtons: React.FC<{
     userRole !== USER_ROLE.SYSTEM_ADMIN &&
     !inFlightRoleRequestForUser(roleList);
 
+  const RotateIcon: React.FC<{
+    transform?: boolean | string;
+    config?: number | string;
+    duration?: number;
+  }> = () => {
+    const myAccountIconRotate = useSpring({
+      transform: showMenu ? "rotateX(180deg)" : "rotateX(0deg)",
+    });
+
+    return (
+      <>
+        <animated.svg
+          width="11"
+          height="9"
+          viewBox="0 0 11 5"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          style={myAccountIconRotate}
+        >
+          <path
+            d="M5.66016 4.52295L0.660156 0.0229473L10.6602 0.0229473L5.66016 4.52295Z"
+            fill="white"
+          ></path>
+        </animated.svg>
+      </>
+    );
+  };
+
   return (
     <>
       <button
@@ -153,21 +183,10 @@ const AccountButtons: React.FC<{
         onClick={() => setShowMenu(!showMenu)}
       >
         My Account&nbsp;
-        <svg
-          width="11"
-          height="9"
-          viewBox="0 0 11 5"
-          fill="none"
-          xmlns="http://www.w3.org/2000/svg"
-        >
-          <path
-            d="M5.66016 4.52295L0.660156 0.0229473L10.6602 0.0229473L5.66016 4.52295Z"
-            fill="white"
-          ></path>
-        </svg>
+        <RotateIcon />
       </button>
       {showMenu && (
-        <div className="dropdown-content">
+        <div data-testid="dropdown-content-test" className="dropdown-content">
           <Link
             to={ROUTES.PROFILE}
             id="manageAccountLink"

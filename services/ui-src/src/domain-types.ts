@@ -12,6 +12,7 @@ export type UserRecord = {
   roleList: RoleEntry[];
   validRoutes?: string[];
   phoneNumber?: string;
+  fullName: string;
   effRole?: string;
   effStatus?: string;
 };
@@ -47,4 +48,8 @@ export type PackageRowValue = {
   submissionTimestamp: number;
   submitter: string;
   territory: string;
+};
+
+export type LocationState = {
+  passCode?: string;
 };

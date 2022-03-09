@@ -49,5 +49,11 @@ export class oneMacDevLoginPage {
     cy.get(PasswordInput).type("Passw0rd!");
     cy.get(LoginBtn).click();
   }
+
+  loginAsEUACMSReadOnlyUser() {
+    cy.get(EmailInput).type("vmcmurray@collabralink.com");
+    cy.get(PasswordInput).type("Passw0rd!");
+    cy.get(LoginBtn).click();
+  }
 }
 export default oneMacDevLoginPage;

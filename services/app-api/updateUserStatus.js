@@ -4,6 +4,7 @@ import {
   territoryMap,
   roleLabels,
   APPROVING_USER_ROLE,
+  USER_ROLE,
 } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import sendEmail from "./libs/email-lib";
@@ -105,6 +106,21 @@ export const updateUserStatus = async (event) => {
       if (role !== body.role && status === USER_STATUS.ACTIVE) {
         await doUpdate(
           { ...body, role, territory, status: USER_STATUS.REVOKED },
+          doneBy,
+          doneTo
+        );
+      }
+    }
+  }
+
+  if (
+    body.status === USER_STATUS.DENIED ||
+    body.status === USER_STATUS.REVOKED
+  ) {
+    for (const { role, territory } of doneTo.roleList) {
+      if (role === USER_ROLE.DEFAULT_CMS_USER) {
+        await doUpdate(
+          { ...body, role, territory, status: USER_STATUS.ACTIVE },
           doneBy,
           doneTo
         );

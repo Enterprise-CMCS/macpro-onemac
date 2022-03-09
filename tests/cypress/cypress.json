@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://d2dr7dgo9g0124.cloudfront.net/",
+  "baseUrl": "https://d29q22ry23m267.cloudfront.net/",
   "redirectionLimit": 20,
   "retries": 2,
   "watchForFileChanges": true,
@@ -14,5 +14,6 @@
   "defaultCommandTimeout": 70000,
   "viewportWidth": 1440,
   "viewportHeight": 900,
+  "experimentalStudio": true,
   "types": ["cypress", "cypress-axe"]
 }

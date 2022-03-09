@@ -1,3 +1,8 @@
+const topRaiRespCaret = "#sparai0_caret-button";
+const topRaiRespDownloadBtn = "#dl_sparai0";
+const topRaiRespCard = "#sparai0_caret";
+const topRaiRespAddInfo = "#addl-info-rai-0";
+
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
 const actionCard = "//div[@class='detail-card']";
@@ -13,6 +18,10 @@ const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
 const dateSubmittedHeader = "//h3[text()='Date Submitted']";
+const raiResponsesHeader = "//section//h2[text()='RAI Responses']";
+const packageOverviewNavBtn = "//button[text()='Package Overview']";
+const packageDetailsNavBtn =
+  "//li[contains(@class, 'nav')]//a[text()='Package Details']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -68,6 +77,42 @@ export class oneMacPackageDetailsPage {
   }
   verifyDateExists() {
     cy.xpath(dateSubmittedHeader).next().should("be.visible");
+  }
+  verifyRaiResponseHeaderExists() {
+    cy.xpath(raiResponsesHeader).scrollIntoView().should("be.visible");
+  }
+  verifyTopRaiRespCaretExistsAndEnabled() {
+    cy.get(topRaiRespCaret).scrollIntoView().should("be.visible");
+    cy.get(topRaiRespCaret).should("be.enabled");
+  }
+  verifyTopRaiRespCardExists() {
+    cy.get(topRaiRespCard).scrollIntoView().should("be.visible");
+  }
+  verifyTopRaiRespDownloadBtnExistsAndEnabled() {
+    cy.get(topRaiRespDownloadBtn).scrollIntoView().should("be.visible");
+    cy.get(topRaiRespDownloadBtn).should("be.enabled");
+  }
+  verifyTopRaiRespAddInfoDoesNotExist() {
+    cy.get(topRaiRespAddInfo).should("not.exist");
+  }
+  verifyTopRaiRespAddInfoExists() {
+    cy.get(topRaiRespAddInfo).scrollIntoView().should("be.visible");
+  }
+  verifyPackageOverviewNavBtnExists() {
+    cy.xpath(packageOverviewNavBtn).should("be.visible");
+  }
+  verifyPackageOverviewNavBtnIsEnabled() {
+    cy.xpath(packageOverviewNavBtn).should("be.enabled");
+  }
+  verifyPackageOverviewNavBtnIsExpanded() {
+    cy.xpath(packageOverviewNavBtn).should(
+      "have.attr",
+      "aria-expanded",
+      "true"
+    );
+  }
+  verifyPackageDetailsNavBtnExists() {
+    cy.xpath(packageDetailsNavBtn).should("be.visible");
   }
 }
 export default oneMacPackageDetailsPage;
