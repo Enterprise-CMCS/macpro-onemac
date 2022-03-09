@@ -63,7 +63,7 @@ export const main = handler(async (event) => {
   } while (params.ExclusiveStartKey);
 
   await Promise.all(
-    promiseItems.map(async (updateParams, index) => {
+    promiseItems.map(async (updateParams) => {
       try {
         console.log(`Update Params are ${JSON.stringify(updateParams)}`);
 
