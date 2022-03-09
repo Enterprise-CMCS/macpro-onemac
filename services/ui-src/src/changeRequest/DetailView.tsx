@@ -128,7 +128,8 @@ const DetailSection = ({
     [history]
   );
 
-  const packageConfig = ChangeRequest.CONFIG[detail?.componentType ?? ""];
+  const packageConfig =
+    ChangeRequest.CONFIG[detail?.componentType ?? ChangeRequest.TYPE.SPA];
 
   return (
     <>
@@ -151,7 +152,7 @@ const DetailSection = ({
           <section className="package-actions">
             <h2>Package Actions</h2>
             <ul className="action-list">
-              {packageConfig.actionsByStatus[detail.currentStatus].length >
+              {packageConfig.actionsByStatus[detail.currentStatus]?.length >
               0 ? (
                 packageConfig.actionsByStatus[detail.currentStatus]?.map(
                   (actionLabel, index) => {

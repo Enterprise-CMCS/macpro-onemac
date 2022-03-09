@@ -4209,5 +4209,150 @@
     "componentId": "MI.83420",
     "submitterName": "Statesubmitter Nightwatch",
     "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
-  }
+  },
+  {
+    "pk": "MI.1110",
+    "sk": "waivernew",
+    "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+    "changeHistory": [
+     {
+      "componentType": "waivernew",
+      "additionalInformation": "Testing the details views, need more packages !",
+      "componentId": "MI.1110",
+      "attachments": [
+       {
+        "s3Key": "1646850624434/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850624434/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+       }
+      ],
+      "submissionId": "fcb6d120-9fd6-11ec-b1b8-09aa0cc142ef",
+      "waiverAuthority": "1915(b)(4)",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+      "submitterName": "Angie Active",
+      "submissionTimestamp": 1646850625671,
+      "submitterEmail": "statesubmitteractive@cms.hhs.local"
+     }
+    ],
+    "componentType": "waivernew",
+    "effectiveDateTimestamp": 1646850625671,
+    "currentStatus": "Approved",
+    "attachments": [
+     {
+      "s3Key": "1646850624434/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+      "contentType": "application/pdf",
+      "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850624434/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+     }
+    ],
+    "GSI1sk": "MI.1110",
+    "additionalInformation": "Testing the details views, need more packages !",
+    "submissionTimestamp": 1646850615671,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MI.1110",
+    "submitterName": "Angie Active",
+    "submissionId": "fcb6d120-9fd6-11ec-b1b8-09aa0cc142ef"
+   },
+   {
+    "pk": "MI.1110.R01",
+    "sk": "waiverrenewal",
+    "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+    "changeHistory": [
+     {
+      "componentType": "waiverrenewal",
+      "additionalInformation": "Here is a renewal package for testing",
+      "componentId": "MI.1110.R01",
+      "attachments": [
+       {
+        "s3Key": "1646850668600/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850668600/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+       }
+      ],
+      "submissionId": "16b2bbc0-9fd7-11ec-b1b8-09aa0cc142ef",
+      "waiverAuthority": "1915(b)(4)",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+      "submitterName": "Angie Active",
+      "submissionTimestamp": 1646850669468,
+      "submitterEmail": "statesubmitteractive@cms.hhs.local"
+     }
+    ],
+    "componentType": "waiverrenewal",
+    "currentStatus": "Submitted",
+    "attachments": [
+     {
+      "s3Key": "1646850668600/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+      "contentType": "application/pdf",
+      "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850668600/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+     }
+    ],
+    "GSI1sk": "MI.1110.R01",
+    "additionalInformation": "Here is a renewal package for testing",
+    "submissionTimestamp": 1646850669468,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MI.1110.R01",
+    "submitterName": "Angie Active",
+    "submissionId": "16b2bbc0-9fd7-11ec-b1b8-09aa0cc142ef"
+   },
+   {
+    "pk": "VA.9999",
+    "sk": "waivernew",
+    "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+    "changeHistory": [
+     {
+      "componentType": "waivernew",
+      "additionalInformation": "This one will get updated to RAI Issued.....",
+      "componentId": "VA.9999",
+      "attachments": [
+       {
+        "s3Key": "1646852065050/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646852065050/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+       }
+      ],
+      "submissionId": "579014f0-9fda-11ec-9e4d-ed0e09a4d794",
+      "waiverAuthority": "1915(b)",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+      "submitterName": "Angie Active",
+      "submissionTimestamp": 1646852067074,
+      "submitterEmail": "statesubmitteractive@cms.hhs.local"
+     }
+    ],
+    "componentType": "waivernew",
+    "currentStatus": "RAI Issued",
+    "attachments": [
+     {
+      "s3Key": "1646852065050/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "contentType": "application/pdf",
+      "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646852065050/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+     }
+    ],
+    "GSI1sk": "VA.9999",
+    "additionalInformation": "This one will get updated to RAI Issued.....",
+    "submissionTimestamp": 1646852067074,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "VA.9999",
+    "submitterName": "Angie Active",
+    "submissionId": "579014f0-9fda-11ec-9e4d-ed0e09a4d794"
+   }
 ]
