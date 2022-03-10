@@ -2004,6 +2004,15 @@ aside#faq-contact-info-box {
         @extend .ds-u-margin--0;
       }
     }
+
+    .choice-info {
+      @extend .ds-u-margin-bottom--2;
+    }
+
+    .file-list-dl-button {
+      @extend .ds-u-margin-bottom--2;
+      align-self: flex-end;
+    }
   }
 }
 .choice-intro {

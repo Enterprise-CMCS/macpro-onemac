@@ -100,6 +100,9 @@ const DetailSection = ({
   const history = useHistory();
   const { userProfile } = useAppContext() ?? {};
 
+  const downloadInfoText =
+    "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
+
   const onLinkActionWithdraw = useCallback(async () => {
     // For now, the second argument is constant.
     // When we add another action to the menu, we will need to look at the action taken here.
@@ -208,6 +211,7 @@ const DetailSection = ({
         <section className="detail-section">
           <FileList
             heading="Base Supporting Documentation"
+            infoText={downloadInfoText}
             uploadList={detail.attachments}
             zipId={detail.componentId}
           />
@@ -240,6 +244,7 @@ const DetailSection = ({
                   >
                     <FileList
                       heading={"RAI Response Documentation"}
+                      infoText={downloadInfoText}
                       uploadList={raiResponse.attachments}
                       zipId={raiResponse.componentType + index}
                     />

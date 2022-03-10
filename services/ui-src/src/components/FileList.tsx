@@ -9,6 +9,7 @@ type FileListProps = {
   heading: ReactNode;
   uploadList: { filename: string; title: string; url: string }[];
   zipId?: string;
+  infoText?: string;
 };
 
 /**
@@ -18,6 +19,7 @@ export default function FileList({
   heading,
   uploadList,
   zipId,
+  infoText,
 }: FileListProps) {
   const onDownloadAll = useCallback(async () => {
     const downloadList = (await Promise.all(
@@ -52,15 +54,14 @@ export default function FileList({
       {heading && (
         <div className="choice-intro">
           <h2>{heading}</h2>
-          <Button
-            onClick={onDownloadAll}
-            variation="primary"
-            id={"dl_" + zipId}
-          >
-            <FontAwesomeIcon icon={faDownload} /> Download All
-          </Button>
         </div>
       )}
+      {infoText && <div className="choice-info">{infoText}</div>}
+      <div className="file-list-dl-button">
+        <Button onClick={onDownloadAll} variation="primary" id={"dl_" + zipId}>
+          <FontAwesomeIcon icon={faDownload} /> Download All
+        </Button>
+      </div>
       <div className="gradient-box" />
       {uploadList && (
         <ul className="choice-list">
