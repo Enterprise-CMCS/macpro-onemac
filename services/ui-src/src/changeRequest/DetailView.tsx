@@ -143,11 +143,13 @@ const DetailSection = ({
                 {formatDetailViewDate(detail.clockEndTimestamp)}
               </Review>
             )}
-            {detail.effectiveDateTimestamp && (
-              <Review heading="Effective Date">
-                {formatDetailViewDate(detail.effectiveDateTimestamp)}
-              </Review>
-            )}
+            {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+              ChangeRequest.PACKAGE_GROUP.WAIVER &&
+              detail.effectiveDateTimestamp && (
+                <Review heading="Effective Date">
+                  {formatDetailViewDate(detail.effectiveDateTimestamp)}
+                </Review>
+              )}
           </section>
           <section className="package-actions">
             <h2>Package Actions</h2>
@@ -217,11 +219,14 @@ const DetailSection = ({
               {formatDetailViewDate(detail.submissionTimestamp)}
             </Review>
           )}
-          <Review heading="Proposed Effective Date">
-            {detail.proposedEffectiveTimestamp
-              ? formatDetailViewDate(detail.proposedEffectiveTimestamp)
-              : "N/A"}
-          </Review>
+          {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+            ChangeRequest.PACKAGE_GROUP.WAIVER && (
+            <Review heading="Proposed Effective Date">
+              {detail.proposedEffectiveTimestamp
+                ? formatDetailViewDate(detail.proposedEffectiveTimestamp)
+                : "N/A"}
+            </Review>
+          )}
         </section>
         <section className="detail-section">
           <FileList
