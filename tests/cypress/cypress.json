@@ -13,5 +13,7 @@
   "supportFile": "support/index.js",
   "defaultCommandTimeout": 70000,
   "viewportWidth": 1440,
-  "viewportHeight": 900
+  "viewportHeight": 900,
+  "experimentalStudio": true,
+  "types": ["cypress", "cypress-axe"]
 }
