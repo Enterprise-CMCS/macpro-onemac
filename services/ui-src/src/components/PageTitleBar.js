@@ -22,6 +22,7 @@ const PageTitleBar = ({
   heading,
   rightSideContent,
   enableBackNav,
+  backTo,
   backNavConfirmationMessage,
 }) => {
   const history = useHistory();
@@ -35,9 +36,10 @@ const PageTitleBar = ({
     async (event) => {
       event.preventDefault();
       if (backNavConfirmationMessage) openCancelConfirmation();
+      else if (backTo) history.push(backTo);
       else history.goBack();
     },
-    [backNavConfirmationMessage, history, openCancelConfirmation]
+    [backNavConfirmationMessage, backTo, history, openCancelConfirmation]
   );
 
   return (
@@ -73,7 +75,7 @@ const PageTitleBar = ({
           acceptText="Leave Anyway"
           cancelText="Stay on Page"
           heading="Leave this page?"
-          onAccept={() => history.goBack()}
+          onAccept={() => (backTo ? history.push(backTo) : history.goBack())}
           onCancel={closeCancelConfirmation}
         >
           {backNavConfirmationMessage}

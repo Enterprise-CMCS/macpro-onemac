@@ -21,7 +21,7 @@ const dateSubmittedHeader = "//h3[text()='Date Submitted']";
 const raiResponsesHeader = "//section//h2[text()='RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
-  "//li[contains(@class, 'nav')]//div[text()='Package Details']";
+  "//li[contains(@class, 'nav')]//a[text()='Package Details']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {

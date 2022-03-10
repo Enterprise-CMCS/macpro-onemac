@@ -197,6 +197,8 @@ jobs:
             OY2_16471_State_should_not_be_able_to_withdraw_RAI_Responses_in_OneMAC.spec.feature,
             OY2_14656_Left_Hand_Navigation_for_Package_Details_View.spec.feature,
             OY2_16322_RAI_Response_for_SPA_package_view.spec.feature,
+            OY2_16707_CMS_Users_Denied_a_CRA_Role_loses_Read_Only_Access_to_OneMAC.spec.feature,
+            OY2_15984_Updated_SPA_Package_Details_View_Additional_Information_Page.spec.js,
           ]
     steps:
       - name: set branch_name
@@ -267,3 +269,88 @@ jobs:
           SLACK_COLOR: ${{job.status}}
           SLACK_FOOTER: ""
           MSG_MINIMAL: actions url,commit,ref
+
+  a11y-tests:
+    name: A11y Tests
+    needs: deploy
+    if: ${{ github.ref != 'refs/heads/prod' }}
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        containers: 
+          [
+            homePage,
+            AppendixKAmmendmentPage,
+            CHIPSPAPage,
+            dashboardPage,
+            faqPage,
+            manageProfilePage,
+            MedicaidSpaPage,
+            packagePageSpas,
+            packagePageWaivers,
+            RequestRoleChangePage,
+            requestTempExtentionPage,
+            RespondToCHIPSPAPage,
+            RespondToMedicaidSpaTest,
+            RespondToWaiverRaiPage,
+            spaTypePage,
+            submissionType,
+            waiverActionPage,
+            waiverActionTypePage,
+          ]
+    steps:
+      - name: set branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+      - uses: actions/checkout@v1
+      - name: set branch specific variable names
+        run: ./.github/build_vars.sh set_names
+      - name: set variable values
+        run: ./.github/build_vars.sh set_values
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+          INFRASTRUCTURE_TYPE: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_INFRASTRUCTURE_TYPE] || secrets.INFRASTRUCTURE_TYPE || 'development' }}
+          STAGE_PREFIX: ${{ secrets.STAGE_PREFIX }}
+          COGNITO_TEST_USERS_PASSWORD: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_COGNITO_TEST_USERS_PASSWORD] || secrets.COGNITO_TEST_USERS_PASSWORD }}
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "12.x"
+      - name: Combine package-lock.json files to single file
+        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+      - name: cache service dependencies
+        uses: actions/cache@v2
+        with:
+          path: |
+            services/app-api/node_modules
+            services/uploads/node_modules
+            services/stream-functions/node_modules
+            services/ui/node_modules
+            services/ui-auth/node_modules
+            services/ui-src/node_modules
+            node_modules
+          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+      - name: Install dependencies
+        run: npm install --frozen-lockfile
+      - name: set path
+        run: |
+          echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
+      - name: Endpoint
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT" >> $GITHUB_ENV
+          echo "Application endpoint: $APPLICATION_ENDPOINT"
+          popd
+      - name: Check Project A11y
+        uses: cypress-io/github-action@v2.11.7
+        with:
+          working-directory: tests/cypress
+          spec: cypress/integration/a11y/${{ matrix.containers }}.spec.js
+          browser: chrome
+          headless: true
+          config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
+        env:
+          SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
