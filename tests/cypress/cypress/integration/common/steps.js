@@ -1238,6 +1238,9 @@ And("verify package in review exists", () => {
 And("click Package In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();
 });
+And("click Waiver Terminated checkbox", () => {
+  OneMacPackagePage.clickWaiverTerminatedCheckBox();
+});
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
 });
@@ -1883,6 +1886,12 @@ And("verify there is a Type header in the details section", () => {
 And("verify a type containing SPA exists for the Type", () => {
   OneMacPackageDetailsPage.verifyTypeContainsSPA();
 });
+And("verify the type is Base Waiver", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsBaseWaiver();
+});
+And("verify the type is Waiver Renewal", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
+});
 And("verify there is a State header in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
@@ -1960,4 +1969,13 @@ And("click the deny access button", () => {
 });
 And("click the logout button", () => {
   OneMacDashboardPage.clickLogoutBtn();
+});
+And(
+  "verify there is a Proposed Effective Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyProposedEffectiveDateHeaderExists();
+  }
+);
+And("verify the Proposed Effective Date is NA", () => {
+  OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
 });

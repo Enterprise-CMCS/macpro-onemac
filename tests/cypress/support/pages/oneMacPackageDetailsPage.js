@@ -22,6 +22,8 @@ const raiResponsesHeader = "//section//h2[text()='RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Package Details']";
+const proposedEffectiveDateHeader =
+  "//h3[contains(text(),'Proposed Effective Date')]";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -65,6 +67,12 @@ export class oneMacPackageDetailsPage {
   }
   verifyTypeContainsSPA() {
     cy.xpath(typeHeader).next().contains("SPA");
+  }
+  verifyTypeContainsBaseWaiver() {
+    cy.xpath(typeHeader).next().contains("Base Waiver");
+  }
+  verifyTypeContainsWaiverRenewal() {
+    cy.xpath(typeHeader).next().contains("Waiver Renewal");
   }
   verifyStateHeaderExists() {
     cy.xpath(stateHeader).should("be.visible");
@@ -113,6 +121,12 @@ export class oneMacPackageDetailsPage {
   }
   verifyPackageDetailsNavBtnExists() {
     cy.xpath(packageDetailsNavBtn).should("be.visible");
+  }
+  verifyProposedEffectiveDateHeaderExists() {
+    cy.xpath(proposedEffectiveDateHeader).should("be.visible");
+  }
+  verifyproposedEffectiveDateHeaderContainsNA() {
+    cy.xpath(proposedEffectiveDateHeader).next().contains("N/A");
   }
 }
 export default oneMacPackageDetailsPage;
