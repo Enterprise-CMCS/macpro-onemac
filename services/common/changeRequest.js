@@ -34,14 +34,14 @@ export const ONEMAC_STATUS = {
   RAI_ISSUED: "RAI Issued",
   APPROVED: "Package Approved",
   DISAPPROVED: "Package Disapproved",
-  WITHDRAWN: "Package Withdrawn",
+  WITHDRAWN: "Withdrawn",
   TERMINATED: "Waiver Terminated",
   PAUSED: "Review Paused, Off the Clock",
 };
 
 export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
-  WITHDRAW: "Withdraw Package",
+  WITHDRAW: "Withdraw",
 };
 
 export const correspondingRAILink = {

@@ -1380,12 +1380,9 @@ And(
     OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
   }
 );
-And(
-  "verify that the 3 dots next to Package Withdrawn status is not clickable",
-  () => {
-    OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
-  }
-);
+And("verify that the 3 dots next to Withdrawn status is not clickable", () => {
+  OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
+});
 And(
   "verify that the 3 dots next to Waiver Terminated status is not clickable",
   () => {
@@ -1599,7 +1596,7 @@ And("click the SPA ID link in the first row", () => {
 And("click the Waiver Number link in the first row", () => {
   OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
 });
-And("click the Package Withdrawn checkbox", () => {
+And("click the Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
 And("verify that the value of the column for the 90th day is Pending", () => {
