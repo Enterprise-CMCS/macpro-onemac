@@ -44,6 +44,7 @@ export const getDetails = async (event) => {
     detailsk != "spa" &&
     detailsk != "chipspa" &&
     detailsk != "waivernew" &&
+    detailsk != "waiverrenewal" &&
     event.queryStringParameters.cNum
   )
     detailsk += `#${event.queryStringParameters.cNum}`;
