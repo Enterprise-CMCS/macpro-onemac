@@ -29,7 +29,7 @@ Feature: OY2-15620 Updated SPA Package Details View - Card View with Actions
         And verify a date exists for the Date Submitted
 
     Scenario: Screen Enhance - Withdrawn SPA
-        And click the Package Withdrawn checkbox
+        And click the Withdrawn checkbox
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible

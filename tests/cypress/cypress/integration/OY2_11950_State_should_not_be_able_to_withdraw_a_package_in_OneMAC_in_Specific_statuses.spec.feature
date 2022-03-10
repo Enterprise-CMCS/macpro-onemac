@@ -14,12 +14,12 @@ Feature: OY2-11950 State should not be able to withdraw a package in OneMAC in S
         And click on Packages
         And verify that the 3 dots next to Package Disapproved status is not clickable
 
-    Scenario: Demonstrate that withdraw a package is not available on Package Withdrawn status
+    Scenario: Demonstrate that withdraw a package is not available on Withdrawn status
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
-        And verify that the 3 dots next to Package Withdrawn status is not clickable
+        And verify that the 3 dots next to Withdrawn status is not clickable
 
     Scenario: Demonstrate that withdraw a package is not available on Waiver Terminated status
         Given I am on Login Page

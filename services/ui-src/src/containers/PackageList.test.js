@@ -98,7 +98,7 @@ it("switches to waiver columns if wavier tab selected", async () => {
 
 it.each`
   filterFieldType    | filterFieldValue       | inName                 | inValue          | textShown
-  ${"currentStatus"} | ${"Package Withdrawn"} | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${"Withdrawn"}         | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
   ${"currentStatus"} | ${"Waiver Terminated"} | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
   ${"currentStatus"} | ${"Unsubmitted"}       | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
   ${"currentStatus"} | ${"AnythingElse"}      | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
@@ -139,9 +139,7 @@ it("provides option to withdraw packages", async () => {
         name: "Actions for MI-98-2223",
       })
     );
-    await userEvent.click(
-      screen.getByRole("menuitem", { name: "Withdraw Package" })
-    );
+    await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
     await userEvent.click(
       screen.getByRole("button", { name: "Yes, withdraw" })
     );
