@@ -26,7 +26,8 @@ const errorMessageForNoResultsFound =
   "//p[contains(text(),'Adjust your search and filter to find what you are')]";
 const stateColumnHeader = "#territoryColHeader";
 //Element is Xpath use cy.xpath instead of cy.get
-const arrowOnStateColumnHeader = "//thead/tr[1]/th[3]/span[1]/img[1]";
+const arrowOnStateColumnHeader =
+  "//th[@id='territoryColHeader']//span[@class='sort-icons-table']";
 //Element is Xpath use cy.xpath instead of cy.get
 const filterButton = "//button[contains(text(),'Filter')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -97,7 +98,7 @@ const raiResponseSubmitted = "//span[contains(text(),'RAIResponse Submitted')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const seaToolStatus1 = "//span[contains(text(),'SEATool Status: 1')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const medicaidSPAInList = "//tbody/tr[1]/td[2]/span[1]";
+const medicaidSPAInList = "//tbody/tr[1]/td[3]/span[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const ShowHideColumnsBTN = "//button[contains(text(),'Show/Hide Columns')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -138,10 +139,10 @@ const PackageWithdrawn =
   "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
-  "//a[contains(text(),'MD.10330')]/../following-sibling::td[9]/button";
+  "//a[text()='MD.10330']/../following-sibling::td[contains(@id,'packageActions')]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
-  "//a[contains(text(),'MD.83420')]/../following-sibling::td[9]/button";
+  "//a[contains(text(),'MD.83420')]/../following-sibling::td[contains(@id,'packageActions')]/button";
 const stateDropdownFilter = "#territory-button";
 const stateFilterSelect = "#territory-filter-select";
 const statesSelected = "#territory";
@@ -180,6 +181,8 @@ const parentRowExpander = "//tr[1]//button[@aria-label='Expand row']";
 const rowTwo = "tbody > tr:nth-child(2)";
 const packageRowTwoSubmittedBy = "#submitter-1";
 const packageRowTwoActions = "#packageActions-1";
+//Element is Xpath use cy.xpath instead of cy.get
+const allPackageRowActions = "//td[contains(@id,'packageActions')]";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
@@ -189,6 +192,9 @@ const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
+const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
+const respondToRAIBtn = "//li[text()='Respond to RAI'][@aria-disabled='false']";
+const packageRowOneWaiverNumLink = "//td[@id='componentId-0']//a";
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -197,7 +203,7 @@ export class oneMacPackagePage {
 
   verifyValue() {
     cy.get(nintiethDayColumnFirstValue).contains(
-      /N\/A|Pending|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
+      /N\/A|Pending|Clock Stopped|((Jan|Feb|Mar|Apr|May|Jun|Jul|Aug|Sep|Oct|Nov|Dec)\s+(\d{1,2})\s+(\d{4}))/
     );
   }
 
@@ -267,7 +273,6 @@ export class oneMacPackagePage {
     cy.get(stateColumnHeader).should("be.visible");
   }
   verifyStateColumnIsSortable() {
-    cy.get(stateColumnHeader).click();
     cy.xpath(arrowOnStateColumnHeader).should("be.visible");
   }
   verifyfilterButtonExists() {
@@ -292,18 +297,21 @@ export class oneMacPackagePage {
     cy.xpath(ninetiethDayFilterDropdown).should("be.visible");
   }
   clickOn90thDayFilterDropDown() {
+    cy.xpath(ninetiethDayFilterDropdown).wait(1000);
     cy.xpath(ninetiethDayFilterDropdown).click();
   }
   verifyExpirationDateFilterDropDownExists() {
     cy.xpath(expirationDateFilterDropdown).should("be.visible");
   }
   clickOnExpirationDateFilterDropDown() {
+    cy.xpath(expirationDateFilterDropdown).wait(1000);
     cy.xpath(expirationDateFilterDropdown).click();
   }
   verifyDateSubmittedFilterDropDownExists() {
     cy.xpath(dateSubmittedFilterDropdown).should("be.visible");
   }
   clickOnDateSubmittedFilterDropDown() {
+    cy.xpath(dateSubmittedFilterDropdown).wait(1000);
     cy.xpath(dateSubmittedFilterDropdown).click();
   }
   verifyNinetiethDayNACheckboxExists() {
@@ -328,18 +336,21 @@ export class oneMacPackagePage {
     cy.get(ninetiethDayDatePickerFilter).should("exist");
   }
   clickOnNinetiethDayDatePickerFilter() {
+    cy.get(ninetiethDayDatePickerFilter).wait(1000);
     cy.get(ninetiethDayDatePickerFilter).click();
   }
   verifyExpirationDateDatePickerFilterExists() {
     cy.get(expirationDateDatePickerFilter).should("exist");
   }
   clickOnExpirationDateDatePickerFilter() {
+    cy.get(expirationDateDatePickerFilter).wait(1000);
     cy.get(expirationDateDatePickerFilter).click();
   }
   verifyDateSubmittedDatePickerFilterExists() {
     cy.xpath(dateSubmittedDatePickerFilter).last().should("exist");
   }
   clickOnDateSubmittedDatePickerFilter() {
+    cy.xpath(dateSubmittedDatePickerFilter).wait(1000);
     cy.xpath(dateSubmittedDatePickerFilter).last().click();
   }
   clickOnThisQuarterDatePickerBtn() {
@@ -384,9 +395,11 @@ export class oneMacPackagePage {
     cy.xpath(resetButton).should("be.visible");
   }
   clickOnResetButton() {
+    cy.xpath(resetButton).wait(1000);
     cy.xpath(resetButton).click();
   }
   clickTypeDropDown() {
+    cy.get(typeDropDown).wait(1000);
     cy.get(typeDropDown).click();
   }
   verifyWaiverRenewal1915bCheckBoxExists() {
@@ -402,6 +415,7 @@ export class oneMacPackagePage {
     cy.xpath(MedicaidSPACheckBox).should("be.visible");
   }
   clickstatusDropDown() {
+    cy.get(statusDropDown).wait(1000);
     cy.get(statusDropDown).click();
   }
   verifypackageApproveCheckBoxExists() {
@@ -581,6 +595,7 @@ export class oneMacPackagePage {
     cy.get(stateDropdownFilter).should("be.visible");
   }
   clickStateDropdownFilter() {
+    cy.get(stateDropdownFilter).wait(1000);
     cy.get(stateDropdownFilter).click();
   }
   verifyStateFilterSelectExists() {
@@ -599,7 +614,7 @@ export class oneMacPackagePage {
     cy.get(stateFilterSelect).should(
       "have.attr",
       "aria-describedby",
-      "react-select-2-placeholder"
+      "react-select-3-placeholder"
     );
   }
   typeStateToSelect(state) {
@@ -777,6 +792,20 @@ export class oneMacPackagePage {
   clickActionsColumnForChild() {
     cy.get(packageRowTwoActions).scrollIntoView().click();
   }
+  verifyChildActionsBtnIsDisabled() {
+    cy.get(packageRowTwoActions)
+      .scrollIntoView()
+      .children("button")
+      .first()
+      .should("be.disabled");
+  }
+  clickActionsBtnForTempExtensionChild() {
+    cy.xpath(childRows)
+      .filter(":contains('Temporary Extension')")
+      .then(($el) => {
+        cy.wrap($el).find("button").first().scrollIntoView().click();
+      });
+  }
   verifyexpirationDateColumnExistsForChild() {
     cy.get(packageRowTwoExpirationDate).should("be.visible");
   }
@@ -809,6 +838,15 @@ export class oneMacPackagePage {
   }
   clickSPAIDLinkInFirstRow() {
     cy.xpath(packageRowOneSPAIDLink).click();
+  }
+  clickPackageRowOneActionsBtn() {
+    cy.xpath(packageRowOneActionsBtn).click();
+  }
+  clickRespondToRAIBtn() {
+    cy.xpath(respondToRAIBtn).click();
+  }
+  clickWaiverNumberLinkInFirstRow() {
+    cy.xpath(packageRowOneWaiverNumLink).click();
   }
 }
 export default oneMacPackagePage;

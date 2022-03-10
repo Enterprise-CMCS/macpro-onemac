@@ -1,7 +1,7 @@
 import React from "react";
 import { Router } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { render, screen } from "@testing-library/react";
+import { render, screen, fireEvent } from "@testing-library/react";
 
 import { AppContext } from "../libs/contextLib";
 import { Header } from "./Header";
@@ -211,5 +211,26 @@ describe("right side account management", () => {
     );
 
     expect(screen.queryByText("Log out", { selector: "a" })).toBeNull();
+  });
+
+  it("closes menu when clicked outside of account dropdown", () => {
+    const history = createMemoryHistory();
+    render(
+      <AppContext.Provider
+        value={{
+          isAuthenticated: true,
+          userProfile: { userData: { type: "statesubmitter" } },
+        }}
+      >
+        <Router history={history}>
+          <Header />
+        </Router>
+      </AppContext.Provider>
+    );
+    const myAccountLink = screen.getByRole("button", { name: /my account/i });
+    fireEvent.click(myAccountLink);
+    const dropdownContent = screen.getByTestId("dropdown-content-test");
+    fireEvent.click(myAccountLink);
+    expect(dropdownContent).not.toBeVisible();
   });
 });

@@ -40,4 +40,7 @@ Feature: OY2-11581 Add an Expiration Date Column to the Package Dashboard part 3
         And verify submission Successful message
         And click on Packages
         And click on the Waivers tab
+        And click show hide columns button
+        And click expiration date checkbox
+        And click show hide columns button
         And verify expiration date column exists
