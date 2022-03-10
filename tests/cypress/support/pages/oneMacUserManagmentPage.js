@@ -42,6 +42,7 @@ export class oneMacUserManagmentPage {
   clickPendingUserActionBtn() {
     cy.xpath(modifiedBy)
       .next("td")
+      .find("button")
       .scrollIntoView({ easing: "linear" })
       .click();
   }
