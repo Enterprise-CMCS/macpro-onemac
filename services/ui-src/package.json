@@ -22,7 +22,7 @@
     "formik": "^2.2.5",
     "isomorphic-fetch": "^3.0.0",
     "jszip": "^3.6.0",
-    "node-sass": "^4.14.1",
+    "node-sass": "^7.0.0",
     "promise-polyfill": "8.2.0",
     "react": "^16.13.1",
     "react-bootstrap": "^0.33.1",
