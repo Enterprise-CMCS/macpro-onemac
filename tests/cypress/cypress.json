@@ -1,9 +1,9 @@
 {
-  "baseUrl": "https://d1nn8bs7pz4bgh.cloudfront.net/",
+  "baseUrl": "https://d2dr7dgo9g0124.cloudfront.net/",
   "redirectionLimit": 20,
   "retries": 2,
   "watchForFileChanges": true,
-  "testFiles": "**/*.feature",
+  "testFiles": ["**/*.feature", "**/*.spec.js"],
   "fixturesFolder": "fixtures",
   "pluginsFile": "plugins/index.js",
   "screenshotsFolder": "screenshots",
