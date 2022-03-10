@@ -182,22 +182,23 @@ export default function PortalTable<V extends {} = {}>({
             </tbody>
           )}
         </table>
-      </div>
-      {rows.length === 0 &&
-        (preFilteredRows.length > 0 || preGlobalFilteredRows.length > 0) && (
-          <div className="no-results" role="status">
-            <FontAwesomeIcon
-              className="no-results-background"
-              icon={faSearch}
-            />
-            <div className="no-results-message">
-              <h4>No Results Found</h4>
-              <p>
-                Adjust your search and filter to find what you are looking for.
-              </p>
+        {rows.length === 0 &&
+          (preFilteredRows.length > 0 || preGlobalFilteredRows.length > 0) && (
+            <div className="no-results" role="status">
+              <FontAwesomeIcon
+                className="no-results-background"
+                icon={faSearch}
+              />
+              <div className="no-results-message">
+                <h4>No Results Found</h4>
+                <p>
+                  Adjust your search and filter to find what you are looking
+                  for.
+                </p>
+              </div>
             </div>
-          </div>
-        )}
+          )}
+      </div>
     </>
   );
 }

@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 
 import {
@@ -41,6 +41,8 @@ type ComponentDetail = {
   additionalInformation: string;
   submissionTimestamp: Date;
   clockEndTimestamp: Date;
+  proposedEffectiveTimestamp: Date;
+  effectiveDateTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
   territory: string;
   raiResponses: any[];
@@ -129,7 +131,8 @@ const DetailSection = ({
     [history]
   );
 
-  const packageConfig = ChangeRequest.CONFIG[detail?.componentType ?? ""];
+  const packageConfig =
+    ChangeRequest.CONFIG[detail?.componentType ?? ChangeRequest.TYPE.SPA];
 
   return (
     <>
@@ -143,39 +146,51 @@ const DetailSection = ({
                 {formatDetailViewDate(detail.clockEndTimestamp)}
               </Review>
             )}
+            {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+              ChangeRequest.PACKAGE_GROUP.WAIVER &&
+              detail.effectiveDateTimestamp && (
+                <Review heading="Effective Date">
+                  {formatDetailViewDate(detail.effectiveDateTimestamp)}
+                </Review>
+              )}
           </section>
           <section className="package-actions">
             <h2>Package Actions</h2>
             <ul className="action-list">
-              {(packageConfig?.actionsByStatus ??
-                ChangeRequest.defaultActionsByStatus)[
-                detail.currentStatus
-              ]?.map((actionLabel, index) => {
-                return (
-                  <li key={index}>
-                    <Button
-                      className="package-action-link"
-                      onClick={
-                        actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW
-                          ? () => {
-                              setConfirmItem({
-                                label: actionLabel,
-                                confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                onAccept: onLinkActionWithdraw,
-                              });
-                            }
-                          : () => {
-                              onLinkActionRAI({
-                                href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
-                              });
-                            }
-                      }
-                    >
-                      {actionLabel}
-                    </Button>
-                  </li>
-                );
-              })}
+              {packageConfig.actionsByStatus[detail.currentStatus]?.length >
+              0 ? (
+                packageConfig.actionsByStatus[detail.currentStatus]?.map(
+                  (actionLabel, index) => {
+                    return (
+                      <li key={index}>
+                        <Button
+                          className="package-action-link"
+                          onClick={
+                            actionLabel ===
+                            ChangeRequest.PACKAGE_ACTION.WITHDRAW
+                              ? () => {
+                                  setConfirmItem({
+                                    label: actionLabel,
+                                    confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                    onAccept: onLinkActionWithdraw,
+                                  });
+                                }
+                              : () => {
+                                  onLinkActionRAI({
+                                    href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                  });
+                                }
+                          }
+                        >
+                          {actionLabel}
+                        </Button>
+                      </li>
+                    );
+                  }
+                )
+              ) : (
+                <p>No actions are currently available for this submission.</p>
+              )}
             </ul>
           </section>
         </div>
@@ -207,6 +222,14 @@ const DetailSection = ({
               {formatDetailViewDate(detail.submissionTimestamp)}
             </Review>
           )}
+          {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+            ChangeRequest.PACKAGE_GROUP.WAIVER && (
+            <Review heading="Proposed Effective Date">
+              {detail.proposedEffectiveTimestamp
+                ? formatDetailViewDate(detail.proposedEffectiveTimestamp)
+                : "N/A"}
+            </Review>
+          )}
         </section>
         <section className="detail-section">
           <FileList
@@ -216,14 +239,6 @@ const DetailSection = ({
             zipId={detail.componentId}
           />
         </section>
-        {detail.additionalInformation && (
-          <section id="addl-info-base" className="detail-section">
-            <h2>Additional Information</h2>
-            <Review className="original-review-component" headingLevel="2">
-              {detail.additionalInformation}
-            </Review>
-          </section>
-        )}
         {detail.raiResponses && (
           <section className="detail-section">
             <h2>RAI Responses</h2>
@@ -273,8 +288,24 @@ const DetailSection = ({
   );
 };
 
+const AdditionalInfoSection: FC<{ detail: ComponentDetail }> = ({ detail }) => {
+  return (
+    <>
+      <section id="addl-info-base" className="read-only-submission">
+        <h2>Additional Information</h2>
+        <Review className="original-review-component" headingLevel="2">
+          {detail.additionalInformation || (
+            <i>No Additional Information has been submitted.</i>
+          )}
+        </Review>
+      </section>
+    </>
+  );
+};
+
 enum DetailViewTab {
   DETAIL = "component-details",
+  ADDITIONAL = "additional-info",
 }
 
 /**
@@ -287,12 +318,13 @@ const DetailView = () => {
     useParams<PathParams>();
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [tab, setTab] = useState<DetailViewTab>(DetailViewTab.DETAIL);
   const [confirmItem, setConfirmItem] = useState<{
     label: ChangeRequest.PACKAGE_ACTION;
     confirmationMessage: string;
     onAccept: () => void;
   } | null>(null);
+
+  const detailTab = location.hash.substring(1) || DetailViewTab.DETAIL;
 
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
@@ -338,15 +370,22 @@ const DetailView = () => {
     [history, componentId, componentType, componentTimestamp]
   );
 
-  const onTabSwitch = useCallback((_event, id) => {
-    setTab(id);
-  }, []);
-
   const navItems = useMemo(
     () => [
       {
         label: "Package Overview",
-        items: [{ id: DetailViewTab.DETAIL, label: "Package Details" }],
+        items: [
+          {
+            id: DetailViewTab.DETAIL,
+            label: "Package Details",
+            url: `#${DetailViewTab.DETAIL}`,
+          },
+          {
+            id: DetailViewTab.ADDITIONAL,
+            label: "Additional Information",
+            url: `#${DetailViewTab.ADDITIONAL}`,
+          },
+        ],
       },
     ],
     []
@@ -364,24 +403,31 @@ const DetailView = () => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={detail && detail.componentId} enableBackNav />
+      <PageTitleBar
+        backTo={ROUTES.PACKAGE_LIST}
+        heading={detail && detail.componentId}
+        enableBackNav
+      />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       {detail && (
         <div className="form-container">
           <div className="component-detail-wrapper">
             <VerticalNav
+              // component="button"
               items={navItems}
-              onLinkClick={onTabSwitch}
-              selectedId={tab}
+              selectedId={detailTab}
             />
             <article className="component-detail">
-              {tab === DetailViewTab.DETAIL && (
+              {detailTab === DetailViewTab.DETAIL && (
                 <DetailSection
                   detail={detail}
                   loadDetail={loadDetail}
                   setAlertCode={setAlertCode}
                   setConfirmItem={setConfirmItem}
                 />
+              )}
+              {detailTab === DetailViewTab.ADDITIONAL && (
+                <AdditionalInfoSection detail={detail} />
               )}
             </article>
           </div>
