@@ -3650,7 +3650,7 @@
       }
     ],
     "componentType": "spa",
-    "currentStatus": "Package Withdrawn",
+    "currentStatus": "Withdrawn",
     "attachments": [
       {
         "s3Key": "1639595173888/textnotes.txt",
@@ -3753,7 +3753,7 @@
       }
     ],
     "componentType": "spa",
-    "currentStatus": "Package Withdrawn",
+    "currentStatus": "Withdrawn",
     "attachments": [
       {
         "s3Key": "1639595173888/textnotes.txt",

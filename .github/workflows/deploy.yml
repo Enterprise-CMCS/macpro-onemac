@@ -197,6 +197,7 @@ jobs:
             OY2_16471_State_should_not_be_able_to_withdraw_RAI_Responses_in_OneMAC.spec.feature,
             OY2_14656_Left_Hand_Navigation_for_Package_Details_View.spec.feature,
             OY2_16322_RAI_Response_for_SPA_package_view.spec.feature,
+            OY2_13923_Warning_Message_on_Package_Details_Page.spec.js,
             OY2_16707_CMS_Users_Denied_a_CRA_Role_loses_Read_Only_Access_to_OneMAC.spec.feature,
             OY2_15984_Updated_SPA_Package_Details_View_Additional_Information_Page.spec.js,
           ]
