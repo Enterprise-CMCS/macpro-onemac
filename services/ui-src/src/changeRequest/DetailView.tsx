@@ -41,6 +41,8 @@ type ComponentDetail = {
   additionalInformation: string;
   submissionTimestamp: Date;
   clockEndTimestamp: Date;
+  proposedEffectiveTimestamp: Date;
+  effectiveDateTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
   territory: string;
   raiResponses: any[];
@@ -126,7 +128,8 @@ const DetailSection = ({
     [history]
   );
 
-  const packageConfig = ChangeRequest.CONFIG[detail?.componentType ?? ""];
+  const packageConfig =
+    ChangeRequest.CONFIG[detail?.componentType ?? ChangeRequest.TYPE.SPA];
 
   return (
     <>
@@ -140,39 +143,51 @@ const DetailSection = ({
                 {formatDetailViewDate(detail.clockEndTimestamp)}
               </Review>
             )}
+            {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+              ChangeRequest.PACKAGE_GROUP.WAIVER &&
+              detail.effectiveDateTimestamp && (
+                <Review heading="Effective Date">
+                  {formatDetailViewDate(detail.effectiveDateTimestamp)}
+                </Review>
+              )}
           </section>
           <section className="package-actions">
             <h2>Package Actions</h2>
             <ul className="action-list">
-              {(packageConfig?.actionsByStatus ??
-                ChangeRequest.defaultActionsByStatus)[
-                detail.currentStatus
-              ]?.map((actionLabel, index) => {
-                return (
-                  <li key={index}>
-                    <Button
-                      className="package-action-link"
-                      onClick={
-                        actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW
-                          ? () => {
-                              setConfirmItem({
-                                label: actionLabel,
-                                confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                onAccept: onLinkActionWithdraw,
-                              });
-                            }
-                          : () => {
-                              onLinkActionRAI({
-                                href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
-                              });
-                            }
-                      }
-                    >
-                      {actionLabel}
-                    </Button>
-                  </li>
-                );
-              })}
+              {packageConfig.actionsByStatus[detail.currentStatus]?.length >
+              0 ? (
+                packageConfig.actionsByStatus[detail.currentStatus]?.map(
+                  (actionLabel, index) => {
+                    return (
+                      <li key={index}>
+                        <Button
+                          className="package-action-link"
+                          onClick={
+                            actionLabel ===
+                            ChangeRequest.PACKAGE_ACTION.WITHDRAW
+                              ? () => {
+                                  setConfirmItem({
+                                    label: actionLabel,
+                                    confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                    onAccept: onLinkActionWithdraw,
+                                  });
+                                }
+                              : () => {
+                                  onLinkActionRAI({
+                                    href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                  });
+                                }
+                          }
+                        >
+                          {actionLabel}
+                        </Button>
+                      </li>
+                    );
+                  }
+                )
+              ) : (
+                <p>No actions are currently available for this submission.</p>
+              )}
             </ul>
           </section>
         </div>
@@ -202,6 +217,14 @@ const DetailSection = ({
           {detail.submissionTimestamp && (
             <Review heading="Date Submitted">
               {formatDetailViewDate(detail.submissionTimestamp)}
+            </Review>
+          )}
+          {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+            ChangeRequest.PACKAGE_GROUP.WAIVER && (
+            <Review heading="Proposed Effective Date">
+              {detail.proposedEffectiveTimestamp
+                ? formatDetailViewDate(detail.proposedEffectiveTimestamp)
+                : "N/A"}
             </Review>
           )}
         </section>
