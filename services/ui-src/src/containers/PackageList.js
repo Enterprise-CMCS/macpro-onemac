@@ -104,17 +104,7 @@ const PackageList = () => {
   );
 
   const getType = useCallback(
-    ({ componentType }) =>
-      ({
-        [ChangeRequest.TYPE.CHIP_SPA]: "CHIP SPA",
-        [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
-        [ChangeRequest.TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
-        [ChangeRequest.TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
-        [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-        [ChangeRequest.TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
-        [ChangeRequest.TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
-        [ChangeRequest.TYPE.WAIVER_RAI]: "1915(b) RAI Response",
-      }[componentType] ?? []),
+    ({ componentType }) => ChangeRequest.LABEL[componentType] ?? [],
     []
   );
 
@@ -332,7 +322,7 @@ const PackageList = () => {
       className="new-submission-button"
       onClick={(e) => {
         e.preventDefault();
-        tableListExportToCSV("submission-table", packageList, "SubmissionList");
+        tableListExportToCSV("package-dashboard", packageList, `${tab}List`);
       }}
       inversed
     >
