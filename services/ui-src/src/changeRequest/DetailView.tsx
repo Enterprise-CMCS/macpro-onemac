@@ -74,15 +74,15 @@ const PAGE_detail = {
     detailHeader: "RAI Response",
     idLabel: "CHIP SPA ID",
   },
-  waiverrai: {
+  [ChangeRequest.TYPE.WAIVER_RAI]: {
     detailHeader: "RAI Response",
     idLabel: "Waiver Number",
   },
-  waiverrenewal: {
+  [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
     detailHeader: "Waiver Renewal",
     idLabel: "Waiver Number",
   },
-  waiveramendment: {
+  [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
     detailHeader: "Waiver Amendment",
     idLabel: "Waiver Number",
   },
