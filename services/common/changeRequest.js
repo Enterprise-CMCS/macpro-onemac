@@ -117,6 +117,24 @@ export const getWaiverRAIParent = (inId) => {
   return TYPE.WAIVER_BASE;
 };
 
+export const get90thDayText = (currentStatus, clockEndTimestamp) => {
+  switch (currentStatus) {
+    case ONEMAC_STATUS.RAI_ISSUED:
+      return "Clock Stopped";
+    case ONEMAC_STATUS.APPROVED:
+    case ONEMAC_STATUS.DISAPPROVED:
+    case ONEMAC_STATUS.TERMINATED:
+    case ONEMAC_STATUS.WITHDRAWN:
+      return "N/A";
+    case ONEMAC_STATUS.SUBMITTED:
+    case ONEMAC_STATUS.UNSUBMITTED:
+    case ONEMAC_STATUS.IN_REVIEW:
+      return "Pending";
+    default:
+      return clockEndTimestamp;
+  }
+};
+
 export const decodeId = (inId, inType) => {
   const returnInfo = {
     packageId: inId,
