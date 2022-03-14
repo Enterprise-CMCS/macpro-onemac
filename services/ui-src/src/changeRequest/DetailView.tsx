@@ -35,6 +35,7 @@ type PathParams = {
 
 type ComponentDetail = {
   componentId: string;
+  title: string;
   componentType: string;
   currentStatus: string;
   attachments: any[];
@@ -57,34 +58,64 @@ const PAGE_detail = {
   [ChangeRequest.TYPE.WAIVER_BASE]: {
     detailHeader: "Base Waiver",
     idLabel: "Waiver Number",
+    actionLabel: "Package Actions",
+    usesVerticalNav: true,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    raiLink: ROUTES.WAIVER_RAI,
   },
   [ChangeRequest.TYPE.SPA]: {
     detailHeader: "Medicaid SPA",
     idLabel: "Medicaid SPA ID",
+    actionLabel: "Package Actions",
+    usesVerticalNav: true,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    raiLink: ROUTES.SPA_RAI,
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
     detailHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
+    actionLabel: "Package Actions",
+    usesVerticalNav: true,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    raiLink: ROUTES.CHIP_SPA_RAI,
   },
   [ChangeRequest.TYPE.SPA_RAI]: {
     detailHeader: "RAI Response",
     idLabel: "Medicaid SPA ID",
+    actionLabel: "Package Actions",
+    usesVerticalNav: false,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
   },
   [ChangeRequest.TYPE.CHIP_SPA_RAI]: {
     detailHeader: "RAI Response",
     idLabel: "CHIP SPA ID",
+    actionLabel: "Package Actions",
+    usesVerticalNav: false,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
   },
   [ChangeRequest.TYPE.WAIVER_RAI]: {
     detailHeader: "RAI Response",
     idLabel: "Waiver Number",
+    actionLabel: "Package Actions",
+    usesVerticalNav: false,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
   },
   [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
     detailHeader: "Waiver Renewal",
     idLabel: "Waiver Number",
+    actionLabel: "Package Actions",
+    usesVerticalNav: true,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    raiLink: ROUTES.WAIVER_RAI,
   },
   [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
     detailHeader: "Waiver Amendment",
-    idLabel: "Waiver Number",
+    titleHeader: "Amendment Title",
+    idLabel: "Amendment Number",
+    actionLabel: "Amendment Actions",
+    usesVerticalNav: false,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    raiLink: ROUTES.WAIVER_RAI,
   },
 };
 
@@ -131,8 +162,8 @@ const DetailSection = ({
     [history]
   );
 
-  const packageConfig =
-    ChangeRequest.CONFIG[detail?.componentType ?? ChangeRequest.TYPE.SPA];
+  const pageConfig =
+    PAGE_detail[detail?.componentType ?? ChangeRequest.TYPE.SPA];
 
   return (
     <>
@@ -141,11 +172,11 @@ const DetailSection = ({
         <div className="detail-card">
           <section>
             <h2>{detail.currentStatus}</h2>
-            {detail.clockEndTimestamp && (
-              <Review heading="90th Day">
-                {formatDetailViewDate(detail.clockEndTimestamp)}
-              </Review>
-            )}
+            <Review heading="90th Day">
+              {detail.clockEndTimestamp
+                ? formatDetailViewDate(detail.clockEndTimestamp)
+                : "N/A"}
+            </Review>
             {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
               ChangeRequest.PACKAGE_GROUP.WAIVER &&
               detail.effectiveDateTimestamp && (
@@ -155,11 +186,10 @@ const DetailSection = ({
               )}
           </section>
           <section className="package-actions">
-            <h2>Package Actions</h2>
+            <h2>{pageConfig.actionLabel}</h2>
             <ul className="action-list">
-              {packageConfig.actionsByStatus[detail.currentStatus]?.length >
-              0 ? (
-                packageConfig.actionsByStatus[detail.currentStatus]?.map(
+              {pageConfig.actionsByStatus[detail.currentStatus]?.length > 0 ? (
+                pageConfig.actionsByStatus[detail.currentStatus]?.map(
                   (actionLabel, index) => {
                     return (
                       <li key={index}>
@@ -177,7 +207,7 @@ const DetailSection = ({
                                 }
                               : () => {
                                   onLinkActionRAI({
-                                    href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                    href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
                                   });
                                 }
                           }
@@ -197,7 +227,12 @@ const DetailSection = ({
       </section>
       <div className="read-only-submission">
         <section className="detail-section">
-          <h2>Package Details</h2>
+          <h2>{pageConfig.detailHeader} Details</h2>
+          {pageConfig.titleHeader && (
+            <Review heading={pageConfig.titleHeader}>
+              {detail.title ?? "N/A"}
+            </Review>
+          )}
           {detail.waiverAuthority && (
             <Review heading="Waiver Authority">
               {AUTHORITY_LABELS[detail.waiverAuthority] ??
@@ -205,14 +240,10 @@ const DetailSection = ({
             </Review>
           )}
           {detail.componentId && (
-            <Review heading={PAGE_detail[detail.componentType].idLabel}>
-              {detail.componentId}
-            </Review>
+            <Review heading={pageConfig.idLabel}>{detail.componentId}</Review>
           )}
           {detail.componentType && (
-            <Review heading="Type">
-              {PAGE_detail[detail.componentType].detailHeader}
-            </Review>
+            <Review heading="Type">{pageConfig.detailHeader}</Review>
           )}
           {detail.territory && (
             <Review heading="State">{territoryMap[detail.territory]}</Review>
@@ -331,6 +362,8 @@ const DetailView = () => {
 
   // The record we are using for the form.
   const [detail, setDetail] = useState<ComponentDetail>();
+  const pageConfig =
+    PAGE_detail[detail?.componentType ?? ChangeRequest.TYPE.SPA];
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -412,11 +445,13 @@ const DetailView = () => {
       {detail && (
         <div className="form-container">
           <div className="component-detail-wrapper">
-            <VerticalNav
-              // component="button"
-              items={navItems}
-              selectedId={detailTab}
-            />
+            {pageConfig.usesVerticalNav && (
+              <VerticalNav
+                // component="button"
+                items={navItems}
+                selectedId={detailTab}
+              />
+            )}
             <article className="component-detail">
               {detailTab === DetailViewTab.DETAIL && (
                 <DetailSection
@@ -426,7 +461,14 @@ const DetailView = () => {
                   setConfirmItem={setConfirmItem}
                 />
               )}
-              {detailTab === DetailViewTab.ADDITIONAL && (
+              {!pageConfig.usesVerticalNav && (
+                <>
+                  <br />
+                  <br />
+                </>
+              )}
+              {(!pageConfig.usesVerticalNav ||
+                detailTab === DetailViewTab.ADDITIONAL) && (
                 <AdditionalInfoSection detail={detail} />
               )}
             </article>
