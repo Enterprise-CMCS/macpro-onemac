@@ -26,6 +26,7 @@ export default function getChangeRequestFunctions(type) {
     [ChangeRequest.TYPE.SPA]: SPA,
     [ChangeRequest.TYPE.SPA_RAI]: SPARAI,
     [ChangeRequest.TYPE.WAIVER]: Waiver,
+    [ChangeRequest.TYPE.WAIVER_BASE]: Waiver,
     [ChangeRequest.TYPE.WAIVER_APP_K]: WaiverAppK,
     [ChangeRequest.TYPE.WAIVER_EXTENSION]: WaiverExtension,
     [ChangeRequest.TYPE.WAIVER_RAI]: WaiverRAI,
@@ -122,6 +123,7 @@ export function validateSubmission(data) {
     // user submitted
     actionType: Joi.string().allow(""),
     waiverAuthority: Joi.string().allow(""),
+    proposedEffectiveTimestamp: Joi.string().isoDate().allow(""),
     summary: Joi.string().allow("").max(4000),
     territory: Joi.string()
       .valid(...territoryCodeList)
