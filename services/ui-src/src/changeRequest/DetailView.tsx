@@ -37,6 +37,7 @@ type ComponentDetail = {
   componentId: string;
   title: string;
   componentType: string;
+  typeNice: string;
   currentStatus: string;
   attachments: any[];
   additionalInformation: string;
@@ -45,65 +46,81 @@ type ComponentDetail = {
   proposedEffectiveTimestamp: Date;
   effectiveDateTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
+  waiverAuthorityNice?: string;
   territory: string;
+  territoryNice: string;
   raiResponses: any[];
-};
+} & Record<string, any>;
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
   "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
 } as const;
 
+const submissionDateDefault = {
+  heading: "Date Submitted",
+  fieldName: "submissionDateNice",
+  default: null,
+};
+const waiverAuthorityDefault = {
+  heading: "Waiver Authority",
+  fieldName: "waiverAuthorityNice",
+  default: "N/A",
+};
+const typeDefault = { heading: "Type", fieldName: "typeNice", default: "N/A" };
+const territoryDefault = {
+  heading: "State",
+  fieldName: "territoryNice",
+  default: null,
+};
+
+const defaultPage = {
+  actionLabel: "Package Actions",
+  usesVerticalNav: true,
+  actionsByStatus: ChangeRequest.defaultActionsByStatus,
+  detailHeader: "Package",
+  raiLink: ROUTES.WAIVER_RAI,
+  detailsSection: [
+    { heading: "ID", fieldName: "componentId", default: "N/A" },
+    submissionDateDefault,
+  ],
+};
+
 const PAGE_detail = {
-  default: {
-    idLabel: "ID",
-    actionLabel: "Actions",
-    usesVerticalNav: false,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
-  },
+  default: defaultPage,
   [ChangeRequest.TYPE.WAIVER_BASE]: {
-    idLabel: "Waiver Number",
-    actionLabel: "Package Actions",
-    usesVerticalNav: true,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
-    raiLink: ROUTES.WAIVER_RAI,
+    ...defaultPage,
+    detailsSection: [
+      waiverAuthorityDefault,
+      { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
+      typeDefault,
+      territoryDefault,
+      submissionDateDefault,
+    ],
   },
   [ChangeRequest.TYPE.SPA]: {
-    idLabel: "Medicaid SPA ID",
-    actionLabel: "Package Actions",
-    usesVerticalNav: true,
+    ...defaultPage,
     actionsByStatus: ChangeRequest.defaultActionsByStatus,
     raiLink: ROUTES.SPA_RAI,
+    detailsSection: [
+      { heading: "Medicaid SPA ID", fieldName: "componentId", default: "N/A" },
+      typeDefault,
+      territoryDefault,
+      submissionDateDefault,
+    ],
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
-    idLabel: "CHIP SPA ID",
-    actionLabel: "Package Actions",
-    usesVerticalNav: true,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    ...defaultPage,
     raiLink: ROUTES.CHIP_SPA_RAI,
-  },
-  [ChangeRequest.TYPE.SPA_RAI]: {
-    detailHeader: "RAI Response",
-    idLabel: "Medicaid SPA ID",
-    actionLabel: "Package Actions",
-    usesVerticalNav: false,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
-  },
-  [ChangeRequest.TYPE.CHIP_SPA_RAI]: {
-    detailHeader: "RAI Response",
-    idLabel: "CHIP SPA ID",
-    actionLabel: "Package Actions",
-    usesVerticalNav: false,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
-  },
-  [ChangeRequest.TYPE.WAIVER_RAI]: {
-    detailHeader: "RAI Response",
-    idLabel: "Waiver Number",
-    actionLabel: "Package Actions",
-    usesVerticalNav: false,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+    detailsSection: [
+      { heading: "CHIP SPA ID", fieldName: "componentId", default: "N/A" },
+      typeDefault,
+      territoryDefault,
+      submissionDateDefault,
+    ],
   },
   [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
+    ...defaultPage,
     detailHeader: "Waiver Renewal",
     idLabel: "Waiver Number",
     actionLabel: "Package Actions",
@@ -112,13 +129,20 @@ const PAGE_detail = {
     raiLink: ROUTES.WAIVER_RAI,
   },
   [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
-    detailHeader: "Waiver Amendment",
-    titleHeader: "Amendment Title",
-    idLabel: "Amendment Number",
     actionLabel: "Amendment Actions",
     usesVerticalNav: false,
     actionsByStatus: ChangeRequest.defaultActionsByStatus,
     raiLink: ROUTES.WAIVER_RAI,
+    detailHeader: "Waiver Amendment",
+    detailsSection: [
+      { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
+      { heading: "Amendment Title", fieldName: "title", default: "N/A" },
+      {
+        heading: "Waiver Authority",
+        fieldName: "waiverAuthorityNice",
+        default: "N/A",
+      },
+    ],
   },
 };
 
@@ -165,7 +189,8 @@ const DetailSection = ({
     [history]
   );
 
-  const pageConfig = PAGE_detail[detail?.componentType ?? "default"];
+  const pageConfig =
+    PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
   return (
     <>
@@ -234,31 +259,14 @@ const DetailSection = ({
       </section>
       <div className="read-only-submission">
         <section className="detail-section">
-          <h2>{pageConfig.detailHeader ?? "Package"} Details</h2>
-          {pageConfig.titleHeader && (
-            <Review heading={pageConfig.titleHeader}>
-              {detail.title ?? "N/A"}
-            </Review>
-          )}
-          {detail.waiverAuthority && (
-            <Review heading="Waiver Authority">
-              {AUTHORITY_LABELS[detail.waiverAuthority] ??
-                detail.waiverAuthority}
-            </Review>
-          )}
-          {detail.componentId && (
-            <Review heading={pageConfig.idLabel}>{detail.componentId}</Review>
-          )}
-          {detail.componentType && (
-            <Review heading="Type">{pageConfig.detailHeader}</Review>
-          )}
-          {detail.territory && (
-            <Review heading="State">{territoryMap[detail.territory]}</Review>
-          )}
-          {detail.submissionTimestamp && (
-            <Review heading="Date Submitted">
-              {formatDetailViewDate(detail.submissionTimestamp)}
-            </Review>
+          <h2>{pageConfig.detailHeader} Details</h2>
+          {pageConfig.detailsSection?.map(
+            (item) =>
+              (detail[item.fieldName] || item.default) && (
+                <Review heading={item.heading}>
+                  {detail[item.fieldName] ?? item.default}
+                </Review>
+              )
           )}
           {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
             ChangeRequest.PACKAGE_GROUP.WAIVER && (
@@ -392,7 +400,23 @@ const DetailView = () => {
           fetchedDetail.territory = getTerritoryFromTransmittalNumber(
             fetchedDetail.componentId
           );
+        fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
 
+        if (fetchedDetail.waiverAuthority) {
+          fetchedDetail.waiverAuthorityNice =
+            AUTHORITY_LABELS[fetchedDetail.waiverAuthority];
+        }
+        if (fetchedDetail.submissionTimestamp) {
+          fetchedDetail.submissionDateNice = formatDetailViewDate(
+            fetchedDetail.submissionTimestamp
+          );
+        }
+
+        if (fetchedDetail.proposedEffectiveDate) {
+          fetchedDetail.proposedEffectiveDateNice = formatDetailViewDate(
+            fetchedDetail.proposedEffectiveDate
+          );
+        }
         console.log("got the package: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {
