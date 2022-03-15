@@ -41,11 +41,7 @@ export const getDetails = async (event) => {
   const componentType = event.queryStringParameters.cType;
   let detailsk = componentType;
   if (
-    detailsk != "spa" &&
-    detailsk != "chipspa" &&
-    detailsk != "waivernew" &&
-    detailsk != "waiverrenewal" &&
-    detailsk != "waiveramendment" &&
+    detailsk.search(/rai/i) > -1 &&
     event.queryStringParameters.cNum &&
     event.queryStringParameters.cNum !== "undefined"
   )

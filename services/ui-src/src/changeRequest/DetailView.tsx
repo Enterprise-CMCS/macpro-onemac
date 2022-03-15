@@ -55,8 +55,13 @@ const AUTHORITY_LABELS = {
 } as const;
 
 const PAGE_detail = {
+  ["default"]: {
+    idLabel: "ID",
+    actionLabel: "Actions",
+    usesVerticalNav: false,
+    actionsByStatus: ChangeRequest.defaultActionsByStatus,
+  },
   [ChangeRequest.TYPE.WAIVER_BASE]: {
-    detailHeader: "Base Waiver",
     idLabel: "Waiver Number",
     actionLabel: "Package Actions",
     usesVerticalNav: true,
@@ -64,7 +69,6 @@ const PAGE_detail = {
     raiLink: ROUTES.WAIVER_RAI,
   },
   [ChangeRequest.TYPE.SPA]: {
-    detailHeader: "Medicaid SPA",
     idLabel: "Medicaid SPA ID",
     actionLabel: "Package Actions",
     usesVerticalNav: true,
@@ -72,7 +76,6 @@ const PAGE_detail = {
     raiLink: ROUTES.SPA_RAI,
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
-    detailHeader: "CHIP SPA",
     idLabel: "CHIP SPA ID",
     actionLabel: "Package Actions",
     usesVerticalNav: true,
@@ -162,13 +165,17 @@ const DetailSection = ({
     [history]
   );
 
-  const pageConfig =
-    PAGE_detail[detail?.componentType ?? ChangeRequest.TYPE.SPA];
+  const pageConfig = PAGE_detail[detail?.componentType ?? "default"];
 
   return (
     <>
       <section>
         <div className="detail-card-top"></div>
+        {detail.title && (
+          <section>
+            <h2>{detail.title}</h2>
+          </section>
+        )}
         <div className="detail-card">
           <section>
             <h2>{detail.currentStatus}</h2>
@@ -227,7 +234,7 @@ const DetailSection = ({
       </section>
       <div className="read-only-submission">
         <section className="detail-section">
-          <h2>{pageConfig.detailHeader} Details</h2>
+          <h2>{pageConfig.detailHeader ?? "Package"} Details</h2>
           {pageConfig.titleHeader && (
             <Review heading={pageConfig.titleHeader}>
               {detail.title ?? "N/A"}
