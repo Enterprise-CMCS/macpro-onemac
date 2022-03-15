@@ -63,11 +63,7 @@ export namespace ChangeRequest {
   };
 
   type WaiverFormInfo = {
-    actionType: {
-      optionsList: SelectOption[];
-      hidden?: boolean;
-      value?: string;
-    };
+    actionType: { optionsList: SelectOption[] };
     waiverAuthority: { optionsList: SelectOption[] };
     newTransmittalNumber: TransmittalNumberInfo;
     amendmentTransmittalNumber: TransmittalNumberInfo;
