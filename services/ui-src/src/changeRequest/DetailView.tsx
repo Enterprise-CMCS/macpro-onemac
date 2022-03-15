@@ -55,7 +55,7 @@ const AUTHORITY_LABELS = {
 } as const;
 
 const PAGE_detail = {
-  ["default"]: {
+  default: {
     idLabel: "ID",
     actionLabel: "Actions",
     usesVerticalNav: false,
