@@ -19,6 +19,17 @@ export const TYPE = {
   WAIVER_APP_K: "waiverappk",
 };
 
+export const LABEL = {
+  [TYPE.CHIP_SPA]: "CHIP SPA",
+  [TYPE.SPA]: "Medicaid SPA",
+  [TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
+  [TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
+  [TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+  [TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
+  [TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
+  [TYPE.WAIVER_RAI]: "1915(b) RAI Response",
+};
+
 export const MY_PACKAGE_GROUP = {
   [TYPE.CHIP_SPA]: PACKAGE_GROUP.SPA,
   [TYPE.CHIP_SPA_RAI]: PACKAGE_GROUP.SPA,
