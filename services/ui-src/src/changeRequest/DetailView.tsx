@@ -87,8 +87,12 @@ const defaultPage = {
   detailHeader: "Package",
   raiLink: ROUTES.WAIVER_RAI,
   detailsSection: [
-    { heading: "ID", fieldName: "componentId", default: "N/A" },
+    waiverAuthorityDefault,
+    { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
+    typeDefault,
+    territoryDefault,
     submissionDateDefault,
+    proposedEffectiveDateDefault,
   ],
 };
 
@@ -96,14 +100,6 @@ const PAGE_detail = {
   default: defaultPage,
   [ChangeRequest.TYPE.WAIVER_BASE]: {
     ...defaultPage,
-    detailsSection: [
-      waiverAuthorityDefault,
-      { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
-      typeDefault,
-      territoryDefault,
-      submissionDateDefault,
-      proposedEffectiveDateDefault,
-    ],
   },
   [ChangeRequest.TYPE.SPA]: {
     ...defaultPage,
@@ -127,14 +123,6 @@ const PAGE_detail = {
   },
   [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
     ...defaultPage,
-    detailsSection: [
-      waiverAuthorityDefault,
-      { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
-      typeDefault,
-      territoryDefault,
-      submissionDateDefault,
-      proposedEffectiveDateDefault,
-    ],
   },
   [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
     ...defaultPage,
