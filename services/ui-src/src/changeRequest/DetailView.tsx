@@ -1,5 +1,6 @@
 import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
+import { format, parseISO } from "date-fns";
 
 import {
   Button,
@@ -73,6 +74,11 @@ const territoryDefault = {
   fieldName: "territoryNice",
   default: null,
 };
+const proposedEffectiveDateDefault = {
+  heading: "Proposed Effective Date",
+  fieldName: "proposedEffectiveDateNice",
+  default: "N/A",
+};
 
 const defaultPage = {
   actionLabel: "Package Actions",
@@ -96,11 +102,11 @@ const PAGE_detail = {
       typeDefault,
       territoryDefault,
       submissionDateDefault,
+      proposedEffectiveDateDefault,
     ],
   },
   [ChangeRequest.TYPE.SPA]: {
     ...defaultPage,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
     raiLink: ROUTES.SPA_RAI,
     detailsSection: [
       { heading: "Medicaid SPA ID", fieldName: "componentId", default: "N/A" },
@@ -121,18 +127,19 @@ const PAGE_detail = {
   },
   [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
     ...defaultPage,
-    detailHeader: "Waiver Renewal",
-    idLabel: "Waiver Number",
-    actionLabel: "Package Actions",
-    usesVerticalNav: true,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
-    raiLink: ROUTES.WAIVER_RAI,
+    detailsSection: [
+      waiverAuthorityDefault,
+      { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
+      typeDefault,
+      territoryDefault,
+      submissionDateDefault,
+      proposedEffectiveDateDefault,
+    ],
   },
   [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
+    ...defaultPage,
     actionLabel: "Amendment Actions",
     usesVerticalNav: false,
-    actionsByStatus: ChangeRequest.defaultActionsByStatus,
-    raiLink: ROUTES.WAIVER_RAI,
     detailHeader: "Waiver Amendment",
     detailsSection: [
       { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
@@ -261,23 +268,15 @@ const DetailSection = ({
         <section className="detail-section">
           <h2>{pageConfig.detailHeader} Details</h2>
           {pageConfig.detailsSection?.map(
-            (item) =>
+            (item, index) =>
               (detail[item.fieldName] || item.default) && (
-                <Review heading={item.heading}>
+                <Review key={index} heading={item.heading}>
                   {detail[item.fieldName] ?? item.default}
                 </Review>
               )
           )}
-          {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
-            ChangeRequest.PACKAGE_GROUP.WAIVER && (
-            <Review heading="Proposed Effective Date">
-              {detail.proposedEffectiveTimestamp
-                ? formatDetailViewDate(detail.proposedEffectiveTimestamp)
-                : "N/A"}
-            </Review>
-          )}
         </section>
-        <section className="detail-section">
+        <section className="detail-section ds-u-margin-bottom--7">
           <FileList
             heading="Base Supporting Documentation"
             infoText={downloadInfoText}
@@ -378,7 +377,7 @@ const DetailView = () => {
   // The record we are using for the form.
   const [detail, setDetail] = useState<ComponentDetail>();
   const pageConfig =
-    PAGE_detail[detail?.componentType ?? ChangeRequest.TYPE.SPA];
+    PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -394,6 +393,7 @@ const DetailView = () => {
         fetchedDetail = (await PackageApi.getDetail(
           componentId,
           componentType,
+
           componentTimestamp
         )) as ComponentDetail;
         if (!fetchedDetail.territory)
@@ -401,6 +401,8 @@ const DetailView = () => {
             fetchedDetail.componentId
           );
         fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
+        fetchedDetail.typeNice =
+          ChangeRequest.LABEL[fetchedDetail.componentType];
 
         if (fetchedDetail.waiverAuthority) {
           fetchedDetail.waiverAuthorityNice =
@@ -411,10 +413,12 @@ const DetailView = () => {
             fetchedDetail.submissionTimestamp
           );
         }
-
         if (fetchedDetail.proposedEffectiveDate) {
-          fetchedDetail.proposedEffectiveDateNice = formatDetailViewDate(
-            fetchedDetail.proposedEffectiveDate
+          const effDate = parseISO(fetchedDetail.proposedEffectiveDate);
+
+          fetchedDetail.proposedEffectiveDateNice = format(
+            effDate,
+            "MMM d yyyy"
           );
         }
         console.log("got the package: ", fetchedDetail);
@@ -491,12 +495,6 @@ const DetailView = () => {
                   setAlertCode={setAlertCode}
                   setConfirmItem={setConfirmItem}
                 />
-              )}
-              {!pageConfig.usesVerticalNav && (
-                <>
-                  <br />
-                  <br />
-                </>
               )}
               {(!pageConfig.usesVerticalNav ||
                 detailTab === DetailViewTab.ADDITIONAL) && (

@@ -57,7 +57,7 @@ export default function FileList({
         </div>
       )}
       {infoText && <div className="choice-info">{infoText}</div>}
-      <div className="file-list-dl-button">
+      <div className="file-list-dl-button ds-u-margin-bottom--2">
         <Button onClick={onDownloadAll} variation="primary" id={"dl_" + zipId}>
           <FontAwesomeIcon icon={faDownload} /> Download All
         </Button>
