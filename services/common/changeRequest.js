@@ -55,6 +55,12 @@ export const PACKAGE_ACTION = {
   WITHDRAW: "Withdraw",
 };
 
+export const NINETY_DAY_STATUS = {
+  PENDING: "Pending",
+  CLOCK_STOPPED: "Clock Stopped",
+  NA: "N/A",
+};
+
 export const correspondingRAILink = {
   [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [TYPE.SPA]: ROUTES.SPA_RAI,
@@ -120,16 +126,16 @@ export const getWaiverRAIParent = (inId) => {
 export const get90thDayText = (currentStatus, clockEndTimestamp) => {
   switch (currentStatus) {
     case ONEMAC_STATUS.RAI_ISSUED:
-      return "Clock Stopped";
+      return NINETY_DAY_STATUS.CLOCK_STOPPED;
     case ONEMAC_STATUS.APPROVED:
     case ONEMAC_STATUS.DISAPPROVED:
     case ONEMAC_STATUS.TERMINATED:
     case ONEMAC_STATUS.WITHDRAWN:
-      return "N/A";
+      return NINETY_DAY_STATUS.NA;
     case ONEMAC_STATUS.SUBMITTED:
     case ONEMAC_STATUS.UNSUBMITTED:
     case ONEMAC_STATUS.IN_REVIEW:
-      return "Pending";
+      return NINETY_DAY_STATUS.PENDING;
     default:
       return clockEndTimestamp;
   }
