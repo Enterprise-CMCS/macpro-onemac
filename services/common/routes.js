@@ -26,6 +26,7 @@ export const ROUTES = {
   SPA_RAI: "/sparai",
   NEW_WAIVER: "/newwaiver",
   WAIVER: "/waiver",
+  BASE_WAIVER: "/base-waiver",
   WAIVER_RAI: "/waiverrai",
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",

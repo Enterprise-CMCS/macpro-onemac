@@ -63,11 +63,16 @@ export namespace ChangeRequest {
   };
 
   type WaiverFormInfo = {
-    actionType: { optionsList: SelectOption[] };
+    actionType: {
+      optionsList: SelectOption[];
+      hidden?: boolean;
+      value?: string;
+    };
     waiverAuthority: { optionsList: SelectOption[] };
     newTransmittalNumber: TransmittalNumberInfo;
     amendmentTransmittalNumber: TransmittalNumberInfo;
     renewalTransmittalNumber: TransmittalNumberInfo;
+    proposedEffectiveDate: { fieldName: string };
   };
 
   export enum PACKAGE_ACTION {
@@ -84,6 +89,8 @@ export namespace ChangeRequest {
     optionalUploads: unknown;
     actionsByStatus: Record<string, PACKAGE_ACTION[]>;
     raiLink: string;
+    overrideType?: string;
+    overrideActionType?: string;
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;
