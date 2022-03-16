@@ -242,19 +242,11 @@ const PackageList = () => {
         },
         {
           Header: "90th Day",
-          accessor: ({ clockEndTimestamp, currentStatus }) => {
-            switch (currentStatus) {
-              case ChangeRequest.ONEMAC_STATUS.RAI_ISSUED:
-                return "Clock Stopped";
-              case ChangeRequest.ONEMAC_STATUS.APPROVED:
-              case ChangeRequest.ONEMAC_STATUS.DISAPPROVED:
-                return "N/A";
-              case ChangeRequest.ONEMAC_STATUS.SUBMITTED:
-              case ChangeRequest.ONEMAC_STATUS.UNSUBMITTED:
-                return "Pending";
-              default:
-                return clockEndTimestamp ?? "N/A";
-            }
+          accessor: ({ currentStatus, clockEndTimestamp }) => {
+            return ChangeRequest.get90thDayText(
+              currentStatus,
+              clockEndTimestamp
+            );
           },
           id: "ninetiethDay",
           Cell: renderDate,

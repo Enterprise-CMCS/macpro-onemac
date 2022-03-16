@@ -34,6 +34,7 @@ const spaIDLink =
 const uploadedAttachments =
   "div.header-and-content:nth-child(1) article.form-container div.read-only-submission section.choice-container.file-list-container:nth-child(3)";
 const logoutBtn = "//a[@id='logoutLink']";
+const rcSuccessMessage = "#alert-bar";
 
 export class oneMacDashboardPage {
   clickNewSubmission() {
@@ -130,6 +131,9 @@ export class oneMacDashboardPage {
   }
   clickLogoutBtn() {
     cy.xpath(logoutBtn).click();
+  }
+  verifySuccessMessageIsDisplayedForRoleChange() {
+    cy.get(rcSuccessMessage).contains("Status Change");
   }
 }
 export default oneMacDashboardPage;
