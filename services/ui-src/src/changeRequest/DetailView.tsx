@@ -82,6 +82,7 @@ const proposedEffectiveDateDefault = {
 
 const defaultPage = {
   actionLabel: "Package Actions",
+  attachmentsHeading: "Base Supporting Documentation",
   usesVerticalNav: true,
   actionsByStatus: ChangeRequest.defaultActionsByStatus,
   detailHeader: "Package",
@@ -129,6 +130,7 @@ const PAGE_detail = {
     actionLabel: "Amendment Actions",
     usesVerticalNav: false,
     detailHeader: "Waiver Amendment",
+    attachmentsHeading: "Supporting Documentation",
     detailsSection: [
       { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
       { heading: "Amendment Title", fieldName: "title", default: "N/A" },
@@ -266,7 +268,7 @@ const DetailSection = ({
         </section>
         <section className="detail-section ds-u-margin-bottom--7">
           <FileList
-            heading="Base Supporting Documentation"
+            heading={pageConfig.attachmentsHeading}
             infoText={downloadInfoText}
             uploadList={detail.attachments}
             zipId={detail.componentId}
