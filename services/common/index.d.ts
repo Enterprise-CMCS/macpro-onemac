@@ -99,4 +99,8 @@ export namespace ChangeRequest {
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const get90thDayText: (
+    currentStatus: string,
+    clockEndTimestamp: date
+  ) => string;
 }
