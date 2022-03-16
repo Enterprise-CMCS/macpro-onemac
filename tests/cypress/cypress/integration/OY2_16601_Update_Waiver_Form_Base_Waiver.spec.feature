@@ -10,7 +10,7 @@ Feature: Update Waiver Form: Base Waiver
         And verify Base Waiver is a clickable option
         And click on Base Waiver
         And verify user is on new base waiver page
-@focus 
+
     Scenario: create base waiver from package dashboard and search it
         Given I am on Login Page
         When Clicking on Development Login
