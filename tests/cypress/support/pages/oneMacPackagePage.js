@@ -855,5 +855,8 @@ export class oneMacPackagePage {
   clickLinkForWaiver(n) {
     cy.xpath(waiverNumLink(n)).first().click();
   }
+  verifyIDNumberInFirstRowIs(id) {
+    cy.xpath(packageRowOneWaiverNumLink).contains(id);
+  }
 }
 export default oneMacPackagePage;

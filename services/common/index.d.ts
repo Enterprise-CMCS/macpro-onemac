@@ -68,6 +68,7 @@ export namespace ChangeRequest {
     newTransmittalNumber: TransmittalNumberInfo;
     amendmentTransmittalNumber: TransmittalNumberInfo;
     renewalTransmittalNumber: TransmittalNumberInfo;
+    proposedEffectiveDate: { fieldName: string };
   };
 
   export enum PACKAGE_ACTION {
@@ -84,6 +85,8 @@ export namespace ChangeRequest {
     optionalUploads: unknown;
     actionsByStatus: Record<string, PACKAGE_ACTION[]>;
     raiLink: string;
+    overrideType?: string;
+    overrideActionType?: string;
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;
@@ -97,4 +100,8 @@ export namespace ChangeRequest {
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const get90thDayText: (
+    currentStatus: string,
+    clockEndTimestamp: date
+  ) => string;
 }

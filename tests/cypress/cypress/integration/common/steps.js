@@ -405,6 +405,14 @@ And("click on Waiver Action on Waiver Action Type page", () => {
   OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
 });
 
+And("click on Base Waiver", () => {
+  OneMacSubmissionTypePage.clickBaseWaiver();
+});
+
+And("verify Base Waiver is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
+});
+
 And("select Action Type New Waiver", () => {
   OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
 });
@@ -617,6 +625,18 @@ And("Type Unique Valid Waiver Number With 5 Characters", () => {
       OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
     });
 });
+And("Type Unique Valid Base Waiver Number With SS.#####.R00.00 format", () => {
+  var number = Utilities.generateWaiverNumberWith12Characters("MD");
+  var f = "./fixtures/sharedBaseWaiverNumber.json";
+  cy.readFile(f)
+    .then((data) => {
+      // write the merged object
+      cy.writeFile(f, { newBaseWaiverNumber: number });
+    })
+    .then(() => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
+    });
+});
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
   cy.fixture("sharedWaiverNumber.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber);
@@ -634,6 +654,20 @@ And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
     });
   });
 });
+And("search for Unique Valid Base Waiver Number with 12 Characters", () => {
+  cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newBaseWaiverNumber);
+  });
+  cy.wait(1000);
+});
+And(
+  "verify id number in the first row matches Unique Valid Base Waiver Number",
+  () => {
+    cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newBaseWaiverNumber);
+    });
+  }
+);
 And("search for Unique Valid Waiver Number with 5 Characters", () => {
   cy.fixture("sharedWaiverNumber.json").then((data) => {
     OneMacPackagePage.searchFor(data.newWaiverNumber);
@@ -1916,6 +1950,9 @@ And("verify user is on new spa page", () => {
 And("verify user is on new waiver page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverPage();
 });
+And("verify user is on new base waiver page", () => {
+  OneMacSubmissionTypePage.verifyNewBaseWaiverPage();
+});
 And("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
 });
@@ -2027,4 +2064,7 @@ And("verify submission message for withdrawn amendment", () => {
 });
 And("verify the amendment details section exists", () => {
   OneMacPackageDetailsPage.verifyAmendmentDetailSectionExists();
+});
+And("verify success message for denied role", () => {
+  OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });

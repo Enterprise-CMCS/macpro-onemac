@@ -162,6 +162,11 @@ const DetailSection = ({
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
+  const ninetyDayText = ChangeRequest.get90thDayText(
+    detail.currentStatus,
+    detail.clockEndTimestamp
+  );
+
   const onLinkActionWithdraw = useCallback(async () => {
     // For now, the second argument is constant.
     // When we add another action to the menu, we will need to look at the action taken here.
@@ -203,11 +208,13 @@ const DetailSection = ({
         <div className="detail-card">
           <section>
             <h2>{detail.currentStatus}</h2>
-            <Review heading="90th Day">
-              {detail.clockEndTimestamp
-                ? formatDetailViewDate(detail.clockEndTimestamp)
-                : "N/A"}
-            </Review>
+            {ninetyDayText && ninetyDayText !== "N/A" && (
+              <Review heading="90th Day">
+                {Number(ninetyDayText)
+                  ? formatDetailViewDate(new Date(ninetyDayText))
+                  : ninetyDayText ?? "N/A"}
+              </Review>
+            )}
             {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
               ChangeRequest.PACKAGE_GROUP.WAIVER &&
               detail.effectiveDateTimestamp && (
