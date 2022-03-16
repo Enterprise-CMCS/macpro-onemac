@@ -24,6 +24,15 @@ class utilities {
     let waiverNumber = state + "." + num1 + "" + num2 + "" + num3;
     return waiverNumber;
   }
+
+  generateWaiverNumberWith12Characters(state) {
+    let num1 = Math.floor(Math.random() * Math.floor(80)) + 10;
+    let num2 = Math.floor(Math.random() * Math.floor(80)) + 10;
+    let num3 = Math.floor(Math.random());
+    // SS.#####.R00.00
+    let waiverNumber = state + "." + num1 + "" + num2 + "" + num3 + ".R00.00";
+    return waiverNumber;
+  }
 }
 
 module.exports = utilities;
