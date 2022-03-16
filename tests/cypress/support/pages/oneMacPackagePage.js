@@ -195,6 +195,7 @@ const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
 const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
 const respondToRAIBtn = "//li[text()='Respond to RAI'][@aria-disabled='false']";
 const packageRowOneWaiverNumLink = "//td[@id='componentId-0']//a";
+const waiverNumLink = (n) => `//a[text()="${n}"]`;
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -850,6 +851,9 @@ export class oneMacPackagePage {
   }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneWaiverNumLink).click();
+  }
+  clickLinkForWaiver(n) {
+    cy.xpath(waiverNumLink(n)).first().click();
   }
 }
 export default oneMacPackagePage;
