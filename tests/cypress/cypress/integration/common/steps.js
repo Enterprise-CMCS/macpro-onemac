@@ -2013,6 +2013,58 @@ And(
 And("verify the Proposed Effective Date is NA", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
 });
+And("click the Waiver Number link for the Amendment", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    var number = `${data.newWaiverNumber}.R00.M00`;
+    OneMacPackagePage.clickLinkForWaiver(number);
+  });
+  cy.wait(1000);
+});
+And("verify the Amendment Number header exists", () => {
+  OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
+});
+And("verify the amendment number matches", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    var number = `${data.newWaiverNumber}.R00.M00`;
+    OneMacPackageDetailsPage.verifyAmendmentNumbermatches(number);
+  });
+});
+And("verify the amendment title header exists", () => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
+});
+And("verify the amendment title is NA", () => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderContainsNA();
+});
+And("verify the waiver authority header exists", () => {
+  OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderExists();
+});
+And("verify the supporting documentation section exists", () => {
+  OneMacPackageDetailsPage.verifySupportingDocumentationSectionExists();
+});
+And("verify the download all button exists", () => {
+  OneMacPackageDetailsPage.verifyDownloadAllBtnExists();
+});
+And("verify the additional information section exists", () => {
+  OneMacPackageDetailsPage.verifyAdditionalInfoSectionExists();
+});
+And("verify 90th day header exists", () => {
+  OneMacPackageDetailsPage.verify90thDayHeaderExists();
+});
+And("verify 90th day header is NA", () => {
+  OneMacPackageDetailsPage.verify90thDayHeaderContainsNA();
+});
+And("click withdraw button", () => {
+  OneMacPackageDetailsPage.clickWithdrawBtn();
+});
+And("click withdraw confirmation", () => {
+  OneMacPackageDetailsPage.clickWithdrawConfirmationBtn();
+});
+And("verify submission message for withdrawn amendment", () => {
+  OneMacPackageDetailsPage.verifySubmissionMsgForWithdrawnAmendment();
+});
+And("verify the amendment details section exists", () => {
+  OneMacPackageDetailsPage.verifyAmendmentDetailSectionExists();
+});
 And("verify success message for denied role", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });

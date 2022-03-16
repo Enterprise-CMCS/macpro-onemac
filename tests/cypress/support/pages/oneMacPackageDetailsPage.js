@@ -24,6 +24,19 @@ const packageDetailsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Package Details']";
 const proposedEffectiveDateHeader =
   "//h3[contains(text(),'Proposed Effective Date')]";
+const ninetieththDayHeader = "//h3[text()='90th Day']";
+const additionalInfoSection =
+  "//section[@id='addl-info-base']//h2[text()='Additional Information']";
+const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
+const supportingDocumentationSection =
+  "//h2[text()='Supporting Documentation']";
+const downloadAllBtn = "//button[contains(text(),'Download All')]";
+const amendmentTitleHeader = "//h3[text()='Amendment Title']";
+const amendmentNumberHeader = "//h3[text()='Amendment Number']";
+const successMessage = "#alert-bar";
+const withdrawConfirmationBtn = "//button[text()='Withdraw?']";
+const withdrawBtn = "//button[text()='Withdraw']";
+const amendmentHeaders = "//h2[text()='Waiver Amendment']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -127,6 +140,52 @@ export class oneMacPackageDetailsPage {
   }
   verifyproposedEffectiveDateHeaderContainsNA() {
     cy.xpath(proposedEffectiveDateHeader).next().contains("N/A");
+  }
+  verifyAmendmentNumberHeaderExists() {
+    cy.xpath(amendmentNumberHeader).should("be.visible");
+  }
+  verifyAmendmentNumbermatches(anumber) {
+    cy.xpath(amendmentNumberHeader).next().contains(anumber);
+  }
+  verifyAmendmentTitleHeaderExists() {
+    cy.xpath(amendmentTitleHeader).should("be.visible");
+  }
+  verifyAmendmentTitleHeaderContainsNA() {
+    cy.xpath(amendmentTitleHeader).next().contains("N/A");
+  }
+  verifyWaiverAuthorityHeaderExists() {
+    cy.xpath(waiverAuthorityHeader).should("be.visible");
+  }
+  verifySupportingDocumentationSectionExists() {
+    cy.xpath(supportingDocumentationSection).should("be.visible");
+  }
+  verifyDownloadAllBtnExists() {
+    cy.xpath(downloadAllBtn)
+      .scrollIntoView({ easing: "linear" })
+      .should("be.visible");
+  }
+  verifyAdditionalInfoSectionExists() {
+    cy.xpath(additionalInfoSection).should("be.visible");
+  }
+  verify90thDayHeaderExists() {
+    cy.xpath(ninetieththDayHeader).should("be.visible");
+  }
+  verify90thDayHeaderContainsNA() {
+    cy.xpath(ninetieththDayHeader).next().contains("N/A");
+  }
+  clickWithdrawBtn() {
+    cy.xpath(withdrawBtn).click();
+  }
+  clickWithdrawConfirmationBtn() {
+    cy.xpath(withdrawConfirmationBtn).click();
+  }
+  verifySubmissionMsgForWithdrawnAmendment() {
+    cy.get(successMessage).contains(
+      "Your submission package has successfully been withdrawn"
+    );
+  }
+  verifyAmendmentDetailSectionExists() {
+    cy.xpath(amendmentHeaders).should("be.visible");
   }
 }
 export default oneMacPackageDetailsPage;

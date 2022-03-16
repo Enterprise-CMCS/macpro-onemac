@@ -2473,3 +2473,7 @@ aside#faq-contact-info-box {
   @extend .ds-u-font-style--italic;
   color: $color-gray;
 }
+
+.detail-title {
+  @extend .ds-u-margin-bottom--3;
+}
