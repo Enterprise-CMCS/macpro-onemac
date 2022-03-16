@@ -1976,3 +1976,6 @@ And(
 And("verify the Proposed Effective Date is NA", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
 });
+And("verify success message for denied role", () => {
+  OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
+});
