@@ -18,6 +18,8 @@ const respondToMedicaidSPARAI = '//h4[text()="Respond to Medicaid SPA RAI"]';
 const respondToCHIPSPARAI = '//h4[text()="Respond to CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToWaiverRAI = '//h4[text()="Respond to Waiver RAI"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const baseWaiver = '//h4[text()="Base Waiver"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
@@ -28,6 +30,9 @@ export class oneMacSubmissionTypePage {
   }
   verifyNewSPAPage() {
     cy.url().should("include", "/newspa");
+  }
+  verifyNewBaseWaiverPage() {
+    cy.url().should("include", "/base-waiver");
   }
   clickwaiverAction() {
     cy.xpath(waiverAction).click();
@@ -60,6 +65,15 @@ export class oneMacSubmissionTypePage {
   }
   clickRespondToWaiverRAI() {
     cy.xpath(respondToWaiverRAI).click();
+  }
+  clickBaseWaiver() {
+    cy.xpath(baseWaiver).click();
+  }
+  verifyBaseWaiverIsClickable() {
+    cy.xpath(baseWaiver)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/base-waiver");
   }
 }
 export default oneMacSubmissionTypePage;
