@@ -87,6 +87,7 @@ const defaultPage = {
   actionsByStatus: ChangeRequest.defaultActionsByStatus,
   detailHeader: "Package",
   raiLink: ROUTES.WAIVER_RAI,
+  defaultTitle: null,
   detailsSection: [
     waiverAuthorityDefault,
     { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
@@ -131,6 +132,7 @@ const PAGE_detail = {
     usesVerticalNav: false,
     detailHeader: "Waiver Amendment",
     attachmentsHeading: "Supporting Documentation",
+    defaultTitle: "Waiver Amendment",
     detailsSection: [
       { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
       { heading: "Amendment Title", fieldName: "title", default: "N/A" },
@@ -191,13 +193,13 @@ const DetailSection = ({
 
   return (
     <>
+      {(detail.title || pageConfig.defaultTitle) && (
+        <section className="detail-title">
+          <h2>{detail.title ?? pageConfig.defaultTitle}</h2>
+        </section>
+      )}
       <section>
         <div className="detail-card-top"></div>
-        {detail.title && (
-          <section>
-            <h2>{detail.title}</h2>
-          </section>
-        )}
         <div className="detail-card">
           <section>
             <h2>{detail.currentStatus}</h2>
