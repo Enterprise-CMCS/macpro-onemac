@@ -9,3 +9,8 @@ npm install cypress --save-dev
 
 go to /tests/cypress
 npx cypress open
+
+## Run an individual cypress test rather than whole test suite
+
+go to /tests/cypress
+npx cypress run --spec "./cypress/integration/OY2_16294_Withdraw_action_on_waiver_component.spec.feature" --headed
