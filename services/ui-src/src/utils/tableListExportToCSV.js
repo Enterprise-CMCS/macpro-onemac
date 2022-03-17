@@ -1,8 +1,10 @@
-import { roleLabels } from "cmscommonlib";
+import { roleLabels, ChangeRequest } from "cmscommonlib";
 import { format } from "date-fns";
 
 const CSV_HEADER = {
   "submission-table":
+    "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By",
+  "package-dashboard":
     "SPA ID/Waiver Number,Type,State,Date Submitted,Submitted By",
   "user-table": "Name,Email,State,Status,Role,Last Modified,Modified By",
 };
@@ -44,14 +46,21 @@ const rowTransformer = {
     serializeDate(row.submittedAt),
     JSON.stringify(row.user.firstName + " " + row.user.lastName),
   ],
+  "package-dashboard": (row) => [
+    row.componentId,
+    ChangeRequest.LABEL[row.componentType],
+    row.componentId ? row.componentId.toString().substring(0, 2) : "--",
+    serializeDate(row.submissionTimestamp),
+    JSON.stringify(row.submitterName),
+  ],
   "user-table": (row) => [
-    JSON.stringify(row.firstName + " " + row.lastName),
+    JSON.stringify(row.fullName),
     row.email,
-    row.stateCode,
-    userStatus[row.latest.status],
+    row.territory,
+    userStatus[row.status],
     roleLabels[row.role],
-    serializeDate(row.latest.date * 1000),
-    JSON.stringify(row.latest.doneByName),
+    serializeDate(row.date * 1000),
+    JSON.stringify(row.doneByName),
   ],
 };
 

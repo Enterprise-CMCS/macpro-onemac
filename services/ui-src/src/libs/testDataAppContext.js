@@ -279,14 +279,14 @@ export const cmsUserNoAuthState = {
   isLoggedInAsDeveloper: false,
   userProfile: {
     cmsRoles: "onemac-cms-user",
-    email: "cmsroleapproverunregistered@cms.hhs.local",
+    email: "cmsuserunregistered@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
       firstName: "Unita",
       lastName: "Goodcode",
       roleList: [],
-      email: "cmsroleapproverunregistered@cms.hhs.local",
+      email: "cmsuserunregistered@cms.hhs.local",
       validRoutes: [
         "/",
         "/profile",

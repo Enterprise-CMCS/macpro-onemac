@@ -1,4 +1,4 @@
-import { format } from "date-fns";
+import { format, parseISO } from "date-fns";
 
 /**
  * Format a date to a string.
@@ -23,6 +23,9 @@ export function formatDetailViewDate(date) {
   let dateString = "";
 
   if (date) {
+    if (typeof date === "string") {
+      date = parseISO(date);
+    }
     dateString = format(date, "MMM d yyyy");
   }
   return dateString;

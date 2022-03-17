@@ -1,6 +1,51 @@
 [
   {
     "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "3",
+    "GSI1sk": "Boss",
+    "email": "cmsreviewerrevoked@cms.hhs.local",
+    "fullName": "Ronald Revoked",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsreviewerrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsreviewerrevoked@cms.hhs.local",
+    "doneByName": "Ronald Revoked",
+    "date": "1617149285",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsreviewerrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617149286",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "revoked",
+    "sk": "v2#defaultcmsuser#N/A",
+    "pk": "cmsreviewerrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v3#defaultcmsuser#N/A",
+    "pk": "cmsreviewerrevoked@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
     "status": "revoked",
     "Latest": "1",
     "GSI1sk": "cmsroleapprover",
@@ -186,6 +231,41 @@
   },
   {
     "doneByName": "Systemadmin Nightwatch",
+    "status": "revoked",
+    "Latest": "2",
+    "GSI1sk": "Boss",
+    "email": "cmsreviewer@nightwatch.test",
+    "fullName": "CMSReviewer Nightwatch",
+    "doneByEmail": "systemadmin@nightwatch.test",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsreviewer@nightwatch.test"
+  },
+  {
+    "doneByEmail": "cmsreviewer@nightwatch.test",
+    "doneByName": "CMSReviewer Nightwatch",
+    "date": "1617148287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsreviewer@nightwatch.test"
+  },
+  {
+    "doneByEmail": "systemadmin@nightwatch.test",
+    "doneByName": "Systemadmin Nightwatch",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "revoked",
+    "sk": "v2#defaultcmsuser#N/A",
+    "pk": "cmsreviewer@nightwatch.test"
+  },
+  {
+    "doneByName": "Systemadmin Nightwatch",
     "status": "active",
     "Latest": "2",
     "GSI1sk": "cmsroleapprover",
@@ -218,6 +298,31 @@
     "status": "active",
     "sk": "v2#cmsreviewer#N/A",
     "pk": "cmsreviewer@nightwatch.test"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "1",
+    "GSI1sk": "Boss",
+    "email": "cmsreviewerpending@cms.hhs.local",
+    "fullName": "Pamela Pending",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsreviewerpending@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsreviewerpending@cms.hhs.local"
   },
   {
     "doneByName": "Teresa Test",
@@ -316,6 +421,41 @@
   },
   {
     "doneByName": "Systemadmin Nightwatch",
+    "status": "revoked",
+    "Latest": "2",
+    "GSI1sk": "Boss",
+    "email": "cmsroleapprover@nightwatch.test",
+    "fullName": "CMSroleapprover Nightwatch",
+    "doneByEmail": "systemadmin@nightwatch.test",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsroleapprover@nightwatch.test"
+  },
+  {
+    "doneByEmail": "cmsroleapprover@nightwatch.test",
+    "doneByName": "CMSroleapprover Nightwatch",
+    "date": "1617148286",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsroleapprover@nightwatch.test"
+  },
+  {
+    "doneByEmail": "systemadmin@nightwatch.test",
+    "doneByName": "Systemadmin Nightwatch",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "revoked",
+    "sk": "v2#defaultcmsuser#N/A",
+    "pk": "cmsroleapprover@nightwatch.test"
+  },
+  {
+    "doneByName": "Systemadmin Nightwatch",
     "status": "active",
     "Latest": "2",
     "GSI1sk": "Boss",
@@ -348,6 +488,41 @@
     "status": "active",
     "sk": "v2#cmsroleapprover#N/A",
     "pk": "cmsroleapprover@nightwatch.test"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "revoked",
+    "Latest": "1",
+    "GSI1sk": "Boss",
+    "email": "cmsroleapproveractive@cms.hhs.local",
+    "fullName": "Arnold Active",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsroleapproveractive@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsroleapproveractive@cms.hhs.local",
+    "doneByName": "Arnold Active",
+    "date": "1617149286",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsroleapproveractive@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "revoked",
+    "sk": "v2#defaultcmsuser#N/A",
+    "pk": "cmsroleapproveractive@cms.hhs.local"
   },
   {
     "doneByName": "Teresa Test",
@@ -511,8 +686,53 @@
   },
   {
     "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "3",
+    "GSI1sk": "Boss",
+    "email": "cmsroleapproverrevoked@cms.hhs.local",
+    "fullName": "Rhonda Revoked",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617147287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617148287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
     "status": "revoked",
-    "Latest": "1",
+    "sk": "v2#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v3#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverrevoked@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "revoked",
+    "Latest": "3",
     "GSI1sk": "Boss",
     "email": "cmsroleapproverrevoked@cms.hhs.local",
     "fullName": "Rhonda Revoked",
@@ -527,11 +747,31 @@
   {
     "doneByEmail": "systemadmintest@cms.hhs.local",
     "doneByName": "Teresa Test",
+    "date": "1617147287",
+    "role": "cmsroleapprover",
+    "territory": "N/A",
+    "status": "pending",
+    "sk": "v1#cmsroleapprover#N/A",
+    "pk": "cmsroleapproverrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617148287",
+    "role": "cmsroleapprover",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v2#cmsroleapprover#N/A",
+    "pk": "cmsroleapproverrevoked@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "doneByName": "Teresa Test",
     "date": "1617149287",
     "role": "cmsroleapprover",
     "territory": "N/A",
     "status": "revoked",
-    "sk": "v1#cmsroleapprover#N/A",
+    "sk": "v3#cmsroleapprover#N/A",
     "pk": "cmsroleapproverrevoked@cms.hhs.local"
   },
   {
@@ -721,6 +961,31 @@
   },
   {
     "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "3",
+    "GSI1sk": "Boss",
+    "email": "cmsreviewerdenied@cms.hhs.local",
+    "fullName": "Donny Denied",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsreviewerdenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsreviewerdenied@cms.hhs.local",
+    "doneByName": "Donny Denied",
+    "date": "1617148287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsreviewerdenied@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
     "status": "denied",
     "Latest": "1",
     "GSI1sk": "cmsroleapprover",
@@ -788,6 +1053,31 @@
     "status": "active",
     "sk": "v2#helpdesk#N/A",
     "pk": "helpdeskactive@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "1",
+    "GSI1sk": "Boss",
+    "email": "cmsroleapproverpending@cms.hhs.local",
+    "fullName": "Peter Pending",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverpending@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsroleapproverpending@cms.hhs.local",
+    "doneByName": "Peter Pending",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverpending@cms.hhs.local"
   },
   {
     "doneByName": "Teresa Test",
@@ -873,6 +1163,41 @@
     "status": "pending",
     "sk": "v1#helpdesk#N/A",
     "pk": "helpdeskpending@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "revoked",
+    "Latest": "2",
+    "GSI1sk": "Boss",
+    "email": "cmsrevieweractive@cms.hhs.local",
+    "fullName": "Amanda Active",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsrevieweractive@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsrevieweractive@cms.hhs.local",
+    "doneByName": "Amanda Active",
+    "date": "1617148287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsrevieweractive@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsrevieweractive@cms.hhs.local",
+    "doneByName": "Teresa Test",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "revoked",
+    "sk": "v2#defaultcmsuser#N/A",
+    "pk": "cmsrevieweractive@cms.hhs.local"
   },
   {
     "doneByName": "Teresa Test",
@@ -1183,6 +1508,31 @@
     "status": "revoked",
     "sk": "v3#helpdesk#N/A",
     "pk": "helpdeskrevoked@cms.hhs.local"
+  },
+  {
+    "doneByName": "Teresa Test",
+    "status": "active",
+    "Latest": "1",
+    "GSI1sk": "Boss",
+    "email": "cmsroleapproverdenied@cms.hhs.local",
+    "fullName": "Debbie Denied",
+    "doneByEmail": "systemadmintest@cms.hhs.local",
+    "GSI1pk": "USER",
+    "date": "1617149287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "sk": "v0#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverdenied@cms.hhs.local"
+  },
+  {
+    "doneByEmail": "cmsroleapproverdenied@cms.hhs.local",
+    "doneByName": "Debbie Denied",
+    "date": "1617148287",
+    "role": "defaultcmsuser",
+    "territory": "N/A",
+    "status": "active",
+    "sk": "v1#defaultcmsuser#N/A",
+    "pk": "cmsroleapproverdenied@cms.hhs.local"
   },
   {
     "doneByName": "Teresa Test",
@@ -3300,7 +3650,7 @@
       }
     ],
     "componentType": "spa",
-    "currentStatus": "Package Withdrawn",
+    "currentStatus": "Withdrawn",
     "attachments": [
       {
         "s3Key": "1639595173888/textnotes.txt",
@@ -3403,7 +3753,7 @@
       }
     ],
     "componentType": "spa",
-    "currentStatus": "Package Withdrawn",
+    "currentStatus": "Withdrawn",
     "attachments": [
       {
         "s3Key": "1639595173888/textnotes.txt",
@@ -3859,5 +4209,150 @@
     "componentId": "MI.83420",
     "submitterName": "Statesubmitter Nightwatch",
     "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
-  }
-]
+  },
+  {
+    "pk": "MI.1110",
+    "sk": "waivernew",
+    "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+    "changeHistory": [
+     {
+      "componentType": "waivernew",
+      "additionalInformation": "Testing the details views, need more packages !",
+      "componentId": "MI.1110",
+      "attachments": [
+       {
+        "s3Key": "1646850624434/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850624434/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+       }
+      ],
+      "submissionId": "fcb6d120-9fd6-11ec-b1b8-09aa0cc142ef",
+      "waiverAuthority": "1915(b)(4)",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+      "submitterName": "Angie Active",
+      "submissionTimestamp": 1646850625671,
+      "submitterEmail": "statesubmitteractive@cms.hhs.local"
+     }
+    ],
+    "componentType": "waivernew",
+    "effectiveDateTimestamp": 1646850625671,
+    "currentStatus": "Approved",
+    "attachments": [
+     {
+      "s3Key": "1646850624434/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+      "contentType": "application/pdf",
+      "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850624434/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+     }
+    ],
+    "GSI1sk": "MI.1110",
+    "additionalInformation": "Testing the details views, need more packages !",
+    "submissionTimestamp": 1646850615671,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MI.1110",
+    "submitterName": "Angie Active",
+    "submissionId": "fcb6d120-9fd6-11ec-b1b8-09aa0cc142ef"
+   },
+   {
+    "pk": "MI.1110.R01",
+    "sk": "waiverrenewal",
+    "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+    "changeHistory": [
+     {
+      "componentType": "waiverrenewal",
+      "additionalInformation": "Here is a renewal package for testing",
+      "componentId": "MI.1110.R01",
+      "attachments": [
+       {
+        "s3Key": "1646850668600/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850668600/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+       }
+      ],
+      "submissionId": "16b2bbc0-9fd7-11ec-b1b8-09aa0cc142ef",
+      "waiverAuthority": "1915(b)(4)",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+      "submitterName": "Angie Active",
+      "submissionTimestamp": 1646850669468,
+      "submitterEmail": "statesubmitteractive@cms.hhs.local"
+     }
+    ],
+    "componentType": "waiverrenewal",
+    "currentStatus": "Submitted",
+    "attachments": [
+     {
+      "s3Key": "1646850668600/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+      "contentType": "application/pdf",
+      "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850668600/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+     }
+    ],
+    "GSI1sk": "MI.1110.R01",
+    "additionalInformation": "Here is a renewal package for testing",
+    "submissionTimestamp": 1646850669468,
+    "waiverAuthority": "1915(b)(4)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MI.1110.R01",
+    "submitterName": "Angie Active",
+    "submissionId": "16b2bbc0-9fd7-11ec-b1b8-09aa0cc142ef"
+   },
+   {
+    "pk": "VA.9999",
+    "sk": "waivernew",
+    "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+    "changeHistory": [
+     {
+      "componentType": "waivernew",
+      "additionalInformation": "This one will get updated to RAI Issued.....",
+      "componentId": "VA.9999",
+      "attachments": [
+       {
+        "s3Key": "1646852065050/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646852065050/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+       }
+      ],
+      "submissionId": "579014f0-9fda-11ec-9e4d-ed0e09a4d794",
+      "waiverAuthority": "1915(b)",
+      "currentStatus": "Submitted",
+      "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
+      "submitterName": "Angie Active",
+      "submissionTimestamp": 1646852067074,
+      "submitterEmail": "statesubmitteractive@cms.hhs.local"
+     }
+    ],
+    "componentType": "waivernew",
+    "currentStatus": "RAI Issued",
+    "attachments": [
+     {
+      "s3Key": "1646852065050/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "contentType": "application/pdf",
+      "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646852065050/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+     }
+    ],
+    "GSI1sk": "VA.9999",
+    "additionalInformation": "This one will get updated to RAI Issued.....",
+    "submissionTimestamp": 1646852067074,
+    "waiverAuthority": "1915(b)",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "VA.9999",
+    "submitterName": "Angie Active",
+    "submissionId": "579014f0-9fda-11ec-9e4d-ed0e09a4d794"
+   }
+  ]

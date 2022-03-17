@@ -35,7 +35,7 @@ Feature: Clicking withdraw package on a waiver component doesn't withdraw the co
         And search for Unique Valid Waiver Number with 5 Characters
         And wait for parent row expander to be enabled
         And click parent row expander
-        And verify child row has status "Package Withdrawn"
+        And verify child row has status "Withdrawn"
 
     Scenario: Verify user can withdraw temporary extension component
         And Click on Request Temporary Extension
@@ -55,7 +55,7 @@ Feature: Clicking withdraw package on a waiver component doesn't withdraw the co
         And search for Unique Valid Waiver Number with 5 Characters
         And wait for parent row expander to be enabled
         And click parent row expander
-        And verify child row has status "Package Withdrawn"
+        And verify child row has status "Withdrawn"
 
 
 

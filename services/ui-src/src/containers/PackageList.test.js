@@ -9,7 +9,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { ROUTES } from "cmscommonlib";
+import { ROUTES, ChangeRequest } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
@@ -97,12 +97,13 @@ it("switches to waiver columns if wavier tab selected", async () => {
 });
 
 it.each`
-  filterFieldType    | filterFieldValue       | inName                 | inValue          | textShown
-  ${"currentStatus"} | ${"Package Withdrawn"} | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
-  ${"currentStatus"} | ${"Waiver Terminated"} | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
-  ${"currentStatus"} | ${"Unsubmitted"}       | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-  ${"currentStatus"} | ${"AnythingElse"}      | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
-  ${"currentStatus"} | ${"AnythingElse"}      | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  filterFieldType    | filterFieldValue                           | inName                 | inValue          | textShown
+  ${"currentStatus"} | ${ChangeRequest.ONEMAC_STATUS.WITHDRAWN}   | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${ChangeRequest.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${ChangeRequest.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+  ${"currentStatus"} | ${ChangeRequest.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+  ${"currentStatus"} | ${"AnythingElse"}                          | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
+  ${"currentStatus"} | ${"AnythingElse"}                          | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
 `(
   "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
   async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
@@ -139,9 +140,7 @@ it("provides option to withdraw packages", async () => {
         name: "Actions for MI-98-2223",
       })
     );
-    await userEvent.click(
-      screen.getByRole("menuitem", { name: "Withdraw Package" })
-    );
+    await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
     await userEvent.click(
       screen.getByRole("button", { name: "Yes, withdraw" })
     );

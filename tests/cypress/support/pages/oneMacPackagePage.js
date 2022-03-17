@@ -89,6 +89,7 @@ const MedicaidSPACheckBox =
 const packageApproveCheckBox = "//span[contains(text(),'Package Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageInReviewcheckBox = "//span[contains(text(),'Package In Review')]";
+const waiverTerminatedCheckBox = "//span[contains(text(),'Waiver Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -186,8 +187,7 @@ const allPackageRowActions = "//td[contains(@id,'packageActions')]";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
-const withdrawPackageBtn =
-  "//li[text()='Withdraw Package'][@aria-disabled='false']";
+const withdrawPackageBtn = "//li[text()='Withdraw'][@aria-disabled='false']";
 const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -195,6 +195,7 @@ const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
 const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
 const respondToRAIBtn = "//li[text()='Respond to RAI'][@aria-disabled='false']";
 const packageRowOneWaiverNumLink = "//td[@id='componentId-0']//a";
+const waiverNumLink = (n) => `//a[text()="${n}"]`;
 
 export class oneMacPackagePage {
   verify90thDayColumn() {
@@ -426,6 +427,9 @@ export class oneMacPackagePage {
   }
   clickPackageInReviewcheckBox() {
     cy.xpath(packageInReviewcheckBox).click();
+  }
+  clickWaiverTerminatedCheckBox() {
+    cy.xpath(waiverTerminatedCheckBox).click();
   }
   verifywithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
@@ -847,6 +851,12 @@ export class oneMacPackagePage {
   }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneWaiverNumLink).click();
+  }
+  clickLinkForWaiver(n) {
+    cy.xpath(waiverNumLink(n)).first().click();
+  }
+  verifyIDNumberInFirstRowIs(id) {
+    cy.xpath(packageRowOneWaiverNumLink).contains(id);
   }
 }
 export default oneMacPackagePage;
