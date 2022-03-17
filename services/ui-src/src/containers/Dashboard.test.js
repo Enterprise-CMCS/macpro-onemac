@@ -47,7 +47,7 @@ it("renders with a New Submission button", async () => {
 
   const newSubmissionButton = screen.getByText("New Submission");
   expect(newSubmissionButton.getAttribute("href")).toBe(
-    ROUTES.NEW_SUBMISSION_SELECTION
+    ROUTES.NEW_SUBMISSION_SELECTION + "?legacy"
   );
 
   // let promise resolve before test ends
