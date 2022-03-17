@@ -31,4 +31,7 @@ export const ROUTES = {
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
   ATTACHMENT_LANDING: "/legacy-attachments",
+  TRIAGE_GROUP: "/choose-group",
+  TRIAGE_SPA: "/spa-choices",
+  TRIAGE_WAIVER: "/waiver-choices",
 };

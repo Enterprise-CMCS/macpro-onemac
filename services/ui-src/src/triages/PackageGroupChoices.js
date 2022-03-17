@@ -1,6 +1,6 @@
 import React from "react";
-
 import { ROUTES } from "cmscommonlib";
+
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
@@ -8,17 +8,17 @@ const choices = [
   {
     title: "State Plan Amendment (SPA)",
     description: "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
-    linkTo: ROUTES.NEW_SPA,
+    linkTo: ROUTES.TRIAGE_SPA,
   },
   {
     title: "Waiver Action",
     description:
       "Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension",
-    linkTo: ROUTES.NEW_WAIVER,
+    linkTo: ROUTES.TRIAGE_WAIVER,
   },
 ];
 
-const NewSubmission = () => {
+const PackageGroupChoices = () => {
   return (
     <>
       <PageTitleBar heading="Submission Type" enableBackNav />
@@ -30,4 +30,4 @@ const NewSubmission = () => {
   );
 };
 
-export default NewSubmission;
+export default PackageGroupChoices;

@@ -326,7 +326,7 @@ const PackageList = () => {
     <Button
       id="new-submission-button"
       className="new-submission-button"
-      href={ROUTES.NEW_SUBMISSION_SELECTION}
+      href={ROUTES.TRIAGE_GROUP}
       inversed
     >
       New Submission
