@@ -24,18 +24,19 @@ import WaiverChoices from "./triages/WaiverChoices";
 import PackageGroupChoices from "./triages/PackageGroupChoices";
 import SPAChoices from "./triages/SPAChoices";
 import NewWaiver from "./changeRequest/NewWaiver";
+import BaseWaiverForm from "./forms/BaseWaiverForm";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
 import DetailView from "./changeRequest/DetailView";
 import UserPage from "./containers/UserPage";
 
+// this is legacy and should not be touched!
 const FORM_TYPES = {
   [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
   [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
   [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
   [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
   [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
-  [ROUTES.BASE_WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
   [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
   [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,
   [ROUTES.WAIVER_RAI]: ChangeRequest.TYPE.WAIVER_RAI,
@@ -157,6 +158,9 @@ export default function DynamicRoutes() {
           </Route>
           <Route path={`${ROUTES.TRIAGE_WAIVER}`}>
             <WaiverChoices />
+          </Route>
+          <Route path={`${ROUTES.BASE_WAIVER}`}>
+            <BaseWaiverForm />
           </Route>
         </>
       )}
