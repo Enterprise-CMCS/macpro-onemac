@@ -139,6 +139,24 @@ export default function DynamicRoutes() {
           <Redirect to={ROUTES.HOME} />
         )}
       </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST_WAIVER}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList startTab={ChangeRequest.PACKAGE_GROUP.WAIVER} />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST_SPA}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList startTab={ChangeRequest.PACKAGE_GROUP.SPA} />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
       {userRoleObj.canAccessForms && (
         <>
           <Route path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>

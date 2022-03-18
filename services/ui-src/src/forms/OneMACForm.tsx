@@ -203,14 +203,17 @@ export const OneMACForm: React.FC<{
     window.scrollTo({ top: 0 });
 
     if (alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
+      let landingPage = ROUTES.PACKAGE_LIST;
+      if (formInfo.overrideSuccessLanding)
+        landingPage = formInfo.overrideSuccessLanding;
       history.push({
-        pathname: ROUTES.PACKAGE_LIST,
+        pathname: landingPage,
         state: {
           passCode: alertCode,
         },
       });
     }
-  }, [alertCode, history]);
+  }, [alertCode, history, formInfo.overrideSuccessLanding]);
 
   useEffect(() => {
     // default display message settings with empty message

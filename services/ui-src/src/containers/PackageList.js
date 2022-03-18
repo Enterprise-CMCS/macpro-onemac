@@ -51,10 +51,10 @@ const getChildren = ({ children }) => children;
 /**
  * Component containing dashboard
  */
-const PackageList = () => {
+const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
-  const [tab, setTab] = useState(ChangeRequest.PACKAGE_GROUP.SPA);
+  const [tab, setTab] = useState(startTab);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
