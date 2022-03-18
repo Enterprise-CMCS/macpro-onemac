@@ -20,9 +20,7 @@ import { useAppContext } from "./libs/contextLib";
 import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
 import NewSPA from "./changeRequest/NewSPA";
-import WaiverChoices from "./triages/WaiverChoices";
-import PackageGroupChoices from "./triages/PackageGroupChoices";
-import SPAChoices from "./triages/SPAChoices";
+import Triage from "./containers/Triage";
 import NewWaiver from "./changeRequest/NewWaiver";
 import BaseWaiverForm from "./forms/BaseWaiverForm";
 import SubmissionForm from "./changeRequest/SubmissionForm";
@@ -169,13 +167,13 @@ export default function DynamicRoutes() {
             <NewWaiver />
           </Route>
           <Route path={`${ROUTES.TRIAGE_GROUP}`}>
-            <PackageGroupChoices />
+            <Triage />
           </Route>
           <Route path={`${ROUTES.TRIAGE_SPA}`}>
-            <SPAChoices />
+            <Triage />
           </Route>
           <Route path={`${ROUTES.TRIAGE_WAIVER}`}>
-            <WaiverChoices />
+            <Triage />
           </Route>
           <Route path={`${ROUTES.BASE_WAIVER}`}>
             <BaseWaiverForm />
