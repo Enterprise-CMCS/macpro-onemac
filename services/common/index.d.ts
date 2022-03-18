@@ -87,6 +87,7 @@ export namespace ChangeRequest {
     raiLink: string;
     overrideType?: string;
     overrideActionType?: string;
+    overrideSuccessLanding?: ROUTES;
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;

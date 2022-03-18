@@ -546,6 +546,7 @@ export const CONFIG = {
     detailsHeader: "Waiver Action",
     overrideType: TYPE.WAIVER,
     overrideActionType: "new",
+    overrideSuccessLanding: ROUTES.PACKAGE_LIST_WAIVER,
     requiredUploads: [],
     optionalUploads: [
       "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
