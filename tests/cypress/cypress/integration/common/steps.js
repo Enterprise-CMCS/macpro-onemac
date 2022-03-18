@@ -2068,3 +2068,6 @@ And("verify the amendment details section exists", () => {
 And("verify success message for denied role", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });
+And("select proposed effective date 3 months from today", () => {
+  OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
+});
