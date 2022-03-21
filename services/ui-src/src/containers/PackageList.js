@@ -36,7 +36,7 @@ import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const filterArray = {
-  componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
+  componentType: [Workflow.ONEMAC_TYPE.SPA, Workflow.ONEMAC_TYPE.CHIP_SPA],
 };
 
 const renderDate = ({ value }) =>
@@ -106,7 +106,7 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
   );
 
   const getType = useCallback(
-    ({ componentType }) => ChangeRequest.LABEL[componentType] ?? [],
+    ({ componentType }) => Workflow.ONEMAC_LABEL[componentType] ?? [],
     []
   );
 
@@ -170,7 +170,7 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
         row.original.currentStatus
       ]?.forEach((actionLabel) => {
         const newItem = { label: actionLabel };
-        if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+        if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
           newItem.value = "Withdrawn";
           newItem.formatConfirmationMessage = ({ componentId }) =>
             `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
@@ -243,10 +243,7 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
         {
           Header: "90th Day",
           accessor: ({ currentStatus, clockEndTimestamp }) => {
-            return ChangeRequest.get90thDayText(
-              currentStatus,
-              clockEndTimestamp
-            );
+            return Workflow.get90thDayText(currentStatus, clockEndTimestamp);
           },
           id: "ninetiethDay",
           Cell: renderDate,
@@ -433,7 +430,7 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
                 className="tab-button"
                 disabled={tab === Workflow.PACKAGE_GROUP.SPA}
                 onClick={switchTo}
-                value={ChangeRequest.PACKAGE_GROUP.SPA}
+                value={Workflow.PACKAGE_GROUP.SPA}
               >
                 SPAs
               </Button>

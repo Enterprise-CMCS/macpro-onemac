@@ -1,7 +1,7 @@
 import dynamoDb from "./libs/dynamodb-lib";
 
 import handler from "./libs/handler-lib";
-import { RESPONSE_CODE, ChangeRequest, Workflow } from "cmscommonlib";
+import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 
 import {
   CMSWithdrawalEmail,

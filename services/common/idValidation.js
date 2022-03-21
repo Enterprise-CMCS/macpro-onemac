@@ -1,8 +1,7 @@
 import { ONEMAC_TYPE } from "./workflow";
-import { ROUTES } from "./routes";
 
-const defaultSPARegex =
-  "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)";
+// const defaultSPARegex =
+//   "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)";
 
 export const ONEMAC_ID_REGEX = {
   [ONEMAC_TYPE.WAIVER_BASE]: "^[A-Z]{2}[.][0-9]{4,5}[.]R00.00$",
@@ -53,52 +52,53 @@ export const decodeWaiverNumber = (inId) => {
 
 export const getParentPackage = (inId) => {
   const results = decodeWaiverNumber(inId);
-  if (!results) return ["FakeID", TYPE.WAIVER_BASE];
+  if (!results) return ["FakeID", ONEMAC_TYPE.WAIVER_BASE];
   const { family, renewal } = results;
 
-  if (renewal === "00") return [family, TYPE.WAIVER_BASE];
+  if (renewal === "00") return [family, ONEMAC_TYPE.WAIVER_BASE];
   const renewalNumber = family + ".R" + renewal;
-  return [renewalNumber, TYPE.WAIVER_RENEWAL];
+  return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
 };
 
 export const getWaiverRAIParent = (inId) => {
   const results = decodeWaiverNumber(inId);
-  if (!results) return TYPE.WAIVER_BASE;
+  if (!results) return ONEMAC_TYPE.WAIVER_BASE;
   const { renewal, amendment } = results;
 
-  if (amendment) return TYPE.WAIVER_AMENDMENT;
-  if (!amendment && renewal && renewal !== "00") return TYPE.WAIVER_RENEWAL;
-  return TYPE.WAIVER_BASE;
+  if (amendment) return ONEMAC_TYPE.WAIVER_AMENDMENT;
+  if (!amendment && renewal && renewal !== "00")
+    return ONEMAC_TYPE.WAIVER_RENEWAL;
+  return ONEMAC_TYPE.WAIVER_BASE;
 };
 
 export const decodeId = (inId, inType) => {
   const returnInfo = {
     packageId: inId,
-    parentType: TYPE.SPA,
+    parentType: ONEMAC_TYPE.SPA,
     componentId: inId,
     componentType: inType,
     isNewPackage: true,
   };
   switch (inType) {
-    case TYPE.CHIP_SPA_RAI:
-      returnInfo.parentType = TYPE.CHIP_SPA;
+    case ONEMAC_TYPE.CHIP_SPA_RAI:
+      returnInfo.parentType = ONEMAC_TYPE.CHIP_SPA;
     // falls through
-    case TYPE.SPA_RAI:
+    case ONEMAC_TYPE.SPA_RAI:
       returnInfo.isNewPackage = false;
       break;
-    case TYPE.WAIVER_RAI:
-    case TYPE.WAIVER_EXTENSION:
+    case ONEMAC_TYPE.WAIVER_RAI:
+    case ONEMAC_TYPE.WAIVER_EXTENSION:
       returnInfo.parentType = getWaiverRAIParent(inId);
       returnInfo.isNewPackage = false;
       break;
-    case TYPE.WAIVER_AMENDMENT:
-    case TYPE.WAIVER_APP_K:
+    case ONEMAC_TYPE.WAIVER_AMENDMENT:
+    case ONEMAC_TYPE.WAIVER_APP_K:
       [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
       returnInfo.isNewPackage = false;
       break;
-    case TYPE.WAIVER:
-    case TYPE.WAIVER_BASE:
-    case TYPE.WAIVER_RENEWAL:
+    case ONEMAC_TYPE.WAIVER:
+    case ONEMAC_TYPE.WAIVER_BASE:
+    case ONEMAC_TYPE.WAIVER_RENEWAL:
       returnInfo.parentType = inType;
       break;
   }
