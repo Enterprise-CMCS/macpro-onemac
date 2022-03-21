@@ -42,6 +42,10 @@ export const getUser = async (userEmail) => {
     cResult = await dynamoDb.get(cParams);
 
     result = await dynamoDb.query(params);
+
+    if (!result.Items) {
+      result = setTimeout(await dynamoDb.query(params), 1500);
+    }
   } catch (dbError) {
     console.log(`Error happened while reading from DB:  ${dbError}`);
     throw dbError;

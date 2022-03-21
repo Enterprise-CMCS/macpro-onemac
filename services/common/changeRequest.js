@@ -19,12 +19,29 @@ export const TYPE = {
   WAIVER_APP_K: "waiverappk",
 };
 
+export const LABEL = {
+  [TYPE.CHIP_SPA]: "CHIP SPA",
+  [TYPE.SPA]: "Medicaid SPA",
+  [TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
+  [TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
+  [TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
+  [TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
+  [TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
+  [TYPE.WAIVER_RAI]: "1915(b) RAI Response",
+};
+
 export const MY_PACKAGE_GROUP = {
   [TYPE.CHIP_SPA]: PACKAGE_GROUP.SPA,
+  [TYPE.CHIP_SPA_RAI]: PACKAGE_GROUP.SPA,
   [TYPE.SPA]: PACKAGE_GROUP.SPA,
+  [TYPE.SPA_RAI]: PACKAGE_GROUP.SPA,
   [TYPE.WAIVER]: PACKAGE_GROUP.WAIVER,
+  [TYPE.WAIVER_RAI]: PACKAGE_GROUP.WAIVER,
   [TYPE.WAIVER_BASE]: PACKAGE_GROUP.WAIVER,
   [TYPE.WAIVER_RENEWAL]: PACKAGE_GROUP.WAIVER,
+  [TYPE.WAIVER_AMENDMENT]: PACKAGE_GROUP.WAIVER,
+  [TYPE.WAIVER_EXTENSION]: PACKAGE_GROUP.WAIVER,
+  [TYPE.WAIVER_APP_K]: PACKAGE_GROUP.WAIVER,
 };
 
 export const ONEMAC_STATUS = {
@@ -34,14 +51,20 @@ export const ONEMAC_STATUS = {
   RAI_ISSUED: "RAI Issued",
   APPROVED: "Package Approved",
   DISAPPROVED: "Package Disapproved",
-  WITHDRAWN: "Package Withdrawn",
+  WITHDRAWN: "Withdrawn",
   TERMINATED: "Waiver Terminated",
   PAUSED: "Review Paused, Off the Clock",
 };
 
 export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
-  WITHDRAW: "Withdraw Package",
+  WITHDRAW: "Withdraw",
+};
+
+export const NINETY_DAY_STATUS = {
+  PENDING: "Pending",
+  CLOCK_STOPPED: "Clock Stopped",
+  NA: "N/A",
 };
 
 export const correspondingRAILink = {
@@ -49,6 +72,8 @@ export const correspondingRAILink = {
   [TYPE.SPA]: ROUTES.SPA_RAI,
   [TYPE.WAIVER]: ROUTES.WAIVER_RAI,
   [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+  [TYPE.WAIVER_RENEWAL]: ROUTES.WAIVER_RAI,
+  [TYPE.WAIVER_AMENDMENT]: ROUTES.WAIVER_RAI,
 };
 
 export const getBaseWaiverId = (inId) => {
@@ -104,6 +129,24 @@ export const getWaiverRAIParent = (inId) => {
   if (amendment) return TYPE.WAIVER_AMENDMENT;
   if (!amendment && renewal && renewal !== "00") return TYPE.WAIVER_RENEWAL;
   return TYPE.WAIVER_BASE;
+};
+
+export const get90thDayText = (currentStatus, clockEndTimestamp) => {
+  switch (currentStatus) {
+    case ONEMAC_STATUS.RAI_ISSUED:
+      return NINETY_DAY_STATUS.CLOCK_STOPPED;
+    case ONEMAC_STATUS.APPROVED:
+    case ONEMAC_STATUS.DISAPPROVED:
+    case ONEMAC_STATUS.TERMINATED:
+    case ONEMAC_STATUS.WITHDRAWN:
+      return NINETY_DAY_STATUS.NA;
+    case ONEMAC_STATUS.SUBMITTED:
+    case ONEMAC_STATUS.UNSUBMITTED:
+    case ONEMAC_STATUS.IN_REVIEW:
+      return NINETY_DAY_STATUS.PENDING;
+    default:
+      return clockEndTimestamp;
+  }
 };
 
 export const decodeId = (inId, inType) => {
@@ -493,7 +536,60 @@ export const CONFIG = {
     },
     actionsByStatus: raiActionsByStatus,
   },
+
+  [TYPE.WAIVER_BASE]: {
+    pageTitle: "Base Waiver Submission",
+    readOnlyPageTitle: "Waiver Action Details",
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
+    detailsHeader: "Waiver Action",
+    overrideType: TYPE.WAIVER,
+    overrideActionType: "new",
+    requiredUploads: [],
+    optionalUploads: [
+      "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+      "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
+      "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+      "Tribal Consultation (Initial, Renewal, Amendment)",
+      "Other",
+    ],
+
+    waiverAuthority: {
+      fieldName: "waiverAuthority",
+      errorMessage: "Please select the Waiver Authority.",
+      optionsList: [
+        { label: "-- select a waiver authority --", value: "" },
+        {
+          label: "1915(b)(4) FFS Selective Contracting waivers",
+          value: "1915(b)(4)",
+        },
+        { label: "All other 1915(b) Waivers", value: "1915(b)" },
+      ],
+    },
+    transmittalNumber: {
+      ...waiverBaseTransmittalNumber,
+      idLabel: "Base Waiver Number",
+      idHintText:
+        "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
+      idFormat: "SS.####.R00.00 or SS.#####.R00.00",
+      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R00.00$",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
+    },
+
+    proposedEffectiveDate: {
+      fieldName: "proposedEffectiveTimestamp",
+    },
+
+    actionsByStatus: defaultActionsByStatus,
+    raiLink: ROUTES.WAIVER_RAI,
+  },
 };
 
-CONFIG[TYPE.WAIVER_BASE] = CONFIG[TYPE.WAIVER];
 CONFIG[TYPE.WAIVER_RENEWAL] = CONFIG[TYPE.WAIVER];

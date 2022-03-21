@@ -213,6 +213,9 @@ And("Verify SPA RAI ID number matches Medical SPA ID number", () => {
 When("Login with cms role approver", () => {
   OneMacDevLoginPage.loginAsCMSRoleApprover();
 });
+When("Login as EUA CMS Read Only User", () => {
+  OneMacDevLoginPage.loginAsEUACMSReadOnlyUser();
+});
 Then("i am on User Management Page", () => {
   OneMacUserManagmentPage.verifyWeAreOnUserManagmentPage();
 });
@@ -240,6 +243,9 @@ And("Role text is Displayed", () => {
 And("Actual Role is Displayed", () => {
   OneMacMyProfilePage.verifyRole();
 });
+And("User Role is Read Only User", () => {
+  OneMacMyProfilePage.verifyRole();
+});
 And("Email text is Displayed", () => {
   OneMacMyProfilePage.verifyEmailHeader();
 });
@@ -254,6 +260,9 @@ And("Phone Number Add Button is Displayed", () => {
 });
 And("Status text is Displayed", () => {
   OneMacMyProfilePage.verifyStatusHeader();
+});
+And("Status text is not displayed", () => {
+  OneMacMyProfilePage.verifyStatusHeaderDoesNotExist();
 });
 And("Actual Status is Displayed with Access Granted", () => {
   OneMacMyProfilePage.verifyAccessStatus();
@@ -394,6 +403,14 @@ And("Click on Waiver Action", () => {
 
 And("click on Waiver Action on Waiver Action Type page", () => {
   OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
+});
+
+And("click on Base Waiver", () => {
+  OneMacSubmissionTypePage.clickBaseWaiver();
+});
+
+And("verify Base Waiver is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
 });
 
 And("select Action Type New Waiver", () => {
@@ -608,6 +625,18 @@ And("Type Unique Valid Waiver Number With 5 Characters", () => {
       OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
     });
 });
+And("Type Unique Valid Base Waiver Number With SS.#####.R00.00 format", () => {
+  var number = Utilities.generateWaiverNumberWith12Characters("MD");
+  var f = "./fixtures/sharedBaseWaiverNumber.json";
+  cy.readFile(f)
+    .then((data) => {
+      // write the merged object
+      cy.writeFile(f, { newBaseWaiverNumber: number });
+    })
+    .then(() => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
+    });
+});
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
   cy.fixture("sharedWaiverNumber.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber);
@@ -625,6 +654,20 @@ And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
     });
   });
 });
+And("search for Unique Valid Base Waiver Number with 12 Characters", () => {
+  cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newBaseWaiverNumber);
+  });
+  cy.wait(1000);
+});
+And(
+  "verify id number in the first row matches Unique Valid Base Waiver Number",
+  () => {
+    cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+      OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newBaseWaiverNumber);
+    });
+  }
+);
 And("search for Unique Valid Waiver Number with 5 Characters", () => {
   cy.fixture("sharedWaiverNumber.json").then((data) => {
     OneMacPackagePage.searchFor(data.newWaiverNumber);
@@ -1229,6 +1272,9 @@ And("verify package in review exists", () => {
 And("click Package In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();
 });
+And("click Waiver Terminated checkbox", () => {
+  OneMacPackagePage.clickWaiverTerminatedCheckBox();
+});
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
 });
@@ -1371,12 +1417,9 @@ And(
     OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
   }
 );
-And(
-  "verify that the 3 dots next to Package Withdrawn status is not clickable",
-  () => {
-    OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
-  }
-);
+And("verify that the 3 dots next to Withdrawn status is not clickable", () => {
+  OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
+});
 And(
   "verify that the 3 dots next to Waiver Terminated status is not clickable",
   () => {
@@ -1590,7 +1633,7 @@ And("click the SPA ID link in the first row", () => {
 And("click the Waiver Number link in the first row", () => {
   OneMacPackagePage.clickWaiverNumberLinkInFirstRow();
 });
-And("click the Package Withdrawn checkbox", () => {
+And("click the Withdrawn checkbox", () => {
   OneMacPackagePage.clickWithdrawnCheckBoxExists();
 });
 And("verify that the value of the column for the 90th day is Pending", () => {
@@ -1874,6 +1917,12 @@ And("verify there is a Type header in the details section", () => {
 And("verify a type containing SPA exists for the Type", () => {
   OneMacPackageDetailsPage.verifyTypeContainsSPA();
 });
+And("verify the type is Base Waiver", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsBaseWaiver();
+});
+And("verify the type is Waiver Renewal", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
+});
 And("verify there is a State header in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
@@ -1900,6 +1949,9 @@ And("verify user is on new spa page", () => {
 });
 And("verify user is on new waiver page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverPage();
+});
+And("verify user is on new base waiver page", () => {
+  OneMacSubmissionTypePage.verifyNewBaseWaiverPage();
 });
 And("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
@@ -1942,4 +1994,77 @@ And("verify Package Overview navigation button is expanded", () => {
 });
 And("verify Package Details is listed under Package Overview", () => {
   OneMacPackageDetailsPage.verifyPackageDetailsNavBtnExists();
+});
+And("click the pending user action button", () => {
+  OneMacUserManagmentPage.clickPendingUserActionBtn();
+});
+And("click the deny access button", () => {
+  OneMacUserManagmentPage.clickDenyAccessBtn();
+});
+And("click the logout button", () => {
+  OneMacDashboardPage.clickLogoutBtn();
+});
+And(
+  "verify there is a Proposed Effective Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyProposedEffectiveDateHeaderExists();
+  }
+);
+And("verify the Proposed Effective Date is NA", () => {
+  OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
+});
+And("click the Waiver Number link for the Amendment", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    var number = `${data.newWaiverNumber}.R00.M00`;
+    OneMacPackagePage.clickLinkForWaiver(number);
+  });
+  cy.wait(1000);
+});
+And("verify the Amendment Number header exists", () => {
+  OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
+});
+And("verify the amendment number matches", () => {
+  cy.fixture("sharedWaiverNumber.json").then((data) => {
+    var number = `${data.newWaiverNumber}.R00.M00`;
+    OneMacPackageDetailsPage.verifyAmendmentNumbermatches(number);
+  });
+});
+And("verify the amendment title header exists", () => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderExists();
+});
+And("verify the amendment title is NA", () => {
+  OneMacPackageDetailsPage.verifyAmendmentTitleHeaderContainsNA();
+});
+And("verify the waiver authority header exists", () => {
+  OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderExists();
+});
+And("verify the supporting documentation section exists", () => {
+  OneMacPackageDetailsPage.verifySupportingDocumentationSectionExists();
+});
+And("verify the download all button exists", () => {
+  OneMacPackageDetailsPage.verifyDownloadAllBtnExists();
+});
+And("verify the additional information section exists", () => {
+  OneMacPackageDetailsPage.verifyAdditionalInfoSectionExists();
+});
+And("verify 90th day header exists", () => {
+  OneMacPackageDetailsPage.verify90thDayHeaderExists();
+});
+And("verify 90th day header is NA", () => {
+  OneMacPackageDetailsPage.verify90thDayHeaderContainsNA();
+});
+And("click withdraw button", () => {
+  OneMacPackageDetailsPage.clickWithdrawBtn();
+});
+And("click withdraw confirmation", () => {
+  OneMacPackageDetailsPage.clickWithdrawConfirmationBtn();
+});
+And("verify submission message for withdrawn amendment", () => {
+  OneMacPackageDetailsPage.verifySubmissionMsgForWithdrawnAmendment();
+});
+And("verify the amendment details section exists", () => {
+  OneMacPackageDetailsPage.verifyAmendmentDetailSectionExists();
+});
+And("verify success message for denied role", () => {
+  OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });

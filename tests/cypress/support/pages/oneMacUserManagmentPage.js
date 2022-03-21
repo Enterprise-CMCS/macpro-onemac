@@ -16,6 +16,10 @@ const FAQTab = '//a[contains(text(),"FAQ")]';
 const actionsHeader = "#personnelActionsColHeader";
 const requestARoleBtn = "#requestRoleLink";
 
+//Element is Xpath use cy.xpath instead of cy.get
+const modifiedBy = "//td[text()='Valencia McMurray']";
+const denyAccessBtn = "//div[@autofocus]//li[text()='Deny Access']";
+
 export class oneMacUserManagmentPage {
   clickMyAccountDropDown() {
     cy.get(myAccountDropDown).click();
@@ -35,7 +39,16 @@ export class oneMacUserManagmentPage {
   verifyWeAreOnUserManagmentPage() {
     cy.url().should("include", "/usermanagement");
   }
-
+  clickPendingUserActionBtn() {
+    cy.xpath(modifiedBy)
+      .next("td")
+      .find("button")
+      .scrollIntoView({ easing: "linear" })
+      .click();
+  }
+  clickDenyAccessBtn() {
+    cy.xpath(denyAccessBtn).click();
+  }
   verifyUserManagmentHeaderIsDisplayed() {
     cy.xpath(userManagmentHeader).should("be.visible");
   }

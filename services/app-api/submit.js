@@ -1,7 +1,11 @@
 import { DateTime } from "luxon";
 import * as uuid from "uuid";
 
-import { getUserRoleObj, getActiveTerritories } from "cmscommonlib";
+import {
+  ChangeRequest,
+  getUserRoleObj,
+  getActiveTerritories,
+} from "cmscommonlib";
 
 import getChangeRequestFunctions, {
   validateSubmission,
@@ -36,6 +40,8 @@ export const main = handler(async (event) => {
     console.log("event couldn't parse: ", error);
     throw error;
   }
+
+  const config = ChangeRequest.CONFIG[data.type];
 
   // these errors are application errors, so are returned, instead
   try {
@@ -81,6 +87,9 @@ export const main = handler(async (event) => {
       console.log("Message from fieldsValid: ", validationResponse);
       throw validationResponse.whyNot;
     }
+
+    if (config.overrideType) data.type = config.overrideType;
+    if (config.overrideActionType) data.actionType = config.overrideActionType;
 
     await dynamoDb.put({
       TableName: process.env.tableName,
@@ -128,6 +137,7 @@ export const main = handler(async (event) => {
     componentId: data.transmittalNumber,
     componentType: data.type,
     submissionTimestamp: data.submittedAt,
+    proposedEffectiveTimestamp: data.proposedEffectiveTimestamp,
     currentStatus: "Submitted",
     attachments: data.uploads,
     additionalInformation: data.summary,

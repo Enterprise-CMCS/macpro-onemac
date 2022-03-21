@@ -1,3 +1,4 @@
+import { ChangeRequest } from "cmscommonlib";
 import { format } from "date-fns";
 
 import { serializeDate, tableToCSV } from "./tableListExportToCSV";
@@ -16,6 +17,16 @@ describe("date output", () => {
 
 it("provides correct header row for submissions table", () => {
   const output = tableToCSV("submission-table", []);
+  const outputElements = output.split("\n")[0].trim().split(",");
+  expect(outputElements).toContain("SPA ID/Waiver Number");
+  expect(outputElements).toContain("Type");
+  expect(outputElements).toContain("State");
+  expect(outputElements).toContain("Date Submitted");
+  expect(outputElements).toContain("Submitted By");
+});
+
+it("provides correct header row for package dashboard", () => {
+  const output = tableToCSV("package-dashboard", []);
   const outputElements = output.split("\n")[0].trim().split(",");
   expect(outputElements).toContain("SPA ID/Waiver Number");
   expect(outputElements).toContain("Type");
@@ -44,7 +55,10 @@ it("formats submission data", () => {
       territory: "ZZ",
 
       submittedAt: 1234567898765,
-      user: { firstName: "Me", lastName: "Myself" },
+      user: {
+        firstName: "Me",
+        lastName: "Myself",
+      },
     },
   ]);
   expect(output.split("\n")[1].trim()).toBe(
@@ -52,23 +66,33 @@ it("formats submission data", () => {
   );
 });
 
+it("formats package data", () => {
+  const output = tableToCSV("package-dashboard", [
+    {
+      componentId: "ZZ-12-1234",
+      componentType: ChangeRequest.TYPE.SPA,
+      submissionTimestamp: 1234567898765,
+      submitterName: "Me Myself",
+    },
+  ]);
+  expect(output.split("\n")[1].trim()).toBe(
+    'ZZ-12-1234,Medicaid SPA,ZZ,"Feb 13, 2009","Me Myself"'
+  );
+});
+
 it("formats user data", () => {
-  // format for user data has changed, this test is no longer valid
-  // const output = tableToCSV("user-table", [
-  //   {
-  //     firstName: "You",
-  //     lastName: "Yourself",
-  //     email: "you@example.com",
-  //     stateCode: "ZZ",
-  //     latest: {
-  //       date: 987654321,
-  //       status: "pending",
-  //       doneByName: "Someone Else",
-  //     },
-  //     role: "statesubmitter",
-  //   },
-  // ]);
-  // expect(output.split("\n")[1].trim()).toBe(
-  //   '"You Yourself",you@example.com,ZZ,Pending,State Submitter,"Apr 19, 2001","Someone Else"'
-  // );
+  const output = tableToCSV("user-table", [
+    {
+      fullName: "You Yourself",
+      email: "you@example.com",
+      territory: "ZZ",
+      date: 987654321,
+      status: "pending",
+      doneByName: "Someone Else",
+      role: "statesubmitter",
+    },
+  ]);
+  expect(output.split("\n")[1].trim()).toBe(
+    '"You Yourself",you@example.com,ZZ,Pending,State Submitter,"Apr 19, 2001","Someone Else"'
+  );
 });

@@ -2004,6 +2004,15 @@ aside#faq-contact-info-box {
         @extend .ds-u-margin--0;
       }
     }
+
+    .choice-info {
+      @extend .ds-u-margin-bottom--2;
+    }
+
+    .file-list-dl-button {
+      @extend .ds-u-margin-bottom--2;
+      align-self: flex-end;
+    }
   }
 }
 .choice-intro {
@@ -2241,6 +2250,7 @@ aside#faq-contact-info-box {
   @extend .ds-u-text-align--center;
   position: relative;
   width: 500px;
+  margin: 0 auto;
 
   .no-results-background {
     width: 100px;
@@ -2446,6 +2456,10 @@ aside#faq-contact-info-box {
   @extend .ds-u-padding--0;
   @extend .ds-u-padding-top--2;
   @extend .ds-u-margin--0;
+
+  p {
+    color: $color-gray;
+  }
 }
 .detail-section {
   @extend .ds-u-margin-top--7;
@@ -2458,4 +2472,8 @@ aside#faq-contact-info-box {
   @extend .ds-u-measure--wide;
   @extend .ds-u-font-style--italic;
   color: $color-gray;
+}
+
+.detail-title {
+  @extend .ds-u-margin-bottom--3;
 }

@@ -1,5 +1,6 @@
-import React, { useState, useCallback, useEffect, useMemo } from "react";
+import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
+import { format, parseISO } from "date-fns";
 
 import {
   Button,
@@ -35,54 +36,112 @@ type PathParams = {
 
 type ComponentDetail = {
   componentId: string;
+  title: string;
   componentType: string;
+  typeNice: string;
   currentStatus: string;
   attachments: any[];
   additionalInformation: string;
   submissionTimestamp: Date;
   clockEndTimestamp: Date;
+  proposedEffectiveTimestamp: Date;
+  effectiveDateTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
+  waiverAuthorityNice?: string;
   territory: string;
+  territoryNice: string;
   raiResponses: any[];
-};
+} & Record<string, any>;
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
   "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
 } as const;
 
+const submissionDateDefault = {
+  heading: "Date Submitted",
+  fieldName: "submissionDateNice",
+  default: null,
+};
+const waiverAuthorityDefault = {
+  heading: "Waiver Authority",
+  fieldName: "waiverAuthorityNice",
+  default: "N/A",
+};
+const typeDefault = { heading: "Type", fieldName: "typeNice", default: "N/A" };
+const territoryDefault = {
+  heading: "State",
+  fieldName: "territoryNice",
+  default: null,
+};
+const proposedEffectiveDateDefault = {
+  heading: "Proposed Effective Date",
+  fieldName: "proposedEffectiveDateNice",
+  default: "N/A",
+};
+
+const defaultPage = {
+  actionLabel: "Package Actions",
+  attachmentsHeading: "Base Supporting Documentation",
+  usesVerticalNav: true,
+  actionsByStatus: ChangeRequest.defaultActionsByStatus,
+  detailHeader: "Package",
+  raiLink: ROUTES.WAIVER_RAI,
+  defaultTitle: null,
+  detailsSection: [
+    waiverAuthorityDefault,
+    { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
+    typeDefault,
+    territoryDefault,
+    submissionDateDefault,
+    proposedEffectiveDateDefault,
+  ],
+};
+
 const PAGE_detail = {
+  default: defaultPage,
   [ChangeRequest.TYPE.WAIVER_BASE]: {
-    detailHeader: "Base Waiver",
-    idLabel: "Waiver Number",
+    ...defaultPage,
   },
   [ChangeRequest.TYPE.SPA]: {
-    detailHeader: "Medicaid SPA",
-    idLabel: "Medicaid SPA ID",
+    ...defaultPage,
+    raiLink: ROUTES.SPA_RAI,
+    detailsSection: [
+      { heading: "Medicaid SPA ID", fieldName: "componentId", default: "N/A" },
+      typeDefault,
+      territoryDefault,
+      submissionDateDefault,
+    ],
   },
   [ChangeRequest.TYPE.CHIP_SPA]: {
-    detailHeader: "CHIP SPA",
-    idLabel: "CHIP SPA ID",
+    ...defaultPage,
+    raiLink: ROUTES.CHIP_SPA_RAI,
+    detailsSection: [
+      { heading: "CHIP SPA ID", fieldName: "componentId", default: "N/A" },
+      typeDefault,
+      territoryDefault,
+      submissionDateDefault,
+    ],
   },
-  [ChangeRequest.TYPE.SPA_RAI]: {
-    detailHeader: "RAI Response",
-    idLabel: "Medicaid SPA ID",
+  [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
+    ...defaultPage,
   },
-  [ChangeRequest.TYPE.CHIP_SPA_RAI]: {
-    detailHeader: "RAI Response",
-    idLabel: "CHIP SPA ID",
-  },
-  waiverrai: {
-    detailHeader: "RAI Response",
-    idLabel: "Waiver Number",
-  },
-  waiverrenewal: {
-    detailHeader: "Waiver Renewal",
-    idLabel: "Waiver Number",
-  },
-  waiveramendment: {
+  [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
+    ...defaultPage,
+    actionLabel: "Amendment Actions",
+    usesVerticalNav: false,
     detailHeader: "Waiver Amendment",
-    idLabel: "Waiver Number",
+    attachmentsHeading: "Supporting Documentation",
+    defaultTitle: "Waiver Amendment",
+    detailsSection: [
+      { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
+      { heading: "Amendment Title", fieldName: "title", default: "N/A" },
+      {
+        heading: "Waiver Authority",
+        fieldName: "waiverAuthorityNice",
+        default: "N/A",
+      },
+    ],
   },
 };
 
@@ -99,6 +158,14 @@ const DetailSection = ({
 }) => {
   const history = useHistory();
   const { userProfile } = useAppContext() ?? {};
+
+  const downloadInfoText =
+    "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
+
+  const ninetyDayText = ChangeRequest.get90thDayText(
+    detail.currentStatus,
+    detail.clockEndTimestamp
+  );
 
   const onLinkActionWithdraw = useCallback(async () => {
     // For now, the second argument is constant.
@@ -126,100 +193,96 @@ const DetailSection = ({
     [history]
   );
 
-  const packageConfig = ChangeRequest.CONFIG[detail?.componentType ?? ""];
+  const pageConfig =
+    PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
   return (
     <>
+      {(detail.title || pageConfig.defaultTitle) && (
+        <section className="detail-title">
+          <h2>{detail.title ?? pageConfig.defaultTitle}</h2>
+        </section>
+      )}
       <section>
         <div className="detail-card-top"></div>
         <div className="detail-card">
           <section>
             <h2>{detail.currentStatus}</h2>
-            {detail.clockEndTimestamp && (
+            {ninetyDayText && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
-                {formatDetailViewDate(detail.clockEndTimestamp)}
+                {Number(ninetyDayText)
+                  ? formatDetailViewDate(new Date(ninetyDayText))
+                  : ninetyDayText ?? "N/A"}
               </Review>
             )}
+            {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
+              ChangeRequest.PACKAGE_GROUP.WAIVER &&
+              detail.effectiveDateTimestamp && (
+                <Review heading="Effective Date">
+                  {formatDetailViewDate(detail.effectiveDateTimestamp)}
+                </Review>
+              )}
           </section>
           <section className="package-actions">
-            <h2>Package Actions</h2>
+            <h2>{pageConfig.actionLabel}</h2>
             <ul className="action-list">
-              {(packageConfig?.actionsByStatus ??
-                ChangeRequest.defaultActionsByStatus)[
-                detail.currentStatus
-              ]?.map((actionLabel, index) => {
-                return (
-                  <li key={index}>
-                    <Button
-                      className="package-action-link"
-                      onClick={
-                        actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW
-                          ? () => {
-                              setConfirmItem({
-                                label: actionLabel,
-                                confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                onAccept: onLinkActionWithdraw,
-                              });
-                            }
-                          : () => {
-                              onLinkActionRAI({
-                                href: `${packageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
-                              });
-                            }
-                      }
-                    >
-                      {actionLabel}
-                    </Button>
-                  </li>
-                );
-              })}
+              {pageConfig.actionsByStatus[detail.currentStatus]?.length > 0 ? (
+                pageConfig.actionsByStatus[detail.currentStatus]?.map(
+                  (actionLabel, index) => {
+                    return (
+                      <li key={index}>
+                        <Button
+                          className="package-action-link"
+                          onClick={
+                            actionLabel ===
+                            ChangeRequest.PACKAGE_ACTION.WITHDRAW
+                              ? () => {
+                                  setConfirmItem({
+                                    label: actionLabel,
+                                    confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                    onAccept: onLinkActionWithdraw,
+                                  });
+                                }
+                              : () => {
+                                  onLinkActionRAI({
+                                    href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                  });
+                                }
+                          }
+                        >
+                          {actionLabel}
+                        </Button>
+                      </li>
+                    );
+                  }
+                )
+              ) : (
+                <p>No actions are currently available for this submission.</p>
+              )}
             </ul>
           </section>
         </div>
       </section>
       <div className="read-only-submission">
         <section className="detail-section">
-          <h2>Package Details</h2>
-          {detail.waiverAuthority && (
-            <Review heading="Waiver Authority">
-              {AUTHORITY_LABELS[detail.waiverAuthority] ??
-                detail.waiverAuthority}
-            </Review>
-          )}
-          {detail.componentId && (
-            <Review heading={PAGE_detail[detail.componentType].idLabel}>
-              {detail.componentId}
-            </Review>
-          )}
-          {detail.componentType && (
-            <Review heading="Type">
-              {PAGE_detail[detail.componentType].detailHeader}
-            </Review>
-          )}
-          {detail.territory && (
-            <Review heading="State">{territoryMap[detail.territory]}</Review>
-          )}
-          {detail.submissionTimestamp && (
-            <Review heading="Date Submitted">
-              {formatDetailViewDate(detail.submissionTimestamp)}
-            </Review>
+          <h2>{pageConfig.detailHeader} Details</h2>
+          {pageConfig.detailsSection?.map(
+            (item, index) =>
+              (detail[item.fieldName] || item.default) && (
+                <Review key={index} heading={item.heading}>
+                  {detail[item.fieldName] ?? item.default}
+                </Review>
+              )
           )}
         </section>
-        <section className="detail-section">
+        <section className="detail-section ds-u-margin-bottom--7">
           <FileList
-            heading="Base Supporting Documentation"
+            heading={pageConfig.attachmentsHeading}
+            infoText={downloadInfoText}
             uploadList={detail.attachments}
             zipId={detail.componentId}
           />
         </section>
-        {detail.additionalInformation && (
-          <section id="addl-info-base" className="detail-section">
-            <h2>Additional Information</h2>
-            <Review className="original-review-component" headingLevel="2">
-              {detail.additionalInformation}
-            </Review>
-          </section>
-        )}
         {detail.raiResponses && (
           <section className="detail-section">
             <h2>RAI Responses</h2>
@@ -240,6 +303,7 @@ const DetailSection = ({
                   >
                     <FileList
                       heading={"RAI Response Documentation"}
+                      infoText={downloadInfoText}
                       uploadList={raiResponse.attachments}
                       zipId={raiResponse.componentType + index}
                     />
@@ -268,8 +332,24 @@ const DetailSection = ({
   );
 };
 
+const AdditionalInfoSection: FC<{ detail: ComponentDetail }> = ({ detail }) => {
+  return (
+    <>
+      <section id="addl-info-base" className="read-only-submission">
+        <h2>Additional Information</h2>
+        <Review className="original-review-component" headingLevel="2">
+          {detail.additionalInformation || (
+            <i>No Additional Information has been submitted.</i>
+          )}
+        </Review>
+      </section>
+    </>
+  );
+};
+
 enum DetailViewTab {
   DETAIL = "component-details",
+  ADDITIONAL = "additional-info",
 }
 
 /**
@@ -282,18 +362,21 @@ const DetailView = () => {
     useParams<PathParams>();
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [tab, setTab] = useState<DetailViewTab>(DetailViewTab.DETAIL);
   const [confirmItem, setConfirmItem] = useState<{
     label: ChangeRequest.PACKAGE_ACTION;
     confirmationMessage: string;
     onAccept: () => void;
   } | null>(null);
 
+  const detailTab = location.hash.substring(1) || DetailViewTab.DETAIL;
+
   // so we show the spinner during the data load
   const [isLoading, setIsLoading] = useState(true);
 
   // The record we are using for the form.
   const [detail, setDetail] = useState<ComponentDetail>();
+  const pageConfig =
+    PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -309,13 +392,34 @@ const DetailView = () => {
         fetchedDetail = (await PackageApi.getDetail(
           componentId,
           componentType,
+
           componentTimestamp
         )) as ComponentDetail;
         if (!fetchedDetail.territory)
           fetchedDetail.territory = getTerritoryFromTransmittalNumber(
             fetchedDetail.componentId
           );
+        fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
+        fetchedDetail.typeNice =
+          ChangeRequest.LABEL[fetchedDetail.componentType];
 
+        if (fetchedDetail.waiverAuthority) {
+          fetchedDetail.waiverAuthorityNice =
+            AUTHORITY_LABELS[fetchedDetail.waiverAuthority];
+        }
+        if (fetchedDetail.submissionTimestamp) {
+          fetchedDetail.submissionDateNice = formatDetailViewDate(
+            fetchedDetail.submissionTimestamp
+          );
+        }
+        if (fetchedDetail.proposedEffectiveDate) {
+          const effDate = parseISO(fetchedDetail.proposedEffectiveDate);
+
+          fetchedDetail.proposedEffectiveDateNice = format(
+            effDate,
+            "MMM d yyyy"
+          );
+        }
         console.log("got the package: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {
@@ -333,15 +437,22 @@ const DetailView = () => {
     [history, componentId, componentType, componentTimestamp]
   );
 
-  const onTabSwitch = useCallback((_event, id) => {
-    setTab(id);
-  }, []);
-
   const navItems = useMemo(
     () => [
       {
         label: "Package Overview",
-        items: [{ id: DetailViewTab.DETAIL, label: "Package Details" }],
+        items: [
+          {
+            id: DetailViewTab.DETAIL,
+            label: "Package Details",
+            url: `#${DetailViewTab.DETAIL}`,
+          },
+          {
+            id: DetailViewTab.ADDITIONAL,
+            label: "Additional Information",
+            url: `#${DetailViewTab.ADDITIONAL}`,
+          },
+        ],
       },
     ],
     []
@@ -359,24 +470,34 @@ const DetailView = () => {
 
   return (
     <LoadingScreen isLoading={isLoading}>
-      <PageTitleBar heading={detail && detail.componentId} enableBackNav />
+      <PageTitleBar
+        backTo={ROUTES.PACKAGE_LIST}
+        heading={detail && detail.componentId}
+        enableBackNav
+      />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       {detail && (
         <div className="form-container">
           <div className="component-detail-wrapper">
-            <VerticalNav
-              items={navItems}
-              onLinkClick={onTabSwitch}
-              selectedId={tab}
-            />
+            {pageConfig.usesVerticalNav && (
+              <VerticalNav
+                // component="button"
+                items={navItems}
+                selectedId={detailTab}
+              />
+            )}
             <article className="component-detail">
-              {tab === DetailViewTab.DETAIL && (
+              {detailTab === DetailViewTab.DETAIL && (
                 <DetailSection
                   detail={detail}
                   loadDetail={loadDetail}
                   setAlertCode={setAlertCode}
                   setConfirmItem={setConfirmItem}
                 />
+              )}
+              {(!pageConfig.usesVerticalNav ||
+                detailTab === DetailViewTab.ADDITIONAL) && (
+                <AdditionalInfoSection detail={detail} />
               )}
             </article>
           </div>

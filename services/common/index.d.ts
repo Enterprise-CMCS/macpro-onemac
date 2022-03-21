@@ -68,11 +68,12 @@ export namespace ChangeRequest {
     newTransmittalNumber: TransmittalNumberInfo;
     amendmentTransmittalNumber: TransmittalNumberInfo;
     renewalTransmittalNumber: TransmittalNumberInfo;
+    proposedEffectiveDate: { fieldName: string };
   };
 
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
-    WITHDRAW = "Withdraw Package",
+    WITHDRAW = "Withdraw",
   }
 
   export type FormInfo = {
@@ -84,15 +85,23 @@ export namespace ChangeRequest {
     optionalUploads: unknown;
     actionsByStatus: Record<string, PACKAGE_ACTION[]>;
     raiLink: string;
+    overrideType?: string;
+    overrideActionType?: string;
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;
   export const ONEMAC_STATUS: Record<string, string>;
   export const TYPE: Record<string, string>;
+  export const LABEL: Record<string, string>;
+  export const MY_PACKAGE_GROUP: Record<string, string>;
   export enum PACKAGE_GROUP {
     SPA = "spa",
     WAIVER = "waiver",
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const get90thDayText: (
+    currentStatus: string,
+    clockEndTimestamp: date
+  ) => string;
 }
