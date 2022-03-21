@@ -6,6 +6,12 @@
 import * as ChangeRequest from "./changeRequest";
 export { ChangeRequest };
 
+import * as Validate from "./idValidation";
+export { Validate };
+
+import * as Workflow from "./workflow";
+export { Workflow };
+
 import { ROUTES } from "./routes";
 export * from "./routes";
 

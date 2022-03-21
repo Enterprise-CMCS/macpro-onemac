@@ -1,13 +1,10 @@
-import { ChangeRequest } from "cmscommonlib";
+import { ChangeRequest, Validate, Workflow } from "cmscommonlib";
 
 import dynamoDb from "../libs/dynamodb-lib";
 import updateComponent from "./updateComponent";
 
 export default async function newSubmission(inData) {
-  const idInfo = ChangeRequest.decodeId(
-    inData.componentId,
-    inData.componentType
-  );
+  const idInfo = Validate.decodeId(inData.componentId, inData.componentType);
 
   let newSk = inData.componentType;
   switch (inData.componentType) {
@@ -28,7 +25,7 @@ export default async function newSubmission(inData) {
 
   // use the scarce index for anything marked as a package.
   if (idInfo.isNewPackage) {
-    data.GSI1pk = `OneMAC#${ChangeRequest.MY_PACKAGE_GROUP[data.sk]}`;
+    data.GSI1pk = `OneMAC#${Workflow.MY_PACKAGE_GROUP[data.sk]}`;
     data.GSI1sk = data.pk;
   } else {
     data.parentId = idInfo.packageId;

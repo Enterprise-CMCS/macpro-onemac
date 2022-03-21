@@ -13,6 +13,7 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ChangeRequest,
+  Workflow,
   territoryMap,
 } from "cmscommonlib";
 
@@ -84,7 +85,7 @@ const defaultPage = {
   actionLabel: "Package Actions",
   attachmentsHeading: "Base Supporting Documentation",
   usesVerticalNav: true,
-  actionsByStatus: ChangeRequest.defaultActionsByStatus,
+  actionsByStatus: Workflow.defaultActionsByStatus,
   detailHeader: "Package",
   raiLink: ROUTES.WAIVER_RAI,
   defaultTitle: null,
@@ -100,10 +101,10 @@ const defaultPage = {
 
 const PAGE_detail = {
   default: defaultPage,
-  [ChangeRequest.TYPE.WAIVER_BASE]: {
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: {
     ...defaultPage,
   },
-  [ChangeRequest.TYPE.SPA]: {
+  [Workflow.ONEMAC_TYPE.SPA]: {
     ...defaultPage,
     raiLink: ROUTES.SPA_RAI,
     detailsSection: [
@@ -113,7 +114,7 @@ const PAGE_detail = {
       submissionDateDefault,
     ],
   },
-  [ChangeRequest.TYPE.CHIP_SPA]: {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: {
     ...defaultPage,
     raiLink: ROUTES.CHIP_SPA_RAI,
     detailsSection: [
@@ -123,10 +124,10 @@ const PAGE_detail = {
       submissionDateDefault,
     ],
   },
-  [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: {
     ...defaultPage,
   },
-  [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: {
     ...defaultPage,
     actionLabel: "Amendment Actions",
     usesVerticalNav: false,
@@ -162,7 +163,7 @@ const DetailSection = ({
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
-  const ninetyDayText = ChangeRequest.get90thDayText(
+  const ninetyDayText = Workflow.get90thDayText(
     detail.currentStatus,
     detail.clockEndTimestamp
   );
@@ -215,8 +216,8 @@ const DetailSection = ({
                   : ninetyDayText ?? "N/A"}
               </Review>
             )}
-            {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
-              ChangeRequest.PACKAGE_GROUP.WAIVER &&
+            {Workflow.MY_PACKAGE_GROUP[detail.componentType] ===
+              Workflow.PACKAGE_GROUP.WAIVER &&
               detail.effectiveDateTimestamp && (
                 <Review heading="Effective Date">
                   {formatDetailViewDate(detail.effectiveDateTimestamp)}
@@ -363,7 +364,7 @@ const DetailView = () => {
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [confirmItem, setConfirmItem] = useState<{
-    label: ChangeRequest.PACKAGE_ACTION;
+    label: Workflow.PACKAGE_ACTION;
     confirmationMessage: string;
     onAccept: () => void;
   } | null>(null);
@@ -401,7 +402,7 @@ const DetailView = () => {
           );
         fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
         fetchedDetail.typeNice =
-          ChangeRequest.LABEL[fetchedDetail.componentType];
+          Workflow.ONEMAC_LABEL[fetchedDetail.componentType];
 
         if (fetchedDetail.waiverAuthority) {
           fetchedDetail.waiverAuthorityNice =

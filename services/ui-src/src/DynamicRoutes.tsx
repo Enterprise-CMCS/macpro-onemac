@@ -5,6 +5,7 @@ import { Auth } from "aws-amplify";
 import {
   ROUTES,
   ChangeRequest,
+  Workflow,
   effectiveRoleForUser,
   getUserRoleObj,
 } from "cmscommonlib";
@@ -139,7 +140,7 @@ export default function DynamicRoutes() {
       </Route>
       <Route exact path={ROUTES.PACKAGE_LIST_WAIVER}>
         {userRoleObj.canAccessDashboard ? (
-          <PackageList startTab={ChangeRequest.PACKAGE_GROUP.WAIVER} />
+          <PackageList startTab={Workflow.PACKAGE_GROUP.WAIVER} />
         ) : userRoleObj.canAccessUserManagement ? (
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         ) : (
@@ -148,7 +149,7 @@ export default function DynamicRoutes() {
       </Route>
       <Route exact path={ROUTES.PACKAGE_LIST_SPA}>
         {userRoleObj.canAccessDashboard ? (
-          <PackageList startTab={ChangeRequest.PACKAGE_GROUP.SPA} />
+          <PackageList startTab={Workflow.PACKAGE_GROUP.SPA} />
         ) : userRoleObj.canAccessUserManagement ? (
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         ) : (
