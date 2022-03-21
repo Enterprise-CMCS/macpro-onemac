@@ -37,7 +37,7 @@ export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 export type TableProps<V extends {}> = {
   className?: string;
   expandable?: boolean;
-  searchBarTitle: ReactNode;
+  searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
   TEMP_onReset?: () => void;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &
@@ -79,9 +79,6 @@ export default function PortalTable<V extends {} = {}>({
       defaultColumn,
       filterTypes: customFilterTypes,
       ...props,
-      initialState: {
-        hiddenColumns: ["expirationTimestamp", "familyNumber"],
-      },
     },
     useGlobalFilter,
     useFilters,

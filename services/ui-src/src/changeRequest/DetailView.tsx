@@ -1,12 +1,14 @@
 import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { format, parseISO } from "date-fns";
+import classNames from "classnames";
 
 import {
   Button,
   VerticalNav,
   Accordion,
   AccordionItem,
+  Review,
 } from "@cmsgov/design-system";
 
 import {
@@ -14,6 +16,7 @@ import {
   ROUTES,
   ChangeRequest,
   territoryMap,
+  getUserRoleObj,
 } from "cmscommonlib";
 
 import { LocationState } from "../domain-types";
@@ -24,9 +27,10 @@ import { formatDetailViewDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
-import { Review } from "@cmsgov/design-system";
 import { getTerritoryFromTransmittalNumber } from "./SubmissionForm";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
+import PortalTable from "../components/PortalTable";
+import PopupMenu from "../components/PopupMenu";
 
 type PathParams = {
   componentType: string;
@@ -51,6 +55,14 @@ type ComponentDetail = {
   territory: string;
   territoryNice: string;
   raiResponses: any[];
+  waiverExtensions: any[];
+} & Record<string, any>;
+
+type PortalMenuItem = {
+  label: string;
+  value?: any;
+  formatConfirmationMessage?: (componentId: any) => string;
+  handleSelected?: (rownum: string) => any;
 } & Record<string, any>;
 
 const AUTHORITY_LABELS = {
@@ -347,9 +359,116 @@ const AdditionalInfoSection: FC<{ detail: ComponentDetail }> = ({ detail }) => {
   );
 };
 
+const TemporaryExtensionSection: FC<{
+  detail: ComponentDetail;
+  loadDetail: () => void;
+  setAlertCode: (code: string) => void;
+}> = ({ detail, loadDetail, setAlertCode }) => {
+  const { userProfile } = useAppContext() ?? {};
+  const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+
+  const tableClassName = classNames({
+    "submissions-table": true,
+    "submissions-table-actions-column": userRoleObj.canAccessForms,
+  });
+
+  //TODO: This should point to....something?
+  const extTableRef = React.createRef<HTMLElement>();
+
+  const onPopupActionWithdraw = useCallback(
+    async (rowNum) => {
+      let packageToModify = detail?.waiverExtensions[rowNum];
+      try {
+        console.log("package to modify ", packageToModify);
+        const resp = await PackageApi.withdraw(
+          userProfile?.userData?.fullName,
+          userProfile?.email,
+          packageToModify.componentId,
+          packageToModify.componentType
+        );
+        setAlertCode(resp);
+        loadDetail();
+      } catch (e: any) {
+        console.log("Error while updating package.", e);
+        setAlertCode(RESPONSE_CODE[e.message]);
+      }
+    },
+    [detail, userProfile, setAlertCode, loadDetail]
+  );
+
+  const renderActions = useCallback(
+    ({ row }) => {
+      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
+      let menuItems: PortalMenuItem[] = [];
+
+      (packageConfig?.actionsByStatus ?? ChangeRequest.defaultActionsByStatus)[
+        row.original.currentStatus
+      ]?.forEach((actionLabel) => {
+        let newItem: PortalMenuItem = { label: actionLabel };
+        if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+          newItem.value = "Withdrawn";
+          newItem.formatConfirmationMessage = ({ componentId }) =>
+            `You are about to withdraw the temporary extension for ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+          newItem.handleSelected = onPopupActionWithdraw;
+        }
+        menuItems.push(newItem);
+      });
+
+      return (
+        <PopupMenu
+          buttonLabel={`Actions for ${row.original.componentId}`}
+          selectedRow={row}
+          menuItems={menuItems}
+          variation="PackageList"
+        />
+      );
+    },
+    [onPopupActionWithdraw]
+  );
+
+  const tempExtColumns = useMemo(
+    () => [
+      {
+        Header: "Extension Id",
+        accessor: "componentId",
+      },
+      {
+        Header: "Status",
+        accessor: "currentStatus",
+      },
+      {
+        Header: "Actions",
+        accessor: "actions",
+        id: "packageActions",
+        Cell: renderActions,
+      },
+    ],
+    [renderActions]
+  );
+
+  return (
+    <section id="temp-ext-base" className="read-only-submission ">
+      <h2>Temporary Extensions</h2>
+      <div className="ds-u-padding-top--3" />
+      <PortalTable
+        className={tableClassName}
+        columns={tempExtColumns}
+        data={detail.waiverExtensions}
+        pageContentRef={extTableRef}
+      />
+      {detail.waiverExtensions.length === 0 && (
+        <div className="no-results no-results-message">
+          <p>No currently submitted temporary extensions</p>
+        </div>
+      )}
+    </section>
+  );
+};
+
 enum DetailViewTab {
   DETAIL = "component-details",
   ADDITIONAL = "additional-info",
+  EXTENSION = "temp-extenstion",
 }
 
 /**
@@ -452,10 +571,15 @@ const DetailView = () => {
             label: "Additional Information",
             url: `#${DetailViewTab.ADDITIONAL}`,
           },
+          ChangeRequest.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType) && {
+            id: DetailViewTab.EXTENSION,
+            label: "Temporary Extension",
+            url: `#${DetailViewTab.EXTENSION}`,
+          },
         ],
       },
     ],
-    []
+    [componentType]
   );
 
   useEffect(() => {
@@ -498,6 +622,13 @@ const DetailView = () => {
               {(!pageConfig.usesVerticalNav ||
                 detailTab === DetailViewTab.ADDITIONAL) && (
                 <AdditionalInfoSection detail={detail} />
+              )}
+              {detailTab === DetailViewTab.EXTENSION && (
+                <TemporaryExtensionSection
+                  detail={detail}
+                  loadDetail={loadDetail}
+                  setAlertCode={setAlertCode}
+                />
               )}
             </article>
           </div>

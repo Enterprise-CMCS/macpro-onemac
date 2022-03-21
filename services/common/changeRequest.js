@@ -19,6 +19,11 @@ export const TYPE = {
   WAIVER_APP_K: "waiverappk",
 };
 
+export const ALLOW_WAIVER_EXTENSION_TYPE = [
+  TYPE.WAIVER_BASE,
+  TYPE.WAIVER_RENEWAL,
+];
+
 export const LABEL = {
   [TYPE.CHIP_SPA]: "CHIP SPA",
   [TYPE.SPA]: "Medicaid SPA",
@@ -204,6 +209,18 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.DISAPPROVED]: [],
   [ONEMAC_STATUS.WITHDRAWN]: [],
   [ONEMAC_STATUS.TERMINATED]: [],
+};
+
+export const waiverExtensionActionsByStatus = {
+  [ONEMAC_STATUS.UNSUBMITTED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [],
+  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.RAI_ISSUED]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.APPROVED]: [],
+  [ONEMAC_STATUS.DISAPPROVED]: [],
+  [ONEMAC_STATUS.WITHDRAWN]: [],
+  [ONEMAC_STATUS.TERMINATED]: [],
+  [ONEMAC_STATUS.PAUSED]: [PACKAGE_ACTION.WITHDRAW],
 };
 
 export const raiActionsByStatus = {
@@ -508,6 +525,7 @@ export const CONFIG = {
         "Please enter the waiver number used on your initial submission",
       idFormat: "the Number format used on the initial submission",
     },
+    actionsByStatus: waiverExtensionActionsByStatus,
   },
 
   [TYPE.WAIVER_RAI]: {

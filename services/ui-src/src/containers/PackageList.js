@@ -305,9 +305,13 @@ const PackageList = () => {
   );
 
   const initialTableState = useMemo(
-    () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
+    () => ({
+      sortBy: [{ id: "timestamp", desc: true }],
+      hiddenColumns: ["expirationTimestamp", "familyNumber"],
+    }),
     []
   );
+
   const csvExportSubmissions = (
     <Button
       id="new-submission-button"
