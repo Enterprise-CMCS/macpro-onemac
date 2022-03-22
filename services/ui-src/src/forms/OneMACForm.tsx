@@ -195,7 +195,6 @@ export const OneMACForm: React.FC = () => {
 
     let existMessages: Message[] = [];
     let result = false;
-
     try {
       if (
         formatMessage.statusMessage === "" &&
