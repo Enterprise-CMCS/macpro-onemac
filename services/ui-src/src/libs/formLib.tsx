@@ -20,7 +20,6 @@ export enum COMPONENT_ACTION {
 }
 
 type WaiverFormInfo = {
-  actionType: { optionsList: SelectOption[] };
   waiverAuthority: { optionsList: SelectOption[] };
   proposedEffectiveDate: { fieldName: string };
 };
@@ -36,6 +35,19 @@ export type OneMACFormInfo = {
   raiLink: string;
   landingPage: string;
 } & Partial<WaiverFormInfo>;
+
+const defaultWaiverAuthority = {
+  fieldName: "waiverAuthority",
+  errorMessage: "Please select the Waiver Authority.",
+  optionsList: [
+    { label: "-- select a waiver authority --", value: "" },
+    {
+      label: "1915(b)(4) FFS Selective Contracting waivers",
+      value: "1915(b)(4)",
+    },
+    { label: "All other 1915(b) Waivers", value: "1915(b)" },
+  ],
+};
 
 export const FORM = {
   [ROUTES.BASE_WAIVER]: {
@@ -53,18 +65,7 @@ export const FORM = {
       "Other",
     ],
 
-    waiverAuthority: {
-      fieldName: "waiverAuthority",
-      errorMessage: "Please select the Waiver Authority.",
-      optionsList: [
-        { label: "-- select a waiver authority --", value: "" },
-        {
-          label: "1915(b)(4) FFS Selective Contracting waivers",
-          value: "1915(b)(4)",
-        },
-        { label: "All other 1915(b) Waivers", value: "1915(b)" },
-      ],
-    },
+    waiverAuthority: defaultWaiverAuthority,
     transmittalNumber: {
       idType: "waiver",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
@@ -92,35 +93,15 @@ export const FORM = {
     type: Workflow.ONEMAC_TYPE.WAIVER_EXTENSION,
     pageTitle: "Request a Temporary Extension",
     detailsHeader: "Temporary Extension Request",
-    requiredUploads: [],
-    optionalUploads: [
-      "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-      "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-      "Tribal Consultation (Initial, Renewal, Amendment)",
-      "Other",
-    ],
-
-    waiverAuthority: {
-      fieldName: "waiverAuthority",
-      errorMessage: "Please select the Waiver Authority.",
-      optionsList: [
-        { label: "-- select a waiver authority --", value: "" },
-        {
-          label: "1915(b)(4) FFS Selective Contracting waivers",
-          value: "1915(b)(4)",
-        },
-        { label: "All other 1915(b) Waivers", value: "1915(b)" },
-      ],
-    },
+    requiredUploads: ["Waiver Extension Request"],
+    optionalUploads: ["Other"],
     transmittalNumber: {
       idType: "waiver",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idLabel: "Base Waiver Number",
+      idLabel: "Temporary Extension Request Number",
       idHintText:
-        "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
-      idFormat: "SS.####.R00.00 or SS.#####.R00.00",
+        "Must be a new base number with the format SS.####.R##.TE## or SS.#####.R##.TE##",
+      idFormat: "SS.####.R##.TE## or SS.#####.R##.##",
       idExistValidations: [
         {
           idMustExist: false,
@@ -128,11 +109,6 @@ export const FORM = {
         },
       ],
     },
-
-    proposedEffectiveDate: {
-      fieldName: "proposedEffectiveTimestamp",
-    },
-
     actionsByStatus: Workflow.defaultActionsByStatus,
     raiLink: ROUTES.WAIVER_RAI,
     landingPage: ROUTES.PACKAGE_LIST_WAIVER,

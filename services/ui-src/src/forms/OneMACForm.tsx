@@ -81,14 +81,14 @@ export const OneMACForm: React.FC = () => {
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: "",
+    type: formInfo.type,
     territory:
       (initialTransmittalNumber &&
         getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
       "",
+    actionType: "new",
     summary: "",
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
-    actionType: "",
     waiverAuthority: "",
   });
 

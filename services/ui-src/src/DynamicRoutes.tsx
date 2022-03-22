@@ -179,6 +179,9 @@ export default function DynamicRoutes() {
           <Route path={`${ROUTES.BASE_WAIVER}`}>
             <OneMACForm />
           </Route>
+          <Route path={`${ROUTES.TEMPORARY_EXTENSION}`}>
+            <OneMACForm />
+          </Route>
         </>
       )}
       {/* submission view */}
