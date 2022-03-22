@@ -52,6 +52,7 @@ const defaultWaiverAuthority = {
 export const FORM = {
   [ROUTES.BASE_WAIVER]: {
     type: Workflow.ONEMAC_TYPE.WAIVER_BASE,
+    actionType: "new",
     pageTitle: "Base Waiver Submission",
     detailsHeader: "Base Waiver",
     addlIntroJSX: "",
@@ -91,6 +92,7 @@ export const FORM = {
   },
   [ROUTES.TEMPORARY_EXTENSION]: {
     type: Workflow.ONEMAC_TYPE.WAIVER_EXTENSION,
+    actionType: "",
     pageTitle: "Request a Temporary Extension",
     detailsHeader: "Temporary Extension Request",
     requiredUploads: ["Waiver Extension Request"],

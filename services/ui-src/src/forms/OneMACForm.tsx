@@ -86,7 +86,7 @@ export const OneMACForm: React.FC = () => {
       (initialTransmittalNumber &&
         getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
       "",
-    actionType: "new",
+    actionType: formInfo.actionType,
     summary: "",
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     waiverAuthority: "",
