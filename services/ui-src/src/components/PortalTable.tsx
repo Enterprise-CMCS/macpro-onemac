@@ -79,6 +79,9 @@ export default function PortalTable<V extends {} = {}>({
       defaultColumn,
       filterTypes: customFilterTypes,
       ...props,
+      initialState: {
+        hiddenColumns: ["expirationTimestamp", "familyNumber"],
+      },
     },
     useGlobalFilter,
     useFilters,
