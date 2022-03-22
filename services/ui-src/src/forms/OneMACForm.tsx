@@ -20,7 +20,6 @@ import config from "../utils/config";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
@@ -49,9 +48,7 @@ type Message = {
  * Submisstion Form template to allow rendering for different types of Submissions.
  * @param changeRequestType - the type of change request
  */
-export const OneMACForm: React.FC<{
-  formType: string;
-}> = ({ formType }) => {
+export const OneMACForm: React.FC = () => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories } = useAppContext() ?? {};
@@ -84,7 +81,7 @@ export const OneMACForm: React.FC<{
 
   // The record we are using for the form.
   const [changeRequest, setChangeRequest] = useState({
-    type: formType,
+    type: "",
     territory:
       (initialTransmittalNumber &&
         getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
@@ -499,10 +496,6 @@ export const OneMACForm: React.FC<{
       </div>
     </LoadingOverlay>
   );
-};
-
-OneMACForm.propTypes = {
-  formType: PropTypes.string.isRequired,
 };
 
 export default OneMACForm;

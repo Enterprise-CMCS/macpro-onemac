@@ -12,7 +12,7 @@ import { createMemoryHistory } from "history";
 import { Router, MemoryRouter } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
-import { ChangeRequest, RESPONSE_CODE } from "cmscommonlib";
+import { ChangeRequest, ROUTES, RESPONSE_CODE } from "cmscommonlib";
 
 import { OneMACForm } from "./OneMACForm";
 
@@ -24,11 +24,12 @@ import { AppContext } from "../libs/contextLib";
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-describe("Submission Form", () => {
+describe("OneMAC Form", () => {
   let history;
 
   beforeEach(() => {
     history = createMemoryHistory();
+    history.push(ROUTES.BASE_WAIVER);
   });
 
   describe("Submit button diabled until form is ready to Submit", () => {
@@ -42,7 +43,7 @@ describe("Submission Form", () => {
           }}
         >
           <Router history={history}>
-            <OneMACForm formType={ChangeRequest.TYPE.WAIVER}></OneMACForm>
+            <OneMACForm />
           </Router>
         </AppContext.Provider>
       );
@@ -54,7 +55,8 @@ describe("Submission Form", () => {
     });
 
     it("stays disabled even with valid ID", async () => {
-      const testID = "MI-11-2222";
+      const testID = "MI.2222";
+
       render(
         <AppContext.Provider
           value={{
@@ -62,7 +64,7 @@ describe("Submission Form", () => {
           }}
         >
           <Router history={history}>
-            <OneMACForm formType={ChangeRequest.TYPE.SPA}></OneMACForm>
+            <OneMACForm />
           </Router>
         </AppContext.Provider>
       );
@@ -70,7 +72,7 @@ describe("Submission Form", () => {
       const submitButtonEl = screen.getByText("Submit");
       expect(submitButtonEl).toBeDisabled();
 
-      const transmittalNumberEl = screen.getByLabelText("SPA ID");
+      const transmittalNumberEl = screen.getByLabelText("Base Waiver Number");
 
       ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
@@ -80,7 +82,8 @@ describe("Submission Form", () => {
       expect(submitButtonEl).toBeDisabled();
     });
   });
-
+});
+/*
   describe("Effects of Failed Submit", () => {
     // oy2-3734 Part One - maintaining Action Type, Waiver Authority, and Transmittal Number
     // values after a failed Submit
@@ -98,7 +101,7 @@ describe("Submission Form", () => {
           }}
         >
           <Router history={history}>
-            <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
+            <OneMACForm />
           </Router>
         </AppContext.Provider>
       );
@@ -137,7 +140,8 @@ describe("Submission Form", () => {
       expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
     });
   });
-
+*/
+/*
   describe("Transmittal Number Section", () => {
     it("populates the transmittal number field when passed in as a url query parameter", async () => {
       const testTransmittalNumber = "MI-12-1122";
@@ -154,7 +158,7 @@ describe("Submission Form", () => {
           }}
         >
           <Router history={history}>
-            <OneMACForm formType={ChangeRequest.TYPE.SPA_RAI} />
+            <OneMACForm />
           </Router>
         </AppContext.Provider>
       );
@@ -181,7 +185,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.CHIP_SPA} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -211,7 +215,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.CHIP_SPA} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -232,10 +236,10 @@ describe("Submission Form", () => {
           screen.queryByText(formatMessage)
         );
       });
-
+*/
+/*
       it("displays error message when id SHOULD NOT exist but it does", async () => {
-        history.push("/spa");
-        const spaIdLabel =
+         const spaIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA].transmittalNumber
             .idLabel;
         const testId = "MI-12-1122";
@@ -251,7 +255,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.SPA} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -260,10 +264,10 @@ describe("Submission Form", () => {
 
         userEvent.type(transmittalNumberEl, testId);
         await waitFor(() => screen.getByText(existErrorMessage));
+        
       });
-
+      
       it("displays error message when new Waiver Number SHOULD NOT exist but it does", async () => {
-        history.push("/waiver");
         const idLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
@@ -280,7 +284,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -311,7 +315,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.SPA_RAI} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -351,7 +355,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -392,7 +396,7 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
+              <OneMACForm />
             </Router>
           </AppContext.Provider>
         );
@@ -427,7 +431,7 @@ describe("Submission Form", () => {
           }}
         >
           <Router history={history}>
-            <OneMACForm formType={ChangeRequest.TYPE.CHIP_SPA}></OneMACForm>
+            <OneMACForm />
           </Router>
         </AppContext.Provider>
       );
@@ -465,7 +469,7 @@ it("successfully submits the form", async () => {
       }}
     >
       <MemoryRouter>
-        <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
+        <OneMACForm />
       </MemoryRouter>
     </AppContext.Provider>
   );
@@ -498,83 +502,84 @@ it("successfully submits the form", async () => {
   //userEvent.click(submitButtonEl);
   screen.debug();
 });
+    });
+  describe("cancelling the form submission", () => {
+    it("keeps the form information if cancel is cancelled", async () => {
+      const testValues = {
+        transmittalNumber: "MI.17234.R03.M22",
+        actionType: "amendment",
+        waiverAuthority: "1915(b)",
+      };
 
-describe("cancelling the form submission", () => {
-  it("keeps the form information if cancel is cancelled", async () => {
-    const testValues = {
-      transmittalNumber: "MI.17234.R03.M22",
-      actionType: "amendment",
-      waiverAuthority: "1915(b)",
-    };
+      render(
+        <AppContext.Provider
+          value={{
+            ...stateSubmitterInitialAuthState,
+          }}
+        >
+          <MemoryRouter>
+            <OneMACForm />
+          </MemoryRouter>
+        </AppContext.Provider>
+      );
 
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateSubmitterInitialAuthState,
-        }}
-      >
-        <MemoryRouter>
-          <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
-        </MemoryRouter>
-      </AppContext.Provider>
-    );
+      const transmittalNumberEl = screen.getByLabelText("Waiver Number");
+      const actionTypeEl = screen.getByLabelText("Action Type");
+      const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+      const cancelButtonEl = screen.getByText("Cancel");
 
-    const transmittalNumberEl = screen.getByLabelText("Waiver Number");
-    const actionTypeEl = screen.getByLabelText("Action Type");
-    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
-    const cancelButtonEl = screen.getByText("Cancel");
+      // values start out empty
+      expect(transmittalNumberEl.value).toBe("");
+      expect(actionTypeEl.value).toBe("");
+      expect(waiverAuthorityEl.value).toBe("");
 
-    // values start out empty
-    expect(transmittalNumberEl.value).toBe("");
-    expect(actionTypeEl.value).toBe("");
-    expect(waiverAuthorityEl.value).toBe("");
+      userEvent.selectOptions(actionTypeEl, testValues.actionType);
+      await screen.findByText("Waiver amendment");
 
-    userEvent.selectOptions(actionTypeEl, testValues.actionType);
-    await screen.findByText("Waiver amendment");
+      userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+      await screen.findByText("All other 1915(b) Waivers");
 
-    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-    await screen.findByText("All other 1915(b) Waivers");
+      // Don't find the package
+      ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+      userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+      await screen.findByText(
+        `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
+      );
+      expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
-    // Don't find the package
-    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
-    userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
-    await screen.findByText(
-      `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
-    );
-    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+      // click the submit button
+      userEvent.click(cancelButtonEl);
+      screen.findByText("Stay on Page");
+      const cancelCancelEl = screen.getByText("Stay on Page");
+      userEvent.click(cancelCancelEl);
+      expect(cancelCancelEl).not.toBeInTheDocument();
+      // the transmittal number still contains the value
+      expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+      expect(actionTypeEl.value).toBe(testValues.actionType);
+      expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+    });
 
-    // click the submit button
-    userEvent.click(cancelButtonEl);
-    screen.findByText("Stay on Page");
-    const cancelCancelEl = screen.getByText("Stay on Page");
-    userEvent.click(cancelCancelEl);
-    expect(cancelCancelEl).not.toBeInTheDocument();
-    // the transmittal number still contains the value
-    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-    expect(actionTypeEl.value).toBe(testValues.actionType);
-    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+    it("leaves the page when cancel is confirmed", async () => {
+      const herstory = createMemoryHistory();
+      herstory.push("/previousPage");
+      herstory.push("/currentPage");
+
+      render(
+        <AppContext.Provider
+          value={{
+            ...stateSubmitterInitialAuthState,
+          }}
+        >
+          <Router history={herstory}>
+            <OneMACForm />
+          </Router>
+        </AppContext.Provider>
+      );
+      const cancelButtonEl = screen.getByText("Cancel");
+      userEvent.click(cancelButtonEl);
+      screen.findByText("Leave Anyway", { selector: "button" });
+      userEvent.click(screen.getByText("Leave Anyway", { selector: "button" }));
+      expect(herstory.location.pathname).toBe("/previousPage");
+    });
   });
-
-  it("leaves the page when cancel is confirmed", async () => {
-    const herstory = createMemoryHistory();
-    herstory.push("/previousPage");
-    herstory.push("/currentPage");
-
-    render(
-      <AppContext.Provider
-        value={{
-          ...stateSubmitterInitialAuthState,
-        }}
-      >
-        <Router history={herstory}>
-          <OneMACForm formType={ChangeRequest.TYPE.WAIVER} />
-        </Router>
-      </AppContext.Provider>
-    );
-    const cancelButtonEl = screen.getByText("Cancel");
-    userEvent.click(cancelButtonEl);
-    screen.findByText("Leave Anyway", { selector: "button" });
-    userEvent.click(screen.getByText("Leave Anyway", { selector: "button" }));
-    expect(herstory.location.pathname).toBe("/previousPage");
-  });
-});
+*/

@@ -9,13 +9,7 @@ import {
   AccordionItem,
 } from "@cmsgov/design-system";
 
-import {
-  RESPONSE_CODE,
-  ROUTES,
-  ChangeRequest,
-  Workflow,
-  territoryMap,
-} from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES, Workflow, territoryMap } from "cmscommonlib";
 
 import { LocationState } from "../domain-types";
 import LoadingScreen from "../components/LoadingScreen";
@@ -235,8 +229,7 @@ const DetailSection = ({
                         <Button
                           className="package-action-link"
                           onClick={
-                            actionLabel ===
-                            ChangeRequest.PACKAGE_ACTION.WITHDRAW
+                            actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
                               ? () => {
                                   setConfirmItem({
                                     label: actionLabel,

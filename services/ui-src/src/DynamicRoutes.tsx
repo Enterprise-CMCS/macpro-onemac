@@ -23,7 +23,7 @@ import NewSubmission from "./changeRequest/NewSubmission";
 import NewSPA from "./changeRequest/NewSPA";
 import Triage from "./containers/Triage";
 import NewWaiver from "./changeRequest/NewWaiver";
-import BaseWaiverForm from "./forms/BaseWaiverForm";
+import OneMACForm from "./forms/OneMACForm";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
 import DetailView from "./changeRequest/DetailView";
@@ -177,7 +177,7 @@ export default function DynamicRoutes() {
             <Triage />
           </Route>
           <Route path={`${ROUTES.BASE_WAIVER}`}>
-            <BaseWaiverForm />
+            <OneMACForm />
           </Route>
         </>
       )}
