@@ -368,7 +368,7 @@ const TemporaryExtensionSection: FC<{
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
   const tableClassName = classNames({
-    "submissions-table": true,
+    "submissions-table-mini-dash": true,
     "submissions-table-actions-column": userRoleObj.canAccessForms,
   });
 
