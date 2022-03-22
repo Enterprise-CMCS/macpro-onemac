@@ -55,13 +55,13 @@ describe("decodeId for Waiver Numbers", () => {
     expect(myId.componentId).toBe("MI.77777");
     expect(myId.componentType).toBe("waiverrai");
     expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R00");
+    expect(myId.packageId).toBe("MI.77777");
     expect(myId.parentType).toBe("waivernew");
   });
 
   it("decodes BASE WAIVER EXTENSION NUMBER", () => {
-    const myId = decodeId("MI.77777", TYPE.WAIVER_EXTENSION);
-    expect(myId.componentId).toBe("MI.77777");
+    const myId = decodeId("MI.77777.R00.TE01", TYPE.WAIVER_EXTENSION);
+    expect(myId.componentId).toBe("MI.77777.R00.TE01");
     expect(myId.componentType).toBe("waiverextension");
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI.77777.R00");
