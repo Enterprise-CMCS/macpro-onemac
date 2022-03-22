@@ -55,7 +55,7 @@ export const getParentPackage = (inId) => {
   if (!results) return ["FakeID", ONEMAC_TYPE.WAIVER_BASE];
   const { family, renewal } = results;
 
-  if (renewal === "00") return [family, ONEMAC_TYPE.WAIVER_BASE];
+  if (renewal === "00") return [family + ".R00", ONEMAC_TYPE.WAIVER_BASE];
   const renewalNumber = family + ".R" + renewal;
   return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
 };
@@ -88,7 +88,10 @@ export const decodeId = (inId, inType) => {
       break;
     case ONEMAC_TYPE.WAIVER_RAI:
     case ONEMAC_TYPE.WAIVER_EXTENSION:
-      returnInfo.parentType = getWaiverRAIParent(inId);
+      const posTE = inId.search(".TE");
+      if (posTE > 0)
+        [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
+      else returnInfo.parentType = getWaiverRAIParent(inId);
       returnInfo.isNewPackage = false;
       break;
     case ONEMAC_TYPE.WAIVER_AMENDMENT:
