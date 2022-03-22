@@ -47,9 +47,7 @@ it("renders with a New Submission button", async () => {
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   const newSubmissionButton = screen.getByText("New Submission");
-  expect(newSubmissionButton.getAttribute("href")).toBe(
-    ROUTES.NEW_SUBMISSION_SELECTION
-  );
+  expect(newSubmissionButton.getAttribute("href")).toBe(ROUTES.TRIAGE_GROUP);
 });
 
 it("passes a retrieval error up", async () => {

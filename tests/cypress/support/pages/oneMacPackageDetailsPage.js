@@ -13,7 +13,8 @@ const packageActionsHeader =
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//button[text()='Respond to RAI']";
 const withdrawPackageAction = "//button[text()='Withdraw']";
-const detailSection = "//h2[text()='Package Details']";
+const detailSection =
+  "//section[@class='detail-section']//h2[contains(text(),'Package')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
