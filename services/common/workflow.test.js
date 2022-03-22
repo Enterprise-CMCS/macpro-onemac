@@ -1,8 +1,4 @@
-import {
-  ONEMAC_STATUS,
-  get90thDayText,
-  NINETY_DAY_STATUS,
-} from "./changeRequest";
+import { ONEMAC_STATUS, get90thDayText, NINETY_DAY_STATUS } from "./workflow";
 
 describe("get90thDayText", () => {
   it("returns 'Pending' string when status is 'In Review'", () => {
