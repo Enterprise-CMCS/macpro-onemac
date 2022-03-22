@@ -79,6 +79,8 @@ export const decodeId = (inId, inType) => {
     componentType: inType,
     isNewPackage: true,
   };
+  const posTE = inId.search(".TE");
+
   switch (inType) {
     case ONEMAC_TYPE.CHIP_SPA_RAI:
       returnInfo.parentType = ONEMAC_TYPE.CHIP_SPA;
@@ -88,7 +90,6 @@ export const decodeId = (inId, inType) => {
       break;
     case ONEMAC_TYPE.WAIVER_RAI:
     case ONEMAC_TYPE.WAIVER_EXTENSION:
-      const posTE = inId.search(".TE");
       if (posTE > 0)
         [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
       else returnInfo.parentType = getWaiverRAIParent(inId);
