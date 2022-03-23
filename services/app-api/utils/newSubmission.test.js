@@ -1,5 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { ChangeRequest, Validate } from "cmscommonlib";
+import { Validate } from "cmscommonlib";
 import newSubmission from "./newSubmission";
 import updateComponent from "./updateComponent";
 

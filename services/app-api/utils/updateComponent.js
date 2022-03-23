@@ -1,5 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { ChangeRequest, Validate } from "cmscommonlib";
+import { Validate } from "cmscommonlib";
 
 const topLevelUpdates = [
   "clockEndTimestamp",
@@ -23,13 +23,13 @@ export default async function updateComponent({
 
   let updateSk = updateData.componentType;
   switch (updateData.componentType) {
-    case ChangeRequest.TYPE.WAIVER_RAI:
-    case ChangeRequest.TYPE.SPA_RAI:
-    case ChangeRequest.TYPE.CHIP_SPA_RAI:
+    case Workflow.ONEMAC_TYPE.WAIVER_RAI:
+    case Workflow.ONEMAC_TYPE.SPA_RAI:
+    case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
       updateSk += `#${updateData.submissionTimestamp}`;
   }
 
-  if (updateData.componentType === ChangeRequest.TYPE.WAIVER_AMENDMENT) {
+  if (updateData.componentType === Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT) {
     const { renewal, amendment } = Validate.decodeWaiverNumber(updatePk);
     changeData.displayId = "R" + renewal + "." + amendment;
   }

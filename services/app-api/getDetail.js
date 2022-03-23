@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { RESPONSE_CODE, ChangeRequest } from "cmscommonlib";
+import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
@@ -81,7 +81,7 @@ export const getDetails = async (event) => {
       result.Item.raiResponses = [...raiResult.Items];
     }
 
-    if (ChangeRequest.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
+    if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
       //fetch any waiver extensions associated to this component
       const waiverExtensionParams = {
         TableName: process.env.oneMacTableName,
@@ -89,7 +89,7 @@ export const getDetails = async (event) => {
         KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
         ExpressionAttributeValues: {
           ":pk": componentId,
-          ":sk": ChangeRequest.TYPE.WAIVER_EXTENSION,
+          ":sk": Workflow.ONEMAC_TYPE.WAIVER_EXTENSION,
         },
       };
 
