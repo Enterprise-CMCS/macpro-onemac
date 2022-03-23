@@ -8,7 +8,6 @@ describe("Waiver Mini-Dashboard: Temporary Extension", () => {
   });
 
   it("Screen Enhancement", () => {
-    /* ==== Generated with Cypress Studio ==== */
     cy.get("#packageListLink").click();
     cy.get("#show-waivers-button").click();
     cy.get("#componentId-0 > a").click();
@@ -25,6 +24,5 @@ describe("Waiver Mini-Dashboard: Temporary Extension", () => {
     cy.get("#packageActionsColHeader")
       .should("be.visible")
       .and("have.text", "Actions");
-    /* ==== End Cypress Studio ==== */
   });
 });
