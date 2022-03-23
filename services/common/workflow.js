@@ -65,6 +65,18 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.TERMINATED]: [],
 };
 
+export const waiverExtensionActionsByStatus = {
+  [ONEMAC_STATUS.UNSUBMITTED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [],
+  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.RAI_ISSUED]: [PACKAGE_ACTION.WITHDRAW],
+  [ONEMAC_STATUS.APPROVED]: [],
+  [ONEMAC_STATUS.DISAPPROVED]: [],
+  [ONEMAC_STATUS.WITHDRAWN]: [],
+  [ONEMAC_STATUS.TERMINATED]: [],
+  [ONEMAC_STATUS.PAUSED]: [PACKAGE_ACTION.WITHDRAW],
+};
+
 export const raiActionsByStatus = {
   [ONEMAC_STATUS.UNSUBMITTED]: [],
   [ONEMAC_STATUS.SUBMITTED]: [],
@@ -86,9 +98,14 @@ export const ACTIONS = {
   [ONEMAC_TYPE.WAIVER_BASE]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RENEWAL]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_EXTENSION]: defaultActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
   [ONEMAC_TYPE.WAIVER_APP_K]: defaultActionsByStatus,
 };
+
+export const ALLOW_WAIVER_EXTENSION_TYPE = [
+  ONEMAC_TYPE.WAIVER_BASE,
+  ONEMAC_TYPE.WAIVER_RENEWAL,
+];
 
 export const NINETY_DAY_STATUS = {
   PENDING: "Pending",
