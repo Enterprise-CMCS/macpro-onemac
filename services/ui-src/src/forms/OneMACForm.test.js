@@ -83,160 +83,160 @@ describe("OneMAC Form", () => {
     });
   });
 });
-/*
-  describe("Effects of Failed Submit", () => {
-    // oy2-3734 Part One - maintaining Action Type, Waiver Authority, and Transmittal Number
-    // values after a failed Submit
-    it("does not clear already completed form fields if submit fails. (oy2-3734)", async () => {
-      const testValues = {
-        transmittalNumber: "MI.17234.R03.M22",
-        actionType: "amendment",
-        waiverAuthority: "1915(b)",
-      };
 
-      render(
-        <AppContext.Provider
-          value={{
-            ...stateSubmitterInitialAuthState,
-          }}
-        >
-          <Router history={history}>
-            <OneMACForm />
-          </Router>
-        </AppContext.Provider>
-      );
+describe("Effects of Failed Submit", () => {
+  let history;
 
-      const transmittalNumberEl = screen.getByLabelText("Waiver Number");
-      const actionTypeEl = screen.getByLabelText("Action Type");
-      const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
-      const submitButtonEl = screen.getByText("Submit");
-
-      // values start out empty
-      expect(transmittalNumberEl.value).toBe("");
-      expect(actionTypeEl.value).toBe("");
-      expect(waiverAuthorityEl.value).toBe("");
-
-      userEvent.selectOptions(actionTypeEl, testValues.actionType);
-      await screen.findByText("Waiver amendment");
-
-      userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
-      await screen.findByText("All other 1915(b) Waivers");
-
-      // Don't find the package
-      ChangeRequestDataApi.packageExists.mockResolvedValue(false);
-      userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
-      await screen.findByText(
-        `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
-      );
-      expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-
-      // click the submit button
-      userEvent.click(submitButtonEl);
-      // await screen.findByText("Missing Required Attachments");
-
-      // the transmittal number still contains the value
-      expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
-      expect(actionTypeEl.value).toBe(testValues.actionType);
-      expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
-    });
+  beforeEach(() => {
+    history = createMemoryHistory();
+    history.push(ROUTES.BASE_WAIVER);
   });
-*/
-/*
-  describe("Transmittal Number Section", () => {
-    it("populates the transmittal number field when passed in as a url query parameter", async () => {
-      const testTransmittalNumber = "MI-12-1122";
-      const spaRaiTransmittalNumberDetails =
-        ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA_RAI].transmittalNumber;
-      const promise = Promise.resolve([]);
-      ChangeRequestDataApi.packageExists.mockImplementationOnce(() => promise);
 
-      history.push(`/sparai?transmittalNumber=${testTransmittalNumber}`);
-      render(
-        <AppContext.Provider
-          value={{
-            ...stateSubmitterInitialAuthState,
-          }}
-        >
-          <Router history={history}>
-            <OneMACForm />
-          </Router>
-        </AppContext.Provider>
-      );
+  it("does not clear already completed form fields if submit fails.", async () => {
+    const testValues = {
+      transmittalNumber: "MI.17234.R00.00",
+      waiverAuthority: "1915(b)",
+    };
 
-      const transmittalNumberEl = screen.getByLabelText(
-        spaRaiTransmittalNumberDetails.idLabel
-      );
-      expect(transmittalNumberEl.value).toBe(testTransmittalNumber);
-      await act(() => promise);
-    });
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <OneMACForm />
+        </Router>
+      </AppContext.Provider>
+    );
 
-    describe("Transmittal Number Validation", () => {
-      it("informs user that they cannot submit for an unauthorized territory", async () => {
-        history.push("/chipspa");
-        const chipSpaTransmittalNumberDetails =
-          ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber;
-        const territoryMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
-        const invalidFormatId = "SS-12-1312";
+    const transmittalNumberEl = screen.getByLabelText("Base Waiver Number");
+    const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+    const submitButtonEl = screen.getByText("Submit");
 
-        render(
-          <AppContext.Provider
-            value={{
-              ...stateSubmitterInitialAuthState,
-            }}
-          >
-            <Router history={history}>
-              <OneMACForm />
-            </Router>
-          </AppContext.Provider>
-        );
+    // values start out empty
+    expect(transmittalNumberEl.value).toBe("");
+    expect(waiverAuthorityEl.value).toBe("");
 
-        const transmittalNumberEl = screen.getByLabelText(
-          chipSpaTransmittalNumberDetails.idLabel
-        );
+    userEvent.selectOptions(waiverAuthorityEl, testValues.waiverAuthority);
+    await screen.findByText("All other 1915(b) Waivers");
 
-        userEvent.type(transmittalNumberEl, invalidFormatId);
-        await waitFor(() => screen.getByText(territoryMessage));
-      });
+    // Find the package
+    ChangeRequestDataApi.packageExists.mockResolvedValue(true);
+    userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
+    await screen.findByText(
+      `According to our records, this Base Waiver Number already exists. Please check the Base Waiver Number and try entering it again.`
+    );
+    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
-      it("displays error message when the format id is invalid (but not when it's valid)", async () => {
-        history.push("/chipspa");
-        const chipSpaTransmittalNumberDetails =
-          ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber;
-        const formatMessage = `The ${chipSpaTransmittalNumberDetails.idLabel} must be in the format of ${chipSpaTransmittalNumberDetails.idFormat}`;
-        const invalidFormatId = "MI-12";
-        const validFormatId = "MI-12-1122-CHIP";
+    // click the submit button
+    userEvent.click(submitButtonEl);
+    // await screen.findByText("Missing Required Attachments");
 
-        ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+    // the transmittal number still contains the value
+    expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
+    expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+  });
+});
 
-        render(
-          <AppContext.Provider
-            value={{
-              ...stateSubmitterInitialAuthState,
-            }}
-          >
-            <Router history={history}>
-              <OneMACForm />
-            </Router>
-          </AppContext.Provider>
-        );
+describe("Transmittal Number Section", () => {
+  let history;
 
-        const transmittalNumberEl = screen.getByLabelText(
-          chipSpaTransmittalNumberDetails.idLabel
-        );
+  beforeEach(() => {
+    history = createMemoryHistory();
+    // history.push(ROUTES.BASE_WAIVER);
+  });
 
-        // status message shows when INVALID id format is put in
-        userEvent.type(transmittalNumberEl, invalidFormatId);
-        expect(transmittalNumberEl.value).toBe(invalidFormatId);
-        await waitFor(() => screen.getByText(formatMessage));
+  it("populates the transmittal number field when passed in as a url query parameter", async () => {
+    const testTransmittalNumber = "MI.1122.R00.00";
+    const promise = Promise.resolve([]);
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
-        // status message is removed when VALID id format is put in
-        userEvent.clear(transmittalNumberEl);
-        userEvent.type(transmittalNumberEl, validFormatId);
-        await waitForElementToBeRemoved(() =>
-          screen.queryByText(formatMessage)
-        );
-      });
-*/
+    history.push(
+      `${ROUTES.BASE_WAIVER}?transmittalNumber=${testTransmittalNumber}`
+    );
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <OneMACForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const transmittalNumberEl = screen.getByLabelText("Base Waiver Number");
+    await act(() => promise);
+    expect(transmittalNumberEl.value).toBe(testTransmittalNumber);
+  });
+  /*
+  it("informs user that they cannot submit for an unauthorized territory", async () => {
+    const chipSpaTransmittalNumberDetails =
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber;
+    const territoryMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
+    const invalidFormatId = "SS-12-1312";
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <OneMACForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const transmittalNumberEl = screen.getByLabelText(
+      chipSpaTransmittalNumberDetails.idLabel
+    );
+
+    userEvent.type(transmittalNumberEl, invalidFormatId);
+    await waitFor(() => screen.getByText(territoryMessage));
+  });
+
+  it("displays error message when the format id is invalid (but not when it's valid)", async () => {
+    history.push("/chipspa");
+    const chipSpaTransmittalNumberDetails =
+      ChangeRequest.CONFIG[ChangeRequest.TYPE.CHIP_SPA].transmittalNumber;
+    const formatMessage = `The ${chipSpaTransmittalNumberDetails.idLabel} must be in the format of ${chipSpaTransmittalNumberDetails.idFormat}`;
+    const invalidFormatId = "MI-12";
+    const validFormatId = "MI-12-1122-CHIP";
+
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <OneMACForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const transmittalNumberEl = screen.getByLabelText(
+      chipSpaTransmittalNumberDetails.idLabel
+    );
+
+    // status message shows when INVALID id format is put in
+    userEvent.type(transmittalNumberEl, invalidFormatId);
+    expect(transmittalNumberEl.value).toBe(invalidFormatId);
+    await waitFor(() => screen.getByText(formatMessage));
+
+    // status message is removed when VALID id format is put in
+    userEvent.clear(transmittalNumberEl);
+    userEvent.type(transmittalNumberEl, validFormatId);
+    await waitForElementToBeRemoved(() => screen.queryByText(formatMessage));
+  });
+  */
+});
+
 /*
       it("displays error message when id SHOULD NOT exist but it does", async () => {
          const spaIdLabel =

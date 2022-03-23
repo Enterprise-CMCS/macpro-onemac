@@ -103,7 +103,7 @@ export const FORM = {
       idLabel: "Temporary Extension Request Number",
       idHintText:
         "Must be a new base number with the format SS.####.R##.TE## or SS.#####.R##.TE##",
-      idFormat: "SS.####.R##.TE## or SS.#####.R##.##",
+      idFormat: "SS.####.R##.TE## or SS.#####.R##.TE##",
       idExistValidations: [
         {
           idMustExist: false,
