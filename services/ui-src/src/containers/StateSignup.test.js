@@ -6,6 +6,12 @@ import { stateUserNoAuthState } from "../libs/testDataAppContext";
 import { createMemoryHistory } from "history";
 import { StateSignup } from "./StateSignup";
 import { Router, Route, MemoryRouter } from "react-router-dom";
+import UserDataApi from "../utils/UserDataApi";
+import { RESPONSE_CODE } from "cmscommonlib";
+
+jest.mock("../utils/UserDataApi");
+
+UserDataApi.requestAccess.mockResolvedValue(RESPONSE_CODE.USER_SUBMITTED);
 
 import userEvent from "@testing-library/user-event";
 
@@ -61,5 +67,14 @@ describe("StateSignup", () => {
       userEvent.click(confirmDialogButton);
     });
     expect(cancelConfirmBox).not.toBeVisible();
+  });
+
+  it("creates the correct signup callback", async () => {
+    expect(history.location.pathname).toBe("/signup/state");
+    const submitButton = screen.getByRole("button", { name: "Submit" });
+    act(() => {
+      userEvent.click(submitButton);
+    });
+    expect(history.location.pathname).toBe("/signup/state");
   });
 });
