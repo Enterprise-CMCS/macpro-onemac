@@ -45,6 +45,16 @@ const noPathEvent = {
     cNum: 18274923435,
   },
 };
+const waiverEvent = {
+  queryStringParameters: {
+    email: "email",
+    cType: "waivernew",
+    cNum: 18274923435,
+  },
+  pathParameters: {
+    id: "MInumber",
+  },
+};
 
 beforeEach(() => {
   getUser.mockResolvedValue(validDoneBy);
@@ -54,6 +64,8 @@ beforeEach(() => {
       field1: "one",
     },
   });
+
+  dynamoDb.query.mockResolvedValue({ Items: [], Count: 0 });
 });
 
 describe("handles errors and exceptions", () => {
@@ -103,6 +115,31 @@ describe("component details are returned", () => {
 
   it("returns details", async () => {
     expect(getDetails(validEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+});
+
+describe("rai responses are returned", () => {
+  it("returns rai responses if spa type", async () => {
+    dynamoDb.query.mockResolvedValue({ Items: [{ item: "any" }], Count: 1 });
+    expect(getDetails(validEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+});
+
+describe("waiver extensions are returned", () => {
+  it("returns waiver extensions if waiver type", async () => {
+    expect(getDetails(waiverEvent))
       .resolves.toStrictEqual({
         field1: "one",
       })

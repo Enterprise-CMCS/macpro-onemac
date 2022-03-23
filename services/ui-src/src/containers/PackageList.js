@@ -305,9 +305,13 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
   );
 
   const initialTableState = useMemo(
-    () => ({ sortBy: [{ id: "timestamp", desc: true }] }),
+    () => ({
+      sortBy: [{ id: "timestamp", desc: true }],
+      hiddenColumns: ["expirationTimestamp", "familyNumber"],
+    }),
     []
   );
+
   const csvExportSubmissions = (
     <Button
       id="new-submission-button"
