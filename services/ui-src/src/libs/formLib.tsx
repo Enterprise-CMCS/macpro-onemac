@@ -102,7 +102,7 @@ export const FORM = {
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
       idLabel: "Temporary Extension Request Number",
       idHintText:
-        "Must be a new base number with the format SS.####.R##.TE## or SS.#####.R##.TE##",
+        "Must be a waiver extension request number with the format SS.####.R##.TE## or SS.#####.R##.TE##",
       idFormat: "SS.####.R##.TE## or SS.#####.R##.TE##",
       idExistValidations: [
         {
