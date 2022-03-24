@@ -47,6 +47,7 @@ class CHIPSPARAI {
       process.env.reviewerCHIPEmail,
       process.env.testingEmail,
     ].filter(Boolean);
+    cmsEmail.CcAddresses = process.env.chipCcEmail ?? "";
     cmsEmail.Subject =
       "New CHIP SPA RAI " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
