@@ -1,4 +1,4 @@
-import { ROUTES } from "./routes";
+import { ROUTES } from "./routes.js";
 
 export const PACKAGE_GROUP = {
   SPA: "spa",

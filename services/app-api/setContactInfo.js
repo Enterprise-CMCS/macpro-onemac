@@ -11,8 +11,8 @@ import { newUser } from "./utils/newUser";
 import { changeUserStatus } from "./utils/changeUserStatus";
 
 export const setContactInfo = async (event) => {
-  let body,
-    apiResponse = RESPONSE_CODE.USER_EXISTS;
+  let body;
+  let apiResponse = RESPONSE_CODE.USER_EXISTS;
   try {
     body = JSON.parse(event.body);
   } catch (e) {

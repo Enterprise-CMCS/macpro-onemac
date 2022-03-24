@@ -3,11 +3,11 @@
  * This will contain static items needed by both the frontend and backend.
  */
 
-import * as ChangeRequest from "./changeRequest";
+import * as ChangeRequest from "./changeRequest.js";
 export { ChangeRequest };
 
-import { ROUTES } from "./routes";
-export * from "./routes";
+import { ROUTES } from "./routes.js";
+export * from "./routes.js";
 
 /**
  * Codes to send to front end
