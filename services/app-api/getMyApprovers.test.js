@@ -10,11 +10,6 @@ beforeAll(() => {
     return {
       Items: [
         {
-          email: "sabrina.mccrae@cms.hhs.gov",
-          firstName: "Sabrina",
-          lastName: "McCrae",
-        },
-        {
           email: "systemadmintest@cms.hhs.local",
           firstName: "Teresa",
           lastName: "Test",
@@ -30,7 +25,7 @@ it("gets approver list from role and territory", async () => {
   };
   const expectedResponse = {
     statusCode: 200,
-    body: '[{"email":"sabrina.mccrae@cms.hhs.gov","firstName":"Sabrina","lastName":"McCrae"},{"email":"systemadmintest@cms.hhs.local","firstName":"Teresa","lastName":"Test"}]',
+    body: '[{"email":"systemadmintest@cms.hhs.local","firstName":"Teresa","lastName":"Test"}]',
     headers: {
       "Access-Control-Allow-Origin": "*",
       "Access-Control-Allow-Credentials": true,
