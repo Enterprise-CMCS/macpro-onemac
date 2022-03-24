@@ -6,7 +6,7 @@ plugins:
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${env:IAM_PATH, "/"}
-  wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN~true, ""}
+  wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN, ""}
 
 provider:
   name: aws
