@@ -53,10 +53,10 @@ const formatPackageDetails = (data) => {
  */
 export const CMSWithdrawalEmail = (data) => ({
   ToAddresses: [process.env.reviewerEmail],
-  CcAddresses:
-    data.componentType === "chipspa" || data.componentType === "chipsparai"
-      ? process.env.chipCcEmail ?? ""
-      : undefined,
+  CcAddresses: [
+    (data.componentType === "chipspa" || data.componentType === "chipsparai") &&
+      process.env.chipCcEmail,
+  ].filter(Boolean),
   Subject: `${TYPE_LABELS[data.componentType]} Package ${
     data.componentId
   } Withdraw Request`,

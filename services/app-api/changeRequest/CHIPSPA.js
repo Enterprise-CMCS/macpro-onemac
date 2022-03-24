@@ -48,7 +48,7 @@ class CHIPSPA {
       process.env.reviewerCHIPEmail,
       process.env.testingEmail,
     ].filter(Boolean);
-    cmsEmail.CcAddresses = process.env.chipCcEmail ?? "";
+    cmsEmail.CcAddresses = [process.env.chipCcEmail].filter(Boolean);
     cmsEmail.Subject = `New CHIP SPA ${data.transmittalNumber} submitted`;
     cmsEmail.HTML = `
       <p>The Submission Portal received a CHIP State Plan Amendment:</p>
