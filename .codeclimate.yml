@@ -23,3 +23,5 @@ exclude_patterns:
 - "**/*.d.ts"
 - "**/*.test.js"
 - "**/test*"
+- "**/changeRequest/"
+- "**/migrate.js"
