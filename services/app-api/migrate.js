@@ -17,7 +17,10 @@ export const main = handler(async (event) => {
     },
     ExclusiveStartKey: null,
     ScanIndexForward: false,
-    ProjectionExpression: "pk, sk, date",
+    ExpressionAttributeNames: {
+      "#date": "date",
+    },
+    ProjectionExpression: "pk, sk, #date",
   };
 
   const promiseItems = [];
@@ -35,7 +38,10 @@ export const main = handler(async (event) => {
           pk: item.pk,
           sk: item.sk,
         },
-        UpdateExpression: "SET date = :newDate",
+        UpdateExpression: "SET #date = :newDate",
+        ExpressionAttributeNames: {
+          "#date": "date",
+        },
         ExpressionAttributeValues: {
           ":newDate": item.date * 1000,
         },
