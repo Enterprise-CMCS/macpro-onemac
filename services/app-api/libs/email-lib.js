@@ -10,6 +10,7 @@ function getSESEmailParams(email) {
   const emailParams = {
     Destination: {
       ToAddresses: email.ToAddresses,
+      CcAddresses: email.CcAddresses,
     },
     Message: {
       Body: {
