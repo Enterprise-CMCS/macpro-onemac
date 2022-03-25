@@ -55,7 +55,7 @@ export const CMSWithdrawalEmail = (data) => ({
   ToAddresses: [process.env.reviewerEmail],
   CcAddresses:
     data.componentType === "chipspa" || data.componentType === "chipsparai"
-      ? process.env.chipCcEmail?.split(";")?.filter(Boolean)
+      ? process.env.chipCcEmail?.split(";")?.filter((s) => s.trim())
       : [],
   Subject: `${TYPE_LABELS[data.componentType]} Package ${
     data.componentId
