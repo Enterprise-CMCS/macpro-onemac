@@ -24,6 +24,12 @@ export const changeUserStatus = async ({
   territory,
   status,
 }) => {
+  // date should be in seconds. if milliseconds were sent, date will be greater than now...
+  const chkTS = Math.floor(Date.now() / 1000);
+  if (date > chkTS) {
+    date /= 1000;
+  }
+
   // add a new v0 and v latest
   try {
     const updateParams = {
