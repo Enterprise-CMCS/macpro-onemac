@@ -5,6 +5,7 @@ import { Auth } from "aws-amplify";
 import {
   ROUTES,
   ChangeRequest,
+  Workflow,
   effectiveRoleForUser,
   getUserRoleObj,
 } from "cmscommonlib";
@@ -22,7 +23,7 @@ import NewSubmission from "./changeRequest/NewSubmission";
 import NewSPA from "./changeRequest/NewSPA";
 import Triage from "./containers/Triage";
 import NewWaiver from "./changeRequest/NewWaiver";
-import BaseWaiverForm from "./forms/BaseWaiverForm";
+import OneMACForm from "./forms/OneMACForm";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
 import DetailView from "./changeRequest/DetailView";
@@ -139,7 +140,7 @@ export default function DynamicRoutes() {
       </Route>
       <Route exact path={ROUTES.PACKAGE_LIST_WAIVER}>
         {userRoleObj.canAccessDashboard ? (
-          <PackageList startTab={ChangeRequest.PACKAGE_GROUP.WAIVER} />
+          <PackageList startTab={Workflow.PACKAGE_GROUP.WAIVER} />
         ) : userRoleObj.canAccessUserManagement ? (
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         ) : (
@@ -148,7 +149,7 @@ export default function DynamicRoutes() {
       </Route>
       <Route exact path={ROUTES.PACKAGE_LIST_SPA}>
         {userRoleObj.canAccessDashboard ? (
-          <PackageList startTab={ChangeRequest.PACKAGE_GROUP.SPA} />
+          <PackageList startTab={Workflow.PACKAGE_GROUP.SPA} />
         ) : userRoleObj.canAccessUserManagement ? (
           <Redirect to={ROUTES.USER_MANAGEMENT} />
         ) : (
@@ -176,7 +177,10 @@ export default function DynamicRoutes() {
             <Triage />
           </Route>
           <Route path={`${ROUTES.BASE_WAIVER}`}>
-            <BaseWaiverForm />
+            <OneMACForm />
+          </Route>
+          <Route path={`${ROUTES.TEMPORARY_EXTENSION}`}>
+            <OneMACForm />
           </Route>
         </>
       )}

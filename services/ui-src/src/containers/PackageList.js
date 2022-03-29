@@ -14,6 +14,8 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ChangeRequest,
+  Validate,
+  Workflow,
   getUserRoleObj,
   USER_ROLE,
   USER_STATUS,
@@ -34,14 +36,14 @@ import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const filterArray = {
-  componentType: [ChangeRequest.TYPE.SPA, ChangeRequest.TYPE.CHIP_SPA],
+  componentType: [Workflow.ONEMAC_TYPE.SPA, Workflow.ONEMAC_TYPE.CHIP_SPA],
 };
 
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
 const getFamily = ({ componentId }) =>
-  componentId ? ChangeRequest.getBaseWaiverId(componentId) : "";
+  componentId ? Validate.getWaiverFamily(componentId) : "";
 
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
@@ -51,7 +53,7 @@ const getChildren = ({ children }) => children;
 /**
  * Component containing dashboard
  */
-const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
+const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
   const [tab, setTab] = useState(startTab);
@@ -104,7 +106,7 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
   );
 
   const getType = useCallback(
-    ({ componentType }) => ChangeRequest.LABEL[componentType] ?? [],
+    ({ componentType }) => Workflow.ONEMAC_LABEL[componentType] ?? [],
     []
   );
 
@@ -164,11 +166,11 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
       const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
-      (packageConfig?.actionsByStatus ?? ChangeRequest.defaultActionsByStatus)[
+      (packageConfig?.actionsByStatus ?? Workflow.defaultActionsByStatus)[
         row.original.currentStatus
       ]?.forEach((actionLabel) => {
         const newItem = { label: actionLabel };
-        if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+        if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
           newItem.value = "Withdrawn";
           newItem.formatConfirmationMessage = ({ componentId }) =>
             `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
@@ -200,15 +202,13 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
       [
         {
           Header:
-            tab === ChangeRequest.PACKAGE_GROUP.SPA
-              ? "SPA ID"
-              : "Waiver Number",
+            tab === Workflow.PACKAGE_GROUP.SPA ? "SPA ID" : "Waiver Number",
           accessor: "componentId",
           disableGlobalFilter: false,
           disableSortBy: true,
           Cell: renderId,
         },
-        tab === ChangeRequest.PACKAGE_GROUP.WAIVER && {
+        tab === Workflow.PACKAGE_GROUP.WAIVER && {
           Header: "Waiver Family #",
           id: "familyNumber",
           accessor: getFamily,
@@ -243,10 +243,7 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
         {
           Header: "90th Day",
           accessor: ({ currentStatus, clockEndTimestamp }) => {
-            return ChangeRequest.get90thDayText(
-              currentStatus,
-              clockEndTimestamp
-            );
+            return Workflow.get90thDayText(currentStatus, clockEndTimestamp);
           },
           id: "ninetiethDay",
           Cell: renderDate,
@@ -254,7 +251,7 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
           filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
           Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
         },
-        tab === ChangeRequest.PACKAGE_GROUP.WAIVER && {
+        tab === Workflow.PACKAGE_GROUP.WAIVER && {
           Header: "Expiration Date",
           accessor: ({ expirationTimestamp, componentType }) => {
             if (!filterArray.componentType.includes(componentType)) {
@@ -400,7 +397,7 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
             className={tableClassName}
             columns={columns}
             data={packageList}
-            expandable={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
+            expandable={tab === Workflow.PACKAGE_GROUP.WAIVER}
             getSubRows={getChildren}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
@@ -435,9 +432,9 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
                 id="show-spas-button"
                 aria-label="switch to showing spa packages"
                 className="tab-button"
-                disabled={tab === ChangeRequest.PACKAGE_GROUP.SPA}
+                disabled={tab === Workflow.PACKAGE_GROUP.SPA}
                 onClick={switchTo}
-                value={ChangeRequest.PACKAGE_GROUP.SPA}
+                value={Workflow.PACKAGE_GROUP.SPA}
               >
                 SPAs
               </Button>
@@ -445,9 +442,9 @@ const PackageList = ({ startTab = ChangeRequest.PACKAGE_GROUP.SPA }) => {
                 id="show-waivers-button"
                 aria-label="switch to showing waiver packages"
                 className="tab-button"
-                disabled={tab === ChangeRequest.PACKAGE_GROUP.WAIVER}
+                disabled={tab === Workflow.PACKAGE_GROUP.WAIVER}
                 onClick={switchTo}
-                value={ChangeRequest.PACKAGE_GROUP.WAIVER}
+                value={Workflow.PACKAGE_GROUP.WAIVER}
               >
                 Waivers
               </Button>

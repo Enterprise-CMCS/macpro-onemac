@@ -1,5 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { ChangeRequest } from "cmscommonlib";
+import { Validate } from "cmscommonlib";
 import newSubmission from "./newSubmission";
 import updateComponent from "./updateComponent";
 
@@ -14,7 +14,7 @@ jest.mock("cmscommonlib");
 
 describe("submissions are properly captured into the database", () => {
   it("recognizes a new Package", () => {
-    ChangeRequest.decodeId.mockReturnValueOnce({
+    Validate.decodeId.mockReturnValueOnce({
       packageId: "MI-11-1112",
       parentType: "spa",
       componentId: "MI-11-1111",
@@ -40,7 +40,7 @@ describe("submissions are properly captured into the database", () => {
   });
 
   it("recognizes a child Package", () => {
-    ChangeRequest.decodeId.mockReturnValueOnce({
+    Validate.decodeId.mockReturnValueOnce({
       packageId: "MI.1112",
       parentType: "waiver",
       componentId: "MI.1112.R00.M01",
