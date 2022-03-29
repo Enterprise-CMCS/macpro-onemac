@@ -175,7 +175,7 @@ const UserManagement = () => {
   );
 
   const renderDate = useCallback(
-    ({ value }) => format(new Date(value * 1000), "MMM d, yyyy hh:mm a"),
+    ({ value }) => format(new Date(value), "MMM d, yyyy hh:mm a"),
     []
   );
 
