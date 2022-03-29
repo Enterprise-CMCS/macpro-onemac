@@ -14,7 +14,7 @@ import {
 import {
   RESPONSE_CODE,
   ROUTES,
-  ChangeRequest,
+  Workflow,
   territoryMap,
   getUserRoleObj,
 } from "cmscommonlib";
@@ -96,7 +96,7 @@ const defaultPage = {
   actionLabel: "Package Actions",
   attachmentsHeading: "Base Supporting Documentation",
   usesVerticalNav: true,
-  actionsByStatus: ChangeRequest.defaultActionsByStatus,
+  actionsByStatus: Workflow.defaultActionsByStatus,
   detailHeader: "Package",
   raiLink: ROUTES.WAIVER_RAI,
   defaultTitle: null,
@@ -112,10 +112,10 @@ const defaultPage = {
 
 const PAGE_detail = {
   default: defaultPage,
-  [ChangeRequest.TYPE.WAIVER_BASE]: {
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: {
     ...defaultPage,
   },
-  [ChangeRequest.TYPE.SPA]: {
+  [Workflow.ONEMAC_TYPE.SPA]: {
     ...defaultPage,
     raiLink: ROUTES.SPA_RAI,
     detailsSection: [
@@ -125,7 +125,7 @@ const PAGE_detail = {
       submissionDateDefault,
     ],
   },
-  [ChangeRequest.TYPE.CHIP_SPA]: {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: {
     ...defaultPage,
     raiLink: ROUTES.CHIP_SPA_RAI,
     detailsSection: [
@@ -135,10 +135,10 @@ const PAGE_detail = {
       submissionDateDefault,
     ],
   },
-  [ChangeRequest.TYPE.WAIVER_RENEWAL]: {
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: {
     ...defaultPage,
   },
-  [ChangeRequest.TYPE.WAIVER_AMENDMENT]: {
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: {
     ...defaultPage,
     actionLabel: "Amendment Actions",
     usesVerticalNav: false,
@@ -174,7 +174,7 @@ const DetailSection = ({
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
-  const ninetyDayText = ChangeRequest.get90thDayText(
+  const ninetyDayText = Workflow.get90thDayText(
     detail.currentStatus,
     detail.clockEndTimestamp
   );
@@ -227,8 +227,8 @@ const DetailSection = ({
                   : ninetyDayText ?? "N/A"}
               </Review>
             )}
-            {ChangeRequest.MY_PACKAGE_GROUP[detail.componentType] ===
-              ChangeRequest.PACKAGE_GROUP.WAIVER &&
+            {Workflow.MY_PACKAGE_GROUP[detail.componentType] ===
+              Workflow.PACKAGE_GROUP.WAIVER &&
               detail.effectiveDateTimestamp && (
                 <Review heading="Effective Date">
                   {formatDetailViewDate(detail.effectiveDateTimestamp)}
@@ -246,8 +246,7 @@ const DetailSection = ({
                         <Button
                           className="package-action-link"
                           onClick={
-                            actionLabel ===
-                            ChangeRequest.PACKAGE_ACTION.WITHDRAW
+                            actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
                               ? () => {
                                   setConfirmItem({
                                     label: actionLabel,
@@ -398,14 +397,14 @@ const TemporaryExtensionSection: FC<{
 
   const renderActions = useCallback(
     ({ row }) => {
-      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
+      const packageConfig = PAGE_detail[row.original.componentType];
       let menuItems: PortalMenuItem[] = [];
 
-      (packageConfig?.actionsByStatus ?? ChangeRequest.defaultActionsByStatus)[
+      (packageConfig?.actionsByStatus ?? Workflow.defaultActionsByStatus)[
         row.original.currentStatus
       ]?.forEach((actionLabel) => {
         let newItem: PortalMenuItem = { label: actionLabel };
-        if (actionLabel === ChangeRequest.PACKAGE_ACTION.WITHDRAW) {
+        if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
           newItem.value = "Withdrawn";
           newItem.formatConfirmationMessage = ({ componentId }) =>
             `You are about to withdraw the temporary extension for ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
@@ -482,7 +481,7 @@ const DetailView = () => {
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [confirmItem, setConfirmItem] = useState<{
-    label: ChangeRequest.PACKAGE_ACTION;
+    label: Workflow.PACKAGE_ACTION;
     confirmationMessage: string;
     onAccept: () => void;
   } | null>(null);
@@ -520,7 +519,7 @@ const DetailView = () => {
           );
         fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
         fetchedDetail.typeNice =
-          ChangeRequest.LABEL[fetchedDetail.componentType];
+          Workflow.ONEMAC_LABEL[fetchedDetail.componentType];
 
         if (fetchedDetail.waiverAuthority) {
           fetchedDetail.waiverAuthorityNice =
@@ -571,7 +570,7 @@ const DetailView = () => {
             label: "Additional Information",
             url: `#${DetailViewTab.ADDITIONAL}`,
           },
-          ChangeRequest.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType) && {
+          Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType) && {
             id: DetailViewTab.EXTENSION,
             label: "Temporary Extension",
             url: `#${DetailViewTab.EXTENSION}`,

@@ -43,7 +43,7 @@ export const choicesFromRoute = {
       {
         title: "Request Temporary Extension",
         description: "Submit for 1915(b) and 1915(c)",
-        linkTo: ROUTES.BASE_WAIVER,
+        linkTo: ROUTES.TEMPORARY_EXTENSION,
       },
     ],
   },

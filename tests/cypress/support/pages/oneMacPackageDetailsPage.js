@@ -38,6 +38,10 @@ const successMessage = "#alert-bar";
 const withdrawConfirmationBtn = "//button[text()='Withdraw?']";
 const withdrawBtn = "//button[text()='Withdraw']";
 const amendmentHeaders = "//h2[text()='Waiver Amendment']";
+const tempExtensionsNavBtn =
+  "//li[contains(@class, 'nav')]//a[text()='Temporary Extension']";
+const tempExtensionID = "//td[contains(@id,'componentId-')]";
+const withdrawBtnOnTempExt = "//li[text()='Withdraw']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -187,6 +191,18 @@ export class oneMacPackageDetailsPage {
   }
   verifyAmendmentDetailSectionExists() {
     cy.xpath(amendmentHeaders).should("be.visible");
+  }
+  clickTempExtensionsNavBtn() {
+    cy.xpath(tempExtensionsNavBtn).click();
+  }
+  verifyTempExtensionIDExists(num) {
+    cy.xpath(tempExtensionID).contains(num).should("be.visible");
+  }
+  clickTempExtensionActionBtn(num) {
+    cy.xpath(tempExtensionID).contains(num).next().next().click();
+  }
+  clickWithdrawBtnOnTempExt() {
+    cy.xpath(withdrawBtnOnTempExt).click();
   }
 }
 export default oneMacPackageDetailsPage;
