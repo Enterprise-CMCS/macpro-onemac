@@ -202,6 +202,7 @@ jobs:
             OY2_16707_CMS_Users_Denied_a_CRA_Role_loses_Read_Only_Access_to_OneMAC.spec.feature,
             OY2_15984_Updated_SPA_Package_Details_View_Additional_Information_Page.spec.js,
             OY2_16332_Waiver_Mini_Dashboard_Temporary_Extension.spec.js,
+            OY2_16333_Update_Waiver_Form_Temporary_Extension.spec.feature,
           ]
     steps:
       - name: set branch_name
