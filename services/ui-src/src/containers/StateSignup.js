@@ -13,9 +13,11 @@ export function StateSignup() {
     state: { role = "" },
   } = useLocation();
 
-  const expandStatesToAttributes = useCallback((values) => {
-    return values.map(({ value }) => value);
-  }, []);
+  const expandStatesToAttributes = useCallback(
+    (values) =>
+      (Array.isArray(values) ? values : [values]).map(({ value }) => value),
+    []
+  );
 
   const [loading, onSubmit] = useSignupCallback(role, expandStatesToAttributes);
   const [
