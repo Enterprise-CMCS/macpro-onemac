@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
@@ -8,7 +8,6 @@ import { validateUserReadOnly } from "./utils/validateUser";
 const s3 = new AWS.S3();
 
 async function assignAttachmentUrls(item) {
-  console.log("url item", JSON.stringify(item, null, 2));
   if (Array.isArray(item.attachments)) {
     const attachmentURLs = await Promise.all(
       item.attachments.map(({ url }) =>
@@ -79,7 +78,23 @@ export const getDetails = async (event) => {
       for (const child of raiResult.Items) {
         await assignAttachmentUrls(child);
       }
-      result.Item.raiResponses = raiResult.Items.slice(0); //replace the static children with fresh result from query
+      result.Item.raiResponses = [...raiResult.Items];
+    }
+
+    if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
+      //fetch any waiver extensions associated to this component
+      const waiverExtensionParams = {
+        TableName: process.env.oneMacTableName,
+        IndexName: "GSI1",
+        KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
+        ExpressionAttributeValues: {
+          ":pk": componentId,
+          ":sk": Workflow.ONEMAC_TYPE.WAIVER_EXTENSION,
+        },
+      };
+
+      const waiverExtensionResult = await dynamoDb.query(waiverExtensionParams);
+      result.Item.waiverExtensions = [...waiverExtensionResult.Items];
     }
 
     console.log("Sending back result:", JSON.stringify(result, null, 2));

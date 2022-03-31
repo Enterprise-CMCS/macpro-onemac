@@ -83,20 +83,40 @@ export namespace ChangeRequest {
     transmittalNumber: TransmittalNumberInfo;
     requiredUploads: unknown;
     optionalUploads: unknown;
-    actionsByStatus: Record<string, PACKAGE_ACTION[]>;
     raiLink: string;
     overrideType?: string;
     overrideActionType?: string;
+    overrideSuccessLanding?: ROUTES;
   } & Partial<WaiverFormInfo>;
 
   export const CONFIG: Record<string, FormInfo>;
-  export const ONEMAC_STATUS: Record<string, string>;
   export const TYPE: Record<string, string>;
   export const LABEL: Record<string, string>;
+}
+
+export namespace Validate {
+  export const ONEMAC_ID_REGEX: Record<string, string>;
+  export const ID_EXISTS_REGEX: Record<string, []>;
+}
+
+export namespace Workflow {
+  export enum PACKAGE_ACTION {
+    RESPOND_TO_RAI = "Respond to RAI",
+    WITHDRAW = "Withdraw",
+  }
+  export const ONEMAC_TYPE: Record<string, string>;
+  export const ONEMAC_LABEL: Record<string, string>;
+  export const ONEMAC_STATUS: Record<string, string>;
+  export const ALLOW_WAIVER_EXTENSION_TYPE: string[];
   export const MY_PACKAGE_GROUP: Record<string, string>;
   export enum PACKAGE_GROUP {
     SPA = "spa",
     WAIVER = "waiver",
+  }
+  export enum NINETY_DAY_STATUS {
+    PENDING = "Pending",
+    CLOCK_STOPPED = "Clock Stopped",
+    NA = "N/A",
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;

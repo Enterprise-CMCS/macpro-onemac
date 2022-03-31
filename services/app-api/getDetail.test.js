@@ -1,10 +1,12 @@
 import dynamoDb from "./libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { getDetails } from "./getDetail";
 import { getUser } from "./getUser";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("./getUser");
 jest.mock("./libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 beforeAll(() => {
   jest.clearAllMocks();
@@ -45,6 +47,16 @@ const noPathEvent = {
     cNum: 18274923435,
   },
 };
+const waiverEvent = {
+  queryStringParameters: {
+    email: "email",
+    cType: "waivernew",
+    cNum: 18274923435,
+  },
+  pathParameters: {
+    id: "MInumber",
+  },
+};
 
 beforeEach(() => {
   getUser.mockResolvedValue(validDoneBy);
@@ -53,6 +65,14 @@ beforeEach(() => {
     Item: {
       field1: "one",
     },
+  });
+
+  dynamoDb.query.mockResolvedValue({ Items: [], Count: 0 });
+
+  AWS.S3.mockImplementation(() => {
+    return {
+      getSignedUrlPromise: () => "signedURL",
+    };
   });
 });
 
@@ -105,6 +125,37 @@ describe("component details are returned", () => {
     expect(getDetails(validEvent))
       .resolves.toStrictEqual({
         field1: "one",
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+});
+
+describe("rai responses are returned", () => {
+  it("returns rai responses if spa type", async () => {
+    dynamoDb.query.mockResolvedValue({ Items: [{ item: "any" }], Count: 1 });
+    expect(getDetails(validEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+        raiResponses: [
+          {
+            item: "any",
+          },
+        ],
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+});
+
+describe("waiver extensions are returned", () => {
+  it("returns waiver extensions if waiver type", async () => {
+    expect(getDetails(waiverEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+        waiverExtensions: [],
       })
       .catch((error) => {
         console.log("caught test error: ", error);

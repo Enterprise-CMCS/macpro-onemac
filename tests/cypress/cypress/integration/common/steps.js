@@ -2068,3 +2068,36 @@ And("verify the amendment details section exists", () => {
 And("verify success message for denied role", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
 });
+And("select proposed effective date 3 months from today", () => {
+  OneMacSubmitNewWaiverActionPage.setProposedEffectiveDateThreeMonthsAway();
+});
+And("Type Unique Valid Temporary Extension Number With 5 Characters", () => {
+  cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+    var num = data.newBaseWaiverNumber.substring(0, 13) + "TE00";
+    var f = "./fixtures/sharedTempExtensionNumber.json";
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
+    cy.readFile(f).then((d) => {
+      d.newTemporaryExtensionNumber = num;
+      // write the merged object
+      cy.writeFile(f, d);
+    });
+  });
+});
+And("verify the temporary extension exists", () => {
+  cy.fixture("sharedTempExtensionNumber.json").then((data) => {
+    var num = data.newTemporaryExtensionNumber;
+    OneMacPackageDetailsPage.verifyTempExtensionIDExists(num);
+  });
+});
+And("click the action button for the temporary extension", () => {
+  cy.fixture("sharedTempExtensionNumber.json").then((data) => {
+    var num = data.newTemporaryExtensionNumber;
+    OneMacPackageDetailsPage.clickTempExtensionActionBtn(num);
+  });
+});
+And("click withdraw button on the temp extension page", () => {
+  OneMacPackageDetailsPage.clickWithdrawBtnOnTempExt();
+});
+And("click on the Temporary Extension nav button", () => {
+  OneMacPackageDetailsPage.clickTempExtensionsNavBtn();
+});

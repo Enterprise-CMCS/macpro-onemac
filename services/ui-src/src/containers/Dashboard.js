@@ -237,7 +237,7 @@ const Dashboard = () => {
     <Button
       id="new-submission-button"
       className="new-submission-button"
-      href={ROUTES.NEW_SUBMISSION_SELECTION + "?legacy"}
+      href={ROUTES.NEW_SUBMISSION_SELECTION}
       inversed
     >
       New Submission
