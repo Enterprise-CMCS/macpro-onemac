@@ -20,4 +20,9 @@ describe("get90thDayText", () => {
     const ninetyDay = get90thDayText("OTHER_NOT_REAL_STATUS", today);
     expect(ninetyDay).toBe(today);
   });
+  it("returns date string when status is null", () => {
+    const today = new Date();
+    const ninetyDay = get90thDayText(null, today);
+    expect(ninetyDay).toBe(today);
+  });
 });

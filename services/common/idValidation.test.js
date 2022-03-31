@@ -1,5 +1,5 @@
 import { TYPE } from "./changeRequest";
-import { decodeId } from "./idValidation";
+import { decodeId, getWaiverFamily } from "./idValidation";
 
 describe("decodeId for SPA IDs", () => {
   it("handles a null component type", () => {
@@ -129,5 +129,12 @@ describe("decodeId for Waiver Numbers", () => {
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI.77777.R01.M01");
     expect(myId.parentType).toBe("waiveramendment");
+  });
+});
+
+describe("Waiver Family Numbers", () => {
+  it("gets the Waiver Family Number", () => {
+    const familyNumber = getWaiverFamily("MI.77777.R01.M01");
+    expect(familyNumber).toBe("MI.77777");
   });
 });
