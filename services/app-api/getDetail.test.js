@@ -1,10 +1,12 @@
 import dynamoDb from "./libs/dynamodb-lib";
+import AWS from "aws-sdk";
 import { getDetails } from "./getDetail";
 import { getUser } from "./getUser";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("./getUser");
 jest.mock("./libs/dynamodb-lib");
+jest.mock("aws-sdk");
 
 beforeAll(() => {
   jest.clearAllMocks();
@@ -66,6 +68,12 @@ beforeEach(() => {
   });
 
   dynamoDb.query.mockResolvedValue({ Items: [], Count: 0 });
+
+  AWS.S3.mockImplementation(() => {
+    return {
+      getSignedUrlPromise: () => "signedURL",
+    };
+  });
 });
 
 describe("handles errors and exceptions", () => {
@@ -130,6 +138,11 @@ describe("rai responses are returned", () => {
     expect(getDetails(validEvent))
       .resolves.toStrictEqual({
         field1: "one",
+        raiResponses: [
+          {
+            item: "any",
+          },
+        ],
       })
       .catch((error) => {
         console.log("caught test error: ", error);
@@ -142,6 +155,7 @@ describe("waiver extensions are returned", () => {
     expect(getDetails(waiverEvent))
       .resolves.toStrictEqual({
         field1: "one",
+        waiverExtensions: [],
       })
       .catch((error) => {
         console.log("caught test error: ", error);
