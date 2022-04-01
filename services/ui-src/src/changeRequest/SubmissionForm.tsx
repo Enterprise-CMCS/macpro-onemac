@@ -96,7 +96,6 @@ export const SubmissionForm: React.FC<{
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
-    proposedEffectiveDate: "",
   });
 
   function matchesRegex(fieldValue: string, regexFormatString: string) {
@@ -192,13 +191,6 @@ export const SubmissionForm: React.FC<{
 
     setChangeRequest(updatedRecord);
   };
-
-  const handleEffectiveDateChange = useCallback(
-    (proposedEffectiveDate: string) => {
-      setChangeRequest((cr) => ({ ...cr, proposedEffectiveDate }));
-    },
-    []
-  );
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -307,8 +299,7 @@ export const SubmissionForm: React.FC<{
         (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
         (displayMessage.statusLevel === "warn" ||
           !displayMessage.statusMessage) &&
-        areUploadsReady &&
-        (!formInfo.proposedEffectiveDate || changeRequest.proposedEffectiveDate)
+        areUploadsReady
       )
         formReady = true;
 
@@ -441,23 +432,6 @@ export const SubmissionForm: React.FC<{
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
               }
             />
-            {formInfo.proposedEffectiveDate && (
-              <>
-                <label
-                  className="ds-c-label required"
-                  htmlFor="proposed-effective-date"
-                >
-                  <span>Proposed Effective Date</span>
-                </label>
-                <Input
-                  className="field"
-                  id="proposed-effective-date"
-                  name={formInfo.proposedEffectiveDate.fieldName}
-                  onChange={handleEffectiveDateChange}
-                  type="date"
-                />
-              </>
-            )}
           </div>
           <h3>Attachments</h3>
           <FileUploader
