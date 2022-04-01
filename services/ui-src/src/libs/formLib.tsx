@@ -83,7 +83,7 @@ export const FORM = {
     },
 
     proposedEffectiveDate: {
-      fieldName: "proposedEffectiveTimestamp",
+      fieldName: "proposedEffectiveDate",
     },
 
     actionsByStatus: Workflow.defaultActionsByStatus,

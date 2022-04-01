@@ -90,6 +90,7 @@ export const OneMACForm: React.FC = () => {
     summary: "",
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     waiverAuthority: "",
+    proposedEffectiveDate: "",
   });
 
   function matchesRegex(fieldValue: string, regexFormatString: string) {
@@ -161,8 +162,8 @@ export const OneMACForm: React.FC = () => {
   };
 
   const handleEffectiveDateChange = useCallback(
-    (proposedEffectiveTimestamp: string) => {
-      setChangeRequest((cr) => ({ ...cr, proposedEffectiveTimestamp }));
+    (proposedEffectiveDate: string) => {
+      setChangeRequest((cr) => ({ ...cr, proposedEffectiveDate }));
     },
     []
   );
@@ -273,7 +274,8 @@ export const OneMACForm: React.FC = () => {
         (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
         (displayMessage.statusLevel === "warn" ||
           !displayMessage.statusMessage) &&
-        areUploadsReady
+        areUploadsReady &&
+        (!formInfo.proposedEffectiveDate || changeRequest.proposedEffectiveDate)
       )
         formReady = true;
 

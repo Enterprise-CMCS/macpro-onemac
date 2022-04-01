@@ -137,7 +137,7 @@ export const main = handler(async (event) => {
     componentId: data.transmittalNumber,
     componentType: data.type,
     submissionTimestamp: data.submittedAt,
-    proposedEffectiveTimestamp: data.proposedEffectiveTimestamp,
+    proposedEffectiveDate: data.proposedEffectiveDate,
     currentStatus: "Submitted",
     attachments: data.uploads,
     additionalInformation: data.summary,

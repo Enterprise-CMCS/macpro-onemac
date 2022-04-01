@@ -123,7 +123,7 @@ export function validateSubmission(data) {
     // user submitted
     actionType: Joi.string().allow(""),
     waiverAuthority: Joi.string().allow(""),
-    proposedEffectiveTimestamp: Joi.string().isoDate().allow(""),
+    proposedEffectiveDate: Joi.string().isoDate().allow(""),
     summary: Joi.string().allow("").max(4000),
     territory: Joi.string()
       .valid(...territoryCodeList)
