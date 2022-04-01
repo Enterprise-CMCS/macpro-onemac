@@ -4,11 +4,13 @@ import { getUser } from "./getUser";
 import { validateUserSubmitting } from "./utils/validateUser";
 import updateComponent from "./utils/updateComponent";
 import sendEmail from "./libs/email-lib";
+import dynamoDb from "./libs/dynamodb-lib";
 
 jest.mock("./getUser");
 jest.mock("./utils/validateUser");
 jest.mock("./utils/updateComponent");
 jest.mock("./libs/email-lib");
+jest.mock("./libs/dynamodb-lib");
 
 const expectedResponse = {
   statusCode: 200,
@@ -37,58 +39,10 @@ beforeEach(() => {
   });
   updateComponent.mockImplementation(() => {
     return {
-      changeHistory: [
-        {
-          componentType: "spa",
-          componentTimestamp: 1641584108252,
-          submitterName: "Angie Active",
-          componentId: "MI-13-1122",
-        },
-        {
-          componentType: "sparai",
-          componentTimestamp: 1639696189171,
-          submitterName: "StateSubmitter Nightwatch",
-          componentId: "MD-13-1122",
-        },
-        {
-          componentType: "spa",
-          additionalInformation: "This is just a test",
-          componentId: "MI-13-1122",
-          attachments: [Array],
-          submissionId: "4240e440-5ec5-11ec-b2ea-eb35c89f340d",
-          currentStatus: "Submitted",
-          submitterId: "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-          submitterName: "StateSubmitter Nightwatch",
-          submissionTimestamp: 1639696185888,
-          submitterEmail: "statesubmitter@nightwatch.test",
-        },
-      ],
-      additionalInformation: "This is just a test",
-      componentType: "spa",
-      attachments: [
-        {
-          s3Key: "1639696180278/15MB.pdf",
-          filename: "15MB.pdf",
-          title: "CMS Form 179",
-          contentType: "application/pdf",
-          url: "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/15MB.pdf",
-        },
-        {
-          s3Key: "1639696180278/adobe.pdf",
-          filename: "adobe.pdf",
-          title: "SPA Pages",
-          contentType: "application/pdf",
-          url: "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf",
-        },
-        {
-          s3Key: "1639696188378/adobe.pdf",
-          filename: "adobe.pdf",
-          title: "RAI Response",
-          contentType: "application/pdf",
-          url: "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696188378/adobe.pdf",
-        },
-      ],
-      componentId: "MI-13-1122",
+      componentType: "testComponentType",
+      componentId: "testComponentId",
+      parentId: "testParentID",
+      parentType: "testParentType",
       sparai: [
         {
           componentType: "sparai",
@@ -123,6 +77,18 @@ beforeEach(() => {
   sendEmail.mockImplementation(() => {
     return true;
   });
+  dynamoDb.get.mockImplementation(() => ({
+    Item: {
+      children: [
+        {
+          componentId: "testComponentId",
+          componentType: "testComponentType",
+          submissionTimestamp: 1639696185888,
+        },
+      ],
+    },
+  }));
+  dynamoDb.update.mockImplementation(() => "parent updated");
 });
 
 it(`returns a validation error event doesn't parse`, async () => {
