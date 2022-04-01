@@ -1,3 +1,8 @@
+/* eslint @typescript-eslint/no-var-requires: "off" */
+/* eslint no-console: "off" */
+// We will use lodash to do some filtering/searching.
+const _ = require("lodash");
+
 // Our data source is Security Hub Findings.  Auth is provided via the lambda's IAM role.
 import AWS from "aws-sdk";
 const securityhub = new AWS.SecurityHub();
@@ -29,16 +34,13 @@ const octokitRepoParams = {
   repo: repo,
 };
 
-// We will use lodash to do some filtering/searching.
-const _ = require("lodash");
-
 // Regex used to search a GitHub Issue's body to find the Id of its underlying Security Hub Finding.
 const findingIdRegex = /(?<=\nFinding Id: ).*/g;
 
 async function getAllActiveFindings() {
   const EMPTY = Symbol("empty");
   const res = [];
-  let severityLabels = [];
+  const severityLabels = [];
   process.env.severity.split(",").forEach(function (label) {
     severityLabels.push({
       Comparison: "EQUALS",
@@ -85,7 +87,7 @@ async function getAllActiveFindings() {
 }
 
 async function getAllIssues() {
-  let issues = [];
+  const issues = [];
   for await (const response of octokit.paginate.iterator(
     octokit.rest.issues.listForRepo,
     {
@@ -150,8 +152,8 @@ async function createNewGitHubIssue(finding) {
 }
 
 async function updateIssueIfItsDrifted(finding, issue) {
-  let issueParams = issueParamsForFinding(finding);
-  let issueLabels = [];
+  const issueParams = issueParamsForFinding(finding);
+  const issueLabels = [];
   issue.labels.forEach(function (label) {
     issueLabels.push(label.name);
   });
@@ -180,12 +182,12 @@ async function closeIssuesWithoutAnActiveFinding(findings, issues) {
   );
 
   // Store all finding ids in an array
-  var findingsIds = _.map(findings, "Id");
+  const findingsIds = _.map(findings, "Id");
   // Search for open issues that do not have a corresponding active SH finding.
   for (let i = 0; i < issues.length; i++) {
-    let issue = issues[i];
+    const issue = issues[i];
     if (issue.state != "open") continue; // We only care about open issues here.
-    let issueId = issue.body.match(findingIdRegex);
+    const issueId = issue.body.match(findingIdRegex);
     if (issueId && findingsIds.includes(issueId[0])) {
       console.log(
         `Issue ${issue.number}:  Underlying finding found.  Doing nothing...`
@@ -209,11 +211,11 @@ async function createOrUpdateIssuesBasedOnFindings(findings, issues) {
   );
   // Search for active SH findings that don't have an open issue
   for (let i = 0; i < findings.length; i++) {
-    var finding = findings[i];
+    const finding = findings[i];
     let hit = false;
     for (let j = 0; j < issues.length; j++) {
-      var issue = issues[j];
-      let issueId = issue.body.match(findingIdRegex);
+      const issue = issues[j];
+      const issueId = issue.body.match(findingIdRegex);
       if (finding.Id == issueId) {
         hit = true;
         console.log(
@@ -238,26 +240,26 @@ async function assignIssuesToProject(issues, projectId, defaultColumnName) {
   );
 
   // Get information on any/all columns in the target project.
-  var targetProjectColumns = (
+  const targetProjectColumns = (
     await octokit.rest.projects.listColumns({
       project_id: projectId,
     })
   ).data;
 
   // Store the default column's id in a variable.  This is used later to add cards to the Project.
-  var defaultColumnId = _.find(
+  const defaultColumnId = _.find(
     targetProjectColumns,
     "name",
     defaultColumnName
   ).id;
 
   // Store the Project's columns' ids in an array
-  var targetColumnIds = _.map(targetProjectColumns, "id");
+  const targetColumnIds = _.map(targetProjectColumns, "id");
 
   // Iterate over the Project's columns, and put all cards into a single array.
-  var projectCards = [];
+  const projectCards = [];
   for (let i = 0; i < targetColumnIds.length; i++) {
-    let cards = (
+    const cards = (
       await octokit.rest.projects.listCards({
         column_id: targetColumnIds[i],
       })
@@ -270,7 +272,7 @@ async function assignIssuesToProject(issues, projectId, defaultColumnName) {
 
   // Iterate over the issues; if the issue is not on the board, add it to the default column.
   for (let i = 0; i < issues.length; i++) {
-    let issue = issues[i];
+    const issue = issues[i];
     if (issue.state != "open") continue; // We only care about open issues here.
     if (projectCardsContentUrls.includes(issue.url)) {
       console.log(
@@ -291,13 +293,13 @@ async function assignIssuesToProject(issues, projectId, defaultColumnName) {
 
 async function assignIssuesToRepositoryProjects(issues, projects) {
   // Find all Projects for the given repository
-  var repoProjects = (
+  const repoProjects = (
     await octokit.rest.projects.listForRepo(octokitRepoParams)
   ).data;
 
   for (let i = 0; i < projects.length; i++) {
     // Find the target Project by name
-    var targetProject = _.find(repoProjects, function (x) {
+    const targetProject = _.find(repoProjects, function (x) {
       return x.name == projects[i];
     });
     await assignIssuesToProject(issues, targetProject.id, "To Do");
@@ -306,19 +308,20 @@ async function assignIssuesToRepositoryProjects(issues, projects) {
 
 async function assignIssuesToOrganizationProjects(issues, projects) {
   // Find all Projects for the given repository
-  var orgProjects = (await octokit.rest.projects.listForOrg({ org: org })).data;
+  const orgProjects = (await octokit.rest.projects.listForOrg({ org: org }))
+    .data;
   for (let i = 0; i < projects.length; i++) {
     // Find the target Project by name
-    var targetProject = _.find(orgProjects, function (x) {
+    const targetProject = _.find(orgProjects, function (x) {
       return x.name == projects[i];
     });
     await assignIssuesToProject(issues, targetProject.id, "To Do");
   }
 }
 
-async function sync(event) {
+async function sync() {
   const findings = await getAllActiveFindings();
-  var issues = await getAllIssues();
+  let issues = await getAllIssues();
   await closeIssuesWithoutAnActiveFinding(findings, issues);
   await createOrUpdateIssuesBasedOnFindings(findings, issues);
   issues = await getAllIssues(); // Refetch all issues before assigning to projects
