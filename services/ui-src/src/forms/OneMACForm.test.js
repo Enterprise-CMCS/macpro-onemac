@@ -283,7 +283,7 @@ describe("cancelling the form submission", () => {
     const testValues = {
       transmittalNumber: "MI.17234.R00.00",
       waiverAuthority: "1915(b)",
-      proposedEffectiveDate: "05032022",
+      proposedEffectiveDate: "2022-04-01",
     };
 
     render(
@@ -319,8 +319,9 @@ describe("cancelling the form submission", () => {
     await expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
     userEvent.type(proposedEffectiveEl, testValues.proposedEffectiveDate);
-    // screen.debug();
-    // await expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
+    await expect(proposedEffectiveEl.value).toBe(
+      testValues.proposedEffectiveDate
+    );
 
     // click the submit button
     userEvent.click(cancelButtonEl);
@@ -331,7 +332,7 @@ describe("cancelling the form submission", () => {
     // the transmittal number still contains the value
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
     expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
-    //expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
+    expect(proposedEffectiveEl.value).toBe(testValues.proposedEffectiveDate);
   });
 
   it("leaves the page when cancel is confirmed", async () => {
