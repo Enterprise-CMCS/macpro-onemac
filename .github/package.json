@@ -1,5 +1,5 @@
 {
-  "name": "macpro-quickstart-serverless",
+  "name": "onemac",
   "version": "1.0.0",
   "description": "A serverless form submission application built and deployed to AWS with the Serverless Application Framework.",
   "main": "index.js",
@@ -15,12 +15,12 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/CMSgov/macpro-quickstart-serverless.git"
+    "url": "git+https://github.com/CMSgov/onemac.git"
   },
   "author": "",
   "license": "CC0-1.0",
   "bugs": {
-    "url": "https://github.com/CMSgov/macpro-quickstart-serverless/issues"
+    "url": "https://github.com/CMSgov/onemac/issues"
   },
-  "homepage": "https://github.com/CMSgov/macpro-quickstart-serverless#readme"
+  "homepage": "https://github.com/CMSgov/onemac#readme"
 }
