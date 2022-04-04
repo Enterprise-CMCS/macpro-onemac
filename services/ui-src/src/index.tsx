@@ -1,5 +1,7 @@
 import React from "react";
 import ReactDOM from "react-dom";
+import "core-js/stable";
+import "regenerator-runtime/runtime";
 import "promise-polyfill/src/polyfill";
 import "core-js/es/typed-array/uint32-array";
 import "core-js/es/array/find";
@@ -16,7 +18,6 @@ import { Amplify } from "aws-amplify";
 import { getApplicationNode } from "./utils";
 import config from "./utils/config";
 import { ROUTES } from "cmscommonlib";
-import "core-js/stable";
 
 let amplifyConfig = {
   Auth: {
