@@ -88,6 +88,10 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And verify that Request a Role Change button does not exist
 
     Scenario: Screen Enhance - Denied CMS user can request CMS Role Approver
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with cms role approver Denied
+        Then i am on Dashboard Page
         Then Click on My Account
         And verify that Request a Role Change button exists
         And click on Request a Role Change button
@@ -95,6 +99,10 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And verify the CMS Role Approver role is available
 
     Scenario: Screen Enhance - Revoked CMS user can request CMS Role Approver
+        Given I am on Login Page
+        When Clicking on Development Login
+        When Login with cms role approver Revoked
+        Then i am on Dashboard Page
         Then Click on My Account
         And verify that Request a Role Change button exists
         And click on Request a Role Change button
