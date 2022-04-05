@@ -7,7 +7,7 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         And Click on Waiver Action
         And Click on Request Temporary Extension
 
-@focus 
+
     Scenario: Screen enhancement - verify warning messages have been relaxed
         And Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page
         And verify error message is not present on Request Waiver Temporary Extenstion Page

@@ -43,12 +43,13 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
+        And click on Packages
         Then click on New Submission
         And Click on Waiver Action
-        And Click on Waiver Action under Waiver Type
-        And Click on New Waiver under Action type
+        And click on Base Waiver
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Unique Valid Waiver Number With 5 Characters
+        And Type Unique Valid Base Waiver Number With SS.#####.R00.00 format
+        And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
@@ -83,7 +84,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Login with cms Help Desk User
         And click on Packages
         And verify search bar exists
-        And verify search bar exists
         And verify search by package id or submitter name is displayed ontop of search bar
 
     Scenario: log in with system admin user
@@ -91,7 +91,6 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         When Clicking on Development Login
         When Login with cms System Admin
         And click on Packages
-        And verify search bar exists
         And verify search bar exists
         And verify search by package id or submitter name is displayed ontop of search bar
 
