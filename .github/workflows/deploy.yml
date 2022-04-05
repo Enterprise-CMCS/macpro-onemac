@@ -164,7 +164,6 @@ jobs:
             Package_Dashboard_Amendment_Details.spec.feature,
             Package_Dashboard_Base_Waiver_Form.spec.feature,
             Package_Dashboard_Column_90th_Day.spec.feature,
-            Package_Dashboard_Column_Expiration_Date.spec.feature,
             Package_Dashboard_Column_Picker_SPA.spec.feature,
             Package_Dashboard_Column_Picker_Waiver.spec.feature,
             Package_Dashboard_Filter_By_State.spec.feature,

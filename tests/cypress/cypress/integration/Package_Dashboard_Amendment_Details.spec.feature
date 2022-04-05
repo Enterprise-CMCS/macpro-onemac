@@ -12,7 +12,7 @@ Feature: OY2-15971 Updated Waiver read-only form: Amendment details
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
-        And click on Packages 
+        #And click on Packages (until new Waiver Amendment form is done)
         And click on New Submission
         And Click on Waiver Action
 
@@ -80,8 +80,3 @@ Feature: OY2-15971 Updated Waiver read-only form: Amendment details
         And verify the supporting documentation section exists
         And verify the download all button exists
         And verify the additional information section exists
-
-
-
-
-

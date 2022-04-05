@@ -21,4 +21,4 @@ node_modules
 tests/cypress/videos
 tests/cypress/screenshots
 tests/cypress/fixtures/*.txt
-tests/cypress/fixtures/sharedWaiverNumber.json
+tests/cypress/fixtures/*.json

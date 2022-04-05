@@ -36,7 +36,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click status checkbox
         And click submitted by checkbox
         And click type checkbox
-        And click the Waivers Family checkbox
         And click show hide columns button
         And verify SPA ID column exists
         And verify actions column exists
@@ -47,10 +46,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status column does not exist
         And verify date submitted column does not exist
         And verify submitted by column does not exist
-        And verify the Waivers Family # column exists
-        And verify the Waivers Family # column exists
-        And verify Waiver Family # column is sortable
-        And verify the Waiver family format in row one is SS.#### or SS.#####
 
     Scenario: Verify state exists, click state from drop down, verify it no longer exists, click it again, verify it exists again.
         Given I am on Login Page
