@@ -26,6 +26,7 @@ custom:
   githubRepositoryProjects: ${ssm:/configuration/${self:custom.stage}/sechub/githubRepositoryProjects~true, ssm:/configuration/default/sechub/githubRepositoryProjects~true, ""}
   githubOrganizationProjects: ${ssm:/configuration/${self:custom.stage}/sechub/githubOrganizationProjects~true, ssm:/configuration/default/sechub/githubOrganizationProjects~true, ""}
   severity: ${ssm:/configuration/${self:custom.stage}/sechub/severity~true, ssm:/configuration/default/sechub/severity~true, "CRITICAL,HIGH"}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
 
 provider:
   name: aws
@@ -34,7 +35,7 @@ provider:
   iam:
     role:
       path: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true, "/"}
-      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+      permissionsBoundary: !Sub !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
       statements:
         - Effect: "Allow"
           Action:
