@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "@material-ui/core";
+import { Link } from "react-router-dom";
 
 /**
  * Returns the ID specific form element
@@ -38,7 +38,7 @@ const TransmittalNumber: React.FC<{
           </label>
         </div>
         <div className="label-rcol">
-          <Link target="new" href={idFAQLink}>
+          <Link target="new" to={idFAQLink}>
             What is my {idLabel}?
           </Link>
         </div>
