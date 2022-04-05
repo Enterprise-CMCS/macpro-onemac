@@ -7,7 +7,6 @@ import React, {
   useCallback,
 } from "react";
 import { useHistory, useLocation } from "react-router-dom";
-import { Input } from "rsuite";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
@@ -191,13 +190,6 @@ export const SubmissionForm: React.FC<{
 
     setChangeRequest(updatedRecord);
   };
-
-  const handleEffectiveDateChange = useCallback(
-    (proposedEffectiveTimestamp: string) => {
-      setChangeRequest((cr) => ({ ...cr, proposedEffectiveTimestamp }));
-    },
-    []
-  );
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
@@ -439,23 +431,6 @@ export const SubmissionForm: React.FC<{
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
               }
             />
-            {formInfo.proposedEffectiveDate && (
-              <>
-                <label
-                  className="ds-c-label required"
-                  htmlFor="proposed-effective-date"
-                >
-                  <span>Proposed Effective Date</span>
-                </label>
-                <Input
-                  className="field"
-                  id="proposed-effective-date"
-                  name={formInfo.proposedEffectiveDate.fieldName}
-                  onChange={handleEffectiveDateChange}
-                  type="date"
-                />
-              </>
-            )}
           </div>
           <h3>Attachments</h3>
           <FileUploader
