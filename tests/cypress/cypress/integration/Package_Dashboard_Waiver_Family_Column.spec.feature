@@ -22,5 +22,6 @@ Feature: OY2-15426 Package Dashboard: Waiver Family Column for the Waivers tab
         And click the Waivers Family checkbox
         And click show hide columns button
         And verify the Waivers Family # column exists
+        And verify the Waivers Family # column exists
         And verify Waiver Family # column is sortable
         And verify the Waiver family format in row one is SS.#### or SS.#####

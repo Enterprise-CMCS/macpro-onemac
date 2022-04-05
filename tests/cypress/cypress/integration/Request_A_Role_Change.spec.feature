@@ -21,7 +21,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And verify the submit button is disabled
         And verify the cancel button is clickable
 
-        Scenario: Screen enhance - SSA role change
+    Scenario: Screen enhance - SSA role change
         Given I am on Login Page
         When Clicking on Development Login
         When Login as a State System Admin
@@ -43,7 +43,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And verify there is no error message
         And verify the cancel button is clickable
 
-        Scenario: Screen enhance - cms role approver role change
+    Scenario: Screen enhance - cms role approver role change
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms role approver
@@ -60,7 +60,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And click stay on page in the modal
         And verify the cancel button is clickable
 
-        Scenario: Screen enhance - CMS Reviewer role change
+    Scenario: Screen enhance - CMS Reviewer role change
         Given I am on Login Page
         When Clicking on Development Login
         When Login with CMS Reviewer User
@@ -71,7 +71,7 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And verify Select the role for which you are registering is visible
         And verify the CMS Role Approver role is available
 
-        Scenario: Screen enhance - cms system admin role change
+    Scenario: Screen enhance - cms system admin role change
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms System Admin
@@ -79,10 +79,24 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         Then Click on My Account
         And verify that Request a Role Change button does not exist
 
-        Scenario: Screen enhance - Help Desk User role change
+    Scenario: Screen enhance - Help Desk User role change
         Given I am on Login Page
         When Clicking on Development Login
         When Login with cms Help Desk User
         Then i am on Dashboard Page
         Then Click on My Account
         And verify that Request a Role Change button does not exist
+
+    Scenario: Screen Enhance - Denied CMS user can request CMS Role Approver
+        Then Click on My Account
+        And verify that Request a Role Change button exists
+        And click on Request a Role Change button
+        And verify Select the role for which you are registering is visible
+        And verify the CMS Role Approver role is available
+
+    Scenario: Screen Enhance - Revoked CMS user can request CMS Role Approver
+        Then Click on My Account
+        And verify that Request a Role Change button exists
+        And click on Request a Role Change button
+        And verify Select the role for which you are registering is visible
+        And verify the CMS Role Approver role is available
