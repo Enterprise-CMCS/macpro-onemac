@@ -58,12 +58,24 @@ const waiverEvent = {
   },
 };
 
+const raiEvent = {
+  queryStringParameters: {
+    email: "email",
+    cType: "waiverrai",
+    cNum: 18274923435,
+  },
+  pathParameters: {
+    id: "MInumber",
+  },
+};
+
 beforeEach(() => {
   getUser.mockResolvedValue(validDoneBy);
 
   dynamoDb.get.mockResolvedValue({
     Item: {
       field1: "one",
+      attachments: [{ url: "aURL" }, { url: "anotherURL" }],
     },
   });
 
@@ -71,7 +83,7 @@ beforeEach(() => {
 
   AWS.S3.mockImplementation(() => {
     return {
-      getSignedUrlPromise: () => "signedURL",
+      getSignedUrlPromise: () => ({ url: "signedURL", idx: "anIDX" }),
     };
   });
 });
@@ -108,6 +120,28 @@ describe("handles errors and exceptions", () => {
         console.log("caught test error: ", error);
       });
   });
+
+  it("handles user exception", async () => {
+    const expectedReturn = RESPONSE_CODE.VALIDATION_ERROR;
+    getUser.mockRejectedValueOnce("getUser exception");
+
+    await expect(getDetails(validEvent))
+      .resolves.toStrictEqual(expectedReturn)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
+  it("handles dynamo exception", async () => {
+    const expectedReturn = {};
+    dynamoDb.query.mockRejectedValueOnce("dynamoDb exception");
+
+    await expect(getDetails(validEvent))
+      .resolves.toStrictEqual(expectedReturn)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
 });
 
 describe("component details are returned", () => {
@@ -125,30 +159,39 @@ describe("component details are returned", () => {
     await expect(getDetails(validEvent))
       .resolves.toStrictEqual({
         field1: "one",
+        attachments: [{ url: undefined }, { url: undefined }],
       })
       .catch((error) => {
         console.log("caught test error: ", error);
       });
   });
-  /*
+
+  it("returns rai details", async () => {
+    await expect(getDetails(raiEvent))
+      .resolves.toStrictEqual({
+        field1: "one",
+        attachments: [{ url: undefined }, { url: undefined }],
+      })
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
+  });
+
   it("returns full response from main", async () => {
     const fullResponse = {
       statusCode: 200,
-      body: JSON.stringify({
-        field1: "one",
-      }),
+      body: '{"field1":"one","attachments":[{},{}]}',
       headers: {
         "Access-Control-Allow-Origin": "*",
         "Access-Control-Allow-Credentials": true,
       },
-    }
+    };
     expect(main(validEvent))
       .resolves.toStrictEqual(fullResponse)
       .catch((error) => {
         console.log("caught test error: ", error);
       });
   });
-*/
 });
 
 describe("rai responses are returned", () => {
@@ -157,6 +200,7 @@ describe("rai responses are returned", () => {
     await expect(getDetails(validEvent))
       .resolves.toStrictEqual({
         field1: "one",
+        attachments: [{ url: undefined }, { url: undefined }],
         raiResponses: [
           {
             item: "any",
@@ -174,6 +218,7 @@ describe("waiver extensions are returned", () => {
     await expect(getDetails(waiverEvent))
       .resolves.toStrictEqual({
         field1: "one",
+        attachments: [{ url: undefined }, { url: undefined }],
         waiverExtensions: [],
       })
       .catch((error) => {
@@ -181,21 +226,3 @@ describe("waiver extensions are returned", () => {
       });
   });
 });
-/*
-it("catches an exception from getDetail", async () => {
-
-  jest.mock("./getDetail", () => ({
-    ...jest.requireActual("./getDetail"),
-    getDetails: () => {throw "an exception"},
-  }));
-
-  expect(main(waiverEvent))
-    .resolves.toStrictEqual({
-      field1: "one",
-      waiverExtensions: [],
-    })
-    .catch((error) => {
-      console.log("caught test error: ", error);
-    });
-});
-*/

@@ -86,8 +86,25 @@ it(`returns an error if no user email is sent`, async () => {
   getUser.mockResolvedValueOnce(null);
 
   expectedResponse.statusCode = 500;
-  expectedResponse.body =
-    '{"error":"Cannot convert undefined or null to object"}';
+  expectedResponse.body = `{"error":"Cannot read property 'roleList' of null"}`;
+  const thisTestUserEvent = {
+    queryStringParameters: {
+      email: null,
+    },
+  };
+
+  await expect(main(thisTestUserEvent))
+    .resolves.toStrictEqual(expectedResponse)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it(`handles a dynamo exception`, async () => {
+  dynamoDb.query.mockRejectedValueOnce("dynamo error");
+
+  expectedResponse.statusCode = 200;
+  expectedResponse.body = JSON.stringify(RESPONSE_CODE.DATA_RETRIEVAL_ERROR);
   const thisTestUserEvent = {
     queryStringParameters: {
       email: null,
