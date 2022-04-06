@@ -1,4 +1,4 @@
-import React, { useRef, useState } from "react";
+import React, { useState } from "react";
 import Select, { components } from "react-select";
 
 const customComponents = {
@@ -15,14 +15,6 @@ const customComponents = {
 };
 
 const customStyles = {
-  menu: (provided) => ({
-    ...provided,
-    position: "static",
-  }),
-  menuPortal: (provided) => ({
-    ...provided,
-    position: "static",
-  }),
   multiValue: (provided) => ({
     ...provided,
     backgroundColor: "#0071BC",
@@ -47,7 +39,6 @@ export const MultiSelectDropDown = ({
   title,
 }) => {
   const [value, setValue] = useState([]);
-  const menuTargetRef = useRef(null);
 
   const invalid =
     (required && value.length === 0) || (onlyOne && value.length > 1);
@@ -57,17 +48,15 @@ export const MultiSelectDropDown = ({
       <label className="ds-text-heading--xl">{title}</label>
       <Select
         aria-invalid={invalid}
+        autoFocus
         components={customComponents}
         isDisabled={loading}
         isMulti={!onlyOne}
-        menuIsOpen
-        menuPortalTarget={menuTargetRef.current}
         onChange={setValue}
         options={options}
         placeholder={placeholder}
         styles={customStyles}
       />
-      <div className="multi-select-menu-container" ref={menuTargetRef} />
       <div className="multi-select-bottom-section">
         {errorMessage && invalid ? (
           <div className="multi-select-error-message">{errorMessage}</div>

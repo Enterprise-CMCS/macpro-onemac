@@ -1,13 +1,14 @@
 import React from "react";
-
+import { Router, Route, MemoryRouter } from "react-router-dom";
+import { createMemoryHistory } from "history";
 import { act, render, screen } from "@testing-library/react";
+import selectEvent from "react-select-event";
+import { RESPONSE_CODE } from "cmscommonlib";
+
 import { AppContext } from "../libs/contextLib";
 import { stateUserNoAuthState } from "../libs/testDataAppContext";
-import { createMemoryHistory } from "history";
 import { StateSignup } from "./StateSignup";
-import { Router, Route, MemoryRouter } from "react-router-dom";
 import UserDataApi from "../utils/UserDataApi";
-import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("../utils/UserDataApi");
 
@@ -46,6 +47,9 @@ describe("StateSignup", () => {
     expect(stateSignup).toBeVisible();
     const userRole = screen.getByText("State Submitter");
     expect(userRole).toBeVisible();
+    const stateDropdown = screen.getByRole("combobox");
+    expect(stateDropdown).toBeVisible();
+    selectEvent.openMenu(stateDropdown);
     const stateList = screen.getByRole("list");
     expect(stateList).toBeVisible();
     const stateOption = screen.getByRole("option", { name: "Alabama" });
