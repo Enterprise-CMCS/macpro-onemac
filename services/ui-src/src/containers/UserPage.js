@@ -332,6 +332,9 @@ const UserPage = () => {
     return (
       <div className="profile-signup-container">
         <MultiSelectDropDown
+          ariaLabel={
+            "Select one or more states to request access. Use down key to enter the menu. You can also begin typing a territory name to search."
+          }
           cancelFn={() => setIsStateSelectorVisible(false)}
           errorMessage="Please select at least one state."
           loading={loading}
