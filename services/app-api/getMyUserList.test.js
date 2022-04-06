@@ -10,6 +10,15 @@ const testDoneBy = {
   lastName: "lasty",
   fullName: "firsty lastly",
 };
+
+const testDoneByHelpdesk = {
+  roleList: [{ role: "helpdesk", status: "active", territory: "N/A" }],
+  email: "myemail@email.com",
+  firstName: "firsty",
+  lastName: "lasty",
+  fullName: "firsty lastly",
+};
+
 const testCantBeDoneBy = {
   roleList: [{ role: "statesubmitter", status: "active", territory: "MD" }],
   email: "myemail@email.com",
@@ -36,7 +45,7 @@ beforeAll(() => {
   });
 });
 
-it("builds the correct paramaters for system admin", () => {
+it("builds the correct parameters for system admin", () => {
   const expectedParams = {
     ExpressionAttributeNames: {
       "#date": "date",
@@ -57,7 +66,7 @@ it("builds the correct paramaters for system admin", () => {
   );
 });
 
-it("builds the correct paramaters for CMS Role Approvers", () => {
+it("builds the correct parameters for CMS Role Approvers", () => {
   const expectedParams = {
     ExpressionAttributeNames: {
       "#date": "date",
@@ -79,7 +88,7 @@ it("builds the correct paramaters for CMS Role Approvers", () => {
   );
 });
 
-it("builds the correct paramaters for State System Admins", () => {
+it("builds the correct parameters for State System Admins", () => {
   const expectedParams = {
     ExpressionAttributeNames: {
       "#date": "date",
@@ -97,6 +106,29 @@ it("builds the correct paramaters for State System Admins", () => {
     TableName: undefined,
   };
   expect(buildParams(USER_ROLE.STATE_SYSTEM_ADMIN, "VA")).toStrictEqual(
+    expectedParams
+  );
+});
+
+it("builds the correct parameters for Helpdesk", () => {
+  const expectedParams = {
+    ExpressionAttributeNames: {
+      "#date": "date",
+      "#role": "role",
+      "#status": "status",
+    },
+    ExpressionAttributeValues: {
+      ":role": "systemadmin",
+      ":user": "USER",
+    },
+    FilterExpression: "#role <> :role",
+    IndexName: "GSI1",
+    KeyConditionExpression: "GSI1pk=:user",
+    ProjectionExpression:
+      "#date, doneByName, email, fullName, #role, #status, territory",
+    TableName: undefined,
+  };
+  expect(buildParams(USER_ROLE.HELPDESK, "Territory")).toStrictEqual(
     expectedParams
   );
 });

@@ -140,19 +140,9 @@ async function getDataFromDB(user) {
  */
 export const main = handler(async (event) => {
   const user = await getUser(event.queryStringParameters.email);
-  if (Object.keys(user).length === 0) {
-    console.info(
-      `User ${event.queryStringParameters.email} does not exist in database.`
-    );
-  }
+
   const allResults = await getDataFromDB(user);
   if (typeof allResults === "string") return allResults;
   // extracts items from each of the results
-  const items = allResults.flatMap(({ Items }) => Items);
-  if (items.length === 0) {
-    console.log(`No change requests found matching that query.`);
-  }
-
-  console.log(`Sending back ${items.length} change request(s).`);
-  return items;
+  return allResults.flatMap(({ Items }) => Items);
 });

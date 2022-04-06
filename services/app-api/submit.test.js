@@ -68,21 +68,15 @@ beforeEach(() => {
     return;
   });
 
-  newSubmission.mockImplementation(() => {
-    return;
-  });
+  newSubmission.mockResolvedValue(true);
 
   packageExists.mockImplementation(() => {
     return false;
   });
 });
-/*
+
 it(`successfully submits`, async () => {
   expectedResponse.body = JSON.stringify(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
-
-  getUser.mockImplementationOnce(() => {
-    return validDoneBy;
-  });
 
   expect(main(validSubmitEvent))
     .resolves.toStrictEqual(expectedResponse)
@@ -90,7 +84,7 @@ it(`successfully submits`, async () => {
       console.log("caught test error: ", error);
     });
 });
-*/
+
 it("takes exception to bad JSON", async () => {
   return expect(() =>
     main({ data: "{ bad,,json }" }, "foo").toThrow(
