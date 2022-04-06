@@ -21,7 +21,7 @@ export default async function updateComponent({
     displayId: updateData.componentId,
   };
 
-  let updateSk = updateData.componentType;
+  let updateSk = "v0#" + updateData.componentType;
   switch (updateData.componentType) {
     case Workflow.ONEMAC_TYPE.WAIVER_RAI:
     case Workflow.ONEMAC_TYPE.SPA_RAI:
@@ -36,20 +36,20 @@ export default async function updateComponent({
 
   const updateComponentParams = {
     TableName: process.env.oneMacTableName,
+    ReturnValues: "UPDATED_NEW",
     Key: {
       pk: updatePk,
       sk: updateSk,
     },
     ConditionExpression: "pk = :pkVal AND sk = :skVal",
     UpdateExpression:
-      "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
+      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, ",
     ExpressionAttributeValues: {
+      ":defaultval": 0,
+      ":incrval": 1,
       ":pkVal": updatePk,
       ":skVal": updateSk,
-      ":newChange": [changeData.changeHistory],
-      ":emptyList": [],
     },
-    ReturnValues: "ALL_NEW",
   };
 
   topLevelUpdates.forEach((attributeName) => {
@@ -81,6 +81,21 @@ export default async function updateComponent({
     console.log("updateParams: ", updateComponentParams);
     const result = await dynamoDb.update(updateComponentParams);
     console.log("Result is: ", result);
+    try {
+      const latestVersion = result["Attributes"]["Latest"];
+      const putsk = updateSk.replace("v0#", "v" + latestVersion + "#");
+      const putParams = {
+        TableName: process.env.oneMacTableName,
+        Item: {
+          pk: updatePk,
+          sk: putsk,
+          ...result.Attributes,
+        },
+      };
+      await dynamoDb.put(putParams);
+    } catch (e) {
+      console.log("got exception: ", e);
+    }
     return result.Attributes;
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {
