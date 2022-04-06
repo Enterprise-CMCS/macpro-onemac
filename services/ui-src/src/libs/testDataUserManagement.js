@@ -26,4 +26,13 @@ export const userList = [
     status: "revoked",
     territory: "N/A",
   },
+  {
+    date: 1617149287,
+    doneByName: "Teresa Test",
+    email: "cmsroleapproveractive@cms.hhs.local",
+    fullName: "Arnold Active",
+    role: "cmsroleapprover",
+    status: "active",
+    territory: "N/A",
+  },
 ];
