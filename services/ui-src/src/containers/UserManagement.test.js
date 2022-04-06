@@ -14,6 +14,7 @@ import UserDataApi from "../utils/UserDataApi";
 import UserManagement from "./UserManagement";
 
 import { LOADER_TEST_ID } from "../components/LoadingScreen";
+import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("../utils/UserDataApi");
 
@@ -67,5 +68,60 @@ it("confirms user actions with popup", async () => {
   const modalHeader = screen.getByText(/Modify/).closest("header");
   expect(modalHeader.nextElementSibling).toHaveTextContent(
     "This will grant Perry Pending access to OneMAC."
+  );
+});
+
+it("allows sort by status", async () => {
+  UserDataApi.getMyUserList.mockResolvedValue(userList);
+
+  render(
+    <AppContext.Provider
+      value={{
+        ...systemAdminInitialAuthState,
+      }}
+    >
+      <UserManagement />
+    </AppContext.Provider>,
+    { wrapper: MemoryRouter }
+  );
+
+  // wait for loading spinner to disappear so submissions table displays
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  fireEvent.click(screen.getByText("Status"));
+});
+
+it("handles userlist as string", async () => {
+  UserDataApi.getMyUserList.mockResolvedValue("Im a string");
+
+  render(
+    <AppContext.Provider
+      value={{
+        ...systemAdminInitialAuthState,
+      }}
+    >
+      <UserManagement />
+    </AppContext.Provider>,
+    { wrapper: MemoryRouter }
+  );
+
+  // wait for loading spinner to disappear so submissions table displays
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+});
+
+it("catches api errors", async () => {
+  UserDataApi.getMyUserList.mockRejectedValue(
+    new Error(RESPONSE_CODE.USER_NOT_AUTHORIZED)
+  );
+
+  render(
+    <AppContext.Provider
+      value={{
+        ...systemAdminInitialAuthState,
+      }}
+    >
+      <UserManagement />
+    </AppContext.Provider>,
+    { wrapper: MemoryRouter }
   );
 });
