@@ -405,7 +405,7 @@ export const CONFIG = {
     },
 
     proposedEffectiveDate: {
-      fieldName: "proposedEffectiveTimestamp",
+      fieldName: "proposedEffectiveDate",
     },
 
     raiLink: ROUTES.WAIVER_RAI,

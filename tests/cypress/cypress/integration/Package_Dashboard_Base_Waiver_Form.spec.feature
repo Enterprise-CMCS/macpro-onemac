@@ -29,4 +29,3 @@ Feature: Update Waiver Form: Base Waiver
         And verify the Waivers tab is selected
         And search for Unique Valid Base Waiver Number with 12 Characters
         And verify id number in the first row matches Unique Valid Base Waiver Number
-  

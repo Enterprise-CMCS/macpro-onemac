@@ -48,7 +48,7 @@ type ComponentDetail = {
   additionalInformation: string;
   submissionTimestamp: Date;
   clockEndTimestamp: Date;
-  proposedEffectiveTimestamp: Date;
+  proposedEffectiveDate: string;
   effectiveDateTimestamp: Date;
   waiverAuthority?: keyof typeof AUTHORITY_LABELS;
   waiverAuthorityNice?: string;
