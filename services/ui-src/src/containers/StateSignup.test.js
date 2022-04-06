@@ -54,6 +54,7 @@ describe("StateSignup", () => {
     expect(stateList).toBeVisible();
     const stateOption = screen.getByRole("option", { name: "Alabama" });
     expect(stateOption).toBeVisible();
+    selectEvent.select(stateDropdown, "Alabama");
   });
 
   it("locates cancel button and invokes cancel confirmation box", async () => {

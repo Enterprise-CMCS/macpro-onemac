@@ -858,7 +858,6 @@ article.form-container {
   border-radius: 3px;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
   width: 100%;
-  min-height: 485px;
 }
 
 .dashboard-container {
@@ -1267,7 +1266,6 @@ article.form-container {
     @extend .ds-u-display--flex;
     @extend .ds-u-flex-direction--column;
     @extend .ds-u-justify-content--end;
-    border-top: 2px solid $color-gray-lighter;
     width: 100%;
 
     .multi-select-error-message {
