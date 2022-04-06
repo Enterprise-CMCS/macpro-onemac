@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Button } from "@cmsgov/design-system";
 import Select, { components } from "react-select";
 
 const customComponents = {
@@ -28,6 +29,7 @@ const customStyles = {
 };
 
 export const MultiSelectDropDown = ({
+  ariaLabel,
   cancelFn,
   errorMessage,
   loading = false,
@@ -47,8 +49,7 @@ export const MultiSelectDropDown = ({
     <div className="multi-select-dropdown-container">
       <label className="ds-text-heading--xl">{title}</label>
       <Select
-        aria-invalid={invalid}
-        autoFocus
+        aria-label={ariaLabel}
         components={customComponents}
         isDisabled={loading}
         isMulti={!onlyOne}
@@ -58,17 +59,15 @@ export const MultiSelectDropDown = ({
         styles={customStyles}
       />
       <div className="multi-select-bottom-section">
-        {errorMessage && invalid ? (
+        {errorMessage && invalid && (
           <div className="multi-select-error-message">{errorMessage}</div>
-        ) : (
-          <div className="no-error-offset" aria-hidden="true" />
         )}
         <div className="multi-select-button-container">
-          <button
+          <Button
             disabled={loading || invalid}
             onClick={() => submitFn(value)}
-            className="ds-c-button ds-c-button--primary"
             type="button"
+            variation="primary"
           >
             {loading && (
               <>
@@ -81,16 +80,11 @@ export const MultiSelectDropDown = ({
               </>
             )}
             Submit
-          </button>
+          </Button>
           {cancelFn && (
-            <button
-              disabled={loading}
-              onClick={cancelFn}
-              className="ds-c-button ds-c-button--transparent"
-              type="button"
-            >
+            <Button onClick={cancelFn} type="button" variation="transparent">
               Cancel
-            </button>
+            </Button>
           )}
         </div>
       </div>

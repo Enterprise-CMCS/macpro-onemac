@@ -12,7 +12,6 @@ const SSARoleBtn =
 const userRoleHeader = "//div[@class='signup-headings']//p[@class='user-role']";
 const errorMsg = "//div[@class='multi-select-error-message']";
 const submitBtn = "//button[contains(text(),'Submit')]";
-const accessFor = (state) => `//span[text()='${state}']`;
 const cancelBtn = "//button[text()='Cancel']";
 const stayOnPageBtn = "//button[text()='Stay on Page']";
 const confirmBtn = "//button[text()='Confirm']";
@@ -53,7 +52,7 @@ export class oneMacRequestARoleChangePage {
     cy.xpath(submitBtn).should("not.be.disabled");
   }
   clickStateForStateAccess(state) {
-    cy.xpath(accessFor(state)).click();
+    cy.get('input[role="combobox"]').type(state).type("{enter}");
   }
   verifyErrorMsgDoesNotExist() {
     cy.xpath(errorMsg).should("not.exist");

@@ -1280,6 +1280,10 @@ article.form-container {
   }
 }
 
+.multi-select-button-container button:not(:last-child) {
+  margin-right: 1ch;
+}
+
 // icon in input field of multiselect component
 .multi-search-icon {
   position: relative;
