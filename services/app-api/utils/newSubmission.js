@@ -126,9 +126,8 @@ export default async function newSubmission(inData) {
       const putParams = {
         TableName: process.env.oneMacTableName,
         Item: {
-          pk: data.pk,
-          sk: putsk,
           ...data,
+          sk: putsk,
         },
       };
       dynamoDb.put(putParams);
