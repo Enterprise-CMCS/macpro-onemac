@@ -3,22 +3,35 @@ import { Validate, Workflow } from "cmscommonlib";
 import dynamoDb from "../libs/dynamodb-lib";
 import updateComponent from "./updateComponent";
 
-export default async function newSubmission(inData) {
-  const idInfo = Validate.decodeId(inData.componentId, inData.componentType);
+export default async function newSubmission(
+  componentId,
+  componentType,
+  submissionTimestamp,
+  proposedEffectiveDate,
+  currentStatus,
+  attachments,
+  additionalInformation,
+  submissionId,
+  submitterName,
+  submitterEmail,
+  submitterId,
+  waiverAuthority
+) {
+  const idInfo = Validate.decodeId(componentId, componentType);
   let newGSI = {};
 
-  let newSk = "v0#" + inData.componentType;
-  switch (inData.componentType) {
+  let newSk = "v0#" + componentType;
+  switch (componentType) {
     case Workflow.ONEMAC_TYPE.WAIVER_RAI:
     case Workflow.ONEMAC_TYPE.SPA_RAI:
     case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
-      newSk += `#${inData.submissionTimestamp}`;
+      newSk += `#${submissionTimestamp}`;
       break;
     case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
     case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT:
       newGSI = {
-        GSI1pk: Validate.getParentPackage(inData.componentId)[0],
-        GSI1sk: inData.componentType,
+        GSI1pk: Validate.getParentPackage(componentId)[0],
+        GSI1sk: componentType,
       };
       break;
   }
@@ -26,12 +39,21 @@ export default async function newSubmission(inData) {
   const data = {
     pk: idInfo.componentId,
     sk: newSk,
-    ...inData,
+    componentId,
+    componentTypee,
+    submissionTimestamp,
+    proposedEffectiveDate,
+    currentStatus,
+    attachments,
+    additionalInformation,
+    submissionId,
+    submitterName,
+    submitterEmail,
+    submitterId,
     ...newGSI,
-    changeHistory: [inData],
   };
 
-  if (inData.waiverAuthority) data.waiverAuthority = inData.waiverAuthority;
+  if (waiverAuthority) data.waiverAuthority = waiverAuthority;
 
   // use the scarce index for anything marked as a package.
   if (idInfo.isNewPackage) {
@@ -126,8 +148,18 @@ export default async function newSubmission(inData) {
       const putParams = {
         TableName: process.env.oneMacTableName,
         Item: {
-          ...data,
           sk: putsk,
+          componentId,
+          componentTypee,
+          submissionTimestamp,
+          proposedEffectiveDate,
+          currentStatus,
+          attachments,
+          additionalInformation,
+          submissionId,
+          submitterName,
+          submitterEmail,
+          submitterId,
         },
       };
       dynamoDb.put(putParams);
