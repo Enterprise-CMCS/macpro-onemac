@@ -11,15 +11,14 @@ Feature: OY2-12679 Users can request a role change in OneMAC
         And verify SSA is the role available
         And click on the SSA role
         And verify the user role is "State System Admin"
-        And verify the error message says "Please select one state."
+        And verify the error message says "Please select a state."
         And verify the submit button is disabled
         And select "Alabama" for state access
         And verify the submit button is enabled
         And verify there is no error message
         And select "Alaska" for state access
-        And verify the error message says "Please select one state."
-        And verify the submit button is disabled
-        And verify the cancel button is clickable
+        And verify the submit button is enabled
+        And verify there is no error message
 
     Scenario: Screen enhance - SSA role change
         Given I am on Login Page
