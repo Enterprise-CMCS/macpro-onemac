@@ -152,7 +152,7 @@ export const main = handler(async (event) => {
   if (data.waiverAuthority)
     submissionData.waiverAuthority = data.waiverAuthority;
 
-  return newSubmission(...submissionData)
+  return newSubmission(submissionData)
     .then(() => {
       console.log("Successfully submitted the following:", data);
       return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;

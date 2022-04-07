@@ -21,13 +21,7 @@ export default async function updateComponent({
     displayId: updateData.componentId,
   };
 
-  let updateSk = "v0#" + updateData.componentType;
-  switch (updateData.componentType) {
-    case Workflow.ONEMAC_TYPE.WAIVER_RAI:
-    case Workflow.ONEMAC_TYPE.SPA_RAI:
-    case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
-      updateSk += `#${updateData.submissionTimestamp}`;
-  }
+  const updateSk = `v0#${changeData.componentType}#${changeData.submissionTimestamp}`;
 
   if (updateData.componentType === Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT) {
     const { renewal, amendment } = Validate.decodeWaiverNumber(updatePk);
@@ -47,6 +41,7 @@ export default async function updateComponent({
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,
+      ":emptyList": [],
       ":pkVal": updatePk,
       ":skVal": updateSk,
     },
