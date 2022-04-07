@@ -58,7 +58,7 @@ export const doUpdate = async (body, doneBy, doneTo) => {
   try {
     await changeUserStatus({
       ...body,
-      date: Math.floor(Date.now() / 1000),
+      date: Date.now(),
       doneByName: doneBy.fullName,
       fullName: doneTo.fullName,
     });

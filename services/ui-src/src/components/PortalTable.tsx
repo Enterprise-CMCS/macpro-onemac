@@ -37,7 +37,7 @@ export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 export type TableProps<V extends {}> = {
   className?: string;
   expandable?: boolean;
-  searchBarTitle: ReactNode;
+  searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
   TEMP_onReset?: () => void;
 } & Pick<SearchFilterProps<V>, "pageContentRef"> &

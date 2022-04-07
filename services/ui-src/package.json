@@ -22,7 +22,6 @@
     "formik": "^2.2.5",
     "isomorphic-fetch": "^3.0.0",
     "jszip": "^3.6.0",
-    "node-sass": "^4.14.1",
     "promise-polyfill": "8.2.0",
     "react": "^16.13.1",
     "react-bootstrap": "^0.33.1",
@@ -36,7 +35,8 @@
     "react-router-dom": "^5.1.2",
     "react-router-hash-link": "^2.2.2",
     "react-scripts": "^4.0.3",
-    "react-table": "^7.7.0"
+    "react-table": "^7.7.0",
+    "sass": "^1.49.9"
   },
   "scripts": {
     "start": "react-scripts start",

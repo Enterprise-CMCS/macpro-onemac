@@ -1,7 +1,7 @@
 import dynamoDb from "./libs/dynamodb-lib";
 
 import handler from "./libs/handler-lib";
-import { RESPONSE_CODE, ChangeRequest } from "cmscommonlib";
+import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 
 import {
   CMSWithdrawalEmail,
@@ -30,7 +30,7 @@ export const main = handler(async (event) => {
     updatedPackageData = await updateComponent({
       componentId,
       componentType,
-      currentStatus: ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
+      currentStatus: Workflow.ONEMAC_STATUS.WITHDRAWN,
       changeHistory: [
         {
           submitterEmail: submitterEmail.toLowerCase(),
@@ -67,7 +67,7 @@ export const main = handler(async (event) => {
           ...params,
           UpdateExpression: `SET children[${favoriteChild}].currentStatus = :newStatus`,
           ExpressionAttributeValues: {
-            ":newStatus": ChangeRequest.ONEMAC_STATUS.WITHDRAWN,
+            ":newStatus": Workflow.ONEMAC_STATUS.WITHDRAWN,
           },
           ReturnValues: "ALL_NEW",
         };

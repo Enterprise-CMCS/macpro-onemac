@@ -1,18 +1,14 @@
 import sendEmail from "./email-lib";
 
-it('Email Stub', async () => {
+const testEmail = {
+  toAddresses: "1,2",
+  subject: "subject",
+  HTML: "<p>HTML stuff</p>",
+  fromAddressSource: "from",
+};
 
-  const response =  sendEmail("foo");
-  expect(response).toBeInstanceOf(Promise)
-
-});
-
-
-
-it('email Offline Stub', async () => {
-
-  process.env.IS_OFFLINE=true
-  const response =  sendEmail("foo");
-  expect(response).toBeInstanceOf(Promise)
-
+it("email Offline Stub", async () => {
+  process.env.IS_OFFLINE = true;
+  const response = sendEmail(testEmail);
+  expect(response).toBeInstanceOf(Promise);
 });

@@ -49,5 +49,6 @@
     "*.{js,jsx,ts,tsx,scss,css,md}": [
       "prettier --write"
     ]
-  }
+  },
+  "dependencies": {}
 }

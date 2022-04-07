@@ -62,7 +62,7 @@ export const requestAccess = async (event) => {
   for (const territory of body.territories ?? ["N/A"]) {
     try {
       await changeUserStatus({
-        date: Math.floor(Date.now() / 1000),
+        date: Date.now(),
         doneByEmail: body.email,
         doneByName: user.fullName,
         email: body.email,

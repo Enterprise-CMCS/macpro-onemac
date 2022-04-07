@@ -1,30 +1,24 @@
-import React, { useMemo } from "react";
-import { useLocation } from "react-router-dom";
+import React from "react";
 
+import { ROUTES } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
+const choices = [
+  {
+    title: "State Plan Amendment (SPA)",
+    description: "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
+    linkTo: ROUTES.NEW_SPA,
+  },
+  {
+    title: "Waiver Action",
+    description:
+      "Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension",
+    linkTo: ROUTES.NEW_WAIVER,
+  },
+];
+
 const NewSubmission = () => {
-  const location = useLocation();
-
-  const choices = useMemo(
-    () => [
-      {
-        title: "State Plan Amendment (SPA)",
-        description:
-          "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
-        linkTo: `/newspa${location.search}`,
-      },
-      {
-        title: "Waiver Action",
-        description:
-          "Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension",
-        linkTo: `/newwaiver${location.search}`,
-      },
-    ],
-    [location.search]
-  );
-
   return (
     <>
       <PageTitleBar heading="Submission Type" enableBackNav />

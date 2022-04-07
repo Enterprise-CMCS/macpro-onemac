@@ -11,7 +11,7 @@
   "video": false,
   "downloadsFolder": "downloads",
   "supportFile": "support/index.js",
-  "defaultCommandTimeout": 70000,
+  "defaultCommandTimeout": 70001,
   "viewportWidth": 1440,
   "viewportHeight": 900,
   "experimentalStudio": true,

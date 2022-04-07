@@ -19,6 +19,7 @@ custom:
   userAccessEmailSource: ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
   reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
   reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
+  chipCcEmail: ${opt:chipCcEmail, env:CMS_CHIP_FORM_CC_EMAIL, ""}
   systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
   productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
   testingEmail: ${opt:testingEmail, env:TESTING_TEAM_EMAIL, ""}
@@ -57,9 +58,9 @@ custom:
           sources: [./one-seed.json]
   serverless-offline:
     allowCache: true
-associateWaf:
-  name: ${self:custom.stage}-ApiGwWebAcl
-  version: V2 #(optional) Regional | V2
+  associateWaf:
+    name: ${self:custom.stage}-ApiGwWebAcl
+    version: V2 #(optional) Regional | V2
 
 provider:
   name: aws
@@ -80,6 +81,7 @@ provider:
     userAccessEmailSource: ${self:custom.userAccessEmailSource}
     reviewerEmail: ${self:custom.reviewerEmail}
     reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
+    chipCcEmail: ${self:custom.chipCcEmail}
     testingEmail: ${self:custom.testingEmail}
     systemAdminEmail: ${self:custom.systemAdminEmail}
     productionNoEmailDebug: ${self:custom.productionNoEmailDebug}

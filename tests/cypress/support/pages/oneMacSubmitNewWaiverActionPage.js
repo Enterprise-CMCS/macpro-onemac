@@ -10,6 +10,7 @@ const commentsInputBox = "#field_2";
 const existingWaiverNumber = "MD.11223";
 const whatIsMyWaiverIDLink =
   "//body/reference[1]/div[1]/div[1]/div[4]/div[2]/form[1]/div[1]/div[3]/div[1]/div[2]/a[1]";
+const proposedEffectiveDate = "#proposed-effective-date";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumber(s) {
@@ -77,6 +78,15 @@ export class oneMacSubmitNewWaiverActionPage {
         return false;
       }
     });
+  }
+  setProposedEffectiveDateThreeMonthsAway() {
+    var t = new Date();
+    var m = ("0" + (t.getMonth() + 1)).slice(-2);
+    var d = ("0" + t.getDate()).slice(-2);
+    var y = t.getFullYear();
+    var dt = y + "-" + m + "-" + d;
+
+    cy.get(proposedEffectiveDate).type(dt);
   }
 }
 export default oneMacSubmitNewWaiverActionPage;

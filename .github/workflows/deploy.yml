@@ -89,6 +89,7 @@ jobs:
           CMS_SPA_FORM_FROM_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_SPA_FORM_FROM_EMAIL] || secrets.CMS_SPA_FORM_FROM_EMAIL }}
           CMS_SPA_FORM_CMS_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_SPA_FORM_CMS_EMAIL] || secrets.CMS_SPA_FORM_CMS_EMAIL }}
           CMS_CHIP_FORM_CMS_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_CHIP_FORM_CMS_EMAIL] || secrets.CMS_CHIP_FORM_CMS_EMAIL }}
+          CMS_CHIP_FORM_CC_EMAIL: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_CMS_CHIP_FORM_CC_EMAIL] || secrets.CMS_CHIP_FORM_CC_EMAIL }}
           BIGMAC_NAME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_BIGMAC_NAME] || secrets.BIGMAC_NAME }}
           ROUTE_53_HOSTED_ZONE_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ROUTE_53_HOSTED_ZONE_ID] }}
           ROUTE_53_DOMAIN_NAME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_ROUTE_53_DOMAIN_NAME] }}
@@ -141,14 +142,14 @@ jobs:
           BRANCH: ${{ env.STAGE_PREFIX }}${{ env.branch_name }}
         run: cd services/app-api && serverless dynamodb seed --stage=$BRANCH --region=$AWS_DEFAULT_REGION --seed=domain --online
       - name: Load Test Users
-        if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
+        if: ${{ env.branch_name != 'production'}}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
       - name: Migrate Data
         run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f migrate
   cypress-test:
     name: Cypress Tests
     needs: deploy
-    if: ${{ github.ref != 'refs/heads/production' && github.ref != 'refs/heads/master' }}
+    if: ${{ github.ref != 'refs/heads/production'}}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false
@@ -200,6 +201,8 @@ jobs:
             OY2_13923_Warning_Message_on_Package_Details_Page.spec.js,
             OY2_16707_CMS_Users_Denied_a_CRA_Role_loses_Read_Only_Access_to_OneMAC.spec.feature,
             OY2_15984_Updated_SPA_Package_Details_View_Additional_Information_Page.spec.js,
+            OY2_16332_Waiver_Mini_Dashboard_Temporary_Extension.spec.js,
+            OY2_16333_Update_Waiver_Form_Temporary_Extension.spec.feature,
           ]
     steps:
       - name: set branch_name
@@ -274,7 +277,7 @@ jobs:
   a11y-tests:
     name: A11y Tests
     needs: deploy
-    if: ${{ github.ref != 'refs/heads/prod' }}
+    if: ${{ github.ref != 'refs/heads/production' }}
     runs-on: ubuntu-latest
     strategy:
       fail-fast: false

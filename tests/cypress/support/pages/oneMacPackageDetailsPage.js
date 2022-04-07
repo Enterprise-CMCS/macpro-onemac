@@ -13,7 +13,8 @@ const packageActionsHeader =
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//button[text()='Respond to RAI']";
 const withdrawPackageAction = "//button[text()='Withdraw']";
-const detailSection = "//h2[text()='Package Details']";
+const detailSection =
+  "//section[@class='detail-section']//h2[contains(text(),'Package')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
@@ -37,6 +38,10 @@ const successMessage = "#alert-bar";
 const withdrawConfirmationBtn = "//button[text()='Withdraw?']";
 const withdrawBtn = "//button[text()='Withdraw']";
 const amendmentHeaders = "//h2[text()='Waiver Amendment']";
+const tempExtensionsNavBtn =
+  "//li[contains(@class, 'nav')]//a[text()='Temporary Extension']";
+const tempExtensionID = "//td[contains(@id,'componentId-')]";
+const withdrawBtnOnTempExt = "//li[text()='Withdraw']";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -186,6 +191,18 @@ export class oneMacPackageDetailsPage {
   }
   verifyAmendmentDetailSectionExists() {
     cy.xpath(amendmentHeaders).should("be.visible");
+  }
+  clickTempExtensionsNavBtn() {
+    cy.xpath(tempExtensionsNavBtn).click();
+  }
+  verifyTempExtensionIDExists(num) {
+    cy.xpath(tempExtensionID).contains(num).should("be.visible");
+  }
+  clickTempExtensionActionBtn(num) {
+    cy.xpath(tempExtensionID).contains(num).next().next().click();
+  }
+  clickWithdrawBtnOnTempExt() {
+    cy.xpath(withdrawBtnOnTempExt).click();
   }
 }
 export default oneMacPackageDetailsPage;

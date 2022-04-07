@@ -5,6 +5,7 @@ import { Auth } from "aws-amplify";
 import {
   ROUTES,
   ChangeRequest,
+  Workflow,
   effectiveRoleForUser,
   getUserRoleObj,
 } from "cmscommonlib";
@@ -20,19 +21,21 @@ import { useAppContext } from "./libs/contextLib";
 import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
 import NewSPA from "./changeRequest/NewSPA";
+import Triage from "./containers/Triage";
 import NewWaiver from "./changeRequest/NewWaiver";
+import OneMACForm from "./forms/OneMACForm";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
 import DetailView from "./changeRequest/DetailView";
 import UserPage from "./containers/UserPage";
 
+// this is legacy and should not be touched!
 const FORM_TYPES = {
   [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
   [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
   [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
   [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
   [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
-  [ROUTES.BASE_WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
   [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
   [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,
   [ROUTES.WAIVER_RAI]: ChangeRequest.TYPE.WAIVER_RAI,
@@ -135,6 +138,24 @@ export default function DynamicRoutes() {
           <Redirect to={ROUTES.HOME} />
         )}
       </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST_WAIVER}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList startTab={Workflow.PACKAGE_GROUP.WAIVER} />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
+      <Route exact path={ROUTES.PACKAGE_LIST_SPA}>
+        {userRoleObj.canAccessDashboard ? (
+          <PackageList startTab={Workflow.PACKAGE_GROUP.SPA} />
+        ) : userRoleObj.canAccessUserManagement ? (
+          <Redirect to={ROUTES.USER_MANAGEMENT} />
+        ) : (
+          <Redirect to={ROUTES.HOME} />
+        )}
+      </Route>
       {userRoleObj.canAccessForms && (
         <>
           <Route path={`${ROUTES.NEW_SUBMISSION_SELECTION}`}>
@@ -145,6 +166,21 @@ export default function DynamicRoutes() {
           </Route>
           <Route path={`${ROUTES.NEW_WAIVER}`}>
             <NewWaiver />
+          </Route>
+          <Route path={`${ROUTES.TRIAGE_GROUP}`}>
+            <Triage />
+          </Route>
+          <Route path={`${ROUTES.TRIAGE_SPA}`}>
+            <Triage />
+          </Route>
+          <Route path={`${ROUTES.TRIAGE_WAIVER}`}>
+            <Triage />
+          </Route>
+          <Route path={`${ROUTES.BASE_WAIVER}`}>
+            <OneMACForm />
+          </Route>
+          <Route path={`${ROUTES.TEMPORARY_EXTENSION}`}>
+            <OneMACForm />
           </Route>
         </>
       )}

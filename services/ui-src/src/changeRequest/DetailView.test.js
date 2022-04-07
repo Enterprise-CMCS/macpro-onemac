@@ -3,6 +3,7 @@ import {
   render,
   screen,
   fireEvent,
+  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
@@ -103,6 +104,8 @@ const testDetail = {
   submissionId: "4240e440-5ec5-11ec-b2ea-eb35c89f340d",
 };
 
+const waiverDetail = require("./mock-data/MockWaiverDetail.json");
+
 const ContextWrapper = ({ children }) => {
   return (
     <MemoryRouter>
@@ -169,5 +172,28 @@ describe("Detail View Tests", () => {
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
     fireEvent.click(screen.getByText("Respond to RAI"));
+  });
+
+  it("shows additional information tab", async () => {
+    let history;
+    history = createMemoryHistory();
+    history.push("/detail/spa/MI-12-1133");
+
+    PackageApi.getDetail.mockResolvedValue(testDetail);
+
+    render(<DetailView />, { wrapper: ContextWrapper });
+
+    // wait for loading screen to disappear so package table displays
+    await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+    fireEvent.click(
+      screen.getByRole("link", { name: "Additional Information" })
+    );
+
+    await waitFor(() => {
+      expect(
+        screen.getByRole("heading", { name: "Additional Information" })
+      ).toBeInTheDocument();
+    });
   });
 });

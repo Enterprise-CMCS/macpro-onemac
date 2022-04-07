@@ -1,10 +1,5 @@
 import { ROUTES } from "./routes";
 
-export const PACKAGE_GROUP = {
-  SPA: "spa",
-  WAIVER: "waiver",
-};
-
 export const TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
@@ -30,43 +25,6 @@ export const LABEL = {
   [TYPE.WAIVER_RAI]: "1915(b) RAI Response",
 };
 
-export const MY_PACKAGE_GROUP = {
-  [TYPE.CHIP_SPA]: PACKAGE_GROUP.SPA,
-  [TYPE.CHIP_SPA_RAI]: PACKAGE_GROUP.SPA,
-  [TYPE.SPA]: PACKAGE_GROUP.SPA,
-  [TYPE.SPA_RAI]: PACKAGE_GROUP.SPA,
-  [TYPE.WAIVER]: PACKAGE_GROUP.WAIVER,
-  [TYPE.WAIVER_RAI]: PACKAGE_GROUP.WAIVER,
-  [TYPE.WAIVER_BASE]: PACKAGE_GROUP.WAIVER,
-  [TYPE.WAIVER_RENEWAL]: PACKAGE_GROUP.WAIVER,
-  [TYPE.WAIVER_AMENDMENT]: PACKAGE_GROUP.WAIVER,
-  [TYPE.WAIVER_EXTENSION]: PACKAGE_GROUP.WAIVER,
-  [TYPE.WAIVER_APP_K]: PACKAGE_GROUP.WAIVER,
-};
-
-export const ONEMAC_STATUS = {
-  UNSUBMITTED: "Unsubmitted",
-  SUBMITTED: "Submitted",
-  IN_REVIEW: "Package In Review",
-  RAI_ISSUED: "RAI Issued",
-  APPROVED: "Package Approved",
-  DISAPPROVED: "Package Disapproved",
-  WITHDRAWN: "Withdrawn",
-  TERMINATED: "Waiver Terminated",
-  PAUSED: "Review Paused, Off the Clock",
-};
-
-export const PACKAGE_ACTION = {
-  RESPOND_TO_RAI: "Respond to RAI",
-  WITHDRAW: "Withdraw",
-};
-
-export const NINETY_DAY_STATUS = {
-  PENDING: "Pending",
-  CLOCK_STOPPED: "Clock Stopped",
-  NA: "N/A",
-};
-
 export const correspondingRAILink = {
   [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [TYPE.SPA]: ROUTES.SPA_RAI,
@@ -76,113 +34,6 @@ export const correspondingRAILink = {
   [TYPE.WAIVER_AMENDMENT]: ROUTES.WAIVER_RAI,
 };
 
-export const getBaseWaiverId = (inId) => {
-  const baseRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
-
-  if (!inId) return null;
-
-  // SEA Tool sometimes uses hyphens in Waiver Numbers
-  const waiverNumber = inId.replace("-", ".");
-
-  const returnValue = baseRE.exec(waiverNumber);
-  return returnValue && returnValue[0];
-};
-
-export const decodeWaiverNumber = (inId) => {
-  // amendments can have parents that are bases or renewals
-  // base if no R section or R00
-  // renewal if R section has a number
-  //const waiverRegex = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
-  if (!inId) return null;
-
-  // clean user entered errors, if possible
-  const waiverNumber = inId.replace(".R.", ".R");
-
-  const waiverRegex = new RegExp(
-    "([A-Z]{2}[.-]\\d{2,5})(\\.R?(\\d{2})(\\.M?(\\d{2}))?)?"
-  );
-
-  const results = waiverRegex.exec(waiverNumber);
-
-  if (!results) return null;
-
-  const [, family, , renewal, , amendment] = results;
-
-  return { family, renewal, amendment };
-};
-
-export const getParentPackage = (inId) => {
-  const results = decodeWaiverNumber(inId);
-  if (!results) return ["FakeID", TYPE.WAIVER_BASE];
-  const { family, renewal } = results;
-
-  if (renewal === "00") return [family, TYPE.WAIVER_BASE];
-  const renewalNumber = family + ".R" + renewal;
-  return [renewalNumber, TYPE.WAIVER_RENEWAL];
-};
-
-export const getWaiverRAIParent = (inId) => {
-  const results = decodeWaiverNumber(inId);
-  if (!results) return TYPE.WAIVER_BASE;
-  const { renewal, amendment } = results;
-
-  if (amendment) return TYPE.WAIVER_AMENDMENT;
-  if (!amendment && renewal && renewal !== "00") return TYPE.WAIVER_RENEWAL;
-  return TYPE.WAIVER_BASE;
-};
-
-export const get90thDayText = (currentStatus, clockEndTimestamp) => {
-  switch (currentStatus) {
-    case ONEMAC_STATUS.RAI_ISSUED:
-      return NINETY_DAY_STATUS.CLOCK_STOPPED;
-    case ONEMAC_STATUS.APPROVED:
-    case ONEMAC_STATUS.DISAPPROVED:
-    case ONEMAC_STATUS.TERMINATED:
-    case ONEMAC_STATUS.WITHDRAWN:
-      return NINETY_DAY_STATUS.NA;
-    case ONEMAC_STATUS.SUBMITTED:
-    case ONEMAC_STATUS.UNSUBMITTED:
-    case ONEMAC_STATUS.IN_REVIEW:
-      return NINETY_DAY_STATUS.PENDING;
-    default:
-      return clockEndTimestamp;
-  }
-};
-
-export const decodeId = (inId, inType) => {
-  const returnInfo = {
-    packageId: inId,
-    parentType: TYPE.SPA,
-    componentId: inId,
-    componentType: inType,
-    isNewPackage: true,
-  };
-  switch (inType) {
-    case TYPE.CHIP_SPA_RAI:
-      returnInfo.parentType = TYPE.CHIP_SPA;
-    // falls through
-    case TYPE.SPA_RAI:
-      returnInfo.isNewPackage = false;
-      break;
-    case TYPE.WAIVER_RAI:
-    case TYPE.WAIVER_EXTENSION:
-      returnInfo.parentType = getWaiverRAIParent(inId);
-      returnInfo.isNewPackage = false;
-      break;
-    case TYPE.WAIVER_AMENDMENT:
-    case TYPE.WAIVER_APP_K:
-      [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
-      returnInfo.isNewPackage = false;
-      break;
-    case TYPE.WAIVER:
-    case TYPE.WAIVER_BASE:
-    case TYPE.WAIVER_RENEWAL:
-      returnInfo.parentType = inType;
-      break;
-  }
-  return returnInfo;
-};
-
 const commonSubheaderMessage =
   "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.<b> If you leave this page, you will lose your progress on this form.</b>";
 
@@ -190,31 +41,6 @@ const waiverBaseTransmittalNumber = {
   idType: "waiver",
   idLabel: "Waiver Number",
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
-};
-
-export const defaultActionsByStatus = {
-  [ONEMAC_STATUS.UNSUBMITTED]: [],
-  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.RAI_ISSUED]: [
-    PACKAGE_ACTION.WITHDRAW,
-    PACKAGE_ACTION.RESPOND_TO_RAI,
-  ],
-  [ONEMAC_STATUS.APPROVED]: [],
-  [ONEMAC_STATUS.DISAPPROVED]: [],
-  [ONEMAC_STATUS.WITHDRAWN]: [],
-  [ONEMAC_STATUS.TERMINATED]: [],
-};
-
-export const raiActionsByStatus = {
-  [ONEMAC_STATUS.UNSUBMITTED]: [],
-  [ONEMAC_STATUS.SUBMITTED]: [],
-  [ONEMAC_STATUS.IN_REVIEW]: [],
-  [ONEMAC_STATUS.RAI_ISSUED]: [],
-  [ONEMAC_STATUS.APPROVED]: [],
-  [ONEMAC_STATUS.DISAPPROVED]: [],
-  [ONEMAC_STATUS.WITHDRAWN]: [],
-  [ONEMAC_STATUS.TERMINATED]: [],
 };
 
 export const CONFIG = {
@@ -251,7 +77,6 @@ export const CONFIG = {
         },
       ],
     },
-    actionsByStatus: defaultActionsByStatus,
     raiLink: ROUTES.CHIP_SPA_RAI,
   },
 
@@ -287,7 +112,6 @@ export const CONFIG = {
         },
       ],
     },
-    actionsByStatus: raiActionsByStatus,
   },
 
   [TYPE.SPA]: {
@@ -325,7 +149,6 @@ export const CONFIG = {
         },
       ],
     },
-    actionsByStatus: defaultActionsByStatus,
     raiLink: ROUTES.SPA_RAI,
   },
 
@@ -354,7 +177,6 @@ export const CONFIG = {
         },
       ],
     },
-    actionsByStatus: raiActionsByStatus,
   },
 
   [TYPE.WAIVER]: {
@@ -457,7 +279,6 @@ export const CONFIG = {
         },
       ],
     },
-    actionsByStatus: defaultActionsByStatus,
     raiLink: ROUTES.WAIVER_RAI,
   },
 
@@ -534,7 +355,6 @@ export const CONFIG = {
         },
       ],
     },
-    actionsByStatus: raiActionsByStatus,
   },
 
   [TYPE.WAIVER_BASE]: {
@@ -546,6 +366,7 @@ export const CONFIG = {
     detailsHeader: "Waiver Action",
     overrideType: TYPE.WAIVER,
     overrideActionType: "new",
+    overrideSuccessLanding: ROUTES.PACKAGE_LIST_WAIVER,
     requiredUploads: [],
     optionalUploads: [
       "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
@@ -587,7 +408,6 @@ export const CONFIG = {
       fieldName: "proposedEffectiveTimestamp",
     },
 
-    actionsByStatus: defaultActionsByStatus,
     raiLink: ROUTES.WAIVER_RAI,
   },
 };

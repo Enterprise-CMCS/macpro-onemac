@@ -29,6 +29,53 @@ $color-primary-alt-lightest: #f0fafe;
   border-radius: 3px;
 }
 
+@mixin custom-table {
+  @extend .ds-c-table;
+  @extend .ds-c-table--borderless;
+  @include max-width-ultra-wide;
+  width: 100%;
+  color: $color-gray;
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  th {
+    border-color: $color-gray-lightest;
+    background-color: $color-white;
+    color: $color-black;
+    font-weight: 600;
+    padding-left: 0px;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    text-align: left;
+    user-select: none;
+  }
+
+  td {
+    border-color: $color-gray-lightest;
+    color: $color-base;
+    font-weight: 400;
+    padding-left: 0px;
+    padding-top: 20px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    text-align: left;
+  }
+
+  a {
+    font-weight: bold;
+  }
+
+  .type-badge {
+    @extend .ds-c-badge;
+    font-weight: 600;
+    background-color: $color-primary-alt-lightest;
+    color: $color-gray;
+  }
+}
+
 #root {
   min-height: 100vh;
   display: flex;
@@ -524,6 +571,25 @@ input[type="file"] {
   }
 }
 
+.submissions-table-mini-dash {
+  @include custom-table;
+  width: 100%;
+  color: #5b616b;
+  font-family: Open Sans;
+  font-style: normal;
+  font-size: 14px;
+  line-height: 20px;
+
+  th,
+  td {
+    white-space: nowrap;
+
+    &:not(:last-child) {
+      padding-right: 2ch;
+    }
+  }
+}
+
 article.form-container {
   @extend .ds-u-margin-bottom--7;
   @extend .ds-u-align-items--center;
@@ -811,53 +877,6 @@ article.form-container {
   @extend .ds-u-padding--4;
   text-align: center;
   flex: auto;
-}
-
-@mixin custom-table {
-  @extend .ds-c-table;
-  @extend .ds-c-table--borderless;
-  @include max-width-ultra-wide;
-  width: 100%;
-  color: $color-gray;
-  font-family: Open Sans;
-  font-style: normal;
-  font-size: 14px;
-  line-height: 20px;
-
-  th {
-    border-color: $color-gray-lightest;
-    background-color: $color-white;
-    color: $color-black;
-    font-weight: 600;
-    padding-left: 0px;
-    padding-top: 0px;
-    padding-right: 0px;
-    padding-bottom: 20px;
-    text-align: left;
-    user-select: none;
-  }
-
-  td {
-    border-color: $color-gray-lightest;
-    color: $color-base;
-    font-weight: 400;
-    padding-left: 0px;
-    padding-top: 20px;
-    padding-right: 0px;
-    padding-bottom: 20px;
-    text-align: left;
-  }
-
-  a {
-    font-weight: bold;
-  }
-
-  .type-badge {
-    @extend .ds-c-badge;
-    font-weight: 600;
-    background-color: $color-primary-alt-lightest;
-    color: $color-gray;
-  }
 }
 
 .table-wrapper {

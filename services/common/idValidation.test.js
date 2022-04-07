@@ -1,10 +1,5 @@
-import {
-  TYPE,
-  decodeId,
-  ONEMAC_STATUS,
-  get90thDayText,
-  NINETY_DAY_STATUS,
-} from "./changeRequest";
+import { TYPE } from "./changeRequest";
+import { decodeId } from "./idValidation";
 
 describe("decodeId for SPA IDs", () => {
   it("handles a null component type", () => {
@@ -65,11 +60,11 @@ describe("decodeId for Waiver Numbers", () => {
   });
 
   it("decodes BASE WAIVER EXTENSION NUMBER", () => {
-    const myId = decodeId("MI.77777", TYPE.WAIVER_EXTENSION);
-    expect(myId.componentId).toBe("MI.77777");
+    const myId = decodeId("MI.77777.R00.TE01", TYPE.WAIVER_EXTENSION);
+    expect(myId.componentId).toBe("MI.77777.R00.TE01");
     expect(myId.componentType).toBe("waiverextension");
     expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777");
+    expect(myId.packageId).toBe("MI.77777.R00.00");
     expect(myId.parentType).toBe("waivernew");
   });
 
@@ -78,7 +73,7 @@ describe("decodeId for Waiver Numbers", () => {
     expect(myId.componentId).toBe("MI.77777.R00.M01");
     expect(myId.componentType).toBe("waiveramendment");
     expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777");
+    expect(myId.packageId).toBe("MI.77777.R00.00");
     expect(myId.parentType).toBe("waivernew");
   });
 
@@ -134,68 +129,5 @@ describe("decodeId for Waiver Numbers", () => {
     expect(myId.isNewPackage).toBe(false);
     expect(myId.packageId).toBe("MI.77777.R01.M01");
     expect(myId.parentType).toBe("waiveramendment");
-  });
-});
-/*
-describe("decodeId WAIVER_APP_K", () => {
-  const myId = decodeId("MI.1111.R11.22", TYPE.WAIVER_APP_K);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI.1111.R11.22");
-    expect(myId.componentType).toBe("waiverappk");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.1111");
-    expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.1111");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-});
-
-describe("decodeId WAIVER_APP_K", () => {
-  const myId = decodeId("MI.1111.R11-22", TYPE.WAIVER_APP_K);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI.1111.R11-22");
-    expect(myId.componentType).toBe("waiverappk");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.1111");
-    expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.1111");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-});
-
-describe("decodeId WAIVER_APP_K Seatool dash", () => {
-  const myId = decodeId("MI.1111-R11,22", TYPE.WAIVER_APP_K);
-  it("WAIVER", () => {
-    expect(myId.componentId).toBe("MI.1111-R11,22");
-    expect(myId.componentType).toBe("waiverappk");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.1111");
-    expect(myId.parentType).toBe("waivernew");
-    const myIdnull = decodeId("MI.1111");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-});
-
-*/
-
-describe("get90thDayText", () => {
-  it("returns 'Pending' string when status is 'In Review'", () => {
-    const ninetyDay = get90thDayText(ONEMAC_STATUS.IN_REVIEW, null);
-    expect(ninetyDay).toBe(NINETY_DAY_STATUS.PENDING);
-  });
-
-  it("returns 'Clock Stopped' string when status is 'RAI Issued'", () => {
-    const ninetyDay = get90thDayText(ONEMAC_STATUS.RAI_ISSUED, null);
-    expect(ninetyDay).toBe(NINETY_DAY_STATUS.CLOCK_STOPPED);
-  });
-
-  it("returns 'N/A' string when status is 'Approved'", () => {
-    const ninetyDay = get90thDayText(ONEMAC_STATUS.APPROVED, new Date());
-    expect(ninetyDay).toBe(NINETY_DAY_STATUS.NA);
-  });
-  it("returns date string when status is other", () => {
-    const today = new Date();
-    const ninetyDay = get90thDayText("OTHER_NOT_REAL_STATUS", today);
-    expect(ninetyDay).toBe(today);
   });
 });
