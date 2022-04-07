@@ -3,174 +3,101 @@ import { Validate, Workflow } from "cmscommonlib";
 import dynamoDb from "../libs/dynamodb-lib";
 import updateComponent from "./updateComponent";
 
-export default async function newSubmission(
-  componentId,
-  componentType,
-  submissionTimestamp,
-  proposedEffectiveDate,
-  currentStatus,
-  attachments,
-  additionalInformation,
-  submissionId,
-  submitterName,
-  submitterEmail,
-  submitterId,
-  waiverAuthority
-) {
-  const idInfo = Validate.decodeId(componentId, componentType);
-  let newGSI = {};
+const topLevelAttributes = [
+  "componentId",
+  "componentType",
+  "submissionTimestamp",
+  "proposedEffectiveDate",
+  "currentStatus",
+  "attachments",
+  "additionalInformation",
+  "submissionId",
+  "submitterName",
+  "submitterEmail",
+  "submitterId",
+  "waiverAuthority",
+  "GSI1pk",
+  "GSI1sk",
+  "parentId",
+  "parentType",
+];
 
-  let newSk = "v0#" + componentType;
-  switch (componentType) {
-    case Workflow.ONEMAC_TYPE.WAIVER_RAI:
-    case Workflow.ONEMAC_TYPE.SPA_RAI:
-    case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
-      newSk += `#${submissionTimestamp}`;
-      break;
-    case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
-    case Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT:
-      newGSI = {
-        GSI1pk: Validate.getParentPackage(componentId)[0],
-        GSI1sk: componentType,
-      };
-      break;
-  }
+export default async function newSubmission(newData) {
+  const pk = newData.componentId;
+  const sk = `v0#${newData.componentType}#${newData.submissionTimestamp}`;
 
-  const data = {
-    pk: idInfo.componentId,
-    sk: newSk,
-    componentId,
-    componentTypee,
-    submissionTimestamp,
-    proposedEffectiveDate,
-    currentStatus,
-    attachments,
-    additionalInformation,
-    submissionId,
-    submitterName,
-    submitterEmail,
-    submitterId,
-    ...newGSI,
-  };
-
-  if (waiverAuthority) data.waiverAuthority = waiverAuthority;
-
-  // use the scarce index for anything marked as a package.
-  if (idInfo.isNewPackage) {
-    data.GSI1pk = `OneMAC#${Workflow.MY_PACKAGE_GROUP[data.sk]}`;
-    data.GSI1sk = data.pk;
+  if (
+    Workflow.MY_PACKAGE_GROUP[newData.componentType] === newData.componentType
+  ) {
+    newData.GSI1pk = `OneMAC#${
+      Workflow.MY_PACKAGE_GROUP[newData.componentType]
+    }`;
+    newData.GSI1sk = pk;
   } else {
-    data.parentId = idInfo.packageId;
-    data.parentType = idInfo.parentType;
+    [newData.parentId, newData.parentType] = Validate.getParentPackage(
+      newData.componentId
+    );
+    newData.GSI1pk = newData.parentId;
+    newData.GSI1sk = newData.componentType;
   }
 
   const params = {
     TableName: process.env.oneMacTableName,
     ReturnValues: "UPDATED_NEW",
     Key: {
-      pk: idInfo.componentId,
-      sk: newSk,
+      pk,
+      sk,
     },
     UpdateExpression:
-      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, " +
-      "#componentId = :componentId, #componentType = :componentType, #submissionTimestamp = :submissionTimestamp, " +
-      "#currentStatus = :currentStatus, #attachments = :attachments, " +
-      "#additionalInformation = :additionalInformation, #submissionId = :submissionId, #submitterName = :submitterName, " +
-      "#submitterEmail = :submitterEmail, #submitterId = :submitterId",
-    ExpressionAttributeNames: {
-      "#componentId": "componentId",
-      "#componentType": "componentType",
-      "#submissionTimestamp": "submissionTimestamp",
-      "#currentStatus": "currentStatus",
-      "#attachments": "attachments",
-      "#additionalInformation": "additionalInformation",
-      "#submissionId": "submissionId",
-      "#submitterName": "submitterName",
-      "#submitterEmail": "submitterEmail",
-      "#submitterId": "submitterId",
-    },
+      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,
-      ":componentId": data.componentId,
-      ":componentType": data.componentType,
-      ":submissionTimestamp": data.submissionTimestamp,
-      ":currentStatus": data.currentStatus,
-      ":attachments": data.attachments,
-      ":additionalInformation": data.additionalInformation,
-      ":submissionId": data.submissionId,
-      ":submitterName": data.submitterName,
-      ":submitterEmail": data.submitterEmail,
-      ":submitterId": data.submitterId,
     },
   };
 
-  if (data.GSI1pk) {
-    params.UpdateExpression += ", #GSI1pk = :GSI1pk, #GSI1sk = :GSI1sk";
-    params.ExpressionAttributeNames["#GSI1pk"] = "GSI1pk";
-    params.ExpressionAttributeNames["#GSI1sk"] = "GSI1sk";
-    params.ExpressionAttributeValues[":GSI1pk"] = data.GSI1pk;
-    params.ExpressionAttributeValues[":GSI1sk"] = data.GSI1sk;
-  }
-  if (data.parentId) {
-    params.UpdateExpression +=
-      ", #parentId = :parentId, #parentType = :parentType";
-    params.ExpressionAttributeNames["#parentId"] = "parentId";
-    params.ExpressionAttributeNames["#parentType"] = "parentType";
-    params.ExpressionAttributeValues[":parentId"] = data.parentId;
-    params.ExpressionAttributeValues[":parentType"] = data.parentType;
-  }
-  if (data.actionType) {
-    params.UpdateExpression += ", #actionType = :actionType";
-    params.ExpressionAttributeNames["#actionType"] = "actionType";
-    params.ExpressionAttributeValues[":actionType"] = data.actionType;
-  }
-  if (data.proposedEffectiveDate) {
-    params.UpdateExpression +=
-      ", #proposedEffectiveDate = :proposedEffectiveDate";
-    params.ExpressionAttributeNames["#proposedEffectiveDate"] =
-      "proposedEffectiveDate";
-    params.ExpressionAttributeValues[":proposedEffectiveDate"] =
-      data.proposedEffectiveDate;
-  }
-  if (data.waiverAuthority) {
-    params.UpdateExpression += ", #waiverAuthority = :waiverAuthority";
-    params.ExpressionAttributeNames["#waiverAuthority"] = "waiverAuthority";
-    params.ExpressionAttributeValues[":waiverAuthority"] = data.waiverAuthority;
-  }
+  topLevelAttributes.forEach((attributeName) => {
+    if (newData[attributeName]) {
+      const label = `:${attributeName}`;
+      params.ExpressionAttributeValues[label] = newData[attributeName];
+      if (Array.isArray(newData[attributeName]))
+        params.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${label})`;
+      else params.UpdateExpression += `, ${attributeName} = ${label}`;
+    }
+  });
 
   console.log("params in newSubmission are: ", JSON.stringify(params, null, 2));
   return dynamoDb
     .update(params)
     .then((response) => {
       const latestVersion = response["Attributes"]["Latest"];
-      const putsk = newSk.replace("v0", "v" + latestVersion);
+      const putsk = sk.replace("v0", "v" + latestVersion);
       const putParams = {
         TableName: process.env.oneMacTableName,
         Item: {
           sk: putsk,
-          componentId,
-          componentTypee,
-          submissionTimestamp,
-          proposedEffectiveDate,
-          currentStatus,
-          attachments,
-          additionalInformation,
-          submissionId,
-          submitterName,
-          submitterEmail,
-          submitterId,
+          componentId: newData.componentId,
+          componentType: newData.componentType,
+          submissionTimestamp: newData.submissionTimestamp,
+          proposedEffectiveDate: newData.proposedEffectiveDate,
+          currentStatus: newData.currentStatus,
+          attachments: newData.attachments,
+          additionalInformation: newData.additionalInformation,
+          submissionId: newData.submissionId,
+          submitterName: newData.submitterName,
+          submitterEmail: newData.submitterEmail,
+          submitterId: newData.submitterId,
         },
       };
       dynamoDb.put(putParams);
     })
     .then(() => {
-      if (!idInfo.isNewPackage) {
+      if (newData.parentId) {
         const parentToUpdate = {
-          componentId: data.parentId,
-          componentType: data.parentType,
-          attachments: data.attachments,
-          newChild: data,
+          componentId: newData.parentId,
+          componentType: newData.parentType,
+          attachments: newData.attachments,
+          newChild: newData,
         };
         return updateComponent(parentToUpdate);
       } else {
