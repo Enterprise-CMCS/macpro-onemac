@@ -104,7 +104,7 @@ const testDetail = {
   submissionId: "4240e440-5ec5-11ec-b2ea-eb35c89f340d",
 };
 
-const waiverDetail = require("./mock-data/MockWaiverDetail.json");
+const waiverDetail = require("../changeRequest/mock-data/MockWaiverDetail.json");
 
 const ContextWrapper = ({ children }) => {
   return (

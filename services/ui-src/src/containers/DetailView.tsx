@@ -27,7 +27,7 @@ import { formatDetailViewDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
-import { getTerritoryFromTransmittalNumber } from "./SubmissionForm";
+import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import PortalTable from "../components/PortalTable";
 import PopupMenu from "../components/PopupMenu";
