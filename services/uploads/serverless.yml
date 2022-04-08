@@ -200,6 +200,25 @@ resources:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
                 SSEAlgorithm: AES256
+        # Policy to allow public read access to all attachments
+    ClamDefsBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: ClamDefsBucket
+        PolicyDocument:
+          Statement:                 
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref ClamDefsBucket
+                  - /*
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
     BucketAVScanRole:
       Type: "AWS::IAM::Role"
       Properties:
