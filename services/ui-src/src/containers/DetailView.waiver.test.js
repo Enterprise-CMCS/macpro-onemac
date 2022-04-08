@@ -19,7 +19,7 @@ import { LOADER_TEST_ID } from "../components/LoadingScreen";
 
 jest.mock("../utils/PackageApi");
 
-const waiverDetail = require("./mock-data/MockWaiverDetail.json");
+const waiverDetail = require("../changeRequest/mock-data/MockWaiverDetail.json");
 
 const ContextWrapper = ({ children }) => {
   return (
