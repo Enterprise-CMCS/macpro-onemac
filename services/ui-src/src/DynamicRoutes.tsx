@@ -26,7 +26,7 @@ import NewWaiver from "./changeRequest/NewWaiver";
 import OneMACForm from "./forms/OneMACForm";
 import SubmissionForm from "./changeRequest/SubmissionForm";
 import SubmissionView from "./changeRequest/SubmissionView";
-import DetailView from "./changeRequest/DetailView";
+import DetailView from "./containers/DetailView";
 import UserPage from "./containers/UserPage";
 
 // this is legacy and should not be touched!
