@@ -3,13 +3,13 @@ const actionTypeDropDown = "#action-type";
 const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
-const addFile1915b4 = "//tbody/tr[1]/td[2]/label[1]";
+const addFile1915b4 =
+  "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]/following-sibling::td[label[text()='Add File']]";
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
 
 const existingWaiverNumber = "MD.11223";
-const whatIsMyWaiverIDLink =
-  "//body/reference[1]/div[1]/div[1]/div[4]/div[2]/form[1]/div[1]/div[3]/div[1]/div[2]/a[1]";
+const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 
 export class oneMacSubmitNewWaiverActionPage {

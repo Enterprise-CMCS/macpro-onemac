@@ -57,8 +57,3 @@
 #         And wait for parent row expander to be enabled
 #         And click parent row expander
 #         And verify child row has status "Withdrawn"
-
-
-
-
-

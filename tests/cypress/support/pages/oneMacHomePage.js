@@ -1,15 +1,14 @@
 const DevelopmentLogin = "#devloginBtn";
 
 //xpath, use cy.xpath
-const FAQPage =
-  "//body/reference[1]/div[1]/div[1]/div[2]/div[1]/div[1]/div[1]/div[2]/a[1]";
+const FAQPage = "//a[text()='FAQ']";
 //xpath, use cy.xpath
 const HomePageLink = "//a[contains(text(),'Home')]";
 //xpath, use cy.xpath
 const RegisterLink = "//a[contains(text(),'Register')]";
 const loginBTN = "#loginBtn";
 //xpath, use cy.xpath
-const welcomeMSG = "//body/reference[1]/div[1]/div[1]/div[3]/div[1]/div[2]";
+const welcomeMSG = "//div[@class='home-header-text']";
 //xpath, use cy.xpath
 const stateUsersSection = "//h1[contains(text(),'State Users')]";
 //xpath, use cy.xpath
