@@ -2,13 +2,9 @@ const profileInformation = "#profileInfoHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const fullNameHeader = '//h3[contains(text(),"Full Name")]';
 //Element is Xpath use cy.xpath instead of cy.get
-const fullName = "//h3[text()='Full Name']/following-sibling::div";
-//Element is Xpath use cy.xpath instead of cy.get
 const roleHeader = '//h3[contains(text(),"Role")]';
-const role = "//h3[text()='Role']/following-sibling::div";
 //Element is Xpath use cy.xpath instead of cy.get
 const emailHeader = '//h3[contains(text(),"Email")]';
-const email = "//h3[text()='Email']/following-sibling::div";
 //Element is Xpath use cy.xpath instead of cy.get
 const phoneNumberHeader = '//span[contains(text(),"Phone Number")]';
 const phoneNumberAddBTN = "#addButton";
@@ -30,19 +26,19 @@ export class oneMacMyProfilePage {
     cy.xpath(fullNameHeader).should("be.visible");
   }
   verifyFullName() {
-    cy.xpath(fullName).should("be.visible");
+    cy.xpath(fullNameHeader).next("div").should("be.visible");
   }
   verifyRoleHeader() {
     cy.xpath(roleHeader).should("be.visible");
   }
   verifyRole() {
-    cy.get(role).should("be.visible");
+    cy.xpath(roleHeader).next("div").should("be.visible");
   }
   verifyEmailHeader() {
     cy.xpath(emailHeader).should("be.visible");
   }
   verifyEmail() {
-    cy.get(email).should("be.visible");
+    cy.xpath(emailHeader).next("div").should("be.visible");
   }
   verifyPhoneNumberHeader() {
     cy.xpath(phoneNumberHeader).should("be.visible");

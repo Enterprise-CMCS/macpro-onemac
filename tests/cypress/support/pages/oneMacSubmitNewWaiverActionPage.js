@@ -4,7 +4,7 @@ const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
 const addFile1915b4 =
-  "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]/following-sibling::td[label[text()='Add File']]";
+  "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]";
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
 
@@ -54,7 +54,7 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   upload1915B4File() {
-    cy.xpath(addFile1915b4).click();
+    cy.xpath(addFile1915b4).next("td").click();
     const filePath = "/files/15MB.pdf";
     cy.get(fileUpload1915b4).attachFile(filePath);
   }
