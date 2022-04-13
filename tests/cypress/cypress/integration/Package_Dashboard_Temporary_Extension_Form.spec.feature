@@ -10,7 +10,7 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
         And Type Unique Valid Base Waiver Number With SS.#####.R00.00 format
         And select proposed effective date 3 months from today
-        And upload Waiver Extension Request
+        And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And verify submission Successful message
