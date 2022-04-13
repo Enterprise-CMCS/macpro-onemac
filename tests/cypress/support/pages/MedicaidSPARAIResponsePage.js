@@ -1,5 +1,5 @@
 const RAIResponseUploadFile = "#uploader-input-0";
-const AdditionalInformationBox = "#field_4";
+const AdditionalInformationBox = "//textarea[@name='summary']";
 const submitBTN = "#form-submission-button";
 //locator is xpath, please user cy.xpath();
 const RevisedAmendedStatePlanLanguageBTN =
@@ -21,7 +21,7 @@ export class MedicaidSPARAIResponsePage {
   }
 
   addCommentsRAIRespone() {
-    cy.get(AdditionalInformationBox).type("This is just a test");
+    cy.xpath(AdditionalInformationBox).type("This is just a test");
   }
 
   clickSubmitBTN() {

@@ -2105,3 +2105,12 @@ And("click withdraw button on the temp extension page", () => {
 And("click on the Temporary Extension nav button", () => {
   OneMacPackageDetailsPage.clickTempExtensionsNavBtn();
 });
+And("copy the ID from the link in the first row", () => {
+  OneMacPackagePage.copyTheIDFromLinkInFirstRow();
+});
+And("search for the ID copied from the link in the first row", () => {
+  cy.fixture("savedID.json").then((data) => {
+    OneMacPackagePage.searchFor(data.savedID);
+  });
+  cy.wait(1000);
+});

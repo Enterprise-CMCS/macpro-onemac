@@ -1,5 +1,5 @@
-# There's a known issue with this one so commented out.
-# Feature: State should not be able to withdraw RAI Responses in OneMAC
+# Commented out because there is a bug with withdrawing RAI Responses in the package dashboard
+#Feature: State should not be able to withdraw RAI Responses in OneMAC
 #     Scenario: Can not withdraw Waiver RAI Response
 #         Given I am on Login Page
 #         When Clicking on Development Login
