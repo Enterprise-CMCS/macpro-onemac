@@ -589,6 +589,10 @@ And("Upload 1915 b 4 file", () => {
   OneMacSubmitNewWaiverActionPage.upload1915B4File();
 });
 
+And("upload Waiver Extension Request", () => {
+  OneMacRequestWaiverTemporaryExtension.uploadWaiverExtensionRequest();
+});
+
 And("Type {string} in Summary Box", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputComments(Comments);
 });

@@ -10,7 +10,7 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
         And Type Unique Valid Base Waiver Number With SS.#####.R00.00 format
         And select proposed effective date 3 months from today
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And verify submission Successful message
@@ -21,7 +21,7 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on Waiver Action
         And Click on Request Temporary Extension
         And Type Unique Valid Temporary Extension Number With 5 Characters
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And click on Packages
@@ -36,7 +36,7 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on Waiver Action
         And Click on Request Temporary Extension
         And Type Unique Valid Temporary Extension Number With 5 Characters
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And click on Packages
