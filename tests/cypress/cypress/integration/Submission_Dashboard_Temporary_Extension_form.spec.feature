@@ -23,12 +23,12 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
 
     Scenario: Create Temporary Extension with valid waiver number
         And Type existing Unique Valid Waiver Number With 5 Characters
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This test has a valid waiver number" in Summary Box
         And Click on Submit Button
 
     Scenario: Create Temporary Extension with invalid waiver number
         And type in invalid Waiver Number
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This test has an invalid waiver number" in Summary Box
         And Click on Submit Button

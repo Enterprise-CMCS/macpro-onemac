@@ -176,7 +176,6 @@ jobs:
             Package_Dashboard_Temporary_Extension_Form.spec.feature,
             Package_Dashboard_Waiver_Family_Column.spec.feature,
             Package_Dashboard_Withdraw_Package.spec.feature,
-            Package_Dashboard_Withdraw_RAI_Responses.spec.feature,
             Profile_View_CMS_Approver.spec.feature,
             Profile_View_CMS_System_Admin.spec.feature,
             Profile_View_CMS_User_Denied.spec.feature,
