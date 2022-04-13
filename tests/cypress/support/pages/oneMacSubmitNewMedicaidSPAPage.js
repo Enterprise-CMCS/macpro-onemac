@@ -1,5 +1,5 @@
 const SpaIDInput = "#transmittalNumber";
-const additionalInformationCommentBox = "#field_2";
+const additionalInformationCommentBox = "//textarea[@name='summary']";
 const submitBTN = "#form-submission-button";
 const SPAIDErrorMessage = "#transmittalNumberStatusMsg";
 const cancelBTN = "#form-cancel-button";
@@ -90,7 +90,7 @@ export class oneMacSubmitNewMedicaidSPAPage {
   }
 
   AdditionalInformationTypeComment(s) {
-    cy.get(additionalInformationCommentBox).type(s);
+    cy.xpath(additionalInformationCommentBox).type(s);
   }
 
   clicksubmitBTN() {
