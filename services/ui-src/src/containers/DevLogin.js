@@ -13,22 +13,6 @@ import config from "../utils/config";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 
-function querystring(name, url = window.location.href) {
-  name = name.replace(/[[]]/g, "\\$&");
-
-  const regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)", "i");
-  const results = regex.exec(url);
-
-  if (!results) {
-    return null;
-  }
-  if (!results[2]) {
-    return "";
-  }
-
-  return decodeURIComponent(results[2].replace(/\+/g, " "));
-}
-
 export default function DevLogin() {
   const { isAuthenticated, setUserInfo } = useAppContext();
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
@@ -57,8 +41,7 @@ export default function DevLogin() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  if (isAuthenticated)
-    return <Redirect to={querystring("redirect") ?? ROUTES.DASHBOARD} />;
+  if (isAuthenticated) return <Redirect to={ROUTES.DASHBOARD} />;
 
   return (
     <div>
