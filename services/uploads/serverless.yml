@@ -306,7 +306,7 @@ resources:
                 - Effect: "Allow"
                   Action:
                     - s3:ListBucket
-                  Resource: !GetAtt ClamDefsBucket.Arn
+                  Resource: !GetAtt ClamDefsBucket.Arn  
 
   # Print out the name of the bucket that is created
   Outputs:
