@@ -352,6 +352,9 @@ export function Header() {
 
   return (
     <>
+      <a className="skip-nav-link" href="#main">
+        Skip to content
+      </a>
       <div className="usa-banner-custom">
         <UsaBanner />
       </div>
