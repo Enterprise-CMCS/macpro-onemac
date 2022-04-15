@@ -152,3 +152,43 @@ it("renders dashboard for registered state users", async () => {
   expect(screen.getByText(/submission list/i)).toBeVisible();
   expect(screen.getByText("ME-12-3456", { selector: "td a" })).toBeVisible();
 });
+
+it("renders submission triage view for state user", async () => {
+  const profilePromise = Promise.resolve({
+    type: "statesubmitter",
+    validRoutes: ["/dashboard"],
+  });
+  UserDataApi.userProfile.mockReturnValueOnce(profilePromise);
+  const history = createMemoryHistory();
+  history.push("/choices");
+
+  const ctxValue = {
+    isAuthenticated: true,
+    userRole: "statesubmitter",
+    userStatus: "active",
+    userProfile: {
+      userData: {
+        roleList: [
+          { territory: "ME", role: "statesubmitter", status: "active" },
+        ],
+      },
+    },
+  };
+
+  render(
+    <AppContext.Provider value={ctxValue}>
+      <Router history={history}>
+        <Routes />
+      </Router>
+    </AppContext.Provider>
+  );
+
+  await act(async () => {
+    await profilePromise;
+  });
+
+  expect(
+    screen.getByText(/submission type/i, { selector: "h1" })
+  ).toBeVisible();
+  expect(screen.getByText(/select a submission type/i)).toBeVisible();
+});

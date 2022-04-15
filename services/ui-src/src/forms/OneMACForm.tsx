@@ -170,16 +170,7 @@ export const OneMACForm: React.FC = () => {
 
   useEffect(() => {
     window.scrollTo({ top: 0 });
-
-    if (alertCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
-      history.push({
-        pathname: formInfo.landingPage,
-        state: {
-          passCode: alertCode,
-        },
-      });
-    }
-  }, [alertCode, history, formInfo.landingPage]);
+  }, [alertCode]);
 
   useEffect(() => {
     // default display message settings with empty message
@@ -292,58 +283,60 @@ export const OneMACForm: React.FC = () => {
     alertCode,
   ]);
 
-  const limitSubmit = useRef(false);
-
-  useEffect(() => {
-    const saveForm = async () => {
-      let transmittalNumberWarningMessage: string | undefined = "";
-
-      if (
-        transmittalNumberStatusMessage.statusLevel === "warn" &&
-        transmittalNumberStatusMessage.statusMessage
-      ) {
-        transmittalNumberWarningMessage =
-          transmittalNumberStatusMessage.warningMessageCode;
-      }
-
-      if (uploader.current) {
-        uploader.current
-          .uploadFiles()
-          .then((uploadedList) => {
-            return ChangeRequestDataApi.submit(
-              { ...changeRequest, transmittalNumberWarningMessage },
-              uploadedList
-            );
-          })
-          .then((returnCode) => {
-            setAlertCode(returnCode);
-          })
-          .catch((err) => {
-            console.log("error is: ", err);
-            setAlertCode(RESPONSE_CODE[err.message]);
-          })
-          .finally(() => {
-            setIsSubmitting(false);
-            limitSubmit.current = false;
-          });
-      }
-    };
-
-    if (isSubmitting && !limitSubmit.current) {
-      limitSubmit.current = true;
-      saveForm();
-    }
-  }, [isSubmitting, transmittalNumberStatusMessage, changeRequest, alertCode]);
-
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  function handleSubmit(event: SyntheticEvent) {
-    event.preventDefault();
+  const limitSubmit = useRef(false);
 
-    setIsSubmitting(isSubmissionReady);
-  }
+  const handleSubmit = useCallback(
+    async (event: SyntheticEvent) => {
+      event.preventDefault();
+
+      if (isSubmissionReady && !limitSubmit.current) {
+        limitSubmit.current = true;
+        setIsSubmitting(true);
+
+        let transmittalNumberWarningMessage: string | undefined = "";
+
+        if (
+          transmittalNumberStatusMessage.statusLevel === "warn" &&
+          transmittalNumberStatusMessage.statusMessage
+        ) {
+          transmittalNumberWarningMessage =
+            transmittalNumberStatusMessage.warningMessageCode;
+        }
+
+        if (uploader.current) {
+          try {
+            const uploadedList = await uploader.current.uploadFiles();
+            const returnCode = await ChangeRequestDataApi.submit(
+              { ...changeRequest, transmittalNumberWarningMessage },
+              uploadedList
+            );
+
+            if (returnCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
+              history.push(formInfo.landingPage, {
+                passCode: returnCode,
+              });
+            }
+          } catch (err) {
+            console.log("error is: ", err);
+            setAlertCode(RESPONSE_CODE[(err as Error).message]);
+            setIsSubmitting(false);
+            limitSubmit.current = false;
+          }
+        }
+      }
+    },
+    [
+      isSubmissionReady,
+      transmittalNumberStatusMessage,
+      changeRequest,
+      formInfo.landingPage,
+      history,
+    ]
+  );
 
   return (
     <LoadingOverlay isLoading={isSubmitting}>

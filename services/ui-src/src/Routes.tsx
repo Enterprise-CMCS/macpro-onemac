@@ -9,7 +9,6 @@ import {
   ChangeRequest,
   ROUTES,
   UserRole,
-  Workflow,
   effectiveRoleForUser,
   getUserRoleObj,
 } from "cmscommonlib";
@@ -226,31 +225,10 @@ const ROUTE_LIST: RouteSpec[] = [
       },
     ],
   })),
-  // TODO investigate doing the tabbing with either a param, search, or something of that nature
   {
     path: ROUTES.PACKAGE_LIST,
     exact: true,
     component: () => <DashboardWrapper WrappedComponent={PackageList} />,
-  },
-  {
-    path: ROUTES.PACKAGE_LIST_WAIVER,
-    exact: true,
-    component: () => (
-      <DashboardWrapper
-        startTab={Workflow.PACKAGE_GROUP.WAIVER}
-        WrappedComponent={PackageList}
-      />
-    ),
-  },
-  {
-    path: ROUTES.PACKAGE_LIST_SPA,
-    exact: true,
-    component: () => (
-      <DashboardWrapper
-        startTab={Workflow.PACKAGE_GROUP.SPA}
-        WrappedComponent={PackageList}
-      />
-    ),
   },
   {
     path: ROUTES.TRIAGE_GROUP,
