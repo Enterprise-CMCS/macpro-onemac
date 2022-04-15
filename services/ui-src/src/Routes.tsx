@@ -85,51 +85,37 @@ const AuthenticatedRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
     <Redirect to={ROUTES.HOME} />
   );
 
-const useProcessedRole = () => {
-  const { userProfile: { userData: { roleList = [] } = {} } = {} } =
-    useAppContext() ?? {};
-
-  return getUserRoleObj(roleList);
-};
-
-const accessGuardRouteListRenderer: (
-  accessKey: keyof UserRole
-) => FC<{ routes: RouteSpec[] }> =
-  (accessKey) =>
-  ({ routes }) => {
-    const { [accessKey]: hasAccess } = useProcessedRole();
-    return hasAccess ? <RouteListRenderer routes={routes} /> : <NotFound />;
-  };
-
-// this one is a little complex, but necessary since the behavior desired for
-// when you access a dashboard screen is so specific
-const DashboardWrapper: FC<{
-  WrappedComponent: any;
-  startTab?: string;
-  isUserMgmt?: boolean;
-}> = ({ WrappedComponent, isUserMgmt, ...rest }) => {
+const SignupGuardRouteListRenderer: FC<{ routes: RouteSpec[] }> = ({
+  routes,
+}) => {
   const {
     isAuthenticated,
     userProfile: { cmsRoles = "", userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
 
-  const { canAccessDashboard, canAccessUserManagement } = useProcessedRole();
-
   if (!isAuthenticated) return <Redirect to={ROUTES.HOME} />;
   if (effectiveRoleForUser(roleList) === null && cmsRoles)
     return <Redirect to={ROUTES.SIGNUP} />;
 
-  if (isUserMgmt) {
-    if (canAccessUserManagement) return <WrappedComponent {...rest} />;
-    else if (canAccessDashboard) return <Redirect to={ROUTES.DASHBOARD} />;
-  } else {
-    if (canAccessDashboard) return <WrappedComponent {...rest} />;
-    else if (canAccessUserManagement)
-      return <Redirect to={ROUTES.USER_MANAGEMENT} />;
-  }
-
-  return <NotFound />;
+  return <RouteListRenderer routes={routes} />;
 };
+
+const accessGuardRouteListRenderer: (
+  accessKey: keyof UserRole,
+  redirectAccessKey?: keyof UserRole,
+  redirectTo?: string
+) => FC<{ routes: RouteSpec[] }> =
+  (accessKey, redirectAccessKey, redirectTo) =>
+  ({ routes }) => {
+    const { userProfile: { userData: { roleList = [] } = {} } = {} } =
+      useAppContext() ?? {};
+    const roleObj = getUserRoleObj(roleList);
+
+    if (roleObj[accessKey]) return <RouteListRenderer routes={routes} />;
+    if (redirectAccessKey && redirectTo && roleObj[redirectAccessKey])
+      return <Redirect to={redirectTo} />;
+    return <NotFound />;
+  };
 
 const ROUTE_LIST: RouteSpec[] = [
   { path: ROUTES.HOME, exact: true, component: Home },
@@ -164,18 +150,44 @@ const ROUTE_LIST: RouteSpec[] = [
       },
     ],
   },
-  {
-    path: ROUTES.USER_MANAGEMENT,
-    exact: true,
-    component: () => (
-      <DashboardWrapper isUserMgmt WrappedComponent={UserManagement} />
-    ),
-  },
-  {
-    path: ROUTES.DASHBOARD,
-    exact: true,
-    component: () => <DashboardWrapper WrappedComponent={Dashboard} />,
-  },
+  // dashboards, including user management
+  ...[
+    {
+      path: ROUTES.USER_MANAGEMENT,
+      accessKey: "canAccessUserManagement",
+      redirectAccessKey: "canAccessDashboard",
+      redirectTo: ROUTES.DASHBOARD,
+      component: UserManagement,
+    },
+    {
+      path: ROUTES.DASHBOARD,
+      accessKey: "canAccessDashboard",
+      redirectAccessKey: "canAccessUserManagement",
+      redirectTo: ROUTES.USER_MANAGEMENT,
+      component: Dashboard,
+    },
+    {
+      path: ROUTES.PACKAGE_LIST,
+      accessKey: "canAccessDashboard",
+      redirectAccessKey: "canAccessUserManagement",
+      redirectTo: ROUTES.USER_MANAGEMENT,
+      component: PackageList,
+    },
+  ].map(({ path, accessKey, redirectAccessKey, redirectTo, component }) => ({
+    path,
+    component: SignupGuardRouteListRenderer,
+    routes: [
+      {
+        path,
+        component: accessGuardRouteListRenderer(
+          accessKey as keyof UserRole,
+          redirectAccessKey as keyof UserRole,
+          redirectTo
+        ),
+        routes: [{ path, exact: true, component }],
+      },
+    ],
+  })),
   // legacy triage screens, plus current OneMACForm forms
   ...[
     { path: ROUTES.NEW_SUBMISSION_SELECTION, component: NewSubmission },
@@ -225,11 +237,6 @@ const ROUTE_LIST: RouteSpec[] = [
       },
     ],
   })),
-  {
-    path: ROUTES.PACKAGE_LIST,
-    exact: true,
-    component: () => <DashboardWrapper WrappedComponent={PackageList} />,
-  },
   {
     path: ROUTES.TRIAGE_GROUP,
     component: AuthenticatedRouteListRenderer,
