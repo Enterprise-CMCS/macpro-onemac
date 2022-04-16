@@ -317,7 +317,7 @@ resources:
                   Condition:
                     Bool:
                       aws:SecureTransport: 'false'
-                  Principal: "*"
+                  
 
   # Print out the name of the bucket that is created
   Outputs:
