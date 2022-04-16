@@ -307,7 +307,7 @@ resources:
                   Action:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
-                    - Effect: Deny
+                - Effect: Deny
                   Action: s3:*
                   Resource:
                     - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-avscan-${AWS::AccountId}
