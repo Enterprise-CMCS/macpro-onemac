@@ -315,11 +315,12 @@ export const OneMACForm: React.FC = () => {
               uploadedList
             );
 
-            if (returnCode === RESPONSE_CODE.SUCCESSFULLY_SUBMITTED) {
-              history.push(formInfo.landingPage, {
-                passCode: returnCode,
-              });
-            }
+            if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
+              throw returnCode;
+
+            history.push(formInfo.landingPage, {
+              passCode: returnCode,
+            });
           } catch (err) {
             console.log("error is: ", err);
             setAlertCode(RESPONSE_CODE[(err as Error).message]);
