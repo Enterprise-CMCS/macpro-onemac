@@ -92,29 +92,6 @@ $color-primary-alt-lightest: #f0fafe;
   }
 }
 
-.skip-nav-link {
-  @extend .ds-u-font-weight--bold;
-  @extend .ds-u-text-decoration--none;
-  @extend .ds-u-padding--1;
-  @extend .ds-u-fill--background-inverse;
-  @extend .ds-u-color--white;
-  position: absolute;
-  top: $spacer-1;
-  left: $spacer-1;
-  z-index: 999;
-  transform: translateX(calc(-100% - $spacer-2))
-    translateY(calc(-100% - $spacer-2));
-  transition: transform 0.3s;
-
-  &:visited {
-    color: $color-white;
-  }
-
-  &:focus {
-    transform: translateY(0%);
-  }
-}
-
 .faq-table {
   table,
   th,
