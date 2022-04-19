@@ -94,6 +94,33 @@ resources:
                 Bool: 
                   "aws:SecureTransport": "false"
         Bucket: !Ref S3Bucket
+    S3BucketCloudFrontLogs:
+      Type: AWS::S3::Bucket
+      Properties:
+        BucketName: ${self:service.name}-${self:custom.stage}-cloudfront-logs-${AWS::AccountId}
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+      DeletionPolicy: Delete
+    LogBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        PolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref S3BucketCloudFrontLogs
+                  - /*
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
+        Bucket: !Ref S3BucketCloudFrontLogs
     CloudFrontWebAcl:
       Type: AWS::WAFv2::WebACL
       Properties:
@@ -183,6 +210,11 @@ resources:
             Fn::GetAtt:
               - CloudFrontWebAcl
               - Arn
+          Logging:
+            Bucket: !Sub 
+              - '${CloudFrontLogsBucketName}.s3.amazonaws.com'
+              - CloudFrontLogsBucketName: !Ref S3BucketCloudFrontLogs
+            IncludeCookies: false
 
     Route53DnsRecord:
       Type: AWS::Route53::RecordSet
