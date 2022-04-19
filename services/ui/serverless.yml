@@ -97,7 +97,7 @@ resources:
     S3BucketCloudFrontLogs:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: ${self:service.name}-${self:custom.stage}-cloudfront-logs-${AWS::AccountId}
+        BucketName: !Sub ${self:service.name}-${self:custom.stage}-cloudfront-logs-${AWS::AccountId}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
