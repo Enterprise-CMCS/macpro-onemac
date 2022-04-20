@@ -76,8 +76,8 @@ resources:
               Principal: "*"
               Action: "s3:*"
               Resource:
-                !Sub ${S3Bucket.Arn}/*
-                !Sub ${S3Bucket.Arn}
+                - !Sub ${S3Bucket.Arn}/*
+                - !Sub ${S3Bucket.Arn}
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
@@ -101,8 +101,8 @@ resources:
               Principal: "*"
               Action: "s3:*"
               Resource:
-                !Sub ${S3BucketCloudFrontLogs.Arn}/*
-                !Sub ${S3BucketCloudFrontLogs.Arn}
+                - !Sub ${S3BucketCloudFrontLogs.Arn}/*
+                - !Sub ${S3BucketCloudFrontLogs.Arn}
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"

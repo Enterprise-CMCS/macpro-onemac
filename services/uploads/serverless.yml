@@ -209,8 +209,8 @@ resources:
               Principal: "*"
               Action: "s3:*"
               Resource:
-                !Sub ${ClamDefsBucket.Arn}/*
-                !Sub ${ClamDefsBucket.Arn}
+                - !Sub ${ClamDefsBucket.Arn}/*
+                - !Sub ${ClamDefsBucket.Arn}
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
