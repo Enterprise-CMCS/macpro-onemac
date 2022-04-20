@@ -316,7 +316,7 @@ export const OneMACForm: React.FC = () => {
             );
 
             if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
-              throw returnCode;
+              throw new Error(returnCode);
 
             history.push(formInfo.landingPage, {
               passCode: returnCode,
