@@ -323,8 +323,9 @@ export const OneMACForm: React.FC = () => {
             });
           } catch (err) {
             console.log("error is: ", err);
-            setAlertCode(RESPONSE_CODE[(err as Error).message]);
+            setAlertCode((err as Error).message);
             setIsSubmitting(false);
+            setIsSubmissionReady(false);
             limitSubmit.current = false;
           }
         }
@@ -451,8 +452,7 @@ export const OneMACForm: React.FC = () => {
               aria-label="submit-form"
               className="ds-c-button ds-c-button--success"
               disabled={!isSubmissionReady}
-              onClick={handleSubmit}
-              value="Submit"
+              type="submit"
             >
               Submit
             </Button>
@@ -461,6 +461,7 @@ export const OneMACForm: React.FC = () => {
               aria-label="cancel-form"
               className="ds-c-button ds-c-button--transparent"
               onClick={() => setConfirmCancel(true)}
+              type="button"
             >
               Cancel
             </Button>
