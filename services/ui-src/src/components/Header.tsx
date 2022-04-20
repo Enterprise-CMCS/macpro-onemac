@@ -2,7 +2,7 @@ import React, { RefObject, useState, useEffect, useRef } from "react";
 import { Link, useHistory, useLocation } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import { AwsCognitoOAuthOpts } from "@aws-amplify/auth/lib-esm/types/Auth";
-import { Button } from "@cmsgov/design-system";
+import { Button, SkipNav } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSignOutAlt,
@@ -352,6 +352,7 @@ export function Header() {
 
   return (
     <>
+      <SkipNav href="#main">Skip to content</SkipNav>
       <div className="usa-banner-custom">
         <UsaBanner />
       </div>
