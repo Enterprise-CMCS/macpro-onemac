@@ -10,10 +10,12 @@ describe("Warning Message on Package Details Page", () => {
   it("Check if warning message displays properly", () => {
     cy.get("#packageListLink").click();
     cy.get("#componentId-0 > a").click();
-    cy.get("#sparai0_caret > .choice-container > .choice-info").should(
-      "have.text",
-      "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents."
-    );
+    cy.get(".choice-container > .choice-info")
+      .first()
+      .should(
+        "have.text",
+        "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents."
+      );
     cy.get(
       ".read-only-submission > :nth-child(2) > .choice-container > .choice-info"
     ).should(

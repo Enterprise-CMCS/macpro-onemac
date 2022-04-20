@@ -183,6 +183,16 @@ resources:
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref AttachmentsBucket
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
@@ -200,7 +210,6 @@ resources:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:
                 SSEAlgorithm: AES256
-        # Policy to allow public read access to all attachments
     ClamDefsBucketPolicy:
       Type: AWS::S3::BucketPolicy
       Properties:
@@ -216,6 +225,16 @@ resources:
                 - - "arn:aws:s3:::"
                   - !Ref ClamDefsBucket
                   - /*
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref ClamDefsBucket
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
@@ -307,6 +326,17 @@ resources:
                   Action:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
+                - Effect: Deny
+                  Action: s3:*
+                  Resource:
+                    - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-avscan-${AWS::AccountId}
+                    - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-avscan-${AWS::AccountId}/*
+                    - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-uploads-${AWS::AccountId}
+                    - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-uploads-${AWS::AccountId}/*
+                  Condition:
+                    Bool:
+                      aws:SecureTransport: 'false'
+                  
 
   # Print out the name of the bucket that is created
   Outputs:
