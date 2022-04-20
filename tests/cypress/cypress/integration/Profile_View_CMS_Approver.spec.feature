@@ -18,4 +18,3 @@ Feature: OY2_8618_CMS_Approver
         And Phone Number Add Button is Displayed
         And Status text is Displayed
         And Actual Status is Displayed with Access Granted
-        

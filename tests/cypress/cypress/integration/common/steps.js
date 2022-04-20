@@ -1269,6 +1269,15 @@ And("verify rai response submitted exists", () => {
 And("verify package in review exists", () => {
   OneMacPackagePage.verifypackageInReviewcheckBoxExists();
 });
+And("verify Submitted status checkbox exists", () => {
+  OneMacPackagePage.verifySubmittedCheckboxExists();
+});
+And("verify Withdrawn status checkbox exists", () => {
+  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+});
+And("verify RAI Issued status checkbox exists", () => {
+  OneMacPackagePage.verifyRaiIssuedCheckboxExists();
+});
 And("click Package In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();
 });
