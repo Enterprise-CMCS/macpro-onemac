@@ -41,8 +41,7 @@ const receiveAnEmailConformation =
 const receiveAnEmailConformationInfo =
   "//div[contains(text(),'After you submit, you will receive an email confir')]";
 //xpath, use cy.xpath
-const submissionTypesInclude =
-  "//body/reference[1]/div[1]/div[1]/div[5]/div[1]/div[2]/div[1]";
+const submissionTypesInclude = "//main[1]/div[3]/div[1]/div[2]/div[1]";
 //xpath, use cy.xpath
 const firstBullet =
   "//li[contains(text(),'Amendments to your Medicaid and CHIP State Plans (')]";
@@ -86,8 +85,7 @@ const ReviewYourAssignedSubmission =
 const ReviewYourAssignedSubmissionInfo =
   "//div[contains(text(),'Search the submission ID from the email and click ')]";
 //xpath, use cy.xpath
-const CMSUSERSsubmissionTypesInclude =
-  "//body/reference[1]/div[1]/div[1]/div[7]/div[1]/div[2]/div[1]";
+const CMSUSERSsubmissionTypesInclude = "//main[1]/div[5]/div[1]/div[2]/div[1]";
 //xpath, use cy.xpath
 const CMSBullet1 =
   "//li[contains(text(),'Amendments to your Medicaid and CHIP State Plans.')]";
