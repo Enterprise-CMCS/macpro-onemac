@@ -120,6 +120,16 @@ resources:
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref S3BucketCloudFrontLogs
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
         Bucket: !Ref S3BucketCloudFrontLogs
     CloudFrontWebAcl:
       Type: AWS::WAFv2::WebACL
