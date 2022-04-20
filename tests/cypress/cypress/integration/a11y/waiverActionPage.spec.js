@@ -8,7 +8,7 @@ describe("Waiver Action Page 508 test", () => {
     cy.xpath("//a[@id='new-submission-button']").click();
     cy.xpath("//h4[contains(text(),'Waiver Action')]").click();
     cy.xpath(
-      "//body[1]/reference[1]/div[1]/div[1]/div[4]/ul[1]/li[1]/a[1]/div[1]"
+      "//p[contains(text(),'Submit waivers, amendments, and renewals')]"
     ).click();
   });
 
