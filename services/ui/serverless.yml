@@ -75,21 +75,9 @@ resources:
             - Effect: Deny
               Principal: "*"
               Action: "s3:*"
-              Resource: !Join
-                - ""
-                - - "arn:aws:s3:::"
-                  - !Ref S3Bucket
-                  - /*
-              Condition:
-                Bool: 
-                  "aws:SecureTransport": "false"
-            - Effect: Deny
-              Principal: "*"
-              Action: "s3:*"
-              Resource: !Join
-                - ""
-                - - "arn:aws:s3:::"
-                  - !Ref S3Bucket
+              Resource:
+                !Sub ${S3Bucket.Arn}/*
+                !Sub ${S3Bucket.Arn}
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
@@ -112,21 +100,9 @@ resources:
             - Effect: Deny
               Principal: "*"
               Action: "s3:*"
-              Resource: !Join
-                - ""
-                - - "arn:aws:s3:::"
-                  - !Ref S3BucketCloudFrontLogs
-                  - /*
-              Condition:
-                Bool: 
-                  "aws:SecureTransport": "false"
-            - Effect: Deny
-              Principal: "*"
-              Action: "s3:*"
-              Resource: !Join
-                - ""
-                - - "arn:aws:s3:::"
-                  - !Ref S3BucketCloudFrontLogs
+              Resource:
+                !Sub ${S3BucketCloudFrontLogs.Arn}/*
+                !Sub ${S3BucketCloudFrontLogs.Arn}
               Condition:
                 Bool: 
                   "aws:SecureTransport": "false"
