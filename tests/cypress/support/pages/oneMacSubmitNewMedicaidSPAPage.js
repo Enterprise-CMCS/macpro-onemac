@@ -27,7 +27,7 @@ const SPAPagesAddFileBTN =
   "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader table:nth-child(1) tbody:nth-child(1) tr:nth-child(2) td.uploader-input-cell:nth-child(2) > label.uploader-input-label-active";
 const SPAPAgesAddFileUpload = "#uploader-input-1";
 const dashboardTabBTN = "#dashboardLink";
-const whatIsMySPAIDLink = "//a[contains(text(), 'What is my SPA ID?')]";
+const whatIsMySPAIDLink = "//a[text()='What is my SPA ID?']";
 const page = "//div[@class='dashboard-container']";
 
 export class oneMacSubmitNewMedicaidSPAPage {
@@ -142,7 +142,8 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(SPAIDErrorMessage).should("be.visible");
   }
   clickWhatIsMySPAIDLink() {
-    cy.xpath(whatIsMySPAIDLink)
+    cy.get("a:visible")
+      .contains("What is my SPA ID?")
       .invoke("attr", "href")
       .then((href) => {
         cy.visit(href);

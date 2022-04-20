@@ -47,7 +47,7 @@ const firstBullet =
   "//li[contains(text(),'Amendments to your Medicaid and CHIP State Plans (')]";
 //xpath, use cy.xpath
 const secondBullet =
-  "//body/reference[1]/div[1]/div[1]/div[5]/div[1]/div[2]/ul[1]/li[2]";
+  "//li[text()='Official state responses to formal requests for additional information (RAIs) for SPAs (not submitted through MACPro).']";
 //xpath, use cy.xpath
 const thirdBullet =
   "//li[contains(text(),'Section 1915(b) waiver submissions (those not subm')]";
@@ -56,10 +56,10 @@ const fourthBullet =
   "//li[contains(text(),'Section 1915(c) Appendix K amendments (which canno')]";
 //xpath, use cy.xpath
 const fifthBullet =
-  "//body/reference[1]/div[1]/div[1]/div[5]/div[1]/div[2]/ul[1]/li[5]";
+  "//li[text()='Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions (in addition to submitting waiver changes in WMS, if applicable).']";
 //xpath, use cy.xpath
 const sixthBullet =
-  "//body/reference[1]/div[1]/div[1]/div[5]/div[1]/div[2]/ul[1]/li[6]";
+  "//li[text()='State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.']";
 
 // CMS Users Section
 
@@ -91,7 +91,7 @@ const CMSBullet1 =
   "//li[contains(text(),'Amendments to your Medicaid and CHIP State Plans.')]";
 //xpath, use cy.xpath
 const CMSBullet2 =
-  "//body/reference[1]/div[1]/div[1]/div[7]/div[1]/div[2]/ul[1]/li[2]";
+  "//li[text()='Official state responses to formal requests for additional information (RAIs) for SPAs.']";
 //xpath, use cy.xpath
 const CMSBullet3 =
   "//li[contains(text(),'Section 1915(b) waiver submissions.')]";
@@ -100,10 +100,10 @@ const CMSBullet4 =
   "//li[contains(text(),'Section 1915(c) Appendix K amendments.')]";
 //xpath, use cy.xpath
 const CMSBullet5 =
-  "//body/reference[1]/div[1]/div[1]/div[7]/div[1]/div[2]/ul[1]/li[5]";
+  "//li[text()='Official state responses to formal requests for additional information (RAIs) for Section 1915(b) waiver actions.']";
 //xpath, use cy.xpath
 const CMSBullet6 =
-  "//body/reference[1]/div[1]/div[1]/div[7]/div[1]/div[2]/ul[1]/li[6]";
+  "//li[text()='State requests for Temporary Extensions for section 1915(b) and 1915(c) waivers.']";
 
 export class oneMacHomePage {
   launch() {
