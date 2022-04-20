@@ -70,9 +70,6 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
 
     Scenario: Verify the Waiver Number format on Appendix K Form
         And Click on Appendix K Amendment
-        And type in Waiver Number with 4 characters On Appendix K Amendment Page
-        And verify error message is not present On Appendix K Amendment Page
-        And clear Waiver Number Input box On Appendix K Amendment Page
         And type in Waiver Number with 5 characters On Appendix K Amendment Page
         And verify error message is not present On Appendix K Amendment Page
         And clear Waiver Number Input box On Appendix K Amendment Page
