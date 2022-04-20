@@ -1389,6 +1389,7 @@ article.form-container {
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-align-items--center;
+  @extend .ds-u-overflow--hidden;
   padding-top: 97px;
 
   animation: slidein 1s ease-out;
@@ -1520,6 +1521,7 @@ article.form-container {
   @extend .ds-u-display--flex;
   @extend .ds-u-flex-direction--column;
   @extend .ds-u-align-items--center;
+  @extend .ds-u-overflow--hidden;
   background: $color-primary-alt-lightest;
   height: 295px;
 
