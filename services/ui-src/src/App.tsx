@@ -144,7 +144,9 @@ export function App() {
     <AppContext.Provider value={contextValue}>
       <div className="header-and-content">
         <Header />
-        <Routes />
+        <main id="main">
+          <Routes />
+        </main>
       </div>
       <Footer />
     </AppContext.Provider>
