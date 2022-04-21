@@ -53,10 +53,9 @@ const getChildren = ({ children }) => children;
 /**
  * Component containing dashboard
  */
-const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
+const PackageList = () => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
-  const [tab, setTab] = useState(startTab);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
@@ -66,6 +65,10 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
+  const startTab =
+    new URLSearchParams(location.search).get("startTab") ??
+    Workflow.PACKAGE_GROUP.SPA;
+  const [tab, setTab] = useState(startTab);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData?.roleList);
 
