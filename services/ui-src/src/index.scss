@@ -293,6 +293,10 @@ ul {
     margin-top: 0px;
     padding-top: 4px;
     padding-bottom: 4px;
+
+    &:focus-within {
+      @include focus-styles;
+    }
   }
 
   .uploader-input-label-active {
