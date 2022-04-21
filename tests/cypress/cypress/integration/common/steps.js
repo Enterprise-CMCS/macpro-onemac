@@ -562,7 +562,7 @@ And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
     cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-      OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.R00.12`);
+      OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.12`);
     });
   }
 );
@@ -587,6 +587,10 @@ And(
 
 And("Upload 1915 b 4 file", () => {
   OneMacSubmitNewWaiverActionPage.upload1915B4File();
+});
+
+And("upload Waiver Extension Request", () => {
+  OneMacRequestWaiverTemporaryExtension.uploadWaiverExtensionRequest();
 });
 
 And("Type {string} in Summary Box", (Comments) => {
@@ -1268,6 +1272,15 @@ And("verify rai response submitted exists", () => {
 });
 And("verify package in review exists", () => {
   OneMacPackagePage.verifypackageInReviewcheckBoxExists();
+});
+And("verify Submitted status checkbox exists", () => {
+  OneMacPackagePage.verifySubmittedCheckboxExists();
+});
+And("verify Withdrawn status checkbox exists", () => {
+  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+});
+And("verify RAI Issued status checkbox exists", () => {
+  OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
 And("click Package In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();
@@ -2100,4 +2113,13 @@ And("click withdraw button on the temp extension page", () => {
 });
 And("click on the Temporary Extension nav button", () => {
   OneMacPackageDetailsPage.clickTempExtensionsNavBtn();
+});
+And("copy the ID from the link in the first row", () => {
+  OneMacPackagePage.copyTheIDFromLinkInFirstRow();
+});
+And("search for the ID copied from the link in the first row", () => {
+  cy.fixture("savedID.json").then((data) => {
+    OneMacPackagePage.searchFor(data.savedID);
+  });
+  cy.wait(1000);
 });

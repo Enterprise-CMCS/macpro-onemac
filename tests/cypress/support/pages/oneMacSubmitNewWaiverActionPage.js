@@ -3,13 +3,13 @@ const actionTypeDropDown = "#action-type";
 const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
-const addFile1915b4 = "//tbody/tr[1]/td[2]/label[1]";
+const addFile1915b4 =
+  "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]";
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
 
 const existingWaiverNumber = "MD.11223";
-const whatIsMyWaiverIDLink =
-  "//body/reference[1]/div[1]/div[1]/div[4]/div[2]/form[1]/div[1]/div[3]/div[1]/div[2]/a[1]";
+const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 
 export class oneMacSubmitNewWaiverActionPage {
@@ -54,7 +54,7 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   upload1915B4File() {
-    cy.xpath(addFile1915b4).click();
+    cy.xpath(addFile1915b4).next("td").click();
     const filePath = "/files/15MB.pdf";
     cy.get(fileUpload1915b4).attachFile(filePath);
   }

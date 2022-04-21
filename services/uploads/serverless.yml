@@ -172,6 +172,15 @@ resources:
                 - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.txt
                 - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xls
                 - !Sub arn:aws:s3:::${self:service.name}-${self:custom.stage}-attachments-${AWS::AccountId}/*.xlsx
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource:
+                - !Sub ${AttachmentsBucket.Arn}/*
+                - !Sub ${AttachmentsBucket.Arn}
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
     LambdaInvokePermission:
       Type: AWS::Lambda::Permission
       Properties:
@@ -185,6 +194,26 @@ resources:
       Properties:
         BucketName: !Sub ${self:service.name}-${self:custom.stage}-avscan-${AWS::AccountId}
         AccessControl: Private
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
+    ClamDefsBucketPolicy:
+      Type: AWS::S3::BucketPolicy
+      Properties:
+        Bucket:
+          Ref: ClamDefsBucket
+        PolicyDocument:
+          Statement:                 
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource:
+                - !Sub ${ClamDefsBucket.Arn}/*
+                - !Sub ${ClamDefsBucket.Arn}
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
     BucketAVScanRole:
       Type: "AWS::IAM::Role"
       Properties:
@@ -273,6 +302,7 @@ resources:
                   Action:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
+                  
 
   # Print out the name of the bucket that is created
   Outputs:

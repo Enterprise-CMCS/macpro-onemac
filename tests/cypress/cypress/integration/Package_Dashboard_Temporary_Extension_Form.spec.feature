@@ -21,11 +21,10 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on Waiver Action
         And Click on Request Temporary Extension
         And Type Unique Valid Temporary Extension Number With 5 Characters
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And click on Packages
-        And click on the Waivers tab
         And search for Unique Valid Base Waiver Number with 12 Characters
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
@@ -36,11 +35,10 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on Waiver Action
         And Click on Request Temporary Extension
         And Type Unique Valid Temporary Extension Number With 5 Characters
-        And Upload 1915 b 4 file
+        And upload Waiver Extension Request
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And click on Packages
-        And click on the Waivers tab
         And search for Unique Valid Base Waiver Number with 12 Characters
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button

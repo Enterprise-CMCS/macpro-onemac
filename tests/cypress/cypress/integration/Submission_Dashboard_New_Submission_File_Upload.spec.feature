@@ -71,10 +71,10 @@ Feature: OY2_5869_FileUpload_Attachment_Types
                 And Type Additonal Information Comments
                 And Click on Submit Button
                 And verify submission Successful message
-                #     And verify SPA ID EXISTS
-                #     And verify submission date
-                #     And Verify submission type
-                #     And verify Submission List is Displayed
+                And verify SPA ID EXISTS
+                And verify submission date
+                And Verify submission type
+                And verify Submission List is Displayed
                 And Click on the SPA ID Link
                 And Verify "15MB.pdf" exists in the attachments
                 And Verify "textnotes.txt" exists in the attachments

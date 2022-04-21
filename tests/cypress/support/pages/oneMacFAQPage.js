@@ -12,7 +12,7 @@ const phoneNumber = '//dt[contains(text(),"Phone Number")]';
 const actualPhoneNumber = '//a[contains(text(),"(833) 228-2540")]';
 const email = '//dt[contains(text(),"Email")]';
 const actualEmail =
-  "//body/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/aside[1]/div[2]/dl[1]/div[2]/dd[1]/a[1]";
+  "//*[@id='faq-contact-info-box']//a[@href='mailto:OneMAC_Helpdesk@cms.hhs.gov']";
 //General Section
 const whatBrowsersCanIUseToAccessTheSystem = "#browsers-button";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -29,14 +29,13 @@ const isThisConsideredTheStateOfficialSubmissionValue =
 const whatAreTheOneMacUserRoles = "#onemac-roles-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const whatAreTheOneMacUserRolesValueStateSubmitter =
-  "//body[1]/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/table[1]/tbody[1]/tr[1]/td[1]";
+  "//*[@id='onemac-roles']//td[text()='State Submitter']";
 //Element is Xpath use cy.xpath instead of cy.get
 const whatAreTheOneMacUserRolesValueStateSystemAdministrator =
-  "//body[1]/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/table[1]/tbody[1]/tr[2]/td[1]";
+  "//*[@id='onemac-roles']//tr[2]/td[text()='State System Administrator']";
 //Element is Xpath use cy.xpath instead of cy.get
 const whatAreTheOneMacUserRolesValueCMSRoleApprover =
-  "//body[1]/reference[1]/div[1]/div[1]/div[3]/div[2]/div[1]/div[1]/div[1]/div[1]/div[4]/div[1]/table[1]/tbody[1]/tr[3]/td[1]";
-
+  "//*[@id='onemac-roles']//tr[3]//td[text()='CMS Role Approver']";
 //State Plan Amendment (SPA's) Section
 const whatFormatIsUsedToEnterASPAID = "#spa-id-format-button";
 const whatFormatIsUsedToEnterASPAIDValue = "#spa-id-format";
