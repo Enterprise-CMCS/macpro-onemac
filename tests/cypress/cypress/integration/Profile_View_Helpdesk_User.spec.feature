@@ -21,4 +21,3 @@ Feature: OY2_10093_Helpdesk_User
         And verify Role is Displayed
         And verify Last Modified is Displayed
         And verify Modified By is Displayed
-

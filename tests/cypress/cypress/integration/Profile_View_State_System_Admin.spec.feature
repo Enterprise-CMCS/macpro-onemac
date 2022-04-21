@@ -28,4 +28,3 @@ Feature: OY2_9990_State_System_Admin_Profile_Screen_Enhancements
         And Actual Email is Displayed
         And Phone Number text is Displayed
         And Phone Number Add Button is Displayed
-
