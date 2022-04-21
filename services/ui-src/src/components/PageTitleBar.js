@@ -54,6 +54,7 @@ const PageTitleBar = ({
         <div className="title-bar-left-content">
           {enableBackNav && (
             <Button
+              aria-label="Back to previous page"
               id="back-button"
               data-testid="back-button"
               className="title-bar-back-button"
