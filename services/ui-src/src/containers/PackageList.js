@@ -169,24 +169,25 @@ const PackageList = () => {
       const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
-      (packageConfig?.actionsByStatus ?? Workflow.defaultActionsByStatus)[
-        row.original.currentStatus
-      ]?.forEach((actionLabel) => {
-        const newItem = { label: actionLabel };
-        if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
-          newItem.value = "Withdrawn";
-          newItem.formatConfirmationMessage = ({ componentId }) =>
-            `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-          newItem.handleSelected = onPopupActionWithdraw;
-        } else {
-          newItem.value = {
-            link: packageConfig?.raiLink,
-            raiId: row.original.componentId,
-          };
-          newItem.handleSelected = onPopupActionRAI;
+      (Workflow.ACTIONS[row.original.componentType] ??
+        Workflow.defaultActionsByStatus)[row.original.currentStatus]?.forEach(
+        (actionLabel) => {
+          const newItem = { label: actionLabel };
+          if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
+            newItem.value = "Withdrawn";
+            newItem.formatConfirmationMessage = ({ componentId }) =>
+              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+            newItem.handleSelected = onPopupActionWithdraw;
+          } else {
+            newItem.value = {
+              link: packageConfig?.raiLink,
+              raiId: row.original.componentId,
+            };
+            newItem.handleSelected = onPopupActionRAI;
+          }
+          menuItems.push(newItem);
         }
-        menuItems.push(newItem);
-      });
+      );
 
       return (
         <PopupMenu
