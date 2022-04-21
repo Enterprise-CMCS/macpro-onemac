@@ -13,7 +13,7 @@ import classNames from "classnames";
 import {
   RESPONSE_CODE,
   ROUTES,
-  ChangeRequest,
+  RAI_ROUTE,
   Validate,
   Workflow,
   getUserRoleObj,
@@ -166,7 +166,6 @@ const PackageList = () => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
       (Workflow.ACTIONS[row.original.componentType] ??
@@ -180,7 +179,7 @@ const PackageList = () => {
             newItem.handleSelected = onPopupActionWithdraw;
           } else {
             newItem.value = {
-              link: packageConfig?.raiLink,
+              link: RAI_ROUTE[row.original.componentType],
               raiId: row.original.componentId,
             };
             newItem.handleSelected = onPopupActionRAI;

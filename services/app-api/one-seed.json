@@ -2502,7 +2502,7 @@
     "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
   },
   {
-    "pk": "VA.1117",
+    "pk": "VA.1117.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "changeHistory": [
@@ -2528,22 +2528,22 @@
         "clockEndTimestamp": null,
         "componentType": "waivernew",
         "expirationTimestamp": null,
-        "componentId": "VA.1117",
+        "componentId": "VA.1117.R00.00",
         "currentStatus": "Package In Review"
       },
       {
         "componentType": "waiverrenewal",
         "componentTimestamp": 1638473598762,
         "submitterName": "Angie Active",
-        "componentId": "VA.1117.R01"
+        "componentId": "VA.1117.R01.00"
       },
       {
         "componentType": "122",
         "clockEndTimestamp": null,
         "planType": "122",
-        "componentId": "VA.1117",
+        "componentId": "VA.1117.R00.00",
         "currentStatus": "Package In Review",
-        "packageId": "VA.1117",
+        "packageId": "VA.1117.R00.00",
         "stateCode": "VA",
         "expirationTimestamp": null,
         "packageStatus": "1",
@@ -2553,9 +2553,9 @@
         "componentType": "122",
         "clockEndTimestamp": null,
         "planType": "122",
-        "componentId": "VA.1117",
+        "componentId": "VA.1117.R00.00",
         "currentStatus": "Package In Review",
-        "packageId": "VA.1117",
+        "packageId": "VA.1117.R00.00",
         "stateCode": "VA",
         "expirationTimestamp": null,
         "packageStatus": "1",
@@ -2564,7 +2564,7 @@
       {
         "componentType": "waivernew",
         "additionalInformation": "Base waiver for testing the waiver renewals",
-        "componentId": "VA.1117",
+        "componentId": "VA.1117.R00.00",
         "attachments": [
           {
             "s3Key": "1638473559097/Attachment 3.1-A, #4b, Page 3f Track.pdf",
@@ -2579,10 +2579,10 @@
         "children": [
           {
             "componentType": "waiverrai",
-            "componentId": "VA.1117",
+            "componentId": "VA.1117.R00.00",
             "currentStatus": "Submitted",
             "submitterName": "Angie Active",
-            "displayId": "VA.1117",
+            "displayId": "VA.1117.R00.00",
             "submitterEmail": "statesubmitteractive@cms.hhs.local",
             "submissionTimestamp": 1643296612626
           }
@@ -2627,7 +2627,7 @@
         "url": "https://uploads-withdraw-actions-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c/1644847043902/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
       }
     ],
-    "GSI1sk": "VA.1117",
+    "GSI1sk": "VA.1117.R00.00",
     "additionalInformation": "Base waiver for testing the waiver renewals",
     "children": [
       {
@@ -2652,18 +2652,18 @@
     "submissionTimestamp": 1638473560098,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
-    "packageId": "VA.1117",
+    "packageId": "VA.1117.R00.00",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "waiverrenewal": [
       {
         "componentType": "waiverrenewal",
         "componentTimestamp": 1638473598762,
         "submitterName": "Angie Active",
-        "componentId": "VA.1117.R01"
+        "componentId": "VA.1117.R01.00"
       }
     ],
     "devComment": "Package added via seed data for application testing",
-    "componentId": "VA.1117",
+    "componentId": "VA.1117.R00.00",
     "waiveramendment": [
       {
         "componentType": "waiveramendment",
@@ -3802,7 +3802,7 @@
     "submissionId": "18858520-5dda-11ec-b9f1-03b9820992ae"
   },
   {
-    "pk": "MD.10330",
+    "pk": "MD.10330.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "changeHistory": [
@@ -3819,9 +3819,9 @@
         "componentType": "122",
         "clockEndTimestamp": null,
         "planType": "122",
-        "componentId": "MD.10330",
+        "componentId": "MD.10330.R00.00",
         "currentStatus": "SEATool Status: 1",
-        "packageId": "MD.10330",
+        "packageId": "MD.10330.R00.00",
         "stateCode": "MD",
         "expirationTimestamp": null,
         "packageStatus": "1",
@@ -3831,9 +3831,9 @@
         "componentType": "122",
         "clockEndTimestamp": null,
         "planType": "122",
-        "componentId": "MD.10330",
+        "componentId": "MD.10330.R00.00",
         "currentStatus": "SEATool Status: 1",
-        "packageId": "MD.10330",
+        "packageId": "MD.10330.R00.00",
         "stateCode": "MD",
         "expirationTimestamp": null,
         "packageStatus": "1",
@@ -3842,7 +3842,7 @@
       {
         "componentType": "waivernew",
         "additionalInformation": "This is just a test",
-        "componentId": "MD.10330",
+        "componentId": "MD.10330.R00.00",
         "attachments": [
           {
             "s3Key": "1636137484260/15MB.pdf",
@@ -3882,10 +3882,10 @@
     "children": [
       {
         "componentType": "waiverextension",
-        "componentId": "MD.10330",
+        "componentId": "MD.10330.R00.TE00",
         "currentStatus": "Submitted",
         "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD.10330",
+        "displayId": "MD.10330.R00.TE00",
         "submitterEmail": "statesubmitter@nightwatch.test",
         "submissionTimestamp": 1643138320362
       },
@@ -3899,14 +3899,14 @@
         "submissionTimestamp": 1643212119072
       }
     ],
-    "GSI1sk": "MD.10330",
+    "GSI1sk": "MD.10330.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1636137490470,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
-    "packageId": "MD.10330",
+    "packageId": "MD.10330.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.10330",
+    "componentId": "MD.10330.R00.00",
     "waiveramendment": [
       {
         "componentType": "waiveramendment",
@@ -3922,7 +3922,7 @@
     "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
   },
   {
-    "pk": "MD.10330.R01",
+    "pk": "MD.10330.R01.00",
     "sk": "waiverrenewal",
     "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
     "changeHistory": [
@@ -3938,7 +3938,7 @@
       {
         "componentType": "waiverrenewal",
         "additionalInformation": "renew",
-        "componentId": "MD.10330.R01",
+        "componentId": "MD.10330.R01.00",
         "attachments": [
           {
             "s3Key": "1643212168056/IMG_3202.jpg",
@@ -3975,7 +3975,7 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212211505/plain.pdf"
       }
     ],
-    "GSI1sk": "MD.10330.R01",
+    "GSI1sk": "MD.10330.R01.00",
     "additionalInformation": "renew",
     "children": [
       {
@@ -3991,9 +3991,9 @@
     "submissionTimestamp": 1643212170520,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
-    "packageId": "MD.10330.R01",
+    "packageId": "MD.10330.R01.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.10330.R01",
+    "componentId": "MD.10330.R01.00",
     "waiveramendment": [
       {
         "componentType": "waiveramendment",
@@ -4009,7 +4009,7 @@
     "submissionId": "8c52e960-7ebf-11ec-bd30-a11f4457ce6b"
   },
   {
-    "pk": "MI.10330",
+    "pk": "MI.10330.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "changeHistory": [
@@ -4017,9 +4017,9 @@
         "componentType": "122",
         "clockEndTimestamp": null,
         "planType": "122",
-        "componentId": "MI.10330",
+        "componentId": "MI.10330.R00.00",
         "currentStatus": "SEATool Status: 1",
-        "packageId": "MI.10330",
+        "packageId": "MI.10330.R00.00",
         "stateCode": "MI",
         "expirationTimestamp": null,
         "packageStatus": "1",
@@ -4031,7 +4031,7 @@
         "planType": "122",
         "componentId": "MI.10330",
         "currentStatus": "SEATool Status: 1",
-        "packageId": "MI.10330",
+        "packageId": "MI.10330.R00.00",
         "stateCode": "MI",
         "expirationTimestamp": null,
         "packageStatus": "1",
@@ -4040,7 +4040,7 @@
       {
         "componentType": "waivernew",
         "additionalInformation": "This is just a test",
-        "componentId": "MI.10330",
+        "componentId": "MI.10330.R00.00",
         "attachments": [
           {
             "s3Key": "1636137484260/15MB.pdf",
@@ -4053,10 +4053,10 @@
         "children": [
           {
             "componentType": "waiverextension",
-            "componentId": "MI.10330",
+            "componentId": "MI.10330.R00.TE01",
             "currentStatus": "Submitted",
             "submitterName": "Statesubmitter Nightwatch",
-            "displayId": "MI.10330",
+            "displayId": "MI.10330.R00.00",
             "submitterEmail": "statesubmitter@nightwatch.test",
             "submissionTimestamp": 1643138320362
           },
@@ -4090,26 +4090,26 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1636137484260/15MB.pdf"
       }
     ],
-    "GSI1sk": "MI.10330",
+    "GSI1sk": "MI.10330.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1636137490470,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
-    "packageId": "MI.10330",
+    "packageId": "MI.10330.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.10330",
+    "componentId": "MI.10330.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
   },
   {
-    "pk": "MD.83420",
+    "pk": "MD.83420.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "changeHistory": [
       {
         "componentType": "waivernew",
         "additionalInformation": "This is just a test",
-        "componentId": "MD.83420",
+        "componentId": "MD.83420.R00.00",
         "attachments": [
           {
             "s3Key": "1639507770586/15MB.pdf",
@@ -4142,34 +4142,34 @@
     "children": [
       {
         "componentType": "waiverrai",
-        "componentId": "MD.83420",
+        "componentId": "MD.83420.R00.00",
         "currentStatus": "Submitted",
         "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD.83420",
+        "displayId": "MD.83420.R00.00",
         "submitterEmail": "statesubmitter@nightwatch.test",
         "submissionTimestamp": 1643296612626
       }
     ],
-    "GSI1sk": "MD.83420",
+    "GSI1sk": "MD.83420.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639507775282,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
-    "packageId": "MD.83420",
+    "packageId": "MD.83420.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MD.83420",
+    "componentId": "MD.83420.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
   },
   {
-    "pk": "MI.83420",
+    "pk": "MI.83420.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "changeHistory": [
       {
         "componentType": "waivernew",
         "additionalInformation": "This is just a test",
-        "componentId": "MI.83420",
+        "componentId": "MI.83420.R00.00",
         "attachments": [
           {
             "s3Key": "1639507770586/15MB.pdf",
@@ -4217,14 +4217,14 @@
         "submissionTimestamp": 1647640764590
        }
     ],
-    "GSI1sk": "MI.83420",
+    "GSI1sk": "MI.83420.R00.00",
     "additionalInformation": "This is just a test",
     "submissionTimestamp": 1639507775282,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
-    "packageId": "MI.83420",
+    "packageId": "MI.83420.R00.00",
     "submitterEmail": "statesubmitter@nightwatch.test",
-    "componentId": "MI.83420",
+    "componentId": "MI.83420.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
   },
@@ -4234,7 +4234,7 @@
     "submitterId": "us-east-1:461e534a-6f0f-470c-a2da-d57e848125f5",
     "componentType": "waiverextension",
     "currentStatus": "Withdrawn",
-    "parentId": "MI.83420",
+    "parentId": "MI.83420.R00.00",
     "attachments": [
      {
       "s3Key": "1647640763552/attach1.txt",
@@ -4248,7 +4248,7 @@
     "GSI1sk": "waiverextension",
     "additionalInformation": "test 2222",
     "submissionTimestamp": 1647640764590,
-    "GSI1pk": "MI.83420",
+    "GSI1pk": "MI.83420.R00.00",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI.83420.R00.TE01",
     "submitterName": "Angie Active",
@@ -4260,7 +4260,7 @@
     "submitterId": "us-east-1:461e534a-6f0f-470c-a2da-d57e848125f5",
     "componentType": "waiverextension",
     "currentStatus": "Package In Review",
-    "parentId": "MI.83420",
+    "parentId": "MI.83420.R00.00",
     "attachments": [
      {
       "s3Key": "1647640763552/attach1.txt",
@@ -4274,21 +4274,21 @@
     "GSI1sk": "waiverextension",
     "additionalInformation": "test 3333",
     "submissionTimestamp": 1647640774590,
-    "GSI1pk": "MI.83420",
+    "GSI1pk": "MI.83420.R00.00",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MI.83420.R00.TE02",
     "submitterName": "Angie Active",
     "submissionId": "ac3d65b0-a706-11ec-9f30-6773b9268a62"
    },
   {
-    "pk": "MI.1110",
+    "pk": "MI.1110.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
     "changeHistory": [
      {
       "componentType": "waivernew",
       "additionalInformation": "Testing the details views, need more packages !",
-      "componentId": "MI.1110",
+      "componentId": "MI.1110.R00.00",
       "attachments": [
        {
         "s3Key": "1646850624434/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
@@ -4319,25 +4319,25 @@
       "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850624434/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
      }
     ],
-    "GSI1sk": "MI.1110",
+    "GSI1sk": "MI.1110.R00.00",
     "additionalInformation": "Testing the details views, need more packages !",
     "submissionTimestamp": 1646850615671,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MI.1110",
+    "componentId": "MI.1110.R00.00",
     "submitterName": "Angie Active",
     "submissionId": "fcb6d120-9fd6-11ec-b1b8-09aa0cc142ef"
    },
    {
-    "pk": "MI.1110.R01",
+    "pk": "MI.1110.R01.00",
     "sk": "waiverrenewal",
     "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
     "changeHistory": [
      {
       "componentType": "waiverrenewal",
       "additionalInformation": "Here is a renewal package for testing",
-      "componentId": "MI.1110.R01",
+      "componentId": "MI.1110.R01.00",
       "attachments": [
        {
         "s3Key": "1646850668600/Attachment 3.1-A, #4b, Page 3f Track.pdf",
@@ -4367,25 +4367,25 @@
       "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646850668600/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
      }
     ],
-    "GSI1sk": "MI.1110.R01",
+    "GSI1sk": "MI.1110.R01.00",
     "additionalInformation": "Here is a renewal package for testing",
     "submissionTimestamp": 1646850669468,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MI.1110.R01",
+    "componentId": "MI.1110.R01.00",
     "submitterName": "Angie Active",
     "submissionId": "16b2bbc0-9fd7-11ec-b1b8-09aa0cc142ef"
    },
    {
-    "pk": "VA.9999",
+    "pk": "VA.9999.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:8a1e227b-9469-415a-aa48-2a96befef6d5",
     "changeHistory": [
      {
       "componentType": "waivernew",
       "additionalInformation": "This one will get updated to RAI Issued.....",
-      "componentId": "VA.9999",
+      "componentId": "VA.9999.R00.00",
       "attachments": [
        {
         "s3Key": "1646852065050/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
@@ -4415,13 +4415,13 @@
       "url": "https://uploads-waiver-details-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A8a1e227b-9469-415a-aa48-2a96befef6d5/1646852065050/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
      }
     ],
-    "GSI1sk": "VA.9999",
+    "GSI1sk": "VA.9999.R00.00",
     "additionalInformation": "This one will get updated to RAI Issued.....",
     "submissionTimestamp": 1646852067074,
     "waiverAuthority": "1915(b)",
     "GSI1pk": "OneMAC#waiver",
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "VA.9999",
+    "componentId": "VA.9999.R00.00",
     "submitterName": "Angie Active",
     "submissionId": "579014f0-9fda-11ec-9e4d-ed0e09a4d794"
    }

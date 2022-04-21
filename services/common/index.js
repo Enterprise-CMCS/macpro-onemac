@@ -52,6 +52,17 @@ export const RESPONSE_CODE = {
   PACKAGE_WITHDRAW_SUCCESS: "WP000",
 };
 
+export const RAI_ROUTE = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [Workflow.ONEMAC_TYPE.SPA]: ROUTES.SPA_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "",
+};
+
 /**
  * Map Warning Message displayed on Waiver Form to message to include in CMS Email
  */
