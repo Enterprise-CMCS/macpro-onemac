@@ -49,6 +49,10 @@ resources:
         WebsiteConfiguration:
           IndexDocument: index.html
           ErrorDocument: index.html
+        BucketEncryption:
+          ServerSideEncryptionConfiguration:
+            - ServerSideEncryptionByDefault:
+                SSEAlgorithm: AES256
       DeletionPolicy: Delete
     BucketPolicy:
       Type: AWS::S3::BucketPolicy
@@ -68,6 +72,17 @@ resources:
                   Fn::GetAtt:
                     - CloudFrontOriginAccessIdentity
                     - S3CanonicalUserId
+            - Effect: Deny
+              Principal: "*"
+              Action: "s3:*"
+              Resource: !Join
+                - ""
+                - - "arn:aws:s3:::"
+                  - !Ref S3Bucket
+                  - /*
+              Condition:
+                Bool: 
+                  "aws:SecureTransport": "false"
         Bucket: !Ref S3Bucket
     CloudFrontWebAcl:
       Type: AWS::WAFv2::WebACL

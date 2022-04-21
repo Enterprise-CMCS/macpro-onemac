@@ -1,16 +1,10 @@
 const profileInformation = "#profileInfoHeader";
 //Element is Xpath use cy.xpath instead of cy.get
 const fullNameHeader = '//h3[contains(text(),"Full Name")]';
-const fullName =
-  "div.header-and-content:nth-child(1) div.profile-container div.profile-content div.left-column div.ds-c-review:nth-child(2) div.ds-u-margin-right--2 > div.ds-c-review__body";
 //Element is Xpath use cy.xpath instead of cy.get
 const roleHeader = '//h3[contains(text(),"Role")]';
-const role =
-  "div.header-and-content:nth-child(1) div.profile-container div.profile-content div.left-column div.ds-c-review:nth-child(3) div.ds-u-margin-right--2 > div.ds-c-review__body";
 //Element is Xpath use cy.xpath instead of cy.get
 const emailHeader = '//h3[contains(text(),"Email")]';
-const email =
-  "div.header-and-content:nth-child(1) div.profile-container div.profile-content div.left-column div.ds-c-review:nth-child(4) div.ds-u-margin-right--2 > div.ds-c-review__body";
 //Element is Xpath use cy.xpath instead of cy.get
 const phoneNumberHeader = '//span[contains(text(),"Phone Number")]';
 const phoneNumberAddBTN = "#addButton";
@@ -32,19 +26,19 @@ export class oneMacMyProfilePage {
     cy.xpath(fullNameHeader).should("be.visible");
   }
   verifyFullName() {
-    cy.get(fullName).should("be.visible");
+    cy.xpath(fullNameHeader).next("div").should("be.visible");
   }
   verifyRoleHeader() {
     cy.xpath(roleHeader).should("be.visible");
   }
   verifyRole() {
-    cy.get(role).should("be.visible");
+    cy.xpath(roleHeader).next("div").should("be.visible");
   }
   verifyEmailHeader() {
     cy.xpath(emailHeader).should("be.visible");
   }
   verifyEmail() {
-    cy.get(email).should("be.visible");
+    cy.xpath(emailHeader).next("div").should("be.visible");
   }
   verifyPhoneNumberHeader() {
     cy.xpath(phoneNumberHeader).should("be.visible");

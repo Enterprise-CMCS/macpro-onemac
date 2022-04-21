@@ -49,6 +49,10 @@ const testEvent = {
   body: '{"doneByEmail":"testDoneByEmail","email":"testEmail","role":"testRole", "territory":"MD", "status": "active"}',
 };
 
+const testRevokedEvent = {
+  body: '{"doneByEmail":"testDoneByEmail","email":"testDoneByEmail","role": "defaultcmsuser", "territory":"MD", "status": "revoked"}',
+};
+
 it("builds the access change notice", () => {
   const expectedResponse = {
     fromAddressSource: "userAccessEmailSource",
@@ -184,4 +188,21 @@ it("returns User Submitted when complete", async () => {
   };
 
   expect(main(testEvent)).resolves.toStrictEqual(expectedReturn);
+});
+
+it("returns User Submitted when complete for default CMS users", async () => {
+  sendEmail.mockImplementationOnce(() => {
+    throw "an Exception!";
+  });
+
+  const expectedReturn = {
+    statusCode: 200,
+    body: JSON.stringify(RESPONSE_CODE.USER_SUBMITTED),
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Credentials": true,
+    },
+  };
+
+  expect(main(testRevokedEvent)).resolves.toStrictEqual(expectedReturn);
 });

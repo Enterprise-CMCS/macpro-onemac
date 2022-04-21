@@ -858,7 +858,6 @@ article.form-container {
   border-radius: 3px;
   box-shadow: 0px 0px 24px rgba(0, 0, 0, 0.05);
   width: 100%;
-  min-height: 485px;
 }
 
 .dashboard-container {
@@ -1262,27 +1261,12 @@ article.form-container {
 // MultiSelectDropDown component
 
 .multi-select-dropdown-container {
-  height: 440px;
-  position: relative;
-
-  .multi-select-title {
-    font-family: Open Sans;
-    font-weight: bold;
-    font-size: 24px;
-  }
-
   .multi-select-bottom-section {
     @extend .ds-u-padding-top--2;
     @extend .ds-u-display--flex;
     @extend .ds-u-flex-direction--column;
     @extend .ds-u-justify-content--end;
-    border-top: 2px solid $color-gray-lighter;
     width: 100%;
-
-    &.profile-multi-select {
-      position: absolute;
-      top: 350px;
-    }
 
     .multi-select-error-message {
       @extend .ds-c-field__hint;
@@ -1296,45 +1280,15 @@ article.form-container {
   }
 }
 
+.multi-select-button-container button:not(:last-child) {
+  margin-right: 1ch;
+}
+
 // icon in input field of multiselect component
 .multi-search-icon {
   position: relative;
   top: 33px;
   left: 15px;
-}
-
-.state-dropdown-select {
-  // override style for input box of selected content in react-dropdown-select component
-  .react-dropdown-select-content {
-    overflow-y: auto;
-    overflow-x: hidden;
-    max-height: 105px;
-  }
-
-  // override style for selected content in input box in react-dropdown-select component
-  .react-dropdown-select-option {
-    align-items: center;
-    background-color: $color-primary;
-    font-family: Open Sans;
-    font-style: normal;
-    font-weight: bold;
-    height: 28px;
-    padding: 8px;
-  }
-
-  // override style for selected options within dropdown list in react-dropdown-select component
-  .react-dropdown-select-dropdown .react-dropdown-select-item-selected {
-    background-color: $color-primary;
-    font-weight: 700;
-  }
-
-  &.state-dropdown-select-no-selection {
-    // override style for position of placeholder text in input box react-dropdown-select component
-    .react-dropdown-select-input {
-      position: relative;
-      left: 25px;
-    }
-  }
 }
 
 // Footer

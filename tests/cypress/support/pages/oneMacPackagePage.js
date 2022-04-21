@@ -191,10 +191,9 @@ const withdrawPackageBtn = "//li[text()='Withdraw'][@aria-disabled='false']";
 const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageRowOneSPAIDLink = "//td[@id='componentId-0']//a";
+const packageRowOneIDLink = "//td[@id='componentId-0']//a";
 const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
 const respondToRAIBtn = "//li[text()='Respond to RAI'][@aria-disabled='false']";
-const packageRowOneWaiverNumLink = "//td[@id='componentId-0']//a";
 const waiverNumLink = (n) => `//a[text()="${n}"]`;
 
 export class oneMacPackagePage {
@@ -841,7 +840,7 @@ export class oneMacPackagePage {
     );
   }
   clickSPAIDLinkInFirstRow() {
-    cy.xpath(packageRowOneSPAIDLink).click();
+    cy.xpath(packageRowOneIDLink).click();
   }
   clickPackageRowOneActionsBtn() {
     cy.xpath(packageRowOneActionsBtn).click();
@@ -850,13 +849,21 @@ export class oneMacPackagePage {
     cy.xpath(respondToRAIBtn).click();
   }
   clickWaiverNumberLinkInFirstRow() {
-    cy.xpath(packageRowOneWaiverNumLink).click();
+    cy.xpath(packageRowOneIDLink).click();
   }
   clickLinkForWaiver(n) {
     cy.xpath(waiverNumLink(n)).first().click();
   }
   verifyIDNumberInFirstRowIs(id) {
-    cy.xpath(packageRowOneWaiverNumLink).contains(id);
+    cy.xpath(packageRowOneIDLink).contains(id);
+  }
+  copyTheIDFromLinkInFirstRow() {
+    cy.xpath(packageRowOneIDLink)
+      .invoke("text")
+      .then((text) => {
+        var f = "./fixtures/savedID.json";
+        cy.writeFile(f, { savedID: text });
+      });
   }
 }
 export default oneMacPackagePage;

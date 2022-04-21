@@ -27,7 +27,7 @@ it("returns null if user not found", async () => {
     return {};
   });
 
-  expect(getUser("email@test.com"))
+  await expect(getUser("email@test.com"))
     .resolves.toStrictEqual(null)
     .catch((error) => {
       console.log("caught test error: ", error);
@@ -35,7 +35,7 @@ it("returns null if user not found", async () => {
 });
 
 it("returns the user data", async () => {
-  expect(getUser("email@test.com"))
+  await expect(getUser("email@test.com"))
     .resolves.toStrictEqual({ ...testContactDetail, roleList: testAccessList })
     .catch((error) => {
       console.log("caught test error: ", error);
@@ -57,8 +57,43 @@ it("handles the lambda event", async () => {
     },
   };
 
-  expect(main(testEvent))
+  await expect(main(testEvent))
     .resolves.toStrictEqual(expectedReturn)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("tries a second query if first returns no results", async () => {
+  dynamoDb.query
+    .mockImplementationOnce(() => {
+      return {};
+    })
+    .mockImplementationOnce(() => {
+      return {
+        Items: testAccessList,
+      };
+    });
+
+  await expect(getUser("email@test.com"))
+    .resolves.toStrictEqual({
+      email: "testEmail",
+      fullName: "My Name",
+      roleList: undefined,
+      validRoutes: "accesses",
+    })
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
+
+it("handles exceptions", async () => {
+  dynamoDb.query.mockImplementationOnce(() => {
+    throw "dynamo Exception";
+  });
+
+  await expect(getUser("email@test.com"))
+    .rejects.toEqual("dynamo Exception")
     .catch((error) => {
       console.log("caught test error: ", error);
     });
