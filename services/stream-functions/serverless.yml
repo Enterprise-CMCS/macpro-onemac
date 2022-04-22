@@ -78,7 +78,7 @@ functions:
           arn: ${self:custom.tableStreamArn}
           startingPosition: LATEST
           maximumRetryAttempts: 2
-          enabled: ${self:custom.seaToolWritingEnabled.${opt:stage}, self.seaToolWritingEnabled.other}
+          enabled: ${self:custom.seaToolWritingEnabled.${opt:stage}, self:custom.seaToolWritingEnabled.other}
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
