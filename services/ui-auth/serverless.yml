@@ -7,6 +7,10 @@
 # The `service` block is the name of the service
 service: ui-auth
 
+frameworkVersion: "3"
+
+useDotenv: true
+
 plugins:
   - serverless-s3-bucket-helper
 

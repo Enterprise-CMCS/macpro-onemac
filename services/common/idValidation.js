@@ -1,4 +1,4 @@
-import { ONEMAC_TYPE } from "./workflow";
+import { ONEMAC_TYPE } from "./workflow.js";
 
 // const defaultSPARegex =
 //   "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)";
