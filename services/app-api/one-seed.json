@@ -2505,95 +2505,6 @@
     "pk": "VA.1117.R00.00",
     "sk": "waivernew",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "changeHistory": [
-      {
-        "componentType": "waiveramendment",
-        "componentId": "VA.1117.R00.M02",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "R00.02",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1644847044969
-      },
-      {
-        "componentType": "waiveramendment",
-        "componentId": "VA.1117.R00.M01",
-        "currentStatus": "Submitted",
-        "submitterName": "Angie Active",
-        "displayId": "R00.01",
-        "submitterEmail": "statesubmitteractive@cms.hhs.local",
-        "submissionTimestamp": 1644846937626
-      },
-      {
-        "clockEndTimestamp": null,
-        "componentType": "waivernew",
-        "expirationTimestamp": null,
-        "componentId": "VA.1117.R00.00",
-        "currentStatus": "Package In Review"
-      },
-      {
-        "componentType": "waiverrenewal",
-        "componentTimestamp": 1638473598762,
-        "submitterName": "Angie Active",
-        "componentId": "VA.1117.R01.00"
-      },
-      {
-        "componentType": "122",
-        "clockEndTimestamp": null,
-        "planType": "122",
-        "componentId": "VA.1117.R00.00",
-        "currentStatus": "Package In Review",
-        "packageId": "VA.1117.R00.00",
-        "stateCode": "VA",
-        "expirationTimestamp": null,
-        "packageStatus": "1",
-        "packageType": "waivernew"
-      },
-      {
-        "componentType": "122",
-        "clockEndTimestamp": null,
-        "planType": "122",
-        "componentId": "VA.1117.R00.00",
-        "currentStatus": "Package In Review",
-        "packageId": "VA.1117.R00.00",
-        "stateCode": "VA",
-        "expirationTimestamp": null,
-        "packageStatus": "1",
-        "packageType": "waivernew"
-      },
-      {
-        "componentType": "waivernew",
-        "additionalInformation": "Base waiver for testing the waiver renewals",
-        "componentId": "VA.1117.R00.00",
-        "attachments": [
-          {
-            "s3Key": "1638473559097/Attachment 3.1-A, #4b, Page 3f Track.pdf",
-            "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
-            "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-            "contentType": "application/pdf",
-            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1638473559097/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
-          }
-        ],
-        "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278",
-        "waiverAuthority": "1915(b)(4)",
-        "children": [
-          {
-            "componentType": "waiverrai",
-            "componentId": "VA.1117.R00.00",
-            "currentStatus": "Submitted",
-            "submitterName": "Angie Active",
-            "displayId": "VA.1117.R00.00",
-            "submitterEmail": "statesubmitteractive@cms.hhs.local",
-            "submissionTimestamp": 1643296612626
-          }
-        ],
-        "currentStatus": "Submitted",
-        "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-        "submitterName": "Angie Active",
-        "submissionTimestamp": 1638473560098,
-        "submitterEmail": "statesubmitteractive@cms.hhs.local"
-      }
-    ],
     "clockEndTimestamp": 1645990706000,
     "componentType": "waivernew",
     "currentStatus": "Submitted",
@@ -2630,6 +2541,15 @@
     "GSI1sk": "VA.1117.R00.00",
     "additionalInformation": "Base waiver for testing the waiver renewals",
     "children": [
+      {
+        "componentType": "waiverrai",
+        "componentId": "VA.1117.R00.00",
+        "currentStatus": "Submitted",
+        "submitterName": "Angie Active",
+        "displayId": "VA.1117.R00.00",
+        "submitterEmail": "statesubmitteractive@cms.hhs.local",
+        "submissionTimestamp": 1643296612626
+      },
       {
         "componentType": "waiveramendment",
         "componentId": "VA.1117.R00.M01",
@@ -4160,6 +4080,46 @@
     "componentId": "MD.83420.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945"
+  },
+  {
+    "pk": "MD.83420.R00.00",
+    "sk": "waiverrai#1643296612626",
+    "componentType": "waiverrai",
+    "componentId": "MD.83420.R00.00",
+    "currentStatus": "Submitted",
+    "submitterName": "Statesubmitter Nightwatch",
+    "displayId": "MD.83420.R00.00",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "submissionTimestamp": 1643296612626,
+    "attachments": [
+      {
+        "s3Key": "1639507770586/15MB.pdf",
+        "filename": "15MB.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
+      }
+    ]
+  },
+  {
+    "pk": "MI.83420.R00.00",
+    "sk": "waiverrai#1643296612626",
+    "componentType": "waiverrai",
+    "componentId": "MI.83420.R00.00",
+    "currentStatus": "Submitted",
+    "submitterName": "Statesubmitter Nightwatch",
+    "displayId": "MI.83420.R00.00",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "submissionTimestamp": 1643296612626,
+    "attachments": [
+      {
+        "s3Key": "1639507770586/15MB.pdf",
+        "filename": "15MB.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf"
+      }
+    ]
   },
   {
     "pk": "MI.83420.R00.00",
