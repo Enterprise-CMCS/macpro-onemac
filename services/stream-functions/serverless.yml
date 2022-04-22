@@ -36,6 +36,8 @@ custom:
       concurrency: 5
       folderName: node_modules/serverless-bundle/src/_warmup
       cleanFolder: false
+    configureConnectors:
+      enabled: false
   tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
@@ -115,8 +117,6 @@ functions:
       sinkPrefix: spa-${self:custom.stage}-
     maximumRetryAttempts: 2
     timeout: 120
-    warmup:
-      enabled: false
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup
