@@ -1,20 +1,16 @@
 import { DateTime } from "luxon";
-import * as uuid from "uuid";
 
 import {
-  ChangeRequest,
   getUserRoleObj,
   getActiveTerritories,
+  RESPONSE_CODE,
+  Workflow,
 } from "cmscommonlib";
 
-import getChangeRequestFunctions, {
-  validateSubmission,
-} from "./changeRequest/changeRequest-util";
-import dynamoDb from "./libs/dynamodb-lib";
-import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
-import { getUser } from "./getUser";
-import newSubmission from "./utils/newSubmission";
+import dynamoDb from "../libs/dynamodb-lib";
+// import sendEmail from "../libs/email-lib";
+import { getUser } from "../getUser";
+import newSubmission from "../utils/newSubmission";
 
 /**
  * Submitting a Form uses the configs from each form type to do the following:
@@ -63,34 +59,34 @@ export const processAny = async (event, config) => {
     }
 
     // map the changeRequest functions from the data.type
-    crFunctions = getChangeRequestFunctions(data.type);
+    // crFunctions = getChangeRequestFunctions(data.type);
 
-    // check for submission-specific validation (uses database)
-    const validationResponse = await crFunctions.fieldsValid(data);
-    console.log("validation Response: ", validationResponse);
+    // // check for submission-specific validation (uses database)
+    // const validationResponse = await crFunctions.fieldsValid(data);
+    // console.log("validation Response: ", validationResponse);
 
-    if (validationResponse.areFieldsValid === false) {
-      console.log("Message from fieldsValid: ", validationResponse);
-      throw validationResponse.whyNot;
-    }
+    // if (validationResponse.areFieldsValid === false) {
+    //   console.log("Message from fieldsValid: ", validationResponse);
+    //   throw validationResponse.whyNot;
+    // }
 
-    if (config.overrideType) data.type = config.overrideType;
-    if (config.overrideActionType) data.actionType = config.overrideActionType;
+    // if (config.overrideType) data.type = config.overrideType;
+    // if (config.overrideActionType) data.actionType = config.overrideActionType;
 
-    await dynamoDb.put({
-      TableName: process.env.tableName,
-      Item: data,
-    });
+    // await dynamoDb.put({
+    //   TableName: process.env.tableName,
+    //   Item: data,
+    // });
   } catch (error) {
     console.log("Error is: ", error);
     return error;
   }
 
   // Now send the CMS email
-  await sendEmail(crFunctions.getCMSEmail(data));
+  // await sendEmail(crFunctions.getCMSEmail(data));
 
   //We successfully sent the submission email.  Update the record to reflect that.
-  data.state = SUBMISSION_STATES.SUBMITTED;
+  data.state = Workflow.ONEMAC_STATUS.SUBMITTED;
   data.submittedAt = Date.now();
 
   // record the current end timestamp (can be start/stopped/changed)
@@ -109,7 +105,7 @@ export const processAny = async (event, config) => {
   //An error sending the user email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
-    await sendEmail(crFunctions.getStateEmail(data));
+    // await sendEmail(crFunctions.getStateEmail(data));
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user acknowledgement email.",

@@ -11,7 +11,7 @@ import "isomorphic-fetch";
 import "rsuite/dist/rsuite.min.css";
 import "./index.scss";
 import { App } from "./App";
-import { BrowserRouter as Router } from "react-router-dom";
+import { BrowserRouter } from "react-router-dom";
 import { Amplify } from "aws-amplify";
 import { getApplicationNode } from "./utils";
 import config from "./utils/config";
@@ -52,8 +52,8 @@ let amplifyConfig = {
 Amplify.configure(amplifyConfig);
 
 ReactDOM.render(
-  <Router>
+  <BrowserRouter>
     <App />
-  </Router>,
+  </BrowserRouter>,
   getApplicationNode()
 );

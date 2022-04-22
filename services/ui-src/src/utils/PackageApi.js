@@ -1,9 +1,81 @@
 import { API, Auth } from "aws-amplify";
+import { Workflow } from "cmscommonlib";
 import handleApiError from "../libs/apiErrorHandler";
+
+const API_CALL = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.SPA]: "submitMedicaidSPA",
+  [Workflow.ONEMAC_TYPE.SPA_RAI]: "submitSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "submitBaseWaiver",
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitAppendixKAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "submitWaiverExtension",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "submitWaiverAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
+};
+
 /**
  * Singleton class to perform operations with the change request backend.
  */
 class PackageApi {
+  /**
+   * Submit a change request to be saved by the backend.
+   * @param {Object} data the change request data
+   * @param {Array} uploadsList an array with the information on the already uploaded files
+   * @returns the submitted change request
+   */
+  async submitToAPI(data, uploadsList) {
+    try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      console.log(
+        "userAuth payload is: ",
+        userAuth.signInUserSession.idToken.payload
+      );
+      //Normalize the user data.
+      data.submitterEmail =
+        userAuth.signInUserSession.idToken.payload.email.toLowerCase();
+      data.submitterName = {
+        firstName: userAuth.signInUserSession.idToken.payload.given_name,
+        lastName: userAuth.signInUserSession.idToken.payload.family_name,
+      };
+      data.uploads = uploadsList;
+    } catch (error) {
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
+    }
+
+    if (
+      !data ||
+      !uploadsList ||
+      !data.type ||
+      uploadsList.length === 0 ||
+      !data.submitterEmail
+    ) {
+      console.log(
+        "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
+        data,
+        uploadsList
+      );
+      throw new Error("Missing required data or uploads");
+    }
+    console.log("posting to: ", API_CALL[data.componentType]);
+    try {
+      return await API.post("oneMacAPI", `/${API_CALL[data.componentType]}`, {
+        body: data,
+      });
+    } catch (error) {
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
+    }
+  }
+
   /**
    * Fetch a specific package from the backend.
    * @param {string} id the ID of the package to fetch

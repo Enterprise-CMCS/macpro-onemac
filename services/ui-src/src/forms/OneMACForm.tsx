@@ -20,6 +20,7 @@ import config from "../utils/config";
 import LoadingOverlay from "../components/LoadingOverlay";
 import FileUploader from "../components/FileUploader";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+import PackageApi from "../utils/PackageApi";
 import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
@@ -310,7 +311,7 @@ export const OneMACForm: React.FC = () => {
         if (uploader.current) {
           try {
             const uploadedList = await uploader.current.uploadFiles();
-            const returnCode = await ChangeRequestDataApi.submit(
+            const returnCode = await PackageApi.submitToAPI(
               { ...changeRequest, transmittalNumberWarningMessage },
               uploadedList
             );

@@ -1,21 +1,6 @@
-import { DateTime } from "luxon";
-import * as uuid from "uuid";
-
-import {
-  ChangeRequest,
-  getUserRoleObj,
-  getActiveTerritories,
-} from "cmscommonlib";
-
-import getChangeRequestFunctions, {
-  validateSubmission,
-} from "./changeRequest/changeRequest-util";
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
-import sendEmail from "./libs/email-lib";
-import { RESPONSE_CODE } from "cmscommonlib";
-import { getUser } from "./getUser";
-import newSubmission from "./utils/newSubmission";
+import handler from "../libs/handler-lib";
+import { processAny } from "./processAny";
+import { defaultFormConfig } from "./defaultFormConfig";
 
 /**
  * Submitting a Base Waiver MUST do the following to return SUCCESS:
@@ -32,6 +17,10 @@ import newSubmission from "./utils/newSubmission";
 const baseWaiverConfig = {
   ...defaultFormConfig,
   typeLabel: "1915(b) Base Waiver",
+  validateSubmission: (data) => {
+    if (data) return true;
+    return null;
+  },
 };
 
 export const main = handler(async (event) => {
