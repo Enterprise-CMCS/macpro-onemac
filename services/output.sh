@@ -1,5 +1,5 @@
 # Script to obtain CloudFormation information from AWS.
-
+echo 'start'
 if [ $# -lt 2 ]
 then
    echo "ERROR: Missing arguments."
@@ -15,8 +15,8 @@ if [ "$output" == "url" ]; then
   output="CloudFrontEndpointUrl"
 fi
 
-service_output=`cd $service && serverless info --stage $stage -v`
-
+service_output=`cd $service && serverless info --stage $stage --verbose`
+echo "$service_output"
 if [ $? -ne 0 ]
 then
   >&2 echo "ERROR trying to obtain serverless app information".
