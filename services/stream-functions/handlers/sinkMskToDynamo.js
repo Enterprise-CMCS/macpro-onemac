@@ -64,7 +64,7 @@ function createTestEvent(event, value) {
     "topic": event.topic,
     "partition": event.partition,
     "offset": event.offset,
-    "value": JSON.stringify({ 
+    "value": JSON.stringify({
       "payload": {
         "ID_Number": value.payload.ID_Number,
         "Submission_Date": value.payload.Submission_Date,
@@ -99,7 +99,7 @@ function myHandler(event) {
   if (!pk || !eventId) return;
 
   // use the offset as a version number/event tracker... highest id is most recent
-  const sk = `SEATool#${table}#${eventId}`
+  const sk = `SEATool#${table}#${eventId}`;
 
   // put the SEATool Entry - overwrites if already exists
   const updateSEAToolParams = {
@@ -117,50 +117,51 @@ function myHandler(event) {
         componentType: SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[value.payload.Plan_Type],
         componentId: pk,
         expirationTimestamp: value.payload.End_Date,
-      }
+      };
 
-    // update OneMAC Component
-    const updatePk = SEAToolData.componentId;
-    const updateSk = SEAToolData.componentType;
-    const updatePackageParams = {
-      TableName: process.env.oneMacTableName,
-      Key: {
-        pk: updatePk,
-        sk: updateSk,
-      },
-      ConditionExpression: "pk = :pkVal AND sk = :skVal",
-      UpdateExpression:
-        "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
-      ExpressionAttributeValues: {
-        ":pkVal": updatePk,
-        ":skVal": updateSk,
-        ":newChange": [SEAToolData],
-        ":emptyList": [],
-      },
-    };
+      // update OneMAC Component
+      const updatePk = SEAToolData.componentId;
+      const updateSk = SEAToolData.componentType;
+      const updatePackageParams = {
+        TableName: process.env.oneMacTableName,
+        Key: {
+          pk: updatePk,
+          sk: updateSk,
+        },
+        ConditionExpression: "pk = :pkVal AND sk = :skVal",
+        UpdateExpression:
+          "SET changeHistory = list_append(:newChange, if_not_exists(changeHistory, :emptyList))",
+        ExpressionAttributeValues: {
+          ":pkVal": updatePk,
+          ":skVal": updateSk,
+          ":newChange": [SEAToolData],
+          ":emptyList": [],
+        },
+      };
 
-    topLevelUpdates.forEach((attributeName) => {
-      if (SEAToolData[attributeName]) {
-        const newLabel = `:new${attributeName}`;
-        updatePackageParams.ExpressionAttributeValues[newLabel] =
-        SEAToolData[attributeName];
-        if (Array.isArray(SEAToolData[attributeName]))
-          updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-        else
-          updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-      }
-    });
-  
-    ddb.update(updatePackageParams, function(err, data) {
-      if (err) {
-        if (err.code === "ConditionalCheckFailedException")
-          console.log("Not a OneMAC package: ", updatePk);
-        else 
-          console.log("Error", err);
-      } else {
-        console.log("Update Success!  Returned data is: ", data);
-        console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-    }});
+      topLevelUpdates.forEach((attributeName) => {
+        if (SEAToolData[attributeName]) {
+          const newLabel = `:new${attributeName}`;
+          updatePackageParams.ExpressionAttributeValues[newLabel] =
+          SEAToolData[attributeName];
+          if (Array.isArray(SEAToolData[attributeName]))
+            updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
+          else
+            updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+        }
+      });
+
+      ddb.update(updatePackageParams, function(err, data) {
+        if (err) {
+          if (err.code === "ConditionalCheckFailedException")
+            console.log("Not a OneMAC package: ", updatePk);
+          else
+            console.log("Error", err);
+        } else {
+          console.log("Update Success!  Returned data is: ", data);
+          console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
+        }
+      });
     }
   });
 }

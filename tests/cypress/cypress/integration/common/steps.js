@@ -562,7 +562,7 @@ And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
     cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-      OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.R00.12`);
+      OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.12`);
     });
   }
 );
@@ -1272,6 +1272,15 @@ And("verify rai response submitted exists", () => {
 });
 And("verify package in review exists", () => {
   OneMacPackagePage.verifypackageInReviewcheckBoxExists();
+});
+And("verify Submitted status checkbox exists", () => {
+  OneMacPackagePage.verifySubmittedCheckboxExists();
+});
+And("verify Withdrawn status checkbox exists", () => {
+  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+});
+And("verify RAI Issued status checkbox exists", () => {
+  OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
 And("click Package In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();

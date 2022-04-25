@@ -10,7 +10,7 @@ describe("Medicaid SPA Page 508 test", () => {
       "//p[contains(text(),'Submit a new Medicaid & CHIP State Plan Amendments')]"
     ).click();
     cy.xpath(
-      "//body[1]/reference[1]/div[1]/div[1]/div[4]/ul[1]/li[1]/a[1]/div[1]/h4[1]"
+      "//p[contains(text(),'Submit new Medicaid State Plan Amendment')]"
     ).click();
   });
 

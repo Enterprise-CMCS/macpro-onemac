@@ -13,7 +13,7 @@ import classNames from "classnames";
 import {
   RESPONSE_CODE,
   ROUTES,
-  ChangeRequest,
+  RAI_ROUTE,
   Validate,
   Workflow,
   getUserRoleObj,
@@ -53,10 +53,9 @@ const getChildren = ({ children }) => children;
 /**
  * Component containing dashboard
  */
-const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
+const PackageList = () => {
   const dashboardRef = useRef();
   const [packageList, setPackageList] = useState([]);
-  const [tab, setTab] = useState(startTab);
   const [isLoading, setIsLoading] = useState(true);
   const {
     userStatus,
@@ -66,6 +65,10 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
   } = useAppContext();
   const history = useHistory();
   const location = useLocation();
+  const startTab =
+    new URLSearchParams(location.search).get("startTab") ??
+    Workflow.PACKAGE_GROUP.SPA;
+  const [tab, setTab] = useState(startTab);
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const userRoleObj = getUserRoleObj(userData?.roleList);
 
@@ -163,27 +166,27 @@ const PackageList = ({ startTab = Workflow.PACKAGE_GROUP.SPA }) => {
 
   const renderActions = useCallback(
     ({ row }) => {
-      const packageConfig = ChangeRequest.CONFIG[row.original.componentType];
       let menuItems = [];
 
-      (packageConfig?.actionsByStatus ?? Workflow.defaultActionsByStatus)[
-        row.original.currentStatus
-      ]?.forEach((actionLabel) => {
-        const newItem = { label: actionLabel };
-        if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
-          newItem.value = "Withdrawn";
-          newItem.formatConfirmationMessage = ({ componentId }) =>
-            `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-          newItem.handleSelected = onPopupActionWithdraw;
-        } else {
-          newItem.value = {
-            link: packageConfig?.raiLink,
-            raiId: row.original.componentId,
-          };
-          newItem.handleSelected = onPopupActionRAI;
+      (Workflow.ACTIONS[row.original.componentType] ??
+        Workflow.defaultActionsByStatus)[row.original.currentStatus]?.forEach(
+        (actionLabel) => {
+          const newItem = { label: actionLabel };
+          if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
+            newItem.value = "Withdrawn";
+            newItem.formatConfirmationMessage = ({ componentId }) =>
+              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
+            newItem.handleSelected = onPopupActionWithdraw;
+          } else {
+            newItem.value = {
+              link: RAI_ROUTE[row.original.componentType],
+              raiId: row.original.componentId,
+            };
+            newItem.handleSelected = onPopupActionRAI;
+          }
+          menuItems.push(newItem);
         }
-        menuItems.push(newItem);
-      });
+      );
 
       return (
         <PopupMenu

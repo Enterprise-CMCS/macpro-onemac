@@ -1,4 +1,4 @@
-import { TYPE } from "./changeRequest";
+import { TYPE } from "./changeRequest.js";
 
 export const ONEMAC_TYPE = {
   ...TYPE,

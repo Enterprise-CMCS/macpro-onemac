@@ -13,16 +13,16 @@ Feature: OY2_13234_CHIP_SPA_RAI
     And Type Additonal Information Comments
     And Click on Submit Button
     And verify submission Successful message
-    # And verify CHIP ID EXISTS
-    # And verify submission date
-    # And Verify submission CHIP type
+    And verify CHIP ID EXISTS
+    And verify submission date
+    And Verify submission CHIP type
     And click on CHIP Respond to RAI
     And Add file for Revised Amended State Plan Language
     And Add file for Official RAI Response
     And Add Additional Comments
     And Click on Submit Button
     And verify submission Successful message after RAI
-# And Verify submission typeCHIP SPA RAI
-# And Verify CHIP RAI ID number matches CHIP SPA ID number
-# And verify submission date
+    And Verify submission typeCHIP SPA RAI
+    And Verify CHIP RAI ID number matches CHIP SPA ID number
+    And verify submission date
 
