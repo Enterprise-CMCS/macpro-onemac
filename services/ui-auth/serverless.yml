@@ -7,6 +7,10 @@
 # The `service` block is the name of the service
 service: ui-auth
 
+frameworkVersion: "3"
+
+useDotenv: true
+
 plugins:
   - serverless-s3-bucket-helper
 
@@ -15,7 +19,7 @@ custom:
   attachments_bucket_arn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   api_gateway_rest_api_name: ${cf:app-api-${self:custom.stage}.ApiGatewayRestApiName}
   application_endpoint_url: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl}
-  okta_metadata_url: ${env:OKTA_METADATA_URL}
+  okta_metadata_url: ${env:OKTA_METADATA_URL, ""}
   iamPath: ${env:IAM_PATH, "/"}
 
 # The `provider` block defines where your service will be deployed
