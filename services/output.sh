@@ -1,5 +1,4 @@
 # Script to obtain CloudFormation information from AWS.
-
 if [ $# -lt 2 ]
 then
    echo "ERROR: Missing arguments."
@@ -15,7 +14,7 @@ if [ "$output" == "url" ]; then
   output="CloudFrontEndpointUrl"
 fi
 
-service_output=`cd $service && serverless info --stage $stage -v`
+service_output=`cd $service && serverless info --stage $stage --verbose`
 
 if [ $? -ne 0 ]
 then
@@ -23,6 +22,5 @@ then
   >&2 echo "$service_output"
   exit 1
 else
-  echo "$service_output" | sed -e '1,/^Stack Outputs/d' -e '$d' | sed -n -e "s/^.*$output: //p"
+  echo "$service_output" | sed -n -e "s/^.*$output: //p"
 fi
-

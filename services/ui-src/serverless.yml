@@ -1,5 +1,7 @@
 service: ui-src
 
+frameworkVersion: "3"
+
 plugins:
   - serverless-plugin-scripts
   - serverless-s3-sync

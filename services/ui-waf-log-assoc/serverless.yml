@@ -1,5 +1,7 @@
 service: ui-waf-log-assoc
 
+frameworkVersion: "3"
+
 plugins:
   - serverless-plugin-scripts
   - serverless-s3-bucket-helper

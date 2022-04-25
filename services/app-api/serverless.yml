@@ -1,5 +1,9 @@
 service: app-api
 
+frameworkVersion: "3"
+
+useDotenv: true
+
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
@@ -30,14 +34,15 @@ custom:
     production: true
     development: true
   warmup:
-    enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
-    role: LambdaWarmupRole
-    vpc: false
-    events:
-      - schedule: rate(4 minutes)
-    timeout: 20
-    prewarm: true
-    concurrency: 5
+    default:
+      enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
+      role: LambdaWarmupRole
+      vpc: false
+      events:
+        - schedule: rate(4 minutes)
+      timeout: 20
+      prewarm: true
+      concurrency: 5
   #Dynamo DB local configuration
   dynamodb:
     stages:

@@ -142,7 +142,7 @@ jobs:
         env:
           SLS_DEBUG: 'true'
           BRANCH: ${{ env.STAGE_PREFIX }}${{ env.branch_name }}
-        run: cd services/app-api && serverless dynamodb seed --stage=$BRANCH --region=$AWS_DEFAULT_REGION --seed=domain --online
+        run: cd services/app-api && serverless dynamodb seed --stage=$BRANCH --region=$AWS_DEFAULT_REGION --online
       - name: Load Test Users
         if: ${{ env.branch_name != 'production'}}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
