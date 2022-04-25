@@ -23,6 +23,6 @@ then
   >&2 echo "$service_output"
   exit 1
 else
-  echo "$service_output" | sed -e '1,/^Stack Outputs/d' -e '$d' | sed -n -e "s/^.*$output: //p"
+  echo "$service_output" | sed -n -e "s/^.*$output: //p"
 fi
 
