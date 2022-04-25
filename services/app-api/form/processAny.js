@@ -7,8 +7,7 @@ import {
   Workflow,
 } from "cmscommonlib";
 
-import dynamoDb from "../libs/dynamodb-lib";
-// import sendEmail from "../libs/email-lib";
+import sendEmail from "../libs/email-lib";
 import { getUser } from "../getUser";
 import newSubmission from "../utils/newSubmission";
 
@@ -34,12 +33,12 @@ export const processAny = async (event, config) => {
   // these errors are application errors, so are returned, instead
   try {
     // returns undefined if no errors found, or the first error found.
-    if (config.validateSubmission(data)) {
+    if (!config.validateSubmission(data)) {
       throw RESPONSE_CODE.VALIDATION_ERROR;
     }
 
     // get the rest of the details about the current user
-    const doneBy = await getUser(data?.user?.email);
+    const doneBy = await getUser(data.submitterEmail);
 
     if (JSON.stringify(doneBy) === "{}") {
       throw RESPONSE_CODE.USER_NOT_FOUND;
@@ -57,91 +56,66 @@ export const processAny = async (event, config) => {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
     }
-
-    // map the changeRequest functions from the data.type
-    // crFunctions = getChangeRequestFunctions(data.type);
-
-    // // check for submission-specific validation (uses database)
-    // const validationResponse = await crFunctions.fieldsValid(data);
-    // console.log("validation Response: ", validationResponse);
-
-    // if (validationResponse.areFieldsValid === false) {
-    //   console.log("Message from fieldsValid: ", validationResponse);
-    //   throw validationResponse.whyNot;
-    // }
-
-    // if (config.overrideType) data.type = config.overrideType;
-    // if (config.overrideActionType) data.actionType = config.overrideActionType;
-
-    // await dynamoDb.put({
-    //   TableName: process.env.tableName,
-    //   Item: data,
-    // });
   } catch (error) {
     console.log("Error is: ", error);
     return error;
   }
 
-  // Now send the CMS email
-  // await sendEmail(crFunctions.getCMSEmail(data));
+  try {
+    // we do the data conversion here so the new functions only need the new way
+    const submissionData = {
+      componentId: data.transmittalNumber,
+      componentType: data.type,
+      submissionTimestamp: Date.now(),
+      proposedEffectiveDate: data.proposedEffectiveDate,
+      currentStatus: Workflow.ONEMAC_STATUS.SUBMITTED,
+      attachments: data.uploads,
+      additionalInformation: data.summary,
+      submissionId: data.id,
+      submitterName: data.submitterName,
+      submitterEmail: data.user.email,
+      submitterId: data.userId,
+    };
 
-  //We successfully sent the submission email.  Update the record to reflect that.
-  data.state = Workflow.ONEMAC_STATUS.SUBMITTED;
-  data.submittedAt = Date.now();
+    if (data.waiverAuthority)
+      submissionData.waiverAuthority = data.waiverAuthority;
 
-  // record the current end timestamp (can be start/stopped/changed)
-  // 90 days is current CMS review period and it is based on CMS time!!
-  // UTC is 4-5 hours ahead, convert first to get the correct start day
-  // AND use plus days function b/c DST days are 23 or 25 hours!!
-  data.ninetyDayClockEnd = DateTime.fromMillis(data.submittedAt)
-    .setZone("America/New_York")
-    .plus({ days: 90 })
-    .toMillis();
-  await dynamoDb.put({
-    TableName: process.env.tableName,
-    Item: data,
-  });
+    // record the current end timestamp (can be start/stopped/changed)
+    // 90 days is current CMS review period and it is based on CMS time!!
+    // UTC is 4-5 hours ahead, convert first to get the correct start day
+    // AND use plus days function b/c DST days are 23 or 25 hours!!
+    submissionData.ninetyDayClockEnd = DateTime.fromMillis(
+      data.submissionTimestamp
+    )
+      .setZone("America/New_York")
+      .plus({ days: 90 })
+      .toMillis();
+
+    await newSubmission(submissionData);
+    console.log("Successfully submitted the following:", data);
+  } catch (error) {
+    console.log("Error is: ", error.message);
+    // submitting to the package model doesn't matter... all returns are success by this point
+    return RESPONSE_CODE.SUBMISSION_SAVE_FAILURE;
+  }
+
+  try {
+    // Now send the CMS email
+    await sendEmail(config.getCMSEmail(data));
+  } catch (error) {
+    console.log("Error is: ", error);
+    return RESPONSE_CODE.EMAIL_NOT_SENT;
+  }
 
   //An error sending the user email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
-    // await sendEmail(crFunctions.getStateEmail(data));
+    await sendEmail(config.getStateEmail(data));
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user acknowledgement email.",
       error
     );
   }
-
-  // we do the data conversion here so the new functions only need the new way
-  const submitterName = data.user.firstName + " " + data.user.lastName;
-  const submissionData = {
-    componentId: data.transmittalNumber,
-    componentType: data.type,
-    submissionTimestamp: data.submittedAt,
-    proposedEffectiveDate: data.proposedEffectiveDate,
-    currentStatus: "Submitted",
-    attachments: data.uploads,
-    additionalInformation: data.summary,
-    submissionId: data.id,
-    submitterName: submitterName,
-    submitterEmail: data.user.email,
-    submitterId: data.userId,
-  };
-
-  if (data.actionType) submissionData.componentType += data.actionType;
-
-  if (data.waiverAuthority)
-    submissionData.waiverAuthority = data.waiverAuthority;
-
-  return newSubmission(submissionData)
-    .then(() => {
-      console.log("Successfully submitted the following:", data);
-      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
-    })
-    .catch((error) => {
-      console.log("Error is: ", error.message);
-      // submitting to the package model doesn't matter... all returns are success by this point
-      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
-    });
+  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 };

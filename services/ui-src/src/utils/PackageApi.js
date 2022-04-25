@@ -28,17 +28,14 @@ class PackageApi {
   async submitToAPI(data, uploadsList) {
     try {
       const userAuth = await Auth.currentAuthenticatedUser();
-      console.log(
-        "userAuth payload is: ",
-        userAuth.signInUserSession.idToken.payload
-      );
-      //Normalize the user data.
       data.submitterEmail =
         userAuth.signInUserSession.idToken.payload.email.toLowerCase();
-      data.submitterName = {
-        firstName: userAuth.signInUserSession.idToken.payload.given_name,
-        lastName: userAuth.signInUserSession.idToken.payload.family_name,
-      };
+      data.submitterName = [
+        userAuth.signInUserSession.idToken.payload.given_name,
+        userAuth.signInUserSession.idToken.payload.family_name,
+      ]
+        .filter(Boolean)
+        .join(" ");
       data.uploads = uploadsList;
     } catch (error) {
       handleApiError(
@@ -62,9 +59,10 @@ class PackageApi {
       );
       throw new Error("Missing required data or uploads");
     }
-    console.log("posting to: ", API_CALL[data.componentType]);
+    console.log("componentType: ", data.type);
+    console.log("posting to: ", API_CALL[data.type]);
     try {
-      return await API.post("oneMacAPI", `/${API_CALL[data.componentType]}`, {
+      return await API.post("oneMacAPI", `/${API_CALL[data.type]}`, {
         body: data,
       });
     } catch (error) {

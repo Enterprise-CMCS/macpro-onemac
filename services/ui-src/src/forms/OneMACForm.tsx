@@ -47,7 +47,6 @@ type Message = {
 
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
- * @param changeRequestType - the type of change request
  */
 export const OneMACForm: React.FC = () => {
   // for setting the alert
