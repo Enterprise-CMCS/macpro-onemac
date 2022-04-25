@@ -151,7 +151,13 @@ const Dashboard = () => {
           value: { link: link, raiId: row.original.transmittalNumber },
           handleSelected: onPopupAction,
         };
-        return <PopupMenu selectedRow={row} menuItems={[item]} />;
+        return (
+          <PopupMenu
+            buttonLabel={`Actions for ${row.original.transmittalNumber}`}
+            selectedRow={row}
+            menuItems={[item]}
+          />
+        );
       } else return <></>;
     },
     [onPopupAction]

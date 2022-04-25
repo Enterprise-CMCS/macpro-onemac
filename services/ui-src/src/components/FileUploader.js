@@ -255,6 +255,9 @@ export default class FileUploader extends Component {
           </td>
           <td className="uploader-input-cell">
             <label
+              aria-label={`Add file${
+                uploader.allowMultiple ? "s" : ""
+              } of type ${uploader.title}`}
               className={
                 isDisabled
                   ? "uploader-input-label-disabled"
