@@ -1,4 +1,5 @@
 const AWS = require('aws-sdk');
+const { ChangeRequest } = require("cmscommonlib");
 const { Workflow } = require("cmscommonlib");
 const { ONEMAC_STATUS } = Workflow;
 
