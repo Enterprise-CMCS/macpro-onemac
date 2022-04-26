@@ -1,9 +1,6 @@
-import {
-  StateWithdrawalEmail,
-  CMSWithdrawalEmail,
-} from "./formatWithdrawalEmails";
+import { StateWithdrawalReceipt } from "./StateWithdrawalReceipt";
 
-it("Change Request Types", async () => {
+it("builds the State Withdrawal Receipt Email", async () => {
   const testData = {
     changeHistory: [
       { submissionTimestamp: 1631626754502 },
@@ -13,9 +10,6 @@ it("Change Request Types", async () => {
     componentId: "MI-11-1111-22",
   };
   // TODO:  Get Test Data
-  const response = StateWithdrawalEmail(testData);
+  const response = StateWithdrawalReceipt(testData);
   expect(response.HTML.length).toBe(348);
-
-  const response2 = CMSWithdrawalEmail(testData);
-  expect(response2.HTML.length).toBe(349);
 });

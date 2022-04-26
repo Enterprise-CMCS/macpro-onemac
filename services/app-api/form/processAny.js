@@ -9,6 +9,8 @@ import {
 
 import sendEmail from "../libs/email-lib";
 import { getUser } from "../getUser";
+import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
+import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
 import newSubmission from "../utils/newSubmission";
 
 /**
@@ -73,7 +75,7 @@ export const processAny = async (event, config) => {
       additionalInformation: data.summary,
       submissionId: data.id,
       submitterName: data.submitterName,
-      submitterEmail: data.user.email,
+      submitterEmail: data.submitterEmail,
       submitterId: data.userId,
     };
 
@@ -85,23 +87,22 @@ export const processAny = async (event, config) => {
     // UTC is 4-5 hours ahead, convert first to get the correct start day
     // AND use plus days function b/c DST days are 23 or 25 hours!!
     submissionData.ninetyDayClockEnd = DateTime.fromMillis(
-      data.submissionTimestamp
+      submissionData.submissionTimestamp
     )
       .setZone("America/New_York")
       .plus({ days: 90 })
       .toMillis();
 
     await newSubmission(submissionData);
-    console.log("Successfully submitted the following:", data);
+    console.log("Successfully submitted the following:", submissionData);
   } catch (error) {
     console.log("Error is: ", error.message);
-    // submitting to the package model doesn't matter... all returns are success by this point
     return RESPONSE_CODE.SUBMISSION_SAVE_FAILURE;
   }
 
   try {
     // Now send the CMS email
-    await sendEmail(config.getCMSEmail(data));
+    await sendEmail(CMSSubmissionNotice(data, config));
   } catch (error) {
     console.log("Error is: ", error);
     return RESPONSE_CODE.EMAIL_NOT_SENT;
@@ -110,7 +111,7 @@ export const processAny = async (event, config) => {
   //An error sending the user email is not a failure.
   try {
     // send the submission "reciept" to the State Submitter
-    await sendEmail(config.getStateEmail(data));
+    await sendEmail(stateSubmissionReceipt(data, config));
   } catch (error) {
     console.log(
       "Warning: There was an error sending the user acknowledgement email.",

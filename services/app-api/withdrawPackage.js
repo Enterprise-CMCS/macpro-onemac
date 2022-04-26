@@ -3,10 +3,8 @@ import dynamoDb from "./libs/dynamodb-lib";
 import handler from "./libs/handler-lib";
 import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 
-import {
-  CMSWithdrawalEmail,
-  StateWithdrawalEmail,
-} from "./changeRequest/formatWithdrawalEmails";
+import { CMSWithdrawalNotice } from "./email/CMSWithdrawalNotice";
+import { stateWithdrawalReceipt } from "./email/stateWithdrawalReceipt";
 import sendEmail from "./libs/email-lib";
 import updateComponent from "./utils/updateComponent";
 import { validateUserSubmitting } from "./utils/validateUser";
@@ -80,10 +78,16 @@ export const main = handler(async (event) => {
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
 
+  const emailData = {
+    ...updatedPackageData,
+    submitterName,
+    submitterEmail,
+  };
+
   try {
     await Promise.all(
-      [CMSWithdrawalEmail, StateWithdrawalEmail]
-        .map((f) => f(updatedPackageData, submitterName, submitterEmail))
+      [CMSWithdrawalNotice, stateWithdrawalReceipt]
+        .map((f) => f(emailData))
         .map(sendEmail)
     );
   } catch (e) {
