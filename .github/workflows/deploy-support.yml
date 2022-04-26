@@ -4,7 +4,7 @@ on:
   push:
     branches:
       # # List of all branches which should control underlying infrastructure.
-      - new-sec-hub
+      - fix-sechub
       - develop
 
 jobs:
