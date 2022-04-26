@@ -2124,12 +2124,18 @@ And("search for the ID copied from the link in the first row", () => {
   cy.wait(1000);
 });
 And("reset EUA CMS Read Only User state if needed", () => {
-  cy.wait(1000).then(() => {
-    if (OneMacUserManagmentPage.isActionBtnPending()) {
-      OneMacUserManagmentPage.clickPendingUserActionBtn();
-      OneMacUserManagmentPage.clickDenyAccessBtn();
-      OneMacRequestARoleChangePage.clickConfirmBtn();
-      OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
-    }
-  });
+  cy.wait(1000)
+    .then(() => {
+      OneMacUserManagmentPage.isActionBtnPending();
+    })
+    .then((bool) => {
+      if (bool) {
+        OneMacUserManagmentPage.clickPendingUserActionBtn();
+        OneMacUserManagmentPage.clickDenyAccessBtn();
+        OneMacRequestARoleChangePage.clickConfirmBtn();
+        OneMacDashboardPage.verifySuccessMessageIsDisplayedForRoleChange();
+      } else {
+        //no reset is needed so do nothing
+      }
+    });
 });

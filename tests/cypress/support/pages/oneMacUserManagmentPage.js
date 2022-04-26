@@ -47,11 +47,12 @@ export class oneMacUserManagmentPage {
       .click();
   }
   isActionBtnPending() {
-    if (cy.get("table").find("Valencia McMurray").its("length") > 1) {
-      return true;
-    } else {
-      return false;
-    }
+    cy.get('td:contains("Valencia McMurray")')
+      .its("length")
+      .then((num) => {
+        console.log("num is " + (num > 2));
+        return cy.wrap(num > 2);
+      });
   }
   clickDenyAccessBtn() {
     cy.xpath(denyAccessBtn).click();
