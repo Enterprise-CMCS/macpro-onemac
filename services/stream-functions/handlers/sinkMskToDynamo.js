@@ -1,6 +1,7 @@
 const AWS = require('aws-sdk');
 const { ChangeRequest } = require("cmscommonlib");
-const { ONEMAC_STATUS } = ChangeRequest;
+const { Workflow } = require("cmscommonlib");
+const { ONEMAC_STATUS } = Workflow;
 
 AWS.config.update({region: 'us-east-1'});
 const ddb = new AWS.DynamoDB.DocumentClient({apiVersion: '2012-08-10'});
