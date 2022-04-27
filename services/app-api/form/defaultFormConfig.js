@@ -1,7 +1,7 @@
 export const defaultFormConfig = {
   idLabel: "Default ID",
-  validateSubmission: (data) => {
-    if (data) return true;
-    return null;
-  },
+  CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
+    Boolean
+  ),
+  CMSCcAddresses: [],
 };

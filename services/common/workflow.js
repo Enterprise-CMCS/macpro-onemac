@@ -1,7 +1,15 @@
-import { TYPE } from "./changeRequest";
-
 export const ONEMAC_TYPE = {
-  ...TYPE,
+  CHIP_SPA: "chipspa",
+  CHIP_SPA_RAI: "chipsparai",
+  SPA: "spa",
+  SPA_RAI: "sparai",
+  WAIVER: "waiver",
+  WAIVER_BASE: "waivernew",
+  WAIVER_AMENDMENT: "waiveramendment",
+  WAIVER_RENEWAL: "waiverrenewal",
+  WAIVER_RAI: "waiverrai",
+  WAIVER_EXTENSION: "waiverextension",
+  WAIVER_APP_K: "waiverappk",
 };
 
 export const ONEMAC_LABEL = {

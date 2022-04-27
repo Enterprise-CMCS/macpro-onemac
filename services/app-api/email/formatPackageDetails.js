@@ -8,8 +8,11 @@ export const formatPackageDetails = (data, config) => {
   let detailText = `
       <p>
         <br><b>State or territory</b>: ${data.componentId.substring(0, 2)}
-        <br><b>Name</b>: ${data.submitterName}
-        <br><b>Email Address</b>: ${data.submitterEmail}
+        ${
+          data.withdrawnByName
+            ? `<br><b>Withdrawn By</b>: ${data.withdrawnByName}<br><b>Email Address</b>: ${data.withdrawnByEmail}`
+            : `<br><b>Name</b>: ${data.submitterName}<br><b>Email Address</b>: ${data.submitterEmail}`
+        }
         <br><b>${config.idLabel}</b>: ${data.componentId}
         ${
           data.waiverAuthority
