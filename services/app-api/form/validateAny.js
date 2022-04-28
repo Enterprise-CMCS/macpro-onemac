@@ -42,19 +42,13 @@ export const validateAny = (
     }
     return basicError;
   }
-
-  let uploads = Joi.array().items(
-    uploadSchema.append({
-      title: Joi.string().valid(
-        ...[...config.requiredUploads, ...config.optionalUploads].map(
-          getUploadName
-        )
-      ),
-    })
+  /*
+  let attachments = Joi.array().items(
+    
   );
   for (const field of config.requiredUploads) {
     uploads = uploads.has(
-      uploadSchema.append({
+      attachmentSchema.append({
         title: Joi.string().valid(getUploadName(field)).valid().required(),
       })
     );
@@ -80,4 +74,6 @@ export const validateAny = (
     }
     return advancedError;
   }
+  */
+  return null;
 };

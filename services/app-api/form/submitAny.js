@@ -1,4 +1,5 @@
 import { DateTime } from "luxon";
+import * as uuid from "uuid";
 
 import {
   getUserRoleObj,
@@ -9,30 +10,43 @@ import {
 
 import sendEmail from "../libs/email-lib";
 import { getUser } from "../getUser";
+import newSubmission from "../utils/newSubmission";
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
-import newSubmission from "../utils/newSubmission";
 
 /**
  * Submitting a Form uses the configs from each form type to do the following:
  *  - parse the event
- *  - authenticate the user
  *  - validate the submission data
+ *  - authenticate the user
  *  - save the data
  *  - send emails
  */
 
 export const submitAny = async (event, config) => {
-  let data;
+  let inData;
 
   try {
-    data = JSON.parse(event.body);
+    inData = JSON.parse(event.body);
   } catch (error) {
     console.log("event couldn't parse: ", error);
     throw error;
   }
 
-  // these errors are application errors, so are returned, instead
+  // TRANSLATION SECTION - MOVE THESE CHANGES TO FRONT END
+  const data = {
+    componentId: inData.transmittalNumber,
+    proposedEffectiveDate: inData.proposedEffectiveDate,
+    attachments: inData.uploads,
+    additionalInformation: inData.summary,
+    submissionId: uuid.v1(), // not sure we need this anymore
+    submitterName: inData.submitterName,
+    submitterEmail: inData.submitterEmail,
+    submitterId: event.requestContext.identity.cognitoIdentityId, // not sure we want this anymore
+    waiverAuthority: inData.waiverAuthority,
+  };
+
+  // errors here are application level: returned as codes to front end for handling
   try {
     // returns undefined if no errors found, or the first error found.
     if (config.validateSubmission(data)) {
@@ -67,7 +81,7 @@ export const submitAny = async (event, config) => {
   try {
     // Add the details from this submission action
     data.submissionTimestamp = Date.now();
-    data.componentType = config.type;
+    data.componentType = config.componentType;
     data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
 
     // record the current end timestamp (can be start/stopped/changed)

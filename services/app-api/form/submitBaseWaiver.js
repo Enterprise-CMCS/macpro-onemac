@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { baseWaiver } from "cmscommonlib";
+import baseWaiver from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
@@ -21,27 +21,36 @@ const baseWaiverFormConfig = {
   ...baseWaiver,
   validateSubmission: (data) => {
     // validate the items required for all forms
-    const validateDefaultResult = validateAny(
+    const { error: anyFormError, value: valueAfterAnyForm } = validateAny(
       data,
       baseWaiver.idRegex,
       baseWaiver.requiredAttachments,
       baseWaiver.optionalAttachments
     );
+    if (anyFormError) {
+      if (process.env.NODE_ENV !== "test") {
+        console.error(anyFormError, valueAfterAnyForm);
+      }
+      return anyFormError;
+    }
 
     // base waiver specific validation
     const baseWaiverSchema = Joi.object({
-      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
+      waiverAuthority: Joi.string().required(),
+      // Should look into a real validation with choices centrally located in cmscommonlib
+      //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
       proposedEffectiveDate: Joi.string().isoDate().required(),
     });
 
-    const { error: basicError, value: valueAfterBasic } =
+    const { error: baseWaiverError, value: valueAfterBaseWaiverError } =
       baseWaiverSchema.validate(data);
-    if (basicError) {
+    if (baseWaiverError) {
       if (process.env.NODE_ENV !== "test") {
-        console.error(basicError, valueAfterBasic);
+        console.error(baseWaiverError, valueAfterBaseWaiverError);
       }
-      return basicError;
+      return baseWaiverError;
     }
+
     return null;
   },
 };

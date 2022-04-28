@@ -2,12 +2,12 @@ import dynamoDb from "./libs/dynamodb-lib";
 
 import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 
+import { getUser } from "./getUser";
+import { validateUserSubmitting } from "./utils/validateUser";
+import updateComponent from "./utils/updateComponent";
 import { CMSWithdrawalNotice } from "./email/CMSWithdrawalNotice";
 import { stateWithdrawalReceipt } from "./email/stateWithdrawalReceipt";
 import sendEmail from "./libs/email-lib";
-import updateComponent from "./utils/updateComponent";
-import { validateUserSubmitting } from "./utils/validateUser";
-import { getUser } from "./getUser";
 
 export const withdrawAny = async (event, config) => {
   let body;
@@ -55,7 +55,7 @@ export const withdrawAny = async (event, config) => {
           (child) => {
             return (
               child.componentId === componentId &&
-              child.componentType === componentType &&
+              child.componentType === config.componentType &&
               child.submissionTimestamp ===
                 updatedPackageData.submissionTimestamp
             );
