@@ -27,7 +27,7 @@ export const validateAny = (
     territory: Joi.string()
       .valid(...territoryCodeList)
       .required(),
-    transmittalNumber: Joi.string().regex(idRegex).required(),
+    transmittalNumber: Joi.string().regex(new RegExp(idRegex)).required(),
     transmittalNumberWarningMessage: Joi.string().allow(""),
     attachments: Joi.array().items(attachmentSchema).min(1).required(),
     submitterName: Joi.string().required(),

@@ -1,4 +1,4 @@
-export default baseWaiver = {
+export const baseWaiver = {
   componentType: "waiverbase",
   label: "1915(b) Base Waiver",
   idType: "waiver",

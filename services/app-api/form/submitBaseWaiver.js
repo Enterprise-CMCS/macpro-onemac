@@ -1,5 +1,5 @@
 import Joi from "joi";
-import baseWaiver from "cmscommonlib";
+import { baseWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
@@ -57,6 +57,7 @@ const baseWaiverFormConfig = {
 
 export const main = handler(async (event) => {
   try {
+    console.log("baseWaiverFormConfig is: ", baseWaiverFormConfig);
     return submitAny(event, baseWaiverFormConfig);
   } catch (error) {
     console.log("Exception: ", error);

@@ -36,6 +36,7 @@ export const submitAny = async (event, config) => {
   // TRANSLATION SECTION - MOVE THESE CHANGES TO FRONT END
   const data = {
     componentId: inData.transmittalNumber,
+    territory: inData.transmittalNumber.toString().substring(0, 2),
     proposedEffectiveDate: inData.proposedEffectiveDate,
     attachments: inData.uploads,
     additionalInformation: inData.summary,
