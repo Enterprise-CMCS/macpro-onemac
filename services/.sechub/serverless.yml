@@ -1,5 +1,7 @@
 service: sechub
 
+frameworkVersion: "3"
+
 package:
   individually: true
 
