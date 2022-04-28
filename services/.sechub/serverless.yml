@@ -12,7 +12,6 @@ plugins:
   - serverless-iam-helper
   - serverless-s3-bucket-helper
   - serverless-online
-
 custom:
   stage: ${opt:stage, self:provider.stage}
   region: ${opt:region, self:provider.region}
