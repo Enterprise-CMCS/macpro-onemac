@@ -2,8 +2,6 @@ service: sechub
 
 frameworkVersion: "3"
 
-useDotenv: true
-
 package:
   individually: true
 
