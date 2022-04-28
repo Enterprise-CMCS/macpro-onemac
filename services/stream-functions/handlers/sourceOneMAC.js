@@ -9,6 +9,7 @@ class SourceOneMAC extends KafkaSourceLib {
     const skSlice = JSON.stringify(recordDetails.NewImage.sk).slice(0,7);
     if (record.headers.eventName === "INSERT" && skSlice !== "SEATool") {
       console.log("Record Details being sent: ", recordDetails);
+      console.log("would be sent to: ", staticTopic);
       //return staticTopic;
     } else {
       console.log("Record Details being ignored: ", recordDetails);
