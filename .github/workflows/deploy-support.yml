@@ -5,7 +5,7 @@ on:
     branches:
       # # List of all branches which should control underlying infrastructure.
       - fix-sechub
-      - develop
+      - not-develop
 
 jobs:
   deploy:
