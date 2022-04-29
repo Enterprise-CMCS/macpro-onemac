@@ -17,7 +17,7 @@ const actionsHeader = "#personnelActionsColHeader";
 const requestARoleBtn = "#requestRoleLink";
 
 //Element is Xpath use cy.xpath instead of cy.get
-const modifiedBy = "//td[text()='Valencia McMurray']";
+const userNameValenciaM = "//td[text()='Valencia McMurray']";
 const denyAccessBtn = "//div[@autofocus]//li[text()='Deny Access']";
 
 export class oneMacUserManagmentPage {
@@ -40,11 +40,19 @@ export class oneMacUserManagmentPage {
     cy.url().should("include", "/usermanagement");
   }
   clickPendingUserActionBtn() {
-    cy.xpath(modifiedBy)
+    cy.xpath(userNameValenciaM)
       .next("td")
       .find("button")
       .scrollIntoView({ easing: "linear" })
       .click();
+  }
+  isActionBtnPending() {
+    cy.get('td:contains("Valencia McMurray")')
+      .its("length")
+      .then((num) => {
+        console.log("num is " + (num > 2));
+        return cy.wrap(num > 2);
+      });
   }
   clickDenyAccessBtn() {
     cy.xpath(denyAccessBtn).click();

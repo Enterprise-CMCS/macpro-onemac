@@ -1,16 +1,20 @@
 service: ui
 
+frameworkVersion: "3"
+
+useDotenv: true
+
 plugins:
   - serverless-s3-bucket-helper
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${env:IAM_PATH, "/"}
-  wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN~true, ""}
+  wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN, ""}
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: us-east-1
   stage: dev
 
@@ -85,7 +89,7 @@ resources:
     S3BucketCloudFrontLogs:
       Type: AWS::S3::Bucket
       Properties:
-        BucketName: !Sub ${self:service.name}-${self:custom.stage}-cloudfront-logs-${AWS::AccountId}
+        BucketName: !Sub ${self:service}-${self:custom.stage}-cloudfront-logs-${AWS::AccountId}
         BucketEncryption:
           ServerSideEncryptionConfiguration:
             - ServerSideEncryptionByDefault:

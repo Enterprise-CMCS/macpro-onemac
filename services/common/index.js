@@ -3,20 +3,20 @@
  * This will contain static items needed by both the frontend and backend.
  */
 
-import * as ChangeRequest from "./changeRequest";
+import * as ChangeRequest from "./changeRequest.js";
 export { ChangeRequest };
 
-import * as Validate from "./idValidation";
+import * as Validate from "./idValidation.js";
 export { Validate };
 
-import * as Workflow from "./workflow";
+import * as Workflow from "./workflow.js";
 export { Workflow };
 
 import { baseWaiver } from "./type/baseWaiver";
 export { baseWaiver };
 
-import { ROUTES } from "./routes";
-export * from "./routes";
+import { ROUTES } from "./routes.js";
+export * from "./routes.js";
 
 /**
  * Codes to send to front end
