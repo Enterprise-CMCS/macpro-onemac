@@ -8,7 +8,7 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
 export const CMSSubmissionNotice = (data, config) => ({
   ToAddresses: config.CMSToAddresses,
   CcAddresses: config.CMSCcAddresses,
-  Subject: `${config.typeLabel} ${data.transmittalNumber} Submitted`,
+  Subject: `${config.typeLabel} ${data.componentId} Submitted`,
   HTML: `
     <p>The OneMAC Submission Portal received a ${
       config.typeLabel

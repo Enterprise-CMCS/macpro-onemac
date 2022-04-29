@@ -3,7 +3,7 @@ import { baseWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { validateAny } from "./validateAny";
+import { getCommonSchema } from "./getCommonSchema";
 
 /**
  * Submitting a Base Waiver MUST do the following to return SUCCESS:
@@ -20,22 +20,12 @@ import { validateAny } from "./validateAny";
 const baseWaiverFormConfig = {
   ...baseWaiver,
   validateSubmission: (data) => {
-    // validate the items required for all forms
-    const { error: anyFormError, value: valueAfterAnyForm } = validateAny(
-      data,
+    // start with the Schema for all form submissions
+    const baseWaiverSchema = getCommonSchema(
       baseWaiver.idRegex,
       baseWaiver.requiredAttachments,
       baseWaiver.optionalAttachments
-    );
-    if (anyFormError) {
-      if (process.env.NODE_ENV !== "test") {
-        console.error(anyFormError, valueAfterAnyForm);
-      }
-      return anyFormError;
-    }
-
-    // base waiver specific validation
-    const baseWaiverSchema = Joi.object({
+    ).append({
       waiverAuthority: Joi.string().required(),
       // Should look into a real validation with choices centrally located in cmscommonlib
       //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),

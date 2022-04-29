@@ -82,19 +82,18 @@ export const submitAny = async (event, config) => {
   try {
     // Add the details from this submission action
     data.submissionTimestamp = Date.now();
-    data.componentType = config.componentType;
     data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
 
     // record the current end timestamp (can be start/stopped/changed)
     // 90 days is current CMS review period and it is based on CMS time!!
     // UTC is 4-5 hours ahead, convert first to get the correct start day
     // AND use plus days function b/c DST days are 23 or 25 hours!!
-    data.ninetyDayClockEnd = DateTime.fromMillis(data.submissionTimestamp)
+    data.clockEndTimestamp = DateTime.fromMillis(data.submissionTimestamp)
       .setZone("America/New_York")
       .plus({ days: 90 })
       .toMillis();
 
-    await newSubmission(data);
+    await newSubmission(data, config);
     console.log("Successfully submitted the following:", data);
   } catch (error) {
     console.log("Error is: ", error.message);

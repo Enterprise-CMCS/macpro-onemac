@@ -1,5 +1,6 @@
-export const baseWaiver = {
-  componentType: "waivernew",
+export const waiverTemporaryExtension = {
+  componentType: "waiverextension",
+  isTopLevelComponent: true,
   packageGroup: "waiver",
   label: "1915(b) Base Waiver",
   idType: "waiver",

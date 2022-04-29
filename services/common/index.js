@@ -12,7 +12,7 @@ export { Validate };
 import * as Workflow from "./workflow.js";
 export { Workflow };
 
-import { baseWaiver } from "./type/baseWaiver";
+import { baseWaiver } from "./type/baseWaiver.js";
 export { baseWaiver };
 
 import { ROUTES } from "./routes.js";
