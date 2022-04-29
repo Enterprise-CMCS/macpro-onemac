@@ -19,6 +19,3 @@ Feature: OY2_12596_CMSUserDenied
         And Phone Number text is Displayed
         And Phone Number Add Button is Displayed
         And Status text is not displayed
-        
-
-    

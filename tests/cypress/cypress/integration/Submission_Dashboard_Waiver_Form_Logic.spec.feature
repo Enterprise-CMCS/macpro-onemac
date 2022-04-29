@@ -67,16 +67,12 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And type in invalid Waiver Number
         And verify error message is present on New Waiver Page
         And Return to dashboard Page
-        
-# Scenario: Verify the Waiver Number format on Appendix K Form
-#     And Click on Waiver Action
-#     And Click on Appendix K Amendment
-#     And type in Waiver Number with 4 characters On Appendix K Amendment Page
-#     And verify error message is not present On Appendix K Amendment Page
-#     And clear Waiver Number Input box On Appendix K Amendment Page
-#     And type in Waiver Number with 5 characters On Appendix K Amendment Page
-#     And verify error message is not present On Appendix K Amendment Page
-#     And clear Waiver Number Input box On Appendix K Amendment Page
-#     And type in invalid Waiver Number On Appendix K Amendment Page
-#     And verify that error message for incorrect Waiver Number is Displayed On Appendix K Amendment Page
-#     And Return to dashboard Page
+
+    Scenario: Verify the Waiver Number format on Appendix K Form
+        And Click on Appendix K Amendment
+        And type in Waiver Number with 5 characters On Appendix K Amendment Page
+        And verify error message is not present On Appendix K Amendment Page
+        And clear Waiver Number Input box On Appendix K Amendment Page
+        And type in invalid Waiver Number On Appendix K Amendment Page
+        And verify that error message for incorrect Waiver Number is Displayed On Appendix K Amendment Page
+        And Return to dashboard Page

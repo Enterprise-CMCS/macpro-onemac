@@ -4,8 +4,8 @@ on:
   push:
     branches:
       # # List of all branches which should control underlying infrastructure.
-      - new-sec-hub
-      - develop
+      - fix-sechub
+      - not-develop
 
 jobs:
   deploy:
