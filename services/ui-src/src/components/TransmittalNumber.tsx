@@ -6,7 +6,7 @@ import { Link } from "@material-ui/core";
  */
 const TransmittalNumber: React.FC<{
   idLabel: string;
-  hintText: string;
+  hintText: string[];
   idFAQLink: string;
   statusLevel: string;
   statusMessage: string;
@@ -42,7 +42,9 @@ const TransmittalNumber: React.FC<{
             What is my {idLabel}?
           </Link>
         </div>
-        <p className="field-hint">{hintText}</p>
+        {hintText.map(function (text) {
+          return <p className="field-hint">{text}</p>;
+        })}
       </div>
       {statusMessage && (
         <div id="transmittalNumberStatusMsg" className={statusMsgClass}>

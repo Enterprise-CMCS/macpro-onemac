@@ -53,7 +53,7 @@ export namespace ChangeRequest {
     idLabel: string;
     idRegex: string;
     idFormat: string;
-    idHintText: string;
+    idHintText: string[];
     idFAQLink: string;
     idExistValidations: {
       existenceRegex?: RegExp;

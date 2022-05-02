@@ -5,7 +5,7 @@ type SelectOption = { label: string; value: string };
 type OneMACIDInfo = {
   idLabel: string;
   idFormat: string;
-  idHintText: string;
+  idHintText: string[];
   idFAQLink: string;
   idExistValidations: {
     existenceRegex?: RegExp;
@@ -71,8 +71,9 @@ export const FORM = {
       idType: "waiver",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
       idLabel: "Base Waiver Number",
-      idHintText:
+      idHintText: [
         "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
+      ],
       idFormat: "SS.####.R00.00 or SS.#####.R00.00",
       idExistValidations: [
         {
@@ -101,8 +102,9 @@ export const FORM = {
       idType: "waiver",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
       idLabel: "Temporary Extension Request Number",
-      idHintText:
+      idHintText: [
         "Must be a waiver extension request number with the format SS.####.R##.TE## or SS.#####.R##.TE##",
+      ],
       idFormat: "SS.####.R##.TE## or SS.#####.R##.TE##",
       idExistValidations: [
         {
