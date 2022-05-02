@@ -1,6 +1,19 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
+// import {
+//   baseWaiver,
+//   waiverTemporaryExtension,
+//   waiverRenewal,
+//   waiverAmendment,
+//   waiverAppendixK,
+//   waiverRAIResponse,
+//   medicaidSPA,
+//   medicaidSPARAIResponse,
+//   chipSPA,
+//   chipSPARAIResponse,
+// } from "cmscommonlib";
+
 /**
  * Perform data conversions
  */
@@ -9,61 +22,21 @@ export const main = handler(async (event) => {
   console.log("Convert was called with event: ", event);
   // scan changeRequest table
   const params = {
-    TableName: process.env.oneMacTableName,
-    IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :gsi1pk",
-    ExpressionAttributeValues: {
-      ":gsi1pk": `USER`,
-    },
+    TableName: process.env.tableName,
     ExclusiveStartKey: null,
-    ScanIndexForward: false,
-    ExpressionAttributeNames: {
-      "#date": "date",
-    },
-    ProjectionExpression: "pk, sk, #date",
   };
 
-  const promiseItems = [];
   do {
     const results = await dynamoDb.scan(params);
-
+    let i = 0;
     for (const item of results.Items) {
-      // don't update if date is already in milliseconds
-      if (item.date > 10000000000) continue;
-      /*
-      promiseItems.push({
-        TableName: process.env.oneMacTableName,
-        ReturnValues: "ALL_NEW",
-        Key: {
-          pk: item.pk,
-          sk: item.sk,
-        },
-        UpdateExpression: "SET #date = :newDate",
-        ExpressionAttributeNames: {
-          "#date": "date",
-        },
-        ExpressionAttributeValues: {
-          ":newDate": item.date * 1000,
-        },
-      });
-      */
+      console.log("Item is: ", item);
+      if (i++ > 10) break;
     }
+
     console.log("results number: ", results.Items.length);
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
-
-  await Promise.all(
-    promiseItems.map(async (updateParams) => {
-      try {
-        console.log(`Update Params are ${JSON.stringify(updateParams)}`);
-
-        //        const result = await dynamoDb.update(updateParams);
-        //        console.log("Result is: ", result);
-      } catch (e) {
-        console.log("update error: ", e);
-      }
-    })
-  );
 
   return "Done";
 });
