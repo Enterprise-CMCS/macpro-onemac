@@ -42,7 +42,7 @@ const TransmittalNumber: React.FC<{
             What is my {idLabel}?
           </Link>
         </div>
-        {hintText.map(function (text) {
+        {hintText?.map(function (text) {
           return <p className="field-hint">{text}</p>;
         })}
       </div>
