@@ -4,6 +4,7 @@ import { baseWaiver } from "cmscommonlib";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
 import { getCommonSchema } from "./getCommonSchema";
+import { defaultFormConfig } from "./defaultFormConfig";
 
 /**
  * Submitting a Base Waiver MUST do the following to return SUCCESS:
@@ -18,6 +19,7 @@ import { getCommonSchema } from "./getCommonSchema";
  */
 
 const baseWaiverFormConfig = {
+  ...defaultFormConfig,
   ...baseWaiver,
   validateSubmission: (data) => {
     // start with the Schema for all form submissions

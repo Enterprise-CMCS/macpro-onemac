@@ -24,7 +24,7 @@ export default async function updateParent(childData) {
     },
     ConditionExpression: "pk = :pkVal AND sk = :skVal",
     UpdateExpression:
-      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, ",
+      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,

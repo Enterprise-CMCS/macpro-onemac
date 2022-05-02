@@ -24,6 +24,7 @@ const topLevelAttributes = [
 export default async function newSubmission(newData, config) {
   const pk = newData.componentId;
   let sk = `v0#${config.componentType}`;
+  newData.componentType = config.componentType;
 
   if (config.packageGroup) {
     newData.GSI1pk = `OneMAC#${config.packageGroup}`;

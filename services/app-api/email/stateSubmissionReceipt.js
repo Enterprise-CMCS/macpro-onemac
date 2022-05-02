@@ -8,14 +8,15 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const stateSubmissionReceipt = (data, config) => {
-  data.ninetyDayDate = DateTime.fromMillis(data.ninetyDayClockEnd)
+  data.ninetyDayDate = DateTime.fromMillis(data.clockEndTimestamp)
     .setZone("America/New_York")
     .toFormat("DDDD '@ 11:59pm' ZZZZ");
   data.attachments = {};
 
   return {
     ToAddresses: `${data.submitterName} <${data.submitterEmail}>`,
-    Subject: `Your ${config.typeLabel} ${data.transmittalNumber} has been submitted to CMS`,
+    CcAddresses: [],
+    Subject: `Your ${config.typeLabel} ${data.componentId} has been submitted to CMS`,
     HTML: `
     <p>This response confirms the receipt of your ${config.typeLabel}:</p>
     ${formatPackageDetails(data, config)}

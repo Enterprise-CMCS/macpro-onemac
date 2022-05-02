@@ -120,6 +120,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  submitWaiverExtension:
+    handler: form/submitWaiverExtension.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverExtension
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   get:
     handler: get.main
     role: LambdaApiRole

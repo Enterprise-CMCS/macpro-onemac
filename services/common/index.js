@@ -15,6 +15,9 @@ export { Workflow };
 import { baseWaiver } from "./type/baseWaiver.js";
 export { baseWaiver };
 
+import { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
+export { waiverTemporaryExtension };
+
 import { ROUTES } from "./routes.js";
 export * from "./routes.js";
 
