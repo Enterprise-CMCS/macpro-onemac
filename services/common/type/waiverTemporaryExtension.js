@@ -1,11 +1,9 @@
 export const waiverTemporaryExtension = {
   componentType: "waiverextension",
-  isTopLevelComponent: true,
-  packageGroup: "waiver",
   label: "1915(b) Base Waiver",
   idType: "waiver",
   idLabel: "Waiver Number",
-  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R00.00$",
+  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R[0-9]{2}.TE[0-9]{2}$",
   idExistValidations: [
     {
       idMustExist: false,
