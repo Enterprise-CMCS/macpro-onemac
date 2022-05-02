@@ -9,7 +9,10 @@ it("builds the CMS Withdrawal Notice Email", async () => {
     submitterName: "name",
     componentId: "MI-11-1111-22",
   };
+  const testConfig = {
+    typeLabel: "Test Type",
+  };
 
-  const response2 = CMSWithdrawalNotice(testData);
-  expect(response2.HTML.length).toBe(349);
+  const response2 = CMSWithdrawalNotice(testData, testConfig);
+  expect(response2.HTML.length).toBe(375);
 });
