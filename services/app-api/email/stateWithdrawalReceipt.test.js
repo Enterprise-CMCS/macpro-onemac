@@ -1,4 +1,4 @@
-import { StateWithdrawalReceipt } from "./StateWithdrawalReceipt";
+import { stateWithdrawalReceipt } from "./stateWithdrawalReceipt";
 
 it("builds the State Withdrawal Receipt Email", async () => {
   const testData = {
@@ -9,7 +9,10 @@ it("builds the State Withdrawal Receipt Email", async () => {
     submitterName: "name",
     componentId: "MI-11-1111-22",
   };
+  const testConfig = {
+    typeLabel: "Test Type",
+  };
   // TODO:  Get Test Data
-  const response = StateWithdrawalReceipt(testData);
-  expect(response.HTML.length).toBe(348);
+  const response = stateWithdrawalReceipt(testData, testConfig);
+  expect(response.HTML.length).toBe(374);
 });
