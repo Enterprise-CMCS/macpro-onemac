@@ -1,36 +1,35 @@
-import {
-  Workflow,
-  baseWaiver,
-  waiverTemporaryExtension,
-  waiverRenewal,
-  waiverAmendment,
-  waiverAppendixK,
-  waiverRAIResponse,
-  medicaidSPA,
-  medicaidSPARAIResponse,
-  chipSPA,
-  chipSPARAIResponse,
-} from "cmscommonlib";
+import { Workflow } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 // import newSubmission from "./utils/newSubmission";
+
+import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
+// waiverTemporaryExtension,
+// waiverRenewal,
+// waiverAmendment,
+// waiverAppendixK,
+// waiverRAIResponse,
+// medicaidSPA,
+// medicaidSPARAIResponse,
+// chipSPA,
+// chipSPARAIResponse,
 
 /**
  * Perform data conversions
  */
 
 const NEW_CONFIG = {
-  [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPA,
-  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponse,
-  [Workflow.ONEMAC_TYPE.SPA]: medicaidSPA,
-  [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponse,
-  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiver,
-  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal,
-  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK,
-  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtension,
-  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendment,
-  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse,
+  // [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPA,
+  // [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponse,
+  // [Workflow.ONEMAC_TYPE.SPA]: medicaidSPA,
+  // [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponse,
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
+  // [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal,
+  // [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK,
+  // [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtension,
+  // [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendment,
+  // [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse,
 };
 
 export const main = handler(async (event) => {
@@ -45,8 +44,8 @@ export const main = handler(async (event) => {
     const results = await dynamoDb.scan(params);
     let i = 0;
     for (const item of results.Items) {
-      console.log("Item " + i + "is: ", item);
-
+      console.log("Item " + i + " is: ", item);
+      if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE) continue;
       const config = NEW_CONFIG[item.type];
 
       const data = {
