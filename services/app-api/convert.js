@@ -1,8 +1,9 @@
+import { DateTime } from "luxon";
 import { Workflow } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-// import newSubmission from "./utils/newSubmission";
+import newSubmission from "./utils/newSubmission";
 
 import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
 // waiverTemporaryExtension,
@@ -24,6 +25,7 @@ const NEW_CONFIG = {
   // [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponse,
   // [Workflow.ONEMAC_TYPE.SPA]: medicaidSPA,
   // [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponse,
+  [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
   // [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal,
   // [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK,
@@ -45,9 +47,16 @@ export const main = handler(async (event) => {
     let i = 0;
     for (const item of results.Items) {
       console.log("Item " + i + " is: ", item);
-      if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE) continue;
-      const config = NEW_CONFIG[item.type];
 
+      if (item.type === "waiver") {
+        item.type += item.actionType;
+        item.transmittalNumber += ".R00.00";
+        item.proposedEffectiveDate = "none";
+      }
+      // if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE && item.type != Workflow.ONEMAC_TYPE.WAIVER) continue;
+      const config = NEW_CONFIG[item.type];
+      //console.log("config is: ", config);
+      //console.log("base waiver form config is: ", baseWaiverFormConfig);
       const data = {
         componentId: item.transmittalNumber,
         territory: item.territory,
@@ -57,6 +66,7 @@ export const main = handler(async (event) => {
         submitterName: `${item.user.firstName} ${item.user.lastName}`,
         submitterEmail: item.user.email,
         submitterId: item.user.id, // not sure we want this anymore
+        submissionTimestamp: item.submittedAt,
       };
       if (item.proposedEffectiveDate)
         data.proposedEffectiveDate = item.proposedEffectiveDate;
@@ -64,10 +74,18 @@ export const main = handler(async (event) => {
 
       if (!config.validateSubmission(data)) {
         console.log("data validated for config: ", config.type);
+      } else {
+        console.log("not validated??");
       }
-      // await newSubmission(data, NEW_CONFIG[item.type]);
+      data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
+      data.clockEndTimestamp = DateTime.fromMillis(data.submissionTimestamp)
+        .setZone("America/New_York")
+        .plus({ days: 90 })
+        .toMillis();
 
-      if (i++ > 10) break;
+      await newSubmission(data, config);
+
+      if (i++ > 3) break;
     }
 
     console.log("results number: ", results.Items.length);
