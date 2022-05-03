@@ -104,6 +104,9 @@ functions:
     handler: convert.main
     role: LambdaApiRole
     timeout: 180
+    warmup:
+      default:
+        enabled: false
 
   submit:
     handler: submit.main
