@@ -4,6 +4,9 @@ frameworkVersion: "3"
 
 useDotenv: true
 
+package:
+  individually: true
+
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
