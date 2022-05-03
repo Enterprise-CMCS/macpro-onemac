@@ -82,6 +82,7 @@ provider:
   logs:
     restApi: true    
   environment:
+    NODE_OPTIONS: '--enable-source-maps'
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
