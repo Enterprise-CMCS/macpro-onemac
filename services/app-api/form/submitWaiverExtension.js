@@ -6,7 +6,7 @@ import { submitAny } from "./submitAny";
 import { getCommonSchema } from "./getCommonSchema";
 import { defaultFormConfig } from "./defaultFormConfig";
 
-const waiverTemporaryExtensionFormConfig = {
+export const waiverTemporaryExtensionFormConfig = {
   ...defaultFormConfig,
   ...waiverTemporaryExtension,
   validateSubmission: (data) => {

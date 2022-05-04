@@ -6,6 +6,7 @@ import dynamoDb from "./libs/dynamodb-lib";
 import newSubmission from "./utils/newSubmission";
 
 import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
+import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
 // waiverTemporaryExtension,
 // waiverRenewal,
 // waiverAmendment,
@@ -29,7 +30,7 @@ const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
   // [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal,
   // [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK,
-  // [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtension,
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtensionFormConfig,
   // [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendment,
   // [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse,
 };
@@ -55,8 +56,10 @@ export const main = handler(async (event) => {
       }
       // if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE && item.type != Workflow.ONEMAC_TYPE.WAIVER) continue;
       const config = NEW_CONFIG[item.type];
+      if (!config) continue;
       //console.log("config is: ", config);
       //console.log("base waiver form config is: ", baseWaiverFormConfig);
+
       const data = {
         componentId: item.transmittalNumber,
         territory: item.territory,
@@ -66,7 +69,6 @@ export const main = handler(async (event) => {
         submitterName: `${item.user.firstName} ${item.user.lastName}`,
         submitterEmail: item.user.email,
         submitterId: item.user.id, // not sure we want this anymore
-        submissionTimestamp: item.submittedAt,
       };
       if (item.proposedEffectiveDate)
         data.proposedEffectiveDate = item.proposedEffectiveDate;
@@ -76,7 +78,11 @@ export const main = handler(async (event) => {
         console.log("data validated for config: ", config.type);
       } else {
         console.log("not validated??");
+        continue;
       }
+
+      // these fields are added BY submit, so will fail validation
+      data.submissionTimestamp = item.submittedAt;
       data.currentStatus = Workflow.ONEMAC_STATUS.SUBMITTED;
       data.clockEndTimestamp = DateTime.fromMillis(data.submissionTimestamp)
         .setZone("America/New_York")
