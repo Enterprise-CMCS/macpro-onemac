@@ -15,6 +15,9 @@ export enum USER_ROLE {
   HELPDESK = "helpdesk",
 }
 
+import { FieldHint } from "./FieldHint";
+export { FieldHint };
+
 export class UserRole {
   canAccessDashboard: boolean;
   canAccessForms: boolean;
@@ -53,7 +56,7 @@ export namespace ChangeRequest {
     idLabel: string;
     idRegex: string;
     idFormat: string;
-    idHintText: string;
+    idFieldHint: FieldHint[];
     idFAQLink: string;
     idExistValidations: {
       existenceRegex?: RegExp;
