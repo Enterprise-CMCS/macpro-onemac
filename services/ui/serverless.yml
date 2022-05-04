@@ -330,6 +330,8 @@ resources:
     S3BucketName:
       Value:
         Ref: S3Bucket
+    S3BucketCloudFrontLogsName:
+      Value: !Ref S3BucketCloudFrontLogs
     CloudFrontDistributionId:
       Value:
         Ref: CloudFrontDistribution
