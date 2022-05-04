@@ -3,7 +3,6 @@ import { baseWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { getCommonSchema } from "./getCommonSchema";
 import { defaultFormConfig } from "./defaultFormConfig";
 
 /**
@@ -21,42 +20,24 @@ import { defaultFormConfig } from "./defaultFormConfig";
 export const baseWaiverFormConfig = {
   ...defaultFormConfig,
   ...baseWaiver,
-  validateSubmission: (data) => {
-    console.log("validate this data: ", data);
-    // start with the Schema for all form submissions
-    const baseWaiverSchema = getCommonSchema(
-      baseWaiver.idRegex,
-      baseWaiver.requiredAttachments,
-      baseWaiver.optionalAttachments
-    ).append({
-      waiverAuthority: Joi.string().required(),
-      // Should look into a real validation with choices centrally located in cmscommonlib
-      //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
-      proposedEffectiveDate: [
-        Joi.string().isoDate(),
-        Joi.string().valid("none"),
-      ],
-    });
-
-    const { error: baseWaiverError, value: valueAfterBaseWaiverError } =
-      baseWaiverSchema.validate(data);
-    if (baseWaiverError) {
-      if (process.env.NODE_ENV !== "test") {
-        console.error(baseWaiverError, valueAfterBaseWaiverError);
-      }
-      return baseWaiverError;
-    }
-
-    return null;
+  appendToSchema: {
+    waiverAuthority: Joi.string().required(),
+    // Should look into a real validation with choices centrally located in cmscommonlib
+    //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
+    proposedEffectiveDate: [Joi.string().isoDate(), Joi.string().valid("none")],
   },
 };
 
-export const main = handler(async (event) => {
-  try {
-    console.log("baseWaiverFormConfig is: ", baseWaiverFormConfig);
-    return submitAny(event, baseWaiverFormConfig);
-  } catch (error) {
-    console.log("Exception: ", error);
-    throw error;
-  }
-});
+export const main = handler(async (event) =>
+  submitAny(event, baseWaiverFormConfig)
+);
+
+// export const main = handler(async (event) => {
+//   try {
+//     console.log("baseWaiverFormConfig is: ", baseWaiverFormConfig);
+//     return submitAny(event, baseWaiverFormConfig);
+//   } catch (error) {
+//     console.log("Exception: ", error);
+//     throw error;
+//   }
+// });

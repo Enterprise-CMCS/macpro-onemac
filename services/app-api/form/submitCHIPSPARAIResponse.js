@@ -1,15 +1,17 @@
-import { chipSPA } from "cmscommonlib";
+// import Joi from "joi";
+import { chipSPARAIResponse, Workflow } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
 import { defaultFormConfig } from "./defaultFormConfig";
 
-export const chipSPAFormConfig = {
+export const chipSPARAIResponseFormConfig = {
   ...defaultFormConfig,
-  ...chipSPA,
+  ...chipSPARAIResponse,
   CMSCcAddresses: process.env.chipCcEmail?.split(";")?.filter((s) => s.trim()),
+  getParentInfo: (data) => [data.componentId, Workflow.ONEMAC_TYPE.CHIP_SPA],
 };
 
 export const main = handler(async (event) =>
-  submitAny(event, chipSPAFormConfig)
+  submitAny(event, chipSPARAIResponseFormConfig)
 );

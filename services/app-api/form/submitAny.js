@@ -10,6 +10,7 @@ import {
 
 import sendEmail from "../libs/email-lib";
 import { getUser } from "../getUser";
+import { validateSubmission } from "./validateSubmission";
 import newSubmission from "../utils/newSubmission";
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
@@ -53,7 +54,7 @@ export const submitAny = async (event, config) => {
   // errors here are application level: returned as codes to front end for handling
   try {
     // returns undefined if no errors found, or the first error found.
-    if (config.validateSubmission(data)) {
+    if (validateSubmission(data, config)) {
       throw RESPONSE_CODE.VALIDATION_ERROR;
     }
 

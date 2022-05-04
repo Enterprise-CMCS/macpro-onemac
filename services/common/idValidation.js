@@ -50,7 +50,7 @@ export const decodeWaiverNumber = (inId) => {
   return { family, renewal, amendment };
 };
 
-export const getParentPackage = (inId) => {
+export const getParentWaiver = (inId) => {
   const results = decodeWaiverNumber(inId);
   if (!results) return ["FakeID", ONEMAC_TYPE.WAIVER_BASE];
   const { family, renewal } = results;
@@ -58,15 +58,4 @@ export const getParentPackage = (inId) => {
   if (renewal === "00") return [family + ".R00.00", ONEMAC_TYPE.WAIVER_BASE];
   const renewalNumber = family + ".R" + renewal;
   return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
-};
-
-export const getWaiverRAIParent = (inId) => {
-  const results = decodeWaiverNumber(inId);
-  if (!results) return ONEMAC_TYPE.WAIVER_BASE;
-  const { renewal, amendment } = results;
-
-  if (amendment) return ONEMAC_TYPE.WAIVER_AMENDMENT;
-  if (!amendment && renewal && renewal !== "00")
-    return ONEMAC_TYPE.WAIVER_RENEWAL;
-  return ONEMAC_TYPE.WAIVER_BASE;
 };

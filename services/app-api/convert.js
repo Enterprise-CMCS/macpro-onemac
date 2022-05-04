@@ -5,6 +5,8 @@ import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 import newSubmission from "./utils/newSubmission";
 
+import { validateSubmission } from "./form/validateSubmission";
+import { chipSPAFormConfig } from "./form/submitCHIPSPA";
 import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
 // waiverTemporaryExtension,
@@ -22,7 +24,7 @@ import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension
  */
 
 const NEW_CONFIG = {
-  // [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPA,
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPAFormConfig,
   // [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponse,
   // [Workflow.ONEMAC_TYPE.SPA]: medicaidSPA,
   // [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponse,
@@ -50,9 +52,9 @@ export const main = handler(async (event) => {
       console.log("Item " + i + " is: ", item);
 
       if (item.type === "waiver") {
-        item.type += item.actionType;
-        item.transmittalNumber += ".R00.00";
-        item.proposedEffectiveDate = "none";
+        item.type += item.actionType; // change-request items use type="waiver" and actionType to differentiate the components
+        item.transmittalNumber += ".R00.00"; // change-request item Base Waiver Numbers do not have .R00.00
+        item.proposedEffectiveDate = "none"; // original waiver forms did not capture proposedEffectiveDate
       }
       // if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE && item.type != Workflow.ONEMAC_TYPE.WAIVER) continue;
       const config = NEW_CONFIG[item.type];
@@ -74,7 +76,8 @@ export const main = handler(async (event) => {
         data.proposedEffectiveDate = item.proposedEffectiveDate;
       if (item.waiverAuthority) data.waiverAuthority = item.waiverAuthority;
 
-      if (!config.validateSubmission(data)) {
+      // validating returns null if valid, the error if not
+      if (!validateSubmission(data, config)) {
         console.log("data validated for config: ", config.type);
       } else {
         console.log("not validated??");

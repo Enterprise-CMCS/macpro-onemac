@@ -37,3 +37,24 @@ export const getCommonSchema = (
 
   return basicSchema;
 };
+
+export const validateSubmission = (data, config) => {
+  console.log("validate this data: ", data);
+  // start with the Schema for all form submissions
+  const theSchema = getCommonSchema(
+    config.idRegex,
+    config.requiredAttachments,
+    config.optionalAttachments
+  ).append(config.appendToSchema);
+
+  const { error: validationError, value: valueOfValidationError } =
+    theSchema.validate(data);
+  if (validationError) {
+    if (process.env.NODE_ENV !== "test") {
+      console.error(validationError, valueOfValidationError);
+    }
+    return validationError;
+  }
+
+  return null;
+};
