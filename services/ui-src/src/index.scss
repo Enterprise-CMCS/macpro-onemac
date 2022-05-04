@@ -161,6 +161,12 @@ p.field-hint {
   width: 100%;
   margin: 0px;
 }
+.field-hint-major {
+  @extend .ds-c-field__hint;
+  @extend .ds-u-font-style--italic;
+  width: 100%;
+  margin: 0px;
+}
 .field-error-message {
   @extend .ds-c-field__hint;
   color: $color-red;

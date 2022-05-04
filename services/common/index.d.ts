@@ -1,3 +1,5 @@
+import { FieldHint } from "../ui-src/src/components/FieldHint";
+
 export const RESPONSE_CODE: Record<string, string>;
 export const ROUTES: Record<string, string>;
 export enum USER_STATUS {
@@ -53,7 +55,7 @@ export namespace ChangeRequest {
     idLabel: string;
     idRegex: string;
     idFormat: string;
-    idHintText: string[];
+    idFieldHint: FieldHint[];
     idFAQLink: string;
     idExistValidations: {
       existenceRegex?: RegExp;
