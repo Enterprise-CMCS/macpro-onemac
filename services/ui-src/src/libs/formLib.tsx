@@ -1,5 +1,4 @@
-import { ROUTES, Workflow } from "cmscommonlib";
-import { FieldHint } from "../components/FieldHint";
+import { ROUTES, Workflow, FieldHint } from "cmscommonlib";
 
 type SelectOption = { label: string; value: string };
 

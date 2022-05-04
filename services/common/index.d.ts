@@ -1,5 +1,3 @@
-import { FieldHint } from "../ui-src/src/components/FieldHint";
-
 export const RESPONSE_CODE: Record<string, string>;
 export const ROUTES: Record<string, string>;
 export enum USER_STATUS {
@@ -16,6 +14,9 @@ export enum USER_ROLE {
   SYSTEM_ADMIN = "systemadmin",
   HELPDESK = "helpdesk",
 }
+
+import { FieldHint } from "./FieldHint";
+export { FieldHint };
 
 export class UserRole {
   canAccessDashboard: boolean;

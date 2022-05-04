@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from "@material-ui/core";
-import { FieldHint } from "./FieldHint";
+import { FieldHint } from "cmscommonlib";
 
 /**
  * Returns the ID specific form element
