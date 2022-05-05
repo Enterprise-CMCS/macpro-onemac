@@ -8,17 +8,14 @@ import newSubmission from "./utils/newSubmission";
 import { validateSubmission } from "./form/validateSubmission";
 import { chipSPAFormConfig } from "./form/submitCHIPSPA";
 import { chipSPARAIResponseFormConfig } from "./form/submitCHIPSPARAIResponse";
+import { medicaidSPAFormConfig } from "./form/submitMedicaidSPA";
+import { medicaidSPARAIResponseFormConfig } from "./form/submitMedicaidSPARAIResponse";
 import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
-// waiverTemporaryExtension,
 // waiverRenewal,
 // waiverAmendment,
 // waiverAppendixK,
 // waiverRAIResponse,
-// medicaidSPA,
-// medicaidSPARAIResponse,
-// chipSPA,
-// chipSPARAIResponse,
 
 /**
  * Perform data conversions
@@ -27,8 +24,8 @@ import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension
 const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPAFormConfig,
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponseFormConfig,
-  // [Workflow.ONEMAC_TYPE.SPA]: medicaidSPA,
-  // [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponse,
+  [Workflow.ONEMAC_TYPE.SPA]: medicaidSPAFormConfig,
+  [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponseFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
   // [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal,
@@ -38,8 +35,7 @@ const NEW_CONFIG = {
   // [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse,
 };
 
-export const main = handler(async (event) => {
-  // console.log("Convert was called with event: ", event);
+export const main = handler(async () => {
   // scan changeRequest table
   const params = {
     TableName: process.env.tableName,

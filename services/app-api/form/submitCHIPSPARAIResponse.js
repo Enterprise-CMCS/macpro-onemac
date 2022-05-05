@@ -1,4 +1,3 @@
-// import Joi from "joi";
 import { chipSPARAIResponse, Workflow } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
