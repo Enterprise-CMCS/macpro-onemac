@@ -46,6 +46,7 @@ export default async function newSubmission(newData, config) {
       pk,
       sk,
     },
+    ConditionExpression: "attribute_not_exists(pk)",
     UpdateExpression:
       "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
@@ -68,6 +69,7 @@ export default async function newSubmission(newData, config) {
   console.log("params in newSubmission are: ", JSON.stringify(params, null, 2));
   try {
     const response = await dynamoDb.update(params);
+    console.log("the response is: ", response);
 
     const latestVersion = response["Attributes"]["Latest"];
     const putsk = sk.replace("v0", "v" + latestVersion);
