@@ -94,7 +94,7 @@ export const main = handler(async (event) => {
 
       await newSubmission(data, config);
 
-      if (i++ > 3) break;
+      if (i++ > 1000) break;
     }
 
     console.log("results number: ", results.Items.length);
