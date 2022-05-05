@@ -3,17 +3,17 @@
  * This will contain static items needed by both the frontend and backend.
  */
 
-import * as ChangeRequest from "./changeRequest";
+import * as ChangeRequest from "./changeRequest.js";
 export { ChangeRequest };
 
-import * as Validate from "./idValidation";
+import * as Validate from "./idValidation.js";
 export { Validate };
 
-import * as Workflow from "./workflow";
+import * as Workflow from "./workflow.js";
 export { Workflow };
 
-import { ROUTES } from "./routes";
-export * from "./routes";
+import { ROUTES } from "./routes.js";
+export * from "./routes.js";
 
 /**
  * Codes to send to front end
@@ -50,6 +50,17 @@ export const RESPONSE_CODE = {
   SUBMISSION_ID_NOT_FOUND_WARNING: "OMP002",
   SUBMISSION_ID_EXIST_WARNING: "OMP003",
   PACKAGE_WITHDRAW_SUCCESS: "WP000",
+};
+
+export const RAI_ROUTE = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
+  [Workflow.ONEMAC_TYPE.SPA]: ROUTES.SPA_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "",
 };
 
 /**

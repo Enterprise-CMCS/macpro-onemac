@@ -1,6 +1,8 @@
 
 service: stream-functions
 
+frameworkVersion: "3"
+
 package:
   individually: true
 
@@ -13,9 +15,9 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path~true, ssm:/configuration/default/iam/path~true}
-  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy~true, ssm:/configuration/default/iam/permissionsBoundaryPolicy~true, ""}
-  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type~true, ssm:/configuration/default/infrastucture/type~true, "development"}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
   warmupEnabled:
     production: true
     development: false
@@ -23,31 +25,34 @@ custom:
     production: false
     other: true
   warmup:
-    enabled: ${self:custom.warmupEnabled.${self:custom.infrastructureType}}
-    role: LambdaWarmupRole
-    vpc: false
-    events:
-      - schedule: rate(3 minutes)
-    timeout: 20
-    prewarm: true
-    concurrency: 5
-    folderName: node_modules/serverless-bundle/src/_warmup
-    cleanFolder: false
+    default:
+      enabled: ${self:custom.warmupEnabled.${self:custom.infrastructureType}}
+      role: LambdaWarmupRole
+      vpc: false
+      events:
+        - schedule: rate(3 minutes)
+      timeout: 20
+      prewarm: true
+      concurrency: 5
+      folderName: node_modules/serverless-bundle/src/_warmup
+      cleanFolder: false
+    configureConnectors:
+      enabled: false
   tableStreamArn: ${cf:app-api-${self:custom.stage}.OneMacTableStreamArn}
   spaIdTableName: ${cf:app-api-${self:custom.stage}.SpaIdTableName}
   spaIdTableArn: ${cf:app-api-${self:custom.stage}.SpaIdTableArn}
   oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
   oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
-  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls~true, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls~true}
-  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id~true, ssm:/configuration/default/vpc/id~true}
+  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
+  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
   dataSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id~true, ssm:/configuration/default/vpc/subnets/data/a/id~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id~true, ssm:/configuration/default/vpc/subnets/data/b/id~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id~true, ssm:/configuration/default/vpc/subnets/data/c/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id, ssm:/configuration/default/vpc/subnets/data/c/id}
   privateSubnets:
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id~true, ssm:/configuration/default/vpc/subnets/private/a/id~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id~true, ssm:/configuration/default/vpc/subnets/private/b/id~true}
-    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id~true, ssm:/configuration/default/vpc/subnets/private/c/id~true}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
   scripts:
     hooks:
       package:setupProviderConfiguration: |
@@ -63,7 +68,7 @@ custom:
 
 provider:
   name: aws
-  runtime: nodejs12.x
+  runtime: nodejs14.x
   region: us-east-1
   stage: dev
 
@@ -75,7 +80,7 @@ functions:
           arn: ${self:custom.tableStreamArn}
           startingPosition: LATEST
           maximumRetryAttempts: 2
-          enabled: ${self:custom.seaToolWritingEnabled.${opt:stage}, self.seaToolWritingEnabled.other}
+          enabled: ${self:custom.seaToolWritingEnabled.${opt:stage}, self:custom.seaToolWritingEnabled.other}
     role: LamdaSourceDynamoToMskRole
     environment:
       BOOTSTRAP_BROKER_STRING_TLS: ${self:custom.bootstrapBrokerStringTls}
@@ -112,8 +117,6 @@ functions:
       sinkPrefix: spa-${self:custom.stage}-
     maximumRetryAttempts: 2
     timeout: 120
-    warmup:
-      enabled: false
     vpc:
       securityGroupIds:
         - Ref: LambdaConfigureConnectorsSecurityGroup

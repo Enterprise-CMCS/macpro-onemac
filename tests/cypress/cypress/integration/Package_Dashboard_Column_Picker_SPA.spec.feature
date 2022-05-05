@@ -76,7 +76,7 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click type checkbox
         And click show hide columns button
         And verify type column exists
-    
+
         Scenario: Filter for medicaid spa only, remove all check from drop down and keep TYPE, verify type state medicaid spa
         Given I am on Login Page
         When Clicking on Development Login
@@ -93,8 +93,8 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click status checkbox
         And click submitted by checkbox
         And click show hide columns button
-        # And verify the type on row one exists
-        # And verify the type on row one is Medicaid SPA
+        And verify the type on row one exists
+        And verify the type on row one is Medicaid SPA
 
     Scenario: Search with no results and verify error message is correct, verify columns are existing per selection on filter
         Given I am on Login Page
@@ -126,14 +126,14 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And type partial existing ID in search bar
         And verify type column exists
         And verify state column exists
-        #And verify the type on row one exists
-        #And verify the state on row one exists
+        And verify the type on row one exists
+        And verify the state on row one exists
         And click show hide columns button
         And click state checkbox
         And click show hide columns button
         And verify state column does not exist
         And verify type column exists
-        #And verify the type on row one exists
+        And verify the type on row one exists
 
 #Feature: OY2-11469 Display State column for the CMS System Admin
     Scenario: Verify State Column Exists and is sortable for CMS System Admins

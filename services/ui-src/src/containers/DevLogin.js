@@ -1,9 +1,10 @@
 import React, { useState } from "react";
 import { Auth } from "aws-amplify";
+import { Redirect } from "react-router-dom";
 
 import { Button } from "@cmsgov/design-system";
 
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { useFormFields } from "../libs/hooksLib";
@@ -13,7 +14,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 
 export default function DevLogin() {
-  const { setUserInfo } = useAppContext();
+  const { isAuthenticated, setUserInfo } = useAppContext();
   const showDevLogin = config.ALLOW_DEV_LOGIN === "true";
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const [fields, handleFieldChange] = useFormFields({
@@ -39,6 +40,8 @@ export default function DevLogin() {
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
+
+  if (isAuthenticated) return <Redirect to={ROUTES.DASHBOARD} />;
 
   return (
     <div>

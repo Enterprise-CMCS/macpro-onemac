@@ -1,4 +1,4 @@
-import { ROUTES } from "./routes";
+import { ROUTES } from "./routes.js";
 
 export const TYPE = {
   CHIP_SPA: "chipspa",

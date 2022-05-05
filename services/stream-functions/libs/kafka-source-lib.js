@@ -5,7 +5,7 @@ const STAGE = process.env.STAGE;
 let CLIENT_ID_PREFIX = 'seds';
 if (process.env.CLIENT_ID_PREFIX)
   CLIENT_ID_PREFIX = process.env.CLIENT_ID_PREFIX;
-  
+
 const kafka = new Kafka({
   clientId: `${CLIENT_ID_PREFIX}-${STAGE}`,
   brokers: process.env.BOOTSTRAP_BROKER_STRING_TLS.split(","),
