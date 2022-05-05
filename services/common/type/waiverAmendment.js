@@ -1,5 +1,4 @@
 export const waiverAmendment = {
-  packageGroup: "waiver",
   componentType: "waiveramendment",
   typeLabel: "1915(b) Waiver Amendment",
   idType: "waiver",

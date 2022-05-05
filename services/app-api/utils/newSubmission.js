@@ -33,10 +33,12 @@ export default async function newSubmission(newData, config) {
     [newData.parentId, newData.parentType] = config.getParentInfo(
       newData.componentId
     );
+    console.log("newData is: ", newData);
     newData.GSI1pk = newData.parentId;
     newData.GSI1sk = config.componentType;
     if (newData.parentId === newData.componentId)
       sk += `#${newData.submissionTimestamp}`;
+    console.log("the sk for the child is: ", sk);
   }
 
   const params = {
@@ -46,23 +48,23 @@ export default async function newSubmission(newData, config) {
       pk,
       sk,
     },
-    ConditionExpression: "attribute_not_exists(pk)",
     UpdateExpression:
       "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,
-      ":emptyList": [],
+      //      ":emptyList": [],
     },
   };
-
+  console.log("params in newSubmission are: ", params);
   topLevelAttributes.forEach((attributeName) => {
     if (newData[attributeName]) {
       const label = `:${attributeName}`;
       params.ExpressionAttributeValues[label] = newData[attributeName];
-      if (Array.isArray(newData[attributeName]))
-        params.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${label})`;
-      else params.UpdateExpression += `, ${attributeName} = ${label}`;
+      //      if (Array.isArray(newData[attributeName]))
+      //        params.UpdateExpression += `, ${attributeName} = list_append(:emptyList, ${label})`;
+      //      else
+      params.UpdateExpression += `, ${attributeName} = ${label}`;
     }
   });
 

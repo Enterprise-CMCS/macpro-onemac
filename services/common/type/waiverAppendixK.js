@@ -1,5 +1,4 @@
 export const waiverAppendixK = {
-  packageGroup: "waiver",
   componentType: "waiverappk",
   typeLabel: "1915(c) Appendix K Amendment",
   idType: "waiver",

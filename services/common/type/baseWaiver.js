@@ -20,6 +20,7 @@ export const baseWaiver = {
     "Tribal Consultation (Initial, Renewal, Amendment)",
     "Other",
   ],
+  deprecatedAttachmentTypes: ["Required Upload (per Waiver Authority)"],
   requiredUploads: [], // until changed in front end
   optionalUploads: [
     "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",

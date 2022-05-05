@@ -6,6 +6,8 @@ export const getCommonSchema = (
   idRegex,
   requiredAttachments,
   optionalAttachments
+  // ,
+  // deprecatedAttachmentTypes
 ) => {
   const MIME_TYPE_PATTERN =
     /(application|audio|font|image|message|model|multipart|text|video)\/.+/;
@@ -15,7 +17,10 @@ export const getCommonSchema = (
     filename: Joi.string().required(),
     s3Key: Joi.string().required(),
     title: Joi.string().valid(
-      ...[...requiredAttachments, ...optionalAttachments].map((uploadCfg) =>
+      ...[
+        ...requiredAttachments,
+        ...optionalAttachments /* , ...deprecatedAttachmentTypes */,
+      ].map((uploadCfg) =>
         typeof uploadCfg === "string" ? uploadCfg : uploadCfg.title
       )
     ),
@@ -45,6 +50,8 @@ export const validateSubmission = (data, config) => {
     config.idRegex,
     config.requiredAttachments,
     config.optionalAttachments
+    // ,
+    // config.deprecatedAttachmentTypes
   ).append(config.appendToSchema);
 
   const { error: validationError, value: valueOfValidationError } =
@@ -53,6 +60,7 @@ export const validateSubmission = (data, config) => {
     if (process.env.NODE_ENV !== "test") {
       console.error(validationError, valueOfValidationError);
     }
+    console.log(validationError, valueOfValidationError);
     return validationError;
   }
 

@@ -1,5 +1,4 @@
 export const chipSPARAIResponse = {
-  packageGroup: "spa",
   componentType: "chipsparai",
   typeLabel: "CHIP SPA RAI Response",
   idType: "spa",

@@ -1,5 +1,4 @@
 export const waiverRAIResponse = {
-  packageGroup: "waiver",
   componentType: "waiverrai",
   typeLabel: "1915(b) RAI Response",
   idType: "waiver",

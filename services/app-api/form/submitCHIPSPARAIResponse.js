@@ -9,7 +9,7 @@ export const chipSPARAIResponseFormConfig = {
   ...defaultFormConfig,
   ...chipSPARAIResponse,
   CMSCcAddresses: process.env.chipCcEmail?.split(";")?.filter((s) => s.trim()),
-  getParentInfo: (data) => [data.componentId, Workflow.ONEMAC_TYPE.CHIP_SPA],
+  getParentInfo: (myId) => [myId, Workflow.ONEMAC_TYPE.CHIP_SPA],
 };
 
 export const main = handler(async (event) =>

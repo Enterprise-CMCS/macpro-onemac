@@ -7,6 +7,7 @@ import newSubmission from "./utils/newSubmission";
 
 import { validateSubmission } from "./form/validateSubmission";
 import { chipSPAFormConfig } from "./form/submitCHIPSPA";
+import { chipSPARAIResponseFormConfig } from "./form/submitCHIPSPARAIResponse";
 import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
 // waiverTemporaryExtension,
@@ -25,7 +26,7 @@ import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension
 
 const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPAFormConfig,
-  // [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponse,
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponseFormConfig,
   // [Workflow.ONEMAC_TYPE.SPA]: medicaidSPA,
   // [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponse,
   [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
@@ -38,7 +39,7 @@ const NEW_CONFIG = {
 };
 
 export const main = handler(async (event) => {
-  console.log("Convert was called with event: ", event);
+  // console.log("Convert was called with event: ", event);
   // scan changeRequest table
   const params = {
     TableName: process.env.tableName,
@@ -70,7 +71,7 @@ export const main = handler(async (event) => {
         submissionId: item.id, // not sure we need this anymore
         submitterName: `${item.user.firstName} ${item.user.lastName}`,
         submitterEmail: item.user.email,
-        submitterId: item.user.id, // not sure we want this anymore
+        submitterId: item.userId, // not sure we want this anymore
       };
       if (item.proposedEffectiveDate)
         data.proposedEffectiveDate = item.proposedEffectiveDate;
@@ -78,7 +79,7 @@ export const main = handler(async (event) => {
 
       // validating returns null if valid, the error if not
       if (!validateSubmission(data, config)) {
-        console.log("data validated for config: ", config.type);
+        console.log("data validated for config: ", config.componentType);
       } else {
         console.log("not validated??");
         continue;
@@ -91,13 +92,13 @@ export const main = handler(async (event) => {
         .setZone("America/New_York")
         .plus({ days: 90 })
         .toMillis();
-
+      console.log("Submitting data: ", data);
       await newSubmission(data, config);
 
       if (i++ > 1000) break;
     }
 
-    console.log("results number: ", results.Items.length);
+    // console.log("results number: ", results.Items.length);
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
 

@@ -7,7 +7,7 @@ import { defaultFormConfig } from "./defaultFormConfig";
 export const waiverTemporaryExtensionFormConfig = {
   ...defaultFormConfig,
   ...waiverTemporaryExtension,
-  getParentInfo: (data) => Validate.getParentWaiver(data),
+  getParentInfo: (myId) => Validate.getParentWaiver(myId),
 };
 
 export const main = handler(async (event) =>
