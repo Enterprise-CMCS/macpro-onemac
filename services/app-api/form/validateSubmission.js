@@ -2,13 +2,7 @@ import Joi from "joi";
 
 import { territoryCodeList } from "cmscommonlib";
 
-export const getCommonSchema = (
-  idRegex,
-  requiredAttachments,
-  optionalAttachments
-  // ,
-  // deprecatedAttachmentTypes
-) => {
+export const getCommonSchema = (idRegex, possibleAttachmentTitles) => {
   const MIME_TYPE_PATTERN =
     /(application|audio|font|image|message|model|multipart|text|video)\/.+/;
 
@@ -16,14 +10,7 @@ export const getCommonSchema = (
     contentType: Joi.string().pattern(MIME_TYPE_PATTERN).required(),
     filename: Joi.string().required(),
     s3Key: Joi.string().required(),
-    title: Joi.string().valid(
-      ...[
-        ...requiredAttachments,
-        ...optionalAttachments /* , ...deprecatedAttachmentTypes */,
-      ].map((uploadCfg) =>
-        typeof uploadCfg === "string" ? uploadCfg : uploadCfg.title
-      )
-    ),
+    title: Joi.string().valid(...possibleAttachmentTitles),
     url: Joi.string().uri().required(),
   });
   const basicSchema = Joi.object({
@@ -45,13 +32,19 @@ export const getCommonSchema = (
 
 export const validateSubmission = (data, config) => {
   console.log("validate this data: ", data);
+
+  if (!config.deprecatedAttachmentTypes) config.deprecatedAttachmentTypes = [];
+  // possible attachment titles are built from Required, Optional, and Deprecated
+  const possibleAttachmentTitles = config.requiredAttachments
+    .concat(config.optionalAttachments, config.deprecatedAttachmentTypes)
+    .map((uploadCfg) =>
+      typeof uploadCfg === "string" ? uploadCfg : uploadCfg.title
+    );
+
   // start with the Schema for all form submissions
   const theSchema = getCommonSchema(
     config.idRegex,
-    config.requiredAttachments,
-    config.optionalAttachments
-    // ,
-    // config.deprecatedAttachmentTypes
+    possibleAttachmentTitles
   ).append(config.appendToSchema);
 
   const { error: validationError, value: valueOfValidationError } =

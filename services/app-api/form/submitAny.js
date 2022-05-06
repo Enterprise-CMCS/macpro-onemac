@@ -14,6 +14,7 @@ import { validateSubmission } from "./validateSubmission";
 import newSubmission from "../utils/newSubmission";
 import { CMSSubmissionNotice } from "../email/CMSSubmissionNotice";
 import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
+import packageExists from "../utils/packageExists";
 
 /**
  * Submitting a Form uses the configs from each form type to do the following:
@@ -26,6 +27,7 @@ import { stateSubmissionReceipt } from "../email/stateSubmissionReceipt";
 
 export const submitAny = async (event, config) => {
   let inData;
+  const warningsInCMSNotice = [];
 
   try {
     inData = JSON.parse(event.body);
@@ -78,6 +80,39 @@ export const submitAny = async (event, config) => {
         throw RESPONSE_CODE.USER_NOT_AUTHORIZED;
       }
     }
+
+    // id validations, can be many for different parts of IDs
+    const promises = config.idExistValidations.map(
+      async ({ idMustExist, errorLevel, existenceRegex }) => {
+        let checkingNumber = data.componentId;
+
+        if (existenceRegex !== undefined) {
+          checkingNumber = data.componentId.match(existenceRegex)[0];
+        }
+        console.log("ID to check for existence: ", checkingNumber);
+
+        const isThere = await packageExists(checkingNumber);
+        if (idMustExist && !isThere) {
+          return [errorLevel, RESPONSE_CODE.ID_NOT_FOUND];
+        }
+        if (!idMustExist && isThere) {
+          return [errorLevel, RESPONSE_CODE.DUPLICATE_ID];
+        }
+      }
+    );
+
+    const results = await Promise.all(promises);
+    console.log("ID Matching results are: ", results);
+    if (results[0] != undefined)
+      results.forEach((errorMsg) => {
+        console.log("theLevel: ", errorMsg[0]);
+        console.log("theCode: ", errorMsg[1]);
+        if (errorMsg[0] === "error") {
+          throw errorMsg[1];
+        } else {
+          warningsInCMSNotice.push(errorMsg[1]);
+        }
+      });
   } catch (error) {
     console.log("Error is: ", error);
     return error;
@@ -106,7 +141,7 @@ export const submitAny = async (event, config) => {
 
   try {
     // Now send the CMS email
-    await sendEmail(CMSSubmissionNotice(data, config));
+    await sendEmail(CMSSubmissionNotice(data, config, warningsInCMSNotice));
   } catch (error) {
     console.log("Error is: ", error);
     return RESPONSE_CODE.EMAIL_NOT_SENT;

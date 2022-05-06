@@ -5,7 +5,7 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @param {Object} data from the package.
  * @returns {Object} email parameters in generic format.
  */
-export const CMSSubmissionNotice = (data, config) => ({
+export const CMSSubmissionNotice = (data, config, warnings) => ({
   ToAddresses: config.CMSToAddresses,
   CcAddresses: config.CMSCcAddresses,
   Subject: `${config.typeLabel} ${data.componentId} Submitted`,
@@ -32,6 +32,7 @@ export const CMSSubmissionNotice = (data, config) => ({
         </li>
       </ul>
           ${formatPackageDetails(data, config)}
+          ${warnings.map((warning) => `<p>${warning}</p>`).toString()}
           <br>
           <p>If the contents of this email seem suspicious, do not open them, and instead forward this email to <a href="mailto:SPAM@cms.hhs.gov">SPAM@cms.hhs.gov</a>.</p>
           <p>Thank you!</p>
