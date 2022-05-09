@@ -45,7 +45,12 @@ do
   for x in "${filteredBucketList[@]}"
   do
     echo 'Emptying bucket ' $x
+    #turning off bucket versioning
     echo `aws s3api put-bucket-versioning --bucket $x --versioning-configuration Status=Suspended`
+    #delete any previously versioned files and deletion markers
+    echo `aws s3api delete-objects --bucket $x --delete "$(aws s3api list-object-versions --bucket $x --query='{Objects: Versions[].{Key:Key,VersionId:VersionId}}')"`
+    echo `aws s3api delete-objects --bucket $x --delete "$(aws s3api list-object-versions --bucket $x --query='{Objects: DeleteMarkers[].{Key:Key,VersionId:VersionId}}')"`
+    #delete any unversioned files
     echo `aws s3 rm s3://$x/ --recursive`
   done
   echo 'deleting stack: ' $i
