@@ -1,5 +1,4 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import { Validate, Workflow } from "cmscommonlib";
 
 const topLevelUpdates = [
   "clockEndTimestamp",

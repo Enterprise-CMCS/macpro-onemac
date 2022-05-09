@@ -119,7 +119,7 @@ export const main = handler(async (event) => {
           },
         };
         console.log("Put params: ", putParams);
-        const v0item = await dynamoDb.put(putParams);
+        await dynamoDb.put(putParams);
 
         // make the v1 item also
         putParams.Item = {
@@ -127,7 +127,7 @@ export const main = handler(async (event) => {
           sk: `v1#${result.Attributes.sk}`,
         };
 
-        const v1item = await dynamoDb.put(putParams);
+        await dynamoDb.put(putParams);
 
         // if there are children, have to migrate those as well
         if (result.Attributes.children) {
