@@ -45,9 +45,9 @@ do
   for x in "${filteredBucketList[@]}"
   do
     echo 'Emptying bucket ' $x
-    echo `aws s3api put-bucket-versioning --bucket $x --versioning-configuration Status=Suspended`
-    echo `aws s3 rm s3://$x/ --recursive`
+    #echo `aws s3api put-bucket-versioning --bucket $x --versioning-configuration Status=Suspended`
+    #echo `aws s3 rm s3://$x/ --recursive`
   done
   echo 'deleting stack: ' $i
-  echo `aws cloudformation delete-stack --stack-name $i`
+  #echo `aws cloudformation delete-stack --stack-name $i`
 done
