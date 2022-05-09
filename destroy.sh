@@ -36,15 +36,16 @@ if [ "$CI" != "true" ]; then
   fi
 fi
 
-ffor i in "${filteredStackList[@]}"
+for i in "${filteredStackList[@]}"
 do
   echo 'starting destroy on stack: ' $i
   # Get list of buckets in this stack
   filteredBucketList=(`aws cloudformation describe-stack-resources --stack-name $i | jq -r ".StackResources[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
-  echo 'Emptying buckets...'
+  echo 'Turning off Versioning and Emptying buckets...'
   for x in "${filteredBucketList[@]}"
   do
     echo 'Emptying bucket ' $x
+    echo `aws s3api put-bucket-versioning --bucket $x --versioning-configuration Status=Suspended`
     echo `aws s3 rm s3://$x/ --recursive`
   done
   echo 'deleting stack: ' $i
