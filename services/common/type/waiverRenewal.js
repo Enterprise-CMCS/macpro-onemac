@@ -18,6 +18,7 @@ export const waiverRenewal = {
       existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R(0[1-9]|[1-9][0-9])(|.00)",
     },
   ],
+  allowMultiplesWithSameId: false,
   requiredAttachments: [],
   optionalAttachments: [
     "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",

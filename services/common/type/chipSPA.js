@@ -12,6 +12,7 @@ export const chipSPA = {
       errorLevel: "error",
     },
   ],
+  allowMultiplesWithSameId: false,
   requiredAttachments: [
     "Current State Plan",
     "Amended State Plan Language",

@@ -11,6 +11,7 @@ export const waiverAppendixK = {
       existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
     },
   ],
+  allowMultiplesWithSameId: false,
   requiredAttachments: ["1915(c) Appendix K Amendment Waiver Template"],
   optionalAttachments: ["Other"],
   requiredUploads: ["1915(c) Appendix K Amendment Waiver Template"],

@@ -11,6 +11,7 @@ export const chipSPARAIResponse = {
       errorLevel: "error",
     },
   ],
+  allowMultiplesWithSameId: true,
   requiredAttachments: [
     "Revised Amended State Plan Language",
     "Official RAI Response",

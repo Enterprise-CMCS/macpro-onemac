@@ -5,45 +5,37 @@ const topLevelUpdates = [
   "clockEndTimestamp",
   "expirationTimestamp",
   "currentStatus",
+  "lastModifiedName",
+  "lastModifiedEmail",
+  "lastModifiedTimestamp",
 ];
 
-export default async function updateComponent({
-  componentId: updatePk,
-  ...updateData
-}) {
+export default async function updateComponent(updateData, config) {
   const changeData = {
-    componentType: updateData.componentType,
-    submitterName: updateData.submitterName,
-    submitterEmail: updateData.submitterEmail,
-    currentStatus: updateData.currentStatus,
-    submissionTimestamp: updateData.submissionTimestamp,
-    componentId: updateData.componentId,
-    displayId: updateData.componentId,
+    pk: updateData.componentId,
+    sk: `v0#${updateData.componentType}`,
+    lastModifiedName: updateData.submitterName,
+    lastModifiedEmail: updateData.submitterEmail,
+    lastModifiedTimestamp: updateData.submissionTimestamp,
   };
 
-  const updateSk = `v0#${changeData.componentType}#${changeData.submissionTimestamp}`;
-
-  if (updateData.componentType === Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT) {
-    const { renewal, amendment } = Validate.decodeWaiverNumber(updatePk);
-    changeData.displayId = "R" + renewal + "." + amendment;
-  }
+  if (config.allowMultiplesWithSameId)
+    changeData.sk += `#${changeData.submissionTimestamp}`;
 
   const updateComponentParams = {
     TableName: process.env.oneMacTableName,
     ReturnValues: "UPDATED_NEW",
     Key: {
-      pk: updatePk,
-      sk: updateSk,
+      pk: changeData.pk,
+      sk: changeData.sk,
     },
-    ConditionExpression: "pk = :pkVal AND sk = :skVal",
+    ConditionExpression: "pk = :pkVal", // so update fails if component does not exist
     UpdateExpression:
-      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval, ",
+      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,
-      ":emptyList": [],
-      ":pkVal": updatePk,
-      ":skVal": updateSk,
+      ":pkVal": changeData.pk,
     },
   };
 
@@ -52,45 +44,42 @@ export default async function updateComponent({
       const newLabel = `:new${attributeName}`;
       updateComponentParams.ExpressionAttributeValues[newLabel] =
         updateData[attributeName];
-      if (Array.isArray(updateData[attributeName]))
+      if (Array.isArray(updateData[attributeName])) {
         updateComponentParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-      else
+        updateComponentParams.ExpressionAttributeValues[":emptyList"] = [];
+      } else
         updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
     }
   });
-
-  // add the child details
-  if (updateData.newChild) {
-    updateComponentParams.ExpressionAttributeNames = {
-      "#childTypeName": updateData.newChild.componentType,
-      "#childList": "children",
-    };
-    updateComponentParams.ExpressionAttributeValues[":childcomponent"] = [
-      updateData.newChild,
-    ];
-    updateComponentParams.UpdateExpression +=
-      ", #childTypeName = list_append(if_not_exists(#childTypeName,:emptyList), :childcomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :childcomponent)";
-  }
 
   try {
     console.log("updateParams: ", updateComponentParams);
     const result = await dynamoDb.update(updateComponentParams);
     console.log("Result is: ", result);
-    try {
-      const latestVersion = result["Attributes"]["Latest"];
-      const putsk = updateSk.replace("v0#", "v" + latestVersion + "#");
-      const putParams = {
-        TableName: process.env.oneMacTableName,
-        Item: {
-          pk: updatePk,
-          sk: putsk,
-          ...result.Attributes,
-        },
-      };
-      await dynamoDb.put(putParams);
-    } catch (e) {
-      console.log("got exception: ", e);
-    }
+    const latestVersion = result["Attributes"]["Latest"];
+    const putsk = changeData.sk.replace("v0#", "v" + latestVersion + "#");
+    const putParams = {
+      TableName: process.env.oneMacTableName,
+      Item: {
+        pk: changeData.pk,
+        sk: putsk,
+        ...result.Attributes,
+      },
+    };
+    await dynamoDb.put(putParams);
+
+    // remove GSI
+    const gsiParams = {
+      TableName: process.env.oneMacTableName,
+      Key: {
+        pk: changeData.pk,
+        sk: putsk,
+      },
+    };
+    gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
+
+    await dynamoDb.update(gsiParams);
+
     return result.Attributes;
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {

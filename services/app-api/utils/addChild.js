@@ -1,84 +1,6 @@
 import dynamoDb from "../libs/dynamodb-lib";
 
-export default async function updateParent(childData) {
-  const params = {
-    TableName: process.env.oneMacTableName,
-    Key: {
-      pk: childData.parentId,
-      sk: `v0#${childData.parentType}`,
-    },
-  };
-
-  const parentComponent = await dynamoDb.get(params);
-  console.log("parent Component: ", parentComponent);
-  if (parentComponent.Item) {
-    const favoriteChild = parentComponent.Item.children.findIndex((child) => {
-      return (
-        child.componentId === childData.componentId &&
-        child.componentType === childData.componentType &&
-        child.submissionTimestamp === childData.submissionTimestamp
-      );
-    });
-
-    console.log("favorite child index is: ", favoriteChild);
-
-    const updateParams = {
-      ...params,
-      UpdateExpression: `SET children[${favoriteChild}].currentStatus = :newStatus`,
-      ExpressionAttributeValues: {
-        ":newStatus": childData.currentStatus,
-      },
-      ReturnValues: "ALL_NEW",
-    };
-
-    const result = await dynamoDb.update(updateParams);
-    console.log("the updated details returned are: ", result);
-
-    try {
-      const latestVersion = result["Attributes"]["Latest"];
-      const putsk = parentComponent.Item.sk.replace(
-        "v0#",
-        "v" + latestVersion + "#"
-      );
-      const putParams = {
-        TableName: process.env.oneMacTableName,
-        Item: {
-          pk: childData.parentId,
-          sk: putsk,
-          ...result.Attributes,
-        },
-      };
-      await dynamoDb.put(putParams);
-
-      // remove GSI
-      const gsiParams = {
-        TableName: process.env.oneMacTableName,
-        Key: {
-          pk: childData.parentId,
-          sk: putsk,
-        },
-      };
-      gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
-
-      await dynamoDb.update(gsiParams);
-
-      return result.Attributes;
-    } catch (error) {
-      if (error.code === "ConditionalCheckFailedException") {
-        console.log(
-          `component is not (yet) a oneMAC component:  ${error.message}`
-        );
-      } else {
-        console.log(`Error happened updating DB:  ${error.message}`);
-        console.log("update parameters tried: ", updateParams);
-        // throw error;
-      }
-    }
-  }
-}
-
-/*
-const backup = () => {
+export default async function addChild(childData) {
   const childSummaryData = {
     componentId: childData.componentId,
     displayId: childData.componentId,
@@ -167,4 +89,3 @@ const backup = () => {
     }
   }
 }
-*/

@@ -12,6 +12,7 @@ export const medicaidSPA = {
       errorLevel: "error",
     },
   ],
+  allowMultiplesWithSameId: false,
   requiredAttachments: [
     { title: "CMS Form 179", allowMultiple: false },
     "SPA Pages",

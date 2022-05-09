@@ -1,5 +1,5 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import updateParent from "./updateParent";
+import addChild from "./addChild";
 
 const topLevelAttributes = [
   "componentId",
@@ -24,6 +24,7 @@ const topLevelAttributes = [
 export default async function newSubmission(newData, config) {
   const pk = newData.componentId;
   let sk = `v0#${config.componentType}`;
+  if (config.allowMultiplesWithSameId) sk += `#${newData.submissionTimestamp}`;
   newData.componentType = config.componentType;
 
   if (config.packageGroup) {
@@ -33,13 +34,10 @@ export default async function newSubmission(newData, config) {
     [newData.parentId, newData.parentType] = config.getParentInfo(
       newData.componentId
     );
-    console.log("newData is: ", newData);
     newData.GSI1pk = newData.parentId;
     newData.GSI1sk = config.componentType;
-    if (newData.parentId === newData.componentId)
-      sk += `#${newData.submissionTimestamp}`;
-    console.log("the sk for the child is: ", sk);
   }
+  console.log("newData is: ", newData);
 
   const params = {
     TableName: process.env.oneMacTableName,
@@ -99,7 +97,7 @@ export default async function newSubmission(newData, config) {
     await dynamoDb.update(gsiParams);
 
     if (newData.parentId) {
-      return await updateParent(newData);
+      return await addChild(newData);
     } else {
       return "Component is Top Level.";
     }

@@ -187,8 +187,8 @@ const DetailSection = ({
       const resp = await PackageApi.withdraw(
         userProfile?.userData?.fullName,
         userProfile?.email,
-        detail?.componentId,
-        detail?.componentType
+        detail.componentId,
+        detail.componentType
       );
       setAlertCode(resp);
       loadDetail();

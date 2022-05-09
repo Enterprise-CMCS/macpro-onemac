@@ -112,16 +112,6 @@ functions:
       default:
         enabled: false
 
-  submit:
-    handler: submit.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: submit
-          method: post
-          cors: true
-          authorizer: aws_iam
-
   submitBaseWaiver:
     handler: form/submitBaseWaiver.main
     role: LambdaApiRole
@@ -138,6 +128,26 @@ functions:
     events:
       - http:
           path: submitWaiverExtension
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawBaseWaiver:
+    handler: action/withdrawBaseWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawBaseWaiver
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submit:
+    handler: submit.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submit
           method: post
           cors: true
           authorizer: aws_iam
@@ -189,16 +199,6 @@ functions:
       - http:
           path: package-exists/{packageId}
           method: get
-          cors: true
-          authorizer: aws_iam
-
-  withdraw-package:
-    handler: withdrawPackage.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: withdraw
-          method: post
           cors: true
           authorizer: aws_iam
 

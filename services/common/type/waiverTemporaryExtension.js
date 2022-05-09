@@ -10,6 +10,7 @@ export const waiverTemporaryExtension = {
       errorLevel: "error",
     },
   ],
+  allowMultiplesWithSameId: false,
   requiredAttachments: ["Waiver Extension Request"],
   optionalAttachments: ["Other"],
   requiredUploads: ["Waiver Extension Request"],

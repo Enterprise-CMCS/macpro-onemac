@@ -236,5 +236,77 @@
       "email": "statesubmitteractive@cms.hhs.local"
     },
     "territory": "MI"
-  }
+  },
+  {
+    "userId": "us-east-1:ff2f762d-6c0c-4585-9703-24502eb57240",
+    "id": "ebe60830-b69b-11ec-bf55-e5d568426d9f",
+    "actionType": "new",
+    "createdAt": 1649354133555,
+    "ninetyDayClockEnd": 1657130134063,
+    "state": "submitted",
+    "submittedAt": 1649354134063,
+    "summary": "",
+    "territory": "MD",
+    "transmittalNumber": "MD.32560",
+    "transmittalNumberWarningMessage": "",
+    "type": "waiver",
+    "uploads": [
+     {
+      "contentType": "application/pdf",
+      "filename": "15MB.pdf",
+      "s3Key": "1649354127582/15MB.pdf",
+      "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+      "url": "https://uploads-fix-parents-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff2f762d-6c0c-4585-9703-24502eb57240/1649354127582/15MB.pdf"
+     }
+    ],
+    "user": {
+     "email": "statesubmitter@nightwatch.test",
+     "firstName": "StateSubmitter",
+     "lastName": "Nightwatch"
+    },
+    "waiverAuthority": "1915(b)(4)"
+   },
+   {
+    "userId": "us-east-1:ff2f762d-6c0c-4585-9703-24502eb57240",
+    "id": "9d351d20-cfa5-11ec-80f3-d11857576605",
+    "actionType": "",
+    "createdAt": 1652107075570,
+    "ninetyDayClockEnd": 1659883076144,
+    "state": "submitted",
+    "submittedAt": 1652107076144,
+    "summary": "This MD Medicaid SPA is used by the cypress testing and should be part of the seed process.",
+    "territory": "MD",
+    "transmittalNumber": "MD-13-8218",
+    "transmittalNumberWarningMessage": "",
+    "type": "spa",
+    "uploads": [
+     {
+      "contentType": "application/pdf",
+      "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+      "s3Key": "1652107074725/CMS 179 Form Acronym Removal Signed.pdf",
+      "title": "CMS Form 179",
+      "url": "https://uploads-fix-parents-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff2f762d-6c0c-4585-9703-24502eb57240/1652107074725/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+     },
+     {
+      "contentType": "application/pdf",
+      "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "s3Key": "1652107074726/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+      "title": "SPA Pages",
+      "url": "https://uploads-fix-parents-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff2f762d-6c0c-4585-9703-24502eb57240/1652107074726/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+     },
+     {
+      "contentType": "application/pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "s3Key": "1652107074726/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+      "title": "SPA Pages",
+      "url": "https://uploads-fix-parents-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aff2f762d-6c0c-4585-9703-24502eb57240/1652107074726/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+     }
+    ],
+    "user": {
+     "email": "statesubmitter@nightwatch.test",
+     "firstName": "StateSubmitter",
+     "lastName": "Nightwatch"
+    },
+    "waiverAuthority": ""
+   }
 ]

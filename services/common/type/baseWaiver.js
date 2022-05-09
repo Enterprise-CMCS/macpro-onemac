@@ -11,6 +11,7 @@ export const baseWaiver = {
       errorLevel: "error",
     },
   ],
+  allowMultiplesWithSameId: false,
   requiredAttachments: [],
   optionalAttachments: [
     "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
