@@ -23,18 +23,17 @@ export default async function updateComponent(updateData, config) {
 
   const updateComponentParams = {
     TableName: process.env.oneMacTableName,
-    ReturnValues: "UPDATED_NEW",
+    ReturnValues: "ALL_NEW",
     Key: {
       pk: changeData.pk,
       sk: changeData.sk,
     },
-    ConditionExpression: "pk = :pkVal", // so update fails if component does not exist
+    ConditionExpression: "attribute_exists(pk)", // so update fails if component does not exist
     UpdateExpression:
       "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,
-      ":pkVal": changeData.pk,
     },
   };
 

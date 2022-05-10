@@ -45,9 +45,7 @@ export default async function addChild(childData) {
     ", #childTypeName = list_append(if_not_exists(#childTypeName,:emptyList), :childcomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :childcomponent)";
 
   try {
-    console.log("updateParentParams: ", updateParentParams);
     const result = await dynamoDb.update(updateParentParams);
-    console.log("Result is: ", result);
     try {
       const latestVersion = result["Attributes"]["Latest"];
       const putsk = updateSk.replace("v0#", "v" + latestVersion + "#");

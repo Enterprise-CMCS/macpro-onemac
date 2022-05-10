@@ -8,11 +8,30 @@ export default async function updateParent(childData) {
       sk: `v0#${childData.parentType}`,
     },
   };
+  console.log("parent Component params: ", params);
 
   const parentComponent = await dynamoDb.get(params);
   console.log("parent Component: ", parentComponent);
+  console.log("children are: ", parentComponent.Item.children);
   if (parentComponent.Item) {
     const favoriteChild = parentComponent.Item.children.findIndex((child) => {
+      console.log(
+        `Child Component Id: ${child.componentId} versus ${
+          childData.componentId
+        } resolves to ${child.componentId === childData.componentId}`
+      );
+      console.log(
+        `Child Component Type: ${child.componentType} versus ${
+          childData.componentType
+        } resolves to ${child.componentType === childData.componentType}`
+      );
+      console.log(
+        `Child Submission Timestamp: ${child.submissionTimestamp} versus ${
+          childData.submissionTimestamp
+        } resolves to ${
+          child.submissionTimestamp === childData.submissionTimestamp
+        }`
+      );
       return (
         child.componentId === childData.componentId &&
         child.componentType === childData.componentType &&
@@ -21,7 +40,7 @@ export default async function updateParent(childData) {
     });
 
     console.log("favorite child index is: ", favoriteChild);
-
+    if (favoriteChild < 0) return;
     const updateParams = {
       ...params,
       UpdateExpression: `SET children[${favoriteChild}].currentStatus = :newStatus`,

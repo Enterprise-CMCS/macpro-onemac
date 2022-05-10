@@ -40,7 +40,7 @@ export const changeStatusAny = async (event, config) => {
     console.log("Updated Package Data: ", updatedPackageData);
     updateData.submissionTimestamp = updatedPackageData.submissionTimestamp;
 
-    if (updatedPackageData.parentId) updateParent(updateData);
+    if (updatedPackageData.parentId) await updateParent(updatedPackageData);
   } catch (e) {
     console.error("Failed to update package", e);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
