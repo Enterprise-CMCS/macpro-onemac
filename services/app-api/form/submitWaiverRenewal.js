@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { Validate, waiverRenewal } from "cmscommonlib";
+import { waiverRenewal } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
