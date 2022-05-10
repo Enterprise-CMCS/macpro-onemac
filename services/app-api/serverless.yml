@@ -152,6 +152,26 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  withdrawWaiverRenewal:
+    handler: action/withdrawWaiverRenewal.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverRenewal
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawWaiverAmendment:
+    handler: action/withdrawWaiverAmendment.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverAmendment
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   submit:
     handler: submit.main
     role: LambdaApiRole

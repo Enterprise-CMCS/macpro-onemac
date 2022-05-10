@@ -12,6 +12,8 @@ import { medicaidSPAFormConfig } from "./form/submitMedicaidSPA";
 import { medicaidSPARAIResponseFormConfig } from "./form/submitMedicaidSPARAIResponse";
 import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
+import { waiverRenewalFormConfig } from "./form/submitWaiverRenewal";
+import { waiverAmendmentFormConfig } from "./form/submitWaiverAmendment";
 // waiverRenewal,
 // waiverAmendment,
 // waiverAppendixK,
@@ -28,10 +30,10 @@ const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponseFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
-  // [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal,
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewalFormConfig,
   // [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK,
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtensionFormConfig,
-  // [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendment,
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendmentFormConfig,
   // [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse,
 };
 
@@ -50,7 +52,8 @@ export const main = handler(async () => {
 
       if (item.type === "waiver") {
         item.type += item.actionType; // change-request items use type="waiver" and actionType to differentiate the components
-        item.transmittalNumber += ".R00.00"; // change-request item Base Waiver Numbers do not have .R00.00
+        if (item.type === "waivernew") item.transmittalNumber += ".R00.00"; // change-request item Base Waiver Numbers do not have .R00.00
+        if (item.type === "waiverrenewal") item.transmittalNumber += ".00"; // change-request item Renewal Waiver Numbers do not have .00
         item.proposedEffectiveDate = "none"; // original waiver forms did not capture proposedEffectiveDate
       }
       // if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE && item.type != Workflow.ONEMAC_TYPE.WAIVER) continue;

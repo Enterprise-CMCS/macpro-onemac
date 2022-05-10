@@ -56,6 +56,6 @@ export const getParentWaiver = (inId) => {
   const { family, renewal } = results;
 
   if (renewal === "00") return [family + ".R00.00", ONEMAC_TYPE.WAIVER_BASE];
-  const renewalNumber = family + ".R" + renewal;
+  const renewalNumber = family + ".R" + renewal + ".00";
   return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
 };

@@ -1,5 +1,6 @@
 export const waiverRenewal = {
   componentType: "waiverrenewal",
+  packageGroup: "waiver",
   typeLabel: "1915(b) Waiver Renewal",
   idType: "waiver",
   idLabel: "Waiver Number",

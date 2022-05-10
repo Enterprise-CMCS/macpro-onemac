@@ -40,21 +40,24 @@ export const validateSubmission = (data, config) => {
     .map((uploadCfg) =>
       typeof uploadCfg === "string" ? uploadCfg : uploadCfg.title
     );
-
   // start with the Schema for all form submissions
   const theSchema = getCommonSchema(
     config.idRegex,
     possibleAttachmentTitles
   ).append(config.appendToSchema);
 
-  const { error: validationError, value: valueOfValidationError } =
-    theSchema.validate(data);
-  if (validationError) {
-    if (process.env.NODE_ENV !== "test") {
-      console.error(validationError, valueOfValidationError);
+  try {
+    const { error: validationError, value: valueOfValidationError } =
+      theSchema.validate(data);
+    if (validationError) {
+      if (process.env.NODE_ENV !== "test") {
+        console.error(validationError, valueOfValidationError);
+      }
+      console.log(validationError, valueOfValidationError);
+      return validationError;
     }
-    console.log(validationError, valueOfValidationError);
-    return validationError;
+  } catch (e) {
+    console.log("validateSubmission error: ", e);
   }
 
   return null;

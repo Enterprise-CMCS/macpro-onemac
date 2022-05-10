@@ -308,5 +308,63 @@
      "lastName": "Nightwatch"
     },
     "waiverAuthority": ""
-   }
+   },
+   {
+    "summary": "This is the renewal of the base waiver MI.1122",
+    "waiverAuthority": "1915(b)(4)",
+    "ninetyDayClockEnd": 1659985273765,
+    "type": "waiver",
+    "userId": "offlineContext_cognitoIdentityId",
+    "uploads": [
+      {
+        "s3Key": "1652209270530/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1652209270530/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+      }
+    ],
+    "actionType": "renewal",
+    "createdAt": 1652209273633,
+    "transmittalNumberWarningMessage": "",
+    "id": "8ffff910-d093-11ec-ae7d-b5a398c43e46",
+    "state": "submitted",
+    "transmittalNumber": "MI.1122.R01",
+    "submittedAt": 1652209273765,
+    "user": {
+      "firstName": "Angie",
+      "lastName": "Active",
+      "email": "statesubmitteractive@cms.hhs.local"
+    },
+    "territory": "MI"
+  },
+  {
+    "summary": "This is an amendment for the renewal MI.1122.R01 for the base MI.1122",
+    "waiverAuthority": "1915(b)(4)",
+    "ninetyDayClockEnd": 1659986718318,
+    "type": "waiver",
+    "userId": "offlineContext_cognitoIdentityId",
+    "uploads": [
+      {
+        "s3Key": "1652210717212/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1652210717212/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "actionType": "amendment",
+    "createdAt": 1652210718250,
+    "transmittalNumberWarningMessage": "",
+    "id": "ed0f08a0-d096-11ec-a68b-a5c367084617",
+    "state": "submitted",
+    "transmittalNumber": "MI.1122.R01.M01",
+    "submittedAt": 1652210718318,
+    "user": {
+      "firstName": "Angie",
+      "lastName": "Active",
+      "email": "statesubmitteractive@cms.hhs.local"
+    },
+    "territory": "MI"
+  }
 ]

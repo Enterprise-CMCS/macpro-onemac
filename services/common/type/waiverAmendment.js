@@ -3,7 +3,7 @@ export const waiverAmendment = {
   typeLabel: "1915(b) Waiver Amendment",
   idType: "waiver",
   idLabel: "Waiver Number",
-  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R[0-9]{2}.(0[1-9]|[1-9][0-9]$",
+  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R[0-9]{2}.M(0[1-9]|[1-9][0-9])$",
   idExistValidations: [
     // the base waiver or waiver renewal being amended should exist
     {
