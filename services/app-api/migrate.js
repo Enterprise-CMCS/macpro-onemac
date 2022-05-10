@@ -1,6 +1,53 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
+const createVersionedComponent = async (oldData) => {
+  const baseItem = {
+    pk: oldData.pk,
+    componentType: oldData.componentType,
+    additionalInformation: oldData.additionalInformation,
+    attachments: oldData.attachments,
+    componentId: oldData.componentId,
+    currentStatus: oldData.currentStatus,
+    submissionTimestamp: oldData.submissionTimestamp,
+    submissionId: oldData.submissionId,
+    submitterId: oldData.submitterId,
+    submitterName: oldData.submitterName,
+    submitterEmail: oldData.submitterEmail.toLowerCase(),
+    Latest: 1,
+  };
+
+  if (oldData.parentId) baseItem.parentId = oldData.parentId;
+  if (oldData.parentType) baseItem.parentType = oldData.parentType;
+  if (oldData.clockEndTimestamp)
+    baseItem.clockEndTimestamp = oldData.clockEndTimestamp;
+  if (oldData.expirationTimestamp)
+    baseItem.expirationTimestamp = oldData.expirationTimestamp;
+  if (oldData.children) baseItem.children = oldData.children;
+  if (oldData.waiverAuthority)
+    baseItem.waiverAuthority = oldData.waiverAuthority;
+
+  const putParams = {
+    TableName: process.env.oneMacTableName,
+    Item: {
+      ...baseItem,
+      sk: `v0#${oldData.sk}`,
+      GSI1pk: oldData.GSI1pk,
+      GSI1sk: oldData.GSI1sk,
+    },
+  };
+  console.log("Put params: ", putParams);
+  await dynamoDb.put(putParams);
+
+  // make the v1 item also
+  putParams.Item = {
+    ...baseItem,
+    sk: `v1#${oldData.sk}`,
+  };
+
+  await dynamoDb.put(putParams);
+};
+
 /**
  * Perform data migrations
  */
@@ -18,16 +65,17 @@ export const main = handler(async (event) => {
     },
     ExclusiveStartKey: null,
     ScanIndexForward: false,
-    ProjectionExpression: "pk, sk",
+    ProjectionExpression: "pk, sk, children",
   };
 
   const promiseItems = [];
+  // SPA group
   do {
     const results = await dynamoDb.query(params);
 
     for (const item of results.Items) {
-      console.log("item is: ", item);
-      console.log("item slice is: ", item.sk.slice(0, 2));
+      // console.log("item is: ", item);
+      //console.log("item slice is: ", item.sk.slice(0, 2));
       // skip if this is already versioned
       if (item.sk.slice(0, 2) === "v0") continue;
 
@@ -44,7 +92,6 @@ export const main = handler(async (event) => {
         ReturnValues: "ALL_OLD",
       });
     }
-
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
 
@@ -52,12 +99,13 @@ export const main = handler(async (event) => {
     ":gsi1pk": `OneMAC#waiver`,
   };
 
+  // Waiver group
   do {
     const results = await dynamoDb.query(params);
 
     for (const item of results.Items) {
-      console.log("item is: ", item);
-      console.log("item slice is: ", item.sk.slice(0, 2));
+      //console.log("item is: ", item);
+      //console.log("item slice is: ", item.sk.slice(0, 2));
       // if a one table entry in the index is NOT versioned, remove any GSI details
       if (item.sk.slice(0, 2) === "v0") continue;
 
@@ -70,6 +118,31 @@ export const main = handler(async (event) => {
         UpdateExpression: "REMOVE GSI1pk, GSI1sk",
         ReturnValues: "ALL_OLD",
       });
+
+      // if there are children, have to migrate those as well
+      if (item.children) {
+        console.log("Children are: ", item.children);
+        for (const child of item.children) {
+          let childSk = child.componentType;
+          // start by removing the GSI and returning the item
+          if (child.componentType === "waiverrai") {
+            childSk += `#${child.submissionTimestamp}`;
+          }
+          promiseItems.push({
+            TableName: process.env.oneMacTableName,
+            Key: {
+              pk: child.componentId,
+              sk: childSk,
+            },
+            ConditionExpression: "attribute_exists(pk)",
+            UpdateExpression: "SET fromMigration = :dummy",
+            ExpressionAttributeValues: {
+              ":dummy": "yes",
+            },
+            ReturnValues: "ALL_OLD",
+          });
+        }
+      }
     }
 
     params.ExclusiveStartKey = results.LastEvaluatedKey;
@@ -81,61 +154,8 @@ export const main = handler(async (event) => {
         console.log(`Update Params are ${JSON.stringify(updateParams)}`);
 
         const result = await dynamoDb.update(updateParams);
-        // console.log("The updated record: ", result);
-
-        const baseItem = {
-          pk: result.Attributes.pk,
-          componentType: result.Attributes.componentType,
-          additionalInformation: result.Attributes.additionalInformation,
-          attachments: result.Attributes.attachments,
-          componentId: result.Attributes.componentId,
-          currentStatus: result.Attributes.currentStatus,
-          submissionTimestamp: result.Attributes.submissionTimestamp,
-          submissionId: result.Attributes.submissionId,
-          submitterId: result.Attributes.submitterId,
-          submitterName: result.Attributes.submitterName,
-          submitterEmail: result.Attributes.submitterEmail.toLowerCase(),
-          Latest: 1,
-        };
-
-        if (result.Attributes.parentId)
-          baseItem.parentId = result.Attributes.parentId;
-        if (result.Attributes.parentType)
-          baseItem.parentType = result.Attributes.parentType;
-        if (result.Attributes.clockEndTimestamp)
-          baseItem.clockEndTimestamp = result.Attributes.clockEndTimestamp;
-        if (result.Attributes.expirationTimestamp)
-          baseItem.expirationTimestamp = result.Attributes.expirationTimestamp;
-        if (result.Attributes.children)
-          baseItem.children = result.Attributes.children;
-
-        const putParams = {
-          TableName: process.env.oneMacTableName,
-          Item: {
-            ...baseItem,
-            sk: `v0#${result.Attributes.sk}`,
-            GSI1pk: result.Attributes.GSI1pk,
-            GSI1sk: result.Attributes.GSI1sk,
-          },
-        };
-        console.log("Put params: ", putParams);
-        await dynamoDb.put(putParams);
-
-        // make the v1 item also
-        putParams.Item = {
-          ...baseItem,
-          sk: `v1#${result.Attributes.sk}`,
-        };
-
-        await dynamoDb.put(putParams);
-
-        // if there are children, have to migrate those as well
-        if (result.Attributes.children) {
-          console.log("Children are: ", result.Attributes.children);
-          // for (const child of results.Attributes.children) {
-
-          // }
-        }
+        console.log("The updated record: ", result);
+        if (result) createVersionedComponent(result.Attributes);
       } catch (e) {
         console.log("update error: ", e.message);
       }
