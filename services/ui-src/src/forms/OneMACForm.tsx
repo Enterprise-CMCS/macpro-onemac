@@ -383,7 +383,7 @@ export const OneMACForm: React.FC = () => {
             )}
             <TransmittalNumber
               idLabel={formInfo.transmittalNumber.idLabel}
-              hintText={formInfo.transmittalNumber.idHintText}
+              idFieldHint={formInfo.transmittalNumber.idFieldHint}
               idFAQLink={formInfo.transmittalNumber.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
