@@ -56,5 +56,5 @@ export const changeStatusAny = async (event, config) => {
     console.error("Failed to send acknowledgement emails", e);
   }
 
-  return RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS;
+  return config.successResponseCode;
 };
