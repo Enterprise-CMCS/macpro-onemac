@@ -10,6 +10,7 @@ const baseWaiverWithdrawConfig = {
 
 export const main = handler(async (event) => {
   try {
+    console.log("event id: ", event);
     return changeStatusAny(event, baseWaiverWithdrawConfig);
   } catch (error) {
     console.log("Exception: ", error);
