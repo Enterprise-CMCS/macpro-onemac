@@ -31,13 +31,3 @@ export const baseWaiverFormConfig = {
 export const main = handler(async (event) =>
   submitAny(event, baseWaiverFormConfig)
 );
-
-// export const main = handler(async (event) => {
-//   try {
-//     console.log("baseWaiverFormConfig is: ", baseWaiverFormConfig);
-//     return submitAny(event, baseWaiverFormConfig);
-//   } catch (error) {
-//     console.log("Exception: ", error);
-//     throw error;
-//   }
-// });
