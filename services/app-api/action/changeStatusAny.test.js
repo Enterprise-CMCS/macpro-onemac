@@ -21,9 +21,11 @@ const testConfig = {
 };
 
 it("catches a badly parsed event", async () => {
-  expect(changeStatusAny(testEventNoParse, testConfig)).rejects.toThrow(
-    "Unexpected token t in JSON at position 1"
-  );
+  expect(changeStatusAny(testEventNoParse, testConfig))
+    .rejects.toThrow("Unexpected token t in JSON at position 1")
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("changes the base waiver to withdrawn", async () => {
