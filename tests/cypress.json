@@ -1,6 +1,6 @@
 {
   "nodeVersion": "system",
-  "baseUrl": "http://localhost:3000/",
+  "baseUrl": "https://d2dr7dgo9g0124.cloudfront.net/",
   "redirectionLimit": 20,
   "retries": 5,
   "watchForFileChanges": true,
