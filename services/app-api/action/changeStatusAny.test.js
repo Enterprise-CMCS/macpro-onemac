@@ -20,6 +20,14 @@ const testDoneBy = {
   fullName: "firsty lastly",
 };
 
+const testUnauthUser = {
+  roleList: [],
+  email: "myemail@email.com",
+  firstName: "firsty",
+  lastName: "lasty",
+  fullName: "firsty lastly",
+};
+
 const testUpdatedPackageData = {
   submissionTimestamp: Date.now(),
   componentId: "1111",
@@ -67,4 +75,10 @@ it("catches a badly parsed event", async () => {
 it("updates status on a parent package", async () => {
   const response = await changeStatusAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS);
+});
+
+it("returns error code for unauthorized user", async () => {
+  getUser.mockResolvedValue(testUnauthUser);
+  const response = await changeStatusAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.USER_NOT_AUTHORIZED);
 });
