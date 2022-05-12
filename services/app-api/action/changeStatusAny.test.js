@@ -48,13 +48,14 @@ const testEventNoParse = {
 const testEvent = {
   body: JSON.stringify(eventBody),
 };
+
 const testConfig = {
   allowMultiplesWithSameId: false,
   newStatus: "newStatus",
   successResponseCode: RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS,
 };
 
-beforeAll(() => {
+beforeEach(() => {
   jest.clearAllMocks();
 
   getUser.mockResolvedValue(testDoneBy);
@@ -81,4 +82,36 @@ it("returns error code for unauthorized user", async () => {
   getUser.mockResolvedValue(testUnauthUser);
   const response = await changeStatusAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+});
+
+it("returns validation error code when error occurs getting user", async () => {
+  getUser.mockImplementation(() => {
+    throw new Error("User error");
+  });
+  const response = await changeStatusAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.VALIDATION_ERROR);
+});
+
+it("returns data retrieval error code when error occurs calling update", async () => {
+  updateComponent.mockImplementation(() => {
+    throw new Error("Update error");
+  });
+  const response = await changeStatusAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.DATA_RETRIEVAL_ERROR);
+});
+
+it("logs email error but still returns success code", async () => {
+  const mockError = new Error("Email error");
+  sendEmail.mockImplementation(() => {
+    throw mockError;
+  });
+  const logSpy = jest.spyOn(console, "error");
+
+  const response = await changeStatusAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS);
+
+  expect(logSpy).toHaveBeenCalledWith(
+    "Failed to send acknowledgement emails",
+    mockError
+  );
 });
