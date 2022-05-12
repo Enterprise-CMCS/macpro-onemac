@@ -1,13 +1,16 @@
 import { RESPONSE_CODE } from "cmscommonlib";
-import { changeStatusAny } from "./changeStatusAny";
+import { submitAny } from "./submitAny";
 import { getUser } from "../getUser";
-import updateComponent from "../utils/updateComponent";
-import updateParent from "../utils/updateParent";
+import { defaultFormConfig } from "./defaultFormConfig";
+import { baseWaiverFormConfig } from "./submitBaseWaiver";
+import packageExists from "../utils/packageExists";
 import sendEmail from "../libs/email-lib";
+import newSubmission from "../utils/newSubmission";
 
 jest.mock("../getUser");
-jest.mock("../utils/updateComponent");
+jest.mock("../utils/packageExists");
 jest.mock("../libs/email-lib");
+jest.mock("../utils/newSubmission");
 
 const testDoneBy = {
   roleList: [
@@ -28,17 +31,20 @@ const testUnauthUser = {
   fullName: "firsty lastly",
 };
 
-const testUpdatedPackageData = {
-  submissionTimestamp: Date.now(),
-  componentId: "1111",
-  //parentId: '',
-};
-
 const eventBody = {
-  componentId: "VA.1117.R00.00",
-  componentType: "waivernew",
-  changedByEmail: "statesubmitteractive@cms.hhs.local",
-  changedByName: "Angie Active",
+  transmittalNumber: "VA.1117.R00.00",
+  submitterEmail: "statesubmitteractive@cms.hhs.local",
+  submitterName: "Angie Active",
+  uploads: [
+    {
+      contentType: "image/png",
+      filename: "myfile.png",
+      s3Key: "path/in/s3",
+      title: "Other",
+      url: "https://www.notasite.gov",
+    },
+  ],
+  waiverAuthority: "me",
 };
 
 const testEventNoParse = {
@@ -47,38 +53,38 @@ const testEventNoParse = {
 
 const testEvent = {
   body: JSON.stringify(eventBody),
+  requestContext: {
+    identity: {
+      cognitoIdentityId: "1234",
+    },
+  },
 };
-const testConfig = {
-  allowMultiplesWithSameId: false,
-  newStatus: "newStatus",
-  successResponseCode: RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS,
-};
+const testConfig = { ...baseWaiverFormConfig };
 
 beforeAll(() => {
   jest.clearAllMocks();
 
   getUser.mockResolvedValue(testDoneBy);
-
-  updateComponent.mockResolvedValue(testUpdatedPackageData);
-
+  packageExists.mockResolvedValue(false);
   sendEmail.mockResolvedValue(null);
+  newSubmission.mockResolvedValue(null);
 });
 
 it("catches a badly parsed event", async () => {
-  expect(changeStatusAny(testEventNoParse, testConfig))
+  expect(submitAny(testEventNoParse, testConfig))
     .rejects.toThrow("Unexpected token t in JSON at position 1")
     .catch((error) => {
       console.log("caught test error: ", error);
     });
 });
 
-it("updates status on a parent package", async () => {
-  const response = await changeStatusAny(testEvent, testConfig);
-  expect(response).toEqual(RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS);
+it("submits a base waiver", async () => {
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
 });
 
 it("returns error code for unauthorized user", async () => {
   getUser.mockResolvedValue(testUnauthUser);
-  const response = await changeStatusAny(testEvent, testConfig);
+  const response = await submitAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.USER_NOT_AUTHORIZED);
 });
