@@ -42,12 +42,13 @@ export const decodeWaiverNumber = (inId) => {
   );
 
   const results = waiverRegex.exec(waiverNumber);
-
   if (!results) return null;
 
-  const [, family, , renewal, , amendment] = results;
+  const [, family, , renewal, maybeAppK, amendment] = results;
 
-  return { family, renewal, amendment };
+  const isAppK = maybeAppK === "." + amendment;
+
+  return { family, renewal, amendment, isAppK };
 };
 
 export const getParentWaiver = (inId) => {
@@ -58,4 +59,16 @@ export const getParentWaiver = (inId) => {
   if (renewal === "00") return [family + ".R00.00", ONEMAC_TYPE.WAIVER_BASE];
   const renewalNumber = family + ".R" + renewal + ".00";
   return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
+};
+
+export const getWaiverTypeFromNumber = (myId) => {
+  const results = decodeWaiverNumber(myId);
+  if (!results) return ONEMAC_TYPE.WAIVER_BASE;
+  const { renewal, amendment, isAppK } = results;
+
+  if (amendment && amendment !== "00") {
+    return isAppK ? ONEMAC_TYPE.WAIVER_APP_K : ONEMAC_TYPE.WAIVER_AMENDMENT;
+  }
+  if (renewal === "00") return ONEMAC_TYPE.WAIVER_BASE;
+  return ONEMAC_TYPE.WAIVER_RENEWAL;
 };

@@ -2,7 +2,7 @@ import Joi from "joi";
 
 import { territoryCodeList } from "cmscommonlib";
 
-export const getCommonSchema = (idRegex, possibleAttachmentTitles) => {
+const getCommonSchema = (idRegex, possibleAttachmentTitles) => {
   const MIME_TYPE_PATTERN =
     /(application|audio|font|image|message|model|multipart|text|video)\/.+/;
 
