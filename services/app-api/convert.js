@@ -44,9 +44,8 @@ export const main = handler(async () => {
 
   do {
     const results = await dynamoDb.scan(params);
-    let i = 0;
     for (const item of results.Items) {
-      //      console.log("Item " + i + " is: ", item);
+      //      console.log("Item is: ", item);
 
       if (item.type === "waiver") {
         item.type += item.actionType; // change-request items use type="waiver" and actionType to differentiate the components
