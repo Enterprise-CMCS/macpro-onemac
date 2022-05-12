@@ -14,10 +14,8 @@ import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
 import { waiverRenewalFormConfig } from "./form/submitWaiverRenewal";
 import { waiverAmendmentFormConfig } from "./form/submitWaiverAmendment";
-// waiverRenewal,
-// waiverAmendment,
-// waiverAppendixK,
-// waiverRAIResponse,
+import { waiverAppendixKFormConfig } from "./form/submitWaiverAppendixK";
+import { waiverRAIResponseFormConfig } from "./form/submitWaiverRAIResponse";
 
 /**
  * Perform data conversions
@@ -31,10 +29,10 @@ const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewalFormConfig,
-  // [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixKFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtensionFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendmentFormConfig,
-  // [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse,
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponseFormConfig,
 };
 
 export const main = handler(async () => {
@@ -46,9 +44,10 @@ export const main = handler(async () => {
 
   do {
     const results = await dynamoDb.scan(params);
+    console.log("Results of scan are: ", results);
     let i = 0;
     for (const item of results.Items) {
-      console.log("Item " + i + " is: ", item);
+      //      console.log("Item " + i + " is: ", item);
 
       if (item.type === "waiver") {
         item.type += item.actionType; // change-request items use type="waiver" and actionType to differentiate the components
