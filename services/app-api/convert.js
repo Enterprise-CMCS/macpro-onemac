@@ -44,7 +44,6 @@ export const main = handler(async () => {
 
   do {
     const results = await dynamoDb.scan(params);
-    console.log("Results of scan are: ", results);
     let i = 0;
     for (const item of results.Items) {
       //      console.log("Item " + i + " is: ", item);
@@ -92,8 +91,6 @@ export const main = handler(async () => {
         .toMillis();
       console.log("Submitting data: ", data);
       await newSubmission(data, config);
-
-      if (i++ > 1000) break;
     }
 
     // console.log("results number: ", results.Items.length);
