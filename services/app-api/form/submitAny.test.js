@@ -35,6 +35,24 @@ const eventBody = {
   transmittalNumber: "VA.1117.R00.00",
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
+  proposedEffectiveDate: "2022-01-01",
+  uploads: [
+    {
+      contentType: "image/png",
+      filename: "myfile.png",
+      s3Key: "path/in/s3",
+      title: "Other",
+      url: "https://www.notasite.gov",
+    },
+  ],
+  waiverAuthority: "me",
+};
+
+const invalidEventBody = {
+  transmittalNumber: "VA.1117", //transmittal number is invalid format
+  submitterEmail: "statesubmitteractive@cms.hhs.local",
+  submitterName: "Angie Active",
+  proposedEffectiveDate: "2022-01-01",
   uploads: [
     {
       contentType: "image/png",
@@ -59,9 +77,19 @@ const testEvent = {
     },
   },
 };
+
+const invalidTestEvent = {
+  body: JSON.stringify(invalidEventBody),
+  requestContext: {
+    identity: {
+      cognitoIdentityId: "1234",
+    },
+  },
+};
+
 const testConfig = { ...baseWaiverFormConfig };
 
-beforeAll(() => {
+beforeEach(() => {
   jest.clearAllMocks();
 
   getUser.mockResolvedValue(testDoneBy);
@@ -83,8 +111,47 @@ it("submits a base waiver", async () => {
   expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
 });
 
+it("rejects a duplicate id base waiver", async () => {
+  packageExists.mockResolvedValue(true);
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
+});
+
+it("returns error code for validation error", async () => {
+  const response = await submitAny(invalidTestEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.VALIDATION_ERROR);
+});
+
 it("returns error code for unauthorized user", async () => {
   getUser.mockResolvedValue(testUnauthUser);
   const response = await submitAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.USER_NOT_AUTHORIZED);
+});
+
+it("returns error code when new submission fails", async () => {
+  newSubmission.mockImplementation((testEvent, testConfig) => {
+    throw new Error("Submit error");
+  });
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.SUBMISSION_SAVE_FAILURE);
+});
+
+it("returns error code when CMS email fails", async () => {
+  sendEmail.mockImplementation(() => {
+    throw new Error("Email error");
+  });
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.EMAIL_NOT_SENT);
+});
+
+it("returns success code even when State email fails", async () => {
+  sendEmail.mockImplementationOnce(() => {
+    return null; //success - first email is CMS email
+  });
+  sendEmail.mockImplementationOnce(() => {
+    throw new Error("Email error"); //second email is state email
+  });
+
+  const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
 });
