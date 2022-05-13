@@ -158,6 +158,12 @@ label {
 .field-hint,
 p.field-hint {
   @extend .ds-c-field__hint;
+  width: 100%;
+  margin: 0px;
+}
+.field-hint-major {
+  @extend .field-hint;
+  @extend .ds-u-font-style--italic;
 }
 .field-error-message {
   @extend .ds-c-field__hint;

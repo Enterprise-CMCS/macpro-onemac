@@ -65,7 +65,7 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "chipspa",
       idLabel: "SPA ID",
-      idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
@@ -100,7 +100,7 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "chipspa",
       idLabel: "SPA ID",
-      idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
@@ -137,7 +137,13 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "spa",
       idLabel: "SPA ID",
-      idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+      idFieldHint: [
+        { text: "Must follow the format SS-YY-NNNN-xxxx" },
+        {
+          text: "Reminder - CMS recommends that all SPA numbers start with the year in which the package is submitted.",
+          className: "field-hint-major",
+        },
+      ],
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
@@ -165,7 +171,7 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "spa",
       idLabel: "SPA ID",
-      idHintText: "Must follow the format SS-YY-NNNN-xxxx",
+      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
       idFAQLink: ROUTES.FAQ_SPA_ID,
       idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
       idRegex:
@@ -223,7 +229,9 @@ export const CONFIG = {
     },
     transmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      idHintText: "Must follow the format required by the Action Type",
+      idFieldHint: [
+        { text: "Must follow the format required by the Action Type" },
+      ],
       idFormat: "the Action Type.  Please select an Action Type first.",
       idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
       idExistValidations: [
@@ -235,8 +243,11 @@ export const CONFIG = {
     },
     newTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      idHintText:
-        "Must be a new base number with the format SS.#### or SS.#####",
+      idFieldHint: [
+        {
+          text: "Must be a new base number with the format SS.#### or SS.#####",
+        },
+      ],
       idFormat: "SS.#### or SS.#####",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}$",
       idExistValidations: [
@@ -248,7 +259,9 @@ export const CONFIG = {
     },
     amendmentTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      idHintText: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##",
+      idFieldHint: [
+        { text: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##" },
+      ],
       idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
       idExistValidations: [
@@ -261,7 +274,9 @@ export const CONFIG = {
     },
     renewalTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      idHintText: "Must follow the format SS.####.R## or SS.#####.R##",
+      idFieldHint: [
+        { text: "Must follow the format SS.####.R## or SS.#####.R##" },
+      ],
       idFormat: "SS.####.R## or SS.#####.R##",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
       idExistValidations: [
@@ -297,8 +312,11 @@ export const CONFIG = {
       idType: "waiverappk",
       idLabel: "Waiver Number",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idHintText:
-        "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)",
+      idFieldHint: [
+        {
+          text: "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)",
+        },
+      ],
       idFormat: "SS.####.R##.## or SS.#####.R##.##",
       idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
       idExistValidations: [
@@ -325,8 +343,11 @@ export const CONFIG = {
       idType: "waiver",
       idLabel: "Waiver Number",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idHintText:
-        "Please enter the waiver number used on your initial submission",
+      idFieldHint: [
+        {
+          text: "Please enter the waiver number used on your initial submission",
+        },
+      ],
       idFormat: "the Number format used on the initial submission",
     },
   },
@@ -345,7 +366,9 @@ export const CONFIG = {
       idType: "waiver",
       idLabel: "Waiver Number",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idHintText: "Please use the exact Waiver Number sent with the RAI",
+      idFieldHint: [
+        { text: "Please use the exact Waiver Number sent with the RAI" },
+      ],
       idFormat: "the Number format sent with the RAI",
       idRegex:
         "(^[A-Z]{2}[.-][0-9]{4,5}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}[.]M?[0-9]{2}$)",
@@ -392,8 +415,11 @@ export const CONFIG = {
     transmittalNumber: {
       ...waiverBaseTransmittalNumber,
       idLabel: "Base Waiver Number",
-      idHintText:
-        "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
+      idFieldHint: [
+        {
+          text: "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
+        },
+      ],
       idFormat: "SS.####.R00.00 or SS.#####.R00.00",
       idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R00.00$",
       idExistValidations: [

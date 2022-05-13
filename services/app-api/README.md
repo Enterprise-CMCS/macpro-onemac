@@ -37,3 +37,13 @@ Then change the URL for the API in the UI to the following. You can reference th
 ```
  http://localhost:3001/dev
 ```
+
+### GUI for dynamodb local
+
+#### https://github.com/aaronshaf/dynamodb-admin
+
+npm install -g dynamodb-admin
+
+dynamodb-admin
+
+http://localhost:8001

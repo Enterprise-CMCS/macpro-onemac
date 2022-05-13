@@ -1,12 +1,13 @@
 import React from "react";
 import { Link } from "@material-ui/core";
+import { FieldHint } from "cmscommonlib";
 
 /**
  * Returns the ID specific form element
  */
 const TransmittalNumber: React.FC<{
   idLabel: string;
-  hintText: string;
+  idFieldHint: FieldHint[];
   idFAQLink: string;
   statusLevel: string;
   statusMessage: string;
@@ -15,7 +16,7 @@ const TransmittalNumber: React.FC<{
   disabled: boolean;
 }> = ({
   idLabel,
-  hintText,
+  idFieldHint,
   idFAQLink,
   statusLevel,
   statusMessage,
@@ -42,7 +43,13 @@ const TransmittalNumber: React.FC<{
             What is my {idLabel}?
           </Link>
         </div>
-        <p className="field-hint">{hintText}</p>
+        {idFieldHint?.map(function (idFieldHint) {
+          return (
+            <p className={idFieldHint.className || "field-hint"}>
+              {idFieldHint.text}
+            </p>
+          );
+        })}
       </div>
       {statusMessage && (
         <div id="transmittalNumberStatusMsg" className={statusMsgClass}>

@@ -416,7 +416,7 @@ export const SubmissionForm: React.FC<{
             )}
             <TransmittalNumber
               idLabel={transmittalNumberDetails.idLabel}
-              hintText={transmittalNumberDetails.idHintText}
+              idFieldHint={transmittalNumberDetails.idFieldHint}
               idFAQLink={transmittalNumberDetails.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
