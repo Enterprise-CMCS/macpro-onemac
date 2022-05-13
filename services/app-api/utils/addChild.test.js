@@ -1,15 +1,14 @@
-import dynamoDb from "../libs/dynamodb-lib";
 import addChild from "./addChild";
+import updateWithVersion from "./updateWithVersion";
 
-jest.mock("../libs/dynamodb-lib");
+jest.mock("./updateWithVersion");
 
 beforeAll(() => {
   jest.clearAllMocks();
 
-  dynamoDb.update.mockImplementation(() => {
-    return { Attributes: { Latest: 2 } };
+  updateWithVersion.mockImplementation(() => {
+    return { Latest: 2 };
   });
-  dynamoDb.put.mockImplementation(() => {});
 });
 
 const testChild = {
@@ -33,15 +32,15 @@ it("runs without crashing", async () => {
 });
 
 it("notices when the parent component doesn't exist", async () => {
-  const expectedReturn = { Latest: 2 };
-  dynamoDb.update.mockImplementation(() => {
-    throw new Error({
-      code: "ConditionalCheckFailedException",
-      message: "an error",
-    });
+  updateWithVersion.mockImplementation(() => {
+    const theError = new Error();
+    theError.code = "ConditionalCheckFailedException";
+    theError.message = "an error";
+    throw theError;
   });
+
   expect(addChild(testChild))
-    .resolves.toStrictEqual(expectedReturn)
+    .resolves.toStrictEqual(undefined)
     .catch((error) => {
       console.log("caught test error: ", error);
     });
@@ -49,26 +48,14 @@ it("notices when the parent component doesn't exist", async () => {
 
 it("notices other errors", async () => {
   const expectedReturn = { Latest: 2 };
-  dynamoDb.update.mockImplementation(() => {
-    throw new Error({
-      code: "NOTConditionalCheckFailedException",
-      message: "an error",
-    });
+  updateWithVersion.mockImplementation(() => {
+    const theError = new Error();
+    theError.code = "NOTConditionalCheckFailedException";
+    theError.message = "an error";
+    throw theError;
   });
   expect(addChild(testChild))
-    .resolves.toStrictEqual(expectedReturn)
-    .catch((error) => {
-      console.log("caught test error: ", error);
-    });
-});
-
-it("notices smaller errors", async () => {
-  const expectedReturn = undefined;
-  dynamoDb.put.mockImplementation(() => {
-    throw new Error("an error");
-  });
-  expect(addChild(testChild))
-    .resolves.toStrictEqual(expectedReturn)
+    .resolves.toStrictEqual(undefined)
     .catch((error) => {
       console.log("caught test error: ", error);
     });

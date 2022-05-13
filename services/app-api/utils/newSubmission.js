@@ -41,7 +41,6 @@ export default async function newSubmission(newData, config) {
 
   const params = {
     TableName: process.env.oneMacTableName,
-    ReturnValues: "UPDATED_NEW",
     Key: {
       pk,
       sk,

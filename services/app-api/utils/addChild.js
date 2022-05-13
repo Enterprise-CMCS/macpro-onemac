@@ -1,4 +1,4 @@
-import dynamoDb from "../libs/dynamodb-lib";
+import updateWithVersion from "./updateWithVersion";
 
 export default async function addChild(childData) {
   const childSummaryData = {
@@ -13,24 +13,19 @@ export default async function addChild(childData) {
     submitterEmail: childData.submitterEmail,
   };
 
-  const updateSk = `v0#${childData.parentType}`;
-
   const updateParentParams = {
     TableName: process.env.oneMacTableName,
-    ReturnValues: "UPDATED_NEW",
     Key: {
       pk: childData.parentId,
-      sk: updateSk,
+      sk: childData.parentType,
     },
-    ConditionExpression: "pk = :pkVal AND sk = :skVal",
+    ConditionExpression: "attribute_exists(pk)",
     UpdateExpression:
       "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
       ":defaultval": 0,
       ":incrval": 1,
       ":emptyList": [],
-      ":pkVal": childData.parentId,
-      ":skVal": updateSk,
     },
   };
 
@@ -45,36 +40,7 @@ export default async function addChild(childData) {
     ", #childTypeName = list_append(if_not_exists(#childTypeName,:emptyList), :childcomponent), #childList = list_append(if_not_exists(#childList,:emptyList), :childcomponent)";
 
   try {
-    const result = await dynamoDb.update(updateParentParams);
-    try {
-      const latestVersion = result["Attributes"]["Latest"];
-      const putsk = updateSk.replace("v0#", "v" + latestVersion + "#");
-      const putParams = {
-        TableName: process.env.oneMacTableName,
-        Item: {
-          pk: childData.parentId,
-          sk: putsk,
-          ...result.Attributes,
-        },
-      };
-      await dynamoDb.put(putParams);
-
-      // remove GSI
-      const gsiParams = {
-        TableName: process.env.oneMacTableName,
-        Key: {
-          pk: childData.parentId,
-          sk: putsk,
-        },
-      };
-      gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
-
-      await dynamoDb.update(gsiParams);
-    } catch (error) {
-      console.log(`Error:  ${error.message}`);
-    }
-
-    return result.Attributes;
+    return updateWithVersion(updateParentParams);
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {
       console.log(
