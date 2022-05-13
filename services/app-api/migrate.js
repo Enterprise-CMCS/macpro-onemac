@@ -125,7 +125,7 @@ export const main = handler(async (event) => {
         for (const child of item.children) {
           let childSk = child.componentType;
           // start by removing the GSI and returning the item
-          if (child.componentType === "waiverrai") {
+          if (child.componentType.search(/rai/i) > -1) {
             childSk += `#${child.submissionTimestamp}`;
           }
           promiseItems.push({
@@ -135,10 +135,7 @@ export const main = handler(async (event) => {
               sk: childSk,
             },
             ConditionExpression: "attribute_exists(pk)",
-            UpdateExpression: "SET fromMigration = :dummy",
-            ExpressionAttributeValues: {
-              ":dummy": "yes",
-            },
+            UpdateExpression: "REMOVE GSI1pk, GSI1sk",
             ReturnValues: "ALL_OLD",
           });
         }

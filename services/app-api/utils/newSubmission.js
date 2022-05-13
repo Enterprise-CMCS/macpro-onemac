@@ -45,6 +45,7 @@ export default async function newSubmission(newData, config) {
       pk,
       sk,
     },
+    ReturnValues: "ALL_NEW",
     UpdateExpression:
       "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
