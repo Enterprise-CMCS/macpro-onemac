@@ -1880,7 +1880,8 @@ aside#faq-contact-info-box {
     border-radius: 0 0 3px 3px;
     border-top: none;
 
-    h3 {
+    h2 {
+      @extend .ds-h3;
       @extend .ds-u-margin-top--0;
       @extend .ds-u-margin-bottom--3;
     }

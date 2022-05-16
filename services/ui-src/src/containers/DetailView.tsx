@@ -268,7 +268,9 @@ const DetailSection = ({
                   }
                 )
               ) : (
-                <p>No actions are currently available for this submission.</p>
+                <li>
+                  <p>No actions are currently available for this submission.</p>
+                </li>
               )}
             </ul>
           </section>

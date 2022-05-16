@@ -112,7 +112,7 @@ export default function PortalTable<V extends {} = {}>({
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {expandable && <th />}
+                {expandable && <th aria-hidden="true"></th>}
                 {(
                   headerGroup.headers as (HeaderGroup<V> &
                     UseSortByColumnProps<V>)[]
