@@ -4,6 +4,9 @@ frameworkVersion: "3"
 
 useDotenv: true
 
+package:
+  individually: true
+
 plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
@@ -79,6 +82,7 @@ provider:
   logs:
     restApi: true    
   environment:
+    NODE_OPTIONS: '--enable-source-maps'
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
@@ -99,6 +103,74 @@ functions:
     handler: migrate.main
     role: LambdaApiRole
     timeout: 180
+
+  convert:
+    handler: convert.main
+    role: LambdaApiRole
+    timeout: 180
+    warmup:
+      default:
+        enabled: false
+
+  submitBaseWaiver:
+    handler: form/submitBaseWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitBaseWaiver
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaiverExtension:
+    handler: form/submitWaiverExtension.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverExtension
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawBaseWaiver:
+    handler: action/withdrawBaseWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawBaseWaiver
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawWaiverTemporaryExtension:
+    handler: action/withdrawWaiverTemporaryExtension.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverTemporaryExtension
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawWaiverRenewal:
+    handler: action/withdrawWaiverRenewal.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverRenewal
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawWaiverAmendment:
+    handler: action/withdrawWaiverAmendment.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverAmendment
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   submit:
     handler: submit.main
@@ -157,16 +229,6 @@ functions:
       - http:
           path: package-exists/{packageId}
           method: get
-          cors: true
-          authorizer: aws_iam
-
-  withdraw-package:
-    handler: withdrawPackage.main
-    role: LambdaApiRole
-    events:
-      - http:
-          path: withdraw
-          method: post
           cors: true
           authorizer: aws_iam
 

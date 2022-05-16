@@ -187,8 +187,8 @@ const DetailSection = ({
       const resp = await PackageApi.withdraw(
         userProfile?.userData?.fullName,
         userProfile?.email,
-        detail?.componentId,
-        detail?.componentType
+        detail.componentId,
+        detail.componentType
       );
       setAlertCode(resp);
       loadDetail();
@@ -531,16 +531,21 @@ const DetailView = () => {
           );
         }
         if (fetchedDetail.proposedEffectiveDate) {
-          const effDate = parseISO(fetchedDetail.proposedEffectiveDate);
+          if (fetchedDetail.proposedEffectiveDate === "none") {
+            fetchedDetail.proposedEffectiveDateNice = "Pending";
+          } else {
+            const effDate = parseISO(fetchedDetail.proposedEffectiveDate);
 
-          fetchedDetail.proposedEffectiveDateNice = format(
-            effDate,
-            "MMM d yyyy"
-          );
+            fetchedDetail.proposedEffectiveDateNice = format(
+              effDate,
+              "MMM d yyyy"
+            );
+          }
         }
         console.log("got the package: ", fetchedDetail);
         stillLoading = false;
       } catch (e) {
+        console.log("error in getDetail call?? ", e);
         history.push({
           pathname: ROUTES.DASHBOARD,
           state: {

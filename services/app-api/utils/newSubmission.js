@@ -1,68 +1,108 @@
-import { Validate, Workflow } from "cmscommonlib";
-
 import dynamoDb from "../libs/dynamodb-lib";
-import updateComponent from "./updateComponent";
+import addChild from "./addChild";
 
-export default async function newSubmission(inData) {
-  const idInfo = Validate.decodeId(inData.componentId, inData.componentType);
-  let newGSI = {};
+const topLevelAttributes = [
+  "componentId",
+  "componentType",
+  "submissionTimestamp",
+  "proposedEffectiveDate",
+  "clockEndTimestamp",
+  "currentStatus",
+  "attachments",
+  "additionalInformation",
+  "submissionId",
+  "submitterName",
+  "submitterEmail",
+  "submitterId",
+  "waiverAuthority",
+  "GSI1pk",
+  "GSI1sk",
+  "parentId",
+  "parentType",
+];
 
-  let newSk = inData.componentType;
-  switch (inData.componentType) {
-    case Workflow.ONEMAC_TYPE.WAIVER_RAI:
-    case Workflow.ONEMAC_TYPE.SPA_RAI:
-    case Workflow.ONEMAC_TYPE.CHIP_SPA_RAI:
-      newSk += `#${inData.submissionTimestamp}`;
-      break;
-    case Workflow.ONEMAC_TYPE.WAIVER_EXTENSION:
-      newGSI = {
-        GSI1pk: Validate.getParentPackage(inData.componentId)[0],
-        GSI1sk: inData.componentType,
-      };
-      break;
-  }
+export default async function newSubmission(newData, config) {
+  const pk = newData.componentId;
+  let sk = `v0#${config.componentType}`;
+  if (config.allowMultiplesWithSameId) sk += `#${newData.submissionTimestamp}`;
+  newData.componentType = config.componentType;
 
-  const data = {
-    pk: idInfo.componentId,
-    sk: newSk,
-    ...inData,
-    ...newGSI,
-    changeHistory: [inData],
-  };
-
-  if (inData.waiverAuthority) data.waiverAuthority = inData.waiverAuthority;
-
-  // use the scarce index for anything marked as a package.
-  if (idInfo.isNewPackage) {
-    data.GSI1pk = `OneMAC#${Workflow.MY_PACKAGE_GROUP[data.sk]}`;
-    data.GSI1sk = data.pk;
+  if (config.packageGroup) {
+    newData.GSI1pk = `OneMAC#${config.packageGroup}`;
+    newData.GSI1sk = pk;
   } else {
-    data.parentId = idInfo.packageId;
-    data.parentType = idInfo.parentType;
+    [newData.parentId, newData.parentType] = config.getParentInfo(
+      newData.componentId
+    );
+    newData.GSI1pk = newData.parentId;
+    newData.GSI1sk = config.componentType;
   }
+  console.log("newData is: ", newData);
 
   const params = {
     TableName: process.env.oneMacTableName,
-    Item: data,
+    Key: {
+      pk,
+      sk,
+    },
+    ReturnValues: "ALL_NEW",
+    UpdateExpression:
+      "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
+    ExpressionAttributeValues: {
+      ":defaultval": 0,
+      ":incrval": 1,
+      //      ":emptyList": [],
+    },
   };
+  console.log("params in newSubmission are: ", params);
+  topLevelAttributes.forEach((attributeName) => {
+    if (newData[attributeName]) {
+      const label = `:${attributeName}`;
+      params.ExpressionAttributeValues[label] = newData[attributeName];
+      //      if (Array.isArray(newData[attributeName]))
+      //        params.UpdateExpression += `, ${attributeName} = list_append(:emptyList, ${label})`;
+      //      else
+      params.UpdateExpression += `, ${attributeName} = ${label}`;
+    }
+  });
+
   console.log("params in newSubmission are: ", JSON.stringify(params, null, 2));
-  return dynamoDb
-    .put(params)
-    .then(() => {
-      if (!idInfo.isNewPackage) {
-        const parentToUpdate = {
-          componentId: data.parentId,
-          componentType: data.parentType,
-          attachments: data.attachments,
-          newChild: data,
-        };
-        return updateComponent(parentToUpdate);
-      } else {
-        return "Compnent is a Package.";
-      }
-    })
-    .catch((error) => {
-      console.log("newSubmission put error is: ", error);
-      throw error;
-    });
+  try {
+    const response = await dynamoDb.update(params);
+    console.log("the response is: ", response);
+
+    const latestVersion = response["Attributes"]["Latest"];
+    const putsk = sk.replace("v0", "v" + latestVersion);
+    const putParams = {
+      TableName: process.env.oneMacTableName,
+      Item: {
+        pk,
+        sk: putsk,
+        ...response.Attributes,
+      },
+    };
+
+    await dynamoDb.put(putParams);
+
+    // remove GSI
+    const gsiParams = {
+      TableName: process.env.oneMacTableName,
+      Key: {
+        pk,
+        sk: putsk,
+      },
+    };
+    gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
+
+    await dynamoDb.update(gsiParams);
+
+    if (newData.parentId) {
+      return await addChild(newData);
+    } else {
+      return "Component is Top Level.";
+    }
+  } catch (error) {
+    console.log("newSubmission error is: ", error);
+    throw error;
+  }
 }

@@ -6,7 +6,7 @@ class SourceOneMAC extends KafkaSourceLib {
 
   determineTopicName(record) {
     const recordDetails = JSON.parse(record.value);
-    const skSlice = JSON.stringify(recordDetails.NewImage.sk).slice(0,7);
+    const skSlice = JSON.stringify(recordDetails.NewImage.sk).slice(1,7);
 
     if (record.headers.eventName === "INSERT" && skSlice !== "SEATool") {
       console.log("Record Details being sent: ", recordDetails);
