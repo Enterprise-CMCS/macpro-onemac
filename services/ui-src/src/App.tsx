@@ -148,9 +148,7 @@ export function App() {
           <Routes />
         </main>
       </div>
-      <footer>
-        <Footer />
-      </footer>
+      <Footer />
     </AppContext.Provider>
   );
 }
