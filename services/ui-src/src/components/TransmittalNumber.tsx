@@ -43,9 +43,12 @@ const TransmittalNumber: React.FC<{
             What is my {idLabel}?
           </Link>
         </div>
-        {idFieldHint?.map(function (idFieldHint) {
+        {idFieldHint?.map(function (idFieldHint, idx) {
           return (
-            <p className={idFieldHint.className || "field-hint"}>
+            <p
+              id={"fieldHint" + idx}
+              className={idFieldHint.className || "field-hint"}
+            >
               {idFieldHint.text}
             </p>
           );
@@ -61,6 +64,11 @@ const TransmittalNumber: React.FC<{
         type="text"
         id="transmittalNumber"
         name="transmittalNumber"
+        aria-describedby={idFieldHint
+          ?.map(function (idFieldHint, idx) {
+            return "fieldHint" + idx;
+          })
+          .join(" ")}
         value={value}
         onChange={onChange}
         required
