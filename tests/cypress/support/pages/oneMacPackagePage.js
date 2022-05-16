@@ -848,6 +848,9 @@ export class oneMacPackagePage {
   clickRespondToRAIBtn() {
     cy.xpath(respondToRAIBtn).click();
   }
+  verifyRespondToRAIBtnExists() {
+    cy.xpath(respondToRAIBtn).should("be.visible");
+  }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink).click();
   }
