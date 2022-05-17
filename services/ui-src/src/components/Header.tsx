@@ -257,6 +257,7 @@ export function Header() {
     // Target new ensures FAQ opens in new window.
     const faq = (
       <a
+        id="faqLink"
         href={ROUTES.FAQ}
         className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
         target="_blank"

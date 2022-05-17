@@ -20,7 +20,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
-  oneMacTableName: onemac-${self:custom.stage}-20220517
+  oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
   userAccessEmailSource: ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
