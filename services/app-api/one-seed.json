@@ -1,5 +1,38 @@
 [
   {
+    "pk": "vmcmurray@collabralink.com",
+    "sk": "ContactInfo",
+    "email": "vmcmurray@collabralink.com",
+    "fullName": "Valencia McMurray",
+    "GSI1pk": "defaultcmsuser#N/A",
+    "GSI1sk": "vmcmurray@collabralink.com"
+   },
+   {
+    "pk": "vmcmurray@collabralink.com",
+    "sk": "v0#defaultcmsuser#N/A",
+    "date": 1652812346916,
+    "doneByEmail": "vmcmurray@collabralink.com",
+    "doneByName": "Valencia McMurray",
+    "email": "vmcmurray@collabralink.com",
+    "fullName": "Valencia McMurray",
+    "GSI1pk": "USER",
+    "GSI1sk": "Boss",
+    "Latest": 1,
+    "role": "defaultcmsuser",
+    "status": "active",
+    "territory": "N/A"
+   },
+   {
+    "pk": "vmcmurray@collabralink.com",
+    "sk": "v1#defaultcmsuser#N/A",
+    "date": 1652812346916,
+    "doneByEmail": "vmcmurray@collabralink.com",
+    "doneByName": "Valencia McMurray",
+    "role": "defaultcmsuser",
+    "status": "active",
+    "territory": "N/A"
+   },
+  {
     "doneByName": "Teresa Test",
     "status": "active",
     "Latest": "3",
@@ -4384,5 +4417,33 @@
     "componentId": "VA.9999.R00.00",
     "submitterName": "Angie Active",
     "submissionId": "579014f0-9fda-11ec-9e4d-ed0e09a4d794"
-   }
+   },
+   {
+    "additionalInformation": "This base waiver is used for testing and will have the status of \"Waiver Terminated\"",
+    "componentType": "waivernew",
+    "attachments": [
+      {
+        "s3Key": "1652811485216/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1652811485216/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "componentId": "MD.3322.R00.00",
+    "waiverAuthority": "1915(b)(4)",
+    "currentStatus": "Waiver Terminated",
+    "submissionTimestamp": 1652811485757,
+    "clockEndTimestamp": 1660587485757,
+    "proposedEffectiveDate": "",
+    "submissionId": "b25cae20-d60d-11ec-b340-0b8c3db0bac3",
+    "GSI1pk": "OneMAC#waiver",
+    "submitterId": "offlineContext_cognitoIdentityId",
+    "GSI1sk": "MD.3322.R00.00",
+    "sk": "v0#waivernew",
+    "Latest": 1,
+    "pk": "MD.3322.R00.00",
+    "submitterName": "Statesubmitter Nightwatch",
+    "submitterEmail": "statesubmitter@nightwatch.test"
+  }
   ]
