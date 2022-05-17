@@ -1785,24 +1785,25 @@ article.form-container {
 
 .state-access-card,
 .cms-group-division-section {
-  dt {
+  div {
     @extend .ds-u-font-size--h3;
     @extend .ds-u-font-weight--semibold;
-
+    line-height: 1.42857143; //carried over from bootstrap dd height
     margin-bottom: 5px;
   }
 
-  dd {
-    em {
-      color: $color-gray;
-    }
-    p {
-      @extend .ds-u-font-weight--semibold;
-    }
-    a {
-      @extend .ds-u-font-weight--normal;
-      @extend .ds-u-text-decoration--none;
-    }
+  em {
+    color: $color-gray;
+    line-height: 1.42857143; //carried over from bootstrap dt height
+  }
+
+  p {
+    @extend .ds-u-font-weight--semibold;
+    line-height: 1.42857143; //carried over from bootstrap dt height
+  }
+  a {
+    @extend .ds-u-font-weight--normal;
+    @extend .ds-u-text-decoration--none;
   }
 }
 
