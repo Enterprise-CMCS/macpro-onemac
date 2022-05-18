@@ -9,7 +9,7 @@ const MedicalSPA = '//div[text()="Medicaid SPA"]';
 const ChipSPA = '//div[text()="CHIP SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverActionWaiverAction =
-  '//p[contains(text(),"Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension")]';
+  '//p[contains(text(),"Submit waivers, amendments, and renewals")]';
 //Element is Xpath use cy.xpath instead of cy.get
 const RequestTemporaryExtension = '//div[text()="Request Temporary Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
