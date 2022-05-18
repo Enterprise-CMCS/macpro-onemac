@@ -9,7 +9,7 @@ const ChoiceItem = ({ linkTo, title, description, onclick }) => {
     <li className="choice" onClick={onclick}>
       <Link to={linkTo}>
         <div>
-          <h4>{title}</h4>
+          <div className="choice-title">{title}</div>
           <p>{description}</p>
         </div>
         <FontAwesomeIcon icon={faChevronRight} className="choice-item-arrow" />
