@@ -2250,6 +2250,10 @@ aside#faq-contact-info-box {
     top: 1em;
     left: 0;
     right: 0;
+
+    .no-results-header {
+      @extend .ds-h4;
+    }
   }
 }
 

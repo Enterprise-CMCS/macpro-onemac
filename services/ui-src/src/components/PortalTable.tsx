@@ -190,7 +190,7 @@ export default function PortalTable<V extends {} = {}>({
                 icon={faSearch}
               />
               <div className="no-results-message">
-                <h4>No Results Found</h4>
+                <div className="no-results-header">No Results Found</div>
                 <p>
                   Adjust your search and filter to find what you are looking
                   for.
