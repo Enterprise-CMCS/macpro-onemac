@@ -570,7 +570,7 @@ export class oneMacPackagePage {
     cy.get(packageRowOneType).should("have.text", "Medicaid SPA");
   }
   typePartialExistingID() {
-    cy.get(searchbar).type("MD-10");
+    cy.get(searchbar).type("MD-13");
   }
   checkforPackageApprovedIsNotClickable() {
     cy.xpath(PackageApproved).should("be.disabled");
@@ -847,6 +847,9 @@ export class oneMacPackagePage {
   }
   clickRespondToRAIBtn() {
     cy.xpath(respondToRAIBtn).click();
+  }
+  verifyRespondToRAIBtnExists() {
+    cy.xpath(respondToRAIBtn).should("be.visible");
   }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink).click();

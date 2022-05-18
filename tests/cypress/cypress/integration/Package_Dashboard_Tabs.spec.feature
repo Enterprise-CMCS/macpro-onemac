@@ -73,7 +73,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         And search for "MD.10330"
         And wait for parent row expander to be enabled
         And verify parent row expander exists
-        And verify the next row is not a child
+        #And verify the next row is not a child
         And click parent row expander
         And verify the next row is a child
         And verify all children start with "MD.10330"
