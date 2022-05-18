@@ -20,7 +20,7 @@ const searchbarHeader =
 //Element is Xpath use cy.xpath instead of cy.get
 const searchBarXBTN = "//button[@aria-label='Clear Search']";
 //Element is Xpath use cy.xpath instead of cy.get
-const noResultsFound = "//h4[contains(text(),'No Results Found')]";
+const noResultsFound = "//div[contains(text(),'No Results Found')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const errorMessageForNoResultsFound =
   "//p[contains(text(),'Adjust your search and filter to find what you are')]";

@@ -16,7 +16,8 @@ const date = "#submittedAt-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToRAIBTN = "//tbody/tr[1]/td[6]/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToRAI = '//body/div[@id="simple-menu"]/div[3]/ul[1]/div[1]/li[1]';
+//const respondToRAI = '//body/div[@id="simple-menu"]/div[3]/ul[1]/div[1]/li[1]';
+const respondToRAI = '//*[@id="simple-menu-0"]/div[3]/ul/div/li';
 const userManagementTab = "#userManagementLink";
 //Element is Xpath use cy.xpath instead of cy.get
 const submissionList = '//h1[contains(text(),"Submission List")]';

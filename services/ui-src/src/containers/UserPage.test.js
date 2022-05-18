@@ -331,10 +331,10 @@ describe("access section", () => {
 
     for (const { status, territory } of accesses) {
       const stateLabelEl = screen.getByText(territoryMap[territory], {
-        selector: "dt",
+        selector: "div",
       });
       expect(stateLabelEl).toBeVisible();
-      expect(stateLabelEl.nextElementSibling.tagName).toBe("DD");
+      expect(stateLabelEl.nextElementSibling.tagName).toBe("EM");
       expect(stateLabelEl.nextElementSibling).toHaveTextContent(
         ACCESS_LABELS[status]
       );

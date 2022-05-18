@@ -7,7 +7,7 @@ const statePlanAmendmentSPAHeader =
   '//h2[contains(text(),"State Plan Amendments (SPAs)")]';
 const waiversHeader = '//h2[contains(text(),"Waivers")]';
 const oneMacHelpDeskContactInfoHeader =
-  '//h3[contains(text(),"OneMAC Help Desk Contact Info")]';
+  '//h2[contains(text(),"OneMAC Help Desk Contact Info")]';
 const phoneNumber = '//dt[contains(text(),"Phone Number")]';
 const actualPhoneNumber = '//a[contains(text(),"(833) 228-2540")]';
 const email = '//dt[contains(text(),"Email")]';
