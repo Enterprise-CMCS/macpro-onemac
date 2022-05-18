@@ -6,9 +6,9 @@ const modal = "#react-aria-modal-dialog";
 const selectTheRoleText =
   "//div[contains(text(),'Select the role for which you are registering.')]";
 const stateSubmitterRoleBtn =
-  "//a[@href='/state']//h4[contains(text(),'State Submitter')]";
+  "//a[@href='/state']//div[contains(text(),'State Submitter')]";
 const SSARoleBtn =
-  "//a[@href='/state']//h4[contains(text(),'State System Admin')]";
+  "//a[@href='/state']//div[contains(text(),'State System Admin')]";
 const userRoleHeader = "//div[@class='signup-headings']//p[@class='user-role']";
 const errorMsg = "//div[@class='multi-select-error-message']";
 const submitBtn = "//button[contains(text(),'Submit')]";
@@ -16,9 +16,9 @@ const cancelBtn = "//button[text()='Cancel']";
 const stayOnPageBtn = "//button[text()='Stay on Page']";
 const confirmBtn = "//button[text()='Confirm']";
 const CMSReviewerRoleBtn =
-  "//a[@href='/signup/cmsreviewer']//h4[contains(text(),'CMS Reviewer')]";
+  "//a[@href='/signup/cmsreviewer']//div[contains(text(),'CMS Reviewer')]";
 const CMSRoleApproverBtn =
-  "//a[@href='/usermanagement']//h4[contains(text(),'CMS Role Approver')]";
+  "//a[@href='/usermanagement']//div[contains(text(),'CMS Role Approver')]";
 
 export class oneMacRequestARoleChangePage {
   verifySelectTheRoleTextExists() {
