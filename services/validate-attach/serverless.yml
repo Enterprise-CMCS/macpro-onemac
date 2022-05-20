@@ -14,7 +14,7 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${env:IAM_PATH, "/"}
-  emailSource:
+  emailSource: "nowhere@nowhere.com"
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: 
   serverless-offline:
@@ -37,12 +37,12 @@ provider:
           Action: 
             - dynamodb:Query
           Resource:
-            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
+            - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
         - Effect: Allow
           Action:
             - dynamodb:Query
           Resource:
-            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
+            - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
         - Effect: 'Allow'
           Action:
             - 's3:GetObject'
