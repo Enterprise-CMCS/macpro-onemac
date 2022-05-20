@@ -32,6 +32,7 @@ provider:
     attachmentsBucket: ${self:custom.attachmentsBucket}
   iam:
     role:
+      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
       statements: # permissions for all functions
         - Effect: Allow
           Action: 
