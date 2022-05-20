@@ -1,0 +1,4 @@
+rules:
+  no-console: off
+  # TODO turn this rule back on once we figure out types for this module
+  "@typescript-eslint/explicit-module-boundary-types": off
