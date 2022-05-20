@@ -1,4 +1,4 @@
-import handler from "./libs/handler-lib";
+import handler from "./libs/handler-lib.js";
 //import dynamoDb from "./libs/dynamodb-lib";
 
 export const validate = async () => {

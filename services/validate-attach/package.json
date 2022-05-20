@@ -1,0 +1,42 @@
+{
+  "name": "validate-attach",
+  "description": "",
+  "version": "1.0.0",
+  "main": "validateAttachments.js",
+  "scripts": {
+    "test": "serverless-bundle test --passWithNoTests"
+  },
+  "author": "",
+  "license": "CC0-1.0",
+  "devDependencies": {
+    "aws-sdk": "^2.752.0",
+    "aws-sdk-client-mock": "^0.5.6",
+    "serverless-bundle": "^5.3.0",
+    "serverless-dotenv-plugin": "^3.12.2",
+    "serverless-iam-helper": "file:../../plugins/serverless-iam-helper",
+    "serverless-offline": "^8.5.0",
+    "serverless-plugin-warmup": "^7.1.0",
+    "xstate": "^4.26.0"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.43.0",
+    "@aws-sdk/lib-dynamodb": "^3.43.0"
+  },
+  "jest": {
+    "coverageReporters": [
+      "json",
+      [
+        "lcov",
+        {
+          "projectRoot": "../../"
+        }
+      ],
+      "text",
+      "clover"
+    ],
+    "moduleNameMapper": {
+      "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs",
+      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs"
+    }
+  }
+}
