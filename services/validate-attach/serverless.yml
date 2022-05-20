@@ -1,0 +1,61 @@
+
+service: validate-attach
+
+frameworkVersion: '3'
+
+plugins:
+  - serverless-bundle
+  - serverless-dotenv-plugin
+  - serverless-offline
+  - serverless-iam-helper
+  - serverless-s3-bucket-helper
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  oneMacTableName: onemac-${self:custom.stage}-one
+  iamPath: ${env:IAM_PATH, "/"}
+  emailSource:
+  attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
+  attachmentsBucketArn: 
+  serverless-offline:
+    allowCache: true
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: dev
+  environment:
+    NODE_OPTIONS: '--enable-source-maps'
+    oneMacTableName: ${self:custom.oneMacTableName}
+    emailSource: ${self:custom.emailSource}
+    attachmentsBucket: ${self:custom.attachmentsBucket}
+  iam:
+    role:
+      statements: # permissions for all functions
+        - Effect: Allow
+          Action: 
+            - dynamodb:Query
+          Resource:
+            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+          Resource:
+            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
+        - Effect: 'Allow'
+          Action:
+            - 's3:GetObject'
+          Resource: !Sub ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}/*
+        - Effect: "Allow"
+          Action:
+            - ses:SendEmail
+            - ses:SendRawEmail
+          Resource: "*"  
+functions:
+  validate-attachments:
+    handler: validateAttachments.main
+    role: LambdaApiRole
+    timeout: 180
+
+    
