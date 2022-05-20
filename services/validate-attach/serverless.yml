@@ -55,7 +55,6 @@ provider:
 functions:
   validate-attachments:
     handler: validateAttachments.main
-    role: LambdaApiRole
     timeout: 180
 
     
