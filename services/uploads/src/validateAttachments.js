@@ -1,6 +1,6 @@
 //import AWS from "aws-sdk";
 
-import { ATTACHMENTS_BUCKET } from "./constants";
+//import { ATTACHMENTS_BUCKET } from "./constants";
 import dynamoDb from "../libs/dynamodb-lib";
 
 //const s3 = new AWS.S3();
