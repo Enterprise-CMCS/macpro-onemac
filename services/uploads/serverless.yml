@@ -48,7 +48,9 @@ provider:
           Action:
             - dynamodb:Query
           Resource:
+            - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
         - Effect: "Allow"
           Action:
             - ses:SendEmail

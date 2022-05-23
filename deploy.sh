@@ -24,13 +24,13 @@ install_deps
 # Run deploy for each folder
 # skip   'stream-functions' while bigMAC is down
 services=(
-  #'ui'
+  'ui'
   'uploads'
-  #'app-api'
-  #'stream-functions'
-  #'ui-waf-log-assoc'
-  #'ui-auth'
-  #'ui-src'
+  'app-api'
+  'stream-functions'
+  'ui-waf-log-assoc'
+  'ui-auth'
+  'ui-src'
   #'validate-attach'
 )
 
