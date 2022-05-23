@@ -16,7 +16,7 @@ custom:
   iamPath: ${env:IAM_PATH, "/"}
   emailSource: "nowhere@nowhere.com"
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
-  attachmentsBucketArn: 
+  attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   serverless-offline:
     allowCache: true
 
@@ -32,7 +32,7 @@ provider:
     attachmentsBucket: ${self:custom.attachmentsBucket}
   iam:
     role:
-      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+      permissionsBoundary: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
       statements: # permissions for all functions
         - Effect: Allow
           Action: 
