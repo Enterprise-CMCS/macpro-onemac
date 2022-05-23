@@ -44,11 +44,22 @@ provider:
           Resource:
             - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-uploads-${AWS::AccountId}
             - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-avscan-${AWS::AccountId}
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+          Resource:
+            - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+        - Effect: "Allow"
+          Action:
+            - ses:SendEmail
+            - ses:SendRawEmail
+          Resource: "*"  
 
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  oneMacTableName: onemac-${self:custom.stage}-one
   scripts:
     hooks:
       # This script is run locally when running 'serverless deploy'
@@ -103,6 +114,9 @@ functions:
       ATTACHMENTS_BUCKET: !Ref AttachmentsBucket
     events:
       - schedule: rate(1 hour)
+  validateAttachments:
+    handler: src/validateAttachments.validate
+    timeout: 300
 
 resources:
   Conditions:

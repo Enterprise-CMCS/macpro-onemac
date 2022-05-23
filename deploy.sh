@@ -25,13 +25,13 @@ install_deps
 # skip   'stream-functions' while bigMAC is down
 services=(
   #'ui'
-  #'uploads'
+  'uploads'
   #'app-api'
   #'stream-functions'
   #'ui-waf-log-assoc'
   #'ui-auth'
   #'ui-src'
-  'validate-attach'
+  #'validate-attach'
 )
 
 set -e
