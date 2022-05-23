@@ -59,6 +59,8 @@ custom:
   stage: ${opt:stage, self:provider.stage}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  tableName: cms-spa-form-${self:custom.stage}-change-requests
+  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
   scripts:
     hooks:
@@ -117,6 +119,9 @@ functions:
   validateAttachments:
     handler: src/validateAttachments.validate
     timeout: 300
+    environment:
+      ATTACHMENTS_BUCKET: !Ref AttachmentsBucket
+      UPLOADS_TABLE_NAME: ${self:custom.tableName}
 
 resources:
   Conditions:
