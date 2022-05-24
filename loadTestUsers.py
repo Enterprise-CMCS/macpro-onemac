@@ -125,7 +125,7 @@ def seed_cognito(test_users, user_pool_id, password):
         elif user["role"].startswith("state"):
             role = "onemac-state-user"
         elif user["role"].startswith("cms") or user["role"] == "systemadmin":
-            role = "none"
+            role = ""
         elif user["role"] == "helpdesk":
             role = "onemac-helpdesk"
 
