@@ -12,7 +12,7 @@ async function isObjectinS3(item, upload) {
     Key: `protected/${item.userId}/${upload.s3Key}`,
   };
   try {
-    const result = await s3.headObject(s3Params).promise();
+    await s3.headObject(s3Params).promise();
   } catch (err) {
     if (err.code === "NotFound") {
       console.warn("Attachment not found in s3 ", upload);
@@ -91,7 +91,10 @@ async function validateChangeRequestUploads(event) {
 }
 
 async function validateOneMacAttachments(event) {
-  console.warn("Validation of onemac table attachments is not yet implemented");
+  console.warn(
+    "Validation of onemac table attachments is not yet implemented",
+    event
+  );
 }
 
 export async function validate(event) {
