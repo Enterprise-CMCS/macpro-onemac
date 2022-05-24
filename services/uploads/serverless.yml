@@ -36,17 +36,18 @@ provider:
             - s3:DeleteObject
             - s3:ListBucket
           Resource:
-            - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-uploads-${AWS::AccountId}/*
+            - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-attachments-${AWS::AccountId}/*
             - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-avscan-${AWS::AccountId}/*
         - Effect: 'Allow'
           Action:
             - s3:ListBucket
           Resource:
-            - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-uploads-${AWS::AccountId}
+            - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-attachments-${AWS::AccountId}
             - !Sub arn:aws:s3:::${self:service}-${self:custom.stage}-avscan-${AWS::AccountId}
         - Effect: Allow
           Action:
             - dynamodb:Query
+            - dynamodb:Scan
           Resource:
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
             - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
@@ -121,9 +122,17 @@ functions:
   validateAttachments:
     handler: src/validateAttachments.validate
     timeout: 300
+    events:
+      - schedule: cron(0 0 ? * WED *)
     environment:
       ATTACHMENTS_BUCKET: !Ref AttachmentsBucket
-      UPLOADS_TABLE_NAME: ${self:custom.tableName}
+      TABLE_NAME: ${self:custom.tableName}
+      ONEMAC_TABLE_NAME: ${self:custom.oneMacTableName}
+      VALIDATE_CHANGE_REQUESTS: true
+      VALIDATE_ONEMAC: false
+      STAGE: ${self:custom.stage}
+      emailSource: !GetAtt ValidateAttachmentsEmailSourceSSM.Value
+      emailToAddresses: !GetAtt ValidateAttachmentsToEmailSSM.Value
 
 resources:
   Conditions:
@@ -325,8 +334,21 @@ resources:
                   Action:
                     - s3:ListBucket
                   Resource: !GetAtt ClamDefsBucket.Arn
-                  
-
+    ValidateAttachmentsToEmailSSM:
+      Type: AWS::SSM::Parameter
+      Properties: 
+        Type: StringList
+        Description: Comma delimited list of email address values to be sent the email validation report
+        Name: !Sub /configuration/${self:custom.stage}/email/${self:service}/validateAttachments/toEmail
+        Value: "bflynn@collabralink.com, hwells@collabralink.com, jaime.morris1@cms.hhs.gov, rcrews@collabralink.com"
+    ValidateAttachmentsEmailSourceSSM:
+      Type: AWS::SSM::Parameter
+      Properties:
+        Type: String
+        Description: Email address used to send the email validation report
+        Name: !Sub /configuration/${self:custom.stage}/email/${self:service}/validateAttachments/emailSource
+        Value: "OneMAC@cms.hhs.gov"
+                   
   # Print out the name of the bucket that is created
   Outputs:
     AttachmentsBucketName:
