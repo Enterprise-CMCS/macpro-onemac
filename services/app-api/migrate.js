@@ -95,7 +95,7 @@ export const main = handler(async (event) => {
       });
     }
     params.ExclusiveStartKey = results.LastEvaluatedKey;
-  } while (params.ExclusiveStartKey && promiseItems.length < 20);
+  } while (params.ExclusiveStartKey);
 
   params.ExpressionAttributeValues = {
     ":gsi1pk": `OneMAC#waiver`,
@@ -145,7 +145,7 @@ export const main = handler(async (event) => {
     }
 
     params.ExclusiveStartKey = results.LastEvaluatedKey;
-  } while (params.ExclusiveStartKey && promiseItems.length < 20);
+  } while (params.ExclusiveStartKey);
 
   await Promise.all(
     promiseItems.map(async (updateParams) => {
