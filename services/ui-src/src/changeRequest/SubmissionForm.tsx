@@ -384,7 +384,7 @@ export const SubmissionForm: React.FC<{
           </div>
         )}
         <form noValidate onSubmit={handleSubmit}>
-          <h3>{formInfo.detailsHeader} Details</h3>
+          <h2>{formInfo.detailsHeader} Details</h2>
           <p className="req-message">
             <span className="required-mark">*</span>
             indicates required field.
