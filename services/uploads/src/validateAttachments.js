@@ -84,8 +84,7 @@ async function validateChangeRequestUploads(event) {
 
   console.log(
     "Attachment Validation Report for Change Request Table:",
-    emailParams,
-    emailParams.Message.Body.Html
+    emailTemplate
   );
 
   if (
