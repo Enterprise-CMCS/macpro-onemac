@@ -45,6 +45,8 @@ const createVersionedComponent = async (oldData) => {
     sk: `v1#${oldData.sk}`,
   };
 
+  console.log("Second Put params: ", putParams);
+
   await dynamoDb.put(putParams);
 };
 
@@ -152,7 +154,7 @@ export const main = handler(async (event) => {
 
         const result = await dynamoDb.update(updateParams);
         console.log("The updated record: ", result);
-        if (result) createVersionedComponent(result.Attributes);
+        if (result) await createVersionedComponent(result.Attributes);
       } catch (e) {
         console.log("update error: ", e.message);
       }
