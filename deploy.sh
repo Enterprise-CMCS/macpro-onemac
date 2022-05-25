@@ -27,7 +27,7 @@ services=(
   'ui'
   'uploads'
   'app-api'
-  'stream-functions'
+  #'stream-functions'
   'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'
