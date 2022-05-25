@@ -123,7 +123,7 @@ functions:
     handler: src/validateAttachments.validate
     timeout: 300
     events:
-      - schedule: cron(0 4 ? * WED *) #aws cron is UTC time; so this is midnight EST
+      - schedule: cron(0 4 ? * SUN *) #aws cron is UTC time; so this is midnight EST
     environment:
       ATTACHMENTS_BUCKET: !Ref AttachmentsBucket
       TABLE_NAME: ${self:custom.tableName}
@@ -340,7 +340,7 @@ resources:
         Type: StringList
         Description: Comma delimited list of email address values to be sent the email validation report
         Name: !Sub /configuration/${self:custom.stage}/email/${self:service}/validateAttachments/toEmail
-        Value: ""
+        Value: " "
     ValidateAttachmentsEmailSourceSSM:
       Type: AWS::SSM::Parameter
       Properties:

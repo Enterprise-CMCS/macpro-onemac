@@ -76,13 +76,25 @@ async function validateChangeRequestUploads(event) {
     dbParams.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (dbParams.ExclusiveStartKey);
 
-  if (attachmentsInError.length > 0) {
-    //send email
-    const emailTemplate = await getValidateAttachmentEmailTemplate(
-      "Change Requests",
-      attachmentsInError
-    );
-    await sendEmail(emailTemplate);
+  //send email
+  const emailTemplate = await getValidateAttachmentEmailTemplate(
+    "Change Requests",
+    attachmentsInError
+  );
+
+  console.log(
+    "Attachment Validation Report for Change Request Table:",
+    emailParams,
+    emailParams.Message.Body.Html
+  );
+
+  if (
+    emailTemplate.fromAddressSource.trim().length > 0 &&
+    emailTemplate.ToAddresses.length > 0
+  ) {
+    await sendEmail(emailTemplate); //only send email if from and to addresses are configured
+  } else {
+    console.log("Email addresses not configured - email not sent.");
   }
 
   console.log(
