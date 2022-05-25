@@ -123,7 +123,7 @@ functions:
     handler: src/validateAttachments.validate
     timeout: 300
     events:
-      - schedule: cron(0 0 ? * WED *)
+      - schedule: cron(0 4 ? * WED *) #aws cron is UTC time; so this is midnight EST
     environment:
       ATTACHMENTS_BUCKET: !Ref AttachmentsBucket
       TABLE_NAME: ${self:custom.tableName}
