@@ -340,7 +340,6 @@ resources:
         Type: StringList
         Description: Comma delimited list of email address values to be sent the email validation report
         Name: !Sub /configuration/${self:custom.stage}/email/${self:service}/validateAttachments/toEmail
-        Value: "bflynn@collabralink.com, hwells@collabralink.com, jaime.morris1@cms.hhs.gov, rcrews@collabralink.com"
     ValidateAttachmentsEmailSourceSSM:
       Type: AWS::SSM::Parameter
       Properties:
