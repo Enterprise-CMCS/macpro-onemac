@@ -179,13 +179,18 @@ And("verify SPA ID for RAI 2 EXISTS", () => {
 });
 And("verify CHIP ID EXISTS", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.chipSPAID);
+    OneMacDashboardPage.verifyIDNumber(d.chipSPAID1);
   });
 });
 
 And("type in CHIP ID", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.chipSPAID);
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.chipSPAID1);
+  });
+});
+And("type in CHIP ID 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.chipSPAID2);
   });
 });
 
@@ -195,7 +200,9 @@ And("click on CHIP Respond to RAI", () => {
 
 And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(d.chipSPAID);
+    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(
+      d.chipSPAID1
+    );
   });
 });
 
@@ -663,7 +670,7 @@ And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
 });
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber1);
   });
 });
 And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
@@ -679,13 +686,13 @@ And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
   });
 });
 And("search for Base Waiver Number 1 with 12 Characters", () => {
-  cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.searchFor(data.newBaseWaiverNumber1);
   });
   cy.wait(1000);
 });
 And("search for Base Waiver Number 2 with 12 Characters", () => {
-  cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.searchFor(data.newBaseWaiverNumber2);
   });
   cy.wait(1000);
@@ -1192,7 +1199,7 @@ And("verify Error message displayed should be No Results Found", () => {
   OneMacPackagePage.noResultsFoundErrorMessage();
 });
 And("verify user exists with id number searched", () => {
-  cy.fixture("sharedBaseWaiverNumber.json").then((data) => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.verifyIDNumberExists(data.newBaseWaiverNumber2);
   });
 });
