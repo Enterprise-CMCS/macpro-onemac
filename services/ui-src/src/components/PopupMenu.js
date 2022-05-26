@@ -71,7 +71,7 @@ export default function PopupMenu({
         <FontAwesomeIcon icon={faEllipsisV} />
       </Button>
       <Menu
-        id="simple-menu"
+        id={"simple-menu-" + selectedRow.id}
         anchorEl={anchorEl}
         anchorOrigin={{
           vertical: "center",

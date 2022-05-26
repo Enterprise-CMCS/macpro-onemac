@@ -82,6 +82,11 @@ export const ALERTS_MSG: Record<
     heading: "Submission Error",
     text: "There was an issue submitting your request. Please try again.",
   },
+  SUBMISSION_SAVE_ERROR: {
+    type: ALERT_TYPES.ERROR,
+    heading: "Submission Error",
+    text: "There was an issue submitting your request.",
+  },
   SUBMISSION_FETCH_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Submission Fetch Error",
@@ -199,6 +204,7 @@ export const alertCodeAlerts = {
   [RESPONSE_CODE.NONE]: ALERTS_MSG.NONE,
   [RESPONSE_CODE.LOGIN_ERROR]: ALERTS_MSG.LOGIN_ERROR,
   [RESPONSE_CODE.SUCCESSFULLY_SUBMITTED]: ALERTS_MSG.SUBMISSION_SUCCESS_SURVEY,
+  [RESPONSE_CODE.SUBMISSION_SAVE_FAILURE]: ALERTS_MSG.SUBMISSION_SAVE_ERROR,
   [RESPONSE_CODE.DATA_MISSING]: ALERTS_MSG.SUBMISSION_INCOMPLETE,
   [RESPONSE_CODE.ATTACHMENTS_MISSING]: ALERTS_MSG.REQUIRED_UPLOADS_MISSING,
   [RESPONSE_CODE.USER_SUBMITTED]: ALERTS_MSG.SUBMISSION_SUCCESS,

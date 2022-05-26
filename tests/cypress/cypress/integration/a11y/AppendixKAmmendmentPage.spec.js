@@ -6,8 +6,10 @@ describe("Respond To Appendix K Ammendment Page 508 test", () => {
     cy.get("#password").type("Passw0rd!");
     cy.get("#loginDevUserBtn").click();
     cy.xpath("//a[@id='new-submission-button']").click();
-    cy.xpath("//h4[contains(text(),'Waiver Action')]").click();
-    cy.xpath("//h4[contains(text(),'Appendix K Amendment')]").click();
+    cy.xpath(
+      "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]"
+    ).click();
+    cy.xpath("//p[contains(text(),'Submit Appendix K Amendment')]").click();
   });
 
   it("Check a11y on Respond To Appendix K Ammendment Page", () => {

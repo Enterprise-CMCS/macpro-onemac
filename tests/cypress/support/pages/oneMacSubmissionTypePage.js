@@ -1,25 +1,27 @@
 //Element is Xpath use cy.xpath instead of cy.get
-const statePlanAmendmentSPA = '//h4[text()="State Plan Amendment (SPA)"]';
+const statePlanAmendmentSPA = '//div[text()="State Plan Amendment (SPA)"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const waiverAction = '//h4[text()="Waiver Action"]';
+const waiverAction =
+  "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const MedicalSPA = '//h4[text()="Medicaid SPA"]';
+const MedicalSPA = '//div[text()="Medicaid SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const ChipSPA = '//h4[text()="CHIP SPA"]';
+const ChipSPA = '//div[text()="CHIP SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const waiverActionWaiverAction = '//h4[text()="Waiver Action"]';
+const waiverActionWaiverAction =
+  '//p[contains(text(),"Submit waivers, amendments, and renewals")]';
 //Element is Xpath use cy.xpath instead of cy.get
-const RequestTemporaryExtension = '//h4[text()="Request Temporary Extension"]';
+const RequestTemporaryExtension = '//div[text()="Request Temporary Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const AppendixKAmendment = '//h4[text()="Appendix K Amendment"]';
+const AppendixKAmendment = '//div[text()="Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToMedicaidSPARAI = '//h4[text()="Respond to Medicaid SPA RAI"]';
+const respondToMedicaidSPARAI = '//div[text()="Respond to Medicaid SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToCHIPSPARAI = '//h4[text()="Respond to CHIP SPA RAI"]';
+const respondToCHIPSPARAI = '//div[text()="Respond to CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = '//h4[text()="Respond to Waiver RAI"]';
+const respondToWaiverRAI = '//div[text()="Respond to Waiver RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const baseWaiver = '//h4[text()="Base Waiver"]';
+const baseWaiver = '//div[text()="Base Waiver"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {

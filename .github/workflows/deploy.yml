@@ -130,6 +130,8 @@ jobs:
       - name: Set testing email address unless in prod
         if: ${{ env.branch_name != 'production' }}
         run: echo "TESTING_TEAM_EMAIL=macproemailnotification@gmail.com" >> $GITHUB_ENV
+      - name: reset one table
+        run: cd ./services/app-api && ./resetOne.sh $STAGE_PREFIX$branch_name
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
@@ -147,6 +149,7 @@ jobs:
         if: ${{ env.branch_name != 'production'}}
         run: ./loadTestUsers.py $STAGE_PREFIX$branch_name
       - name: Migrate Data
+        if: ${{ env.branch_name != 'production'}}
         run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f migrate
   cypress-test:
     name: Cypress Tests
@@ -197,7 +200,7 @@ jobs:
             Mini_Dashboard_Additional_Information.spec.js,
             Home_Page.spec.feature,
             FAQ_Page.spec.feature,
-            Package_Dashboard_Withdraw_RAI_Responses.spec.feature,
+            Submission_Dashboard_Withdraw_RAI_Responses.spec.feature,
           ]
     steps:
       - name: set branch_name
