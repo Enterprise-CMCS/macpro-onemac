@@ -2118,15 +2118,17 @@ And("Type Temporary Extension Number 2 With 5 Characters", () => {
   });
 });
 And("verify the temporary extension exists", () => {
-  cy.fixture("sharedTempExtensionNumber.json").then((data) => {
-    var num = data.newTemporaryExtensionNumber;
-    OneMacPackageDetailsPage.verifyTempExtensionIDExists(num);
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackageDetailsPage.verifyTempExtensionIDExists(
+      data.newTemporaryExtensionNumber1
+    );
   });
 });
 And("click the action button for the temporary extension", () => {
-  cy.fixture("sharedTempExtensionNumber.json").then((data) => {
-    var num = data.newTemporaryExtensionNumber;
-    OneMacPackageDetailsPage.clickTempExtensionActionBtn(num);
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackageDetailsPage.clickTempExtensionActionBtn(
+      data.newTemporaryExtensionNumber1
+    );
   });
 });
 And("click withdraw button on the temp extension page", () => {
