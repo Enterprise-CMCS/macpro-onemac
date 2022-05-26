@@ -860,13 +860,8 @@ export class oneMacPackagePage {
   verifyIDNumberInFirstRowIs(id) {
     cy.xpath(packageRowOneIDLink).contains(id);
   }
-  copyTheIDFromLinkInFirstRow() {
-    cy.xpath(packageRowOneIDLink)
-      .invoke("text")
-      .then((text) => {
-        var f = "./fixtures/savedID.json";
-        cy.writeFile(f, { savedID: text });
-      });
+  compareSearchIDToFirstLinkID(searchedID) {
+    cy.xpath(packageRowOneIDLink).should("have.text", searchedID);
   }
 }
 export default oneMacPackagePage;

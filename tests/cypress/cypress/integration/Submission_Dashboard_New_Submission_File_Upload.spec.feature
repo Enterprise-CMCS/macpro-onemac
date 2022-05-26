@@ -61,7 +61,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario:  Verify uploaded files exists in Submission
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 2
                 And Add "textnotes.txt" file to form 179
                 And Verify "textnotes.txt" is added to form 179
                 And Add file "15MB.pdf" for SPA Pages
@@ -71,7 +71,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
                 And Type Additonal Information Comments
                 And Click on Submit Button
                 And verify submission Successful message
-                And verify SPA ID EXISTS
+                And verify SPA ID 2 EXISTS
                 And verify submission date
                 And Verify submission type
                 And verify Submission List is Displayed

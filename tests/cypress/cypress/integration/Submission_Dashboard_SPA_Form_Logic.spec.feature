@@ -11,9 +11,6 @@ Feature: OY2_3900_SPA_Waivers_FormatTest
         And type in SPA ID
         And verify error message is not present
         And clear SPA ID Input box
-        And type in SPA ID
-        And verify error message is not present
-        And clear SPA ID Input box
         And Return to dashboard Page
         Then click on New Submission
         And Click on State Plan Amendment SPA
@@ -26,10 +23,10 @@ Feature: OY2_3900_SPA_Waivers_FormatTest
     Scenario: Verify the SPA ID format check on Respond to SPA RAI
         And Click on State Plan Amendment SPA
         And click on CHIP SPA
-        And type in SPA ID in CHIP SPA page
+        And type in CHIP ID
         And verify error message is not present on Submit New CHIP SPA Page
         And clear SPA ID Input box CHIP SPA page
-        And type in SPA ID in CHIP SPA page
+        And type in CHIP ID
         And verify error message is not present
         And clear SPA ID Input box
         And type in invalid SPA ID on CHIP SPA page

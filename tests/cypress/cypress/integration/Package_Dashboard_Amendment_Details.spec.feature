@@ -30,7 +30,7 @@
 #         And verify submission Successful message
 #         And click on Packages
 #         And click on the Waivers tab
-#         And search for Unique Valid Base Waiver Number with 12 Characters
+#         And search for Base Waiver Number 1 with 12 Characters
 #         And wait for parent row expander to be enabled
 #         And click parent row expander
 #         And click the Waiver Number link for the Amendment
@@ -62,7 +62,7 @@
 #         And verify submission Successful message
 #         And click on Packages
 #         And click on the Waivers tab
-#         And search for Unique Valid Base Waiver Number with 12 Characters
+#         And search for Base Waiver Number 1 with 12 Characters
 #         And wait for parent row expander to be enabled
 #         And click parent row expander
 #         And click the Waiver Number link for the Amendment

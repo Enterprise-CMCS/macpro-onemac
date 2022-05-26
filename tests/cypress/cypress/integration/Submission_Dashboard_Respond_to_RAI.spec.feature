@@ -34,13 +34,13 @@ Feature: OY2-15647 State User can Respond to RAI
         Then click on New Submission
         And Click on State Plan Amendment SPA
         And click on Medicaid SPA
-        And type in SPA ID
+        And type in SPA ID for RAI
         And Add file for CMS Form 179
         And Add file for SPA Pages
         And Type Additonal Information Comments
         And Click on Submit Button
         And verify submission Successful message
-        And verify SPA ID EXISTS
+        And verify SPA ID for RAI EXISTS
         And verify submission date
         And Verify submission type
         And click on spa Respond to RAI
