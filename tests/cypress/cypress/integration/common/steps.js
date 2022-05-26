@@ -70,9 +70,14 @@ And("type in SPA ID 2", () => {
     OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.attachmentsSPAID2);
   });
 });
-And("type in SPA ID for RAI", () => {
+And("type in SPA ID for RAI 1", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI);
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI1);
+  });
+});
+And("type in SPA ID for RAI 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI2);
   });
 });
 And("Add file for CMS Form 179", () => {
@@ -162,9 +167,14 @@ And("verify SPA ID 2 EXISTS", () => {
     OneMacDashboardPage.verifyIDNumber(d.attachmentsSPAID2);
   });
 });
-And("verify SPA ID for RAI EXISTS", () => {
+And("verify SPA ID for RAI 1 EXISTS", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI);
+    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI1);
+  });
+});
+And("verify SPA ID for RAI 2 EXISTS", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI2);
   });
 });
 And("verify CHIP ID EXISTS", () => {
@@ -631,9 +641,14 @@ And("Click on Request for waiver renewal from Action Type", () => {
 And("type in Existing Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumber();
 });
-And("Type new Waiver Number in format SS.#####", () => {
+And("Type new Waiver Number 1 in format SS.#####", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber1);
+  });
+});
+And("Type new Waiver Number for RAI in format SS.#####", () => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber2);
   });
 });
 And("Type Base Waiver Number in format SS.#####.R00.00", () => {
@@ -647,14 +662,14 @@ And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
   });
 });
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
-  cy.fixture("sharedWaiverNumber.json").then((data) => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber);
   });
 });
 And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
-  cy.fixture("sharedWaiverNumber.json").then((data) => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     var number = `${data.newWaiverNumber}.R00.M00`;
-    var f = "./fixtures/sharedWaiverNumber.json";
+    var f = "./fixtures/submissionDashboardWaiverNumbers.json";
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
     cy.readFile(f).then((d) => {
       d.waiverAmendmentNumber = number;
@@ -681,7 +696,7 @@ And("verify id number in the first row matches Base Waiver Number 1", () => {
   });
 });
 And("search for Unique Valid Waiver Number with 5 Characters", () => {
-  cy.fixture("sharedWaiverNumber.json").then((data) => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.searchFor(data.newWaiverNumber);
   });
   cy.wait(1000);
@@ -2024,7 +2039,7 @@ And("verify the Proposed Effective Date is NA", () => {
   OneMacPackageDetailsPage.verifyproposedEffectiveDateHeaderContainsNA();
 });
 And("click the Waiver Number link for the Amendment", () => {
-  cy.fixture("sharedWaiverNumber.json").then((data) => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     var number = `${data.newWaiverNumber}.R00.M00`;
     OneMacPackagePage.clickLinkForWaiver(number);
   });
@@ -2034,7 +2049,7 @@ And("verify the Amendment Number header exists", () => {
   OneMacPackageDetailsPage.verifyAmendmentNumberHeaderExists();
 });
 And("verify the amendment number matches", () => {
-  cy.fixture("sharedWaiverNumber.json").then((data) => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     var number = `${data.newWaiverNumber}.R00.M00`;
     OneMacPackageDetailsPage.verifyAmendmentNumbermatches(number);
   });

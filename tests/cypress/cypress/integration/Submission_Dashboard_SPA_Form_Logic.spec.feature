@@ -8,7 +8,7 @@ Feature: OY2_3900_SPA_Waivers_FormatTest
     Scenario: Verify the SPA ID format check on Submit New SPA
         And Click on State Plan Amendment SPA
         And click on Medicaid SPA
-        And type in SPA ID
+        And type in SPA ID 1
         And verify error message is not present
         And clear SPA ID Input box
         And Return to dashboard Page

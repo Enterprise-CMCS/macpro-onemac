@@ -10,7 +10,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on Waiver Action under Waiver Type
         And Click on New Waiver under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type in new Waiver Number in format SS.#####
+        And Type new Waiver Number 1 in format SS.#####
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
