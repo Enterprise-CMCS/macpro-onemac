@@ -306,7 +306,7 @@ const PackageList = () => {
 
   const initialTableState = useMemo(
     () => ({
-      sortBy: [{ id: "timestamp", desc: true }],
+      sortBy: [{ id: "submissionTimestamp", desc: true }],
       hiddenColumns: ["expirationTimestamp", "familyNumber"],
     }),
     []
