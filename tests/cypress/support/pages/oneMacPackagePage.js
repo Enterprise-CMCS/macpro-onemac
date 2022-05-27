@@ -860,6 +860,9 @@ export class oneMacPackagePage {
   verifyIDNumberInFirstRowIs(id) {
     cy.xpath(packageRowOneIDLink).contains(id);
   }
+  compareSearchIDToFirstLinkID(searchedID) {
+    cy.xpath(packageRowOneIDLink).should("have.text", searchedID);
+  }
   copyTheIDFromLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink)
       .invoke("text")
