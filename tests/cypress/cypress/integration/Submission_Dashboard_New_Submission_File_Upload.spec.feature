@@ -8,7 +8,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario: Verify If PDF Can Be Uploaded
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 1
                 And Add "15MB.pdf" file to form 179
                 And Verify "15MB.pdf" is added to form 179
                 And Delete file from form 179
@@ -16,7 +16,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario: Verify If Excel Can Be Uploaded
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 1
                 And Add "excel.xlsx" file to form 179
                 And Verify "excel.xlsx" is added to form 179
                 And Delete file from form 179
@@ -24,7 +24,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario: Verify If DOCX Can Be Uploaded
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 1
                 And Add "test3.docx" file to form 179
                 And Verify "test3.docx" is added to form 179
                 And Delete file from form 179
@@ -32,7 +32,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario: Verify If JPEG Can Be Uploaded
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 1
                 And Add "picture.jpg" file to form 179
                 And Verify "picture.jpg" is added to form 179
                 And Delete file from form 179
@@ -40,7 +40,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario: Verify If TEXT Can Be Uploaded
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 1
                 And Add "textnotes.txt" file to form 179
                 And Verify "textnotes.txt" is added to form 179
                 And Delete file from form 179
@@ -48,7 +48,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario: Verify If Multiple Files Can Be Uploaded
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 1
                 And Add file "15MB.pdf" for SPA Pages
                 And Add file "textnotes.txt" for SPA Pages
                 And Add file "picture.jpg" for SPA Pages
@@ -61,7 +61,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
         Scenario:  Verify uploaded files exists in Submission
                 And Click on State Plan Amendment SPA
                 And click on Medicaid SPA
-                And type in SPA ID
+                And type in SPA ID 2
                 And Add "textnotes.txt" file to form 179
                 And Verify "textnotes.txt" is added to form 179
                 And Add file "15MB.pdf" for SPA Pages
@@ -71,7 +71,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
                 And Type Additonal Information Comments
                 And Click on Submit Button
                 And verify submission Successful message
-                And verify SPA ID EXISTS
+                And verify SPA ID 2 EXISTS
                 And verify submission date
                 And Verify submission type
                 And verify Submission List is Displayed
