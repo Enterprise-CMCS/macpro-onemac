@@ -50,6 +50,18 @@ export const getState = ({ componentId }) =>
 
 const getChildren = ({ children }) => children;
 
+const initialStatuses = [
+  Workflow.ONEMAC_STATUS.UNSUBMITTED,
+  Workflow.ONEMAC_STATUS.SUBMITTED,
+  Workflow.ONEMAC_STATUS.IN_REVIEW,
+  Workflow.ONEMAC_STATUS.RAI_ISSUED,
+  Workflow.ONEMAC_STATUS.APPROVED,
+  Workflow.ONEMAC_STATUS.DISAPPROVED,
+  Workflow.ONEMAC_STATUS.WITHDRAWN,
+  Workflow.ONEMAC_STATUS.TERMINATED,
+  Workflow.ONEMAC_STATUS.PAUSED,
+];
+
 /**
  * Component containing dashboard
  */
@@ -308,6 +320,7 @@ const PackageList = () => {
     () => ({
       sortBy: [{ id: "timestamp", desc: true }],
       hiddenColumns: ["expirationTimestamp", "familyNumber"],
+      filters: [{ id: "packageStatus", value: initialStatuses }],
     }),
     []
   );

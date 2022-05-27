@@ -32,7 +32,7 @@ async function helpdeskOrReviewerDynamoDbQuery(
   const results = await dynamoDb.scan({
     ...commonQueryConfig,
     ExpressionAttributeValues: {
-      ":submittedState": "Submitted",
+      ":submittedState": "submitted",
     },
     ExclusiveStartKey: startingKey,
   });
@@ -70,7 +70,7 @@ async function stateSubmitterDynamoDbQuery(
     ExpressionAttributeValues: {
       ":v_territory": territory,
       ":v_submittedAt": 0,
-      ":submittedState": "Submitted",
+      ":submittedState": "submitted",
     },
     ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
   });
