@@ -99,6 +99,11 @@ provider:
 
 functions:
 
+  resetData:
+    handler: resetData.main
+    role: LambdaApiRole
+    timeout: 180
+
   migrate:
     handler: migrate.main
     role: LambdaApiRole
