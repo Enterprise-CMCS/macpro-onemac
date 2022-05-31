@@ -9,77 +9,113 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
     : {}
 );
 
-async function updateChangeRequestId(event) {
-  console.log("Inside updateChangeRequestId", event);
-  console.log(
-    "Input vars:",
-    "tablename:",
-    process.env.tableName,
-    "ISOsubmittedAt:",
-    process.env.ISOsubmittedAt,
-    "fromTransmittalNumber:",
-    process.env.fromTransmittalNumber,
-    "toTransmittalNumber:",
-    process.env.toTransmittalNumber,
-    "appendAdditionalInfo:",
-    process.env.appendAdditionalInfo
-  );
+function validateEvent(event) {
+  //validate required input params
+  let missingParams = "";
+  if (!event.ISOsubmittedAt) {
+    missingParams += " ISOsubmittedAt ";
+  }
+  if (!event.fromTransmittalNumber) {
+    missingParams += " fromTransmittalNumber ";
+  }
+  if (!event.toTransmittalNumber) {
+    missingParams += " toTransmittalNumber ";
+  }
+  if (!event.type) {
+    missingParams += " type ";
+  }
+  if (!event.territory) {
+    missingParams += " territory ";
+  }
+  if (!event.appendAdditionalInfo) {
+    missingParams += " appendAdditionalInfo ";
+  }
+  if (missingParams.trim().length != 0) {
+    throw new Error("Missing event parameters - " + missingParams);
+  }
 
-  //get territory from transactionNumber
-  const territory = process.env.fromTransmittalNumber.substring(0, 2);
-  console.log("territory", territory);
-
-  //convert input timestamp to epoch - submittedAt timestamps are input in ET so append -04
-  const dateSubmittedAt = parseISO(process.env.ISOsubmittedAt.concat("-04"));
-  const dateSubmittedAtPlusOneSecond = addSeconds(dateSubmittedAt, 1);
-
-  //query for change request in the given territory and sumbitted at the specified time (within one second)
-  const results = await dynamoDb
-    .query({
-      TableName: process.env.tableName,
-      ProjectionExpression: "transmittalNumber,summary,userId,id",
-      IndexName: "territory-submittedAt-index",
-      KeyConditionExpression:
-        "territory = :v_territory and submittedAt between :v_submittedAt and :v_submittedEnd",
-      ExpressionAttributeValues: {
-        ":v_territory": territory,
-        ":v_submittedAt": dateSubmittedAt.getTime(),
-        ":v_submittedEnd": dateSubmittedAtPlusOneSecond.getTime(),
-      },
-    })
-    .promise();
-
-  console.log("Query Results:", results.Items);
-
-  //validate proper results
-  if (results.Items.length > 0) {
-    throw new Error("Item not found.");
-  } else if (results.Items.length > 1) {
-    throw new Error("Multiple records found - can not do auto update");
-  } else if (
-    results.Items[0].transmittalNumber != process.env.fromTransmittalNumber
-  ) {
+  //validate format of ISOsubmittedAt
+  if (isNaN(parseISO(event.ISOsubmittedAt))) {
     throw new Error(
-      "Incorrect Transmittal number found - can not do auto update"
+      "Invalid format for ISOsubmittedAt parameter. Expected YYYY-MM-DDThh:mm:ss and received " +
+        event.ISOsubmittedAt
     );
   }
+
+  console.log("event passed validation");
+}
+
+function extractMatchedResult(results, event) {
+  const result = results.Items.find((item) => {
+    return (
+      item.transmittalNumber === event.fromTransmittalNumber &&
+      item.type === event.type
+    );
+  });
+
+  if (!result) {
+    throw new Error(
+      "Transmittal number not found for specified territory and submission time - can not do auto update"
+    );
+  }
+  console.log("Match found", result);
+  return result;
+}
+
+/**
+ * Update a given change request transaction number based on its current transactionNumber, type, and submittedAt timestamp.
+ * Note that the ISOsubmittedAt parameter should represent US Eastern Timezone and be in 24hr format.
+ *
+ * @param {string} event.ISOsubmittedAt An ISO formatted (YYYY-MM-DDThh:mm:ss) dateTime string representing the US Eastern Timezone date of submission
+ * @param {string} event.fromTransmittalNumber The submission id (TransmittalNumber) to update
+ * @param {string} event.toTransmittalNumber the new submission id (TransmittalNumber)
+ * @param {string} event.type the type of submission - see changeRequest.js Type - examples: (chipspa,chipsparai,spa,sparai,waiver)
+ * @param {string} event.territory the two character state code to which the submission belongs
+ * @param {string} event.appendAdditionalInfo is any text that should be prepended to the summary (additional info) to explain the update
+ * @returns {string} Confirmation message
+ */
+exports.main = async function (event) {
+  console.log("updateChangeRequestId.main", event);
+
+  validateEvent(event);
+
+  //convert input timestamp to epoch; submittedAt timestamps are input in ET so append -04
+  const dateSubmittedAt = parseISO(event.ISOsubmittedAt.concat("-04"));
+
+  //query for change request in the given territory and sumbitted at the specified time (within one second)
+  const queryParams = {
+    TableName: process.env.tableName,
+    ProjectionExpression: "transmittalNumber,#type,summary,userId,id",
+    ExpressionAttributeNames: { "#type": "type" },
+    IndexName: "territory-submittedAt-index",
+    KeyConditionExpression:
+      "territory = :v_territory and submittedAt between :v_submittedAt and :v_submittedEnd",
+    ExpressionAttributeValues: {
+      ":v_territory": event.territory,
+      ":v_submittedAt": dateSubmittedAt.getTime(),
+      ":v_submittedEnd": addSeconds(dateSubmittedAt, 1).getTime(),
+    },
+  };
+
+  console.log("queryParams", queryParams);
+  const results = await dynamoDb.query(queryParams).promise();
+
+  //find exact match from query results
+  const result = extractMatchedResult(results, event);
 
   //update the transmittalNumber to the input transmittalNumber and append the additional info
   await dynamoDb
     .update({
       TableName: process.env.tableName,
-      Key: { userId: results.Items[0].userId, id: results.Items[0].id },
+      Key: { userId: result.userId, id: result.id },
       UpdateExpression:
-        "SET transmitttalNumber = :toTransmittalNumber, summary = :toSummary",
+        "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
       ExpressionAttributeValues: {
-        ":toTransmittalNumber": process.env.toTransmittalNumber,
-        ":toSummary":
-          process.env.appendAdditionalInfo + " " + results.Items[0].summary,
+        ":toTransmittalNumber": event.toTransmittalNumber,
+        ":toSummary": event.appendAdditionalInfo + " " + result.summary,
       },
     })
     .promise();
 
   return "Update Complete";
-}
-
-exports.main = updateChangeRequestId;
+};

@@ -1,0 +1,8 @@
+{
+    "ISOsubmittedAt": "YYYY-MM-DDThh:mm:ss",
+    "fromTransmittalNumber": "SS.XXXX.RXX.XX",
+    "toTransmittalNumber": "SS.YYYY.RYY.YY",
+    "type": "waiverappk",
+    "territory": "SS",
+    "appendAdditionalInfo": "UPDATED - Per request ..."
+  }
