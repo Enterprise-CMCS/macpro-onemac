@@ -86,13 +86,12 @@ export const main = handler(async (event) => {
       try {
         console.log(`Delete Params are ${JSON.stringify(deleteParams)}`);
 
-        const result = await dynamoDb.delete(deleteParams);
-        console.log("The deleted record: ", result);
+        await dynamoDb.delete(deleteParams);
       } catch (e) {
         console.log("delete error: ", e.message);
       }
     })
   );
-
+  console.log("lambda thinks " + promiseItems.length + " Items are deleted");
   return "Done";
 });
