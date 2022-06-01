@@ -325,7 +325,7 @@ const PackageList = () => {
     []
   );
 
-  const csvExportSubmissions = (
+  const csvExportPackages = (
     <Button
       id="new-submission-button"
       className="new-submission-button"
@@ -377,7 +377,7 @@ const PackageList = () => {
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
     } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
-      rightSideContent = csvExportSubmissions;
+      rightSideContent = csvExportPackages;
     }
 
     return rightSideContent;
@@ -385,7 +385,7 @@ const PackageList = () => {
 
   const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
 
-  function renderSubmissionList() {
+  function renderPackageList() {
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
@@ -402,8 +402,8 @@ const PackageList = () => {
     }
 
     const tableClassName = classNames({
-      "submissions-table": true,
-      "submissions-table-actions-column": userRoleObj.canAccessForms,
+      "package-table": true,
+      "package-table-actions-column": userRoleObj.canAccessForms,
     });
     const packageListExists = packageList && packageList.length > 0;
     return (
@@ -422,7 +422,7 @@ const PackageList = () => {
             TEMP_onReset={TEMP_onReset}
           />
         ) : (
-          <EmptyList message="You have no submissions yet." />
+          <EmptyList message="You have no packages yet." />
         )}
       </LoadingScreen>
     );
@@ -436,7 +436,7 @@ const PackageList = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar
-        heading="Submission Dashboard"
+        heading="Package Dashboard"
         rightSideContent={getRightSideContent()}
       />
       <div className="dash-and-filters" ref={dashboardRef}>
@@ -465,7 +465,7 @@ const PackageList = () => {
                 Waivers
               </Button>
             </div>
-            {renderSubmissionList()}
+            {renderPackageList()}
           </div>
         </div>
       </div>
