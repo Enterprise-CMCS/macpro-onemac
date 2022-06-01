@@ -240,7 +240,7 @@ And("Verify submission type Waiver RAI", () => {
   OneMacDashboardPage.verifyType("Waiver RAI");
 });
 
-And("Verify submission typeCHIP SPA RAI", () => {
+And("Verify submission type CHIP SPA RAI", () => {
   OneMacDashboardPage.verifyType("CHIP SPA RAI");
 });
 
@@ -630,7 +630,9 @@ And("Type {string} in Summary Box", (Comments) => {
 });
 
 And("verify ID Number Exists", () => {
-  OneMacDashboardPage.verifyIDNumberIsDisplayed();
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacDashboardPage.verifyIDNumberIsDisplayed(d.newWaiverNumber1);
+  });
 });
 
 And("Click on All other 1915 b Waivers under Waiver Authority", () => {
