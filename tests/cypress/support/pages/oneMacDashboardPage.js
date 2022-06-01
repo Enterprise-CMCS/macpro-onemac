@@ -7,7 +7,7 @@ const successMessageAfterRAIResponse =
   '//*[contains(text(),"Thanks for your submission. We truly value your feedback. Please consider taking our ")]';
 
 //Element is Xpath use cy.xpath instead of cy.get
-const IDNUMBER = "//tbody/tr[1]/td[1]/a[1]";
+const IDNUMBER = (id) => `//a[text()="${id}"]`;
 //Element is Xpath use cy.xpath instead of cy.get
 const SecondIDNUMBER = "//tbody/tr[2]/td[1]/a[1]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -54,7 +54,7 @@ export class oneMacDashboardPage {
   }
 
   verifyIDNumber(s) {
-    cy.xpath(IDNUMBER).contains(s);
+    cy.xpath(IDNUMBER(s)).should("be.visible");
   }
 
   verifyType(s) {
@@ -71,13 +71,11 @@ export class oneMacDashboardPage {
   }
 
   verifySPARAIIDNumberMatchesMedicalSPAIDNumber(s) {
-    cy.xpath(IDNUMBER).contains(s);
-    cy.xpath(SecondIDNUMBER).contains(s);
+    cy.xpath(IDNUMBER(s)).should("be.visible").and("have.length", 2);
   }
 
   verifySPARAIIDNumberMatchesCHIPSPAIDNumber(s) {
-    cy.xpath(IDNUMBER).contains(s);
-    cy.xpath(SecondIDNUMBER).contains(s);
+    cy.xpath(IDNUMBER(s)).should("be.visible").and("have.length", 2);
   }
 
   clickUserManagementTab() {

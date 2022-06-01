@@ -1,4 +1,4 @@
-Feature: OY2_4807_Validate_Waiver_Form_Logic
+Feature: Submit a New Waiver in Submission Dashboard
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
