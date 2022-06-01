@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { parseISO, addSeconds } from "date-fns";
+import { parse, addSeconds } from "date-fns";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(
   process.env.IS_OFFLINE
@@ -9,11 +9,14 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
     : {}
 );
 
+const dateFormat = "EEE, MMM d yyyy, h:mm:ss a";
+const dateFormatTimeZone = dateFormat.concat(" x");
+
 function validateEvent(event) {
   //validate required input params
   let missingParams = "";
-  if (!event.ISOsubmittedAt) {
-    missingParams += " ISOsubmittedAt ";
+  if (!event.submittedAt) {
+    missingParams += " submittedAt ";
   }
   if (!event.fromTransmittalNumber) {
     missingParams += " fromTransmittalNumber ";
@@ -34,11 +37,13 @@ function validateEvent(event) {
     throw new Error("Missing event parameters - " + missingParams);
   }
 
-  //validate format of ISOsubmittedAt
-  if (isNaN(parseISO(event.ISOsubmittedAt))) {
+  //validate format of submittedAt
+  if (isNaN(parse(event.submittedAt, dateFormat, new Date()))) {
     throw new Error(
-      "Invalid format for ISOsubmittedAt parameter. Expected YYYY-MM-DDThh:mm:ss and received " +
-        event.ISOsubmittedAt
+      "Invalid format for submittedAt parameter. Expected " +
+        dateFormat +
+        " and received " +
+        event.submittedAt
     );
   }
 
@@ -64,9 +69,9 @@ function extractMatchedResult(results, event) {
 
 /**
  * Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp.
- * Note that the ISOsubmittedAt parameter should represent US Eastern Timezone and be in 24hr format.
+ * Note that the submittedAt parameter should represent US Eastern Timezone and be in 24hr format.
  *
- * @param {string} event.ISOsubmittedAt An ISO formatted (YYYY-MM-DDThh:mm:ss) dateTime string representing the US Eastern Timezone date of submission
+ * @param {string} event.submittedAt A formatted (EEE, MMM d yyyy, h:mm:ss a) dateTime string representing the US Eastern Timezone date of submission as it appears on the submission details page
  * @param {string} event.fromTransmittalNumber The submission id (TransmittalNumber) to update
  * @param {string} event.toTransmittalNumber the new submission id (TransmittalNumber)
  * @param {string} event.type the type of submission - see changeRequest.js Type - examples: (chipspa,chipsparai,spa,sparai,waiver)
@@ -80,7 +85,11 @@ exports.main = async function (event) {
   validateEvent(event);
 
   //convert input timestamp to epoch; submittedAt timestamps are input in ET so append -04
-  const dateSubmittedAt = parseISO(event.ISOsubmittedAt.concat("-04"));
+  const dateSubmittedAt = parse(
+    event.submittedAt.concat(" -04"),
+    dateFormatTimeZone,
+    new Date()
+  );
 
   //query for change request in the given territory and sumbitted at the specified time (within one second)
   const queryParams = {
