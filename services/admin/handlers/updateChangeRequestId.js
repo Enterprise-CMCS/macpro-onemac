@@ -27,8 +27,8 @@ function validateEvent(event) {
   if (!event.territory) {
     missingParams += " territory ";
   }
-  if (!event.appendAdditionalInfo) {
-    missingParams += " appendAdditionalInfo ";
+  if (!event.prependAdditionalInfo) {
+    missingParams += " prependAdditionalInfo ";
   }
   if (missingParams.trim().length != 0) {
     throw new Error("Missing event parameters - " + missingParams);
@@ -63,7 +63,7 @@ function extractMatchedResult(results, event) {
 }
 
 /**
- * Update a given change request transaction number based on its current transactionNumber, type, and submittedAt timestamp.
+ * Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp.
  * Note that the ISOsubmittedAt parameter should represent US Eastern Timezone and be in 24hr format.
  *
  * @param {string} event.ISOsubmittedAt An ISO formatted (YYYY-MM-DDThh:mm:ss) dateTime string representing the US Eastern Timezone date of submission
@@ -71,7 +71,7 @@ function extractMatchedResult(results, event) {
  * @param {string} event.toTransmittalNumber the new submission id (TransmittalNumber)
  * @param {string} event.type the type of submission - see changeRequest.js Type - examples: (chipspa,chipsparai,spa,sparai,waiver)
  * @param {string} event.territory the two character state code to which the submission belongs
- * @param {string} event.appendAdditionalInfo is any text that should be prepended to the summary (additional info) to explain the update
+ * @param {string} event.prependAdditionalInfo is any text that should be prepended to the summary (additional info) to explain the update
  * @returns {string} Confirmation message
  */
 exports.main = async function (event) {
@@ -103,7 +103,7 @@ exports.main = async function (event) {
   //find exact match from query results
   const result = extractMatchedResult(results, event);
 
-  //update the transmittalNumber to the input transmittalNumber and append the additional info
+  //update the transmittalNumber to the input transmittalNumber and prepend the additional info
   await dynamoDb
     .update({
       TableName: process.env.tableName,
@@ -112,7 +112,7 @@ exports.main = async function (event) {
         "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
       ExpressionAttributeValues: {
         ":toTransmittalNumber": event.toTransmittalNumber,
-        ":toSummary": event.appendAdditionalInfo + " " + result.summary,
+        ":toSummary": event.prependAdditionalInfo + " " + result.summary,
       },
     })
     .promise();

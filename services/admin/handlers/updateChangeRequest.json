@@ -4,5 +4,5 @@
     "toTransmittalNumber": "SS.YYYY.RYY.YY",
     "type": "waiverappk",
     "territory": "SS",
-    "appendAdditionalInfo": "UPDATED - Per request ..."
-  }
+    "prependAdditionalInfo": "UPDATED - Per request ..."
+}

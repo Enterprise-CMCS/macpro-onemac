@@ -48,6 +48,6 @@ provider:
 functions:
 
   updateChangeRequestId:
-    handler: handlers/updateChangeRequestId.main
+    handler: ./handlers/updateChangeRequestId.main
     timeout: 180
      
