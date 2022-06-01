@@ -130,8 +130,6 @@ jobs:
       - name: Set testing email address unless in prod
         if: ${{ env.branch_name != 'production' }}
         run: echo "TESTING_TEAM_EMAIL=macproemailnotification@gmail.com" >> $GITHUB_ENV
-      - name: reset one table
-        run: cd ./services/app-api && ./resetOne.sh $STAGE_PREFIX$branch_name
       - name: deploy
         run: |
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
@@ -151,6 +149,9 @@ jobs:
       - name: Migrate Data
         if: ${{ env.branch_name != 'production'}}
         run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f migrate
+      - name: Reset Test Data
+        if: ${{ env.branch_name != 'production'}}
+        run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f resetData
   cypress-test:
     name: Cypress Tests
     needs: deploy
@@ -355,3 +356,16 @@ jobs:
           config: baseUrl=${{ env.APPLICATION_ENDPOINT }}
         env:
           SLACK_WEBHOOK_URL: ${{ secrets.SLACK_WEBHOOK_URL }}
+  # reset:
+  #   name: Reset
+  #   needs:
+  #     - cypress-test
+  #   runs-on: ubuntu-latest
+  #   steps:
+  #     - name: set branch_name
+  #       run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
+  #     - name: set stage_prefix
+  #       run: echo "STAGE_PREFIX=${{ secrets.STAGE_PREFIX }}" >> $STATE_PREFIX
+  #     - name: Reset Test Data
+  #       if: ${{ env.branch_name != 'production'}}
+  #       run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f resetData

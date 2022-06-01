@@ -44,6 +44,7 @@ function validateEvent(event) {
         dateFormat +
         " and received " +
         event.submittedAt
+
     );
   }
 
@@ -107,7 +108,8 @@ exports.main = async function (event) {
   };
 
   console.log("queryParams", queryParams);
-  //const results = await dynamoDb.query(queryParams).promise();
+
+  const results = await dynamoDb.query(queryParams).promise();
 
   //find exact match from query results
   const result = extractMatchedResult(results, event);

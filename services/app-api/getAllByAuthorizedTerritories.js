@@ -6,9 +6,14 @@ import { getUser } from "./getUser";
 
 const commonQueryConfig = {
   TableName: process.env.tableName,
-  ExpressionAttributeNames: { "#type": "type", "#user": "user" },
+  ExpressionAttributeNames: {
+    "#type": "type",
+    "#user": "user",
+    "#state": "state",
+  },
+  FilterExpression: "#state = :submittedState",
   ProjectionExpression:
-    "transmittalNumber,#type,territory,submittedAt,#user.firstName,#user.lastName,#user.email,userId,id",
+    "transmittalNumber,#type,territory,submittedAt,#user.firstName,#user.lastName,#user.email,userId,id,#state",
 };
 
 /**
@@ -26,6 +31,9 @@ async function helpdeskOrReviewerDynamoDbQuery(
 ) {
   const results = await dynamoDb.scan({
     ...commonQueryConfig,
+    ExpressionAttributeValues: {
+      ":submittedState": "submitted",
+    },
     ExclusiveStartKey: startingKey,
   });
   allResults.push(results);
@@ -62,6 +70,7 @@ async function stateSubmitterDynamoDbQuery(
     ExpressionAttributeValues: {
       ":v_territory": territory,
       ":v_submittedAt": 0,
+      ":submittedState": "submitted",
     },
     ScanIndexForward: false, // sorts the results by submittedAt in descending order (most recent first)
   });

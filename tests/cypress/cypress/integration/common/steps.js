@@ -653,9 +653,14 @@ And("Type new Waiver Number 1 in format SS.#####", () => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber1);
   });
 });
-And("Type new Waiver Number for RAI in format SS.#####", () => {
+And("Type new Waiver Number 2 in format SS.#####", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber2);
+  });
+});
+And("Type new Waiver Number for RAI in format SS.#####", () => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber3);
   });
 });
 And("Type Base Waiver Number in format SS.#####.R00.00", () => {
@@ -671,6 +676,11 @@ And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber1);
+  });
+});
+And("Type existing Waiver Number 2 With 5 Characters", () => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber2);
   });
 });
 And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {

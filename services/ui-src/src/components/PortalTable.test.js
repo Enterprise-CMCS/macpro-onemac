@@ -43,9 +43,7 @@ describe("column headers", () => {
         initialState={{ hiddenColumns: ["my-first-column"] }}
       />
     );
-    expect(
-      screen.queryByRole("columnheader", { name: /first/i })
-    ).not.toBeNull();
+    expect(screen.queryByRole("columnheader", { name: /first/i })).toBeNull();
     expect(screen.getByRole("columnheader", { name: /second/i })).toBeVisible();
   });
 });

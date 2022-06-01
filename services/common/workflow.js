@@ -24,6 +24,7 @@ export const ONEMAC_LABEL = {
 };
 
 export const ONEMAC_STATUS = {
+  INACTIVATED: "Inactivated",
   UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
   IN_REVIEW: "Package In Review",
