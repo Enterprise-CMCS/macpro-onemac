@@ -1,0 +1,53 @@
+service: admin
+
+frameworkVersion: "3"
+
+useDotenv: true
+
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle
+  - serverless-dotenv-plugin
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  tableName: cms-spa-form-${self:custom.stage}-change-requests
+  spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
+  oneMacTableName: onemac-${self:custom.stage}-one
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: dev
+  iam:
+    role:
+      path: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+      permissionsBoundary: !Sub arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy}
+      statements:
+        - Effect: Allow
+          Action:
+            - dynamodb:Query
+            - dynamodb:Scan
+            - dynamodb:GetItem
+            - dynamodb:PutItem
+            - dynamodb:UpdateItem
+            - dynamodb:DeleteItem
+          Resource:
+            - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+            - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
+            - arn:aws:dynamodb:*:*:table/${self:custom.tableName}/index/*
+  environment:
+    NODE_OPTIONS: '--enable-source-maps'
+    tableName: ${self:custom.tableName}
+    spaIdTableName: ${self:custom.spaIdTableName}
+    oneMacTableName: ${self:custom.oneMacTableName}
+
+functions:
+
+  updateChangeRequestId:
+    handler: ./handlers/updateChangeRequestId.main
+    timeout: 180
+     
