@@ -9,8 +9,10 @@ const resetIds = [
   "MD-22-0022",
   "MD-22-0023",
   "MD.12896",
+  "MD.12893",
   "MD.12958",
   "MD.38430",
+  "MD.123456",
   "MD.33463.R00.00",
   "MD.39253.R00.00",
   "MD.33463.R00.TE00",
@@ -86,13 +88,12 @@ export const main = handler(async (event) => {
       try {
         console.log(`Delete Params are ${JSON.stringify(deleteParams)}`);
 
-        const result = await dynamoDb.delete(deleteParams);
-        console.log("The deleted record: ", result);
+        await dynamoDb.delete(deleteParams);
       } catch (e) {
         console.log("delete error: ", e.message);
       }
     })
   );
-
+  console.log("lambda thinks " + promiseItems.length + " Items are deleted");
   return "Done";
 });

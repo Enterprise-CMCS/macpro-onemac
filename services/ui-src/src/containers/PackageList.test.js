@@ -100,8 +100,8 @@ it.each`
   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-  ${"currentStatus"} | ${"AnythingElse"}                     | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
-  ${"currentStatus"} | ${"AnythingElse"}                     | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.SUBMITTED}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"Pending"}
+  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.RAI_ISSUED}  | ${"clockEndTimestamp"} | ${null}          | ${"Clock Stopped"}
 `(
   "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
   async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {

@@ -4490,5 +4490,110 @@
     "pk": "MD.3322.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
+  },
+  {
+    "pk": "MD-78-2985",
+    "sk": "chipspa",
+    "devComment": "Package added via seed data for application testing",
+    "chipsparai": [
+      {
+        "componentType": "chipsparai",
+        "componentTimestamp": 1639695915718,
+        "submitterName": "StateSubmitter Nightwatch",
+        "componentId": "MD-77-2985"
+      }
+    ],
+    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+    "changeHistory": [
+      {
+        "componentType": "chipsparai",
+        "componentTimestamp": 1639695915718,
+        "submitterName": "StateSubmitter Nightwatch",
+        "componentId": "MD-77-2985"
+      },
+      {
+        "componentType": "chipspa",
+        "additionalInformation": "This is just a test",
+        "componentId": "MD-77-2985",
+        "attachments": [
+          {
+            "s3Key": "1639695907350/picture.jpg",
+            "filename": "picture.jpg",
+            "title": "Current State Plan",
+            "contentType": "image/jpeg",
+            "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+          },
+          {
+            "s3Key": "1639695907351/adobe.pdf",
+            "filename": "adobe.pdf",
+            "title": "Amended State Plan Language",
+            "contentType": "application/pdf",
+            "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+          },
+          {
+            "s3Key": "1639695907351/adobe.pdf",
+            "filename": "adobe.pdf",
+            "title": "Cover Letter",
+            "contentType": "application/pdf",
+            "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+          }
+        ],
+        "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d",
+        "currentStatus": "Submitted",
+        "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+        "submitterName": "StateSubmitter Nightwatch",
+        "submissionTimestamp": 1639695908900,
+        "submitterEmail": "statesubmitter@nightwatch.test"
+      }
+    ],
+    "componentType": "chipspa",
+    "currentStatus": "Inactivated",
+    "attachments": [
+      {
+        "s3Key": "1639695907350/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "Current State Plan",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695913999/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Revised Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695913999/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695913999/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Official RAI Response",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695913999/adobe.pdf"
+      }
+    ],
+    "GSI1sk": "MD-78-2985",
+    "additionalInformation": "This is just a test",
+    "submissionTimestamp": 1639695908900,
+    "GSI1pk": "OneMAC#spa",
+    "clockEndTimestamp": 1646941106000,
+    "packageId": "MD-78-2985",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "componentId": "MD-78-2985",
+    "submitterName": "StateSubmitter Nightwatch",
+    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
   }
   ]
