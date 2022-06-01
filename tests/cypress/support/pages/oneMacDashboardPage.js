@@ -111,8 +111,8 @@ export class oneMacDashboardPage {
     cy.get(newSubmissionBTN).should("be.visible");
   }
 
-  verifyIDNumberIsDisplayed() {
-    cy.xpath(IDNUMBER).should("be.visible");
+  verifyIDNumberIsDisplayed(s) {
+    cy.xpath(IDNUMBER(s)).should("be.visible");
   }
   clickPackageTab() {
     cy.xpath(packageTab).click();
