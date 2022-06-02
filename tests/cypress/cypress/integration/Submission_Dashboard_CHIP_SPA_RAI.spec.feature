@@ -22,7 +22,5 @@ Feature: OY2_13234_CHIP_SPA_RAI
     And Add Additional Comments
     And Click on Submit Button
     And verify submission Successful message after RAI
-    And Verify submission typeCHIP SPA RAI
     And Verify CHIP RAI ID number matches CHIP SPA ID number
     And verify submission date
-
