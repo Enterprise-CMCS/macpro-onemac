@@ -1,5 +1,6 @@
 // import dynamoDb from "../libs/dynamodb-lib";
 import updateWithVersion from "./updateWithVersion";
+import updateParent from "../utils/updateParent";
 
 const topLevelUpdates = [
   "clockEndTimestamp",
@@ -44,7 +45,9 @@ export default async function updateComponent(updateData, config) {
   });
 
   try {
-    return updateWithVersion(updateComponentParams);
+    const updateResults = await updateWithVersion(updateComponentParams);
+
+    if (updateResults.parentId) await updateParent(updateResults);
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {
       console.log(
