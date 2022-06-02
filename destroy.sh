@@ -40,7 +40,7 @@ for i in "${filteredStackList[@]}"
 do
   echo 'starting destroy on stack: ' $i
   # Get list of buckets in this stack
-  filteredBucketList=(`aws cloudformation list-stack-resources --stack-name $i --no-paginate | jq -r ".StackResourceSummaries[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
+  filteredBucketList=(`aws cloudformation list-stack-resources --stack-name $i | jq -r ".StackResourceSummaries[] | select(.ResourceType==\"AWS::S3::Bucket\") | .PhysicalResourceId"`)
   echo 'Turning off Versioning and Emptying buckets...'
   for x in "${filteredBucketList[@]}"
   do
