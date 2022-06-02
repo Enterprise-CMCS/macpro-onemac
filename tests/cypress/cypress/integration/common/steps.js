@@ -1996,6 +1996,9 @@ And("click the actions button in row one", () => {
 And("click the Respond to RAI button", () => {
   OneMacPackagePage.clickRespondToRAIBtn();
 });
+And("verify the Respond to RAI button is displayed", () => {
+  OneMacPackagePage.verifyRespondToRAIBtnExists();
+});
 And("verify Package Overview navigation button exists", () => {
   OneMacPackageDetailsPage.verifyPackageOverviewNavBtnExists();
 });
@@ -2138,4 +2141,8 @@ And("reset EUA CMS Read Only User state if needed", () => {
         //no reset is needed so do nothing
       }
     });
+});
+
+And("verify the actions button is unavailable", () => {
+  OneMacDashboardPage.verifyActionsBtnUnvailableOnFirstRow();
 });

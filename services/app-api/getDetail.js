@@ -38,7 +38,7 @@ export const getDetails = async (event) => {
     return RESPONSE_CODE.VALIDATION_ERROR;
   }
   const componentType = event.queryStringParameters.cType;
-  let detailsk = componentType;
+  let detailsk = `v0#${componentType}`;
   if (
     detailsk.search(/rai/i) > -1 &&
     event.queryStringParameters.cNum &&
@@ -54,7 +54,7 @@ export const getDetails = async (event) => {
     },
   };
 
-  const raiSk = componentType + "rai";
+  const raiSk = `v0#${componentType}rai`;
   const raiParams = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk AND begins_with(sk,:sk)",
@@ -89,7 +89,7 @@ export const getDetails = async (event) => {
         KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
         ExpressionAttributeValues: {
           ":pk": componentId,
-          ":sk": Workflow.ONEMAC_TYPE.WAIVER_EXTENSION,
+          ":sk": `${Workflow.ONEMAC_TYPE.WAIVER_EXTENSION}`,
         },
       };
 

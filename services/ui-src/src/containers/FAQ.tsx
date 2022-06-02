@@ -91,7 +91,7 @@ const FAQ = () => {
           <aside id="faq-contact-info-box">
             <div className="faq-border-box"></div>
             <div className="faq-info-box">
-              <h3>OneMAC Help Desk Contact Info</h3>
+              <h2>OneMAC Help Desk Contact Info</h2>
               {renderInfo()}
             </div>
           </aside>

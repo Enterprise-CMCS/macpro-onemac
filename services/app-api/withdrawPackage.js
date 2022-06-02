@@ -1,16 +1,15 @@
-import dynamoDb from "./libs/dynamodb-lib";
+// import dynamoDb from "./libs/dynamodb-lib";
 
 import handler from "./libs/handler-lib";
 import { RESPONSE_CODE, Workflow } from "cmscommonlib";
 
-import {
-  CMSWithdrawalEmail,
-  StateWithdrawalEmail,
-} from "./changeRequest/formatWithdrawalEmails";
-import sendEmail from "./libs/email-lib";
-import updateComponent from "./utils/updateComponent";
 import { validateUserSubmitting } from "./utils/validateUser";
 import { getUser } from "./getUser";
+import updateComponent from "./utils/updateComponent";
+import updateParent from "./utils/updateParent";
+import { CMSWithdrawalNotice } from "./email/CMSWithdrawalNotice";
+import { stateWithdrawalReceipt } from "./email/stateWithdrawalReceipt";
+import sendEmail from "./libs/email-lib";
 
 export const main = handler(async (event) => {
   let body;
@@ -25,23 +24,22 @@ export const main = handler(async (event) => {
   }
 
   let updatedPackageData;
-  const { componentId, componentType, submitterEmail, submitterName } = body;
+  const updateData = {
+    componentId: body.componentId,
+    componentType: body.componentType,
+    currentStatus: Workflow.ONEMAC_STATUS.WITHDRAWN,
+    lastModifiedEmail: body.submitterEmail.toLowerCase(),
+    lastModifiedName: body.submitterName,
+    lastModifiedTimestamp: Date.now(),
+  };
   try {
-    updatedPackageData = await updateComponent({
-      componentId,
-      componentType,
-      currentStatus: Workflow.ONEMAC_STATUS.WITHDRAWN,
-      changeHistory: [
-        {
-          submitterEmail: submitterEmail.toLowerCase(),
-          submitterName,
-          submissionTimestamp: Date.now(),
-          action: "Withdraw",
-        },
-      ],
-    });
+    updatedPackageData = await updateComponent(updateData);
+    console.log("Updated Package Data: ", updatedPackageData);
+    updateData.submissionTimestamp = updatedPackageData.submissionTimestamp;
 
     if (updatedPackageData.parentId) {
+      updateParent(updateData);
+      /*
       const params = {
         TableName: process.env.oneMacTableName,
         Key: {
@@ -74,16 +72,23 @@ export const main = handler(async (event) => {
 
         console.log(await dynamoDb.update(updateParams));
       }
+      */
     }
   } catch (e) {
     console.error("Failed to update package", e);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
   }
 
+  const emailData = {
+    ...updatedPackageData,
+    submitterName: body.submitterName,
+    submitterEmail: body.submitterEmail,
+  };
+
   try {
     await Promise.all(
-      [CMSWithdrawalEmail, StateWithdrawalEmail]
-        .map((f) => f(updatedPackageData, submitterName, submitterEmail))
+      [CMSWithdrawalNotice, stateWithdrawalReceipt]
+        .map((f) => f(emailData))
         .map(sendEmail)
     );
   } catch (e) {

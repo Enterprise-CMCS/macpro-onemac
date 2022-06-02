@@ -42,69 +42,33 @@ export const decodeWaiverNumber = (inId) => {
   );
 
   const results = waiverRegex.exec(waiverNumber);
-
   if (!results) return null;
 
-  const [, family, , renewal, , amendment] = results;
+  const [, family, , renewal, maybeAppK, amendment] = results;
 
-  return { family, renewal, amendment };
+  const isAppK = maybeAppK === "." + amendment;
+
+  return { family, renewal, amendment, isAppK };
 };
 
-export const getParentPackage = (inId) => {
+export const getParentWaiver = (inId) => {
   const results = decodeWaiverNumber(inId);
   if (!results) return ["FakeID", ONEMAC_TYPE.WAIVER_BASE];
   const { family, renewal } = results;
 
   if (renewal === "00") return [family + ".R00.00", ONEMAC_TYPE.WAIVER_BASE];
-  const renewalNumber = family + ".R" + renewal;
+  const renewalNumber = family + ".R" + renewal + ".00";
   return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
 };
 
-export const getWaiverRAIParent = (inId) => {
-  const results = decodeWaiverNumber(inId);
+export const getWaiverTypeFromNumber = (myId) => {
+  const results = decodeWaiverNumber(myId);
   if (!results) return ONEMAC_TYPE.WAIVER_BASE;
-  const { renewal, amendment } = results;
+  const { renewal, amendment, isAppK } = results;
 
-  if (amendment) return ONEMAC_TYPE.WAIVER_AMENDMENT;
-  if (!amendment && renewal && renewal !== "00")
-    return ONEMAC_TYPE.WAIVER_RENEWAL;
-  return ONEMAC_TYPE.WAIVER_BASE;
-};
-
-export const decodeId = (inId, inType) => {
-  const returnInfo = {
-    packageId: inId,
-    parentType: ONEMAC_TYPE.SPA,
-    componentId: inId,
-    componentType: inType,
-    isNewPackage: true,
-  };
-  const posTE = inId.search(".TE");
-
-  switch (inType) {
-    case ONEMAC_TYPE.CHIP_SPA_RAI:
-      returnInfo.parentType = ONEMAC_TYPE.CHIP_SPA;
-    // falls through
-    case ONEMAC_TYPE.SPA_RAI:
-      returnInfo.isNewPackage = false;
-      break;
-    case ONEMAC_TYPE.WAIVER_RAI:
-    case ONEMAC_TYPE.WAIVER_EXTENSION:
-      if (posTE > 0)
-        [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
-      else returnInfo.parentType = getWaiverRAIParent(inId);
-      returnInfo.isNewPackage = false;
-      break;
-    case ONEMAC_TYPE.WAIVER_AMENDMENT:
-    case ONEMAC_TYPE.WAIVER_APP_K:
-      [returnInfo.packageId, returnInfo.parentType] = getParentPackage(inId);
-      returnInfo.isNewPackage = false;
-      break;
-    case ONEMAC_TYPE.WAIVER:
-    case ONEMAC_TYPE.WAIVER_BASE:
-    case ONEMAC_TYPE.WAIVER_RENEWAL:
-      returnInfo.parentType = inType;
-      break;
+  if (amendment && amendment !== "00") {
+    return isAppK ? ONEMAC_TYPE.WAIVER_APP_K : ONEMAC_TYPE.WAIVER_AMENDMENT;
   }
-  return returnInfo;
+  if (renewal === "00") return ONEMAC_TYPE.WAIVER_BASE;
+  return ONEMAC_TYPE.WAIVER_RENEWAL;
 };

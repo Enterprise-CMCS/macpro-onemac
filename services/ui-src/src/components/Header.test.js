@@ -9,6 +9,7 @@ import { Header } from "./Header";
 jest.mock("aws-amplify", () => ({
   Auth: {
     configure: () => ({ oauth: { domain: "" } }),
+    signOut: () => ({}),
   },
 }));
 
@@ -232,5 +233,28 @@ describe("right side account management", () => {
     const dropdownContent = screen.getByTestId("dropdown-content-test");
     fireEvent.click(myAccountLink);
     expect(dropdownContent).not.toBeVisible();
+  });
+
+  it("redirects to login page when click 'Log out' menu button", () => {
+    const history = createMemoryHistory();
+    render(
+      <AppContext.Provider
+        value={{
+          isAuthenticated: true,
+          isLoggedInAsDeveloper: true,
+          userProfile: { userData: { type: "statesubmitter" } },
+        }}
+      >
+        <Router history={history}>
+          <Header />
+        </Router>
+      </AppContext.Provider>
+    );
+    const myAccountLink = screen.getByRole("button", { name: /my account/i });
+    fireEvent.click(myAccountLink);
+    const dropdownContent = screen.getByTestId("dropdown-content-test");
+    const logoutLink = screen.getByRole("link", { name: /Log out/i });
+    fireEvent.click(logoutLink);
+    // expect(screen.getByText("Login", { selector: "a" })).toBeVisible();
   });
 });

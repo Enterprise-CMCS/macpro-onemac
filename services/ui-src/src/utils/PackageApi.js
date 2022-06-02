@@ -1,9 +1,91 @@
 import { API, Auth } from "aws-amplify";
+import { Workflow } from "cmscommonlib";
 import handleApiError from "../libs/apiErrorHandler";
+
+const SUBMIT_API_CALL = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.SPA]: "submitMedicaidSPA",
+  [Workflow.ONEMAC_TYPE.SPA_RAI]: "submitSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "submitBaseWaiver",
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitAppendixKAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "submitWaiverExtension",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "submitWaiverAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",
+};
+
+const WITHDRAW_API_CALL = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: "withdrawCHIPSPA",
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "withdrawCHIPSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.SPA]: "withdrawMedicaidSPA",
+  [Workflow.ONEMAC_TYPE.SPA_RAI]: "withdrawSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "withdrawBaseWaiver",
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "withdrawWaiverRenewal",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "withdrawAppendixKAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "withdrawWaiverTemporaryExtension",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "withdrawWaiverAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "withdrawWaiverRAIResponse",
+};
 /**
  * Singleton class to perform operations with the change request backend.
  */
 class PackageApi {
+  /**
+   * Submit a change request to be saved by the backend.
+   * @param {Object} data the change request data
+   * @param {Array} uploadsList an array with the information on the already uploaded files
+   * @returns the submitted change request
+   */
+  async submitToAPI(data, uploadsList) {
+    try {
+      const userAuth = await Auth.currentAuthenticatedUser();
+      data.submitterEmail =
+        userAuth.signInUserSession.idToken.payload.email.toLowerCase();
+      data.submitterName = [
+        userAuth.signInUserSession.idToken.payload.given_name,
+        userAuth.signInUserSession.idToken.payload.family_name,
+      ]
+        .filter(Boolean)
+        .join(" ");
+      data.uploads = uploadsList;
+    } catch (error) {
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
+    }
+
+    if (
+      !data ||
+      !uploadsList ||
+      !data.type ||
+      uploadsList.length === 0 ||
+      !data.submitterEmail
+    ) {
+      console.log(
+        "Unable to submit data due to missing fields, invalid format of fields,  or uploads.",
+        data,
+        uploadsList
+      );
+      throw new Error("Missing required data or uploads");
+    }
+    console.log("componentType: ", data.type);
+    console.log("posting to: ", SUBMIT_API_CALL[data.type]);
+    try {
+      return await API.post("oneMacAPI", `/${SUBMIT_API_CALL[data.type]}`, {
+        body: data,
+      });
+    } catch (error) {
+      handleApiError(
+        error,
+        "USER_SUBMISSION_FAILED",
+        "Error while submitting the form."
+      );
+    }
+  }
+
   /**
    * Fetch a specific package from the backend.
    * @param {string} id the ID of the package to fetch
@@ -36,7 +118,8 @@ class PackageApi {
 
   /**
    * Fetch all packages that correspond to the user's active access to states/territories
-   * @param {string} email the user's email
+   * @param {string} userEmail the user's email
+   * @param {string} tab the package group (matches to dashboard tab) to retrieve
    * @return {Promise<Array>} a list of change requests
    */
   async getMyPackages(userEmail, tab) {
@@ -57,25 +140,31 @@ class PackageApi {
   }
 
   /**
-   * Set a package's status to Withdrawn
-   * @param {string} ID the package ID
+   * Set a component's status to Withdrawn
+   * @param {string} componentId the component to be withdrawn
    * @return {Promise<string>} the response code
    */
-  async withdraw(submitterName, submitterEmail, componentId, componentType) {
+  async withdraw(changedByName, changedByEmail, componentId, componentType) {
     try {
-      return await API.post("oneMacAPI", `/withdraw`, {
-        body: {
-          componentId,
-          componentType,
-          submitterEmail,
-          submitterName,
-        },
-      });
+      console.log("posting to: ", WITHDRAW_API_CALL[componentType]);
+
+      return await API.post(
+        "oneMacAPI",
+        `/${WITHDRAW_API_CALL[componentType]}`,
+        {
+          body: {
+            componentId,
+            componentType,
+            changedByEmail,
+            changedByName,
+          },
+        }
+      );
     } catch (err) {
       handleApiError(
         err,
         "FETCH_ERROR",
-        `There was an error updating the status of package ${componentId}.`
+        `There was an error withdrawing package ${componentId}.`
       );
     }
   }

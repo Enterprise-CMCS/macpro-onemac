@@ -11,12 +11,13 @@ const IDNUMBER = "//tbody/tr[1]/td[1]/a[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 const SecondIDNUMBER = "//tbody/tr[2]/td[1]/a[1]";
 //Element is Xpath use cy.xpath instead of cy.get
-const Type = "//tbody/tr[1]/td[2]/span[1]";
+const Type = "//td[@id='type-0']";
 const date = "#submittedAt-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToRAIBTN = "//tbody/tr[1]/td[6]/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToRAI = '//body/div[@id="simple-menu"]/div[3]/ul[1]/div[1]/li[1]';
+//const respondToRAI = '//body/div[@id="simple-menu"]/div[3]/ul[1]/div[1]/li[1]';
+const respondToRAI = '//*[@id="simple-menu-0"]/div[3]/ul/div/li';
 const userManagementTab = "#userManagementLink";
 //Element is Xpath use cy.xpath instead of cy.get
 const submissionList = '//h1[contains(text(),"Submission List")]';
@@ -35,6 +36,7 @@ const uploadedAttachments =
   "div.header-and-content:nth-child(1) article.form-container div.read-only-submission section.choice-container.file-list-container:nth-child(3)";
 const logoutBtn = "//a[@id='logoutLink']";
 const rcSuccessMessage = "#alert-bar";
+const actionsRowOne = "#packageActions-0";
 
 export class oneMacDashboardPage {
   clickNewSubmission() {
@@ -134,6 +136,9 @@ export class oneMacDashboardPage {
   }
   verifySuccessMessageIsDisplayedForRoleChange() {
     cy.get(rcSuccessMessage).contains("Status Change");
+  }
+  verifyActionsBtnUnvailableOnFirstRow() {
+    cy.get(actionsRowOne).not("button");
   }
 }
 export default oneMacDashboardPage;

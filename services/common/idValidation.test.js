@@ -1,140 +1,101 @@
-import { TYPE } from "./changeRequest";
-import { decodeId, getWaiverFamily } from "./idValidation";
+import {
+  getWaiverFamily,
+  getParentWaiver,
+  getWaiverTypeFromNumber,
+  decodeWaiverNumber,
+} from "./idValidation";
 
-describe("decodeId for SPA IDs", () => {
-  it("handles a null component type", () => {
-    const myIdnull = decodeId("Anything");
-    expect(myIdnull.componentType).toBe(undefined);
-  });
-
-  it("decodes SPA ID", () => {
-    const myId = decodeId("MI-11-1119", TYPE.SPA);
-    expect(myId.componentId).toBe("MI-11-1119");
-    expect(myId.componentType).toBe("spa");
-    expect(myId.isNewPackage).toBe(true);
-    expect(myId.packageId).toBe("MI-11-1119");
-    expect(myId.parentType).toBe("spa");
-  });
-
-  it("decodes SPA RAI ID", () => {
-    const myId = decodeId("MI-11-1119", TYPE.SPA_RAI);
-    expect(myId.componentId).toBe("MI-11-1119");
-    expect(myId.componentType).toBe("sparai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI-11-1119");
-    expect(myId.parentType).toBe("spa");
-  });
-
-  it("decodes CHIP SPA ID", () => {
-    const myId = decodeId("MI-00-1234-CHIP", TYPE.CHIP_SPA);
-    expect(myId.packageId).toBe("MI-00-1234-CHIP");
-  });
-
-  it("decodes CHIP SPA RAI ID", () => {
-    const myId = decodeId("MI-00-1234-CHIP", TYPE.CHIP_SPA_RAI);
-    expect(myId.componentId).toBe("MI-00-1234-CHIP");
-    expect(myId.componentType).toBe("chipsparai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI-00-1234-CHIP");
-    expect(myId.parentType).toBe("chipspa");
-  });
-});
-
-describe("decodeId for Waiver Numbers", () => {
-  it("decodes base WAIVER NUMBER", () => {
-    const myId = decodeId("MI.77777", TYPE.WAIVER_BASE);
-    expect(myId.componentId).toBe("MI.77777");
-    expect(myId.componentType).toBe("waivernew");
-    expect(myId.isNewPackage).toBe(true);
-    expect(myId.packageId).toBe("MI.77777");
-    expect(myId.parentType).toBe("waivernew");
-  });
-
-  it("decodes BASE WAIVER RAI NUMBER", () => {
-    const myId = decodeId("MI.77777", TYPE.WAIVER_RAI);
-    expect(myId.componentId).toBe("MI.77777");
-    expect(myId.componentType).toBe("waiverrai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777");
-    expect(myId.parentType).toBe("waivernew");
-  });
-
-  it("decodes BASE WAIVER EXTENSION NUMBER", () => {
-    const myId = decodeId("MI.77777.R00.TE01", TYPE.WAIVER_EXTENSION);
-    expect(myId.componentId).toBe("MI.77777.R00.TE01");
-    expect(myId.componentType).toBe("waiverextension");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R00.00");
-    expect(myId.parentType).toBe("waivernew");
-  });
-
-  it("decodes BASE WAIVER AMENDMENT NUMBER", () => {
-    const myId = decodeId("MI.77777.R00.M01", TYPE.WAIVER_AMENDMENT);
-    expect(myId.componentId).toBe("MI.77777.R00.M01");
-    expect(myId.componentType).toBe("waiveramendment");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R00.00");
-    expect(myId.parentType).toBe("waivernew");
-  });
-
-  it("decodes BASE WAIVER AMENDMENT RAI NUMBER", () => {
-    const myId = decodeId("MI.77777.R00.M01", TYPE.WAIVER_RAI);
-    expect(myId.componentId).toBe("MI.77777.R00.M01");
-    expect(myId.componentType).toBe("waiverrai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R00.M01");
-    expect(myId.parentType).toBe("waiveramendment");
-  });
-
-  it("decodes RENEWAL WAIVER NUMBER", () => {
-    const myId = decodeId("MI.77777.R01", TYPE.WAIVER_RENEWAL);
-    expect(myId.componentId).toBe("MI.77777.R01");
-    expect(myId.componentType).toBe("waiverrenewal");
-    expect(myId.isNewPackage).toBe(true);
-    expect(myId.packageId).toBe("MI.77777.R01");
-    expect(myId.parentType).toBe("waiverrenewal");
-  });
-
-  it("decodes RENEWAL WAIVER NUMBER RAI", () => {
-    const myId = decodeId("MI.77777.R01", TYPE.WAIVER_RAI);
-    expect(myId.componentId).toBe("MI.77777.R01");
-    expect(myId.componentType).toBe("waiverrai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R01");
-    expect(myId.parentType).toBe("waiverrenewal");
-  });
-
-  it("decodes RENEWAL WAIVER EXTENSION NUMBER", () => {
-    const myId = decodeId("MI.77777.R01", TYPE.WAIVER_EXTENSION);
-    expect(myId.componentId).toBe("MI.77777.R01");
-    expect(myId.componentType).toBe("waiverextension");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R01");
-    expect(myId.parentType).toBe("waiverrenewal");
-  });
-
-  it("decodes RENEWAL WAIVER AMENDMENT NUMBER", () => {
-    const myId = decodeId("MI.77777.R01.M01", TYPE.WAIVER_AMENDMENT);
-    expect(myId.componentId).toBe("MI.77777.R01.M01");
-    expect(myId.componentType).toBe("waiveramendment");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R01");
-    expect(myId.parentType).toBe("waiverrenewal");
-  });
-
-  it("decodes RENEWAL WAIVER AMENDMENT NUMBER RAI", () => {
-    const myId = decodeId("MI.77777.R01.M01", TYPE.WAIVER_RAI);
-    expect(myId.componentId).toBe("MI.77777.R01.M01");
-    expect(myId.componentType).toBe("waiverrai");
-    expect(myId.isNewPackage).toBe(false);
-    expect(myId.packageId).toBe("MI.77777.R01.M01");
-    expect(myId.parentType).toBe("waiveramendment");
-  });
-});
-
-describe("Waiver Family Numbers", () => {
+describe("Waiver Number Useful Functions", () => {
   it("gets the Waiver Family Number", () => {
-    const familyNumber = getWaiverFamily("MI.77777.R01.M01");
-    expect(familyNumber).toBe("MI.77777");
+    expect(getWaiverFamily("MI.77777.R01.M01")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily("MI.77777.R00.00")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily("MI.77777.R01.M00")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily("MI.77777.R00.M00")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily("MI.77777.R00.M01")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily("MI.77777.R01.00")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily("MI.77777.R01.01")).toStrictEqual("MI.77777");
+    expect(getWaiverFamily()).toBeNull();
+  });
+
+  it("gets the Parent Waiver Number and Type", () => {
+    expect(getParentWaiver("MI.77777.R01.M01")).toStrictEqual([
+      "MI.77777.R01.00",
+      "waiverrenewal",
+    ]);
+    expect(getParentWaiver("MI.77777.R00.M01")).toStrictEqual([
+      "MI.77777.R00.00",
+      "waivernew",
+    ]);
+    expect(getParentWaiver("MI.77777.R01.00")).toStrictEqual([
+      "MI.77777.R01.00",
+      "waiverrenewal",
+    ]);
+  });
+
+  it("gets the Waiver Type based on Number", () => {
+    expect(getWaiverTypeFromNumber("MI.77777.R00.M00")).toStrictEqual(
+      "waivernew"
+    );
+    expect(getWaiverTypeFromNumber("MI.77777.R01.00")).toStrictEqual(
+      "waiverrenewal"
+    );
+    expect(getWaiverTypeFromNumber("MI.77777.R01.M01")).toStrictEqual(
+      "waiveramendment"
+    );
+    expect(getWaiverTypeFromNumber("MI.77777.R00.M01")).toStrictEqual(
+      "waiveramendment"
+    );
+    expect(getWaiverTypeFromNumber("MI.77777.R01.01")).toStrictEqual(
+      "waiverappk"
+    );
+    expect(getWaiverTypeFromNumber("MI.77777.R00.01")).toStrictEqual(
+      "waiverappk"
+    );
+  });
+
+  it("decodes the Waiver Number", () => {
+    expect(decodeWaiverNumber("MI.77777.R01.M01")).toStrictEqual({
+      family: "MI.77777",
+      renewal: "01",
+      amendment: "01",
+      isAppK: false,
+    });
+    expect(decodeWaiverNumber("MI.77777.R00.00")).toStrictEqual({
+      amendment: "00",
+      family: "MI.77777",
+      isAppK: true,
+      renewal: "00",
+    });
+    expect(decodeWaiverNumber("MI.77777.R01.M00")).toStrictEqual({
+      amendment: "00",
+      family: "MI.77777",
+      isAppK: false,
+      renewal: "01",
+    });
+    expect(decodeWaiverNumber("MI.77777.R00.M00")).toStrictEqual({
+      amendment: "00",
+      family: "MI.77777",
+      isAppK: false,
+      renewal: "00",
+    });
+    expect(decodeWaiverNumber("MI.77777.R00.M01")).toStrictEqual({
+      amendment: "01",
+      family: "MI.77777",
+      isAppK: false,
+      renewal: "00",
+    });
+    expect(decodeWaiverNumber("MI.77777.R01.00")).toStrictEqual({
+      amendment: "00",
+      family: "MI.77777",
+      isAppK: true,
+      renewal: "01",
+    });
+    expect(decodeWaiverNumber("MI.77777.R01.01")).toStrictEqual({
+      amendment: "01",
+      family: "MI.77777",
+      isAppK: true,
+      renewal: "01",
+    });
+    expect(decodeWaiverNumber()).toBeNull();
   });
 });

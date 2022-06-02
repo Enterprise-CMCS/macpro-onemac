@@ -79,12 +79,12 @@ Cypress.Commands.add("checkA11yOfPage", () => {
       values: ["wcag2a", "wcag2aa"],
       includedImpacts: ["minor", "moderate", "serious", "critical"], // options: "minor", "moderate", "serious", "critical"
     },
-    terminalLog,
+    terminalLog
     // (err) => {
     //   console.log("Accessibility violations:");
     //   console.log({ err });
     // },
-    true // does not fail tests for ally violations
+    // defaults to false... // true // does not fail tests for ally violations
   );
 });
 

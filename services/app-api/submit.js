@@ -15,7 +15,6 @@ import dynamoDb from "./libs/dynamodb-lib";
 import sendEmail from "./libs/email-lib";
 import { RESPONSE_CODE } from "cmscommonlib";
 import { getUser } from "./getUser";
-import newSubmission from "./utils/newSubmission";
 
 /**
  * Submission states for the change requests.
@@ -131,35 +130,5 @@ export const main = handler(async (event) => {
     );
   }
 
-  // we do the data conversion here so the new functions only need the new way
-  const submitterName = data.user.firstName + " " + data.user.lastName;
-  const submissionData = {
-    componentId: data.transmittalNumber,
-    componentType: data.type,
-    submissionTimestamp: data.submittedAt,
-    proposedEffectiveDate: data.proposedEffectiveDate,
-    currentStatus: "Submitted",
-    attachments: data.uploads,
-    additionalInformation: data.summary,
-    submissionId: data.id,
-    submitterName: submitterName,
-    submitterEmail: data.user.email,
-    submitterId: data.userId,
-  };
-
-  if (data.actionType) submissionData.componentType += data.actionType;
-
-  if (data.waiverAuthority)
-    submissionData.waiverAuthority = data.waiverAuthority;
-
-  return newSubmission(submissionData)
-    .then(() => {
-      console.log("Successfully submitted the following:", data);
-      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
-    })
-    .catch((error) => {
-      console.log("Error is: ", error.message);
-      // submitting to the package model doesn't matter... all returns are success by this point
-      return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
-    });
+  return RESPONSE_CODE.SUCCESSFULLY_SUBMITTED;
 });

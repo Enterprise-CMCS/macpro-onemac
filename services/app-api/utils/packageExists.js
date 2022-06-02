@@ -18,7 +18,6 @@ export default async function packageExists(id) {
 
   let result;
   try {
-    console.log("params for checking: ", params);
     result = await dynamoDb.query(params);
 
     if (result.Count <= 0) {
@@ -29,7 +28,6 @@ export default async function packageExists(id) {
           ":pk": id,
         },
       };
-      console.log("the params for checking", params);
       result = await dynamoDb.query(params);
     }
 
@@ -44,10 +42,7 @@ export default async function packageExists(id) {
         },
       };
       do {
-        console.log("params for checking: ", params);
         result = await dynamoDb.scan(params);
-        console.log("params are: ", params);
-        console.log("results are: ", result);
         params.ExclusiveStartKey = result.LastEvaluatedKey;
       } while (params.ExclusiveStartKey && result.Count <= 0);
     }

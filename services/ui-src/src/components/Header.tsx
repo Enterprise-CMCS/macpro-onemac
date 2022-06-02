@@ -257,6 +257,7 @@ export function Header() {
     // Target new ensures FAQ opens in new window.
     const faq = (
       <a
+        id="faqLink"
         href={ROUTES.FAQ}
         className={getActiveClass(currentRoute, RouteList.FAQ_TOP)}
         target="_blank"
@@ -353,22 +354,26 @@ export function Header() {
   return (
     <>
       <SkipNav href="#main">Skip to content</SkipNav>
-      <div className="usa-banner-custom">
-        <UsaBanner />
-      </div>
-      {isIE && (
-        <Alert variation="error" heading="Internet Explorer Browser Issues">
-          Please consider upgrading to a recommended browser. Internet Explorer
-          may have functionality issues and we recommend using another browser
-          to access the system. Check out the <a href="/FAQ"> FAQ page</a> for a
-          list of recommended browsers.”
-        </Alert>
-      )}
-      {renderNavBar(
-        isLoggedInAsDeveloper,
-        getCurrentRoute(useLocation().pathname),
-        isAuthenticated
-      )}
+      <header>
+        <div className="usa-banner-custom">
+          <UsaBanner />
+        </div>
+        {isIE && (
+          <Alert variation="error" heading="Internet Explorer Browser Issues">
+            Please consider upgrading to a recommended browser. Internet
+            Explorer may have functionality issues and we recommend using
+            another browser to access the system. Check out the{" "}
+            <a href="/FAQ"> FAQ page</a> for a list of recommended browsers.”
+          </Alert>
+        )}
+      </header>
+      <nav>
+        {renderNavBar(
+          isLoggedInAsDeveloper,
+          getCurrentRoute(useLocation().pathname),
+          isAuthenticated
+        )}
+      </nav>
     </>
   );
 }
