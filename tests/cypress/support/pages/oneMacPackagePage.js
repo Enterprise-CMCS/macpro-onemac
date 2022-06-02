@@ -86,9 +86,9 @@ const CHIPSPACheckBox =
 const MedicaidSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-Medicaid SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageApproveCheckBox = "//span[contains(text(),'Package Approved')]";
+const packageApproveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageInReviewcheckBox = "//span[contains(text(),'Package In Review')]";
+const packageInReviewcheckBox = "//span[contains(text(),'In Review')]";
 const waiverTerminatedCheckBox = "//span[contains(text(),'Waiver Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
@@ -160,10 +160,10 @@ const waiverFamilyRowOne = "#familyNumber-0";
 const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageApprovedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Package Approved')]";
+  "//label[contains(@for,'checkbox_packageStatus-Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageDisapprovedCheckbox =
-  "//label[contains(@for,'checkbox_packageStatus-Package Disapproved')]";
+  "//label[contains(@for,'checkbox_packageStatus-Disapproved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const submittedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Submitted')]";

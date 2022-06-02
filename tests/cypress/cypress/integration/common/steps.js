@@ -732,7 +732,7 @@ And("click actions button for Temporary Extension in Child Row", () => {
 And("verify child row has status {string}", (status) => {
   OneMacPackagePage.verifyChildRowStatusIs(status);
 });
-And("verify success message for Package Withdrawal", () => {
+And("verify success message for Withdrawal", () => {
   OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
 });
 
@@ -1310,7 +1310,7 @@ And("verify Withdrawn status checkbox exists", () => {
 And("verify RAI Issued status checkbox exists", () => {
   OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
-And("click Package In Review checkbox", () => {
+And("click In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();
 });
 And("click Waiver Terminated checkbox", () => {
@@ -1446,14 +1446,11 @@ And("verify the state on row one exists", () => {
   OneMacPackagePage.verifypackageRowOneStateExists();
 });
 
+And("verify that the 3 dots next to Approved status is not clickable", () => {
+  OneMacPackagePage.checkforPackageApprovedIsNotClickable();
+});
 And(
-  "verify that the 3 dots next to Package Approved status is not clickable",
-  () => {
-    OneMacPackagePage.checkforPackageApprovedIsNotClickable();
-  }
-);
-And(
-  "verify that the 3 dots next to Package Disapproved status is not clickable",
+  "verify that the 3 dots next to Disapproved status is not clickable",
   () => {
     OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
   }
@@ -1659,13 +1656,13 @@ And(
     OneMacPackagePage.verify90thDayRowOneIsClockStopped();
   }
 );
-And("click Package Approved checkbox", () => {
+And("click Approved checkbox", () => {
   OneMacPackagePage.clickPackageApprovedCheckbox();
 });
 And("verify that the value of the column for the 90th day is NA", () => {
   OneMacPackagePage.verify90thDayRowOneIsNA();
 });
-And("click Package Disapproved checkbox", () => {
+And("click Disapproved checkbox", () => {
   OneMacPackagePage.clickPackageDisapprovedCheckbox();
 });
 And("click the SPA ID link in the first row", () => {

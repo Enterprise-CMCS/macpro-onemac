@@ -36,4 +36,4 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And click the action button for the temporary extension
         And click withdraw button on the temp extension page
         And click yes, withdraw package button
-        And verify success message for Package Withdrawal
+        And verify success message for Withdrawal
