@@ -31,6 +31,7 @@ services=(
   'ui-waf-log-assoc'
   'ui-auth'
   'ui-src'
+  'admin'
 )
 
 set -e
