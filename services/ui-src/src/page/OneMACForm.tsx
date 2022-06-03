@@ -11,7 +11,7 @@ import { Input } from "rsuite";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
-import { Validate, RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { OneMACFormInfo } from "../libs/formLib";
@@ -113,7 +113,7 @@ const OneMACForm: React.FC<{
 
       // Must have a value
       if (!newTransmittalNumber) {
-        errorMessage = `${formInfo.transmittalNumber.idLabel} Required`;
+        errorMessage = `${formInfo.idLabel} Required`;
       }
       // state code must be on the User's active state list
       else if (
@@ -127,18 +127,15 @@ const OneMACForm: React.FC<{
       }
       // must match the associated Regex string for format
       else if (
-        Validate.ONEMAC_ID_REGEX[formInfo.type] &&
-        !matchesRegex(
-          newTransmittalNumber,
-          Validate.ONEMAC_ID_REGEX[formInfo.type]
-        )
+        formInfo.idRegex &&
+        !matchesRegex(newTransmittalNumber, formInfo.idRegex)
       ) {
-        errorMessage = `The ${formInfo.transmittalNumber.idLabel} must be in the format of ${formInfo.transmittalNumber.idFormat}`;
+        errorMessage = `The ${formInfo.idLabel} must be in the format of ${formInfo.idFormat}`;
       }
 
       return errorMessage;
     },
-    [activeTerritories, formInfo.type, formInfo.transmittalNumber]
+    [activeTerritories, formInfo.idFormat, formInfo.idLabel, formInfo.idRegex]
   );
 
   async function handleTransmittalNumberChange(newTransmittalNumber: string) {
@@ -192,9 +189,9 @@ const OneMACForm: React.FC<{
       if (
         formatMessage.statusMessage === "" &&
         changeRequest.transmittalNumber &&
-        formInfo.transmittalNumber.idExistValidations
+        formInfo.idExistValidations
       ) {
-        const promises = formInfo.transmittalNumber.idExistValidations.map(
+        const promises = formInfo.idExistValidations.map(
           async (idExistValidation) => {
             let checkingNumber = changeRequest.transmittalNumber;
 
@@ -216,25 +213,24 @@ const OneMACForm: React.FC<{
         Promise.all(promises)
           .then((results) => {
             results.forEach((dupID, key) => {
-              const correspondingValidation =
-                formInfo.transmittalNumber.idExistValidations[key];
+              const correspondingValidation = formInfo.idExistValidations[key];
               let tempMessage, tempCode;
 
               // ID does not exist but it should exist
               if (!dupID && correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formInfo.transmittalNumber.idLabel} does not exist. Please check the ${formInfo.transmittalNumber.idLabel} and try entering it again.`;
+                  tempMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
                 } else {
-                  tempMessage = `${formInfo.transmittalNumber.idLabel} not found. Please ensure you have the correct ${formInfo.transmittalNumber.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  tempMessage = `${formInfo.idLabel} not found. Please ensure you have the correct ${formInfo.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
                 }
                 // ID exists but it should NOT exist
               } else if (dupID && !correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formInfo.transmittalNumber.idLabel} already exists. Please check the ${formInfo.transmittalNumber.idLabel} and try entering it again.`;
+                  tempMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 } else {
-                  tempMessage = `According to our records, this ${formInfo.transmittalNumber.idLabel} already exists. Please ensure you have the correct ${formInfo.transmittalNumber.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  tempMessage = `According to our records, this ${formInfo.idLabel} already exists. Please ensure you have the correct ${formInfo.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 }
               }
@@ -383,13 +379,13 @@ const OneMACForm: React.FC<{
               />
             )}
             <TransmittalNumber
-              idLabel={formInfo.transmittalNumber.idLabel}
-              idFieldHint={formInfo.transmittalNumber.idFieldHint}
-              idFAQLink={formInfo.transmittalNumber.idFAQLink}
+              idLabel={formInfo.idLabel}
+              idFieldHint={formInfo.idFieldHint}
+              idFAQLink={formInfo.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
                 transmittalNumberStatusMessage.statusMessage !==
-                `${formInfo.transmittalNumber.idLabel} Required`
+                `${formInfo.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }

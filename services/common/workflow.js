@@ -1,7 +1,7 @@
 export const ONEMAC_TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
-  SPA: "spa",
+  MEDICAID_SPA: "spa",
   SPA_RAI: "sparai",
   WAIVER: "waiver",
   WAIVER_BASE: "waivernew",
@@ -14,7 +14,7 @@ export const ONEMAC_TYPE = {
 
 export const ONEMAC_LABEL = {
   [ONEMAC_TYPE.CHIP_SPA]: "CHIP SPA",
-  [ONEMAC_TYPE.SPA]: "Medicaid SPA",
+  [ONEMAC_TYPE.MEDICAID_SPA]: "Medicaid SPA",
   [ONEMAC_TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
   [ONEMAC_TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [ONEMAC_TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",

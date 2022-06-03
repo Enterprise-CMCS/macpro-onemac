@@ -13,6 +13,7 @@ import classNames from "classnames";
 import {
   RESPONSE_CODE,
   ROUTES,
+  ONEMAC_ROUTES,
   RAI_ROUTE,
   Validate,
   Workflow,
@@ -343,7 +344,7 @@ const PackageList = () => {
     <Button
       id="new-submission-button"
       className="new-submission-button"
-      href={ROUTES.TRIAGE_GROUP}
+      href={ONEMAC_ROUTES.TRIAGE_GROUP}
       inversed
     >
       New Submission

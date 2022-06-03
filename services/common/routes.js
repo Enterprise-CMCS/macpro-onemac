@@ -28,19 +28,18 @@ export const ROUTES = {
   SPA_RAI: "/sparai",
   NEW_WAIVER: "/newwaiver",
   WAIVER: "/waiver",
-  BASE_WAIVER: "/base-waiver",
-  TEMPORARY_EXTENSION: "/temporary-extension",
   WAIVER_RAI: "/waiverrai",
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
   ATTACHMENT_LANDING: "/legacy-attachments",
-  TRIAGE_GROUP: "/choices",
-  TRIAGE_SPA: "/choices/spa",
-  TRIAGE_WAIVER: "/choices/waiver",
 };
 
 export const ONEMAC_ROUTES = {
-  SPA: "/onemac-spa",
+  TRIAGE_GROUP: "/choices",
+  TRIAGE_SPA: "/choices/spa",
+  TRIAGE_WAIVER: "/choices/waiver",
+  MEDICAID_SPA: "/medicaid-spa",
+  CHIP_SPA: "/chip-spa",
   BASE_WAIVER: "/base-waiver",
   TEMPORARY_EXTENSION: "/temporary-extension",
 };

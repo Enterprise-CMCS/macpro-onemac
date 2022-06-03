@@ -35,9 +35,10 @@ import Triage from "./containers/Triage";
 import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
-import BaseWaiverForm from "./form/waiver/BaseWaiverForm";
-import TemporaryExtensionForm from "./form/waiver/TemporaryExtensionForm";
-import MedicaidSpaForm from "./form/spa/MedicaidSpaForm";
+import BaseWaiverForm from "./page/base-waiver/BaseWaiverForm";
+import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
+import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
+import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -196,7 +197,8 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ROUTES.NEW_SUBMISSION_SELECTION, component: NewSubmission },
     { path: ROUTES.NEW_SPA, component: NewSPA },
     { path: ROUTES.NEW_WAIVER, component: NewWaiver },
-    { path: ONEMAC_ROUTES.SPA, component: MedicaidSpaForm },
+    { path: ONEMAC_ROUTES.MEDICAID_SPA, component: MedicaidSpaForm },
+    { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.BASE_WAIVER, component: BaseWaiverForm },
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
@@ -245,16 +247,16 @@ const ROUTE_LIST: RouteSpec[] = [
     ],
   })),
   {
-    path: ROUTES.TRIAGE_GROUP,
+    path: ONEMAC_ROUTES.TRIAGE_GROUP,
     component: AuthenticatedRouteListRenderer,
     routes: [
       {
-        path: ROUTES.TRIAGE_GROUP,
+        path: ONEMAC_ROUTES.TRIAGE_GROUP,
         component: accessGuardRouteListRenderer("canAccessForms"),
         routes: [
-          { path: ROUTES.TRIAGE_GROUP, exact: true, component: Triage },
-          { path: ROUTES.TRIAGE_SPA, exact: true, component: Triage },
-          { path: ROUTES.TRIAGE_WAIVER, exact: true, component: Triage },
+          { path: ONEMAC_ROUTES.TRIAGE_GROUP, exact: true, component: Triage },
+          { path: ONEMAC_ROUTES.TRIAGE_SPA, exact: true, component: Triage },
+          { path: ONEMAC_ROUTES.TRIAGE_WAIVER, exact: true, component: Triage },
         ],
       },
     ],

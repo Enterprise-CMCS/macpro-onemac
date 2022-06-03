@@ -18,7 +18,6 @@ type OneMACIDInfo = {
 
 export type WaiverFormInfo = {
   waiverAuthority: { optionsList: SelectOption[] };
-  proposedEffectiveDate: { fieldName: string };
 };
 
 export type FileUploadProps = {
@@ -32,13 +31,14 @@ export type OneMACFormInfo = {
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;
-  transmittalNumber: OneMACIDInfo;
-  requiredUploads: FileUploadProps[];
-  optionalUploads: FileUploadProps[];
+  requiredUploads: (string | FileUploadProps)[];
+  optionalUploads: (string | FileUploadProps)[];
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   raiLink: string;
   landingPage: string;
-} & Partial<WaiverFormInfo>;
+  proposedEffectiveDate?: { fieldName: string };
+} & OneMACIDInfo &
+  Partial<WaiverFormInfo>;
 
 export const defaultWaiverAuthority = {
   fieldName: "waiverAuthority",
