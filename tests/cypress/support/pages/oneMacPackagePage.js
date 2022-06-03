@@ -86,10 +86,10 @@ const CHIPSPACheckBox =
 const MedicaidSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-Medicaid SPA')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageApproveCheckBox = "//span[contains(text(),'Approved')]";
+const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageInReviewcheckBox = "//span[contains(text(),'In Review')]";
-const waiverTerminatedCheckBox = "//span[contains(text(),'Waiver Terminated')]";
+const inReviewcheckBox = "//span[contains(text(),'In Review')]";
+const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -130,10 +130,10 @@ const packageRowOneState = "#territory-0";
 const packageRows = "tr";
 const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
-const PackageApproved =
+const Approved =
   "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
-const PackageDisapproved =
+const Disapproved =
   "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageWithdrawn =
@@ -159,10 +159,10 @@ const waiverFamilyRowOne = "#familyNumber-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageApprovedCheckbox =
+const approvedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const packageDisapprovedCheckbox =
+const disapprovedCheckbox =
   "//label[contains(@for,'checkbox_packageStatus-Disapproved')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const submittedCheckbox =
@@ -572,16 +572,16 @@ export class oneMacPackagePage {
   typePartialExistingID() {
     cy.get(searchbar).type("MD-13");
   }
-  checkforPackageApprovedIsNotClickable() {
-    cy.xpath(PackageApproved).should("be.disabled");
+  checkforApprovedIsNotClickable() {
+    cy.xpath(Approved).should("be.disabled");
   }
-  checkforPackageDisapprovedIsNotClickable() {
-    cy.xpath(PackageDisapproved).should("be.disabled");
+  checkforDisapprovedIsNotClickable() {
+    cy.xpath(Disapproved).should("be.disabled");
   }
-  checkforPackageWithdrawnIsNotClickable() {
+  checkforWithdrawnIsNotClickable() {
     cy.xpath(PackageWithdrawn).should("be.disabled");
   }
-  checkforWaiverTerminatedIsNotClickable() {
+  checkforTerminatedIsNotClickable() {
     cy.xpath(waiverTerminated).should("be.disabled");
   }
   checkforUnsubmittedIsNotClickable() {
@@ -691,17 +691,17 @@ export class oneMacPackagePage {
   clickRaiIssuedCheckbox() {
     cy.xpath(raiIssuedCheckbox).click();
   }
-  verifyPackageApprovedCheckboxExists() {
-    cy.xpath(packageApprovedCheckbox).should("be.visible");
+  verifyApprovedCheckboxExists() {
+    cy.xpath(approvedCheckbox).should("be.visible");
   }
-  clickPackageApprovedCheckbox() {
-    cy.xpath(packageApprovedCheckbox).click();
+  clickApprovedCheckbox() {
+    cy.xpath(approvedCheckbox).click();
   }
-  verifyPackageDisapprovedCheckboxExists() {
-    cy.xpath(packageDisapprovedCheckbox).should("be.visible");
+  verifyDisapprovedCheckboxExists() {
+    cy.xpath(disapprovedCheckbox).should("be.visible");
   }
-  clickPackageDisapprovedCheckbox() {
-    cy.xpath(packageDisapprovedCheckbox).click();
+  clickDisapprovedCheckbox() {
+    cy.xpath(disapprovedCheckbox).click();
   }
   verifySubmittedCheckboxExists() {
     cy.xpath(submittedCheckbox).should("be.visible");

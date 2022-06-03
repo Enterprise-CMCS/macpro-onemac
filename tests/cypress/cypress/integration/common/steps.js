@@ -1313,7 +1313,7 @@ And("verify RAI Issued status checkbox exists", () => {
 And("click In Review checkbox", () => {
   OneMacPackagePage.clickPackageInReviewcheckBox();
 });
-And("click Waiver Terminated checkbox", () => {
+And("click Terminated checkbox", () => {
   OneMacPackagePage.clickWaiverTerminatedCheckBox();
 });
 And("verify seatool status 1 exists", () => {
@@ -1447,23 +1447,20 @@ And("verify the state on row one exists", () => {
 });
 
 And("verify that the 3 dots next to Approved status is not clickable", () => {
-  OneMacPackagePage.checkforPackageApprovedIsNotClickable();
+  OneMacPackagePage.checkforApprovedIsNotClickable();
 });
 And(
   "verify that the 3 dots next to Disapproved status is not clickable",
   () => {
-    OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
+    OneMacPackagePage.checkforDisapprovedIsNotClickable();
   }
 );
 And("verify that the 3 dots next to Withdrawn status is not clickable", () => {
-  OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
+  OneMacPackagePage.checkforWithdrawnIsNotClickable();
 });
-And(
-  "verify that the 3 dots next to Waiver Terminated status is not clickable",
-  () => {
-    OneMacPackagePage.checkforWaiverTerminatedIsNotClickable();
-  }
-);
+And("verify that the 3 dots next to Terminated status is not clickable", () => {
+  OneMacPackagePage.checkforTerminatedIsNotClickable();
+});
 And(
   "verify that the 3 dots next to Unsubmitted status is not clickable",
   () => {
@@ -1657,13 +1654,13 @@ And(
   }
 );
 And("click Approved checkbox", () => {
-  OneMacPackagePage.clickPackageApprovedCheckbox();
+  OneMacPackagePage.clickApprovedCheckbox();
 });
 And("verify that the value of the column for the 90th day is NA", () => {
   OneMacPackagePage.verify90thDayRowOneIsNA();
 });
 And("click Disapproved checkbox", () => {
-  OneMacPackagePage.clickPackageDisapprovedCheckbox();
+  OneMacPackagePage.clickDisapprovedCheckbox();
 });
 And("click the SPA ID link in the first row", () => {
   OneMacPackagePage.clickSPAIDLinkInFirstRow();

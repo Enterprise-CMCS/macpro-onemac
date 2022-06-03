@@ -37,15 +37,13 @@ export default async function updateComponent(updateData, config) {
   };
 
   topLevelUpdates.forEach((attributeName) => {
-    if (changeData[attributeName]) {
+    if (changeData[attributeName] || updateData[attributeName]) {
       const newLabel = `:new${attributeName}`;
-      updateComponentParams.ExpressionAttributeValues[newLabel] =
-        changeData[attributeName];
-      updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-    } else if (updateData[attributeName]) {
-      const newLabel = `:new${attributeName}`;
-      updateComponentParams.ExpressionAttributeValues[newLabel] =
-        updateData[attributeName];
+      updateComponentParams.ExpressionAttributeValues[newLabel] = changeData[
+        attributeName
+      ]
+        ? changeData[attributeName]
+        : updateData[attributeName];
       updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
     }
   });
