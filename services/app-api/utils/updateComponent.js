@@ -1,4 +1,3 @@
-// import dynamoDb from "../libs/dynamodb-lib";
 import updateWithVersion from "./updateWithVersion";
 import updateParent from "../utils/updateParent";
 
@@ -16,6 +15,9 @@ export default async function updateComponent(updateData, config) {
     lastModifiedName: updateData.submitterName,
     lastModifiedEmail: updateData.submitterEmail,
     lastModifiedTimestamp: updateData.submissionTimestamp,
+    currentStatus: updateData.currentStatus,
+    clockEndTimestamp: updateData.clockEndTimestamp,
+    expirationTimestamp: updateData.expirationTimestamp,
   };
 
   const updateComponentParams = {
@@ -23,7 +25,9 @@ export default async function updateComponent(updateData, config) {
     Key: {
       pk: updateData.componentId,
       sk: `${updateData.componentType}${
-        config.allowMultiplesWithSameId && `#${updateData.submissionTimestamp}`
+        config.allowMultiplesWithSameId
+          ? `#${updateData.submissionTimestamp}`
+          : ""
       }`,
     },
     ConditionExpression: "attribute_exists(pk)", // so update fails if component does not exist

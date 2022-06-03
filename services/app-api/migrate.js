@@ -1,6 +1,6 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-//import updateComponent from "./utils/updateComponent";
+import updateComponent from "./utils/updateComponent";
 
 const statusConversion = {
   "Package In Review": "In Review",
@@ -38,24 +38,25 @@ export const main = handler(async (event) => {
       console.log("item is: ", item);
       console.log("newStatus is: ", newStatus);
       // skip if don't need to change status
-      if (item.currentStatus === newStatus) continue;
-      console.log("would update!");
+      if (!newStatus) continue;
 
-      // const updateData = {
-      //   submitterName: "Migrate Script",
-      //   submitterEmail: "k.grue@theta-llc.com",
-      //   submissionTimestamp: Date.now(),
-      //   componentId: item.componentId,
-      //   componentType: item.componentType,
-      // };
+      const updateData = {
+        submitterName: "Migrate Script",
+        submitterEmail: "k.grue@theta-llc.com",
+        submissionTimestamp: Date.now(),
+        componentId: item.componentId,
+        componentType: item.componentType,
+        currentStatus: newStatus,
+      };
+      console.log("update data: ", updateData);
 
-      // const updateConfig = {
-      //   newStatus,
-      //   successResponseCode: "Migrated",
+      const updateConfig = {
+        successResponseCode: "Migrated",
+        allowMultiplesWithSameId: item.componentType.search(/rai/i) > -1,
+      };
 
-      // };
-      // // otherwise, update the component with the new status
-      // const updatedItem = await updateComponent(updateData, updateConfig);
+      const updatedItem = await updateComponent(updateData, updateConfig);
+      console.log("the updated Item is: ", updatedItem);
     }
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
