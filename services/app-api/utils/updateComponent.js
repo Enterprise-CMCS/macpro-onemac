@@ -15,9 +15,6 @@ export default async function updateComponent(updateData, config) {
     lastModifiedName: updateData.submitterName,
     lastModifiedEmail: updateData.submitterEmail,
     lastModifiedTimestamp: updateData.submissionTimestamp,
-    currentStatus: updateData.currentStatus,
-    clockEndTimestamp: updateData.clockEndTimestamp,
-    expirationTimestamp: updateData.expirationTimestamp,
   };
 
   const updateComponentParams = {
@@ -44,6 +41,11 @@ export default async function updateComponent(updateData, config) {
       const newLabel = `:new${attributeName}`;
       updateComponentParams.ExpressionAttributeValues[newLabel] =
         changeData[attributeName];
+      updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
+    } else if (updateData[attributeName]) {
+      const newLabel = `:new${attributeName}`;
+      updateComponentParams.ExpressionAttributeValues[newLabel] =
+        updateData[attributeName];
       updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
     }
   });

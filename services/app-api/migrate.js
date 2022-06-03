@@ -35,8 +35,6 @@ export const main = handler(async (event) => {
 
     for (const item of results.Items) {
       const newStatus = statusConversion[item.currentStatus];
-      console.log("item is: ", item);
-      console.log("newStatus is: ", newStatus);
       // skip if don't need to change status
       if (!newStatus) continue;
 
@@ -65,65 +63,34 @@ export const main = handler(async (event) => {
     ":gsi1pk": `OneMAC#waiver`,
   };
 
-  // // Waiver group
-  // do {
-  //   const results = await dynamoDb.query(params);
+  // Waiver group
+  do {
+    const results = await dynamoDb.query(params);
 
-  //   for (const item of results.Items) {
-  //     //console.log("item is: ", item);
-  //     //console.log("item slice is: ", item.sk.slice(0, 2));
-  //     // if a one table entry in the index is NOT versioned, remove any GSI details
-  //     if (item.sk.slice(0, 2) === "v0") continue;
+    for (const item of results.Items) {
+      const newStatus = statusConversion[item.currentStatus];
+      // skip if don't need to change status
+      if (!newStatus) continue;
 
-  //     promiseItems.push({
-  //       TableName: process.env.oneMacTableName,
-  //       Key: {
-  //         pk: item.pk,
-  //         sk: item.sk,
-  //       },
-  //       UpdateExpression: "REMOVE GSI1pk, GSI1sk",
-  //       ReturnValues: "ALL_OLD",
-  //     });
+      const updateData = {
+        submitterName: "Migrate Script",
+        submitterEmail: "k.grue@theta-llc.com",
+        submissionTimestamp: Date.now(),
+        componentId: item.componentId,
+        componentType: item.componentType,
+        currentStatus: newStatus,
+      };
 
-  //     // if there are children, have to migrate those as well
-  //     if (item.children) {
-  //       console.log("Children are: ", item.children);
-  //       for (const child of item.children) {
-  //         let childSk = child.componentType;
-  //         // start by removing the GSI and returning the item
-  //         if (child.componentType.search(/rai/i) > -1) {
-  //           childSk += `#${child.submissionTimestamp}`;
-  //         }
-  //         promiseItems.push({
-  //           TableName: process.env.oneMacTableName,
-  //           Key: {
-  //             pk: child.componentId,
-  //             sk: childSk,
-  //           },
-  //           ConditionExpression: "attribute_exists(pk)",
-  //           UpdateExpression: "REMOVE GSI1pk, GSI1sk",
-  //           ReturnValues: "ALL_OLD",
-  //         });
-  //       }
-  //     }
-  //   }
+      const updateConfig = {
+        successResponseCode: "Migrated",
+        allowMultiplesWithSameId: item.componentType.search(/rai/i) > -1,
+      };
 
-  //   params.ExclusiveStartKey = results.LastEvaluatedKey;
-  // } while (params.ExclusiveStartKey);
-
-  // await Promise.all(
-  //   promiseItems.map(async (updateParams) => {
-  //     try {
-  //       console.log(`Update Params are ${JSON.stringify(updateParams)}`);
-
-  //       const result = await dynamoDb.update(updateParams);
-  //       console.log("The updated record: ", result);
-  //       if (result) await createVersionedComponent(result.Attributes);
-  //     } catch (e) {
-  //       console.log("update error: ", e.message);
-  //     }
-  //   })
-  // );
+      console.log("update data: ", updateData);
+      const updatedItem = await updateComponent(updateData, updateConfig);
+    }
+    params.ExclusiveStartKey = results.LastEvaluatedKey;
+  } while (params.ExclusiveStartKey);
 
   return "Done";
 });
