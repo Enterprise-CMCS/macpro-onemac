@@ -53,8 +53,7 @@ export const main = handler(async (event) => {
         allowMultiplesWithSameId: item.componentType.search(/rai/i) > -1,
       };
 
-      const updatedItem = await updateComponent(updateData, updateConfig);
-      console.log("the updated Item is: ", updatedItem);
+      await updateComponent(updateData, updateConfig);
     }
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
@@ -87,7 +86,7 @@ export const main = handler(async (event) => {
       };
 
       console.log("update data: ", updateData);
-      const updatedItem = await updateComponent(updateData, updateConfig);
+      await updateComponent(updateData, updateConfig);
     }
     params.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (params.ExclusiveStartKey);
