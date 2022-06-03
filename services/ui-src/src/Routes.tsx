@@ -8,6 +8,7 @@ import { Redirect, Route, Switch } from "react-router-dom";
 import {
   ChangeRequest,
   ROUTES,
+  ONEMAC_ROUTES,
   UserRole,
   effectiveRoleForUser,
   getUserRoleObj,
@@ -24,7 +25,6 @@ import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
 import NewSPA from "./changeRequest/NewSPA";
 import NewWaiver from "./changeRequest/NewWaiver";
-import OneMACForm from "./forms/OneMACForm";
 import PackageList from "./containers/PackageList";
 import { Signup } from "./containers/Signup";
 import { StateSignup } from "./containers/StateSignup";
@@ -35,6 +35,9 @@ import Triage from "./containers/Triage";
 import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
+import BaseWaiverForm from "./form/waiver/BaseWaiverForm";
+import TemporaryExtensionForm from "./form/waiver/TemporaryExtensionForm";
+import MedicaidSpaForm from "./form/spa/MedicaidSpaForm";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -193,8 +196,12 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ROUTES.NEW_SUBMISSION_SELECTION, component: NewSubmission },
     { path: ROUTES.NEW_SPA, component: NewSPA },
     { path: ROUTES.NEW_WAIVER, component: NewWaiver },
-    { path: ROUTES.BASE_WAIVER, component: OneMACForm },
-    { path: ROUTES.TEMPORARY_EXTENSION, component: OneMACForm },
+    { path: ONEMAC_ROUTES.SPA, component: MedicaidSpaForm },
+    { path: ONEMAC_ROUTES.BASE_WAIVER, component: BaseWaiverForm },
+    {
+      path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
+      component: TemporaryExtensionForm,
+    },
   ].map(({ path, ...rest }) => ({
     path,
     component: AuthenticatedRouteListRenderer,

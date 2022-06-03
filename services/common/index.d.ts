@@ -1,5 +1,6 @@
 export const RESPONSE_CODE: Record<string, string>;
-export const ROUTES: Record<string, string>;
+export { ROUTES, ONEMAC_ROUTES } from "./routes.js";
+
 export enum USER_STATUS {
   ACTIVE = "active",
   PENDING = "pending",

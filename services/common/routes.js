@@ -38,3 +38,9 @@ export const ROUTES = {
   TRIAGE_SPA: "/choices/spa",
   TRIAGE_WAIVER: "/choices/waiver",
 };
+
+export const ONEMAC_ROUTES = {
+  SPA: "/onemac-spa",
+  BASE_WAIVER: "/base-waiver",
+  TEMPORARY_EXTENSION: "/temporary-extension",
+};

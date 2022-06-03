@@ -14,7 +14,7 @@ import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 import { Validate, RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
-import { FORM } from "../libs/formLib";
+import { OneMACFormInfo } from "../libs/formLib";
 import config from "../utils/config";
 
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -48,12 +48,13 @@ type Message = {
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
  */
-export const OneMACForm: React.FC = () => {
+const OneMACForm: React.FC<{
+  formInfo: OneMACFormInfo;
+}> = ({ formInfo }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories } = useAppContext() ?? {};
   const location = useLocation();
-  const formInfo = FORM[location.pathname];
 
   //Reference to the File Uploader.
   const uploader = useRef<FileUploader>(null);

@@ -1,10 +1,12 @@
-import { ROUTES, Workflow, FieldHint } from "cmscommonlib";
+import { Workflow, FieldHint } from "cmscommonlib";
 
 type SelectOption = { label: string; value: string };
 
 type OneMACIDInfo = {
+  idType?: string;
   idLabel: string;
   idFormat: string;
+  idRegex: string;
   idFieldHint: FieldHint[];
   idFAQLink: string;
   idExistValidations: {
@@ -14,29 +16,31 @@ type OneMACIDInfo = {
   }[];
 };
 
-export enum COMPONENT_ACTION {
-  RESPOND_TO_RAI = "Respond to RAI",
-  WITHDRAW = "Withdraw",
-}
-
-type WaiverFormInfo = {
+export type WaiverFormInfo = {
   waiverAuthority: { optionsList: SelectOption[] };
   proposedEffectiveDate: { fieldName: string };
 };
 
+export type FileUploadProps = {
+  title: string;
+  allowMultiple?: boolean;
+};
+
 export type OneMACFormInfo = {
+  type: string;
+  actionType: string;
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;
   transmittalNumber: OneMACIDInfo;
-  requiredUploads: unknown;
-  optionalUploads: unknown;
-  actionsByStatus: Record<string, COMPONENT_ACTION[]>;
+  requiredUploads: FileUploadProps[];
+  optionalUploads: FileUploadProps[];
+  actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   raiLink: string;
   landingPage: string;
 } & Partial<WaiverFormInfo>;
 
-const defaultWaiverAuthority = {
+export const defaultWaiverAuthority = {
   fieldName: "waiverAuthority",
   errorMessage: "Please select the Waiver Authority.",
   optionsList: [
@@ -47,78 +51,4 @@ const defaultWaiverAuthority = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
-};
-
-export const FORM = {
-  [ROUTES.BASE_WAIVER]: {
-    type: Workflow.ONEMAC_TYPE.WAIVER_BASE,
-    actionType: "new",
-    pageTitle: "Base Waiver Submission",
-    detailsHeader: "Base Waiver",
-    addlIntroJSX: "",
-    requiredUploads: [],
-    optionalUploads: [
-      "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-      "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-      "Tribal Consultation (Initial, Renewal, Amendment)",
-      "Other",
-    ],
-
-    waiverAuthority: defaultWaiverAuthority,
-    transmittalNumber: {
-      idType: "waiver",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idLabel: "Base Waiver Number",
-      idFieldHint: [
-        {
-          text: "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
-        },
-      ],
-      idFormat: "SS.####.R00.00 or SS.#####.R00.00",
-      idExistValidations: [
-        {
-          idMustExist: false,
-          errorLevel: "error",
-        },
-      ],
-    },
-
-    proposedEffectiveDate: {
-      fieldName: "proposedEffectiveDate",
-    },
-
-    actionsByStatus: Workflow.defaultActionsByStatus,
-    raiLink: ROUTES.WAIVER_RAI,
-    landingPage: ROUTES.PACKAGE_LIST_WAIVER,
-  },
-  [ROUTES.TEMPORARY_EXTENSION]: {
-    type: Workflow.ONEMAC_TYPE.WAIVER_EXTENSION,
-    actionType: "",
-    pageTitle: "Request a Temporary Extension",
-    detailsHeader: "Temporary Extension Request",
-    requiredUploads: ["Waiver Extension Request"],
-    optionalUploads: ["Other"],
-    transmittalNumber: {
-      idType: "waiver",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,
-      idLabel: "Temporary Extension Request Number",
-      idFieldHint: [
-        {
-          text: "Must be a waiver extension request number with the format SS.####.R##.TE## or SS.#####.R##.TE##",
-        },
-      ],
-      idFormat: "SS.####.R##.TE## or SS.#####.R##.TE##",
-      idExistValidations: [
-        {
-          idMustExist: false,
-          errorLevel: "error",
-        },
-      ],
-    },
-    actionsByStatus: Workflow.defaultActionsByStatus,
-    raiLink: ROUTES.WAIVER_RAI,
-    landingPage: ROUTES.PACKAGE_LIST_WAIVER,
-  },
 };

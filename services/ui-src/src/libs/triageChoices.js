@@ -1,4 +1,4 @@
-import { ROUTES } from "cmscommonlib";
+import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
 
 export const choicesFromRoute = {
   [ROUTES.TRIAGE_GROUP]: {
@@ -21,13 +21,12 @@ export const choicesFromRoute = {
   },
   [ROUTES.TRIAGE_SPA]: {
     heading: "SPA Type",
-    intro:
-      "There are currently no SPA form options for package dashboard. Use Submission Dashboard and the SPA packages will appear.",
+    intro: "Select a SPA type to start your submission.",
     choices: [
       {
-        title: "Sample Choice Title",
-        description: "Some dummy text to show what it looks like",
-        linkTo: ROUTES.TRIAGE_GROUP,
+        title: "Medicaid SPA",
+        description: "Submit new Medicaid State Plan Amendment",
+        linkTo: ONEMAC_ROUTES.SPA,
       },
     ],
   },
@@ -38,12 +37,12 @@ export const choicesFromRoute = {
       {
         title: "Base Waiver",
         description: "Create a new Base Waiver",
-        linkTo: ROUTES.BASE_WAIVER,
+        linkTo: ONEMAC_ROUTES.BASE_WAIVER,
       },
       {
         title: "Request Temporary Extension",
         description: "Submit for 1915(b) and 1915(c)",
-        linkTo: ROUTES.TEMPORARY_EXTENSION,
+        linkTo: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       },
     ],
   },

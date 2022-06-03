@@ -9,13 +9,12 @@ import userEvent from "@testing-library/user-event";
 import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
-
 import { ROUTES } from "cmscommonlib";
 import { OneMACForm } from "./OneMACForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
-jest.mock("../utils/ChangeRequestDataApi");
-
 import { AppContext } from "../libs/contextLib";
+
+jest.mock("../utils/ChangeRequestDataApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
