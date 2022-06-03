@@ -1299,22 +1299,22 @@ And("verify rai response submitted exists", () => {
   OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
 });
 And("verify package in review exists", () => {
-  OneMacPackagePage.verifypackageInReviewcheckBoxExists();
+  OneMacPackagePage.verifyInReviewCheckBoxExists();
 });
 And("verify Submitted status checkbox exists", () => {
   OneMacPackagePage.verifySubmittedCheckboxExists();
 });
 And("verify Withdrawn status checkbox exists", () => {
-  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+  OneMacPackagePage.verifyWithdrawnCheckBoxExists();
 });
 And("verify RAI Issued status checkbox exists", () => {
   OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
 And("click In Review checkbox", () => {
-  OneMacPackagePage.clickPackageInReviewcheckBox();
+  OneMacPackagePage.clickInReviewCheckBox();
 });
 And("click Terminated checkbox", () => {
-  OneMacPackagePage.clickWaiverTerminatedCheckBox();
+  OneMacPackagePage.clickTerminatedCheckBox();
 });
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();

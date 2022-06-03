@@ -88,7 +88,7 @@ const MedicaidSPACheckBox =
 //Element is Xpath use cy.xpath instead of cy.get
 const approveCheckBox = "//span[contains(text(),'Approved')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const inReviewcheckBox = "//span[contains(text(),'In Review')]";
+const inReviewCheckBox = "//span[contains(text(),'In Review')]";
 const terminatedCheckBox = "//span[contains(text(),'Terminated')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const withdrawnCheckBox = "//span[contains(text(),'Withdrawn')]";
@@ -418,19 +418,19 @@ export class oneMacPackagePage {
     cy.get(statusDropDown).wait(1000);
     cy.get(statusDropDown).click();
   }
-  verifypackageApproveCheckBoxExists() {
-    cy.xpath(packageApproveCheckBox).should("be.visible");
+  verifyApproveCheckBoxExists() {
+    cy.xpath(approveCheckBox).should("be.visible");
   }
-  verifypackageInReviewcheckBoxExists() {
-    cy.xpath(packageInReviewcheckBox).should("be.visible");
+  verifyInReviewCheckBoxExists() {
+    cy.xpath(inReviewCheckBox).should("be.visible");
   }
-  clickPackageInReviewcheckBox() {
-    cy.xpath(packageInReviewcheckBox).click();
+  clickInReviewCheckBox() {
+    cy.xpath(inReviewCheckBox).click();
   }
-  clickWaiverTerminatedCheckBox() {
-    cy.xpath(waiverTerminatedCheckBox).click();
+  clickTerminatedCheckBox() {
+    cy.xpath(terminatedCheckBox).click();
   }
-  verifywithdrawnCheckBoxExists() {
+  verifyWithdrawnCheckBoxExists() {
     cy.xpath(withdrawnCheckBox).should("be.visible");
   }
   clickWithdrawnCheckBoxExists() {
