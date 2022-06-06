@@ -28,7 +28,7 @@ describe("OneMAC Form", () => {
     history.push(ROUTES.BASE_WAIVER);
   });
 
-  it("Additional Information Section does not exceed character limit", async () => {
+  it("Additional Information Section does not exceed the character limit", async () => {
     /*  const testValues = {
       //4001 char string
       additionalInformation:

@@ -31,7 +31,7 @@ import { useAppContext } from "../libs/contextLib";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import PortalTable from "../components/PortalTable";
-import PopupMenu from "../components/PopupMenu";
+import { ActionPopup } from "../components/ActionPopup";
 
 type PathParams = {
   componentType: string;
@@ -428,13 +428,21 @@ const TemporaryExtensionSection: FC<{
       });
 
       return (
-        <PopupMenu
+        <ActionPopup
           buttonLabel={`Actions for ${row.original.componentId}`}
           selectedRow={row}
           menuItems={menuItems}
           variation="PackageList"
         />
       );
+      // return (
+      //   <PopupMenu
+      //     buttonLabel={`Actions for ${row.original.componentId}`}
+      //     selectedRow={row}
+      //     menuItems={menuItems}
+      //     variation="PackageList"
+      //   />
+      // );
     },
     [onPopupActionWithdraw]
   );
