@@ -732,7 +732,7 @@ And("click actions button for Temporary Extension in Child Row", () => {
 And("verify child row has status {string}", (status) => {
   OneMacPackagePage.verifyChildRowStatusIs(status);
 });
-And("verify success message for Package Withdrawal", () => {
+And("verify success message for Withdrawal", () => {
   OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
 });
 
@@ -1299,22 +1299,22 @@ And("verify rai response submitted exists", () => {
   OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
 });
 And("verify package in review exists", () => {
-  OneMacPackagePage.verifypackageInReviewcheckBoxExists();
+  OneMacPackagePage.verifyInReviewCheckBoxExists();
 });
 And("verify Submitted status checkbox exists", () => {
   OneMacPackagePage.verifySubmittedCheckboxExists();
 });
 And("verify Withdrawn status checkbox exists", () => {
-  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+  OneMacPackagePage.verifyWithdrawnCheckBoxExists();
 });
 And("verify RAI Issued status checkbox exists", () => {
   OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
-And("click Package In Review checkbox", () => {
-  OneMacPackagePage.clickPackageInReviewcheckBox();
+And("click In Review checkbox", () => {
+  OneMacPackagePage.clickInReviewCheckBox();
 });
-And("click Waiver Terminated checkbox", () => {
-  OneMacPackagePage.clickWaiverTerminatedCheckBox();
+And("click Terminated checkbox", () => {
+  OneMacPackagePage.clickTerminatedCheckBox();
 });
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
@@ -1446,27 +1446,21 @@ And("verify the state on row one exists", () => {
   OneMacPackagePage.verifypackageRowOneStateExists();
 });
 
+And("verify that the 3 dots next to Approved status is not clickable", () => {
+  OneMacPackagePage.checkforApprovedIsNotClickable();
+});
 And(
-  "verify that the 3 dots next to Package Approved status is not clickable",
+  "verify that the 3 dots next to Disapproved status is not clickable",
   () => {
-    OneMacPackagePage.checkforPackageApprovedIsNotClickable();
-  }
-);
-And(
-  "verify that the 3 dots next to Package Disapproved status is not clickable",
-  () => {
-    OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
+    OneMacPackagePage.checkforDisapprovedIsNotClickable();
   }
 );
 And("verify that the 3 dots next to Withdrawn status is not clickable", () => {
-  OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
+  OneMacPackagePage.checkforWithdrawnIsNotClickable();
 });
-And(
-  "verify that the 3 dots next to Waiver Terminated status is not clickable",
-  () => {
-    OneMacPackagePage.checkforWaiverTerminatedIsNotClickable();
-  }
-);
+And("verify that the 3 dots next to Terminated status is not clickable", () => {
+  OneMacPackagePage.checkforTerminatedIsNotClickable();
+});
 And(
   "verify that the 3 dots next to Unsubmitted status is not clickable",
   () => {
@@ -1659,14 +1653,14 @@ And(
     OneMacPackagePage.verify90thDayRowOneIsClockStopped();
   }
 );
-And("click Package Approved checkbox", () => {
-  OneMacPackagePage.clickPackageApprovedCheckbox();
+And("click Approved checkbox", () => {
+  OneMacPackagePage.clickApprovedCheckbox();
 });
 And("verify that the value of the column for the 90th day is NA", () => {
   OneMacPackagePage.verify90thDayRowOneIsNA();
 });
-And("click Package Disapproved checkbox", () => {
-  OneMacPackagePage.clickPackageDisapprovedCheckbox();
+And("click Disapproved checkbox", () => {
+  OneMacPackagePage.clickDisapprovedCheckbox();
 });
 And("click the SPA ID link in the first row", () => {
   OneMacPackagePage.clickSPAIDLinkInFirstRow();
