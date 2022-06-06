@@ -44,6 +44,42 @@ const waiverBaseTransmittalNumber = {
 };
 
 export const CONFIG = {
+  [TYPE.CHIP_SPA]: {
+    pageTitle: "Submit New CHIP SPA",
+    readOnlyPageTitle: "CHIP SPA Submission Details",
+    detailsHeader: "CHIP SPA",
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
+    requiredUploads: [
+      "Current State Plan",
+      "Amended State Plan Language",
+      "Cover Letter",
+    ],
+    optionalUploads: [
+      "Budget Documents",
+      "Public Notice",
+      "Tribal Consultation",
+      "Other",
+    ],
+    transmittalNumber: {
+      idType: "chipspa",
+      idLabel: "SPA ID",
+      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
+      idFAQLink: ROUTES.FAQ_SPA_ID,
+      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
+      idRegex:
+        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
+    },
+    raiLink: ROUTES.CHIP_SPA_RAI,
+  },
+
   [TYPE.CHIP_SPA_RAI]: {
     pageTitle: "Respond to CHIP SPA RAI",
     readOnlyPageTitle: "CHIP SPA RAI Response Details",
@@ -77,6 +113,51 @@ export const CONFIG = {
       ],
     },
   },
+
+  [TYPE.SPA]: {
+    pageTitle: "Submit New Medicaid SPA",
+    readOnlyPageTitle: "Medicaid SPA Submission Details",
+    subheaderMessage: {
+      __html: commonSubheaderMessage,
+    },
+    detailsHeader: "Medicaid SPA",
+    requiredUploads: [
+      { title: "CMS Form 179", allowMultiple: false },
+      "SPA Pages",
+    ],
+    optionalUploads: [
+      "Cover Letter",
+      "Document Demonstrating Good-Faith Tribal Engagement",
+      "Existing State Plan Page(s)",
+      "Public Notice",
+      "Standard Funding Questions (SFQs)",
+      "Tribal Consultation",
+      "Other",
+    ],
+    transmittalNumber: {
+      idType: "spa",
+      idLabel: "SPA ID",
+      idFieldHint: [
+        { text: "Must follow the format SS-YY-NNNN-xxxx" },
+        {
+          text: "Reminder - CMS recommends that all SPA numbers start with the year in which the package is submitted.",
+          className: "field-hint-major",
+        },
+      ],
+      idFAQLink: ROUTES.FAQ_SPA_ID,
+      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
+      idRegex:
+        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
+    },
+    raiLink: ROUTES.SPA_RAI,
+  },
+
   [TYPE.SPA_RAI]: {
     pageTitle: "Respond to Medicaid SPA RAI",
     readOnlyPageTitle: "Medicaid SPA RAI Response Details",

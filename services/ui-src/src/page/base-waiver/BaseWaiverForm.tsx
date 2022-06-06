@@ -5,7 +5,7 @@ import { Workflow, ROUTES, ONEMAC_ROUTES, baseWaiver } from "cmscommonlib";
 
 const baseWaiverIdFormat: string = "SS.####.R00.00 or SS.#####.R00.00";
 
-const baseWaiverFormInfo: OneMACFormInfo = {
+export const baseWaiverFormInfo: OneMACFormInfo = {
   ...baseWaiver,
   type: Workflow.ONEMAC_TYPE.WAIVER_BASE,
   actionType: "new",

@@ -3,7 +3,7 @@ export const baseWaiver = {
   componentType: "waivernew",
   typeLabel: "1915(b) Base Waiver",
   idType: "waiver",
-  idLabel: "Waiver Number",
+  idLabel: "Base Waiver Number",
   idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R00.00$",
   idExistValidations: [
     {
