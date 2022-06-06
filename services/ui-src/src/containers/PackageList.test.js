@@ -9,7 +9,7 @@ import {
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { ROUTES, Workflow } from "cmscommonlib";
+import { ONEMAC_ROUTES, Workflow } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
 import {
   stateSubmitterInitialAuthState,
@@ -68,7 +68,9 @@ it("renders with a New Submission button", async () => {
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   const newSubmissionButton = screen.getByText("New Submission");
-  expect(newSubmissionButton.getAttribute("href")).toBe(ROUTES.TRIAGE_GROUP);
+  expect(newSubmissionButton.getAttribute("href")).toBe(
+    ONEMAC_ROUTES.TRIAGE_GROUP
+  );
 });
 
 it("helpdesk user renders with an Export button", async () => {

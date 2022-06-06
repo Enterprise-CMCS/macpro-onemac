@@ -33,9 +33,7 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @param transmittalNumber the transmittal number
  * @returns two character state/territory
  */
-export function getTerritoryFromTransmittalNumber(
-  transmittalNumber: string
-): string {
+function getTerritoryFromTransmittalNumber(transmittalNumber: string): string {
   return transmittalNumber.toString().substring(0, 2);
 }
 
@@ -48,9 +46,7 @@ type Message = {
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
  */
-const OneMACForm: React.FC<{
-  formInfo: OneMACFormInfo;
-}> = ({ formInfo }) => {
+const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories } = useAppContext() ?? {};

@@ -8,7 +8,7 @@ export * as ChangeRequest from "./changeRequest.js";
 export * as Validate from "./idValidation.js";
 
 import * as Workflow from "./workflow.js";
-export { Workflow };
+export * as Workflow from "./workflow.js";
 
 export { baseWaiver } from "./type/baseWaiver.js";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
@@ -21,7 +21,7 @@ export { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
 export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 
-import { ROUTES } from "./routes.js";
+import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
 export { ROUTES, ONEMAC_ROUTES } from "./routes.js";
 
 /**
@@ -161,7 +161,7 @@ export class Role {
     const accesses = [...ALL_USERS_ROUTES];
 
     if (this.canAccessDashboard)
-      accesses.push(ROUTES.DASHBOARD, ROUTES.PACKAGE_LIST);
+      accesses.push(ROUTES.DASHBOARD, ONEMAC_ROUTES.PACKAGE_LIST);
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,

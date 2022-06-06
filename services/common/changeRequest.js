@@ -44,42 +44,6 @@ const waiverBaseTransmittalNumber = {
 };
 
 export const CONFIG = {
-  [TYPE.CHIP_SPA]: {
-    pageTitle: "Submit New CHIP SPA",
-    readOnlyPageTitle: "CHIP SPA Submission Details",
-    detailsHeader: "CHIP SPA",
-    subheaderMessage: {
-      __html: commonSubheaderMessage,
-    },
-    requiredUploads: [
-      "Current State Plan",
-      "Amended State Plan Language",
-      "Cover Letter",
-    ],
-    optionalUploads: [
-      "Budget Documents",
-      "Public Notice",
-      "Tribal Consultation",
-      "Other",
-    ],
-    transmittalNumber: {
-      idType: "chipspa",
-      idLabel: "SPA ID",
-      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
-      idFAQLink: ROUTES.FAQ_SPA_ID,
-      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex:
-        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-      idExistValidations: [
-        {
-          idMustExist: false,
-          errorLevel: "error",
-        },
-      ],
-    },
-    raiLink: ROUTES.CHIP_SPA_RAI,
-  },
-
   [TYPE.CHIP_SPA_RAI]: {
     pageTitle: "Respond to CHIP SPA RAI",
     readOnlyPageTitle: "CHIP SPA RAI Response Details",
@@ -113,51 +77,6 @@ export const CONFIG = {
       ],
     },
   },
-
-  [TYPE.SPA]: {
-    pageTitle: "Submit New Medicaid SPA",
-    readOnlyPageTitle: "Medicaid SPA Submission Details",
-    subheaderMessage: {
-      __html: commonSubheaderMessage,
-    },
-    detailsHeader: "Medicaid SPA",
-    requiredUploads: [
-      { title: "CMS Form 179", allowMultiple: false },
-      "SPA Pages",
-    ],
-    optionalUploads: [
-      "Cover Letter",
-      "Document Demonstrating Good-Faith Tribal Engagement",
-      "Existing State Plan Page(s)",
-      "Public Notice",
-      "Standard Funding Questions (SFQs)",
-      "Tribal Consultation",
-      "Other",
-    ],
-    transmittalNumber: {
-      idType: "spa",
-      idLabel: "SPA ID",
-      idFieldHint: [
-        { text: "Must follow the format SS-YY-NNNN-xxxx" },
-        {
-          text: "Reminder - CMS recommends that all SPA numbers start with the year in which the package is submitted.",
-          className: "field-hint-major",
-        },
-      ],
-      idFAQLink: ROUTES.FAQ_SPA_ID,
-      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex:
-        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
-      idExistValidations: [
-        {
-          idMustExist: false,
-          errorLevel: "error",
-        },
-      ],
-    },
-    raiLink: ROUTES.SPA_RAI,
-  },
-
   [TYPE.SPA_RAI]: {
     pageTitle: "Respond to Medicaid SPA RAI",
     readOnlyPageTitle: "Medicaid SPA RAI Response Details",
@@ -378,63 +297,6 @@ export const CONFIG = {
         },
       ],
     },
-  },
-
-  [TYPE.WAIVER_BASE]: {
-    pageTitle: "Base Waiver Submission",
-    readOnlyPageTitle: "Waiver Action Details",
-    subheaderMessage: {
-      __html: commonSubheaderMessage,
-    },
-    detailsHeader: "Waiver Action",
-    overrideType: TYPE.WAIVER,
-    overrideActionType: "new",
-    overrideSuccessLanding: ROUTES.PACKAGE_LIST_WAIVER,
-    requiredUploads: [],
-    optionalUploads: [
-      "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-      "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-      "Tribal Consultation (Initial, Renewal, Amendment)",
-      "Other",
-    ],
-
-    waiverAuthority: {
-      fieldName: "waiverAuthority",
-      errorMessage: "Please select the Waiver Authority.",
-      optionsList: [
-        { label: "-- select a waiver authority --", value: "" },
-        {
-          label: "1915(b)(4) FFS Selective Contracting waivers",
-          value: "1915(b)(4)",
-        },
-        { label: "All other 1915(b) Waivers", value: "1915(b)" },
-      ],
-    },
-    transmittalNumber: {
-      ...waiverBaseTransmittalNumber,
-      idLabel: "Base Waiver Number",
-      idFieldHint: [
-        {
-          text: "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
-        },
-      ],
-      idFormat: "SS.####.R00.00 or SS.#####.R00.00",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R00.00$",
-      idExistValidations: [
-        {
-          idMustExist: false,
-          errorLevel: "error",
-        },
-      ],
-    },
-
-    proposedEffectiveDate: {
-      fieldName: "proposedEffectiveDate",
-    },
-
-    raiLink: ROUTES.WAIVER_RAI,
   },
 };
 

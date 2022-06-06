@@ -22,7 +22,7 @@ import { Alert, UsaBanner } from "@cmsgov/design-system";
 import { isIE } from "react-device-detect";
 import { useAppContext } from "../libs/contextLib";
 import oneMacLogo from "../assets/images/OneMAC_logoLight.svg";
-import { ROUTES as RouteList } from "cmscommonlib";
+import { ONEMAC_ROUTES, ROUTES as RouteList } from "cmscommonlib";
 import HamburgerMenu from "../components/HamburgerMenu.js";
 
 import { animated, useSpring } from "@react-spring/web";
@@ -290,8 +290,8 @@ export function Header() {
     const packageListLink = (
       <Link
         id="packageListLink"
-        to={ROUTES.PACKAGE_LIST}
-        className={getActiveClass(currentRoute, RouteList.PACKAGE_LIST)}
+        to={ONEMAC_ROUTES.PACKAGE_LIST}
+        className={getActiveClass(currentRoute, ONEMAC_ROUTES.PACKAGE_LIST)}
       >
         Packages
       </Link>

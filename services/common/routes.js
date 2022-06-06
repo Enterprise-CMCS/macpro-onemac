@@ -6,9 +6,6 @@ export const ROUTES = {
   CHIP_SPA: "/chipspa",
   CHIP_SPA_RAI: "/chipsparai",
   DASHBOARD: "/dashboard",
-  PACKAGE_LIST: "/packagelist",
-  PACKAGE_LIST_SPA: "/packagelist?startTab=spa",
-  PACKAGE_LIST_WAIVER: "/packagelist?startTab=waiver",
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
@@ -35,6 +32,9 @@ export const ROUTES = {
 };
 
 export const ONEMAC_ROUTES = {
+  PACKAGE_LIST: "/packagelist",
+  PACKAGE_LIST_SPA: "/packagelist?startTab=spa",
+  PACKAGE_LIST_WAIVER: "/packagelist?startTab=waiver",
   TRIAGE_GROUP: "/choices",
   TRIAGE_SPA: "/choices/spa",
   TRIAGE_WAIVER: "/choices/waiver",

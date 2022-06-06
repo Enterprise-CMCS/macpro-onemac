@@ -98,11 +98,6 @@ export namespace ChangeRequest {
   export const LABEL: Record<string, string>;
 }
 
-export namespace Validate {
-  // export const ONEMAC_ID_REGEX: Record<string, string>;
-  // export const ID_EXISTS_REGEX: Record<string, []>;
-}
-
 export namespace Workflow {
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
@@ -129,6 +124,8 @@ export namespace Workflow {
     clockEndTimestamp: date
   ) => string;
 }
+
+//export * as Workflow from "./workflow.js";
 
 export { baseWaiver } from "./type/baseWaiver.js";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
