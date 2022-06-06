@@ -2,6 +2,7 @@ import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import classNames from "classnames";
+import { Column } from "react-table";
 
 import {
   Button,
@@ -427,8 +428,8 @@ const TemporaryExtensionSection: FC<{
     [onPopupActionWithdraw]
   );
 
-  const tempExtColumns = useMemo(
-    () => [
+  const tempExtColumns = useMemo(() => {
+    const theColumns: Column[] = [
       {
         Header: "Extension Id",
         accessor: "componentId",
@@ -437,15 +438,17 @@ const TemporaryExtensionSection: FC<{
         Header: "Status",
         accessor: "currentStatus",
       },
-      {
+    ];
+    if (userRoleObj.canAccessForms)
+      theColumns.push({
         Header: "Actions",
         accessor: "actions",
         id: "packageActions",
         Cell: renderActions,
-      },
-    ],
-    [renderActions]
-  );
+      });
+
+    return theColumns;
+  }, [renderActions, userRoleObj.canAccessForms]);
 
   return (
     <section id="temp-ext-base" className="read-only-submission ">
