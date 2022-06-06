@@ -209,6 +209,8 @@ const DetailSection = ({
   const pageConfig =
     PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
+  const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+
   return (
     <>
       {(detail.title || pageConfig.defaultTitle) && (
@@ -236,45 +238,54 @@ const DetailSection = ({
                 </Review>
               )}
           </section>
-          <section className="package-actions">
-            <h2>{pageConfig.actionLabel}</h2>
-            <ul className="action-list">
-              {pageConfig.actionsByStatus[detail.currentStatus]?.length > 0 ? (
-                pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                  (actionLabel, index) => {
-                    return (
-                      <li key={index}>
-                        <Button
-                          className="package-action-link"
-                          onClick={
-                            actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
-                              ? () => {
-                                  setConfirmItem({
-                                    label: actionLabel,
-                                    confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                    onAccept: onLinkActionWithdraw,
-                                  });
-                                }
-                              : () => {
-                                  onLinkActionRAI({
-                                    href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
-                                  });
-                                }
-                          }
-                        >
-                          {actionLabel}
-                        </Button>
-                      </li>
-                    );
-                  }
-                )
-              ) : (
-                <li>
-                  <p>No actions are currently available for this submission.</p>
-                </li>
-              )}
-            </ul>
-          </section>
+          {userRoleObj.canAccessForms ? (
+            <section className="package-actions">
+              <h2>{pageConfig.actionLabel}</h2>
+              <ul className="action-list">
+                {pageConfig.actionsByStatus[detail.currentStatus]?.length >
+                0 ? (
+                  pageConfig.actionsByStatus[detail.currentStatus]?.map(
+                    (actionLabel, index) => {
+                      return (
+                        <li key={index}>
+                          <Button
+                            className="package-action-link"
+                            onClick={
+                              actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
+                                ? () => {
+                                    setConfirmItem({
+                                      label: actionLabel,
+                                      confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                      onAccept: onLinkActionWithdraw,
+                                    });
+                                  }
+                                : () => {
+                                    onLinkActionRAI({
+                                      href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                    });
+                                  }
+                            }
+                          >
+                            {actionLabel}
+                          </Button>
+                        </li>
+                      );
+                    }
+                  )
+                ) : (
+                  <li>
+                    <p>
+                      No actions are currently available for this submission.
+                    </p>
+                  </li>
+                )}
+              </ul>
+            </section>
+          ) : (
+            <section className="package-actions">
+              <div className="column-spacer">&nbsp;</div>
+            </section>
+          )}
         </div>
       </section>
       <div className="read-only-submission">
