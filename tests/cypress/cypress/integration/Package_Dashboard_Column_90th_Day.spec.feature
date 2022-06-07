@@ -36,7 +36,7 @@ Feature: OY2-11116 Package Dashboard Updates - 90th Day Data from SEATool
         And click on 90th day filter dropdown
         And click on Status
         And click all of the status checkboxes
-        And click Package In Review checkbox
+        And click In Review checkbox
         And verify that the value of the column for the 90th day is Pending
     
     Scenario: Waivers tab - Pending when package status is In Review
@@ -49,7 +49,7 @@ Feature: OY2-11116 Package Dashboard Updates - 90th Day Data from SEATool
         And click on 90th day filter dropdown
         And click on Status
         And click all of the status checkboxes
-        And click Package In Review checkbox
+        And click In Review checkbox
         And verify that the value of the column for the 90th day is Pending
 
 #Feature: OY2-12735 Additional 90th Day statuses for the Package Dashboard
@@ -75,7 +75,7 @@ Feature: OY2-11116 Package Dashboard Updates - 90th Day Data from SEATool
         And click RAI Issued checkbox
         And verify that the value of the column for the 90th day is Clock Stopped
 
-    Scenario: SPA tab - N/A when package status is Package Approved
+    Scenario: SPA tab - N/A when package status is Approved
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -83,10 +83,10 @@ Feature: OY2-11116 Package Dashboard Updates - 90th Day Data from SEATool
         And Click on Filter Button
         And click on Status
         And click all of the status checkboxes
-        And click Package Approved checkbox
+        And click Approved checkbox
         And verify that the value of the column for the 90th day is NA
 
-    Scenario: SPA tab - N/A when package status is Package Disapproved
+    Scenario: SPA tab - N/A when package status is Disapproved
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
@@ -95,7 +95,7 @@ Feature: OY2-11116 Package Dashboard Updates - 90th Day Data from SEATool
         And click on 90th day filter dropdown
         And click on Status
         And click all of the status checkboxes
-        And click Package Disapproved checkbox
+        And click Disapproved checkbox
         And verify that the value of the column for the 90th day is NA
 
     Scenario: SPA tab - Pending when package status is Submitted

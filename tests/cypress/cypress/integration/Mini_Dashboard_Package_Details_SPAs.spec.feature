@@ -1,4 +1,4 @@
-Feature: OY2-15620 Updated SPA Package Details View - Card View with Actions 
+Feature: OY2-15620 Updated SPA Details View - Card View with Actions 
     Background: Reoccuring Steps
         Given I am on Login Page
         When Clicking on Development Login
@@ -9,7 +9,7 @@ Feature: OY2-15620 Updated SPA Package Details View - Card View with Actions
         And click all of the status checkboxes
 
     Scenario: Screen Enhance - Approved SPA
-        And click Package Approved checkbox
+        And click Approved checkbox
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
@@ -48,7 +48,7 @@ Feature: OY2-15620 Updated SPA Package Details View - Card View with Actions
         And verify a date exists for the Date Submitted
 
     Scenario: Screen Enhance - Disapproved SPA
-        And click Package Disapproved checkbox
+        And click Disapproved checkbox
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
@@ -68,7 +68,7 @@ Feature: OY2-15620 Updated SPA Package Details View - Card View with Actions
 
 
     Scenario: Screen Enhance - In Review SPA
-        And click Package In Review checkbox
+        And click In Review checkbox
         And Click on Filter Button
         And click the SPA ID link in the first row
         And verify the package details page is visible
