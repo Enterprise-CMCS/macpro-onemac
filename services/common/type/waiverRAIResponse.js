@@ -14,6 +14,4 @@ export const waiverRAIResponse = {
   allowMultiplesWithSameId: true,
   requiredAttachments: ["Waiver RAI Response"],
   optionalAttachments: ["Other"],
-  requiredUploads: ["Waiver RAI Response"],
-  optionalUploads: ["Other"],
 };

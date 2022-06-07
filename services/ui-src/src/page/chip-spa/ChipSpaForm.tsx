@@ -1,14 +1,12 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { OneMACFormInfo } from "../../libs/formLib";
+import { OneMACFormConfig } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, Workflow, chipSPA } from "cmscommonlib";
 
 const idFormat: string = "SS-YY-NNNN-xxxx";
 
-const chipSpaFormInfo: OneMACFormInfo = {
+const chipSpaFormInfo: OneMACFormConfig = {
   ...chipSPA,
-  type: Workflow.ONEMAC_TYPE.CHIP_SPA,
-  actionType: "new",
   pageTitle: "Submit New CHIP SPA",
   detailsHeader: "CHIP SPA",
   addlIntroJSX: "",
@@ -20,12 +18,11 @@ const chipSpaFormInfo: OneMACFormInfo = {
   idFormat: idFormat,
   raiLink: ROUTES.SPA_RAI,
   actionsByStatus: Workflow.defaultActionsByStatus,
-  idExistValidations: [{ idMustExist: false, errorLevel: "error" }],
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };
 
 const MedicaidSpaForm: FC = () => {
-  return <OneMACForm formInfo={chipSpaFormInfo} />;
+  return <OneMACForm formConfig={chipSpaFormInfo} />;
 };
 
 export default MedicaidSpaForm;

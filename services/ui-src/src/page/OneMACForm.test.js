@@ -68,7 +68,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -89,7 +89,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -120,7 +120,7 @@ describe("OneMAC Form", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -176,7 +176,7 @@ describe("Transmittal Number Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -198,7 +198,7 @@ describe("Transmittal Number Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -223,7 +223,7 @@ describe("Transmittal Number Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -254,7 +254,7 @@ describe("Transmittal Number Section", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -288,7 +288,7 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={history}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );
@@ -342,7 +342,7 @@ describe("cancelling the form submission", () => {
         }}
       >
         <Router history={herstory}>
-          <OneMACForm formInfo={baseWaiverFormInfo} />
+          <OneMACForm formConfig={baseWaiverFormInfo} />
         </Router>
       </AppContext.Provider>
     );

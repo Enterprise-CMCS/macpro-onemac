@@ -1,5 +1,6 @@
 export const waiverTemporaryExtension = {
   componentType: "waiverextension",
+  packageGroup: "waiver",
   typeLabel: "Waiver Extension",
   idType: "waiver",
   idLabel: "Waiver Number",

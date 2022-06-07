@@ -1,54 +1,42 @@
-import { Workflow, FieldHint } from "cmscommonlib";
+import {
+  Workflow,
+  FieldHint,
+  IdValidation,
+  SelectOption,
+  FileUploadProps,
+} from "cmscommonlib";
 
-type SelectOption = { label: string; value: string };
-
-type OneMACIDInfo = {
-  idType?: string;
-  idLabel: string;
+export type OneMACFormConfig = {
   idFormat: string;
-  idRegex: string;
   idFieldHint: FieldHint[];
   idFAQLink: string;
-  idExistValidations: {
-    existenceRegex?: RegExp;
-    idMustExist?: boolean;
-    errorLevel: string;
-  }[];
-};
-
-export type WaiverFormInfo = {
-  waiverAuthority: { optionsList: SelectOption[] };
-};
-
-export type FileUploadProps = {
-  title: string;
-  allowMultiple?: boolean;
-};
-
-export type OneMACFormInfo = {
-  type: string;
-  actionType: string;
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;
-  requiredUploads: (string | FileUploadProps)[];
-  optionalUploads: (string | FileUploadProps)[];
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   raiLink: string;
   landingPage: string;
   proposedEffectiveDate?: { fieldName: string };
-} & OneMACIDInfo &
-  Partial<WaiverFormInfo>;
+} & PackageType &
+  Partial<WaiverPackageType>;
 
-export const defaultWaiverAuthority = {
-  fieldName: "waiverAuthority",
-  errorMessage: "Please select the Waiver Authority.",
-  optionsList: [
-    { label: "-- select a waiver authority --", value: "" },
-    {
-      label: "1915(b)(4) FFS Selective Contracting waivers",
-      value: "1915(b)(4)",
-    },
-    { label: "All other 1915(b) Waivers", value: "1915(b)" },
-  ],
+export const defaultWaiverAuthority = [
+  { label: "-- select a waiver authority --", value: "" },
+];
+
+export type PackageType = {
+  packageGroup: string;
+  componentType: string;
+  typeLabel: string;
+  idType: string;
+  idLabel: string;
+  idRegex: string;
+  idExistValidations: IdValidation[];
+  allowMultiplesWithSameId: boolean;
+  requiredAttachments: (string | FileUploadProps)[];
+  optionalAttachments: (string | FileUploadProps)[];
+};
+
+export type WaiverPackageType = {
+  waiverAuthorities: SelectOption[];
 };

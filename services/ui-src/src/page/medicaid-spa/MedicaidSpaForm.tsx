@@ -1,14 +1,12 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { OneMACFormInfo } from "../../libs/formLib";
+import { OneMACFormConfig } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, Workflow, medicaidSPA } from "cmscommonlib";
 
 const medicaidSpaIdFormat: string = "SS-YY-NNNN or SS-YY-NNNN-xxxx";
 
-const medicaidSpaFormInfo: OneMACFormInfo = {
+const medicaidSpaFormInfo: OneMACFormConfig = {
   ...medicaidSPA,
-  type: Workflow.ONEMAC_TYPE.MEDICAID_SPA,
-  actionType: "new",
   pageTitle: "Submit New Medicaid SPA",
   detailsHeader: "Medicaid SPA",
   addlIntroJSX: "",
@@ -30,7 +28,7 @@ const medicaidSpaFormInfo: OneMACFormInfo = {
 };
 
 const MedicaidSpaForm: FC = () => {
-  return <OneMACForm formInfo={medicaidSpaFormInfo} />;
+  return <OneMACForm formConfig={medicaidSpaFormInfo} />;
 };
 
 export default MedicaidSpaForm;

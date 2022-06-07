@@ -16,8 +16,10 @@ export enum USER_ROLE {
   HELPDESK = "helpdesk",
 }
 
-import { FieldHint } from "./FieldHint";
-export { FieldHint };
+export interface FieldHint {
+  text: string;
+  className?: string;
+}
 
 export class UserRole {
   canAccessDashboard: boolean;
@@ -51,6 +53,16 @@ export type SelectOption = { label: string; value: string };
 export const territoryList: SelectOption[];
 
 export const territoryMap: Record<string, string>;
+
+export type FileUploadProps = {
+  title: string;
+  allowMultiple?: boolean;
+};
+
+export type IdValidation = {
+  idMustExist: boolean;
+  errorLevel: string;
+};
 
 export namespace ChangeRequest {
   type TransmittalNumberInfo = {
@@ -127,7 +139,7 @@ export namespace Workflow {
 
 //export * as Workflow from "./workflow.js";
 
-export { baseWaiver } from "./type/baseWaiver.js";
+export { baseWaiver } from "./type/baseWaiver";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
 export { waiverRenewal } from "./type/waiverRenewal.js";
 export { waiverAmendment } from "./type/waiverAmendment.js";

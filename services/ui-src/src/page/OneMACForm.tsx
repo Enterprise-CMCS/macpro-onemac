@@ -14,7 +14,7 @@ import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
-import { OneMACFormInfo } from "../libs/formLib";
+import { OneMACFormConfig, defaultWaiverAuthority } from "../libs/formLib";
 import config from "../utils/config";
 
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -43,10 +43,21 @@ type Message = {
   warningMessageCode?: string;
 };
 
+type OneMacFormData = {
+  type: string;
+  territory: string;
+  summary: string;
+  transmittalNumber: string;
+  waiverAuthority: string;
+  proposedEffectiveDate: string;
+};
+
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
  */
-const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
+const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
+  formConfig,
+}) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories } = useAppContext() ?? {};
@@ -77,13 +88,12 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
   );
 
   // The record we are using for the form.
-  const [changeRequest, setChangeRequest] = useState({
-    type: formInfo.type,
+  const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
+    type: formConfig.componentType,
     territory:
       (initialTransmittalNumber &&
         getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
       "",
-    actionType: formInfo.actionType,
     summary: "",
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     waiverAuthority: "",
@@ -109,7 +119,7 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
 
       // Must have a value
       if (!newTransmittalNumber) {
-        errorMessage = `${formInfo.idLabel} Required`;
+        errorMessage = `${formConfig.idLabel} Required`;
       }
       // state code must be on the User's active state list
       else if (
@@ -123,41 +133,46 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
       }
       // must match the associated Regex string for format
       else if (
-        formInfo.idRegex &&
-        !matchesRegex(newTransmittalNumber, formInfo.idRegex)
+        formConfig.idRegex &&
+        !matchesRegex(newTransmittalNumber, formConfig.idRegex)
       ) {
-        errorMessage = `The ${formInfo.idLabel} must be in the format of ${formInfo.idFormat}`;
+        errorMessage = `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`;
       }
 
       return errorMessage;
     },
-    [activeTerritories, formInfo.idFormat, formInfo.idLabel, formInfo.idRegex]
+    [
+      activeTerritories,
+      formConfig.idFormat,
+      formConfig.idLabel,
+      formConfig.idRegex,
+    ]
   );
 
   async function handleTransmittalNumberChange(newTransmittalNumber: string) {
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    let updatedRecord = { ...oneMacFormData }; // You need a new object to be able to update the state
 
     updatedRecord["transmittalNumber"] = newTransmittalNumber;
     updatedRecord["territory"] =
       getTerritoryFromTransmittalNumber(newTransmittalNumber);
 
-    setChangeRequest(updatedRecord);
+    setOneMacFormData(updatedRecord);
   }
 
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event || !event.target) return;
 
-    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+    let updatedRecord = { ...oneMacFormData }; // You need a new object to be able to update the state
 
     updatedRecord[event.target.name as keyof typeof updatedRecord] =
       event.target.value;
 
-    setChangeRequest(updatedRecord);
+    setOneMacFormData(updatedRecord);
   };
 
   const handleEffectiveDateChange = useCallback(
     (proposedEffectiveDate: string) => {
-      setChangeRequest((cr) => ({ ...cr, proposedEffectiveDate }));
+      setOneMacFormData((cr) => ({ ...cr, proposedEffectiveDate }));
     },
     []
   );
@@ -175,7 +190,9 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
 
     let formatMessage = {
       statusLevel: "error",
-      statusMessage: validateTransmittalNumber(changeRequest.transmittalNumber),
+      statusMessage: validateTransmittalNumber(
+        oneMacFormData.transmittalNumber
+      ),
       warningMessageCode: "",
     };
 
@@ -184,12 +201,12 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
     try {
       if (
         formatMessage.statusMessage === "" &&
-        changeRequest.transmittalNumber &&
-        formInfo.idExistValidations
+        oneMacFormData.transmittalNumber &&
+        formConfig.idExistValidations
       ) {
-        const promises = formInfo.idExistValidations.map(
+        const promises = formConfig.idExistValidations.map(
           async (idExistValidation) => {
-            let checkingNumber = changeRequest.transmittalNumber;
+            let checkingNumber = oneMacFormData.transmittalNumber;
 
             // if (idExistValidation.existenceRegex !== undefined) {
             //   checkingNumber = changeRequest.transmittalNumber.match(
@@ -209,24 +226,25 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
         Promise.all(promises)
           .then((results) => {
             results.forEach((dupID, key) => {
-              const correspondingValidation = formInfo.idExistValidations[key];
+              const correspondingValidation =
+                formConfig.idExistValidations[key];
               let tempMessage, tempCode;
 
               // ID does not exist but it should exist
               if (!dupID && correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formInfo.idLabel} does not exist. Please check the ${formInfo.idLabel} and try entering it again.`;
+                  tempMessage = `According to our records, this ${formConfig.idLabel} does not exist. Please check the ${formConfig.idLabel} and try entering it again.`;
                 } else {
-                  tempMessage = `${formInfo.idLabel} not found. Please ensure you have the correct ${formInfo.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  tempMessage = `${formConfig.idLabel} not found. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
                 }
                 // ID exists but it should NOT exist
               } else if (dupID && !correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formInfo.idLabel} already exists. Please check the ${formInfo.idLabel} and try entering it again.`;
+                  tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 } else {
-                  tempMessage = `According to our records, this ${formInfo.idLabel} already exists. Please ensure you have the correct ${formInfo.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 }
               }
@@ -253,25 +271,30 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
         setTransmittalNumberStatusMessage(displayMessage);
       }
 
-      let formReady = false;
-      if (
-        (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
-        (displayMessage.statusLevel === "warn" ||
-          !displayMessage.statusMessage) &&
-        areUploadsReady &&
-        (!formInfo.proposedEffectiveDate || changeRequest.proposedEffectiveDate)
-      )
-        formReady = true;
+      const isWaiverAuthorityReady: boolean = Boolean(
+        !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
+      );
+      const isProposedEffecitveDateReady: boolean = Boolean(
+        !formConfig.proposedEffectiveDate ||
+          oneMacFormData.proposedEffectiveDate
+      );
+      const hasNoErrors: boolean =
+        displayMessage.statusLevel === "warn" || !displayMessage.statusMessage;
 
-      setIsSubmissionReady(formReady);
+      setIsSubmissionReady(
+        isWaiverAuthorityReady &&
+          hasNoErrors &&
+          areUploadsReady &&
+          isProposedEffecitveDateReady
+      );
     } catch (err) {
       console.log("error is: ", err);
       setAlertCode(RESPONSE_CODE[(err as Error).message]);
     }
   }, [
     areUploadsReady,
-    changeRequest,
-    formInfo,
+    oneMacFormData,
+    formConfig,
     validateTransmittalNumber,
     alertCode,
   ]);
@@ -304,14 +327,14 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
           try {
             const uploadedList = await uploader.current.uploadFiles();
             const returnCode = await PackageApi.submitToAPI(
-              { ...changeRequest, transmittalNumberWarningMessage },
+              { ...oneMacFormData, transmittalNumberWarningMessage },
               uploadedList
             );
 
             if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
               throw new Error(returnCode);
 
-            history.push(formInfo.landingPage, {
+            history.push(formConfig.landingPage, {
               passCode: returnCode,
             });
           } catch (err) {
@@ -327,8 +350,8 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
     [
       isSubmissionReady,
       transmittalNumberStatusMessage,
-      changeRequest,
-      formInfo.landingPage,
+      oneMacFormData,
+      formConfig.landingPage,
       history,
     ]
   );
@@ -336,7 +359,7 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
   return (
     <LoadingOverlay isLoading={isSubmitting}>
       <PageTitleBar
-        heading={formInfo.pageTitle}
+        heading={formConfig.pageTitle}
         enableBackNav
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
@@ -352,20 +375,23 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
               {" "}
               If you leave this page, you will lose your progress on this form.
             </b>
-            {formInfo.addlIntroJSX}
+            {formConfig.addlIntroJSX}
           </p>
         </div>
         <form noValidate onSubmit={handleSubmit}>
-          <h3>{formInfo.detailsHeader} Details</h3>
+          <h3>{formConfig.detailsHeader} Details</h3>
           <p className="req-message">
             <span className="required-mark">*</span>
             indicates required field.
           </p>
           <div className="form-card">
-            {formInfo.waiverAuthority && (
+            {formConfig.waiverAuthorities && (
               <Dropdown
-                options={formInfo.waiverAuthority.optionsList}
-                defaultValue={changeRequest.waiverAuthority}
+                options={[
+                  ...defaultWaiverAuthority,
+                  ...formConfig.waiverAuthorities,
+                ]}
+                defaultValue={oneMacFormData.waiverAuthority}
                 label="Waiver Authority"
                 labelClassName="ds-u-margin-top--0 required"
                 fieldClassName="field"
@@ -375,23 +401,23 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
               />
             )}
             <TransmittalNumber
-              idLabel={formInfo.idLabel}
-              idFieldHint={formInfo.idFieldHint}
-              idFAQLink={formInfo.idFAQLink}
+              idLabel={formConfig.idLabel}
+              idFieldHint={formConfig.idFieldHint}
+              idFAQLink={formConfig.idFAQLink}
               statusLevel={transmittalNumberStatusMessage.statusLevel}
               statusMessage={
                 transmittalNumberStatusMessage.statusMessage !==
-                `${formInfo.idLabel} Required`
+                `${formConfig.idLabel} Required`
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }
               disabled={!!initialTransmittalNumber}
-              value={changeRequest.transmittalNumber}
+              value={oneMacFormData.transmittalNumber}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
                 handleTransmittalNumberChange(event.target.value.toUpperCase())
               }
             />
-            {formInfo.proposedEffectiveDate && (
+            {formConfig.proposedEffectiveDate && (
               <>
                 <label
                   className="ds-c-label required"
@@ -402,7 +428,7 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
                 <Input
                   className="field"
                   id="proposed-effective-date"
-                  name={formInfo.proposedEffectiveDate.fieldName}
+                  name={formConfig.proposedEffectiveDate.fieldName}
                   onChange={handleEffectiveDateChange}
                   type="date"
                 />
@@ -412,8 +438,8 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
           <h3>Attachments</h3>
           <FileUploader
             ref={uploader}
-            requiredUploads={formInfo.requiredUploads}
-            optionalUploads={formInfo.optionalUploads}
+            requiredUploads={formConfig.requiredAttachments}
+            optionalUploads={formConfig.optionalAttachments}
             readyCallback={setAreUploadsReady}
           ></FileUploader>
           <div className="summary-box">
@@ -425,11 +451,12 @@ const OneMACForm: React.FC<{ formInfo: OneMACFormInfo }> = ({ formInfo }) => {
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
-              value={changeRequest.summary}
+              value={oneMacFormData.summary}
               maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             ></TextField>
             <div className="char-count">
-              {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
+              {oneMacFormData.summary.length}/
+              {config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>
           <div className="form-buttons">
