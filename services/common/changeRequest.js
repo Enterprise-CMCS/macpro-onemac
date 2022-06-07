@@ -92,6 +92,7 @@ export const CONFIG = {
       __html: raiSubheaderMessage,
     },
     detailsHeader: "Formal CHIP SPA RAI",
+    readOnlyDetailsHeader: "CHIP SPA RAI",
     requiredUploads: [
       "Revised Amended State Plan Language",
       "Official RAI Response",
@@ -170,6 +171,7 @@ export const CONFIG = {
       __html: raiSubheaderMessage,
     },
     detailsHeader: "Formal Medicaid SPA RAI",
+    readOnlyDetailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
     optionalUploads: ["Other"],
 
@@ -340,7 +342,7 @@ export const CONFIG = {
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },
-    detailsHeader: "Request Temporary Extension",
+    detailsHeader: "Temporary Extension Request",
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
 
