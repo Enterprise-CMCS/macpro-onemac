@@ -27,12 +27,12 @@ export const ONEMAC_STATUS = {
   INACTIVATED: "Inactivated",
   UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
-  IN_REVIEW: "Package In Review",
+  IN_REVIEW: "In Review",
   RAI_ISSUED: "RAI Issued",
-  APPROVED: "Package Approved",
-  DISAPPROVED: "Package Disapproved",
+  APPROVED: "Approved",
+  DISAPPROVED: "Disapproved",
   WITHDRAWN: "Withdrawn",
-  TERMINATED: "Waiver Terminated",
+  TERMINATED: "Terminated",
   PAUSED: "Review Paused, Off the Clock",
 };
 
