@@ -25,7 +25,7 @@ export const defaultWaiverAuthority = [
 ];
 
 export type PackageType = {
-  packageGroup: string;
+  packageGroup?: string;
   componentType: string;
   typeLabel: string;
   idType: string;
