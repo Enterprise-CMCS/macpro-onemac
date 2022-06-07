@@ -20,6 +20,11 @@ export const formatPackageDetails = (data, config) => {
             : ""
         }
         ${
+          data.proposedEffectiveDate
+            ? `<br><b>Proposed Effective Date</b>: ${data.proposedEffectiveDate}`
+            : ""
+        }
+        ${
           data.ninetyDayDate
             ? `<br><b>90th day deadline</b>: ${data.ninetyDayDate}`
             : ""
