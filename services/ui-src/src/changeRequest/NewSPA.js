@@ -10,7 +10,7 @@ const SPA_CHOICES = [
     linkTo: "/spa",
   },
   {
-    title: "Respond to Medicaid SPA RAI",
+    title: "Respond to Formal Medicaid SPA RAI",
     description: "Submit additional information",
     linkTo: "/sparai",
   },
@@ -20,7 +20,7 @@ const SPA_CHOICES = [
     linkTo: "/chipspa",
   },
   {
-    title: "Respond to CHIP SPA RAI",
+    title: "Respond to Formal CHIP SPA RAI",
     description: "Submit additional information",
     linkTo: "/chipsparai",
   },
