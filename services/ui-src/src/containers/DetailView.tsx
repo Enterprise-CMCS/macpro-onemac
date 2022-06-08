@@ -167,7 +167,7 @@ const DetailSection = ({
   setAlertCode: (code: string) => void;
 }) => {
   const history = useHistory();
-  const { userProfile, useConfirmationDialog } = useAppContext() ?? {};
+  const { userProfile, createConfirmationDialog } = useAppContext() ?? {};
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
@@ -249,8 +249,8 @@ const DetailSection = ({
                             onClick={
                               actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
                                 ? () => {
-                                    useConfirmationDialog &&
-                                      useConfirmationDialog(
+                                    createConfirmationDialog &&
+                                      createConfirmationDialog(
                                         Workflow.PACKAGE_ACTION.WITHDRAW,
                                         "Withdraw?",
                                         "Cancel",

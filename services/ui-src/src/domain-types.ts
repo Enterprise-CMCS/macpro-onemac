@@ -1,5 +1,4 @@
 import { USER_STATUS, USER_ROLE, RoleEntry } from "cmscommonlib";
-import { DialogSize } from "@cmsgov/design-system/dist/types/Dialog/Dialog";
 
 export type UserProfile = {
   cmsRoles: string;
@@ -38,7 +37,7 @@ export type AppContextValue = {
   activeTerritories: string[] | null;
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;
-  useConfirmationDialog: (
+  createConfirmationDialog: (
     heading: string,
     acceptText: string,
     cancelText: string,

@@ -25,7 +25,7 @@ const PageTitleBar = ({
   backNavConfirmationMessage,
 }) => {
   const history = useHistory();
-  const { useConfirmationDialog } = useAppContext() ?? {};
+  const { createConfirmationDialog } = useAppContext() ?? {};
 
   const handleTravel = () => (backTo ? history.push(backTo) : history.goBack());
 
@@ -47,7 +47,7 @@ const PageTitleBar = ({
               className="title-bar-back-button"
               onClick={() =>
                 backNavConfirmationMessage
-                  ? useConfirmationDialog(
+                  ? createConfirmationDialog(
                       "Leave this page?",
                       "Leave Anyway",
                       "Stay on Page",

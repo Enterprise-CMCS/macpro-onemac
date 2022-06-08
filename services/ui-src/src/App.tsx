@@ -18,7 +18,7 @@ import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
-  "setUserInfo" | "updatePhoneNumber" | "useConfirmationDialog"
+  "setUserInfo" | "updatePhoneNumber" | "createConfirmationDialog"
 > = {
   isAuthenticating: true,
   isAuthenticated: false,
@@ -44,7 +44,7 @@ export function App() {
     []
   );
 
-  const useConfirmationDialog = useCallback(
+  const createConfirmationDialog = useCallback(
     async (
       heading: string,
       acceptText: string,
@@ -170,9 +170,9 @@ export function App() {
       ...authState,
       setUserInfo,
       updatePhoneNumber,
-      useConfirmationDialog,
+      createConfirmationDialog,
     }),
-    [authState, setUserInfo, updatePhoneNumber, useConfirmationDialog]
+    [authState, setUserInfo, updatePhoneNumber, createConfirmationDialog]
   );
 
   return authState.isAuthenticating ? null : (
