@@ -80,6 +80,16 @@ And("type in SPA ID for RAI 2", () => {
     OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI2);
   });
 });
+And("type in Medicaid SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID);
+  });
+});
+And("type in Chip SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID);
+  });
+});
 And("Add file for CMS Form 179", () => {
   OneMacSubmitNewMedicaidSpaPage.uploadCMSForm179AddFile();
 });
@@ -444,6 +454,12 @@ And("click on Base Waiver", () => {
 And("verify Base Waiver is a clickable option", () => {
   OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
 });
+And("verify CHIP SPA is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyChipSPAIsClickable();
+});
+And("verify Medicaid SPA is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyMedicaidSPAIsClickable();
+});
 
 And("select Action Type New Waiver", () => {
   OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
@@ -709,9 +725,31 @@ And("search for Base Waiver Number 2 with 12 Characters", () => {
   });
   cy.wait(1000);
 });
+And("search for Medicaid SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newMedicaidSPAID);
+  });
+  cy.wait(1000);
+});
+And("search for CHIP SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newChipSPAID);
+  });
+  cy.wait(1000);
+});
 And("verify id number in the first row matches Base Waiver Number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newBaseWaiverNumber1);
+  });
+});
+And("verify id number in the first row matches Medicaid SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newMedicaidSPAID);
+  });
+});
+And("verify id number in the first row matches CHIP SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID);
   });
 });
 And("search for Unique Valid Waiver Number with 5 Characters", () => {
@@ -1987,6 +2025,12 @@ And("verify user is on new waiver page", () => {
 });
 And("verify user is on new base waiver page", () => {
   OneMacSubmissionTypePage.verifyNewBaseWaiverPage();
+});
+And("verify user is on new Medicaid SPA page", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
+});
+And("verify user is on new CHIP SPA page", () => {
+  OneMacCHIPSPAPage.verifyNewChipSPAPage();
 });
 And("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();

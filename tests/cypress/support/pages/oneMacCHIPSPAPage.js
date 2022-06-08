@@ -11,6 +11,9 @@ const addFileBTNAmmendedStatePlanLanguage = "//tbody/tr[2]/td[2]/label[1]";
 const addFileBTNAmmendedStatePlanLanguageInnerBTN = "#uploader-input-1";
 
 export class oneMacCHIPSPAPage {
+  verifyNewChipSPAPage() {
+    cy.url().should("include", "/chip-spa");
+  }
   inputSpaID(s) {
     cy.get(SPAIDInputBox).type(s);
   }
