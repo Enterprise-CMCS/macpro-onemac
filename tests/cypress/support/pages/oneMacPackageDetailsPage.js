@@ -62,6 +62,9 @@ export class oneMacPackageDetailsPage {
   verifyNoPackageActionsAvailable() {
     cy.xpath(packageActionsList).should("be.visible");
   }
+  verifyPackageActionsSectionDoesNotExist() {
+    cy.xpath(packageActionsList).should("not.exist");
+  }
   verifyRespondtoRAIActionExists() {
     cy.xpath(respondToRAIAction).should("be.visible");
   }

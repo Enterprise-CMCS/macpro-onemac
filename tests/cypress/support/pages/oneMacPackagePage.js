@@ -871,5 +871,8 @@ export class oneMacPackagePage {
         cy.writeFile(f, { savedID: text });
       });
   }
+  verifyActionsColumnDoesNotExist() {
+    cy.get(actionsColumn).should("not.exist");
+  }
 }
 export default oneMacPackagePage;
