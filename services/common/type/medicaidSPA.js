@@ -26,17 +26,4 @@ export const medicaidSPA = {
     "Tribal Consultation",
     "Other",
   ],
-  requiredUploads: [
-    { title: "CMS Form 179", allowMultiple: false },
-    "SPA Pages",
-  ],
-  optionalUploads: [
-    "Cover Letter",
-    "Document Demonstrating Good-Faith Tribal Engagement",
-    "Existing State Plan Page(s)",
-    "Public Notice",
-    "Standard Funding Questions (SFQs)",
-    "Tribal Consultation",
-    "Other",
-  ],
 };

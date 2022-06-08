@@ -4,6 +4,8 @@
  * @param {Object} config of the package.
  * @returns {String} HTML for package details.
  */
+
+import { format, parseISO } from "date-fns";
 export const formatPackageDetails = (data, config) => {
   let detailText = `
       <p>
@@ -17,6 +19,14 @@ export const formatPackageDetails = (data, config) => {
         ${
           data.waiverAuthority
             ? `<br><b>Waiver Authority</b>: ${data.waiverAuthority}`
+            : ""
+        }
+        ${
+          data.proposedEffectiveDate
+            ? `<br><b>Proposed Effective Date</b>: ${format(
+                parseISO(data.proposedEffectiveDate),
+                "MMM d yyyy"
+              )}`
             : ""
         }
         ${
