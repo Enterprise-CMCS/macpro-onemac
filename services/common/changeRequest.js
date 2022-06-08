@@ -40,7 +40,7 @@ const commonSubheaderMessage =
 const raiSubheaderMessage =
   commonSubheaderMessage +
   "<br><br>" +
-  "<b>Please note:</b> Formal RAI Response selection should only be used only when submitting a response to a Formal RAI that would impact the clock.  If this submission is in response to informal questions and is not clock related, the state should be forwarding to the review team via email.";
+  "<b>Please note:</b> Formal RAI Response selection should only be used when submitting a response to a Formal RAI that would impact the clock.  If this submission is in response to informal questions and is not clock related, the state should be forwarding to the review team via email.";
 
 const waiverBaseTransmittalNumber = {
   idType: "waiver",
