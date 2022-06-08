@@ -42,7 +42,7 @@ Feature: OY2-15647 State User can Respond to RAI
         And verify submission Successful message
         And verify SPA ID for RAI 1 EXISTS
         And verify submission date
-        And Verify submission type
+        And Verify submission type for RAI 1 parent SPA
         And click on spa Respond to RAI
         And Add file for RAI Response
         And Add Additional Comments
