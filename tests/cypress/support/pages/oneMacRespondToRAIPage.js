@@ -1,4 +1,5 @@
-const pageHeader = "//h1[contains(text(),'Respond to Medicaid SPA RAI')]";
+const pageHeader =
+  "//h1[contains(text(),'Respond to Formal Medicaid SPA RAI')]";
 const backArrow = "#back-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const leaveAnywaysBtn = "//button[text()='Leave Anyway']";

@@ -37,6 +37,11 @@ export const correspondingRAILink = {
 const commonSubheaderMessage =
   "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.<b> If you leave this page, you will lose your progress on this form.</b>";
 
+const raiSubheaderMessage =
+  commonSubheaderMessage +
+  "<br><br>" +
+  "<b>Please note:</b> Formal RAI Response selection should only be used only when submitting a response to a Formal RAI that would impact the clock.  If this submission is in response to informal questions and is not clock related, the state should be forwarding to the review team via email.";
+
 const waiverBaseTransmittalNumber = {
   idType: "waiver",
   idLabel: "Waiver Number",
@@ -81,12 +86,13 @@ export const CONFIG = {
   },
 
   [TYPE.CHIP_SPA_RAI]: {
-    pageTitle: "Respond to CHIP SPA RAI",
-    readOnlyPageTitle: "CHIP SPA RAI Response Details",
+    pageTitle: "Respond to Formal CHIP SPA RAI",
+    readOnlyPageTitle: "Formal CHIP SPA RAI Response Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
-    detailsHeader: "CHIP SPA RAI",
+    detailsHeader: "Formal CHIP SPA RAI",
+    readOnlyDetailsHeader: "CHIP SPA RAI",
     requiredUploads: [
       "Revised Amended State Plan Language",
       "Official RAI Response",
@@ -159,12 +165,13 @@ export const CONFIG = {
   },
 
   [TYPE.SPA_RAI]: {
-    pageTitle: "Respond to Medicaid SPA RAI",
-    readOnlyPageTitle: "Medicaid SPA RAI Response Details",
+    pageTitle: "Respond to Formal Medicaid SPA RAI",
+    readOnlyPageTitle: "Medicaid SPA RAI Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
-    detailsHeader: "Medicaid SPA RAI",
+    detailsHeader: "Formal Medicaid SPA RAI",
+    readOnlyDetailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
     optionalUploads: ["Other"],
 
@@ -335,7 +342,7 @@ export const CONFIG = {
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },
-    detailsHeader: "Request Temporary Extension",
+    detailsHeader: "Temporary Extension Request",
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
 

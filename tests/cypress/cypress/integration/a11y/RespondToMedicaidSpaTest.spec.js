@@ -9,7 +9,9 @@ describe("Respond To Medicaid SPA Page 508 test", () => {
     cy.xpath(
       "//p[contains(text(),'Submit a new Medicaid & CHIP State Plan Amendments')]"
     ).click();
-    cy.xpath("//div[contains(text(),'Respond to Medicaid SPA RAI')]").click();
+    cy.xpath(
+      "//div[contains(text(),'Respond to Formal Medicaid SPA RAI')]"
+    ).click();
   });
 
   it("Check a11y on Respond to Medicaid SPA Page", () => {
