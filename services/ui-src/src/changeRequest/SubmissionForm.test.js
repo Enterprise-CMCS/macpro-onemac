@@ -17,12 +17,14 @@ import { ChangeRequest } from "cmscommonlib";
 import { SubmissionForm } from "./SubmissionForm";
 
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
+
+import { AppContext } from "../libs/contextLib";
+import { RESPONSE_CODE } from "cmscommonlib";
+
 jest.mock("../utils/ChangeRequestDataApi");
 
 // jest.mock("../utils/s3Uploader");
 
-import { AppContext } from "../libs/contextLib";
-import { RESPONSE_CODE } from "cmscommonlib";
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 

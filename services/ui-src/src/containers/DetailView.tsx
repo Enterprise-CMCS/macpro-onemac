@@ -15,6 +15,7 @@ import {
 import {
   RESPONSE_CODE,
   ROUTES,
+  ONEMAC_ROUTES,
   Workflow,
   territoryMap,
   getUserRoleObj,
@@ -116,7 +117,7 @@ const PAGE_detail = {
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: {
     ...defaultPage,
   },
-  [Workflow.ONEMAC_TYPE.SPA]: {
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: {
     ...defaultPage,
     raiLink: ROUTES.SPA_RAI,
     detailsSection: [
@@ -497,7 +498,7 @@ const DetailView = () => {
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [confirmItem, setConfirmItem] = useState<{
-    label: Workflow.PACKAGE_ACTION;
+    label: typeof Workflow.PACKAGE_ACTION;
     confirmationMessage: string;
     onAccept: () => void;
   } | null>(null);
@@ -615,7 +616,7 @@ const DetailView = () => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar
-        backTo={ROUTES.PACKAGE_LIST}
+        backTo={ONEMAC_ROUTES.PACKAGE_LIST}
         heading={detail && detail.componentId}
         enableBackNav
       />

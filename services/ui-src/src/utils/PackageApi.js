@@ -5,7 +5,7 @@ import handleApiError from "../libs/apiErrorHandler";
 const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
-  [Workflow.ONEMAC_TYPE.SPA]: "submitMedicaidSPA",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "submitMedicaidSPA",
   [Workflow.ONEMAC_TYPE.SPA_RAI]: "submitSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "submitBaseWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
@@ -18,7 +18,7 @@ const SUBMIT_API_CALL = {
 const WITHDRAW_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "withdrawCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "withdrawCHIPSPARAIResponse",
-  [Workflow.ONEMAC_TYPE.SPA]: "withdrawMedicaidSPA",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "withdrawMedicaidSPA",
   [Workflow.ONEMAC_TYPE.SPA_RAI]: "withdrawSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "withdrawBaseWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "withdrawWaiverRenewal",
