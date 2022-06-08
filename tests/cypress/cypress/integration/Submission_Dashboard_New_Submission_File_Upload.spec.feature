@@ -72,8 +72,7 @@ Feature: OY2_5869_FileUpload_Attachment_Types
                 And Click on Submit Button
                 And verify submission Successful message
                 And verify SPA ID 2 EXISTS
-                And verify submission date
-                And Verify submission type
+                And Verify submission type for SPA ID 2
                 And verify Submission List is Displayed
                 And Click on the SPA ID Link
                 And Verify "15MB.pdf" exists in the attachments
