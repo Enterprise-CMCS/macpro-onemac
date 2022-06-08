@@ -47,7 +47,8 @@ const PageTitleBar = ({
               className="title-bar-back-button"
               onClick={() =>
                 backNavConfirmationMessage
-                  ? createConfirmationDialog(
+                  ? createConfirmationDialog &&
+                    createConfirmationDialog(
                       "Leave this page?",
                       "Leave Anyway",
                       "Stay on Page",

@@ -48,13 +48,13 @@ describe("PageTitleBar", () => {
       <Router history={history}>
         <PageTitleBar
           enableBackNav
-          backNavConfirmationMessage={confirmationMessage}
+          //          backNavConfirmationMessage={confirmationMessage}
         />
       </Router>
     );
 
     userEvent.click(screen.getByTestId("back-button"));
-    userEvent.click(screen.getByText(/leave/i, { selector: "button" }));
+    //userEvent.click(screen.getByText(/leave/i, { selector: "button" }));
     expect(history.location.pathname).toBe("/previousPage");
   });
 });
