@@ -29,7 +29,6 @@ import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { useAppContext } from "../libs/contextLib";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
-import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import PortalTable from "../components/PortalTable";
 import PopupMenu from "../components/PopupMenu";
 
@@ -162,16 +161,13 @@ const DetailSection = ({
   detail,
   loadDetail,
   setAlertCode,
-  setConfirmItem,
 }: {
   detail: ComponentDetail;
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
-  setConfirmItem: (item: any) => void;
 }) => {
   const history = useHistory();
-  const { userProfile } = useAppContext() ?? {};
-
+  const { userProfile, useConfirmationDialog } = useAppContext() ?? {};
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
 
@@ -253,11 +249,14 @@ const DetailSection = ({
                             onClick={
                               actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
                                 ? () => {
-                                    setConfirmItem({
-                                      label: actionLabel,
-                                      confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                      onAccept: onLinkActionWithdraw,
-                                    });
+                                    useConfirmationDialog &&
+                                      useConfirmationDialog(
+                                        Workflow.PACKAGE_ACTION.WITHDRAW,
+                                        "Withdraw?",
+                                        "Cancel",
+                                        `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                        onLinkActionWithdraw
+                                      );
                                   }
                                 : () => {
                                     onLinkActionRAI({
@@ -496,11 +495,11 @@ const DetailView = () => {
     useParams<PathParams>();
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [confirmItem, setConfirmItem] = useState<{
-    label: Workflow.PACKAGE_ACTION;
-    confirmationMessage: string;
-    onAccept: () => void;
-  } | null>(null);
+  // const [confirmItem, setConfirmItem] = useState<{
+  //   label: Workflow.PACKAGE_ACTION;
+  //   confirmationMessage: string;
+  //   onAccept: () => void;
+  // } | null>(null);
 
   const detailTab = location.hash.substring(1) || DetailViewTab.DETAIL;
 
@@ -515,7 +514,7 @@ const DetailView = () => {
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
-  const closeConfirmation = useCallback(() => setConfirmItem(null), []);
+  // const closeConfirmation = useCallback(() => setConfirmItem(null), []);
 
   const loadDetail = useCallback(
     async (ctrlr?: AbortController) => {
@@ -636,7 +635,7 @@ const DetailView = () => {
                   detail={detail}
                   loadDetail={loadDetail}
                   setAlertCode={setAlertCode}
-                  setConfirmItem={setConfirmItem}
+                  // setConfirmItem={setConfirmItem}
                 />
               )}
               {(!pageConfig.usesVerticalNav ||
@@ -653,19 +652,6 @@ const DetailView = () => {
             </article>
           </div>
         </div>
-      )}
-      {confirmItem && (
-        <ConfirmationDialog
-          acceptText={confirmItem.label + "?"}
-          heading={confirmItem.label}
-          onAccept={() => {
-            confirmItem.onAccept();
-            closeConfirmation();
-          }}
-          onCancel={closeConfirmation}
-        >
-          {confirmItem.confirmationMessage}
-        </ConfirmationDialog>
       )}
     </LoadingScreen>
   );

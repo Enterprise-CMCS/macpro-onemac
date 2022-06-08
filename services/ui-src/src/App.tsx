@@ -14,10 +14,11 @@ import {
   getActiveTerritories,
   RESPONSE_CODE,
 } from "cmscommonlib";
+import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
-  "setUserInfo" | "updatePhoneNumber"
+  "setUserInfo" | "updatePhoneNumber" | "useConfirmationDialog"
 > = {
   isAuthenticating: true,
   isAuthenticated: false,
@@ -30,7 +31,40 @@ const DEFAULT_AUTH_STATE: Omit<
 
 export function App() {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
+  const [confirmationDialog, setConfirmationDialog] = useState<{
+    heading: string;
+    acceptText: string;
+    cancelText: string;
+    message: string;
+    onAccept: any;
+    onDeny: any;
+  } | null>(null);
+  const closeConfirmationDialog = useCallback(
+    () => setConfirmationDialog(null),
+    []
+  );
 
+  const useConfirmationDialog = useCallback(
+    async (
+      heading: string,
+      acceptText: string,
+      cancelText: string,
+      message: string,
+      onAccept: any,
+      onDeny: any
+    ) =>
+      setConfirmationDialog({
+        heading,
+        acceptText,
+        cancelText,
+        message,
+        onAccept,
+        onDeny,
+      }),
+    []
+  );
+
+  //  const testDialog =  { yesText: "Yes, Do it!", dialogTitle: "Confirmation Dialog Title", doOnAccept: () => { alert('dialog accepted'); closeConfirmationDialog(); }, doOnDeny: () => { alert('dialog denied'); closeConfirmationDialog(); }, message: "This is a confirmation dialog from the context.", width: "100" };
   /**
    * Gets authentication status for user,
    * gets user names and email from cognito
@@ -136,8 +170,9 @@ export function App() {
       ...authState,
       setUserInfo,
       updatePhoneNumber,
+      useConfirmationDialog,
     }),
-    [authState, setUserInfo, updatePhoneNumber]
+    [authState, setUserInfo, updatePhoneNumber, useConfirmationDialog]
   );
 
   return authState.isAuthenticating ? null : (
@@ -146,6 +181,23 @@ export function App() {
         <Header />
         <main id="main">
           <Routes />
+          {confirmationDialog && (
+            <ConfirmationDialog
+              acceptText={confirmationDialog.acceptText}
+              cancelText={confirmationDialog.cancelText}
+              heading={confirmationDialog.heading}
+              onAccept={() => {
+                confirmationDialog.onAccept && confirmationDialog.onAccept();
+                closeConfirmationDialog();
+              }}
+              onCancel={() => {
+                confirmationDialog.onDeny && confirmationDialog.onDeny();
+                closeConfirmationDialog();
+              }}
+            >
+              {confirmationDialog.message}
+            </ConfirmationDialog>
+          )}
         </main>
       </div>
       <Footer />
