@@ -61,7 +61,7 @@ export class oneMacDashboardPage {
     cy.xpath(Type).contains(s);
   }
   verifyTypeForID(s, e) {
-    cy.xpath(IDNUMBER(s)).next("td").contains(e);
+    cy.xpath(IDNUMBER(s)).parent("td").next("td").contains(e);
   }
   verifyDate() {
     cy.get(date).should("be.visible");
