@@ -34,11 +34,11 @@ Feature: State should not be able to withdraw RAI Responses in OneMAC
         And verify submission Successful message
         And verify SPA ID for RAI 2 EXISTS
         And verify submission date
-        And Verify submission type
+        And Verify submission type of SPA ID for RAI 2
         And click on spa Respond to RAI
         And Add file for RAI Response
         And Add Additional Comments
         And Click on Submit Button
         And verify submission Successful message after RAI
-        And Verify submission typeRAI
+        And Verify submission type SPA RAI
         And verify the actions button is unavailable

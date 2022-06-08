@@ -213,6 +213,17 @@ And("Verify submission type", () => {
   OneMacDashboardPage.verifyType("Medicaid SPA");
 });
 
+And("Verify submission type for SPA ID 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.attachmentsSPAID2, "Medicaid SPA");
+  });
+});
+And("Verify submission type for RAI 1 parent SPA", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.SPAIDforRAI1, "Medicaid SPA");
+  });
+});
+
 And("Verify submission Waiver type", () => {
   OneMacDashboardPage.verifyType("Waiver");
 });
@@ -232,16 +243,24 @@ And("Add Additional Comments", () => {
 And("verify submission Successful message after RAI", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedAfterRAIResponse();
 });
-And("Verify submission typeRAI", () => {
-  OneMacDashboardPage.verifyType("SPA RAI");
+And("Verify submission type SPA RAI", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.SPAIDforRAI2, "SPA RAI");
+  });
 });
 
 And("Verify submission type Waiver RAI", () => {
-  OneMacDashboardPage.verifyType("Waiver RAI");
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.verifyTypeForID(
+      d.newWaiverNumber3,
+      "Waiver RAI"
+    );
+  });
 });
-
-And("Verify submission type CHIP SPA RAI", () => {
-  OneMacDashboardPage.verifyType("CHIP SPA RAI");
+And("Verify submission type of SPA ID for RAI 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI2, "Medicaid SPA");
+  });
 });
 
 //this is for the oy2 8616
@@ -1928,6 +1947,9 @@ And("verify package actions header is visible", () => {
 And("verify there are no package actions available", () => {
   OneMacPackageDetailsPage.verifyNoPackageActionsAvailable();
 });
+And("verify the package actions section is unavailable", () => {
+  OneMacPackageDetailsPage.verifyPackageActionsSectionDoesNotExist();
+});
 And("verify Respond to RAI action exists", () => {
   OneMacPackageDetailsPage.verifyRespondtoRAIActionExists();
 });
@@ -2177,4 +2199,7 @@ And("reset EUA CMS Read Only User state if needed", () => {
 
 And("verify the actions button is unavailable", () => {
   OneMacDashboardPage.verifyActionsBtnUnvailableOnFirstRow();
+});
+And("verify actions column is unavailable", () => {
+  OneMacPackagePage.verifyActionsColumnDoesNotExist();
 });
