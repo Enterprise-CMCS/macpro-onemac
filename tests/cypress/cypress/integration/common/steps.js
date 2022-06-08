@@ -229,7 +229,9 @@ And("Verify submission Waiver type", () => {
 });
 
 And("Verify submission CHIP type", () => {
-  OneMacDashboardPage.verifyType("CHIP SPA");
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.chipSPAID1, "CHIP SPA");
+  });
 });
 And("click on spa Respond to RAI", () => {
   OneMacDashboardPage.clickOnrespondToRAI();
@@ -251,10 +253,7 @@ And("Verify submission type SPA RAI", () => {
 
 And("Verify submission type Waiver RAI", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.verifyTypeForID(
-      d.newWaiverNumber3,
-      "Waiver RAI"
-    );
+    OneMacDashboardPage.verifyTypeForID(d.newWaiverNumber3, "Waiver RAI");
   });
 });
 And("Verify submission type of SPA ID for RAI 2", () => {
