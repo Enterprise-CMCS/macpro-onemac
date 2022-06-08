@@ -1,5 +1,5 @@
 Feature: Package Dashboard: CHIP SPA Form
-@focus 
+
     Scenario: Screen Enhance - CHIP SPA
         Given I am on Login Page
         When Clicking on Development Login
