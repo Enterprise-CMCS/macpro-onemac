@@ -78,5 +78,17 @@ export class oneMacSubmissionTypePage {
       .parent()
       .should("have.attr", "href", "/base-waiver");
   }
+  verifyChipSPAIsClickable() {
+    cy.xpath(ChipSPA)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/chip-spa");
+  }
+  verifyMedicaidSPAIsClickable() {
+    cy.xpath(MedicalSPA)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/medicaid-spa");
+  }
 }
 export default oneMacSubmissionTypePage;
