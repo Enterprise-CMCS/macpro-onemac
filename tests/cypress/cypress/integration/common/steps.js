@@ -245,9 +245,14 @@ And("Verify submission CHIP type", () => {
     OneMacDashboardPage.verifyTypeForID(d.chipSPAID1, "CHIP SPA");
   });
 });
-And("click on spa Respond to RAI", () => {
+And("click on spa Respond to RAI 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
     OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI2);
+  });
+});
+And("click on spa Respond to RAI 1", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI1);
   });
 });
 And("Add file for RAI Response", () => {
