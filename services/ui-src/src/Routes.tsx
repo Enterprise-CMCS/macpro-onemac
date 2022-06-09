@@ -19,7 +19,7 @@ import FAQ from "./containers/FAQ";
 import { AttachmentLanding } from "./containers/AttachmentLanding";
 import NotFound from "./containers/NotFound";
 import Dashboard from "./containers/Dashboard";
-import DetailView from "./containers/DetailView";
+//import DetailView from "./containers/DetailView";
 import DevLogin from "./containers/DevLogin";
 import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
@@ -36,6 +36,7 @@ import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
 import BaseWaiverForm from "./page/base-waiver/BaseWaiverForm";
+import BaseWaiverDetail from "./page/base-waiver/BaseWaiverDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
 import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
@@ -270,17 +271,17 @@ const ROUTE_LIST: RouteSpec[] = [
         component: accessGuardRouteListRenderer("canAccessDashboard"),
         routes: [
           {
-            path: ROUTES.DETAIL + "/:componentType/:componentId",
+            path: ONEMAC_ROUTES.BASE_WAIVER_DETAIL + "/:componentId",
             exact: true,
-            component: DetailView,
+            component: BaseWaiverDetail,
           },
-          {
-            path:
-              ROUTES.DETAIL +
-              "/:componentType/:componentTimestamp/:componentId",
-            exact: true,
-            component: DetailView,
-          },
+          // {
+          //   path:
+          //     ROUTES.DETAIL +
+          //     "/:componentType/:componentTimestamp/:componentId",
+          //   exact: true,
+          //   component: DetailView,
+          // },
         ],
       },
     ],
