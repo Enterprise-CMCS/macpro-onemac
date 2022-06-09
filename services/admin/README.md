@@ -4,6 +4,10 @@ The purpose of this set of services is to serve as a mechanism to standardize ad
 
 ### Functions
 
+#### resetData
+
+Run this lambda to delete the components used in the automated testing. Right now, the IDs are hard-coded into the function and the delete is run on the change-request and one tables. Plan is to move the list of IDs into the test area of the repo for QE control.
+
 #### updateChangeRequestId
 
 Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message onto the addtionalInfo
@@ -16,6 +20,15 @@ From the admin directory run:
 - npm install --save-dev serverless-webpack
 
 ### Execution
+
+#### Local Invocation
+
+For resetData:
+
+```
+cd /services/admin
+serverless invoke local --function resetData --stage dev --env IS_OFFLINE=true
+```
 
 #### AWS Console
 
