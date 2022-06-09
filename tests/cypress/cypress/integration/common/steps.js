@@ -205,7 +205,9 @@ And("type in CHIP ID 2", () => {
 });
 
 And("click on CHIP Respond to RAI", () => {
-  OneMacDashboardPage.clickOnrespondToRAI();
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.chipSPAID1);
+  });
 });
 
 And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
@@ -244,7 +246,9 @@ And("Verify submission CHIP type", () => {
   });
 });
 And("click on spa Respond to RAI", () => {
-  OneMacDashboardPage.clickOnrespondToRAI();
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI2);
+  });
 });
 And("Add file for RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
@@ -501,7 +505,9 @@ And("verify Waiver Number EXISTS", () => {
 });
 
 And("click on Waiver Respond to RAI", () => {
-  OneMacDashboardPage.clickOnrespondToRAI();
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.newWaiverNumber3);
+  });
 });
 
 And("Add file for Waiver RAI Response", () => {

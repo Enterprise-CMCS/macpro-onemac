@@ -1,4 +1,5 @@
 Feature: State should not be able to withdraw RAI Responses in OneMAC
+@focus     
     Scenario: Can not withdraw Waiver RAI Response
         Given I am on Login Page
         When Clicking on Development Login
