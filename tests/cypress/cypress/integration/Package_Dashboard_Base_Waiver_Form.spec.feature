@@ -20,12 +20,12 @@ Feature: Update Waiver Form: Base Waiver
         And Click on Waiver Action
         And click on Base Waiver
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Unique Valid Base Waiver Number With SS.#####.R00.00 format
+        And Type Base Waiver Number in format SS.#####.R00.00
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button
         And verify submission Successful message
         And verify the Waivers tab is selected
-        And search for Unique Valid Base Waiver Number with 12 Characters
-        And verify id number in the first row matches Unique Valid Base Waiver Number
+        And search for Base Waiver Number 1 with 12 Characters
+        And verify id number in the first row matches Base Waiver Number 1

@@ -2,6 +2,7 @@ import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
 import { useHistory, useParams, useLocation } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import classNames from "classnames";
+import { Column } from "react-table";
 
 import {
   Button,
@@ -14,6 +15,7 @@ import {
 import {
   RESPONSE_CODE,
   ROUTES,
+  ONEMAC_ROUTES,
   Workflow,
   territoryMap,
   getUserRoleObj,
@@ -115,7 +117,7 @@ const PAGE_detail = {
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: {
     ...defaultPage,
   },
-  [Workflow.ONEMAC_TYPE.SPA]: {
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: {
     ...defaultPage,
     raiLink: ROUTES.SPA_RAI,
     detailsSection: [
@@ -208,6 +210,8 @@ const DetailSection = ({
   const pageConfig =
     PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
+  const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+
   return (
     <>
       {(detail.title || pageConfig.defaultTitle) && (
@@ -235,45 +239,54 @@ const DetailSection = ({
                 </Review>
               )}
           </section>
-          <section className="package-actions">
-            <h2>{pageConfig.actionLabel}</h2>
-            <ul className="action-list">
-              {pageConfig.actionsByStatus[detail.currentStatus]?.length > 0 ? (
-                pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                  (actionLabel, index) => {
-                    return (
-                      <li key={index}>
-                        <Button
-                          className="package-action-link"
-                          onClick={
-                            actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
-                              ? () => {
-                                  setConfirmItem({
-                                    label: actionLabel,
-                                    confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                    onAccept: onLinkActionWithdraw,
-                                  });
-                                }
-                              : () => {
-                                  onLinkActionRAI({
-                                    href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
-                                  });
-                                }
-                          }
-                        >
-                          {actionLabel}
-                        </Button>
-                      </li>
-                    );
-                  }
-                )
-              ) : (
-                <li>
-                  <p>No actions are currently available for this submission.</p>
-                </li>
-              )}
-            </ul>
-          </section>
+          {userRoleObj.canAccessForms ? (
+            <section className="package-actions">
+              <h2>{pageConfig.actionLabel}</h2>
+              <ul className="action-list">
+                {pageConfig.actionsByStatus[detail.currentStatus]?.length >
+                0 ? (
+                  pageConfig.actionsByStatus[detail.currentStatus]?.map(
+                    (actionLabel, index) => {
+                      return (
+                        <li key={index}>
+                          <Button
+                            className="package-action-link"
+                            onClick={
+                              actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
+                                ? () => {
+                                    setConfirmItem({
+                                      label: actionLabel,
+                                      confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                      onAccept: onLinkActionWithdraw,
+                                    });
+                                  }
+                                : () => {
+                                    onLinkActionRAI({
+                                      href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                    });
+                                  }
+                            }
+                          >
+                            {actionLabel}
+                          </Button>
+                        </li>
+                      );
+                    }
+                  )
+                ) : (
+                  <li>
+                    <p>
+                      No actions are currently available for this submission.
+                    </p>
+                  </li>
+                )}
+              </ul>
+            </section>
+          ) : (
+            <section className="package-actions">
+              <div className="column-spacer">&nbsp;</div>
+            </section>
+          )}
         </div>
       </section>
       <div className="read-only-submission">
@@ -427,8 +440,8 @@ const TemporaryExtensionSection: FC<{
     [onPopupActionWithdraw]
   );
 
-  const tempExtColumns = useMemo(
-    () => [
+  const tempExtColumns = useMemo(() => {
+    const theColumns: Column[] = [
       {
         Header: "Extension Id",
         accessor: "componentId",
@@ -437,15 +450,17 @@ const TemporaryExtensionSection: FC<{
         Header: "Status",
         accessor: "currentStatus",
       },
-      {
+    ];
+    if (userRoleObj.canAccessForms)
+      theColumns.push({
         Header: "Actions",
         accessor: "actions",
         id: "packageActions",
         Cell: renderActions,
-      },
-    ],
-    [renderActions]
-  );
+      });
+
+    return theColumns;
+  }, [renderActions, userRoleObj.canAccessForms]);
 
   return (
     <section id="temp-ext-base" className="read-only-submission ">
@@ -483,7 +498,7 @@ const DetailView = () => {
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [confirmItem, setConfirmItem] = useState<{
-    label: Workflow.PACKAGE_ACTION;
+    label: typeof Workflow.PACKAGE_ACTION;
     confirmationMessage: string;
     onAccept: () => void;
   } | null>(null);
@@ -601,7 +616,7 @@ const DetailView = () => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar
-        backTo={ROUTES.PACKAGE_LIST}
+        backTo={ONEMAC_ROUTES.PACKAGE_LIST}
         heading={detail && detail.componentId}
         enableBackNav
       />

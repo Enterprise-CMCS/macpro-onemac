@@ -24,15 +24,4 @@ export const chipSPA = {
     "Tribal Consultation",
     "Other",
   ],
-  requiredUploads: [
-    "Current State Plan",
-    "Amended State Plan Language",
-    "Cover Letter",
-  ],
-  optionalUploads: [
-    "Budget Documents",
-    "Public Notice",
-    "Tribal Consultation",
-    "Other",
-  ],
 };

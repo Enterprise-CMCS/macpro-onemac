@@ -79,7 +79,10 @@ const SubmissionView = ({ changeRequestType }) => {
               </section>
             )}
             <section>
-              <h2>{formInfo.detailsHeader} Details</h2>
+              <h2>
+                {formInfo.readOnlyDetailsHeader ?? formInfo.detailsHeader}{" "}
+                Details
+              </h2>
               {changeRequest.waiverAuthority && (
                 <Review heading="Waiver Authority">
                   {AUTHORITY_LABELS[changeRequest.waiverAuthority] ??

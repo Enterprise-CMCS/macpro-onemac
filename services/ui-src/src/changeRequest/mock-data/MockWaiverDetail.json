@@ -3,7 +3,7 @@
     "sk": "waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
         {
         "s3Key": "1639507770586/15MB.pdf",
@@ -25,7 +25,7 @@
         {
         "componentType": "waiverextension",
         "componentId": "MI.83420.R00.TE02",
-        "currentStatus": "Package In Review",
+        "currentStatus": "In Review",
         "submitterName": "Angie Active",
         "submitterEmail": "statesubmitteractive@cms.hhs.local",
         "submissionTimestamp": 1647640764590
@@ -73,7 +73,7 @@
             "sk": "waiverextension",
             "submitterId": "us-east-1:461e534a-6f0f-470c-a2da-d57e848125f5",
             "componentType": "waiverextension",
-            "currentStatus": "Package In Review",
+            "currentStatus": "In Review",
             "parentId": "MI.83420",
             "attachments": [
              {

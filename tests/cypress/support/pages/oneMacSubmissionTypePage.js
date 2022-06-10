@@ -15,9 +15,10 @@ const RequestTemporaryExtension = '//div[text()="Request Temporary Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const AppendixKAmendment = '//div[text()="Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToMedicaidSPARAI = '//div[text()="Respond to Medicaid SPA RAI"]';
+const respondToMedicaidSPARAI =
+  '//div[text()="Respond to Formal Medicaid SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToCHIPSPARAI = '//div[text()="Respond to CHIP SPA RAI"]';
+const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToWaiverRAI = '//div[text()="Respond to Waiver RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -76,6 +77,18 @@ export class oneMacSubmissionTypePage {
       .parent()
       .parent()
       .should("have.attr", "href", "/base-waiver");
+  }
+  verifyChipSPAIsClickable() {
+    cy.xpath(ChipSPA)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/chip-spa");
+  }
+  verifyMedicaidSPAIsClickable() {
+    cy.xpath(MedicalSPA)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/medicaid-spa");
   }
 }
 export default oneMacSubmissionTypePage;

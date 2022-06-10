@@ -3,7 +3,6 @@ import { RESPONSE_CODE } from "cmscommonlib";
 import { getUser } from "../getUser";
 import { validateUserSubmitting } from "../utils/validateUser";
 import updateComponent from "../utils/updateComponent";
-import updateParent from "../utils/updateParent";
 import { CMSWithdrawalNotice } from "../email/CMSWithdrawalNotice";
 import { stateWithdrawalReceipt } from "../email/stateWithdrawalReceipt";
 import sendEmail from "../libs/email-lib";
@@ -38,9 +37,6 @@ export const changeStatusAny = async (event, config) => {
   try {
     updatedPackageData = await updateComponent(updateData, config);
     console.log("Updated Package Data: ", updatedPackageData);
-    updateData.submissionTimestamp = updatedPackageData.submissionTimestamp;
-
-    if (updatedPackageData.parentId) await updateParent(updatedPackageData);
   } catch (e) {
     console.error("Failed to update package", e);
     return RESPONSE_CODE.DATA_RETRIEVAL_ERROR;
