@@ -53,3 +53,9 @@ export type PackageRowValue = {
 export type LocationState = {
   passCode?: string;
 };
+
+export type FormLocationState = {
+  parentId?: string;
+  parentType?: string;
+  componentId?: string;
+};

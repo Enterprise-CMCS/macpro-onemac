@@ -1,8 +1,9 @@
 import React, { FC, useState, useCallback, useEffect, useMemo } from "react";
-import { useHistory, useParams, useLocation } from "react-router-dom";
+import { useHistory, useParams, useLocation, Link } from "react-router-dom";
 import { format, parseISO } from "date-fns";
 import classNames from "classnames";
 import { Column } from "react-table";
+import { FormLocationState } from "../domain-types";
 
 import {
   Button,
@@ -201,8 +202,8 @@ const DetailSection = ({
   }, [detail, userProfile, loadDetail, setAlertCode]);
 
   const onLinkActionRAI = useCallback(
-    (value) => {
-      history.push(`${value.href}`);
+    (value: { href: string; state?: FormLocationState }) => {
+      history.push(`${value.href}`, value.state);
     },
     [history]
   );
@@ -262,7 +263,10 @@ const DetailSection = ({
                                   }
                                 : () => {
                                     onLinkActionRAI({
-                                      href: `${pageConfig.raiLink}?transmittalNumber=${detail.componentId}`,
+                                      href: pageConfig.raiLink,
+                                      state: {
+                                        componentId: detail.componentId,
+                                      },
                                     });
                                   }
                             }
@@ -464,7 +468,22 @@ const TemporaryExtensionSection: FC<{
 
   return (
     <section id="temp-ext-base" className="read-only-submission ">
-      <h2>Temporary Extensions</h2>
+      <div className="mini-dashboard-title">
+        <h2>Temporary Extensions</h2>
+        <Link<FormLocationState>
+          to={{
+            pathname: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
+            state: {
+              parentId: detail.componentId,
+              parentType: detail.componentType,
+            },
+          }}
+        >
+          <Button id="new-temp-ext-button" variation="primary">
+            Request Extension
+          </Button>
+        </Link>
+      </div>
       <div className="ds-u-padding-top--3" />
       <PortalTable
         className={tableClassName}
@@ -484,7 +503,7 @@ const TemporaryExtensionSection: FC<{
 enum DetailViewTab {
   DETAIL = "component-details",
   ADDITIONAL = "additional-info",
-  EXTENSION = "temp-extenstion",
+  EXTENSION = "temp-extension",
 }
 
 /**

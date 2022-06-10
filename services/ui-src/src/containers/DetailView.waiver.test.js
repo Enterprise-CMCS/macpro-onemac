@@ -74,7 +74,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420#temp-extenstion");
+    history.push("/detail/waivernew/MI.83420#temp-extension");
 
     render(
       <AppContext.Provider
@@ -106,7 +106,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420#temp-extenstion");
+    history.push("/detail/waivernew/MI.83420#temp-extension");
 
     render(
       <AppContext.Provider

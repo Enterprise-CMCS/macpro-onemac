@@ -31,11 +31,14 @@ export default async function newSubmission(newData, config) {
     newData.GSI1pk = `OneMAC#${config.packageGroup}`;
     newData.GSI1sk = pk;
   } else {
-    [newData.parentId, newData.parentType] = config.getParentInfo(
-      newData.componentId
-    );
-    newData.GSI1pk = newData.parentId;
-    newData.GSI1sk = config.componentType;
+    if (newData.parentId) {
+      newData.GSI1pk = newData.parentId;
+      newData.GSI1sk = config.componentType;
+    } else {
+      [newData.parentId, newData.parentType] = config.getParentInfo(
+        newData.componentId
+      );
+    }
   }
   console.log("newData is: ", newData);
 

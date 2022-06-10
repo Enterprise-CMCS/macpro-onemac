@@ -137,6 +137,7 @@ export namespace Workflow {
   ) => string;
 }
 
+export * as Validate from "./idValidation.js";
 //export * as Workflow from "./workflow.js";
 
 export { baseWaiver } from "./type/baseWaiver";

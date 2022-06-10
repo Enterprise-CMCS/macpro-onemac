@@ -3,8 +3,8 @@ import OneMACForm from "../OneMACForm";
 import { OneMACFormConfig } from "../../libs/formLib";
 import {
   Workflow,
+  Validate,
   ROUTES,
-  ONEMAC_ROUTES,
   waiverTemporaryExtension,
 } from "cmscommonlib";
 
@@ -23,7 +23,9 @@ const temporaryExtensionFormInfo: OneMACFormConfig = {
   idFormat: idFormat,
   actionsByStatus: Workflow.defaultActionsByStatus,
   raiLink: ROUTES.WAIVER_RAI,
-  landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
+  landingPage: ROUTES.DETAIL + "/:parentType/:parentId#temp-extension",
+  landingPageReplacementKeys: ["parentType", "parentId"],
+  getParentInfo: (myId) => Validate.getParentWaiver(myId),
 };
 
 const TemporaryExtensionForm: FC = () => {
