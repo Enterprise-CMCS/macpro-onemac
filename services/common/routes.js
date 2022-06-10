@@ -39,8 +39,11 @@ export const ONEMAC_ROUTES = {
   TRIAGE_SPA: "/choices/spa",
   TRIAGE_WAIVER: "/choices/waiver",
   MEDICAID_SPA: "/medicaid-spa",
+  MEDICAID_SPA_DETAIL: "/detail/spa",
   CHIP_SPA: "/chip-spa",
+  CHIP_SPA_DETAIL: "/detail/chipspa",
   BASE_WAIVER: "/base-waiver",
   BASE_WAIVER_DETAIL: "/detail/waivernew",
   TEMPORARY_EXTENSION: "/temporary-extension",
+  TEMPORARY_EXTENSION_DETAIL: "/detail/waiverextension",
 };

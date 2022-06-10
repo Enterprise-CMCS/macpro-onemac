@@ -1,13 +1,49 @@
 import React, { FC } from "react";
 import DetailView from "../DetailView";
-import { OneMACDetail, defaultDetail } from "../DetailViewDefaults";
-import { Workflow, ROUTES, baseWaiver } from "cmscommonlib";
+import {
+  OneMACDetail,
+  DetailViewTab,
+  defaultDetail,
+  typeDefault,
+  waiverAuthorityDefault,
+  territoryDefault,
+  submissionDateDefault,
+  proposedEffectiveDateDefault,
+} from "../DetailViewDefaults";
+import { ROUTES, baseWaiver } from "cmscommonlib";
 
 export const baseWaiverDetail: OneMACDetail = {
   ...defaultDetail,
   ...baseWaiver,
-  usesVerticalNav: true,
-  actionsByStatus: Workflow.defaultActionsByStatus,
+  navItems: [
+    {
+      label: "Package Overview",
+      items: [
+        {
+          id: DetailViewTab.DETAIL,
+          label: "Package Details",
+          url: `#${DetailViewTab.DETAIL}`,
+        },
+        {
+          id: DetailViewTab.ADDITIONAL,
+          label: "Additional Information",
+          url: `#${DetailViewTab.ADDITIONAL}`,
+        },
+        {
+          id: DetailViewTab.EXTENSION,
+          label: "Temporary Extension",
+          url: `#${DetailViewTab.EXTENSION}`,
+        },
+      ],
+    },
+  ],
+  detailSection: [
+    waiverAuthorityDefault,
+    typeDefault,
+    territoryDefault,
+    submissionDateDefault,
+    proposedEffectiveDateDefault,
+  ],
   raiLink: ROUTES.WAIVER_RAI,
 };
 

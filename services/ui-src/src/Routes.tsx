@@ -19,7 +19,6 @@ import FAQ from "./containers/FAQ";
 import { AttachmentLanding } from "./containers/AttachmentLanding";
 import NotFound from "./containers/NotFound";
 import Dashboard from "./containers/Dashboard";
-//import DetailView from "./containers/DetailView";
 import DevLogin from "./containers/DevLogin";
 import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
@@ -39,7 +38,9 @@ import BaseWaiverForm from "./page/base-waiver/BaseWaiverForm";
 import BaseWaiverDetail from "./page/base-waiver/BaseWaiverDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
+import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
 import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
+import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -270,6 +271,16 @@ const ROUTE_LIST: RouteSpec[] = [
         path: ROUTES.DETAIL,
         component: accessGuardRouteListRenderer("canAccessDashboard"),
         routes: [
+          {
+            path: ONEMAC_ROUTES.MEDICAID_SPA_DETAIL + "/:componentId",
+            exact: true,
+            component: MedicaidSPADetail,
+          },
+          {
+            path: ONEMAC_ROUTES.CHIP_SPA_DETAIL + "/:componentId",
+            exact: true,
+            component: CHIPSPADetail,
+          },
           {
             path: ONEMAC_ROUTES.BASE_WAIVER_DETAIL + "/:componentId",
             exact: true,

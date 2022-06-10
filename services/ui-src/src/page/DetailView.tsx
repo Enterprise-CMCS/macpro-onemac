@@ -33,7 +33,7 @@ import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionFo
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import PortalTable from "../components/PortalTable";
 import PopupMenu from "../components/PopupMenu";
-import { OneMACDetail } from "./DetailViewDefaults";
+import { OneMACDetail, DetailViewTab } from "./DetailViewDefaults";
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
@@ -41,7 +41,6 @@ const AUTHORITY_LABELS = {
 } as const;
 
 type PathParams = {
-  componentType: string;
   componentTimestamp: string;
   componentId: string;
 };
@@ -440,20 +439,14 @@ const TemporaryExtensionSection: FC<{
   );
 };
 
-enum DetailViewTab {
-  DETAIL = "component-details",
-  ADDITIONAL = "additional-info",
-  EXTENSION = "temp-extenstion",
-}
-
 /**
  * Given an id and the relevant submission type forminfo, show the detail
  */
 const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-  const { componentType, componentTimestamp, componentId } =
-    useParams<PathParams>();
+  const { componentTimestamp, componentId } = useParams<PathParams>();
+  const [componentType] = useState(pageConfig.componentType);
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [confirmItem, setConfirmItem] = useState<{
@@ -483,8 +476,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       try {
         fetchedDetail = (await PackageApi.getDetail(
           componentId,
-          "waivernew",
-
+          componentType,
           componentTimestamp
         )) as ComponentDetail;
         if (!fetchedDetail.territory)
@@ -531,33 +523,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
-    [history, componentId, componentTimestamp]
-  );
-
-  const navItems = useMemo(
-    () => [
-      {
-        label: "Package Overview",
-        items: [
-          {
-            id: DetailViewTab.DETAIL,
-            label: "Package Details",
-            url: `#${DetailViewTab.DETAIL}`,
-          },
-          {
-            id: DetailViewTab.ADDITIONAL,
-            label: "Additional Information",
-            url: `#${DetailViewTab.ADDITIONAL}`,
-          },
-          Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes("waivernew") && {
-            id: DetailViewTab.EXTENSION,
-            label: "Temporary Extension",
-            url: `#${DetailViewTab.EXTENSION}`,
-          },
-        ],
-      },
-    ],
-    []
+    [history, componentId, componentType, componentTimestamp]
   );
 
   useEffect(() => {
@@ -568,7 +534,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
     return function cleanup() {
       ctrlr.abort();
     };
-  }, [componentId, componentType, componentTimestamp, loadDetail]);
+  }, [componentId, componentTimestamp, loadDetail]);
 
   return (
     <LoadingScreen isLoading={isLoading}>
@@ -581,12 +547,8 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
       {detail && (
         <div className="form-container">
           <div className="component-detail-wrapper">
-            {pageConfig.usesVerticalNav && (
-              <VerticalNav
-                // component="button"
-                items={navItems}
-                selectedId={detailTab}
-              />
+            {pageConfig.navItems.length > 0 && (
+              <VerticalNav items={pageConfig.navItems} selectedId={detailTab} />
             )}
             <article className="component-detail">
               {detailTab === DetailViewTab.DETAIL && (
