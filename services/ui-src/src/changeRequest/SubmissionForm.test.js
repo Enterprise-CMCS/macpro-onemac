@@ -69,7 +69,7 @@ describe("Submission Form", () => {
         >
           <Router history={history}>
             <SubmissionForm
-              changeRequestType={ChangeRequest.TYPE.SPA}
+              changeRequestType={ChangeRequest.TYPE.MEDICAID_SPA}
             ></SubmissionForm>
           </Router>
         </AppContext.Provider>
@@ -150,7 +150,8 @@ describe("Submission Form", () => {
     it("populates the transmittal number field when passed in as a url query parameter", async () => {
       const testTransmittalNumber = "MI-12-1122";
       const spaRaiTransmittalNumberDetails =
-        ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA_RAI].transmittalNumber;
+        ChangeRequest.CONFIG[ChangeRequest.TYPE.MEDICAID_SPA_RAI]
+          .transmittalNumber;
       const promise = Promise.resolve([]);
       ChangeRequestDataApi.packageExists.mockImplementationOnce(() => promise);
 
@@ -162,7 +163,9 @@ describe("Submission Form", () => {
           }}
         >
           <Router history={history}>
-            <SubmissionForm changeRequestType={ChangeRequest.TYPE.SPA_RAI} />
+            <SubmissionForm
+              changeRequestType={ChangeRequest.TYPE.MEDICAID_SPA_RAI}
+            />
           </Router>
         </AppContext.Provider>
       );
@@ -244,8 +247,8 @@ describe("Submission Form", () => {
       it("displays error message when id SHOULD NOT exist but it does", async () => {
         history.push("/spa");
         const spaIdLabel =
-          ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA].transmittalNumber
-            .idLabel;
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.MEDICAID_SPA]
+            .transmittalNumber.idLabel;
         const testId = "MI-12-1122";
         const existErrorMessage = `According to our records, this ${spaIdLabel} already exists. Please check the ${spaIdLabel} and try entering it again.`;
 
@@ -259,7 +262,9 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <SubmissionForm changeRequestType={ChangeRequest.TYPE.SPA} />
+              <SubmissionForm
+                changeRequestType={ChangeRequest.TYPE.MEDICAID_SPA}
+              />
             </Router>
           </AppContext.Provider>
         );
@@ -304,8 +309,8 @@ describe("Submission Form", () => {
       it("displays error message when id SHOULD exist but it doesn't", async () => {
         history.push("/sparai");
         const spaRaiIdLabel =
-          ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA_RAI].transmittalNumber
-            .idLabel;
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.MEDICAID_SPA_RAI]
+            .transmittalNumber.idLabel;
         const testId = "MI-12-1122";
         const existErrorMessage = `According to our records, this ${spaRaiIdLabel} does not exist. Please check the ${spaRaiIdLabel} and try entering it again.`;
 
@@ -319,7 +324,9 @@ describe("Submission Form", () => {
             }}
           >
             <Router history={history}>
-              <SubmissionForm changeRequestType={ChangeRequest.TYPE.SPA_RAI} />
+              <SubmissionForm
+                changeRequestType={ChangeRequest.TYPE.MEDICAID_SPA_RAI}
+              />
             </Router>
           </AppContext.Provider>
         );
