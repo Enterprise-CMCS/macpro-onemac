@@ -31,11 +31,11 @@ export const waiverSubmission = {
   territory: "MI",
 };
 
-export const spaSubmission = {
+export const medicaidSpaSubmission = {
   summary: "zx",
   waiverAuthority: "",
   ninetyDayClockEnd: 1631545241170,
-  type: "spa",
+  type: "medicaidspa",
   userId: "us-east-1:4267bada-207d-47f2-8cf9-e80150f3e670",
   uploads: [
     {

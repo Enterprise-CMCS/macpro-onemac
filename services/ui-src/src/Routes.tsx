@@ -44,8 +44,8 @@ import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
 const FORM_TYPES = {
   [ROUTES.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
   [ROUTES.CHIP_SPA_RAI]: ChangeRequest.TYPE.CHIP_SPA_RAI,
-  [ROUTES.SPA]: ChangeRequest.TYPE.SPA,
-  [ROUTES.SPA_RAI]: ChangeRequest.TYPE.SPA_RAI,
+  [ROUTES.MEDICAID_SPA]: ChangeRequest.TYPE.MEDICAID_SPA,
+  [ROUTES.MEDICIAD_SPA_RAI]: ChangeRequest.TYPE.MEDICAID_SPA_RAI,
   [ROUTES.WAIVER]: ChangeRequest.TYPE.WAIVER,
   [ROUTES.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
   [ROUTES.WAIVER_EXTENSION]: ChangeRequest.TYPE.WAIVER_EXTENSION,

@@ -3,8 +3,8 @@ import { ROUTES } from "./routes.js";
 export const TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
-  SPA: "spa",
-  SPA_RAI: "sparai",
+  MEDICAID_SPA: "medicaidspa",
+  MEDICAID_SPA_RAI: "medicaidsparai",
   WAIVER: "waiver",
   WAIVER_BASE: "waivernew",
   WAIVER_AMENDMENT: "waiveramendment",
@@ -27,7 +27,7 @@ export const LABEL = {
 
 export const correspondingRAILink = {
   [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
-  [TYPE.SPA]: ROUTES.SPA_RAI,
+  [TYPE.MEDICAID_SPA]: ROUTES.MEDICAID_SPA_RAI,
   [TYPE.WAIVER]: ROUTES.WAIVER_RAI,
   [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
   [TYPE.WAIVER_RENEWAL]: ROUTES.WAIVER_RAI,
@@ -120,7 +120,7 @@ export const CONFIG = {
     },
   },
 
-  [TYPE.SPA]: {
+  [TYPE.MEDICAID_SPA]: {
     pageTitle: "Submit New Medicaid SPA",
     readOnlyPageTitle: "Medicaid SPA Submission Details",
     subheaderMessage: {
@@ -161,10 +161,10 @@ export const CONFIG = {
         },
       ],
     },
-    raiLink: ROUTES.SPA_RAI,
+    raiLink: ROUTES.MEDICAID_SPA_RAI,
   },
 
-  [TYPE.SPA_RAI]: {
+  [TYPE.MEDICAID_SPA_RAI]: {
     pageTitle: "Respond to Formal Medicaid SPA RAI",
     readOnlyPageTitle: "Medicaid SPA RAI Details",
     subheaderMessage: {

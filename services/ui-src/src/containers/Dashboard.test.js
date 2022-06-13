@@ -16,7 +16,7 @@ import { AppContext } from "../libs/contextLib";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 import {
   waiverSubmission,
-  spaSubmission,
+  medicaidSpaSubmission,
   chipSpaSubmission,
 } from "../libs/testDataSubmissions";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
@@ -97,7 +97,7 @@ describe("puzzle piece message", () => {
 });
 
 it("renders table with columns", async () => {
-  const promise = Promise.resolve([spaSubmission]);
+  const promise = Promise.resolve([medicaidSpaSubmission]);
   ChangeRequestDataApi.getAllByAuthorizedTerritories.mockImplementationOnce(
     () => promise
   );
@@ -130,14 +130,14 @@ it("renders table with columns", async () => {
 describe("Actions column", () => {
   it("links to the correct RAI form for spa type", async () => {
     let history = createMemoryHistory();
-    const promise = Promise.resolve([spaSubmission]);
+    const promise = Promise.resolve([medicaidSpaSubmission]);
     ChangeRequestDataApi.getAllByAuthorizedTerritories.mockImplementationOnce(
       () => promise
     );
 
     const expectedType = "Medicaid SPA";
-    const expectedRaiLink = "/sparai";
-    const expectedUrlParams = `?transmittalNumber=${spaSubmission.transmittalNumber}`;
+    const expectedRaiLink = "/medicaidsparai";
+    const expectedUrlParams = `?transmittalNumber=${medicaidSpaSubmission.transmittalNumber}`;
 
     render(
       <AppContext.Provider
