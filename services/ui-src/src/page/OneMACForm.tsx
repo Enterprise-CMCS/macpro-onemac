@@ -145,11 +145,20 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     ]
   );
 
-  async function handleTransmittalNumberChange(componentId: string) {
+  async function handleComponentIdChange(componentId: string) {
     let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
 
     updatedRecord.componentId = componentId;
     updatedRecord.territory = getTerritoryFromComponentId(componentId);
+
+    //if this is a child type form and no parentId was passed in state then determine parentId based on componentId
+    if (
+      typeof formConfig.getParentInfo == "function" &&
+      !location.state?.parentId
+    ) {
+      [updatedRecord.parentId, updatedRecord.parentType] =
+        formConfig.getParentInfo(updatedRecord.componentId);
+    }
 
     setOneMacFormData(updatedRecord);
   }
@@ -297,22 +306,21 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     setAlertCode(RESPONSE_CODE.NONE);
   }
 
-  function getLandingPage(landingPage: string): string {
-    let finalLandingPage: string = landingPage;
-
-    if (formConfig.landingPageReplacementKeys) {
-      for (let key of formConfig.landingPageReplacementKeys) {
-        finalLandingPage = finalLandingPage.replace(
-          ":".concat(key),
-          oneMacFormData[key] ?? ""
-        );
-      }
-    }
-
-    return finalLandingPage;
-  }
-
   const limitSubmit = useRef(false);
+
+  const getLandingPage = useCallback(() => {
+    let finalLandingPage: string = formConfig.landingPage;
+    if (oneMacFormData.parentId && oneMacFormData.parentType) {
+      finalLandingPage = finalLandingPage
+        .replace("parentType", oneMacFormData.parentType)
+        .replace("parentId", oneMacFormData.parentId);
+    }
+    return finalLandingPage;
+  }, [
+    formConfig.landingPage,
+    oneMacFormData.parentId,
+    oneMacFormData.parentType,
+  ]);
 
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
@@ -332,14 +340,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             transmittalNumberStatusMessage.warningMessageCode;
         }
 
-        if (
-          typeof formConfig.getParentInfo == "function" &&
-          oneMacFormData.parentId === undefined
-        ) {
-          [oneMacFormData.parentId, oneMacFormData.parentType] =
-            formConfig.getParentInfo(oneMacFormData.componentId);
-        }
-
         if (uploader.current) {
           try {
             const uploadedList = await uploader.current.uploadFiles();
@@ -352,7 +352,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
               throw new Error(returnCode);
 
-            history.push(getLandingPage(formConfig.landingPage), {
+            history.push(getLandingPage(), {
               passCode: returnCode,
             });
           } catch (err) {
@@ -367,11 +367,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     },
     [
       isSubmissionReady,
-      transmittalNumberStatusMessage,
+      transmittalNumberStatusMessage.statusLevel,
+      transmittalNumberStatusMessage.statusMessage,
+      transmittalNumberStatusMessage.warningMessageCode,
       oneMacFormData,
-      formConfig.landingPage,
       formConfig.componentType,
       history,
+      getLandingPage,
     ]
   );
 
@@ -419,6 +421,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 onChange={handleInputChange}
               />
             )}
+            {typeof formConfig.getParentInfo == "function" && (
+              <div>
+                <label className="ds-c-label">
+                  Parent {formConfig.idLabel}
+                </label>
+                <span>{oneMacFormData.parentId ?? "Unknown"}</span>
+              </div>
+            )}
             <TransmittalNumber
               idLabel={formConfig.idLabel}
               idFieldHint={formConfig.idFieldHint}
@@ -433,7 +443,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               disabled={!!presetComponentId}
               value={oneMacFormData.componentId}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                handleTransmittalNumberChange(event.target.value.toUpperCase())
+                handleComponentIdChange(event.target.value.toUpperCase())
               }
             />
             {formConfig.proposedEffectiveDate && (

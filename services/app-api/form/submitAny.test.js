@@ -1,7 +1,6 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { submitAny } from "./submitAny";
 import { getUser } from "../getUser";
-import { defaultFormConfig } from "./defaultFormConfig";
 import { baseWaiverFormConfig } from "./submitBaseWaiver";
 import packageExists from "../utils/packageExists";
 import sendEmail from "../libs/email-lib";
@@ -32,11 +31,12 @@ const testUnauthUser = {
 };
 
 const eventBody = {
-  transmittalNumber: "VA.1117.R00.00",
+  componentId: "VA.1117.R00.00",
+  territory: "VA",
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
   proposedEffectiveDate: "2022-01-01",
-  uploads: [
+  attachments: [
     {
       contentType: "image/png",
       filename: "myfile.png",

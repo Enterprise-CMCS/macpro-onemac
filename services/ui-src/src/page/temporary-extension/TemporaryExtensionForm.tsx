@@ -1,12 +1,7 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { OneMACFormConfig } from "../../libs/formLib";
-import {
-  Workflow,
-  Validate,
-  ROUTES,
-  waiverTemporaryExtension,
-} from "cmscommonlib";
+import { Workflow, ROUTES, waiverTemporaryExtension } from "cmscommonlib";
 
 const idFormat: string = "SS.####.R##.TE## or SS.#####.R##.TE##";
 const temporaryExtensionFormInfo: OneMACFormConfig = {
@@ -23,9 +18,7 @@ const temporaryExtensionFormInfo: OneMACFormConfig = {
   idFormat: idFormat,
   actionsByStatus: Workflow.defaultActionsByStatus,
   raiLink: ROUTES.WAIVER_RAI,
-  landingPage: ROUTES.DETAIL + "/:parentType/:parentId#temp-extension",
-  landingPageReplacementKeys: ["parentType", "parentId"],
-  getParentInfo: (myId) => Validate.getParentWaiver(myId),
+  landingPage: ROUTES.DETAIL + "/parentType/parentId#temp-extension",
 };
 
 const TemporaryExtensionForm: FC = () => {

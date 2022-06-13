@@ -1,5 +1,4 @@
 import { medicaidSPA } from "cmscommonlib";
-import Joi from "joi";
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
 import {

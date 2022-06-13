@@ -444,11 +444,22 @@ const TemporaryExtensionSection: FC<{
     [onPopupActionWithdraw]
   );
 
+  const renderTempExtLink = useCallback((props: { value: string }) => {
+    //TODO: turn this link on for OY2-16334 when temp ext details page is ready
+    // return (
+    //   <Link to={ROUTES.DETAIL + ONEMAC_ROUTES.TEMPORARY_EXTENSION + "/" + props.value}>
+    //     {props.value}
+    //   </Link>
+    //   );
+    return <span>{props.value}</span>;
+  }, []);
+
   const tempExtColumns = useMemo(() => {
     const theColumns: Column[] = [
       {
         Header: "Extension Id",
         accessor: "componentId",
+        Cell: renderTempExtLink,
       },
       {
         Header: "Status",
@@ -464,7 +475,7 @@ const TemporaryExtensionSection: FC<{
       });
 
     return theColumns;
-  }, [renderActions, userRoleObj.canAccessForms]);
+  }, [renderActions, renderTempExtLink, userRoleObj.canAccessForms]);
 
   return (
     <section id="temp-ext-base" className="read-only-submission ">
