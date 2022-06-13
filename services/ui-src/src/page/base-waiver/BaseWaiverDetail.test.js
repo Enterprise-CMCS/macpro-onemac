@@ -28,7 +28,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420");
+    history.push("/detail/base-waiver/MI.83420");
 
     render(
       <AppContext.Provider
@@ -37,7 +37,7 @@ describe("Detail View Tests", () => {
         }}
       >
         <Router history={history}>
-          <Route path="/detail/:componentType/:componentId">
+          <Route path="/detail/base-waiver/:componentId">
             <BaseWaiverDetail />
           </Route>
         </Router>
@@ -59,7 +59,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420#temp-extenstion");
+    history.push("/detail/base-waiver/MI.83420#temp-extenstion");
 
     render(
       <AppContext.Provider
@@ -91,7 +91,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420#temp-extenstion");
+    history.push("/detail/base-waiver/MI.83420#temp-extenstion");
 
     render(
       <AppContext.Provider

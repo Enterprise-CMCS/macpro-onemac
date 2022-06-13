@@ -11,7 +11,7 @@ import { createMemoryHistory } from "history";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { AppContext } from "../../libs/contextLib";
-import MedicaidSPADetail from "./MedicaidSPADetail";
+import CHIPSPADetail from "./CHIPSPADetail";
 import PackageApi from "../../utils/PackageApi";
 import { LOADER_TEST_ID } from "../../components/LoadingScreen";
 
@@ -130,11 +130,11 @@ describe("Detail View Tests", () => {
   it("renders", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/medicaid-spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -145,11 +145,11 @@ describe("Detail View Tests", () => {
   it("shows withdraw modal", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/medicaid-spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -160,11 +160,11 @@ describe("Detail View Tests", () => {
   it("allows respond to RAI action", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/medicaid-spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -175,11 +175,11 @@ describe("Detail View Tests", () => {
   it("shows additional information tab", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/medicaid-spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<MedicaidSPADetail />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));

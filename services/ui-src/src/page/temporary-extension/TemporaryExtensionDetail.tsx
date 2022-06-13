@@ -7,7 +7,7 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverTemporaryExtension,
   navItems: [],
-  actionsByStatus: Workflow.defaultActionsByStatus,
+  actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   raiLink: ROUTES.SPA_RAI,
 };
 
