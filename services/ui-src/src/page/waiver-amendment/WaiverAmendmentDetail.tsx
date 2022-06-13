@@ -3,11 +3,7 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
-  typeDefault,
   waiverAuthorityDefault,
-  territoryDefault,
-  submissionDateDefault,
-  proposedEffectiveDateDefault,
 } from "../DetailViewDefaults";
 import { ROUTES, waiverAmendment } from "cmscommonlib";
 
