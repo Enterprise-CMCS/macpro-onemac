@@ -47,6 +47,7 @@ const TransmittalNumber: React.FC<{
           return (
             <p
               id={"fieldHint" + idx}
+              key={"fieldHint" + idx}
               className={idFieldHint.className || "field-hint"}
             >
               {idFieldHint.text}
