@@ -72,53 +72,6 @@ type PortalMenuItem = {
   handleSelected?: (rownum: string) => any;
 } & Record<string, any>;
 
-// const PAGE_detail = {
-//   default: defaultPage,
-//   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: {
-//     ...defaultPage,
-//   },
-//   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: {
-//     ...defaultPage,
-//     raiLink: ROUTES.SPA_RAI,
-//     detailsSection: [
-//       { heading: "Medicaid SPA ID", fieldName: "componentId", default: "N/A" },
-//       typeDefault,
-//       territoryDefault,
-//       submissionDateDefault,
-//     ],
-//   },
-//   [Workflow.ONEMAC_TYPE.CHIP_SPA]: {
-//     ...defaultPage,
-//     raiLink: ROUTES.CHIP_SPA_RAI,
-//     detailsSection: [
-//       { heading: "CHIP SPA ID", fieldName: "componentId", default: "N/A" },
-//       typeDefault,
-//       territoryDefault,
-//       submissionDateDefault,
-//     ],
-//   },
-//   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: {
-//     ...defaultPage,
-//   },
-//   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: {
-//     ...defaultPage,
-//     actionLabel: "Amendment Actions",
-//     usesVerticalNav: false,
-//     detailHeader: "Waiver Amendment",
-//     attachmentsHeading: "Supporting Documentation",
-//     defaultTitle: "Waiver Amendment",
-//     detailsSection: [
-//       { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
-//       { heading: "Amendment Title", fieldName: "title", default: "N/A" },
-//       {
-//         heading: "Waiver Authority",
-//         fieldName: "waiverAuthorityNice",
-//         default: "N/A",
-//       },
-//     ],
-//   },
-// };
-
 const DetailSection = ({
   pageConfig,
   detail,

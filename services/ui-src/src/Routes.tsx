@@ -36,6 +36,7 @@ import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
 import BaseWaiverForm from "./page/base-waiver/BaseWaiverForm";
 import BaseWaiverDetail from "./page/base-waiver/BaseWaiverDetail";
+import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
 import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
@@ -283,6 +284,16 @@ const ROUTE_LIST: RouteSpec[] = [
           },
           {
             path: ONEMAC_ROUTES.BASE_WAIVER_DETAIL + "/:componentId",
+            exact: true,
+            component: BaseWaiverDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL + "/:componentId",
+            exact: true,
+            component: WaiverAmendmentDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL + "/:componentId",
             exact: true,
             component: BaseWaiverDetail,
           },
