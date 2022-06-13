@@ -51,3 +51,6 @@ functions:
     handler: ./handlers/updateChangeRequestId.main
     timeout: 180
      
+  resetData:
+    handler: ./handlers/resetData.main
+    timeout: 180

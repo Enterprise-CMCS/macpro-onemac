@@ -67,8 +67,8 @@ export class oneMacDashboardPage {
     cy.get(date).should("be.visible");
   }
 
-  clickOnrespondToRAI() {
-    cy.xpath(respondToRAIBTN).click();
+  clickOnrespondToRAI(s) {
+    cy.xpath(IDNUMBER(s)).parent("td").siblings().find("button").click();
     cy.xpath(respondToRAI).click();
   }
 
