@@ -37,7 +37,10 @@ import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 const filterArray = {
-  componentType: [Workflow.ONEMAC_TYPE.SPA, Workflow.ONEMAC_TYPE.CHIP_SPA],
+  componentType: [
+    Workflow.ONEMAC_TYPE.MEDICAID_SPA,
+    Workflow.ONEMAC_TYPE.CHIP_SPA,
+  ],
 };
 
 const renderDate = ({ value }) =>

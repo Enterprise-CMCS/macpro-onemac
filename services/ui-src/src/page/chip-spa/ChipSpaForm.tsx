@@ -16,7 +16,7 @@ const chipSpaFormInfo: OneMACFormConfig = {
   },
   idFAQLink: ROUTES.FAQ_SPA_ID,
   idFormat: idFormat,
-  raiLink: ROUTES.SPA_RAI,
+  raiLink: ROUTES.MEDICAID_SPA_RAI,
   actionsByStatus: Workflow.defaultActionsByStatus,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };

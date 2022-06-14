@@ -1,31 +1,31 @@
-import SPARAI from "./SPARAI";
+import MedicaidSPA from "./MedicaidSPA";
 import spaData from "../unit-test/testSubmitData.json";
 import packageExists from "../utils/packageExists";
 
 jest.mock("../utils/packageExists");
 
-it("SPARAI Stub", async () => {
+it("SPA Stub", async () => {
   packageExists.mockImplementationOnce(() => true);
-  const response = SPARAI.fieldsValid(spaData);
+  const response = MedicaidSPA.fieldsValid(spaData);
   expect(response).toBeInstanceOf(Promise);
 
   packageExists.mockImplementationOnce(() => false);
-  const responsef = SPARAI.fieldsValid(spaData);
+  const responsef = MedicaidSPA.fieldsValid(spaData);
   expect(responsef).toBeInstanceOf(Promise);
 
   packageExists.mockImplementationOnce(() => {
     throw "Ouch!";
   });
-  const responset = SPARAI.fieldsValid(spaData);
+  const responset = MedicaidSPA.fieldsValid(spaData);
   expect(responset).toBeInstanceOf(Promise);
 
-  const response2 = SPARAI.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1313);
+  const response2 = MedicaidSPA.getCMSEmail(spaData);
+  expect(response2.HTML.length).toBe(1316);
 
-  const response3 = SPARAI.getStateEmail({
+  const response3 = MedicaidSPA.getStateEmail({
     spaData,
     ninetyDayClockEnd: 1631626754502,
     user: { email: "foo" },
   });
-  expect(response3.HTML.length).toBe(1176);
+  expect(response3.HTML.length).toBe(1197);
 });

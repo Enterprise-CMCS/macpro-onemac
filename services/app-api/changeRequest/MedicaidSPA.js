@@ -7,12 +7,12 @@ import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
- * SPA submission specific functions.
+ * MedicaidSPA submission specific functions.
  * @class
  */
-class SPA {
+class MedicaidSPA {
   /**
-   * SPA Submissions require that the Package ID is not currently being used.
+   * MedicaidSPA Submissions require that the Package ID is not currently being used.
    * @param {Object} data the received data
    * @returns {String} any errors
    */
@@ -51,9 +51,9 @@ class SPA {
       process.env.reviewerEmail,
       process.env.testingEmail,
     ].filter(Boolean);
-    cmsEmail.Subject = `New SPA ${data.transmittalNumber} submitted`;
+    cmsEmail.Subject = `New Medicaid SPA ${data.transmittalNumber} submitted`;
     cmsEmail.HTML = `
-      <p>The Submission Portal received a State Plan Amendment.</p>
+      <p>The Submission Portal received a Medicaid State Plan Amendment.</p>
       ${getAccessInstructions()}
       <p>
         <br><b>State or territory</b>: ${data.territory}
@@ -88,9 +88,11 @@ class SPA {
 
     stateEmail.ToAddresses = [data.user.email];
     stateEmail.Subject =
-      "Your SPA " + data.transmittalNumber + " has been submitted to CMS";
+      "Your Medicaid SPA " +
+      data.transmittalNumber +
+      " has been submitted to CMS";
     stateEmail.HTML = `
-      <p>This is confirmation that you submitted a State Plan Amendment to CMS for review:</p>
+      <p>This is confirmation that you submitted a Medicaid State Plan Amendment to CMS for review:</p>
       <p>
         <br><b>State or territory</b>: ${data.territory}
         <br><b>SPA ID</b>: ${data.transmittalNumber}
@@ -106,7 +108,7 @@ class SPA {
       </p>
       <br>
       <p>
-        This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
+        This response confirms the receipt of your Medicaid State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
         You can expect a formal response to your submittal to be issued within 90 days, before ${getCMSDateFormat(
           data.ninetyDayClockEnd
         )}.
@@ -123,6 +125,6 @@ class SPA {
   }
 }
 
-const instance = new SPA();
+const instance = new MedicaidSPA();
 Object.freeze(instance);
 export default instance;

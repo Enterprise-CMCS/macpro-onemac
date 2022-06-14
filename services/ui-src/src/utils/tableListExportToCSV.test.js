@@ -70,7 +70,7 @@ it("formats package data", () => {
   const output = tableToCSV("package-dashboard", [
     {
       componentId: "ZZ-12-1234",
-      componentType: ChangeRequest.TYPE.SPA,
+      componentType: ChangeRequest.TYPE.MEDICAID_SPA,
       submissionTimestamp: 1234567898765,
       submitterName: "Me Myself",
     },

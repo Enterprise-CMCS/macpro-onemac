@@ -119,7 +119,7 @@ const PAGE_detail = {
   },
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: {
     ...defaultPage,
-    raiLink: ROUTES.SPA_RAI,
+    raiLink: ROUTES.MEDICAID_SPA_RAI,
     detailsSection: [
       { heading: "Medicaid SPA ID", fieldName: "componentId", default: "N/A" },
       typeDefault,

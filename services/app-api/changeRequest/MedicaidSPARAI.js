@@ -3,12 +3,12 @@ import packageExists from "../utils/packageExists";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
- * SPA RAI submission specific email generation functions.
+ * Medicaid SPA RAI submission specific email generation functions.
  * @class
  */
-class SPARAI {
+class MedicaidSPARAI {
   /**
-   * SPA RAI Submissions require that the Package ID is in the system.
+   * Medicaid SPA RAI Submissions require that the Package ID is in the system.
    * @param {Object} data the received data
    * @returns {String} any errors
    */
@@ -35,7 +35,7 @@ class SPARAI {
   }
 
   /**
-   * SPA RAI submission email to CMS details wrapped in generic function name.
+   * Medicaid SPA RAI submission email to CMS details wrapped in generic function name.
    * @param {Object} data from the form submission.
    * @returns {Object} email parameters in generic format.
    */
@@ -46,9 +46,10 @@ class SPARAI {
       process.env.reviewerEmail,
       process.env.testingEmail,
     ].filter(Boolean);
-    cmsEmail.Subject = "New SPA RAI " + data.transmittalNumber + " submitted";
+    cmsEmail.Subject =
+      "New Medicaid SPA RAI " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
-        <p>The Submission Portal received a SPA RAI Submission:</p>
+        <p>The Submission Portal received a Medicaid SPA RAI Submission:</p>
         ${getAccessInstructions()}
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -82,9 +83,11 @@ class SPARAI {
 
     stateEmail.ToAddresses = [data.user.email];
     stateEmail.Subject =
-      "Your SPA RAI " + data.transmittalNumber + " has been submitted to CMS";
+      "Your Medicaid SPA RAI " +
+      data.transmittalNumber +
+      " has been submitted to CMS";
     stateEmail.HTML = `
-        <p>This response confirms the receipt of your SPA RAI submission:</p>
+        <p>This response confirms the receipt of your Medicaid SPA RAI submission:</p>
         <p>
             <br><b>SPA ID</b>: ${data.transmittalNumber}
             <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
@@ -96,7 +99,7 @@ class SPARAI {
         </p>
         <br>
         <p>
-            This response confirms the receipt of your State Plan Amendment (SPA or your response to a SPA Request for Additional Information (RAI)). 
+            This response confirms the receipt of your Medicaid State Plan Amendment (SPA or your response to a Medicaid SPA Request for Additional Information (RAI)). 
             You can expect a formal response to your submittal to be issued within 90 days. To calculate the 90th day, please count the date of receipt 
             as day zero. The 90th day will be 90 calendar days from that date.
         </p>
@@ -112,6 +115,6 @@ class SPARAI {
   }
 }
 
-const instance = new SPARAI();
+const instance = new MedicaidSPARAI();
 Object.freeze(instance);
 export default instance;

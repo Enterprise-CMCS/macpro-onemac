@@ -24,8 +24,8 @@ import { waiverRAIResponseFormConfig } from "./form/submitWaiverRAIResponse";
 const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: chipSPAFormConfig,
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: chipSPARAIResponseFormConfig,
-  [Workflow.ONEMAC_TYPE.SPA]: medicaidSPAFormConfig,
-  [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponseFormConfig,
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: medicaidSPAFormConfig,
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: medicaidSPARAIResponseFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewalFormConfig,

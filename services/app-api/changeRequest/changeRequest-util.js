@@ -3,8 +3,8 @@ import Joi from "joi";
 
 import { ChangeRequest, territoryCodeList } from "cmscommonlib";
 
-import SPA from "./SPA";
-import SPARAI from "./SPARAI";
+import MedicaidSPA from "./MedicaidSPA";
+import MedicaidSPARAI from "./MedicaidSPARAI";
 import Waiver from "./Waiver";
 import WaiverRAI from "./WaiverRAI";
 import WaiverExtension from "./WaiverExtension";
@@ -23,8 +23,8 @@ export default function getChangeRequestFunctions(type) {
   return {
     [ChangeRequest.TYPE.CHIP_SPA]: CHIPSPA,
     [ChangeRequest.TYPE.CHIP_SPA_RAI]: CHIPSPARAI,
-    [ChangeRequest.TYPE.SPA]: SPA,
-    [ChangeRequest.TYPE.SPA_RAI]: SPARAI,
+    [ChangeRequest.TYPE.MEDICAID_SPA]: MedicaidSPA,
+    [ChangeRequest.TYPE.MEDICAID_SPA_RAI]: MedicaidSPARAI,
     [ChangeRequest.TYPE.WAIVER]: Waiver,
     [ChangeRequest.TYPE.WAIVER_BASE]: Waiver,
     [ChangeRequest.TYPE.WAIVER_APP_K]: WaiverAppK,
