@@ -10,6 +10,7 @@ import {
 } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
+import { DetailViewTab } from "../DetailViewDefaults";
 
 const TemporaryExtensionForm: FC = () => {
   const location = useLocation<FormLocationState>();
@@ -32,7 +33,7 @@ const TemporaryExtensionForm: FC = () => {
     landingPage:
       location.state?.parentType && location.state?.parentId
         ? TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +
-          `/${location.state?.parentId}#temp-extension`
+          `/${location.state?.parentId}#${DetailViewTab.EXTENSION}`
         : ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   };
 
