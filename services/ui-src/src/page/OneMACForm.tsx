@@ -172,7 +172,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       event.target.value;
 
     setOneMacFormData(updatedRecord);
-    console.log("updatedRecord", updatedRecord);
   };
 
   const handleEffectiveDateChange = useCallback(
@@ -308,20 +307,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   const limitSubmit = useRef(false);
 
-  const getLandingPage = useCallback(() => {
-    let finalLandingPage: string = formConfig.landingPage;
-    if (oneMacFormData.parentId && oneMacFormData.parentType) {
-      finalLandingPage = finalLandingPage
-        .replace("parentType", oneMacFormData.parentType)
-        .replace("parentId", oneMacFormData.parentId);
-    }
-    return finalLandingPage;
-  }, [
-    formConfig.landingPage,
-    oneMacFormData.parentId,
-    oneMacFormData.parentType,
-  ]);
-
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
       event.preventDefault();
@@ -352,7 +337,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
               throw new Error(returnCode);
 
-            history.push(getLandingPage(), {
+            history.push(formConfig.landingPage, {
               passCode: returnCode,
             });
           } catch (err) {
@@ -367,13 +352,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     },
     [
       isSubmissionReady,
-      transmittalNumberStatusMessage.statusLevel,
-      transmittalNumberStatusMessage.statusMessage,
-      transmittalNumberStatusMessage.warningMessageCode,
+      transmittalNumberStatusMessage,
       oneMacFormData,
-      formConfig.componentType,
+      formConfig,
       history,
-      getLandingPage,
     ]
   );
 
