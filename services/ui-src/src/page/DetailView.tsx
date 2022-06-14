@@ -34,9 +34,14 @@ import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionFo
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import PortalTable from "../components/PortalTable";
 import PopupMenu from "../components/PopupMenu";
+import { OneMACDetail, DetailViewTab } from "./DetailViewDefaults";
+
+const AUTHORITY_LABELS = {
+  "1915(b)": "All other 1915(b) Waivers",
+  "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
+} as const;
 
 type PathParams = {
-  componentType: string;
   componentTimestamp: string;
   componentId: string;
 };
@@ -68,104 +73,14 @@ type PortalMenuItem = {
   handleSelected?: (rownum: string) => any;
 } & Record<string, any>;
 
-const AUTHORITY_LABELS = {
-  "1915(b)": "All other 1915(b) Waivers",
-  "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
-} as const;
-
-const submissionDateDefault = {
-  heading: "Date Submitted",
-  fieldName: "submissionDateNice",
-  default: null,
-};
-const waiverAuthorityDefault = {
-  heading: "Waiver Authority",
-  fieldName: "waiverAuthorityNice",
-  default: "N/A",
-};
-const typeDefault = { heading: "Type", fieldName: "typeNice", default: "N/A" };
-const territoryDefault = {
-  heading: "State",
-  fieldName: "territoryNice",
-  default: null,
-};
-const proposedEffectiveDateDefault = {
-  heading: "Proposed Effective Date",
-  fieldName: "proposedEffectiveDateNice",
-  default: "N/A",
-};
-
-const defaultPage = {
-  actionLabel: "Package Actions",
-  attachmentsHeading: "Base Supporting Documentation",
-  usesVerticalNav: true,
-  actionsByStatus: Workflow.defaultActionsByStatus,
-  detailHeader: "Package",
-  raiLink: ROUTES.WAIVER_RAI,
-  defaultTitle: null,
-  detailsSection: [
-    waiverAuthorityDefault,
-    { heading: "Waiver Number", fieldName: "componentId", default: "N/A" },
-    typeDefault,
-    territoryDefault,
-    submissionDateDefault,
-    proposedEffectiveDateDefault,
-  ],
-};
-
-const PAGE_detail = {
-  default: defaultPage,
-  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: {
-    ...defaultPage,
-  },
-  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: {
-    ...defaultPage,
-    raiLink: ROUTES.SPA_RAI,
-    detailsSection: [
-      { heading: "Medicaid SPA ID", fieldName: "componentId", default: "N/A" },
-      typeDefault,
-      territoryDefault,
-      submissionDateDefault,
-    ],
-  },
-  [Workflow.ONEMAC_TYPE.CHIP_SPA]: {
-    ...defaultPage,
-    raiLink: ROUTES.CHIP_SPA_RAI,
-    detailsSection: [
-      { heading: "CHIP SPA ID", fieldName: "componentId", default: "N/A" },
-      typeDefault,
-      territoryDefault,
-      submissionDateDefault,
-    ],
-  },
-  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: {
-    ...defaultPage,
-  },
-  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: {
-    ...defaultPage,
-    actionLabel: "Amendment Actions",
-    usesVerticalNav: false,
-    detailHeader: "Waiver Amendment",
-    attachmentsHeading: "Supporting Documentation",
-    defaultTitle: "Waiver Amendment",
-    detailsSection: [
-      { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },
-      { heading: "Amendment Title", fieldName: "title", default: "N/A" },
-      {
-        heading: "Waiver Authority",
-        fieldName: "waiverAuthorityNice",
-        default: "N/A",
-      },
-    ],
-  },
-};
-
 const DetailSection = ({
+  pageConfig,
   detail,
   loadDetail,
   setAlertCode,
   setConfirmItem,
 }: {
+  pageConfig: OneMACDetail;
   detail: ComponentDetail;
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
@@ -207,9 +122,6 @@ const DetailSection = ({
     },
     [history]
   );
-
-  const pageConfig =
-    PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
@@ -296,7 +208,7 @@ const DetailSection = ({
       <div className="read-only-submission">
         <section className="detail-section">
           <h2>{pageConfig.detailHeader} Details</h2>
-          {pageConfig.detailsSection?.map(
+          {pageConfig.detailSection?.map(
             (item, index) =>
               (detail[item.fieldName] || item.default) && (
                 <Review key={index} heading={item.heading}>
@@ -416,10 +328,9 @@ const TemporaryExtensionSection: FC<{
 
   const renderActions = useCallback(
     ({ row }) => {
-      const packageConfig = PAGE_detail[row.original.componentType];
       let menuItems: PortalMenuItem[] = [];
 
-      (packageConfig?.actionsByStatus ?? Workflow.defaultActionsByStatus)[
+      Workflow.waiverExtensionActionsByStatus[
         row.original.currentStatus
       ]?.forEach((actionLabel) => {
         let newItem: PortalMenuItem = { label: actionLabel };
@@ -511,20 +422,14 @@ const TemporaryExtensionSection: FC<{
   );
 };
 
-enum DetailViewTab {
-  DETAIL = "component-details",
-  ADDITIONAL = "additional-info",
-  EXTENSION = "temp-extension",
-}
-
 /**
  * Given an id and the relevant submission type forminfo, show the detail
  */
-const DetailView = () => {
+const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   // The browser history, so we can redirect to the home page
   const history = useHistory();
-  const { componentType, componentTimestamp, componentId } =
-    useParams<PathParams>();
+  const { componentTimestamp, componentId } = useParams<PathParams>();
+  const [componentType] = useState(pageConfig.componentType);
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
   const [confirmItem, setConfirmItem] = useState<{
@@ -540,8 +445,6 @@ const DetailView = () => {
 
   // The record we are using for the form.
   const [detail, setDetail] = useState<ComponentDetail>();
-  const pageConfig =
-    PAGE_detail[detail?.componentType ?? "default"] ?? PAGE_detail["default"];
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -557,7 +460,6 @@ const DetailView = () => {
         fetchedDetail = (await PackageApi.getDetail(
           componentId,
           componentType,
-
           componentTimestamp
         )) as ComponentDetail;
         if (!fetchedDetail.territory)
@@ -607,32 +509,6 @@ const DetailView = () => {
     [history, componentId, componentType, componentTimestamp]
   );
 
-  const navItems = useMemo(
-    () => [
-      {
-        label: "Package Overview",
-        items: [
-          {
-            id: DetailViewTab.DETAIL,
-            label: "Package Details",
-            url: `#${DetailViewTab.DETAIL}`,
-          },
-          {
-            id: DetailViewTab.ADDITIONAL,
-            label: "Additional Information",
-            url: `#${DetailViewTab.ADDITIONAL}`,
-          },
-          Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType) && {
-            id: DetailViewTab.EXTENSION,
-            label: "Temporary Extension",
-            url: `#${DetailViewTab.EXTENSION}`,
-          },
-        ],
-      },
-    ],
-    [componentType]
-  );
-
   useEffect(() => {
     const ctrlr = new AbortController();
 
@@ -641,7 +517,7 @@ const DetailView = () => {
     return function cleanup() {
       ctrlr.abort();
     };
-  }, [componentId, componentType, componentTimestamp, loadDetail]);
+  }, [componentId, componentTimestamp, loadDetail]);
 
   return (
     <LoadingScreen isLoading={isLoading}>
@@ -654,16 +530,13 @@ const DetailView = () => {
       {detail && (
         <div className="form-container">
           <div className="component-detail-wrapper">
-            {pageConfig.usesVerticalNav && (
-              <VerticalNav
-                // component="button"
-                items={navItems}
-                selectedId={detailTab}
-              />
+            {pageConfig.navItems.length > 0 && (
+              <VerticalNav items={pageConfig.navItems} selectedId={detailTab} />
             )}
             <article className="component-detail">
               {detailTab === DetailViewTab.DETAIL && (
                 <DetailSection
+                  pageConfig={pageConfig}
                   detail={detail}
                   loadDetail={loadDetail}
                   setAlertCode={setAlertCode}

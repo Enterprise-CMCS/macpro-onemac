@@ -131,6 +131,7 @@ export namespace Workflow {
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const waiverExtensionActionsByStatus: Record<string, PACKAGE_ACTION[]>;
   export const get90thDayText: (
     currentStatus: string,
     clockEndTimestamp: date
