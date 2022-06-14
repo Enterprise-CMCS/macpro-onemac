@@ -154,7 +154,7 @@
     "summary": "This is our response to the Medicaid SPA MI-22-2222",
     "waiverAuthority": "",
     "ninetyDayClockEnd": 1659560441391,
-    "type": "sparai",
+    "type": "medicaidsparai",
     "userId": "offlineContext_cognitoIdentityId",
     "uploads": [
       {

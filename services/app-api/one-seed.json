@@ -1887,9 +1887,9 @@
       }
     ],
     "GSI1sk": "MD-13-1122",
-    "sparai": [
+    "medicaidsparai": [
       {
-        "componentType": "sparai",
+        "componentType": "medicaidsparai",
         "componentTimestamp": 1643218567141,
         "submitterName": "StateSubmitter Nightwatch",
         "componentId": "MD-13-1122"
@@ -1928,9 +1928,9 @@
         "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf"
       }
     ],
-    "sparai": [
+    "medicaidsparai": [
       {
-        "componentType": "sparai",
+        "componentType": "medicaidsparai",
         "componentTimestamp": 1643218567141,
         "submitterName": "StateSubmitter Nightwatch",
         "componentId": "MD-13-1122"
@@ -1949,7 +1949,7 @@
     "pk": "MD-13-1122",
     "sk": "v0#sparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
-    "componentType": "sparai",
+    "componentType": "medicaidsparai",
     "currentStatus": "Submitted",
     "attachments": [
       {
@@ -1973,7 +1973,7 @@
     "pk": "MD-13-1122",
     "sk": "v1#sparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
-    "componentType": "sparai",
+    "componentType": "medicaidsparai",
     "currentStatus": "Submitted",
     "attachments": [
       {
@@ -2017,9 +2017,9 @@
       }
     ],
     "GSI1sk": "MI-13-1122",
-    "sparai": [
+    "medicaidsparai": [
       {
-        "componentType": "sparai",
+        "componentType": "medicaidsparai",
         "componentTimestamp": 1643218567141,
         "submitterName": "Kristin Grue",
         "componentId": "MI-13-1122"
@@ -2058,9 +2058,9 @@
         "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696180278/adobe.pdf"
       }
     ],
-    "sparai": [
+    "medicaidsparai": [
       {
-        "componentType": "sparai",
+        "componentType": "medicaidsparai",
         "componentTimestamp": 1643218567141,
         "submitterName": "Kristin Grue",
         "componentId": "MI-13-1122"
@@ -2079,7 +2079,7 @@
     "pk": "MI-13-1122",
     "sk": "v0#sparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
-    "componentType": "sparai",
+    "componentType": "medicaidsparai",
     "currentStatus": "Submitted",
     "attachments": [
       {
@@ -2103,7 +2103,7 @@
     "pk": "MI-13-1122",
     "sk": "v1#sparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
-    "componentType": "sparai",
+    "componentType": "medicaidsparai",
     "currentStatus": "Submitted",
     "attachments": [
       {

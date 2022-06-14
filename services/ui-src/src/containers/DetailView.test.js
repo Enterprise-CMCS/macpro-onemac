@@ -58,7 +58,7 @@ const testDetail = {
   ],
   sparai: [
     {
-      componentType: "sparai",
+      componentType: "medicaidsparai",
       componentTimestamp: 1643218567141,
       submitterName: "Kristin Grue",
       componentId: "MI-13-1122",
@@ -76,7 +76,7 @@ const testDetail = {
   pk: "MI-13-1122",
   raiResponses: [
     {
-      componentType: "sparai",
+      componentType: "medicaidsparai",
       additionalInformation: "test",
       componentId: "MI-93-2234",
       attachments: [
