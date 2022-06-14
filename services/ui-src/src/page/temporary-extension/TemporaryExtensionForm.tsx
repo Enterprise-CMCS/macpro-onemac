@@ -6,6 +6,7 @@ import {
   ROUTES,
   waiverTemporaryExtension,
   ONEMAC_ROUTES,
+  TYPE_TO_DETAIL_ROUTE,
 } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
@@ -28,10 +29,11 @@ const TemporaryExtensionForm: FC = () => {
     idFormat: idFormat,
     actionsByStatus: Workflow.defaultActionsByStatus,
     raiLink: ROUTES.WAIVER_RAI,
-    landingPage: location.state?.parentId
-      ? ROUTES.DETAIL +
-        `/${location.state.parentType}/${location.state?.parentId}#temp-extension`
-      : ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
+    landingPage:
+      location.state?.parentType && location.state?.parentId
+        ? TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +
+          `/${location.state?.parentId}#temp-extension`
+        : ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
   };
 
   return <OneMACForm formConfig={temporaryExtensionFormInfo} />;
