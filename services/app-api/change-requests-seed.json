@@ -118,7 +118,7 @@
     "summary": "Here is a medicaid SPA for review and approval!",
     "waiverAuthority": "",
     "ninetyDayClockEnd": 1659560410529,
-    "type": "spa",
+    "type": "medicaidspa",
     "userId": "offlineContext_cognitoIdentityId",
     "uploads": [
       {
@@ -278,7 +278,7 @@
     "territory": "MD",
     "transmittalNumber": "MD-13-8218",
     "transmittalNumberWarningMessage": "",
-    "type": "spa",
+    "type": "medicaidspa",
     "uploads": [
      {
       "contentType": "application/pdf",

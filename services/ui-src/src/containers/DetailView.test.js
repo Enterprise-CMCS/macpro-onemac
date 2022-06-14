@@ -19,7 +19,7 @@ jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"), // use actual for all non-hook parts
   useParams: () => {
     return {
-      componentType: "spa",
+      componentType: "medicaidspa",
       componentTimestamp: 16746532223,
       packageId: "MI-13-1122",
     };
@@ -31,7 +31,7 @@ jest.mock("../utils/PackageApi");
 const testDetail = {
   submitterId: "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
   clockEndTimestamp: 1647286706000,
-  componentType: "spa",
+  componentType: "medicaidspa",
   currentStatus: "RAI Issued",
   attachments: [
     {
@@ -71,7 +71,7 @@ const testDetail = {
   packageId: "MI-13-1122",
   submitterEmail: "statesubmitter@nightwatch.test",
   devComment: "Package added via seed data for application testing",
-  sk: "spa",
+  sk: "medicaidspa",
   componentId: "MI-13-1122",
   pk: "MI-13-1122",
   raiResponses: [
@@ -90,7 +90,7 @@ const testDetail = {
       ],
       currentStatus: "Submitted",
       parentId: "MI-93-2234",
-      parentType: "spa",
+      parentType: "medicaidspa",
       submissionTimestamp: 1646322299324,
       submissionId: "e1cf36e0-9b08-11ec-aa60-d14854d75057",
       submitterId: "offlineContext_cognitoIdentityId",

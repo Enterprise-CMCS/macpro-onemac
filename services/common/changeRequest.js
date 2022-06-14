@@ -16,7 +16,7 @@ export const TYPE = {
 
 export const LABEL = {
   [TYPE.CHIP_SPA]: "CHIP SPA",
-  [TYPE.SPA]: "Medicaid SPA",
+  [TYPE.MEDICAID_SPA]: "Medicaid SPA",
   [TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
   [TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
@@ -141,7 +141,7 @@ export const CONFIG = {
       "Other",
     ],
     transmittalNumber: {
-      idType: "spa",
+      idType: "medicaidspa",
       idLabel: "SPA ID",
       idFieldHint: [
         { text: "Must follow the format SS-YY-NNNN-xxxx" },
@@ -176,7 +176,7 @@ export const CONFIG = {
     optionalUploads: ["Other"],
 
     transmittalNumber: {
-      idType: "spa",
+      idType: "medicaidspa",
       idLabel: "SPA ID",
       idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
       idFAQLink: ROUTES.FAQ_SPA_ID,
