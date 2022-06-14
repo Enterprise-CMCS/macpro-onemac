@@ -1,6 +1,5 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import updateComponent from "./utils/updateComponent";
 
 const typeConversion = {
   spa: "medicaidspa",
