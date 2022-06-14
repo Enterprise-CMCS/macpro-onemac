@@ -155,7 +155,9 @@ describe("Submission Form", () => {
       const promise = Promise.resolve([]);
       ChangeRequestDataApi.packageExists.mockImplementationOnce(() => promise);
 
-      history.push(`/sparai?transmittalNumber=${testTransmittalNumber}`);
+      history.push(
+        `/medicaidsparai?transmittalNumber=${testTransmittalNumber}`
+      );
       render(
         <AppContext.Provider
           value={{
@@ -307,7 +309,7 @@ describe("Submission Form", () => {
       });
 
       it("displays error message when id SHOULD exist but it doesn't", async () => {
-        history.push("/sparai");
+        history.push("/medicaidsparai");
         const spaRaiIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.MEDICAID_SPA_RAI]
             .transmittalNumber.idLabel;

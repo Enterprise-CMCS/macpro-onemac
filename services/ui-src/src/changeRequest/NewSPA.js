@@ -7,12 +7,12 @@ const SPA_CHOICES = [
   {
     title: "Medicaid SPA",
     description: "Submit new Medicaid State Plan Amendment",
-    linkTo: "/spa",
+    linkTo: "/medicaidspa",
   },
   {
     title: "Respond to Formal Medicaid SPA RAI",
     description: "Submit additional information",
-    linkTo: "/sparai",
+    linkTo: "/medicaidsparai",
   },
   {
     title: "CHIP SPA",

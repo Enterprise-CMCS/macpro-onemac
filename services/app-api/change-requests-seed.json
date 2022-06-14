@@ -118,7 +118,7 @@
     "summary": "Here is a medicaid SPA for review and approval!",
     "waiverAuthority": "",
     "ninetyDayClockEnd": 1659560410529,
-    "type": "medicaidspa",
+    "type": "spa",
     "userId": "offlineContext_cognitoIdentityId",
     "uploads": [
       {
@@ -154,7 +154,7 @@
     "summary": "This is our response to the Medicaid SPA MI-22-2222",
     "waiverAuthority": "",
     "ninetyDayClockEnd": 1659560441391,
-    "type": "medicaidsparai",
+    "type": "sparai",
     "userId": "offlineContext_cognitoIdentityId",
     "uploads": [
       {
@@ -278,7 +278,7 @@
     "territory": "MD",
     "transmittalNumber": "MD-13-8218",
     "transmittalNumberWarningMessage": "",
-    "type": "medicaidspa",
+    "type": "spa",
     "uploads": [
      {
       "contentType": "application/pdf",
@@ -309,6 +309,35 @@
     },
     "waiverAuthority": ""
    },
+   {
+    "summary": "here is the rai",
+    "waiverAuthority": "",
+    "ninetyDayClockEnd": 1663006031619,
+    "type": "sparai",
+    "userId": "offlineContext_cognitoIdentityId",
+    "uploads": [
+      {
+        "s3Key": "1655230031207/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "title": "RAI Response",
+        "contentType": "application/pdf",
+        "url": "https://uploads-dev-attachmentsbucket-746ihmluia7u.s3.amazonaws.com/protected/offlineContext_cognitoIdentityId/1655230031207/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf?AWSAccessKeyId=ASIARWD6TTDFM4K7QJNG&Expires=1655233700&Signature=iSwR%2FXhzYohL8EA%2FBshQc2sesds%3D&x-amz-security-token=FwoGZXIvYXdzEJv%2F%2F%2F%2F%2F%2F%2F%2F%2F%2FwEaDHKyx0McJFsytCGz7yKoAZDd5pHZJzUFvrFVgag4kNWpLRizzc2xLGXqsxUWa1QuWjgyfDk7A0I1BnBf6f2Z3dqhbmHrbBhK4UVi4dIn0zoyYRRbgau%2B4Z9FLUyFSi6wVNiI6d5Uk%2BTvuKz0WP8s1%2FwHmp6DTbOnJF3NDLAdaOE4JTs5kajkyBhZEd7IBAMJkhFeYCly5Ehmn2Ei5qNz8IL1oOVeUn6c9KKb13GUwUHYNc0BPyzA0CjvgaOVBjItIBCZSHFNSQpmcmC6BmL5OT0rO9rhi4k%2BRafgmVz7aRC75jXFRk8saw%2BIBekM"
+      }
+    ],
+    "actionType": "",
+    "createdAt": 1655230031562,
+    "transmittalNumberWarningMessage": "",
+    "id": "d0084b90-ec0c-11ec-bb3c-3106ed25bb1a",
+    "state": "submitted",
+    "transmittalNumber": "MD-13-8218",
+    "submittedAt": 1655230031619,
+    "user": {
+      "firstName": "Statesubmitter",
+      "lastName": "Nightwatch",
+      "email": "statesubmitter@nightwatch.test"
+    },
+    "territory": "MD"
+  },
    {
     "summary": "This is the renewal of the base waiver MI.1122",
     "waiverAuthority": "1915(b)(4)",

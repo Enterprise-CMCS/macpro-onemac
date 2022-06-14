@@ -17,11 +17,11 @@ const userStatus = {
 };
 
 const submissionTypes = {
-  spa: "Medicaid SPA",
+  medicaidspa: "Medicaid SPA",
   chipsparai: "CHIP SPA RAI",
   chipspa: "CHIP SPA",
   waiver: "Waiver",
-  sparai: "SPA RAI",
+  medicaidsparai: "Medicaid SPA RAI",
   waiverrai: "Waiver RAI",
   waiverextension: "Temporary Extension Request",
   waiverappk: "1915(c) Appendix K Amendment",

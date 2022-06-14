@@ -51,7 +51,7 @@ it("formats submission data", () => {
   const output = tableToCSV("submission-table", [
     {
       transmittalNumber: "ZZ-12-3456",
-      type: "spa",
+      type: "medicaidspa",
       territory: "ZZ",
 
       submittedAt: 1234567898765,

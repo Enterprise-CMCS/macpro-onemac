@@ -56,7 +56,7 @@ const testDetail = {
       url: "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696188378/adobe.pdf",
     },
   ],
-  sparai: [
+  medicaidsparai: [
     {
       componentType: "medicaidsparai",
       componentTimestamp: 1643218567141,
@@ -94,7 +94,7 @@ const testDetail = {
       submissionTimestamp: 1646322299324,
       submissionId: "e1cf36e0-9b08-11ec-aa60-d14854d75057",
       submitterId: "offlineContext_cognitoIdentityId",
-      sk: "sparai#1646322299324",
+      sk: "medicaidsparai#1646322299324",
       pk: "MI-93-2234",
       submitterName: "Angie Active",
       submitterEmail: "statesubmitteractive@cms.hhs.local",
