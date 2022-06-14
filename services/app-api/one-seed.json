@@ -3847,6 +3847,58 @@
     "submissionId": "86573ae0-3e67-11ec-b244-9b7cbfa0a2c8"
   },
   {
+    "pk": "MD.10330.R00.M01",
+    "sk": "v0#waiveramendment",
+    "parentId": "MD.10330.R00.M00",
+    "parentType": "waivernew",
+    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
+    "componentType": "waiveramendment",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1644846935621/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-withdraw-actions-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c/1644846935621/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "additionalInformation": "",
+    "Latest": 1,
+    "submissionTimestamp": 1644846937626,
+    "waiverAuthority": "1915(b)(4)",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD.10330.R00.M01",
+    "submitterName": "Angie Active",
+    "submissionId": "c8dea8a0-8d9d-11ec-9b4c-db1b8db92a85"
+  },
+  {
+    "pk": "MD.10330.R00.M01",
+    "sk": "v1#waiveramendment",
+    "parentId": "MD.10330.R00.M00",
+    "parentType": "waivernew",
+    "submitterId": "us-east-1:ae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c",
+    "componentType": "waiveramendment",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1644846935621/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-withdraw-actions-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aae2ae6cf-fa41-4d1a-aac7-2b1db9d5dd5c/1644846935621/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "additionalInformation": "",
+    "Latest": 1,
+    "submissionTimestamp": 1644846937626,
+    "waiverAuthority": "1915(b)(4)",
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD.10330.R00.M01",
+    "submitterName": "Angie Active",
+    "submissionId": "c8dea8a0-8d9d-11ec-9b4c-db1b8db92a85"
+  },
+  {
     "pk": "MD.10330.R01.00",
     "sk": "v0#waiverrenewal",
     "submitterId": "us-east-1:fca18499-f892-4266-ad18-8b53c6fb7f39",
