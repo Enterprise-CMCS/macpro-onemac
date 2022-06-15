@@ -36,6 +36,22 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
+const TYPE_TO_ROUTE = {
+  [Workflow.ONEMAC_TYPE.CHIP_SPA]: ONEMAC_ROUTES.CHIP_SPA_DETAIL,
+  [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: ONEMAC_ROUTES.MEDICAID_SPA_DETAIL,
+  [Workflow.ONEMAC_TYPE.SPA_RAI]: "",
+  [Workflow.ONEMAC_TYPE.WAIVER]: ONEMAC_ROUTES.BASE_WAIVER_DETAIL,
+  [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "",
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: ONEMAC_ROUTES.BASE_WAIVER_DETAIL,
+  [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "",
+  [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]:
+    ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL,
+  [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]:
+    ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL,
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "",
+};
+
 const filterArray = {
   componentType: [
     Workflow.ONEMAC_TYPE.MEDICAID_SPA,
@@ -119,7 +135,9 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link to={`/detail/${row.original.componentType}/${value}`}>{value}</Link>
+      <Link to={`${TYPE_TO_ROUTE[row.original.componentType]}/${value}`}>
+        {value}
+      </Link>
     ),
     []
   );

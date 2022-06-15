@@ -19,7 +19,6 @@ import FAQ from "./containers/FAQ";
 import { AttachmentLanding } from "./containers/AttachmentLanding";
 import NotFound from "./containers/NotFound";
 import Dashboard from "./containers/Dashboard";
-import DetailView from "./containers/DetailView";
 import DevLogin from "./containers/DevLogin";
 import Metrics from "./containers/Metrics";
 import NewSubmission from "./changeRequest/NewSubmission";
@@ -36,9 +35,14 @@ import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
 import BaseWaiverForm from "./page/base-waiver/BaseWaiverForm";
+import BaseWaiverDetail from "./page/base-waiver/BaseWaiverDetail";
+import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
+import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
+import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
 import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
+import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -270,17 +274,37 @@ const ROUTE_LIST: RouteSpec[] = [
         component: accessGuardRouteListRenderer("canAccessDashboard"),
         routes: [
           {
-            path: ROUTES.DETAIL + "/:componentType/:componentId",
+            path: ONEMAC_ROUTES.MEDICAID_SPA_DETAIL + "/:componentId",
             exact: true,
-            component: DetailView,
+            component: MedicaidSPADetail,
           },
           {
-            path:
-              ROUTES.DETAIL +
-              "/:componentType/:componentTimestamp/:componentId",
+            path: ONEMAC_ROUTES.CHIP_SPA_DETAIL + "/:componentId",
             exact: true,
-            component: DetailView,
+            component: CHIPSPADetail,
           },
+          {
+            path: ONEMAC_ROUTES.BASE_WAIVER_DETAIL + "/:componentId",
+            exact: true,
+            component: BaseWaiverDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL + "/:componentId",
+            exact: true,
+            component: WaiverAmendmentDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL + "/:componentId",
+            exact: true,
+            component: TemporaryExtensionDetail,
+          },
+          // {
+          //   path:
+          //     ROUTES.DETAIL +
+          //     "/:componentType/:componentTimestamp/:componentId",
+          //   exact: true,
+          //   component: DetailView,
+          // },
         ],
       },
     ],

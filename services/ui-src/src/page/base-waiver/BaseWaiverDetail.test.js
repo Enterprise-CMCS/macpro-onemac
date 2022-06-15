@@ -2,7 +2,6 @@ import React from "react";
 import {
   render,
   screen,
-  fireEvent,
   waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
@@ -10,30 +9,16 @@ import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
+import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
-import { AppContext } from "../libs/contextLib";
-import DetailView from "./DetailView";
-import PackageApi from "../utils/PackageApi";
-import { LOADER_TEST_ID } from "../components/LoadingScreen";
+import { AppContext } from "../../libs/contextLib";
+import BaseWaiverDetail from "./BaseWaiverDetail";
+import PackageApi from "../../utils/PackageApi";
+import { LOADER_TEST_ID } from "../../components/LoadingScreen";
 
-jest.mock("../utils/PackageApi");
+jest.mock("../../utils/PackageApi");
 
-const waiverDetail = require("../changeRequest/mock-data/MockWaiverDetail.json");
-
-const ContextWrapper = ({ children }) => {
-  return (
-    <MemoryRouter>
-      <AppContext.Provider
-        value={{
-          ...stateSubmitterInitialAuthState,
-        }}
-      >
-        {children}
-      </AppContext.Provider>
-    </MemoryRouter>
-  );
-};
+const waiverDetail = require("./testBaseWaiver");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
@@ -43,7 +28,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420");
+    history.push("/detail/base-waiver/MI.83420");
 
     render(
       <AppContext.Provider
@@ -52,8 +37,8 @@ describe("Detail View Tests", () => {
         }}
       >
         <Router history={history}>
-          <Route path="/detail/:componentType/:componentId">
-            <DetailView />
+          <Route path="/detail/base-waiver/:componentId">
+            <BaseWaiverDetail />
           </Route>
         </Router>
       </AppContext.Provider>
@@ -74,7 +59,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420#temp-extenstion");
+    history.push("/detail/base-waiver/MI.83420#temp-extenstion");
 
     render(
       <AppContext.Provider
@@ -84,7 +69,7 @@ describe("Detail View Tests", () => {
       >
         <Router history={history}>
           <Route path="/detail/:componentType/:componentId">
-            <DetailView />
+            <BaseWaiverDetail />
           </Route>
         </Router>
       </AppContext.Provider>
@@ -106,7 +91,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/waivernew/MI.83420#temp-extenstion");
+    history.push("/detail/base-waiver/MI.83420#temp-extenstion");
 
     render(
       <AppContext.Provider
@@ -116,7 +101,7 @@ describe("Detail View Tests", () => {
       >
         <Router history={history}>
           <Route path="/detail/:componentType/:componentId">
-            <DetailView />
+            <BaseWaiverDetail />
           </Route>
         </Router>
       </AppContext.Provider>
@@ -128,7 +113,7 @@ describe("Detail View Tests", () => {
     await act(async () => {
       await userEvent.click(
         screen.getByRole("button", {
-          name: "Actions for MI.83420.R00.TE02",
+          name: "Actions for MD.83420.R00.TE01",
         })
       );
       await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
