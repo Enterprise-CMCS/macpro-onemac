@@ -8,7 +8,7 @@ export const medicaidSPADetail: OneMACDetail = {
   ...medicaidSPA,
   usesVerticalNav: true,
   actionsByStatus: Workflow.defaultActionsByStatus,
-  raiLink: ROUTES.SPA_RAI,
+  raiLink: ROUTES.MEDICAID_SPA_RAI,
 };
 
 const MedicaidSPADetail: FC = () => {
