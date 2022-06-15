@@ -9,7 +9,7 @@ import React, {
 import { useHistory, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
-import { TextField, Button, Dropdown } from "@cmsgov/design-system";
+import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
 
 import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
@@ -404,12 +404,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               />
             )}
             {typeof formConfig.getParentInfo == "function" && (
-              <div>
-                <label className="ds-c-label">
-                  Parent {formConfig.idLabel}
-                </label>
-                <span>{oneMacFormData.parentId ?? "Unknown"}</span>
-              </div>
+              <Review heading={"Parent " + formConfig.idLabel}>
+                {oneMacFormData.parentId ?? "Unknown"}
+              </Review>
             )}
             <TransmittalNumber
               idLabel={formConfig.idLabel}
