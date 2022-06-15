@@ -167,6 +167,9 @@ And("click Stay on Page", () => {
 And("verify submission Successful message", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayed();
 });
+And("verify submission successful message in details", () => {
+  OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
+});
 And("verify SPA ID 1 EXISTS", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
     OneMacDashboardPage.verifyIDNumber(d.attachmentsSPAID1);
@@ -561,6 +564,9 @@ And("verify error message is present on New Waiver Page", () => {
 
 And("Click on Request Temporary Extension", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
+});
+And("Click the Request Extension button", () => {
+  OneMacSubmissionTypePage.clickRequestExtensionBtn();
 });
 
 And(
@@ -2196,6 +2202,13 @@ And("Type Temporary Extension Number 2 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber2
+    );
+  });
+});
+And("Type Temporary Extension Number 3 With 5 Characters", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber3
     );
   });
 });
