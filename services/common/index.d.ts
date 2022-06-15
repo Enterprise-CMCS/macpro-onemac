@@ -1,5 +1,5 @@
 export const RESPONSE_CODE: Record<string, string>;
-export { ROUTES, ONEMAC_ROUTES } from "./routes.js";
+export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
 export enum USER_STATUS {
   ACTIVE = "active",
@@ -138,6 +138,7 @@ export namespace Workflow {
   ) => string;
 }
 
+export * as Validate from "./idValidation.js";
 //export * as Workflow from "./workflow.js";
 
 export { baseWaiver } from "./type/baseWaiver";

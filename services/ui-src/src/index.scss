@@ -227,6 +227,12 @@ p.field-hint {
   }
 }
 
+.mini-dashboard-title {
+  @extend .ds-u-padding-bottom--5;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
+}
+
 .new-submission-button {
   background-color: transparent;
 

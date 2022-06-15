@@ -22,7 +22,7 @@ export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 
 import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
-export { ROUTES, ONEMAC_ROUTES } from "./routes.js";
+export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
 /**
  * Codes to send to front end
