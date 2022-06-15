@@ -21,7 +21,7 @@ const submissionTypes = {
   chipsparai: "CHIP SPA RAI",
   chipspa: "CHIP SPA",
   waiver: "Waiver",
-  sparai: "SPA RAI",
+  sparai: "Medicaid SPA RAI",
   waiverrai: "Waiver RAI",
   waiverextension: "Temporary Extension Request",
   waiverappk: "1915(c) Appendix K Amendment",
