@@ -293,8 +293,8 @@ export const oneMACFAQContent: FAQContent[] = [
                 <tr>
                   <td>Other</td>
                   <td>
-                    Additional document(s) needed to process the SPA RAI
-                    submission
+                    Additional document(s) needed to process the Medicaid SPA
+                    RAI submission
                   </td>
                 </tr>
               </tbody>
