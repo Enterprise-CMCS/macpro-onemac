@@ -1869,7 +1869,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639696180278/15MB.pdf",
@@ -1911,7 +1911,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639696180278/15MB.pdf",
@@ -1999,7 +1999,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639696180278/15MB.pdf",
@@ -2041,7 +2041,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639696180278/15MB.pdf",
@@ -2129,7 +2129,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639695907350/picture.jpg",
@@ -2170,7 +2170,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639695907350/picture.jpg",
@@ -2209,7 +2209,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639695907350/picture.jpg",
@@ -2250,7 +2250,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
     "componentType": "chipspa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1639695907350/picture.jpg",
@@ -2802,7 +2802,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waivernew",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1638473559097/Attachment 3.1-A, #4b, Page 3f Track.pdf",
@@ -2845,7 +2845,7 @@
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "waivernew",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1638473559097/Attachment 3.1-A, #4b, Page 3f Track.pdf",
@@ -3029,7 +3029,7 @@
     "sk": "v0#spa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1640014689456/CMS 179 Form Acronym Removal Signed.pdf",
@@ -3069,7 +3069,7 @@
     "sk": "v1#spa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1640014689456/CMS 179 Form Acronym Removal Signed.pdf",
@@ -3107,7 +3107,7 @@
     "sk": "v0#spa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1640014689456/CMS 179 Form Acronym Removal Signed.pdf",
@@ -3147,7 +3147,7 @@
     "sk": "v1#spa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
     "componentType": "spa",
-    "currentStatus": "Package In Review",
+    "currentStatus": "In Review",
     "attachments": [
       {
         "s3Key": "1640014689456/CMS 179 Form Acronym Removal Signed.pdf",
@@ -3185,7 +3185,7 @@
     "sk": "v0#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Approved",
+    "currentStatus": "Approved",
     "attachments": [
       {
         "s3Key": "1639690300084/textnotes.txt",
@@ -3238,7 +3238,7 @@
     "sk": "v1#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Approved",
+    "currentStatus": "Approved",
     "attachments": [
       {
         "s3Key": "1639690300084/textnotes.txt",
@@ -3289,7 +3289,7 @@
     "sk": "v0#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Approved",
+    "currentStatus": "Approved",
     "attachments": [
       {
         "s3Key": "1639690300084/textnotes.txt",
@@ -3342,7 +3342,7 @@
     "sk": "v1#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Approved",
+    "currentStatus": "Approved",
     "attachments": [
       {
         "s3Key": "1639690300084/textnotes.txt",
@@ -3393,7 +3393,7 @@
     "sk": "v0#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Disapproved",
+    "currentStatus": "Disapproved",
     "attachments": [
       {
         "s3Key": "1639609654211/textnotes.txt",
@@ -3446,7 +3446,7 @@
     "sk": "v1#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Disapproved",
+    "currentStatus": "Disapproved",
     "attachments": [
       {
         "s3Key": "1639609654211/textnotes.txt",
@@ -3497,7 +3497,7 @@
     "sk": "v0#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Disapproved",
+    "currentStatus": "Disapproved",
     "attachments": [
       {
         "s3Key": "1639609654211/textnotes.txt",
@@ -3550,7 +3550,7 @@
     "sk": "v1#spa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "spa",
-    "currentStatus": "Package Disapproved",
+    "currentStatus": "Disapproved",
     "attachments": [
       {
         "s3Key": "1639609654211/textnotes.txt",
@@ -3725,7 +3725,7 @@
     "sk": "v0#waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
-    "currentStatus": "Waiver Terminated",
+    "currentStatus": "Terminated",
     "attachments": [
       {
         "s3Key": "1636137484260/15MB.pdf",
@@ -3789,7 +3789,7 @@
     "sk": "v1#waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
-    "currentStatus": "Waiver Terminated",
+    "currentStatus": "Terminated",
     "attachments": [
       {
         "s3Key": "1636137484260/15MB.pdf",
@@ -4011,7 +4011,7 @@
     "sk": "v0#waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
-    "currentStatus": "Waiver Terminated",
+    "currentStatus": "Terminated",
     "attachments": [
       {
         "s3Key": "1636137484260/15MB.pdf",
@@ -4075,7 +4075,7 @@
     "sk": "v1#waivernew",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "componentType": "waivernew",
-    "currentStatus": "Waiver Terminated",
+    "currentStatus": "Terminated",
     "attachments": [
       {
         "s3Key": "1636137484260/15MB.pdf",
@@ -4461,7 +4461,7 @@
     ],
     "componentId": "MD.3322.R00.00",
     "waiverAuthority": "1915(b)(4)",
-    "currentStatus": "Waiver Terminated",
+    "currentStatus": "Terminated",
     "submissionTimestamp": 1652811485757,
     "clockEndTimestamp": 1660587485757,
     "proposedEffectiveDate": "",
@@ -4488,7 +4488,7 @@
     ],
     "componentId": "MD.3322.R00.00",
     "waiverAuthority": "1915(b)(4)",
-    "currentStatus": "Waiver Terminated",
+    "currentStatus": "Terminated",
     "submissionTimestamp": 1652811485757,
     "clockEndTimestamp": 1660587485757,
     "proposedEffectiveDate": "",
