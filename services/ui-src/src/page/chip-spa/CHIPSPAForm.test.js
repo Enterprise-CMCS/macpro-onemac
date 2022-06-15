@@ -6,21 +6,21 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
+import CHIPSPAForm from "./CHIPSPAForm";
 import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
 import { AppContext } from "../../libs/contextLib";
-import CHIPSPAForm from "./CHIPSPAForm";
 
 jest.mock("../../utils/ChangeRequestDataApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
 
-describe("Chip SPA Form", () => {
+describe("Medicaid SPA Form", () => {
   let history;
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ONEMAC_ROUTES.CHIP_SPA);
+    history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION);
   });
 
   it("has the submit button disabled on initial load", async () => {

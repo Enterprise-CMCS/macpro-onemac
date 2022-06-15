@@ -20,7 +20,7 @@ describe("Medicaid SPA Form", () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ONEMAC_ROUTES.MEDICAID_SPA);
+    history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION);
   });
 
   it("has the submit button disabled on initial load", async () => {
