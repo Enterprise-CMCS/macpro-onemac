@@ -1,6 +1,6 @@
 export const medicaidSPA = {
   packageGroup: "spa",
-  componentType: "spa",
+  componentType: "medicaidspa",
   typeLabel: "Medicaid SPA",
   idType: "spa",
   idLabel: "SPA ID",
