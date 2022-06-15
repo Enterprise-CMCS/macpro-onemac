@@ -27,8 +27,8 @@ const medicaidSpaFormInfo: OneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };
 
-const MedicaidSpaForm: FC = () => {
+const MedicaidSPAForm: FC = () => {
   return <OneMACForm formConfig={medicaidSpaFormInfo} />;
 };
 
-export default MedicaidSpaForm;
+export default MedicaidSPAForm;

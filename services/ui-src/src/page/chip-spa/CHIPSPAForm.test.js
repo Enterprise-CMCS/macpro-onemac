@@ -6,7 +6,7 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import ChipSpaForm from "./ChipSpaForm";
+import ChipSPAForm from "./CHIPSPAForm";
 import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
 import { AppContext } from "../../libs/contextLib";
 
@@ -33,7 +33,7 @@ describe("Medicaid SPA Form", () => {
         }}
       >
         <Router history={history}>
-          <ChipSpaForm />
+          <ChipSPAForm />
         </Router>
       </AppContext.Provider>
     );
@@ -54,7 +54,7 @@ describe("Medicaid SPA Form", () => {
         }}
       >
         <Router history={history}>
-          <ChipSpaForm />
+          <ChipSPAForm />
         </Router>
       </AppContext.Provider>
     );

@@ -21,8 +21,8 @@ const chipSpaFormInfo: OneMACFormConfig = {
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };
 
-const MedicaidSpaForm: FC = () => {
+const CHIPSPAForm: FC = () => {
   return <OneMACForm formConfig={chipSpaFormInfo} />;
 };
 
-export default MedicaidSpaForm;
+export default CHIPSPAForm;
