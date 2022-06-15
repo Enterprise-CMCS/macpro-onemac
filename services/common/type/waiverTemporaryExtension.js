@@ -1,3 +1,4 @@
+import { Validate } from "../index.js";
 export const waiverTemporaryExtension = {
   componentType: "waiverextension",
   typeLabel: "Waiver Extension",
@@ -15,4 +16,5 @@ export const waiverTemporaryExtension = {
   optionalAttachments: ["Other"],
   requiredUploads: ["Waiver Extension Request"],
   optionalUploads: ["Other"],
+  getParentInfo: (myId) => Validate.getParentWaiver(myId),
 };
