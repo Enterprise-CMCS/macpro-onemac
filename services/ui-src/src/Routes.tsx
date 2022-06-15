@@ -39,9 +39,9 @@ import BaseWaiverDetail from "./page/base-waiver/BaseWaiverDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
-import MedicaidSPAForm from "./page/medicaid-spa/MedicaidSPAForm";
+import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
 import MedicaidSPADetail from "./page/medicaid-spa/MedicaidSPADetail";
-import ChipSPAForm from "./page/chip-spa/CHIPSPAForm";
+import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
 import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 
 // this is legacy and should not be touched!
@@ -201,8 +201,8 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ROUTES.NEW_SUBMISSION_SELECTION, component: NewSubmission },
     { path: ROUTES.NEW_SPA, component: NewSPA },
     { path: ROUTES.NEW_WAIVER, component: NewWaiver },
-    { path: ONEMAC_ROUTES.MEDICAID_SPA, component: MedicaidSPAForm },
-    { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSPAForm },
+    { path: ONEMAC_ROUTES.MEDICAID_SPA, component: MedicaidSpaForm },
+    { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.BASE_WAIVER, component: BaseWaiverForm },
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
