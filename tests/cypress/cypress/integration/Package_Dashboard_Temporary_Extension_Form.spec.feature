@@ -46,5 +46,6 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click the Request Extension button
         And Type Temporary Extension Number 3 With 5 Characters
         And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission successful message in details

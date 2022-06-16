@@ -140,6 +140,11 @@ And("Type Additonal Information Comments", () => {
     "This is just a test"
   );
 });
+And("Type Additonal Info Comments in new form", () => {
+  OneMacSubmitNewMedicaidSpaPage.additionalInfoTypeComment(
+    "This is just a test"
+  );
+});
 And("Click on Submit Button", () => {
   OneMacSubmitNewMedicaidSpaPage.clicksubmitBTN();
 });
