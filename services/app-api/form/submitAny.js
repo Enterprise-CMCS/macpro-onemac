@@ -1,5 +1,4 @@
 import { DateTime } from "luxon";
-import * as uuid from "uuid";
 
 import {
   getUserRoleObj,
@@ -26,32 +25,20 @@ import packageExists from "../utils/packageExists";
  */
 
 export const submitAny = async (event, config) => {
-  let inData;
+  let data;
   const warningsInCMSNotice = [];
 
   try {
-    inData = JSON.parse(event.body);
+    data = JSON.parse(event.body);
   } catch (error) {
     console.log("event couldn't parse: ", error);
     throw error;
   }
 
-  // TODO - TRANSLATION SECTION - MOVE THESE CHANGES TO FRONT END
-  const data = {
-    componentId: inData.transmittalNumber,
-    territory: inData.transmittalNumber.toString().substring(0, 2),
-    attachments: inData.uploads,
-    additionalInformation: inData.summary,
-    submissionId: uuid.v1(), // not sure we need this anymore
-    submitterName: inData.submitterName,
-    submitterEmail: inData.submitterEmail,
-    submitterId: event.requestContext.identity.cognitoIdentityId, // not sure we want this anymore
-  };
-
-  // TODO: USE TYPESCRIPT TO FORCE DATA STRUCTURE FROM FRONT END
-  if (inData.proposedEffectiveDate)
-    data.proposedEffectiveDate = inData.proposedEffectiveDate;
-  if (inData.waiverAuthority) data.waiverAuthority = inData.waiverAuthority;
+  // const data = {
+  //   ...inData,
+  //   submitterId: event.requestContext.identity.cognitoIdentityId, // not sure we want this anymore
+  // };
 
   // errors here are application level: returned as codes to front end for handling
   try {

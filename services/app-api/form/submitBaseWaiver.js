@@ -3,7 +3,10 @@ import { baseWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig } from "./defaultFormConfig";
+import {
+  defaultFormConfig,
+  defaultProposedEffectiveDateSchema,
+} from "./defaultFormConfig";
 
 /**
  * Submitting a Base Waiver MUST do the following to return SUCCESS:
@@ -24,7 +27,7 @@ export const baseWaiverFormConfig = {
     waiverAuthority: Joi.string().required(),
     // Should look into a real validation with choices centrally located in cmscommonlib
     //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
-    proposedEffectiveDate: [Joi.string().isoDate(), Joi.string().valid("none")],
+    proposedEffectiveDate: defaultProposedEffectiveDateSchema,
   },
 };
 

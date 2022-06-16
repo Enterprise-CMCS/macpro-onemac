@@ -6,7 +6,7 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "submitMedicaidSPA",
-  [Workflow.ONEMAC_TYPE.SPA_RAI]: "submitSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "submitBaseWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitAppendixKAmendment",
@@ -19,7 +19,7 @@ const WITHDRAW_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "withdrawCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "withdrawCHIPSPARAIResponse",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "withdrawMedicaidSPA",
-  [Workflow.ONEMAC_TYPE.SPA_RAI]: "withdrawSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "withdrawSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "withdrawBaseWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "withdrawWaiverRenewal",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "withdrawAppendixKAmendment",
@@ -37,7 +37,7 @@ class PackageApi {
    * @param {Array} uploadsList an array with the information on the already uploaded files
    * @returns the submitted change request
    */
-  async submitToAPI(data, uploadsList) {
+  async submitToAPI(data, uploadsList, componentType) {
     try {
       const userAuth = await Auth.currentAuthenticatedUser();
       data.submitterEmail =
@@ -48,7 +48,7 @@ class PackageApi {
       ]
         .filter(Boolean)
         .join(" ");
-      data.uploads = uploadsList;
+      data.attachments = uploadsList;
     } catch (error) {
       handleApiError(
         error,
@@ -60,7 +60,7 @@ class PackageApi {
     if (
       !data ||
       !uploadsList ||
-      !data.type ||
+      !componentType ||
       uploadsList.length === 0 ||
       !data.submitterEmail
     ) {
@@ -71,10 +71,10 @@ class PackageApi {
       );
       throw new Error("Missing required data or uploads");
     }
-    console.log("componentType: ", data.type);
-    console.log("posting to: ", SUBMIT_API_CALL[data.type]);
+    console.log("componentType: ", componentType);
+    console.log("posting to: ", SUBMIT_API_CALL[componentType]);
     try {
-      return await API.post("oneMacAPI", `/${SUBMIT_API_CALL[data.type]}`, {
+      return await API.post("oneMacAPI", `/${SUBMIT_API_CALL[componentType]}`, {
         body: data,
       });
     } catch (error) {
