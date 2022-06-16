@@ -19,7 +19,7 @@ beforeEach(() => {
         componentType: "waivernew",
         componentId: "VA.1117",
         submissionId: "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278",
-        currentStatus: "Package In Review",
+        currentStatus: "In Review",
         submitterId: "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
         submitterName: "Angie Active",
         submissionTimestamp: 1638473560098,

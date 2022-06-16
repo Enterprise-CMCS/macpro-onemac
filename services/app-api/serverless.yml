@@ -122,6 +122,26 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  submitMedicaidSpa:
+    handler: form/submitMedicaidSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitMedicaidSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitChipSpa:
+    handler: form/submitCHIPSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitCHIPSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   submitWaiverExtension:
     handler: form/submitWaiverExtension.main
     role: LambdaApiRole

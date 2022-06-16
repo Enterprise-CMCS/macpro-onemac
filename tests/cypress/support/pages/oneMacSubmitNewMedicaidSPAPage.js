@@ -31,6 +31,9 @@ const whatIsMySPAIDLink = "//a[text()='What is my SPA ID?']";
 const page = "//div[@class='dashboard-container']";
 
 export class oneMacSubmitNewMedicaidSPAPage {
+  verifyNewMedicaidSPAPage() {
+    cy.url().should("include", "/medicaid-spa");
+  }
   inputSpaID(s) {
     cy.get(SpaIDInput).type(s);
   }

@@ -22,14 +22,4 @@ export const chipSPARAIResponse = {
     "Tribal Consultation",
     "Other",
   ],
-  requiredUploads: [
-    "Revised Amended State Plan Language",
-    "Official RAI Response",
-  ],
-  optionalUploads: [
-    "Budget Documents",
-    "Public Notice",
-    "Tribal Consultation",
-    "Other",
-  ],
 };

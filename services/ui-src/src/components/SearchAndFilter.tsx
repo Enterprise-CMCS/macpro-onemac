@@ -252,19 +252,22 @@ function TextFilter({
     <>
       {possibleValues
         .filter((value) => !hiddenValues.has(value))
-        .map((value) => (
-          <Choice
-            checked={filterValue?.includes(value) ?? true}
-            inversed
-            key={value}
-            label={value}
-            name={`${id}-${value}`}
-            onChange={onCheckboxSelect}
-            size="small"
-            type="checkbox"
-            value={value}
-          />
-        ))}
+        .map(
+          (value) =>
+            value !== "Inactivated" && (
+              <Choice
+                checked={filterValue?.includes(value) ?? true}
+                inversed
+                key={value}
+                label={value}
+                name={`${id}-${value}`}
+                onChange={onCheckboxSelect}
+                size="small"
+                type="checkbox"
+                value={value}
+              />
+            )
+        )}
     </>
   );
 }

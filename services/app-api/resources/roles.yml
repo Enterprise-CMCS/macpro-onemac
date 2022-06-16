@@ -41,6 +41,7 @@ Resources:
                   - dynamodb:GetItem
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
                 Resource:
                   - arn:aws:dynamodb:*:*:table/${self:custom.tableName}
               - Effect: Allow
@@ -82,6 +83,7 @@ Resources:
                   - dynamodb:Query
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
                 Resource: !GetAtt SpaIdTable.Arn
               - Effect: "Allow"
                 Action:
@@ -90,6 +92,7 @@ Resources:
                   - dynamodb:Scan
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
+                  - dynamodb:DeleteItem
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
               - Effect: Allow
                 Action:

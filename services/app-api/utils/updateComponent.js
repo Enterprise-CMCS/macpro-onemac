@@ -1,5 +1,5 @@
-// import dynamoDb from "../libs/dynamodb-lib";
 import updateWithVersion from "./updateWithVersion";
+import updateParent from "../utils/updateParent";
 
 const topLevelUpdates = [
   "clockEndTimestamp",
@@ -22,7 +22,9 @@ export default async function updateComponent(updateData, config) {
     Key: {
       pk: updateData.componentId,
       sk: `${updateData.componentType}${
-        config.allowMultiplesWithSameId && `#${updateData.submissionTimestamp}`
+        config.allowMultiplesWithSameId
+          ? `#${updateData.submissionTimestamp}`
+          : ""
       }`,
     },
     ConditionExpression: "attribute_exists(pk)", // so update fails if component does not exist
@@ -35,16 +37,21 @@ export default async function updateComponent(updateData, config) {
   };
 
   topLevelUpdates.forEach((attributeName) => {
-    if (changeData[attributeName]) {
+    if (changeData[attributeName] || updateData[attributeName]) {
       const newLabel = `:new${attributeName}`;
-      updateComponentParams.ExpressionAttributeValues[newLabel] =
-        changeData[attributeName];
+      updateComponentParams.ExpressionAttributeValues[newLabel] = changeData[
+        attributeName
+      ]
+        ? changeData[attributeName]
+        : updateData[attributeName];
       updateComponentParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
     }
   });
 
   try {
-    return updateWithVersion(updateComponentParams);
+    const updateResults = await updateWithVersion(updateComponentParams);
+
+    if (updateResults.parentId) await updateParent(updateResults);
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {
       console.log(

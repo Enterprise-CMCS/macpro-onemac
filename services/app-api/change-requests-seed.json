@@ -398,7 +398,7 @@
    },
    {
     "userId": "us-east-1:c84c445b-a748-47dc-b39a-b06c3075b5a5",
-    "id": "1d71c570-d617-11ec-a963-6d27d9ec631c",
+    "id": "1d71c570-d617-11ec-a963-6d27d9ec63aa",
     "actionType": "renewal",
     "createdAt": 1652815530823,
     "ninetyDayClockEnd": 1660591531339,
@@ -424,5 +424,48 @@
      "lastName": "Nightwatch"
     },
     "waiverAuthority": "1915(b)(4)"
-   }
+   },
+   {
+    "summary": "Here is a test inactivated CHIP SPA loaded from seed data.",
+    "waiverAuthority": "",
+    "ninetyDayClockEnd": 1659551958031,
+    "type": "chipspa",
+    "userId": "offlineContext_cognitoIdentityId",
+    "uploads": [
+      {
+        "s3Key": "1651775957075/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "Current State Plan",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1651775957075/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      },
+      {
+        "s3Key": "1651775957075/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1651775957075/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+      },
+      {
+        "s3Key": "1651775957075/Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "filename": "Mr. Scott_ State of KS_SPA KS 21-0002 Signed.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1651775957075/Mr.%20Scott_%20State%20of%20KS_SPA%20KS%2021-0002%20Signed.pdf"
+      }
+    ],
+    "actionType": "",
+    "createdAt": 1651775957952,
+    "transmittalNumberWarningMessage": "",
+    "id": "abba3c00-cca2-11ec-8862-3f438eff442e",
+    "state": "inactivated",
+    "transmittalNumber": "MD-33-1111-CHIP",
+    "submittedAt": 1651775958031,
+    "user": {
+      "firstName": "Angie",
+      "lastName": "Active",
+      "email": "statesubmitteractive@cms.hhs.local"
+    },
+    "territory": "MD"
+  }
 ]
