@@ -2016,10 +2016,10 @@ And("click on Respond to RAI package action", () => {
 And("verify the details section exists", () => {
   OneMacPackageDetailsPage.verifyDetailSectionExists();
 });
-And("verify there is a CHIP SPA ID header in the details section", () => {
+And("verify there is a SPA ID header in the details section", () => {
   OneMacPackageDetailsPage.verifyCHIPSPAIDHeaderExists();
 });
-And("verify an ID exists for the CHIP SPA ID", () => {
+And("verify an ID exists for the SPA ID", () => {
   OneMacPackageDetailsPage.verifyIDExists();
 });
 And("verify there is a Type header in the details section", () => {
