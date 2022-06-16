@@ -7,7 +7,7 @@ const successMessageAfterRAIResponse =
   '//*[contains(text(),"Thanks for your submission. We truly value your feedback. Please consider taking our ")]';
 
 //Element is Xpath use cy.xpath instead of cy.get
-const IDNUMBER = "//tbody/tr[1]/td[1]/a[1]";
+const IDNUMBER = (id) => `//a[text()="${id}"]`;
 //Element is Xpath use cy.xpath instead of cy.get
 const SecondIDNUMBER = "//tbody/tr[2]/td[1]/a[1]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -54,30 +54,30 @@ export class oneMacDashboardPage {
   }
 
   verifyIDNumber(s) {
-    cy.xpath(IDNUMBER).contains(s);
+    cy.xpath(IDNUMBER(s)).should("be.visible");
   }
 
   verifyType(s) {
     cy.xpath(Type).contains(s);
   }
-
+  verifyTypeForID(s, e) {
+    cy.xpath(IDNUMBER(s)).parent("td").next("td").contains(e);
+  }
   verifyDate() {
     cy.get(date).should("be.visible");
   }
 
-  clickOnrespondToRAI() {
-    cy.xpath(respondToRAIBTN).click();
+  clickOnrespondToRAI(s) {
+    cy.xpath(IDNUMBER(s)).parent("td").siblings().find("button").click();
     cy.xpath(respondToRAI).click();
   }
 
   verifySPARAIIDNumberMatchesMedicalSPAIDNumber(s) {
-    cy.xpath(IDNUMBER).contains(s);
-    cy.xpath(SecondIDNUMBER).contains(s);
+    cy.xpath(IDNUMBER(s)).should("be.visible").and("have.length", 2);
   }
 
   verifySPARAIIDNumberMatchesCHIPSPAIDNumber(s) {
-    cy.xpath(IDNUMBER).contains(s);
-    cy.xpath(SecondIDNUMBER).contains(s);
+    cy.xpath(IDNUMBER(s)).should("be.visible").and("have.length", 2);
   }
 
   clickUserManagementTab() {
@@ -113,8 +113,8 @@ export class oneMacDashboardPage {
     cy.get(newSubmissionBTN).should("be.visible");
   }
 
-  verifyIDNumberIsDisplayed() {
-    cy.xpath(IDNUMBER).should("be.visible");
+  verifyIDNumberIsDisplayed(s) {
+    cy.xpath(IDNUMBER(s)).should("be.visible");
   }
   clickPackageTab() {
     cy.xpath(packageTab).click();

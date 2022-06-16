@@ -3,47 +3,26 @@
  * This will contain static items needed by both the frontend and backend.
  */
 
-import * as ChangeRequest from "./changeRequest.js";
-export { ChangeRequest };
+export * as ChangeRequest from "./changeRequest.js";
 
-import * as Validate from "./idValidation.js";
-export { Validate };
+export * as Validate from "./idValidation.js";
 
 import * as Workflow from "./workflow.js";
-export { Workflow };
+export * as Workflow from "./workflow.js";
 
-import { baseWaiver } from "./type/baseWaiver.js";
-export { baseWaiver };
+export { baseWaiver } from "./type/baseWaiver.js";
+export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
+export { waiverRenewal } from "./type/waiverRenewal.js";
+export { waiverAmendment } from "./type/waiverAmendment.js";
+export { waiverAppendixK } from "./type/waiverAppendixK.js";
+export { waiverRAIResponse } from "./type/waiverRAIResponse.js";
+export { medicaidSPA } from "./type/medicaidSPA.js";
+export { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
+export { chipSPA } from "./type/chipSPA.js";
+export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 
-import { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
-export { waiverTemporaryExtension };
-
-import { waiverRenewal } from "./type/waiverRenewal.js";
-export { waiverRenewal };
-
-import { waiverAmendment } from "./type/waiverAmendment.js";
-export { waiverAmendment };
-
-import { waiverAppendixK } from "./type/waiverAppendixK.js";
-export { waiverAppendixK };
-
-import { waiverRAIResponse } from "./type/waiverRAIResponse.js";
-export { waiverRAIResponse };
-
-import { medicaidSPA } from "./type/medicaidSPA.js";
-export { medicaidSPA };
-
-import { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
-export { medicaidSPARAIResponse };
-
-import { chipSPA } from "./type/chipSPA.js";
-export { chipSPA };
-
-import { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
-export { chipSPARAIResponse };
-
-import { ROUTES } from "./routes.js";
-export * from "./routes.js";
+import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
+export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
 /**
  * Codes to send to front end
@@ -182,7 +161,7 @@ export class Role {
     const accesses = [...ALL_USERS_ROUTES];
 
     if (this.canAccessDashboard)
-      accesses.push(ROUTES.DASHBOARD, ROUTES.PACKAGE_LIST);
+      accesses.push(ROUTES.DASHBOARD, ONEMAC_ROUTES.PACKAGE_LIST);
     if (this.canAccessForms) {
       accesses.push(
         ROUTES.DASHBOARD,

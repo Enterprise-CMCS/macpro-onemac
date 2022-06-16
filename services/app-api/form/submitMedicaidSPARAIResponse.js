@@ -7,7 +7,7 @@ import { defaultFormConfig } from "./defaultFormConfig";
 export const medicaidSPARAIResponseFormConfig = {
   ...defaultFormConfig,
   ...medicaidSPARAIResponse,
-  getParentInfo: (myId) => [myId, Workflow.ONEMAC_TYPE.SPA],
+  getParentInfo: (myId) => [myId, Workflow.ONEMAC_TYPE.MEDICAID_SPA],
 };
 
 export const main = handler(async (event) =>

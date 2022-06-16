@@ -29,15 +29,6 @@ export const waiverRenewal = {
     "Tribal Consultation (Initial, Renewal, Amendment)",
     "Other",
   ],
-  requiredUploads: [], // until changed in front end
-  optionalUploads: [
-    "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-    "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-    "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-    "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-    "Tribal Consultation (Initial, Renewal, Amendment)",
-    "Other",
-  ],
   waiverAuthorities: [
     {
       label: "1915(b)(4) FFS Selective Contracting waivers",

@@ -151,7 +151,7 @@ jobs:
         run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f migrate
       - name: Reset Test Data
         if: ${{ env.branch_name != 'production'}}
-        run: cd ./services/app-api && sls invoke -s $STAGE_PREFIX$branch_name -f resetData
+        run: cd ./services/admin && sls invoke -s $STAGE_PREFIX$branch_name -f resetData
   cypress-test:
     name: Cypress Tests
     needs: deploy
@@ -201,6 +201,9 @@ jobs:
             Home_Page.spec.feature,
             FAQ_Page.spec.feature,
             Submission_Dashboard_Withdraw_RAI_Responses.spec.feature,
+            Package_Dashboard_Chip_SPA_Form.spec.feature,
+            Package_Dashboard_Medicaid_SPA_Form.spec.feature,
+            CMS_Read_Only_View.spec.feature,
           ]
     steps:
       - name: set branch_name

@@ -245,6 +245,32 @@ export const helpDeskDeniedInitialAuthState = {
     },
   },
 };
+export const helpDeskActiveInitialAuthState = {
+  isAuthenticating: false,
+  isAuthenticated: true,
+  isLoggedInAsDeveloper: false,
+  userRole: "helpdesk",
+  userStatus: "active",
+  userProfile: {
+    cmsRoles: "onemac-state-user",
+    email: "statesubmitteractive@cms.hhs.local",
+    firstName: "Unit",
+    lastName: "Tester",
+    userData: {
+      roleList: [
+        {
+          role: "helpdesk",
+          territory: "N/A",
+          status: "active",
+        },
+      ],
+      email: "helpdesk@nightwatch.test",
+      firstName: "Help",
+      lastName: "Desk",
+      validRoutes: ["/", "/profile", "/devlogin", "/FAQ", "/dashboard"],
+    },
+  },
+};
 
 export const helpDeskRevokedInitialAuthState = {
   isAuthenticating: false,

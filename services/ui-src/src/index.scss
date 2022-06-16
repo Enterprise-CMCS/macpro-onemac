@@ -227,6 +227,12 @@ p.field-hint {
   }
 }
 
+.mini-dashboard-title {
+  @extend .ds-u-padding-bottom--5;
+  @extend .ds-u-display--flex;
+  @extend .ds-u-justify-content--between;
+}
+
 .new-submission-button {
   background-color: transparent;
 
@@ -489,7 +495,7 @@ input[type="file"] {
 
   h2 {
     @extend .ds-h3;
-    @extend .ds-u-margin-top--7;
+    @extend .ds-u-margin-top--1;
   }
   .topic-title {
     @extend .ds-h3;
@@ -895,7 +901,8 @@ article.form-container {
   overflow: auto;
 }
 
-.submissions-table {
+.submissions-table,
+.package-table {
   @include custom-table;
   min-width: 1024px;
 
@@ -929,7 +936,8 @@ article.form-container {
   }
 }
 
-.submissions-table-actions-column {
+.submissions-table-actions-column,
+.package-table-actions-column {
   th:last-child {
     text-align: right;
     padding-right: 8px;
@@ -996,7 +1004,8 @@ article.form-container {
 }
 
 .submissions-table,
-.user-table {
+.user-table,
+.package-table {
   .user-name {
     font-weight: normal;
     text-decoration: none;

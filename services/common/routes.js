@@ -2,13 +2,13 @@
  * Routing Control Shared List
  *
  */
+
+import { ONEMAC_TYPE } from "./workflow.js";
+
 export const ROUTES = {
   CHIP_SPA: "/chipspa",
   CHIP_SPA_RAI: "/chipsparai",
   DASHBOARD: "/dashboard",
-  PACKAGE_LIST: "/packagelist",
-  PACKAGE_LIST_SPA: "/packagelist?startTab=spa",
-  PACKAGE_LIST_WAIVER: "/packagelist?startTab=waiver",
   DETAIL: "/detail",
   USER_MANAGEMENT: "/usermanagement",
   FAQ: "/FAQ",
@@ -28,13 +28,40 @@ export const ROUTES = {
   SPA_RAI: "/sparai",
   NEW_WAIVER: "/newwaiver",
   WAIVER: "/waiver",
-  BASE_WAIVER: "/base-waiver",
-  TEMPORARY_EXTENSION: "/temporary-extension",
   WAIVER_RAI: "/waiverrai",
   WAIVER_EXTENSION: "/waiverextension",
   WAIVER_APP_K: "/waiverappk",
   ATTACHMENT_LANDING: "/legacy-attachments",
+};
+
+export const ONEMAC_ROUTES = {
+  PACKAGE_LIST: "/packagelist",
+  PACKAGE_LIST_SPA: "/packagelist?startTab=spa",
+  PACKAGE_LIST_WAIVER: "/packagelist?startTab=waiver",
   TRIAGE_GROUP: "/choices",
   TRIAGE_SPA: "/choices/spa",
   TRIAGE_WAIVER: "/choices/waiver",
+  MEDICAID_SPA: "/medicaid-spa",
+  MEDICAID_SPA_DETAIL: "/detail/medicaid-spa",
+  CHIP_SPA: "/chip-spa",
+  CHIP_SPA_DETAIL: "/detail/chip-spa",
+  BASE_WAIVER: "/base-waiver",
+  BASE_WAIVER_DETAIL: "/detail/base-waiver",
+  WAIVER_AMENDMENT_DETAIL: "/detail/waiver-amendment",
+  TEMPORARY_EXTENSION: "/temporary-extension",
+  TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
+};
+
+export const TYPE_TO_DETAIL_ROUTE = {
+  [ONEMAC_TYPE.CHIP_SPA]: ONEMAC_ROUTES.CHIP_SPA_DETAIL,
+  [ONEMAC_TYPE.CHIP_SPA_RAI]: "",
+  [ONEMAC_TYPE.MEDICAID_SPA]: ONEMAC_ROUTES.MEDICAID_SPA_DETAIL,
+  [ONEMAC_TYPE.MEDICAID_SPA_RAI]: "",
+  [ONEMAC_TYPE.WAIVER]: ONEMAC_ROUTES.BASE_WAIVER_DETAIL,
+  [ONEMAC_TYPE.WAIVER_RAI]: "",
+  [ONEMAC_TYPE.WAIVER_BASE]: ONEMAC_ROUTES.BASE_WAIVER_DETAIL,
+  [ONEMAC_TYPE.WAIVER_RENEWAL]: "",
+  [ONEMAC_TYPE.WAIVER_AMENDMENT]: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL,
+  [ONEMAC_TYPE.WAIVER_EXTENSION]: "",
+  [ONEMAC_TYPE.WAIVER_APP_K]: "",
 };

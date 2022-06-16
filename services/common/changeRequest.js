@@ -37,6 +37,11 @@ export const correspondingRAILink = {
 const commonSubheaderMessage =
   "Once you submit this form, a confirmation email is sent to you and to CMS. CMS will use this content to review your package, and you will not be able to edit this form. If CMS needs any additional information, they will follow up by email.<b> If you leave this page, you will lose your progress on this form.</b>";
 
+const raiSubheaderMessage =
+  commonSubheaderMessage +
+  "<br><br>" +
+  "<b>Please note:</b> Formal RAI Response selection should only be used when submitting a response to a Formal RAI that would impact the clock.  If this submission is in response to informal questions and is not clock related, the state should be forwarding to the review team via email.";
+
 const waiverBaseTransmittalNumber = {
   idType: "waiver",
   idLabel: "Waiver Number",
@@ -81,12 +86,13 @@ export const CONFIG = {
   },
 
   [TYPE.CHIP_SPA_RAI]: {
-    pageTitle: "Respond to CHIP SPA RAI",
-    readOnlyPageTitle: "CHIP SPA RAI Response Details",
+    pageTitle: "Respond to Formal CHIP SPA RAI",
+    readOnlyPageTitle: "Formal CHIP SPA RAI Response Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
-    detailsHeader: "CHIP SPA RAI",
+    detailsHeader: "Formal CHIP SPA RAI",
+    readOnlyDetailsHeader: "CHIP SPA RAI",
     requiredUploads: [
       "Revised Amended State Plan Language",
       "Official RAI Response",
@@ -159,12 +165,13 @@ export const CONFIG = {
   },
 
   [TYPE.SPA_RAI]: {
-    pageTitle: "Respond to Medicaid SPA RAI",
-    readOnlyPageTitle: "Medicaid SPA RAI Response Details",
+    pageTitle: "Respond to Formal Medicaid SPA RAI",
+    readOnlyPageTitle: "Medicaid SPA RAI Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
-    detailsHeader: "Medicaid SPA RAI",
+    detailsHeader: "Formal Medicaid SPA RAI",
+    readOnlyDetailsHeader: "Medicaid SPA RAI",
     requiredUploads: ["RAI Response"],
     optionalUploads: ["Other"],
 
@@ -335,7 +342,7 @@ export const CONFIG = {
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },
-    detailsHeader: "Request Temporary Extension",
+    detailsHeader: "Temporary Extension Request",
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
 
@@ -378,63 +385,6 @@ export const CONFIG = {
         },
       ],
     },
-  },
-
-  [TYPE.WAIVER_BASE]: {
-    pageTitle: "Base Waiver Submission",
-    readOnlyPageTitle: "Waiver Action Details",
-    subheaderMessage: {
-      __html: commonSubheaderMessage,
-    },
-    detailsHeader: "Waiver Action",
-    overrideType: TYPE.WAIVER,
-    overrideActionType: "new",
-    overrideSuccessLanding: ROUTES.PACKAGE_LIST_WAIVER,
-    requiredUploads: [],
-    optionalUploads: [
-      "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
-      "1915(b) Comprehensive (Capitated) Waiver Cost effectiveness spreadsheets (Initial, Renewal, Amendment)",
-      "1915(b)(4) FFS Selective Contracting (Streamlined) and 1915(b) Comprehensive (Capitated) Waiver Independent Assessment (first two renewals only)",
-      "Tribal Consultation (Initial, Renewal, Amendment)",
-      "Other",
-    ],
-
-    waiverAuthority: {
-      fieldName: "waiverAuthority",
-      errorMessage: "Please select the Waiver Authority.",
-      optionsList: [
-        { label: "-- select a waiver authority --", value: "" },
-        {
-          label: "1915(b)(4) FFS Selective Contracting waivers",
-          value: "1915(b)(4)",
-        },
-        { label: "All other 1915(b) Waivers", value: "1915(b)" },
-      ],
-    },
-    transmittalNumber: {
-      ...waiverBaseTransmittalNumber,
-      idLabel: "Base Waiver Number",
-      idFieldHint: [
-        {
-          text: "Must be a new base number with the format SS.####.R00.00 or SS.#####.R00.00",
-        },
-      ],
-      idFormat: "SS.####.R00.00 or SS.#####.R00.00",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R00.00$",
-      idExistValidations: [
-        {
-          idMustExist: false,
-          errorLevel: "error",
-        },
-      ],
-    },
-
-    proposedEffectiveDate: {
-      fieldName: "proposedEffectiveDate",
-    },
-
-    raiLink: ROUTES.WAIVER_RAI,
   },
 };
 

@@ -31,7 +31,7 @@
 #         And click actions button on the child row
 #         And click withdraw package button
 #         And click yes, withdraw package button
-#         And verify success message for Package Withdrawal
+#         And verify success message for Withdrawal
 #         And search for Unique Valid Waiver Number with 5 Characters
 #         And wait for parent row expander to be enabled
 #         And click parent row expander
@@ -52,7 +52,7 @@
 #         And click actions button for Temporary Extension in Child Row
 #         And click withdraw package button
 #         And click yes, withdraw package button
-#         And verify success message for Package Withdrawal
+#         And verify success message for Withdrawal
 #         And search for Unique Valid Waiver Number with 5 Characters
 #         And wait for parent row expander to be enabled
 #         And click parent row expander

@@ -1,0 +1,28 @@
+{
+    "additionalInformation": "Please extend this waiver.",
+    "componentType": "waiverextension",
+    "attachments": [
+        {
+            "s3Key": "1654892407833/Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+            "filename": "Attachment 3.1-A, #4b, Page 3f Clean.pdf",
+            "title": "Waiver Extension Request",
+            "contentType": "application/pdf",
+            "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1654892407833/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Clean.pdf"
+        }
+    ],
+    "componentId": "MD.83420.R00.TE01",
+    "currentStatus": "Submitted",
+    "parentId": "MD.83420.R00.00",
+    "parentType": "waivernew",
+    "submissionTimestamp": 1654892408443,
+    "clockEndTimestamp": 1662668408443,
+    "submissionId": "b8f27c10-e8fa-11ec-bf83-4b9b3380ee9e",
+    "GSI1pk": "MD.83420.R00.00",
+    "submitterId": "offlineContext_cognitoIdentityId",
+    "GSI1sk": "waiverextension",
+    "sk": "v0#waiverextension",
+    "Latest": 1,
+    "pk": "MD.83420.R00.TE01",
+    "submitterName": "Statesubmitter Nightwatch",
+    "submitterEmail": "statesubmitter@nightwatch.test"
+}

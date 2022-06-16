@@ -9,10 +9,14 @@ import {
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { ROUTES, Workflow } from "cmscommonlib";
+import { ONEMAC_ROUTES, Workflow } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
-import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
+import {
+  stateSubmitterInitialAuthState,
+  helpDeskActiveInitialAuthState,
+} from "../libs/testDataAppContext";
 import { packageList } from "../libs/testDataPackages";
+import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
 import PackageApi from "../utils/PackageApi";
 import PackageList, { getState } from "./PackageList";
@@ -22,12 +26,29 @@ import { LOADER_TEST_ID } from "../components/LoadingScreen";
 jest.mock("../utils/PackageApi");
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
+jest.mock("../utils/tableListExportToCSV");
+tableListExportToCSV.mockImplementation(() => null);
+
 const ContextWrapper = ({ children }) => {
   return (
     <MemoryRouter>
       <AppContext.Provider
         value={{
           ...stateSubmitterInitialAuthState,
+        }}
+      >
+        {children}
+      </AppContext.Provider>
+    </MemoryRouter>
+  );
+};
+
+const helpDeskContextWrapper = ({ children }) => {
+  return (
+    <MemoryRouter>
+      <AppContext.Provider
+        value={{
+          ...helpDeskActiveInitialAuthState,
         }}
       >
         {children}
@@ -47,7 +68,20 @@ it("renders with a New Submission button", async () => {
   await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
   const newSubmissionButton = screen.getByText("New Submission");
-  expect(newSubmissionButton.getAttribute("href")).toBe(ROUTES.TRIAGE_GROUP);
+  expect(newSubmissionButton.getAttribute("href")).toBe(
+    ONEMAC_ROUTES.TRIAGE_GROUP
+  );
+});
+
+it("helpdesk user renders with an Export button", async () => {
+  PackageApi.getMyPackages.mockResolvedValue([]);
+
+  render(<PackageList />, { wrapper: helpDeskContextWrapper });
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  const exportButton = await screen.findByText("Export to Excel(CSV)");
+  userEvent.click(exportButton);
+  expect(tableListExportToCSV).toBeCalled();
 });
 
 it("passes a retrieval error up", async () => {
@@ -100,8 +134,8 @@ it.each`
   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-  ${"currentStatus"} | ${"AnythingElse"}                     | ${"clockEndTimestamp"} | ${1570378876000} | ${"Oct 6, 2019"}
-  ${"currentStatus"} | ${"AnythingElse"}                     | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.SUBMITTED}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"Pending"}
+  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.RAI_ISSUED}  | ${"clockEndTimestamp"} | ${null}          | ${"Clock Stopped"}
 `(
   "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
   async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
@@ -146,5 +180,31 @@ it("provides option to withdraw packages", async () => {
 
   expect(document.getElementById("alert-bar")).toHaveTextContent(
     "Your submission package has successfully been withdrawn."
+  );
+});
+
+it("handles exceptions in withdraw action", async () => {
+  PackageApi.getMyPackages.mockResolvedValue(packageList);
+  PackageApi.withdraw.mockResolvedValueOnce("UR040");
+
+  render(<PackageList />, { wrapper: ContextWrapper });
+
+  // wait for loading screen to disappear so package table displays
+  await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+  await act(async () => {
+    await userEvent.click(
+      screen.getByRole("button", {
+        name: "Actions for MI-98-2223",
+      })
+    );
+    await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
+    await userEvent.click(
+      screen.getByRole("button", { name: "Yes, withdraw" })
+    );
+  });
+
+  expect(document.getElementById("alert-bar")).toHaveTextContent(
+    "There was an issue submitting your request. Please try again."
   );
 });

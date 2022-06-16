@@ -80,6 +80,16 @@ And("type in SPA ID for RAI 2", () => {
     OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI2);
   });
 });
+And("type in Medicaid SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newMedicaidSPAID);
+  });
+});
+And("type in Chip SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((d) => {
+    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.newChipSPAID);
+  });
+});
 And("Add file for CMS Form 179", () => {
   OneMacSubmitNewMedicaidSpaPage.uploadCMSForm179AddFile();
 });
@@ -195,7 +205,9 @@ And("type in CHIP ID 2", () => {
 });
 
 And("click on CHIP Respond to RAI", () => {
-  OneMacDashboardPage.clickOnrespondToRAI();
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.chipSPAID1);
+  });
 });
 
 And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
@@ -213,15 +225,35 @@ And("Verify submission type", () => {
   OneMacDashboardPage.verifyType("Medicaid SPA");
 });
 
+And("Verify submission type for SPA ID 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.attachmentsSPAID2, "Medicaid SPA");
+  });
+});
+And("Verify submission type for RAI 1 parent SPA", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.SPAIDforRAI1, "Medicaid SPA");
+  });
+});
+
 And("Verify submission Waiver type", () => {
   OneMacDashboardPage.verifyType("Waiver");
 });
 
 And("Verify submission CHIP type", () => {
-  OneMacDashboardPage.verifyType("CHIP SPA");
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.chipSPAID1, "CHIP SPA");
+  });
 });
-And("click on spa Respond to RAI", () => {
-  OneMacDashboardPage.clickOnrespondToRAI();
+And("click on spa Respond to RAI 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI2);
+  });
+});
+And("click on spa Respond to RAI 1", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.SPAIDforRAI1);
+  });
 });
 And("Add file for RAI Response", () => {
   medicaidSPARAIResponsePage.uploadRAIResponseAddFile();
@@ -232,16 +264,21 @@ And("Add Additional Comments", () => {
 And("verify submission Successful message after RAI", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayedAfterRAIResponse();
 });
-And("Verify submission typeRAI", () => {
-  OneMacDashboardPage.verifyType("SPA RAI");
+And("Verify submission type SPA RAI", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.SPAIDforRAI2, "SPA RAI");
+  });
 });
 
 And("Verify submission type Waiver RAI", () => {
-  OneMacDashboardPage.verifyType("Waiver RAI");
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacDashboardPage.verifyTypeForID(d.newWaiverNumber3, "Waiver RAI");
+  });
 });
-
-And("Verify submission typeCHIP SPA RAI", () => {
-  OneMacDashboardPage.verifyType("CHIP SPA RAI");
+And("Verify submission type of SPA ID for RAI 2", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI2, "Medicaid SPA");
+  });
 });
 
 //this is for the oy2 8616
@@ -444,6 +481,12 @@ And("click on Base Waiver", () => {
 And("verify Base Waiver is a clickable option", () => {
   OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
 });
+And("verify CHIP SPA is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyChipSPAIsClickable();
+});
+And("verify Medicaid SPA is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyMedicaidSPAIsClickable();
+});
 
 And("select Action Type New Waiver", () => {
   OneMacSubmitNewWaiverActionPage.selectNewWaiverUnderActionType();
@@ -467,7 +510,9 @@ And("verify Waiver Number EXISTS", () => {
 });
 
 And("click on Waiver Respond to RAI", () => {
-  OneMacDashboardPage.clickOnrespondToRAI();
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacDashboardPage.clickOnrespondToRAI(d.newWaiverNumber3);
+  });
 });
 
 And("Add file for Waiver RAI Response", () => {
@@ -630,7 +675,9 @@ And("Type {string} in Summary Box", (Comments) => {
 });
 
 And("verify ID Number Exists", () => {
-  OneMacDashboardPage.verifyIDNumberIsDisplayed();
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacDashboardPage.verifyIDNumberIsDisplayed(d.newWaiverNumber1);
+  });
 });
 
 And("Click on All other 1915 b Waivers under Waiver Authority", () => {
@@ -653,9 +700,14 @@ And("Type new Waiver Number 1 in format SS.#####", () => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber1);
   });
 });
-And("Type new Waiver Number for RAI in format SS.#####", () => {
+And("Type new Waiver Number 2 in format SS.#####", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber2);
+  });
+});
+And("Type new Waiver Number for RAI in format SS.#####", () => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber3);
   });
 });
 And("Type Base Waiver Number in format SS.#####.R00.00", () => {
@@ -671,6 +723,11 @@ And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber1);
+  });
+});
+And("Type existing Waiver Number 2 With 5 Characters", () => {
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber2);
   });
 });
 And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
@@ -697,9 +754,31 @@ And("search for Base Waiver Number 2 with 12 Characters", () => {
   });
   cy.wait(1000);
 });
+And("search for Medicaid SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newMedicaidSPAID);
+  });
+  cy.wait(1000);
+});
+And("search for CHIP SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.searchFor(data.newChipSPAID);
+  });
+  cy.wait(1000);
+});
 And("verify id number in the first row matches Base Waiver Number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newBaseWaiverNumber1);
+  });
+});
+And("verify id number in the first row matches Medicaid SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newMedicaidSPAID);
+  });
+});
+And("verify id number in the first row matches CHIP SPA ID", () => {
+  cy.fixture("packageDashboardSPAIDs.json").then((data) => {
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newChipSPAID);
   });
 });
 And("search for Unique Valid Waiver Number with 5 Characters", () => {
@@ -720,7 +799,7 @@ And("click actions button for Temporary Extension in Child Row", () => {
 And("verify child row has status {string}", (status) => {
   OneMacPackagePage.verifyChildRowStatusIs(status);
 });
-And("verify success message for Package Withdrawal", () => {
+And("verify success message for Withdrawal", () => {
   OneMacPackagePage.verifyPackageWithdrawalMessageIsDisplayed();
 });
 
@@ -1287,22 +1366,22 @@ And("verify rai response submitted exists", () => {
   OneMacPackagePage.verifyraiResponseSubmittedCheckBoxExists();
 });
 And("verify package in review exists", () => {
-  OneMacPackagePage.verifypackageInReviewcheckBoxExists();
+  OneMacPackagePage.verifyInReviewCheckBoxExists();
 });
 And("verify Submitted status checkbox exists", () => {
   OneMacPackagePage.verifySubmittedCheckboxExists();
 });
 And("verify Withdrawn status checkbox exists", () => {
-  OneMacPackagePage.verifywithdrawnCheckBoxExists();
+  OneMacPackagePage.verifyWithdrawnCheckBoxExists();
 });
 And("verify RAI Issued status checkbox exists", () => {
   OneMacPackagePage.verifyRaiIssuedCheckboxExists();
 });
-And("click Package In Review checkbox", () => {
-  OneMacPackagePage.clickPackageInReviewcheckBox();
+And("click In Review checkbox", () => {
+  OneMacPackagePage.clickInReviewCheckBox();
 });
-And("click Waiver Terminated checkbox", () => {
-  OneMacPackagePage.clickWaiverTerminatedCheckBox();
+And("click Terminated checkbox", () => {
+  OneMacPackagePage.clickTerminatedCheckBox();
 });
 And("verify seatool status 1 exists", () => {
   OneMacPackagePage.verifyseaToolStatus1CheckBoxExists();
@@ -1434,27 +1513,21 @@ And("verify the state on row one exists", () => {
   OneMacPackagePage.verifypackageRowOneStateExists();
 });
 
+And("verify that the 3 dots next to Approved status is not clickable", () => {
+  OneMacPackagePage.checkforApprovedIsNotClickable();
+});
 And(
-  "verify that the 3 dots next to Package Approved status is not clickable",
+  "verify that the 3 dots next to Disapproved status is not clickable",
   () => {
-    OneMacPackagePage.checkforPackageApprovedIsNotClickable();
-  }
-);
-And(
-  "verify that the 3 dots next to Package Disapproved status is not clickable",
-  () => {
-    OneMacPackagePage.checkforPackageDisapprovedIsNotClickable();
+    OneMacPackagePage.checkforDisapprovedIsNotClickable();
   }
 );
 And("verify that the 3 dots next to Withdrawn status is not clickable", () => {
-  OneMacPackagePage.checkforPackageWithdrawnIsNotClickable();
+  OneMacPackagePage.checkforWithdrawnIsNotClickable();
 });
-And(
-  "verify that the 3 dots next to Waiver Terminated status is not clickable",
-  () => {
-    OneMacPackagePage.checkforWaiverTerminatedIsNotClickable();
-  }
-);
+And("verify that the 3 dots next to Terminated status is not clickable", () => {
+  OneMacPackagePage.checkforTerminatedIsNotClickable();
+});
 And(
   "verify that the 3 dots next to Unsubmitted status is not clickable",
   () => {
@@ -1647,14 +1720,14 @@ And(
     OneMacPackagePage.verify90thDayRowOneIsClockStopped();
   }
 );
-And("click Package Approved checkbox", () => {
-  OneMacPackagePage.clickPackageApprovedCheckbox();
+And("click Approved checkbox", () => {
+  OneMacPackagePage.clickApprovedCheckbox();
 });
 And("verify that the value of the column for the 90th day is NA", () => {
   OneMacPackagePage.verify90thDayRowOneIsNA();
 });
-And("click Package Disapproved checkbox", () => {
-  OneMacPackagePage.clickPackageDisapprovedCheckbox();
+And("click Disapproved checkbox", () => {
+  OneMacPackagePage.clickDisapprovedCheckbox();
 });
 And("click the SPA ID link in the first row", () => {
   OneMacPackagePage.clickSPAIDLinkInFirstRow();
@@ -1922,6 +1995,9 @@ And("verify package actions header is visible", () => {
 And("verify there are no package actions available", () => {
   OneMacPackageDetailsPage.verifyNoPackageActionsAvailable();
 });
+And("verify the package actions section is unavailable", () => {
+  OneMacPackageDetailsPage.verifyPackageActionsSectionDoesNotExist();
+});
 And("verify Respond to RAI action exists", () => {
   OneMacPackageDetailsPage.verifyRespondtoRAIActionExists();
 });
@@ -1981,6 +2057,12 @@ And("verify user is on new waiver page", () => {
 });
 And("verify user is on new base waiver page", () => {
   OneMacSubmissionTypePage.verifyNewBaseWaiverPage();
+});
+And("verify user is on new Medicaid SPA page", () => {
+  OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
+});
+And("verify user is on new CHIP SPA page", () => {
+  OneMacCHIPSPAPage.verifyNewChipSPAPage();
 });
 And("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
@@ -2171,4 +2253,7 @@ And("reset EUA CMS Read Only User state if needed", () => {
 
 And("verify the actions button is unavailable", () => {
   OneMacDashboardPage.verifyActionsBtnUnvailableOnFirstRow();
+});
+And("verify actions column is unavailable", () => {
+  OneMacPackagePage.verifyActionsColumnDoesNotExist();
 });

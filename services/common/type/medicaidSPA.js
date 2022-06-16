@@ -1,6 +1,6 @@
 export const medicaidSPA = {
   packageGroup: "spa",
-  componentType: "spa",
+  componentType: "medicaidspa",
   typeLabel: "Medicaid SPA",
   idType: "spa",
   idLabel: "SPA ID",
@@ -18,19 +18,6 @@ export const medicaidSPA = {
     "SPA Pages",
   ],
   optionalAttachments: [
-    "Cover Letter",
-    "Document Demonstrating Good-Faith Tribal Engagement",
-    "Existing State Plan Page(s)",
-    "Public Notice",
-    "Standard Funding Questions (SFQs)",
-    "Tribal Consultation",
-    "Other",
-  ],
-  requiredUploads: [
-    { title: "CMS Form 179", allowMultiple: false },
-    "SPA Pages",
-  ],
-  optionalUploads: [
     "Cover Letter",
     "Document Demonstrating Good-Faith Tribal Engagement",
     "Existing State Plan Page(s)",

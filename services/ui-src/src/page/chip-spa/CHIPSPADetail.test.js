@@ -8,30 +8,30 @@ import {
 } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { createMemoryHistory } from "history";
-import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
+import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
-import { AppContext } from "../libs/contextLib";
-import DetailView from "./DetailView";
-import PackageApi from "../utils/PackageApi";
-import { LOADER_TEST_ID } from "../components/LoadingScreen";
+import { AppContext } from "../../libs/contextLib";
+import CHIPSPADetail from "./CHIPSPADetail";
+import PackageApi from "../../utils/PackageApi";
+import { LOADER_TEST_ID } from "../../components/LoadingScreen";
 
 jest.mock("react-router-dom", () => ({
   ...jest.requireActual("react-router-dom"), // use actual for all non-hook parts
   useParams: () => {
     return {
-      componentType: "spa",
+      componentType: "chipspa",
       componentTimestamp: 16746532223,
       packageId: "MI-13-1122",
     };
   },
 }));
 
-jest.mock("../utils/PackageApi");
+jest.mock("../../utils/PackageApi");
 
 const testDetail = {
   submitterId: "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
   clockEndTimestamp: 1647286706000,
-  componentType: "spa",
+  componentType: "chipspa",
   currentStatus: "RAI Issued",
   attachments: [
     {
@@ -56,9 +56,9 @@ const testDetail = {
       url: "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696188378/adobe.pdf",
     },
   ],
-  sparai: [
+  chipsparai: [
     {
-      componentType: "sparai",
+      componentType: "chipsparai",
       componentTimestamp: 1643218567141,
       submitterName: "Kristin Grue",
       componentId: "MI-13-1122",
@@ -71,12 +71,12 @@ const testDetail = {
   packageId: "MI-13-1122",
   submitterEmail: "statesubmitter@nightwatch.test",
   devComment: "Package added via seed data for application testing",
-  sk: "spa",
+  sk: "chipspa",
   componentId: "MI-13-1122",
   pk: "MI-13-1122",
   raiResponses: [
     {
-      componentType: "sparai",
+      componentType: "chipsparai",
       additionalInformation: "test",
       componentId: "MI-93-2234",
       attachments: [
@@ -90,7 +90,7 @@ const testDetail = {
       ],
       currentStatus: "Submitted",
       parentId: "MI-93-2234",
-      parentType: "spa",
+      parentType: "chipspa",
       submissionTimestamp: 1646322299324,
       submissionId: "e1cf36e0-9b08-11ec-aa60-d14854d75057",
       submitterId: "offlineContext_cognitoIdentityId",
@@ -103,8 +103,6 @@ const testDetail = {
   submitterName: "StateSubmitter Nightwatch",
   submissionId: "4240e440-5ec5-11ec-b2ea-eb35c89f340d",
 };
-
-const waiverDetail = require("../changeRequest/mock-data/MockWaiverDetail.json");
 
 const ContextWrapper = ({ children }) => {
   return (
@@ -132,11 +130,11 @@ describe("Detail View Tests", () => {
   it("renders", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<DetailView />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -147,11 +145,11 @@ describe("Detail View Tests", () => {
   it("shows withdraw modal", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<DetailView />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -162,11 +160,11 @@ describe("Detail View Tests", () => {
   it("allows respond to RAI action", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<DetailView />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
@@ -177,11 +175,11 @@ describe("Detail View Tests", () => {
   it("shows additional information tab", async () => {
     let history;
     history = createMemoryHistory();
-    history.push("/detail/spa/MI-12-1133");
+    history.push("/detail/chip-spa/MI-12-1133");
 
     PackageApi.getDetail.mockResolvedValue(testDetail);
 
-    render(<DetailView />, { wrapper: ContextWrapper });
+    render(<CHIPSPADetail />, { wrapper: ContextWrapper });
 
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));

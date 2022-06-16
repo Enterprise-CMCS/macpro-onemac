@@ -1,5 +1,12 @@
-import handler from "./libs/handler-lib";
-import dynamoDb from "./libs/dynamodb-lib";
+import AWS from "aws-sdk";
+
+const dynamoDb = new AWS.DynamoDB.DocumentClient(
+  process.env.IS_OFFLINE
+    ? {
+        endpoint: "http://localhost:8000",
+      }
+    : {}
+);
 
 const resetIds = [
   "MD-22-0018",
@@ -8,9 +15,13 @@ const resetIds = [
   "MD-22-0021",
   "MD-22-0022",
   "MD-22-0023",
+  "MD-22-4234",
+  "MD-22-0283-9434",
   "MD.12896",
+  "MD.12893",
   "MD.12958",
   "MD.38430",
+  "MD.123456",
   "MD.33463.R00.00",
   "MD.39253.R00.00",
   "MD.33463.R00.TE00",
@@ -21,8 +32,8 @@ const resetIds = [
  * Reset test Data
  */
 
-export const main = handler(async (event) => {
-  console.log("resetData was called with event: ", event);
+export const main = async (event) => {
+  console.log("resetData event: ", event);
 
   const promiseItems = [];
 
@@ -38,7 +49,7 @@ export const main = handler(async (event) => {
         ProjectionExpression: "pk,sk",
       };
       try {
-        const results = await dynamoDb.query(qParams);
+        const results = await dynamoDb.query(qParams).promise();
         console.log("Found these results in One Table: ", results);
         for (const item of results.Items) {
           promiseItems.push({
@@ -62,7 +73,7 @@ export const main = handler(async (event) => {
   };
   try {
     do {
-      const newresults = await dynamoDb.scan(scanparams);
+      const newresults = await dynamoDb.scan(scanparams).promise();
       console.log("a page of scans");
       for (const item of newresults.Items) {
         if (!resetIds.includes(item.transmittalNumber)) continue;
@@ -86,13 +97,12 @@ export const main = handler(async (event) => {
       try {
         console.log(`Delete Params are ${JSON.stringify(deleteParams)}`);
 
-        const result = await dynamoDb.delete(deleteParams);
-        console.log("The deleted record: ", result);
+        await dynamoDb.delete(deleteParams).promise();
       } catch (e) {
         console.log("delete error: ", e.message);
       }
     })
   );
-
+  console.log("lambda thinks " + promiseItems.length + " Items are deleted");
   return "Done";
-});
+};

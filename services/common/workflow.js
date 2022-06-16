@@ -1,8 +1,8 @@
 export const ONEMAC_TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
-  SPA: "spa",
-  SPA_RAI: "sparai",
+  MEDICAID_SPA: "medicaidspa",
+  MEDICAID_SPA_RAI: "medicaidsparai",
   WAIVER: "waiver",
   WAIVER_BASE: "waivernew",
   WAIVER_AMENDMENT: "waiveramendment",
@@ -14,7 +14,7 @@ export const ONEMAC_TYPE = {
 
 export const ONEMAC_LABEL = {
   [ONEMAC_TYPE.CHIP_SPA]: "CHIP SPA",
-  [ONEMAC_TYPE.SPA]: "Medicaid SPA",
+  [ONEMAC_TYPE.MEDICAID_SPA]: "Medicaid SPA",
   [ONEMAC_TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
   [ONEMAC_TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [ONEMAC_TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
@@ -24,14 +24,15 @@ export const ONEMAC_LABEL = {
 };
 
 export const ONEMAC_STATUS = {
+  INACTIVATED: "Inactivated",
   UNSUBMITTED: "Unsubmitted",
   SUBMITTED: "Submitted",
-  IN_REVIEW: "Package In Review",
+  IN_REVIEW: "In Review",
   RAI_ISSUED: "RAI Issued",
-  APPROVED: "Package Approved",
-  DISAPPROVED: "Package Disapproved",
+  APPROVED: "Approved",
+  DISAPPROVED: "Disapproved",
   WITHDRAWN: "Withdrawn",
-  TERMINATED: "Waiver Terminated",
+  TERMINATED: "Terminated",
   PAUSED: "Review Paused, Off the Clock",
 };
 
@@ -48,8 +49,8 @@ export const PACKAGE_GROUP = {
 export const MY_PACKAGE_GROUP = {
   [ONEMAC_TYPE.CHIP_SPA]: PACKAGE_GROUP.SPA,
   [ONEMAC_TYPE.CHIP_SPA_RAI]: PACKAGE_GROUP.SPA,
-  [ONEMAC_TYPE.SPA]: PACKAGE_GROUP.SPA,
-  [ONEMAC_TYPE.SPA_RAI]: PACKAGE_GROUP.SPA,
+  [ONEMAC_TYPE.MEDICAID_SPA]: PACKAGE_GROUP.SPA,
+  [ONEMAC_TYPE.MEDICAID_SPA_RAI]: PACKAGE_GROUP.SPA,
   [ONEMAC_TYPE.WAIVER]: PACKAGE_GROUP.WAIVER,
   [ONEMAC_TYPE.WAIVER_RAI]: PACKAGE_GROUP.WAIVER,
   [ONEMAC_TYPE.WAIVER_BASE]: PACKAGE_GROUP.WAIVER,
@@ -75,7 +76,7 @@ export const defaultActionsByStatus = {
 
 export const waiverExtensionActionsByStatus = {
   [ONEMAC_STATUS.UNSUBMITTED]: [],
-  [ONEMAC_STATUS.SUBMITTED]: [],
+  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.RAI_ISSUED]: [PACKAGE_ACTION.WITHDRAW],
   [ONEMAC_STATUS.APPROVED]: [],
@@ -99,8 +100,8 @@ export const raiActionsByStatus = {
 export const ACTIONS = {
   [ONEMAC_TYPE.CHIP_SPA]: defaultActionsByStatus,
   [ONEMAC_TYPE.CHIP_SPA_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.SPA]: defaultActionsByStatus,
-  [ONEMAC_TYPE.SPA_RAI]: raiActionsByStatus,
+  [ONEMAC_TYPE.MEDICAID_SPA]: defaultActionsByStatus,
+  [ONEMAC_TYPE.MEDICAID_SPA_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.WAIVER]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.WAIVER_BASE]: defaultActionsByStatus,

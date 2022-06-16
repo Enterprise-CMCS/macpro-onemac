@@ -13,12 +13,14 @@ import classNames from "classnames";
 import {
   RESPONSE_CODE,
   ROUTES,
+  ONEMAC_ROUTES,
   RAI_ROUTE,
   Validate,
   Workflow,
   getUserRoleObj,
   USER_ROLE,
   USER_STATUS,
+  TYPE_TO_DETAIL_ROUTE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -49,6 +51,18 @@ export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
 const getChildren = ({ children }) => children;
+
+const initialStatuses = [
+  Workflow.ONEMAC_STATUS.UNSUBMITTED,
+  Workflow.ONEMAC_STATUS.SUBMITTED,
+  Workflow.ONEMAC_STATUS.IN_REVIEW,
+  Workflow.ONEMAC_STATUS.RAI_ISSUED,
+  Workflow.ONEMAC_STATUS.APPROVED,
+  Workflow.ONEMAC_STATUS.DISAPPROVED,
+  Workflow.ONEMAC_STATUS.WITHDRAWN,
+  Workflow.ONEMAC_STATUS.TERMINATED,
+  Workflow.ONEMAC_STATUS.PAUSED,
+];
 
 /**
  * Component containing dashboard
@@ -103,7 +117,9 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link to={`/detail/${row.original.componentType}/${value}`}>{value}</Link>
+      <Link to={`${TYPE_TO_DETAIL_ROUTE[row.original.componentType]}/${value}`}>
+        {value}
+      </Link>
     ),
     []
   );
@@ -308,11 +324,12 @@ const PackageList = () => {
     () => ({
       sortBy: [{ id: "submissionTimestamp", desc: true }],
       hiddenColumns: ["expirationTimestamp", "familyNumber"],
+      filters: [{ id: "packageStatus", value: initialStatuses }],
     }),
     []
   );
 
-  const csvExportSubmissions = (
+  const csvExportPackages = (
     <Button
       id="new-submission-button"
       className="new-submission-button"
@@ -330,7 +347,7 @@ const PackageList = () => {
     <Button
       id="new-submission-button"
       className="new-submission-button"
-      href={ROUTES.TRIAGE_GROUP}
+      href={ONEMAC_ROUTES.TRIAGE_GROUP}
       inversed
     >
       New Submission
@@ -364,7 +381,7 @@ const PackageList = () => {
     if (userCanSubmit) {
       rightSideContent = newSubmissionButton;
     } else if (userStatus === USER_STATUS.ACTIVE || !userStatus) {
-      rightSideContent = csvExportSubmissions;
+      rightSideContent = csvExportPackages;
     }
 
     return rightSideContent;
@@ -372,7 +389,7 @@ const PackageList = () => {
 
   const TEMP_onReset = useCallback(() => setPackageList((d) => [...d]), []);
 
-  function renderSubmissionList() {
+  function renderPackageList() {
     if (userRole !== USER_ROLE.CMS_ROLE_APPROVER) {
       if (userStatus === USER_STATUS.PENDING) {
         return <EmptyList message={pendingMessage[userRole]} />;
@@ -389,8 +406,8 @@ const PackageList = () => {
     }
 
     const tableClassName = classNames({
-      "submissions-table": true,
-      "submissions-table-actions-column": userRoleObj.canAccessForms,
+      "package-table": true,
+      "package-table-actions-column": userRoleObj.canAccessForms,
     });
     const packageListExists = packageList && packageList.length > 0;
     return (
@@ -409,7 +426,7 @@ const PackageList = () => {
             TEMP_onReset={TEMP_onReset}
           />
         ) : (
-          <EmptyList message="You have no submissions yet." />
+          <EmptyList message="You have no packages yet." />
         )}
       </LoadingScreen>
     );
@@ -423,7 +440,7 @@ const PackageList = () => {
   return (
     <div className="dashboard-white">
       <PageTitleBar
-        heading="Submission Dashboard"
+        heading="Package Dashboard"
         rightSideContent={getRightSideContent()}
       />
       <div className="dash-and-filters" ref={dashboardRef}>
@@ -452,7 +469,7 @@ const PackageList = () => {
                 Waivers
               </Button>
             </div>
-            {renderSubmissionList()}
+            {renderPackageList()}
           </div>
         </div>
       </div>
