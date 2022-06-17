@@ -38,7 +38,7 @@ function validateEvent(event) {
 function extractMatchedResult(results, event) {
   const result = results.Items.find((item) => {
     return (
-      item.transmittalNumber === event.fromTransmittalNumber &&
+      item.transmittalNumber === event.transmittalNumber &&
       item.type === event.type
     );
   });
@@ -88,6 +88,7 @@ exports.main = async function (event) {
 
   //find exact match from query results
   const result = extractMatchedResult(results, event);
+  console.log(result);
 
   //update the status to INACTIVATED and prepend the additional info
   //   await dynamoDb
