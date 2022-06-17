@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { subtractMonths } from "date-fns";
+import { addMonths } from "date-fns";
 import { isFinite } from "lodash";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(
@@ -45,7 +45,7 @@ function extractMatchedResult(results, event) {
 
   if (!result) {
     throw new Error(
-      "Transmittal number not found for specified territory and submission time - can not do auto update"
+      "Transmittal number not found for specified territory and submission timeframe - can not do auto update"
     );
   }
   console.log("Match found", result);
@@ -63,11 +63,11 @@ function extractMatchedResult(results, event) {
  * @returns {string} Confirmation message
  */
 exports.main = async function (event) {
-  console.log("updateChangeRequestId.main", event);
+  console.log("softDeleteChangeRequest.main", event);
 
   validateEvent(event);
 
-  const monthsAgo = event.submittedLastXMonths ?? 3;
+  const monthsAgo = -(event.submittedLastXMonths ?? 3);
 
   //query for change request in the given territory and sumbitted within the last x months (default 3 months)
   const queryParams = {
@@ -76,10 +76,10 @@ exports.main = async function (event) {
     ExpressionAttributeNames: { "#type": "type" },
     IndexName: "territory-submittedAt-index",
     KeyConditionExpression:
-      "territory = :v_territory and submittedAt GE :v_submittedStart",
+      "territory = :v_territory and submittedAt >= :v_submittedStart",
     ExpressionAttributeValues: {
       ":v_territory": event.territory,
-      ":v_submittedStart": subtractMonths(new Date(), monthsAgo).getTime(),
+      ":v_submittedStart": addMonths(new Date(), monthsAgo).getTime(),
     },
   };
 
@@ -90,18 +90,19 @@ exports.main = async function (event) {
   const result = extractMatchedResult(results, event);
   console.log(result);
 
-  //update the status to INACTIVATED and prepend the additional info
-  //   await dynamoDb
-  //     .update({
-  //       TableName: process.env.tableName,
-  //       Key: { userId: result.userId, id: result.id },
-  //       UpdateExpression:
-  //         "SET state = 'Inactivated', summary = :toSummary",
-  //       ExpressionAttributeValues: {
-  //         ":toSummary": event.prependAdditionalInfo + " " + result.summary,
-  //       },
-  //     })
-  //     .promise();
+  //update the status to inactivated and prepend the additional info
+  await dynamoDb
+    .update({
+      TableName: process.env.tableName,
+      Key: { userId: result.userId, id: result.id },
+      UpdateExpression: "SET #state = :toState, summary = :toSummary",
+      ExpressionAttributeNames: { "#state": "state" },
+      ExpressionAttributeValues: {
+        ":toState": "inactivated",
+        ":toSummary": event.prependAdditionalInfo + " " + result.summary,
+      },
+    })
+    .promise();
 
   return "Update Complete";
 };
