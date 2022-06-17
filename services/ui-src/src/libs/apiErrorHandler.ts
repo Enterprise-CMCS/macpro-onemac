@@ -22,6 +22,6 @@ const handleApiError = (
   }
 
   console.log("error:", err, "message: ", message, "info:", errorLog);
-  throw new Error(message ? "SESSION_EXPIRED" : customError);
+  throw new Error(message ? "SESSION_EXPIRED" : "SY000");
 };
 export default handleApiError;

@@ -14,7 +14,6 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ONEMAC_ROUTES,
-  RAI_ROUTE,
   Validate,
   Workflow,
   getUserRoleObj,
@@ -32,7 +31,7 @@ import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
 import PackageAPI from "../utils/PackageApi";
-import PopupMenu from "../components/PopupMenu";
+import ActionPopup from "../components/ActionPopup";
 import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
@@ -146,75 +145,11 @@ const PackageList = () => {
     []
   );
 
-  const onPopupActionWithdraw = useCallback(
-    async (rowNum) => {
-      // For now, the second argument is constant.
-      // When we add another action to the menu, we will need to look at the action taken here.
-      const [row, child] = rowNum.split(".");
-      let packageToModify;
-      if (child) packageToModify = packageList[row].children[child];
-      else packageToModify = packageList[row];
-      try {
-        console.log("rowNum: ", rowNum);
-        console.log("package to modify ", packageToModify);
-        const resp = await PackageAPI.withdraw(
-          userProfile.userData.fullName,
-          userProfile.email,
-          packageToModify.componentId,
-          packageToModify.componentType
-        );
-        setAlertCode(resp);
-        loadPackageList();
-      } catch (e) {
-        console.log("Error while updating package.", e);
-        setAlertCode(RESPONSE_CODE[e.message]);
-      }
-    },
-    [packageList, loadPackageList, userProfile.email, userProfile.userData]
-  );
-
-  const onPopupActionRAI = useCallback(
-    (value) => {
-      history.push(`${value.link}?transmittalNumber=${value.raiId}`);
-    },
-    [history]
-  );
-
-  const renderActions = useCallback(
-    ({ row }) => {
-      let menuItems = [];
-
-      (Workflow.ACTIONS[row.original.componentType] ??
-        Workflow.defaultActionsByStatus)[row.original.currentStatus]?.forEach(
-        (actionLabel) => {
-          const newItem = { label: actionLabel };
-          if (actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW) {
-            newItem.value = "Withdrawn";
-            newItem.formatConfirmationMessage = ({ componentId }) =>
-              `You are about to withdraw ${componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`;
-            newItem.handleSelected = onPopupActionWithdraw;
-          } else {
-            newItem.value = {
-              link: RAI_ROUTE[row.original.componentType],
-              raiId: row.original.componentId,
-            };
-            newItem.handleSelected = onPopupActionRAI;
-          }
-          menuItems.push(newItem);
-        }
-      );
-
-      return (
-        <PopupMenu
-          buttonLabel={`Actions for ${row.original.componentId}`}
-          selectedRow={row}
-          menuItems={menuItems}
-          variation="PackageList"
-        />
-      );
-    },
-    [onPopupActionWithdraw, onPopupActionRAI]
-  );
+  const renderActions = useCallback(({ row }) => {
+    return (
+      <ActionPopup theComponent={row.original} alertCallback={setAlertCode} />
+    );
+  }, []);
 
   const columns = useMemo(
     () =>
