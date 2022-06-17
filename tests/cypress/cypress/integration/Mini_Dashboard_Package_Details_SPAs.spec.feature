@@ -19,6 +19,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -37,6 +39,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -55,6 +59,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -74,6 +80,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -92,6 +100,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -110,6 +120,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
@@ -128,12 +140,10 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify Respond to RAI action exists
-        And click on Respond to RAI package action
-        And verify the Respond to RAI form loads
-        And click back arrow
-        And click Leave, anyway
         And verify the package details page is visible
         And verify the details section exists
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section

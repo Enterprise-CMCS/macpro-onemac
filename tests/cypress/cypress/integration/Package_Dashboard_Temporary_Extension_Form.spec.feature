@@ -37,3 +37,15 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And click withdraw button on the temp extension page
         And click yes, withdraw package button
         And verify success message for Withdrawal
+
+    Scenario: Verify user can create a temporary extension from the Mini-Dashboard
+        And click on the Waivers tab
+        And search for Base Waiver Number 1 with 12 Characters
+        And click the Waiver Number link in the first row
+        And click on the Temporary Extension nav button
+        And Click the Request Extension button
+        And Type Temporary Extension Number 3 With 5 Characters
+        And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
+        And Click on Submit Button
+        And verify submission successful message in details
