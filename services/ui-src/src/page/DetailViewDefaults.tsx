@@ -1,6 +1,6 @@
 import { ROUTES, Workflow } from "cmscommonlib";
 
-type AttributeDetail = {
+export type AttributeDetail = {
   heading: string;
   fieldName: string;
   default?: string | null;
@@ -12,6 +12,8 @@ export type OneMACDetail = {
   componentType: string;
   navItems: any[];
   actionLabel: string;
+  show90thDayInfo: boolean;
+  showEffectiveDate: boolean;
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   raiLink: string;
   detailHeader?: string;
@@ -74,6 +76,8 @@ export const defaultDetail: OneMACDetail = {
     },
   ],
   actionsByStatus: Workflow.defaultActionsByStatus,
+  show90thDayInfo: true,
+  showEffectiveDate: false,
   detailHeader: "Package",
   raiLink: ROUTES.WAIVER_RAI,
   defaultTitle: null,

@@ -46,8 +46,9 @@ type PathParams = {
   componentId: string;
 };
 
-type ComponentDetail = {
+export type ComponentDetail = {
   componentId: string;
+  parentId: string;
   title: string;
   componentType: string;
   typeNice: string;
@@ -137,20 +138,18 @@ const DetailSection = ({
         <div className="detail-card">
           <section>
             <h2>{detail.currentStatus}</h2>
-            {ninetyDayText && ninetyDayText !== "N/A" && (
+            {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
                 {Number(ninetyDayText)
                   ? formatDetailViewDate(new Date(ninetyDayText))
                   : ninetyDayText ?? "N/A"}
               </Review>
             )}
-            {Workflow.MY_PACKAGE_GROUP[detail.componentType] ===
-              Workflow.PACKAGE_GROUP.WAIVER &&
-              detail.effectiveDateTimestamp && (
-                <Review heading="Effective Date">
-                  {formatDetailViewDate(detail.effectiveDateTimestamp)}
-                </Review>
-              )}
+            {pageConfig.showEffectiveDate && detail.effectiveDateTimestamp && (
+              <Review heading="Effective Date">
+                {formatDetailViewDate(detail.effectiveDateTimestamp)}
+              </Review>
+            )}
           </section>
           {userRoleObj.canAccessForms ? (
             <section className="package-actions">
@@ -356,13 +355,11 @@ const TemporaryExtensionSection: FC<{
   );
 
   const renderTempExtLink = useCallback((props: { value: string }) => {
-    //TODO: turn this link on for OY2-16334 when temp ext details page is ready
-    // return (
-    //   <Link to={ROUTES.DETAIL + ONEMAC_ROUTES.TEMPORARY_EXTENSION + "/" + props.value}>
-    //     {props.value}
-    //   </Link>
-    //   );
-    return <span>{props.value}</span>;
+    return (
+      <Link to={ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL + "/" + props.value}>
+        {props.value}
+      </Link>
+    );
   }, []);
 
   const tempExtColumns = useMemo(() => {
