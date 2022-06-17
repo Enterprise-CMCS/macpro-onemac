@@ -10,7 +10,7 @@ export type OneMACDetail = {
   defaultTitle: null;
   usesVerticalNav: boolean;
   componentType: string;
-  navItems: any[];
+  navItems: DetailNavGroup[];
   actionLabel: string;
   show90thDayInfo: boolean;
   showEffectiveDate: boolean;
@@ -47,11 +47,47 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
   fieldName: "proposedEffectiveDateNice",
   default: "N/A",
 };
+
 export enum DetailViewTab {
   DETAIL = "component-details",
   ADDITIONAL = "additional-info",
   EXTENSION = "temp-extension",
 }
+
+export type DetailNavGroup = {
+  label: string;
+  items: DetailNavItem[];
+};
+export type DetailNavItem = {
+  id: DetailViewTab;
+  label: string;
+  url: string;
+};
+
+export const detailSectionNavItem: DetailNavItem = {
+  id: DetailViewTab.DETAIL,
+  label: "Package Details",
+  url: `#${DetailViewTab.DETAIL}`,
+};
+
+export const additionalInfoSectionNavItem: DetailNavItem = {
+  id: DetailViewTab.ADDITIONAL,
+  label: "Additional Information",
+  url: `#${DetailViewTab.ADDITIONAL}`,
+};
+
+export const tempExtensionSectionNavItem: DetailNavItem = {
+  id: DetailViewTab.EXTENSION,
+  label: "Temporary Extension",
+  url: `#${DetailViewTab.EXTENSION}`,
+};
+
+export const defaultPackageOverviewNavItems: DetailNavItem[] = [
+  detailSectionNavItem,
+  additionalInfoSectionNavItem,
+];
+
+export const defaultPackageOverviewLabel: string = "PackageOverview";
 
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
@@ -60,19 +96,8 @@ export const defaultDetail: OneMACDetail = {
   usesVerticalNav: true,
   navItems: [
     {
-      label: "Package Overview",
-      items: [
-        {
-          id: DetailViewTab.DETAIL,
-          label: "Package Details",
-          url: `#${DetailViewTab.DETAIL}`,
-        },
-        {
-          id: DetailViewTab.ADDITIONAL,
-          label: "Additional Information",
-          url: `#${DetailViewTab.ADDITIONAL}`,
-        },
-      ],
+      label: defaultPackageOverviewLabel,
+      items: defaultPackageOverviewNavItems,
     },
   ],
   actionsByStatus: Workflow.defaultActionsByStatus,
