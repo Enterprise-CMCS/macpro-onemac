@@ -79,19 +79,22 @@ export default function ActionPopup({ theComponent, alertCallback }) {
         <FontAwesomeIcon icon={faEllipsisV} />
       </Button>
       {showMenu && (
-        <div data-testid="action-popup" className="dropdown-content">
+        <div data-testid="action-popup" className="action-popup">
           {availableActions.map((actionName, i) => (
-            <Link
-              key={`popup-action-${i}`}
-              to={toLink[actionName]}
-              id={idPre[actionName] + "-" + theComponent.componentId}
-              onClick={() => {
-                theAction[actionName] && theAction[actionName]();
-                setShowMenu(false);
-              }}
-            >
-              {popupLabel[actionName]}
-            </Link>
+            <>
+              {i !== 0 && <hr />}
+              <Link
+                key={`popup-action-${i}`}
+                to={toLink[actionName]}
+                id={idPre[actionName] + "-" + theComponent.componentId}
+                onClick={() => {
+                  theAction[actionName] && theAction[actionName]();
+                  setShowMenu(false);
+                }}
+              >
+                {popupLabel[actionName]}
+              </Link>
+            </>
           ))}
         </div>
       )}
