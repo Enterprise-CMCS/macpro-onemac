@@ -14,6 +14,7 @@ import PackageApi from "../../utils/PackageApi";
 import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../DetailViewDefaults";
 import FileList from "../../components/FileList";
+import { AdditionalInfoSection } from "./AdditionalInfoSection";
 
 export const DetailSection = ({
   pageConfig,
@@ -208,6 +209,9 @@ export const DetailSection = ({
               })}
             </Accordion>
           </section>
+        )}
+        {!pageConfig.usesVerticalNav && (
+          <AdditionalInfoSection detail={detail} />
         )}
       </div>
     </>

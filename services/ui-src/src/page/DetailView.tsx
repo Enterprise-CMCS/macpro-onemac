@@ -43,7 +43,6 @@ export type ComponentDetail = {
   typeNice: string;
   currentStatus: string;
   attachments: any[];
-  additionalInformation: string;
   submissionTimestamp: Date;
   clockEndTimestamp: Date;
   proposedEffectiveDate: string;
@@ -177,8 +176,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
                   setConfirmItem={setConfirmItem}
                 />
               )}
-              {(!pageConfig.usesVerticalNav ||
-                detailTab === DetailViewTab.ADDITIONAL) && (
+              {detailTab === DetailViewTab.ADDITIONAL && (
                 <AdditionalInfoSection detail={detail} />
               )}
               {detailTab === DetailViewTab.EXTENSION && (

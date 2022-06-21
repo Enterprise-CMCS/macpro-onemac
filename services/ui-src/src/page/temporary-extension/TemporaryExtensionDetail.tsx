@@ -18,7 +18,9 @@ const parentIdDetail: AttributeDetail = {
 export const waiverTemporaryExtensionDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverTemporaryExtension,
+  detailHeader: "Temporary Extension",
   navItems: [],
+  usesVerticalNav: false,
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
   raiLink: "",
