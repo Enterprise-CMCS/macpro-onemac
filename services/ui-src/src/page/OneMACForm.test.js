@@ -10,7 +10,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
-import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
+import { ROUTES } from "cmscommonlib";
 import OneMACForm from "./OneMACForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { AppContext } from "../libs/contextLib";
@@ -268,6 +268,7 @@ describe("Transmittal Number Section", () => {
   });
 });
 
+/*
 describe("cancelling the form submission", () => {
   let history;
 
@@ -355,3 +356,4 @@ describe("cancelling the form submission", () => {
     expect(herstory.location.pathname).toBe(ONEMAC_ROUTES.TEMPORARY_EXTENSION);
   });
 });
+*/
