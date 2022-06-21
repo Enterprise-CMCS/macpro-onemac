@@ -47,7 +47,10 @@ export const ONEMAC_ROUTES = {
   CHIP_SPA_DETAIL: "/detail/chip-spa",
   BASE_WAIVER: "/base-waiver",
   BASE_WAIVER_DETAIL: "/detail/base-waiver",
+  WAIVER_RENEWAL: "/waiver-renewal",
+  WAIVER_AMENDMENT: "/waiver-amendment",
   WAIVER_AMENDMENT_DETAIL: "/detail/waiver-amendment",
+  APPENDIX_K_AMENDMENT: "/appendix-k-amendment",
   TEMPORARY_EXTENSION: "/temporary-extension",
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
 };
