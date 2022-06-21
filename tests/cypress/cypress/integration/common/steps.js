@@ -489,6 +489,15 @@ And("click on Base Waiver", () => {
 And("verify Base Waiver is a clickable option", () => {
   OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
 });
+And("verify Appendix K is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyAppendixKIsClickable();
+});
+And("verify Base Waiver Renewal is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyBaseWaiverRenewalIsClickable();
+});
+And("verify Amendment is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyAmendmentIsClickable();
+});
 And("verify CHIP SPA is a clickable option", () => {
   OneMacSubmissionTypePage.verifyChipSPAIsClickable();
 });
