@@ -36,20 +36,25 @@ function validateEvent(event) {
 }
 
 function extractMatchedResult(results, event) {
-  const result = results.Items.find((item) => {
+  const filteredResults = results.Items.filter((item) => {
     return (
       item.transmittalNumber === event.transmittalNumber &&
       item.type === event.type
     );
   });
 
-  if (!result) {
+  if (filteredResults.length === 0) {
     throw new Error(
-      "Transmittal number not found for specified territory and submission timeframe - can not do auto update"
+      "Transmittal number not found for specified type, territory, and submission timeframe - can not do auto update"
+    );
+  } else if (filteredResults.length > 1) {
+    throw new Error(
+      "Duplicate transmittal numbers found for specified type, territory, and submission timeframe - can not do auto update"
     );
   }
-  console.log("Match found", result);
-  return result;
+
+  console.log("Single Match Found", filteredResults[0]);
+  return filteredResults[0];
 }
 
 /**
@@ -99,7 +104,7 @@ exports.main = async function (event) {
       ExpressionAttributeNames: { "#state": "state" },
       ExpressionAttributeValues: {
         ":toState": "inactivated",
-        ":toSummary": event.prependAdditionalInfo + " " + result.summary,
+        ":toSummary": event.prependAdditionalInfo + "\n\n" + result.summary,
       },
     })
     .promise();
