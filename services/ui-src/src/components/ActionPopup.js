@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from "react";
+import React, { useCallback, useState, useRef, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -22,11 +22,37 @@ const idPre = {
     "request-temporary-extension-action",
 };
 
+/**
+ * Hook that alerts clicks outside of the passed ref
+ */
+function useOutsideAlerter(ref, setShowMenu) {
+  useEffect(() => {
+    /**
+     * Alert if clicked on outside of element
+     */
+    const handleClickOutside = (event) => {
+      if (ref.current && !ref.current.contains(event.target)) {
+        setShowMenu(false);
+      }
+    };
+
+    // Bind the event listener
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => {
+      // Unbind the event listener on clean up
+      document.removeEventListener("mousedown", handleClickOutside);
+    };
+  }, [ref, setShowMenu]);
+}
+
 export default function ActionPopup({ theComponent, alertCallback }) {
   const { userProfile, confirmAction } = useAppContext() ?? {};
   const [showMenu, setShowMenu] = useState(false);
   const availableActions =
     Workflow.ACTIONS[theComponent.componentType][theComponent.currentStatus];
+
+  const wrapperRef = useRef(null);
+  useOutsideAlerter(wrapperRef, setShowMenu);
 
   const toLink = {
     [Workflow.PACKAGE_ACTION.WITHDRAW]: ONEMAC_ROUTES.PACKAGE_LIST,
@@ -68,6 +94,7 @@ export default function ActionPopup({ theComponent, alertCallback }) {
     <>
       <Button
         aria-haspopup="true"
+        key={`key-${theComponent.componentId}`}
         aria-label={`Actions for ${theComponent.componentId}`}
         className="popup-menu-button"
         data-testid="popup-menu-trigger"
@@ -79,7 +106,11 @@ export default function ActionPopup({ theComponent, alertCallback }) {
         <FontAwesomeIcon icon={faEllipsisV} />
       </Button>
       {showMenu && (
-        <div data-testid="action-popup" className="action-popup">
+        <div
+          ref={wrapperRef}
+          data-testid="action-popup"
+          className="action-popup"
+        >
           {availableActions.map((actionName, i) => (
             <>
               {i !== 0 && <hr />}

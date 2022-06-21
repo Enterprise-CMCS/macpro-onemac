@@ -102,6 +102,16 @@ const PackageList = () => {
     [tab, userProfile.email]
   );
 
+  const tellPackageListAboutAction = useCallback(
+    async (returnCode) => {
+      const ctrlr = new AbortController();
+      await loadPackageList(ctrlr);
+
+      setAlertCode(returnCode);
+    },
+    [loadPackageList]
+  );
+
   // Redirect new users to the signup flow, and load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
@@ -145,11 +155,17 @@ const PackageList = () => {
     []
   );
 
-  const renderActions = useCallback(({ row }) => {
-    return (
-      <ActionPopup theComponent={row.original} alertCallback={setAlertCode} />
-    );
-  }, []);
+  const renderActions = useCallback(
+    ({ row }) => {
+      return (
+        <ActionPopup
+          theComponent={row.original}
+          alertCallback={tellPackageListAboutAction}
+        />
+      );
+    },
+    [tellPackageListAboutAction]
+  );
 
   const columns = useMemo(
     () =>
