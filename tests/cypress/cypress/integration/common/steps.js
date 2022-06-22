@@ -185,6 +185,11 @@ And("verify SPA ID 2 EXISTS", () => {
     OneMacDashboardPage.verifyIDNumber(d.attachmentsSPAID2);
   });
 });
+And("Click on the SPA ID 2 Link", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickIDNumberLink(d.attachmentsSPAID2);
+  });
+});
 And("verify SPA ID for RAI 1 EXISTS", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
     OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI1);

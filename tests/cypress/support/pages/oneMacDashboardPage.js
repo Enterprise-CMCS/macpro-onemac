@@ -60,6 +60,9 @@ export class oneMacDashboardPage {
   verifyIDNumber(s) {
     cy.xpath(IDNUMBER(s)).should("be.visible");
   }
+  clickIDNumberLink(s) {
+    cy.xpath(IDNUMBER(s)).click();
+  }
 
   verifyType(s) {
     cy.xpath(Type).contains(s);
