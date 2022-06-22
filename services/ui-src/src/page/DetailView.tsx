@@ -19,7 +19,7 @@ import { formatDetailViewDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
-import { OneMACDetail, DetailViewTab } from "./DetailViewDefaults";
+import { OneMACDetail, DetailViewTab } from "../libs/detailLib";
 import TemporaryExtensionSection from "./section/TemporaryExtensionSection";
 import { DetailSection } from "./section/DetailSection";
 import { AdditionalInfoSection } from "./section/AdditionalInfoSection";

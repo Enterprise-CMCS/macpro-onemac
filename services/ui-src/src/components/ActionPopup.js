@@ -57,9 +57,14 @@ export default function ActionPopup({ theComponent, alertCallback }) {
   const toLink = {
     [Workflow.PACKAGE_ACTION.WITHDRAW]: ONEMAC_ROUTES.PACKAGE_LIST,
     [Workflow.PACKAGE_ACTION
-      .RESPOND_TO_RAI]: `${ONEMAC_ROUTES.MEDICAID_SPA}&componentId=${theComponent.componentId}`,
-    [Workflow.PACKAGE_ACTION
-      .REQUEST_TEMPORARY_EXTENSION]: `${ONEMAC_ROUTES.TEMPORARY_EXTENSION}&parentId=${theComponent.componentId}`,
+      .RESPOND_TO_RAI]: `${ONEMAC_ROUTES.MEDICAID_SPA}?componentId=${theComponent.componentId}`,
+    [Workflow.PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION]: {
+      pathname: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
+      state: {
+        parentId: theComponent.componentId,
+        parentType: theComponent.componentType,
+      },
+    },
   };
 
   const onPopupActionWithdraw = useCallback(async () => {

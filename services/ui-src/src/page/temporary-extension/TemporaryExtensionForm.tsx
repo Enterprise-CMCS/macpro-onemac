@@ -9,7 +9,7 @@ import {
 } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
-import { DetailViewTab } from "../DetailViewDefaults";
+import { DetailViewTab } from "../../libs/detailLib";
 
 const TemporaryExtensionForm: FC = () => {
   const location = useLocation<FormLocationState>();

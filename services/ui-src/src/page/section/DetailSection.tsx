@@ -4,7 +4,12 @@ import {
   Button,
   Review,
 } from "@cmsgov/design-system";
-import { Workflow, RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
+import {
+  Workflow,
+  RESPONSE_CODE,
+  getUserRoleObj,
+  ONEMAC_ROUTES,
+} from "cmscommonlib";
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { FormLocationState } from "../../domain-types";
@@ -12,7 +17,7 @@ import { useAppContext } from "../../libs/contextLib";
 import { formatDetailViewDate } from "../../utils/date-utils";
 import PackageApi from "../../utils/PackageApi";
 import { ComponentDetail } from "../DetailView";
-import { OneMACDetail } from "../DetailViewDefaults";
+import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
 
@@ -39,9 +44,6 @@ export const DetailSection = ({
   );
 
   const onLinkActionWithdraw = useCallback(async () => {
-    // For now, the second argument is constant.
-    // When we add another action to the menu, we will need to look at the action taken here.
-
     try {
       const resp = await PackageApi.withdraw(
         userProfile?.userData?.fullName,
@@ -57,7 +59,7 @@ export const DetailSection = ({
     }
   }, [detail, userProfile, loadDetail, setAlertCode]);
 
-  const onLinkActionRAI = useCallback(
+  const onLinkAction = useCallback(
     (value: { href: string; state?: FormLocationState }) => {
       history.push(`${value.href}`, value.state);
     },
@@ -115,11 +117,22 @@ export const DetailSection = ({
                                         onLinkActionWithdraw
                                       );
                                   }
-                                : () => {
-                                    onLinkActionRAI({
+                                : actionLabel ===
+                                  Workflow.PACKAGE_ACTION.RESPOND_TO_RAI
+                                ? () => {
+                                    onLinkAction({
                                       href: pageConfig.raiLink,
                                       state: {
                                         componentId: detail.componentId,
+                                      },
+                                    });
+                                  }
+                                : () => {
+                                    onLinkAction({
+                                      href: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
+                                      state: {
+                                        parentId: detail.componentId,
+                                        parentType: detail.componentType,
                                       },
                                     });
                                   }

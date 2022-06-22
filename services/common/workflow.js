@@ -1,10 +1,12 @@
+import { baseWaiver } from "./type/baseWaiver";
+
 export const ONEMAC_TYPE = {
   CHIP_SPA: "chipspa",
   CHIP_SPA_RAI: "chipsparai",
   MEDICAID_SPA: "medicaidspa",
   MEDICAID_SPA_RAI: "medicaidsparai",
-  WAIVER: "waiver",
-  WAIVER_BASE: "waivernew",
+  WAIVER: baseWaiver.componentType,
+  WAIVER_BASE: baseWaiver.componentType,
   WAIVER_AMENDMENT: "waiveramendment",
   WAIVER_RENEWAL: "waiverrenewal",
   WAIVER_RAI: "waiverrai",
@@ -47,20 +49,6 @@ export const PACKAGE_GROUP = {
   WAIVER: "waiver",
 };
 
-export const MY_PACKAGE_GROUP = {
-  [ONEMAC_TYPE.CHIP_SPA]: PACKAGE_GROUP.SPA,
-  [ONEMAC_TYPE.CHIP_SPA_RAI]: PACKAGE_GROUP.SPA,
-  [ONEMAC_TYPE.MEDICAID_SPA]: PACKAGE_GROUP.SPA,
-  [ONEMAC_TYPE.MEDICAID_SPA_RAI]: PACKAGE_GROUP.SPA,
-  [ONEMAC_TYPE.WAIVER]: PACKAGE_GROUP.WAIVER,
-  [ONEMAC_TYPE.WAIVER_RAI]: PACKAGE_GROUP.WAIVER,
-  [ONEMAC_TYPE.WAIVER_BASE]: PACKAGE_GROUP.WAIVER,
-  [ONEMAC_TYPE.WAIVER_RENEWAL]: PACKAGE_GROUP.WAIVER,
-  [ONEMAC_TYPE.WAIVER_AMENDMENT]: PACKAGE_GROUP.WAIVER,
-  [ONEMAC_TYPE.WAIVER_EXTENSION]: PACKAGE_GROUP.WAIVER,
-  [ONEMAC_TYPE.WAIVER_APP_K]: PACKAGE_GROUP.WAIVER,
-};
-
 export const defaultActionsByStatus = {
   [ONEMAC_STATUS.UNSUBMITTED]: [],
   [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
@@ -75,27 +63,22 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.TERMINATED]: [],
 };
 
+export const baseWaiverActionsByStatus = {
+  ...defaultActionsByStatus,
+  [ONEMAC_STATUS.APPROVED]: [PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION],
+};
+
 export const waiverExtensionActionsByStatus = {
-  [ONEMAC_STATUS.UNSUBMITTED]: [],
-  [ONEMAC_STATUS.SUBMITTED]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.IN_REVIEW]: [PACKAGE_ACTION.WITHDRAW],
+  ...defaultActionsByStatus,
   [ONEMAC_STATUS.RAI_ISSUED]: [PACKAGE_ACTION.WITHDRAW],
-  [ONEMAC_STATUS.APPROVED]: [],
-  [ONEMAC_STATUS.DISAPPROVED]: [],
-  [ONEMAC_STATUS.WITHDRAWN]: [],
-  [ONEMAC_STATUS.TERMINATED]: [],
   [ONEMAC_STATUS.PAUSED]: [PACKAGE_ACTION.WITHDRAW],
 };
 
 export const raiActionsByStatus = {
-  [ONEMAC_STATUS.UNSUBMITTED]: [],
+  ...defaultActionsByStatus,
   [ONEMAC_STATUS.SUBMITTED]: [],
   [ONEMAC_STATUS.IN_REVIEW]: [],
   [ONEMAC_STATUS.RAI_ISSUED]: [],
-  [ONEMAC_STATUS.APPROVED]: [],
-  [ONEMAC_STATUS.DISAPPROVED]: [],
-  [ONEMAC_STATUS.WITHDRAWN]: [],
-  [ONEMAC_STATUS.TERMINATED]: [],
 };
 
 export const ACTIONS = {
@@ -103,12 +86,9 @@ export const ACTIONS = {
   [ONEMAC_TYPE.CHIP_SPA_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.MEDICAID_SPA]: defaultActionsByStatus,
   [ONEMAC_TYPE.MEDICAID_SPA_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER]: defaultActionsByStatus,
+  [ONEMAC_TYPE.WAIVER]: baseWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_BASE]: {
-    ...defaultActionsByStatus,
-    [ONEMAC_STATUS.APPROVED]: [PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION],
-  },
+  [ONEMAC_TYPE.WAIVER_BASE]: baseWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RENEWAL]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
