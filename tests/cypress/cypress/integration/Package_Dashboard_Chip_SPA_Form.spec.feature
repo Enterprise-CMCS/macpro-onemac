@@ -24,8 +24,7 @@ Feature: Package Dashboard: CHIP SPA Form
         And Add file for Current State Plan
         And Add file for Amended State Plan Language
         And Add file for Cover Letter
-        And Type Additonal Information Comments
-        And Type Additonal Information Comments
+        And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission Successful message
         And verify the SPAs tab is selected

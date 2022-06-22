@@ -45,6 +45,21 @@ export const choicesFromRoute = {
         linkTo: ONEMAC_ROUTES.BASE_WAIVER,
       },
       {
+        title: "Waiver Renewal",
+        description: "Renew an existing 1915(b) base waiver",
+        linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL,
+      },
+      {
+        title: "Waiver Amendment",
+        description: "Amend an Existing Waiver",
+        linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT,
+      },
+      {
+        title: "Appendix K Amendment",
+        description: "Create an Appendix K Amendment",
+        linkTo: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
+      },
+      {
         title: "Request Temporary Extension",
         description: "Submit for 1915(b) and 1915(c)",
         linkTo: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
