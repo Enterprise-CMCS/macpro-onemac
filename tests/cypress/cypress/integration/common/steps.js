@@ -2039,6 +2039,9 @@ And("verify the type is Base Waiver", () => {
 And("verify the type is Waiver Renewal", () => {
   OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
 });
+And("verify the type is 1915(b) Temporary Extension", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+});
 And("verify there is a State header in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
@@ -2199,6 +2202,13 @@ And("select proposed effective date 3 months from today", () => {
 And("Type Temporary Extension Number 1 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber1
+    );
+  });
+});
+And("click on the link for temporary extension number 1", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackageDetailsPage.clickTempExtensionID(
       data.newTemporaryExtensionNumber1
     );
   });
