@@ -109,7 +109,7 @@ const SubmissionView = ({ changeRequestType }) => {
             {changeRequest.summary && (
               <section>
                 <Review
-                  className="original-review-component"
+                  className="original-review-component preserve-spacing"
                   headingLevel="2"
                   heading="Additional Information"
                 >

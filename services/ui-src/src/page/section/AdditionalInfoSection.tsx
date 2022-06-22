@@ -9,7 +9,10 @@ export const AdditionalInfoSection: FC<{ detail: ComponentDetail }> = ({
     <>
       <section id="addl-info-base" className="read-only-submission">
         <h2>Additional Information</h2>
-        <Review className="original-review-component" headingLevel="2">
+        <Review
+          className="original-review-component preserve-spacing"
+          headingLevel="2"
+        >
           {detail.additionalInformation || (
             <i>No Additional Information has been submitted.</i>
           )}

@@ -714,6 +714,10 @@ article.form-container {
   }
 }
 
+.preserve-spacing {
+  white-space: pre-wrap;
+}
+
 .info-card {
   display: flex;
   flex-direction: column;
