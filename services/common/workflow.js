@@ -1,4 +1,4 @@
-import { baseWaiver } from "./type/baseWaiver";
+import { baseWaiver } from "./type/baseWaiver.js";
 
 export const ONEMAC_TYPE = {
   CHIP_SPA: "chipspa",
