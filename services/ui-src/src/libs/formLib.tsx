@@ -1,5 +1,4 @@
 import {
-  Workflow,
   FieldHint,
   IdValidation,
   SelectOption,
@@ -15,7 +14,6 @@ export type OneMACFormConfig = {
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;
-  actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   raiLink: string;
   landingPage: string;
   landingPageReplacementKeys?: (keyof OneMacFormData)[];

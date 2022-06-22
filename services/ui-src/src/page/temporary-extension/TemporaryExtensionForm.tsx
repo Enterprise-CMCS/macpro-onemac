@@ -2,7 +2,6 @@ import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { OneMACFormConfig } from "../../libs/formLib";
 import {
-  Workflow,
   ROUTES,
   waiverTemporaryExtension,
   ONEMAC_ROUTES,
@@ -28,7 +27,6 @@ const TemporaryExtensionForm: FC = () => {
       },
     ],
     idFormat: idFormat,
-    actionsByStatus: Workflow.defaultActionsByStatus,
     raiLink: ROUTES.WAIVER_RAI,
     landingPage:
       location.state?.parentType && location.state?.parentId

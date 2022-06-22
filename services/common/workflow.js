@@ -105,7 +105,10 @@ export const ACTIONS = {
   [ONEMAC_TYPE.MEDICAID_SPA_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.WAIVER]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_BASE]: defaultActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_BASE]: {
+    ...defaultActionsByStatus,
+    [ONEMAC_STATUS.APPROVED]: [PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION],
+  },
   [ONEMAC_TYPE.WAIVER_RENEWAL]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
