@@ -87,7 +87,7 @@ export const defaultPackageOverviewNavItems: DetailNavItem[] = [
   additionalInfoSectionNavItem,
 ];
 
-export const defaultPackageOverviewLabel: string = "PackageOverview";
+export const defaultPackageOverviewLabel: string = "Package Overview";
 
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
