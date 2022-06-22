@@ -21,16 +21,14 @@ export const DetailSection = ({
   detail,
   loadDetail,
   setAlertCode,
-  setConfirmItem,
 }: {
   pageConfig: OneMACDetail;
   detail: ComponentDetail;
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
-  setConfirmItem: (item: any) => void;
 }) => {
   const history = useHistory();
-  const { userProfile } = useAppContext() ?? {};
+  const { userProfile, confirmAction } = useAppContext() ?? {};
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -108,11 +106,14 @@ export const DetailSection = ({
                             onClick={
                               actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
                                 ? () => {
-                                    setConfirmItem({
-                                      label: actionLabel,
-                                      confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                      onAccept: onLinkActionWithdraw,
-                                    });
+                                    confirmAction &&
+                                      confirmAction(
+                                        Workflow.PACKAGE_ACTION.WITHDRAW,
+                                        "Withdraw?",
+                                        "Cancel",
+                                        `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                        onLinkActionWithdraw
+                                      );
                                   }
                                 : () => {
                                     onLinkActionRAI({
