@@ -25,6 +25,12 @@ const respondToWaiverRAI = '//div[text()="Respond to Waiver RAI"]';
 const baseWaiver = '//div[text()="Base Waiver"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const RequestExtensionBtn = '//button[text()="Request Extension"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const appendixK = '//div[text()="Appendix K Amendment"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const amendment = '//div[text()="Waiver Amendment"]';
+//Element is Xpath use cy.xpath instead of cy.get
+const baseWaiverRenewal = '//div[text()="Waiver Renewal"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
@@ -81,6 +87,24 @@ export class oneMacSubmissionTypePage {
       .parent()
       .parent()
       .should("have.attr", "href", "/base-waiver");
+  }
+  verifyAppendixKIsClickable() {
+    cy.xpath(appendixK)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/appendix-k-amendment");
+  }
+  verifyBaseWaiverRenewalIsClickable() {
+    cy.xpath(baseWaiverRenewal)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/waiver-renewal");
+  }
+  verifyAmendmentIsClickable() {
+    cy.xpath(amendment)
+      .parent()
+      .parent()
+      .should("have.attr", "href", "/waiver-amendment");
   }
   verifyChipSPAIsClickable() {
     cy.xpath(ChipSPA)
