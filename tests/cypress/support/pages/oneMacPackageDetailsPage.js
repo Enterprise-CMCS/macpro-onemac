@@ -95,6 +95,9 @@ export class oneMacPackageDetailsPage {
   verifyTypeContainsWaiverRenewal() {
     cy.xpath(typeHeader).next().contains("Waiver Renewal");
   }
+  verifyTypeContainsTempExtension() {
+    cy.xpath(typeHeader).next().contains("1915(b) Temporary Extension");
+  }
   verifyStateHeaderExists() {
     cy.xpath(stateHeader).should("be.visible");
   }
@@ -200,6 +203,9 @@ export class oneMacPackageDetailsPage {
   }
   verifyTempExtensionIDExists(num) {
     cy.xpath(tempExtensionID).contains(num).should("be.visible");
+  }
+  clickTempExtensionID(num) {
+    cy.xpath(tempExtensionID).contains(num).click();
   }
   clickTempExtensionActionBtn(num) {
     cy.xpath(tempExtensionID).contains(num).next().next().click();
