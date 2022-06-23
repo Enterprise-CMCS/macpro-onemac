@@ -112,7 +112,7 @@ const PackageList = () => {
     [loadPackageList]
   );
 
-  // Redirect new users to the signup flow, and load the data from the backend for existing users.
+  // load the data from the backend for existing users.
   useEffect(() => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
 
@@ -394,6 +394,7 @@ const PackageList = () => {
 
   function switchTo(event) {
     setTab(event.currentTarget.value);
+    setPackageList([]);
   }
 
   // Render the dashboard
