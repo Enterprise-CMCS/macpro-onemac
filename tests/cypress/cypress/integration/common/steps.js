@@ -185,6 +185,11 @@ And("verify SPA ID 2 EXISTS", () => {
     OneMacDashboardPage.verifyIDNumber(d.attachmentsSPAID2);
   });
 });
+And("Click on the SPA ID 2 Link", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacDashboardPage.clickIDNumberLink(d.attachmentsSPAID2);
+  });
+});
 And("verify SPA ID for RAI 1 EXISTS", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
     OneMacDashboardPage.verifyIDNumber(d.SPAIDforRAI1);
@@ -488,6 +493,15 @@ And("click on Base Waiver", () => {
 
 And("verify Base Waiver is a clickable option", () => {
   OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
+});
+And("verify Appendix K is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyAppendixKIsClickable();
+});
+And("verify Base Waiver Renewal is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyBaseWaiverRenewalIsClickable();
+});
+And("verify Amendment is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyAmendmentIsClickable();
 });
 And("verify CHIP SPA is a clickable option", () => {
   OneMacSubmissionTypePage.verifyChipSPAIsClickable();
@@ -2039,6 +2053,9 @@ And("verify the type is Base Waiver", () => {
 And("verify the type is Waiver Renewal", () => {
   OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
 });
+And("verify the type is 1915(b) Temporary Extension", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
+});
 And("verify there is a State header in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
@@ -2199,6 +2216,13 @@ And("select proposed effective date 3 months from today", () => {
 And("Type Temporary Extension Number 1 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber1
+    );
+  });
+});
+And("click on the link for temporary extension number 1", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackageDetailsPage.clickTempExtensionID(
       data.newTemporaryExtensionNumber1
     );
   });
