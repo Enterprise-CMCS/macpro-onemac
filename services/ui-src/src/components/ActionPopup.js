@@ -99,7 +99,7 @@ export default function ActionPopup({ theComponent, alertCallback }) {
     <>
       <Button
         aria-haspopup="true"
-        key={`key-${theComponent.componentId}`}
+        key={`button-${theComponent.componentId}`}
         aria-label={`Actions for ${theComponent.componentId}`}
         className="popup-menu-button"
         data-testid="popup-menu-trigger"
@@ -112,12 +112,13 @@ export default function ActionPopup({ theComponent, alertCallback }) {
       </Button>
       {showMenu && (
         <div
+          key={`menu-${theComponent.componentId}`}
           ref={wrapperRef}
           data-testid="action-popup"
           className="action-popup"
         >
           {availableActions.map((actionName, i) => (
-            <>
+            <div key={i}>
               {i !== 0 && <hr />}
               <Link
                 key={`popup-action-${i}`}
@@ -130,7 +131,7 @@ export default function ActionPopup({ theComponent, alertCallback }) {
               >
                 {popupLabel[actionName]}
               </Link>
-            </>
+            </div>
           ))}
         </div>
       )}

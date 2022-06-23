@@ -1,14 +1,24 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
-//import userEvent from "@testing-library/user-event";
+import {
+  render,
+  screen,
+  waitFor,
+  waitForElementToBeRemoved,
+} from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
 import { AppContext } from "../libs/contextLib";
 import ActionPopup from "./ActionPopup";
+import PackageApi from "../utils/PackageApi";
 
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
 const testCallback = jest.fn();
+const POPUP_TEST_ID = "action-popup";
+const TRIGGER_TEST_ID = "popup-menu-trigger";
+
+jest.mock("../utils/PackageApi");
 
 const ContextWrapper = ({ children }) => {
   return (
@@ -34,36 +44,46 @@ it("is disabled if the component has no available actions", () => {
     wrapper: ContextWrapper,
   });
 
-  expect(screen.getByTestId("popup-menu-trigger")).toBeDisabled();
-
-  //   const listItems = screen.getAllByRole("menuitem");
-  //   listItems.forEach((el, idx) => {
-  //     expect(el).toBeVisible();
-  //     expect(el).toHaveTextContent(items[idx].label);
-  //   });
+  expect(screen.getByTestId(TRIGGER_TEST_ID)).toBeDisabled();
 });
-/*
-it("asks for confirmation when item is clicked", () => {
-  const items = [
-    {
-      label: "Do thing",
-      value: "thing",
-      formatConfirmationMessage: () => "nice try kiddo",
-    },
-    {
-      label: "Something else",
-      value: "other",
-      formatConfirmationMessage: () => "don't you dare",
-    },
-  ];
+
+it("is enabled if the component has available actions", () => {
+  const rowItem = {
+    componentId: "anId",
+    componentType: "medicaidspa",
+    currentStatus: "Submitted",
+  };
+  render(<ActionPopup theComponent={rowItem} alertCallback={testCallback} />, {
+    wrapper: ContextWrapper,
+  });
+
+  expect(screen.getByTestId(TRIGGER_TEST_ID)).toBeEnabled();
+});
+
+it("opens and closes the menu properly", async () => {
+  const rowItem = {
+    componentId: "anId",
+    componentType: "medicaidspa",
+    currentStatus: "Submitted",
+  };
   render(
-    <PopupMenu menuItems={items} selectedRow={{}} variation="UserManagement" />
+    <>
+      <div data-testid="close-it-trigger">
+        <p>click to close</p>
+      </div>
+      <ActionPopup theComponent={rowItem} alertCallback={testCallback} />
+    </>,
+    {
+      wrapper: ContextWrapper,
+    }
   );
-  userEvent.click(screen.getByTestId(POPUP_TRIGGER_TEST_ID));
-  userEvent.click(screen.getByText(items[1].label));
+  userEvent.click(screen.getByTestId(TRIGGER_TEST_ID));
 
-  expect(screen.getByText(items[1].formatConfirmationMessage())).toBeVisible();
-  expect(screen.getByText("Confirm", { selector: "button" })).toBeVisible;
-  expect(screen.getByText("Cancel", { selector: "button" })).toBeVisible();
+  await waitFor(() =>
+    expect(screen.getByTestId(POPUP_TEST_ID)).toBeInTheDocument()
+  );
+
+  userEvent.click(screen.getByTestId("close-it-trigger"));
+
+  expect(screen.queryByTestId(POPUP_TEST_ID)).not.toBeInTheDocument();
 });
-*/
