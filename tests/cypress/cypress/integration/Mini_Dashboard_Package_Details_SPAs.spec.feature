@@ -19,14 +19,15 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Withdrawn SPA
         And click the Withdrawn checkbox
@@ -38,14 +39,15 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Disapproved SPA
         And click Disapproved checkbox
@@ -57,14 +59,15 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
 
 
     Scenario: Screen Enhance - In Review SPA
@@ -77,14 +80,15 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Submitted SPA
         And click Submitted checkbox
@@ -96,14 +100,15 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Unsubmitted SPA
         And click Unsubmitted checkbox
@@ -115,14 +120,15 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify there are no package actions available
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - RAI Issued SPA
         And click RAI Issued checkbox
@@ -134,17 +140,14 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify package actions header is visible
         And verify withdraw package action exists
         And verify Respond to RAI action exists
-        And click on Respond to RAI package action
-        And verify the Respond to RAI form loads
-        And click back arrow
-        And click Leave, anyway
         And verify the package details page is visible
         And verify the details section exists
-        And verify there is a CHIP SPA ID header in the details section
-        And verify an ID exists for the CHIP SPA ID
+        #And verify there is a CHIP SPA ID header in the details section
+        #And verify an ID exists for the CHIP SPA ID
         And verify there is a Type header in the details section
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is a Date Submitted header in the details section
         And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section

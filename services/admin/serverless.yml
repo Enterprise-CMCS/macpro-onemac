@@ -54,3 +54,7 @@ functions:
   resetData:
     handler: ./handlers/resetData.main
     timeout: 180
+
+  softDeleteChangeRequest:
+    handler: ./handlers/softDeleteChangeRequest.main
+    timeout: 180

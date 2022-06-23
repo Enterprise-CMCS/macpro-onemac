@@ -20,6 +20,7 @@ import {
   getUserRoleObj,
   USER_ROLE,
   USER_STATUS,
+  TYPE_TO_DETAIL_ROUTE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -116,7 +117,9 @@ const PackageList = () => {
 
   const renderId = useCallback(
     ({ row, value }) => (
-      <Link to={`/detail/${row.original.componentType}/${value}`}>{value}</Link>
+      <Link to={`${TYPE_TO_DETAIL_ROUTE[row.original.componentType]}/${value}`}>
+        {value}
+      </Link>
     ),
     []
   );

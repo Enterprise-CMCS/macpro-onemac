@@ -23,7 +23,7 @@ Feature: Package Dashboard: Medicaid SPA Form
         And select proposed effective date 3 months from today
         And Add file for CMS Form 179
         And Add file for SPA Pages
-        And Type Additonal Information Comments
+        And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission Successful message
         And verify the SPAs tab is selected

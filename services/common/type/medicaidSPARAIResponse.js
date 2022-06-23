@@ -1,5 +1,5 @@
 export const medicaidSPARAIResponse = {
-  componentType: "sparai",
+  componentType: "medicaidsparai",
   typeLabel: "Medicaid SPA RAI Response",
   idType: "spa",
   idLabel: "SPA ID",

@@ -1,12 +1,9 @@
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import updateComponent from "./utils/updateComponent";
 
-const statusConversion = {
-  "Package In Review": "In Review",
-  "Package Approved": "Approved",
-  "Package Disapproved": "Disapproved",
-  "Waiver Terminated": "Terminated",
+const typeConversion = {
+  spa: "medicaidspa",
+  sparai: "medicaidsparai",
 };
 
 /**
@@ -16,8 +13,8 @@ const statusConversion = {
 export const main = handler(async (event) => {
   console.log("Migrate was called with event: ", event);
 
-  // scan one table index as only indexed items need migration
-  const params = {
+  // only have to do SPAs at least
+  const oneparams = {
     TableName: process.env.oneMacTableName,
     IndexName: "GSI1",
     KeyConditionExpression: "GSI1pk = :gsi1pk",
@@ -26,70 +23,55 @@ export const main = handler(async (event) => {
     },
     ExclusiveStartKey: null,
     ScanIndexForward: false,
-    ProjectionExpression: "componentId, componentType, currentStatus",
   };
 
+  const onePromiseItems = [];
   // SPA group
   do {
-    const results = await dynamoDb.query(params);
-
+    const results = await dynamoDb.query(oneparams);
     for (const item of results.Items) {
-      const newStatus = statusConversion[item.currentStatus];
-      // skip if don't need to change status
-      if (!newStatus) continue;
+      if (!typeConversion[item.componentType]) continue;
 
-      const updateData = {
-        submitterName: "Migrate Script",
-        submitterEmail: "k.grue@theta-llc.com",
-        submissionTimestamp: Date.now(),
-        componentId: item.componentId,
-        componentType: item.componentType,
-        currentStatus: newStatus,
-      };
-      console.log("update data: ", updateData);
-
-      const updateConfig = {
-        successResponseCode: "Migrated",
-        allowMultiplesWithSameId: item.componentType.search(/rai/i) > -1,
-      };
-
-      await updateComponent(updateData, updateConfig);
+      onePromiseItems.push({
+        TableName: process.env.oneMacTableName,
+        Key: {
+          pk: item.pk,
+          sk: item.sk,
+        },
+        ReturnValues: "ALL_NEW",
+        UpdateExpression: "REMOVE GSI1pk, GSI1sk",
+      });
     }
-    params.ExclusiveStartKey = results.LastEvaluatedKey;
-  } while (params.ExclusiveStartKey);
+    oneparams.ExclusiveStartKey = results.LastEvaluatedKey;
+  } while (oneparams.ExclusiveStartKey);
 
-  params.ExpressionAttributeValues = {
-    ":gsi1pk": `OneMAC#waiver`,
-  };
+  console.log("onePromiseItems: ", onePromiseItems);
 
-  // Waiver group
-  do {
-    const results = await dynamoDb.query(params);
+  await Promise.all(
+    onePromiseItems.map(async (anUpdate) => {
+      console.log("update is: ", anUpdate);
+      const result = await dynamoDb.update(anUpdate);
+      console.log("result is: ", result);
+      const newSk = result["Attributes"]["sk"].replace(
+        result["Attributes"]["componentType"],
+        typeConversion[result["Attributes"]["componentType"]]
+      );
 
-    for (const item of results.Items) {
-      const newStatus = statusConversion[item.currentStatus];
-      // skip if don't need to change status
-      if (!newStatus) continue;
-
-      const updateData = {
-        submitterName: "Migrate Script",
-        submitterEmail: "k.grue@theta-llc.com",
-        submissionTimestamp: Date.now(),
-        componentId: item.componentId,
-        componentType: item.componentType,
-        currentStatus: newStatus,
+      const putParams = {
+        TableName: process.env.oneMacTableName,
+        Item: {
+          ...result.Attributes,
+          //        pk: result["Attributes"]["pk"],
+          sk: newSk,
+          componentType: typeConversion[result["Attributes"]["componentType"]],
+          GSI1pk: "OneMAC#spa",
+          GSI1sk: result["Attributes"]["pk"],
+        },
       };
-
-      const updateConfig = {
-        successResponseCode: "Migrated",
-        allowMultiplesWithSameId: item.componentType.search(/rai/i) > -1,
-      };
-
-      console.log("update data: ", updateData);
-      await updateComponent(updateData, updateConfig);
-    }
-    params.ExclusiveStartKey = results.LastEvaluatedKey;
-  } while (params.ExclusiveStartKey);
+      console.log("now the put params: ", putParams);
+      await dynamoDb.put(putParams);
+    })
+  );
 
   return "Done";
 });
