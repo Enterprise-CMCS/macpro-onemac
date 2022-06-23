@@ -117,12 +117,21 @@ const PackageList = () => {
     if (location?.state?.passCode !== undefined) location.state.passCode = null;
 
     const ctrlr = new AbortController();
-    loadPackageList(ctrlr);
+
+    if (packageList.length === 0) loadPackageList(ctrlr);
 
     return function cleanup() {
       ctrlr.abort();
     };
-  }, [cmsRoles, history, loadPackageList, location, userData, userProfile]);
+  }, [
+    cmsRoles,
+    history,
+    loadPackageList,
+    location,
+    userData,
+    userProfile,
+    packageList.length,
+  ]);
 
   const renderId = useCallback(
     ({ row, value }) => (

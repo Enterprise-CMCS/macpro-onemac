@@ -126,7 +126,6 @@ export default function ActionPopup({ theComponent, alertCallback }) {
                 id={idPre[actionName] + "-" + theComponent.componentId}
                 onClick={() => {
                   theAction[actionName] && theAction[actionName]();
-                  setShowMenu(false);
                 }}
               >
                 {popupLabel[actionName]}
