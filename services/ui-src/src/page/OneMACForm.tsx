@@ -369,6 +369,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
       <div className="form-container">
         <div className="form-subheader-message">
+          <h2>{formConfig.detailsHeader} Details</h2>
+          <p className="req-message">
+            <span className="required-mark">*</span>
+            indicates required field.
+          </p>
           <p className="intro-text">
             Once you submit this form, a confirmation email is sent to you and
             to CMS. CMS will use this content to review your package, and you
@@ -382,11 +387,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           </p>
         </div>
         <form noValidate onSubmit={handleSubmit}>
-          <h3>{formConfig.detailsHeader} Details</h3>
-          <p className="req-message">
-            <span className="required-mark">*</span>
-            indicates required field.
-          </p>
           <div className="form-card">
             {formConfig.waiverAuthorities && (
               <Dropdown

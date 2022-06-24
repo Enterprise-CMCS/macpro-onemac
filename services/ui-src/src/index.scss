@@ -494,8 +494,9 @@ input[type="file"] {
   @extend .ds-u-align-items--center;
 
   h2 {
-    @extend .ds-h3;
-    @extend .ds-u-margin-top--1;
+    //    @extend .ds-h3;
+    @extend .ds-u-padding--0;
+    @extend .ds-u-margin--0;
   }
   .topic-title {
     @extend .ds-h3;
@@ -535,9 +536,8 @@ input[type="file"] {
   }
 
   .form-subheader-message {
-    padding-top: 40px;
-
     > p {
+      @extend .ds-u-padding-top--1;
       @extend .ds-u-measure--wide;
     }
   }
@@ -584,6 +584,8 @@ input[type="file"] {
     }
   }
   .req-message {
+    @extend .ds-u-padding-top--0;
+    @extend .ds-u-padding-bottom--2;
     max-width: 650px;
   }
 }
