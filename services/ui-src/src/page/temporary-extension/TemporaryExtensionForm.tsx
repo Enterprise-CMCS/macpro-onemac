@@ -29,7 +29,6 @@ const TemporaryExtensionForm: FC = () => {
     ],
     idFormat: idFormat,
     actionsByStatus: Workflow.defaultActionsByStatus,
-    raiLink: ROUTES.WAIVER_RAI,
     landingPage:
       location.state?.parentType && location.state?.parentId
         ? TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +

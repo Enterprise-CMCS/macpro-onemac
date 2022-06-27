@@ -26,6 +26,7 @@ import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { FormLocationState } from "../domain-types";
+import ComponentId from "../components/ComponentId";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
@@ -91,7 +92,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       (presetComponentId && getTerritoryFromComponentId(presetComponentId)) ||
       "",
     additionalInformation: "",
-    componentId: presetComponentId || "", //This is needed to be able to control the field
+    componentId: presetComponentId ?? "",
     waiverAuthority: undefined,
     proposedEffectiveDate: undefined,
     parentId: location.state?.parentId,
@@ -408,7 +409,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 {oneMacFormData.parentId ?? "Unknown"}
               </Review>
             )}
-            <TransmittalNumber
+            <ComponentId
               idLabel={formConfig.idLabel}
               idFieldHint={formConfig.idFieldHint}
               idFAQLink={formConfig.idFAQLink}

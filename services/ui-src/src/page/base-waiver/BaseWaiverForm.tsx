@@ -21,7 +21,6 @@ export const baseWaiverFormInfo: OneMACFormConfig = {
     fieldName: "proposedEffectiveDate",
   },
   actionsByStatus: Workflow.defaultActionsByStatus,
-  raiLink: ROUTES.WAIVER_RAI,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 

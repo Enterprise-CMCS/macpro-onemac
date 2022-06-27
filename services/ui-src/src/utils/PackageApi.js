@@ -6,7 +6,7 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: "submitCHIPSPA",
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "submitMedicaidSPA",
-  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitSPARAIResponse",
+  [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitMedicaidSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "submitBaseWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitAppendixKAmendment",

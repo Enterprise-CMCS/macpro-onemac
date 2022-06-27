@@ -14,13 +14,13 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ONEMAC_ROUTES,
-  RAI_ROUTE,
   Validate,
   Workflow,
   getUserRoleObj,
   USER_ROLE,
   USER_STATUS,
   TYPE_TO_DETAIL_ROUTE,
+  TYPE_TO_RAI_ROUTE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
@@ -175,7 +175,7 @@ const PackageList = () => {
 
   const onPopupActionRAI = useCallback(
     (value) => {
-      history.push(`${value.link}?transmittalNumber=${value.raiId}`);
+      history.push(value.link, { componentId: value.raiId });
     },
     [history]
   );
@@ -195,7 +195,7 @@ const PackageList = () => {
             newItem.handleSelected = onPopupActionWithdraw;
           } else {
             newItem.value = {
-              link: RAI_ROUTE[row.original.componentType],
+              link: TYPE_TO_RAI_ROUTE[row.original.componentType],
               raiId: row.original.componentId,
             };
             newItem.handleSelected = onPopupActionRAI;

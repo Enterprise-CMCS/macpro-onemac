@@ -57,6 +57,16 @@ export default async function newSubmission(newData, config) {
       //      ":emptyList": [],
     },
   };
+
+  if (!config.allowMultiplesWithSameId) {
+    params.ConditionExpression = "pk <> :pk AND sk <> :sk";
+    params.ExpressionAttributeValues = {
+      ...params.ExpressionAttributeValues,
+      ":pk": pk,
+      ":sk": sk,
+    };
+  }
+
   console.log("params in newSubmission are: ", params);
   topLevelAttributes.forEach((attributeName) => {
     if (newData[attributeName]) {
@@ -106,6 +116,11 @@ export default async function newSubmission(newData, config) {
     }
   } catch (error) {
     console.log("newSubmission error is: ", error);
+    if (error.code === "ConditionalCheckFailedException") {
+      console.error(
+        "A duplicate submission is not allowed for this submission type."
+      );
+    }
     throw error;
   }
 }

@@ -16,7 +16,6 @@ export type OneMACFormConfig = {
   addlIntroJSX?: string;
   detailsHeader?: string;
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
-  raiLink: string;
   landingPage: string;
   landingPageReplacementKeys?: (keyof OneMacFormData)[];
   proposedEffectiveDate?: { fieldName: string };
@@ -32,7 +31,6 @@ export type PackageType = {
   packageGroup?: string;
   componentType: string;
   typeLabel: string;
-  idType: string;
   idLabel: string;
   idRegex: string;
   idExistValidations: IdValidation[];
