@@ -159,7 +159,7 @@ label {
 p.field-hint {
   @extend .ds-c-field__hint;
   width: 100%;
-  margin: 0px;
+  margin: 0;
 }
 .field-hint-major {
   @extend .field-hint;
@@ -494,9 +494,8 @@ input[type="file"] {
   @extend .ds-u-align-items--center;
 
   h2 {
-    //    @extend .ds-h3;
-    @extend .ds-u-padding--0;
-    @extend .ds-u-margin--0;
+    @extend .ds-h3;
+    @extend .ds-u-margin-top--1;
   }
   .topic-title {
     @extend .ds-h3;
@@ -537,7 +536,6 @@ input[type="file"] {
 
   .form-subheader-message {
     > p {
-      @extend .ds-u-padding-top--1;
       @extend .ds-u-measure--wide;
     }
   }
@@ -584,9 +582,105 @@ input[type="file"] {
     }
   }
   .req-message {
-    @extend .ds-u-padding-top--0;
-    @extend .ds-u-padding-bottom--2;
     max-width: 650px;
+  }
+}
+
+.onemac-form {
+  @extend .app-bar;
+  @extend .ds-u-padding-top--5;
+  @extend .ds-u-justify-content--center;
+
+  form {
+    @include max-width-ultra-wide;
+    width: 100%;
+    display: block;
+
+    h2 {
+      @extend .ds-u-margin-bottom--1;
+    }
+    h3 {
+      @extend .ds-u-padding-top--5;
+      @extend .ds-u-font-size--h2;
+      @extend .ds-u-font-weight--bold;
+    }
+  }
+
+  p {
+    @extend .ds-u-measure--wide;
+  }
+
+  #form-intro {
+    @extend .ds-u-margin-top--2;
+    @extend .ds-u-margin-bottom--3;
+  }
+  #form-submit-instructions {
+    @extend .ds-u-margin-top--3;
+  }
+
+  .field-hint {
+    @extend .ds-u-margin-top--1;
+  }
+
+  input {
+    @extend .ds-u-margin-top--2;
+    @extend .ds-u-margin-bottom--5;
+  }
+
+  .char-count {
+    @extend .ds-u-margin-bottom--7;
+  }
+
+  #additional-information-label {
+    span {
+      display: block;
+      @extend .ds-u-margin-bottom--1;
+    }
+
+    span:first-child {
+      @extend .ds-h2;
+      @extend .ds-u-margin-top--7;
+    }
+  }
+  #additional-information {
+    @extend .ds-u-margin-top--3;
+  }
+  .form-buttons {
+    @extend .ds-u-margin-top--3;
+    @extend .ds-u-margin-bottom--3;
+  }
+  .label-container {
+    @extend .ds-l-row;
+    @extend .ds-u-measure--wide;
+    margin-left: 0px;
+    @extend .ds-u-align-items--end;
+
+    .label-rcol {
+      @extend .ds-u-margin-left--auto;
+      text-align: right;
+      font-weight: 400;
+    }
+  }
+
+  .faq-container {
+    background-color: $color-primary-alt-lightest;
+    @extend .ds-u-margin-bottom--7;
+    @extend .ds-u-margin-top--4;
+    padding: 0 101px;
+    @extend .ds-u-padding-y--5;
+    @extend .ds-u-display--flex;
+    @extend .ds-u-justify-content--between;
+    @extend .ds-u-flex-wrap--wrap;
+    @include max-width-ultra-wide;
+    width: 100%;
+
+    span {
+      font-size: 24px;
+
+      @media only screen and (max-width: $width-lg) {
+        font-size: 21px;
+      }
+    }
   }
 }
 
