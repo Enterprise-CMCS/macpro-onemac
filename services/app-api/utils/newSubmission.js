@@ -1,3 +1,4 @@
+import { RESPONSE_CODE } from "cmscommonlib";
 import dynamoDb from "../libs/dynamodb-lib";
 import addChild from "./addChild";
 
@@ -59,12 +60,7 @@ export default async function newSubmission(newData, config) {
   };
 
   if (!config.allowMultiplesWithSameId) {
-    params.ConditionExpression = "pk <> :pk AND sk <> :sk";
-    params.ExpressionAttributeValues = {
-      ...params.ExpressionAttributeValues,
-      ":pk": pk,
-      ":sk": sk,
-    };
+    params.ConditionExpression = "attribute_not_exists(pk)";
   }
 
   console.log("params in newSubmission are: ", params);
@@ -117,9 +113,7 @@ export default async function newSubmission(newData, config) {
   } catch (error) {
     console.log("newSubmission error is: ", error);
     if (error.code === "ConditionalCheckFailedException") {
-      console.error(
-        "A duplicate submission is not allowed for this submission type."
-      );
+      error.response_code = RESPONSE_CODE.DUPLICATE_ID;
     }
     throw error;
   }

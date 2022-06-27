@@ -10,7 +10,7 @@ export const medicaidSPARAIResponse = {
       errorLevel: "error",
     },
   ],
-  allowMultiplesWithSameId: false, // because Medicaid SPAs can only have one RAI and RAI response
+  allowMultiplesWithSameId: true, // Medicaid SPA RAI can only have one but until business decides how to handle we will allow multiple
   requiredAttachments: ["RAI Response"],
   optionalAttachments: ["Other"],
 };
