@@ -22,7 +22,6 @@ import FileUploader from "../components/FileUploader";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PackageApi from "../utils/PackageApi";
 import PageTitleBar from "../components/PageTitleBar";
-import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { FormLocationState } from "../domain-types";

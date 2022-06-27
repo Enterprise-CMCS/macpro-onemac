@@ -1,12 +1,7 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { OneMACFormConfig } from "../../libs/formLib";
-import {
-  ROUTES,
-  ONEMAC_ROUTES,
-  Workflow,
-  medicaidSPARAIResponse,
-} from "cmscommonlib";
+import { ONEMAC_ROUTES, Workflow, medicaidSPARAIResponse } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
 
