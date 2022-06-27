@@ -36,7 +36,7 @@ const leavePageConfirmMessage = "Changes you made will not be saved.";
  * @returns two character state/territory
  */
 function getTerritoryFromComponentId(componentId: string): string {
-  return componentId.toString().substring(0, 2);
+  return componentId?.toString().substring(0, 2) ?? "";
 }
 
 type Message = {
@@ -84,15 +84,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
-  const presetComponentId = location.state?.componentId;
+  const presetComponentId = location.state?.componentId ?? "";
 
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
-    territory:
-      (presetComponentId && getTerritoryFromComponentId(presetComponentId)) ||
-      "",
+    territory: getTerritoryFromComponentId(presetComponentId),
     additionalInformation: "",
-    componentId: presetComponentId ?? "",
+    componentId: presetComponentId,
     waiverAuthority: undefined,
     proposedEffectiveDate: undefined,
     parentId: location.state?.parentId,

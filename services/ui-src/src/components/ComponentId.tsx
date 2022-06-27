@@ -32,58 +32,56 @@ const ComponentId: React.FC<{
   }
 
   return (
-    <div>
-      <div className="label-container">
-        {!disabled && (
-          <div>
-            <label htmlFor="transmittalNumber" className="required">
-              {idLabel}
-            </label>
-          </div>
-        )}
-        {idFAQLink && (
-          <div className="label-rcol">
-            <Link target="new" href={idFAQLink}>
-              What is my {idLabel}?
-            </Link>
-          </div>
-        )}
-        {idFieldHint?.map(function (idFieldHint, idx) {
-          return (
-            <p
-              id={"fieldHint" + idx}
-              key={"fieldHint" + idx}
-              className={idFieldHint.className || "field-hint"}
-            >
-              {idFieldHint.text}
-            </p>
-          );
-        })}
-      </div>
-      {statusMessage && (
-        <div id="transmittalNumberStatusMsg" className={statusMsgClass}>
-          {statusMessage}
-        </div>
-      )}
+    <>
       {!disabled && (
-        <input
-          className="field"
-          type="text"
-          id="transmittalNumber"
-          name="transmittalNumber"
-          aria-describedby={idFieldHint
-            ?.map(function (idFieldHint, idx) {
-              return "fieldHint" + idx;
-            })
-            .join(" ")}
-          value={value}
-          onChange={onChange}
-          required
-          disabled={disabled}
-        ></input>
+        <>
+          <div className="label-container">
+            <div>
+              <label htmlFor="componentId" className="required">
+                {idLabel}
+              </label>
+            </div>
+            <div className="label-rcol">
+              <Link target="new" href={idFAQLink}>
+                What is my {idLabel}?
+              </Link>
+            </div>
+            {idFieldHint?.map(function (idFieldHint, idx) {
+              return (
+                <p
+                  id={"fieldHint" + idx}
+                  key={"fieldHint" + idx}
+                  className={idFieldHint.className || "field-hint"}
+                >
+                  {idFieldHint.text}
+                </p>
+              );
+            })}
+          </div>
+          {statusMessage && (
+            <div id="componentIdStatusMsg" className={statusMsgClass}>
+              {statusMessage}
+            </div>
+          )}
+          <input
+            className="field"
+            type="text"
+            id="componentId"
+            name="componentId"
+            aria-describedby={idFieldHint
+              ?.map(function (idFieldHint, idx) {
+                return "fieldHint" + idx;
+              })
+              .join(" ")}
+            value={value}
+            onChange={onChange}
+            required
+            disabled={disabled}
+          ></input>
+        </>
       )}
       {disabled && <Review heading={idLabel}>{value}</Review>}
-    </div>
+    </>
   );
 };
 
