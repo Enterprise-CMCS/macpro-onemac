@@ -163,7 +163,7 @@ class PackageApi {
     } catch (err) {
       handleApiError(
         err,
-        "FETCH_ERROR",
+        "SY000",
         `There was an error withdrawing package ${componentId}.`
       );
     }

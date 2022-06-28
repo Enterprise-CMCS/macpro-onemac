@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { OneMACFormConfig } from "../../libs/formLib";
-import { Workflow, ROUTES, ONEMAC_ROUTES, baseWaiver } from "cmscommonlib";
+import { ROUTES, ONEMAC_ROUTES, baseWaiver, Workflow } from "cmscommonlib";
 
 const baseWaiverIdFormat: string = "SS.####.R00.00 or SS.#####.R00.00";
 
@@ -21,6 +21,7 @@ export const baseWaiverFormInfo: OneMACFormConfig = {
     fieldName: "proposedEffectiveDate",
   },
   actionsByStatus: Workflow.defaultActionsByStatus,
+  raiLink: ROUTES.WAIVER_RAI,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 

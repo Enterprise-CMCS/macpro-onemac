@@ -14,10 +14,11 @@ import {
   getActiveTerritories,
   RESPONSE_CODE,
 } from "cmscommonlib";
+import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
 const DEFAULT_AUTH_STATE: Omit<
   AppContextValue,
-  "setUserInfo" | "updatePhoneNumber"
+  "setUserInfo" | "updatePhoneNumber" | "confirmAction"
 > = {
   isAuthenticating: true,
   isAuthenticated: false,
@@ -30,6 +31,38 @@ const DEFAULT_AUTH_STATE: Omit<
 
 export function App() {
   const [authState, setAuthState] = useState(DEFAULT_AUTH_STATE);
+  const [confirmationDialog, setConfirmationDialog] = useState<{
+    heading: string;
+    acceptText: string;
+    cancelText: string;
+    message: string;
+    onAccept: any;
+    onDeny: any;
+  } | null>(null);
+  const closeConfirmationDialog = useCallback(
+    () => setConfirmationDialog(null),
+    []
+  );
+
+  const confirmAction = useCallback(
+    async (
+      heading: string,
+      acceptText: string,
+      cancelText: string,
+      message: string,
+      onAccept: any,
+      onDeny: any
+    ) =>
+      setConfirmationDialog({
+        heading,
+        acceptText,
+        cancelText,
+        message,
+        onAccept,
+        onDeny,
+      }),
+    []
+  );
 
   /**
    * Gets authentication status for user,
@@ -136,8 +169,9 @@ export function App() {
       ...authState,
       setUserInfo,
       updatePhoneNumber,
+      confirmAction,
     }),
-    [authState, setUserInfo, updatePhoneNumber]
+    [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
   return authState.isAuthenticating ? null : (
@@ -146,6 +180,23 @@ export function App() {
         <Header />
         <main id="main">
           <Routes />
+          {confirmationDialog && (
+            <ConfirmationDialog
+              acceptText={confirmationDialog.acceptText}
+              cancelText={confirmationDialog.cancelText}
+              heading={confirmationDialog.heading}
+              onAccept={() => {
+                confirmationDialog.onAccept && confirmationDialog.onAccept();
+                closeConfirmationDialog();
+              }}
+              onCancel={() => {
+                confirmationDialog.onDeny && confirmationDialog.onDeny();
+                closeConfirmationDialog();
+              }}
+            >
+              {confirmationDialog.message}
+            </ConfirmationDialog>
+          )}
         </main>
       </div>
       <Footer />

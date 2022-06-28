@@ -23,7 +23,6 @@ import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PackageApi from "../utils/PackageApi";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
-import { ConfirmationDialog } from "../components/ConfirmationDialog";
 import { FormLocationState } from "../domain-types";
 import ComponentId from "../components/ComponentId";
 
@@ -62,7 +61,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 }) => {
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
-  const { activeTerritories } = useAppContext() ?? {};
+  const { activeTerritories, confirmAction } = useAppContext() ?? {};
   const location = useLocation<FormLocationState>();
 
   //Reference to the File Uploader.
@@ -72,7 +71,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const [isSubmissionReady, setIsSubmissionReady] = useState(false);
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [confirmCancel, setConfirmCancel] = useState(false);
 
   const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
     useState<Message>({
@@ -486,7 +484,16 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               id="form-cancel-button"
               aria-label="cancel-form"
               className="ds-c-button ds-c-button--transparent"
-              onClick={() => setConfirmCancel(true)}
+              onClick={() =>
+                confirmAction &&
+                confirmAction(
+                  "Leave this page?",
+                  "Leave Anyway",
+                  "Stay on Page",
+                  leavePageConfirmMessage,
+                  () => history.goBack()
+                )
+              }
               type="button"
             >
               Cancel
@@ -503,18 +510,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             View FAQ
           </a>
         </div>
-        {confirmCancel && (
-          <ConfirmationDialog
-            className=""
-            acceptText="Leave Anyway"
-            cancelText="Stay on Page"
-            heading="Leave this page?"
-            onAccept={() => history.goBack()}
-            onCancel={() => setConfirmCancel(false)}
-          >
-            Leave this page? Changes you made will not be saved.
-          </ConfirmationDialog>
-        )}
       </div>
     </LoadingOverlay>
   );

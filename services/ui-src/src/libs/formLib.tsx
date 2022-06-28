@@ -1,9 +1,9 @@
 import {
-  Workflow,
   FieldHint,
   IdValidation,
   SelectOption,
   FileUploadProps,
+  Workflow,
 } from "cmscommonlib";
 
 import { OneMacFormData } from "../page/OneMACForm";
@@ -16,6 +16,7 @@ export type OneMACFormConfig = {
   addlIntroJSX?: string;
   detailsHeader?: string;
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
+  raiLink: string;
   landingPage: string;
   landingPageReplacementKeys?: (keyof OneMacFormData)[];
   proposedEffectiveDate?: { fieldName: string };

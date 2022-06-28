@@ -172,6 +172,27 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  withdrawMedicaidSPA:
+    handler: action/withdrawMedicaidSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawMedicaidSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+
+  withdrawCHIPSPA:
+    handler: action/withdrawCHIPSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawCHIPSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   withdrawWaiverTemporaryExtension:
     handler: action/withdrawWaiverTemporaryExtension.main
     role: LambdaApiRole

@@ -1,7 +1,7 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { OneMACFormConfig } from "../../libs/formLib";
-import { ROUTES, ONEMAC_ROUTES, Workflow, medicaidSPA } from "cmscommonlib";
+import { ROUTES, ONEMAC_ROUTES, medicaidSPA, Workflow } from "cmscommonlib";
 
 const medicaidSpaIdFormat: string = "SS-YY-NNNN or SS-YY-NNNN-xxxx";
 
@@ -23,6 +23,7 @@ const medicaidSpaFormInfo: OneMACFormConfig = {
   idFAQLink: ROUTES.FAQ_SPA_ID,
   idFormat: medicaidSpaIdFormat,
   actionsByStatus: Workflow.defaultActionsByStatus,
+  raiLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };
 
