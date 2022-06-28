@@ -601,8 +601,15 @@ input[type="file"] {
     }
     h3 {
       @extend .ds-u-padding-top--5;
-      @extend .ds-u-font-size--h2;
       @extend .ds-u-font-weight--bold;
+    }
+    .ds-c-review {
+      @extend .ds-u-border-bottom--0;
+    }
+    .ds-c-review__heading {
+      @extend .ds-u-margin-top--1;
+      @extend .ds-u-padding-top--0;
+      @extend .ds-u-font-weight--semibold;
     }
   }
 
