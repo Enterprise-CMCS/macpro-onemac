@@ -20,7 +20,6 @@ import {
   USER_ROLE,
   USER_STATUS,
   TYPE_TO_DETAIL_ROUTE,
-  TYPE_TO_RAI_ROUTE,
 } from "cmscommonlib";
 
 import PageTitleBar from "../components/PageTitleBar";
