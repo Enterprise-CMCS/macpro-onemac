@@ -1,6 +1,6 @@
-const waiverNumberInputBox = "#transmittalNumber";
+const waiverNumberInputBox = "#componentId";
 const actionTypeDropDown = "#action-type";
-const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
+const errorMessageForWaiverNumber = "#componentIdStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
 const addFile1915b4 =

@@ -1,8 +1,8 @@
-const SpaIDInput = "#transmittalNumber";
+const SpaIDInput = "#componentId";
 const additionalInformationCommentBox = "//textarea[@name='summary']";
 const additionalInfoCommentBox = "//textarea[@name='additionalInformation']";
 const submitBTN = "#form-submission-button";
-const SPAIDErrorMessage = "#transmittalNumberStatusMsg";
+const SPAIDErrorMessage = "#componentIdStatusMsg";
 const cancelBTN = "#form-cancel-button";
 const warningText = "//p[@class='submission-message']";
 //Element is Xpath use cy.xpath instead of cy.get
