@@ -90,6 +90,7 @@ export namespace ChangeRequest {
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
     WITHDRAW = "Withdraw",
+    REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
   }
 
   export type FormInfo = {
@@ -114,12 +115,12 @@ export namespace Workflow {
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
     WITHDRAW = "Withdraw",
+    REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
   }
   export const ONEMAC_TYPE: Record<string, string>;
   export const ONEMAC_LABEL: Record<string, string>;
   export const ONEMAC_STATUS: Record<string, string>;
   export const ALLOW_WAIVER_EXTENSION_TYPE: string[];
-  export const MY_PACKAGE_GROUP: Record<string, string>;
   export enum PACKAGE_GROUP {
     SPA = "spa",
     WAIVER = "waiver",
@@ -131,6 +132,7 @@ export namespace Workflow {
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const baseWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
   export const waiverExtensionActionsByStatus: Record<string, PACKAGE_ACTION[]>;
   export const get90thDayText: (
     currentStatus: string,

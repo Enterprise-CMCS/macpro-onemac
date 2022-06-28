@@ -1342,6 +1342,54 @@ article.form-container {
   border-color: red;
 }
 
+// Action Popups
+
+.action-popup {
+  position: absolute;
+  margin-top: -8px;
+  margin-left: -8px;
+  border-radius: 5px;
+  box-shadow: 0px 10px 30px $color-gray-light;
+  background-color: $color-primary;
+  min-width: 60px;
+  z-index: 2;
+  animation-duration: 0.2s;
+  animation-name: actionPopupContent;
+}
+
+@keyframes actionPopupContent {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+.action-popup hr {
+  margin: 0px;
+}
+
+.action-popup a {
+  float: none;
+  color: $color-white;
+  padding: 16px;
+  font-size: 12px;
+  font-weight: 600;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.action-popup a:hover {
+  color: rgba($color-base-inverse, 0.8);
+}
+
+.action-popup a:hover {
+  color: rgba($color-base-inverse, 0.8);
+}
+
 // Account dropdown
 
 .dropdown-content {

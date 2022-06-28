@@ -4,7 +4,7 @@ import {
   OneMACDetail,
   defaultDetail,
   waiverAuthorityDefault,
-} from "../DetailViewDefaults";
+} from "../../libs/detailLib";
 import { ROUTES, waiverAmendment } from "cmscommonlib";
 
 export const waiverAmendmentDetail: OneMACDetail = {

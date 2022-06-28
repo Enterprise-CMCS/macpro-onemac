@@ -79,9 +79,8 @@ export default async function newSubmission(newData, config) {
     const putParams = {
       TableName: process.env.oneMacTableName,
       Item: {
-        pk,
-        sk: putsk,
         ...response.Attributes,
+        sk: putsk,
       },
     };
 
