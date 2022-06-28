@@ -62,9 +62,9 @@ export default async function updateParent(childData) {
       const putParams = {
         TableName: process.env.oneMacTableName,
         Item: {
+          ...result.Attributes,
           pk: childData.parentId,
           sk: putsk,
-          ...result.Attributes,
         },
       };
       await dynamoDb.put(putParams);
@@ -151,9 +151,9 @@ const backup = () => {
       const putParams = {
         TableName: process.env.oneMacTableName,
         Item: {
+          ...result.Attributes,
           pk: childData.parentId,
           sk: putsk,
-          ...result.Attributes,
         },
       };
       await dynamoDb.put(putParams);

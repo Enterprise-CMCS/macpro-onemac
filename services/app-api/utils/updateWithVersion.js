@@ -14,9 +14,8 @@ export default async function updateWithVersion(updateParams) {
     const putParams = {
       TableName: process.env.oneMacTableName,
       Item: {
-        pk: result["Attributes"]["pk"],
-        sk: putsk,
         ...result.Attributes,
+        sk: putsk,
       },
     };
     console.log("now the put params: ", putParams);
