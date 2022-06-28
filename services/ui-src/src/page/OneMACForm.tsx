@@ -29,7 +29,7 @@ import ComponentId from "../components/ComponentId";
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
 /**
- * Parses out the two character state/territory at the beginning of the component id (transmittal number).
+ * Parses out the two character state/territory at the beginning of the component id.
  * @param componentId the component id
  * @returns two character state/territory
  */
@@ -72,7 +72,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [transmittalNumberStatusMessage, setTransmittalNumberStatusMessage] =
+  const [componentIdStatusMessage, setComponentIdStatusMessage] =
     useState<Message>({
       statusLevel: "error",
       statusMessage: "",
@@ -259,14 +259,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           .then(() => {
             if (existMessages.length > 0) {
               displayMessage = existMessages[0];
-              setTransmittalNumberStatusMessage(displayMessage);
+              setComponentIdStatusMessage(displayMessage);
             } else {
-              setTransmittalNumberStatusMessage(displayMessage);
+              setComponentIdStatusMessage(displayMessage);
             }
           });
       } else {
         displayMessage = formatMessage;
-        setTransmittalNumberStatusMessage(displayMessage);
+        setComponentIdStatusMessage(displayMessage);
       }
 
       const isWaiverAuthorityReady: boolean = Boolean(
@@ -303,56 +303,67 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   const limitSubmit = useRef(false);
 
+  const doSubmit = useCallback(async () => {
+    limitSubmit.current = true;
+    setIsSubmitting(true);
+
+    let componentIdWarningMessage: string | undefined = "";
+
+    if (
+      componentIdStatusMessage.statusLevel === "warn" &&
+      componentIdStatusMessage.statusMessage
+    ) {
+      componentIdWarningMessage = componentIdStatusMessage.warningMessageCode;
+    }
+
+    if (uploader.current) {
+      try {
+        const uploadedList = await uploader.current.uploadFiles();
+        const returnCode = await PackageApi.submitToAPI(
+          {
+            ...oneMacFormData,
+            transmittalNumberWarningMessage: componentIdWarningMessage,
+          },
+          uploadedList,
+          formConfig.componentType
+        );
+
+        if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
+          throw new Error(returnCode);
+
+        history.push(formConfig.landingPage, {
+          passCode: returnCode,
+        });
+      } catch (err) {
+        console.log("error is: ", err);
+        setAlertCode((err as Error).message);
+        setIsSubmitting(false);
+        setIsSubmissionReady(false);
+        limitSubmit.current = false;
+      }
+    }
+  }, [formConfig, history, oneMacFormData, componentIdStatusMessage]);
+
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
       event.preventDefault();
 
       if (isSubmissionReady && !limitSubmit.current) {
-        limitSubmit.current = true;
-        setIsSubmitting(true);
-
-        let transmittalNumberWarningMessage: string | undefined = "";
-
-        if (
-          transmittalNumberStatusMessage.statusLevel === "warn" &&
-          transmittalNumberStatusMessage.statusMessage
-        ) {
-          transmittalNumberWarningMessage =
-            transmittalNumberStatusMessage.warningMessageCode;
-        }
-
-        if (uploader.current) {
-          try {
-            const uploadedList = await uploader.current.uploadFiles();
-            const returnCode = await PackageApi.submitToAPI(
-              { ...oneMacFormData, transmittalNumberWarningMessage },
-              uploadedList,
-              formConfig.componentType
+        if (formConfig.confirmSubmit) {
+          confirmAction &&
+            confirmAction(
+              "PlaceHolder Heading",
+              "Yes, Submit",
+              "Cancel",
+              "Placeholder instruction text",
+              doSubmit
             );
-
-            if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
-              throw new Error(returnCode);
-
-            history.push(formConfig.landingPage, {
-              passCode: returnCode,
-            });
-          } catch (err) {
-            console.log("error is: ", err);
-            setAlertCode((err as Error).message);
-            setIsSubmitting(false);
-            setIsSubmissionReady(false);
-            limitSubmit.current = false;
-          }
+        } else {
+          doSubmit();
         }
       }
     },
-    [
-      isSubmissionReady,
-      transmittalNumberStatusMessage,
-      oneMacFormData,
-      formConfig,
-      history,
-    ]
+    [isSubmissionReady, formConfig.confirmSubmit, confirmAction, doSubmit]
   );
 
   return (
@@ -408,11 +419,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               idLabel={formConfig.idLabel}
               idFieldHint={formConfig.idFieldHint}
               idFAQLink={formConfig.idFAQLink}
-              statusLevel={transmittalNumberStatusMessage.statusLevel}
+              statusLevel={componentIdStatusMessage.statusLevel}
               statusMessage={
-                transmittalNumberStatusMessage.statusMessage !==
+                componentIdStatusMessage.statusMessage !==
                 `${formConfig.idLabel} Required`
-                  ? transmittalNumberStatusMessage.statusMessage
+                  ? componentIdStatusMessage.statusMessage
                   : ""
               }
               disabled={!!presetComponentId}
@@ -432,7 +443,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 <Input
                   className="field"
                   id="proposed-effective-date"
-                  name={formConfig.proposedEffectiveDate.fieldName}
+                  name="proposedEffectiveDate"
                   onChange={handleEffectiveDateChange}
                   type="date"
                 />

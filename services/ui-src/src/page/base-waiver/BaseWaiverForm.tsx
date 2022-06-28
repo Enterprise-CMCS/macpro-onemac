@@ -1,12 +1,13 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { OneMACFormConfig } from "../../libs/formLib";
+import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, baseWaiver, Workflow } from "cmscommonlib";
 
 const baseWaiverIdFormat: string = "SS.####.R00.00 or SS.#####.R00.00";
 
 export const baseWaiverFormInfo: OneMACFormConfig = {
   ...baseWaiver,
+  ...defaultOneMACFormConfig,
   pageTitle: "Base Waiver Submission",
   detailsHeader: "Base Waiver",
   addlIntroJSX: "",
@@ -17,11 +18,7 @@ export const baseWaiverFormInfo: OneMACFormConfig = {
       text: "Must be a new base number with the format " + baseWaiverIdFormat,
     },
   ],
-  proposedEffectiveDate: {
-    fieldName: "proposedEffectiveDate",
-  },
-  actionsByStatus: Workflow.defaultActionsByStatus,
-  raiLink: ROUTES.WAIVER_RAI,
+  proposedEffectiveDate: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 

@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { OneMACFormConfig } from "../../libs/formLib";
+import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
 import { ONEMAC_ROUTES, Workflow, medicaidSPARAIResponse } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
@@ -8,6 +8,7 @@ import { useLocation } from "react-router-dom";
 const MedicaidSPARAIForm: FC = () => {
   const location = useLocation<FormLocationState>();
   const medicaidSPARAIFormInfo: OneMACFormConfig = {
+    ...defaultOneMACFormConfig,
     ...medicaidSPARAIResponse,
     pageTitle: "Formal Request for Additional Information Response",
     detailsHeader: "Medicaid SPA RAI",
@@ -18,6 +19,7 @@ const MedicaidSPARAIForm: FC = () => {
     actionsByStatus: Workflow.defaultActionsByStatus,
     landingPage:
       ONEMAC_ROUTES.MEDICAID_SPA_DETAIL + `/${location.state?.componentId}`,
+    confirmSubmit: true,
   };
 
   return <OneMACForm formConfig={medicaidSPARAIFormInfo} />;
