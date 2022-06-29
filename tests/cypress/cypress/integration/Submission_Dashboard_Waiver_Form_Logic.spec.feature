@@ -43,7 +43,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on Waiver Action under Waiver Type
         And Click on Request for waiver renewal from Action Type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And type in Existing Waiver Number
+        And type in Existing Waiver Number in old form
         And verify error message is present on New Waiver Page
         And Return to dashboard Page
 
@@ -51,7 +51,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on Waiver Action under Waiver Type
         And Click on Request for waiver renewal from Action Type
         And Click on All other 1915 b Waivers under Waiver Authority
-        And type in Existing Waiver Number
+        And type in Existing Waiver Number in old form
         And verify error message is present on New Waiver Page
         And Return to dashboard Page
 

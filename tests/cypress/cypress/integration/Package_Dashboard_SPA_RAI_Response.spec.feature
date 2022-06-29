@@ -16,7 +16,8 @@ Feature: RAI Response for SPA package view
         And verify Respond to RAI action exists
         And click on Respond to RAI package action
         And Add file for RAI Response
-        And Click on Submit Button
+        And Click the Submit Button without waiting
+        And click yes, submit RAI response button
         And click on Packages
         And search for the ID copied from the link in the first row
         And click the SPA ID link in the first row
@@ -33,7 +34,8 @@ Feature: RAI Response for SPA package view
         And click the Respond to RAI button
         And Add file for RAI Response
         And Type Additonal Information Comments
-        And Click on Submit Button
+        And Click the Submit Button without waiting
+        And click yes, submit RAI response button
         And click on Packages
         And search for the ID copied from the link in the first row
         And click the SPA ID link in the first row

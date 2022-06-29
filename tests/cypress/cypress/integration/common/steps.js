@@ -148,6 +148,12 @@ And("Type Additonal Info Comments in new form", () => {
 And("Click on Submit Button", () => {
   OneMacSubmitNewMedicaidSpaPage.clicksubmitBTN();
 });
+And("Click the Submit Button without waiting", () => {
+  OneMacSubmitNewMedicaidSpaPage.clicksubmitBTNWithoutWait();
+});
+And("click yes, submit RAI response button", () => {
+  OneMacRespondToRAIPage.clickYesSubmitBTN();
+});
 And("verify submission warning text is visible", () => {
   OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningTextIsVisible();
 });
