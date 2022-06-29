@@ -475,7 +475,7 @@ And("type in invalid SPA ID on CHIP SPA page", () => {
 And(
   "verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page",
   () => {
-    OneMacCHIPSPAPage.verifyOldErrorMessageIsDisplayed();
+    OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
   }
 );
 
@@ -581,7 +581,7 @@ And("type in invalid Waiver Number", () => {
 });
 
 And("verify error message is present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsDisplayed();
+  OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
 });
 
 And("Click on Request Temporary Extension", () => {
@@ -749,7 +749,7 @@ And("Type new Waiver Number for RAI in format SS.#####", () => {
 });
 And("Type Base Waiver Number in format SS.#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber1
     );
   });
