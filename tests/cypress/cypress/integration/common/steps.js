@@ -773,6 +773,12 @@ And("search for Base Waiver Number 1 with 12 Characters", () => {
   });
   cy.wait(1000);
 });
+And("search for approved Base Waiver Number 1", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackagePage.searchFor(data.approvedBaseWaiverNum1);
+  });
+  cy.wait(1000);
+});
 And("search for Base Waiver Number 2 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackagePage.searchFor(data.newBaseWaiverNumber2);
@@ -2029,6 +2035,12 @@ And("verify Respond to RAI action exists", () => {
 And("verify withdraw package action exists", () => {
   OneMacPackageDetailsPage.verifyWithdrawPackageActionExists();
 });
+And("verify Request a Temporary Extension package action exists", () => {
+  OneMacPackageDetailsPage.verifyRequestTempExtensionPackageActionExists();
+});
+And("click Request a Temporary Extension package action", () => {
+  OneMacPackageDetailsPage.clickRequestTempExtensionPackageAction();
+});
 And("click on Respond to RAI package action", () => {
   OneMacPackageDetailsPage.clickRespondToRAIAction();
 });
@@ -2121,6 +2133,12 @@ And("click the actions button in row one", () => {
 });
 And("click the Respond to RAI button", () => {
   OneMacPackagePage.clickRespondToRAIBtn();
+});
+And("click the Request Temporary Extension button", () => {
+  OneMacPackagePage.clickRequestTempExtensionBtn();
+});
+And("verify the Request Temporary Extension button is displayed", () => {
+  OneMacPackagePage.verifyRequestTempExtensionBtnExists();
 });
 And("verify the Respond to RAI button is displayed", () => {
   OneMacPackagePage.verifyRespondToRAIBtnExists();
@@ -2238,6 +2256,20 @@ And("Type Temporary Extension Number 3 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
       data.newTemporaryExtensionNumber3
+    );
+  });
+});
+And("Type Temporary Extension Number 4", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber4
+    );
+  });
+});
+And("Type Temporary Extension Number 5", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+      data.newTemporaryExtensionNumber5
     );
   });
 });
