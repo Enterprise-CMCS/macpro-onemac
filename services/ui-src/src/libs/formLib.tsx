@@ -3,9 +3,9 @@ import {
   IdValidation,
   SelectOption,
   FileUploadProps,
+  Workflow,
+  ONEMAC_ROUTES,
 } from "cmscommonlib";
-
-import { OneMacFormData } from "../page/OneMACForm";
 
 export type OneMACFormConfig = {
   idFormat: string;
@@ -14,13 +14,20 @@ export type OneMACFormConfig = {
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;
-  raiLink: string;
+  actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   landingPage: string;
-  landingPageReplacementKeys?: (keyof OneMacFormData)[];
-  proposedEffectiveDate?: { fieldName: string };
+  confirmSubmit?: boolean;
+  proposedEffectiveDate?: boolean;
   getParentInfo?: (id: string) => string[];
 } & PackageType &
   Partial<WaiverPackageType>;
+
+export const defaultOneMACFormConfig = {
+  actionsByStatus: Workflow.defaultActionsByStatus,
+  proposedEffectiveDate: false,
+  landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  confirmSubmit: false,
+};
 
 export const defaultWaiverAuthority = [
   { label: "-- select a waiver authority --", value: "" },
@@ -30,7 +37,6 @@ export type PackageType = {
   packageGroup?: string;
   componentType: string;
   typeLabel: string;
-  idType: string;
   idLabel: string;
   idRegex: string;
   idExistValidations: IdValidation[];

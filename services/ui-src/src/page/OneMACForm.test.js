@@ -153,7 +153,7 @@ describe("OneMAC Form", () => {
   });
 });
 
-describe("Transmittal Number Section", () => {
+describe("Component Id Section", () => {
   let history;
 
   beforeEach(() => {
@@ -161,7 +161,7 @@ describe("Transmittal Number Section", () => {
     history.push(ROUTES.BASE_WAIVER);
   });
 
-  it("populates the transmittal number field when passed in as a state variable", async () => {
+  it("populates the component id as a display only value when passed in as a state variable", async () => {
     const testComponentId = "MI.1122.R00.00";
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
@@ -182,10 +182,7 @@ describe("Transmittal Number Section", () => {
       </AppContext.Provider>
     );
 
-    const transmittalNumberEl = screen.getByLabelText("Base Waiver Number");
-    await waitFor(() =>
-      expect(transmittalNumberEl.value).toBe(testComponentId)
-    );
+    await screen.findByText(testComponentId);
   });
 
   it("informs user that they cannot submit for an unauthorized territory", async () => {
