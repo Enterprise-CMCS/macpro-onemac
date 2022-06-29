@@ -475,7 +475,7 @@ And("type in invalid SPA ID on CHIP SPA page", () => {
 And(
   "verify that error message for incorrect SPA ID is Displayed on CHIP SPA Page",
   () => {
-    OneMacCHIPSPAPage.verifyErrorMessageIsDisplayed();
+    OneMacCHIPSPAPage.verifyOldErrorMessageIsDisplayed();
   }
 );
 

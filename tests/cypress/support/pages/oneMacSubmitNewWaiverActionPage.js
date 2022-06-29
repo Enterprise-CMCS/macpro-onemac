@@ -1,7 +1,8 @@
 const newWaiverNumberInputBox = "#componentId";
-const oldWaiverNumberInputBox = "#componentId";
+const oldWaiverNumberInputBox = "#transmittalNumber";
 const actionTypeDropDown = "#action-type";
-const errorMessageForWaiverNumber = "#componentIdStatusMsg";
+const oldErrMsgForWaiverNumber = "#transmittalNumberStatusMsg";
+const newErrMsgForWaiverNumber = "#componentIdStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
 const addFile1915b4 =
@@ -49,7 +50,7 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   verifyErrorMessageIsNotDisplayed() {
-    cy.get(errorMessageForWaiverNumber).should("not.exist");
+    cy.get(newErrMsgForWaiverNumber).should("not.exist");
   }
 
   clearWaiverNumberInputBoxNewForms() {
@@ -60,7 +61,10 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   verifyErrorMessageIsDisplayed() {
-    cy.get(errorMessageForWaiverNumber).should("be.visible");
+    cy.get(newErrMsgForWaiverNumber).should("be.visible");
+  }
+  verifyOldErrorMessageIsDisplayed() {
+    cy.get(oldErrMsgForWaiverNumber).should("be.visible");
   }
 
   upload1915B4File() {
@@ -81,7 +85,7 @@ export class oneMacSubmitNewWaiverActionPage {
       });
   }
   errorMsgExists() {
-    cy.wrap(errorMessageForWaiverNumber).then(($el) => {
+    cy.wrap(newErrMsgForWaiverNumber).then(($el) => {
       if ($el.length > 0) {
         return true;
       } else {
