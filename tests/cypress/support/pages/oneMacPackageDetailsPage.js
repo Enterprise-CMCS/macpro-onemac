@@ -13,6 +13,8 @@ const packageActionsHeader =
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//button[text()='Respond to RAI']";
 const withdrawPackageAction = "//button[text()='Withdraw']";
+const requestTempExtensionPackageAction =
+  "//button[text()='Request a Temporary Extension']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(text(),'Package')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
@@ -70,6 +72,12 @@ export class oneMacPackageDetailsPage {
   }
   verifyWithdrawPackageActionExists() {
     cy.xpath(withdrawPackageAction).should("be.visible");
+  }
+  verifyRequestTempExtensionPackageActionExists() {
+    cy.xpath(requestTempExtensionPackageAction).should("be.visible");
+  }
+  clickRequestTempExtensionPackageAction() {
+    cy.xpath(requestTempExtensionPackageAction).should("be.visible");
   }
   clickRespondToRAIAction() {
     cy.xpath(respondToRAIAction).click();
