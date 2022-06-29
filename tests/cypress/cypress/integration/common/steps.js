@@ -62,22 +62,22 @@ And("click on Medicaid SPA", () => {
 });
 And("type in SPA ID 1", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.attachmentsSPAID1);
+    OneMacCHIPSPAPage.inputSpaID(d.attachmentsSPAID1);
   });
 });
 And("type in SPA ID 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.attachmentsSPAID2);
+    OneMacCHIPSPAPage.inputSpaID(d.attachmentsSPAID2);
   });
 });
 And("type in SPA ID for RAI 1", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI1);
+    OneMacCHIPSPAPage.inputSpaID(d.SPAIDforRAI1);
   });
 });
 And("type in SPA ID for RAI 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.SPAIDforRAI2);
+    OneMacCHIPSPAPage.inputSpaID(d.SPAIDforRAI2);
   });
 });
 And("type in Medicaid SPA ID", () => {
@@ -208,12 +208,12 @@ And("verify CHIP ID EXISTS", () => {
 
 And("type in CHIP ID", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.chipSPAID1);
+    OneMacCHIPSPAPage.inputSpaID(d.chipSPAID1);
   });
 });
 And("type in CHIP ID 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacSubmitNewMedicaidSpaPage.inputSpaID(d.chipSPAID2);
+    OneMacCHIPSPAPage.inputSpaID(d.chipSPAID2);
   });
 });
 
