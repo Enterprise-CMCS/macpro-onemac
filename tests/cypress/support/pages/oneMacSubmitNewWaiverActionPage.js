@@ -1,4 +1,5 @@
-const waiverNumberInputBox = "#componentId";
+const newWaiverNumberInputBox = "#componentId";
+const oldWaiverNumberInputBox = "#componentId";
 const actionTypeDropDown = "#action-type";
 const errorMessageForWaiverNumber = "#componentIdStatusMsg";
 const waiverAuthority = "#waiver-authority";
@@ -13,12 +14,18 @@ const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 
 export class oneMacSubmitNewWaiverActionPage {
-  inputWaiverNumber(s) {
-    cy.get(waiverNumberInputBox).type(s);
+  inputWaiverNumberNewForms(s) {
+    cy.get(newWaiverNumberInputBox).type(s);
+  }
+  inputWaiverNumberOldForms(s) {
+    cy.get(oldWaiverNumberInputBox).type(s);
   }
 
-  inputExistingWaiverNumber() {
-    cy.get(waiverNumberInputBox).type(existingWaiverNumber);
+  inputExistingWaiverNumberNewForms() {
+    cy.get(newWaiverNumberInputBox).type(existingWaiverNumber);
+  }
+  inputExistingWaiverNumberOldForms() {
+    cy.get(oldWaiverNumberInputBox).type(existingWaiverNumber);
   }
 
   selectNewWaiverUnderActionType() {
@@ -45,8 +52,11 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(errorMessageForWaiverNumber).should("not.exist");
   }
 
-  clearWaiverNumberInputBox() {
-    cy.get(waiverNumberInputBox).clear();
+  clearWaiverNumberInputBoxNewForms() {
+    cy.get(newWaiverNumberInputBox).clear();
+  }
+  clearWaiverNumberInputBoxOldForms() {
+    cy.get(oldWaiverNumberInputBox).clear();
   }
 
   verifyErrorMessageIsDisplayed() {

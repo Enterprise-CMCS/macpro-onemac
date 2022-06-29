@@ -565,16 +565,19 @@ And("verify error message is not present on New Waiver Page", () => {
   OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsNotDisplayed();
 });
 
-And("clear Waiver Number Input box", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBox();
+And("clear Waiver Number Input box in new form", () => {
+  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
+});
+And("clear Waiver Number Input box in old form", () => {
+  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxOldForms();
 });
 
 And("type in a correct Waiver Number with 5 characters", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.72988");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.72988");
 });
 
 And("type in invalid Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumber("MD.123456");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.123456");
 });
 
 And("verify error message is present on New Waiver Page", () => {
@@ -717,49 +720,66 @@ And("Click on Request for waiver renewal from Action Type", () => {
   OneMacSubmitNewWaiverActionPage.selectRequestForWaiverRenewalUnderActionType();
 });
 
-And("type in Existing Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumber();
+And("type in Existing Waiver Number in new form", () => {
+  OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberNewForms();
+});
+And("type in Existing Waiver Number in old form", () => {
+  OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberOldForms();
 });
 And("Type new Waiver Number 1 in format SS.#####", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber1);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      d.newWaiverNumber1
+    );
   });
 });
 And("Type new Waiver Number 2 in format SS.#####", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber2);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      d.newWaiverNumber2
+    );
   });
 });
 And("Type new Waiver Number for RAI in format SS.#####", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newWaiverNumber3);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      d.newWaiverNumber3
+    );
   });
 });
 And("Type Base Waiver Number in format SS.#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newBaseWaiverNumber1);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      d.newBaseWaiverNumber1
+    );
   });
 });
 And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(d.newBaseWaiverNumber2);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
+      d.newBaseWaiverNumber2
+    );
   });
 });
 And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber1);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      data.newWaiverNumber1
+    );
   });
 });
 And("Type existing Waiver Number 2 With 5 Characters", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(data.newWaiverNumber2);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      data.newWaiverNumber2
+    );
   });
 });
 And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     var number = `${data.newWaiverNumber}.R00.M00`;
     var f = "./fixtures/submissionDashboardWaiverNumbers.json";
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(number);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(number);
     cy.readFile(f).then((d) => {
       d.waiverAmendmentNumber = number;
       // write the merged object
@@ -836,13 +856,13 @@ And("verify success message for Withdrawal", () => {
 
 And("Type Valid Waiver Number With 5 Characters", () => {
   cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(num);
   });
 });
 
 And("Type Valid Waiver Number With 5 Characters for RAI", () => {
   cy.fixture("raiWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(num);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(num);
   });
 });
 
@@ -2233,7 +2253,7 @@ And("select proposed effective date 3 months from today", () => {
 });
 And("Type Temporary Extension Number 1 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       data.newTemporaryExtensionNumber1
     );
   });
@@ -2247,14 +2267,14 @@ And("click on the link for temporary extension number 1", () => {
 });
 And("Type Temporary Extension Number 2 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       data.newTemporaryExtensionNumber2
     );
   });
 });
 And("Type Temporary Extension Number 3 With 5 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       data.newTemporaryExtensionNumber3
     );
   });
