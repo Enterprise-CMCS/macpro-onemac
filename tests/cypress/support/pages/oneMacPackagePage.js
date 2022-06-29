@@ -850,7 +850,7 @@ export class oneMacPackagePage {
     cy.xpath(respondToRAIBtn).click();
   }
   verifyRespondToRAIBtnExists() {
-    cy.xpath(respondToRAIBtn).should("be.visible");
+    cy.xpath(respondToRAIBtn).should("exist").and("not.be.disabled");
   }
   clickRequestTempExtensionBtn() {
     cy.xpath(RequestTempExtensionBtn).click();
