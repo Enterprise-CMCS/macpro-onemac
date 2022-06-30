@@ -6,6 +6,8 @@ import {
   FileUploadProps,
 } from "cmscommonlib";
 
+import { OneMacFormData } from "../page/OneMACForm";
+
 export type OneMACFormConfig = {
   idFormat: string;
   idFieldHint: FieldHint[];
@@ -16,7 +18,9 @@ export type OneMACFormConfig = {
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   raiLink: string;
   landingPage: string;
+  landingPageReplacementKeys?: (keyof OneMacFormData)[];
   proposedEffectiveDate?: { fieldName: string };
+  getParentInfo?: (id: string) => string[];
 } & PackageType &
   Partial<WaiverPackageType>;
 

@@ -16,13 +16,13 @@ const chipSpaFormInfo: OneMACFormConfig = {
   },
   idFAQLink: ROUTES.FAQ_SPA_ID,
   idFormat: idFormat,
-  raiLink: ROUTES.SPA_RAI,
+  raiLink: "", // this will need to change when real RAI Response form is added
   actionsByStatus: Workflow.defaultActionsByStatus,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };
 
-const MedicaidSpaForm: FC = () => {
+const ChipSpaForm: FC = () => {
   return <OneMACForm formConfig={chipSpaFormInfo} />;
 };
 
-export default MedicaidSpaForm;
+export default ChipSpaForm;

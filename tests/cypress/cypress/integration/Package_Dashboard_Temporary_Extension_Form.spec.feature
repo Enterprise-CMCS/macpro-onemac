@@ -19,6 +19,14 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And verify the temporary extension exists
+        And click on the link for temporary extension number 1
+        And verify the details section exists
+        And verify there is a Type header in the details section
+        And verify the type is 1915(b) Temporary Extension
+        And verify there is a State header in the details section
+        And verify a state exists for the State
+        And verify there is a Date Submitted header in the details section
+        And verify a date exists for the Date Submitted
 
     Scenario: Verify user can withdraw temporary extension from mini-dashboard page
         Then click on New Submission
@@ -37,3 +45,15 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And click withdraw button on the temp extension page
         And click yes, withdraw package button
         And verify success message for Withdrawal
+
+    Scenario: Verify user can create a temporary extension from the Mini-Dashboard
+        And click on the Waivers tab
+        And search for Base Waiver Number 1 with 12 Characters
+        And click the Waiver Number link in the first row
+        And click on the Temporary Extension nav button
+        And Click the Request Extension button
+        And Type Temporary Extension Number 3 With 5 Characters
+        And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
+        And Click on Submit Button
+        And verify submission successful message in details

@@ -162,13 +162,15 @@ describe("Transmittal Number Section", () => {
     history.push(ROUTES.BASE_WAIVER);
   });
 
-  it("populates the transmittal number field when passed in as a url query parameter", async () => {
-    const testTransmittalNumber = "MI.1122.R00.00";
+  it("populates the transmittal number field when passed in as a state variable", async () => {
+    const testComponentId = "MI.1122.R00.00";
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
-    history.push(
-      `${ROUTES.BASE_WAIVER}?transmittalNumber=${testTransmittalNumber}`
-    );
+    history.push({
+      pathname: ROUTES.BASE_WAIVER,
+      state: { componentId: testComponentId },
+    });
+
     render(
       <AppContext.Provider
         value={{
@@ -183,7 +185,7 @@ describe("Transmittal Number Section", () => {
 
     const transmittalNumberEl = screen.getByLabelText("Base Waiver Number");
     await waitFor(() =>
-      expect(transmittalNumberEl.value).toBe(testTransmittalNumber)
+      expect(transmittalNumberEl.value).toBe(testComponentId)
     );
   });
 

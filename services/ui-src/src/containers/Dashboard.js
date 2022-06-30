@@ -102,7 +102,7 @@ const Dashboard = () => {
         [ChangeRequest.TYPE.CHIP_SPA_RAI]: "CHIP SPA RAI",
         [ChangeRequest.TYPE.SPA]: "Medicaid SPA",
         [ChangeRequest.TYPE.WAIVER]: "Waiver",
-        [ChangeRequest.TYPE.SPA_RAI]: "SPA RAI",
+        [ChangeRequest.TYPE.SPA_RAI]: "Medicaid SPA RAI",
         [ChangeRequest.TYPE.WAIVER_RAI]: "Waiver RAI",
         [ChangeRequest.TYPE.WAIVER_EXTENSION]: "Temporary Extension Request",
         [ChangeRequest.TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",

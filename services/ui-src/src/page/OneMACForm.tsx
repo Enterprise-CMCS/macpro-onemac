@@ -9,7 +9,7 @@ import React, {
 import { useHistory, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
-import { TextField, Button, Dropdown } from "@cmsgov/design-system";
+import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
 
 import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
@@ -25,16 +25,17 @@ import PageTitleBar from "../components/PageTitleBar";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
+import { FormLocationState } from "../domain-types";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
 /**
- * Parses out the two character state/territory at the beginning of the transmittal number.
- * @param transmittalNumber the transmittal number
+ * Parses out the two character state/territory at the beginning of the component id (transmittal number).
+ * @param componentId the component id
  * @returns two character state/territory
  */
-function getTerritoryFromTransmittalNumber(transmittalNumber: string): string {
-  return transmittalNumber.toString().substring(0, 2);
+function getTerritoryFromComponentId(componentId: string): string {
+  return componentId.toString().substring(0, 2);
 }
 
 type Message = {
@@ -43,13 +44,14 @@ type Message = {
   warningMessageCode?: string;
 };
 
-type OneMacFormData = {
-  type: string;
+export type OneMacFormData = {
   territory: string;
-  summary: string;
-  transmittalNumber: string;
-  waiverAuthority: string;
-  proposedEffectiveDate: string;
+  additionalInformation: string;
+  componentId: string;
+  waiverAuthority?: string;
+  proposedEffectiveDate?: string;
+  parentId?: string;
+  parentType?: string;
 };
 
 /**
@@ -61,7 +63,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // for setting the alert
   const [alertCode, setAlertCode] = useState(RESPONSE_CODE.NONE);
   const { activeTerritories } = useAppContext() ?? {};
-  const location = useLocation();
+  const location = useLocation<FormLocationState>();
 
   //Reference to the File Uploader.
   const uploader = useRef<FileUploader>(null);
@@ -81,23 +83,19 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
-  // Get the transmittal number from the url params if it exists
-  const params = location.search;
-  const initialTransmittalNumber = new URLSearchParams(params).get(
-    "transmittalNumber"
-  );
+  const presetComponentId = location.state?.componentId;
 
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
-    type: formConfig.componentType,
     territory:
-      (initialTransmittalNumber &&
-        getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
+      (presetComponentId && getTerritoryFromComponentId(presetComponentId)) ||
       "",
-    summary: "",
-    transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
-    waiverAuthority: "",
-    proposedEffectiveDate: "",
+    additionalInformation: "",
+    componentId: presetComponentId || "", //This is needed to be able to control the field
+    waiverAuthority: undefined,
+    proposedEffectiveDate: undefined,
+    parentId: location.state?.parentId,
+    parentType: location.state?.parentType,
   });
 
   function matchesRegex(fieldValue: string, regexFormatString: string) {
@@ -113,28 +111,26 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     return result;
   }
 
-  const validateTransmittalNumber = useCallback(
-    (newTransmittalNumber) => {
+  const validateComponentId = useCallback(
+    (componentId) => {
       let errorMessage = "";
 
       // Must have a value
-      if (!newTransmittalNumber) {
+      if (!componentId) {
         errorMessage = `${formConfig.idLabel} Required`;
       }
       // state code must be on the User's active state list
       else if (
-        (newTransmittalNumber.length >= 2 && !activeTerritories) ||
+        (componentId.length >= 2 && !activeTerritories) ||
         (activeTerritories &&
-          !activeTerritories.includes(
-            getTerritoryFromTransmittalNumber(newTransmittalNumber)
-          ))
+          !activeTerritories.includes(getTerritoryFromComponentId(componentId)))
       ) {
         errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
       }
       // must match the associated Regex string for format
       else if (
         formConfig.idRegex &&
-        !matchesRegex(newTransmittalNumber, formConfig.idRegex)
+        !matchesRegex(componentId, formConfig.idRegex)
       ) {
         errorMessage = `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`;
       }
@@ -149,12 +145,20 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     ]
   );
 
-  async function handleTransmittalNumberChange(newTransmittalNumber: string) {
-    let updatedRecord = { ...oneMacFormData }; // You need a new object to be able to update the state
+  async function handleComponentIdChange(componentId: string) {
+    let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
 
-    updatedRecord["transmittalNumber"] = newTransmittalNumber;
-    updatedRecord["territory"] =
-      getTerritoryFromTransmittalNumber(newTransmittalNumber);
+    updatedRecord.componentId = componentId;
+    updatedRecord.territory = getTerritoryFromComponentId(componentId);
+
+    //if this is a child type form and no parentId was passed in state then determine parentId based on componentId
+    if (
+      typeof formConfig.getParentInfo == "function" &&
+      !location.state?.parentId
+    ) {
+      [updatedRecord.parentId, updatedRecord.parentType] =
+        formConfig.getParentInfo(updatedRecord.componentId);
+    }
 
     setOneMacFormData(updatedRecord);
   }
@@ -162,7 +166,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
     if (!event || !event.target) return;
 
-    let updatedRecord = { ...oneMacFormData }; // You need a new object to be able to update the state
+    let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
 
     updatedRecord[event.target.name as keyof typeof updatedRecord] =
       event.target.value;
@@ -190,9 +194,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
     let formatMessage = {
       statusLevel: "error",
-      statusMessage: validateTransmittalNumber(
-        oneMacFormData.transmittalNumber
-      ),
+      statusMessage: validateComponentId(oneMacFormData.componentId),
       warningMessageCode: "",
     };
 
@@ -201,12 +203,12 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     try {
       if (
         formatMessage.statusMessage === "" &&
-        oneMacFormData.transmittalNumber &&
+        oneMacFormData.componentId &&
         formConfig.idExistValidations
       ) {
         const promises = formConfig.idExistValidations.map(
           async (idExistValidation) => {
-            let checkingNumber = oneMacFormData.transmittalNumber;
+            let checkingNumber = oneMacFormData.componentId;
 
             // if (idExistValidation.existenceRegex !== undefined) {
             //   checkingNumber = changeRequest.transmittalNumber.match(
@@ -295,7 +297,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     areUploadsReady,
     oneMacFormData,
     formConfig,
-    validateTransmittalNumber,
+    validateComponentId,
     alertCode,
   ]);
 
@@ -328,7 +330,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             const uploadedList = await uploader.current.uploadFiles();
             const returnCode = await PackageApi.submitToAPI(
               { ...oneMacFormData, transmittalNumberWarningMessage },
-              uploadedList
+              uploadedList,
+              formConfig.componentType
             );
 
             if (returnCode !== RESPONSE_CODE.SUCCESSFULLY_SUBMITTED)
@@ -351,7 +354,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       isSubmissionReady,
       transmittalNumberStatusMessage,
       oneMacFormData,
-      formConfig.landingPage,
+      formConfig,
       history,
     ]
   );
@@ -400,6 +403,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 onChange={handleInputChange}
               />
             )}
+            {typeof formConfig.getParentInfo == "function" && (
+              <Review heading={"Parent " + formConfig.idLabel}>
+                {oneMacFormData.parentId ?? "Unknown"}
+              </Review>
+            )}
             <TransmittalNumber
               idLabel={formConfig.idLabel}
               idFieldHint={formConfig.idFieldHint}
@@ -411,10 +419,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                   ? transmittalNumberStatusMessage.statusMessage
                   : ""
               }
-              disabled={!!initialTransmittalNumber}
-              value={oneMacFormData.transmittalNumber}
+              disabled={!!presetComponentId}
+              value={oneMacFormData.componentId}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                handleTransmittalNumberChange(event.target.value.toUpperCase())
+                handleComponentIdChange(event.target.value.toUpperCase())
               }
             />
             {formConfig.proposedEffectiveDate && (
@@ -444,18 +452,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           ></FileUploader>
           <div className="summary-box">
             <TextField
-              name="summary"
+              name="additionalInformation"
               label="Additional Information"
               hint="Add anything else that you would like to share with CMS."
               disabled={isSubmitting}
               fieldClassName="summary-field"
               multiline
               onChange={handleInputChange}
-              value={oneMacFormData.summary}
+              value={oneMacFormData.additionalInformation}
               maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             ></TextField>
             <div className="char-count">
-              {oneMacFormData.summary.length}/
+              {oneMacFormData.additionalInformation.length}/
               {config.MAX_ADDITIONAL_INFO_LENGTH}
             </div>
           </div>

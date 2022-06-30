@@ -22,7 +22,7 @@ const medicaidSpaFormInfo: OneMACFormConfig = {
   },
   idFAQLink: ROUTES.FAQ_SPA_ID,
   idFormat: medicaidSpaIdFormat,
-  raiLink: ROUTES.SPA_RAI,
+  raiLink: "",
   actionsByStatus: Workflow.defaultActionsByStatus,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };

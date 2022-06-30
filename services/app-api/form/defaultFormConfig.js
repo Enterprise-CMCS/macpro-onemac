@@ -1,6 +1,13 @@
+import Joi from "joi";
+
 export const defaultFormConfig = {
   CMSToAddresses: [process.env.reviewerEmail, process.env.testingEmail].filter(
     Boolean
   ),
   CMSCcAddresses: [],
 };
+
+export const defaultProposedEffectiveDateSchema = [
+  Joi.string().isoDate(),
+  Joi.string().valid("none"),
+];

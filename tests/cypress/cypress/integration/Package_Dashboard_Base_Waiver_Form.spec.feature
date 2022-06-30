@@ -23,7 +23,7 @@ Feature: Update Waiver Form: Base Waiver
         And Type Base Waiver Number in format SS.#####.R00.00
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
-        And Type "This is just a test" in Summary Box
+        And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission Successful message
         And verify the Waivers tab is selected

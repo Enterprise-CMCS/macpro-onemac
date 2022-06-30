@@ -2,6 +2,7 @@ import { assert } from "console";
 
 const newSubmissionBTN = "#new-submission-button";
 const successMessage = "#alert_3";
+const successMessage1 = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const successMessageAfterRAIResponse =
   '//*[contains(text(),"Thanks for your submission. We truly value your feedback. Please consider taking our ")]';
@@ -46,6 +47,9 @@ export class oneMacDashboardPage {
   verifySuccessMessageIsDisplayed() {
     cy.get(successMessage).contains("Submission Completed");
   }
+  verifySuccessMessage1IsDisplayed() {
+    cy.get(successMessage1).contains("Submission Completed");
+  }
 
   verifySuccessMessageIsDisplayedAfterRAIResponse() {
     cy.xpath(successMessageAfterRAIResponse).contains(
@@ -55,6 +59,9 @@ export class oneMacDashboardPage {
 
   verifyIDNumber(s) {
     cy.xpath(IDNUMBER(s)).should("be.visible");
+  }
+  clickIDNumberLink(s) {
+    cy.xpath(IDNUMBER(s)).click();
   }
 
   verifyType(s) {

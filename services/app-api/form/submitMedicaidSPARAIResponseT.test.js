@@ -28,5 +28,5 @@ it("calls submitAny", async () => {
 it("returns the Medicaid SPA with my Id as my parent", () => {
   expect(
     medicaidSPARAIResponseFormConfig.getParentInfo("testId")
-  ).toStrictEqual(["testId", Workflow.ONEMAC_TYPE.SPA]);
+  ).toStrictEqual(["testId", Workflow.ONEMAC_TYPE.MEDICAID_SPA]);
 });

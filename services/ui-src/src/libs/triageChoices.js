@@ -25,12 +25,12 @@ export const choicesFromRoute = {
     choices: [
       {
         title: "Medicaid SPA",
-        description: "Submit new Medicaid State Plan Amendment",
+        description: "Submit a new Medicaid State Plan Amendment",
         linkTo: ONEMAC_ROUTES.MEDICAID_SPA,
       },
       {
         title: "CHIP SPA",
-        description: "Submit new CHIP State Plan Amendment",
+        description: "Submit a new CHIP State Plan Amendment",
         linkTo: ONEMAC_ROUTES.CHIP_SPA,
       },
     ],
@@ -43,6 +43,21 @@ export const choicesFromRoute = {
         title: "Base Waiver",
         description: "Create a new Base Waiver",
         linkTo: ONEMAC_ROUTES.BASE_WAIVER,
+      },
+      {
+        title: "Waiver Renewal",
+        description: "Renew an existing 1915(b) base waiver",
+        linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL,
+      },
+      {
+        title: "Waiver Amendment",
+        description: "Amend an Existing Waiver",
+        linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT,
+      },
+      {
+        title: "Appendix K Amendment",
+        description: "Create an Appendix K Amendment",
+        linkTo: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       },
       {
         title: "Request Temporary Extension",
