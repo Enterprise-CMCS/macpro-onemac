@@ -1,14 +1,14 @@
 import React, { FC } from "react";
 import DetailView from "../DetailView";
+import { Workflow, medicaidSPA, ONEMAC_ROUTES } from "cmscommonlib";
 import { OneMACDetail, defaultDetail } from "../../libs/detailLib";
-import { Workflow, medicaidSPA } from "cmscommonlib";
 
 export const medicaidSPADetail: OneMACDetail = {
   ...defaultDetail,
   ...medicaidSPA,
   usesVerticalNav: true,
   actionsByStatus: Workflow.defaultActionsByStatus,
-  raiLink: "", // this will need to change when real Medicaid SPA RAI Response form is added
+  raiLink: ONEMAC_ROUTES.MEDICAID_SPA_RAI,
 };
 
 const MedicaidSPADetail: FC = () => {

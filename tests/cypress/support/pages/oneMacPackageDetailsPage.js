@@ -1,6 +1,6 @@
-const topRaiRespCaret = "#sparai0_caret-button";
-const topRaiRespDownloadBtn = "#dl_sparai0";
-const topRaiRespCard = "#sparai0_caret";
+const topRaiRespCaret = "#medicaidsparai0_caret-button";
+const topRaiRespDownloadBtn = "#dl_medicaidsparai0";
+const topRaiRespCard = "#medicaidsparai0_caret";
 const topRaiRespAddInfo = "#addl-info-rai-0";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath
@@ -13,6 +13,8 @@ const packageActionsHeader =
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//button[text()='Respond to RAI']";
 const withdrawPackageAction = "//button[text()='Withdraw']";
+const requestTempExtensionPackageAction =
+  "//button[text()='Request a Temporary Extension']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(text(),'Package')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
@@ -70,6 +72,12 @@ export class oneMacPackageDetailsPage {
   }
   verifyWithdrawPackageActionExists() {
     cy.xpath(withdrawPackageAction).should("be.visible");
+  }
+  verifyRequestTempExtensionPackageActionExists() {
+    cy.xpath(requestTempExtensionPackageAction).should("be.visible");
+  }
+  clickRequestTempExtensionPackageAction() {
+    cy.xpath(requestTempExtensionPackageAction).should("be.visible");
   }
   clickRespondToRAIAction() {
     cy.xpath(respondToRAIAction).click();

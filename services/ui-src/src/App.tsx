@@ -169,7 +169,7 @@ export function App() {
       ...authState,
       setUserInfo,
       updatePhoneNumber,
-      confirmAction
+      confirmAction,
     }),
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
