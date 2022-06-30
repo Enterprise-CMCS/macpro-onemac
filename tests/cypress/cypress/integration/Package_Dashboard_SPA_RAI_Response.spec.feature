@@ -33,7 +33,7 @@ Feature: RAI Response for SPA package view
         And verify the Respond to RAI button is displayed
         And click the Respond to RAI button
         And Add file for RAI Response
-        And Type Additonal Information Comments
+        And Type Additonal Info Comments in new form
         And Click the Submit Button without waiting
         And click yes, submit RAI response button
         And click on Packages
@@ -43,3 +43,4 @@ Feature: RAI Response for SPA package view
         And verify the RAI Responses caret at the top of the list exists and is enabled
         And verify the RAI response card at the top of the list exists
         And verify the download button for the RAI response at the top of the list exists
+        And verify the first RAI response has Additional Info

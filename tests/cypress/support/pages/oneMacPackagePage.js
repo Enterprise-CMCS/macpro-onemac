@@ -848,7 +848,7 @@ export class oneMacPackagePage {
     cy.xpath(packageRowOneActionsBtn).click();
   }
   clickRespondToRAIBtn() {
-    cy.xpath(respondToRAIBtn).click({ force: true });
+    cy.xpath(respondToRAIBtn).parent().click({ force: true });
   }
   verifyRespondToRAIBtnExists() {
     cy.xpath(respondToRAIBtn).should("exist").and("not.be.disabled");
