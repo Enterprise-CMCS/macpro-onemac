@@ -60,10 +60,10 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on New Waiver under Action type
         And type in a correct Waiver Number with 4 characters
         And verify error message is not present on New Waiver Page
-        And clear Waiver Number Input box
+        And clear Waiver Number Input box in old form
         And type in a correct Waiver Number with 5 characters
         And verify error message is not present on New Waiver Page
-        And clear Waiver Number Input box
+        And clear Waiver Number Input box in old form
         And type in invalid Waiver Number
         And verify error message is present on New Waiver Page
         And Return to dashboard Page

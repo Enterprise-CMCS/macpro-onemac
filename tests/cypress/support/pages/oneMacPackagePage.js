@@ -193,7 +193,8 @@ const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
 const packageRowOneIDLink = "//td[@id='componentId-0']//a";
 const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
-const respondToRAIBtn = "//a[text()='Respond to RAI']";
+const respondToRAIBtn =
+  "//*[@data-testid='action-popup']//a[text()= 'Respond to RAI']";
 const RequestTempExtensionBtn = "//a[text()='Request Temporary Extension']";
 const waiverNumLink = (n) => `//a[text()="${n}"]`;
 

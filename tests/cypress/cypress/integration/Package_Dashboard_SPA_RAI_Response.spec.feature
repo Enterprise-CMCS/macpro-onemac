@@ -22,7 +22,6 @@ Feature: RAI Response for SPA package view
         And search for the ID copied from the link in the first row
         And click the SPA ID link in the first row
         And verify RAI Responses header exists
-        And verify the RAI Responses caret at the top of the list exists and is enabled
         And verify the RAI response card at the top of the list exists
         And verify the download button for the RAI response at the top of the list exists
         And verify the first RAI response does not have Additional Info
