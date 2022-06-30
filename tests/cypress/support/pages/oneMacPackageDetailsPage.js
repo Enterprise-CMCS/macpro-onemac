@@ -1,6 +1,6 @@
-const topRaiRespCaret = "#sparai0_caret-button";
-const topRaiRespDownloadBtn = "#dl_sparai0";
-const topRaiRespCard = "#sparai0_caret";
+const topRaiRespCaret = "#medicaidsparai0_caret-button";
+const topRaiRespDownloadBtn = "#dl_medicaidsparai0";
+const topRaiRespCard = "#medicaidsparai0_caret";
 const topRaiRespAddInfo = "#addl-info-rai-0";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath

@@ -1,6 +1,8 @@
-const waiverNumberInputBox = "#componentId";
+const newWaiverNumberInputBox = "#componentId";
+const oldWaiverNumberInputBox = "#transmittalNumber";
 const actionTypeDropDown = "#action-type";
-const errorMessageForWaiverNumber = "#componentIdStatusMsg";
+const oldErrMsgForWaiverNumber = "#transmittalNumberStatusMsg";
+const newErrMsgForWaiverNumber = "#componentIdStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
 const addFile1915b4 =
@@ -13,12 +15,18 @@ const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 
 export class oneMacSubmitNewWaiverActionPage {
-  inputWaiverNumber(s) {
-    cy.get(waiverNumberInputBox).type(s);
+  inputWaiverNumberNewForms(s) {
+    cy.get(newWaiverNumberInputBox).type(s);
+  }
+  inputWaiverNumberOldForms(s) {
+    cy.get(oldWaiverNumberInputBox).type(s);
   }
 
-  inputExistingWaiverNumber() {
-    cy.get(waiverNumberInputBox).type(existingWaiverNumber);
+  inputExistingWaiverNumberNewForms() {
+    cy.get(newWaiverNumberInputBox).type(existingWaiverNumber);
+  }
+  inputExistingWaiverNumberOldForms() {
+    cy.get(oldWaiverNumberInputBox).type(existingWaiverNumber);
   }
 
   selectNewWaiverUnderActionType() {
@@ -42,15 +50,21 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   verifyErrorMessageIsNotDisplayed() {
-    cy.get(errorMessageForWaiverNumber).should("not.exist");
+    cy.get(newErrMsgForWaiverNumber).should("not.exist");
   }
 
-  clearWaiverNumberInputBox() {
-    cy.get(waiverNumberInputBox).clear();
+  clearWaiverNumberInputBoxNewForms() {
+    cy.get(newWaiverNumberInputBox).clear();
+  }
+  clearWaiverNumberInputBoxOldForms() {
+    cy.get(oldWaiverNumberInputBox).clear();
   }
 
   verifyErrorMessageIsDisplayed() {
-    cy.get(errorMessageForWaiverNumber).should("be.visible");
+    cy.get(newErrMsgForWaiverNumber).should("be.visible");
+  }
+  verifyOldErrorMessageIsDisplayed() {
+    cy.get(oldErrMsgForWaiverNumber).should("be.visible");
   }
 
   upload1915B4File() {
@@ -71,7 +85,7 @@ export class oneMacSubmitNewWaiverActionPage {
       });
   }
   errorMsgExists() {
-    cy.wrap(errorMessageForWaiverNumber).then(($el) => {
+    cy.wrap(newErrMsgForWaiverNumber).then(($el) => {
       if ($el.length > 0) {
         return true;
       } else {

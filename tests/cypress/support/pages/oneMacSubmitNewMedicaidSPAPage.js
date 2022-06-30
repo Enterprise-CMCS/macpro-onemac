@@ -103,6 +103,9 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(submitBTN).click();
     cy.wait(8000);
   }
+  clicksubmitBTNWithoutWait() {
+    cy.get(submitBTN).click();
+  }
   verifySubmitBtnExists() {
     cy.get(submitBTN).scrollIntoView().should("be.visible");
   }
