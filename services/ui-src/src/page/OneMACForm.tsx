@@ -374,9 +374,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         backNavConfirmationMessage={leavePageConfirmMessage}
       />
       <AlertBar alertCode={alertCode} closeCallback={closedAlert} />
-      <div className="form-container">
-        <div className="form-subheader-message">
-          <p className="intro-text">
+      <div className="onemac-form">
+        <form noValidate onSubmit={handleSubmit}>
+          <h2>{formConfig.detailsHeader} Details</h2>
+          <p>
+            <span className="required-mark">*</span>
+            indicates required field.
+          </p>
+          <p id="form-intro">
             Once you submit this form, a confirmation email is sent to you and
             to CMS. CMS will use this content to review your package, and you
             will not be able to edit this form. If CMS needs any additional
@@ -387,69 +392,60 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             </b>
             {formConfig.addlIntroJSX}
           </p>
-        </div>
-        <form noValidate onSubmit={handleSubmit}>
-          <h3>{formConfig.detailsHeader} Details</h3>
-          <p className="req-message">
-            <span className="required-mark">*</span>
-            indicates required field.
-          </p>
-          <div className="form-card">
-            {formConfig.waiverAuthorities && (
-              <Dropdown
-                options={[
-                  ...defaultWaiverAuthority,
-                  ...formConfig.waiverAuthorities,
-                ]}
-                defaultValue={oneMacFormData.waiverAuthority}
-                label="Waiver Authority"
-                labelClassName="ds-u-margin-top--0 required"
-                fieldClassName="field"
-                name="waiverAuthority"
-                id="waiver-authority"
-                onChange={handleInputChange}
-              />
-            )}
-            {typeof formConfig.getParentInfo == "function" && (
-              <Review heading={"Parent " + formConfig.idLabel}>
-                {oneMacFormData.parentId ?? "Unknown"}
-              </Review>
-            )}
-            <ComponentId
-              idLabel={formConfig.idLabel}
-              idFieldHint={formConfig.idFieldHint}
-              idFAQLink={formConfig.idFAQLink}
-              statusLevel={componentIdStatusMessage.statusLevel}
-              statusMessage={
-                componentIdStatusMessage.statusMessage !==
-                `${formConfig.idLabel} Required`
-                  ? componentIdStatusMessage.statusMessage
-                  : ""
-              }
-              disabled={!!presetComponentId}
-              value={oneMacFormData.componentId}
-              onChange={(event: ChangeEvent<HTMLInputElement>) =>
-                handleComponentIdChange(event.target.value.toUpperCase())
-              }
+          {formConfig.waiverAuthorities && (
+            <Dropdown
+              options={[
+                ...defaultWaiverAuthority,
+                ...formConfig.waiverAuthorities,
+              ]}
+              defaultValue={oneMacFormData.waiverAuthority}
+              label="Waiver Authority"
+              labelClassName="ds-u-margin-top--0 required"
+              fieldClassName="field"
+              name="waiverAuthority"
+              id="waiver-authority"
+              onChange={handleInputChange}
             />
-            {formConfig.proposedEffectiveDate && (
-              <>
-                <label
-                  className="ds-c-label required"
-                  htmlFor="proposed-effective-date"
-                >
-                  <span>Proposed Effective Date</span>
-                </label>
-                <Input
-                  className="field"
-                  id="proposed-effective-date"
-                  name="proposedEffectiveDate"
-                  onChange={handleEffectiveDateChange}
-                  type="date"
-                />
-              </>
-            )}
-          </div>
+          )}
+          {typeof formConfig.getParentInfo == "function" && (
+            <Review heading={"Parent " + formConfig.idLabel}>
+              {oneMacFormData.parentId ?? "Unknown"}
+            </Review>
+          )}
+          <ComponentId
+            idLabel={formConfig.idLabel}
+            idFieldHint={formConfig.idFieldHint}
+            idFAQLink={formConfig.idFAQLink}
+            statusLevel={componentIdStatusMessage.statusLevel}
+            statusMessage={
+              componentIdStatusMessage.statusMessage !==
+              `${formConfig.idLabel} Required`
+                ? componentIdStatusMessage.statusMessage
+                : ""
+            }
+            disabled={!!presetComponentId}
+            value={oneMacFormData.componentId}
+            onChange={(event: ChangeEvent<HTMLInputElement>) =>
+              handleComponentIdChange(event.target.value.toUpperCase())
+            }
+          />
+          {formConfig.proposedEffectiveDate && (
+            <>
+              <label
+                className="ds-c-label required"
+                htmlFor="proposed-effective-date"
+              >
+                <span>Proposed Effective Date</span>
+              </label>
+              <Input
+                className="field"
+                id="proposed-effective-date"
+                name="proposedEffectiveDate"
+                onChange={handleEffectiveDateChange}
+                type="date"
+              />
+            </>
+          )}
           <h3>Attachments</h3>
           <FileUploader
             ref={uploader}
@@ -457,31 +453,33 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             optionalUploads={formConfig.optionalAttachments}
             readyCallback={setAreUploadsReady}
           ></FileUploader>
-          <div className="summary-box">
-            <TextField
-              name="additionalInformation"
-              label="Additional Information"
-              hint="Add anything else that you would like to share with CMS."
-              disabled={isSubmitting}
-              fieldClassName="summary-field"
-              multiline
-              onChange={handleInputChange}
-              value={oneMacFormData.additionalInformation}
-              maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
-            ></TextField>
-            <div className="char-count">
-              {oneMacFormData.additionalInformation.length}/
-              {config.MAX_ADDITIONAL_INFO_LENGTH}
-            </div>
+          <TextField
+            name="additionalInformation"
+            label="Additional Information"
+            labelId="additional-information-label"
+            id="additional-information"
+            hint="Add anything else that you would like to share with CMS."
+            disabled={isSubmitting}
+            fieldClassName="summary-field"
+            multiline
+            onChange={handleInputChange}
+            value={oneMacFormData.additionalInformation}
+            maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
+          ></TextField>
+          <div className="char-count">
+            {oneMacFormData.additionalInformation.length}/
+            {config.MAX_ADDITIONAL_INFO_LENGTH}
           </div>
-          <div className="form-buttons">
-            <p className="submission-message">
+          <p id="form-submit-instructions">
+            <i>
               Once you submit this form, a confirmation email is sent to you and
               to CMS. CMS will use this content to review your package, and you
               will not be able to edit this form. If CMS needs any additional
               information, they will follow up by email. If you leave this page,
               you will lose your progress on this form.
-            </p>
+            </i>
+          </p>
+          <div className="form-buttons">
             <Button
               id="form-submission-button"
               aria-label="submit-form"

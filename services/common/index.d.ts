@@ -62,6 +62,7 @@ export type FileUploadProps = {
 export type IdValidation = {
   idMustExist: boolean;
   errorLevel: string;
+  existenceRegex?: RegExp;
 };
 
 export namespace ChangeRequest {
