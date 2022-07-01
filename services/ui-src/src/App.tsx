@@ -169,7 +169,7 @@ export function App() {
       ...authState,
       setUserInfo,
       updatePhoneNumber,
-      confirmAction
+      confirmAction,
     }),
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
@@ -185,13 +185,15 @@ export function App() {
               acceptText={confirmationDialog.acceptText}
               cancelText={confirmationDialog.cancelText}
               heading={confirmationDialog.heading}
-              onAccept={() => {
+              onAccept={async () => {
                 confirmationDialog.onAccept && confirmationDialog.onAccept();
                 closeConfirmationDialog();
+                return "this is true";
               }}
               onCancel={() => {
                 confirmationDialog.onDeny && confirmationDialog.onDeny();
                 closeConfirmationDialog();
+                return "this is false";
               }}
             >
               {confirmationDialog.message}

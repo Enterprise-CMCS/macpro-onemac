@@ -45,18 +45,19 @@ const PageTitleBar = ({
               id="back-button"
               data-testid="back-button"
               className="title-bar-back-button"
-              onClick={() =>
-                backNavConfirmationMessage
-                  ? confirmAction &&
-                    confirmAction(
-                      "Leave this page?",
-                      "Leave Anyway",
-                      "Stay on Page",
-                      backNavConfirmationMessage,
-                      handleTravel
-                    )
-                  : handleTravel()
-              }
+              onClick={async () => {
+                if (!backNavConfirmationMessage) handleTravel();
+                if (confirmAction) {
+                  const confirmResult = await confirmAction(
+                    "Leave this page?",
+                    "Leave Anyway",
+                    "Stay on Page",
+                    backNavConfirmationMessage,
+                    handleTravel
+                  );
+                  console.log("confirm Result: ", confirmResult);
+                }
+              }}
               variation="transparent"
             >
               <FontAwesomeIcon
