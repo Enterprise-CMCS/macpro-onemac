@@ -39,14 +39,14 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(SpaIDInput).type(s);
   }
 
-  xuploadCMSForm179AddFile() {
+  uploadCMSForm179AddFile() {
     cy.xpath(CMSForm179AddFileBTN).click();
     const filePath = "/files/15MB.pdf";
     cy.get(CMSForm179AddFileUpload).attachFile(filePath);
   }
 
   addFileForForm179(fileName) {
-    cy.get(CMSForm179AddFileBTN).click();
+    cy.xpath(CMSForm179AddFileBTN).click();
     const filePath = "/files/";
     cy.get(CMSForm179AddFileUpload).attachFile(filePath + fileName);
   }
