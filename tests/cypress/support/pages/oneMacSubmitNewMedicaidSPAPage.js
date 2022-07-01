@@ -21,7 +21,7 @@ const deleteSpaPagesFile = "//tbody/tr[2]/td[3]/div[1]/button[1]/*[1]";
 
 //Element is Xpath use cy.xpath instead of cy.get
 const CMSForm179AddFileBTN =
-  "div.header-and-content:nth-child(1) div.form-container div.upload-card:nth-child(4) div.uploader table:nth-child(1) tbody:nth-child(1) tr:nth-child(1) td.uploader-input-cell:nth-child(2) > label.uploader-input-label-active";
+  "//label[@aria-label='Add file of type CMS Form 179']//input";
 const CMSForm179AddFileUpload = "#uploader-input-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const SPAPagesAddFileBTN =
@@ -39,8 +39,8 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.get(SpaIDInput).type(s);
   }
 
-  uploadCMSForm179AddFile() {
-    cy.get(CMSForm179AddFileBTN).click();
+  xuploadCMSForm179AddFile() {
+    cy.xpath(CMSForm179AddFileBTN).click();
     const filePath = "/files/15MB.pdf";
     cy.get(CMSForm179AddFileUpload).attachFile(filePath);
   }

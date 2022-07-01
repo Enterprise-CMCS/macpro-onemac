@@ -45,7 +45,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And Type Base Waiver Number 2 in format SS.#####.R00.00
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
-        And Type "This is just a test" in Summary Box
+        And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission Successful message
         And click on Packages
