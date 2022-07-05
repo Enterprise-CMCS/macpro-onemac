@@ -46,6 +46,7 @@ export const ONEMAC_ROUTES = {
   MEDICAID_SPA_RAI: "/medicaid-spa-rai",
   CHIP_SPA: "/chip-spa",
   CHIP_SPA_DETAIL: "/detail/chip-spa",
+  CHIP_SPA_RAI: "/chip-spa-rai",
   BASE_WAIVER: "/base-waiver",
   BASE_WAIVER_DETAIL: "/detail/base-waiver",
   WAIVER_RENEWAL: "/waiver-renewal",
@@ -72,7 +73,7 @@ export const TYPE_TO_DETAIL_ROUTE = {
 
 export const TYPE_TO_RAI_ROUTE = {
   [ONEMAC_TYPE.MEDICAID_SPA]: ONEMAC_ROUTES.MEDICAID_SPA_RAI,
-  [ONEMAC_TYPE.CHIP_SPA]: "",
+  [ONEMAC_TYPE.CHIP_SPA]: ONEMAC_ROUTES.CHIP_SPA_RAI,
   [ONEMAC_TYPE.WAIVER_BASE]: "",
   [ONEMAC_TYPE.WAIVER_RENEWAL]: "",
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: "",

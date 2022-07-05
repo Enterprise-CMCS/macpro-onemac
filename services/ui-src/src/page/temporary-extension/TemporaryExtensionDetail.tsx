@@ -23,7 +23,6 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   usesVerticalNav: false,
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
-  raiLink: "",
   detailSection: [parentIdDetail, typeDefault, submissionDateDefault],
 };
 

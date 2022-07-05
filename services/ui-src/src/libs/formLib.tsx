@@ -3,7 +3,6 @@ import {
   IdValidation,
   SelectOption,
   FileUploadProps,
-  Workflow,
   ONEMAC_ROUTES,
 } from "cmscommonlib";
 
@@ -14,7 +13,6 @@ export type OneMACFormConfig = {
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;
-  actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
   landingPage: string;
   confirmSubmit?: boolean;
   proposedEffectiveDate?: boolean;
@@ -23,9 +21,12 @@ export type OneMACFormConfig = {
   Partial<WaiverPackageType>;
 
 export const defaultOneMACFormConfig = {
-  actionsByStatus: Workflow.defaultActionsByStatus,
-  proposedEffectiveDate: false,
+  idFormat: "",
+  idFieldHint: [],
+  idFAQLink: "",
+  addlIntroJSX: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
+  proposedEffectiveDate: false,
   confirmSubmit: false,
 };
 
