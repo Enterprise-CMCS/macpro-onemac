@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { OneMACFormConfig } from "../../libs/formLib";
+import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
 import {
   ROUTES,
   waiverTemporaryExtension,
   ONEMAC_ROUTES,
   TYPE_TO_DETAIL_ROUTE,
+  Workflow,
 } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
@@ -16,6 +17,7 @@ const TemporaryExtensionForm: FC = () => {
   const idFormat: string = "SS.####.R##.TE## or SS.#####.R##.TE##";
   const temporaryExtensionFormInfo: OneMACFormConfig = {
     ...waiverTemporaryExtension,
+    ...defaultOneMACFormConfig,
     pageTitle: "Request a Temporary Extension",
     detailsHeader: "Temporary Extension Request",
     idFAQLink: ROUTES.FAQ_WAIVER_ID,
@@ -27,7 +29,7 @@ const TemporaryExtensionForm: FC = () => {
       },
     ],
     idFormat: idFormat,
-    raiLink: ROUTES.WAIVER_RAI,
+    actionsByStatus: Workflow.defaultActionsByStatus,
     landingPage:
       location.state?.parentType && location.state?.parentId
         ? TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +

@@ -1865,10 +1865,10 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -1907,10 +1907,10 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -1947,7 +1947,7 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v0#sparai#1643218567141",
+    "sk": "v0#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -1971,7 +1971,7 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v1#sparai#1643218567141",
+    "sk": "v1#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -1995,10 +1995,10 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -2037,10 +2037,10 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -2077,7 +2077,7 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v0#sparai#1643218567141",
+    "sk": "v0#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -2101,7 +2101,7 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v1#sparai#1643218567141",
+    "sk": "v1#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -2285,10 +2285,10 @@
   },
   {
     "pk": "MI-34-2211",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2318,10 +2318,10 @@
   },
   {
     "pk": "MI-34-2211",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2349,10 +2349,10 @@
   },
   {
     "pk": "MD-34-2211",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2382,10 +2382,10 @@
   },
   {
     "pk": "MD-34-2211",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2413,10 +2413,10 @@
   },
   {
     "pk": "MI-93-2234",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2446,10 +2446,10 @@
   },
   {
     "pk": "MI-93-2234",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2477,10 +2477,10 @@
   },
   {
     "pk": "MD-93-2234",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2510,10 +2510,10 @@
   },
   {
     "pk": "MD-93-2234",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -3026,9 +3026,9 @@
   },
   {
     "pk": "MI-42-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3066,9 +3066,9 @@
   },
   {
     "pk": "MI-42-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3104,9 +3104,9 @@
   },
   {
     "pk": "MD-42-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3144,9 +3144,9 @@
   },
   {
     "pk": "MD-42-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3182,9 +3182,9 @@
   },
   {
     "pk": "MD-12-8214",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3235,9 +3235,9 @@
   },
   {
     "pk": "MD-12-8214",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3286,9 +3286,9 @@
   },
   {
     "pk": "MI-12-8214",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3339,9 +3339,9 @@
   },
   {
     "pk": "MI-12-8214",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3390,9 +3390,9 @@
   },
   {
     "pk": "MD-45-5913",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3443,9 +3443,9 @@
   },
   {
     "pk": "MD-45-5913",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3494,9 +3494,9 @@
   },
   {
     "pk": "VA-45-5913",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3547,9 +3547,9 @@
   },
   {
     "pk": "VA-45-5913",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3598,9 +3598,9 @@
   },
   {
     "pk": "MD-13-8218",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -3630,9 +3630,9 @@
   },
   {
     "pk": "MD-13-8218",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -3660,9 +3660,9 @@
   },
   {
     "pk": "MI-13-8218",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -3692,9 +3692,9 @@
   },
   {
     "pk": "MI-13-8218",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {

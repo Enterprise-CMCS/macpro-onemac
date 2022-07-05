@@ -3,6 +3,7 @@ const pageHeader =
 const backArrow = "#back-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const leaveAnywaysBtn = "//button[text()='Leave Anyway']";
+const yesSubmitBtn = "//button[text()='Yes, Submit']";
 
 export class oneMacRespondToRAIPage {
   verifyPageLoads() {
@@ -15,6 +16,10 @@ export class oneMacRespondToRAIPage {
 
   clickLeaveAnyway() {
     cy.xpath(leaveAnywaysBtn).click();
+  }
+  clickYesSubmitBTN() {
+    cy.xpath(yesSubmitBtn).click();
+    cy.wait(8000);
   }
 }
 export default oneMacRespondToRAIPage;

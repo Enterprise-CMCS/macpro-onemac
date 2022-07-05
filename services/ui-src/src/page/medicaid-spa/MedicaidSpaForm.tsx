@@ -1,11 +1,12 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { OneMACFormConfig } from "../../libs/formLib";
+import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
 import { ROUTES, ONEMAC_ROUTES, medicaidSPA } from "cmscommonlib";
 
 const medicaidSpaIdFormat: string = "SS-YY-NNNN or SS-YY-NNNN-xxxx";
 
 const medicaidSpaFormInfo: OneMACFormConfig = {
+  ...defaultOneMACFormConfig,
   ...medicaidSPA,
   pageTitle: "Submit New Medicaid SPA",
   detailsHeader: "Medicaid SPA",
@@ -17,12 +18,9 @@ const medicaidSpaFormInfo: OneMACFormConfig = {
       className: "field-hint-major",
     },
   ],
-  proposedEffectiveDate: {
-    fieldName: "proposedEffectiveDate",
-  },
+  proposedEffectiveDate: true,
   idFAQLink: ROUTES.FAQ_SPA_ID,
   idFormat: medicaidSpaIdFormat,
-  raiLink: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_SPA,
 };
 
