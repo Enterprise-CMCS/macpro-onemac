@@ -20,6 +20,7 @@ import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
+import { TYPE_TO_RAI_ROUTE } from "cmscommonlib/routes";
 
 export const DetailSection = ({
   pageConfig,
@@ -121,7 +122,9 @@ export const DetailSection = ({
                                   Workflow.PACKAGE_ACTION.RESPOND_TO_RAI
                                 ? () => {
                                     onLinkAction({
-                                      href: pageConfig.raiLink,
+                                      href: TYPE_TO_RAI_ROUTE[
+                                        detail.componentType
+                                      ],
                                       state: {
                                         componentId: detail.componentId,
                                       },

@@ -6,7 +6,6 @@ import {
   waiverTemporaryExtension,
   ONEMAC_ROUTES,
   TYPE_TO_DETAIL_ROUTE,
-  Workflow,
 } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
@@ -29,7 +28,6 @@ const TemporaryExtensionForm: FC = () => {
       },
     ],
     idFormat: idFormat,
-    actionsByStatus: Workflow.defaultActionsByStatus,
     landingPage:
       location.state?.parentType && location.state?.parentId
         ? TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +

@@ -2540,6 +2540,214 @@
     "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
   },
   {
+    "pk": "MD-22-2345",
+    "sk": "v0#chipspa",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+    "componentType": "chipspa",
+    "currentStatus": "RAI Issued",
+    "attachments": [
+      {
+        "s3Key": "1639695907350/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "Current State Plan",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      }
+    ],
+    "GSI1sk": "MD-22-2345",
+    "additionalInformation": "This is just a test",
+    "submissionTimestamp": 1639695908900,
+    "Latest": 1,
+    "GSI1pk": "OneMAC#spa",
+    "clockEndTimestamp": 1646941106000,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "componentId": "MD-22-2345",
+    "submitterName": "StateSubmitter Nightwatch",
+    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v1#chipspa",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+    "componentType": "chipspa",
+    "currentStatus": "RAI Issued",
+    "attachments": [
+      {
+        "s3Key": "1639695907350/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "Current State Plan",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      }
+    ],
+    "additionalInformation": "This is just a test",
+    "submissionTimestamp": 1639695908900,
+    "Latest": 1,
+    "clockEndTimestamp": 1646941106000,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "componentId": "MD-22-2345",
+    "submitterName": "StateSubmitter Nightwatch",
+    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v0#chipsparai#1639604007869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "GSI1sk": "MD-22-2345",
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639604007869,
+    "GSI1pk": "OneMAC#chipsparai",
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v1#chipsparai#1639604007869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639604007869,
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v0#chipsparai#1639503006869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "GSI1sk": "MD-22-2345",
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639503006869,
+    "GSI1pk": "OneMAC#chipsparai",
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v1#chipsparai#1639503006869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639503006869,
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
     "pk": "VA.1117.R00.00",
     "sk": "v0#waivernew",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
