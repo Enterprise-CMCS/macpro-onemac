@@ -47,7 +47,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And Upload 1915 b 4 file
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission Successful message in the alert bar
+        And verify submission successful message in the alert bar
         And click on Packages
         And search for Base Waiver Number 2 with 12 Characters
         And clear search bar
