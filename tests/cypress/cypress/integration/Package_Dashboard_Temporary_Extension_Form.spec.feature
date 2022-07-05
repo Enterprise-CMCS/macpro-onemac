@@ -56,7 +56,7 @@ Feature: Package Dashboard Temporary Extension
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission successful message in details
+        And verify submission successful message in the alert bar
 
     Scenario: Verify user can create a temporary extension from the package details Mini-Dashboard
         And click on the Waivers tab
@@ -68,7 +68,7 @@ Feature: Package Dashboard Temporary Extension
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission successful message in details
+        And verify submission successful message in the alert bar
 
     Scenario: Verify user can create a temporary extension from the package dashboard waiver tab
         And click on the Waivers tab
@@ -80,4 +80,4 @@ Feature: Package Dashboard Temporary Extension
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission successful message in details
+        And verify submission successful message in the alert bar
