@@ -188,14 +188,14 @@ export const DetailSection = ({
             <h2>RAI Responses</h2>
             <Accordion>
               {detail.raiResponses?.map((raiResponse, index) => {
-                let raiNumber = (detail.raiResponses.length - index)
-                  .toString()
-                  .padStart(2, "0");
                 return (
                   <AccordionItem
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
-                    heading={"RAI - " + raiNumber}
+                    heading={
+                      "Submitted on " +
+                      formatDetailViewDate(raiResponse.submissionTimestamp)
+                    }
                     headingLevel="6"
                     id={raiResponse.componentType + index + "_caret"}
                     key={raiResponse.componentType + index}
