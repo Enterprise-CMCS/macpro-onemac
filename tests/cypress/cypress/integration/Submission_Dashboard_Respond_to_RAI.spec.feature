@@ -26,7 +26,6 @@ Feature: OY2-15647 State User can Respond to RAI
         And click on Respond to Waiver RAI
         And verify ID field is empty and not disabled
 
-#Feature: OY2_5868_Submission_List_Verification
     Scenario: Submission List Verification > Submit new SPA and Respond to SPA RAI
         Given I am on Login Page
         When Clicking on Development Login
