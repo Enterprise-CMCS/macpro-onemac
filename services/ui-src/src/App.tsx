@@ -185,15 +185,13 @@ export function App() {
               acceptText={confirmationDialog.acceptText}
               cancelText={confirmationDialog.cancelText}
               heading={confirmationDialog.heading}
-              onAccept={async () => {
+              onAccept={() => {
                 confirmationDialog.onAccept && confirmationDialog.onAccept();
                 closeConfirmationDialog();
-                return "this is true";
               }}
               onCancel={() => {
                 confirmationDialog.onDeny && confirmationDialog.onDeny();
                 closeConfirmationDialog();
-                return "this is false";
               }}
             >
               {confirmationDialog.message}
