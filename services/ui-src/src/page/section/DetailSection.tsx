@@ -1,15 +1,5 @@
-import {
-  Accordion,
-  AccordionItem,
-  Button,
-  Review,
-} from "@cmsgov/design-system";
-import {
-  Workflow,
-  RESPONSE_CODE,
-  getUserRoleObj,
-  ONEMAC_ROUTES,
-} from "cmscommonlib";
+import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
+import { Workflow, RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { FormLocationState } from "../../domain-types";
@@ -20,7 +10,7 @@ import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
-import { TYPE_TO_RAI_ROUTE } from "cmscommonlib/routes";
+import { actionComponent } from "../../libs/actionLib";
 
 export const DetailSection = ({
   pageConfig,
@@ -34,7 +24,7 @@ export const DetailSection = ({
   setAlertCode: (code: string) => void;
 }) => {
   const history = useHistory();
-  const { userProfile, confirmAction } = useAppContext() ?? {};
+  const { userProfile } = useAppContext() ?? {};
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -42,29 +32,6 @@ export const DetailSection = ({
   const ninetyDayText = Workflow.get90thDayText(
     detail.currentStatus,
     detail.clockEndTimestamp
-  );
-
-  const onLinkActionWithdraw = useCallback(async () => {
-    try {
-      const resp = await PackageApi.withdraw(
-        userProfile?.userData?.fullName,
-        userProfile?.email,
-        detail.componentId,
-        detail.componentType
-      );
-      setAlertCode(resp);
-      loadDetail();
-    } catch (e) {
-      console.log("Error while updating package.", e);
-      setAlertCode(RESPONSE_CODE[(e as Error).message]);
-    }
-  }, [detail, userProfile, loadDetail, setAlertCode]);
-
-  const onLinkAction = useCallback(
-    (value: { href: string; state?: FormLocationState }) => {
-      history.push(`${value.href}`, value.state);
-    },
-    [history]
   );
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
@@ -101,51 +68,11 @@ export const DetailSection = ({
                 {pageConfig.actionsByStatus[detail.currentStatus]?.length >
                 0 ? (
                   pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                    (actionLabel, index) => {
-                      return (
-                        <li key={index}>
-                          <Button
-                            className="package-action-link"
-                            onClick={
-                              actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
-                                ? () => {
-                                    confirmAction &&
-                                      confirmAction(
-                                        Workflow.PACKAGE_ACTION.WITHDRAW,
-                                        "Withdraw?",
-                                        "Cancel",
-                                        `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                        onLinkActionWithdraw
-                                      );
-                                  }
-                                : actionLabel ===
-                                  Workflow.PACKAGE_ACTION.RESPOND_TO_RAI
-                                ? () => {
-                                    onLinkAction({
-                                      href: TYPE_TO_RAI_ROUTE[
-                                        detail.componentType
-                                      ],
-                                      state: {
-                                        componentId: detail.componentId,
-                                      },
-                                    });
-                                  }
-                                : () => {
-                                    onLinkAction({
-                                      href: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
-                                      state: {
-                                        parentId: detail.componentId,
-                                        parentType: detail.componentType,
-                                      },
-                                    });
-                                  }
-                            }
-                          >
-                            {actionLabel}
-                          </Button>
-                        </li>
-                      );
-                    }
+                    (actionName, i) => (
+                      <li key={i}>
+                        {actionComponent[actionName](detail, setAlertCode)}
+                      </li>
+                    )
                   )
                 ) : (
                   <li>

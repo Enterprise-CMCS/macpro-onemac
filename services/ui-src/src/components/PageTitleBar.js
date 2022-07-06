@@ -46,16 +46,16 @@ const PageTitleBar = ({
               data-testid="back-button"
               className="title-bar-back-button"
               onClick={() => {
-                if (!backNavConfirmationMessage) handleTravel();
-                if (confirmAction) {
-                  confirmAction(
-                    "Leave this page?",
-                    "Leave Anyway",
-                    "Stay on Page",
-                    backNavConfirmationMessage,
-                    handleTravel
-                  );
-                }
+                backNavConfirmationMessage
+                  ? confirmAction &&
+                    confirmAction(
+                      "Leave this page?",
+                      "Leave Anyway",
+                      "Stay on Page",
+                      backNavConfirmationMessage,
+                      handleTravel
+                    )
+                  : handleTravel();
               }}
               variation="transparent"
             >

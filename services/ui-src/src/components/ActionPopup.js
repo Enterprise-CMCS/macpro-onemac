@@ -1,12 +1,10 @@
-import React, { useState, useRef, useEffect, useCallback } from "react";
+import React, { useState, useRef, useEffect } from "react";
 import { Button } from "@cmsgov/design-system";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faEllipsisV } from "@fortawesome/free-solid-svg-icons";
 
 import { Workflow } from "cmscommonlib";
-import RequestTemporaryExtension from "../page/action/RequestTemporaryExtension";
-import RespondToRAI from "../page/action/RespondToRAI";
-import Withdraw from "../page/action/Withdraw";
+import { actionComponent } from "../libs/actionLib";
 
 /**
  * Hook that alerts clicks outside of the passed ref
@@ -39,23 +37,6 @@ export default function ActionPopup({ theComponent, alertCallback }) {
   const wrapperRef = useRef(null);
   useOutsideAlerter(wrapperRef, setShowMenu);
 
-  const actionComponent = {
-    [Workflow.PACKAGE_ACTION.WITHDRAW]: useCallback(
-      () => (
-        <Withdraw theComponent={theComponent} alertCallback={alertCallback} />
-      ),
-      [theComponent, alertCallback]
-    ),
-    [Workflow.PACKAGE_ACTION.RESPOND_TO_RAI]: useCallback(
-      () => <RespondToRAI theComponent={theComponent} />,
-      [theComponent]
-    ),
-    [Workflow.PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION]: useCallback(
-      () => <RequestTemporaryExtension theComponent={theComponent} />,
-      [theComponent]
-    ),
-  };
-
   return (
     <>
       <Button
@@ -81,7 +62,7 @@ export default function ActionPopup({ theComponent, alertCallback }) {
           {availableActions.map((actionName, i) => (
             <div key={i}>
               {i !== 0 && <hr />}
-              {actionComponent[actionName]()}
+              {actionComponent[actionName](theComponent, alertCallback)}
             </div>
           ))}
         </div>
