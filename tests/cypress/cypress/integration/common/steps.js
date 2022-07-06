@@ -178,7 +178,7 @@ And("click Stay on Page", () => {
 And("verify submission Successful message", () => {
   OneMacDashboardPage.verifySuccessMessageIsDisplayed();
 });
-And("verify submission successful message in details", () => {
+And("verify submission successful message in the alert bar", () => {
   OneMacDashboardPage.verifySuccessMessage1IsDisplayed();
 });
 And("verify SPA ID 1 EXISTS", () => {

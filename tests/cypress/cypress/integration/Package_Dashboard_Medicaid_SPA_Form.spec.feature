@@ -25,7 +25,7 @@ Feature: Package Dashboard: Medicaid SPA Form
         And Add file for SPA Pages
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission Successful message
+        And verify submission successful message in the alert bar
         And verify the SPAs tab is selected
         And search for Medicaid SPA ID
         And verify id number in the first row matches Medicaid SPA ID

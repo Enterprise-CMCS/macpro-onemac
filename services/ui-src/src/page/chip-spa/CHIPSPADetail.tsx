@@ -6,7 +6,6 @@ import { chipSPA } from "cmscommonlib";
 export const chipSPADetail: OneMACDetail = {
   ...defaultDetail,
   ...chipSPA,
-  raiLink: "",
 };
 
 const CHIPSPADetail: FC = () => {

@@ -88,7 +88,6 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And Click on What is my Waiver ID Link
         And Verify text contains "Waiver number must follow the format"
 
-#Feature: OY2-13517 FAQ Page Update: Host Onboarding and Quickstart docs material
     Scenario: Screen enhancement
         Given I am on Login Page
         When Clicking on FAQ Tab

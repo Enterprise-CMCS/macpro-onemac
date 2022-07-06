@@ -1,6 +1,6 @@
 import React, { FC } from "react";
 import DetailView from "../DetailView";
-import { Workflow, medicaidSPA, ONEMAC_ROUTES } from "cmscommonlib";
+import { Workflow, medicaidSPA } from "cmscommonlib";
 import { OneMACDetail, defaultDetail } from "../../libs/detailLib";
 
 export const medicaidSPADetail: OneMACDetail = {
@@ -8,7 +8,6 @@ export const medicaidSPADetail: OneMACDetail = {
   ...medicaidSPA,
   usesVerticalNav: true,
   actionsByStatus: Workflow.defaultActionsByStatus,
-  raiLink: ONEMAC_ROUTES.MEDICAID_SPA_RAI,
 };
 
 const MedicaidSPADetail: FC = () => {

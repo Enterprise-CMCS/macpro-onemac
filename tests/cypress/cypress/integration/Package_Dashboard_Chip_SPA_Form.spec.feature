@@ -26,7 +26,7 @@ Feature: Package Dashboard: CHIP SPA Form
         And Add file for Cover Letter
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission Successful message
+        And verify submission successful message in the alert bar
         And verify the SPAs tab is selected
         And search for CHIP SPA ID
         And verify id number in the first row matches CHIP SPA ID

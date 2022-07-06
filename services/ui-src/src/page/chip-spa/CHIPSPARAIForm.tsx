@@ -1,23 +1,23 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
 import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
-import { ONEMAC_ROUTES, medicaidSPARAIResponse } from "cmscommonlib";
+import { ONEMAC_ROUTES, chipSPARAIResponse } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
 
-const MedicaidSPARAIForm: FC = () => {
+const CHIPSPARAIForm: FC = () => {
   const location = useLocation<FormLocationState>();
-  const medicaidSPARAIFormInfo: OneMACFormConfig = {
+  const chipSPARAIFormInfo: OneMACFormConfig = {
     ...defaultOneMACFormConfig,
-    ...medicaidSPARAIResponse,
+    ...chipSPARAIResponse,
     pageTitle: "Formal Request for Additional Information Response",
-    detailsHeader: "Medicaid SPA RAI",
+    detailsHeader: "Formal CHIP SPA RAI",
     landingPage:
-      ONEMAC_ROUTES.MEDICAID_SPA_DETAIL + `/${location.state?.componentId}`,
+      ONEMAC_ROUTES.CHIP_SPA_DETAIL + `/${location.state?.componentId}`,
     confirmSubmit: true,
   };
 
-  return <OneMACForm formConfig={medicaidSPARAIFormInfo} />;
+  return <OneMACForm formConfig={chipSPARAIFormInfo} />;
 };
 
-export default MedicaidSPARAIForm;
+export default CHIPSPARAIForm;

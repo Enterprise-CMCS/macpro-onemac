@@ -152,6 +152,16 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  submitCHIPSPARAIResponse:
+    handler: form/submitCHIPSPARAIResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitCHIPSPARAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
+
   submitWaiverExtension:
     handler: form/submitWaiverExtension.main
     role: LambdaApiRole
