@@ -116,7 +116,7 @@ export const DetailSection = ({
         </section>
         {detail.raiResponses && (
           <section className="detail-section">
-            <h2>RAI Responses</h2>
+            <h2>Formal RAI Responses</h2>
             <Accordion>
               {detail.raiResponses?.map((raiResponse, index) => {
                 return (

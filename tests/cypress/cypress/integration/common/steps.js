@@ -2106,9 +2106,12 @@ And("verify there is a Date Submitted header in the details section", () => {
 And("verify a date exists for the Date Submitted", () => {
   OneMacPackageDetailsPage.verifyDateExists();
 });
-And("verify the Respond to RAI form loads", () => {
-  OneMacRespondToRAIPage.verifyPageLoads();
-});
+And(
+  "verify the form is titled Formal Request for Additional Information Response",
+  () => {
+    OneMacRespondToRAIPage.verifyPageHeader();
+  }
+);
 And("click back arrow", () => {
   OneMacRespondToRAIPage.clickBackArrow();
 });
@@ -2134,18 +2137,48 @@ And("verify RAI Responses header exists", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderExists();
 });
 And(
-  "verify the RAI Responses caret at the top of the list exists and is enabled",
+  "verify the Medicaid RAI Responses caret at the top of the list exists and is enabled",
   () => {
-    OneMacPackageDetailsPage.verifyTopRaiRespCaretExistsAndEnabled();
+    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretExistsAndEnabled();
   }
 );
-And("verify the RAI response card at the top of the list exists", () => {
-  OneMacPackageDetailsPage.verifyTopRaiRespCardExists();
+And(
+  "verify the CHIP RAI Responses caret at the top of the list exists and is enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyCHIPTopRaiRespCaretExistsAndEnabled();
+  }
+);
+And(
+  "verify the title of the Medicaid RAI Responses caret at the top of the list is in Submitted on format",
+  () => {
+    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretTitle();
+  }
+);
+And(
+  "verify the title of the CHIP RAI Responses caret at the top of the list is in Submitted on format",
+  () => {
+    OneMacPackageDetailsPage.verifyCHIPTopRaiRespCaretTitle();
+  }
+);
+And(
+  "verify the Medicaid RAI response card at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCardExists();
+  }
+);
+And("verify the CHIP RAI response card at the top of the list exists", () => {
+  OneMacPackageDetailsPage.verifyCHIPTopRaiRespCardExists();
 });
 And(
-  "verify the download button for the RAI response at the top of the list exists",
+  "verify the download button for the Medicaid RAI response at the top of the list exists",
   () => {
-    OneMacPackageDetailsPage.verifyTopRaiRespDownloadBtnExistsAndEnabled();
+    OneMacPackageDetailsPage.verifyMedicaidTopRaiRespDownloadBtnExistsAndEnabled();
+  }
+);
+And(
+  "verify the download button for the CHIP RAI response at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled();
   }
 );
 And("verify the first RAI response does not have Additional Info", () => {
@@ -2356,4 +2389,7 @@ And("verify the actions button is unavailable", () => {
 });
 And("verify actions column is unavailable", () => {
   OneMacPackagePage.verifyActionsColumnDoesNotExist();
+});
+And("verify the first RAI Response header is titled", () => {
+  OneMacPackageDetailsPage.verifyRaiResponseHeaderTitle();
 });
