@@ -45,7 +45,7 @@ const PageTitleBar = ({
               id="back-button"
               data-testid="back-button"
               className="title-bar-back-button"
-              onClick={() => 
+              onClick={() =>
                 backNavConfirmationMessage
                   ? confirmAction &&
                     confirmAction(
