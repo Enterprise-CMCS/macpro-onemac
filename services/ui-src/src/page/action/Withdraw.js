@@ -1,11 +1,11 @@
 import React, { useCallback } from "react";
-import { Link } from "react-router-dom";
+import { Link, useLocation } from "react-router-dom";
 
 import PackageAPI from "../../utils/PackageApi";
 import { useAppContext } from "../../libs/contextLib";
-import { ONEMAC_ROUTES } from "cmscommonlib";
 
 export default function Withdraw({ theComponent, alertCallback }) {
+  const landOn = useLocation();
   const { userProfile, confirmAction } = useAppContext() ?? {};
 
   const onPopupActionWithdraw = useCallback(async () => {
@@ -26,7 +26,7 @@ export default function Withdraw({ theComponent, alertCallback }) {
   return (
     <Link
       key={`popup-action-${theComponent.componentId}`}
-      to={ONEMAC_ROUTES.PACKAGE_LIST}
+      to={landOn.pathname}
       onClick={() => {
         confirmAction &&
           confirmAction(

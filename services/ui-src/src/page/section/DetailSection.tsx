@@ -1,11 +1,8 @@
 import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
-import { Workflow, RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
+import { Workflow, getUserRoleObj } from "cmscommonlib";
 import React, { useCallback } from "react";
-import { useHistory } from "react-router-dom";
-import { FormLocationState } from "../../domain-types";
 import { useAppContext } from "../../libs/contextLib";
 import { formatDetailViewDate } from "../../utils/date-utils";
-import PackageApi from "../../utils/PackageApi";
 import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
@@ -23,7 +20,6 @@ export const DetailSection = ({
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
 }) => {
-  const history = useHistory();
   const { userProfile } = useAppContext() ?? {};
 
   const downloadInfoText =
@@ -35,6 +31,14 @@ export const DetailSection = ({
   );
 
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
+
+  const updateData = useCallback(
+    async (retCode) => {
+      loadDetail();
+      setAlertCode(retCode);
+    },
+    [loadDetail, setAlertCode]
+  );
 
   return (
     <>
@@ -70,7 +74,7 @@ export const DetailSection = ({
                   pageConfig.actionsByStatus[detail.currentStatus]?.map(
                     (actionName, i) => (
                       <li key={i}>
-                        {actionComponent[actionName](detail, setAlertCode)}
+                        {actionComponent[actionName](detail, updateData)}
                       </li>
                     )
                   )
