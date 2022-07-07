@@ -175,7 +175,7 @@ jobs:
             Package_Dashboard_Filter_options_that_include_Dates.spec.feature,
             Package_Dashboard_Filter.spec.feature,
             Package_Dashboard_Search_Bar.spec.feature,
-            Package_Dashboard_SPA_RAI_Response.spec.feature,
+            Package_Dashboard_Medicaid_SPA_RAI_Response.spec.feature,
             Package_Dashboard_Tabs.spec.feature,
             Package_Dashboard_Waiver_Family_Column.spec.feature,
             Package_Dashboard_Withdraw_Package.spec.feature,
@@ -207,6 +207,7 @@ jobs:
             Package_Dashboard_Appendix_K.spec.feature,
             Package_Dashboard_Waiver_Amendment.spec.feature,
             Package_Dashboard_Base_Waiver_Renewal.spec.feature,
+            Package_Dashboard_CHIP_SPA_RAI_Response.spec.feature,
           ]
     steps:
       - name: set branch_name
