@@ -94,7 +94,7 @@ describe("Submission Form", () => {
     // values after a failed Submit
     it("does not clear already completed form fields if submit fails. (oy2-3734)", async () => {
       const testValues = {
-        transmittalNumber: "MI.17234.R03.M22",
+        transmittalNumber: "MI-17234.R03.22",
         actionType: "amendment",
         waiverAuthority: "1915(b)",
       };
@@ -275,7 +275,7 @@ describe("Submission Form", () => {
         const idLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
-        const testId = "MI.4444";
+        const testId = "MI-4444.R09.34";
         const existErrorMessage = `According to our records, this ${idLabel} already exists. Please check the ${idLabel} and try entering it again.`;
 
         // id will exist
@@ -340,16 +340,16 @@ describe("Submission Form", () => {
         const waiverIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
-        const testId = "MI.1234.R00";
+        const testId = "MI-1234.R00.56";
         const existErrorMessage = `${waiverIdLabel} not found. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
         // base id will NOT exist (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234")
+          .calledWith("MI-1234")
           .mockReturnValue(false);
         // ensure pass of second validation for entire id not existing
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234.R00")
+          .calledWith("MI-1234.R00")
           .mockReturnValue(false);
 
         render(
@@ -381,16 +381,16 @@ describe("Submission Form", () => {
         const waiverIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
-        const testId = "MI.1234.R00";
+        const testId = "MI-1234.R00.98";
         const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
 
         // ensure pass of first validation for base id existing
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234")
+          .calledWith("MI-1234")
           .mockReturnValue(true);
         // entire id will exist in the database (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234.R00")
+          .calledWith("MI-1234.R00")
           .mockReturnValue(true);
 
         render(
@@ -463,7 +463,7 @@ it("successfully submits the form", async () => {
   //  history.push("/waiver");
 
   const testValues = {
-    transmittalNumber: "MI.17234.R03.M22",
+    transmittalNumber: "MI-17234.R03.22",
     actionType: "amendment",
     waiverAuthority: "1915(b)",
   };
@@ -512,7 +512,7 @@ it("successfully submits the form", async () => {
 describe("cancelling the form submission", () => {
   it("keeps the form information if cancel is cancelled", async () => {
     const testValues = {
-      transmittalNumber: "MI.17234.R03.M22",
+      transmittalNumber: "MI-17234.R03.22",
       actionType: "amendment",
       waiverAuthority: "1915(b)",
     };

@@ -280,7 +280,7 @@ export const CONFIG = {
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}",
         },
       ],
     },
@@ -296,13 +296,13 @@ export const CONFIG = {
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}",
         },
         // DON'T want the entire Waiver number with renewal portion to exist
         {
           idMustExist: false,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}",
         },
       ],
     },
