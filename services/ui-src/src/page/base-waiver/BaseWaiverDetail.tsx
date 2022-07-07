@@ -11,8 +11,8 @@ import {
   defaultPackageOverviewNavItems,
   defaultPackageOverviewLabel,
   tempExtensionSectionNavItem,
-} from "../DetailViewDefaults";
-import { ROUTES, baseWaiver } from "cmscommonlib";
+} from "../../libs/detailLib";
+import { baseWaiver, Workflow } from "cmscommonlib";
 
 export const baseWaiverDetail: OneMACDetail = {
   ...defaultDetail,
@@ -30,7 +30,7 @@ export const baseWaiverDetail: OneMACDetail = {
     submissionDateDefault,
     proposedEffectiveDateDefault,
   ],
-  raiLink: ROUTES.WAIVER_RAI,
+  actionsByStatus: Workflow.baseWaiverActionsByStatus,
 };
 
 const BaseWaiverDetail: FC = () => {

@@ -25,7 +25,7 @@ Feature: Update Waiver Form: Base Waiver
         And Upload 1915 b 4 file
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission Successful message
+        And verify submission successful message in the alert bar
         And verify the Waivers tab is selected
         And search for Base Waiver Number 1 with 12 Characters
         And verify id number in the first row matches Base Waiver Number 1

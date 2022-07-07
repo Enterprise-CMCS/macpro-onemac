@@ -1865,10 +1865,10 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -1907,10 +1907,10 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -1947,7 +1947,7 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v0#sparai#1643218567141",
+    "sk": "v0#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -1971,7 +1971,7 @@
   },
   {
     "pk": "MD-13-1122",
-    "sk": "v1#sparai#1643218567141",
+    "sk": "v1#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -1995,10 +1995,10 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -2037,10 +2037,10 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -2077,7 +2077,7 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v0#sparai#1643218567141",
+    "sk": "v0#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -2101,7 +2101,7 @@
   },
   {
     "pk": "MI-13-1122",
-    "sk": "v1#sparai#1643218567141",
+    "sk": "v1#medicaidsparai#1643218567141",
     "submitterId": "us-east-1:17735f75-6535-4e48-bc51-c224a6d2a2d9",
     "componentType": "sparai",
     "currentStatus": "Submitted",
@@ -2285,10 +2285,10 @@
   },
   {
     "pk": "MI-34-2211",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2318,10 +2318,10 @@
   },
   {
     "pk": "MI-34-2211",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2349,10 +2349,10 @@
   },
   {
     "pk": "MD-34-2211",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2382,10 +2382,10 @@
   },
   {
     "pk": "MD-34-2211",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Unsubmitted",
     "attachments": [
       {
@@ -2413,10 +2413,10 @@
   },
   {
     "pk": "MI-93-2234",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2446,10 +2446,10 @@
   },
   {
     "pk": "MI-93-2234",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2477,10 +2477,10 @@
   },
   {
     "pk": "MD-93-2234",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2510,10 +2510,10 @@
   },
   {
     "pk": "MD-93-2234",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "RAI Issued",
     "attachments": [
       {
@@ -2536,6 +2536,214 @@
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
     "componentId": "MD-93-2234",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v0#chipspa",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+    "componentType": "chipspa",
+    "currentStatus": "RAI Issued",
+    "attachments": [
+      {
+        "s3Key": "1639695907350/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "Current State Plan",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      }
+    ],
+    "GSI1sk": "MD-22-2345",
+    "additionalInformation": "This is just a test",
+    "submissionTimestamp": 1639695908900,
+    "Latest": 1,
+    "GSI1pk": "OneMAC#spa",
+    "clockEndTimestamp": 1646941106000,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "componentId": "MD-22-2345",
+    "submitterName": "StateSubmitter Nightwatch",
+    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v1#chipspa",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
+    "componentType": "chipspa",
+    "currentStatus": "RAI Issued",
+    "attachments": [
+      {
+        "s3Key": "1639695907350/picture.jpg",
+        "filename": "picture.jpg",
+        "title": "Current State Plan",
+        "contentType": "image/jpeg",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907350/picture.jpg"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Amended State Plan Language",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      },
+      {
+        "s3Key": "1639695907351/adobe.pdf",
+        "filename": "adobe.pdf",
+        "title": "Cover Letter",
+        "contentType": "application/pdf",
+        "url": "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639695907351/adobe.pdf"
+      }
+    ],
+    "additionalInformation": "This is just a test",
+    "submissionTimestamp": 1639695908900,
+    "Latest": 1,
+    "clockEndTimestamp": 1646941106000,
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "componentId": "MD-22-2345",
+    "submitterName": "StateSubmitter Nightwatch",
+    "submissionId": "9d1ac120-5ec4-11ec-b2ea-eb35c89f340d"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v0#chipsparai#1639604007869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "GSI1sk": "MD-22-2345",
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639604007869,
+    "GSI1pk": "OneMAC#chipsparai",
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v1#chipsparai#1639604007869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639604007869,
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v0#chipsparai#1639503006869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "GSI1sk": "MD-22-2345",
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639503006869,
+    "GSI1pk": "OneMAC#chipsparai",
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
+    "submitterName": "Angie Active",
+    "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
+  },
+  {
+    "pk": "MD-22-2345",
+    "sk": "v1#chipsparai#1639503006869",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "chipsparai",
+    "currentStatus": "Submitted",
+    "attachments": [
+      {
+        "s3Key": "1639503005592/CMS 179 Form Acronym Removal Signed.pdf",
+        "filename": "CMS 179 Form Acronym Removal Signed.pdf",
+        "title": "CMS Form 179",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005592/CMS%20179%20Form%20Acronym%20Removal%20Signed.pdf"
+      },
+      {
+        "s3Key": "1639503005594/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "SPA Pages",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1639503005594/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "additionalInformation": "What is the response",
+    "submissionTimestamp": 1639503006869,
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-22-2345",
     "submitterName": "Angie Active",
     "submissionId": "7a50e650-5d03-11ec-ac34-4373607d3ed6"
   },
@@ -3026,9 +3234,9 @@
   },
   {
     "pk": "MI-42-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3066,9 +3274,9 @@
   },
   {
     "pk": "MI-42-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3104,9 +3312,9 @@
   },
   {
     "pk": "MD-42-1122",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3144,9 +3352,9 @@
   },
   {
     "pk": "MD-42-1122",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "In Review",
     "attachments": [
       {
@@ -3182,9 +3390,9 @@
   },
   {
     "pk": "MD-12-8214",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3235,9 +3443,9 @@
   },
   {
     "pk": "MD-12-8214",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3286,9 +3494,9 @@
   },
   {
     "pk": "MI-12-8214",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3339,9 +3547,9 @@
   },
   {
     "pk": "MI-12-8214",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Approved",
     "attachments": [
       {
@@ -3390,9 +3598,9 @@
   },
   {
     "pk": "MD-45-5913",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3443,9 +3651,9 @@
   },
   {
     "pk": "MD-45-5913",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3494,9 +3702,9 @@
   },
   {
     "pk": "VA-45-5913",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3547,9 +3755,9 @@
   },
   {
     "pk": "VA-45-5913",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Disapproved",
     "attachments": [
       {
@@ -3598,9 +3806,9 @@
   },
   {
     "pk": "MD-13-8218",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -3630,9 +3838,9 @@
   },
   {
     "pk": "MD-13-8218",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -3660,9 +3868,9 @@
   },
   {
     "pk": "MI-13-8218",
-    "sk": "v0#spa",
+    "sk": "v0#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -3692,9 +3900,9 @@
   },
   {
     "pk": "MI-13-8218",
-    "sk": "v1#spa",
+    "sk": "v1#medicaidspa",
     "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
-    "componentType": "spa",
+    "componentType": "medicaidspa",
     "currentStatus": "Withdrawn",
     "attachments": [
       {
@@ -4497,6 +4705,80 @@
     "sk": "v1#waivernew",
     "Latest": 1,
     "pk": "MD.3322.R00.00",
+    "submitterName": "Statesubmitter Nightwatch",
+    "submitterEmail": "statesubmitter@nightwatch.test"
+  },
+  {
+    "additionalInformation": "This is a test to see if the v0 is still working properly",
+    "componentType": "waivernew",
+    "attachments": [
+      {
+        "s3Key": "1655844289419/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1655844289419/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "componentId": "MD.5533.R00.00",
+    "waiverAuthority": "1915(b)",
+    "currentStatus": "Approved",
+    "submissionTimestamp": 1655844289966,
+    "clockEndTimestamp": 1663620289966,
+    "proposedEffectiveDate": "2022-07-03",
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD.5533.R00.00",
+    "sk": "v0#waivernew",
+    "Latest": 2,
+    "pk": "MD.5533.R00.00",
+    "submitterName": "Statesubmitter Nightwatch",
+    "submitterEmail": "statesubmitter@nightwatch.test"
+  },
+  {
+    "additionalInformation": "This is a test to see if the v0 is still working properly",
+    "componentType": "waivernew",
+    "attachments": [
+      {
+        "s3Key": "1655844289419/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1655844289419/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "componentId": "MD.5533.R00.00",
+    "waiverAuthority": "1915(b)",
+    "currentStatus": "Submitted",
+    "submissionTimestamp": 1655844289966,
+    "clockEndTimestamp": 1663620289966,
+    "proposedEffectiveDate": "2022-07-03",
+    "sk": "v1#waivernew",
+    "Latest": 1,
+    "pk": "MD.5533.R00.00",
+    "submitterName": "Statesubmitter Nightwatch",
+    "submitterEmail": "statesubmitter@nightwatch.test"
+  },
+  {
+    "additionalInformation": "This is a test to see if the v0 is still working properly",
+    "componentType": "waivernew",
+    "attachments": [
+      {
+        "s3Key": "1655844289419/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1655844289419/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "componentId": "MD.5533.R00.00",
+    "waiverAuthority": "1915(b)",
+    "currentStatus": "Approved",
+    "submissionTimestamp": 1655844289966,
+    "clockEndTimestamp": 1663620289966,
+    "proposedEffectiveDate": "2022-07-03",
+    "sk": "v2#waivernew",
+    "Latest": 2,
+    "pk": "MD.5533.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
   }
