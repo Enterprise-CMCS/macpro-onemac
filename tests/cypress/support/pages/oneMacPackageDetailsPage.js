@@ -1,7 +1,10 @@
-const topRaiRespCaret = "#medicaidsparai0_caret-button";
-const topRaiRespDownloadBtn = "#dl_medicaidsparai0";
-const topRaiRespCard = "#medicaidsparai0_caret";
+const medicaidTopRaiRespCaret = "#medicaidsparai0_caret-button";
+const medicaidTopRaiRespDownloadBtn = "#dl_medicaidsparai0";
+const medicaidTopRaiRespCard = "#medicaidsparai0_caret";
 const topRaiRespAddInfo = "#addl-info-rai-0";
+const chipTopRaiRespCaret = "#chipsparai0_caret-button";
+const chipTopRaiRespDownloadBtn = "#dl_chipsparai0";
+const chipTopRaiRespCard = "#chipsparai0_caret";
 
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
@@ -21,7 +24,7 @@ const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
 const dateSubmittedHeader = "//h3[text()='Date Submitted']";
-const raiResponsesHeader = "//section//h2[text()='RAI Responses']";
+const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Package Details']";
@@ -121,16 +124,36 @@ export class oneMacPackageDetailsPage {
   verifyRaiResponseHeaderExists() {
     cy.xpath(raiResponsesHeader).scrollIntoView().should("be.visible");
   }
-  verifyTopRaiRespCaretExistsAndEnabled() {
-    cy.get(topRaiRespCaret).scrollIntoView().should("be.visible");
-    cy.get(topRaiRespCaret).should("be.enabled");
+  verifyRaiResponseHeaderTitle() {
+    cy.xpath(raiResponsesHeader).scrollIntoView().should("be.visible");
   }
-  verifyTopRaiRespCardExists() {
-    cy.get(topRaiRespCard).scrollIntoView().should("be.visible");
+  verifyCHIPTopRaiRespCaretExistsAndEnabled() {
+    cy.get(chipTopRaiRespCaret).scrollIntoView().should("be.visible");
+    cy.get(chipTopRaiRespCaret).should("be.enabled");
   }
-  verifyTopRaiRespDownloadBtnExistsAndEnabled() {
-    cy.get(topRaiRespDownloadBtn).scrollIntoView().should("be.visible");
-    cy.get(topRaiRespDownloadBtn).should("be.enabled");
+  verifyMedicaidTopRaiRespCaretExistsAndEnabled() {
+    cy.get(medicaidTopRaiRespCaret).scrollIntoView().should("be.visible");
+    cy.get(medicaidTopRaiRespCaret).should("be.enabled");
+  }
+  verifyCHIPTopRaiRespCaretTitle() {
+    cy.get(chipTopRaiRespCaret).scrollIntoView().contains("Submitted on");
+  }
+  verifyMedicaidTopRaiRespCaretTitle() {
+    cy.get(medicaidTopRaiRespCaret).scrollIntoView().contains("Submitted on");
+  }
+  verifyCHIPTopRaiRespCardExists() {
+    cy.get(chipTopRaiRespCard).scrollIntoView().should("be.visible");
+  }
+  verifyMedicaidTopRaiRespCardExists() {
+    cy.get(medicaidTopRaiRespCard).scrollIntoView().should("be.visible");
+  }
+  verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled() {
+    cy.get(chipTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
+    cy.get(chipTopRaiRespDownloadBtn).should("be.enabled");
+  }
+  verifyMedicaidTopRaiRespDownloadBtnExistsAndEnabled() {
+    cy.get(medicaidTopRaiRespDownloadBtn).scrollIntoView().should("be.visible");
+    cy.get(medicaidTopRaiRespDownloadBtn).should("be.enabled");
   }
   verifyTopRaiRespAddInfoDoesNotExist() {
     cy.get(topRaiRespAddInfo).should("not.exist");
