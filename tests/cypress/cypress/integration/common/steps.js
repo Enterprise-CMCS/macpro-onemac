@@ -579,11 +579,11 @@ And("clear Waiver Number Input box in old form", () => {
 });
 
 And("type in a correct Waiver Number with 5 characters", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.72988");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-72988.R00.00");
 });
 
 And("type in invalid Waiver Number", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.123456");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-123456.R00.00");
 });
 
 And("verify error message is present on New Waiver Page", () => {
@@ -903,7 +903,7 @@ And(
     OneMacPackagePage.verifyexpirationDateColumnHeaderExists();
   }
 );
-And("expiration date on MD.32560 is Oct 14, 2026", () => {
+And("expiration date on MD-32560 is Oct 14, 2026", () => {
   OneMacPackagePage.verifyMD32560ExpirationDateIsSetTooct142026();
 });
 And("Expiration Date value for generated Record is {string}", (s) => {

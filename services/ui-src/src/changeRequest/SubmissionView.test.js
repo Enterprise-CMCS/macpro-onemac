@@ -24,7 +24,7 @@ describe("SubmissionView", () => {
     const objectMock = {
       waiverAuthority: "1915(b)",
       uploads: [],
-      transmittalNumber: "MD.0004.R00.00",
+      transmittalNumber: "MD-0004.R00.00",
     };
     ChangeRequestDataApi.get.mockReturnValueOnce(objectMock);
     history.push("/ChangeRequestMock/mockId/mockUserID");

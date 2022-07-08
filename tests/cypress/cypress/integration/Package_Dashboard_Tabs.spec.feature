@@ -70,13 +70,13 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And search for "MD.10330"
+        And search for "MD-10330.R00.00"
         And wait for parent row expander to be enabled
         And verify parent row expander exists
         #And verify the next row is not a child
         And click parent row expander
         And verify the next row is a child
-        And verify all children start with "MD.10330"
+        And verify all children start with "MD-10330.R00.00"
 
     Scenario: verify all waiver columns are displayed for a child row
         Given I am on Login Page
@@ -84,7 +84,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And search for "MD.10330"
+        And search for "MD-10330.R00.00"
         And wait for parent row expander to be enabled
         And click parent row expander
         And verify Waiver Number column exists for the child
@@ -106,5 +106,5 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And search for "MD.1117"
+        And search for "MD-1117.R00.00"
         And verify parent row expander is disabled

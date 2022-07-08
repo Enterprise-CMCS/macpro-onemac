@@ -10,7 +10,7 @@ const addFile1915b4 =
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
 
-const existingWaiverNumber = "MD.11223";
+const existingWaiverNumber = "MD-11223.R00.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 

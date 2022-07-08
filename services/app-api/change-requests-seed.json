@@ -180,7 +180,7 @@
     "territory": "MI"
   },
   {
-    "summary": "A base waiver numbered MI.1122 in the submission list",
+    "summary": "A base waiver numbered MI-1122 in the submission list",
     "waiverAuthority": "1915(b)",
     "ninetyDayClockEnd": 1659560479781,
     "type": "waiver",
@@ -199,7 +199,7 @@
     "transmittalNumberWarningMessage": "",
     "id": "831cce20-ccb6-11ec-a326-19f0f0c94b60",
     "state": "submitted",
-    "transmittalNumber": "MI.1122",
+    "transmittalNumber": "MI-1122",
     "submittedAt": 1651784479781,
     "user": {
       "firstName": "Angie",
@@ -209,7 +209,7 @@
     "territory": "MI"
   },
   {
-    "summary": "This is what a temporary extension for MI.1122 SHOULD look like, but it is anybody's guess what it DOES look like....",
+    "summary": "This is what a temporary extension for MI-1122 SHOULD look like, but it is anybody's guess what it DOES look like....",
     "waiverAuthority": "",
     "ninetyDayClockEnd": 1659560529183,
     "type": "waiverextension",
@@ -247,7 +247,7 @@
     "submittedAt": 1649354134063,
     "summary": "",
     "territory": "MD",
-    "transmittalNumber": "MD.32560",
+    "transmittalNumber": "MD-32560.R00.00",
     "transmittalNumberWarningMessage": "",
     "type": "waiver",
     "uploads": [
@@ -310,7 +310,7 @@
     "waiverAuthority": ""
    },
    {
-    "summary": "This is the renewal of the base waiver MI.1122",
+    "summary": "This is the renewal of the base waiver MI-1122",
     "waiverAuthority": "1915(b)(4)",
     "ninetyDayClockEnd": 1659985273765,
     "type": "waiver",
@@ -329,7 +329,7 @@
     "transmittalNumberWarningMessage": "",
     "id": "8ffff910-d093-11ec-ae7d-b5a398c43e46",
     "state": "submitted",
-    "transmittalNumber": "MI.1122.R01",
+    "transmittalNumber": "MI-1122.R01",
     "submittedAt": 1652209273765,
     "user": {
       "firstName": "Angie",
@@ -339,7 +339,7 @@
     "territory": "MI"
   },
   {
-    "summary": "This is an amendment for the renewal MI.1122.R01 for the base MI.1122",
+    "summary": "This is an amendment for the renewal MI-1122.R01 for the base MI-1122",
     "waiverAuthority": "1915(b)(4)",
     "ninetyDayClockEnd": 1659986718318,
     "type": "waiver",
@@ -358,7 +358,7 @@
     "transmittalNumberWarningMessage": "",
     "id": "ed0f08a0-d096-11ec-a68b-a5c367084617",
     "state": "submitted",
-    "transmittalNumber": "MI.1122.R01.M01",
+    "transmittalNumber": "MI-1122.R01.M01",
     "submittedAt": 1652210718318,
     "user": {
       "firstName": "Angie",
@@ -377,7 +377,7 @@
     "submittedAt": 1652815498529,
     "summary": "",
     "territory": "MD",
-    "transmittalNumber": "MD.10330",
+    "transmittalNumber": "MD-10330.R00.00",
     "transmittalNumberWarningMessage": "",
     "type": "waiver",
     "uploads": [
@@ -406,7 +406,7 @@
     "submittedAt": 1652815531339,
     "summary": "",
     "territory": "MD",
-    "transmittalNumber": "MD.10330.R01",
+    "transmittalNumber": "MD-10330.R01.00",
     "transmittalNumberWarningMessage": "",
     "type": "waiver",
     "uploads": [

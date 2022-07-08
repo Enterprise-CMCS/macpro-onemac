@@ -12,7 +12,7 @@ const expirationDateColumnHeader = '//th[@id="expirationTimestampColHeader"]';
 const firstExperationDate = '//td[@id="expirationTimestamp-0"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const MD32560hrefValue =
-  '//a[contains(@href,"/detail/waivernew/1633642209858/MD.32560")]';
+  '//a[contains(@href,"/detail/waivernew/1633642209858/MD-32560.R00.00")]';
 const searchbar = "#search-bar-input";
 //Element is Xpath use cy.xpath instead of cy.get
 const searchbarHeader =
@@ -140,10 +140,10 @@ const PackageWithdrawn =
   "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
-  "//a[text()='MD.10330']/../following-sibling::td[contains(@id,'packageActions')]/button";
+  "//a[text()='MD-10330.R00.00']/../following-sibling::td[contains(@id,'packageActions')]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
-  "//a[contains(text(),'MD.83420')]/../following-sibling::td[contains(@id,'packageActions')]/button";
+  "//a[contains(text(),'MD-83420.R00.00')]/../following-sibling::td[contains(@id,'packageActions')]/button";
 const stateDropdownFilter = "#territory-button";
 const stateFilterSelect = "#territory-filter-select";
 const statesSelected = "#territory";
