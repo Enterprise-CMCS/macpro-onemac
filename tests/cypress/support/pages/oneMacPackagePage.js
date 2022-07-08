@@ -140,7 +140,7 @@ const PackageWithdrawn =
   "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
-  "//a[text()='MD-10330.R00.00']/../following-sibling::td[contains(@id,'packageActions')]/button";
+  "//a[text()='MD.10330.R00.00']/../following-sibling::td[contains(@id,'packageActions')]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const Unsubmitted =
   "//a[contains(text(),'MD-83420.R00.00')]/../following-sibling::td[contains(@id,'packageActions')]/button";
