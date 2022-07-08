@@ -456,8 +456,8 @@ export const oneMACFAQContent: FAQContent[] = [
         answerJSX: (
           <>
             <p>
-              Waiver number must follow the format SS.####.R##.## or
-              SS.#####.R##.## to include:
+              Waiver number must follow the format SS-####.R##.## or
+              SS-#####.R##.## to include:
             </p>
             <ul>
               <li>SS = 2 character state abbreviation</li>
@@ -466,14 +466,13 @@ export const oneMACFAQContent: FAQContent[] = [
                 R## = renewal number (R01, R02, ...) (Use R00 for waivers
                 without renewals)
               </li>
-              <li>M## = amendment number, prefixed with a capital M (M01)</li>
+              <li>## = amendment number</li>
             </ul>
             <p>
-              All separated by periods (.). For example, the waiver number
-              KY.0003.R02.M02 is a waiver for the state of Kentucky, with a base
-              waiver number of 0003, a second renewal (R02) and a second
-              amendment (02). Base waivers without renewals should use “R00” as
-              their renewal number.
+              For example, the waiver number KY-0003.R02.02 is a waiver
+              amendment for the state of Kentucky, with a base waiver number of
+              0003, a second renewal (R02) and a second amendment (02). Base
+              waivers without renewals should use “R00” as their renewal number.
             </p>
           </>
         ),
