@@ -398,6 +398,35 @@
    },
    {
     "userId": "us-east-1:c84c445b-a748-47dc-b39a-b06c3075b5a5",
+    "id": "09de2cb0-d617-11ec-ab19-ff08caf8249b",
+    "actionType": "new",
+    "createdAt": 1652815497979,
+    "ninetyDayClockEnd": 1660591498529,
+    "state": "submitted",
+    "submittedAt": 1652815498529,
+    "summary": "",
+    "territory": "MD",
+    "transmittalNumber": "MD.10330.R00.00",
+    "transmittalNumberWarningMessage": "",
+    "type": "waiver",
+    "uploads": [
+     {
+      "contentType": "application/pdf",
+      "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+      "s3Key": "1652815497627/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+      "title": "1915(b) Comprehensive (Capitated) Waiver Application Pre-print (Initial, Renewal, Amendment)",
+      "url": "https://uploads-oy2-17509-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Ac84c445b-a748-47dc-b39a-b06c3075b5a5/1652815497627/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+     }
+    ],
+    "user": {
+     "email": "statesubmitter@nightwatch.test",
+     "firstName": "StateSubmitter",
+     "lastName": "Nightwatch"
+    },
+    "waiverAuthority": "1915(b)"
+   },
+   {
+    "userId": "us-east-1:c84c445b-a748-47dc-b39a-b06c3075b5a5",
     "id": "1d71c570-d617-11ec-a963-6d27d9ec63aa",
     "actionType": "renewal",
     "createdAt": 1652815530823,

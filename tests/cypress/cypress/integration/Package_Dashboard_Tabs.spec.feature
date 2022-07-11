@@ -76,7 +76,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         #And verify the next row is not a child
         And click parent row expander
         And verify the next row is a child
-        And verify all children start with "MD.10330.R00.00"
+        And verify all children start with "MD.10330"
 
     Scenario: verify all waiver columns are displayed for a child row
         Given I am on Login Page

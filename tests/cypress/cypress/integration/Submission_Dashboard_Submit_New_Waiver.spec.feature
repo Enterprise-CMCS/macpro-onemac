@@ -10,7 +10,7 @@ Feature: Submit a New Waiver in Submission Dashboard
         And Click on Waiver Action under Waiver Type
         And Click on New Waiver under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type new Waiver Number 1 in format SS.#####
+        And Type new Waiver Number 1 in format SS-#####.R##.##
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
         And Click on Submit Button

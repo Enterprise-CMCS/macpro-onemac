@@ -241,11 +241,6 @@ export const CONFIG = {
     },
     transmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      // idFieldHint: [
-      //   { text: "Must follow the format required by the Action Type" },
-      // ],
-      // idFormat: "the Action Type.  Please select an Action Type first.",
-      // idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
       idExistValidations: [
         {
           idMustExist: false,
@@ -255,13 +250,6 @@ export const CONFIG = {
     },
     newTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      // idFieldHint: [
-      //   {
-      //     text: "Must be a new base number with the format SS.#### or SS.#####",
-      //   },
-      // ],
-      // idFormat: "SS.#### or SS.#####",
-      // idRegex: "^[A-Z]{2}[.][0-9]{4,5}$",
       idExistValidations: [
         {
           idMustExist: false,
@@ -271,32 +259,22 @@ export const CONFIG = {
     },
     amendmentTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      // idFieldHint: [
-      //   { text: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##" },
-      // ],
-      // idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
-      // idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
       idExistValidations: [
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}",
+          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}.00",
         },
       ],
     },
     renewalTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
-      // idFieldHint: [
-      //   { text: "Must follow the format SS.####.R## or SS.#####.R##" },
-      // ],
-      // idFormat: "SS.####.R## or SS.#####.R##",
-      // idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
       idExistValidations: [
         // Want the base waiver number to exist
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}",
+          existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R00.00",
         },
         // DON'T want the entire Waiver number with renewal portion to exist
         {
