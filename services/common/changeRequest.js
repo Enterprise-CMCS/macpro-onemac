@@ -240,7 +240,7 @@ export const CONFIG = {
         { text: "Must follow the format required by the Action Type" },
       ],
       idFormat: "the Action Type.  Please select an Action Type first.",
-      idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
+      idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$",
       idExistValidations: [
         {
           idMustExist: false,
@@ -252,11 +252,11 @@ export const CONFIG = {
       ...waiverBaseTransmittalNumber,
       idFieldHint: [
         {
-          text: "Must be a new base number with the format SS.#### or SS.#####",
+          text: "Must be a new base number with the format SS-####.R00.00 or SS-#####.R00.00",
         },
       ],
-      idFormat: "SS.#### or SS.#####",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}$",
+      idFormat: "SS-####.R00.00 or SS-#####.R00.00",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}.R00.00$",
       idExistValidations: [
         {
           idMustExist: false,
