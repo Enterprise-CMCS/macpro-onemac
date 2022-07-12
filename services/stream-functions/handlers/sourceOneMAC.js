@@ -6,12 +6,11 @@ class SourceOneMAC extends KafkaSourceLib {
 
   determineTopicName(record) {
     const recordDetails = JSON.parse(record.value);
-    const skSlice = JSON.stringify(recordDetails.NewImage.sk).slice(1,7);
+    const isNewMedicaidSPA = (JSON.stringify(recordDetails.NewImage.sk) === "v0#medicaidspa");
 
-    if (record.headers.eventName === "INSERT" && skSlice !== "SEATool") {
-      console.log("Record Details being sent: ", recordDetails);
+    if (record.headers.eventName === "INSERT" && isNewMedicaidSPA) {
+      console.log("Sending: ", recordDetails);
       console.log("would be sent to: ", staticTopic);
-      console.log("skSlice is: ", skSlice);
       //return staticTopic;
     } else {
       console.log("Record Details being ignored: ", recordDetails);
