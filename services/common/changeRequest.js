@@ -257,6 +257,7 @@ export const CONFIG = {
       ],
       idFormat: "SS-####.R00.00 or SS-#####.R00.00",
       idRegex: "^[A-Z]{2}[-][0-9]{4,5}.R00.00$",
+      idFAQLink: ROUTES.FAQ_BASE_1915B_WAIVER_ID,
       idExistValidations: [
         {
           idMustExist: false,
