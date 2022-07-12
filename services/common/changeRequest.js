@@ -318,19 +318,19 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "waiverappk",
       idLabel: "Waiver Number",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,
+      idFAQLink: ROUTES.FAQ_WAIVER_APP_K_ID,
       idFieldHint: [
         {
-          text: "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)",
+          text: "Must follow the format SS-####.R##.## or SS-#####.R##.## (use R00 for waivers without renewals)",
         },
       ],
-      idFormat: "SS.####.R##.## or SS.#####.R##.##",
-      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
+      idFormat: "SS-####.R##.## or SS-#####.R##.##",
+      idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
       idExistValidations: [
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+          existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}",
         },
       ],
     },

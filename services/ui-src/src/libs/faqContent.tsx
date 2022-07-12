@@ -498,8 +498,8 @@ export const oneMACFAQContent: FAQContent[] = [
         answerJSX: (
           <>
             <p>
-              Waiver number must follow the format SS.####.R##.## or
-              SS.#####.R##.## to include:
+              Waiver number must follow the format SS-####.R##.## or
+              SS-#####.R##.## to include:
             </p>
             <ul>
               <li>SS = 2 character state abbreviation</li>
@@ -511,8 +511,9 @@ export const oneMACFAQContent: FAQContent[] = [
               <li>## = appendix K amendment number (01)</li>
             </ul>
             <p>
-              All separated by periods (.). For example, the waiver number
-              KY.0003.R02.02 is a waiver for the state of Kentucky, with a base
+              State abbreviation is followed by a dash (-). All other sections
+              are separated by periods (.). For example, the waiver number
+              KY-0003.R02.02 is a waiver for the state of Kentucky, with a base
               waiver number of 0003, the second renewal (R02) and the second
               appendix K amendment (02). Base waivers without renewals should
               use “R00” as their renewal number.
