@@ -2602,11 +2602,6 @@ aside#faq-contact-info-box {
   @extend .ds-u-flex-direction--column;
   width: 50%;
 }
-.package-action-link {
-  @extend .ds-c-button--transparent;
-  @extend .ds-u-text-decoration--none;
-  @extend .ds-u-padding--0;
-}
 .action-list {
   list-style-type: none;
   @extend .ds-u-padding--0;
@@ -2615,6 +2610,13 @@ aside#faq-contact-info-box {
 
   p {
     color: $color-gray;
+  }
+
+  a {
+    @extend .ds-c-button;
+    @extend .ds-c-button--transparent;
+    @extend .ds-u-text-decoration--none;
+    @extend .ds-u-padding--0;
   }
 }
 .detail-section {
