@@ -13,9 +13,12 @@ export default function RespondToRAI({ theComponent }) {
   return (
     <Link
       key={`popup-action-${theComponent.componentId}`}
-      to={`${RAILink[theComponent.componentType]}?componentId=${
-        theComponent.componentId
-      }`}
+      to={{
+        pathname: RAILink[theComponent.componentType],
+        state: {
+          componentId: theComponent.componentId,
+        },
+      }}
       id={"respond-rai-action-" + theComponent.componentId}
     >
       Respond to RAI
