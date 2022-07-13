@@ -240,7 +240,7 @@ export const CONFIG = {
         { text: "Must follow the format required by the Action Type" },
       ],
       idFormat: "the Action Type.  Please select an Action Type first.",
-      idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$",
+      idRegex: "^[A-Z]{2}[-][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$",
       idExistValidations: [
         {
           idMustExist: false,
