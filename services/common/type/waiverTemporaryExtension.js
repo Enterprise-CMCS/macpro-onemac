@@ -4,7 +4,7 @@ export const waiverTemporaryExtension = {
   typeLabel: "Waiver Extension",
   idType: "waiver",
   idLabel: "Waiver Number",
-  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R[0-9]{2}.TE[0-9]{2}$",
+  idRegex: "^[A-Z]{2}[-][0-9]{4,5}.R[0-9]{2}.TE[0-9]{2}$",
   idExistValidations: [
     {
       idMustExist: false,
