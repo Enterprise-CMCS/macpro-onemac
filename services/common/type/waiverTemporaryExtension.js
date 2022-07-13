@@ -10,6 +10,11 @@ export const waiverTemporaryExtension = {
       idMustExist: false,
       errorLevel: "error",
     },
+    {
+      idMustExist: true,
+      errorLevel: "warn",
+      validateParentId: true,
+    },
   ],
   allowMultiplesWithSameId: false,
   requiredAttachments: ["Waiver Extension Request"],

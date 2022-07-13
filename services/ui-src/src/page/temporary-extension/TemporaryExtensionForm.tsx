@@ -13,7 +13,7 @@ import { DetailViewTab } from "../../libs/detailLib";
 
 const TemporaryExtensionForm: FC = () => {
   const location = useLocation<FormLocationState>();
-  const idFormat: string = "SS.####.R##.TE## or SS.#####.R##.TE##";
+  const idFormat: string = "SS-####.R##.TE## or SS-#####.R##.TE##";
   const temporaryExtensionFormInfo: OneMACFormConfig = {
     ...waiverTemporaryExtension,
     ...defaultOneMACFormConfig,
