@@ -753,14 +753,14 @@ And("Type new Waiver Number for RAI in format SS-#####.R00.00", () => {
     );
   });
 });
-And("Type Base Waiver Number in format SS-#####.R00.00", () => {
+And("Type Base Waiver Number in format SS.#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber1
     );
   });
 });
-And("Type Base Waiver Number 2 in format SS-#####.R00.00", () => {
+And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber2
