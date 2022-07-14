@@ -730,21 +730,21 @@ And("type in Existing Waiver Number in new form", () => {
 And("type in Existing Waiver Number in old form", () => {
   OneMacSubmitNewWaiverActionPage.inputExistingWaiverNumberOldForms();
 });
-And("Type new Waiver Number 1 in format SS.#####", () => {
+And("Type new Waiver Number 1 in format SS-#####.R00.00", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
       d.newWaiverNumber1
     );
   });
 });
-And("Type new Waiver Number 2 in format SS.#####", () => {
+And("Type new Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
       d.newWaiverNumber2
     );
   });
 });
-And("Type new Waiver Number for RAI in format SS.#####", () => {
+And("Type new Waiver Number for RAI in format SS-#####.R00.00", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
       d.newWaiverNumber3

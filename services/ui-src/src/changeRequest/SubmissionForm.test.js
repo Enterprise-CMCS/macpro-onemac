@@ -275,7 +275,7 @@ describe("Submission Form", () => {
         const idLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
-        const testId = "MI.4444";
+        const testId = "MI-4444.R00.00";
         const existErrorMessage = `According to our records, this ${idLabel} already exists. Please check the ${idLabel} and try entering it again.`;
 
         // id will exist

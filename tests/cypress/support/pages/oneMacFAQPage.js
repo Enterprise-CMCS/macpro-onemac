@@ -60,7 +60,8 @@ const canISubmitSPAFORPHEInOneMacValue =
 //Waiver section
 const whatFormatIsUsedToEnterASPAIDforWaivers = "#waiver-id-format-button";
 const whatFormatIsUsedToEnterASPAIDforWaiversValue =
-  "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(3) div.ds-c-accordion div:nth-child(1) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(1)";
+  // "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(3) div.ds-c-accordion div:nth-child(1) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(1)";
+  "#waiver-id-format";
 const whoCanIContactToHelpMeFigureOutTheCorrect1915bWaiverNumber =
   "#waiver-id-help-button";
 const whoCanIContactToHelpMeFigureOutTheCorrect1915bWaiverNumberValue =
