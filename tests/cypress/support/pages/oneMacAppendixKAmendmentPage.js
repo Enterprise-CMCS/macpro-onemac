@@ -7,7 +7,14 @@ export class oneMacAppendixKAmendmentPage {
   }
 
   verifyErrorMessageIsNotDisplayed() {
-    cy.get(errorMessageForWaiverNumber).should("not.exist");
+    if (cy.get("body").find(errorMessageForWaiverNumber).length == 0) {
+      cy.get(errorMessageForWaiverNumber).should("not.exist");
+    } else {
+      cy.get(errorMessageForWaiverNumber).should(
+        "have.class",
+        "ds-u-color--primary"
+      );
+    }
   }
 
   clearWaiverNumberInputBox() {
