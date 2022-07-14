@@ -451,6 +451,31 @@ export const oneMACFAQContent: FAQContent[] = [
     sectionTitle: "Waivers",
     qanda: [
       {
+        anchorText: "base-waiver-id-format",
+        question: "What format is used to enter a 1915(b) Base Waiver number?",
+        answerJSX: (
+          <>
+            <p>
+              1915(b) Base Waiver numbers must follow the format SS-####.R00.00
+              or SS-#####.R00.00 to include:
+            </p>
+            <ul>
+              <li>SS = 2 character state abbreviation</li>
+              <li>##### = 4 or 5 digit waiver base number</li>
+              <li>R00 = base number</li>
+              <li>00 = amendment number (00 for bases)</li>
+            </ul>
+            <p>
+              State abbreviation is separated by dash (-) and later sections are
+              separated by periods (.). For example, the waiver number
+              KY-0003.R00.00 is a waiver for the state of Kentucky, with a base
+              waiver number of 0003, no renewal number (R00), and no amendment
+              number (00).
+            </p>
+          </>
+        ),
+      },
+      {
         anchorText: "waiver-id-format",
         question: "What format is used to enter a 1915(b) waiver number?",
         answerJSX: (
