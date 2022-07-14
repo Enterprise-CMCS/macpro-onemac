@@ -4,7 +4,12 @@ import {
   Button,
   Review,
 } from "@cmsgov/design-system";
-import { Workflow, RESPONSE_CODE, getUserRoleObj } from "cmscommonlib";
+import {
+  Workflow,
+  RESPONSE_CODE,
+  getUserRoleObj,
+  ONEMAC_ROUTES,
+} from "cmscommonlib";
 import React, { useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { FormLocationState } from "../../domain-types";
@@ -12,25 +17,24 @@ import { useAppContext } from "../../libs/contextLib";
 import { formatDetailViewDate } from "../../utils/date-utils";
 import PackageApi from "../../utils/PackageApi";
 import { ComponentDetail } from "../DetailView";
-import { OneMACDetail } from "../DetailViewDefaults";
+import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
 import { AdditionalInfoSection } from "./AdditionalInfoSection";
+import { TYPE_TO_RAI_ROUTE } from "cmscommonlib/routes";
 
 export const DetailSection = ({
   pageConfig,
   detail,
   loadDetail,
   setAlertCode,
-  setConfirmItem,
 }: {
   pageConfig: OneMACDetail;
   detail: ComponentDetail;
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
-  setConfirmItem: (item: any) => void;
 }) => {
   const history = useHistory();
-  const { userProfile } = useAppContext() ?? {};
+  const { userProfile, confirmAction } = useAppContext() ?? {};
 
   const downloadInfoText =
     "Documents available on this page may not reflect the actual documents that were approved by CMS. Please refer to your CMS Point of Contact for the approved documents.";
@@ -41,9 +45,6 @@ export const DetailSection = ({
   );
 
   const onLinkActionWithdraw = useCallback(async () => {
-    // For now, the second argument is constant.
-    // When we add another action to the menu, we will need to look at the action taken here.
-
     try {
       const resp = await PackageApi.withdraw(
         userProfile?.userData?.fullName,
@@ -59,7 +60,7 @@ export const DetailSection = ({
     }
   }, [detail, userProfile, loadDetail, setAlertCode]);
 
-  const onLinkActionRAI = useCallback(
+  const onLinkAction = useCallback(
     (value: { href: string; state?: FormLocationState }) => {
       history.push(`${value.href}`, value.state);
     },
@@ -108,17 +109,33 @@ export const DetailSection = ({
                             onClick={
                               actionLabel === Workflow.PACKAGE_ACTION.WITHDRAW
                                 ? () => {
-                                    setConfirmItem({
-                                      label: actionLabel,
-                                      confirmationMessage: `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
-                                      onAccept: onLinkActionWithdraw,
+                                    confirmAction &&
+                                      confirmAction(
+                                        Workflow.PACKAGE_ACTION.WITHDRAW,
+                                        "Withdraw?",
+                                        "Cancel",
+                                        `You are about to withdraw ${detail.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
+                                        onLinkActionWithdraw
+                                      );
+                                  }
+                                : actionLabel ===
+                                  Workflow.PACKAGE_ACTION.RESPOND_TO_RAI
+                                ? () => {
+                                    onLinkAction({
+                                      href: TYPE_TO_RAI_ROUTE[
+                                        detail.componentType
+                                      ],
+                                      state: {
+                                        componentId: detail.componentId,
+                                      },
                                     });
                                   }
                                 : () => {
-                                    onLinkActionRAI({
-                                      href: pageConfig.raiLink,
+                                    onLinkAction({
+                                      href: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
                                       state: {
-                                        componentId: detail.componentId,
+                                        parentId: detail.componentId,
+                                        parentType: detail.componentType,
                                       },
                                     });
                                   }
@@ -168,17 +185,17 @@ export const DetailSection = ({
         </section>
         {detail.raiResponses && (
           <section className="detail-section">
-            <h2>RAI Responses</h2>
+            <h2>Formal RAI Responses</h2>
             <Accordion>
               {detail.raiResponses?.map((raiResponse, index) => {
-                let raiNumber = (detail.raiResponses.length - index)
-                  .toString()
-                  .padStart(2, "0");
                 return (
                   <AccordionItem
                     buttonClassName="accordion-button"
                     contentClassName="accordion-content"
-                    heading={"RAI - " + raiNumber}
+                    heading={
+                      "Submitted on " +
+                      formatDetailViewDate(raiResponse.submissionTimestamp)
+                    }
                     headingLevel="6"
                     id={raiResponse.componentType + index + "_caret"}
                     key={raiResponse.componentType + index}

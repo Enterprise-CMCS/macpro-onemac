@@ -1,12 +1,11 @@
 import React, { FC } from "react";
 import DetailView from "../DetailView";
-import { OneMACDetail, defaultDetail } from "../DetailViewDefaults";
+import { OneMACDetail, defaultDetail } from "../../libs/detailLib";
 import { chipSPA } from "cmscommonlib";
 
 export const chipSPADetail: OneMACDetail = {
   ...defaultDetail,
   ...chipSPA,
-  raiLink: "",
 };
 
 const CHIPSPADetail: FC = () => {

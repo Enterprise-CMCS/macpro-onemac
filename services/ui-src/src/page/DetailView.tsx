@@ -19,8 +19,7 @@ import { formatDetailViewDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
-import { ConfirmationDialog } from "../components/ConfirmationDialog";
-import { OneMACDetail, DetailViewTab } from "./DetailViewDefaults";
+import { OneMACDetail, DetailViewTab } from "../libs/detailLib";
 import TemporaryExtensionSection from "./section/TemporaryExtensionSection";
 import { DetailSection } from "./section/DetailSection";
 import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
@@ -65,12 +64,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   const [componentType] = useState(pageConfig.componentType);
   const location = useLocation<LocationState>();
   const [alertCode, setAlertCode] = useState(location?.state?.passCode);
-  const [confirmItem, setConfirmItem] = useState<{
-    label: typeof Workflow.PACKAGE_ACTION;
-    confirmationMessage: string;
-    onAccept: () => void;
-  } | null>(null);
-
   const detailTab = location.hash.substring(1) || DetailViewTab.DETAIL;
 
   // so we show the spinner during the data load
@@ -82,8 +75,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
-  const closeConfirmation = useCallback(() => setConfirmItem(null), []);
-
   const loadDetail = useCallback(
     async (ctrlr?: AbortController) => {
       let fetchedDetail;
@@ -173,7 +164,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
                   detail={detail}
                   loadDetail={loadDetail}
                   setAlertCode={setAlertCode}
-                  setConfirmItem={setConfirmItem}
                 />
               )}
               {detailTab === DetailViewTab.ADDITIONAL && (
@@ -189,19 +179,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             </article>
           </div>
         </div>
-      )}
-      {confirmItem && (
-        <ConfirmationDialog
-          acceptText={confirmItem.label + "?"}
-          heading={confirmItem.label}
-          onAccept={() => {
-            confirmItem.onAccept();
-            closeConfirmation();
-          }}
-          onCancel={closeConfirmation}
-        >
-          {confirmItem.confirmationMessage}
-        </ConfirmationDialog>
       )}
     </LoadingScreen>
   );

@@ -123,6 +123,10 @@ export const submitAny = async (event, config) => {
     console.log("Successfully submitted the following:", data);
   } catch (error) {
     console.log("Error is: ", error.message);
+    //if an appropriate response code has already been set return that; else return generic submission error
+    if (error.response_code) {
+      return error.response_code;
+    }
     return RESPONSE_CODE.SUBMISSION_SAVE_FAILURE;
   }
 

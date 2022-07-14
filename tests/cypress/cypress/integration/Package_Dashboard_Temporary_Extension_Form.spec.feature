@@ -1,4 +1,4 @@
-Feature: OY2-16333 Update Waiver Form: Temporary Extension
+Feature: Package Dashboard Temporary Extension
     Background: reoccurring steps
         Given I am on Login Page
         When Clicking on Development Login
@@ -15,7 +15,7 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on Submit Button
         And click on Packages
         And click on the Waivers tab
-        And search for Base Waiver Number 1 with 12 Characters
+        And search for approved Base Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And verify the temporary extension exists
@@ -38,7 +38,7 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And Click on Submit Button
         And click on Packages
         And click on the Waivers tab
-        And search for Base Waiver Number 1 with 12 Characters
+        And search for approved Base Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And click the action button for the temporary extension
@@ -46,9 +46,9 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And click yes, withdraw package button
         And verify success message for Withdrawal
 
-    Scenario: Verify user can create a temporary extension from the Mini-Dashboard
+    Scenario: Verify user can create a temporary extension from the Temp. Extension Mini-Dashboard
         And click on the Waivers tab
-        And search for Base Waiver Number 1 with 12 Characters
+        And search for approved Base Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And Click the Request Extension button
@@ -56,4 +56,28 @@ Feature: OY2-16333 Update Waiver Form: Temporary Extension
         And upload Waiver Extension Request
         And Type Additonal Info Comments in new form
         And Click on Submit Button
-        And verify submission successful message in details
+        And verify submission successful message in the alert bar
+
+    Scenario: Verify user can create a temporary extension from the package details Mini-Dashboard
+        And click on the Waivers tab
+        And search for approved Base Waiver Number 1
+        And click the Waiver Number link in the first row
+        And verify Request a Temporary Extension package action exists
+        And click Request a Temporary Extension package action
+        And Type Temporary Extension Number 4
+        And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
+        And Click on Submit Button
+        And verify submission successful message in the alert bar
+
+    Scenario: Verify user can create a temporary extension from the package dashboard waiver tab
+        And click on the Waivers tab
+        And search for approved Base Waiver Number 1
+        And click the actions button in row one
+        And verify the Request Temporary Extension button is displayed
+        And click the Request Temporary Extension button
+        And Type Temporary Extension Number 5
+        And upload Waiver Extension Request
+        And Type Additonal Info Comments in new form
+        And Click on Submit Button
+        And verify submission successful message in the alert bar

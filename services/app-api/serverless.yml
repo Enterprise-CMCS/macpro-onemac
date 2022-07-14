@@ -131,6 +131,16 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  submitMedicaidSpaRaiResponse:
+    handler: form/submitMedicaidSPARAIResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitMedicaidSPARAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   submitChipSpa:
     handler: form/submitCHIPSPA.main
@@ -138,6 +148,16 @@ functions:
     events:
       - http:
           path: submitCHIPSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitCHIPSPARAIResponse:
+    handler: form/submitCHIPSPARAIResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitCHIPSPARAIResponse
           method: post
           cors: true
           authorizer: aws_iam
@@ -158,6 +178,27 @@ functions:
     events:
       - http:
           path: withdrawBaseWaiver
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  withdrawMedicaidSPA:
+    handler: action/withdrawMedicaidSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawMedicaidSPA
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+
+  withdrawCHIPSPA:
+    handler: action/withdrawCHIPSPA.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawCHIPSPA
           method: post
           cors: true
           authorizer: aws_iam

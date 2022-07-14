@@ -37,6 +37,14 @@ export type AppContextValue = {
   activeTerritories: string[] | null;
   setUserInfo: (isDeveloper?: boolean) => Promise<void>;
   updatePhoneNumber: (phoneNumber: string) => Promise<void>;
+  confirmAction: (
+    heading: string,
+    acceptText: string,
+    cancelText: string,
+    message: string,
+    onAccept?: any,
+    onDeny?: any
+  ) => Promise<void>;
 };
 
 export type PackageRowValue = {

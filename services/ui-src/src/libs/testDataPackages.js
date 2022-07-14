@@ -20,7 +20,7 @@ export const packageList = [
     submitterEmail: "statesubmitteractive@cms.hhs.local",
   },
   {
-    componentType: "spa",
+    componentType: "medicaidspa",
     componentId: "MI-11-4444",
     submissionId: "bbdab000-263b-11ec-ab47-23c14df6b883",
     currentStatus: "Withdrawn",

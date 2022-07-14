@@ -6,7 +6,7 @@ import {
   typeDefault,
   submissionDateDefault,
   AttributeDetail,
-} from "../DetailViewDefaults";
+} from "../../libs/detailLib";
 import { Workflow, waiverTemporaryExtension } from "cmscommonlib";
 
 const parentIdDetail: AttributeDetail = {
@@ -23,7 +23,6 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   usesVerticalNav: false,
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
-  raiLink: "",
   detailSection: [parentIdDetail, typeDefault, submissionDateDefault],
 };
 

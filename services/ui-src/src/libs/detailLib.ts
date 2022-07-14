@@ -1,4 +1,4 @@
-import { ROUTES, Workflow } from "cmscommonlib";
+import { Workflow } from "cmscommonlib";
 
 export type AttributeDetail = {
   heading: string;
@@ -15,7 +15,6 @@ export type OneMACDetail = {
   show90thDayInfo: boolean;
   showEffectiveDate: boolean;
   actionsByStatus: Record<string, Workflow.PACKAGE_ACTION[]>;
-  raiLink: string;
   detailHeader?: string;
   detailSection: AttributeDetail[];
   allowWaiverExtension: boolean;
@@ -104,7 +103,6 @@ export const defaultDetail: OneMACDetail = {
   show90thDayInfo: true,
   showEffectiveDate: false,
   detailHeader: "Package",
-  raiLink: ROUTES.WAIVER_RAI,
   defaultTitle: null,
   allowWaiverExtension: false,
   detailSection: [
