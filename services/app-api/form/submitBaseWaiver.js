@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { baseWaiver } from "cmscommonlib";
+import { baseWaiver, waiverTemporaryExtension } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
