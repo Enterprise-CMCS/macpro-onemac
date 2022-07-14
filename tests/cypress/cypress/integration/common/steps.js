@@ -672,9 +672,7 @@ And("clear Waiver Number Input box On Appendix K Amendment Page", () => {
 And(
   "type in Waiver Number with 5 characters On Appendix K Amendment Page",
   () => {
-    cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-      OneMacAppendixKAmendmentPage.inputWaiverNumber(`${num}.12`);
-    });
+    OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-10330.R00.12`);
   }
 );
 
