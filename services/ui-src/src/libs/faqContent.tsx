@@ -683,10 +683,10 @@ export const oneMACFAQContent: FAQContent[] = [
                 <tr>
                   <td>Waiver Extension Request*</td>
                   <td>
-                    A formal letter addressed to the Deputy Director of the
-                    Division of Disabled and Elderly Health Programs Group
-                    (DEHPG) requesting a temporary extension beyond the current
-                    approved waiver period
+                    A formal letter addressed to Carrie Smith, Deputy Director
+                    of the Disabled and Elderly Health Program Group (DEHPG),
+                    requesting a temporary extension beyond the current approved
+                    waiver period.
                   </td>
                 </tr>
                 <tr>
