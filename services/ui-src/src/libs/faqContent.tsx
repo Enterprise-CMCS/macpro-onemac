@@ -476,6 +476,32 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
+        anchorText: "waiver-renewal-id-format",
+        question:
+          "What format is used to enter a 1915(b) Waiver Renewal number?",
+        answerJSX: (
+          <>
+            <p>
+              1915(b) Waiver Renewal must follow the format SS-####.R##.00 or
+              SS-#####.R##.00 to include:
+            </p>
+            <ul>
+              <li>SS = 2 character state abbreviation</li>
+              <li>####(#)= 4 or 5 digit waiver base number</li>
+              <li>R## = renewal number (R01, R02, ...)</li>
+              <li>00 = amendment number (00 for renewals)</li>
+            </ul>
+            <p>
+              State abbreviation is separated by dash (-) and later sections are
+              separated by periods (.). For example, the waiver number
+              KY-0003.R02.00 is a waiver for the state of Kentucky, with a base
+              waiver number of 0003, a second renewal (R02), and no amendment
+              number (00).
+            </p>
+          </>
+        ),
+      },
+      {
         anchorText: "waiver-id-format",
         question: "What format is used to enter a 1915(b) waiver number?",
         answerJSX: (
