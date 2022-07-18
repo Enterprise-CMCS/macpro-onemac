@@ -63,7 +63,7 @@ export type IdValidation = {
   idMustExist: boolean;
   errorLevel: string;
   existenceRegex?: RegExp;
-  existenceAppend?: RegExp;
+  existenceAppend?: string;
 };
 
 export namespace ChangeRequest {

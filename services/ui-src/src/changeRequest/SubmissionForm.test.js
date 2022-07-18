@@ -335,87 +335,87 @@ describe("Submission Form", () => {
       // and displays a warning message depending on which one fails
       // #1: Want the base waiver number to exist
       // #2: DON'T want the entire Waiver number with renewal portion to exist
-      // it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the base waiver number SHOULD exist but doesn't)", async () => {
-      //   history.push("/waiver");
-      //   const waiverIdLabel =
-      //     ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
-      //       .idLabel;
-      //   const testId = "MI-1234.R03.00";
-      //   const existErrorMessage = `${waiverIdLabel} not found. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
+      it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the base waiver number SHOULD exist but doesn't)", async () => {
+        history.push("/waiver");
+        const waiverIdLabel =
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
+            .idLabel;
+        const testId = "MI-1234.R03.00";
+        const existErrorMessage = `${waiverIdLabel} not found. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
-      //   // base id will NOT exist (this will cause validation to fail so we can check the warning message)
-      //   when(ChangeRequestDataApi.packageExists)
-      //     .calledWith("MI-1234.R00.00")
-      //     .mockReturnValue(false);
-      //   // ensure pass of second validation for entire id not existing
-      //   when(ChangeRequestDataApi.packageExists)
-      //     .calledWith("MI-1234.R03.00")
-      //     .mockReturnValue(false);
+        // base id will NOT exist (this will cause validation to fail so we can check the warning message)
+        when(ChangeRequestDataApi.packageExists)
+          .calledWith("MI-1234.R00.00")
+          .mockReturnValue(false);
+        // ensure pass of second validation for entire id not existing
+        when(ChangeRequestDataApi.packageExists)
+          .calledWith("MI-1234.R03.00")
+          .mockReturnValue(false);
 
-      //   render(
-      //     <AppContext.Provider
-      //       value={{
-      //         ...stateSubmitterInitialAuthState,
-      //       }}
-      //     >
-      //       <Router history={history}>
-      //         <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
-      //       </Router>
-      //     </AppContext.Provider>
-      //   );
+        render(
+          <AppContext.Provider
+            value={{
+              ...stateSubmitterInitialAuthState,
+            }}
+          >
+            <Router history={history}>
+              <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+            </Router>
+          </AppContext.Provider>
+        );
 
-      //   // setting the form up for a renewal type
-      //   const actionTypeEl = screen.getByLabelText("Action Type");
-      //   const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
-      //   userEvent.selectOptions(actionTypeEl, "renewal");
-      //   userEvent.selectOptions(waiverAuthorityEl, "1915(b)");
+        // setting the form up for a renewal type
+        const actionTypeEl = screen.getByLabelText("Action Type");
+        const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+        userEvent.selectOptions(actionTypeEl, "renewal");
+        userEvent.selectOptions(waiverAuthorityEl, "1915(b)");
 
-      //   const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
+        const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
 
-      //   userEvent.type(transmittalNumberEl, testId);
-      //   await waitFor(() => screen.getByText(existErrorMessage));
-      // });
+        userEvent.type(transmittalNumberEl, testId);
+        await waitFor(() => screen.getByText(existErrorMessage));
+      });
 
-      // it("displays a warning message for a Waiver Renewal when failing the second existence validation (that the entire Waiver number with renewal portion SHOULD NOT exist, but does)", async () => {
-      //   history.push("/waiver");
-      //   const waiverIdLabel =
-      //     ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
-      //       .idLabel;
-      //   const testId = "MI-1234.R03.00";
-      //   const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+      it("displays a warning message for a Waiver Renewal when failing the second existence validation (that the entire Waiver number with renewal portion SHOULD NOT exist, but does)", async () => {
+        history.push("/waiver");
+        const waiverIdLabel =
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
+            .idLabel;
+        const testId = "MI-1234.R03.00";
+        const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please check the ${waiverIdLabel} and try entering it again.`;
 
-      //   // ensure pass of first validation for base id existing
-      //   // when(ChangeRequestDataApi.packageExists)
-      //   //   .calledWith("MI-1234.R00.00")
-      //   //   .mockReturnValue(true);
-      //   // entire id will exist in the database (this will cause validation to fail so we can check the warning message)
-      //   when(ChangeRequestDataApi.packageExists)
-      //     .calledWith("MI-1234.R03.00")
-      //     .mockReturnValue(true);
+        // ensure pass of first validation for base id existing
+        when(ChangeRequestDataApi.packageExists)
+          .calledWith("MI-1234.R00.00")
+          .mockReturnValue(true);
+        // entire id will exist in the database (this will cause validation to fail so we can check the warning message)
+        when(ChangeRequestDataApi.packageExists)
+          .calledWith("MI-1234.R03.00")
+          .mockReturnValue(true);
 
-      //   render(
-      //     <AppContext.Provider
-      //       value={{
-      //         ...stateSubmitterInitialAuthState,
-      //       }}
-      //     >
-      //       <Router history={history}>
-      //         <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
-      //       </Router>
-      //     </AppContext.Provider>
-      //   );
+        render(
+          <AppContext.Provider
+            value={{
+              ...stateSubmitterInitialAuthState,
+            }}
+          >
+            <Router history={history}>
+              <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+            </Router>
+          </AppContext.Provider>
+        );
 
-      //   // setting the form up for a renewal type
-      //   const actionTypeEl = screen.getByLabelText("Action Type");
-      //   const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
-      //   userEvent.selectOptions(actionTypeEl, "renewal");
-      //   userEvent.selectOptions(waiverAuthorityEl, "1915(b)");
+        // setting the form up for a renewal type
+        const actionTypeEl = screen.getByLabelText("Action Type");
+        const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
+        userEvent.selectOptions(actionTypeEl, "renewal");
+        userEvent.selectOptions(waiverAuthorityEl, "1915(b)");
 
-      //   const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
+        const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
 
-      //   userEvent.type(transmittalNumberEl, testId);
-      //   await waitFor(() => screen.getByText(existErrorMessage));
-      // });
+        userEvent.type(transmittalNumberEl, testId);
+        await waitFor(() => screen.getByText(existErrorMessage));
+      });
     });
   });
 
