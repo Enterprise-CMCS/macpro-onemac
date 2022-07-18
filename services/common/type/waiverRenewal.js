@@ -10,7 +10,7 @@ export const waiverRenewal = {
     {
       idMustExist: true,
       errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R00.00",
+      existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}",
     },
     // DON'T want the entire Waiver number with renewal portion to exist
     {

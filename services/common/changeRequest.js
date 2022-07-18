@@ -256,7 +256,7 @@ export const CONFIG = {
         },
       ],
       idFormat: "SS-####.R00.00 or SS-#####.R00.00",
-      idRegex: "^[A-Z]{2}[-][0-9]{4,5}.R00.00$",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
       idFAQLink: ROUTES.FAQ_BASE_1915B_WAIVER_ID,
       idExistValidations: [
         {
@@ -286,20 +286,20 @@ export const CONFIG = {
         { text: "Must follow the format SS-####.R##.00 or SS-#####.R##.00" },
       ],
       idFormat: "SS-####.R##.00 or SS-#####.R##.00",
-      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.]00$",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R(0[1-9]|[1-9][0-9])[.]00$",
       idFAQLink: ROUTES.FAQ_1915B_WAIVER_RENEWAL_ID,
       idExistValidations: [
         // Want the base waiver number to exist
-        // {
-        //   idMustExist: true,
-        //   errorLevel: "warn",
-        //  existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}.R00.00",
-        // },
+        {
+          idMustExist: true,
+          errorLevel: "warn",
+          existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}",
+          existenceAppend: ".R00.00",
+        },
         // DON'T want the entire Waiver number with renewal portion to exist
         {
           idMustExist: false,
           errorLevel: "error",
-          // existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}.00",
         },
       ],
     },
