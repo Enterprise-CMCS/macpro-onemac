@@ -12,6 +12,11 @@ Run this lambda to delete the components used in the automated testing. Right no
 
 Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message onto the addtionalInfo
 
+#### batchUpdateChangeRequestId
+
+Update a set of change requests given a csv format input. Each id will be updated based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message to the addtionalInfo
+NOTE: Convert excel to csv and paste the file into aws lambda test event json. Then use the format json button in the console to properly format newlines.
+
 ### Setup
 
 From the admin directory run:
@@ -32,14 +37,14 @@ serverless invoke local --function resetData --stage dev --env IS_OFFLINE=true
 
 #### AWS Console
 
-- Navigate to the lambda named admin-${stage}-updateChangeRequestId (such as admin-production-updateChangeRequestId)
-- Create (or open) a test event with the json format as found in admin/handlers/updateChangeRequest.json
+- Navigate to the lambda you wish to run for example: admin-production-updateChangeRequestId
+- Create (or open) a test event with the json format as found in the sample json. For example: admin/handlers/updateChangeRequest.json
 - Execute the test event and verify logs in cloudwatch
 
 #### AWS CLI
 
 - Setup aws cli environment variables (from kion)
-- setup json event using template found in admin/handlers/updateChangeRequest.json
+- setup json event using template found in sample json. For example: admin/handlers/updateChangeRequest.json
 - execute (this example is using stage production and the template file)
 
 ```
