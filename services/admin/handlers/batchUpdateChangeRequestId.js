@@ -59,6 +59,8 @@ exports.main = async function (event) {
         switch (item) {
           case "Medicaid SPA":
             return "spa";
+          case "Medicaid SPA RAI":
+            return "sparai";
           default:
             return item;
         }
