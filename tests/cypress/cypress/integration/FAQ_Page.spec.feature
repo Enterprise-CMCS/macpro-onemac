@@ -36,6 +36,12 @@ Feature: OY2_Update_Text_on_FAQ_Page
         Given I am on Login Page
         When Clicking on FAQ Tab
         And Verify Waivers Section Exists
+        And verify What format is used to enter a 1915b Base Waiver number header is visible
+        And click What format is used to enter a 1915b Base Waiver number header
+        And verify What format is used to enter a 1915b Base Waiver number body is visible
+        And verify What format is used to enter a 1915b Waiver Renewal number header is visible
+        And click What format is used to enter a 1915b Waiver Renewal number header
+        And verify What format is used to enter a 1915b Waiver Renewal number is visible
         And Verify What format is used to enter a 1915b waiver number is displayed and click it
         And Verify text contains "Waiver number must follow the format"
         And Verify Who can I contact to help me figure out the correct 1915b Waiver Number is displayed and click it
