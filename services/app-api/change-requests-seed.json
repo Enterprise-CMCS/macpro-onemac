@@ -329,7 +329,7 @@
     "transmittalNumberWarningMessage": "",
     "id": "8ffff910-d093-11ec-ae7d-b5a398c43e46",
     "state": "submitted",
-    "transmittalNumber": "MI.1122.R01",
+    "transmittalNumber": "MI-1122.R01.00",
     "submittedAt": 1652209273765,
     "user": {
       "firstName": "Angie",
@@ -406,7 +406,7 @@
     "submittedAt": 1652815531339,
     "summary": "",
     "territory": "MD",
-    "transmittalNumber": "MD.10330.R01",
+    "transmittalNumber": "MD-10330.R01.00",
     "transmittalNumberWarningMessage": "",
     "type": "waiver",
     "uploads": [

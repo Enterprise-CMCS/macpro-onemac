@@ -13,6 +13,7 @@ import PopupMenu from "../../components/PopupMenu";
 import PortalTable from "../../components/PortalTable";
 import { FormLocationState } from "../../domain-types";
 import { useAppContext } from "../../libs/contextLib";
+import { OneMACDetail } from "../../libs/detailLib";
 import PackageApi from "../../utils/PackageApi";
 import { ComponentDetail } from "../DetailView";
 
@@ -24,10 +25,11 @@ type PopupMenuItem = {
 } & Record<string, any>;
 
 export const TemporaryExtensionSection: FC<{
+  pageConfig: OneMACDetail;
   detail: ComponentDetail;
   loadDetail: () => void;
   setAlertCode: (code: string) => void;
-}> = ({ detail, loadDetail, setAlertCode }) => {
+}> = ({ pageConfig, detail, loadDetail, setAlertCode }) => {
   const { userProfile } = useAppContext() ?? {};
   const userRoleObj = getUserRoleObj(userProfile?.userData?.roleList);
 
@@ -124,19 +126,24 @@ export const TemporaryExtensionSection: FC<{
     <section id="temp-ext-base" className="read-only-submission ">
       <div className="mini-dashboard-title">
         <h2>Temporary Extensions</h2>
-        <Link<FormLocationState>
-          to={{
-            pathname: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
-            state: {
-              parentId: detail.componentId,
-              parentType: detail.componentType,
-            },
-          }}
-        >
-          <Button id="new-temp-ext-button" variation="primary">
-            Request Extension
-          </Button>
-        </Link>
+        {userRoleObj.canAccessForms &&
+          pageConfig.actionsByStatus[detail.currentStatus]?.includes(
+            Workflow.PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION
+          ) && (
+            <Link<FormLocationState>
+              to={{
+                pathname: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
+                state: {
+                  parentId: detail.componentId,
+                  parentType: detail.componentType,
+                },
+              }}
+            >
+              <Button id="new-temp-ext-button" variation="primary">
+                Request Extension
+              </Button>
+            </Link>
+          )}
       </div>
       <div className="ds-u-padding-top--3" />
       <PortalTable
