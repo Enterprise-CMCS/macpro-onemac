@@ -13,25 +13,7 @@ class WaiverRAI {
    * @returns {String} any errors
    */
   async fieldsValid(data) {
-    let areFieldsValid = false;
-    let whyNot = "";
-    let doesExist = false;
-    try {
-      doesExist = await packageExists(data.transmittalNumber);
-    } catch (error) {
-      console.log("WaiverRAI packageExists call error: ", error);
-      throw error;
-    }
-    if (doesExist) {
-      console.log("the Item exists");
-      areFieldsValid = true;
-    } else {
-      console.log("result.Item does not exist");
-      areFieldsValid = false;
-      whyNot = RESPONSE_CODE.ID_NOT_FOUND;
-    }
-
-    return { areFieldsValid, whyNot };
+    return { areFieldsValid: true, whyNot: "" };
   }
 
   /**
