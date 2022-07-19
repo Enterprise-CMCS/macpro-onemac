@@ -948,7 +948,7 @@ And("Verify General Section Exists", () => {
 And(
   "Verify What browsers can I use to access the system link is displayed and click it",
   () => {
-    OneMacFAQPage.verifyVerifyWhatbrowserscanIusetoaccessthesystemlinkisdisplayedandclickit();
+    OneMacFAQPage.verifyVerifywhatBrowsersHeaderBtnlinkisdisplayedandclickit();
   }
 );
 
@@ -2391,3 +2391,39 @@ And("verify actions column is unavailable", () => {
 And("verify the first RAI Response header is titled", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderTitle();
 });
+And(
+  "verify What format is used to enter a 1915b Base Waiver number header is visible",
+  () => {
+    OneMacFAQPage.verifyBaseWaiverFormatHeaderBtnExists();
+  }
+);
+And(
+  "click What format is used to enter a 1915b Base Waiver number header",
+  () => {
+    OneMacFAQPage.clickBaseWaiverFormatHeaderBtn();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b Base Waiver number body is visible",
+  () => {
+    OneMacFAQPage.verifyBaseWaiverFormatBody();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b Waiver Renewal number header is visible",
+  () => {
+    OneMacFAQPage.verifyWaiverRenewalFormatHeaderBtnExists();
+  }
+);
+And(
+  "click What format is used to enter a 1915b Waiver Renewal number header",
+  () => {
+    OneMacFAQPage.clickWaiverRenewalFormatHeaderBtn();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b Waiver Renewal number is visible",
+  () => {
+    OneMacFAQPage.verifyWaiverRenewalFormatBody();
+  }
+);

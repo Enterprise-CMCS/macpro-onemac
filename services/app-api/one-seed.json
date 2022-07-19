@@ -4720,17 +4720,17 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1655844289419/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
       }
     ],
-    "componentId": "MD.5533.R00.00",
+    "componentId": "MD-5533.R00.00",
     "waiverAuthority": "1915(b)",
     "currentStatus": "Approved",
     "submissionTimestamp": 1655844289966,
     "clockEndTimestamp": 1663620289966,
     "proposedEffectiveDate": "2022-07-03",
     "GSI1pk": "OneMAC#waiver",
-    "GSI1sk": "MD.5533.R00.00",
+    "GSI1sk": "MD-5533.R00.00",
     "sk": "v0#waivernew",
     "Latest": 2,
-    "pk": "MD.5533.R00.00",
+    "pk": "MD-5533.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
   },
@@ -4746,7 +4746,7 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1655844289419/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
       }
     ],
-    "componentId": "MD.5533.R00.00",
+    "componentId": "MD-5533.R00.00",
     "waiverAuthority": "1915(b)",
     "currentStatus": "Submitted",
     "submissionTimestamp": 1655844289966,
@@ -4754,7 +4754,7 @@
     "proposedEffectiveDate": "2022-07-03",
     "sk": "v1#waivernew",
     "Latest": 1,
-    "pk": "MD.5533.R00.00",
+    "pk": "MD-5533.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
   },
@@ -4770,7 +4770,7 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1655844289419/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
       }
     ],
-    "componentId": "MD.5533.R00.00",
+    "componentId": "MD-5533.R00.00",
     "waiverAuthority": "1915(b)",
     "currentStatus": "Approved",
     "submissionTimestamp": 1655844289966,
@@ -4778,7 +4778,7 @@
     "proposedEffectiveDate": "2022-07-03",
     "sk": "v2#waivernew",
     "Latest": 2,
-    "pk": "MD.5533.R00.00",
+    "pk": "MD-5533.R00.00",
     "submitterName": "Statesubmitter Nightwatch",
     "submitterEmail": "statesubmitter@nightwatch.test"
   }

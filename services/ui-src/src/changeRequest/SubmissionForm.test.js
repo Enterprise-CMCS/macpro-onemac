@@ -340,16 +340,16 @@ describe("Submission Form", () => {
         const waiverIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
-        const testId = "MI.1234.R00";
+        const testId = "MI-1234.R03.00";
         const existErrorMessage = `${waiverIdLabel} not found. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
         // base id will NOT exist (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234")
+          .calledWith("MI-1234.R00.00")
           .mockReturnValue(false);
         // ensure pass of second validation for entire id not existing
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234.R00")
+          .calledWith("MI-1234.R03.00")
           .mockReturnValue(false);
 
         render(
@@ -381,16 +381,16 @@ describe("Submission Form", () => {
         const waiverIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
-        const testId = "MI.1234.R00";
-        const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+        const testId = "MI-1234.R03.00";
+        const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please check the ${waiverIdLabel} and try entering it again.`;
 
         // ensure pass of first validation for base id existing
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234")
+          .calledWith("MI-1234.R00.00")
           .mockReturnValue(true);
         // entire id will exist in the database (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
-          .calledWith("MI.1234.R00")
+          .calledWith("MI-1234.R03.00")
           .mockReturnValue(true);
 
         render(

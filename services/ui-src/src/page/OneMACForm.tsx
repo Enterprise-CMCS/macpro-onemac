@@ -205,10 +205,16 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         const promises = formConfig.idExistValidations.map(
           async (idExistValidation) => {
             let checkingNumber = oneMacFormData.componentId;
-
+            if (
+              idExistValidation.validateParentId &&
+              typeof formConfig.getParentInfo == "function"
+            ) {
+              [checkingNumber] = formConfig.getParentInfo(
+                oneMacFormData.componentId
+              );
+            }
             // if (idExistValidation.existenceRegex !== undefined) {
-            //   checkingNumber = changeRequest.transmittalNumber.match(
-            //     idExistValidation.existenceRegex
+            //   checkingNumber = checkingNumber.match(idExistValidation.existenceRegex
             //   )![0];
             // }
             try {
