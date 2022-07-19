@@ -1,6 +1,4 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
-import packageExists from "../utils/packageExists";
-import { RESPONSE_CODE } from "cmscommonlib";
 
 /**
  * CHIP SPA RAI submission specific email generation functions.
@@ -12,7 +10,7 @@ class CHIPSPARAI {
    * @param {Object} data the received data
    * @returns {String} any errors
    */
-  async fieldsValid(data) {
+  async fieldsValid() {
     return { areFieldsValid: true, whyNot: "" };
   }
 
