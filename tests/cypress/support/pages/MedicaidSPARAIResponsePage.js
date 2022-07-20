@@ -15,7 +15,6 @@ const spaIDField = "#transmittalNumber";
 
 export class MedicaidSPARAIResponsePage {
   uploadRAIResponseAddFile() {
-    cy.xpath(RAIResponseAddFileBTN).clickAndScreenshot();
     const filePath = "/files/adobe.pdf";
     cy.get(RAIResponseUploadFile).attachFile(filePath);
   }
@@ -25,19 +24,16 @@ export class MedicaidSPARAIResponsePage {
   }
 
   clickSubmitBTN() {
-    cy.get(submitBTN).clickAndScreenshot();
+    cy.get(submitBTN).click();
   }
 
   uploadChipSPARAIRESPONSERevisedAmendedStatePlanLanguage() {
-    cy.xpath(RevisedAmendedStatePlanLanguageBTN)
-      .next("td")
-      .clickAndScreenshot();
+    cy.xpath(RevisedAmendedStatePlanLanguageBTN).next("td").click();
     const filePath = "/files/adobe.pdf";
     cy.get(RevisedAmendedStatePlanLanguageBTNUploadFile).attachFile(filePath);
   }
-
   uploadOfficialRAIResponse() {
-    cy.xpath(RAIResponseAddFileBTN).next("td").clickAndScreenshot();
+    cy.xpath(RAIResponseAddFileBTN).next("td").click();
     const filePath = "/files/adobe.pdf";
     cy.get(officialRAIResponseBTNUploadFile).attachFile(filePath);
   }

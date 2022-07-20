@@ -2,7 +2,6 @@ const SpaIDInput = "#componentId";
 const additionalInformationCommentBox = "//textarea[@name='summary']";
 const additionalInfoCommentBox = "//textarea[@name='additionalInformation']";
 const SPAIDErrorMessage = "#componentIdStatusMsg";
-const cancelBTN = "#form-cancel-button";
 const warningText = "//p[@class='submission-message']";
 //Element is Xpath use cy.xpath instead of cy.get
 const stayOnPageBtn = "//button[contains(text(),'Stay on Page')]";
@@ -95,13 +94,6 @@ export class oneMacSubmitNewMedicaidSPAPage {
   }
   additionalInfoTypeComment(s) {
     cy.xpath(additionalInfoCommentBox).type(s);
-  }
-
-  verifyCancelBtnExists() {
-    cy.get(cancelBTN).scrollIntoView().should("be.visible");
-  }
-  clickCancelBtn() {
-    cy.get(cancelBTN).scrollIntoView().click();
   }
   clickStayOnPageBtn() {
     cy.xpath(stayOnPageBtn).click();

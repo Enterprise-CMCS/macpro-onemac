@@ -1,4 +1,5 @@
 const submitBTN = "#form-submission-button";
+const cancelBTN = "#form-cancel-button";
 
 export class oneMacDefaultForms {
   clicksubmitBTN() {
@@ -16,6 +17,12 @@ export class oneMacDefaultForms {
   }
   verifySubmitBtnIsDisabled() {
     cy.get(submitBTN).should("be.disabled");
+  }
+  verifyCancelBtnExists() {
+    cy.get(cancelBTN).scrollIntoView().should("be.visible");
+  }
+  clickCancelBtn() {
+    cy.get(cancelBTN).scrollIntoView().click();
   }
 }
 export default oneMacDefaultForms;
