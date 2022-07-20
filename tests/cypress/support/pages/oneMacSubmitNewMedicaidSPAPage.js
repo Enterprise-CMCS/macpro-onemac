@@ -1,7 +1,6 @@
 const SpaIDInput = "#componentId";
 const additionalInformationCommentBox = "//textarea[@name='summary']";
 const additionalInfoCommentBox = "//textarea[@name='additionalInformation']";
-const submitBTN = "#form-submission-button";
 const SPAIDErrorMessage = "#componentIdStatusMsg";
 const cancelBTN = "#form-cancel-button";
 const warningText = "//p[@class='submission-message']";
@@ -98,16 +97,6 @@ export class oneMacSubmitNewMedicaidSPAPage {
     cy.xpath(additionalInfoCommentBox).type(s);
   }
 
-  clicksubmitBTN() {
-    cy.get(submitBTN).click();
-    cy.wait(8000);
-  }
-  clicksubmitBTNWithoutWait() {
-    cy.get(submitBTN).click();
-  }
-  verifySubmitBtnExists() {
-    cy.get(submitBTN).scrollIntoView().should("be.visible");
-  }
   verifyCancelBtnExists() {
     cy.get(cancelBTN).scrollIntoView().should("be.visible");
   }
