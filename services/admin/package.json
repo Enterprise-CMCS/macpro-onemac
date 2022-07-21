@@ -6,11 +6,13 @@
     "aws-sdk": "^2.752.0",
     "aws-sdk-client-mock": "^0.5.6",
     "serverless-bundle": "^5.3.0",
-    "serverless-dotenv-plugin": "^3.12.2"
+    "serverless-dotenv-plugin": "^3.12.2",
+    "serverless-offline": "^8.5.0"
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",
     "@aws-sdk/lib-dynamodb": "^3.43.0",
+    "csvtojson": "^2.0.10",
     "date-fns": "^2.16.1"
   },
   "jest": {
