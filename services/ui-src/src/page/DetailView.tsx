@@ -171,6 +171,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
               )}
               {detailTab === DetailViewTab.EXTENSION && (
                 <TemporaryExtensionSection
+                  pageConfig={pageConfig}
                   detail={detail}
                   loadDetail={loadDetail}
                   setAlertCode={setAlertCode}

@@ -230,9 +230,10 @@ export const SubmissionForm: React.FC<{
             let checkingNumber = changeRequest.transmittalNumber;
 
             if (idExistValidation.existenceRegex !== undefined) {
-              checkingNumber = changeRequest.transmittalNumber.match(
-                idExistValidation.existenceRegex
-              )![0];
+              checkingNumber =
+                changeRequest.transmittalNumber.match(
+                  idExistValidation.existenceRegex
+                )![0] + idExistValidation.existenceAppend;
             }
             try {
               result = await ChangeRequestDataApi.packageExists(checkingNumber);
