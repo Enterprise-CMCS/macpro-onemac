@@ -11,6 +11,7 @@ Feature: SPA Form Logic
         And type in SPA ID 1
         And Add "15MB.pdf" file to form 179
         And verify error message is not present on Submit New CHIP SPA Page
+        And Add file for SPA Pages
         And verify the submit button is not disabled
         And clear SPA ID Input box CHIP SPA page
         And type in invalid SPA ID on CHIP SPA page
