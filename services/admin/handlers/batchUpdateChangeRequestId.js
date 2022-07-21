@@ -16,14 +16,17 @@ const dateFormat = "dd-MMM-yy, h:mm:ss a x";
 const successIds = [];
 const errorIds = [];
 
-function validateEvent(updateArray) {
+function validateEvent(event) {
   //validate required input params
-  if (!updateArray || updateArray.length === 0) {
+  if (!event.csvUpdates) {
     throw new Error(
       "Missing event parameter - csvUpdates: must be a csv string of update objects"
     );
   }
+}
 
+function validateUpdates(updateArray) {
+  //validate required input params
   for (const update of updateArray) {
     if (
       !(
@@ -40,7 +43,7 @@ function validateEvent(updateArray) {
       );
     }
   }
-  console.log("event passed validation");
+  console.log("updates passed validation");
 }
 
 /**
@@ -51,6 +54,8 @@ function validateEvent(updateArray) {
  */
 exports.main = async function (event) {
   console.log("batchUpdateChangeRequestId.main", event);
+
+  validateEvent(event);
 
   const updateArray = await csv({
     colParser: {
@@ -68,11 +73,11 @@ exports.main = async function (event) {
     },
   }).fromString(event.csvUpdates);
 
-  validateEvent(updateArray);
+  validateUpdates(updateArray);
 
   for (const idUpdate of updateArray) {
     console.log(idUpdate);
-    //convert input submitted date to epoch; assume midnight in ET will be good enough
+    //convert input submitted date to epoch; assume midnight in ET will be close enough
     const dateSubmittedAt = parse(
       idUpdate["Date Submitted"] + ", 12:00:00 AM -04",
       dateFormat,
@@ -97,7 +102,7 @@ exports.main = async function (event) {
         ":v_type": idUpdate["Type"],
       },
     };
-    console.log("Query Params:", queryParams);
+
     const results = await dynamoDb.query(queryParams).promise();
 
     //find exact match from query results
