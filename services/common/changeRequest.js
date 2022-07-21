@@ -268,15 +268,23 @@ export const CONFIG = {
     amendmentTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
       idFieldHint: [
-        { text: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##" },
+        { text: "Must follow the format SS-####.R##.## or SS-#####.R##.##" },
       ],
-      idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
+      idFormat: "SS-####.R##.## or SS-#####.R##.##",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.](0[1-9]|[1-9][0-9])$",
+      idFAQLink: ROUTES.FAQ_1915B_WAIVER_AMENDMENT_ID,
       idExistValidations: [
+        // Want the base or renewal waiver number to exist
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+          existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}",
+          existenceAppend: ".00",
+        },
+        // DON'T want the entire Waiver number with amendment portion to exist
+        {
+          idMustExist: false,
+          errorLevel: "error",
         },
       ],
     },
