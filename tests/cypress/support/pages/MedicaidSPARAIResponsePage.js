@@ -15,7 +15,6 @@ const spaIDField = "#transmittalNumber";
 
 export class MedicaidSPARAIResponsePage {
   uploadRAIResponseAddFile() {
-    cy.xpath(RAIResponseAddFileBTN).click();
     const filePath = "/files/adobe.pdf";
     cy.get(RAIResponseUploadFile).attachFile(filePath);
   }
@@ -33,7 +32,6 @@ export class MedicaidSPARAIResponsePage {
     const filePath = "/files/adobe.pdf";
     cy.get(RevisedAmendedStatePlanLanguageBTNUploadFile).attachFile(filePath);
   }
-
   uploadOfficialRAIResponse() {
     cy.xpath(RAIResponseAddFileBTN).next("td").click();
     const filePath = "/files/adobe.pdf";
