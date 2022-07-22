@@ -79,7 +79,7 @@ describe("OneMAC Form", () => {
   });
 
   it("stays disabled even with valid ID", async () => {
-    const testID = "MI.2222";
+    const testID = "MI-2222";
 
     render(
       <AppContext.Provider
@@ -108,7 +108,7 @@ describe("OneMAC Form", () => {
 
   it("does not clear already completed form fields if submit fails.", async () => {
     const testValues = {
-      transmittalNumber: "MI.17234.R00.00",
+      transmittalNumber: "MI-17234.R00.00",
       waiverAuthority: "1915(b)",
     };
 
@@ -162,7 +162,7 @@ describe("Component Id Section", () => {
   });
 
   it("populates the component id as a display only value when passed in as a state variable", async () => {
-    const testComponentId = "MI.1122.R00.00";
+    const testComponentId = "MI-1122.R00.00";
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
     history.push({
@@ -187,7 +187,7 @@ describe("Component Id Section", () => {
 
   it("informs user that they cannot submit for an unauthorized territory", async () => {
     const territoryMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
-    const invalidFormatId = "SS.3242.R00.00";
+    const invalidFormatId = "SS-3242.R00.00";
 
     render(
       <AppContext.Provider
@@ -208,9 +208,9 @@ describe("Component Id Section", () => {
   });
 
   it("displays error message when the format id is invalid (but not when it's valid)", async () => {
-    const formatMessage = `The Base Waiver Number must be in the format of SS.####.R00.00 or SS.#####.R00.00`;
-    const invalidFormatId = "MI.12";
-    const validFormatId = "MI.11122.R00.00";
+    const formatMessage = `The Base Waiver Number must be in the format of SS-####.R00.00 or SS-#####.R00.00`;
+    const invalidFormatId = "MI-12";
+    const validFormatId = "MI-11122.R00.00";
 
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
@@ -239,7 +239,7 @@ describe("Component Id Section", () => {
   });
 
   it("displays error message when id SHOULD NOT exist but DOES", async () => {
-    const testId = "MI.1122.R00.00";
+    const testId = "MI-1122.R00.00";
     const existErrorMessage = `According to our records, this Base Waiver Number already exists. Please check the Base Waiver Number and try entering it again.`;
 
     // id will exist
@@ -274,7 +274,7 @@ describe("cancelling the form submission", () => {
 
   it("keeps the form information if cancel is cancelled", async () => {
     const testValues = {
-      transmittalNumber: "MI.17234.R00.00",
+      transmittalNumber: "MI-17234.R00.00",
       waiverAuthority: "1915(b)",
       proposedEffectiveDate: "2022-04-01",
     };
@@ -327,7 +327,7 @@ describe("cancelling the form submission", () => {
 
   it("keeps the form information if cancel is cancelled", async () => {
     const testValues = {
-      transmittalNumber: "MI.17234.R00.00",
+      transmittalNumber: "MI-17234.R00.00",
       waiverAuthority: "1915(b)",
       proposedEffectiveDate: "2022-04-01",
     };
