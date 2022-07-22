@@ -634,10 +634,6 @@ input[type="file"] {
     @extend .ds-u-margin-bottom--5;
   }
 
-  .char-count {
-    @extend .ds-u-margin-bottom--7;
-  }
-
   #additional-information-label {
     span {
       display: block;
@@ -1338,10 +1334,6 @@ article.form-container {
       @extend .ds-u-margin-bottom--1;
     }
   }
-}
-
-.char-count {
-  text-align: right;
 }
 
 .display-errors input:invalid,
