@@ -307,7 +307,7 @@ describe("Submission Form", () => {
           ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA_RAI].transmittalNumber
             .idLabel;
         const testId = "MI-12-1122";
-        const existErrorMessage = `According to our records, this ${spaRaiIdLabel} does not exist. Please check the ${spaRaiIdLabel} and try entering it again.`;
+        const existErrorMessage = `${spaRaiIdLabel} not found. Please ensure you have the correct ${spaRaiIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
         // id will NOT exist
         ChangeRequestDataApi.packageExists.mockResolvedValue(false);
