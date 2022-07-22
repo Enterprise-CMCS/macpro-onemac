@@ -106,15 +106,16 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "chipspa",
       idLabel: "SPA ID",
-      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
       idFAQLink: ROUTES.FAQ_SPA_ID,
-      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex:
-        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idFieldHint: [
+        { text: "Please use the exact CHIP SPA ID sent with the RAI" },
+      ],
+      idFormat: "the Number format sent with the RAI",
+      idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
-          errorLevel: "error",
+          errorLevel: "warn",
         },
       ],
     },
@@ -178,17 +179,18 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "spa",
       idLabel: "SPA ID",
-      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
-      idFAQLink: ROUTES.FAQ_SPA_ID,
-      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex:
-        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idFieldHint: [
+        { text: "Please use the exact Medicaid SPA ID sent with the RAI" },
+      ],
+      idFormat: "the Number format sent with the RAI",
+      idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
-          errorLevel: "error",
+          errorLevel: "warn",
         },
       ],
+      idFAQLink: ROUTES.FAQ_SPA_ID,
     },
   },
 
@@ -387,11 +389,11 @@ export const CONFIG = {
         { text: "Please use the exact Waiver Number sent with the RAI" },
       ],
       idFormat: "the Number format sent with the RAI",
-      idRegex:
-        "(^[A-Z]{2}[.-][0-9]{4,5}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}[.]M?[0-9]{2}$)",
+      idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
+          errorLevel: "warn",
         },
       ],
     },

@@ -1,9 +1,15 @@
 const waiverNumberInputBox = "#transmittalNumber";
 const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
+const firstUploadFileBtn = "#uploader-input-0";
 
 export class oneMacAppendixKAmendmentPage {
   inputWaiverNumber(s) {
     cy.get(waiverNumberInputBox).type(s);
+  }
+
+  uploadAppKAmendmentWaiverTemplate() {
+    const filePath = "/files/adobe.pdf";
+    cy.get(firstUploadFileBtn).attachFile(filePath);
   }
 
   verifyErrorMessageIsNotDisplayed() {
