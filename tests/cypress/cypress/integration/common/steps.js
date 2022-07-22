@@ -16,6 +16,7 @@ import oneMacFAQPage from "../../../support/pages/oneMacFAQPage";
 import oneMacRequestARoleChangePage from "../../../support/pages/oneMacRequestARoleChangePage";
 import oneMacPackageDetailsPage from "../../../support/pages/oneMacPackageDetailsPage";
 import oneMacRespondToRAIPage from "../../../support/pages/oneMacRespondToRAIPage";
+import oneMacDefaultForms from "../../../support/pages/oneMacDefaultForms";
 
 const medicaidSPARAIResponsePage = new MedicaidSPARAIResponsePage();
 const OneMacDashboardPage = new oneMacDashboardPage();
@@ -35,6 +36,7 @@ const OneMacFAQPage = new oneMacFAQPage();
 const OneMacRequestARoleChangePage = new oneMacRequestARoleChangePage();
 const OneMacPackageDetailsPage = new oneMacPackageDetailsPage();
 const OneMacRespondToRAIPage = new oneMacRespondToRAIPage();
+const OneMacDefaultForms = new oneMacDefaultForms();
 
 Given("I am on Login Page", () => {
   OneMacHomePage.launch();
@@ -146,10 +148,10 @@ And("Type Additonal Info Comments in new form", () => {
   );
 });
 And("Click on Submit Button", () => {
-  OneMacSubmitNewMedicaidSpaPage.clicksubmitBTN();
+  OneMacDefaultForms.clicksubmitBTN();
 });
 And("Click the Submit Button without waiting", () => {
-  OneMacSubmitNewMedicaidSpaPage.clicksubmitBTNWithoutWait();
+  OneMacDefaultForms.clicksubmitBTNWithoutWait();
 });
 And("click yes, submit RAI response button", () => {
   OneMacRespondToRAIPage.clickYesSubmitBTN();
@@ -161,13 +163,13 @@ And("verify submission warning text", () => {
   OneMacSubmitNewMedicaidSpaPage.verifySubmissionWarningText();
 });
 And("verify the form Submit Button exists", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifySubmitBtnExists();
+  OneMacDefaultForms.verifySubmitBtnExists();
 });
 And("verify form cancel button exists", () => {
-  OneMacSubmitNewMedicaidSpaPage.verifyCancelBtnExists();
+  OneMacDefaultForms.verifyCancelBtnExists();
 });
 And("click form cancel button", () => {
-  OneMacSubmitNewMedicaidSpaPage.clickCancelBtn();
+  OneMacDefaultForms.clickCancelBtn();
 });
 And("click Leave Anyway form button", () => {
   OneMacSubmitNewMedicaidSpaPage.clickLeaveAnywayBtn();
@@ -208,32 +210,35 @@ And("verify SPA ID for RAI 2 EXISTS", () => {
 });
 And("verify CHIP ID EXISTS", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyIDNumber(d.chipSPAID1);
+    OneMacDashboardPage.verifyIDNumber(d.spaID1);
   });
 });
 
 And("type in CHIP ID", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.chipSPAID1);
+    OneMacCHIPSPAPage.inputSpaID(d.spaID1);
   });
 });
 And("type in CHIP ID 2", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacCHIPSPAPage.inputSpaID(d.chipSPAID2);
+    OneMacCHIPSPAPage.inputSpaID(d.spaID2);
+  });
+});
+And("type in CHIP ID 3", () => {
+  cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
+    OneMacCHIPSPAPage.inputSpaID(d.spaID3);
   });
 });
 
 And("click on CHIP Respond to RAI", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.chipSPAID1);
+    OneMacDashboardPage.clickOnrespondToRAI(d.SPAID1);
   });
 });
 
 And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(
-      d.chipSPAID1
-    );
+    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(d.SPAID1);
   });
 });
 
@@ -562,8 +567,10 @@ And("Click on New Waiver under Action type", () => {
 });
 
 And("type in a correct Waiver Number with 4 characters", () => {
-  cy.fixture("raiWaiverNumber4.txt", (num) => {
-    OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(num);
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      d.formatWaiverTestNumber1
+    );
   });
 });
 
@@ -579,7 +586,11 @@ And("clear Waiver Number Input box in old form", () => {
 });
 
 And("type in a correct Waiver Number with 5 characters", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.72988");
+  cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
+      d.formatWaiverTestNumber2
+    );
+  });
 });
 
 And("type in invalid Waiver Number", () => {
@@ -923,6 +934,9 @@ And("Add file for Revised Amended State Plan Language", () => {
 
 And("Add file for Official RAI Response", () => {
   medicaidSPARAIResponsePage.uploadOfficialRAIResponse();
+});
+And("Add file for 1915c Appendix K Amendment Waiver Template", () => {
+  OneMacAppendixKAmendmentPage.uploadAppKAmendmentWaiverTemplate();
 });
 
 When("Login with cms role approver Revoked", () => {
@@ -2427,3 +2441,9 @@ And(
     OneMacFAQPage.verifyWaiverRenewalFormatBody();
   }
 );
+And("verify the submit button is not disabled", () => {
+  OneMacDefaultForms.verifySubmitBtnIsNotDisabled();
+});
+And("verify the submit button is disabled", () => {
+  OneMacDefaultForms.verifySubmitBtnIsDisabled();
+});
