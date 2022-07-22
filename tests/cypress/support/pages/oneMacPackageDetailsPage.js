@@ -14,10 +14,10 @@ const date90thDay = "//h3[contains(text(),'90th Day')]";
 const packageActionsHeader =
   "//div[@class='detail-card']//section[@class='package-actions']//h2";
 const packageActionsList = "//ul[@class='action-list']";
-const respondToRAIAction = "//button[text()='Respond to RAI']";
-const withdrawPackageAction = "//button[text()='Withdraw']";
+const respondToRAIAction = "//a[text()='Respond to RAI']";
+const withdrawPackageAction = "//a[text()='Withdraw']";
 const requestTempExtensionPackageAction =
-  "//button[text()='Request a Temporary Extension']";
+  "//a[text()='Request a Temporary Extension']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(text(),'Package')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
@@ -41,7 +41,7 @@ const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
 const successMessage = "#alert-bar";
 const withdrawConfirmationBtn = "//button[text()='Withdraw?']";
-const withdrawBtn = "//button[text()='Withdraw']";
+const withdrawBtn = "//a[text()='Withdraw']";
 const amendmentHeaders = "//h2[text()='Waiver Amendment']";
 const tempExtensionsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Temporary Extension']";

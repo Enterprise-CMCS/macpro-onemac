@@ -230,9 +230,10 @@ export const SubmissionForm: React.FC<{
             let checkingNumber = changeRequest.transmittalNumber;
 
             if (idExistValidation.existenceRegex !== undefined) {
-              checkingNumber = changeRequest.transmittalNumber.match(
-                idExistValidation.existenceRegex
-              )![0];
+              checkingNumber =
+                changeRequest.transmittalNumber.match(
+                  idExistValidation.existenceRegex
+                )![0] + idExistValidation.existenceAppend;
             }
             try {
               result = await ChangeRequestDataApi.packageExists(checkingNumber);
@@ -291,29 +292,34 @@ export const SubmissionForm: React.FC<{
         displayMessage = formatMessage;
         setTransmittalNumberStatusMessage(displayMessage);
       }
-
-      let formReady = false;
-      if (
-        (!formInfo.actionType || changeRequest.actionType) &&
-        (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
-        (displayMessage.statusLevel === "warn" ||
-          !displayMessage.statusMessage) &&
-        areUploadsReady
-      )
-        formReady = true;
-
-      setIsSubmissionReady(formReady);
     } catch (err) {
       console.log("error is: ", err);
       setAlertCode(RESPONSE_CODE[(err as Error).message]);
     }
   }, [
-    areUploadsReady,
     changeRequest,
-    formInfo,
     transmittalNumberDetails,
     validateTransmittalNumber,
     alertCode,
+  ]);
+
+  useEffect(() => {
+    let formReady = false;
+    if (
+      (!formInfo.actionType || changeRequest.actionType) &&
+      (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
+      (transmittalNumberStatusMessage.statusLevel === "warn" ||
+        !transmittalNumberStatusMessage.statusMessage) &&
+      areUploadsReady
+    )
+      formReady = true;
+
+    setIsSubmissionReady(formReady);
+  }, [
+    areUploadsReady,
+    changeRequest,
+    formInfo,
+    transmittalNumberStatusMessage,
   ]);
 
   const limitSubmit = useRef(false);

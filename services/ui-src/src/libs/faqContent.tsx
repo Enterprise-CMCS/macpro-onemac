@@ -451,6 +451,84 @@ export const oneMACFAQContent: FAQContent[] = [
     sectionTitle: "Waivers",
     qanda: [
       {
+        anchorText: "base-waiver-id-format",
+        question: "What format is used to enter a 1915(b) Base Waiver number?",
+        answerJSX: (
+          <>
+            <p>
+              1915(b) Base Waiver numbers must follow the format SS-####.R00.00
+              or SS-#####.R00.00 to include:
+            </p>
+            <ul>
+              <li>SS = 2 character state abbreviation</li>
+              <li>##### = 4 or 5 digit waiver base number</li>
+              <li>R00 = base number</li>
+              <li>00 = amendment number (00 for bases)</li>
+            </ul>
+            <p>
+              State abbreviation is separated by dash (-) and later sections are
+              separated by periods (.). For example, the waiver number
+              KY-0003.R00.00 is a waiver for the state of Kentucky, with a base
+              waiver number of 0003, no renewal number (R00), and no amendment
+              number (00).
+            </p>
+          </>
+        ),
+      },
+      {
+        anchorText: "waiver-renewal-id-format",
+        question:
+          "What format is used to enter a 1915(b) Waiver Renewal number?",
+        answerJSX: (
+          <>
+            <p>
+              1915(b) Waiver Renewal must follow the format SS-####.R##.00 or
+              SS-#####.R##.00 to include:
+            </p>
+            <ul>
+              <li>SS = 2 character state abbreviation</li>
+              <li>####(#)= 4 or 5 digit waiver base number</li>
+              <li>R## = renewal number (R01, R02, ...)</li>
+              <li>00 = amendment number (00 for renewals)</li>
+            </ul>
+            <p>
+              State abbreviation is separated by dash (-) and later sections are
+              separated by periods (.). For example, the waiver number
+              KY-0003.R02.00 is a waiver for the state of Kentucky, with a base
+              waiver number of 0003, a second renewal (R02), and no amendment
+              number (00).
+            </p>
+          </>
+        ),
+      },
+      {
+        anchorText: "waiver-amendment-id-format",
+        question:
+          "What format is used to enter a 1915(b) Waiver Amendment number?",
+        answerJSX: (
+          <>
+            <p>
+              1915(b) Waiver Amendment must follow the format SS-####.R##.## or
+              SS-#####.R##.## to include:
+            </p>
+            <ul>
+              <li>SS = 2 character state abbreviation</li>
+              <li>####(#)= 4 or 5 digit waiver base number</li>
+              <li>R## = renewal number (R01, R02, ...)</li>
+              <li>## = amendment number (01)</li>
+            </ul>
+            <p>
+              State abbreviation is separated by dash (-) and later sections are
+              separated by periods (.). For example, the waiver number
+              KY-0003.R02.02 is a waiver for the state of Kentucky, with a base
+              waiver number of 0003, a second renewal (R02), and a second
+              amendment (02). Amendments for base waivers without renewals
+              should use “R00” as their renewal number.
+            </p>
+          </>
+        ),
+      },
+      {
         anchorText: "waiver-id-format",
         question: "What format is used to enter a 1915(b) waiver number?",
         answerJSX: (
@@ -498,8 +576,8 @@ export const oneMACFAQContent: FAQContent[] = [
         answerJSX: (
           <>
             <p>
-              Waiver number must follow the format SS.####.R##.## or
-              SS.#####.R##.## to include:
+              Waiver number must follow the format SS-####.R##.## or
+              SS-#####.R##.## to include:
             </p>
             <ul>
               <li>SS = 2 character state abbreviation</li>
@@ -511,8 +589,9 @@ export const oneMACFAQContent: FAQContent[] = [
               <li>## = appendix K amendment number (01)</li>
             </ul>
             <p>
-              All separated by periods (.). For example, the waiver number
-              KY.0003.R02.02 is a waiver for the state of Kentucky, with a base
+              State abbreviation is followed by a dash (-). All other sections
+              are separated by periods (.). For example, the waiver number
+              KY-0003.R02.02 is a waiver for the state of Kentucky, with a base
               waiver number of 0003, the second renewal (R02) and the second
               appendix K amendment (02). Base waivers without renewals should
               use “R00” as their renewal number.
@@ -657,10 +736,10 @@ export const oneMACFAQContent: FAQContent[] = [
                 <tr>
                   <td>Waiver Extension Request*</td>
                   <td>
-                    A formal letter addressed to the Deputy Director of the
-                    Division of Disabled and Elderly Health Programs Group
-                    (DEHPG) requesting a temporary extension beyond the current
-                    approved waiver period
+                    A formal letter addressed to Carrie Smith, Deputy Director
+                    of the Disabled and Elderly Health Program Group (DEHPG),
+                    requesting a temporary extension beyond the current approved
+                    waiver period.
                   </td>
                 </tr>
                 <tr>
