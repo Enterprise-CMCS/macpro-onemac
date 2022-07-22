@@ -1,4 +1,4 @@
-import React, { useEffect, forwardRef } from "react";
+import React from "react";
 import {
   render,
   screen,
@@ -94,7 +94,7 @@ describe("Submission Form", () => {
     // values after a failed Submit
     it("does not clear already completed form fields if submit fails. (oy2-3734)", async () => {
       const testValues = {
-        transmittalNumber: "MI.17234.R03.M22",
+        transmittalNumber: "MI-17234.R03.22",
         actionType: "amendment",
         waiverAuthority: "1915(b)",
       };
@@ -463,7 +463,7 @@ it("successfully submits the form", async () => {
   //  history.push("/waiver");
 
   const testValues = {
-    transmittalNumber: "MI.17234.R03.M22",
+    transmittalNumber: "MI-17234.R03.22",
     actionType: "amendment",
     waiverAuthority: "1915(b)",
   };
@@ -512,7 +512,7 @@ it("successfully submits the form", async () => {
 describe("cancelling the form submission", () => {
   it("keeps the form information if cancel is cancelled", async () => {
     const testValues = {
-      transmittalNumber: "MI.17234.R03.M22",
+      transmittalNumber: "MI-17234.R03.22",
       actionType: "amendment",
       waiverAuthority: "1915(b)",
     };
