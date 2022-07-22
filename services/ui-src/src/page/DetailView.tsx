@@ -158,7 +158,8 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
               <VerticalNav items={pageConfig.navItems} selectedId={detailTab} />
             )}
             <article className="component-detail">
-              {detailTab === DetailViewTab.DETAIL && (
+              {(detailTab === DetailViewTab.DETAIL ||
+                detailTab === DetailViewTab.MAIN) && (
                 <DetailSection
                   pageConfig={pageConfig}
                   detail={detail}
