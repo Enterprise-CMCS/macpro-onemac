@@ -274,23 +274,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         displayMessage = formatMessage;
         setComponentIdStatusMessage(displayMessage);
       }
-
-      const isWaiverAuthorityReady: boolean = Boolean(
-        !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
-      );
-      const isProposedEffecitveDateReady: boolean = Boolean(
-        !formConfig.proposedEffectiveDate ||
-          oneMacFormData.proposedEffectiveDate
-      );
-      const hasNoErrors: boolean =
-        displayMessage.statusLevel === "warn" || !displayMessage.statusMessage;
-
-      setIsSubmissionReady(
-        isWaiverAuthorityReady &&
-          hasNoErrors &&
-          areUploadsReady &&
-          isProposedEffecitveDateReady
-      );
     } catch (err) {
       console.log("error is: ", err);
       setAlertCode(RESPONSE_CODE[(err as Error).message]);
@@ -302,6 +285,25 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     validateComponentId,
     alertCode,
   ]);
+
+  useEffect(() => {
+    const isWaiverAuthorityReady: boolean = Boolean(
+      !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
+    );
+    const isProposedEffecitveDateReady: boolean = Boolean(
+      !formConfig.proposedEffectiveDate || oneMacFormData.proposedEffectiveDate
+    );
+    const hasNoErrors: boolean =
+      componentIdStatusMessage.statusLevel === "warn" ||
+      !componentIdStatusMessage.statusMessage;
+
+    setIsSubmissionReady(
+      isWaiverAuthorityReady &&
+        hasNoErrors &&
+        areUploadsReady &&
+        isProposedEffecitveDateReady
+    );
+  }, [areUploadsReady, componentIdStatusMessage, formConfig, oneMacFormData]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
