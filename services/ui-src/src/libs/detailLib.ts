@@ -48,6 +48,7 @@ export const proposedEffectiveDateDefault: AttributeDetail = {
 };
 
 export enum DetailViewTab {
+  MAIN = "main",
   DETAIL = "component-details",
   ADDITIONAL = "additional-info",
   EXTENSION = "temp-extension",
