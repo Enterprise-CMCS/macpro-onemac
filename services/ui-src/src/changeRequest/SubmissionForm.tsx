@@ -457,9 +457,6 @@ export const SubmissionForm: React.FC<{
               value={changeRequest.summary}
               maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
             ></TextField>
-            <div className="char-count">
-              {changeRequest.summary.length}/{config.MAX_ADDITIONAL_INFO_LENGTH}
-            </div>
           </div>
           <div className="form-buttons">
             <p className="submission-message">

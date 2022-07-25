@@ -472,10 +472,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             value={oneMacFormData.additionalInformation}
             maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
           ></TextField>
-          <div className="char-count">
-            {oneMacFormData.additionalInformation.length}/
-            {config.MAX_ADDITIONAL_INFO_LENGTH}
-          </div>
           <p id="form-submit-instructions">
             <i>
               Once you submit this form, a confirmation email is sent to you and
