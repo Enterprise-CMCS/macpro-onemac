@@ -96,6 +96,9 @@ provider:
     productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
+  tracing:
+    apiGateway: true
+    lambda: true
 
 functions:
 
