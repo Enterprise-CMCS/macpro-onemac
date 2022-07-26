@@ -62,4 +62,4 @@ functions:
 
   batchUpdateChangeRequestId:
     handler: ./handlers/batchUpdateChangeRequestId.main
-    timeout: 240
+    timeout: 180
