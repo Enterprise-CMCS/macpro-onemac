@@ -4,7 +4,7 @@ export const baseWaiver = {
   typeLabel: "1915(b) Base Waiver",
   idType: "waiver",
   idLabel: "Base Waiver Number",
-  idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R00.00$",
+  idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
   idExistValidations: [
     {
       idMustExist: false,
