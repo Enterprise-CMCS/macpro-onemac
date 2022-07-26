@@ -375,7 +375,7 @@ export const CONFIG = {
     pageTitle: "Respond to Waiver RAI",
     readOnlyPageTitle: "Waiver RAI Response Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],
