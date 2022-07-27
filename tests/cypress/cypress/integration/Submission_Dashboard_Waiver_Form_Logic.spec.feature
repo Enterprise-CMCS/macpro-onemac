@@ -12,7 +12,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on All other 1915 b Waivers under Waiver Authority
         And type in invalid Waiver Number
         And Type "This is just a comment" in Summary Box
-        And verify error message is present on New Waiver Page
+        And verify error message is present on submission dashboard New Waiver Page
         And verify the submit button is disabled
 
     Scenario: Validate Waiver Form Logic for Waiver Amendment and 1915(b)
@@ -20,12 +20,17 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on Waiver Amendment under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
         And type in invalid Waiver Number
-        And verify error message is present on New Waiver Page
+        And Upload 1915 b 4 file
+        And verify error message is present on submission dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Waiver Number Input box in old form
         And type in Existing Waiver Number in old form
-        And verify error message is present on New Waiver Page
+        And verify error message is present on submission dashboard New Waiver Page
         And verify the submit button is disabled
+        And clear Waiver Number Input box in old form
+        And type in valid waiver amendment number in old forms 
+        And verify error message is not present on New Waiver Page
+        And verify the submit button is not disabled 
 
 
     Scenario: Validate Waiver Form Logic for Waiver Renewal and All other
@@ -34,7 +39,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on All other 1915 b Waivers under Waiver Authority
         And type in Existing Waiver Number in old form
         And Upload 1915 b 4 file
-        And verify error message is present on New Waiver Page
+        And verify error message is present on submission dashboard New Waiver Page
         And verify the submit button is disabled
 
     Scenario: Verify the Waiver Number format on Submit New Waiver Action
@@ -53,7 +58,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And clear Waiver Number Input box in old form
         And verify the submit button is disabled
         And type in invalid Waiver Number
-        And verify error message is present on New Waiver Page
+        And verify error message is present on submission dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Waiver Number Input box in old form
         And verify the submit button is disabled

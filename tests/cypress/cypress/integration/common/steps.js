@@ -597,9 +597,12 @@ And("type in invalid Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.123456");
 });
 
-And("verify error message is present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
-});
+And(
+  "verify error message is present on submission dashboard New Waiver Page",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
+  }
+);
 
 And("Click on Request Temporary Extension", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
@@ -762,14 +765,14 @@ And("Type new Waiver Number for RAI in format SS-#####.R00.00", () => {
     );
   });
 });
-And("Type Base Waiver Number in format SS.#####.R00.00", () => {
+And("Type Base Waiver Number in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber1
     );
   });
 });
-And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
+And("Type Base Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber2
@@ -2446,4 +2449,14 @@ And("verify the submit button is not disabled", () => {
 });
 And("verify the submit button is disabled", () => {
   OneMacDefaultForms.verifySubmitBtnIsDisabled();
+});
+
+And("type in valid waiver amendment number in old forms", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-10330.R01.01");
+});
+And("type base waiver number in old format SS.####.R00.00", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.1055.R00.00");
+});
+And("type base waiver number in old format SS.#####.R00.00", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.10555.R00.00");
 });
