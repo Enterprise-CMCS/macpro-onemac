@@ -19,7 +19,7 @@ Feature: Update Waiver Form: Base Waiver
         And type base waiver number in old format SS.####.R00.00
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
-        And verify that error message for incorrect Waiver Number is Displayed
+        And verify error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Waiver Number Input box in new form
         And Type Base Waiver Number in format SS-#####.R00.00
@@ -27,7 +27,7 @@ Feature: Update Waiver Form: Base Waiver
         And verify the submit button is not disabled
         And clear Waiver Number Input box in new form
         And type base waiver number in old format SS.#####.R00.00
-        And verify that error message for incorrect Waiver Number is Displayed
+        And verify error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Waiver Number Input box in new form
 

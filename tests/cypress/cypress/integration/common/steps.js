@@ -2460,3 +2460,9 @@ And("type base waiver number in old format SS.####.R00.00", () => {
 And("type base waiver number in old format SS.#####.R00.00", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.10555.R00.00");
 });
+And(
+  "verify error message is present on package dashboard New Waiver Page",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsDisplayed();
+  }
+);
