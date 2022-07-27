@@ -58,7 +58,7 @@ export class oneMacDashboardPage {
   }
 
   verifyIDNumber(s) {
-    cy.xpath(IDNUMBER(s)).should("be.visible");
+    cy.xpath(IDNUMBER(s)).scrollIntoView().should("be.visible");
   }
   clickIDNumberLink(s) {
     cy.xpath(IDNUMBER(s)).click();

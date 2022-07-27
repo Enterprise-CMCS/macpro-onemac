@@ -232,7 +232,7 @@ And("type in CHIP ID 3", () => {
 
 And("click on CHIP Respond to RAI", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.SPAID1);
+    OneMacDashboardPage.clickOnrespondToRAI(d.spaID1);
   });
 });
 
@@ -266,7 +266,7 @@ And("Verify submission Waiver type", () => {
 
 And("Verify submission CHIP type", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.chipSPAID1, "CHIP SPA");
+    OneMacDashboardPage.verifyTypeForID(d.spaID1, "CHIP SPA");
   });
 });
 And("click on spa Respond to RAI 2", () => {
