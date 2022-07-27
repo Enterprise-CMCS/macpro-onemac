@@ -217,7 +217,8 @@ export const SubmissionForm: React.FC<{
       warningMessageCode: "",
     };
 
-    let existMessages: Message[] = [];
+    let redMessages: Message[] = [];
+    let blueMessages: Message[] = [];
     let result = false;
     try {
       if (
@@ -277,16 +278,20 @@ export const SubmissionForm: React.FC<{
                 statusMessage: tempMessage as string,
                 warningMessageCode: tempCode,
               };
-              tempMessage && existMessages.push(messageToAdd);
+              if (tempMessage) {
+                if (messageToAdd.statusLevel === "error")
+                  redMessages.push(messageToAdd);
+                else blueMessages.push(messageToAdd);
+              }
             });
           })
           .then(() => {
-            if (existMessages.length > 0) {
-              displayMessage = existMessages[0];
-              setTransmittalNumberStatusMessage(displayMessage);
-            } else {
-              setTransmittalNumberStatusMessage(displayMessage);
+            if (redMessages.length > 0) {
+              displayMessage = redMessages[0];
+            } else if (blueMessages.length > 0) {
+              displayMessage = blueMessages[0];
             }
+            setTransmittalNumberStatusMessage(displayMessage);
           });
       } else {
         displayMessage = formatMessage;
