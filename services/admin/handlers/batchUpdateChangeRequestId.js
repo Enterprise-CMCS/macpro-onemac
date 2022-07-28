@@ -72,6 +72,8 @@ exports.main = async function (event) {
             return "waiverrai";
           case "Temporary Extension Request":
             return "waiverextension";
+          case "1915(c) Appendix K Amendment":
+            return "waiverappk";
           default:
             return item;
         }
