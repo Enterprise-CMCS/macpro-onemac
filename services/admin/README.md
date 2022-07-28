@@ -50,3 +50,17 @@ serverless invoke local --function resetData --stage dev --env IS_OFFLINE=true
 ```
 serverless invoke --function updateChangeRequestId --stage production --path ./handlers/updateChangeRequest.json
 ```
+
+### Deploy to Prod
+
+- if this is the first time deploying a particular lambda (function)
+
+```
+serverless deploy --stage production
+```
+
+- otherwise: inside the admin folder:
+
+```
+serverless deploy --function updateChangeRequestId --stage production
+```
