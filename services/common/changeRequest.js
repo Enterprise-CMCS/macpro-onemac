@@ -364,15 +364,24 @@ export const CONFIG = {
       idFAQLink: ROUTES.FAQ_WAIVER_EXTENSION_ID,
       idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.]TE[0-9]{2}$)",
       idFieldHint: [
+        { text: "Must follow the format SS-####.R##.TE## or" },
         {
-          text: "Must follow the format SS-####.R##.TE## or SS-#####.R##.TE## (use R00 for waivers without renewals)",
+          text: "SS-#####.R##.TE## (use R00 for waivers without renewals)",
+          // className: "field-hint-major",
         },
       ],
+      // [
+      //   {
+      //     text: "Must follow the format SS-####.R##.TE## or SS-#####.R##.TE## (use R00 for waivers without renewals)",
+      //   },
+      // ],
       idFormat: "SS-####.R##.TE## or SS-#####.R##.TE##",
-      idExistValidations: {
-        idMustExist: false,
-        errorLevel: "error",
-      },
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
     },
   },
 
