@@ -25,7 +25,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
             - ""
-            - ${self:custom.iamPermissionsBoundaryPolicy}, ""}
+            - ${self:custom.iamPermissionsBoundaryPolicy, ""}
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
@@ -287,7 +287,7 @@ resources:
                 - - "arn:aws:iam::"
                   - Ref: AWS::AccountId
                   - ":policy"
-                  - '${self:custom.iamPermissionsBoundaryPolicy}, ""}'
+                  - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
             - Ref: AWS::NoValue
         AssumeRolePolicyDocument:
           Version: "2012-10-17"

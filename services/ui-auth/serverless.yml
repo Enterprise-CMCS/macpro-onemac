@@ -36,7 +36,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
             - ""
-            - ${self:custom.iamPermissionsBoundaryPolicy}, ""}
+            - ${self:custom.iamPermissionsBoundaryPolicy, ""}
   Resources:
     CognitoUserPool:
       Type: AWS::Cognito::UserPool
@@ -152,7 +152,7 @@ resources:
                 - - "arn:aws:iam::"
                   - Ref: AWS::AccountId
                   - ":policy"
-                  - '${self:custom.iamPermissionsBoundaryPolicy}, ""}'
+                  - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
             - Ref: AWS::NoValue
         AssumeRolePolicyDocument:
           Version: "2012-10-17"
