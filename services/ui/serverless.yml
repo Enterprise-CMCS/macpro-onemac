@@ -9,8 +9,9 @@ plugins:
 
 custom:
   stage: ${opt:stage, self:provider.stage}
-  iamPath: ${env:IAM_PATH, "/"}
   wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN, ""}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
 
 provider:
   name: aws
@@ -24,7 +25,7 @@ resources:
       Fn::Not:
         - Fn::Equals:
             - ""
-            - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
+            - ${self:custom.iamPermissionsBoundaryPolicy}, ""}
     CreateDnsRecord:
       Fn::And:
         - Fn::Not:
@@ -83,7 +84,7 @@ resources:
                 - !Sub ${S3Bucket.Arn}/*
                 - !Sub ${S3Bucket.Arn}
               Condition:
-                Bool: 
+                Bool:
                   "aws:SecureTransport": "false"
         Bucket: !Ref S3Bucket
     S3BucketCloudFrontLogs:
@@ -108,7 +109,7 @@ resources:
                 - !Sub ${S3BucketCloudFrontLogs.Arn}/*
                 - !Sub ${S3BucketCloudFrontLogs.Arn}
               Condition:
-                Bool: 
+                Bool:
                   "aws:SecureTransport": "false"
         Bucket: !Ref S3BucketCloudFrontLogs
     CloudFrontWebAcl:
@@ -201,8 +202,8 @@ resources:
               - CloudFrontWebAcl
               - Arn
           Logging:
-            Bucket: !Sub 
-              - '${CloudFrontLogsBucketName}.s3.amazonaws.com'
+            Bucket: !Sub
+              - "${CloudFrontLogsBucketName}.s3.amazonaws.com"
               - CloudFrontLogsBucketName: !Ref S3BucketCloudFrontLogs
             IncludeCookies: false
 
@@ -286,7 +287,7 @@ resources:
                 - - "arn:aws:iam::"
                   - Ref: AWS::AccountId
                   - ":policy"
-                  - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                  - '${self:custom.iamPermissionsBoundaryPolicy}, ""}'
             - Ref: AWS::NoValue
         AssumeRolePolicyDocument:
           Version: "2012-10-17"

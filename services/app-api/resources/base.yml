@@ -3,4 +3,4 @@ Conditions:
     Fn::Not:
       - Fn::Equals:
           - ""
-          - ${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}
+          - ${self:custom.iamPermissionsBoundaryPolicy}, ""}
