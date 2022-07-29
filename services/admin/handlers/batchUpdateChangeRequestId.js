@@ -66,6 +66,14 @@ exports.main = async function (event) {
             return "spa";
           case "Medicaid SPA RAI":
             return "sparai";
+          case "Waiver":
+            return "waiver";
+          case "Waiver RAI":
+            return "waiverrai";
+          case "Temporary Extension Request":
+            return "waiverextension";
+          case "1915(c) Appendix K Amendment":
+            return "waiverappk";
           default:
             return item;
         }
@@ -126,18 +134,20 @@ exports.main = async function (event) {
       format(new Date(), "EEE, MMM d yyyy") +
       ` from ${idUpdate["Old ID Format"]} to ${idUpdate["New ID Format"]}` +
       "\n\n";
-    await dynamoDb
-      .update({
-        TableName: process.env.tableName,
-        Key: { userId: result.userId, id: result.id },
-        UpdateExpression:
-          "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
-        ExpressionAttributeValues: {
-          ":toTransmittalNumber": idUpdate["New ID Format"],
-          ":toSummary": standardAddtionalInfo + " " + result.summary,
-        },
-      })
-      .promise();
+    if (!event.testRun) {
+      await dynamoDb
+        .update({
+          TableName: process.env.tableName,
+          Key: { userId: result.userId, id: result.id },
+          UpdateExpression:
+            "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
+          ExpressionAttributeValues: {
+            ":toTransmittalNumber": idUpdate["New ID Format"],
+            ":toSummary": standardAddtionalInfo + " " + result.summary,
+          },
+        })
+        .promise();
+    }
     successIds.push(idUpdate);
   }
   console.log("\n\n------ END OF RUN REPORT ------");

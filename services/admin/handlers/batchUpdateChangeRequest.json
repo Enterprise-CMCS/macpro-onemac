@@ -1,3 +1,4 @@
 {
-    "csvUpdates": "Old ID Format,Type,State,Date Submitted,Submitted By,New ID Format\nMD-22-8585-0000,Medicaid SPA,MD,15-Jul-22,Mary Kulawik,MD-22-8585\nMT-22-0020-0000,Medicaid SPA,MT,20-Jun-22,Mary Kulawik,MT-22-0020"
+    "csvUpdates": "Old ID Format,Type,State,Date Submitted,Submitted By,New ID Format\nMD-22-8585-0000,Medicaid SPA,MD,15-Jul-22,Mary Kulawik,MD-22-8585\nMT-22-0020-0000,Medicaid SPA,MT,20-Jun-22,Mary Kulawik,MT-22-0020",
+    "testRun": true
 }
