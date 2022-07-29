@@ -367,14 +367,8 @@ export const CONFIG = {
         { text: "Must follow the format SS-####.R##.TE## or" },
         {
           text: "SS-#####.R##.TE## (use R00 for waivers without renewals)",
-          // className: "field-hint-major",
         },
       ],
-      // [
-      //   {
-      //     text: "Must follow the format SS-####.R##.TE## or SS-#####.R##.TE## (use R00 for waivers without renewals)",
-      //   },
-      // ],
       idFormat: "SS-####.R##.TE## or SS-#####.R##.TE##",
       idExistValidations: [
         {
