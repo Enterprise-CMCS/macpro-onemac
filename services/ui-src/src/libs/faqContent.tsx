@@ -754,6 +754,41 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
+        anchorText: "waiverc-extension-attachments",
+        question:
+          "What are the attachments for a 1915(c) Waiver - Request for Temporary Extension",
+        answerJSX: (
+          <>
+            <p>Note: “*” indicates a required attachment.</p>
+            <table className="faq-table">
+              <thead>
+                <tr>
+                  <th>Attachment Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Waiver Extension Request*</td>
+                  <td>
+                    A formal letter addressed to George Failla, Director of the
+                    Division of HCBS Operations & Oversight requesting a
+                    temporary extension beyond the current approved waiver
+                    period.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Other</td>
+                  <td>
+                    Supplemental documents for the Waiver Extension Request
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </>
+        ),
+      },
+      {
         anchorText: "appk",
         question: "Can I submit Appendix K amendments in OneMAC?",
         answerJSX: (
