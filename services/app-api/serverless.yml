@@ -23,12 +23,12 @@ custom:
   oneMacTableName: onemac-${self:custom.stage}-one
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
-  emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, self:resources.CmsSpaFormFromEmailDefault.Value}
-  userAccessEmailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_user_access_from_email, ssm:/configuration/default/email/cms_user_access_from_email, self:resources.CmsUserAccessFromEmailDefault.Value}
-  reviewerEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_cms_email, ssm:/configuration/default/email/cms_spa_form_cms_email, self:resources.CmsSpaFormCmsEmailDefault.Value}
-  reviewerCHIPEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_chip_email, ssm:/configuration/default/email/cms_spa_form_chip_email, self:resources.CmsSpaFormChipEmailDefault.Value}
-  chipCcEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_chip_form_cc_email, ssm:/configuration/default/email/cms_chip_form_cc_email, self:resources.CmsSpaFormChipCcEmailDefault.Value}
-  testingEmail: ${ssm:/configuration/${self:custom.stage}/email/testing_team_email, ssm:/configuration/default/email/testing_team_email, self:resources.TestingTeamEmailDefault.Value}
+  emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, self:Resources.CmsSpaFormFromEmailDefault.Properties.Value}
+  userAccessEmailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_user_access_from_email, ssm:/configuration/default/email/cms_user_access_from_email, self:Resources.CmsUserAccessFromEmailDefault.Properties.Value}
+  reviewerEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_cms_email, ssm:/configuration/default/email/cms_spa_form_cms_email, self:Resources.CmsSpaFormCmsEmailDefault.Properties.Value}
+  reviewerCHIPEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_chip_email, ssm:/configuration/default/email/cms_spa_form_chip_email, self:Resources.CmsSpaFormChipEmailDefault.Properties.Value}
+  chipCcEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_chip_form_cc_email, ssm:/configuration/default/email/cms_chip_form_cc_email, self:Resources.CmsSpaFormChipCcEmailDefault.Properties.Value}
+  testingEmail: ${ssm:/configuration/${self:custom.stage}/email/testing_team_email, ssm:/configuration/default/email/testing_team_email, self:Resources.TestingTeamEmailDefault.Properties.Value}
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
