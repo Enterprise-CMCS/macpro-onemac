@@ -1,4 +1,5 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
+import { cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * Waiver Extension submission specific email generation functions.
@@ -20,6 +21,7 @@ class WaiverExtension {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
     const cmsEmail = {};
 
     if (data.transmittalNumberWarningMessage) {

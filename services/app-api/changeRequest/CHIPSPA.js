@@ -1,6 +1,6 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * CHIP SPA submission specific functions.
@@ -42,6 +42,7 @@ class CHIPSPA {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
     const cmsEmail = {};
 
     if (data.transmittalNumberWarningMessage) {

@@ -4,7 +4,7 @@ import {
   getCMSDateFormat,
 } from "./changeRequest-util";
 import packageExists from "../utils/packageExists";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * SPA submission specific functions.
@@ -45,6 +45,7 @@ class SPA {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
     const cmsEmail = {};
 
     if (data.transmittalNumberWarningMessage) {
