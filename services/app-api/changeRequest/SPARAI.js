@@ -22,6 +22,13 @@ class SPARAI {
   getCMSEmail(data) {
     const cmsEmail = {};
 
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
+
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,
       process.env.testingEmail,
@@ -33,7 +40,9 @@ class SPARAI {
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>SPA ID</b>: ${data.transmittalNumber}
+            <br><b>SPA ID</b>: ${
+              data.transmittalNumber
+            }${transmittalNumberWarningMessage}
         </p>
         <p>
             <b>Additional Information</b>:

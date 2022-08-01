@@ -79,9 +79,9 @@ export const RAI_ROUTE = {
 
 export const cmsEmailMapToFormWarningMessages = {
   [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]:
-    "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+    "<br/>Please review this submission for correctness as OneMAC found a matching record for the number entered by the state.",
   [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:
-    "<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.",
+    "<br/>Please review this submission for correctness as OneMAC did not find a matching record for the number entered by the state.",
 };
 
 export const approvedBlueWarningMessage =

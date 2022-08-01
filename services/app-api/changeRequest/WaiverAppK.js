@@ -25,9 +25,12 @@ class WaiverAppK {
    */
   getCMSEmail(data) {
     const cmsEmail = {};
-    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
-      ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
-      : "";
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
 
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,

@@ -22,6 +22,13 @@ class WaiverExtension {
   getCMSEmail(data) {
     const cmsEmail = {};
 
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
+
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,
       process.env.testingEmail,
@@ -34,7 +41,9 @@ class WaiverExtension {
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}
+            <br><b>Waiver #</b>: ${
+              data.transmittalNumber
+            }${transmittalNumberWarningMessage}
         </p>
         <p><b>Please review the waiver number for correctness as OneMAC did not validate the waiver number entered by the state.</b></p>
         <p>
