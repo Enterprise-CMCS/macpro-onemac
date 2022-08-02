@@ -65,7 +65,7 @@ Resources:
       Type: StringList
       Description: Default email addresses of recipients for CC on cms chip spa form submission emails
       Name: !Sub /configuration/default/email/cms_chip_form_cc_email
-      Value: ""
+      Value: "OneMAC@cms.hhs.gov"
   CmsSpaFormChipCcEmailForStage:
     Type: AWS::SSM::Parameter
     Properties:
@@ -73,18 +73,3 @@ Resources:
       Description: Branch specific email addresses of recipients for CC on cms chip spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_chip_form_cc_email
       Value: !GetAtt CmsSpaFormChipCcEmailDefault.Value
-
-  TestingTeamEmailDefault:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Default email address of recpient for all cms emails - used for testing
-      Name: !Sub /configuration/default/email/testing_team_email
-      Value: ""
-  TestingTeamEmailForStage:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Branch specific email address of recpient for all cms emails - used for testing
-      Name: !Sub /configuration/${self:custom.stage}/email/testing_team_email
-      Value: !GetAtt TestingTeamEmailDefault.Value

@@ -28,7 +28,7 @@ custom:
   reviewerEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_cms_email, ssm:/configuration/default/email/cms_spa_form_cms_email, file(resources/ssm-params.yml):Resources.CmsSpaFormCmsEmailDefault.Properties.Value}
   reviewerCHIPEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_chip_email, ssm:/configuration/default/email/cms_spa_form_chip_email, file(resources/ssm-params.yml):Resources.CmsSpaFormChipEmailDefault.Properties.Value}
   chipCcEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_chip_form_cc_email, ssm:/configuration/default/email/cms_chip_form_cc_email, file(resources/ssm-params.yml):Resources.CmsSpaFormChipCcEmailDefault.Properties.Value}
-  testingEmail: ${ssm:/configuration/${self:custom.stage}/email/testing_team_email, ssm:/configuration/default/email/testing_team_email, file(resources/ssm-params.yml):Resources.TestingTeamEmailDefault.Properties.Value}
+  testingEmail: ${ssm:/configuration/${self:custom.stage}/email/testing_team_email, ssm:/configuration/default/email/testing_team_email, ""}
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
