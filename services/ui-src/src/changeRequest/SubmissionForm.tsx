@@ -10,7 +10,12 @@ import { useHistory, useLocation } from "react-router-dom";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
-import { ChangeRequest, RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import {
+  ChangeRequest,
+  RESPONSE_CODE,
+  ROUTES,
+  approvedBlueWarningMessage,
+} from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import config from "../utils/config";
@@ -258,7 +263,8 @@ export const SubmissionForm: React.FC<{
                 if (correspondingValidation.errorLevel === "error") {
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} does not exist. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                 } else {
-                  tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  // tempMessage = `${transmittalNumberDetails.idLabel} not found. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  tempMessage = approvedBlueWarningMessage;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
                 }
                 // ID exists but it should NOT exist
@@ -267,7 +273,8 @@ export const SubmissionForm: React.FC<{
                   tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please check the ${transmittalNumberDetails.idLabel} and try entering it again.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 } else {
-                  tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  // tempMessage = `According to our records, this ${transmittalNumberDetails.idLabel} already exists. Please ensure you have the correct ${transmittalNumberDetails.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  tempMessage = approvedBlueWarningMessage;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 }
               }

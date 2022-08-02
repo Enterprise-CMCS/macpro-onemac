@@ -20,7 +20,7 @@ it("SPA Stub", async () => {
   expect(responset).toBeInstanceOf(Promise);
 
   const response2 = SPA.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1307);
+  expect(response2.HTML.length).toBe(1435);
 
   const response3 = SPA.getStateEmail({
     spaData,
