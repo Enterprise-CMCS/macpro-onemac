@@ -1,6 +1,6 @@
 // This function gets invoked once per uploaded file.
 // If two files are uploaded at the same time, this function is called twice.
-const AWS = require("aws-sdk");
+//const AWS = require("aws-sdk");
 
 module.exports.main = async (event, context, callback) => {
   console.log("ENVIRONMENT VARIABLES\n" + JSON.stringify(process.env, null, 2));
@@ -10,7 +10,7 @@ module.exports.main = async (event, context, callback) => {
 
   console.log("Uploaded object(s)\n" + event.Records[0].s3.object.key);
 
-  const s3 = new AWS.s3();
+  //const s3 = new AWS.s3();
 
   return context.logStreamName;
 };
