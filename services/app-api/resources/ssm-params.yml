@@ -65,7 +65,7 @@ Resources:
       Type: StringList
       Description: Default email addresses of recipients for CC on cms chip spa form submission emails
       Name: !Sub /configuration/default/email/cms_chip_form_cc_email
-      Value: " "
+      Value: ""
   CmsSpaFormChipCcEmailForStage:
     Type: AWS::SSM::Parameter
     Properties:
@@ -80,7 +80,7 @@ Resources:
       Type: StringList
       Description: Default email address of recpient for all cms emails - used for testing
       Name: !Sub /configuration/default/email/testing_team_email
-      Value: " "
+      Value: ""
   TestingTeamEmailForStage:
     Type: AWS::SSM::Parameter
     Properties:
