@@ -1,75 +1,40 @@
 Resources:
-  CmsSpaFormFromEmailDefault:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Default Email address of sender for cms spa form submission emails
-      Name: !Sub /configuration/default/email/cms_spa_form_from_email
-      Value: "spa-reply@cms.hhs.gov"
-  CmsSpaFormFromEmailForStage:
+  CmsSpaFormFromEmail:
     Type: AWS::SSM::Parameter
     Properties:
       Type: StringList
       Description: Branch specific email address of sender for cms spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_spa_form_from_email
-      Value: !GetAtt CmsSpaFormFromEmailDefault.Value
+      Value: "spa-reply@cms.hhs.gov"
 
-  CmsUserAccessFromEmailDefault:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Default email address of sender for cms user access emails
-      Name: !Sub /configuration/default/email/cms_user_access_from_email
-      Value: "OneMACAccess@cms.hhs.gov"
-  CmsUserAccessFromEmailForStage:
+  CmsUserAccessFromEmail:
     Type: AWS::SSM::Parameter
     Properties:
       Type: StringList
       Description: Branch specific email address of sender for cms user access emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_user_access_from_email
-      Value: !GetAtt CmsUserAccessFromEmailDefault.Value
+      Value: "OneMACAccess@cms.hhs.gov"
 
-  CmsSpaFormCmsEmailDefault:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Defualt email address of recpient for cms spa form submission emails
-      Name: !Sub /configuration/default/email/cms_spa_form_cms_email
-      Value: "OneMAC@cms.hhs.gov"
-  CmsSpaFormCmsEmailForStage:
+  CmsSpaFormCmsEmail:
     Type: AWS::SSM::Parameter
     Properties:
       Type: StringList
       Description: Branch specific email address of recipient for cms spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_spa_form_cms_email
-      Value: !GetAtt CmsSpaFormCmsEmailDefault.Value
-
-  CmsSpaFormChipEmailDefault:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Default email address of recipient for cms chip spa form submission emails
-      Name: !Sub /configuration/default/email/cms_spa_form_chip_email
       Value: "OneMAC@cms.hhs.gov"
-  CmsSpaFormChipEmailForStage:
+
+  CmsSpaFormChipEmail:
     Type: AWS::SSM::Parameter
     Properties:
       Type: StringList
       Description: Branch specific email address of recipient for cms chip spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_spa_form_chip_email
-      Value: !GetAtt CmsSpaFormChipEmailDefault.Value
-
-  CmsSpaFormChipCcEmailDefault:
-    Type: AWS::SSM::Parameter
-    Properties:
-      Type: StringList
-      Description: Default email addresses of recipients for CC on cms chip spa form submission emails
-      Name: !Sub /configuration/default/email/cms_chip_form_cc_email
       Value: "OneMAC@cms.hhs.gov"
-  CmsSpaFormChipCcEmailForStage:
+
+  CmsSpaFormChipCcEmail:
     Type: AWS::SSM::Parameter
     Properties:
       Type: StringList
       Description: Branch specific email addresses of recipients for CC on cms chip spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_chip_form_cc_email
-      Value: !GetAtt CmsSpaFormChipCcEmailDefault.Value
+      Value: "OneMAC@cms.hhs.gov"
