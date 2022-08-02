@@ -19,6 +19,7 @@ export const ROUTES = {
   FAQ_1915B_WAIVER_RENEWAL_ID: "/FAQ#waiver-renewal-id-format",
   FAQ_1915B_WAIVER_AMENDMENT_ID: "/FAQ#waiver-amendment-id-format",
   FAQ_WAIVER_APP_K_ID: "/FAQ#waiver-c-id",
+  FAQ_WAIVER_EXTENSION_ID: "/FAQ#waiver-extension-id-format",
   HOME: "/",
   PROFILE: "/profile",
   METRICS: "/metrics",
