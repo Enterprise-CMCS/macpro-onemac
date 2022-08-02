@@ -65,6 +65,8 @@ const whatAreTheAttachmentsFor1915bResponsetoRAI =
   "#waiverb-rai-attachments-button";
 const whatAreTheAttachmentsFor1915bResponsetoRAIValue =
   "#waiverb-rai-attachments";
+const tempExtFormatHeaderBtn = "#waiver-extension-id-format-button";
+const tempExtFormatBody = "#waiver-extension-id-format";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtension =
   "#waiverb-extension-attachments-button";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtensionValue =
@@ -227,6 +229,20 @@ export class oneMacFAQPage {
   }
   VerifyWhataretheattachmentsfora1915bWaiverresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsFor1915bResponsetoRAI).click();
+  }
+  verifyTempExtFormatHeaderBtnExists() {
+    cy.get(tempExtFormatHeaderBtn).should("be.visible");
+  }
+  clickTempExtFormatHeaderBtn() {
+    cy.get(tempExtFormatHeaderBtn).click();
+  }
+  verifyTempExtFormatBody() {
+    cy.get(tempExtFormatBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "Temporary extension numbers must follow the format SS-####.R##.TE## or SS-#####.R##.TE## to include:"
+      );
   }
   VerifyWhataretheattachmentsfora1915bWaiverRequestforTemporaryExtensionisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsFor1915bRequestTemprorayExtension).click();

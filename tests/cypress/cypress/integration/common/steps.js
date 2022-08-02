@@ -615,7 +615,9 @@ And(
   "Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page",
   () => {
     cy.fixture("raiWaiverNumber4.txt", (num) => {
-      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(num);
+      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(
+        `${num}.R00.TE01`
+      );
     });
   }
 );
@@ -786,10 +788,10 @@ And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
     );
   });
 });
-And("Type existing Waiver Number 2 With 5 Characters", () => {
+And("Type TE number based on existing waiver number 2", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      data.newWaiverNumber2
+      data.newTempExtNumber
     );
   });
 });
@@ -874,13 +876,7 @@ And("verify success message for Withdrawal", () => {
 
 And("Type Valid Waiver Number With 5 Characters", () => {
   cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(num);
-  });
-});
-
-And("Type Valid Waiver Number With 5 Characters for RAI", () => {
-  cy.fixture("raiWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(num);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(`${num}.R00.12`);
   });
 });
 
@@ -2464,5 +2460,23 @@ And(
   "verify error message is present on package dashboard New Waiver Page",
   () => {
     OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsDisplayed();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b and 1915c Temporary Extension number header",
+  () => {
+    OneMacFAQPage.verifyTempExtFormatHeaderBtnExists();
+  }
+);
+And(
+  "click What format is used to enter a 1915b and 1915c Temporary Extension number header",
+  () => {
+    OneMacFAQPage.clickTempExtFormatHeaderBtn();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b and 1915c Temporary Extension number body is visible",
+  () => {
+    OneMacFAQPage.verifyTempExtFormatBody();
   }
 );
