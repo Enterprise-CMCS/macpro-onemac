@@ -16,7 +16,7 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         And verify error message is not present on Request Waiver Temporary Extenstion Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And type in invalid Waiver Number
-        And verify error message is not present on Request Waiver Temporary Extenstion Page
+        And verify error message is present on submission dashboard New Waiver Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page
         And verify that error message for incorrect Waiver Number is Displayed

@@ -71,6 +71,9 @@ const whatAreTheAttachmentsFor1915bRequestTemprorayExtension =
   "#waiverb-extension-attachments-button";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtensionValue =
   "#waiverb-extension-attachments";
+const attachmentsFor1915cRequestTempExtHeaderBtn =
+  "#waiverc-extension-attachments-button";
+const attachmentsFor1915cRequestTempExtBody = "#waiverc-extension-attachments";
 const canISubmitAppendixKAmmendmentsInOneMac = "#appk-button";
 const canISubmitAppendixKAmmendmentsInOneMacValue = "#appk";
 const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments-button";
@@ -377,6 +380,15 @@ export class oneMacFAQPage {
   }
   verifyWaiverRenewalFormatBody() {
     cy.get(waiverRenewalFormatBody).should("be.visible");
+  }
+  verifyAttachmentsFor1915cRequestTempExtHeaderBtnExists() {
+    cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).should("be.visible");
+  }
+  clickAttachmentsFor1915cRequestTempExtHeaderBtn() {
+    cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).click();
+  }
+  verifyAttachmentsFor1915cRequestTempExtBody() {
+    cy.get(attachmentsFor1915cRequestTempExtBody).should("be.visible");
   }
 }
 export default oneMacFAQPage;

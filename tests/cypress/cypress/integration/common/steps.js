@@ -876,7 +876,7 @@ And("verify success message for Withdrawal", () => {
 
 And("Type Valid Waiver Number With 5 Characters", () => {
   cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(`${num}.R00.12`);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(`${num}.TE01`);
   });
 });
 
@@ -1355,11 +1355,6 @@ And("clear search bar", () => {
 });
 And("type in submitters name", () => {
   OneMacPackagePage.typeSubmittersName();
-});
-And("verify user exists with waiver number searched", () => {
-  cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacPackagePage.verifyIDNumberExists(num);
-  });
 });
 And("search existing user with all upper case", () => {
   OneMacPackagePage.typeSubmittersNameAllUpperCase();
@@ -2480,3 +2475,30 @@ And(
     OneMacFAQPage.verifyTempExtFormatBody();
   }
 );
+And(
+  "verify What are the attachments for a 1915c Waiver - Request for Temporary Extension header is visible",
+  () => {
+    OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtHeaderBtnExists();
+  }
+);
+And(
+  "click What are the attachments for a 1915c Waiver - Request for Temporary Extension header",
+  () => {
+    OneMacFAQPage.clickAttachmentsFor1915cRequestTempExtHeaderBtn();
+  }
+);
+And(
+  "verify What are the attachments for a 1915c Waiver - Request for Temporary Extension body is visible",
+  () => {
+    OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtBody();
+  }
+);
+And(
+  "Verify blue eerror message says user can submit in submission view",
+  () => {
+    OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInSubmissionView();
+  }
+);
+And("Verify blue eerror message says user can submit in package view", () => {
+  OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
+});
