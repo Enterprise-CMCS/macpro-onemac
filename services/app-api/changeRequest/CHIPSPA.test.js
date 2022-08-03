@@ -20,7 +20,7 @@ it("CHIPSPA Stub", async () => {
   expect(responset).toBeInstanceOf(Promise);
 
   const response2 = CHIPSPA.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1312);
+  expect(response2.HTML.length).toBe(1440);
 
   const response3 = CHIPSPA.getStateEmail({ spaData, user: { email: "foo" } });
   expect(response3.HTML.length).toBe(861);

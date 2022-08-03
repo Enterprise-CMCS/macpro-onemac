@@ -3,6 +3,7 @@ import {
   getCMSDateFormat,
   getLinksHtml,
 } from "./changeRequest-util";
+import { cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * Waiver Appendix K Amendment specific functions.
@@ -24,10 +25,14 @@ class WaiverAppK {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
     const cmsEmail = {};
-    const transmittalNumberWarningMessage = data.transmittalNumberWarningMessage
-      ? `<br/>${data.transmittalNumberWarningMessage}<br/>`
-      : "";
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
 
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,

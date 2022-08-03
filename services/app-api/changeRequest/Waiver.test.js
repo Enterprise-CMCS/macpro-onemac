@@ -22,7 +22,7 @@ it("Waiver Stub", async () => {
   expect(responset).toBeInstanceOf(Promise);
 
   const response2 = Waiver.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1443);
+  expect(response2.HTML.length).toBe(1571);
 
   spaData.transmittalNumberWarningMessage = "0000";
   const responsew = Waiver.getCMSEmail(spaData);
