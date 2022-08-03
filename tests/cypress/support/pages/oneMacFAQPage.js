@@ -65,10 +65,15 @@ const whatAreTheAttachmentsFor1915bResponsetoRAI =
   "#waiverb-rai-attachments-button";
 const whatAreTheAttachmentsFor1915bResponsetoRAIValue =
   "#waiverb-rai-attachments";
+const tempExtFormatHeaderBtn = "#waiver-extension-id-format-button";
+const tempExtFormatBody = "#waiver-extension-id-format";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtension =
   "#waiverb-extension-attachments-button";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtensionValue =
   "#waiverb-extension-attachments";
+const attachmentsFor1915cRequestTempExtHeaderBtn =
+  "#waiverc-extension-attachments-button";
+const attachmentsFor1915cRequestTempExtBody = "#waiverc-extension-attachments";
 const canISubmitAppendixKAmmendmentsInOneMac = "#appk-button";
 const canISubmitAppendixKAmmendmentsInOneMacValue = "#appk";
 const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments-button";
@@ -228,6 +233,20 @@ export class oneMacFAQPage {
   VerifyWhataretheattachmentsfora1915bWaiverresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsFor1915bResponsetoRAI).click();
   }
+  verifyTempExtFormatHeaderBtnExists() {
+    cy.get(tempExtFormatHeaderBtn).should("be.visible");
+  }
+  clickTempExtFormatHeaderBtn() {
+    cy.get(tempExtFormatHeaderBtn).click();
+  }
+  verifyTempExtFormatBody() {
+    cy.get(tempExtFormatBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "Temporary extension numbers must follow the format SS-####.R##.TE## or SS-#####.R##.TE## to include:"
+      );
+  }
   VerifyWhataretheattachmentsfora1915bWaiverRequestforTemporaryExtensionisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsFor1915bRequestTemprorayExtension).click();
   }
@@ -361,6 +380,15 @@ export class oneMacFAQPage {
   }
   verifyWaiverRenewalFormatBody() {
     cy.get(waiverRenewalFormatBody).should("be.visible");
+  }
+  verifyAttachmentsFor1915cRequestTempExtHeaderBtnExists() {
+    cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).should("be.visible");
+  }
+  clickAttachmentsFor1915cRequestTempExtHeaderBtn() {
+    cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).click();
+  }
+  verifyAttachmentsFor1915cRequestTempExtBody() {
+    cy.get(attachmentsFor1915cRequestTempExtBody).should("be.visible");
   }
 }
 export default oneMacFAQPage;

@@ -1,4 +1,5 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
+import { cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * Waiver RAI submission specific email generation functions.
@@ -20,7 +21,15 @@ class WaiverRAI {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
     const cmsEmail = {};
+
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
 
     cmsEmail.ToAddresses = [
       process.env.reviewerEmail,
@@ -34,7 +43,9 @@ class WaiverRAI {
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${data.transmittalNumber}
+            <br><b>Waiver #</b>: ${
+              data.transmittalNumber
+            }${transmittalNumberWarningMessage}
         </p>
         <p>
             <b>Additional Information</b>:

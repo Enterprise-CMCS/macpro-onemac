@@ -1,5 +1,7 @@
 const submitBTN = "#form-submission-button";
 const cancelBTN = "#form-cancel-button";
+const submissionFormErrorMsg = "#transmittalNumberStatusMsg";
+const packageFormErrorMsg = "#componentIdStatusMsg";
 
 export class oneMacDefaultForms {
   clicksubmitBTN() {
@@ -23,6 +25,16 @@ export class oneMacDefaultForms {
   }
   clickCancelBtn() {
     cy.get(cancelBTN).scrollIntoView().click();
+  }
+  verifyBlueErrorSaysUserCanSubmitInSubmissionView() {
+    cy.get(submissionFormErrorMsg).contains(
+      "You will still be able to submit but your submission ID does not appear to match our records."
+    );
+  }
+  verifyBlueErrorSaysUserCanSubmitInPkgView() {
+    cy.get(packageFormErrorMsg).contains(
+      "You will still be able to submit but your submission ID does not appear to match our records."
+    );
   }
 }
 export default oneMacDefaultForms;
