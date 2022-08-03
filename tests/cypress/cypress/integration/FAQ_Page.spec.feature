@@ -31,7 +31,7 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And Verify text contains "indicates a required attachment"
         And Verify Can I submit SPAs relating to the Public Health Emergency PHE in OneMAC is displayed and click it
         And Verify text contains "Yes, all PHE-related SPAs should be submitted through OneMAC"
-
+@focus 
     Scenario: Verify Waivers section includes appropriate clickable sections
         Given I am on Login Page
         When Clicking on FAQ Tab
@@ -52,8 +52,14 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And Verify text contains "The regulations at 42 C.F.R. §430.25, 431.55 and 42 C.F.R. §441.301"
         And Verify What are the attachments for a 1915b Waiver response to Request for Additional Information RAI is displayed and click it
         And Verify text contains "indicates a required attachment"
+        And verify What format is used to enter a 1915b and 1915c Temporary Extension number header
+        And click What format is used to enter a 1915b and 1915c Temporary Extension number header
+        And verify What format is used to enter a 1915b and 1915c Temporary Extension number body is visible
         And Verify What are the attachments for a 1915b Waiver Request for Temporary Extension is displayed and click it
         And Verify text contains "indicates a required attachment"
+        And verify What are the attachments for a 1915c Waiver - Request for Temporary Extension header is visible
+        And click What are the attachments for a 1915c Waiver - Request for Temporary Extension header
+        And verify What are the attachments for a 1915c Waiver - Request for Temporary Extension body is visible
         And Verify Can I submit Appendix K amendments in OneMAC is displayed and click it
         And Verify text contains "Yes, you can submit Appendix K amendments"
         And Verify What are the attachments for a 1915c Appendix K Waiver is displayed and click it
