@@ -18,7 +18,7 @@ Resources:
               - - "arn:aws:iam::"
                 - Ref: AWS::AccountId
                 - ":policy"
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
           - Ref: AWS::NoValue
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
@@ -124,7 +124,7 @@ Resources:
               - - "arn:aws:iam::"
                 - Ref: AWS::AccountId
                 - ":policy"
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
           - Ref: AWS::NoValue
       Policies:
         - PolicyName: "Warmup"
