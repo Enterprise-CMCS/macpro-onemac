@@ -232,13 +232,13 @@ And("type in CHIP ID 3", () => {
 
 And("click on CHIP Respond to RAI", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.clickOnrespondToRAI(d.SPAID1);
+    OneMacDashboardPage.clickOnrespondToRAI(d.spaID1);
   });
 });
 
 And("Verify CHIP RAI ID number matches CHIP SPA ID number", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(d.SPAID1);
+    OneMacDashboardPage.verifySPARAIIDNumberMatchesCHIPSPAIDNumber(d.spaID1);
   });
 });
 
@@ -266,7 +266,7 @@ And("Verify submission Waiver type", () => {
 
 And("Verify submission CHIP type", () => {
   cy.fixture("submissionDashboardSPAIDs.json").then((d) => {
-    OneMacDashboardPage.verifyTypeForID(d.chipSPAID1, "CHIP SPA");
+    OneMacDashboardPage.verifyTypeForID(d.spaID1, "CHIP SPA");
   });
 });
 And("click on spa Respond to RAI 2", () => {
@@ -597,9 +597,12 @@ And("type in invalid Waiver Number", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD.123456");
 });
 
-And("verify error message is present on New Waiver Page", () => {
-  OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
-});
+And(
+  "verify error message is present on submission dashboard New Waiver Page",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyOldErrorMessageIsDisplayed();
+  }
+);
 
 And("Click on Request Temporary Extension", () => {
   OneMacSubmissionTypePage.clickRequestTemporaryExtension();
@@ -612,7 +615,9 @@ And(
   "Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page",
   () => {
     cy.fixture("raiWaiverNumber4.txt", (num) => {
-      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(num);
+      OneMacRequestWaiverTemporaryExtension.inputWaiverNumber(
+        `${num}.R00.TE01`
+      );
     });
   }
 );
@@ -762,14 +767,14 @@ And("Type new Waiver Number for RAI in format SS-#####.R00.00", () => {
     );
   });
 });
-And("Type Base Waiver Number in format SS.#####.R00.00", () => {
+And("Type Base Waiver Number in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber1
     );
   });
 });
-And("Type Base Waiver Number 2 in format SS.#####.R00.00", () => {
+And("Type Base Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       d.newBaseWaiverNumber2
@@ -783,10 +788,10 @@ And("Type existing Unique Valid Waiver Number With 5 Characters", () => {
     );
   });
 });
-And("Type existing Waiver Number 2 With 5 Characters", () => {
+And("Type TE number based on existing waiver number 2", () => {
   cy.fixture("submissionDashboardWaiverNumbers.json").then((data) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(
-      data.newWaiverNumber2
+      data.newTempExtNumber
     );
   });
 });
@@ -871,13 +876,7 @@ And("verify success message for Withdrawal", () => {
 
 And("Type Valid Waiver Number With 5 Characters", () => {
   cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(num);
-  });
-});
-
-And("Type Valid Waiver Number With 5 Characters for RAI", () => {
-  cy.fixture("raiWaiverNumber5.txt").then((num) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(num);
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms(`${num}.TE01`);
   });
 });
 
@@ -1356,11 +1355,6 @@ And("clear search bar", () => {
 });
 And("type in submitters name", () => {
   OneMacPackagePage.typeSubmittersName();
-});
-And("verify user exists with waiver number searched", () => {
-  cy.fixture("sharedWaiverNumber5.txt").then((num) => {
-    OneMacPackagePage.verifyIDNumberExists(num);
-  });
 });
 And("search existing user with all upper case", () => {
   OneMacPackagePage.typeSubmittersNameAllUpperCase();
@@ -2446,4 +2440,65 @@ And("verify the submit button is not disabled", () => {
 });
 And("verify the submit button is disabled", () => {
   OneMacDefaultForms.verifySubmitBtnIsDisabled();
+});
+
+And("type in valid waiver amendment number in old forms", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-10330.R01.01");
+});
+And("type base waiver number in old format SS.####.R00.00", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.1055.R00.00");
+});
+And("type base waiver number in old format SS.#####.R00.00", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.10555.R00.00");
+});
+And(
+  "verify error message is present on package dashboard New Waiver Page",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsDisplayed();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b and 1915c Temporary Extension number header",
+  () => {
+    OneMacFAQPage.verifyTempExtFormatHeaderBtnExists();
+  }
+);
+And(
+  "click What format is used to enter a 1915b and 1915c Temporary Extension number header",
+  () => {
+    OneMacFAQPage.clickTempExtFormatHeaderBtn();
+  }
+);
+And(
+  "verify What format is used to enter a 1915b and 1915c Temporary Extension number body is visible",
+  () => {
+    OneMacFAQPage.verifyTempExtFormatBody();
+  }
+);
+And(
+  "verify What are the attachments for a 1915c Waiver - Request for Temporary Extension header is visible",
+  () => {
+    OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtHeaderBtnExists();
+  }
+);
+And(
+  "click What are the attachments for a 1915c Waiver - Request for Temporary Extension header",
+  () => {
+    OneMacFAQPage.clickAttachmentsFor1915cRequestTempExtHeaderBtn();
+  }
+);
+And(
+  "verify What are the attachments for a 1915c Waiver - Request for Temporary Extension body is visible",
+  () => {
+    OneMacFAQPage.verifyAttachmentsFor1915cRequestTempExtBody();
+  }
+);
+And(
+  "Verify blue eerror message says user can submit in submission view",
+  () => {
+    OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInSubmissionView();
+  }
+);
+And("Verify blue eerror message says user can submit in package view", () => {
+  OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
 });

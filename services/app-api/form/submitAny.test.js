@@ -32,7 +32,7 @@ const testUnauthUser = {
 };
 
 const eventBody = {
-  componentId: "VA.1117.R00.00",
+  componentId: "VA-1117.R00.00",
   territory: "VA",
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
@@ -68,7 +68,7 @@ const tempExtensionEventBody = {
 };
 
 const invalidEventBody = {
-  transmittalNumber: "VA.1117", //transmittal number is invalid format
+  transmittalNumber: "VA-1117", //transmittal number is invalid format
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
   proposedEffectiveDate: "2022-01-01",

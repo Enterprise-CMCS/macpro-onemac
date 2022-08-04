@@ -8,7 +8,7 @@
 #         And Click on Waiver Action
 #         And click on Base Waiver
 #         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-#         And Type Unique Valid Base Waiver Number With SS.#####.R00.00 format
+#         And Type Unique Valid Base Waiver Number With SS-#####.R00.00 format
 #         And select proposed effective date 3 months from today
 #         And Upload 1915 b 4 file
 #         And Type "This is just a test" in Summary Box

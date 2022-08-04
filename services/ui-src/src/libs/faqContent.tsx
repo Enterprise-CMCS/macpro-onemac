@@ -719,6 +719,39 @@ export const oneMACFAQContent: FAQContent[] = [
         ),
       },
       {
+        anchorText: "waiver-extension-id-format",
+        question:
+          "What format is used to enter a 1915(b) and 1915(c) Temporary Extension number?",
+        answerJSX: (
+          <>
+            <p>
+              Temporary extension numbers must follow the format
+              SS-####.R##.TE## or SS-#####.R##.TE## to include:
+            </p>
+            <ul>
+              <li>SS = 2 character state abbreviation</li>
+              <li>####(#)= 4 or 5 digit waiver base number</li>
+              <li>
+                R## = renewal number (R01, R02, ...) (Use R00 for waivers
+                without renewals)
+              </li>
+              <li>
+                TE## = temporary extension number, prefixed with a capital TE
+                (TE01)
+              </li>
+            </ul>
+            <p>
+              State abbreviation is separated by dash (-) and later sections are
+              separated by periods (.). For example, the waiver number
+              KY-0003.R02.TE02 is a waiver for the state of Kentucky, with a
+              base waiver number of 0003, a second renewal (R02), and a second
+              temporary extension (02). Base waivers without renewals should use
+              “R00” as their renewal number.
+            </p>
+          </>
+        ),
+      },
+      {
         anchorText: "waiverb-extension-attachments",
         question:
           "What are the attachments for a 1915(b) Waiver - Request for Temporary Extension?",
@@ -740,6 +773,41 @@ export const oneMACFAQContent: FAQContent[] = [
                     of the Disabled and Elderly Health Program Group (DEHPG),
                     requesting a temporary extension beyond the current approved
                     waiver period.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Other</td>
+                  <td>
+                    Supplemental documents for the Waiver Extension Request
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </>
+        ),
+      },
+      {
+        anchorText: "waiverc-extension-attachments",
+        question:
+          "What are the attachments for a 1915(c) Waiver - Request for Temporary Extension",
+        answerJSX: (
+          <>
+            <p>Note: “*” indicates a required attachment.</p>
+            <table className="faq-table">
+              <thead>
+                <tr>
+                  <th>Attachment Name</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Waiver Extension Request*</td>
+                  <td>
+                    A formal letter addressed to George Failla, Director of the
+                    Division of HCBS Operations & Oversight requesting a
+                    temporary extension beyond the current approved waiver
+                    period.
                   </td>
                 </tr>
                 <tr>

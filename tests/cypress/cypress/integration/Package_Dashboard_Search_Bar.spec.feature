@@ -42,7 +42,7 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And Click on Waiver Action
         And click on Base Waiver
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Base Waiver Number 2 in format SS.#####.R00.00
+        And Type Base Waiver Number 2 in format SS-#####.R00.00
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
         And Type Additonal Info Comments in new form

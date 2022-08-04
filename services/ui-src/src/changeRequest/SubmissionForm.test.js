@@ -19,7 +19,7 @@ import { SubmissionForm } from "./SubmissionForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 
 import { AppContext } from "../libs/contextLib";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { approvedBlueWarningMessage } from "cmscommonlib";
 
 jest.mock("../utils/ChangeRequestDataApi");
 
@@ -130,9 +130,7 @@ describe("Submission Form", () => {
       // Don't find the package
       ChangeRequestDataApi.packageExists.mockResolvedValue(false);
       userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
-      await screen.findByText(
-        `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
-      );
+      await screen.findByText(approvedBlueWarningMessage);
       expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
       // click the submit button
@@ -247,7 +245,7 @@ describe("Submission Form", () => {
           ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA].transmittalNumber
             .idLabel;
         const testId = "MI-12-1122";
-        const existErrorMessage = `According to our records, this ${spaIdLabel} already exists. Please check the ${spaIdLabel} and try entering it again.`;
+        const spaExistError = `According to our records, this SPA ID already exists. Please check the SPA ID and try entering it again.`;
 
         // id will exist
         ChangeRequestDataApi.packageExists.mockResolvedValue(true);
@@ -267,7 +265,7 @@ describe("Submission Form", () => {
         const transmittalNumberEl = screen.getByLabelText(spaIdLabel);
 
         userEvent.type(transmittalNumberEl, testId);
-        await waitFor(() => screen.getByText(existErrorMessage));
+        await waitFor(() => screen.getByText(spaExistError));
       });
 
       it("displays error message when new Waiver Number SHOULD NOT exist but it does", async () => {
@@ -307,7 +305,6 @@ describe("Submission Form", () => {
           ChangeRequest.CONFIG[ChangeRequest.TYPE.SPA_RAI].transmittalNumber
             .idLabel;
         const testId = "MI-12-1122";
-        const existErrorMessage = `${spaRaiIdLabel} not found. Please ensure you have the correct ${spaRaiIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
         // id will NOT exist
         ChangeRequestDataApi.packageExists.mockResolvedValue(false);
@@ -327,7 +324,7 @@ describe("Submission Form", () => {
         const transmittalNumberEl = screen.getByLabelText(spaRaiIdLabel);
 
         userEvent.type(transmittalNumberEl, testId);
-        await waitFor(() => screen.getByText(existErrorMessage));
+        await waitFor(() => screen.getByText(approvedBlueWarningMessage));
       });
 
       // Waiver Action form with action type of renewal
@@ -341,7 +338,6 @@ describe("Submission Form", () => {
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
         const testId = "MI-1234.R03.00";
-        const existErrorMessage = `${waiverIdLabel} not found. Please ensure you have the correct ${waiverIdLabel} before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support.`;
 
         // base id will NOT exist (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
@@ -373,7 +369,7 @@ describe("Submission Form", () => {
         const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
 
         userEvent.type(transmittalNumberEl, testId);
-        await waitFor(() => screen.getByText(existErrorMessage));
+        await waitFor(() => screen.getByText(approvedBlueWarningMessage));
       });
 
       it("displays a warning message for a Waiver Renewal when failing the second existence validation (that the entire Waiver number with renewal portion SHOULD NOT exist, but does)", async () => {
@@ -382,7 +378,7 @@ describe("Submission Form", () => {
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
         const testId = "MI-1234.R03.00";
-        const existErrorMessage = `According to our records, this ${waiverIdLabel} already exists. Please check the ${waiverIdLabel} and try entering it again.`;
+        const waiverExistError = `According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.`;
 
         // ensure pass of first validation for base id existing
         when(ChangeRequestDataApi.packageExists)
@@ -414,7 +410,7 @@ describe("Submission Form", () => {
         const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
 
         userEvent.type(transmittalNumberEl, testId);
-        await waitFor(() => screen.getByText(existErrorMessage));
+        await waitFor(() => screen.getByText(waiverExistError));
       });
     });
   });
@@ -499,9 +495,10 @@ it("successfully submits the form", async () => {
   // Don't find the package
   ChangeRequestDataApi.packageExists.mockResolvedValue(false);
   userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
-  await screen.findByText(
-    `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
-  );
+  const existErrorMessage =
+    "You will still be able to submit but your submission ID does not appear to match our records. Before proceeding, please check to ensure you have the correct submission ID. If you need support, please contact the OneMAC Help Desk at OneMAC_Helpdesk@cms.hhs.gov or (833) 228-2540.";
+
+  await screen.findByText(existErrorMessage);
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
   // click the submit button
@@ -548,9 +545,10 @@ describe("cancelling the form submission", () => {
     // Don't find the package
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
     userEvent.type(transmittalNumberEl, testValues.transmittalNumber);
-    await screen.findByText(
-      `Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`
-    );
+    const existErrorMessage =
+      "You will still be able to submit but your submission ID does not appear to match our records. Before proceeding, please check to ensure you have the correct submission ID. If you need support, please contact the OneMAC Help Desk at OneMAC_Helpdesk@cms.hhs.gov or (833) 228-2540.";
+
+    await screen.findByText(existErrorMessage);
     expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
     // click the submit button

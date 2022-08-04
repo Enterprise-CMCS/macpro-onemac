@@ -7,7 +7,7 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         And Click on Waiver Action
 
 
-    Scenario: Screen enhancement - verify warning messages have been relaxed
+    Scenario: Screen enhancement - Temp Extension waiver format
         And Click on Request Temporary Extension
         And Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page
         And verify error message is not present on Request Waiver Temporary Extenstion Page
@@ -16,7 +16,7 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         And verify error message is not present on Request Waiver Temporary Extenstion Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And type in invalid Waiver Number
-        And verify error message is not present on Request Waiver Temporary Extenstion Page
+        And verify error message is present on submission dashboard New Waiver Page
         And clear Waiver Number Input box on Request Waiver Temporary Extenstion Page
         And type waiver number with state abbreviation different from user on Request Waiver Temporary Extenstion Page
         And verify that error message for incorrect Waiver Number is Displayed
@@ -33,15 +33,15 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         Then click on New Submission
         And Click on Waiver Action
         And Click on Request Temporary Extension
-        And Type existing Waiver Number 2 With 5 Characters
+        And Type TE number based on existing waiver number 2
         And upload Waiver Extension Request
         And Type "This test has a valid waiver number" in Summary Box
         And Click on Submit Button
         And verify submission Successful message
 
-    Scenario: Create Temporary Extension with invalid waiver number
+    Scenario: Verify user can not create Temporary Extension with invalid waiver number
         And Click on Request Temporary Extension
         And type in invalid Waiver Number
         And upload Waiver Extension Request
         And Type "This test has an invalid waiver number" in Summary Box
-        And Click on Submit Button
+        And verify the submit button is disabled

@@ -18,7 +18,7 @@ Resources:
               - - "arn:aws:iam::"
                 - Ref: AWS::AccountId
                 - ":policy"
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
           - Ref: AWS::NoValue
       ManagedPolicyArns:
         - arn:aws:iam::aws:policy/service-role/AWSLambdaVPCAccessExecutionRole
@@ -99,6 +99,12 @@ Resources:
                   - dynamodb:Query
                 Resource:
                   - arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}/index/*
+              - Effect: Allow
+                Action:
+                  - xray:PutTraceSegments
+                  - xray:PutTelemetryRecords
+                Resource: "*"
+
   LambdaWarmupRole:
     Type: "AWS::IAM::Role"
     Properties:
@@ -118,7 +124,7 @@ Resources:
               - - "arn:aws:iam::"
                 - Ref: AWS::AccountId
                 - ":policy"
-                - '${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+                - '${self:custom.iamPermissionsBoundaryPolicy, ""}'
           - Ref: AWS::NoValue
       Policies:
         - PolicyName: "Warmup"

@@ -361,13 +361,21 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "waiver",
       idLabel: "Waiver Number",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,
+      idFAQLink: ROUTES.FAQ_WAIVER_EXTENSION_ID,
+      idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.]TE[0-9]{2}$)",
       idFieldHint: [
+        { text: "Must follow the format SS-####.R##.TE## or" },
         {
-          text: "Please enter the waiver number used on your initial submission",
+          text: "SS-#####.R##.TE## (use R00 for waivers without renewals)",
         },
       ],
-      idFormat: "the Number format used on the initial submission",
+      idFormat: "SS-####.R##.TE## or SS-#####.R##.TE##",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
     },
   },
 
@@ -375,7 +383,7 @@ export const CONFIG = {
     pageTitle: "Respond to Waiver RAI",
     readOnlyPageTitle: "Waiver RAI Response Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],

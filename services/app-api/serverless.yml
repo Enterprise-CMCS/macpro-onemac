@@ -21,15 +21,14 @@ custom:
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
-  iamPath: ${env:IAM_PATH, "/"}
-  emailSource: ${opt:emailSource, env:CMS_SPA_FORM_FROM_EMAIL, "spa-reply@cms.hhs.gov"}
-  userAccessEmailSource: ${opt:userAccessEmailSource, env:CMS_USER_ACCESS_FROM_EMAIL, "OneMACAccess@cms.hhs.gov"}
-  reviewerEmail: ${opt:reviewTeamEmail, env:CMS_SPA_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
-  reviewerCHIPEmail: ${opt:reviewTeamCHIPEmail, env:CMS_CHIP_FORM_CMS_EMAIL, "OneMAC@cms.hhs.gov"}
-  chipCcEmail: ${opt:chipCcEmail, env:CMS_CHIP_FORM_CC_EMAIL, ""}
-  systemAdminEmail: ${opt:systemAdminEmail, env:CMS_SYSTEM_ADMIN_EMAIL, ""}
-  productionNoEmailDebug: ${opt:productionNoEmailDebug, env:NO_EMAIL_DEBUG, "OneMAC@cms.hhs.gov"}
-  testingEmail: ${opt:testingEmail, env:TESTING_TEAM_EMAIL, ""}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  emailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_from_email, ssm:/configuration/default/email/cms_spa_form_from_email, file(resources/ssm-params.yml):Resources.CmsSpaFormFromEmail.Properties.Value}
+  userAccessEmailSource: ${ssm:/configuration/${self:custom.stage}/email/cms_user_access_from_email, ssm:/configuration/default/email/cms_user_access_from_email, file(resources/ssm-params.yml):Resources.CmsUserAccessFromEmail.Properties.Value}
+  reviewerEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_cms_email, ssm:/configuration/default/email/cms_spa_form_cms_email, file(resources/ssm-params.yml):Resources.CmsSpaFormCmsEmail.Properties.Value}
+  reviewerCHIPEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_spa_form_chip_email, ssm:/configuration/default/email/cms_spa_form_chip_email, file(resources/ssm-params.yml):Resources.CmsSpaFormChipEmail.Properties.Value}
+  chipCcEmail: ${ssm:/configuration/${self:custom.stage}/email/cms_chip_form_cc_email, ssm:/configuration/default/email/cms_chip_form_cc_email, file(resources/ssm-params.yml):Resources.CmsSpaFormChipCcEmail.Properties.Value}
+  testingEmail: ${ssm:/configuration/${self:custom.stage}/email/testing_team_email, ssm:/configuration/default/email/testing_team_email, ""}
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
@@ -58,12 +57,12 @@ custom:
     seed:
       domain:
         sources:
-        - table: ${self:custom.tableName}
-          sources: [./change-requests-seed.json]
-        - table: ${self:custom.spaIdTableName}
-          sources: [./spa-ids-seed.json]
-        - table: ${self:custom.oneMacTableName}
-          sources: [./one-seed.json]
+          - table: ${self:custom.tableName}
+            sources: [./change-requests-seed.json]
+          - table: ${self:custom.spaIdTableName}
+            sources: [./spa-ids-seed.json]
+          - table: ${self:custom.oneMacTableName}
+            sources: [./one-seed.json]
   serverless-offline:
     allowCache: true
   associateWaf:
@@ -78,11 +77,11 @@ provider:
   iam:
     role:
       path: ${self:custom.iamPath}
-      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${env:IAM_PERMISSIONS_BOUNDARY_POLICY, ""}'
+      permissionsBoundary: !Sub 'arn:aws:iam::${AWS::AccountId}:policy${self:custom.iamPermissionsBoundaryPolicy, ""}'
   logs:
-    restApi: true    
+    restApi: true
   environment:
-    NODE_OPTIONS: '--enable-source-maps'
+    NODE_OPTIONS: "--enable-source-maps"
     tableName: ${self:custom.tableName}
     spaIdTableName: ${self:custom.spaIdTableName}
     oneMacTableName: ${self:custom.oneMacTableName}
@@ -92,13 +91,13 @@ provider:
     reviewerCHIPEmail: ${self:custom.reviewerCHIPEmail}
     chipCcEmail: ${self:custom.chipCcEmail}
     testingEmail: ${self:custom.testingEmail}
-    systemAdminEmail: ${self:custom.systemAdminEmail}
-    productionNoEmailDebug: ${self:custom.productionNoEmailDebug}
     applicationEndpoint: ${self:custom.applicationEndpoint}
     attachmentsBucket: ${self:custom.attachmentsBucket}
+  tracing:
+    apiGateway: true
+    lambda: true
 
 functions:
-
   migrate:
     handler: migrate.main
     role: LambdaApiRole
@@ -131,7 +130,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  
+
   submitMedicaidSpaRaiResponse:
     handler: form/submitMedicaidSPARAIResponse.main
     role: LambdaApiRole
@@ -191,7 +190,6 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-
 
   withdrawCHIPSPA:
     handler: action/withdrawCHIPSPA.main
@@ -374,3 +372,6 @@ resources:
 
   # API Gateway
   - ${file(resources/api-gateway.yml)}
+
+  # SSM Parameters
+  - ${file(resources/ssm-params.yml)}

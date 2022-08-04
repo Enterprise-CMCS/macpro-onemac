@@ -5,6 +5,7 @@
   "actionType": "",
   "waiverAuthority": "",
   "territory": "AX",
+  "transmittalNumberWarningMessage": "OMP002",
   "user": {
     "username": "demoUser",
     "signInUserSession": {
