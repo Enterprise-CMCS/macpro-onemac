@@ -18,7 +18,6 @@ import PortalTable from "../components/PortalTable";
 import AlertBar from "../components/AlertBar";
 import { EmptyList } from "../components/EmptyList";
 import LoadingScreen from "../components/LoadingScreen";
-import IdleTimerContainer from "../components/idleTimerContainer";
 import PopupMenu from "../components/PopupMenu";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { useAppContext } from "../libs/contextLib";
@@ -327,7 +326,6 @@ const Dashboard = () => {
   // Render the dashboard
   return (
     <div className="dashboard-white">
-      <IdleTimerContainer />
       <PageTitleBar
         heading="Submission List"
         rightSideContent={getRightSideContent()}

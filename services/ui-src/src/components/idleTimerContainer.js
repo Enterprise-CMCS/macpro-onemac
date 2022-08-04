@@ -2,7 +2,8 @@ import React, { useState, useEffect } from "react";
 import { useIdleTimer } from "react-idle-timer";
 import jwt_decode from "jwt-decode";
 
-const IdleTimerContainer = () => {
+const IdleTimerContainer = ({ isAuthenticated }) => {
+  const LOCAL_STORAGE_KEY = "accessToken";
   const TOTAL_TIMEOUT_TIME = 60 * 60 * 1000; // default of 1 hour total
   const PROMPT_TIME = 45 * 60 * 1000; // default of 45 minutes to warning
   const LOGOUT_TIME = TOTAL_TIMEOUT_TIME - PROMPT_TIME; // default logout 15 minutes after warning
@@ -26,24 +27,22 @@ const IdleTimerContainer = () => {
     promptTimeout: logoutTimeout,
     events: [],
     element: document,
-    startOnMount: true,
-    startManually: false,
-    stopOnIdle: false,
+    startOnMount: false,
+    startManually: true,
+    stopOnIdle: true,
     crossTab: true,
     syncTimers: 0,
     leaderElection: true,
   });
 
-  console.log("time remaining", idleTimer.getRemainingTime() / 1000 / 60);
-
   useEffect(() => {
     setTimeoutTimes();
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [isAuthenticated]);
 
   const setTimeoutTimes = () => {
     const accessTokenKey = Object.keys(localStorage).filter((k) =>
-      k.includes("accessToken")
+      k.includes(LOCAL_STORAGE_KEY)
     );
     const loginToken = accessTokenKey
       ? localStorage.getItem(accessTokenKey)
@@ -58,8 +57,6 @@ const IdleTimerContainer = () => {
     const currentTime = new Date();
     const timeLoggedIn = currentTime - authTime; // in milliseconds
     const timeLeft = TOTAL_TIMEOUT_TIME - timeLoggedIn;
-
-    console.log("time left", timeLeft / 1000 / 60);
 
     // time has already expired for this session - logout user and redirect to home
     if (timeLeft <= 0) {
