@@ -9,6 +9,7 @@ const TransmittalNumber: React.FC<{
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink: string;
+  faqIdLabel?: string;
   statusLevel: string;
   statusMessage: string;
   value: string;
@@ -18,6 +19,7 @@ const TransmittalNumber: React.FC<{
   idLabel,
   idFieldHint,
   idFAQLink,
+  faqIdLabel,
   statusLevel,
   statusMessage,
   value,
@@ -38,11 +40,13 @@ const TransmittalNumber: React.FC<{
             {idLabel}
           </label>
         </div>
-        <div className="label-rcol">
-          <Link target="new" href={idFAQLink}>
-            What is my {idLabel}?
-          </Link>
-        </div>
+        {idFAQLink && (
+          <div className="label-rcol">
+            <Link target="new" href={idFAQLink}>
+              {faqIdLabel ? faqIdLabel : `What is my ${idLabel}?`}
+            </Link>
+          </div>
+        )}
         {idFieldHint?.map(function (idFieldHint, idx) {
           return (
             <p

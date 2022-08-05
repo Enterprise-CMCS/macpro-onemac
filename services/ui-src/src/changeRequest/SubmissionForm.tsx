@@ -100,6 +100,7 @@ export const SubmissionForm: React.FC<{
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
+    parentNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
   });
 
   function matchesRegex(fieldValue: string, regexFormatString: string) {
@@ -152,6 +153,14 @@ export const SubmissionForm: React.FC<{
     updatedRecord["transmittalNumber"] = newTransmittalNumber;
     updatedRecord["territory"] =
       getTerritoryFromTransmittalNumber(newTransmittalNumber);
+
+    setChangeRequest(updatedRecord);
+  }
+
+  async function handleParentNumberChange(newParentNumber: string) {
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
+    updatedRecord["parentNumber"] = newParentNumber;
 
     setChangeRequest(updatedRecord);
   }
@@ -430,6 +439,21 @@ export const SubmissionForm: React.FC<{
                 name="waiverAuthority"
                 id="waiver-authority"
                 onChange={handleInputChange}
+              />
+            )}
+            {formInfo.parentNumber && (
+              <TransmittalNumber
+                idLabel={formInfo.parentNumber.idLabel}
+                idFieldHint={formInfo.parentNumber.idFieldHint}
+                idFAQLink={formInfo.parentNumber.idFAQLink}
+                faqIdLabel={formInfo.parentNumber.faqIdLabel}
+                statusLevel={"error"}
+                statusMessage={""}
+                disabled={false}
+                value={changeRequest.parentNumber}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleParentNumberChange(event.target.value.toUpperCase())
+                }
               />
             )}
             <TransmittalNumber
