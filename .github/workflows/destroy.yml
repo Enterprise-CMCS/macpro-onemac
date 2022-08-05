@@ -25,3 +25,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - run: ./destroy.sh $STAGE_PREFIX$branch_name
+      - name: Tell bigmac which topics to delete
+        uses: benc-uk/workflow-dispatch@v1
+        with:
+          workflow: Delete Topics
+          repo: cmsgov/cms-bigmac
+          token: ${{ secrets.BIGMAC_PERSONAL_ACCESS_TOKEN }}
+          inputs: '{ "topics": "mgmt.connect.stream-functions-${{ env.branch_name }}.offsets,mgmt.connect.stream-functions-${{ env.branch_name }}.config,mgmt.connect.stream-functions-${{ env.branch_name }}.status"}'
