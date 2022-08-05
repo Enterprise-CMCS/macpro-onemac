@@ -14,7 +14,7 @@ import {
   getActiveTerritories,
   RESPONSE_CODE,
 } from "cmscommonlib";
-import IdleTimerContainer from "./components/idleTimerContainer";
+import IdleTimerContainer from "./components/IdleTimerContainer";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
 const DEFAULT_AUTH_STATE: Omit<

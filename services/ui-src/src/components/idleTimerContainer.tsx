@@ -4,22 +4,39 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
 
-interface idleTimerProps {
-  isAuthenticated: boolean;
-}
-
 const IdleTimerContainer = () => {
   const STORAGE_KEY: string = "accessToken";
   const TOTAL_TIMEOUT_TIME: number = 60 * 60 * 1000; // default of 1 hour total
   const PROMPT_TIME: number = 45 * 60 * 1000; // default of 45 minutes to warning
-  const LOGOUT_TIME: number = TOTAL_TIMEOUT_TIME - PROMPT_TIME; // default logout 15 minutes after warning
+  const LOGOUT_TIME: number = 15 * 60 * 1000 - 5000; // default logout 15 minutes after warning
+  /*
+   * NB: the logout time is 5 seconds less than the backend timer to ensure
+   * the logout occurs on the front end before the backend to avoid sync issues
+   */
 
-  const { isAuthenticated, isLoggedInAsDeveloper } = useAppContext() ?? {};
+  const { confirmAction, isAuthenticated, isLoggedInAsDeveloper } =
+    useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
 
   const onPrompt = () => {
-    console.log("prompt is opened");
+    const minutesRemaining: number = Math.round(
+      idleTimer.getRemainingTime() / 1000 / 60
+    );
+    const headerMessage: string = "Your Session is About to Expire";
+    const bodyMessage: string =
+      minutesRemaining > 1
+        ? `Your session will end in about ${minutesRemaining} minutes`
+        : `Your session will end in about one minute`;
+
+    confirmAction &&
+      confirmAction(
+        headerMessage,
+        "Logout",
+        "Continue Browsing",
+        bodyMessage,
+        onIdle
+      );
   };
 
   const onIdle = () => {
@@ -42,11 +59,24 @@ const IdleTimerContainer = () => {
   });
 
   useEffect(() => {
-    setTimeoutTimes();
+    /*
+     *this depends on isAuthenticated to ensure it starts the timer after logging in
+     * this depends on promptTimeout and logoutTimeout
+     * this is to ensure that the idleTimer has the most recent values for the times
+     */
+    if (isAuthenticated) {
+      setTimeoutTimes();
+      idleTimer.start();
+      console.log("prompt time", promptTimeout / 1000 / 60);
+      console.log("logout time", logoutTimeout / 1000 / 60);
+      console.log("time remaining", idleTimer.getRemainingTime() / 1000 / 60);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isAuthenticated]);
+  }, [isAuthenticated, promptTimeout, logoutTimeout]);
 
   const setTimeoutTimes = () => {
+    if (!isAuthenticated) return;
+
     const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes(STORAGE_KEY)
     );
@@ -65,7 +95,7 @@ const IdleTimerContainer = () => {
 
     // time has already expired for this session
     if (timeLeft <= 0) {
-      // Note: possibly add logic to handle edge cases?
+      // NB: possibly add logic to handle edge cases?
       return;
     }
 
@@ -73,13 +103,10 @@ const IdleTimerContainer = () => {
     if (timeLeft <= LOGOUT_TIME) {
       setPromptTimeout(0);
       setLogoutTimeout(timeLeft);
-      idleTimer.start();
-      onPrompt();
       return;
     }
 
     setPromptTimeout(PROMPT_TIME - timeLoggedIn);
-    idleTimer.start();
   };
 
   return <></>;
