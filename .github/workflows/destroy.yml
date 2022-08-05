@@ -30,5 +30,6 @@ jobs:
         with:
           workflow: Delete Topics
           repo: cmsgov/cms-bigmac
+          ref: refs/heads/master # OneMAC uses develop, bigmac uses master, dispatch assumes same name
           token: ${{ secrets.BIGMAC_PERSONAL_ACCESS_TOKEN }}
           inputs: '{ "topics": "mgmt.connect.stream-functions-${{ env.branch_name }}.offsets,mgmt.connect.stream-functions-${{ env.branch_name }}.config,mgmt.connect.stream-functions-${{ env.branch_name }}.status"}'
