@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { useIdleTimer, IIdleTimer } from "react-idle-timer";
 import jwt_decode from "jwt-decode";
+import { logout } from "../libs/logoutLib";
+import { useAppContext } from "../libs/contextLib";
 
 interface idleTimerProps {
   isAuthenticated: boolean;
 }
 
-const IdleTimerContainer = ({ isAuthenticated }: idleTimerProps) => {
+const IdleTimerContainer = () => {
   const STORAGE_KEY: string = "accessToken";
   const TOTAL_TIMEOUT_TIME: number = 60 * 60 * 1000; // default of 1 hour total
   const PROMPT_TIME: number = 45 * 60 * 1000; // default of 45 minutes to warning
   const LOGOUT_TIME: number = TOTAL_TIMEOUT_TIME - PROMPT_TIME; // default logout 15 minutes after warning
 
+  const { isAuthenticated, isLoggedInAsDeveloper } = useAppContext() ?? {};
   const [promptTimeout, setPromptTimeout] = useState(PROMPT_TIME);
   const [logoutTimeout, setLogoutTimeout] = useState(LOGOUT_TIME);
 
@@ -20,8 +23,7 @@ const IdleTimerContainer = ({ isAuthenticated }: idleTimerProps) => {
   };
 
   const onIdle = () => {
-    console.log("logout occurs");
-    // Do some idle action like log out your user
+    logout(isLoggedInAsDeveloper);
   };
 
   const idleTimer: IIdleTimer = useIdleTimer({
@@ -45,11 +47,11 @@ const IdleTimerContainer = ({ isAuthenticated }: idleTimerProps) => {
   }, [isAuthenticated]);
 
   const setTimeoutTimes = () => {
-    const accessTokenKey: string[] = Object.keys(localStorage).filter((k) =>
+    const tokenKey: string[] = Object.keys(localStorage).filter((k) =>
       k.includes(STORAGE_KEY)
     );
     const loginToken: string | null =
-      accessTokenKey && localStorage.getItem(accessTokenKey[0]);
+      tokenKey && localStorage.getItem(tokenKey[0]);
     if (!loginToken) return;
 
     const decodedToken: any = jwt_decode(loginToken);
@@ -61,9 +63,9 @@ const IdleTimerContainer = ({ isAuthenticated }: idleTimerProps) => {
     const timeLoggedIn: number = currentTime - authTime; // in milliseconds
     const timeLeft: number = TOTAL_TIMEOUT_TIME - timeLoggedIn;
 
-    // time has already expired for this session - logout user and redirect to home
+    // time has already expired for this session
     if (timeLeft <= 0) {
-      onIdle();
+      // Note: possibly add logic to handle edge cases?
       return;
     }
 

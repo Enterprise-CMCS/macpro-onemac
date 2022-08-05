@@ -177,7 +177,7 @@ export function App() {
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
-      <IdleTimerContainer isAuthenticated={authState.isAuthenticated} />
+      <IdleTimerContainer />
       <div className="header-and-content">
         <Header />
         <main id="main">
