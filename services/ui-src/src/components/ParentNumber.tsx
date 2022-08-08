@@ -33,8 +33,8 @@ const ParentNumber: React.FC<{
       </div>
       {statusMessage && (
         <div id="parentNumberStatusMsg" className="ds-u-color--error">
-          {statusMessage.split("\n").map((m) => (
-            <div>{m}</div>
+          {statusMessage.split("\n").map((m, i) => (
+            <div key={i}>{m}</div>
           ))}
         </div>
       )}
