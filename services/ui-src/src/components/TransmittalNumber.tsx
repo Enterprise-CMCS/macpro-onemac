@@ -6,6 +6,7 @@ import { FieldHint } from "cmscommonlib";
  * Returns the ID specific form element
  */
 const TransmittalNumber: React.FC<{
+  inputId: string;
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink: string;
@@ -16,6 +17,7 @@ const TransmittalNumber: React.FC<{
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
 }> = ({
+  inputId,
   idLabel,
   idFieldHint,
   idFAQLink,
@@ -60,14 +62,14 @@ const TransmittalNumber: React.FC<{
         })}
       </div>
       {statusMessage && (
-        <div id="transmittalNumberStatusMsg" className={statusMsgClass}>
+        <div id={`${inputId}-status-msg`} className={statusMsgClass}>
           {statusMessage}
         </div>
       )}
       <input
         className="field"
         type="text"
-        id="transmittalNumber"
+        id={inputId}
         name="transmittalNumber"
         aria-describedby={idFieldHint
           ?.map(function (idFieldHint, idx) {

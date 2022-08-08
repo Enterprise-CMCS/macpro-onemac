@@ -475,6 +475,7 @@ export const SubmissionForm: React.FC<{
             )}
             {formInfo.parentNumber && (
               <TransmittalNumber
+                inputId="parent-number"
                 idLabel={formInfo.parentNumber.idLabel}
                 idFieldHint={formInfo.parentNumber.idFieldHint}
                 idFAQLink={formInfo.parentNumber.idFAQLink}
@@ -489,6 +490,7 @@ export const SubmissionForm: React.FC<{
               />
             )}
             <TransmittalNumber
+              inputId="transmittal-number"
               idLabel={transmittalNumberDetails.idLabel}
               idFieldHint={transmittalNumberDetails.idFieldHint}
               idFAQLink={transmittalNumberDetails.idFAQLink}
