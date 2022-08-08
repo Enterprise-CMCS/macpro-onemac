@@ -128,6 +128,8 @@ jobs:
           # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
           # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
+      - name: Output Endpoint
+        run: echo "::notice::" + `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
       - name: Seed Data
         # this "resets" any data explicitly provided in the seed files to what
         # is in the committed code
