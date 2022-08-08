@@ -27,5 +27,5 @@ it("Waiver Extension Stub", async () => {
     ninetyDayClockEnd: 1631626754502,
     user: { email: "foo" },
   });
-  expect(response3.HTML.length).toBe(906);
+  expect(response3.HTML.length).toBe(918);
 });
