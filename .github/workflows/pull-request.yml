@@ -11,8 +11,9 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - name: Get Endpoint url
+      - name: Checkout
         uses: actions/checkout@v3
+      - name: Get Endpoint url
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
