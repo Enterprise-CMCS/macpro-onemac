@@ -4,19 +4,20 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import UserDataApi from "./utils/UserDataApi";
+import IdleTimerWrapper from "./components/IdleTimerWrapper";
 
 import { App } from "./App";
 import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("aws-amplify");
 jest.mock("./utils/UserDataApi");
-jest.mock("./components/LogoutTimerWrapper");
+jest.mock("./components/IdleTimerWrapper");
 
 beforeEach(() => {
   jest.clearAllMocks();
 
   // render does not work for idleTimer -- workaround
-  LogoutTimerWrapper.mockReturnValue(<></>);
+  IdleTimerWrapper.mockReturnValue(<></>);
 
   Auth.currentAuthenticatedUser.mockResolvedValue({
     signInUserSession: { idToken: { payload: {} } },
