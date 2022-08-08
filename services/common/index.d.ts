@@ -72,6 +72,7 @@ export namespace ChangeRequest {
   type TransmittalNumberInfo = {
     idLabel: string;
     idRegex: string;
+    idAddtionalErrorMessage?: string;
     idFormat: string;
     idFieldHint: FieldHint[];
     idFAQLink: string;
