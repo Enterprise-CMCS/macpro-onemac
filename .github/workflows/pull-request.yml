@@ -1,5 +1,9 @@
+name: Open Pull Request
+
 on:
   pull_request:
+    types: 
+      - opened
     branches:
       - develop
 
@@ -8,14 +12,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Get Endpoint url
+        uses: actions/checkout@v3
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
           echo "::notice::Endpoint URL - $APPLICATION_ENDPOINT"
           popd
       - name: Comment endpoint in PR
-      - uses: actions/checkout@v3
-      - uses: actions/github-script@v6
+        uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
           script: |
