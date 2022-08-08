@@ -81,6 +81,7 @@ export namespace ChangeRequest {
       existenceAppend?: string;
       idMustExist?: boolean;
       errorLevel: string;
+      showMessage?: string;
     }[];
   };
 

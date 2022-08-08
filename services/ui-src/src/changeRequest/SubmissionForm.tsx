@@ -79,6 +79,8 @@ export const SubmissionForm: React.FC<{
       statusLevel: "error",
       statusMessage: "",
     });
+  const [parentNumberStatusMessage, setParentNumberStatusMessage] =
+    useState<string>("");
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -219,6 +221,34 @@ export const SubmissionForm: React.FC<{
   }, [alertCode, history]);
 
   useEffect(() => {
+    const checkId = async () => {
+      let parentStatusMessage = "";
+      const idCheckDetails = !!changeRequest.parentNumber
+        ? formInfo?.parentNumber?.idExistValidations[0]
+        : false;
+      try {
+        if (idCheckDetails) {
+          if (
+            (await ChangeRequestDataApi.packageExists(
+              changeRequest.parentNumber
+            )) === idCheckDetails.idMustExist
+          )
+            parentStatusMessage = "";
+          else
+            parentStatusMessage = idCheckDetails.showMessage
+              ? idCheckDetails.showMessage
+              : "";
+        }
+        setParentNumberStatusMessage(parentStatusMessage);
+      } catch (err) {
+        console.log("error is: ", err);
+        setAlertCode(RESPONSE_CODE[(err as Error).message]);
+      }
+    };
+    checkId();
+  }, [changeRequest.parentNumber, formInfo?.parentNumber]);
+
+  useEffect(() => {
     // default display message settings with empty message
     let displayMessage: Message = {
       statusLevel: "error",
@@ -329,6 +359,7 @@ export const SubmissionForm: React.FC<{
     if (
       (!formInfo.actionType || changeRequest.actionType) &&
       (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
+      (!formInfo.parentNumber || !parentNumberStatusMessage) &&
       (transmittalNumberStatusMessage.statusLevel === "warn" ||
         !transmittalNumberStatusMessage.statusMessage) &&
       areUploadsReady
@@ -341,6 +372,7 @@ export const SubmissionForm: React.FC<{
     changeRequest,
     formInfo,
     transmittalNumberStatusMessage,
+    parentNumberStatusMessage,
   ]);
 
   const limitSubmit = useRef(false);
@@ -448,7 +480,7 @@ export const SubmissionForm: React.FC<{
                 idFAQLink={formInfo.parentNumber.idFAQLink}
                 faqIdLabel={formInfo.parentNumber.faqIdLabel}
                 statusLevel={"error"}
-                statusMessage={""}
+                statusMessage={parentNumberStatusMessage}
                 disabled={false}
                 value={changeRequest.parentNumber}
                 onChange={(event: ChangeEvent<HTMLInputElement>) =>
