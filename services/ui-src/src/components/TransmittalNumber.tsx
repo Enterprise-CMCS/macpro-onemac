@@ -57,7 +57,9 @@ const TransmittalNumber: React.FC<{
       </div>
       {statusMessage && (
         <div id="transmittalNumberStatusMsg" className={statusMsgClass}>
-          {statusMessage}
+          {statusMessage.split("\n").map((m) => (
+            <div>{m}</div>
+          ))}
         </div>
       )}
       <input
