@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 import { logout } from "../libs/logoutLib";
 import { useAppContext } from "../libs/contextLib";
 
-const IdleTimerContainer = () => {
+const LogoutTimerWrapper = () => {
   const STORAGE_KEY: string = "accessToken";
   const TOTAL_TIMEOUT_TIME: number = 60 * 60 * 1000; // default of 1 hour total
   const PROMPT_TIME: number = 45 * 60 * 1000; // default of 45 minutes to warning
@@ -112,4 +112,4 @@ const IdleTimerContainer = () => {
   return <></>;
 };
 
-export default IdleTimerContainer;
+export default LogoutTimerWrapper;

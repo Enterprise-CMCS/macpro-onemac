@@ -14,7 +14,7 @@ import {
   getActiveTerritories,
   RESPONSE_CODE,
 } from "cmscommonlib";
-import IdleTimerContainer from "./components/IdleTimerContainer";
+import LogoutTimerWrapper from "./components/LogoutTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
 
 const DEFAULT_AUTH_STATE: Omit<
@@ -177,7 +177,7 @@ export function App() {
 
   return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
-      <IdleTimerContainer />
+      <LogoutTimerWrapper />
       <div className="header-and-content">
         <Header />
         <main id="main">

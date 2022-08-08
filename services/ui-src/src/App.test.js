@@ -10,13 +10,13 @@ import { RESPONSE_CODE } from "cmscommonlib";
 
 jest.mock("aws-amplify");
 jest.mock("./utils/UserDataApi");
-jest.mock("./components/IdleTimerContainer");
+jest.mock("./components/LogoutTimerWrapper");
 
 beforeEach(() => {
   jest.clearAllMocks();
 
   // render does not work for idleTimer -- workaround
-  IdleTimerContainer.mockReturnValue(<></>);
+  LogoutTimerWrapper.mockReturnValue(<></>);
 
   Auth.currentAuthenticatedUser.mockResolvedValue({
     signInUserSession: { idToken: { payload: {} } },
