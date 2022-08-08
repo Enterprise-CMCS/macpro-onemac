@@ -363,10 +363,23 @@ export const CONFIG = {
     requiredUploads: ["Waiver Extension Request"],
     optionalUploads: ["Other"],
 
+    parentNumber: {
+      idType: "waiver",
+      idLabel: "Approved Base or Renewal Waiver Number",
+      idRegex: "(^[A-Z]{2})",
+      idFieldHint: [
+        {
+          text: "Please enter the base or renewal waiver number you are requesting a Temporary Extension for",
+        },
+      ],
+      parentNotFoundMessage:
+        "The waiver number entered does not appear to match our records. Please enter an approved base or renewal waiver number, using a dash after the two character state abbreviation.",
+    },
     transmittalNumber: {
       idType: "waiver",
-      idLabel: "Waiver Number",
+      idLabel: "Temporary Extension Request Number",
       idFAQLink: ROUTES.FAQ_WAIVER_EXTENSION_ID,
+      faqIdLabel: "What is my Temporary Extension Number?",
       idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.]TE[0-9]{2}$)",
       idFieldHint: [
         { text: "Must follow the format SS-####.R##.TE## or" },

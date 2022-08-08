@@ -83,6 +83,14 @@ export namespace ChangeRequest {
       errorLevel: string;
     }[];
   };
+  type ParentNumberInfo = {
+    idLabel: string;
+    idRegex: string;
+    idAddtionalErrorMessage?: string;
+    idFormat: string;
+    idFieldHint: FieldHint[];
+    parentNotFoundMessage: string;
+  };
 
   type WaiverFormInfo = {
     actionType: { optionsList: SelectOption[] };
@@ -103,6 +111,7 @@ export namespace ChangeRequest {
     pageTitle: string;
     subheaderMessage?: { __html: string };
     detailsHeader?: string;
+    parentNumber?: ParentNumberInfo;
     transmittalNumber: TransmittalNumberInfo;
     requiredUploads: unknown;
     optionalUploads: unknown;

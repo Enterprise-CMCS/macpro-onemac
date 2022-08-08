@@ -25,6 +25,7 @@ import FileUploader from "../components/FileUploader";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import PropTypes from "prop-types";
 import PageTitleBar from "../components/PageTitleBar";
+import ParentNumber from "../components/ParentNumber";
 import TransmittalNumber from "../components/TransmittalNumber";
 import AlertBar from "../components/AlertBar";
 import { ConfirmationDialog } from "../components/ConfirmationDialog";
@@ -79,6 +80,8 @@ export const SubmissionForm: React.FC<{
       statusLevel: "error",
       statusMessage: "",
     });
+  const [parentNumberStatusMessage, setParentNumberStatusMessage] =
+    useState<string>("");
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -97,6 +100,7 @@ export const SubmissionForm: React.FC<{
         getTerritoryFromTransmittalNumber(initialTransmittalNumber)) ||
       "",
     summary: "",
+    parentNumber: "",
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
@@ -158,6 +162,13 @@ export const SubmissionForm: React.FC<{
     setChangeRequest(updatedRecord);
   }
 
+  async function handleParentNumberChange(newParentNumber: string) {
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
+    updatedRecord["parentNumber"] = newParentNumber;
+    setChangeRequest(updatedRecord);
+  }
+
   const handleActionTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!event || !event.target) return;
 
@@ -211,6 +222,27 @@ export const SubmissionForm: React.FC<{
     }
   }, [alertCode, history]);
 
+  useEffect(() => {
+    const checkId = async () => {
+      let parentStatusMessage = "";
+      const idCheckDetails = formInfo?.parentNumber?.parentNotFoundMessage;
+
+      try {
+        if (idCheckDetails) {
+          if (
+            await ChangeRequestDataApi.packageExists(changeRequest.parentNumber)
+          )
+            parentStatusMessage = "";
+          else parentStatusMessage = idCheckDetails;
+        }
+        setParentNumberStatusMessage(parentStatusMessage);
+      } catch (err) {
+        console.log("error is: ", err);
+        setAlertCode(RESPONSE_CODE[(err as Error).message]);
+      }
+    };
+    checkId();
+  }, [changeRequest.parentNumber, formInfo?.parentNumber]);
   useEffect(() => {
     // default display message settings with empty message
     let displayMessage: Message = {
@@ -322,6 +354,7 @@ export const SubmissionForm: React.FC<{
     if (
       (!formInfo.actionType || changeRequest.actionType) &&
       (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
+      (!formInfo.parentNumber || !parentNumberStatusMessage) &&
       (transmittalNumberStatusMessage.statusLevel === "warn" ||
         !transmittalNumberStatusMessage.statusMessage) &&
       areUploadsReady
@@ -334,6 +367,7 @@ export const SubmissionForm: React.FC<{
     changeRequest,
     formInfo,
     transmittalNumberStatusMessage,
+    parentNumberStatusMessage,
   ]);
 
   const limitSubmit = useRef(false);
@@ -432,6 +466,17 @@ export const SubmissionForm: React.FC<{
                 name="waiverAuthority"
                 id="waiver-authority"
                 onChange={handleInputChange}
+              />
+            )}
+            {formInfo?.parentNumber?.idLabel && (
+              <ParentNumber
+                idLabel={formInfo?.parentNumber?.idLabel}
+                idFieldHint={formInfo?.parentNumber?.idFieldHint}
+                statusMessage={parentNumberStatusMessage}
+                value={changeRequest.parentNumber}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleParentNumberChange(event.target.value.toUpperCase())
+                }
               />
             )}
             <TransmittalNumber
