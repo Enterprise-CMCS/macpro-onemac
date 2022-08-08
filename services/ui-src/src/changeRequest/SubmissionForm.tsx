@@ -138,7 +138,9 @@ export const SubmissionForm: React.FC<{
         transmittalNumberDetails.idRegex &&
         !matchesRegex(newTransmittalNumber, transmittalNumberDetails.idRegex)
       ) {
-        errorMessage = `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}`;
+        errorMessage =
+          `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}` +
+          (transmittalNumberDetails.idAddtionalErrorMessage ?? "");
       }
 
       return errorMessage;
