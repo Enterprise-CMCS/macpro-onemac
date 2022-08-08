@@ -11,12 +11,23 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout
-        uses: actions/checkout@v3
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Install dependencies
+        run: |
+          npm ci
+          for service in services/*/; do
+            pushd "$service"
+            if [ -f package-lock.json ]; then npm ci; fi
+            popd
+          done
       - name: Get Endpoint url
         run: |
           pushd services
           export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT" >> $GITHUB_ENV
           echo "::notice::Endpoint URL - $APPLICATION_ENDPOINT"
           popd
       - name: Comment endpoint in PR
@@ -28,5 +39,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Endpoint URL - $APPLICATION_ENDPOINT'
+              body: 'Endpoint URL - ' || $APPLICATION_ENDPOINT
             })
