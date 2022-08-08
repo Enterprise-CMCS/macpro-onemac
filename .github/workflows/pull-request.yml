@@ -1,0 +1,27 @@
+on:
+  pull_request:
+    branches:
+      - develop
+
+jobs:
+  comment:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Get Endpoint url
+        run: |
+          pushd services
+          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+          echo "::notice::Endpoint URL - $APPLICATION_ENDPOINT"
+          popd
+      - name: Comment endpoint in PR
+      - uses: actions/checkout@v3
+      - uses: actions/github-script@v6
+        with:
+          github-token: ${{secrets.GITHUB_TOKEN}}
+          script: |
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              body: 'Endpoint URL - $APPLICATION_ENDPOINT'
+            })
