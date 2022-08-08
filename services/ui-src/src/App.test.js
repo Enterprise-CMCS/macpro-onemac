@@ -4,7 +4,6 @@ import { render } from "@testing-library/react";
 import { MemoryRouter } from "react-router-dom";
 import { Auth } from "aws-amplify";
 import UserDataApi from "./utils/UserDataApi";
-import IdleTimerContainer from "./components/IdleTimerContainer";
 
 import { App } from "./App";
 import { RESPONSE_CODE } from "cmscommonlib";
