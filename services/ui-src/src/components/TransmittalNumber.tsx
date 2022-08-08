@@ -38,7 +38,7 @@ const TransmittalNumber: React.FC<{
     <div>
       <div className="label-container">
         <div>
-          <label htmlFor="transmittalNumber" className="required">
+          <label htmlFor={inputId} className="required">
             {idLabel}
           </label>
         </div>
