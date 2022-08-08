@@ -129,7 +129,8 @@ jobs:
           # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
       - name: Output Endpoint
-        run: echo "::notice::" + `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
+        run: |
+          echo "::notice::Endpoint URL - " + `./servcies/output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
       - name: Seed Data
         # this "resets" any data explicitly provided in the seed files to what
         # is in the committed code
