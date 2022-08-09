@@ -11,12 +11,13 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
+      - name: set branch_name
+        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
       - name: Comment endpoint in PR
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
-          BRANCH_NAME: ${{ GITHUB_REF#refs/heads/ }}
         uses: actions/github-script@v6
         with:
           github-token: ${{secrets.GITHUB_TOKEN}}
@@ -25,5 +26,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "Endpoint URL - ${ssm:/${env.BRANCH_NAME}/ui/application_endpoint}"
+              body: "Endpoint URL - ${ssm:/${env.branch_name}/ui/application_endpoint}"
             })
