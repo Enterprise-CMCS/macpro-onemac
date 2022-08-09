@@ -18,7 +18,9 @@ jobs:
         with:
           node-version: "14.x"
       - name: Install serverless
-        run: npm install -g serverless
+        run: |
+          npm install -g serverless
+          serverless plugin install -n serverless-s3-bucket-helper
       - name: Get Endpoint url
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
