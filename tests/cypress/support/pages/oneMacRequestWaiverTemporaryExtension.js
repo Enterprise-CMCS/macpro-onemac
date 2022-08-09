@@ -1,5 +1,5 @@
-const waiverNumberInputBox = "#transmittalNumber";
-const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
+const waiverNumberInputBox = "#transmittal-number";
+const errorMessageForWaiverNumber = "#transmittal-number-status-msg";
 const waiverExtensionRequest =
   "//td[div[contains(text(),'Waiver Extension Request')]]";
 const firstFileUploadBtn = "#uploader-input-0";

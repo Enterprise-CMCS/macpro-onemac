@@ -52,8 +52,8 @@ const TransmittalNumber: React.FC<{
         {idFieldHint?.map(function (idFieldHint, idx) {
           return (
             <p
-              id={"fieldHint" + idx}
-              key={"fieldHint" + idx}
+              id={inputId + "-field-hint-" + idx}
+              key={inputId + "-field-hint-" + idx}
               className={idFieldHint.className || "field-hint"}
             >
               {idFieldHint.text}
@@ -75,7 +75,7 @@ const TransmittalNumber: React.FC<{
         name="transmittalNumber"
         aria-describedby={idFieldHint
           ?.map(function (idFieldHint, idx) {
-            return "fieldHint" + idx;
+            return inputId + "-field-hint-" + idx;
           })
           .join(" ")}
         value={value}
