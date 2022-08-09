@@ -361,7 +361,8 @@ export const SubmissionForm: React.FC<{
     if (
       (!formInfo.actionType || changeRequest.actionType) &&
       (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
-      (!formInfo.parentNumber || !parentNumberStatusMessage) &&
+      (!formInfo.parentNumber ||
+        (changeRequest.parentNumber && !parentNumberStatusMessage)) &&
       (transmittalNumberStatusMessage.statusLevel === "warn" ||
         !transmittalNumberStatusMessage.statusMessage) &&
       areUploadsReady
