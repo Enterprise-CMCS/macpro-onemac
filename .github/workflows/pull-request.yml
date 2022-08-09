@@ -11,27 +11,15 @@ jobs:
   comment:
     runs-on: ubuntu-latest
     steps:
-      - name: set branch_name
-        run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "14.x"
-      - name: Install serverless
-        run: |
-          npm install -g serverless
-          serverless plugin install -n serverless-s3-bucket-helper
-      - name: Get Endpoint url
+      - name: set environment variables
         env:
-          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-        run: |
-          pushd services
-          export APPLICATION_ENDPOINT=`./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`
-          echo "APPLICATION_ENDPOINT=$APPLICATION_ENDPOINT" >> $GITHUB_ENV
-          echo "::notice::Endpoint URL - $APPLICATION_ENDPOINT"
-          popd
+          AWS_ACCESS_KEY_ID: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_ACCESS_KEY_ID] || secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_SECRET_ACCESS_KEY] || secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_DEFAULT_REGION] || secrets.AWS_DEFAULT_REGION }}
+          BRANCH_NAME: ${{ GITHUB_REF#refs/heads/ }}
+      - name: set environment variables
+        run: ./.github/build_vars.sh set_values
+        
       - name: Comment endpoint in PR
         uses: actions/github-script@v6
         with:
@@ -41,5 +29,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "Endpoint URL - ${{env.APPLICATION_ENDPOINT}}"
+              body: "Endpoint URL - ${ssm:/${env.BRANCH_NAME}/ui/application_endpoint}"
             })
