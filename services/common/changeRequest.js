@@ -48,6 +48,9 @@ const waiverBaseTransmittalNumber = {
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
 };
 
+const waiverAddtionalErrorMessage =
+  "\nFor amendments, the last two digits start with “01” and ascends.";
+
 export const CONFIG = {
   [TYPE.CHIP_SPA]: {
     pageTitle: "Submit New CHIP SPA",
@@ -273,6 +276,7 @@ export const CONFIG = {
         { text: "Must follow the format SS-####.R##.## or SS-#####.R##.##" },
       ],
       idFormat: "SS-####.R##.## or SS-#####.R##.##",
+      idAddtionalErrorMessage: waiverAddtionalErrorMessage,
       idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.](0[1-9]|[1-9][0-9])$",
       idFAQLink: ROUTES.FAQ_1915B_WAIVER_AMENDMENT_ID,
       idExistValidations: [
@@ -338,6 +342,7 @@ export const CONFIG = {
       ],
       idFormat: "SS-####.R##.## or SS-#####.R##.##",
       idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
+      idAddtionalErrorMessage: waiverAddtionalErrorMessage,
       idExistValidations: [
         {
           idMustExist: true,
