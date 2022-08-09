@@ -144,6 +144,41 @@ describe("Submission Form", () => {
     });
   });
 
+  describe("Parent Number Section", () => {
+    it("displays error message when id SHOULD exist but it doesn't", async () => {
+      history.push("/waiverextension");
+      const parentIdLabel =
+        ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER_EXTENSION].parentNumber
+          .idLabel;
+      const errorMessage =
+        ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER_EXTENSION].parentNumber
+          .idExistValidations[0].showMessage;
+      const testId = "MI-12-1122";
+
+      // id will NOT exist
+      ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+
+      render(
+        <AppContext.Provider
+          value={{
+            ...stateSubmitterInitialAuthState,
+          }}
+        >
+          <Router history={history}>
+            <SubmissionForm
+              changeRequestType={ChangeRequest.TYPE.WAIVER_EXTENSION}
+            />
+          </Router>
+        </AppContext.Provider>
+      );
+
+      const parentNumberEl = screen.getByLabelText(parentIdLabel);
+
+      userEvent.type(parentNumberEl, testId);
+      await waitFor(() => screen.getByText(errorMessage));
+    });
+  });
+
   describe("Transmittal Number Section", () => {
     it("populates the transmittal number field when passed in as a url query parameter", async () => {
       const testTransmittalNumber = "MI-12-1122";
@@ -457,6 +492,8 @@ describe("Submission Form", () => {
 
 it("successfully submits the form", async () => {
   //  history.push("/waiver");
+  // mock submitting via the API
+  ChangeRequestDataApi.submit.mockResolvedValue("SC000");
 
   const testValues = {
     transmittalNumber: "MI-17234.R03.22",
@@ -502,7 +539,7 @@ it("successfully submits the form", async () => {
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
   // click the submit button
-  //userEvent.click(submitButtonEl);
+  userEvent.click(submitButtonEl);
   screen.debug();
 });
 
