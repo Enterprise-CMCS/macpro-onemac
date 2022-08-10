@@ -79,6 +79,8 @@ export const SubmissionForm: React.FC<{
       statusLevel: "error",
       statusMessage: "",
     });
+  const [parentNumberStatusMessage, setParentNumberStatusMessage] =
+    useState<string>("");
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -100,6 +102,7 @@ export const SubmissionForm: React.FC<{
     transmittalNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
     actionType: "",
     waiverAuthority: "",
+    parentNumber: initialTransmittalNumber || "", //This is needed to be able to control the field
   });
 
   function matchesRegex(fieldValue: string, regexFormatString: string) {
@@ -158,6 +161,14 @@ export const SubmissionForm: React.FC<{
     setChangeRequest(updatedRecord);
   }
 
+  async function handleParentNumberChange(newParentNumber: string) {
+    let updatedRecord = { ...changeRequest }; // You need a new object to be able to update the state
+
+    updatedRecord["parentNumber"] = newParentNumber;
+
+    setChangeRequest(updatedRecord);
+  }
+
   const handleActionTypeChange = (event: ChangeEvent<HTMLSelectElement>) => {
     if (!event || !event.target) return;
 
@@ -210,6 +221,34 @@ export const SubmissionForm: React.FC<{
       });
     }
   }, [alertCode, history]);
+
+  useEffect(() => {
+    const checkId = async () => {
+      let parentStatusMessage = "";
+      const idCheckDetails = !!changeRequest.parentNumber
+        ? formInfo?.parentNumber?.idExistValidations[0]
+        : false;
+      try {
+        if (idCheckDetails) {
+          if (
+            (await ChangeRequestDataApi.packageExists(
+              changeRequest.parentNumber
+            )) === idCheckDetails.idMustExist
+          )
+            parentStatusMessage = "";
+          else
+            parentStatusMessage = idCheckDetails.showMessage
+              ? idCheckDetails.showMessage
+              : "";
+        }
+        setParentNumberStatusMessage(parentStatusMessage);
+      } catch (err) {
+        console.log("error is: ", err);
+        setAlertCode(RESPONSE_CODE[(err as Error).message]);
+      }
+    };
+    checkId();
+  }, [changeRequest.parentNumber, formInfo?.parentNumber]);
 
   useEffect(() => {
     // default display message settings with empty message
@@ -322,6 +361,8 @@ export const SubmissionForm: React.FC<{
     if (
       (!formInfo.actionType || changeRequest.actionType) &&
       (!formInfo.waiverAuthority || changeRequest.waiverAuthority) &&
+      (!formInfo.parentNumber ||
+        (changeRequest.parentNumber && !parentNumberStatusMessage)) &&
       (transmittalNumberStatusMessage.statusLevel === "warn" ||
         !transmittalNumberStatusMessage.statusMessage) &&
       areUploadsReady
@@ -334,6 +375,7 @@ export const SubmissionForm: React.FC<{
     changeRequest,
     formInfo,
     transmittalNumberStatusMessage,
+    parentNumberStatusMessage,
   ]);
 
   const limitSubmit = useRef(false);
@@ -434,7 +476,24 @@ export const SubmissionForm: React.FC<{
                 onChange={handleInputChange}
               />
             )}
+            {formInfo.parentNumber && (
+              <TransmittalNumber
+                inputId="parent-number"
+                idLabel={formInfo.parentNumber.idLabel}
+                idFieldHint={formInfo.parentNumber.idFieldHint}
+                idFAQLink={formInfo.parentNumber.idFAQLink}
+                faqIdLabel={formInfo.parentNumber.faqIdLabel}
+                statusLevel={"error"}
+                statusMessage={parentNumberStatusMessage}
+                disabled={false}
+                value={changeRequest.parentNumber}
+                onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                  handleParentNumberChange(event.target.value.toUpperCase())
+                }
+              />
+            )}
             <TransmittalNumber
+              inputId="transmittal-number"
               idLabel={transmittalNumberDetails.idLabel}
               idFieldHint={transmittalNumberDetails.idFieldHint}
               idFAQLink={transmittalNumberDetails.idFAQLink}

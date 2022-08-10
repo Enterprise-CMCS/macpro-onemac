@@ -1,5 +1,5 @@
-const SPAIDInputBox = "#transmittalNumber";
-const errorMessageSPAID = "#transmittalNumberStatusMsg";
+const SPAIDInputBox = "#transmittal-number";
+const errorMessageSPAID = "#transmittal-number-status-msg";
 //Element is Xpath use cy.xpath instead of cy.get
 const addFileBTNCurrentStatePlan = "//tbody/tr[1]/td[2]/label[1]";
 const addFileBTNCurrentStatePlanInnerBTN = "#uploader-input-0";

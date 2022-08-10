@@ -1,6 +1,6 @@
 const submitBTN = "#form-submission-button";
 const cancelBTN = "#form-cancel-button";
-const submissionFormErrorMsg = "#transmittalNumberStatusMsg";
+const submissionFormErrorMsg = "#transmittal-number-status-msg";
 const packageFormErrorMsg = "#componentIdStatusMsg";
 
 export class oneMacDefaultForms {
