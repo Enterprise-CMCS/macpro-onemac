@@ -29,10 +29,3 @@ jobs:
               repo: context.repo.repo,
               body: "Endpoint URL - ${{env.application_endpoint_url}}"
             })
-    
-            github.rest.pulls.update({
-              pull_number: context.issue.number,
-              owner: context.repo.owner,
-              repo: context.repo.repo,
-              body: context.issue.body.replace("https://xxxx.cloudfront.net","${{env.application_endpoint_url}}")
-            })
