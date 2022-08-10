@@ -34,7 +34,6 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         And Click on Waiver Action under Waiver Type
         And Click on New Waiver under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type existing waiver number into Approved Base or Renewal Waiver Number field
         And Type new Waiver Number 2 in format SS-#####.R00.00
         And Upload 1915 b 4 file
         And Type "This is just a test" in Summary Box
@@ -43,6 +42,7 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         Then click on New Submission
         And Click on Waiver Action
         And Click on Request Temporary Extension
+        And Type existing waiver number into Approved Base or Renewal Waiver Number field
         And Type TE number based on existing waiver number 2
         And upload Waiver Extension Request
         And Type "This test has a valid waiver number" in Summary Box
