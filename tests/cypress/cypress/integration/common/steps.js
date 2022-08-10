@@ -2551,3 +2551,6 @@ And(
     });
   }
 );
+And("verify error message contains {string}", (msg) => {
+  OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
+});
