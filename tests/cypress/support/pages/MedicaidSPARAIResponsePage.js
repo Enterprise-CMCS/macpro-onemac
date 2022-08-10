@@ -11,7 +11,7 @@ const officialRAIResponseBTNUploadFile = "#uploader-input-1";
 //locator is xpath, please user cy.xpath();
 const RAIResponseAddFileBTN = "//td[div[contains(text(),'RAI Response')]]";
 
-const spaIDField = "#transmittalNumber";
+const spaIDField = "#transmittal-number";
 
 export class MedicaidSPARAIResponsePage {
   uploadRAIResponseAddFile() {
