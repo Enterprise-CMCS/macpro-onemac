@@ -2542,7 +2542,7 @@ And("wait for {string} miliseconds", (s) => {
   cy.wait(parseInt(s));
 });
 And(
-  "And Type new Waiver Number 2 into Approved Base or Renewal Waiver Number field",
+  "Type new Waiver Number 2 into Approved Base or Renewal Waiver Number field",
   () => {
     cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
       OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
