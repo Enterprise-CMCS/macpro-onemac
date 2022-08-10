@@ -45,7 +45,7 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
         Then click on New Submission
         And Click on Waiver Action
         And Click on Request Temporary Extension
-        And Type existing waiver number into Approved Base or Renewal Waiver Number field
+        And Type new Waiver Number 2 into Approved Base or Renewal Waiver Number field
         And Type TE number based on existing waiver number 2
         And upload Waiver Extension Request
         And Type "This test has a valid waiver number" in Summary Box
