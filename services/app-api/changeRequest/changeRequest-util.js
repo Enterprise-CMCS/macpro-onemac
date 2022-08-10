@@ -128,6 +128,7 @@ export function validateSubmission(data) {
     territory: Joi.string()
       .valid(...territoryCodeList)
       .required(),
+    parentNumber: Joi.string().allow(""),
     transmittalNumber: Joi.string().required(),
     transmittalNumberWarningMessage: Joi.string().allow(""),
     type: Joi.string()

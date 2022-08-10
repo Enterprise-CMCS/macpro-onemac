@@ -76,17 +76,20 @@ export namespace ChangeRequest {
     idFormat: string;
     idFieldHint: FieldHint[];
     idFAQLink: string;
+    faqIdLabel?: string;
     idExistValidations: {
       existenceRegex?: RegExp;
       existenceAppend?: string;
       idMustExist?: boolean;
       errorLevel: string;
+      showMessage?: string;
     }[];
   };
 
   type WaiverFormInfo = {
     actionType: { optionsList: SelectOption[] };
     waiverAuthority: { optionsList: SelectOption[] };
+    parentNumber: TransmittalNumberInfo;
     newTransmittalNumber: TransmittalNumberInfo;
     amendmentTransmittalNumber: TransmittalNumberInfo;
     renewalTransmittalNumber: TransmittalNumberInfo;
