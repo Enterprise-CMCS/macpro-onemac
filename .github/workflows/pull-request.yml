@@ -23,6 +23,10 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         run:  echo "application_endpoint_url="`aws cloudformation describe-stacks --stack-name ui-${{env.branch_name}} --output text --query "Stacks[0].Outputs[?OutputKey=='ApplicationEndpointUrl'].OutputValue"` >> $GITHUB_ENV
+      - name: Get PR Comment
+        run: |
+          echo "pr_comment=${{github.event.pull_request.body}}" >> $GITHUB_ENV
+          echo ${{github.event.pull_request.body}}
       - name: Add endpoint in PR
         uses: actions/github-script@v6
         with:
@@ -31,5 +35,5 @@ jobs:
               pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: context.issue.pull_request.body.replace("https://xxxx.cloudfront.net","${{env.application_endpoint_url}}")
+              body: context.pull_request.body.replace("https://xxxx.cloudfront.net","${{env.application_endpoint_url}}")
             })
