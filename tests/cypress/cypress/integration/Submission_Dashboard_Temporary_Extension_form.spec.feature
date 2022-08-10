@@ -23,11 +23,14 @@ Feature: Temporary Extension form - Add warning messaging and relaxing the ID va
 
     Scenario: Screen enhancement - Temp Extension Approved Base or Renewal Waiver Number field
         And Click on Request Temporary Extension
-        And Type "MD" into Approved Base or Renewal Waiver Number field
+        And Type "M" into Approved Base or Renewal Waiver Number field
+        And wait for "1000" miliseconds
         And verify Approved Base or Renewal Waiver Number error message is displayed
         And verify Approved Base or Renewal Waiver Number error message text is correct
         And clear Approved Base or Renewal Waiver Number input box
+        And verify Approved Base or Renewal Waiver Number error message is not displayed
         And Type existing waiver number into Approved Base or Renewal Waiver Number field
+        And wait for "2000" miliseconds
         And verify Approved Base or Renewal Waiver Number error message is not displayed
 
     Scenario: Create Temporary Extension with valid waiver number

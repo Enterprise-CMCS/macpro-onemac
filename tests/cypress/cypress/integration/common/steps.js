@@ -2510,9 +2510,11 @@ And("Type {string} into Approved Base or Renewal Waiver Number field", (n) => {
 And(
   "Type existing waiver number into Approved Base or Renewal Waiver Number field",
   () => {
-    OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
-      "MD-5533.R00.00"
-    );
+    cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+      OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+        d.existingWaiverNum
+      );
+    });
   }
 );
 And(
@@ -2535,4 +2537,7 @@ And(
 );
 And("clear Approved Base or Renewal Waiver Number input box", () => {
   OneMacRequestWaiverTemporaryExtension.clearApprovedBaseOrRenewalWaiverNumberInputBox();
+});
+And("wait for {string} miliseconds", (s) => {
+  cy.wait(parseInt(s));
 });
