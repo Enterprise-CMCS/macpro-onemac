@@ -3,6 +3,8 @@ const errorMessageForWaiverNumber = "#transmittal-number-status-msg";
 const waiverExtensionRequest =
   "//td[div[contains(text(),'Waiver Extension Request')]]";
 const firstFileUploadBtn = "#uploader-input-0";
+const parentWaiverNumberInputBox = "#parent-number";
+const errorMsgForParentWaiverNumber = "#parent-number-status-msg";
 
 export class oneMacRequestWaiverTemporaryExtension {
   inputWaiverNumber(s) {
@@ -24,6 +26,23 @@ export class oneMacRequestWaiverTemporaryExtension {
     cy.xpath(waiverExtensionRequest).click();
     const filePath = "/files/15MB.pdf";
     cy.get(firstFileUploadBtn).attachFile(filePath);
+  }
+  inputApprovedBaseOrRenewalWaiverNumber(s) {
+    cy.get(parentWaiverNumberInputBox).type(s);
+  }
+  verifyParentErrorMessageIsDisplayed() {
+    cy.get(errorMsgForParentWaiverNumber).should("be.visible");
+  }
+  verifyParentErrorMessageText() {
+    cy.get(errorMsgForParentWaiverNumber).contains(
+      "The waiver number entered does not appear to match our records. Please enter an approved base or renewal waiver number, using a dash after the two character state abbreviation."
+    );
+  }
+  verifyParentErrorMessageIsNotDisplayed() {
+    cy.get(errorMsgForParentWaiverNumber).should("not.exist");
+  }
+  clearApprovedBaseOrRenewalWaiverNumberInputBox() {
+    cy.get(parentWaiverNumberInputBox).clear();
   }
 }
 export default oneMacRequestWaiverTemporaryExtension;

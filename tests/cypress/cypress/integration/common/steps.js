@@ -2502,3 +2502,37 @@ And(
 And("Verify blue eerror message says user can submit in package view", () => {
   OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
 });
+And("Type {string} into Approved Base or Renewal Waiver Number field", (n) => {
+  OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+    n
+  );
+});
+And(
+  "Type existing waiver number into Approved Base or Renewal Waiver Number field",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+      "MD-5533.R00.00"
+    );
+  }
+);
+And(
+  "verify Approved Base or Renewal Waiver Number error message is displayed",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsDisplayed();
+  }
+);
+And(
+  "verify Approved Base or Renewal Waiver Number error message text is correct",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageText();
+  }
+);
+And(
+  "verify Approved Base or Renewal Waiver Number error message is not displayed",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsNotDisplayed();
+  }
+);
+And("clear Approved Base or Renewal Waiver Number input box", () => {
+  OneMacRequestWaiverTemporaryExtension.clearApprovedBaseOrRenewalWaiverNumberInputBox();
+});
