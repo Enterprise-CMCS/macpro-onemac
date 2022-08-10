@@ -20,8 +20,9 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And Click on Waiver Amendment under Action type
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
         And type in invalid Waiver Number
-        And Upload 1915 b 4 file
         And verify error message is present on submission dashboard New Waiver Page
+        And verify error message contains 'For amendments, the last two digits start with “01” and ascends'
+        And Upload 1915 b 4 file
         And verify the submit button is disabled
         And clear Waiver Number Input box in old form
         And type in Existing Waiver Number in old form
@@ -75,6 +76,7 @@ Feature: OY2_4807_Validate_Waiver_Form_Logic
         And clear Waiver Number Input box On Appendix K Amendment Page
         And type in invalid Waiver Number On Appendix K Amendment Page
         And verify that error message for incorrect Waiver Number is Displayed On Appendix K Amendment Page
+        And verify error message contains 'For amendments, the last two digits start with “01” and ascends'
         And verify the submit button is disabled
         And clear Waiver Number Input box On Appendix K Amendment Page
         And type in Waiver Number with 5 characters On Appendix K Amendment Page

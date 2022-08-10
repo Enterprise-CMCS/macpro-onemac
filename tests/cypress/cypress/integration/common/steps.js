@@ -2502,3 +2502,7 @@ And(
 And("Verify blue eerror message says user can submit in package view", () => {
   OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
 });
+
+And("verify error message contains {string}", (msg) => {
+  OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
+});

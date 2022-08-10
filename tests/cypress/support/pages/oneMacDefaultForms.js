@@ -36,5 +36,8 @@ export class oneMacDefaultForms {
       "You will still be able to submit but your submission ID does not appear to match our records."
     );
   }
+  verifyErrorMsgContainsInSubmissionView(s) {
+    cy.get(submissionFormErrorMsg).contains(s);
+  }
 }
 export default oneMacDefaultForms;
