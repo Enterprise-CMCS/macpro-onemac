@@ -28,7 +28,7 @@ export class oneMacRequestWaiverTemporaryExtension {
     cy.get(firstFileUploadBtn).attachFile(filePath);
   }
   inputApprovedBaseOrRenewalWaiverNumber(s) {
-    cy.get(parentWaiverNumberInputBox).type(s);
+    cy.get(parentWaiverNumberInputBox).type(s, { delay: 500 });
   }
   verifyParentErrorMessageIsDisplayed() {
     cy.get(errorMsgForParentWaiverNumber).should("be.visible");
