@@ -6,7 +6,7 @@ import { ONEMAC_ROUTES, Workflow } from "cmscommonlib";
 const RAILink = {
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: ONEMAC_ROUTES.MEDICAID_SPA_RAI,
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: ONEMAC_ROUTES.CHIP_SPA_RAI,
-  [Workflow.ONEMAC_TYPE.BASE_WAIVER]: "",
+  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: ONEMAC_ROUTES.WAIVER_RAI,
 };
 
 export default function RespondToRAI({ theComponent }) {

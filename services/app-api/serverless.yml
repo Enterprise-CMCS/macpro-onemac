@@ -170,6 +170,16 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  submitWaiverRaiResponse:
+    handler: form/submitWaiverRAIResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverRAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   withdrawBaseWaiver:
     handler: action/withdrawBaseWaiver.main
