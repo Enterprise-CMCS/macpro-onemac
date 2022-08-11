@@ -27,5 +27,5 @@ jobs:
               pull_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: ("${{github.event.pull_request.body}}").replace("https://xxxx.cloudfront.net","${{env.application_endpoint_url}}")
+              body: "${{env.application_endpoint_url}}\n" + "${{github.event.pull_request.body}}"
             })
