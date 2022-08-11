@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { baseWaiver } from "cmscommonlib";
+import { initialWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
@@ -9,7 +9,7 @@ import {
 } from "./defaultFormConfig";
 
 /**
- * Submitting a Base Waiver MUST do the following to return SUCCESS:
+ * Submitting a Initial Waiver MUST do the following to return SUCCESS:
  *  - parse the event
  *  - authenticate the user
  *  - validate the submission data
@@ -20,9 +20,9 @@ import {
  *  - sends submission receipt
  */
 
-export const baseWaiverFormConfig = {
+export const initialWaiverFormConfig = {
   ...defaultFormConfig,
-  ...baseWaiver,
+  ...initialWaiver,
   appendToSchema: {
     waiverAuthority: Joi.string().required(),
     // Should look into a real validation with choices centrally located in cmscommonlib
@@ -32,5 +32,5 @@ export const baseWaiverFormConfig = {
 };
 
 export const main = handler(async (event) =>
-  submitAny(event, baseWaiverFormConfig)
+  submitAny(event, initialWaiverFormConfig)
 );

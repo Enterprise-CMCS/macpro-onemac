@@ -14,7 +14,7 @@ export const getWaiverFamily = (inId) => {
 
 export const decodeWaiverNumber = (inId) => {
   // amendments can have parents that are bases or renewals
-  // base if no R section or R00
+  // initial if no R section or R00
   // renewal if R section has a number
   //const waiverRegex = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
   if (!inId) return null;

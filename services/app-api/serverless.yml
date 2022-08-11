@@ -111,12 +111,12 @@ functions:
       default:
         enabled: false
 
-  submitBaseWaiver:
-    handler: form/submitBaseWaiver.main
+  submitInitialWaiver:
+    handler: form/submitInitialWaiver.main
     role: LambdaApiRole
     events:
       - http:
-          path: submitBaseWaiver
+          path: submitInitialWaiver
           method: post
           cors: true
           authorizer: aws_iam
@@ -171,12 +171,12 @@ functions:
           cors: true
           authorizer: aws_iam
 
-  withdrawBaseWaiver:
-    handler: action/withdrawBaseWaiver.main
+  withdrawInitialWaiver:
+    handler: action/withdrawInitialWaiver.main
     role: LambdaApiRole
     events:
       - http:
-          path: withdrawBaseWaiver
+          path: withdrawInitialWaiver
           method: post
           cors: true
           authorizer: aws_iam

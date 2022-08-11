@@ -10,7 +10,7 @@ export * as Validate from "./idValidation.js";
 import * as Workflow from "./workflow.js";
 export * as Workflow from "./workflow.js";
 
-export { baseWaiver } from "./type/baseWaiver.js";
+export { initialWaiver } from "./type/initialWaiver.js";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
 export { waiverRenewal } from "./type/waiverRenewal.js";
 export { waiverAmendment } from "./type/waiverAmendment.js";

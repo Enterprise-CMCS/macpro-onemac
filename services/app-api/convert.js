@@ -10,7 +10,7 @@ import { chipSPAFormConfig } from "./form/submitCHIPSPA";
 import { chipSPARAIResponseFormConfig } from "./form/submitCHIPSPARAIResponse";
 import { medicaidSPAFormConfig } from "./form/submitMedicaidSPA";
 import { medicaidSPARAIResponseFormConfig } from "./form/submitMedicaidSPARAIResponse";
-import { baseWaiverFormConfig } from "./form/submitBaseWaiver";
+import { initialWaiverFormConfig } from "./form/submitInitialWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./form/submitWaiverExtension";
 import { waiverRenewalFormConfig } from "./form/submitWaiverRenewal";
 import { waiverAmendmentFormConfig } from "./form/submitWaiverAmendment";
@@ -28,8 +28,8 @@ const NEW_CONFIG = {
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: medicaidSPAFormConfig,
   [Workflow.ONEMAC_TYPE.SPA_RAI]: medicaidSPARAIResponseFormConfig,
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: medicaidSPARAIResponseFormConfig,
-  [Workflow.ONEMAC_TYPE.WAIVER]: baseWaiverFormConfig,
-  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: baseWaiverFormConfig,
+  [Workflow.ONEMAC_TYPE.WAIVER]: initialWaiverFormConfig,
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: initialWaiverFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewalFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixKFormConfig,
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtensionFormConfig,
@@ -51,15 +51,15 @@ export const main = handler(async () => {
 
       if (item.type === "waiver") {
         item.type += item.actionType; // change-request items use type="waiver" and actionType to differentiate the components
-        if (item.type === "waivernew") item.transmittalNumber += ".R00.00"; // change-request item Base Waiver Numbers do not have .R00.00
+        if (item.type === "waivernew") item.transmittalNumber += ".R00.00"; // change-request item Initial Waiver Numbers do not have .R00.00
         if (item.type === "waiverrenewal") item.transmittalNumber += ".00"; // change-request item Renewal Waiver Numbers do not have .00
         item.proposedEffectiveDate = "none"; // original waiver forms did not capture proposedEffectiveDate
       }
-      // if (item.type != Workflow.ONEMAC_TYPE.WAIVER_BASE && item.type != Workflow.ONEMAC_TYPE.WAIVER) continue;
+      // if (item.type != Workflow.ONEMAC_TYPE.WAIVER_INITIAL && item.type != Workflow.ONEMAC_TYPE.WAIVER) continue;
       const config = NEW_CONFIG[item.type];
       if (!config) continue;
       //console.log("config is: ", config);
-      //console.log("base waiver form config is: ", baseWaiverFormConfig);
+      //console.log("Initial waiver form config is: ", initialWaiverFormConfig);
 
       const data = {
         componentId: item.transmittalNumber,

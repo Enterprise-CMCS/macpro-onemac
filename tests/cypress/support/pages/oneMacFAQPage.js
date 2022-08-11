@@ -45,8 +45,8 @@ const whatAttachmentsForCHIPSPAResponseToRAIValue = "#chip-spa-rai-attachments";
 const canISubmitSPAFORPHEInOneMac = "#public-health-emergency-button";
 const canISubmitSPAFORPHEInOneMacValue = "#public-health-emergency";
 //Waiver section
-const baseWaiverFormatHeaderBtn = "#base-waiver-id-format-button";
-const baseWaiverFormatBody = "#base-waiver-id-format";
+const initialWaiverFormatHeaderBtn = "#initial-waiver-id-format-button";
+const initialWaiverFormatBody = "#initial-waiver-id-format";
 const waiverRenewalFormatHeaderBtn = "#waiver-renewal-id-format-button";
 const waiverRenewalFormatBody = "#waiver-renewal-id-format";
 const whatFormatIsUsedToEnterASPAIDforWaivers = "#waiver-id-format-button";
@@ -358,18 +358,18 @@ export class oneMacFAQPage {
         cy.request(href).its("status").should("eq", 200);
       });
   }
-  verifyBaseWaiverFormatHeaderBtnExists() {
-    cy.get(baseWaiverFormatHeaderBtn).should("be.visible");
+  verifyInitialWaiverFormatHeaderBtnExists() {
+    cy.get(initialWaiverFormatHeaderBtn).should("be.visible");
   }
-  clickBaseWaiverFormatHeaderBtn() {
-    cy.get(baseWaiverFormatHeaderBtn).click();
+  clickInitialWaiverFormatHeaderBtn() {
+    cy.get(initialWaiverFormatHeaderBtn).click();
   }
-  verifyBaseWaiverFormatBody() {
-    cy.get(baseWaiverFormatBody)
+  verifyInitialWaiverFormatBody() {
+    cy.get(initialWaiverFormatBody)
       .should("be.visible")
       .find("p")
       .contains(
-        "1915(b) Base Waiver numbers must follow the format SS-####.R00.00 or SS-#####.R00.00 to include:"
+        "1915(b) Initial Waiver numbers must follow the format SS-####.R00.00 or SS-#####.R00.00 to include:"
       );
   }
   verifyWaiverRenewalFormatHeaderBtnExists() {
