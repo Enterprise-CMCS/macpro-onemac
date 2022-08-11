@@ -2502,7 +2502,55 @@ And(
 And("Verify blue eerror message says user can submit in package view", () => {
   OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
 });
-
+And("Type {string} into Approved Base or Renewal Waiver Number field", (n) => {
+  OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+    n
+  );
+});
+And(
+  "Type existing waiver number into Approved Base or Renewal Waiver Number field",
+  () => {
+    cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+      OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+        d.existingWaiverNum
+      );
+    });
+  }
+);
+And(
+  "verify Approved Base or Renewal Waiver Number error message is displayed",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsDisplayed();
+  }
+);
+And(
+  "verify Approved Base or Renewal Waiver Number error message text is correct",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageText();
+  }
+);
+And(
+  "verify Approved Base or Renewal Waiver Number error message is not displayed",
+  () => {
+    OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsNotDisplayed();
+  }
+);
+And("clear Approved Base or Renewal Waiver Number input box", () => {
+  OneMacRequestWaiverTemporaryExtension.clearApprovedBaseOrRenewalWaiverNumberInputBox();
+});
+And("wait for {string} miliseconds", (s) => {
+  cy.wait(parseInt(s));
+});
+And(
+  "Type new Waiver Number 2 into Approved Base or Renewal Waiver Number field",
+  () => {
+    cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
+      OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+        d.newWaiverNumber2
+      );
+    });
+  }
+);
 And("verify error message contains {string}", (msg) => {
   OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
 });
