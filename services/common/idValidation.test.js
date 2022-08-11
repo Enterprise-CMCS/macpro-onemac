@@ -14,7 +14,7 @@ describe("Waiver Number Useful Functions", () => {
     expect(getWaiverFamily("MI.77777.R00.M01")).toStrictEqual("MI.77777");
     expect(getWaiverFamily("MI.77777.R01.00")).toStrictEqual("MI.77777");
     expect(getWaiverFamily("MI.77777.R01.01")).toStrictEqual("MI.77777");
-    expect(getWaiverFamily()).toStrictEqual("MI.77777");
+    expect(getWaiverFamily()).toBeNull();
   });
 
   it("gets the Parent Waiver Number and Type", () => {
