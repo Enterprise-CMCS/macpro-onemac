@@ -2,6 +2,7 @@ import { RESPONSE_CODE } from "cmscommonlib";
 import { submitAny } from "./submitAny";
 import { getUser } from "../getUser";
 import { baseWaiverFormConfig } from "./submitBaseWaiver";
+import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
 import sendEmail from "../libs/email-lib";
 import newSubmission from "../utils/newSubmission";
@@ -31,7 +32,7 @@ const testUnauthUser = {
 };
 
 const eventBody = {
-  componentId: "VA.1117.R00.00",
+  componentId: "VA-1117.R00.00",
   territory: "VA",
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
@@ -48,8 +49,26 @@ const eventBody = {
   waiverAuthority: "me",
 };
 
+const tempExtensionEventBody = {
+  componentId: "VA-9887.R00.TE01",
+  parentId: "VA-9887.R00.00",
+  parentType: "waivernew",
+  territory: "VA",
+  submitterEmail: "statesubmitteractive@cms.hhs.local",
+  submitterName: "Angie Active",
+  attachments: [
+    {
+      contentType: "image/png",
+      filename: "myfile.png",
+      s3Key: "path/in/s3",
+      title: "Other",
+      url: "https://www.notasite.gov",
+    },
+  ],
+};
+
 const invalidEventBody = {
-  transmittalNumber: "VA.1117", //transmittal number is invalid format
+  transmittalNumber: "VA-1117", //transmittal number is invalid format
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
   proposedEffectiveDate: "2022-01-01",
@@ -78,6 +97,15 @@ const testEvent = {
   },
 };
 
+const tempExtensionTestEvent = {
+  body: JSON.stringify(tempExtensionEventBody),
+  requestContext: {
+    identity: {
+      cognitoIdentityId: "1234",
+    },
+  },
+};
+
 const invalidTestEvent = {
   body: JSON.stringify(invalidEventBody),
   requestContext: {
@@ -88,6 +116,7 @@ const invalidTestEvent = {
 };
 
 const testConfig = { ...baseWaiverFormConfig };
+const tempExtentsionTestConfig = { ...waiverTemporaryExtensionFormConfig };
 
 beforeEach(() => {
   jest.clearAllMocks();
@@ -114,6 +143,23 @@ it("submits a base waiver", async () => {
 it("rejects a duplicate id base waiver", async () => {
   packageExists.mockResolvedValue(true);
   const response = await submitAny(testEvent, testConfig);
+  expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
+});
+
+it("allows submission when cant find parentId on temp extension", async () => {
+  const response = await submitAny(
+    tempExtensionTestEvent,
+    tempExtentsionTestConfig
+  );
+  expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
+});
+
+it("rejects a duplicate id for temp extension", async () => {
+  packageExists.mockResolvedValue(true);
+  const response = await submitAny(
+    tempExtensionTestEvent,
+    tempExtentsionTestConfig
+  );
   expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
 });
 

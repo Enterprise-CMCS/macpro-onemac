@@ -58,7 +58,7 @@ export class oneMacDashboardPage {
   }
 
   verifyIDNumber(s) {
-    cy.xpath(IDNUMBER(s)).should("be.visible");
+    cy.xpath(IDNUMBER(s)).scrollIntoView().should("be.visible");
   }
   clickIDNumberLink(s) {
     cy.xpath(IDNUMBER(s)).click();
@@ -68,14 +68,14 @@ export class oneMacDashboardPage {
     cy.xpath(Type).contains(s);
   }
   verifyTypeForID(s, e) {
-    cy.xpath(IDNUMBER(s)).parent("td").next("td").contains(e);
+    cy.xpath(IDNUMBER(s)).parent().next("td").contains(e);
   }
   verifyDate() {
     cy.get(date).should("be.visible");
   }
 
   clickOnrespondToRAI(s) {
-    cy.xpath(IDNUMBER(s)).parent("td").siblings().find("button").click();
+    cy.xpath(IDNUMBER(s)).parent().siblings().find("button").click();
     cy.xpath(respondToRAI).click();
   }
 

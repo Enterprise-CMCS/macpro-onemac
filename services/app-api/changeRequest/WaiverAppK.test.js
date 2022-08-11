@@ -20,7 +20,7 @@ it("Waiver AppK Stub", async () => {
   expect(responset).toBeInstanceOf(Promise);
 
   const response2 = WaiverAppK.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1397);
+  expect(response2.HTML.length).toBe(1525);
 
   const response3 = WaiverAppK.getStateEmail({
     spaData,

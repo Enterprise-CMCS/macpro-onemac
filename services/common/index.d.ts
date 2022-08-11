@@ -1,6 +1,7 @@
 export const RESPONSE_CODE: Record<string, string>;
 export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
+export const approvedBlueWarningMessage: string;
 export enum USER_STATUS {
   ACTIVE = "active",
   PENDING = "pending",
@@ -62,7 +63,9 @@ export type FileUploadProps = {
 export type IdValidation = {
   idMustExist: boolean;
   errorLevel: string;
-  existenceRegex?: RegExp;
+  existenceAppend?: string;
+  existenceRegex?: string | RegExp;
+  validateParentId?: boolean;
 };
 
 export namespace ChangeRequest {
@@ -74,6 +77,7 @@ export namespace ChangeRequest {
     idFAQLink: string;
     idExistValidations: {
       existenceRegex?: RegExp;
+      existenceAppend?: string;
       idMustExist?: boolean;
       errorLevel: string;
     }[];

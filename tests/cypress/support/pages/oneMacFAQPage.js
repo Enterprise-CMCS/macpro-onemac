@@ -1,7 +1,6 @@
 //Element is Xpath use cy.xpath instead of cy.get: All of the following are xpath
 //overall headers and help desk section
-const frequentlyAskedQuestionHeader =
-  '//h1[contains(text(),"Frequently Asked Questions")]';
+const frequentlyAskedQuestionHeader = "//*[@id='title_bar']//h1";
 const generalHeader = '//h2[contains(text(),"General")]';
 const statePlanAmendmentSPAHeader =
   '//h2[contains(text(),"State Plan Amendments (SPAs)")]';
@@ -14,18 +13,12 @@ const email = '//dt[contains(text(),"Email")]';
 const actualEmail =
   "//*[@id='faq-contact-info-box']//a[@href='mailto:OneMAC_Helpdesk@cms.hhs.gov']";
 //General Section
-const whatBrowsersCanIUseToAccessTheSystem = "#browsers-button";
-//Element is Xpath use cy.xpath instead of cy.get
-const whatBrowsersCanIUseToAccessTheSystemValue =
-  '//p[contains(text(),"The submission portal works best on Google Chrome")]';
-const whatShouldWeDoIfWeDontRecieveAConfirmationEmail = "#confirm-email-button";
-//Element is Xpath use cy.xpath instead of cy.get
-const whatShouldWeDoIfWeDontRecieveAConfirmationEmailValue =
-  '//p[contains(text(),"Refresh your inbox, check your SPAM filters, then contact the OneMAC Help")]';
-const isThisConsideredTheStateOfficialSubmission = "#is-official-button";
-//Element is Xpath use cy.xpath instead of cy.get
-const isThisConsideredTheStateOfficialSubmissionValue =
-  '//p[contains(text(),"Yes, as long as you have the electronic receipt (c")]';
+const whatBrowsersHeaderBtn = "#browsers-button";
+const whatBrowsersBody = "#browsers";
+const WhatToDoConfirmationEmailHeaderBtn = "#confirm-email-button";
+const WhatToDoConfirmationEmailBody = "#confirm-email";
+const isThisOfficialHeaderBtn = "#is-official-button";
+const isThisOfficialBody = "#is-official";
 const whatAreTheOneMacUserRoles = "#onemac-roles-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const whatAreTheOneMacUserRolesValueStateSubmitter =
@@ -39,28 +32,25 @@ const whatAreTheOneMacUserRolesValueCMSRoleApprover =
 //State Plan Amendment (SPA's) Section
 const whatFormatIsUsedToEnterASPAID = "#spa-id-format-button";
 const whatFormatIsUsedToEnterASPAIDValue = "#spa-id-format";
-const whatAreTheAttachmentForMedicaidSPA = "#medicaid-spa-attachments-button";
-const whatAreTheAttachmentForMedicaidSPAValue =
-  "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(2) div.ds-c-accordion div:nth-child(2) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(2)";
-const wharAreTheAttachmentForMedicaidResponseToSPARAI =
-  "#medicaid-spa-rai-attachments-button";
-const wharAreTheAttachmentForMedicaidResponseToSPARAIValue =
-  "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(2) div.ds-c-accordion div:nth-child(3) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(1)";
-const whatAreTheAttachmentsForChIPSPA = "#chip-spa-attachments-button";
-const whatAreTheAttachmentsForChIPSPAValue =
-  "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(2) div.ds-c-accordion div:nth-child(4) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(1)";
-const whatAreTheAttachmentsForChIPSPAResponseToRAI =
+const whatAttachmentForMedicaidSPAHeaderBtn =
+  "#medicaid-spa-attachments-button";
+const whatAttachmentForMedicaidSPABody = "#medicaid-spa-attachments";
+const whatAttachmentForRespToSPARAI = "#medicaid-spa-rai-attachments-button";
+const whatAttachmentForRespToSPARAIValue = "#medicaid-spa-rai-attachments";
+const whatAttachmentsForCHIPSPA = "#chip-spa-attachments-button";
+const whatAttachmentsForCHIPSPAValue = "#chip-spa-attachments";
+const whatAttachmentsForCHIPSPAResponseToRAI =
   "#chip-spa-rai-attachments-button";
-const whatAreTheAttachmentsForChIPSPAResponseToRAIValue =
-  "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(2) div.ds-c-accordion div:nth-child(5) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(1)";
+const whatAttachmentsForCHIPSPAResponseToRAIValue = "#chip-spa-rai-attachments";
 const canISubmitSPAFORPHEInOneMac = "#public-health-emergency-button";
-//Element is Xpath use cy.xpath instead of cy.get
-const canISubmitSPAFORPHEInOneMacValue =
-  '//p[contains(text(),"Yes, all PHE-related SPAs should be submitted thro")]';
+const canISubmitSPAFORPHEInOneMacValue = "#public-health-emergency";
 //Waiver section
+const baseWaiverFormatHeaderBtn = "#base-waiver-id-format-button";
+const baseWaiverFormatBody = "#base-waiver-id-format";
+const waiverRenewalFormatHeaderBtn = "#waiver-renewal-id-format-button";
+const waiverRenewalFormatBody = "#waiver-renewal-id-format";
 const whatFormatIsUsedToEnterASPAIDforWaivers = "#waiver-id-format-button";
-const whatFormatIsUsedToEnterASPAIDforWaiversValue =
-  "div.header-and-content:nth-child(1) div.form-container div.faq-card div.faq-left-column:nth-child(2) div.faq-section:nth-child(3) div.ds-c-accordion div:nth-child(1) div.ds-c-accordion__content.accordion-content:nth-child(2) > p:nth-child(1)";
+const whatFormatIsUsedToEnterASPAIDforWaiversValue = "#waiver-id-format";
 const whoCanIContactToHelpMeFigureOutTheCorrect1915bWaiverNumber =
   "#waiver-id-help-button";
 const whoCanIContactToHelpMeFigureOutTheCorrect1915bWaiverNumberValue =
@@ -75,10 +65,15 @@ const whatAreTheAttachmentsFor1915bResponsetoRAI =
   "#waiverb-rai-attachments-button";
 const whatAreTheAttachmentsFor1915bResponsetoRAIValue =
   "#waiverb-rai-attachments";
+const tempExtFormatHeaderBtn = "#waiver-extension-id-format-button";
+const tempExtFormatBody = "#waiver-extension-id-format";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtension =
   "#waiverb-extension-attachments-button";
 const whatAreTheAttachmentsFor1915bRequestTemprorayExtensionValue =
   "#waiverb-extension-attachments";
+const attachmentsFor1915cRequestTempExtHeaderBtn =
+  "#waiverc-extension-attachments-button";
+const attachmentsFor1915cRequestTempExtBody = "#waiverc-extension-attachments";
 const canISubmitAppendixKAmmendmentsInOneMac = "#appk-button";
 const canISubmitAppendixKAmmendmentsInOneMacValue = "#appk";
 const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments-button";
@@ -114,31 +109,42 @@ export class oneMacFAQPage {
     cy.xpath(oneMacHelpDeskContactInfoHeader).should("be.visible");
   }
 
-  verifyVerifyWhatbrowserscanIusetoaccessthesystemlinkisdisplayedandclickit() {
-    cy.get(whatBrowsersCanIUseToAccessTheSystem).click();
+  verifyVerifywhatBrowsersHeaderBtnlinkisdisplayedandclickit() {
+    cy.get(whatBrowsersHeaderBtn).click();
   }
 
   verifytextcontainsThesubmissionportalworksbestonGoogleChrome() {
-    cy.xpath(whatBrowsersCanIUseToAccessTheSystemValue).should("be.visible");
+    cy.get(whatBrowsersBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "The submission portal works best on Google Chrome (Version 91.0.4472.77 or later), Firefox (Version 89.0 or later)."
+      );
   }
 
   VerifyWhatshouldwedoifwedontreceiveaconfirmationemailisdisplayedandclickit() {
-    cy.get(whatShouldWeDoIfWeDontRecieveAConfirmationEmail).click();
+    cy.get(WhatToDoConfirmationEmailHeaderBtn).click();
   }
 
   VerifytextcontainsRefreshyourinboxcheckyourSPAMfiltersthencontacttheOneMACHelpDesk() {
-    cy.xpath(whatShouldWeDoIfWeDontRecieveAConfirmationEmailValue).should(
-      "be.visible"
-    );
+    cy.get(WhatToDoConfirmationEmailBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "Refresh your inbox, check your SPAM filters, then contact the OneMAC Help Desk"
+      );
   }
   VerifyIsthisconsideredtheofficialstatesubmissionisdisplayedandclickit() {
-    cy.get(isThisConsideredTheStateOfficialSubmission).click();
+    cy.get(isThisOfficialHeaderBtn).click();
   }
 
   VerifytextcontainsYesaslongasuouhavetheelectronicreceipt() {
-    cy.xpath(isThisConsideredTheStateOfficialSubmissionValue).should(
-      "be.visible"
-    );
+    cy.get(isThisOfficialBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "Yes, as long as you have the electronic receipt (confirmation email). Your submission is considered your official state submission and will only be considered received by CMS if you have received the electronic receipt. You should receive an email confirmation that the formal action was received along with information about the 90th day. If you do not receive a confirmation email for your SPA or waiver submissions, please contact your state lead or your state’s CMS lead for HCBS or managed care."
+      );
   }
   VerifyWhataretheOneMACuserrolesisdisplayedandclickit() {
     cy.get(whatAreTheOneMacUserRoles).click();
@@ -164,33 +170,36 @@ export class oneMacFAQPage {
     cy.get(whatFormatIsUsedToEnterASPAIDValue).should("be.visible");
   }
   VerifyWhataretheattachmentsforaMedicaidSPAisdisplayedandclickit() {
-    cy.get(whatAreTheAttachmentForMedicaidSPA).click();
+    cy.get(whatAttachmentForMedicaidSPAHeaderBtn).click();
   }
 
   VerifytextcontainsSPAsubmissionrequirementscanbefoundinregulation() {
-    cy.get(whatAreTheAttachmentForMedicaidSPAValue).should("be.visible");
+    cy.get(whatAttachmentForMedicaidSPABody).should("be.visible");
   }
 
   VerifyWhataretheattachmentsforaMedicaidresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit() {
-    cy.get(wharAreTheAttachmentForMedicaidResponseToSPARAI).click();
+    cy.get(whatAttachmentForRespToSPARAI).click();
   }
   Verifytextcontainsindicatesarequiredattachment() {
-    cy.get(wharAreTheAttachmentForMedicaidResponseToSPARAIValue).should(
-      "be.visible"
-    );
+    cy.get(whatAttachmentForRespToSPARAIValue).should("be.visible");
   }
 
   VerifyWhataretheattachmentsforaCHIPSPAisdisplayedandclickit() {
-    cy.get(whatAreTheAttachmentsForChIPSPA).click();
+    cy.get(whatAttachmentsForCHIPSPA).click();
   }
   VerifyWhataretheattachmentsforaCHIPSPAresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit() {
-    cy.get(whatAreTheAttachmentsForChIPSPAResponseToRAI).click();
+    cy.get(whatAttachmentsForCHIPSPAResponseToRAI).click();
   }
   VerifyCanIsubmitSPAsrelatingtothePublicHealthEmergencyPHEinOneMACisdisplayedandclickit() {
     cy.get(canISubmitSPAFORPHEInOneMac).click();
   }
   VerifytextcontainsYesallPHErelatedSPAsshouldbesubmittedthroughOneMAC() {
-    cy.xpath(canISubmitSPAFORPHEInOneMacValue).should("be.visible");
+    cy.get(canISubmitSPAFORPHEInOneMacValue)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "Yes, all PHE-related SPAs should be submitted through OneMAC by completing the Medicaid SPA form."
+      );
   }
 
   VerifyWhatformatisusedtoentera1915bwaivernumberisdisplayedandclickit() {
@@ -224,6 +233,20 @@ export class oneMacFAQPage {
   VerifyWhataretheattachmentsfora1915bWaiverresponsetoRequestforAdditionalInformationRAIisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsFor1915bResponsetoRAI).click();
   }
+  verifyTempExtFormatHeaderBtnExists() {
+    cy.get(tempExtFormatHeaderBtn).should("be.visible");
+  }
+  clickTempExtFormatHeaderBtn() {
+    cy.get(tempExtFormatHeaderBtn).click();
+  }
+  verifyTempExtFormatBody() {
+    cy.get(tempExtFormatBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "Temporary extension numbers must follow the format SS-####.R##.TE## or SS-#####.R##.TE## to include:"
+      );
+  }
   VerifyWhataretheattachmentsfora1915bWaiverRequestforTemporaryExtensionisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsFor1915bRequestTemprorayExtension).click();
   }
@@ -255,7 +278,9 @@ export class oneMacFAQPage {
     cy.url().should("include", "/FAQ");
   }
   VerifyFrequentlyAskedQuestionsExists() {
-    cy.xpath(frequentlyAskedQuestionHeader).should("be.visible");
+    cy.xpath(frequentlyAskedQuestionHeader)
+      .should("be.visible")
+      .contains("Frequently Asked Questions");
   }
   verifyOnboardingMaterialsBtnExists() {
     cy.get(onboardingMaterialsBtn).should("be.visible");
@@ -332,6 +357,38 @@ export class oneMacFAQPage {
       .then((href) => {
         cy.request(href).its("status").should("eq", 200);
       });
+  }
+  verifyBaseWaiverFormatHeaderBtnExists() {
+    cy.get(baseWaiverFormatHeaderBtn).should("be.visible");
+  }
+  clickBaseWaiverFormatHeaderBtn() {
+    cy.get(baseWaiverFormatHeaderBtn).click();
+  }
+  verifyBaseWaiverFormatBody() {
+    cy.get(baseWaiverFormatBody)
+      .should("be.visible")
+      .find("p")
+      .contains(
+        "1915(b) Base Waiver numbers must follow the format SS-####.R00.00 or SS-#####.R00.00 to include:"
+      );
+  }
+  verifyWaiverRenewalFormatHeaderBtnExists() {
+    cy.get(waiverRenewalFormatHeaderBtn).should("be.visible");
+  }
+  clickWaiverRenewalFormatHeaderBtn() {
+    cy.get(waiverRenewalFormatHeaderBtn).click();
+  }
+  verifyWaiverRenewalFormatBody() {
+    cy.get(waiverRenewalFormatBody).should("be.visible");
+  }
+  verifyAttachmentsFor1915cRequestTempExtHeaderBtnExists() {
+    cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).should("be.visible");
+  }
+  clickAttachmentsFor1915cRequestTempExtHeaderBtn() {
+    cy.get(attachmentsFor1915cRequestTempExtHeaderBtn).click();
+  }
+  verifyAttachmentsFor1915cRequestTempExtBody() {
+    cy.get(attachmentsFor1915cRequestTempExtBody).should("be.visible");
   }
 }
 export default oneMacFAQPage;

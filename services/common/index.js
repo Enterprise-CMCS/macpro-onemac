@@ -22,12 +22,7 @@ export { chipSPA } from "./type/chipSPA.js";
 export { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
 
 import { ROUTES, ONEMAC_ROUTES } from "./routes.js";
-export {
-  ROUTES,
-  ONEMAC_ROUTES,
-  TYPE_TO_DETAIL_ROUTE,
-  TYPE_TO_RAI_ROUTE,
-} from "./routes.js";
+export { ROUTES, ONEMAC_ROUTES, TYPE_TO_DETAIL_ROUTE } from "./routes.js";
 
 /**
  * Codes to send to front end
@@ -84,10 +79,13 @@ export const RAI_ROUTE = {
 
 export const cmsEmailMapToFormWarningMessages = {
   [RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING]:
-    "<br/>Please review the waiver number for correctness as OneMAC found a matching waiver renewal record for the number entered by the state.",
+    "<br/>Please review this submission for correctness as OneMAC found a matching record for the number entered by the state.",
   [RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING]:
-    "<br/>Please review the waiver number for correctness as OneMAC did not find a matching record for the number entered by the state.",
+    "<br/>Please review this submission for correctness as OneMAC did not find a matching record for the number entered by the state.",
 };
+
+export const approvedBlueWarningMessage =
+  "You will still be able to submit but your submission ID does not appear to match our records. Before proceeding, please check to ensure you have the correct submission ID. If you need support, please contact the OneMAC Help Desk at OneMAC_Helpdesk@cms.hhs.gov or (833) 228-2540.";
 
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",

@@ -1,6 +1,5 @@
 import { getAccessInstructions, getLinksHtml } from "./changeRequest-util";
-import packageExists from "../utils/packageExists";
-import { RESPONSE_CODE } from "cmscommonlib";
+import { cmsEmailMapToFormWarningMessages } from "cmscommonlib";
 
 /**
  * CHIP SPA RAI submission specific email generation functions.
@@ -12,27 +11,8 @@ class CHIPSPARAI {
    * @param {Object} data the received data
    * @returns {String} any errors
    */
-  async fieldsValid(data) {
-    let areFieldsValid = false;
-    let whyNot = "";
-    let doesExist = false;
-
-    try {
-      doesExist = await packageExists(data.transmittalNumber);
-    } catch (error) {
-      console.log("CHIPSPARAI packageExists call error: ", error);
-      throw error;
-    }
-    if (doesExist) {
-      console.log("the Item exists");
-      areFieldsValid = true;
-    } else {
-      console.log("result.Item does not exist");
-      areFieldsValid = false;
-      whyNot = RESPONSE_CODE.ID_NOT_FOUND;
-    }
-
-    return { areFieldsValid, whyNot };
+  async fieldsValid() {
+    return { areFieldsValid: true, whyNot: "" };
   }
 
   /**
@@ -41,7 +21,15 @@ class CHIPSPARAI {
    * @returns {Object} email parameters in generic format.
    */
   getCMSEmail(data) {
+    let transmittalNumberWarningMessage;
     const cmsEmail = {};
+
+    if (data.transmittalNumberWarningMessage) {
+      transmittalNumberWarningMessage =
+        cmsEmailMapToFormWarningMessages[data.transmittalNumberWarningMessage];
+    } else {
+      transmittalNumberWarningMessage = "";
+    }
 
     cmsEmail.ToAddresses = [
       process.env.reviewerCHIPEmail,
@@ -58,7 +46,9 @@ class CHIPSPARAI {
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>SPA ID</b>: ${data.transmittalNumber}
+            <br><b>SPA ID</b>: ${
+              data.transmittalNumber
+            }${transmittalNumberWarningMessage}
         </p>
         <p>
             <b>Additional Information</b>:

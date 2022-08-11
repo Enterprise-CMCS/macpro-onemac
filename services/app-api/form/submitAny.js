@@ -70,8 +70,11 @@ export const submitAny = async (event, config) => {
 
     // id validations, can be many for different parts of IDs
     const promises = config.idExistValidations.map(
-      async ({ idMustExist, errorLevel, existenceRegex }) => {
+      async ({ idMustExist, errorLevel, existenceRegex, validateParentId }) => {
         let checkingNumber = data.componentId;
+        if (validateParentId && typeof config.getParentInfo == "function") {
+          [checkingNumber] = config.getParentInfo(data.componentId);
+        }
 
         if (existenceRegex !== undefined) {
           checkingNumber = data.componentId.match(existenceRegex)[0];
@@ -90,8 +93,9 @@ export const submitAny = async (event, config) => {
 
     const results = await Promise.all(promises);
     console.log("ID Matching results are: ", results);
-    if (results[0] != undefined)
-      results.forEach((errorMsg) => {
+    results
+      .filter((errorMsg) => errorMsg != undefined)
+      .forEach((errorMsg) => {
         console.log("theLevel: ", errorMsg[0]);
         console.log("theCode: ", errorMsg[1]);
         if (errorMsg[0] === "error") {

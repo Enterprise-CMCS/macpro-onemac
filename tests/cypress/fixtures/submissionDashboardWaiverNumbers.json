@@ -1,5 +1,8 @@
 {
-  "newWaiverNumber1": "MD.12896",
-  "newWaiverNumber2": "MD.12893",
-  "newWaiverNumber3": "MD.12958"
+  "newWaiverNumber1": "MD-12896.R00.00",
+  "newWaiverNumber2": "MD-12893.R00.00",
+  "newTempExtNumber": "MD-12893.R00.TE01",
+  "newWaiverNumber3": "MD-12958.R00.00",
+  "formatWaiverTestNumber1": "MD-6254.R00.00",
+  "formatWaiverTestNumber2": "MD-72988.R00.00"
 }

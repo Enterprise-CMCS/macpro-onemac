@@ -95,4 +95,36 @@ describe("Temporary Extension Form", () => {
       .nextSibling.innerHTML;
     expect(parentWaiverNumberValue).toBe(testParentId);
   });
+
+  it("shows warning message if parentId is not found", async () => {
+    const testParentId = "VA-83420.R00.00";
+    history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION, {
+      parentType: ONEMAC_TYPE.WAIVER_BASE,
+      parentId: testParentId,
+    });
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <TemporaryExtensionForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const input = screen.getByLabelText("Waiver Number");
+
+    userEvent.type(input, "VA-99999.R00.TE01");
+
+    await waitFor(() => {
+      expect(
+        screen.getByText(
+          // "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support."
+          "You will still be able to submit but your submission ID does not appear to match our records. Before proceeding, please check to ensure you have the correct submission ID. If you need support, please contact the OneMAC Help Desk at OneMAC_Helpdesk@cms.hhs.gov or (833) 228-2540."
+        )
+      ).toBeInTheDocument();
+    });
+  });
 });

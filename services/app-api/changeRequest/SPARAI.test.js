@@ -20,7 +20,7 @@ it("SPARAI Stub", async () => {
   expect(responset).toBeInstanceOf(Promise);
 
   const response2 = SPARAI.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1313);
+  expect(response2.HTML.length).toBe(1441);
 
   const response3 = SPARAI.getStateEmail({
     spaData,

@@ -106,15 +106,16 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "chipspa",
       idLabel: "SPA ID",
-      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
       idFAQLink: ROUTES.FAQ_SPA_ID,
-      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex:
-        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idFieldHint: [
+        { text: "Please use the exact CHIP SPA ID sent with the RAI" },
+      ],
+      idFormat: "the Number format sent with the RAI",
+      idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
-          errorLevel: "error",
+          errorLevel: "warn",
         },
       ],
     },
@@ -178,17 +179,18 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "spa",
       idLabel: "SPA ID",
-      idFieldHint: [{ text: "Must follow the format SS-YY-NNNN-xxxx" }],
-      idFAQLink: ROUTES.FAQ_SPA_ID,
-      idFormat: "SS-YY-NNNN or SS-YY-NNNN-xxxx",
-      idRegex:
-        "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
+      idFieldHint: [
+        { text: "Please use the exact Medicaid SPA ID sent with the RAI" },
+      ],
+      idFormat: "the Number format sent with the RAI",
+      idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
-          errorLevel: "error",
+          errorLevel: "warn",
         },
       ],
+      idFAQLink: ROUTES.FAQ_SPA_ID,
     },
   },
 
@@ -240,7 +242,7 @@ export const CONFIG = {
         { text: "Must follow the format required by the Action Type" },
       ],
       idFormat: "the Action Type.  Please select an Action Type first.",
-      idRegex: "^[A-Z]{2}[.][0-9]{2}[.]R[0-9]{2}[.]M[0-9]{2}$",
+      idRegex: "^[A-Z]{2}[-][0-9]{2}[.]R[0-9]{2}[.][0-9]{2}$",
       idExistValidations: [
         {
           idMustExist: false,
@@ -252,11 +254,12 @@ export const CONFIG = {
       ...waiverBaseTransmittalNumber,
       idFieldHint: [
         {
-          text: "Must be a new base number with the format SS.#### or SS.#####",
+          text: "Must be a new base number with the format SS-####.R00.00 or SS-#####.R00.00",
         },
       ],
-      idFormat: "SS.#### or SS.#####",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}$",
+      idFormat: "SS-####.R00.00 or SS-#####.R00.00",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
+      idFAQLink: ROUTES.FAQ_BASE_1915B_WAIVER_ID,
       idExistValidations: [
         {
           idMustExist: false,
@@ -267,37 +270,46 @@ export const CONFIG = {
     amendmentTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
       idFieldHint: [
-        { text: "Must follow the format SS.####.R##.M## or SS.#####.R##.M##" },
+        { text: "Must follow the format SS-####.R##.## or SS-#####.R##.##" },
       ],
-      idFormat: "SS.####.R##.M## or SS.#####.R##.M##",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.]M[0-9]{2}$",
+      idFormat: "SS-####.R##.## or SS-#####.R##.##",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.](0[1-9]|[1-9][0-9])$",
+      idFAQLink: ROUTES.FAQ_1915B_WAIVER_AMENDMENT_ID,
       idExistValidations: [
+        // Want the base or renewal waiver number to exist
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+          existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}",
+          existenceAppend: ".00",
+        },
+        // DON'T want the entire Waiver number with amendment portion to exist
+        {
+          idMustExist: false,
+          errorLevel: "error",
         },
       ],
     },
     renewalTransmittalNumber: {
       ...waiverBaseTransmittalNumber,
       idFieldHint: [
-        { text: "Must follow the format SS.####.R## or SS.#####.R##" },
+        { text: "Must follow the format SS-####.R##.00 or SS-#####.R##.00" },
       ],
-      idFormat: "SS.####.R## or SS.#####.R##",
-      idRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}$",
+      idFormat: "SS-####.R##.00 or SS-#####.R##.00",
+      idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R(0[1-9]|[1-9][0-9])[.]00$",
+      idFAQLink: ROUTES.FAQ_1915B_WAIVER_RENEWAL_ID,
       idExistValidations: [
         // Want the base waiver number to exist
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+          existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}",
+          existenceAppend: ".R00.00",
         },
         // DON'T want the entire Waiver number with renewal portion to exist
         {
           idMustExist: false,
-          errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}",
+          errorLevel: "error",
         },
       ],
     },
@@ -318,19 +330,19 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "waiverappk",
       idLabel: "Waiver Number",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,
+      idFAQLink: ROUTES.FAQ_WAIVER_APP_K_ID,
       idFieldHint: [
         {
-          text: "Must follow the format SS.####.R##.## or SS.#####.R##.## (use R00 for waivers without renewals)",
+          text: "Must follow the format SS-####.R##.## or SS-#####.R##.## (use R00 for waivers without renewals)",
         },
       ],
-      idFormat: "SS.####.R##.## or SS.#####.R##.##",
-      idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
+      idFormat: "SS-####.R##.## or SS-#####.R##.##",
+      idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
       idExistValidations: [
         {
           idMustExist: true,
           errorLevel: "warn",
-          existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+          existenceRegex: "^[A-Z]{2}[-][0-9]{4,5}",
         },
       ],
     },
@@ -349,13 +361,21 @@ export const CONFIG = {
     transmittalNumber: {
       idType: "waiver",
       idLabel: "Waiver Number",
-      idFAQLink: ROUTES.FAQ_WAIVER_ID,
+      idFAQLink: ROUTES.FAQ_WAIVER_EXTENSION_ID,
+      idRegex: "(^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.]TE[0-9]{2}$)",
       idFieldHint: [
+        { text: "Must follow the format SS-####.R##.TE## or" },
         {
-          text: "Please enter the waiver number used on your initial submission",
+          text: "SS-#####.R##.TE## (use R00 for waivers without renewals)",
         },
       ],
-      idFormat: "the Number format used on the initial submission",
+      idFormat: "SS-####.R##.TE## or SS-#####.R##.TE##",
+      idExistValidations: [
+        {
+          idMustExist: false,
+          errorLevel: "error",
+        },
+      ],
     },
   },
 
@@ -363,7 +383,7 @@ export const CONFIG = {
     pageTitle: "Respond to Waiver RAI",
     readOnlyPageTitle: "Waiver RAI Response Details",
     subheaderMessage: {
-      __html: commonSubheaderMessage,
+      __html: raiSubheaderMessage,
     },
     detailsHeader: "Waiver RAI",
     requiredUploads: ["Waiver RAI Response"],
@@ -377,11 +397,11 @@ export const CONFIG = {
         { text: "Please use the exact Waiver Number sent with the RAI" },
       ],
       idFormat: "the Number format sent with the RAI",
-      idRegex:
-        "(^[A-Z]{2}[.-][0-9]{4,5}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}$)|(^[A-Z]{2}[.-][0-9]{4,5}[.]R[0-9]{2}[.]M?[0-9]{2}$)",
+      idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
+          errorLevel: "warn",
         },
       ],
     },

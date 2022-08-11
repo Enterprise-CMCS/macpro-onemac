@@ -11,7 +11,11 @@ import { Input } from "rsuite";
 
 import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
 
-import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
+import {
+  RESPONSE_CODE,
+  ROUTES,
+  approvedBlueWarningMessage,
+} from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import { OneMACFormConfig, defaultWaiverAuthority } from "../libs/formLib";
@@ -205,10 +209,16 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         const promises = formConfig.idExistValidations.map(
           async (idExistValidation) => {
             let checkingNumber = oneMacFormData.componentId;
-
+            if (
+              idExistValidation.validateParentId &&
+              typeof formConfig.getParentInfo == "function"
+            ) {
+              [checkingNumber] = formConfig.getParentInfo(
+                oneMacFormData.componentId
+              );
+            }
             // if (idExistValidation.existenceRegex !== undefined) {
-            //   checkingNumber = changeRequest.transmittalNumber.match(
-            //     idExistValidation.existenceRegex
+            //   checkingNumber = checkingNumber.match(idExistValidation.existenceRegex
             //   )![0];
             // }
             try {
@@ -233,7 +243,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 if (correspondingValidation.errorLevel === "error") {
                   tempMessage = `According to our records, this ${formConfig.idLabel} does not exist. Please check the ${formConfig.idLabel} and try entering it again.`;
                 } else {
-                  tempMessage = `${formConfig.idLabel} not found. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  // tempMessage = `${formConfig.idLabel} not found. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
+                  tempMessage = approvedBlueWarningMessage;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
                 }
                 // ID exists but it should NOT exist
@@ -242,7 +253,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                   tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 } else {
-                  tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  // tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
+                  tempMessage = approvedBlueWarningMessage;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 }
               }
@@ -268,23 +280,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         displayMessage = formatMessage;
         setComponentIdStatusMessage(displayMessage);
       }
-
-      const isWaiverAuthorityReady: boolean = Boolean(
-        !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
-      );
-      const isProposedEffecitveDateReady: boolean = Boolean(
-        !formConfig.proposedEffectiveDate ||
-          oneMacFormData.proposedEffectiveDate
-      );
-      const hasNoErrors: boolean =
-        displayMessage.statusLevel === "warn" || !displayMessage.statusMessage;
-
-      setIsSubmissionReady(
-        isWaiverAuthorityReady &&
-          hasNoErrors &&
-          areUploadsReady &&
-          isProposedEffecitveDateReady
-      );
     } catch (err) {
       console.log("error is: ", err);
       setAlertCode(RESPONSE_CODE[(err as Error).message]);
@@ -296,6 +291,25 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     validateComponentId,
     alertCode,
   ]);
+
+  useEffect(() => {
+    const isWaiverAuthorityReady: boolean = Boolean(
+      !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
+    );
+    const isProposedEffecitveDateReady: boolean = Boolean(
+      !formConfig.proposedEffectiveDate || oneMacFormData.proposedEffectiveDate
+    );
+    const hasNoErrors: boolean =
+      componentIdStatusMessage.statusLevel === "warn" ||
+      !componentIdStatusMessage.statusMessage;
+
+    setIsSubmissionReady(
+      isWaiverAuthorityReady &&
+        hasNoErrors &&
+        areUploadsReady &&
+        isProposedEffecitveDateReady
+    );
+  }, [areUploadsReady, componentIdStatusMessage, formConfig, oneMacFormData]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -466,10 +480,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             value={oneMacFormData.additionalInformation}
             maxLength={config.MAX_ADDITIONAL_INFO_LENGTH}
           ></TextField>
-          <div className="char-count">
-            {oneMacFormData.additionalInformation.length}/
-            {config.MAX_ADDITIONAL_INFO_LENGTH}
-          </div>
           <p id="form-submit-instructions">
             <i>
               Once you submit this form, a confirmation email is sent to you and
