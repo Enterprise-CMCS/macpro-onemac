@@ -8,7 +8,7 @@ for d in services/*/; do
     npm clean-install
 
     # if tests fail for any one of the packages, record the failure and test the rest
-    if ! npm test -- --coverage; then
+    if ! npm test -- --coverage --ci --reporters='default' --reporters='../../github-actions-reporter'; then
       RET=1
     fi
   fi
