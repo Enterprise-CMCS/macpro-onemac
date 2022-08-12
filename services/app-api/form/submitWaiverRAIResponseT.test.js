@@ -24,7 +24,7 @@ it("calls submitAny", async () => {
 
 it.each`
   id                   | parentType
-  ${"MI.1234.R00.00"}  | ${Workflow.ONEMAC_TYPE.WAIVER_BASE}
+  ${"MI.1234.R00.00"}  | ${Workflow.ONEMAC_TYPE.WAIVER_INITIAL}
   ${"MI.1234.R01.00"}  | ${Workflow.ONEMAC_TYPE.WAIVER_RENEWAL}
   ${"MI.1234.R00.M01"} | ${Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT}
   ${"MI.1234.R00.01"}  | ${Workflow.ONEMAC_TYPE.WAIVER_APP_K}

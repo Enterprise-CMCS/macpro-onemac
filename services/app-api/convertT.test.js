@@ -15,7 +15,7 @@ beforeAll(() => {
     return {
       Items: [
         {
-          summary: "This is an new base waiver MI.1122",
+          summary: "This is an new initial waiver MI.1122",
           waiverAuthority: "1915(b)(4)",
           ninetyDayClockEnd: 1659986718318,
           type: "waiver",
@@ -45,7 +45,7 @@ beforeAll(() => {
           territory: "MI",
         },
         {
-          summary: "This is the renewal MI.1122.R01 for the base MI.1122",
+          summary: "This is the renewal MI.1122.R01 for the initial MI.1122",
           waiverAuthority: "1915(b)(4)",
           ninetyDayClockEnd: 1659986718318,
           type: "waiver",
@@ -76,7 +76,7 @@ beforeAll(() => {
         },
         {
           summary:
-            "This is an amendment for the renewal MI.1122.R01 for the base MI.1122",
+            "This is an amendment for the renewal MI.1122.R01 for the initial MI.1122",
           waiverAuthority: "1915(b)(4)",
           ninetyDayClockEnd: 1659986718318,
           type: "waiver",

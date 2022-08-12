@@ -31,14 +31,14 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And Verify text contains "indicates a required attachment"
         And Verify Can I submit SPAs relating to the Public Health Emergency PHE in OneMAC is displayed and click it
         And Verify text contains "Yes, all PHE-related SPAs should be submitted through OneMAC"
-@focus 
+@focus
     Scenario: Verify Waivers section includes appropriate clickable sections
         Given I am on Login Page
         When Clicking on FAQ Tab
         And Verify Waivers Section Exists
-        And verify What format is used to enter a 1915b Base Waiver number header is visible
-        And click What format is used to enter a 1915b Base Waiver number header
-        And verify What format is used to enter a 1915b Base Waiver number body is visible
+        And verify What format is used to enter a 1915b Initial Waiver number header is visible
+        And click What format is used to enter a 1915b Initial Waiver number header
+        And verify What format is used to enter a 1915b Initial Waiver number body is visible
         And verify What format is used to enter a 1915b Waiver Renewal number header is visible
         And click What format is used to enter a 1915b Waiver Renewal number header
         And verify What format is used to enter a 1915b Waiver Renewal number is visible

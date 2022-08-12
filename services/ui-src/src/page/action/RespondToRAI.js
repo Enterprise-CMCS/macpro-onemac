@@ -7,6 +7,7 @@ const RAILink = {
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: ONEMAC_ROUTES.MEDICAID_SPA_RAI,
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: ONEMAC_ROUTES.CHIP_SPA_RAI,
   [Workflow.ONEMAC_TYPE.WAIVER_BASE]: ONEMAC_ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "",
 };
 
 export default function RespondToRAI({ theComponent }) {

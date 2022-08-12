@@ -34,8 +34,8 @@ import Triage from "./containers/Triage";
 import UserManagement from "./containers/UserManagement";
 import UserPage from "./containers/UserPage";
 import { useAppContext } from "./libs/contextLib";
-import BaseWaiverForm from "./page/base-waiver/BaseWaiverForm";
-import BaseWaiverDetail from "./page/base-waiver/BaseWaiverDetail";
+import InitialWaiverForm from "./page/initial-waiver/InitialWaiverForm";
+import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
@@ -210,6 +210,7 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
     { path: ONEMAC_ROUTES.BASE_WAIVER, component: BaseWaiverForm },
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
+    { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
@@ -290,9 +291,9 @@ const ROUTE_LIST: RouteSpec[] = [
             component: CHIPSPADetail,
           },
           {
-            path: ONEMAC_ROUTES.BASE_WAIVER_DETAIL + "/:componentId",
+            path: ONEMAC_ROUTES.INITIAL_WAIVER_DETAIL + "/:componentId",
             exact: true,
-            component: BaseWaiverDetail,
+            component: InitialWaiverDetail,
           },
           {
             path: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL + "/:componentId",

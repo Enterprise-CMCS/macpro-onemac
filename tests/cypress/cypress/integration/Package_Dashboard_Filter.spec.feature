@@ -53,7 +53,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
-        And verify 1915b Base Waiver exists
+        And verify 1915b Initial Waiver exists
         And verify 1915b Waiver Renewal exists
 
     Scenario: SPAs tab - deselect all and verify error message, then select one and verify it exists
@@ -69,7 +69,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Error message details is displayed
         And click Medicaid SPA check box
         And verify Medicaid SPA Exists in list
-    
+
         Scenario: Waivers tab - deselect all and verify error message, then select one and verify it exists
         Given I am on Login Page
         When Clicking on Development Login
@@ -78,11 +78,11 @@ Feature: OY2-13092 Package Dashboard - Filter
         And click on the Waivers tab
         And Click on Filter Button
         And click on Type
-        And click 1915b Base Waiver check box
+        And click 1915b Initial Waiver check box
         And click 1915b Waiver Renewal check box
         And verify Error message displayed should be No Results Found
         And verify Error message details is displayed
-        And click 1915b Base Waiver check box
+        And click 1915b Initial Waiver check box
         And click 1915b Waiver Renewal check box
 
 

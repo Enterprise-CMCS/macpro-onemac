@@ -40,13 +40,13 @@ export const choicesFromRoute = {
     intro: "Select a Waiver type to start your submission.",
     choices: [
       {
-        title: "Base Waiver",
-        description: "Create a new Base Waiver",
-        linkTo: ONEMAC_ROUTES.BASE_WAIVER,
+        title: "Initial Waiver",
+        description: "Create a new Initial Waiver",
+        linkTo: ONEMAC_ROUTES.INITIAL_WAIVER,
       },
       {
         title: "Waiver Renewal",
-        description: "Renew an existing 1915(b) base waiver",
+        description: "Renew an existing 1915(b) initial waiver",
         linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL,
       },
       {

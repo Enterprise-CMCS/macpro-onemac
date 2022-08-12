@@ -498,18 +498,18 @@ And("click on Waiver Action on Waiver Action Type page", () => {
   OneMacSubmissionTypePage.clickWaiverActionUnderWaiverAction();
 });
 
-And("click on Base Waiver", () => {
-  OneMacSubmissionTypePage.clickBaseWaiver();
+And("click on Initial Waiver", () => {
+  OneMacSubmissionTypePage.clickInitialWaiver();
 });
 
-And("verify Base Waiver is a clickable option", () => {
-  OneMacSubmissionTypePage.verifyBaseWaiverIsClickable();
+And("verify Initial Waiver is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyInitialWaiverIsClickable();
 });
 And("verify Appendix K is a clickable option", () => {
   OneMacSubmissionTypePage.verifyAppendixKIsClickable();
 });
-And("verify Base Waiver Renewal is a clickable option", () => {
-  OneMacSubmissionTypePage.verifyBaseWaiverRenewalIsClickable();
+And("verify Initial Waiver Renewal is a clickable option", () => {
+  OneMacSubmissionTypePage.verifyInitialWaiverRenewalIsClickable();
 });
 And("verify Amendment is a clickable option", () => {
   OneMacSubmissionTypePage.verifyAmendmentIsClickable();
@@ -767,17 +767,17 @@ And("Type new Waiver Number for RAI in format SS-#####.R00.00", () => {
     );
   });
 });
-And("Type Base Waiver Number in format SS-#####.R00.00", () => {
+And("Type Initial Waiver Number in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
-      d.newBaseWaiverNumber1
+      d.newInitialWaiverNumber1
     );
   });
 });
-And("Type Base Waiver Number 2 in format SS-#####.R00.00", () => {
+And("Type Initial Waiver Number 2 in format SS-#####.R00.00", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
-      d.newBaseWaiverNumber2
+      d.newInitialWaiverNumber2
     );
   });
 });
@@ -807,21 +807,21 @@ And("Type Unique Valid Waiver Amendment Number With 5 Characters", () => {
     });
   });
 });
-And("search for Base Waiver Number 1 with 12 Characters", () => {
+And("search for Initial Waiver Number 1 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newBaseWaiverNumber1);
+    OneMacPackagePage.searchFor(data.newInitialWaiverNumber1);
   });
   cy.wait(1000);
 });
-And("search for approved Base Waiver Number 1", () => {
+And("search for approved Initial Waiver Number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.approvedBaseWaiverNum1);
+    OneMacPackagePage.searchFor(data.approvedInitialWaiverNum1);
   });
   cy.wait(1000);
 });
-And("search for Base Waiver Number 2 with 12 Characters", () => {
+And("search for Initial Waiver Number 2 with 12 Characters", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.searchFor(data.newBaseWaiverNumber2);
+    OneMacPackagePage.searchFor(data.newInitialWaiverNumber2);
   });
   cy.wait(1000);
 });
@@ -837,9 +837,9 @@ And("search for CHIP SPA ID", () => {
   });
   cy.wait(1000);
 });
-And("verify id number in the first row matches Base Waiver Number 1", () => {
+And("verify id number in the first row matches Initial Waiver Number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newBaseWaiverNumber1);
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(data.newInitialWaiverNumber1);
   });
 });
 And("verify id number in the first row matches Medicaid SPA ID", () => {
@@ -1347,7 +1347,7 @@ And("verify Error message displayed should be No Results Found", () => {
 });
 And("verify user exists with id number searched", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacPackagePage.verifyIDNumberExists(data.newBaseWaiverNumber2);
+    OneMacPackagePage.verifyIDNumberExists(data.newInitialWaiverNumber2);
   });
 });
 And("clear search bar", () => {
@@ -1410,8 +1410,8 @@ And("verify reset Exists", () => {
 And("click on Type", () => {
   OneMacPackagePage.clickTypeDropDown();
 });
-And("verify 1915b Base Waiver exists", () => {
-  OneMacPackagePage.verifyBaseWaiver1915bCheckBoxExists();
+And("verify 1915b Initial Waiver exists", () => {
+  OneMacPackagePage.verifyInitialWaiver1915bCheckBoxExists();
 });
 And("verify 1915b Waiver Renewal exists", () => {
   OneMacPackagePage.verifyWaiverRenewal1915bCheckBoxExists();
@@ -1452,8 +1452,8 @@ And("verify seatool status 1 exists", () => {
 And("verify sparai submitted exists", () => {
   OneMacPackagePage.verifysparaiSubmittedExists();
 });
-And("click 1915b Base Waiver check box", () => {
-  OneMacPackagePage.clickBaseWaiver1915bCheckBox();
+And("click 1915b Initial Waiver check box", () => {
+  OneMacPackagePage.clickInitialWaiver1915bCheckBox();
 });
 And("click 1915b Waiver Renewal check box", () => {
   OneMacPackagePage.clickWaiverRenewal1915bCheckBox();
@@ -1813,14 +1813,14 @@ And("click Submitted checkbox", () => {
 And("verify the type in row one is some kind of 1915b Waiver", () => {
   OneMacPackagePage.verifypackageRowOneTypeContains1915bWaiver();
 });
-And("verify the type in row one is Base Waiver", () => {
-  OneMacPackagePage.verifypackageRowOneTypeHasTextBaseWaiver();
+And("verify the type in row one is Initial Waiver", () => {
+  OneMacPackagePage.verifypackageRowOneTypeHasTextInitialWaiver();
 });
 And("verify the type in row one is Waiver Renewal", () => {
   OneMacPackagePage.verifypackageRowOneTypeHasTextWaiverRenewal();
 });
 And("verify the waiver number format in row one is SS.#### or SS.#####", () => {
-  OneMacPackagePage.verifypackageRowOneIDBaseWaiverFormat();
+  OneMacPackagePage.verifypackageRowOneIDInitialWaiverFormat();
 });
 And(
   "verify the waiver number format in row one is SS.#####.S## or SS.####.S##",
@@ -2091,8 +2091,8 @@ And("verify there is a Type header in the details section", () => {
 And("verify a type containing SPA exists for the Type", () => {
   OneMacPackageDetailsPage.verifyTypeContainsSPA();
 });
-And("verify the type is Base Waiver", () => {
-  OneMacPackageDetailsPage.verifyTypeContainsBaseWaiver();
+And("verify the type is Initial Waiver", () => {
+  OneMacPackageDetailsPage.verifyTypeContainsInitialWaiver();
 });
 And("verify the type is Waiver Renewal", () => {
   OneMacPackageDetailsPage.verifyTypeContainsWaiverRenewal();
@@ -2130,8 +2130,8 @@ And("verify user is on new spa page", () => {
 And("verify user is on new waiver page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverPage();
 });
-And("verify user is on new base waiver page", () => {
-  OneMacSubmissionTypePage.verifyNewBaseWaiverPage();
+And("verify user is on new initial waiver page", () => {
+  OneMacSubmissionTypePage.verifyNewInitialWaiverPage();
 });
 And("verify user is on new Medicaid SPA page", () => {
   OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
@@ -2400,21 +2400,21 @@ And("verify the first RAI Response header is titled", () => {
   OneMacPackageDetailsPage.verifyRaiResponseHeaderTitle();
 });
 And(
-  "verify What format is used to enter a 1915b Base Waiver number header is visible",
+  "verify What format is used to enter a 1915b Initial Waiver number header is visible",
   () => {
-    OneMacFAQPage.verifyBaseWaiverFormatHeaderBtnExists();
+    OneMacFAQPage.verifyInitialWaiverFormatHeaderBtnExists();
   }
 );
 And(
-  "click What format is used to enter a 1915b Base Waiver number header",
+  "click What format is used to enter a 1915b Initial Waiver number header",
   () => {
-    OneMacFAQPage.clickBaseWaiverFormatHeaderBtn();
+    OneMacFAQPage.clickInitialWaiverFormatHeaderBtn();
   }
 );
 And(
-  "verify What format is used to enter a 1915b Base Waiver number body is visible",
+  "verify What format is used to enter a 1915b Initial Waiver number body is visible",
   () => {
-    OneMacFAQPage.verifyBaseWaiverFormatBody();
+    OneMacFAQPage.verifyInitialWaiverFormatBody();
   }
 );
 And(
@@ -2445,10 +2445,10 @@ And("verify the submit button is disabled", () => {
 And("type in valid waiver amendment number in old forms", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberOldForms("MD-10330.R01.01");
 });
-And("type base waiver number in old format SS.####.R00.00", () => {
+And("type initial waiver number in old format SS.####.R00.00", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.1055.R00.00");
 });
-And("type base waiver number in old format SS.#####.R00.00", () => {
+And("type initial waiver number in old format SS.#####.R00.00", () => {
   OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD.10555.R00.00");
 });
 And(
@@ -2502,13 +2502,16 @@ And(
 And("Verify blue eerror message says user can submit in package view", () => {
   OneMacDefaultForms.verifyBlueErrorSaysUserCanSubmitInPkgView();
 });
-And("Type {string} into Approved Base or Renewal Waiver Number field", (n) => {
-  OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
-    n
-  );
-});
 And(
-  "Type existing waiver number into Approved Base or Renewal Waiver Number field",
+  "Type {string} into Approved Initial or Renewal Waiver Number field",
+  (n) => {
+    OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
+      n
+    );
+  }
+);
+And(
+  "Type existing waiver number into Approved Initial or Renewal Waiver Number field",
   () => {
     cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
       OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
@@ -2518,31 +2521,31 @@ And(
   }
 );
 And(
-  "verify Approved Base or Renewal Waiver Number error message is displayed",
+  "verify Approved Initial or Renewal Waiver Number error message is displayed",
   () => {
     OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsDisplayed();
   }
 );
 And(
-  "verify Approved Base or Renewal Waiver Number error message text is correct",
+  "verify Approved Initial or Renewal Waiver Number error message text is correct",
   () => {
     OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageText();
   }
 );
 And(
-  "verify Approved Base or Renewal Waiver Number error message is not displayed",
+  "verify Approved Initial or Renewal Waiver Number error message is not displayed",
   () => {
     OneMacRequestWaiverTemporaryExtension.verifyParentErrorMessageIsNotDisplayed();
   }
 );
-And("clear Approved Base or Renewal Waiver Number input box", () => {
+And("clear Approved Initial or Renewal Waiver Number input box", () => {
   OneMacRequestWaiverTemporaryExtension.clearApprovedBaseOrRenewalWaiverNumberInputBox();
 });
 And("wait for {string} miliseconds", (s) => {
   cy.wait(parseInt(s));
 });
 And(
-  "Type new Waiver Number 2 into Approved Base or Renewal Waiver Number field",
+  "Type new Waiver Number 2 into Approved Initial or Renewal Waiver Number field",
   () => {
     cy.fixture("submissionDashboardWaiverNumbers.json").then((d) => {
       OneMacRequestWaiverTemporaryExtension.inputApprovedBaseOrRenewalWaiverNumber(
