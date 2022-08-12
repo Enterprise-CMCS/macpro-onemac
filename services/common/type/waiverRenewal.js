@@ -36,4 +36,11 @@ export const waiverRenewal = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
+  couldBeMyParent: (inData) => {
+    if (!inData?.componentType || !inData?.currentStatus) return false;
+    return (
+      inData.componentType === "waivernew" &&
+      inData.currentStatus === "Approved"
+    );
+  },
 };

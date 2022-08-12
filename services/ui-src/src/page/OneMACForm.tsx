@@ -82,10 +82,16 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       statusMessage: "",
     });
 
+  const [parentIdStatusMessage, setParentIdStatusMessage] = useState<Message>({
+    statusLevel: "error",
+    statusMessage: "",
+  });
+
   // The browser history, so we can redirect to the home page
   const history = useHistory();
 
   const presetComponentId = location.state?.componentId ?? "";
+  const presetParentId = location.state?.parentId ?? "";
 
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
@@ -94,7 +100,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     componentId: presetComponentId,
     waiverAuthority: undefined,
     proposedEffectiveDate: undefined,
-    parentId: location.state?.parentId,
+    parentId: presetParentId,
     parentType: location.state?.parentType,
   });
 
@@ -152,14 +158,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     updatedRecord.territory = getTerritoryFromComponentId(componentId);
 
     //if this is a child type form and no parentId was passed in state then determine parentId based on componentId
-    if (
-      typeof formConfig.getParentInfo == "function" &&
-      !location.state?.parentId
-    ) {
+    if (typeof formConfig.getParentInfo == "function" && !presetParentId) {
       [updatedRecord.parentId, updatedRecord.parentType] =
         formConfig.getParentInfo(updatedRecord.componentId);
     }
 
+    setOneMacFormData(updatedRecord);
+  }
+
+  async function handleParentIdChange(parentId: string) {
+    let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
+
+    updatedRecord.parentId = parentId;
     setOneMacFormData(updatedRecord);
   }
 
@@ -184,6 +194,40 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [alertCode]);
+
+  useEffect(() => {
+    const checkId = async () => {
+      let parentStatusMessage = {
+        statusLevel: "error",
+        statusMessage: "",
+      };
+
+      try {
+        if (!!oneMacFormData.parentId) {
+          if (
+            (await ChangeRequestDataApi.packageExists(
+              oneMacFormData.parentId
+            )) === true
+          )
+            parentStatusMessage.statusMessage = "";
+          else
+            parentStatusMessage.statusMessage =
+              formConfig?.parentNotFoundMessage
+                ? formConfig?.parentNotFoundMessage
+                : "";
+        }
+        setParentIdStatusMessage(parentStatusMessage);
+      } catch (err) {
+        console.log("error is: ", err);
+        setAlertCode(RESPONSE_CODE[(err as Error).message]);
+      }
+    };
+    checkId();
+  }, [
+    oneMacFormData.parentId,
+    formConfig?.parentLabel,
+    formConfig?.parentNotFoundMessage,
+  ]);
 
   useEffect(() => {
     // default display message settings with empty message
@@ -299,17 +343,29 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     const isProposedEffecitveDateReady: boolean = Boolean(
       !formConfig.proposedEffectiveDate || oneMacFormData.proposedEffectiveDate
     );
+    const isParentIdReady: boolean = Boolean(
+      !formConfig.parentLabel ||
+        (oneMacFormData.parentId && !parentIdStatusMessage)
+    );
+
     const hasNoErrors: boolean =
       componentIdStatusMessage.statusLevel === "warn" ||
       !componentIdStatusMessage.statusMessage;
 
     setIsSubmissionReady(
       isWaiverAuthorityReady &&
+        isParentIdReady &&
         hasNoErrors &&
         areUploadsReady &&
         isProposedEffecitveDateReady
     );
-  }, [areUploadsReady, componentIdStatusMessage, formConfig, oneMacFormData]);
+  }, [
+    areUploadsReady,
+    componentIdStatusMessage,
+    parentIdStatusMessage,
+    formConfig,
+    oneMacFormData,
+  ]);
 
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
@@ -425,6 +481,24 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             <Review heading={"Parent " + formConfig.idLabel}>
               {oneMacFormData.parentId ?? "Unknown"}
             </Review>
+          )}
+          {typeof formConfig.parentLabel == "string" && (
+            <ComponentId
+              idLabel={formConfig.parentLabel}
+              idFieldHint={formConfig.parentFieldHint ?? [{ text: "" }]}
+              statusLevel={"error"}
+              statusMessage={
+                parentIdStatusMessage.statusMessage !==
+                `${formConfig.idLabel} Required`
+                  ? parentIdStatusMessage.statusMessage
+                  : ""
+              }
+              disabled={!!presetParentId}
+              value={oneMacFormData.parentId ?? ""}
+              onChange={(event: ChangeEvent<HTMLInputElement>) =>
+                handleParentIdChange(event.target.value.toUpperCase())
+              }
+            />
           )}
           <ComponentId
             idLabel={formConfig.idLabel}

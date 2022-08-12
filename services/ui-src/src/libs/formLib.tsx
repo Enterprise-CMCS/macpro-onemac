@@ -10,6 +10,9 @@ export type OneMACFormConfig = {
   idFormat: string;
   idFieldHint: FieldHint[];
   idFAQLink: string;
+  parentLabel?: string;
+  parentFieldHint?: FieldHint[];
+  parentNotFoundMessage?: string;
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;

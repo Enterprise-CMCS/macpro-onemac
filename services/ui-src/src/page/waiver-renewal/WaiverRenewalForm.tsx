@@ -23,6 +23,14 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
   ],
   proposedEffectiveDate: true,
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
+  parentLabel: "Existing Waiver Number to Renew",
+  parentFieldHint: [
+    {
+      text: "Enter the currently approved waiver number to renew.",
+    },
+  ],
+  parentNotFoundMessage:
+    "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
 };
 
 const WaiverRenewalForm: FC = () => {
