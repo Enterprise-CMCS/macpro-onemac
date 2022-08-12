@@ -26,7 +26,7 @@ export default function getChangeRequestFunctions(type) {
     [ChangeRequest.TYPE.SPA]: SPA,
     [ChangeRequest.TYPE.SPA_RAI]: SPARAI,
     [ChangeRequest.TYPE.WAIVER]: Waiver,
-    [ChangeRequest.TYPE.WAIVER_BASE]: Waiver,
+    [ChangeRequest.TYPE.WAIVER_INITIAL]: Waiver,
     [ChangeRequest.TYPE.WAIVER_APP_K]: WaiverAppK,
     [ChangeRequest.TYPE.WAIVER_EXTENSION]: WaiverExtension,
     [ChangeRequest.TYPE.WAIVER_RAI]: WaiverRAI,

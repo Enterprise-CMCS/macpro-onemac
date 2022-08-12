@@ -13,7 +13,7 @@ export const getWaiverFamily = (inId) => {
 };
 
 export const decodeWaiverNumber = (inId) => {
-  // amendments can have parents that are bases or renewals
+  // amendments can have parents that are initials or renewals
   // initial if no R section or R00
   // renewal if R section has a number
   //const waiverRegex = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
@@ -39,22 +39,22 @@ export const decodeWaiverNumber = (inId) => {
 export const getParentWaiver = (inId) => {
   const results = decodeWaiverNumber(inId);
   if (!(results && results.family && results.renewal))
-    return ["Unknown", ONEMAC_TYPE.WAIVER_BASE];
+    return ["Unknown", ONEMAC_TYPE.WAIVER_INITIAL];
   const { family, renewal } = results;
 
-  if (renewal === "00") return [family + ".R00.00", ONEMAC_TYPE.WAIVER_BASE];
+  if (renewal === "00") return [family + ".R00.00", ONEMAC_TYPE.WAIVER_INITIAL];
   const renewalNumber = family + ".R" + renewal + ".00";
   return [renewalNumber, ONEMAC_TYPE.WAIVER_RENEWAL];
 };
 
 export const getWaiverTypeFromNumber = (myId) => {
   const results = decodeWaiverNumber(myId);
-  if (!results) return ONEMAC_TYPE.WAIVER_BASE;
+  if (!results) return ONEMAC_TYPE.WAIVER_INITIAL;
   const { renewal, amendment, isAppK } = results;
 
   if (amendment && amendment !== "00") {
     return isAppK ? ONEMAC_TYPE.WAIVER_APP_K : ONEMAC_TYPE.WAIVER_AMENDMENT;
   }
-  if (renewal === "00") return ONEMAC_TYPE.WAIVER_BASE;
+  if (renewal === "00") return ONEMAC_TYPE.WAIVER_INITIAL;
   return ONEMAC_TYPE.WAIVER_RENEWAL;
 };
