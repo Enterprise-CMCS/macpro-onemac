@@ -365,16 +365,16 @@ describe("Submission Form", () => {
       // Waiver Action form with action type of renewal
       // has two different validations for id existence
       // and displays a warning message depending on which one fails
-      // #1: Want the base waiver number to exist
+      // #1: Want the initial waiver number to exist
       // #2: DON'T want the entire Waiver number with renewal portion to exist
-      it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the base waiver number SHOULD exist but doesn't)", async () => {
+      it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the initial waiver number SHOULD exist but doesn't)", async () => {
         history.push("/waiver");
         const waiverIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
         const testId = "MI-1234.R03.00";
 
-        // base id will NOT exist (this will cause validation to fail so we can check the warning message)
+        // initial id will NOT exist (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
           .calledWith("MI-1234.R00.00")
           .mockReturnValue(false);
@@ -415,7 +415,7 @@ describe("Submission Form", () => {
         const testId = "MI-1234.R03.00";
         const waiverExistError = `According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.`;
 
-        // ensure pass of first validation for base id existing
+        // ensure pass of first validation for initial id existing
         when(ChangeRequestDataApi.packageExists)
           .calledWith("MI-1234.R00.00")
           .mockReturnValue(true);

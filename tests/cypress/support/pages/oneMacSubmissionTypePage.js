@@ -22,7 +22,7 @@ const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToWaiverRAI = '//div[text()="Respond to Waiver RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const baseWaiver = '//div[text()="Base Waiver"]';
+const initialWaiver = '//div[text()="Initial Waiver"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const RequestExtensionBtn = '//button[text()="Request Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -30,7 +30,7 @@ const appendixK = '//div[text()="Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const amendment = '//div[text()="Waiver Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const baseWaiverRenewal = '//div[text()="Waiver Renewal"]';
+const initialWaiverRenewal = '//div[text()="Waiver Renewal"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {
@@ -42,8 +42,8 @@ export class oneMacSubmissionTypePage {
   verifyNewSPAPage() {
     cy.url().should("include", "/newspa");
   }
-  verifyNewBaseWaiverPage() {
-    cy.url().should("include", "/base-waiver");
+  verifyNewInitialWaiverPage() {
+    cy.url().should("include", "/initial-waiver");
   }
   clickwaiverAction() {
     cy.xpath(waiverAction).click();
@@ -79,14 +79,14 @@ export class oneMacSubmissionTypePage {
   clickRespondToWaiverRAI() {
     cy.xpath(respondToWaiverRAI).click();
   }
-  clickBaseWaiver() {
-    cy.xpath(baseWaiver).click();
+  clickInitialWaiver() {
+    cy.xpath(initialWaiver).click();
   }
-  verifyBaseWaiverIsClickable() {
-    cy.xpath(baseWaiver)
+  verifyInitialWaiverIsClickable() {
+    cy.xpath(initialWaiver)
       .parent()
       .parent()
-      .should("have.attr", "href", "/base-waiver");
+      .should("have.attr", "href", "/initial-waiver");
   }
   verifyAppendixKIsClickable() {
     cy.xpath(appendixK)
@@ -94,8 +94,8 @@ export class oneMacSubmissionTypePage {
       .parent()
       .should("have.attr", "href", "/appendix-k-amendment");
   }
-  verifyBaseWaiverRenewalIsClickable() {
-    cy.xpath(baseWaiverRenewal)
+  verifyInitialWaiverRenewalIsClickable() {
+    cy.xpath(initialWaiverRenewal)
       .parent()
       .parent()
       .should("have.attr", "href", "/waiver-renewal");

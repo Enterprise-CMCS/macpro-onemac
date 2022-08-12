@@ -32,7 +32,7 @@ const proposedEffectiveDateHeader =
   "//h3[contains(text(),'Proposed Effective Date')]";
 const ninetieththDayHeader = "//h3[text()='90th Day']";
 const additionalInfoSection =
-  "//section[@id='addl-info-base']//h2[text()='Additional Information']";
+  "//section[@id='addl-info-initial']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
 const supportingDocumentationSection =
   "//h2[text()='Supporting Documentation']";
@@ -100,8 +100,8 @@ export class oneMacPackageDetailsPage {
   verifyTypeContainsSPA() {
     cy.xpath(typeHeader).next().contains("SPA");
   }
-  verifyTypeContainsBaseWaiver() {
-    cy.xpath(typeHeader).next().contains("Base Waiver");
+  verifyTypeContainsInitialWaiver() {
+    cy.xpath(typeHeader).next().contains("Initial Waiver");
   }
   verifyTypeContainsWaiverRenewal() {
     cy.xpath(typeHeader).next().contains("Waiver Renewal");

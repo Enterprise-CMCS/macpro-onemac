@@ -1,5 +1,5 @@
 import { submitAny } from "./submitAny";
-import { main } from "./submitBaseWaiver";
+import { main } from "./submitInitialWaiver";
 
 jest.mock("./submitAny");
 submitAny.mockResolvedValue("yup!");

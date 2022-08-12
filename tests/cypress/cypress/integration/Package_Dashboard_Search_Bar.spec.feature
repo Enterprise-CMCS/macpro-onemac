@@ -33,23 +33,23 @@ Feature: OY2-11149 Submission Dashboard - Search bar
         And clear search bar
 
 
-    Scenario: Create Base Waiver and search it
+    Scenario: Create Initial Waiver and search it
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
         Then click on New Submission
         And Click on Waiver Action
-        And click on Base Waiver
+        And click on Initial Waiver
         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-        And Type Base Waiver Number 2 in format SS-#####.R00.00
+        And Type Initial Waiver Number 2 in format SS-#####.R00.00
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
         And Type Additonal Info Comments in new form
         And Click on Submit Button
         And verify submission successful message in the alert bar
         And click on Packages
-        And search for Base Waiver Number 2 with 12 Characters
+        And search for Initial Waiver Number 2 with 12 Characters
         And clear search bar
         And type in submitters name
         And verify user exists with id number searched
