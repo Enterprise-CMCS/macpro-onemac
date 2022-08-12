@@ -208,7 +208,6 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.MEDICAID_SPA_RAI, component: MedicaidSPARAIForm },
     { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
-    { path: ONEMAC_ROUTES.BASE_WAIVER, component: BaseWaiverForm },
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
     {
