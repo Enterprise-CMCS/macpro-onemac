@@ -12,13 +12,13 @@ import { createMemoryHistory } from "history";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { AppContext } from "../../libs/contextLib";
-import BaseWaiverDetail from "./BaseWaiverDetail";
+import InitialWaiverDetail from "./InitialWaiverDetail";
 import PackageApi from "../../utils/PackageApi";
 import { LOADER_TEST_ID } from "../../components/LoadingScreen";
 
 jest.mock("../../utils/PackageApi");
 
-const waiverDetail = require("./testBaseWaiver");
+const waiverDetail = require("./testInitialWaiver");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
@@ -28,7 +28,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/base-waiver/MI.83420");
+    history.push("/detail/initial-waiver/MI.83420");
 
     render(
       <AppContext.Provider
@@ -37,8 +37,8 @@ describe("Detail View Tests", () => {
         }}
       >
         <Router history={history}>
-          <Route path="/detail/base-waiver/:componentId">
-            <BaseWaiverDetail />
+          <Route path="/detail/initial-waiver/:componentId">
+            <InitialWaiverDetail />
           </Route>
         </Router>
       </AppContext.Provider>
@@ -59,7 +59,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/base-waiver/MI.83420#temp-extension");
+    history.push("/detail/initial-waiver/MI.83420#temp-extension");
 
     render(
       <AppContext.Provider
@@ -69,7 +69,7 @@ describe("Detail View Tests", () => {
       >
         <Router history={history}>
           <Route path="/detail/:componentType/:componentId">
-            <BaseWaiverDetail />
+            <InitialWaiverDetail />
           </Route>
         </Router>
       </AppContext.Provider>
@@ -91,7 +91,7 @@ describe("Detail View Tests", () => {
 
     let history;
     history = createMemoryHistory();
-    history.push("/detail/base-waiver/MI.83420#temp-extension");
+    history.push("/detail/initial-waiver/MI.83420#temp-extension");
 
     render(
       <AppContext.Provider
@@ -101,7 +101,7 @@ describe("Detail View Tests", () => {
       >
         <Router history={history}>
           <Route path="/detail/:componentType/:componentId">
-            <BaseWaiverDetail />
+            <InitialWaiverDetail />
           </Route>
         </Router>
       </AppContext.Provider>

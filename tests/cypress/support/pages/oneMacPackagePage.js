@@ -75,8 +75,8 @@ const packageRowOne90thDay = "#ninetiethDay-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const resetButton = "//button[contains(text(),'Reset')]";
 //Element is Xpath use cy.xpath instead of cy.get
-const baseWaiver1915bCheckBox =
-  "//label[contains(@for,'checkbox_componentType-1915(b) Base Waiver')]";
+const initialWaiver1915bCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(b) Initial Waiver')]";
 const waiverRenewal1915bCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -407,8 +407,8 @@ export class oneMacPackagePage {
   verifyWaiverRenewal1915bCheckBoxExists() {
     cy.xpath(waiverRenewal1915bCheckBox).should("be.visible");
   }
-  verifyBaseWaiver1915bCheckBoxExists() {
-    cy.xpath(baseWaiver1915bCheckBox).should("be.visible");
+  verifyInitialWaiver1915bCheckBoxExists() {
+    cy.xpath(initialWaiver1915bCheckBox).should("be.visible");
   }
   verifyCHIPSPACheckBoxExists() {
     cy.xpath(CHIPSPACheckBox).should("be.visible");
@@ -441,8 +441,8 @@ export class oneMacPackagePage {
   verifysparaiSubmittedExists() {
     cy.xpath(sparaiSubmitted).should("be.visible");
   }
-  clickBaseWaiver1915bCheckBox() {
-    cy.xpath(baseWaiver1915bCheckBox).click();
+  clickInitialWaiver1915bCheckBox() {
+    cy.xpath(initialWaiver1915bCheckBox).click();
   }
   clickWaiverRenewal1915bCheckBox() {
     cy.xpath(waiverRenewal1915bCheckBox).click();
@@ -731,7 +731,7 @@ export class oneMacPackagePage {
   verify90thDayRowOneIsClockStopped() {
     cy.get(packageRowOne90thDay).should("have.text", "Clock Stopped");
   }
-  verifypackageRowOneIDBaseWaiverFormat() {
+  verifypackageRowOneIDInitialWaiverFormat() {
     cy.get(packageRowOneID).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
   }
   verifypackageRowOneIDWaiverRenewalFormat() {
@@ -744,8 +744,8 @@ export class oneMacPackagePage {
       .should("contain.text", "1915(b)")
       .and("contain.text", "Waiver");
   }
-  verifypackageRowOneTypeHasTextBaseWaiver() {
-    cy.get(packageRowOneType).should("contain.text", "Base Waiver");
+  verifypackageRowOneTypeHasTextInitialWaiver() {
+    cy.get(packageRowOneType).should("contain.text", "Initial Waiver");
   }
   verifypackageRowOneTypeHasTextWaiverRenewal() {
     cy.get(packageRowOneType).should("contain.text", "Waiver Renewal");

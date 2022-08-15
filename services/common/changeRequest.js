@@ -6,7 +6,7 @@ export const TYPE = {
   SPA: "spa",
   SPA_RAI: "sparai",
   WAIVER: "waiver",
-  WAIVER_BASE: "waivernew",
+  WAIVER_INITIAL: "waivernew",
   WAIVER_AMENDMENT: "waiveramendment",
   WAIVER_RENEWAL: "waiverrenewal",
   WAIVER_RAI: "waiverrai",
@@ -17,7 +17,7 @@ export const TYPE = {
 export const LABEL = {
   [TYPE.CHIP_SPA]: "CHIP SPA",
   [TYPE.SPA]: "Medicaid SPA",
-  [TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
+  [TYPE.WAIVER_INITIAL]: "1915(b) Initial Waiver",
   [TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
   [TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
@@ -29,7 +29,7 @@ export const correspondingRAILink = {
   [TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [TYPE.SPA]: ROUTES.SPA_RAI,
   [TYPE.WAIVER]: ROUTES.WAIVER_RAI,
-  [TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+  [TYPE.WAIVER_INITIAL]: ROUTES.WAIVER_RAI,
   [TYPE.WAIVER_RENEWAL]: ROUTES.WAIVER_RAI,
   [TYPE.WAIVER_AMENDMENT]: ROUTES.WAIVER_RAI,
 };
@@ -42,7 +42,7 @@ const raiSubheaderMessage =
   "<br><br>" +
   "<b>Please note:</b> Formal RAI Response selection should only be used when submitting a response to a Formal RAI that would impact the clock.  If this submission is in response to informal questions and is not clock related, the state should be forwarding to the review team via email.";
 
-const waiverBaseTransmittalNumber = {
+const waiverInitialTransmittalNumber = {
   idType: "waiver",
   idLabel: "Waiver Number",
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
@@ -240,7 +240,7 @@ export const CONFIG = {
       ],
     },
     transmittalNumber: {
-      ...waiverBaseTransmittalNumber,
+      ...waiverInitialTransmittalNumber,
       idFieldHint: [
         { text: "Must follow the format required by the Action Type" },
       ],
@@ -254,15 +254,15 @@ export const CONFIG = {
       ],
     },
     newTransmittalNumber: {
-      ...waiverBaseTransmittalNumber,
+      ...waiverInitialTransmittalNumber,
       idFieldHint: [
         {
-          text: "Must be a new base number with the format SS-####.R00.00 or SS-#####.R00.00",
+          text: "Must be a new initial number with the format SS-####.R00.00 or SS-#####.R00.00",
         },
       ],
       idFormat: "SS-####.R00.00 or SS-#####.R00.00",
       idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
-      idFAQLink: ROUTES.FAQ_BASE_1915B_WAIVER_ID,
+      idFAQLink: ROUTES.FAQ_INITIAL_1915B_WAIVER_ID,
       idExistValidations: [
         {
           idMustExist: false,
@@ -271,7 +271,7 @@ export const CONFIG = {
       ],
     },
     amendmentTransmittalNumber: {
-      ...waiverBaseTransmittalNumber,
+      ...waiverInitialTransmittalNumber,
       idFieldHint: [
         { text: "Must follow the format SS-####.R##.## or SS-#####.R##.##" },
       ],
@@ -280,7 +280,7 @@ export const CONFIG = {
       idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R[0-9]{2}[.](0[1-9]|[1-9][0-9])$",
       idFAQLink: ROUTES.FAQ_1915B_WAIVER_AMENDMENT_ID,
       idExistValidations: [
-        // Want the base or renewal waiver number to exist
+        // Want the initial or renewal waiver number to exist
         {
           idMustExist: true,
           errorLevel: "warn",
@@ -295,7 +295,7 @@ export const CONFIG = {
       ],
     },
     renewalTransmittalNumber: {
-      ...waiverBaseTransmittalNumber,
+      ...waiverInitialTransmittalNumber,
       idFieldHint: [
         { text: "Must follow the format SS-####.R##.00 or SS-#####.R##.00" },
       ],
@@ -303,7 +303,7 @@ export const CONFIG = {
       idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R(0[1-9]|[1-9][0-9])[.]00$",
       idFAQLink: ROUTES.FAQ_1915B_WAIVER_RENEWAL_ID,
       idExistValidations: [
-        // Want the base waiver number to exist
+        // Want the initial waiver number to exist
         {
           idMustExist: true,
           errorLevel: "warn",
@@ -365,11 +365,11 @@ export const CONFIG = {
 
     parentNumber: {
       idType: "waiver",
-      idLabel: "Approved Base or Renewal Waiver Number",
+      idLabel: "Approved Initial or Renewal Waiver Number",
       idRegex: "(^[A-Z]{2})",
       idFieldHint: [
         {
-          text: "Please enter the base or renewal waiver number you are requesting a Temporary Extension for",
+          text: "Please enter the initial or renewal waiver number you are requesting a Temporary Extension for",
         },
       ],
       idExistValidations: [
@@ -377,7 +377,7 @@ export const CONFIG = {
           idMustExist: true,
           errorLevel: "error",
           showMessage:
-            "The waiver number entered does not appear to match our records. Please enter an approved base or renewal waiver number, using a dash after the two character state abbreviation.",
+            "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
         },
       ],
     },
