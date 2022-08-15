@@ -58,7 +58,6 @@ export const getDetails = async (event) => {
     ? "waiver"
     : componentType;
   const raiSk = `v0#${raiComponentType}rai`;
-  console.log("raiSk", raiSk);
   const raiParams = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk AND begins_with(sk,:sk)",

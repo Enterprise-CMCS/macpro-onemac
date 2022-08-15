@@ -22,7 +22,7 @@ describe("Waiver RAI Form", () => {
 
   beforeEach(() => {
     history = createMemoryHistory();
-    history.push(ONEMAC_ROUTES.INITIAL_WAIVER, {
+    history.push(ONEMAC_ROUTES.WAIVER_RAI, {
       componentId: testComponentId,
     });
   });
