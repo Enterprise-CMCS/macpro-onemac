@@ -48,7 +48,7 @@ const waiverInitialTransmittalNumber = {
   idFAQLink: ROUTES.FAQ_WAIVER_ID,
 };
 
-const waiverAdditionalErrorMessage =
+export const waiverAdditionalErrorMessage =
   "\nFor amendments, the last two digits start with “01” and ascends.";
 
 export const CONFIG = {

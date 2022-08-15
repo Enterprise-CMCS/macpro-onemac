@@ -19,7 +19,10 @@ import { SubmissionForm } from "./SubmissionForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 
 import { AppContext } from "../libs/contextLib";
-import { approvedBlueWarningMessage } from "cmscommonlib";
+import {
+  approvedBlueWarningMessage,
+  waiverAdditionalErrorMessage,
+} from "cmscommonlib";
 
 jest.mock("../utils/ChangeRequestDataApi");
 
@@ -446,6 +449,40 @@ describe("Submission Form", () => {
 
         userEvent.type(transmittalNumberEl, testId);
         await waitFor(() => screen.getByText(waiverExistError));
+      });
+
+      it("displays the additional info in the warning message for a Waiver Amendment )", async () => {
+        history.push("/waiver");
+        const waiverIdLabel =
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
+            .idLabel;
+        const testId = "MI-"; //invalid waiver amendment number to force error message
+
+        when(ChangeRequestDataApi.packageExists)
+          .calledWith("MI-")
+          .mockReturnValue(false);
+
+        render(
+          <AppContext.Provider
+            value={{
+              ...stateSubmitterInitialAuthState,
+            }}
+          >
+            <Router history={history}>
+              <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+            </Router>
+          </AppContext.Provider>
+        );
+
+        // setting the form up for a amendment type
+        const actionTypeEl = screen.getByLabelText("Action Type");
+        userEvent.selectOptions(actionTypeEl, "amendment");
+
+        const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
+        userEvent.type(transmittalNumberEl, testId);
+
+        const errorText = waiverAdditionalErrorMessage.replace("\n", "");
+        await waitFor(() => screen.getByText(errorText));
       });
     });
   });
