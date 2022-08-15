@@ -5,10 +5,12 @@ on:
     branches:
       - master
       - develop
+      - codeqlupdate
   pull_request:
     branches:
       - master
       - develop
+      - codeqlupdate
   schedule:
     - cron: "00 4 * * 1"
 
