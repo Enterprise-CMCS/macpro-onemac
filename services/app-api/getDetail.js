@@ -81,8 +81,8 @@ export const getDetails = async (event) => {
       for (const child of raiResult.Items) {
         await assignAttachmentUrls(child);
       }
-      result.Item.raiResponses = [...raiResult.Items];
     }
+    result.Item.raiResponses = [...raiResult.Items];
 
     if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
       //fetch any waiver extensions associated to this component
