@@ -165,7 +165,7 @@ jobs:
             Mini_Dashboard_Package_Details_Waivers.spec.feature,
             Mini_Dashboard_Package_Overview_Nav.spec.feature,
             Mini_Dashboard_Temporary_Extension.spec.js,
-            Package_Dashboard_Base_Waiver_Form.spec.feature,
+            Package_Dashboard_Initial_Waiver_Form.spec.feature,
             Package_Dashboard_Column_90th_Day.spec.feature,
             Package_Dashboard_Column_Picker_SPA.spec.feature,
             Package_Dashboard_Column_Picker_Waiver.spec.feature,
@@ -204,7 +204,7 @@ jobs:
             CMS_Read_Only_View.spec.feature,
             Package_Dashboard_Appendix_K.spec.feature,
             Package_Dashboard_Waiver_Amendment.spec.feature,
-            Package_Dashboard_Base_Waiver_Renewal.spec.feature,
+            Package_Dashboard_Initial_Waiver_Renewal.spec.feature,
             Package_Dashboard_CHIP_SPA_RAI_Response.spec.feature,
           ]
     steps:
