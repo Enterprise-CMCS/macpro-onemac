@@ -69,6 +69,8 @@ const raiEvent = {
   },
 };
 
+const testItems = [{ id: 1234 }];
+
 beforeEach(() => {
   getUser.mockResolvedValue(validDoneBy);
 
@@ -79,7 +81,7 @@ beforeEach(() => {
     },
   });
 
-  dynamoDb.query.mockResolvedValue({ Items: [], Count: 0 });
+  dynamoDb.query.mockResolvedValue({ Items: testItems, Count: 1 });
 
   AWS.S3.mockImplementation(() => {
     return {
@@ -213,13 +215,14 @@ describe("rai responses are returned", () => {
   });
 });
 
-describe("waiver extensions are returned", () => {
-  it("returns waiver extensions if waiver type", async () => {
+describe("waiver children are returned", () => {
+  it("returns waiver extensions and rais if waiver type", async () => {
     await expect(getDetails(waiverEvent))
       .resolves.toStrictEqual({
         field1: "one",
         attachments: [{ url: undefined }, { url: undefined }],
-        waiverExtensions: [],
+        waiverExtensions: testItems,
+        raiResponses: testItems,
       })
       .catch((error) => {
         console.log("caught test error: ", error);
