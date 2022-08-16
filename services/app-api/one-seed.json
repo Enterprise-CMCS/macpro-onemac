@@ -4784,7 +4784,7 @@
     "submitterEmail": "statesubmitter@nightwatch.test"
   },
   {
-    "pk": "MD.1118.R00.00",
+    "pk": "MD-1118.R00.00",
     "sk": "v0#waivernew",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
@@ -4806,28 +4806,20 @@
         "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1638473597646/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
       }
     ],
-    "GSI1sk": "MD.1118.R00.00",
-    "additionalInformation": "Base waiver for testing the waiver renewals",
+    "GSI1sk": "MD-1118.R00.00",
+    "additionalInformation": "Base waiver for testing RAIs",
     "submissionTimestamp": 1638473560098,
     "clockEndTimestamp": 1645990706000,
     "waiverAuthority": "1915(b)(4)",
     "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "waiverrenewal": [
-      {
-        "componentType": "waiverrenewal",
-        "componentTimestamp": 1638473598762,
-        "submitterName": "Angie Active",
-        "componentId": "MD.1118.R01.00"
-      }
-    ],
-    "componentId": "MD.1118.R00.00",
+    "componentId": "MD-1118.R00.00",
     "submitterName": "Angie Active",
     "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
   },
   {
-    "pk": "MD.1118.R00.00",
+    "pk": "MD-1118.R00.00",
     "sk": "v1#waivernew",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
@@ -4855,7 +4847,7 @@
     "waiverAuthority": "1915(b)(4)",
     "Latest": 1,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MD.1118.R00.00",
+    "componentId": "MD-1118.R00.00",
     "submitterName": "Angie Active",
     "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
   }
