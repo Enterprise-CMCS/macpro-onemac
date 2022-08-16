@@ -49,7 +49,7 @@ const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
 // const SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS = {
 //   [SEATOOL_PLAN_TYPE.CHIP_SPA]: ChangeRequest.TYPE.CHIP_SPA,
 //   [SEATOOL_PLAN_TYPE.SPA]: ChangeRequest.TYPE.SPA,
-//   [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER_BASE,
+//   [SEATOOL_PLAN_TYPE.WAIVER]: ChangeRequest.TYPE.WAIVER_INITIAL,
 //   [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
 // };
 
@@ -60,22 +60,21 @@ const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
 // ];
 
 function createTestEvent(event, value) {
-
   const testEvent = {
-    "topic": event.topic,
-    "partition": event.partition,
-    "offset": event.offset,
-    "value": JSON.stringify({
-      "payload": {
-        "ID_Number": value.payload.ID_Number,
-        "Submission_Date": value.payload.Submission_Date,
-        "Plan_Type": value.payload.Plan_Type,
-        "Action_Type": value.payload.Action_Type,
-        "Alert_90_Days_Date": value.payload.Alert_90_Days_Date,
-        "Summary_Memo": value.payload.Summary_Memo,
-        "SPW_Status_ID": value.payload.SPW_Status_ID,
-        "replica_id": value.payload.replica_id
-      }
+    topic: event.topic,
+    partition: event.partition,
+    offset: event.offset,
+    value: JSON.stringify({
+      payload: {
+        ID_Number: value.payload.ID_Number,
+        Submission_Date: value.payload.Submission_Date,
+        Plan_Type: value.payload.Plan_Type,
+        Action_Type: value.payload.Action_Type,
+        Alert_90_Days_Date: value.payload.Alert_90_Days_Date,
+        Summary_Memo: value.payload.Summary_Memo,
+        SPW_Status_ID: value.payload.SPW_Status_ID,
+        replica_id: value.payload.replica_id,
+      },
     }),
   };
 
@@ -86,12 +85,15 @@ function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     return null;
   }
-  console.log('Received event:', JSON.stringify(event, null, 2));
+  console.log("Received event:", JSON.stringify(event, null, 2));
   const table = event.topic.replace(topicPrefix, "");
   const value = JSON.parse(event.value);
   const eventId = event.offset;
-  if (table === "State_Plan") console.log('Test State_Plan Event: ', JSON.stringify(createTestEvent(event, value), null, 2));
-  console.log(`Topic: ${event.topic} Table: ${table} Event value: ${JSON.stringify(value, null, 2)}`);
+  if (table === "State_Plan")
+    console.log("Test State_Plan Event: ", JSON.stringify(createTestEvent(event, value), null, 2));
+  console.log(
+    `Topic: ${event.topic} Table: ${table} Event value: ${JSON.stringify(value, null, 2)}`
+  );
 
   const SEAToolId = value.payload.ID_Number;
   if (!SEAToolId) return;
@@ -106,11 +108,11 @@ function myHandler(event) {
   const updateSEAToolParams = {
     TableName: process.env.oneMacTableName,
     Item: { pk, sk, ...value.payload },
-    ReturnValues: "ALL_OLD",  // ReturnValues for put can only be NONE or ALL_OLD
+    ReturnValues: "ALL_OLD", // ReturnValues for put can only be NONE or ALL_OLD
   };
 
   console.log("Params: ", updateSEAToolParams);
-/*
+  /*
   ddb.put(updateSEAToolParams, function (err, data) {
     if (err) {
       console.log("Error: ", err);

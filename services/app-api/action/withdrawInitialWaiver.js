@@ -1,17 +1,17 @@
 import handler from "../libs/handler-lib";
 import { changeStatusAny } from "./changeStatusAny";
 import { defaultWithdrawConfig } from "./defaultWithdrawConfig";
-import { baseWaiver } from "cmscommonlib";
+import { initialWaiver } from "cmscommonlib";
 
-const baseWaiverWithdrawConfig = {
+const initialWaiverWithdrawConfig = {
   ...defaultWithdrawConfig,
-  ...baseWaiver,
+  ...initialWaiver,
 };
 
 export const main = handler(async (event) => {
   try {
     console.log("event id: ", event);
-    return changeStatusAny(event, baseWaiverWithdrawConfig);
+    return changeStatusAny(event, initialWaiverWithdrawConfig);
   } catch (error) {
     console.log("Exception: ", error);
     throw error;

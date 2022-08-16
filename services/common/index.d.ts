@@ -141,7 +141,7 @@ export namespace Workflow {
   }
 
   export const defaultActionsByStatus: Record<string, PACKAGE_ACTION[]>;
-  export const baseWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
+  export const initialWaiverActionsByStatus: Record<string, PACKAGE_ACTION[]>;
   export const waiverExtensionActionsByStatus: Record<string, PACKAGE_ACTION[]>;
   export const get90thDayText: (
     currentStatus: string,
@@ -152,7 +152,7 @@ export namespace Workflow {
 export * as Validate from "./idValidation.js";
 //export * as Workflow from "./workflow.js";
 
-export { baseWaiver } from "./type/baseWaiver";
+export { initialWaiver } from "./type/initialWaiver";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
 export { waiverRenewal } from "./type/waiverRenewal.js";
 export { waiverAmendment } from "./type/waiverAmendment.js";

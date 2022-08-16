@@ -20,12 +20,12 @@ it("Waiver Extension Stub", async () => {
   expect(responset).toBeInstanceOf(Promise);
 
   const response2 = WaiverExtension.getCMSEmail(spaData);
-  expect(response2.HTML.length).toBe(1700);
+  expect(response2.HTML.length).toBe(1703);
 
   const response3 = WaiverExtension.getStateEmail({
     spaData,
     ninetyDayClockEnd: 1631626754502,
     user: { email: "foo" },
   });
-  expect(response3.HTML.length).toBe(906);
+  expect(response3.HTML.length).toBe(907);
 });

@@ -15,7 +15,7 @@ Feature: Package Dashboard Temporary Extension
         And Click on Submit Button
         And click on Packages
         And click on the Waivers tab
-        And search for approved Base Waiver Number 1
+        And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And verify the temporary extension exists
@@ -38,7 +38,7 @@ Feature: Package Dashboard Temporary Extension
         And Click on Submit Button
         And click on Packages
         And click on the Waivers tab
-        And search for approved Base Waiver Number 1
+        And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And click the action button for the temporary extension
@@ -48,7 +48,7 @@ Feature: Package Dashboard Temporary Extension
 
     Scenario: Verify user can create a temporary extension from the Temp. Extension Mini-Dashboard
         And click on the Waivers tab
-        And search for approved Base Waiver Number 1
+        And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
         And Click the Request Extension button
@@ -60,7 +60,7 @@ Feature: Package Dashboard Temporary Extension
 
     Scenario: Verify user can create a temporary extension from the package details Mini-Dashboard
         And click on the Waivers tab
-        And search for approved Base Waiver Number 1
+        And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And verify Request a Temporary Extension package action exists
         And click Request a Temporary Extension package action
@@ -72,7 +72,7 @@ Feature: Package Dashboard Temporary Extension
 
     Scenario: Verify user can create a temporary extension from the package dashboard waiver tab
         And click on the Waivers tab
-        And search for approved Base Waiver Number 1
+        And search for approved Initial Waiver Number 1
         And click the actions button in row one
         And verify the Request Temporary Extension button is displayed
         And click the Request Temporary Extension button
