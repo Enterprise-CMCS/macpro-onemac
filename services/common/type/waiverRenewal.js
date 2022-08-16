@@ -29,6 +29,6 @@ export const waiverRenewal = {
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
   parentMustExist: true,
-  allowedParentTypes: ["waivernew"],
+  allowedParentTypes: ["waivernew", "waiverrenewal"],
   allowedParentStatuses: ["Approved"],
 };
