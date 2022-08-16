@@ -205,8 +205,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
       try {
         if (!!oneMacFormData.parentId) {
           if (
-            (await ChangeRequestDataApi.packageExists(
-              oneMacFormData.parentId
+            (await PackageApi.validateParent(
+              oneMacFormData.parentId,
+              formConfig.validateParentAPI
             )) === true
           )
             parentStatusMessage.statusMessage = "";
@@ -226,6 +227,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   }, [
     oneMacFormData.parentId,
     formConfig?.parentLabel,
+    formConfig?.validateParentAPI,
     formConfig?.parentNotFoundMessage,
   ]);
 
@@ -345,7 +347,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     );
     const isParentIdReady: boolean = Boolean(
       !formConfig.parentLabel ||
-        (oneMacFormData.parentId && !parentIdStatusMessage)
+        (oneMacFormData.parentId && !parentIdStatusMessage.statusMessage)
     );
 
     const hasNoErrors: boolean =

@@ -171,6 +171,26 @@ functions:
           cors: true
           authorizer: aws_iam
 
+  submitWaiverRenewal:
+    handler: form/submitWaiverRenewal.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverRenewal
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfWaiverRenewal:
+    handler: validation/validateParentOfWaiverRenewal.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverRenewal/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
   withdrawBaseWaiver:
     handler: action/withdrawBaseWaiver.main
     role: LambdaApiRole

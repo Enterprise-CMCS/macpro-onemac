@@ -168,6 +168,28 @@ class PackageApi {
       );
     }
   }
+
+  /**
+   * Check to see if an id exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the ID exists in the back end
+   */
+  async validateParent(id, validateParentAPI) {
+    if (!id) {
+      console.log("ID was not specified for validateParent API call");
+      throw new Error("ID was not specified for validateParent API call");
+    }
+
+    try {
+      return await API.get("oneMacAPI", `/${validateParentAPI}/${id}`);
+    } catch (error) {
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error validating parent with ID ${id}.`
+      );
+    }
+  }
 }
 
 const instance = new PackageApi();

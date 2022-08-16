@@ -6,17 +6,9 @@ export const waiverRenewal = {
   idLabel: "1915(b) Waiver Renewal Number",
   idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R(0[1-9]|[1-9][0-9]).00$",
   idExistValidations: [
-    // the base waiver should exist
-    {
-      idMustExist: true,
-      errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R00.00",
-    },
-    // DON'T want the entire Waiver number with renewal portion to exist
     {
       idMustExist: false,
-      errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R(0[1-9]|[1-9][0-9])(|.00)",
+      errorLevel: "error",
     },
   ],
   allowMultiplesWithSameId: false,
@@ -36,11 +28,7 @@ export const waiverRenewal = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
-  couldBeMyParent: (inData) => {
-    if (!inData?.componentType || !inData?.currentStatus) return false;
-    return (
-      inData.componentType === "waivernew" &&
-      inData.currentStatus === "Approved"
-    );
-  },
+  parentMustExist: true,
+  allowedParentTypes: ["waivernew"],
+  allowedParentStatuses: ["Approved"],
 };

@@ -13,6 +13,7 @@ export type OneMACFormConfig = {
   parentLabel?: string;
   parentFieldHint?: FieldHint[];
   parentNotFoundMessage?: string;
+  validateParentAPI?: string;
   pageTitle: string;
   addlIntroJSX?: string;
   detailsHeader?: string;

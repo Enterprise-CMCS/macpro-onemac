@@ -1,43 +1,38 @@
-import { RESPONSE_CODE } from "cmscommonlib";
-import dynamoDb from "./libs/dynamodb-lib";
-
-import { getUser } from "../getUser";
-import { validateUserSubmitting } from "../utils/validateUser";
+import dynamoDb from "../libs/dynamodb-lib";
 
 export const validateParentOfAny = async (event, config) => {
-  let body;
-  try {
-    body = JSON.parse(event.body);
-  } catch (error) {
-    console.log("event couldn't parse: ", error);
-    throw error;
-  }
-
-  try {
-    const user = await getUser(body.changedByEmail);
-    if (!validateUserSubmitting(user, body.componentId.substring(0, 2))) {
-      return RESPONSE_CODE.USER_NOT_AUTHORIZED;
-    }
-  } catch (e) {
-    return RESPONSE_CODE.VALIDATION_ERROR;
-  }
+  const parentId = event.pathParameters.parentId;
+  console.log("checking parent id: " + parentId);
 
   const parentParams = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk AND begins_with(sk,:version)",
     ExpressionAttributeValues: {
-      ":pk": body.componentId,
+      ":pk": parentId,
       ":version": "v0#",
     },
-    ExpressionAttributeNames: {
-      "#parentType": "componentType",
-      "#parentStatus": "currentStatus",
-    },
-    ProjectionExpression: "#parentType, #parentStatus",
+    ProjectionExpression: "componentType, currentStatus",
   };
   const result = await dynamoDb.query(parentParams);
 
+  // no matches, no parent found
   if (!result?.Items) return false;
 
-  return result.Items.find((item) => config.couldBeMyParent(item)) ?? false;
+  console.log("Items found are: ", result.Items);
+
+  // matches with no more specifics, parent is found
+  if (!config.allowedParentTypes && !config.allowedParentStatuses) return true;
+
+  // loop through the items to see if any of the records match the ideal parent
+  let foundParent = false;
+  result.Items.forEach((item) => {
+    if (
+      (!config.allowedParentTypes ||
+        config.allowedParentTypes.includes(item.componentType)) &&
+      (!config.allowedParentStatuses ||
+        config.allowedParentStatuses.includes(item.currentStatus))
+    )
+      foundParent = true;
+  });
+  return foundParent;
 };
