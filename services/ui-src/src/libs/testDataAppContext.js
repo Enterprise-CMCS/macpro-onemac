@@ -1,23 +1,35 @@
-import { USER_STATUS } from "cmscommonlib";
+import { USER_ROLE, USER_STATUS } from "cmscommonlib";
 
 export const stateSubmitterInitialAuthState = {
   isAuthenticating: false,
   isAuthenticated: true,
   isLoggedInAsDeveloper: false,
-  userRole: "statesubmitter",
+  userRole: USER_ROLE.STATE_SUBMITTER,
   userStatus: USER_STATUS.ACTIVE,
   activeTerritories: ["MI", "VA"],
+  setUserInfo: () => Promise.resolve(),
+  updatePhoneNumber: () => Promise.resolve(),
+  confirmAction: () => Promise.resolve(),
   userProfile: {
     cmsRoles: "onemac-state-user",
     email: "statesubmitteractive@cms.hhs.local",
     firstName: "Unit",
     lastName: "Tester",
     userData: {
+      fullName: "Unita Goodcode",
       firstName: "Unita",
       lastName: "Goodcode",
       roleList: [
-        { role: "statesubmitter", status: "active", territory: "MI" },
-        { role: "statesubmitter", status: "active", territory: "VA" },
+        {
+          role: USER_ROLE.STATE_SUBMITTER,
+          status: USER_STATUS.ACTIVE,
+          territory: "MI",
+        },
+        {
+          role: USER_ROLE.STATE_SUBMITTER,
+          status: USER_STATUS.ACTIVE,
+          territory: "VA",
+        },
       ],
       email: "statesubmitteractive@cms.hhs.local",
       validRoutes: [

@@ -46,6 +46,7 @@ import ChipSpaForm from "./page/chip-spa/ChipSpaForm";
 import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 import MedicaidSPARAIForm from "./page/medicaid-spa/MedicaidSPARAIForm";
 import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
+import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -208,6 +209,7 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.CHIP_SPA, component: ChipSpaForm },
     { path: ONEMAC_ROUTES.MEDICAID_SPA_RAI, component: MedicaidSPARAIForm },
     { path: ONEMAC_ROUTES.CHIP_SPA_RAI, component: CHIPSPARAIForm },
+    { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
     { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },
     {

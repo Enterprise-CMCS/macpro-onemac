@@ -129,7 +129,7 @@ exports.main = async function (event) {
     const result = results.Items[0];
     console.log(result);
     //update the transmittalNumber to the input transmittalNumber and prepend the additional info
-    const standardAddtionalInfo =
+    const standardAdditionalInfo =
       "Modified ID on " +
       format(new Date(), "EEE, MMM d yyyy") +
       ` from ${idUpdate["Old ID Format"]} to ${idUpdate["New ID Format"]}` +
@@ -143,7 +143,7 @@ exports.main = async function (event) {
             "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
           ExpressionAttributeValues: {
             ":toTransmittalNumber": idUpdate["New ID Format"],
-            ":toSummary": standardAddtionalInfo + " " + result.summary,
+            ":toSummary": standardAdditionalInfo + " " + result.summary,
           },
         })
         .promise();

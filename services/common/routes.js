@@ -56,6 +56,7 @@ export const ONEMAC_ROUTES = {
   WAIVER_RENEWAL: "/waiver-renewal",
   WAIVER_AMENDMENT: "/waiver-amendment",
   WAIVER_AMENDMENT_DETAIL: "/detail/waiver-amendment",
+  WAIVER_RAI: "/waiver-rai",
   APPENDIX_K_AMENDMENT: "/appendix-k-amendment",
   TEMPORARY_EXTENSION: "/temporary-extension",
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",

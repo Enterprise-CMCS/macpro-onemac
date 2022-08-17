@@ -143,7 +143,7 @@ export const SubmissionForm: React.FC<{
       ) {
         errorMessage =
           `The ${transmittalNumberDetails.idLabel} must be in the format of ${transmittalNumberDetails.idFormat}` +
-          (transmittalNumberDetails.idAddtionalErrorMessage ?? "");
+          (transmittalNumberDetails.idAdditionalErrorMessage ?? "");
       }
 
       return errorMessage;
