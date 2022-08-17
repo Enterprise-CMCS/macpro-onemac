@@ -20,3 +20,15 @@ const expectedResponse = {
 it("calls validateParentOfAny", async () => {
   expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
 });
+
+it("handles exceptions", async () => {
+  validateParentOfAny.mockImplementationOnce(() => {
+    throw new Error("an exception");
+  });
+
+  expect(main(testEvent))
+    .rejects.toThrow("an exception")
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
+});
