@@ -6,8 +6,8 @@ import { ROUTES, ONEMAC_ROUTES, waiverRenewal } from "cmscommonlib";
 const waiverRenewalIdFormat: string = "SS-####.R##.00 or SS-#####.R##.00";
 
 export const waiverRenewalFormInfo: OneMACFormConfig = {
-  ...waiverRenewal,
   ...defaultOneMACFormConfig,
+  ...waiverRenewal,
   pageTitle: "Renew a 1915(b) Waiver",
   detailsHeader: "1915(b) Waiver Renewal",
   addlIntroJSX: "",

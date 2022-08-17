@@ -91,7 +91,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const history = useHistory();
 
   const presetComponentId = location.state?.componentId ?? "";
-  const presetParentId = location.state?.parentId ?? "";
+  const presetParentId = location.state?.parentId ?? undefined;
 
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
