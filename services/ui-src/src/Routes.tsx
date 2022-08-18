@@ -37,6 +37,7 @@ import { useAppContext } from "./libs/contextLib";
 import InitialWaiverForm from "./page/initial-waiver/InitialWaiverForm";
 import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
 import WaiverRenewalForm from "./page/waiver-renewal/WaiverRenewalForm";
+import WaiverRenewalDetail from "./page/waiver-renewal/WaiverRenewalDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
@@ -295,6 +296,11 @@ const ROUTE_LIST: RouteSpec[] = [
             path: ONEMAC_ROUTES.INITIAL_WAIVER_DETAIL + "/:componentId",
             exact: true,
             component: InitialWaiverDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.WAIVER_RENEWAL_DETAIL + "/:componentId",
+            exact: true,
+            component: WaiverRenewalDetail,
           },
           {
             path: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL + "/:componentId",

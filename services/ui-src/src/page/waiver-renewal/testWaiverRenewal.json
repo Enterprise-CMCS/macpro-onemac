@@ -1,0 +1,42 @@
+{
+    "additionalInformation": "This is just a test",
+    "componentType": "waiverrenewal",
+    "attachments": [
+      {
+        "s3Key": "1639507770586/15MB.pdf",
+        "filename": "15MB.pdf",
+        "title": "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
+        "contentType": "application/pdf",
+        "url": "https://uploads-dev-attachmentsbucket-746ihmluia7u.s3.amazonaws.com/protected/us-east-1%3A86a190fe-b195-42bf-9685-9761bf0ff14b/1639507770586/15MB.pdf?AWSAccessKeyId=ASIARWD6TTDFE7SACR6Y&Expires=1654896015&Signature=ztLp2tJWdeCEmyq0VLCp7XqPyMc%3D&x-amz-security-token=FwoGZXIvYXdzEDwaDMP%2FP3wJPwsitau3BCKoAdyUn05cilTmiRAbQDtwPqnHWI7lzwyPY5ayhuxL%2Fl22G68ch%2BhaDL1k0vUUaFN0b2%2B4w%2F%2F6w4VqY4ZaM0EqJoBCytgT%2BKN4fNj62aTA3anTzspbn3s%2Fvd46NYLCe%2BUDet5cHIc%2FBMrjrUXGBVyTStsYET6CIyf6b7%2B%2BthIM5fYnCh%2F%2FFs6zc3r69bQzag27kXGrLT6dAW%2Fti70bI1Yum1NzVcGwsFYrKSi1oo6VBjItMBOWckaGjetNN0L9SxoUAbC3IO78YZwhnXBShf3owYqEAnY88fkd7B2Pfkzf"
+      }
+    ],
+    "componentId": "MD-83420.R01.00",
+    "waiverAuthority": "1915(b)(4)",
+    "currentStatus": "Unsubmitted",
+    "submissionTimestamp": 1639507775282,
+    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945",
+    "GSI1pk": "OneMAC#waiver",
+    "children": [
+      {
+        "componentType": "waiverrai",
+        "componentId": "MD-83420.R01.00",
+        "currentStatus": "Submitted",
+        "submitterName": "Statesubmitter Nightwatch",
+        "displayId": "MD-83420.R01.00",
+        "submitterEmail": "statesubmitter@nightwatch.test",
+        "submissionTimestamp": 1643296612626
+      }
+    ],
+    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
+    "GSI1sk": "MD-83420.R01.00",
+    "sk": "v0#waiverrenewal",
+    "Latest": 2,
+    "pk": "MD-83420.R01.00",
+    "submitterName": "Statesubmitter Nightwatch",
+    "submitterEmail": "statesubmitter@nightwatch.test",
+    "territory": "MD",
+    "territoryNice": "Maryland",
+    "typeNice": "1915(b) Waiver Renewal",
+    "waiverAuthorityNice": "1915(b)(4) FFS Selective Contracting waivers",
+    "submissionDateNice": "Dec 14 2021"
+  }  
