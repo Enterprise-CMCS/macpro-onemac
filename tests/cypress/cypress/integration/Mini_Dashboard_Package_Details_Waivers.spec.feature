@@ -93,3 +93,24 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
     #     And verify a date exists for the Date Submitted
     #     And verify there is a Proposed Effective Date header in the details section
 
+    Scenario: Screen Enhance: Initial Waiver Details View - RAI Issued
+        And click 1915b Waiver Renewal check box
+        And click on Type
+        And click on Status
+        And click all of the status checkboxes
+        And click RAI Issued checkbox
+        And click the Waiver Number link in the first row
+        And verify the package details page is visible
+        And verify action card exists
+        And verify the status on the card is "RAI Issued"
+        And verify package actions header is visible
+        And verify withdraw package action exists
+        And verify Respond to RAI action exists
+        And verify the details section exists
+        And verify there is a Type header in the details section
+        And verify the type is Initial Waiver
+        And verify there is a State header in the details section
+        And verify a state exists for the State
+        And verify there is a Date Submitted header in the details section
+        And verify a date exists for the Date Submitted
+        And verify there is a Proposed Effective Date header in the details section
