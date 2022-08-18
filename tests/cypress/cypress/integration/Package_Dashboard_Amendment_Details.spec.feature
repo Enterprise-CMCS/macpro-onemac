@@ -6,15 +6,15 @@
 #         And click on Packages
 #         Then click on New Submission
 #         And Click on Waiver Action
-#         And click on Base Waiver
+#         And click on Initial Waiver
 #         And Click on 1915 b 4 FFS Selective Contracting waivers under Waiver Authority
-#         And Type Unique Valid Base Waiver Number With SS-#####.R00.00 format
+#         And Type Unique Valid Initial Waiver Number With SS-#####.R00.00 format
 #         And select proposed effective date 3 months from today
 #         And Upload 1915 b 4 file
 #         And Type "This is just a test" in Summary Box
 #         And Click on Submit Button
 #         And verify submission Successful message
-#         And Return to dashboard Page 
+#         And Return to dashboard Page
 #         # do previous step until new Waiver Amendment form is done
 #         And click on New Submission
 #         And Click on Waiver Action
@@ -30,7 +30,7 @@
 #         And verify submission Successful message
 #         And click on Packages
 #         And click on the Waivers tab
-#         And search for Base Waiver Number 1 with 12 Characters
+#         And search for Initial Waiver Number 1 with 12 Characters
 #         And wait for parent row expander to be enabled
 #         And click parent row expander
 #         And click the Waiver Number link for the Amendment
@@ -62,7 +62,7 @@
 #         And verify submission Successful message
 #         And click on Packages
 #         And click on the Waivers tab
-#         And search for Base Waiver Number 1 with 12 Characters
+#         And search for Initial Waiver Number 1 with 12 Characters
 #         And wait for parent row expander to be enabled
 #         And click parent row expander
 #         And click the Waiver Number link for the Amendment

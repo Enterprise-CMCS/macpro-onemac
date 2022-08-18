@@ -36,14 +36,17 @@ class WaiverExtension {
       process.env.testingEmail,
     ].filter(Boolean);
     cmsEmail.Subject =
-      "New Waiver Extension for " + data.transmittalNumber + " submitted";
+      "New Waiver Extension " + data.transmittalNumber + " submitted";
     cmsEmail.HTML = `
         <p>The Submission Portal received a Request for Waiver Extension Submission:</p>
         ${getAccessInstructions()}
         <p>
             <br><b>Name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Email Address</b>: ${data.user.email}
-            <br><b>Waiver #</b>: ${
+            <br><b>Approved Initial or Renewal Waiver Number</b>: ${
+              data.parentNumber
+            }
+            <br><b>Temporary Extension Request Number</b>: ${
               data.transmittalNumber
             }${transmittalNumberWarningMessage}
         </p>
@@ -81,8 +84,9 @@ class WaiverExtension {
     stateEmail.HTML = `
         <p>This response confirms the receipt of your Waiver Extension submission:</p>
         <p>
-            <br><b>Waiver #</b>: ${data.transmittalNumber}
-            <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
+        <br><b>Approved Initial or Renewal Waiver Number</b>: ${data.parentNumber}
+        <br><b>Temporary Extension Request Number</b>: ${data.transmittalNumber}
+        <br><b>Submitter name</b>: ${data.user.firstName} ${data.user.lastName}
             <br><b>Submitter email</b>: ${data.user.email}
         </p>
         <p>
@@ -91,8 +95,8 @@ class WaiverExtension {
         </p>
         <br>
         <p>
-            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers, 
-            responses to Requests for Additional Information (RAI), and extension requests on Waivers only. 
+            This mailbox is for the submittal of Section 1915(b) and 1915(c) non-web-based Waivers,
+            responses to Requests for Additional Information (RAI), and extension requests on Waivers only.
             Any other correspondence will be disregarded.
         </p>
         <p>If you have any questions, please contact <a href="mailto:spa@cms.hhs.gov">spa@cms.hhs.gov</a> or your state lead.</p>

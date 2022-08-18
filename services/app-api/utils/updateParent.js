@@ -1,6 +1,11 @@
+import { Validate } from "cmscommonlib";
 import dynamoDb from "../libs/dynamodb-lib";
 
 export default async function updateParent(childData) {
+  if (!childData.parentType) {
+    childData.parentType = Validate.getWaiverTypeFromNumber(childData.parentId);
+  }
+
   const params = {
     TableName: process.env.oneMacTableName,
     Key: {

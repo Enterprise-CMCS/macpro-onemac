@@ -1,5 +1,5 @@
 Story: https://qmacbis.atlassian.net/browse/OY2-XXXX
-Endpoint: https://xxxx.cloudfront.net
+Endpoint: See github-actions bot comment
 
 ### Details
 

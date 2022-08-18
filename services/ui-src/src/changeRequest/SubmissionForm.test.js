@@ -19,7 +19,10 @@ import { SubmissionForm } from "./SubmissionForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 
 import { AppContext } from "../libs/contextLib";
-import { approvedBlueWarningMessage } from "cmscommonlib";
+import {
+  approvedBlueWarningMessage,
+  waiverAdditionalErrorMessage,
+} from "cmscommonlib";
 
 jest.mock("../utils/ChangeRequestDataApi");
 
@@ -141,6 +144,41 @@ describe("Submission Form", () => {
       expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
       expect(actionTypeEl.value).toBe(testValues.actionType);
       expect(waiverAuthorityEl.value).toBe(testValues.waiverAuthority);
+    });
+  });
+
+  describe("Parent Number Section", () => {
+    it("displays error message when id SHOULD exist but it doesn't", async () => {
+      history.push("/waiverextension");
+      const parentIdLabel =
+        ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER_EXTENSION].parentNumber
+          .idLabel;
+      const errorMessage =
+        ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER_EXTENSION].parentNumber
+          .idExistValidations[0].showMessage;
+      const testId = "MI-12-1122";
+
+      // id will NOT exist
+      ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+
+      render(
+        <AppContext.Provider
+          value={{
+            ...stateSubmitterInitialAuthState,
+          }}
+        >
+          <Router history={history}>
+            <SubmissionForm
+              changeRequestType={ChangeRequest.TYPE.WAIVER_EXTENSION}
+            />
+          </Router>
+        </AppContext.Provider>
+      );
+
+      const parentNumberEl = screen.getByLabelText(parentIdLabel);
+
+      userEvent.type(parentNumberEl, testId);
+      await waitFor(() => screen.getByText(errorMessage));
     });
   });
 
@@ -330,16 +368,16 @@ describe("Submission Form", () => {
       // Waiver Action form with action type of renewal
       // has two different validations for id existence
       // and displays a warning message depending on which one fails
-      // #1: Want the base waiver number to exist
+      // #1: Want the initial waiver number to exist
       // #2: DON'T want the entire Waiver number with renewal portion to exist
-      it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the base waiver number SHOULD exist but doesn't)", async () => {
+      it("displays a warning message for a Waiver Renewal when failing the first existence validation (that the initial waiver number SHOULD exist but doesn't)", async () => {
         history.push("/waiver");
         const waiverIdLabel =
           ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
             .idLabel;
         const testId = "MI-1234.R03.00";
 
-        // base id will NOT exist (this will cause validation to fail so we can check the warning message)
+        // initial id will NOT exist (this will cause validation to fail so we can check the warning message)
         when(ChangeRequestDataApi.packageExists)
           .calledWith("MI-1234.R00.00")
           .mockReturnValue(false);
@@ -380,7 +418,7 @@ describe("Submission Form", () => {
         const testId = "MI-1234.R03.00";
         const waiverExistError = `According to our records, this Waiver Number already exists. Please check the Waiver Number and try entering it again.`;
 
-        // ensure pass of first validation for base id existing
+        // ensure pass of first validation for initial id existing
         when(ChangeRequestDataApi.packageExists)
           .calledWith("MI-1234.R00.00")
           .mockReturnValue(true);
@@ -411,6 +449,40 @@ describe("Submission Form", () => {
 
         userEvent.type(transmittalNumberEl, testId);
         await waitFor(() => screen.getByText(waiverExistError));
+      });
+
+      it("displays the additional info in the warning message for a Waiver Amendment )", async () => {
+        history.push("/waiver");
+        const waiverIdLabel =
+          ChangeRequest.CONFIG[ChangeRequest.TYPE.WAIVER].transmittalNumber
+            .idLabel;
+        const testId = "MI-"; //invalid waiver amendment number to force error message
+
+        when(ChangeRequestDataApi.packageExists)
+          .calledWith("MI-")
+          .mockReturnValue(false);
+
+        render(
+          <AppContext.Provider
+            value={{
+              ...stateSubmitterInitialAuthState,
+            }}
+          >
+            <Router history={history}>
+              <SubmissionForm changeRequestType={ChangeRequest.TYPE.WAIVER} />
+            </Router>
+          </AppContext.Provider>
+        );
+
+        // setting the form up for a amendment type
+        const actionTypeEl = screen.getByLabelText("Action Type");
+        userEvent.selectOptions(actionTypeEl, "amendment");
+
+        const transmittalNumberEl = screen.getByLabelText(waiverIdLabel);
+        userEvent.type(transmittalNumberEl, testId);
+
+        const errorText = waiverAdditionalErrorMessage.replace("\n", "");
+        await waitFor(() => screen.getByText(errorText));
       });
     });
   });
@@ -457,6 +529,8 @@ describe("Submission Form", () => {
 
 it("successfully submits the form", async () => {
   //  history.push("/waiver");
+  // mock submitting via the API
+  ChangeRequestDataApi.submit.mockResolvedValue("SC000");
 
   const testValues = {
     transmittalNumber: "MI-17234.R03.22",
@@ -502,7 +576,7 @@ it("successfully submits the form", async () => {
   expect(transmittalNumberEl.value).toBe(testValues.transmittalNumber);
 
   // click the submit button
-  //userEvent.click(submitButtonEl);
+  userEvent.click(submitButtonEl);
   screen.debug();
 });
 

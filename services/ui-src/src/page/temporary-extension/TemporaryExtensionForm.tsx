@@ -19,7 +19,7 @@ const TemporaryExtensionForm: FC = () => {
     ...defaultOneMACFormConfig,
     pageTitle: "Request a Temporary Extension",
     detailsHeader: "Temporary Extension Request",
-    idFAQLink: ROUTES.FAQ_WAIVER_ID,
+    idFAQLink: ROUTES.FAQ_WAIVER_EXTENSION_ID,
     idFieldHint: [
       {
         text:

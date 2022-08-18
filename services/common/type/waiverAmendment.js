@@ -5,7 +5,7 @@ export const waiverAmendment = {
   idLabel: "Waiver Number",
   idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R[0-9]{2}.M(0[1-9]|[1-9][0-9])$",
   idExistValidations: [
-    // the base waiver or waiver renewal being amended should exist
+    // the initial waiver or waiver renewal being amended should exist
     {
       idMustExist: true,
       errorLevel: "warn",

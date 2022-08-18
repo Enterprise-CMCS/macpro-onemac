@@ -26,7 +26,7 @@ export default function getChangeRequestFunctions(type) {
     [ChangeRequest.TYPE.SPA]: SPA,
     [ChangeRequest.TYPE.SPA_RAI]: SPARAI,
     [ChangeRequest.TYPE.WAIVER]: Waiver,
-    [ChangeRequest.TYPE.WAIVER_BASE]: Waiver,
+    [ChangeRequest.TYPE.WAIVER_INITIAL]: Waiver,
     [ChangeRequest.TYPE.WAIVER_APP_K]: WaiverAppK,
     [ChangeRequest.TYPE.WAIVER_EXTENSION]: WaiverExtension,
     [ChangeRequest.TYPE.WAIVER_RAI]: WaiverRAI,
@@ -128,6 +128,7 @@ export function validateSubmission(data) {
     territory: Joi.string()
       .valid(...territoryCodeList)
       .required(),
+    parentNumber: Joi.string().allow(""),
     transmittalNumber: Joi.string().required(),
     transmittalNumberWarningMessage: Joi.string().allow(""),
     type: Joi.string()

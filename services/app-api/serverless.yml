@@ -111,12 +111,12 @@ functions:
       default:
         enabled: false
 
-  submitBaseWaiver:
-    handler: form/submitBaseWaiver.main
+  submitInitialWaiver:
+    handler: form/submitInitialWaiver.main
     role: LambdaApiRole
     events:
       - http:
-          path: submitBaseWaiver
+          path: submitInitialWaiver
           method: post
           cors: true
           authorizer: aws_iam
@@ -170,13 +170,43 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-
-  withdrawBaseWaiver:
-    handler: action/withdrawBaseWaiver.main
+  
+  submitWaiverRaiResponse:
+    handler: form/submitWaiverRAIResponse.main
     role: LambdaApiRole
     events:
       - http:
-          path: withdrawBaseWaiver
+          path: submitWaiverRAIResponse
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaiverRenewal:
+    handler: form/submitWaiverRenewal.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverRenewal
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfWaiverRenewal:
+    handler: validation/validateParentOfWaiverRenewal.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverRenewal/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  withdrawInitialWaiver:
+    handler: action/withdrawInitialWaiver.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawInitialWaiver
           method: post
           cors: true
           authorizer: aws_iam
