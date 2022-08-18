@@ -2557,3 +2557,18 @@ And(
 And("verify error message contains {string}", (msg) => {
   OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
 });
+And("search for Waiver in RAI Issued status", () => {
+  cy.fixture("savedID.json").then((data) => {
+    OneMacPackagePage.searchFor(data.savedID2);
+  });
+  cy.wait(1000);
+});
+And(
+  "verify the waiver number in RAI Issued status is pre-populated and uneditable",
+  () => {
+    cy.fixture("savedID.json").then((data) => {
+      OneMacRespondToRAIPage.verifyWaiverNumberMatchesID(data.savedID2);
+    });
+    cy.wait(1000);
+  }
+);

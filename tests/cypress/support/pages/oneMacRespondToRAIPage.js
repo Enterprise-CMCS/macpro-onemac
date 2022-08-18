@@ -4,6 +4,8 @@ const backArrow = "#back-button";
 //Element is Xpath use cy.xpath instead of cy.get
 const leaveAnywaysBtn = "//button[text()='Leave Anyway']";
 const yesSubmitBtn = "//button[text()='Yes, Submit']";
+const prepopulatedWaiverNumber =
+  "//h3[text()='Waiver Number']/following-sibling::div";
 
 export class oneMacRespondToRAIPage {
   verifyPageHeader() {
@@ -20,6 +22,9 @@ export class oneMacRespondToRAIPage {
   clickYesSubmitBTN() {
     cy.xpath(yesSubmitBtn).click();
     cy.wait(8000);
+  }
+  verifyWaiverNumberMatchesID(s) {
+    cy.xpath(prepopulatedWaiverNumber).should("have.text", s);
   }
 }
 export default oneMacRespondToRAIPage;
