@@ -45,6 +45,9 @@ export class oneMacSubmissionTypePage {
   verifyNewInitialWaiverPage() {
     cy.url().should("include", "/initial-waiver");
   }
+  verifyNewWaiverRenewalPage() {
+    cy.url().should("include", "/waiver-renewal");
+  }
   clickwaiverAction() {
     cy.xpath(waiverAction).click();
   }
@@ -82,6 +85,9 @@ export class oneMacSubmissionTypePage {
   clickInitialWaiver() {
     cy.xpath(initialWaiver).click();
   }
+  clickWaiverRenewal() {
+    cy.xpath(initialWaiverRenewal).click();
+  }
   verifyInitialWaiverIsClickable() {
     cy.xpath(initialWaiver)
       .parent()
@@ -94,7 +100,7 @@ export class oneMacSubmissionTypePage {
       .parent()
       .should("have.attr", "href", "/appendix-k-amendment");
   }
-  verifyInitialWaiverRenewalIsClickable() {
+  verifyWaiverRenewalIsClickable() {
     cy.xpath(initialWaiverRenewal)
       .parent()
       .parent()

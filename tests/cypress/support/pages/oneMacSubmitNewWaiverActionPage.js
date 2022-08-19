@@ -13,6 +13,7 @@ const commentsInputBox = "#field_2";
 const existingWaiverNumber = "MD-10330.R01.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
+const waiverRenewalInputBox = "//input[@type='text']";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
@@ -101,6 +102,19 @@ export class oneMacSubmitNewWaiverActionPage {
     var dt = y + "-" + m + "-" + d;
 
     cy.get(proposedEffectiveDate).type(dt);
+  }
+
+  inputWaiverRenewalParentNumber(s) {
+    cy.xpath(waiverRenewalInputBox).first().type(s);
+  }
+  inputWaiverRenewalNumber(s) {
+    cy.xpath(waiverRenewalInputBox).eq(1).type(s);
+  }
+  clearWaiverRenewalParentNumber() {
+    cy.xpath(waiverRenewalInputBox).first().clear();
+  }
+  clearWaiverRenewalNumber() {
+    cy.xpath(waiverRenewalInputBox).eq(1).clear();
   }
 }
 export default oneMacSubmitNewWaiverActionPage;
