@@ -2588,6 +2588,16 @@ And(
     });
   }
 );
+And(
+  "type new waiver renewal number 2 in 1915b Waiver Renewal Number field",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverRenewalNumber(
+        d.newWaiverRenewalNum2
+      );
+    });
+  }
+);
 And("search for new waiver renewal number 1", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
     OneMacPackagePage.searchFor(d.newWaiverRenewalNum1);
