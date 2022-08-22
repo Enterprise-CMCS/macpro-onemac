@@ -190,6 +190,16 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  submitWaiverAmendment:
+    handler: form/submitWaiverAmendment.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverAmendment
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   validateParentOfWaiverRenewal:
     handler: validation/validateParentOfWaiverRenewal.main
@@ -197,6 +207,16 @@ functions:
     events:
       - http:
           path: validateParentOfWaiverRenewal/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
+
+  validateParentOfWaiverAmendment:
+    handler: validation/validateParentOfWaiverAmendment.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfWaiverAmendment/{parentId}
           method: get
           cors: true
           authorizer: aws_iam

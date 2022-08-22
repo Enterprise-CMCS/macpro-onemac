@@ -1,5 +1,5 @@
 import Joi from "joi";
-import { Validate, waiverAmendment } from "cmscommonlib";
+import { waiverAmendment } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
@@ -11,8 +11,8 @@ import {
 export const waiverAmendmentFormConfig = {
   ...defaultFormConfig,
   ...waiverAmendment,
-  getParentInfo: (myId) => Validate.getParentWaiver(myId),
   appendToSchema: {
+    parentId: Joi.string().required(),
     waiverAuthority: Joi.string().required(),
     // Should look into a real validation with choices centrally located in cmscommonlib
     //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),

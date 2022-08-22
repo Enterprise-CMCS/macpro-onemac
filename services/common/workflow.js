@@ -1,40 +1,41 @@
+import { chipSPA } from "./type/chipSPA.js";
+import { chipSPARAIResponse } from "./type/chipSPARAIResponse.js";
+import { initialWaiver } from "./type/initialWaiver.js";
+import { medicaidSPA } from "./type/medicaidSPA.js";
+import { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";
+import { waiverAmendment } from "./type/waiverAmendment.js";
+import { waiverAppendixK } from "./type/waiverAppendixK.js";
+import { waiverRAIResponse } from "./type/waiverRAIResponse.js";
+import { waiverRenewal } from "./type/waiverRenewal.js";
+import { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
+
 export const ONEMAC_TYPE = {
-  CHIP_SPA: "chipspa",
-  CHIP_SPA_RAI: "chipsparai",
-  MEDICAID_SPA: "medicaidspa",
-  MEDICAID_SPA_RAI: "medicaidsparai",
+  CHIP_SPA: chipSPA.componentType,
+  CHIP_SPA_RAI: chipSPARAIResponse.componentType,
+  MEDICAID_SPA: medicaidSPA.componentType,
+  MEDICAID_SPA_RAI: medicaidSPARAIResponse.componentType,
   WAIVER: "waiver",
-  WAIVER_INITIAL: "waivernew",
-  WAIVER_AMENDMENT: "waiveramendment",
-  WAIVER_RENEWAL: "waiverrenewal",
-  WAIVER_RAI: "waiverrai",
-  WAIVER_EXTENSION: "waiverextension",
-  WAIVER_APP_K: "waiverappk",
+  WAIVER_INITIAL: initialWaiver.componentType,
+  WAIVER_AMENDMENT: waiverAmendment.componentType,
+  WAIVER_RENEWAL: waiverRenewal.componentType,
+  WAIVER_RAI: waiverRAIResponse.componentType,
+  WAIVER_EXTENSION: waiverTemporaryExtension.componentType,
+  WAIVER_APP_K: waiverAppendixK.componentType,
 };
 
 export const ONEMAC_LABEL = {
-  [ONEMAC_TYPE.CHIP_SPA]: "CHIP SPA",
-  [ONEMAC_TYPE.MEDICAID_SPA]: "Medicaid SPA",
-  [ONEMAC_TYPE.WAIVER_INITIAL]: "1915(b) Initial Waiver",
-  [ONEMAC_TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
-  [ONEMAC_TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-  [ONEMAC_TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
-  [ONEMAC_TYPE.WAIVER_AMENDMENT]: "1915(b) Amendment",
-  [ONEMAC_TYPE.WAIVER_RAI]: "1915(b) RAI Response",
+  [ONEMAC_TYPE.CHIP_SPA]: chipSPA.typeLabel,
+  [ONEMAC_TYPE.MEDICAID_SPA]: medicaidSPA.typeLabel,
+  [ONEMAC_TYPE.WAIVER_INITIAL]: initialWaiver.typeLabel,
+  [ONEMAC_TYPE.WAIVER_RENEWAL]: waiverRenewal.typeLabel,
+  [ONEMAC_TYPE.WAIVER_APP_K]: waiverAppendixK.typeLabel,
+  [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverTemporaryExtension.typeLabel,
+  [ONEMAC_TYPE.WAIVER_AMENDMENT]: waiverAmendment.typeLabel,
+  [ONEMAC_TYPE.WAIVER_RAI]: waiverRAIResponse.typeLabel,
 };
 
-export const ONEMAC_STATUS = {
-  INACTIVATED: "Inactivated",
-  UNSUBMITTED: "Unsubmitted",
-  SUBMITTED: "Submitted",
-  IN_REVIEW: "In Review",
-  RAI_ISSUED: "RAI Issued",
-  APPROVED: "Approved",
-  DISAPPROVED: "Disapproved",
-  WITHDRAWN: "Withdrawn",
-  TERMINATED: "Terminated",
-  PAUSED: "Review Paused, Off the Clock",
-};
+import { ONEMAC_STATUS } from "./lib/onemacStatus.js";
+export { ONEMAC_STATUS } from "./lib/onemacStatus.js";
 
 export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
