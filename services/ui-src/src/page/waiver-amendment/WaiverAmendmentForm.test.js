@@ -6,11 +6,15 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import WaiverAmendmentForm from "./WaiverAmendmentForm";
+import WaiverAmendmentForm, {
+  waiverAmendmentFormInfo,
+} from "./WaiverAmendmentForm";
 import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
 import { AppContext } from "../../libs/contextLib";
+import PackageApi from "../../utils/PackageApi";
 
 jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
@@ -72,5 +76,59 @@ describe("1915(b) Waiver Amendment Form", () => {
     await waitFor(() => expect(transmittalNumberEl.value).toBe(testID));
 
     expect(submitButtonEl).toBeDisabled();
+  });
+
+  it("displays additional id error messages on invalid id", async () => {
+    const testID = "MD-1234.R01.01";
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <WaiverAmendmentForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const idNumberEl = screen.getByLabelText("1915(b) Waiver Amendment Number");
+
+    ChangeRequestDataApi.packageExists.mockResolvedValue(false);
+
+    userEvent.type(idNumberEl, testID);
+    await waitFor(() => expect(idNumberEl.value).toBe(testID));
+
+    waiverAmendmentFormInfo.idAdditionalErrorMessage.forEach((message) => {
+      screen.getByText(message);
+    });
+  });
+
+  it("displays parent not found message on invalid parent id", async () => {
+    const testID = "MD-1234.R01.01";
+
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <WaiverAmendmentForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const idNumberEl = screen.getByLabelText("Existing Waiver Number to Amend");
+
+    PackageApi.validateParent.mockResolvedValue(false);
+
+    userEvent.type(idNumberEl, testID);
+    await waitFor(() => expect(idNumberEl.value).toBe(testID));
+
+    screen.getByText(
+      "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation."
+    );
   });
 });
