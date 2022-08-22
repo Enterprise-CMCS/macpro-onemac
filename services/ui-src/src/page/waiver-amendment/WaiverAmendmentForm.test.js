@@ -6,9 +6,7 @@ import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
 import { ONEMAC_ROUTES } from "cmscommonlib";
-import WaiverAmendmentForm, {
-  waiverAmendmentFormInfo,
-} from "./WaiverAmendmentForm";
+import WaiverAmendmentForm from "./WaiverAmendmentForm";
 import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
 import { AppContext } from "../../libs/contextLib";
 import PackageApi from "../../utils/PackageApi";
@@ -79,7 +77,7 @@ describe("1915(b) Waiver Amendment Form", () => {
   });
 
   it("displays additional id error messages on invalid id", async () => {
-    const testID = "MD-1234.R01.01";
+    const testID = "MD-1234";
 
     render(
       <AppContext.Provider
@@ -100,9 +98,9 @@ describe("1915(b) Waiver Amendment Form", () => {
     userEvent.type(idNumberEl, testID);
     await waitFor(() => expect(idNumberEl.value).toBe(testID));
 
-    waiverAmendmentFormInfo.idAdditionalErrorMessage.forEach((message) => {
-      screen.getByText(message);
-    });
+    screen.getByText(
+      "For amendments, the last two digits start with ‘01’ and ascends."
+    );
   });
 
   it("displays parent not found message on invalid parent id", async () => {
