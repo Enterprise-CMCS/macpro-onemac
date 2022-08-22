@@ -1,7 +1,3 @@
-import { ONEMAC_STATUS } from "../lib/onemacStatus.js";
-import { initialWaiver } from "./initialWaiver.js";
-import { waiverRenewal } from "./waiverRenewal.js";
-
 export const waiverAmendment = {
   componentType: "waiveramendment",
   typeLabel: "1915(b) Waiver Amendment",
@@ -32,9 +28,6 @@ export const waiverAmendment = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
-  allowedParentTypes: [
-    initialWaiver.componentType,
-    waiverRenewal.componentType,
-  ],
-  allowedParentStatuses: [ONEMAC_STATUS.APPROVED],
+  allowedParentTypes: ["waivernew", "waiverrenewal"],
+  allowedParentStatuses: ["Approved"],
 };
