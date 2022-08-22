@@ -18,7 +18,7 @@ export const ONEMAC_LABEL = {
   [ONEMAC_TYPE.WAIVER_INITIAL]: "1915(b) Initial Waiver",
   [ONEMAC_TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [ONEMAC_TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
-  [ONEMAC_TYPE.WAIVER_EXTENSION]: "Waiver Extension",
+  [ONEMAC_TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: "1915(b) Waiver Amendment",
   [ONEMAC_TYPE.WAIVER_RAI]: "1915(b) RAI Response",
 };
