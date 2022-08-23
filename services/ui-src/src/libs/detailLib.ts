@@ -22,7 +22,7 @@ export type OneMACDetail = {
 };
 
 export const submissionDateDefault: AttributeDetail = {
-  heading: "Date Submitted",
+  heading: "Initial Submission Date",
   fieldName: "submissionDateNice",
   default: null,
 };

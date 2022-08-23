@@ -2109,10 +2109,13 @@ And("verify there is a State header in the details section", () => {
 And("verify a state exists for the State", () => {
   OneMacPackageDetailsPage.verifyStateExists();
 });
-And("verify there is a Date Submitted header in the details section", () => {
-  OneMacPackageDetailsPage.verifyDateSubmittedHeaderExists();
-});
-And("verify a date exists for the Date Submitted", () => {
+And(
+  "verify there is an Initial Submission Date header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyInitialSubmittedDateHeaderExists();
+  }
+);
+And("verify a date exists for the Initial Submission Date", () => {
   OneMacPackageDetailsPage.verifyDateExists();
 });
 And(
