@@ -25,8 +25,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Withdrawn SPA
@@ -45,8 +45,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Disapproved SPA
@@ -65,8 +65,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
 
 
@@ -86,8 +86,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Submitted SPA
@@ -106,8 +106,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - Unsubmitted SPA
@@ -126,8 +126,8 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
 
     Scenario: Screen Enhance - RAI Issued SPA
@@ -148,6 +148,6 @@ Feature: OY2-15620 Updated SPA Details View - Card View with Actions
         And verify a type containing SPA exists for the Type
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
