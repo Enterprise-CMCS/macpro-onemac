@@ -2631,3 +2631,7 @@ aside#faq-contact-info-box {
 .choice-title {
   @extend .ds-h4;
 }
+
+.ds-u-color--warn {
+  @extend .ds-u-color--primary;
+}

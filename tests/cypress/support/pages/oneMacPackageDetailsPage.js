@@ -23,7 +23,7 @@ const detailSection =
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";
-const dateSubmittedHeader = "//h3[text()='Date Submitted']";
+const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
 const packageOverviewNavBtn = "//button[text()='Package Overview']";
 const packageDetailsNavBtn =
@@ -115,11 +115,11 @@ export class oneMacPackageDetailsPage {
   verifyStateExists() {
     cy.xpath(stateHeader).next().should("be.visible");
   }
-  verifyDateSubmittedHeaderExists() {
-    cy.xpath(dateSubmittedHeader).should("be.visible");
+  verifyInitialSubmittedDateHeaderExists() {
+    cy.xpath(initialSubmittedDateHeader).should("be.visible");
   }
   verifyDateExists() {
-    cy.xpath(dateSubmittedHeader).next().should("be.visible");
+    cy.xpath(initialSubmittedDateHeader).next().should("be.visible");
   }
   verifyRaiResponseHeaderExists() {
     cy.xpath(raiResponsesHeader).scrollIntoView().should("be.visible");
