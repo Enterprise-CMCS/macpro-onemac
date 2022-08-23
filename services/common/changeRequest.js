@@ -418,14 +418,18 @@ export const CONFIG = {
       idLabel: "Waiver Number",
       idFAQLink: ROUTES.FAQ_WAIVER_ID,
       idFieldHint: [
-        { text: "Please use the exact Waiver Number sent with the RAI" },
+        {
+          text: "Please enter the waiver number for the RAI you are responding to.  Use a dash after the two character state abbreviation.",
+        },
       ],
       idFormat: "the Number format sent with the RAI",
       idRegex: "(^[A-Z]{2})",
       idExistValidations: [
         {
           idMustExist: true,
-          errorLevel: "warn",
+          errorLevel: "error",
+          showMessage:
+            "The waiver number entered does not appear to match our records. Please enter the waiver number sent with the RAI, using a dash after the two character state abbreviation.",
         },
       ],
     },
