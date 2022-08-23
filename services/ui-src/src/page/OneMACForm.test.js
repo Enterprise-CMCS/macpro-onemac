@@ -10,7 +10,7 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../libs/testDataAppContext";
 
-import { ROUTES, ONEMAC_ROUTES } from "cmscommonlib";
+import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
 import OneMACForm from "./OneMACForm";
 import ChangeRequestDataApi from "../utils/ChangeRequestDataApi";
 import { AppContext } from "../libs/contextLib";
@@ -294,7 +294,7 @@ describe("cancelling the form submission", () => {
     const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
     const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
     const proposedEffectiveEl = screen.getByLabelText(
-      "Proposed Effective Date"
+      "Proposed Effective Date of " + initialWaiver.typeLabel
     );
     const cancelButtonEl = screen.getByText("Cancel");
 
@@ -347,7 +347,7 @@ describe("cancelling the form submission", () => {
     const transmittalNumberEl = screen.getByLabelText("Initial Waiver Number");
     const waiverAuthorityEl = screen.getByLabelText("Waiver Authority");
     const proposedEffectiveEl = screen.getByLabelText(
-      "Proposed Effective Date"
+      "Proposed Effective Date of " + initialWaiver.typeLabel
     );
     const cancelButtonEl = screen.getByText("Cancel");
 

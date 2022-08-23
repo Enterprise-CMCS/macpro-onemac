@@ -9,6 +9,7 @@ import {
 export type OneMACFormConfig = {
   idFormat: string;
   idFieldHint: FieldHint[];
+  idAdditionalErrorMessage?: string[];
   idFAQLink: string;
   parentLabel?: string;
   parentFieldHint?: FieldHint[];
@@ -52,4 +53,20 @@ export type PackageType = {
 
 export type WaiverPackageType = {
   waiverAuthorities: SelectOption[];
+};
+
+export type Message = {
+  statusLevel: string;
+  statusMessage: string;
+  warningMessageCode?: string;
+};
+
+export type OneMacFormData = {
+  territory: string;
+  additionalInformation: string;
+  componentId: string;
+  waiverAuthority?: string;
+  proposedEffectiveDate?: string;
+  parentId?: string;
+  parentType?: string;
 };
