@@ -48,6 +48,9 @@ export class oneMacSubmissionTypePage {
   verifyNewWaiverRenewalPage() {
     cy.url().should("include", "/waiver-renewal");
   }
+  verifyNewWaiverAmendmentPage() {
+    cy.url().should("include", "/waiver-amendment");
+  }
   clickwaiverAction() {
     cy.xpath(waiverAction).click();
   }
@@ -87,6 +90,9 @@ export class oneMacSubmissionTypePage {
   }
   clickWaiverRenewal() {
     cy.xpath(initialWaiverRenewal).click();
+  }
+  clickWaiverAmendment() {
+    cy.xpath(amendment).click();
   }
   verifyInitialWaiverIsClickable() {
     cy.xpath(initialWaiver)
