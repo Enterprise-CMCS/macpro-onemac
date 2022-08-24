@@ -2,7 +2,7 @@ const newWaiverNumberInputBox = "#componentId";
 const oldWaiverNumberInputBox = "#transmittal-number";
 const actionTypeDropDown = "#action-type";
 const oldErrMsgForWaiverNumber = "#transmittal-number-status-msg";
-const newErrMsgForWaiverNumber = "#componentIdStatusMsg";
+const newErrMsgForWaiverNumber = "#componentIdStatusMsg0";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();
 const addFile1915b4 =
@@ -13,7 +13,7 @@ const commentsInputBox = "#field_2";
 const existingWaiverNumber = "MD-10330.R01.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
-const waiverRenewalInputBox = "//input[@type='text']";
+const multiWaiverInputBox = "//input[@type='text']";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
@@ -104,17 +104,17 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.get(proposedEffectiveDate).type(dt);
   }
 
-  inputWaiverRenewalParentNumber(s) {
-    cy.xpath(waiverRenewalInputBox).first().type(s);
+  inputWaiverParentNumber(s) {
+    cy.xpath(multiWaiverInputBox).first().type(s);
   }
-  inputWaiverRenewalNumber(s) {
-    cy.xpath(waiverRenewalInputBox).eq(1).type(s);
+  inputNewWaiverNumber(s) {
+    cy.xpath(multiWaiverInputBox).eq(1).type(s);
   }
-  clearWaiverRenewalParentNumber() {
-    cy.xpath(waiverRenewalInputBox).first().clear();
+  clearWaiverParentNumber() {
+    cy.xpath(multiWaiverInputBox).first().clear();
   }
-  clearWaiverRenewalNumber() {
-    cy.xpath(waiverRenewalInputBox).eq(1).clear();
+  clearNewWaiverNumber() {
+    cy.xpath(multiWaiverInputBox).eq(1).clear();
   }
 }
 export default oneMacSubmitNewWaiverActionPage;

@@ -504,6 +504,9 @@ And("click on Initial Waiver", () => {
 And("click on Waiver Renewal", () => {
   OneMacSubmissionTypePage.clickWaiverRenewal();
 });
+And("click on Waiver Amendment", () => {
+  OneMacSubmissionTypePage.clickWaiverAmendment();
+});
 
 And("verify Initial Waiver is a clickable option", () => {
   OneMacSubmissionTypePage.verifyInitialWaiverIsClickable();
@@ -514,7 +517,7 @@ And("verify Appendix K is a clickable option", () => {
 And("verify Waiver Renewal is a clickable option", () => {
   OneMacSubmissionTypePage.verifyWaiverRenewalIsClickable();
 });
-And("verify Amendment is a clickable option", () => {
+And("verify Waiver Amendment is a clickable option", () => {
   OneMacSubmissionTypePage.verifyAmendmentIsClickable();
 });
 And("verify CHIP SPA is a clickable option", () => {
@@ -2142,6 +2145,9 @@ And("verify user is on new initial waiver page", () => {
 And("verify user is on new waiver renewal page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverRenewalPage();
 });
+And("verify user is on new waiver amendment page", () => {
+  OneMacSubmissionTypePage.verifyNewWaiverAmendmentPage();
+});
 And("verify user is on new Medicaid SPA page", () => {
   OneMacSubmitNewMedicaidSpaPage.verifyNewMedicaidSPAPage();
 });
@@ -2585,8 +2591,18 @@ And(
   "type new waiver renewal number 1 in 1915b Waiver Renewal Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverRenewalNumber(
+      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
         d.newWaiverRenewalNum1
+      );
+    });
+  }
+);
+And(
+  "type new waiver amendment number 1 in 1915b Waiver Amendment Number field",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
+        d.newWaiverAmendmentNum1
       );
     });
   }
@@ -2595,8 +2611,18 @@ And(
   "type new waiver renewal number 2 in 1915b Waiver Renewal Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverRenewalNumber(
+      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
         d.newWaiverRenewalNum2
+      );
+    });
+  }
+);
+And(
+  "type new waiver amendment number 2 in 1915b Waiver Amendment Number field",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
+        d.newWaiverAmendmentNum2
       );
     });
   }
@@ -2607,26 +2633,53 @@ And("search for new waiver renewal number 1", () => {
   });
   cy.wait(1000);
 });
+And("search for new waiver amendment number 1", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+    OneMacPackagePage.searchFor(d.newWaiverAmendmentNum1);
+  });
+  cy.wait(1000);
+});
 And(
   "type approved Initial Waiver number into Existing Waiver Number to Renew field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputWaiverRenewalParentNumber(
+      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
+        d.approvedInitialWaiverNum1
+      );
+    });
+  }
+);
+And(
+  "type approved Initial Waiver number into Existing Waiver Number to Amend field",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
+      OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber(
         d.approvedInitialWaiverNum1
       );
     });
   }
 );
 And("clear Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverRenewalParentNumber();
+  OneMacSubmitNewWaiverActionPage.clearWaiverParentNumber();
+  cy.wait(1000);
+});
+And("clear Existing Waiver Number to Amend field", () => {
+  OneMacSubmitNewWaiverActionPage.clearWaiverParentNumber();
   cy.wait(1000);
 });
 And("clear 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearWaiverRenewalNumber();
+  OneMacSubmitNewWaiverActionPage.clearNewWaiverNumber();
+  cy.wait(1000);
+});
+And("clear 1915b Waiver Amendment Number field", () => {
+  OneMacSubmitNewWaiverActionPage.clearNewWaiverNumber();
   cy.wait(1000);
 });
 And("type bad format into Existing Waiver Number to Renew field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverRenewalParentNumber("MD");
+  OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
+});
+And("type bad format into Existing Waiver Number to Amend field", () => {
+  OneMacSubmitNewWaiverActionPage.inputWaiverParentNumber("MD");
 });
 And("search for new waiver renewal number 2", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
@@ -2635,7 +2688,10 @@ And("search for new waiver renewal number 2", () => {
   cy.wait(1000);
 });
 And("type bad format into 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputWaiverRenewalNumber("MD");
+  OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber("MD");
+});
+And("type bad format into 1915b Waiver Amendment Number field", () => {
+  OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber("MD");
 });
 And(
   "verify id number in the first row matches new waiver renewal number 1",
@@ -2645,3 +2701,20 @@ And(
     });
   }
 );
+And(
+  "verify id number in the child row matches new waiver amendment number 1",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+      OneMacPackagePage.verifyIDNumberInSecondRowIs(
+        data.newWaiverAmendmentNum1
+      );
+    });
+  }
+);
+And("verify id number in the first row matches approved waiver number", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackagePage.verifyIDNumberInFirstRowIs(
+      data.approvedInitialWaiverNum1
+    );
+  });
+});
