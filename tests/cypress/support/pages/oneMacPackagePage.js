@@ -869,7 +869,7 @@ export class oneMacPackagePage {
     cy.xpath(packageRowOneIDLink).contains(id);
   }
   verifyIDNumberInSecondRowIs(id) {
-    cy.xpath(packageRowTwoID).contains(id);
+    cy.get(packageRowTwoID).contains(id);
   }
   compareSearchIDToFirstLinkID(searchedID) {
     cy.xpath(packageRowOneIDLink).should("have.text", searchedID);
