@@ -4850,5 +4850,41 @@
     "componentId": "MD-1118.R00.00",
     "submitterName": "Angie Active",
     "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
+  },
+  {
+    "pk": "MD-1315.R00.01",
+    "sk": "v0#waiverappk",
+    "devComment": "Package added via seed data for application testing",
+    "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
+    "componentType": "waiverappk",
+    "currentStatus": "Approved",
+    "attachments": [
+      {
+        "s3Key": "1638473559097/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "1915(c) Appendix K Amendment Waiver Template",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1638473559097/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      },
+      {
+        "s3Key": "1638473597646/Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "filename": "Attachment 3.1-A, #4b, Page 3f Track.pdf",
+        "title": "Other",
+        "contentType": "application/pdf",
+        "url": "https://uploads-develop-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3A3211a6ff-043f-436b-8313-1b314582b2a5/1638473597646/Attachment%203.1-A%2C%20%234b%2C%20Page%203f%20Track.pdf"
+      }
+    ],
+    "GSI1pk": "OneMAC#waiver",
+    "GSI1sk": "MD-1315.R00.01",
+    "additionalInformation": "AppK Waiver for testing the AppK Details Page",
+    "submissionTimestamp": 1638473560098,
+    "clockEndTimestamp": 1645990706000,
+    "proposedEffectiveDate": "2022-07-03",
+    "waiverAuthority": "1915(c)",
+    "Latest": 1,
+    "submitterEmail": "statesubmitteractive@cms.hhs.local",
+    "componentId": "MD-1315.R00.01",
+    "submitterName": "Angie Active",
+    "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
   }
 ]
