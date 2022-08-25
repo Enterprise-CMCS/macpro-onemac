@@ -1,7 +1,7 @@
 const newWaiverNumberInputBox = "#componentId";
-const oldWaiverNumberInputBox = "#transmittalNumber";
+const oldWaiverNumberInputBox = "#transmittal-number";
 const actionTypeDropDown = "#action-type";
-const oldErrMsgForWaiverNumber = "#transmittalNumberStatusMsg";
+const oldErrMsgForWaiverNumber = "#transmittal-number-status-msg";
 const newErrMsgForWaiverNumber = "#componentIdStatusMsg";
 const waiverAuthority = "#waiver-authority";
 //this is xpath, use cy.xpath();

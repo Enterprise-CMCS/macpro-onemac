@@ -7,7 +7,7 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "submitCHIPSPARAIResponse",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "submitMedicaidSPA",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitMedicaidSPARAIResponse",
-  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "submitBaseWaiver",
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "submitInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitAppendixKAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "submitWaiverExtension",
@@ -20,7 +20,7 @@ const WITHDRAW_API_CALL = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA_RAI]: "withdrawCHIPSPARAIResponse",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA]: "withdrawMedicaidSPA",
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "withdrawSPARAIResponse",
-  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: "withdrawBaseWaiver",
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "withdrawInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "withdrawWaiverRenewal",
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "withdrawAppendixKAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "withdrawWaiverTemporaryExtension",
@@ -165,6 +165,28 @@ class PackageApi {
         err,
         "SY000",
         `There was an error withdrawing package ${componentId}.`
+      );
+    }
+  }
+
+  /**
+   * Check to see if an id exists in the back end
+   * @param {string} id the ID to check
+   * @return {Boolean} true if the ID exists in the back end
+   */
+  async validateParent(id, validateParentAPI) {
+    if (!id) {
+      console.log("ID was not specified for validateParent API call");
+      throw new Error("ID was not specified for validateParent API call");
+    }
+
+    try {
+      return await API.get("oneMacAPI", `/${validateParentAPI}/${id}`);
+    } catch (error) {
+      handleApiError(
+        error,
+        "SUBMISSION_FETCH_ERROR",
+        `There was an error validating parent with ID ${id}.`
       );
     }
   }

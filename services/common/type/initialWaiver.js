@@ -1,9 +1,9 @@
-export const baseWaiver = {
+export const initialWaiver = {
   packageGroup: "waiver",
   componentType: "waivernew",
-  typeLabel: "1915(b) Base Waiver",
+  typeLabel: "1915(b) Initial Waiver",
   idType: "waiver",
-  idLabel: "Base Waiver Number",
+  idLabel: "Initial Waiver Number",
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
   idExistValidations: [
     {

@@ -12,11 +12,11 @@ import {
   defaultPackageOverviewLabel,
   tempExtensionSectionNavItem,
 } from "../../libs/detailLib";
-import { baseWaiver, Workflow } from "cmscommonlib";
+import { initialWaiver, Workflow } from "cmscommonlib";
 
-export const baseWaiverDetail: OneMACDetail = {
+export const initialWaiverDetail: OneMACDetail = {
   ...defaultDetail,
-  ...baseWaiver,
+  ...initialWaiver,
   navItems: [
     {
       label: defaultPackageOverviewLabel,
@@ -30,11 +30,11 @@ export const baseWaiverDetail: OneMACDetail = {
     submissionDateDefault,
     proposedEffectiveDateDefault,
   ],
-  actionsByStatus: Workflow.baseWaiverActionsByStatus,
+  actionsByStatus: Workflow.initialWaiverActionsByStatus,
 };
 
-const BaseWaiverDetail: FC = () => {
-  return <DetailView pageConfig={baseWaiverDetail} />;
+const InitialWaiverDetail: FC = () => {
+  return <DetailView pageConfig={initialWaiverDetail} />;
 };
 
-export default BaseWaiverDetail;
+export default InitialWaiverDetail;

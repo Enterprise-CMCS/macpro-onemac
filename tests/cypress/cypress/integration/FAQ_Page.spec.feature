@@ -31,19 +31,17 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And Verify text contains "indicates a required attachment"
         And Verify Can I submit SPAs relating to the Public Health Emergency PHE in OneMAC is displayed and click it
         And Verify text contains "Yes, all PHE-related SPAs should be submitted through OneMAC"
-@focus 
+
     Scenario: Verify Waivers section includes appropriate clickable sections
         Given I am on Login Page
         When Clicking on FAQ Tab
         And Verify Waivers Section Exists
-        And verify What format is used to enter a 1915b Base Waiver number header is visible
-        And click What format is used to enter a 1915b Base Waiver number header
-        And verify What format is used to enter a 1915b Base Waiver number body is visible
+        And verify What format is used to enter a 1915b Initial Waiver number header is visible
+        And click What format is used to enter a 1915b Initial Waiver number header
+        And verify What format is used to enter a 1915b Initial Waiver number body is visible
         And verify What format is used to enter a 1915b Waiver Renewal number header is visible
         And click What format is used to enter a 1915b Waiver Renewal number header
         And verify What format is used to enter a 1915b Waiver Renewal number is visible
-        And Verify What format is used to enter a 1915b waiver number is displayed and click it
-        And Verify text contains "Waiver number must follow the format"
         And Verify Who can I contact to help me figure out the correct 1915b Waiver Number is displayed and click it
         And Verify text contains "Email MCOGDMCOActions@cms.hhs.gov to get support with determining the correct 1915b Waiver Number"
         And Verify What format is used to enter a 1915c waiver number is displayed and click it
@@ -90,15 +88,15 @@ Feature: OY2_Update_Text_on_FAQ_Page
         And Click on What is my SPA ID link
         And Verify text contains Enter the State Plan Amendment transmittal number Assign consecutive numbers on a calendar year basis
 
-    Scenario: Verify redirect link on waivers
-        Given I am on Login Page
-        When Clicking on Development Login
-        When Login with state submitter user
-        Then click on New Submission
-        And Click on Waiver Action
-        And Click on Waiver Action under Waiver Type
-        And Click on What is my Waiver ID Link
-        And Verify text contains "Waiver number must follow the format"
+    # Scenario: Verify redirect link on waivers
+    #     Given I am on Login Page
+    #     When Clicking on Development Login
+    #     When Login with state submitter user
+    #     Then click on New Submission
+    #     And Click on Waiver Action
+    #     And Click on Waiver Action under Waiver Type
+    #     And Click on What is my Waiver ID Link
+    #     And Verify text contains "Waiver number must follow the format"
 
     Scenario: Screen enhancement
         Given I am on Login Page

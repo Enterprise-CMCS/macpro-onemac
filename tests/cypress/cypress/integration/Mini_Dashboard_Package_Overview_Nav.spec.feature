@@ -32,7 +32,7 @@ Feature: Left Hand Navigation for Package Details View
         And verify Package Details is listed under Package Overview
 
 
-    Scenario: Screen Enhancement - Base Waiver
+    Scenario: Screen Enhancement - Initial Waiver
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user

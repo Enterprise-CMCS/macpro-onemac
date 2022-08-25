@@ -10,11 +10,11 @@ Run this lambda to delete the components used in the automated testing. Right no
 
 #### updateChangeRequestId
 
-Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message onto the addtionalInfo
+Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message onto the additionalInfo
 
 #### batchUpdateChangeRequestId
 
-Update a set of change requests given a csv format input. Each id will be updated based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message to the addtionalInfo. See batchUpdateChangeRequestId.json for sample event data.
+Update a set of change requests given a csv format input. Each id will be updated based on its current transmittalNumber, type, and submittedAt timestamp and prepend a message to the additionalInfo. See batchUpdateChangeRequestId.json for sample event data.
 NOTE: Convert excel to csv and paste the file into aws lambda test event json. Then use the format json button in the console to properly format newlines.
 
 ### Setup

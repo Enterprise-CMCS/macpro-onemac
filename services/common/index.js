@@ -10,7 +10,7 @@ export * as Validate from "./idValidation.js";
 import * as Workflow from "./workflow.js";
 export * as Workflow from "./workflow.js";
 
-export { baseWaiver } from "./type/baseWaiver.js";
+export { initialWaiver } from "./type/initialWaiver.js";
 export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
 export { waiverRenewal } from "./type/waiverRenewal.js";
 export { waiverAmendment } from "./type/waiverAmendment.js";
@@ -65,7 +65,7 @@ export const RESPONSE_CODE = {
 export const RAI_ROUTE = {
   [Workflow.ONEMAC_TYPE.CHIP_SPA]: ROUTES.CHIP_SPA_RAI,
   [Workflow.ONEMAC_TYPE.SPA]: ROUTES.SPA_RAI,
-  [Workflow.ONEMAC_TYPE.WAIVER_BASE]: ROUTES.WAIVER_RAI,
+  [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: ROUTES.WAIVER_RAI,
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: ROUTES.WAIVER_RAI,
   [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: ROUTES.WAIVER_RAI,
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "",
@@ -86,6 +86,8 @@ export const cmsEmailMapToFormWarningMessages = {
 
 export const approvedBlueWarningMessage =
   "You will still be able to submit but your submission ID does not appear to match our records. Before proceeding, please check to ensure you have the correct submission ID. If you need support, please contact the OneMAC Help Desk at OneMAC_Helpdesk@cms.hhs.gov or (833) 228-2540.";
+
+export { waiverAdditionalErrorMessage } from "./changeRequest.js";
 
 export const USER_ADMIN_PERMISSION = {
   STATE_SUBMITTER: "none",

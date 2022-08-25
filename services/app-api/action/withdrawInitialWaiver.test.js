@@ -1,4 +1,4 @@
-import { main } from "./withdrawBaseWaiver";
+import { main } from "./withdrawInitialWaiver";
 import { changeStatusAny } from "./changeStatusAny";
 
 jest.mock("./changeStatusAny");

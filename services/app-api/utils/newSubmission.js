@@ -1,4 +1,4 @@
-import { RESPONSE_CODE } from "cmscommonlib";
+import { RESPONSE_CODE, Validate } from "cmscommonlib";
 import dynamoDb from "../libs/dynamodb-lib";
 import addChild from "./addChild";
 
@@ -105,6 +105,10 @@ export default async function newSubmission(newData, config) {
     await dynamoDb.update(gsiParams);
 
     if (newData.parentId) {
+      if (!newData.parentType) {
+        newData.parentType = Validate.getWaiverTypeFromNumber(newData.parentId);
+      }
+
       return await addChild(newData);
     } else {
       return "Component is Top Level.";

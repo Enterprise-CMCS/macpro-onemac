@@ -6,18 +6,22 @@ import { FieldHint } from "cmscommonlib";
  * Returns the ID specific form element
  */
 const TransmittalNumber: React.FC<{
+  inputId: string;
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink: string;
+  faqIdLabel?: string;
   statusLevel: string;
   statusMessage: string;
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
 }> = ({
+  inputId,
   idLabel,
   idFieldHint,
   idFAQLink,
+  faqIdLabel,
   statusLevel,
   statusMessage,
   value,
@@ -34,20 +38,22 @@ const TransmittalNumber: React.FC<{
     <div>
       <div className="label-container">
         <div>
-          <label htmlFor="transmittalNumber" className="required">
+          <label htmlFor={inputId} className="required">
             {idLabel}
           </label>
         </div>
-        <div className="label-rcol">
-          <Link target="new" href={idFAQLink}>
-            What is my {idLabel}?
-          </Link>
-        </div>
+        {idFAQLink && (
+          <div className="label-rcol">
+            <Link target="new" href={idFAQLink}>
+              {faqIdLabel ? faqIdLabel : `What is my ${idLabel}?`}
+            </Link>
+          </div>
+        )}
         {idFieldHint?.map(function (idFieldHint, idx) {
           return (
             <p
-              id={"fieldHint" + idx}
-              key={"fieldHint" + idx}
+              id={inputId + "-field-hint-" + idx}
+              key={inputId + "-field-hint-" + idx}
               className={idFieldHint.className || "field-hint"}
             >
               {idFieldHint.text}
@@ -56,18 +62,20 @@ const TransmittalNumber: React.FC<{
         })}
       </div>
       {statusMessage && (
-        <div id="transmittalNumberStatusMsg" className={statusMsgClass}>
-          {statusMessage}
+        <div id={`${inputId}-status-msg`} className={statusMsgClass}>
+          {statusMessage.split("\n").map((m, i) => (
+            <div key={i}>{m}</div>
+          ))}
         </div>
       )}
       <input
         className="field"
         type="text"
-        id="transmittalNumber"
+        id={inputId}
         name="transmittalNumber"
         aria-describedby={idFieldHint
           ?.map(function (idFieldHint, idx) {
-            return "fieldHint" + idx;
+            return inputId + "-field-hint-" + idx;
           })
           .join(" ")}
         value={value}

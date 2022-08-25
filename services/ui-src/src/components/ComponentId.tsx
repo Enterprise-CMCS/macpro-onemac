@@ -9,7 +9,7 @@ import { Review } from "@cmsgov/design-system";
 const ComponentId: React.FC<{
   idLabel: string;
   idFieldHint: FieldHint[];
-  idFAQLink: string;
+  idFAQLink?: string;
   statusLevel: string;
   statusMessage: string;
   value: string;
@@ -41,11 +41,13 @@ const ComponentId: React.FC<{
                 {idLabel}
               </label>
             </div>
-            <div className="label-rcol">
-              <Link target="new" href={idFAQLink}>
-                What is my {idLabel}?
-              </Link>
-            </div>
+            {idFAQLink && (
+              <div className="label-rcol">
+                <Link target="new" href={idFAQLink}>
+                  What is my {idLabel}?
+                </Link>
+              </div>
+            )}
             {idFieldHint?.map(function (idFieldHint, idx) {
               return (
                 <p

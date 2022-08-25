@@ -54,7 +54,10 @@ export const getDetails = async (event) => {
     },
   };
 
-  const raiSk = `v0#${componentType}rai`;
+  const raiComponentType = componentType.includes("waiver")
+    ? "waiver"
+    : componentType;
+  const raiSk = `v0#${raiComponentType}rai`;
   const raiParams = {
     TableName: process.env.oneMacTableName,
     KeyConditionExpression: "pk = :pk AND begins_with(sk,:sk)",
@@ -78,8 +81,8 @@ export const getDetails = async (event) => {
       for (const child of raiResult.Items) {
         await assignAttachmentUrls(child);
       }
-      result.Item.raiResponses = [...raiResult.Items];
     }
+    result.Item.raiResponses = [...raiResult.Items];
 
     if (Workflow.ALLOW_WAIVER_EXTENSION_TYPE.includes(componentType)) {
       //fetch any waiver extensions associated to this component

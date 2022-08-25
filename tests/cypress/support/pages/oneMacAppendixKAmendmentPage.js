@@ -1,5 +1,5 @@
-const waiverNumberInputBox = "#transmittalNumber";
-const errorMessageForWaiverNumber = "#transmittalNumberStatusMsg";
+const waiverNumberInputBox = "#transmittal-number";
+const errorMessageForWaiverNumber = "#transmittal-number-status-msg";
 const firstUploadFileBtn = "#uploader-input-0";
 
 export class oneMacAppendixKAmendmentPage {

@@ -1,7 +1,7 @@
 import { RESPONSE_CODE } from "cmscommonlib";
 import { submitAny } from "./submitAny";
 import { getUser } from "../getUser";
-import { baseWaiverFormConfig } from "./submitBaseWaiver";
+import { initialWaiverFormConfig } from "./submitInitialWaiver";
 import { waiverTemporaryExtensionFormConfig } from "./submitWaiverExtension";
 import packageExists from "../utils/packageExists";
 import sendEmail from "../libs/email-lib";
@@ -115,7 +115,7 @@ const invalidTestEvent = {
   },
 };
 
-const testConfig = { ...baseWaiverFormConfig };
+const testConfig = { ...initialWaiverFormConfig };
 const tempExtentsionTestConfig = { ...waiverTemporaryExtensionFormConfig };
 
 beforeEach(() => {
@@ -135,12 +135,12 @@ it("catches a badly parsed event", async () => {
     });
 });
 
-it("submits a base waiver", async () => {
+it("submits a initial waiver", async () => {
   const response = await submitAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.SUCCESSFULLY_SUBMITTED);
 });
 
-it("rejects a duplicate id base waiver", async () => {
+it("rejects a duplicate id initial waiver", async () => {
   packageExists.mockResolvedValue(true);
   const response = await submitAny(testEvent, testConfig);
   expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);

@@ -13,6 +13,7 @@ export const waiverRenewalFormConfig = {
   ...waiverRenewal,
   appendToSchema: {
     waiverAuthority: Joi.string().required(),
+    parentId: Joi.string().required(),
     // Should look into a real validation with choices centrally located in cmscommonlib
     //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,

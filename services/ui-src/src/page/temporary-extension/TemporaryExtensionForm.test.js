@@ -76,7 +76,7 @@ describe("Temporary Extension Form", () => {
   it("sets parentId given valid state properties", async () => {
     const testParentId = "MD-83420.00.00";
     history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION, {
-      parentType: ONEMAC_TYPE.WAIVER_BASE,
+      parentType: ONEMAC_TYPE.WAIVER_INITIAL,
       parentId: testParentId,
     });
     render(
@@ -99,7 +99,7 @@ describe("Temporary Extension Form", () => {
   it("shows warning message if parentId is not found", async () => {
     const testParentId = "VA-83420.R00.00";
     history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION, {
-      parentType: ONEMAC_TYPE.WAIVER_BASE,
+      parentType: ONEMAC_TYPE.WAIVER_INITIAL,
       parentId: testParentId,
     });
     render(

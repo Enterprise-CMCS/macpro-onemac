@@ -4,7 +4,7 @@ export const ONEMAC_TYPE = {
   MEDICAID_SPA: "medicaidspa",
   MEDICAID_SPA_RAI: "medicaidsparai",
   WAIVER: "waiver",
-  WAIVER_BASE: "waivernew",
+  WAIVER_INITIAL: "waivernew",
   WAIVER_AMENDMENT: "waiveramendment",
   WAIVER_RENEWAL: "waiverrenewal",
   WAIVER_RAI: "waiverrai",
@@ -15,7 +15,7 @@ export const ONEMAC_TYPE = {
 export const ONEMAC_LABEL = {
   [ONEMAC_TYPE.CHIP_SPA]: "CHIP SPA",
   [ONEMAC_TYPE.MEDICAID_SPA]: "Medicaid SPA",
-  [ONEMAC_TYPE.WAIVER_BASE]: "1915(b) Base Waiver",
+  [ONEMAC_TYPE.WAIVER_INITIAL]: "1915(b) Initial Waiver",
   [ONEMAC_TYPE.WAIVER_RENEWAL]: "1915(b) Waiver Renewal",
   [ONEMAC_TYPE.WAIVER_APP_K]: "1915(c) Appendix K Amendment",
   [ONEMAC_TYPE.WAIVER_EXTENSION]: "1915(b) Temporary Extension",
@@ -61,7 +61,7 @@ export const defaultActionsByStatus = {
   [ONEMAC_STATUS.TERMINATED]: [],
 };
 
-export const baseWaiverActionsByStatus = {
+export const initialWaiverActionsByStatus = {
   ...defaultActionsByStatus,
   [ONEMAC_STATUS.APPROVED]: [PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION],
 };
@@ -84,9 +84,9 @@ export const ACTIONS = {
   [ONEMAC_TYPE.CHIP_SPA_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.MEDICAID_SPA]: defaultActionsByStatus,
   [ONEMAC_TYPE.MEDICAID_SPA_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER]: baseWaiverActionsByStatus,
+  [ONEMAC_TYPE.WAIVER]: initialWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_BASE]: baseWaiverActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_INITIAL]: initialWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RENEWAL]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
@@ -94,7 +94,7 @@ export const ACTIONS = {
 };
 
 export const ALLOW_WAIVER_EXTENSION_TYPE = [
-  ONEMAC_TYPE.WAIVER_BASE,
+  ONEMAC_TYPE.WAIVER_INITIAL,
   ONEMAC_TYPE.WAIVER_RENEWAL,
 ];
 

@@ -1,7 +1,7 @@
 import React from "react";
 
 import PageTitleBar from "../components/PageTitleBar";
-import { getSignInUrl } from "../components/Header";
+import { getSignInUrl } from "../libs/logoutLib";
 
 export const AttachmentLanding = () => {
   return (
