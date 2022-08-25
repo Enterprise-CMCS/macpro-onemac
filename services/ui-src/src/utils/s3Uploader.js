@@ -71,12 +71,22 @@ export async function uploadFile(file) {
   const targetPathname = `${Date.now()}/${fileToUpload.name}`;
 
   try {
-    const stored = await Storage.vault.put(targetPathname, fileToUpload, {
+    const stored = await Storage.put(targetPathname, fileToUpload, {
       level: "protected",
       contentType: fileToUpload.type,
+      resumable: true,
+      completeCallback: (event) => {
+        console.log(`Successfully uploaded ${event.key}`);
+      },
+      progressCallback: (progress) => {
+        console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+      },
+      errorCallback: (err) => {
+        console.error("Unexpected error while uploading", err);
+      },
     });
 
-    const url = await Storage.vault.get(stored.key, { level: "protected" });
+    const url = await Storage.get(stored.key, { level: "protected" });
 
     let result = {
       s3Key: stored.key,
