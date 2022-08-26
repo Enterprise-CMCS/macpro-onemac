@@ -2,7 +2,6 @@ export const initialWaiver = {
   packageGroup: "waiver",
   componentType: "waivernew",
   typeLabel: "1915(b) Initial Waiver",
-  idType: "waiver",
   idLabel: "Initial Waiver Number",
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
   idExistValidations: [

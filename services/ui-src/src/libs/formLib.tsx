@@ -16,7 +16,7 @@ export type OneMACFormConfig = {
   parentNotFoundMessage?: string;
   validateParentAPI?: string;
   pageTitle: string;
-  addlIntroJSX?: string;
+  addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   landingPage: string;
   confirmSubmit?: boolean;
@@ -29,7 +29,6 @@ export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
-  addlIntroJSX: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
   confirmSubmit: false,

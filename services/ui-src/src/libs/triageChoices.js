@@ -56,7 +56,7 @@ export const choicesFromRoute = {
       },
       {
         title: "Appendix K Amendment",
-        description: "Create an Appendix K Amendment",
+        description: "Create a 1915(c) Appendix K Amendment",
         linkTo: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       },
       {

@@ -443,7 +443,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {" "}
               If you leave this page, you will lose your progress on this form.
             </b>
-            {formConfig.addlIntroJSX}
+            {formConfig.addlIntroJSX ?? ""}
           </p>
           {formConfig.waiverAuthorities && (
             <Dropdown

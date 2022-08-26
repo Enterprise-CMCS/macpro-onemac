@@ -49,6 +49,7 @@ import MedicaidSPARAIForm from "./page/medicaid-spa/MedicaidSPARAIForm";
 import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
 import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
+import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -215,6 +216,10 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
     { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },
     { path: ONEMAC_ROUTES.WAIVER_AMENDMENT, component: WaiverAmendmentForm },
+    {
+      path: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
+      component: WaiverAppendixKForm,
+    },
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
