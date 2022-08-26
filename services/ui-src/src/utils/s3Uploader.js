@@ -43,7 +43,7 @@ export async function uploadFiles(fileArray) {
           resolve(results);
         })
         .catch((error) => {
-          if (error.indexOf("No credentials") !== -1) {
+          if (error.message.indexOf("No credentials") !== -1) {
             reject("SESSION_EXPIRED");
           } else {
             console.log("Error uploading.", error);
@@ -74,17 +74,18 @@ export async function uploadFile(file) {
     const stored = await Storage.put(targetPathname, fileToUpload, {
       level: "protected",
       contentType: fileToUpload.type,
-      resumable: true,
       completeCallback: (event) => {
         console.log(`Successfully uploaded ${event.key}`);
       },
       progressCallback: (progress) => {
         console.log(`Uploaded: ${progress.loaded}/${progress.total}`);
+        console.log("File progress: ", progress);
       },
       errorCallback: (err) => {
         console.error("Unexpected error while uploading", err);
       },
     });
+    console.log("Stored: ", stored);
 
     const url = await Storage.get(stored.key, { level: "protected" });
 
