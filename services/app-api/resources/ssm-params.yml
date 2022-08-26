@@ -34,7 +34,7 @@ Resources:
   CmsSpaFormChipCcEmail:
     Type: AWS::SSM::Parameter
     Properties:
-      Type: StringList
+      Type: String
       Description: Branch specific email addresses of recipients for CC on cms chip spa form submission emails
       Name: !Sub /configuration/${self:custom.stage}/email/cms_chip_form_cc_email
       Value: "OneMAC@cms.hhs.gov"
