@@ -4852,7 +4852,7 @@
     "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
   },
   {
-    "pk": "MD-1315.R00.01",
+    "pk": "MD-13150.R00.01",
     "sk": "v0#waiverappk",
     "devComment": "Package added via seed data for application testing",
     "submitterId": "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
@@ -4875,15 +4875,15 @@
       }
     ],
     "GSI1pk": "OneMAC#waiver",
-    "GSI1sk": "MD-1315.R00.01",
+    "GSI1sk": "MD-13150.R00.01",
     "additionalInformation": "AppK Waiver for testing the AppK Details Page",
     "submissionTimestamp": 1638473560098,
     "clockEndTimestamp": 1645990706000,
     "proposedEffectiveDate": "2022-07-03",
     "waiverAuthority": "1915(c)",
-    "Latest": 1,
+    "Latest": 0,
     "submitterEmail": "statesubmitteractive@cms.hhs.local",
-    "componentId": "MD-1315.R00.01",
+    "componentId": "MD-13150.R00.01",
     "submitterName": "Angie Active",
     "submissionId": "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278"
   }
