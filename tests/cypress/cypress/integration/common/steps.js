@@ -1888,7 +1888,7 @@ And("click on Respond to Medicaid SPA RAI", () => {
 And("click on Respond to CHIP SPA RAI", () => {
   OneMacSubmissionTypePage.clickRespondToCHIPSPARAI();
 });
-And("click on Respond to Waiver RAI", () => {
+And("click on Respond to 1915(b) Waiver RAI", () => {
   OneMacSubmissionTypePage.clickRespondToWaiverRAI();
 });
 And("verify ID field is empty and not disabled", () => {

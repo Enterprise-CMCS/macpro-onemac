@@ -20,7 +20,7 @@ const respondToMedicaidSPARAI =
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = '//div[text()="Respond to Waiver RAI"]';
+const respondToWaiverRAI = '//div[text()="Respond to 1915(b) Waiver RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const initialWaiver = '//div[text()="Initial Waiver"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -30,7 +30,7 @@ const appendixK = '//div[text()="Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const amendment = '//div[text()="Waiver Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const initialWaiverRenewal = '//div[text()="Waiver Renewal"]';
+const initialWaiverRenewal = '//div[text()="1915(b) Waiver Renewal"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {

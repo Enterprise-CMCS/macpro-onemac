@@ -203,7 +203,7 @@ export const CONFIG = {
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },
-    detailsHeader: "Waiver Action",
+    detailsHeader: "1915(b) Waiver Action",
     requiredUploads: [],
     optionalUploads: [
       "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",

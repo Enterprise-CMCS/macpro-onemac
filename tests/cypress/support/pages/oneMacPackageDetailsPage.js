@@ -34,8 +34,7 @@ const ninetieththDayHeader = "//h3[text()='90th Day']";
 const additionalInfoSection =
   "//section[@id='addl-info-initial']//h2[text()='Additional Information']";
 const waiverAuthorityHeader = "//h3[text()='Waiver Authority']";
-const supportingDocumentationSection =
-  "//h2[text()='Supporting Documentation']";
+const supportingDocumentationSection = "//h2[text()='Attachments']";
 const downloadAllBtn = "//button[contains(text(),'Download All')]";
 const amendmentTitleHeader = "//h3[text()='Amendment Title']";
 const amendmentNumberHeader = "//h3[text()='Amendment Number']";
@@ -104,10 +103,10 @@ export class oneMacPackageDetailsPage {
     cy.xpath(typeHeader).next().contains("Initial Waiver");
   }
   verifyTypeContainsWaiverRenewal() {
-    cy.xpath(typeHeader).next().contains("Waiver Renewal");
+    cy.xpath(typeHeader).next().contains("1915(b) Waiver Renewal");
   }
   verifyTypeContainsTempExtension() {
-    cy.xpath(typeHeader).next().contains("1915(b) Temporary Extension");
+    cy.xpath(typeHeader).next().contains("Temporary Extension");
   }
   verifyStateHeaderExists() {
     cy.xpath(stateHeader).should("be.visible");

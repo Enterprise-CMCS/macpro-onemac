@@ -84,7 +84,7 @@ Feature: Submission Form: Submit button updates and Warning Text
         And click Leave Anyway form button
         And verify user is on new waiver page
 
-    Scenario: click on Respond to Waiver RAI
+    Scenario: click on Respond to 1915(b) Waiver RAI
         And Click on Waiver Action
         And Click on Appendix K Amendment
         And verify submission warning text is visible

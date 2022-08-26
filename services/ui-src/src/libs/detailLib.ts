@@ -92,7 +92,7 @@ export const defaultPackageOverviewLabel: string = "Package Overview";
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
-  attachmentsHeading: "Base Supporting Documentation",
+  attachmentsHeading: "Attachments",
   usesVerticalNav: true,
   navItems: [
     {

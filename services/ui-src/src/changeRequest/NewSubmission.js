@@ -11,7 +11,7 @@ const choices = [
     linkTo: ROUTES.NEW_SPA,
   },
   {
-    title: "Waiver Action",
+    title: "1915(b) Waiver Action",
     description:
       "Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension",
     linkTo: ROUTES.NEW_WAIVER,
