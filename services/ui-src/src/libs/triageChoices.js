@@ -51,7 +51,7 @@ export const choicesFromRoute = {
       },
       {
         title: "Waiver Amendment",
-        description: "Amend an Existing Waiver",
+        description: "Amend an Existing 1915(b) Waiver",
         linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT,
       },
       {

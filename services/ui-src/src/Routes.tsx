@@ -37,7 +37,9 @@ import { useAppContext } from "./libs/contextLib";
 import InitialWaiverForm from "./page/initial-waiver/InitialWaiverForm";
 import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
 import WaiverRenewalForm from "./page/waiver-renewal/WaiverRenewalForm";
+import WaiverRenewalDetail from "./page/waiver-renewal/WaiverRenewalDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
+import WaiverAppendixKDetail from "./page/waiver-appendix-k/WaiverAppendixKDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
@@ -47,6 +49,7 @@ import CHIPSPADetail from "./page/chip-spa/CHIPSPADetail";
 import MedicaidSPARAIForm from "./page/medicaid-spa/MedicaidSPARAIForm";
 import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
 import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
+import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -212,6 +215,7 @@ const ROUTE_LIST: RouteSpec[] = [
     { path: ONEMAC_ROUTES.WAIVER_RAI, component: WaiverRAIForm },
     { path: ONEMAC_ROUTES.INITIAL_WAIVER, component: InitialWaiverForm },
     { path: ONEMAC_ROUTES.WAIVER_RENEWAL, component: WaiverRenewalForm },
+    { path: ONEMAC_ROUTES.WAIVER_AMENDMENT, component: WaiverAmendmentForm },
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
@@ -297,9 +301,19 @@ const ROUTE_LIST: RouteSpec[] = [
             component: InitialWaiverDetail,
           },
           {
+            path: ONEMAC_ROUTES.WAIVER_RENEWAL_DETAIL + "/:componentId",
+            exact: true,
+            component: WaiverRenewalDetail,
+          },
+          {
             path: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL + "/:componentId",
             exact: true,
             component: WaiverAmendmentDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.WAIVER_APP_K_DETAIL + "/:componentId",
+            exact: true,
+            component: WaiverAppendixKDetail,
           },
           {
             path: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL + "/:componentId",

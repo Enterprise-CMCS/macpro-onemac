@@ -6,8 +6,8 @@ import { ROUTES, ONEMAC_ROUTES, initialWaiver } from "cmscommonlib";
 const initialWaiverIdFormat: string = "SS-####.R00.00 or SS-#####.R00.00";
 
 export const initialWaiverFormInfo: OneMACFormConfig = {
-  ...initialWaiver,
   ...defaultOneMACFormConfig,
+  ...initialWaiver,
   pageTitle: "Initial Waiver Submission",
   detailsHeader: "Initial Waiver",
   addlIntroJSX: "",
