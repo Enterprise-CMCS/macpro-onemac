@@ -20,7 +20,7 @@ const respondToMedicaidSPARAI =
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = '//div[text()="Respond to 1915(b) Waiver RAI"]';
+const respondToWaiverRAI = '//div[text()="Submit additional information"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const initialWaiver = '//div[text()="Create a New 1915(b) Initial Waiver"]';
 //Element is Xpath use cy.xpath instead of cy.get
