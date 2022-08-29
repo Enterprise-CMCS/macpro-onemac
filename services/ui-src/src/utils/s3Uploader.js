@@ -55,7 +55,7 @@ export async function uploadFiles(fileArray) {
     // Since we have no files then we are successful.
     Promise.resolve();
   }
-  console.log("ResultPromise: ", resultPromise);
+  // console.log("ResultPromise: ", resultPromise);
   return resultPromise;
 }
 
@@ -73,18 +73,13 @@ export async function uploadFile(file) {
 
   while (numTries > 0 && numTries < 10) {
     try {
-      const stored = await new Promise(
-        setTimeout(
-          Storage.put(targetPathname, fileToUpload, {
-            level: "protected",
-            contentType: fileToUpload.type,
-            progressCallback: (progress) => {
-              console.log("File progress: ", progress);
-            },
-          }),
-          numTries * 10
-        )
-      );
+      const stored = await Storage.put(targetPathname, fileToUpload, {
+        level: "protected",
+        contentType: fileToUpload.type,
+        progressCallback: (progress) => {
+          console.log("File progress: ", progress);
+        },
+      });
 
       console.log("Stored: ", stored);
       console.log("numTries: ", numTries);
@@ -104,8 +99,10 @@ export async function uploadFile(file) {
     } catch (error) {
       retPromise = Promise.reject(error);
       if (error.message.indexOf("failed with status code 503") !== -1) {
+        console.log("trying again, numTries: ", numTries);
         numTries++;
       }
+      retPromise = Promise.reject(error);
     }
   }
 
