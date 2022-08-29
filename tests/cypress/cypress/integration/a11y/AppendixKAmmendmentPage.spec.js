@@ -7,10 +7,10 @@ describe("Submit 1915(c) Appendix K Amendment Page 508 test", () => {
     cy.get("#loginDevUserBtn").click();
     cy.xpath("//a[@id='new-submission-button']").click();
     cy.xpath(
-      "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]"
+      "//p[contains(text(),'Submit 1915(b) Waivers, Amendments, and Renewals')]"
     ).click();
     cy.xpath(
-      "//p[contains(text(),'Submit 1915(c) Appendix K Amendment')]"
+      "//p[contains(text(),'Create a 1915(c) Appendix K Amendment')]"
     ).click();
   });
 
