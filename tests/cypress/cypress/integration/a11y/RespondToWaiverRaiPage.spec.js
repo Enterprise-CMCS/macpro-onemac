@@ -7,7 +7,7 @@ describe("Respond To Waiver RAI Page 508 test", () => {
     cy.get("#loginDevUserBtn").click();
     cy.xpath("//a[@id='new-submission-button']").click();
     cy.xpath("//div[contains(text(),'Waiver Action')]").click();
-    cy.xpath("//div[contains(text(),'Respond to 1915(b) Waiver RAI')]").click();
+    cy.xpath("//div[contains(text(),'Submit additional information')]").click();
   });
 
   it("Check a11y on Respond To Waiver RAI Page", () => {
