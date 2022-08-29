@@ -39,6 +39,7 @@ import InitialWaiverDetail from "./page/initial-waiver/InitialWaiverDetail";
 import WaiverRenewalForm from "./page/waiver-renewal/WaiverRenewalForm";
 import WaiverRenewalDetail from "./page/waiver-renewal/WaiverRenewalDetail";
 import WaiverAmendmentDetail from "./page/waiver-amendment/WaiverAmendmentDetail";
+import WaiverAppendixKDetail from "./page/waiver-appendix-k/WaiverAppendixKDetail";
 import TemporaryExtensionForm from "./page/temporary-extension/TemporaryExtensionForm";
 import TemporaryExtensionDetail from "./page/temporary-extension/TemporaryExtensionDetail";
 import MedicaidSpaForm from "./page/medicaid-spa/MedicaidSpaForm";
@@ -313,6 +314,11 @@ const ROUTE_LIST: RouteSpec[] = [
             path: ONEMAC_ROUTES.WAIVER_AMENDMENT_DETAIL + "/:componentId",
             exact: true,
             component: WaiverAmendmentDetail,
+          },
+          {
+            path: ONEMAC_ROUTES.WAIVER_APP_K_DETAIL + "/:componentId",
+            exact: true,
+            component: WaiverAppendixKDetail,
           },
           {
             path: ONEMAC_ROUTES.TEMPORARY_EXTENSION_DETAIL + "/:componentId",
