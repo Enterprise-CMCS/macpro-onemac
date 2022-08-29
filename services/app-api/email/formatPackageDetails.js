@@ -15,6 +15,7 @@ export const formatPackageDetails = (data, config) => {
             ? `<br><b>Withdrawn By</b>: ${data.withdrawnByName}<br><b>Email Address</b>: ${data.withdrawnByEmail}`
             : `<br><b>Name</b>: ${data.submitterName}<br><b>Email Address</b>: ${data.submitterEmail}`
         }
+        ${data.title ? `<br><b>Waiver Title</b>: ${data.title}` : ""}
         <br><b>${config.idLabel}</b>: ${data.componentId}
         ${
           data.waiverAuthority

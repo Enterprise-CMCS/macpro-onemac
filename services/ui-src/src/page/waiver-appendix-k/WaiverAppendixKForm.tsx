@@ -19,6 +19,7 @@ export const waiverAppendixKFormInfo: OneMACFormConfig = {
       </b>
     </p>
   ),
+  titleLabel: "Amendment Title",
   idFAQLink: ROUTES.FAQ_WAIVER_APP_K_ID,
   idFormat: waiverAmendmentIdFormat,
   idFieldHint: [

@@ -5,6 +5,7 @@ import { submitAny } from "./submitAny";
 import {
   defaultFormConfig,
   defaultProposedEffectiveDateSchema,
+  defaultTitleSchema,
 } from "./defaultFormConfig";
 
 export const waiverAppendixKFormConfig = {
@@ -12,6 +13,7 @@ export const waiverAppendixKFormConfig = {
   ...waiverAppendixK,
   appendToSchema: {
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,
+    title: defaultTitleSchema,
   },
 };
 

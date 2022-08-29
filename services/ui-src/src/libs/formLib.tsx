@@ -21,6 +21,7 @@ export type OneMACFormConfig = {
   landingPage: string;
   confirmSubmit?: boolean;
   proposedEffectiveDate?: boolean;
+  titleLabel?: string;
   getParentInfo?: (id: string) => string[];
 } & PackageType &
   Partial<WaiverPackageType>;
@@ -66,6 +67,7 @@ export type OneMacFormData = {
   componentId: string;
   waiverAuthority?: string;
   proposedEffectiveDate?: string;
+  title?: string;
   parentId?: string;
   parentType?: string;
 };
