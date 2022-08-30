@@ -1464,6 +1464,9 @@ And("click 1915b Initial Waiver check box", () => {
 And("click 1915b Waiver Renewal check box", () => {
   OneMacPackagePage.clickWaiverRenewal1915bCheckBox();
 });
+And("click 1915c Appendix K Amendment check box", () => {
+  OneMacPackagePage.click1915cAppendixKAmendmentCheckBox();
+});
 And("click CHIP SPA check box", () => {
   OneMacPackagePage.clickCHIPSPACheckBox();
 });
@@ -2110,6 +2113,12 @@ And("verify there is a State header in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
 And("verify a state exists for the State", () => {
+  OneMacPackageDetailsPage.verifyStateExists();
+});
+And("verify there is an Amendment Title in the details section", () => {
+  OneMacPackageDetailsPage.verifyStateHeaderExists();
+});
+And("verify the Amendment Title is Appendix K Amendment", () => {
   OneMacPackageDetailsPage.verifyStateExists();
 });
 And(
