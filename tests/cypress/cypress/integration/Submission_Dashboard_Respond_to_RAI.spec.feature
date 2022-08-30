@@ -23,7 +23,7 @@ Feature: OY2-15647 State User can Respond to RAI
         When Login with state submitter user
         Then click on New Submission
         And Click on Waiver Action
-        And click on Respond to 1915(b) Waiver RAI
+        And click on Respond to Waiver RAI
         And verify ID field is empty and not disabled
 
     Scenario: Submission List Verification > Submit new SPA and Respond to SPA RAI

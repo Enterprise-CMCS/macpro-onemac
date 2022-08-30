@@ -21,15 +21,15 @@ const respondToMedicaidSPARAI =
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = '//div[text()="Submit additional information"]';
+const respondToWaiverRAI = "//a//div[text()='Respond to 1915(b) Waiver RAI']";
 //Element is Xpath use cy.xpath instead of cy.get
-const initialWaiver = '//div[text()="Create a new 1915(b) initial waiver"]';
+const initialWaiver = "//a//div[text()='1915(b) Initial Waiver']";
 //Element is Xpath use cy.xpath instead of cy.get
 const RequestExtensionBtn = '//button[text()="Request Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const appendixK = '//div[text()="1915(c) Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const amendment = '//div[text()="Waiver Amendment"]';
+const amendment = '//a//div[text()="1915(b) Waiver Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const initialWaiverRenewal = '//div[text()="1915(b) Waiver Renewal"]';
 
