@@ -45,9 +45,9 @@ export async function uploadFiles(fileArray) {
         })
         .catch((error) => {
           if (error.message.indexOf("No credentials") !== -1) {
-            reject("SESSION_EXPIRED");
+            reject("SY001");
           } else {
-            reject("UPLOADS_ERROR");
+            reject("UP000");
           }
         });
     });
@@ -77,13 +77,7 @@ export async function uploadFile(file) {
       const stored = await Storage.put(targetPathname, fileToUpload, {
         level: "protected",
         contentType: fileToUpload.type,
-        progressCallback: (progress) => {
-          console.log("File progress: ", progress);
-        },
       });
-
-      console.log("Stored: ", stored);
-      console.log("numTries: ", numTries);
 
       const url = await Storage.get(stored.key, { level: "protected" });
 
@@ -101,7 +95,7 @@ export async function uploadFile(file) {
       numTries++;
       retPromise = Promise.reject(error);
       if (error.message.indexOf("failed with status code 503") !== -1) {
-        console.log("got 503 again, numTries: ", numTries);
+        console.log("got 503, numTries: ", numTries);
       } else {
         console.log("got a different error: ", error);
       }
