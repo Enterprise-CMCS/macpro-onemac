@@ -1,5 +1,7 @@
 import { Storage } from "aws-amplify";
 
+import { RESPONSE_CODE } from "cmscommonlib";
+
 /**
  * Checks if file extension is lowercase and if not converts it to lowercase.
  * @param {File} file a file
@@ -45,9 +47,9 @@ export async function uploadFiles(fileArray) {
         })
         .catch((error) => {
           if (error.message.indexOf("No credentials") !== -1) {
-            reject("SY001");
+            reject(RESPONSE_CODE.SESSION_EXPIRED);
           } else {
-            reject("UP000");
+            reject(RESPONSE_CODE.UPLOADS_ERROR);
           }
         });
     });
