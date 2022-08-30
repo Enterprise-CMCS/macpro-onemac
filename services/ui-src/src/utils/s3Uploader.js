@@ -69,7 +69,8 @@ export async function uploadFile(file) {
 
   let retPromise;
   let numTries = 1;
-  const targetPathname = `${Date.now()}/${fileToUpload.name}`;
+  // const targetPathname = `${Date.now()}/${fileToUpload.name}`;
+  const targetPathname = `123456789/${fileToUpload.name}`;
 
   while (numTries > 0 && numTries < 10) {
     try {
