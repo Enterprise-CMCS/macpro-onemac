@@ -10,7 +10,6 @@ const chipSpaFormInfo: OneMACFormConfig = {
   ...chipSPA,
   pageTitle: "Submit New CHIP SPA",
   detailsHeader: "CHIP SPA",
-  addlIntroJSX: "",
   idFieldHint: [{ text: "Must follow the format " + idFormat }],
   proposedEffectiveDate: true,
   idFAQLink: ROUTES.FAQ_SPA_ID,

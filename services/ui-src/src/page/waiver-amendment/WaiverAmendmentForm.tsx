@@ -10,7 +10,6 @@ export const waiverAmendmentFormInfo: OneMACFormConfig = {
   ...waiverAmendment,
   pageTitle: "Amend a 1915(b) Waiver",
   detailsHeader: "1915(b) Waiver Amendment Request",
-  addlIntroJSX: "",
   idFAQLink: ROUTES.FAQ_1915B_WAIVER_AMENDMENT_ID,
   idFormat: waiverAmendmentIdFormat,
   idFieldHint: [

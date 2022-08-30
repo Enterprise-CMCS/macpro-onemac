@@ -11,3 +11,5 @@ export const defaultProposedEffectiveDateSchema = [
   Joi.string().isoDate(),
   Joi.string().valid("none"),
 ];
+
+export const defaultTitleSchema = Joi.string().required();

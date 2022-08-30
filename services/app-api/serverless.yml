@@ -200,6 +200,16 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  submitWaiverAppendixK:
+    handler: form/submitWaiverAppendixK.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverAppendixK
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   validateParentOfWaiverRenewal:
     handler: validation/validateParentOfWaiverRenewal.main
