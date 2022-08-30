@@ -97,12 +97,13 @@ export async function uploadFile(file) {
       retPromise = Promise.resolve(result);
       numTries = 0;
     } catch (error) {
+      numTries++;
       retPromise = Promise.reject(error);
       if (error.message.indexOf("failed with status code 503") !== -1) {
-        console.log("trying again, numTries: ", numTries);
-        numTries++;
+        console.log("got 503 again, numTries: ", numTries);
+      } else {
+        console.log("got a different error: ", error);
       }
-      retPromise = Promise.reject(error);
     }
   }
 
