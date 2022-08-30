@@ -34,7 +34,6 @@ export async function uploadFiles(fileArray) {
     // Process each file.
     let uploadPromises = [];
     fileArray.forEach((file, i) => {
-      // let promise = setTimeout(uploadFile(file), i*10);
       let promise = uploadFile(file);
       uploadPromises.push(promise);
     });
@@ -57,7 +56,6 @@ export async function uploadFiles(fileArray) {
     // Since we have no files then we are successful.
     Promise.resolve();
   }
-  // console.log("ResultPromise: ", resultPromise);
   return resultPromise;
 }
 
@@ -71,8 +69,7 @@ export async function uploadFile(file) {
 
   let retPromise;
   let numTries = 1;
-  // const targetPathname = `${Date.now()}/${fileToUpload.name}`;
-  const targetPathname = `123456789/${fileToUpload.name}`;
+  const targetPathname = `${Date.now()}/${fileToUpload.name}`;
 
   while (numTries > 0 && numTries < 10) {
     try {
