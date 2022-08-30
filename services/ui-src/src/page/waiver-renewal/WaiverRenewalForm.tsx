@@ -10,7 +10,6 @@ export const waiverRenewalFormInfo: OneMACFormConfig = {
   ...waiverRenewal,
   pageTitle: "Renew a 1915(b) Waiver",
   detailsHeader: "1915(b) Waiver Renewal",
-  addlIntroJSX: "",
   idFAQLink: ROUTES.FAQ_1915B_WAIVER_RENEWAL_ID,
   idFormat: waiverRenewalIdFormat,
   idFieldHint: [
