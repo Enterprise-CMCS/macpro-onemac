@@ -19,7 +19,7 @@ const withdrawPackageAction = "//a[text()='Withdraw']";
 const requestTempExtensionPackageAction =
   "//a[text()='Request a Temporary Extension']";
 const detailSection =
-  "//section[@class='detail-section']//h2[contains(text(),'Package')]";
+  "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
 const stateHeader = "//h3[text()='State']";

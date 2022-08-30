@@ -41,6 +41,7 @@ Feature: Left Hand Navigation for Package Details View
         And Click on Filter Button
         And click on Type
         And click 1915b Waiver Renewal check box
+        And click 1915c Appendix K Amendment check box
         And Click on Filter Button
         And click the Waiver Number link in the first row
         And verify Package Overview navigation button exists
