@@ -10,7 +10,6 @@ export const initialWaiverFormInfo: OneMACFormConfig = {
   ...initialWaiver,
   pageTitle: "1915(b) Initial Waiver Submission",
   detailsHeader: "Initial Waiver",
-  addlIntroJSX: "",
   idFAQLink: ROUTES.FAQ_INITIAL_1915B_WAIVER_ID,
   idFormat: initialWaiverIdFormat,
   idFieldHint: [

@@ -321,6 +321,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   ]);
 
   useEffect(() => {
+    const isTitleReady: boolean = Boolean(
+      !formConfig.titleLabel || oneMacFormData.title
+    );
     const isWaiverAuthorityReady: boolean = Boolean(
       !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
     );
@@ -337,7 +340,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     );
 
     setIsSubmissionReady(
-      isWaiverAuthorityReady &&
+      isTitleReady &&
+        isWaiverAuthorityReady &&
         isParentIdReady &&
         idHasNoErrors &&
         areUploadsReady &&
@@ -443,8 +447,24 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {" "}
               If you leave this page, you will lose your progress on this form.
             </b>
-            {formConfig.addlIntroJSX}
+            {formConfig.addlIntroJSX ?? ""}
           </p>
+          {formConfig.titleLabel && (
+            <TextField
+              name="title"
+              label={formConfig.titleLabel}
+              labelId="title-label"
+              labelClassName="required"
+              id="title"
+              disabled={isSubmitting}
+              fieldClassName="field"
+              multiline
+              rows="2"
+              onChange={handleInputChange}
+              value={oneMacFormData.title}
+              maxLength={config.MAX_PACKAGE_TITLE_LENGTH}
+            ></TextField>
+          )}
           {formConfig.waiverAuthorities && (
             <Dropdown
               options={[
