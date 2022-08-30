@@ -8,9 +8,6 @@ jest.mock("aws-amplify");
 
 beforeEach(() => {
   jest.clearAllMocks();
-
-  Storage.put.mockResolvedValue({ key: "theKeyToTHeUniverse" });
-  Storage.get.mockResolvedValue({ url: "whatwillthisdo?ignorethispart" });
 });
 
 describe("ensureLowerCaseFileExtension function", () => {
@@ -48,6 +45,16 @@ describe("ensureLowerCaseFileExtension function", () => {
 });
 
 it("exists without crashing", () => {
-  const response = uploadFiles(["foo.pdf"]);
-  expect(response).toBeInstanceOf(Promise);
+  const originalFile = new File(["I am a test file."], "test.TXT", {
+    type: "text/plain",
+  });
+
+  Storage.put.mockResolvedValue({ key: "theKeyToTheUniverse" });
+  Storage.get.mockResolvedValue({ url: "whatwillthisdo?ignorethispart" });
+
+  expect(uploadFiles([originalFile]))
+    .rejects.toEqual("AT001")
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

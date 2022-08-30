@@ -33,7 +33,7 @@ export async function uploadFiles(fileArray) {
   if (fileArray.length > 0) {
     // Process each file.
     let uploadPromises = [];
-    fileArray.forEach((file, i) => {
+    fileArray.forEach((file) => {
       let promise = uploadFile(file);
       uploadPromises.push(promise);
     });
@@ -93,11 +93,7 @@ export async function uploadFile(file) {
     } catch (error) {
       numTries++;
       retPromise = Promise.reject(error);
-      if (error.message.indexOf("failed with status code 503") !== -1) {
-        console.log("got 503, numTries: ", numTries);
-      } else {
-        console.log("got a different error: ", error);
-      }
+      console.log(`numTries ${numTries} with error: `, error);
     }
   }
 
