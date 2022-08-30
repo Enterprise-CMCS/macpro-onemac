@@ -160,7 +160,7 @@ export const ALERTS_MSG: Record<
   UPLOADS_ERROR: {
     type: ALERT_TYPES.ERROR,
     heading: "Document Upload Error",
-    text: `An error occured while uploading documents to AWS S3 service.`,
+    text: `An error occured while uploading documents to AWS S3 service. It is possible that retrying the submit will be successful.`,
   },
   NOT_AUTHENTICATED: {
     type: ALERT_TYPES.WARNING,
@@ -233,4 +233,5 @@ export const alertCodeAlerts = {
     ALERTS_MSG.DASHBOARD_LIST_FETCH_ERROR,
   [RESPONSE_CODE.SESSION_EXPIRED]: ALERTS_MSG.SESSION_EXPIRED,
   [RESPONSE_CODE.PACKAGE_WITHDRAW_SUCCESS]: ALERTS_MSG.WITHDREW_PACKAGE,
+  [RESPONSE_CODE.UPLOADS_ERROR]: ALERTS_MSG.UPLOADS_ERROR,
 };
