@@ -407,8 +407,8 @@ export const SubmissionForm: React.FC<{
             setAlertCode(returnCode);
           })
           .catch((err) => {
-            console.log("error is: ", err);
-            setAlertCode(RESPONSE_CODE[err.message]);
+            console.log("this error is: ", err);
+            setAlertCode(err);
           })
           .finally(() => {
             setIsSubmitting(false);

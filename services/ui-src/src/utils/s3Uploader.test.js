@@ -1,5 +1,14 @@
-import { ensureLowerCaseFileExtension, uploadFile, uploadFiles } from "./s3Uploader";
+import {
+  ensureLowerCaseFileExtension,
+  uploadFile,
+  uploadFiles,
+} from "./s3Uploader";
+import { Storage } from "aws-amplify";
+jest.mock("aws-amplify");
 
+beforeEach(() => {
+  jest.clearAllMocks();
+});
 
 describe("ensureLowerCaseFileExtension function", () => {
   it("returns the original file if the extension is already lowercase", () => {
@@ -33,13 +42,19 @@ describe("ensureLowerCaseFileExtension function", () => {
 
     expect(returnedFile.title).toBe(title);
   });
+});
 
-  it("exists without crashing", () => {
-    const response = uploadFiles(["foo"])
-    expect(response).toBeInstanceOf(Promise)
+it("exists without crashing", () => {
+  const originalFile = new File(["I am a test file."], "test.TXT", {
+    type: "text/plain",
+  });
 
-    const response2 = uploadFile("foo")
-    expect(response2).toBeInstanceOf(Promise)
-  })
+  Storage.put.mockResolvedValue({ key: "theKeyToTheUniverse" });
+  Storage.get.mockResolvedValue({ url: "whatwillthisdo?ignorethispart" });
 
+  expect(uploadFiles([originalFile]))
+    .rejects.toEqual("AT001")
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
