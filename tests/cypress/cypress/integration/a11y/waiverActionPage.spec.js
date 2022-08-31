@@ -10,7 +10,7 @@ describe("Waiver Action Page 508 test", () => {
       "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]"
     ).click();
     cy.xpath(
-      "//p[contains(text(),'Submit waivers, amendments, and renewals')]"
+      "//p[contains(text(),'Submit 1915(b) waivers, amendments, and renewals')]"
     ).click();
   });
 

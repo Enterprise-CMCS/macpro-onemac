@@ -8,7 +8,7 @@ const initialWaiverIdFormat: string = "SS-####.R00.00 or SS-#####.R00.00";
 export const initialWaiverFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...initialWaiver,
-  pageTitle: "Initial Waiver Submission",
+  pageTitle: "1915(b) Initial Waiver Submission",
   detailsHeader: "Initial Waiver",
   idFAQLink: ROUTES.FAQ_INITIAL_1915B_WAIVER_ID,
   idFormat: initialWaiverIdFormat,

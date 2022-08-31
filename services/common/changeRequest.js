@@ -198,12 +198,12 @@ export const CONFIG = {
   },
 
   [TYPE.WAIVER]: {
-    pageTitle: "Submit New Waiver Action",
-    readOnlyPageTitle: "Waiver Action Details",
+    pageTitle: "Submit New 1915(b) Waiver Action",
+    readOnlyPageTitle: "1915(b) Waiver Action Details",
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },
-    detailsHeader: "Waiver Action",
+    detailsHeader: "1915(b) Waiver Action",
     requiredUploads: [],
     optionalUploads: [
       "1915(b)(4) FFS Selective Contracting (Streamlined) waiver application pre-print (Initial, Renewal, Amendment)",
@@ -354,8 +354,9 @@ export const CONFIG = {
   },
 
   [TYPE.WAIVER_EXTENSION]: {
-    pageTitle: "Request Waiver Temporary Extension",
-    readOnlyPageTitle: "Waiver Temporary Extension Request Details",
+    pageTitle: "Request 1915(b) and 1915(c) Temporary Extension",
+    readOnlyPageTitle:
+      "1915(b) and 1915(c) Temporary Extension Request Details",
     subheaderMessage: {
       __html: commonSubheaderMessage,
     },
@@ -404,8 +405,8 @@ export const CONFIG = {
   },
 
   [TYPE.WAIVER_RAI]: {
-    pageTitle: "Respond to Waiver RAI",
-    readOnlyPageTitle: "Waiver RAI Response Details",
+    pageTitle: "Respond to 1915(b) Waiver RAI",
+    readOnlyPageTitle: "1915(b) Waiver RAI Response Details",
     subheaderMessage: {
       __html: raiSubheaderMessage,
     },

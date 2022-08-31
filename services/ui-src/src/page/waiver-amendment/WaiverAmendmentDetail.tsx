@@ -12,7 +12,6 @@ export const waiverAmendmentDetail: OneMACDetail = {
   ...waiverAmendment,
   actionLabel: "Amendment Actions",
   detailHeader: "Waiver Amendment",
-  attachmentsHeading: "Supporting Documentation",
   navItems: [],
   detailSection: [
     { heading: "Amendment Number", fieldName: "componentId", default: "N/A" },

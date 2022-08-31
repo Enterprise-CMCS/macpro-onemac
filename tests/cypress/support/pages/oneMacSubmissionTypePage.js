@@ -9,28 +9,29 @@ const MedicalSPA = '//div[text()="Medicaid SPA"]';
 const ChipSPA = '//div[text()="CHIP SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverActionWaiverAction =
-  '//p[contains(text(),"Submit waivers, amendments, and renewals")]';
+  '//p[contains(text(),"Submit 1915(b) waivers, amendments, and renewals")]';
 //Element is Xpath use cy.xpath instead of cy.get
-const RequestTemporaryExtension = '//div[text()="Request Temporary Extension"]';
+const RequestTemporaryExtension =
+  '//div[text()="Request 1915(b) and 1915(c) Temporary Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const AppendixKAmendment = '//div[text()="Appendix K Amendment"]';
+const AppendixKAmendment = '//div[text()="1915(c) Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToMedicaidSPARAI =
   '//div[text()="Respond to Formal Medicaid SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const respondToCHIPSPARAI = '//div[text()="Respond to Formal CHIP SPA RAI"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const respondToWaiverRAI = '//div[text()="Respond to Waiver RAI"]';
+const respondToWaiverRAI = "//a//div[text()='Respond to 1915(b) Waiver RAI']";
 //Element is Xpath use cy.xpath instead of cy.get
-const initialWaiver = '//div[text()="Initial Waiver"]';
+const initialWaiver = "//a//div[text()='1915(b) Initial Waiver']";
 //Element is Xpath use cy.xpath instead of cy.get
 const RequestExtensionBtn = '//button[text()="Request Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const appendixK = '//div[text()="Appendix K Amendment"]';
+const appendixK = '//div[text()="1915(c) Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const amendment = '//div[text()="Waiver Amendment"]';
+const amendment = '//a//div[text()="1915(b) Waiver Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
-const initialWaiverRenewal = '//div[text()="Waiver Renewal"]';
+const initialWaiverRenewal = '//div[text()="1915(b) Waiver Renewal"]';
 
 export class oneMacSubmissionTypePage {
   clickStatePlanAmendmentSPA() {

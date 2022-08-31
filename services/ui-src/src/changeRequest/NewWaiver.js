@@ -6,23 +6,23 @@ import ChoiceList from "../components/ChoiceList";
 
 const choices = [
   {
-    title: "Waiver Action",
-    description: "Submit waivers, amendments, and renewals",
+    title: "1915(b) Waiver Action",
+    description: "Submit 1915(b) waivers, amendments, and renewals",
     linkTo: ROUTES.WAIVER,
   },
   {
-    title: "Request Temporary Extension",
+    title: "Request 1915(b) and 1915(c) Temporary Extension",
     description: "Submit for 1915(b) and 1915(c)",
     linkTo: ROUTES.WAIVER_EXTENSION,
   },
   {
-    title: "Respond to Waiver RAI",
+    title: "Respond to 1915(b) Waiver RAI",
     description: "Submit additional information",
     linkTo: ROUTES.WAIVER_RAI,
   },
   {
-    title: "Appendix K Amendment",
-    description: "Submit Appendix K Amendment",
+    title: "1915(c) Appendix K Amendment",
+    description: "Create a 1915(c) Appendix K Amendment",
     linkTo: ROUTES.WAIVER_APP_K,
   },
 ];
