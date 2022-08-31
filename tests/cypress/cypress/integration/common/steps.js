@@ -697,6 +697,12 @@ And(
     OneMacAppendixKAmendmentPage.inputWaiverNumber(`MD-10330.R00.12`);
   }
 );
+And(
+  "type in Waiver Number with 5 characters on new Appendix K Amendment Page",
+  () => {
+    OneMacAppendixKAmendmentPage.inputWaiverNumberNewForms(`MD-10330.R00.12`);
+  }
+);
 
 And("type in invalid Waiver Number On Appendix K Amendment Page", () => {
   OneMacAppendixKAmendmentPage.inputWaiverNumber("MD.123");
@@ -1902,6 +1908,10 @@ And("search for {string}", (part) => {
   OneMacPackagePage.searchFor(part);
   cy.wait(1000);
 });
+And("search for Appendix K number", () => {
+  OneMacPackagePage.searchFor("MD-10330.R00.12");
+  cy.wait(1000);
+});
 And("verify parent row expander exists", () => {
   OneMacPackagePage.verifyFirstParentRowExpanderExists();
 });
@@ -2118,7 +2128,7 @@ And("verify a state exists for the State", () => {
 And("verify there is an Amendment Title in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
-And("verify the Amendment Title is Appendix K Amendment", () => {
+And("verify the Amendment Title is {string}", () => {
   OneMacPackageDetailsPage.verifyStateExists();
 });
 And(
@@ -2153,6 +2163,9 @@ And("verify user is on new initial waiver page", () => {
 });
 And("verify user is on new waiver renewal page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverRenewalPage();
+});
+And("verify user is on new Appendix K page", () => {
+  OneMacSubmissionTypePage.verifyNewAppendixKPage();
 });
 And("verify user is on new waiver amendment page", () => {
   OneMacSubmissionTypePage.verifyNewWaiverAmendmentPage();
@@ -2726,4 +2739,10 @@ And("verify id number in the first row matches approved waiver number", () => {
       data.approvedInitialWaiverNum1
     );
   });
+});
+And("type Appendix K Submission 1 into Amendment Title field", () => {
+  OneMacAppendixKAmendmentPage.inputAmendmentTitle("Appendix K Submission 1");
+});
+And("verify id number in the first row matches Appendix K number", () => {
+  OneMacPackagePage.verifyIDNumberInFirstRowIs("MD-10330.R00.12");
 });
