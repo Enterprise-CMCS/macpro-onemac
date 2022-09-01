@@ -12,6 +12,7 @@ export const waiverAppendixKFormInfo: OneMACFormConfig = {
   detailsHeader: "1915(c) Appendix K Amendment Request",
   addlIntroJSX: (
     <p>
+      <br />
       <b>
         If your Appendix K submission is for more than one waiver number, please
         enter one of the applicable waiver numbers. You do not need to create
