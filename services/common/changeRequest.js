@@ -405,8 +405,8 @@ export const CONFIG = {
   },
 
   [TYPE.WAIVER_RAI]: {
-    pageTitle: "Respond to 1915(b) Waiver RAI",
-    readOnlyPageTitle: "1915(b) Waiver RAI Response Details",
+    pageTitle: "Respond to Waiver RAI",
+    readOnlyPageTitle: "Waiver RAI Response Details",
     subheaderMessage: {
       __html: raiSubheaderMessage,
     },

@@ -16,7 +16,7 @@ const choices = [
     linkTo: ROUTES.WAIVER_EXTENSION,
   },
   {
-    title: "Respond to 1915(b) Waiver RAI",
+    title: "Respond to Waiver RAI",
     description: "Submit additional information",
     linkTo: ROUTES.WAIVER_RAI,
   },
