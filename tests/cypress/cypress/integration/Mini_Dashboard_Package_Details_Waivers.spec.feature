@@ -136,7 +136,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is an Amendment Title in the details section
-        And verify the Amendment Title is Appendix K Amendment
+        And verify the Amendment Title is "Appendix K Amendment"
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
         And verify there is a Proposed Effective Date header in the details section
