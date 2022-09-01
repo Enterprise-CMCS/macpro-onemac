@@ -1,4 +1,4 @@
-describe("Respond To Appendix K Ammendment Page 508 test", () => {
+describe("Submit 1915(c) Appendix K Amendment Page 508 test", () => {
   beforeEach(() => {
     cy.visit("/");
     cy.get("#devloginBtn").click();
@@ -9,10 +9,12 @@ describe("Respond To Appendix K Ammendment Page 508 test", () => {
     cy.xpath(
       "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]"
     ).click();
-    cy.xpath("//p[contains(text(),'Submit Appendix K Amendment')]").click();
+    cy.xpath(
+      "//p[contains(text(),'Create a 1915(c) Appendix K Amendment')]"
+    ).click();
   });
 
-  it("Check a11y on Respond To Appendix K Ammendment Page", () => {
+  it("Check a11y on Submit 1915(c) Appendix K Amendment Page", () => {
     cy.checkA11yOfPage();
   });
 });

@@ -19,5 +19,5 @@ it("builds the CMS Submission Notice Email", async () => {
 
   expect(response2.HTML.includes(testData.componentId)).toBe(true);
   expect(response2.HTML.includes(process.env.applicationEndpoint)).toBe(true);
-  expect(response2.HTML.length).toBe(1213);
+  expect(response2.HTML.length).toBe(1222);
 });

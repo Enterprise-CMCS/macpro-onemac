@@ -1,14 +1,13 @@
 export const waiverAppendixK = {
+  packageGroup: "waiver",
   componentType: "waiverappk",
   typeLabel: "1915(c) Appendix K Amendment",
-  idType: "waiver",
-  idLabel: "Waiver Number",
-  idRegex: "(^[A-Z]{2}[.][0-9]{4,5}[.]R[0-9]{2}[.][0-9]{2}$)",
+  idLabel: "Waiver Amendment Number",
+  idRegex: "^[A-Z]{2}[-][0-9]{4,5}.R[0-9]{2}.(0[1-9]|[1-9][0-9])$",
   idExistValidations: [
     {
-      idMustExist: true,
-      errorLevel: "warn",
-      existenceRegex: "^[A-Z]{2}[.][0-9]{4,5}",
+      idMustExist: false,
+      errorLevel: "error",
     },
   ],
   allowMultiplesWithSameId: false,

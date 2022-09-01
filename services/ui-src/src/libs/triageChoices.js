@@ -40,23 +40,23 @@ export const choicesFromRoute = {
     intro: "Select a Waiver type to start your submission.",
     choices: [
       {
-        title: "Initial Waiver",
-        description: "Create a new Initial Waiver",
+        title: "1915(b) Initial Waiver",
+        description: "Create a new 1915(b) initial waiver",
         linkTo: ONEMAC_ROUTES.INITIAL_WAIVER,
       },
       {
-        title: "Waiver Renewal",
-        description: "Renew an existing 1915(b) initial waiver",
+        title: "1915(b) Waiver Renewal",
+        description: "Renew an existing 1915(b) waiver",
         linkTo: ONEMAC_ROUTES.WAIVER_RENEWAL,
       },
       {
-        title: "Waiver Amendment",
-        description: "Amend an Existing Waiver",
+        title: "1915(b) Waiver Amendment",
+        description: "Amend an existing 1915(b) waiver",
         linkTo: ONEMAC_ROUTES.WAIVER_AMENDMENT,
       },
       {
-        title: "Appendix K Amendment",
-        description: "Create an Appendix K Amendment",
+        title: "1915(c) Appendix K Amendment",
+        description: "Create a 1915(c) Appendix K Amendment",
         linkTo: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       },
       {

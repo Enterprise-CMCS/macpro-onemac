@@ -6,8 +6,8 @@ import { ONEMAC_ROUTES, waiverRAIResponse } from "cmscommonlib";
 export const waiverRAIFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...waiverRAIResponse,
-  pageTitle: "Respond to Waiver RAI",
-  detailsHeader: "Waiver RAI Response",
+  pageTitle: "Respond to 1915(b) Waiver RAI",
+  detailsHeader: "1915(b) Waiver RAI Response",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
 };
 

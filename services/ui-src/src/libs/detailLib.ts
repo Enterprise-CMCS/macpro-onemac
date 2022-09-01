@@ -22,7 +22,7 @@ export type OneMACDetail = {
 };
 
 export const submissionDateDefault: AttributeDetail = {
-  heading: "Date Submitted",
+  heading: "Initial Submission Date",
   fieldName: "submissionDateNice",
   default: null,
 };
@@ -92,7 +92,7 @@ export const defaultPackageOverviewLabel: string = "Package Overview";
 export const defaultDetail: OneMACDetail = {
   actionLabel: "Package Actions",
   componentType: "none",
-  attachmentsHeading: "Base Supporting Documentation",
+  attachmentsHeading: "Attachments",
   usesVerticalNav: true,
   navItems: [
     {

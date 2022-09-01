@@ -25,8 +25,8 @@ Feature: Package Dashboard Temporary Extension
         And verify the type is 1915(b) Temporary Extension
         And verify there is a State header in the details section
         And verify a state exists for the State
-        And verify there is a Date Submitted header in the details section
-        And verify a date exists for the Date Submitted
+        And verify there is an Initial Submission Date header in the details section
+        And verify a date exists for the Initial Submission Date
 
     Scenario: Verify user can withdraw temporary extension from mini-dashboard page
         Then click on New Submission

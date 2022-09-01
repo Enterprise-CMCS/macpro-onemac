@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "@material-ui/core";
 import { FieldHint } from "cmscommonlib";
 import { Review } from "@cmsgov/design-system";
+import { Message } from "../libs/formLib";
 
 /**
  * Returns the ID specific form element
@@ -10,8 +11,7 @@ const ComponentId: React.FC<{
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink?: string;
-  statusLevel: string;
-  statusMessage: string;
+  statusMessages: Message[];
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
@@ -19,18 +19,11 @@ const ComponentId: React.FC<{
   idLabel,
   idFieldHint,
   idFAQLink,
-  statusLevel,
-  statusMessage,
+  statusMessages,
   value,
   onChange,
   disabled,
 }) => {
-  let statusMsgClass = "ds-u-color--error";
-
-  if (statusLevel === "warn") {
-    statusMsgClass = "ds-u-color--primary";
-  }
-
   return (
     <>
       {!disabled && (
@@ -60,11 +53,17 @@ const ComponentId: React.FC<{
               );
             })}
           </div>
-          {statusMessage && (
-            <div id="componentIdStatusMsg" className={statusMsgClass}>
-              {statusMessage}
-            </div>
-          )}
+          {statusMessages &&
+            statusMessages.length > 0 &&
+            statusMessages.map((message, i) => (
+              <div
+                key={i}
+                id={"componentIdStatusMsg" + i}
+                className={"ds-u-color--" + message.statusLevel}
+              >
+                {message.statusMessage}
+              </div>
+            ))}
           <input
             className="field"
             type="text"

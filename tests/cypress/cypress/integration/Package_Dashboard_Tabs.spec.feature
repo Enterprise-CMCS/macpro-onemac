@@ -47,6 +47,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         And Click on Filter Button
         And click on Type
         And click 1915b Waiver Renewal check box
+        And click 1915c Appendix K Amendment check box
         And Click on Filter Button
         And verify the type in row one is Initial Waiver
         And verify the waiver number format in row one is SS.#### or SS.#####
@@ -60,6 +61,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         And Click on Filter Button
         And click on Type
         And click 1915b Initial Waiver check box
+        And click 1915c Appendix K Amendment check box
         And Click on Filter Button
         And verify the type in row one is Waiver Renewal
         And verify the waiver number format in row one is SS.#####.S## or SS.####.S##

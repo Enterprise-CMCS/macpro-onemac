@@ -9,7 +9,7 @@ const SUBMIT_API_CALL = {
   [Workflow.ONEMAC_TYPE.MEDICAID_SPA_RAI]: "submitMedicaidSPARAIResponse",
   [Workflow.ONEMAC_TYPE.WAIVER_INITIAL]: "submitInitialWaiver",
   [Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]: "submitWaiverRenewal",
-  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitAppendixKAmendment",
+  [Workflow.ONEMAC_TYPE.WAIVER_APP_K]: "submitWaiverAppendixK",
   [Workflow.ONEMAC_TYPE.WAIVER_EXTENSION]: "submitWaiverExtension",
   [Workflow.ONEMAC_TYPE.WAIVER_AMENDMENT]: "submitWaiverAmendment",
   [Workflow.ONEMAC_TYPE.WAIVER_RAI]: "submitWaiverRAIResponse",

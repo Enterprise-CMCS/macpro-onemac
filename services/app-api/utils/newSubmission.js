@@ -20,6 +20,7 @@ const topLevelAttributes = [
   "GSI1sk",
   "parentId",
   "parentType",
+  "title",
 ];
 
 export default async function newSubmission(newData, config) {
