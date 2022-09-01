@@ -17,7 +17,7 @@ Feature: OY2-15647 State User can Respond to RAI
         And click on Respond to CHIP SPA RAI
         And verify ID field is empty and not disabled
 
-    Scenario: Verify state user can access Respond to 1915(b) Waiver RAI for seatool
+    Scenario: Verify state user can access Respond to Waiver RAI for seatool
         Given I am on Login Page
         When Clicking on Development Login
         When Login with state submitter user
