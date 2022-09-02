@@ -49,7 +49,13 @@ const getFamily = ({ componentId }) =>
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
-const getChildren = ({ children }) => children;
+const getChildren = ({ children }) => {
+  //remove child component types that we dont want to show in package list view
+  const filterChildrenComponentTypes = [Workflow.ONEMAC_TYPE.WAIVER_RAI];
+  return children?.filter(
+    (c) => !filterChildrenComponentTypes.includes(c.componentType)
+  );
+};
 
 const initialStatuses = [
   Workflow.ONEMAC_STATUS.UNSUBMITTED,
