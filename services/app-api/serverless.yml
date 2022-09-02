@@ -170,7 +170,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  
+
   submitWaiverRaiResponse:
     handler: form/submitWaiverRAIResponse.main
     role: LambdaApiRole
@@ -190,7 +190,7 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  
+
   submitWaiverAmendment:
     handler: form/submitWaiverAmendment.main
     role: LambdaApiRole
@@ -200,13 +200,23 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
-  
+
   submitWaiverAppendixK:
     handler: form/submitWaiverAppendixK.main
     role: LambdaApiRole
     events:
       - http:
           path: submitWaiverAppendixK
+          method: post
+          cors: true
+          authorizer: aws_iam
+
+  submitWaiverAppendixKRAIResponse:
+    handler: form/submitWaiverAppendixKRAIResponse.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: submitWaiverAppendixKRAIResponse
           method: post
           cors: true
           authorizer: aws_iam

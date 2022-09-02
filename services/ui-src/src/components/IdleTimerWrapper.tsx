@@ -67,9 +67,6 @@ const IdleTimerWrapper = () => {
     if (isAuthenticated) {
       setTimeoutTimes();
       idleTimer.start();
-      console.log("prompt time", promptTimeout / 1000 / 60);
-      console.log("logout time", logoutTimeout / 1000 / 60);
-      console.log("time remaining", idleTimer.getRemainingTime() / 1000 / 60);
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isAuthenticated, promptTimeout, logoutTimeout]);
