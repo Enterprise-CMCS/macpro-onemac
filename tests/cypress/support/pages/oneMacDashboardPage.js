@@ -58,7 +58,7 @@ export class oneMacDashboardPage {
   }
 
   verifyIDNumber(s) {
-    cy.xpath(IDNUMBER(s)).first().scrollIntoView().should("be.visible");
+    cy.xpath(IDNUMBER(s)).first().should("exist");
   }
   clickIDNumberLink(s) {
     cy.xpath(IDNUMBER(s)).click({ force: true });
