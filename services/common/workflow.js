@@ -10,6 +10,7 @@ export const ONEMAC_TYPE = {
   WAIVER_RAI: "waiverrai",
   WAIVER_EXTENSION: "waiverextension",
   WAIVER_APP_K: "waiverappk",
+  WAIVER_APP_K_RAI: "waiverappkrai",
 };
 
 export const ONEMAC_LABEL = {
