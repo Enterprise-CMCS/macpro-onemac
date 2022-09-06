@@ -865,7 +865,7 @@ export class oneMacPackagePage {
     cy.xpath(RequestTempExtensionBtn).should("be.visible");
   }
   clickWaiverNumberLinkInFirstRow() {
-    cy.xpath(packageRowOneIDLink).click();
+    cy.xpath(packageRowOneIDLink).click({ force: true });
   }
   clickLinkForWaiver(n) {
     cy.xpath(waiverNumLink(n)).first().click();
