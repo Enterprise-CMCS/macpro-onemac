@@ -50,6 +50,30 @@ UPPER_CASE_USER = [
     }
 ]
 
+devs = [
+    {
+        "email": "bflynn@gswell.com",
+        "firstName": "Brandon",
+        "lastName": "Flynn",
+    },
+    {
+        "email": "vmcmurray@gswell.com",
+        "firstName": "Valencia",
+        "lastName": "McMurray",
+    },{
+        "email": "k.grue@theta-llc.com",
+        "firstName": "Kristin",
+        "lastName": "Grue",
+    },{
+        "email": "aalousi@gswell.com",
+        "firstName": "Ahmad",
+        "lastName": "Alousi",
+    },{
+        "email": "hwells@gswell.com",
+        "firstName": "Haywood",
+        "lastName": "Wells",
+    }
+]
 
 def seed_data():
     """
@@ -71,35 +95,6 @@ def seed_data():
             for item in json.load(f)
             if "GSI1pk" in item and item["GSI1pk"] == "USER"
         ]
-
-
-def git_committers():
-    """
-    Parse the output of `git log` to get a list of all the (human,
-    non-duplicate) committers to this repository.
-    """
-    committers = {}
-    for line in subprocess.run(
-        ["git", "log", "--pretty=format:%an %ae"], capture_output=True
-    ).stdout.split(b"\n"):
-        if b"github.com" in line:
-            continue
-
-        parts = line.decode("utf-8").split(" ")
-        # the strip call here is because of poorly configured git users
-        name, email = parts[:-1], parts[-1].strip(".!?#“”")
-        if email not in committers or len(committers[email]) < len(name):
-            committers[email] = name
-
-    return [
-        {
-            "email": email,
-            "firstName": name[0] if len(name) else email.split("@")[0],
-            "lastName": name[1] if len(name) > 1 else "TestUser",
-        }
-        for email, name in committers.items()
-    ]
-
 
 def get_user_pool_id(stage):
     """
@@ -148,6 +143,7 @@ def seed_cognito(test_users, user_pool_id, password):
                     f'Name=given_name,Value={user["firstName"]}',
                     f'Name=family_name,Value={user["lastName"]}',
                     f"Name=custom:cms_roles,Value={role}",
+                    f"Name=custom:ismemberof,Value={ismemberof}",
                 ],
                 check=True,
             )
@@ -185,7 +181,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     seed_users = seed_data()
-    devs = git_committers()
 
     if args.dry_run:
         print("Seed users:")
