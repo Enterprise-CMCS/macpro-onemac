@@ -18,7 +18,7 @@ const date = "#submittedAt-0";
 const respondToRAIBTN = "//tbody/tr[1]/td[6]/button[1]";
 //Element is Xpath use cy.xpath instead of cy.get
 //const respondToRAI = '//body/div[@id="simple-menu"]/div[3]/ul[1]/div[1]/li[1]';
-const respondToRAI = '//*[@id="simple-menu-0"]/div[3]/ul/div/li';
+const respondToRAI = '//li[(text()="Respond to RAI")]';
 const userManagementTab = "#userManagementLink";
 //Element is Xpath use cy.xpath instead of cy.get
 const submissionList = '//h1[contains(text(),"Submission List")]';
@@ -58,10 +58,10 @@ export class oneMacDashboardPage {
   }
 
   verifyIDNumber(s) {
-    cy.xpath(IDNUMBER(s)).scrollIntoView().should("be.visible");
+    cy.xpath(IDNUMBER(s)).first().scrollIntoView().should("be.visible");
   }
   clickIDNumberLink(s) {
-    cy.xpath(IDNUMBER(s)).click();
+    cy.xpath(IDNUMBER(s)).click({ force: true });
   }
 
   verifyType(s) {
@@ -76,7 +76,7 @@ export class oneMacDashboardPage {
 
   clickOnrespondToRAI(s) {
     cy.xpath(IDNUMBER(s)).parent().siblings().find("button").click();
-    cy.xpath(respondToRAI).click();
+    cy.xpath(respondToRAI).filter(":visible").click();
   }
 
   verifySPARAIIDNumberMatchesMedicalSPAIDNumber(s) {
