@@ -97,6 +97,8 @@ export function App() {
         isLoggedInAsDeveloper: isDeveloper || devUsers.includes(email),
         userProfile: {
           email,
+          ismemberof:
+            authUser.signInUserSession.idToken.payload["custom:ismemberof"],
           cmsRoles:
             authUser.signInUserSession.idToken.payload["custom:cms_roles"],
           firstName: authUser.signInUserSession.idToken.payload.given_name,

@@ -63,6 +63,10 @@ resources:
             AttributeDataType: String
             Mutable: true
             Required: false
+          - Name: ismemberof
+            AttributeDataType: String
+            Mutable: true
+            Required: false
 
     CognitoUserPoolClient:
       Type: AWS::Cognito::UserPoolClient
@@ -112,6 +116,7 @@ resources:
           family_name: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/surname
           given_name: http://schemas.xmlsoap.org/ws/2005/05/identity/claims/givenname
           custom:cms_roles: cmsRoles
+          custom:ismemberof: ismemberof
         IdpIdentifiers:
           - IdpIdentifier
         ProviderDetails:
