@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from "react";
-import { Redirect, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
+import { USER_STATUS, USER_ROLE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
@@ -78,13 +78,10 @@ function HelpdeskSignup() {
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
-const isCmsUser = (cmsRoles: string) =>
-  !cmsRoles || !!cmsRoles.split(",").includes("onemac-cms-user");
 const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
-  // const history = useHistory();
   const { userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
@@ -92,30 +89,16 @@ export function Signup() {
     () =>
       isStateUser(cmsRoles) ? (
         <StateUserSignup />
-      ) : isCmsUser(cmsRoles) ? (
-        <CMSSignup />
       ) : isHelpdeskUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <HelpdeskSignup />
         </div>
       ) : (
-        <Redirect
-          to={{
-            pathname: "/",
-            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR }, // ALERTS_MSG.CONTACT_HELP_DESK },
-          }}
-        />
+        <CMSSignup />
       ),
     [cmsRoles]
   );
 
-  // useEffect(() => {
-  //   if (type) history.replace("/dashboard");
-  // }, [history, type]);
-
-  // //<p className="signup-prompt">
-  // Select the user role you're registering for.
-  // </p>
   return (
     <>
       <PageTitleBar heading="Registration: User Role" />
