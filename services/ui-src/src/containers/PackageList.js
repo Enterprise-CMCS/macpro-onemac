@@ -51,7 +51,10 @@ export const getState = ({ componentId }) =>
 
 const getChildren = ({ children }) => {
   //remove child component types that we dont want to show in package list view
-  const filterChildrenComponentTypes = [Workflow.ONEMAC_TYPE.WAIVER_RAI];
+  const filterChildrenComponentTypes = [
+    Workflow.ONEMAC_TYPE.WAIVER_RAI,
+    Workflow.ONEMAC_TYPE.WAIVER_APP_K_RAI,
+  ];
   return children?.filter(
     (c) => !filterChildrenComponentTypes.includes(c.componentType)
   );
