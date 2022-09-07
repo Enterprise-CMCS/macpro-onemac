@@ -586,7 +586,7 @@ export class oneMacPackagePage {
     cy.xpath(Disapproved).should("be.disabled");
   }
   checkforWithdrawnIsNotClickable() {
-    cy.xpath(PackageWithdrawn).should("be.disabled");
+    cy.xpath(PackageWithdrawn).children("button").should("be.disabled");
   }
   checkforTerminatedIsNotClickable() {
     cy.xpath(waiverTerminated).should("be.disabled");
