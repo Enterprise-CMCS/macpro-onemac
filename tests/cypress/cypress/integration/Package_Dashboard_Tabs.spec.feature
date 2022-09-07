@@ -36,7 +36,7 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And verify the type in row one is some kind of 1915b Waiver
+        And verify the type in row one is some kind of 1915 Waiver
 
     Scenario: verify initial waiver waiver number pattern
         Given I am on Login Page
