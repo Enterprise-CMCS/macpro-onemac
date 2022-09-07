@@ -139,7 +139,7 @@ const Disapproved =
   "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[7]/button";
 //Element is Xpath use cy.xpath instead of cy.get
 const PackageWithdrawn =
-  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/button";
+  "//a[contains(text(),'MD-13-8218')]/../following-sibling::td[7]/div";
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverTerminated =
   "//a[text()='MD.10330']/../following-sibling::td[contains(@id,'packageActions')]/button";
@@ -586,7 +586,7 @@ export class oneMacPackagePage {
     cy.xpath(Disapproved).should("be.disabled");
   }
   checkforWithdrawnIsNotClickable() {
-    cy.xpath(PackageWithdrawn).should("be.disabled");
+    cy.xpath(PackageWithdrawn).children("button").should("be.disabled");
   }
   checkforTerminatedIsNotClickable() {
     cy.xpath(waiverTerminated).should("be.disabled");
@@ -744,10 +744,8 @@ export class oneMacPackagePage {
       /[A-Z]{2}\.\d{5}\.[A-Z]{1}\d{2}||[A-Z]{2}\.\d{4}\.[A-Z]{1}\d{2}/
     );
   }
-  verifypackageRowOneTypeContains1915bWaiver() {
-    cy.get(packageRowOneType)
-      .should("contain.text", "1915(b)")
-      .and("contain.text", "Waiver");
+  verifypackageRowOneTypeContains1915Waiver() {
+    cy.get(packageRowOneType).should("contain.text", "1915");
   }
   verifypackageRowOneTypeHasTextInitialWaiver() {
     cy.get(packageRowOneType).should("contain.text", "Initial Waiver");
