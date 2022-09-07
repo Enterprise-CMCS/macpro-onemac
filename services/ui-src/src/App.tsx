@@ -11,8 +11,8 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import {
   effectiveRoleForUser,
-  getActiveTerritories, // ,
-  // RESPONSE_CODE,
+  getActiveTerritories,
+  RESPONSE_CODE,
 } from "cmscommonlib";
 import IdleTimerWrapper from "./components/IdleTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
@@ -99,8 +99,11 @@ export function App() {
           email,
           ismemberof:
             authUser.signInUserSession.idToken.payload["custom:ismemberof"],
-          cmsRoles:
-            authUser.signInUserSession.idToken.payload["custom:cms_roles"],
+          cmsRoles: authUser.signInUserSession.idToken.payload[
+            "custom:cms_roles"
+          ]
+            .split(",")
+            .filter((role: string) => role === "onemac-state-user"),
           firstName: authUser.signInUserSession.idToken.payload.given_name,
           lastName: authUser.signInUserSession.idToken.payload.family_name,
           // Get user data from the user table
@@ -130,11 +133,11 @@ export function App() {
     }
   }, []);
 
-  // useEffect(() => {
-  //   // On initial load of the App, try to set the user info.
-  //   // It will capture info if they are logged in from a previous session.
-  //   setUserInfo();
-  // }, [setUserInfo]);
+  useEffect(() => {
+    // On initial load of the App, try to set the user info.
+    // It will capture info if they are logged in from a previous session.
+    setUserInfo();
+  }, [setUserInfo]);
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
@@ -142,16 +145,15 @@ export function App() {
     // does not already exist
     (async () => {
       if (email) {
-        // const retResponse =
-        await UserDataApi.setContactInfo({
+        const retResponse = await UserDataApi.setContactInfo({
           email,
           firstName,
           lastName,
           cmsRoles,
         });
-        // if (retResponse === RESPONSE_CODE.USER_SUBMITTED) {
-        await setUserInfo();
-        // }
+        if (retResponse === RESPONSE_CODE.USER_SUBMITTED) {
+          await setUserInfo();
+        }
       }
     })();
   }, [email, firstName, lastName, cmsRoles, setUserInfo]);
@@ -178,8 +180,7 @@ export function App() {
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
-  // return authState.isAuthenticating ? null : (
-  return (
+  return authState.isAuthenticating ? null : (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">
