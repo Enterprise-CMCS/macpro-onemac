@@ -11,8 +11,8 @@ import { Header } from "./components/Header";
 import { Footer } from "./components/Footer";
 import {
   effectiveRoleForUser,
-  getActiveTerritories,
-  RESPONSE_CODE,
+  getActiveTerritories, // ,
+  // RESPONSE_CODE,
 } from "cmscommonlib";
 import IdleTimerWrapper from "./components/IdleTimerWrapper";
 import { ConfirmationDialog } from "./components/ConfirmationDialog";
@@ -130,11 +130,11 @@ export function App() {
     }
   }, []);
 
-  useEffect(() => {
-    // On initial load of the App, try to set the user info.
-    // It will capture info if they are logged in from a previous session.
-    setUserInfo();
-  }, [setUserInfo]);
+  // useEffect(() => {
+  //   // On initial load of the App, try to set the user info.
+  //   // It will capture info if they are logged in from a previous session.
+  //   setUserInfo();
+  // }, [setUserInfo]);
 
   const { email, firstName, lastName, cmsRoles } = authState.userProfile;
   useEffect(() => {
@@ -142,15 +142,16 @@ export function App() {
     // does not already exist
     (async () => {
       if (email) {
-        const retResponse = await UserDataApi.setContactInfo({
+        // const retResponse =
+        await UserDataApi.setContactInfo({
           email,
           firstName,
           lastName,
           cmsRoles,
         });
-        if (retResponse === RESPONSE_CODE.USER_SUBMITTED) {
-          await setUserInfo();
-        }
+        // if (retResponse === RESPONSE_CODE.USER_SUBMITTED) {
+        await setUserInfo();
+        // }
       }
     })();
   }, [email, firstName, lastName, cmsRoles, setUserInfo]);
@@ -177,7 +178,8 @@ export function App() {
     [authState, setUserInfo, updatePhoneNumber, confirmAction]
   );
 
-  return authState.isAuthenticating ? null : (
+  // return authState.isAuthenticating ? null : (
+  return (
     <AppContext.Provider value={contextValue}>
       <IdleTimerWrapper />
       <div className="header-and-content">

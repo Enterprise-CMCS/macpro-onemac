@@ -1,9 +1,9 @@
 import React, { useEffect, useMemo } from "react";
-import { useHistory } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
 
 import { useAppContext } from "../libs/contextLib";
 import { useSignupCallback } from "../libs/hooksLib";
-import { USER_STATUS, USER_ROLE } from "cmscommonlib";
+import { USER_STATUS, USER_ROLE, RESPONSE_CODE } from "cmscommonlib";
 import PageTitleBar from "../components/PageTitleBar";
 import ChoiceList from "../components/ChoiceList";
 
@@ -75,14 +75,24 @@ function HelpdeskSignup() {
   return null;
 }
 
+const CMS_ROLES: USER_ROLE[] = [
+  USER_ROLE.CMS_REVIEWER,
+  USER_ROLE.CMS_ROLE_APPROVER,
+  USER_ROLE.DEFAULT_CMS_USER,
+  USER_ROLE.SYSTEM_ADMIN,
+];
+
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
+const isCmsUser = (userRole: USER_ROLE | null | undefined) =>
+  !userRole || CMS_ROLES.includes(userRole);
 const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
-  const { userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
+  // const history = useHistory();
+  const { userRole, userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
   const signupOptions = useMemo(
@@ -93,12 +103,26 @@ export function Signup() {
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <HelpdeskSignup />
         </div>
-      ) : (
+      ) : isCmsUser(userRole) ? (
         <CMSSignup />
+      ) : (
+        <Redirect
+          to={{
+            pathname: "/",
+            state: { passCode: RESPONSE_CODE.SYSTEM_ERROR }, // ALERTS_MSG.CONTACT_HELP_DESK },
+          }}
+        />
       ),
-    [cmsRoles]
+    [cmsRoles, userRole]
   );
 
+  // useEffect(() => {
+  //   if (type) history.replace("/dashboard");
+  // }, [history, type]);
+
+  // //<p className="signup-prompt">
+  // Select the user role you're registering for.
+  // </p>
   return (
     <>
       <PageTitleBar heading="Registration: User Role" />
