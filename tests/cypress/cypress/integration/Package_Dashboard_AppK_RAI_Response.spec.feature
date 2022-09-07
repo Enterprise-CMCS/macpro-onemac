@@ -1,4 +1,4 @@
-Feature: RAI Response for Initial Waiver - Package View
+Feature: RAI Response for Appendix K Amendment - Package View
 
     Background: Reoccuring Steps
         Given I am on Login Page
@@ -6,12 +6,12 @@ Feature: RAI Response for Initial Waiver - Package View
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And search for Initial Waiver in RAI Issued status
+        And search for the Appendix K Amendment in RAI Issued status
 
     Scenario: Respond to RAI from package dashboard
         And click the actions button in row one
         And click the Respond to RAI button
-        And verify the Initial Waiver Number in RAI Issued status is pre-populated and uneditable
+        And verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable
         And Add file for Waiver RAI Response
         And Click on Submit Button
         And verify submission successful message in the alert bar
@@ -19,7 +19,7 @@ Feature: RAI Response for Initial Waiver - Package View
     Scenario: Respond to RAI from package details page
         And click the Waiver Number link in the first row
         And click on Respond to RAI package action
-        And verify the Initial Waiver Number in RAI Issued status is pre-populated and uneditable
+        And verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable
         And Add file for Waiver RAI Response
         And Click on Submit Button
         And verify submission successful message in the alert bar
