@@ -88,7 +88,8 @@ export function App() {
         userStatus = roleResult[1];
       }
       const activeTerritories = getActiveTerritories(userData?.roleList);
-      let oneMacIdmRoles = "";
+      let oneMacIdmRoles;
+      console.log("payload: ", authUser.signInUserSession.idToken.payload);
       if (authUser.signInUserSession.idToken.payload["custom:cms_roles"])
         oneMacIdmRoles = authUser.signInUserSession.idToken.payload[
           "custom:cms_roles"
@@ -126,7 +127,7 @@ export function App() {
       });
     } catch (error) {
       if (
-        (error as string) !== "not authenticated" &&
+        (error as string) !== "The user is not authenticated" &&
         (error as Error).message !== "SESSION_EXPIRY"
       ) {
         console.log(
