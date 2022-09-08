@@ -20,6 +20,12 @@ Feature: OY2-11950 State should not be able to withdraw a package in OneMAC in S
         When Clicking on Development Login
         When Login with state submitter user
         And click on Packages
+        And Click on Filter Button
+        And click on Status
+        And click all of the status checkboxes
+        And click the Withdrawn checkbox
+        And click on Status
+        And Click on Filter Button
         And verify that the 3 dots next to Withdrawn status is not clickable
 
 #These two need data in VAL to be able to pass so commented out for now

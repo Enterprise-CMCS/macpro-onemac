@@ -207,6 +207,7 @@ jobs:
             Package_Dashboard_Waiver_Renewal.spec.feature,
             Package_Dashboard_CHIP_SPA_RAI_Response.spec.feature,
             Package_Dashboard_Waiver_RAI_Response.spec.feature,
+            Package_Dashboard_AppK_RAI_Response.spec.feature,
           ]
     steps:
       - name: set branch_name
@@ -300,12 +301,20 @@ jobs:
             RequestRoleChangePage,
             requestTempExtentionPage,
             RespondToCHIPSPAPage,
-            RespondToMedicaidSpaTest,
+            RespondToMedicaidSpaPage,
             RespondToWaiverRaiPage,
             spaTypePage,
             submissionType,
             waiverActionPage,
             waiverActionTypePage,
+            RespondToMedicaidSpaPage,
+            PackageWaiverActionTypePage,
+            PackageSubmissionType,
+            PackageSpaTypePage,
+            PackageRequestTempExtentionPage,
+            PackageMedicaidSpaPage,
+            PackageCHIPSPAPage,
+            PackageAppendixKPage,
           ]
     steps:
       - name: set branch_name

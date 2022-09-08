@@ -1825,8 +1825,8 @@ And("click Unsubmitted checkbox", () => {
 And("click Submitted checkbox", () => {
   OneMacPackagePage.clickSubmittedCheckbox();
 });
-And("verify the type in row one is some kind of 1915b Waiver", () => {
-  OneMacPackagePage.verifypackageRowOneTypeContains1915bWaiver();
+And("verify the type in row one is some kind of 1915 Waiver", () => {
+  OneMacPackagePage.verifypackageRowOneTypeContains1915Waiver();
 });
 And("verify the type in row one is Initial Waiver", () => {
   OneMacPackagePage.verifypackageRowOneTypeHasTextInitialWaiver();
@@ -2594,17 +2594,34 @@ And(
 And("verify error message contains {string}", (msg) => {
   OneMacDefaultForms.verifyErrorMsgContainsInSubmissionView(msg);
 });
-And("search for Waiver in RAI Issued status", () => {
-  cy.fixture("savedID.json").then((data) => {
-    OneMacPackagePage.searchFor(data.savedID2);
+And("search for Initial Waiver in RAI Issued status", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackagePage.searchFor(data.initialWaiverInRAIStatus);
   });
   cy.wait(1000);
 });
 And(
-  "verify the waiver number in RAI Issued status is pre-populated and uneditable",
+  "verify the Initial Waiver Number in RAI Issued status is pre-populated and uneditable",
   () => {
-    cy.fixture("savedID.json").then((data) => {
-      OneMacRespondToRAIPage.verifyWaiverNumberMatchesID(data.savedID2);
+    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+      OneMacRespondToRAIPage.verifyWaiverNumberMatchesID(
+        data.initialWaiverInRAIStatus
+      );
+    });
+    cy.wait(1000);
+  }
+);
+And("search for the Appendix K Amendment in RAI Issued status", () => {
+  cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+    OneMacPackagePage.searchFor(data.appKInRAIStatus);
+  });
+  cy.wait(1000);
+});
+And(
+  "verify the Appendix K Amendment in RAI Issued status is pre-populated and uneditable",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+      OneMacRespondToRAIPage.verifyAppKMatchesID(data.appKInRAIStatus);
     });
     cy.wait(1000);
   }
