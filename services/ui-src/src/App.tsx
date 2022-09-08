@@ -88,6 +88,19 @@ export function App() {
         userStatus = roleResult[1];
       }
       const activeTerritories = getActiveTerritories(userData?.roleList);
+      let oneMacIdmRoles = "";
+      if (authUser.signInUserSession.idToken.payload["custom:cms_roles"])
+        oneMacIdmRoles = authUser.signInUserSession.idToken.payload[
+          "custom:cms_roles"
+        ]
+          .split(",")
+          .filter(
+            (role: string) =>
+              role === "onemac-state-user" || role === "onemac-helpdesk"
+          )
+          .toString();
+
+      console.log("oneMACRoles: ", oneMacIdmRoles);
 
       setAuthState({
         ...DEFAULT_AUTH_STATE,
@@ -99,11 +112,7 @@ export function App() {
           email,
           ismemberof:
             authUser.signInUserSession.idToken.payload["custom:ismemberof"],
-          cmsRoles: authUser.signInUserSession.idToken.payload[
-            "custom:cms_roles"
-          ]
-            .split(",")
-            .filter((role: string) => role === "onemac-state-user"),
+          cmsRoles: oneMacIdmRoles,
           firstName: authUser.signInUserSession.idToken.payload.given_name,
           lastName: authUser.signInUserSession.idToken.payload.family_name,
           // Get user data from the user table
