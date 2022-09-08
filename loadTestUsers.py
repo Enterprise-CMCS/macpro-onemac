@@ -154,7 +154,7 @@ def seed_cognito(test_users, user_pool_id, password):
                     "--user-attributes",
                     f'Name=given_name,Value={user["firstName"]}',
                     f'Name=family_name,Value={user["lastName"]}',
-                    f"Name=custom:cms_roles,Value={role}",
+                    f'Name=custom:cms_roles,Value="{role}"',
                     f'Name=custom:ismemberof,Value="{user["ismemberof"]}"',
                 ],
                 check=True,
