@@ -52,36 +52,41 @@ UPPER_CASE_USER = [
 
 devs = [
     {
-        "email": "bflynn@gswell.com",
-        "role": "notaonemacrole",
+        "email": "k.grue.cmsroleapprover@gmail.com",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
         "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
         "firstName": "Brandon",
         "lastName": "Flynn",
-    },
-    {
-        "email": "vmcmurray@gswell.com",
-        "role": "notaonemacrole",
+    },{
+        "email": "helpdesk@notreal.com",
+        "cms_roles": "onemac-helpdesk",
         "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
         "firstName": "Valencia",
         "lastName": "McMurray",
     },{
-        "email": "k.grue@theta-llc.com",
-        "role": "notaonemacrole",
+        "email": "vmcmurray@collabralink.com",
+        "cms_roles": "onemac-helpdesk",
         "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "Kristin",
-        "lastName": "Grue",
+        "firstName": "Valencia",
+        "lastName": "McMurray",
     },{
-        "email": "aalousi@gswell.com",
-        "role": "notaonemacrole",
+        "email": "k.grue.stateuser@gmail.com",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinState",
+        "lastName": "GrueUser",
+    },{
+        "email": "helpdesk2@notreal.com",
+        "cms_roles": "onemac-helpdesk,notaonemacrole,anothernononemacrole",
         "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
         "firstName": "Ahmad",
         "lastName": "Alousi",
     },{
-        "email": "hwells@gswell.com",
-        "role": "notaonemacrole",
+        "email": "k.grue.stateadmn@gmail.com",
+        "cms_roles": "notaonemacrole,onemac-state-user,anothernononemacrole",
         "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
-        "firstName": "Haywood",
-        "lastName": "Wells",
+        "firstName": "KristinState",
+        "lastName": "GrueAdmin",
     }
 ]
 
@@ -126,13 +131,14 @@ def seed_cognito(test_users, user_pool_id, password):
         print(f'Creating user with ID {user["email"]}')
         role = ""
         if "role" not in user:
-            pass
+            if "cms_roles" not in user:
+                pass
+            else:
+                role = user["cms_roles"]
         elif user["role"].startswith("state"):
             role = "onemac-state-user"
         elif user["role"].startswith("cms") or user["role"] == "systemadmin":
             role = ""
-        elif user["role"] == "notaonemacrole":
-            role = "Theresarolehere"
         elif user["role"] == "helpdesk":
             role = "onemac-helpdesk"
 
