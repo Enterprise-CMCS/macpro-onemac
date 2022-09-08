@@ -18,7 +18,12 @@ import {
 } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
-import { OneMACFormConfig, defaultWaiverAuthority } from "../libs/formLib";
+import {
+  OneMACFormConfig,
+  OneMacFormData,
+  Message,
+  defaultWaiverAuthority,
+} from "../libs/formLib";
 import config from "../utils/config";
 
 import LoadingOverlay from "../components/LoadingOverlay";
@@ -41,22 +46,6 @@ function getTerritoryFromComponentId(componentId: string): string {
   return componentId?.toString().substring(0, 2) ?? "";
 }
 
-type Message = {
-  statusLevel: string;
-  statusMessage: string;
-  warningMessageCode?: string;
-};
-
-export type OneMacFormData = {
-  territory: string;
-  additionalInformation: string;
-  componentId: string;
-  waiverAuthority?: string;
-  proposedEffectiveDate?: string;
-  parentId?: string;
-  parentType?: string;
-};
-
 /**
  * Submisstion Form template to allow rendering for different types of Submissions.
  */
@@ -76,16 +65,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   // True if we are currently submitting the form
   const [isSubmitting, setIsSubmitting] = useState(false);
 
-  const [componentIdStatusMessage, setComponentIdStatusMessage] =
-    useState<Message>({
-      statusLevel: "error",
-      statusMessage: "",
-    });
+  const [componentIdStatusMessages, setComponentIdStatusMessages] = useState<
+    Message[]
+  >([]);
 
-  const [parentIdStatusMessage, setParentIdStatusMessage] = useState<Message>({
-    statusLevel: "error",
-    statusMessage: "",
-  });
+  const [parentIdStatusMessages, setParentIdStatusMessages] = useState<
+    Message[]
+  >([]);
 
   // The browser history, so we can redirect to the home page
   const history = useHistory();
@@ -119,11 +105,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   const validateComponentId = useCallback(
     (componentId) => {
-      let errorMessage = "";
+      let errorMessages: Message[] = [];
 
-      // Must have a value
+      // Do not validate if no value
       if (!componentId) {
-        errorMessage = `${formConfig.idLabel} Required`;
+        return errorMessages;
       }
       // state code must be on the User's active state list
       else if (
@@ -131,20 +117,35 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         (activeTerritories &&
           !activeTerritories.includes(getTerritoryFromComponentId(componentId)))
       ) {
-        errorMessage = `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`;
+        errorMessages.push({
+          statusLevel: "error",
+          statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
+        });
       }
       // must match the associated Regex string for format
       else if (
         formConfig.idRegex &&
         !matchesRegex(componentId, formConfig.idRegex)
       ) {
-        errorMessage = `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`;
+        errorMessages.push({
+          statusLevel: "error",
+          statusMessage: `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`,
+        });
+        if (formConfig.idAdditionalErrorMessage) {
+          formConfig.idAdditionalErrorMessage.forEach((message) =>
+            errorMessages.push({
+              statusLevel: "error",
+              statusMessage: message,
+            })
+          );
+        }
       }
 
-      return errorMessage;
+      return errorMessages;
     },
     [
       activeTerritories,
+      formConfig.idAdditionalErrorMessage,
       formConfig.idFormat,
       formConfig.idLabel,
       formConfig.idRegex,
@@ -197,27 +198,21 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   useEffect(() => {
     const checkId = async () => {
-      let parentStatusMessage = {
-        statusLevel: "error",
-        statusMessage: "",
-      };
-
       try {
+        const parentStatusMessages: Message[] = [];
         if (!!oneMacFormData.parentId) {
-          if (
-            (await PackageApi.validateParent(
-              oneMacFormData.parentId,
-              formConfig.validateParentAPI
-            )) === true
-          )
-            parentStatusMessage.statusMessage = "";
-          else
-            parentStatusMessage.statusMessage =
-              formConfig?.parentNotFoundMessage
-                ? formConfig?.parentNotFoundMessage
-                : "";
+          const isParentIdValid = await PackageApi.validateParent(
+            oneMacFormData.parentId,
+            formConfig.validateParentAPI
+          );
+          if (!isParentIdValid) {
+            parentStatusMessages.push({
+              statusMessage: formConfig.parentNotFoundMessage ?? "",
+              statusLevel: "error",
+            });
+          }
         }
-        setParentIdStatusMessage(parentStatusMessage);
+        setParentIdStatusMessages(parentStatusMessages);
       } catch (err) {
         console.log("error is: ", err);
         setAlertCode(RESPONSE_CODE[(err as Error).message]);
@@ -233,22 +228,15 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
   useEffect(() => {
     // default display message settings with empty message
-    let displayMessage: Message = {
-      statusLevel: "error",
-      statusMessage: "",
-    };
-
-    let formatMessage = {
-      statusLevel: "error",
-      statusMessage: validateComponentId(oneMacFormData.componentId),
-      warningMessageCode: "",
-    };
+    let formatMessages: Message[] = validateComponentId(
+      oneMacFormData.componentId
+    );
 
     let existMessages: Message[] = [];
     let result = false;
     try {
       if (
-        formatMessage.statusMessage === "" &&
+        formatMessages.length === 0 &&
         oneMacFormData.componentId &&
         formConfig.idExistValidations
       ) {
@@ -306,8 +294,8 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               }
 
               // if we got a message through checking, then we should add it to the existMessages array
-              const messageToAdd = {
-                statusLevel: correspondingValidation.errorLevel!,
+              const messageToAdd: Message = {
+                statusLevel: correspondingValidation.errorLevel,
                 statusMessage: tempMessage as string,
                 warningMessageCode: tempCode,
               };
@@ -315,16 +303,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             });
           })
           .then(() => {
-            if (existMessages.length > 0) {
-              displayMessage = existMessages[0];
-              setComponentIdStatusMessage(displayMessage);
-            } else {
-              setComponentIdStatusMessage(displayMessage);
-            }
+            setComponentIdStatusMessages(existMessages);
           });
       } else {
-        displayMessage = formatMessage;
-        setComponentIdStatusMessage(displayMessage);
+        setComponentIdStatusMessages(formatMessages);
       }
     } catch (err) {
       console.log("error is: ", err);
@@ -332,13 +314,16 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     }
   }, [
     areUploadsReady,
-    oneMacFormData,
     formConfig,
     validateComponentId,
     alertCode,
+    oneMacFormData.componentId,
   ]);
 
   useEffect(() => {
+    const isTitleReady: boolean = Boolean(
+      !formConfig.titleLabel || oneMacFormData.title
+    );
     const isWaiverAuthorityReady: boolean = Boolean(
       !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
     );
@@ -347,24 +332,25 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     );
     const isParentIdReady: boolean = Boolean(
       !formConfig.parentLabel ||
-        (oneMacFormData.parentId && !parentIdStatusMessage.statusMessage)
+        (oneMacFormData.parentId &&
+          !parentIdStatusMessages.some((m) => m.statusLevel === "error"))
+    );
+    const idHasNoErrors: boolean = !componentIdStatusMessages.some(
+      (m) => m.statusLevel === "error"
     );
 
-    const hasNoErrors: boolean =
-      componentIdStatusMessage.statusLevel === "warn" ||
-      !componentIdStatusMessage.statusMessage;
-
     setIsSubmissionReady(
-      isWaiverAuthorityReady &&
+      isTitleReady &&
+        isWaiverAuthorityReady &&
         isParentIdReady &&
-        hasNoErrors &&
+        idHasNoErrors &&
         areUploadsReady &&
         isProposedEffecitveDateReady
     );
   }, [
     areUploadsReady,
-    componentIdStatusMessage,
-    parentIdStatusMessage,
+    componentIdStatusMessages,
+    parentIdStatusMessages,
     formConfig,
     oneMacFormData,
   ]);
@@ -379,14 +365,13 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     limitSubmit.current = true;
     setIsSubmitting(true);
 
-    let componentIdWarningMessage: string | undefined = "";
-
-    if (
-      componentIdStatusMessage.statusLevel === "warn" &&
-      componentIdStatusMessage.statusMessage
-    ) {
-      componentIdWarningMessage = componentIdStatusMessage.warningMessageCode;
-    }
+    const componentIdWarningMessage: Message | undefined =
+      componentIdStatusMessages.find(
+        (message) => message.statusLevel === "warn"
+      );
+    const componentIdWarningMessageCode = componentIdWarningMessage
+      ? componentIdWarningMessage.warningMessageCode
+      : "";
 
     if (uploader.current) {
       try {
@@ -394,7 +379,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         const returnCode = await PackageApi.submitToAPI(
           {
             ...oneMacFormData,
-            transmittalNumberWarningMessage: componentIdWarningMessage,
+            transmittalNumberWarningMessage: componentIdWarningMessageCode,
           },
           uploadedList,
           formConfig.componentType
@@ -414,7 +399,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         limitSubmit.current = false;
       }
     }
-  }, [formConfig, history, oneMacFormData, componentIdStatusMessage]);
+  }, [formConfig, history, oneMacFormData, componentIdStatusMessages]);
 
   const handleSubmit = useCallback(
     async (event: SyntheticEvent) => {
@@ -462,8 +447,24 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {" "}
               If you leave this page, you will lose your progress on this form.
             </b>
-            {formConfig.addlIntroJSX}
+            {formConfig.addlIntroJSX ?? ""}
           </p>
+          {formConfig.titleLabel && (
+            <TextField
+              name="title"
+              label={formConfig.titleLabel}
+              labelId="title-label"
+              labelClassName="required"
+              id="title"
+              disabled={isSubmitting}
+              fieldClassName="field"
+              multiline
+              rows="2"
+              onChange={handleInputChange}
+              value={oneMacFormData.title}
+              maxLength={config.MAX_PACKAGE_TITLE_LENGTH}
+            ></TextField>
+          )}
           {formConfig.waiverAuthorities && (
             <Dropdown
               options={[
@@ -484,17 +485,11 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               {oneMacFormData.parentId ?? "Unknown"}
             </Review>
           )}
-          {typeof formConfig.parentLabel == "string" && (
+          {formConfig.parentLabel && (
             <ComponentId
               idLabel={formConfig.parentLabel}
               idFieldHint={formConfig.parentFieldHint ?? [{ text: "" }]}
-              statusLevel={"error"}
-              statusMessage={
-                parentIdStatusMessage.statusMessage !==
-                `${formConfig.idLabel} Required`
-                  ? parentIdStatusMessage.statusMessage
-                  : ""
-              }
+              statusMessages={parentIdStatusMessages}
               disabled={!!presetParentId}
               value={oneMacFormData.parentId ?? ""}
               onChange={(event: ChangeEvent<HTMLInputElement>) =>
@@ -506,13 +501,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             idLabel={formConfig.idLabel}
             idFieldHint={formConfig.idFieldHint}
             idFAQLink={formConfig.idFAQLink}
-            statusLevel={componentIdStatusMessage.statusLevel}
-            statusMessage={
-              componentIdStatusMessage.statusMessage !==
-              `${formConfig.idLabel} Required`
-                ? componentIdStatusMessage.statusMessage
-                : ""
-            }
+            statusMessages={componentIdStatusMessages}
             disabled={!!presetComponentId}
             value={oneMacFormData.componentId}
             onChange={(event: ChangeEvent<HTMLInputElement>) =>
@@ -525,7 +514,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 className="ds-c-label required"
                 htmlFor="proposed-effective-date"
               >
-                <span>Proposed Effective Date</span>
+                <span>Proposed Effective Date of {formConfig.typeLabel}</span>
               </label>
               <Input
                 className="field"

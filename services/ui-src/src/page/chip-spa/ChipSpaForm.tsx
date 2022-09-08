@@ -6,11 +6,10 @@ import { ROUTES, ONEMAC_ROUTES, chipSPA } from "cmscommonlib";
 const idFormat: string = "SS-YY-NNNN-xxxx";
 
 const chipSpaFormInfo: OneMACFormConfig = {
-  ...chipSPA,
   ...defaultOneMACFormConfig,
+  ...chipSPA,
   pageTitle: "Submit New CHIP SPA",
   detailsHeader: "CHIP SPA",
-  addlIntroJSX: "",
   idFieldHint: [{ text: "Must follow the format " + idFormat }],
   proposedEffectiveDate: true,
   idFAQLink: ROUTES.FAQ_SPA_ID,

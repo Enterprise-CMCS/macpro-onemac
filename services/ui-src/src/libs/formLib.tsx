@@ -9,17 +9,19 @@ import {
 export type OneMACFormConfig = {
   idFormat: string;
   idFieldHint: FieldHint[];
+  idAdditionalErrorMessage?: string[];
   idFAQLink: string;
   parentLabel?: string;
   parentFieldHint?: FieldHint[];
   parentNotFoundMessage?: string;
   validateParentAPI?: string;
   pageTitle: string;
-  addlIntroJSX?: string;
+  addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   landingPage: string;
   confirmSubmit?: boolean;
   proposedEffectiveDate?: boolean;
+  titleLabel?: string;
   getParentInfo?: (id: string) => string[];
 } & PackageType &
   Partial<WaiverPackageType>;
@@ -28,7 +30,6 @@ export const defaultOneMACFormConfig = {
   idFormat: "",
   idFieldHint: [],
   idFAQLink: "",
-  addlIntroJSX: "",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST,
   proposedEffectiveDate: false,
   confirmSubmit: false,
@@ -52,4 +53,21 @@ export type PackageType = {
 
 export type WaiverPackageType = {
   waiverAuthorities: SelectOption[];
+};
+
+export type Message = {
+  statusLevel: string;
+  statusMessage: string;
+  warningMessageCode?: string;
+};
+
+export type OneMacFormData = {
+  territory: string;
+  additionalInformation: string;
+  componentId: string;
+  waiverAuthority?: string;
+  proposedEffectiveDate?: string;
+  title?: string;
+  parentId?: string;
+  parentType?: string;
 };

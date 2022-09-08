@@ -1,5 +1,7 @@
 import { Storage } from "aws-amplify";
 
+import { RESPONSE_CODE } from "cmscommonlib";
+
 /**
  * Checks if file extension is lowercase and if not converts it to lowercase.
  * @param {File} file a file
@@ -43,11 +45,10 @@ export async function uploadFiles(fileArray) {
           resolve(results);
         })
         .catch((error) => {
-          if (error.indexOf("No credentials") !== -1) {
-            reject("SESSION_EXPIRED");
+          if (error.message.indexOf("No credentials") !== -1) {
+            reject(RESPONSE_CODE.SESSION_EXPIRED);
           } else {
-            console.log("Error uploading.", error);
-            reject("UPLOADS_ERROR");
+            reject(RESPONSE_CODE.UPLOADS_ERROR);
           }
         });
     });
@@ -55,7 +56,6 @@ export async function uploadFiles(fileArray) {
     // Since we have no files then we are successful.
     Promise.resolve();
   }
-
   return resultPromise;
 }
 
@@ -68,27 +68,34 @@ export async function uploadFile(file) {
   const fileToUpload = ensureLowerCaseFileExtension(file);
 
   let retPromise;
+  let numTries = 1;
   const targetPathname = `${Date.now()}/${fileToUpload.name}`;
 
-  try {
-    const stored = await Storage.vault.put(targetPathname, fileToUpload, {
-      level: "protected",
-      contentType: fileToUpload.type,
-    });
+  while (numTries > 0 && numTries < 10) {
+    try {
+      const stored = await Storage.put(targetPathname, fileToUpload, {
+        level: "protected",
+        contentType: fileToUpload.type,
+      });
 
-    const url = await Storage.vault.get(stored.key, { level: "protected" });
+      const url = await Storage.get(stored.key, { level: "protected" });
 
-    let result = {
-      s3Key: stored.key,
-      filename: fileToUpload.name,
-      contentType: fileToUpload.type,
-      url: url.split("?", 1)[0], //We only need the permalink part of the URL since the S3 bucket policy allows for public read
-      title: fileToUpload.title,
-    };
+      let result = {
+        s3Key: stored.key,
+        filename: fileToUpload.name,
+        contentType: fileToUpload.type,
+        url: url.split("?", 1)[0], //We only need the permalink part of the URL since the S3 bucket policy allows for public read
+        title: fileToUpload.title,
+      };
 
-    retPromise = Promise.resolve(result);
-  } catch (error) {
-    retPromise = Promise.reject(error);
+      retPromise = Promise.resolve(result);
+      numTries = 0;
+    } catch (error) {
+      numTries++;
+      retPromise = Promise.reject(error);
+      console.log(`numTries ${numTries} with error: `, error);
+    }
   }
+
   return retPromise;
 }

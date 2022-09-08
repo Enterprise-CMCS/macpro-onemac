@@ -21,15 +21,3 @@ const expectedResponse = {
 it("calls submitAny", async () => {
   expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
 });
-
-it("returns the a Initial Waiver if the Amendment ID contains .R00 and the right Initial Waiver Number", () => {
-  expect(
-    waiverAmendmentFormConfig.getParentInfo("MI.1234.R00.M01")
-  ).toStrictEqual(["MI.1234.R00.00", Workflow.ONEMAC_TYPE.WAIVER_INITIAL]);
-});
-
-it("returns the Waiver Renewal if the Amendment ID contains .R## (other than R00) and the right Waiver Renewal Number", () => {
-  expect(
-    waiverAmendmentFormConfig.getParentInfo("MI.1234.R01.M01")
-  ).toStrictEqual(["MI.1234.R01.00", Workflow.ONEMAC_TYPE.WAIVER_RENEWAL]);
-});

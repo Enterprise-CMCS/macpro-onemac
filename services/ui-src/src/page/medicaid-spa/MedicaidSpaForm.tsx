@@ -10,7 +10,6 @@ const medicaidSpaFormInfo: OneMACFormConfig = {
   ...medicaidSPA,
   pageTitle: "Submit New Medicaid SPA",
   detailsHeader: "Medicaid SPA",
-  addlIntroJSX: "",
   idFieldHint: [
     { text: "Must follow the format " + medicaidSpaIdFormat },
     {

@@ -79,6 +79,8 @@ const initialWaiver1915bCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Initial Waiver')]";
 const waiverRenewal1915bCheckBox =
   "//label[contains(@for,'checkbox_componentType-1915(b) Waiver Renewal')]";
+const appendixKAmendmentCheckBox =
+  "//label[contains(@for,'checkbox_componentType-1915(c) Appendix K Amendment')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const CHIPSPACheckBox =
   "//label[contains(@for,'checkbox_componentType-CHIP SPA')]";
@@ -446,6 +448,9 @@ export class oneMacPackagePage {
   }
   clickWaiverRenewal1915bCheckBox() {
     cy.xpath(waiverRenewal1915bCheckBox).click();
+  }
+  click1915cAppendixKAmendmentCheckBox() {
+    cy.xpath(appendixKAmendmentCheckBox).click();
   }
   clickCHIPSPACheckBox() {
     cy.xpath(CHIPSPACheckBox).click();
@@ -867,6 +872,9 @@ export class oneMacPackagePage {
   }
   verifyIDNumberInFirstRowIs(id) {
     cy.xpath(packageRowOneIDLink).contains(id);
+  }
+  verifyIDNumberInSecondRowIs(id) {
+    cy.get(packageRowTwoID).contains(id);
   }
   compareSearchIDToFirstLinkID(searchedID) {
     cy.xpath(packageRowOneIDLink).should("have.text", searchedID);

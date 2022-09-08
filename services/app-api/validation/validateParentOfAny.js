@@ -34,5 +34,6 @@ export const validateParentOfAny = async (event, config) => {
     )
       foundParent = true;
   });
+  console.log("foundParent:", foundParent);
   return foundParent;
 };
