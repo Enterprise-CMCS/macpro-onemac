@@ -8,7 +8,7 @@ describe("Package Dashboard Submit 1915(c) Appendix K Amendment Page 508 test", 
     cy.xpath('//a[@id="packageListLink"]').click();
     cy.xpath("//a[@id='new-submission-button']").click();
     cy.xpath(
-      "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]"
+      "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]"
     ).click();
     cy.xpath(
       "//p[contains(text(),'Create a 1915(c) Appendix K Amendment')]"
