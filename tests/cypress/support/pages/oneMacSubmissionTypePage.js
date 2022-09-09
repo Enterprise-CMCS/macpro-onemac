@@ -2,7 +2,7 @@
 const statePlanAmendmentSPA = '//div[text()="State Plan Amendment (SPA)"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const waiverAction =
-  "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]";
+  "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]";
 //Element is Xpath use cy.xpath instead of cy.get
 const MedicalSPA = '//div[text()="Medicaid SPA"]';
 //Element is Xpath use cy.xpath instead of cy.get

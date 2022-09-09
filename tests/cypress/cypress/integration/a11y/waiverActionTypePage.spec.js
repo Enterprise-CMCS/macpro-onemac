@@ -7,7 +7,7 @@ describe("Waiver Type Page 508 test", () => {
     cy.get("#loginDevUserBtn").click();
     cy.xpath("//a[@id='new-submission-button']").click();
     cy.xpath(
-      "//p[contains(text(),'Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension')]"
+      "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]"
     ).click();
   });
 
