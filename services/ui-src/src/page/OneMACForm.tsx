@@ -197,6 +197,17 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   }, [alertCode]);
 
   useEffect(() => {
+    if (
+      formConfig.waiverAuthorities &&
+      formConfig.waiverAuthorities.length === 1
+    ) {
+      let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
+      updatedRecord.waiverAuthority = formConfig.waiverAuthorities[0].value;
+      setOneMacFormData(updatedRecord);
+    }
+  }, [formConfig]);
+
+  useEffect(() => {
     const checkId = async () => {
       try {
         const parentStatusMessages: Message[] = [];
@@ -465,21 +476,22 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               maxLength={config.MAX_PACKAGE_TITLE_LENGTH}
             ></TextField>
           )}
-          {formConfig.waiverAuthorities && (
-            <Dropdown
-              options={[
-                ...defaultWaiverAuthority,
-                ...formConfig.waiverAuthorities,
-              ]}
-              defaultValue={oneMacFormData.waiverAuthority}
-              label="Waiver Authority"
-              labelClassName="ds-u-margin-top--0 required"
-              fieldClassName="field"
-              name="waiverAuthority"
-              id="waiver-authority"
-              onChange={handleInputChange}
-            />
-          )}
+          {formConfig.waiverAuthorities &&
+            formConfig.waiverAuthorities.length > 1 && (
+              <Dropdown
+                options={[
+                  ...defaultWaiverAuthority,
+                  ...formConfig.waiverAuthorities,
+                ]}
+                defaultValue={oneMacFormData.waiverAuthority}
+                label="Waiver Authority"
+                labelClassName="ds-u-margin-top--0 required"
+                fieldClassName="field"
+                name="waiverAuthority"
+                id="waiver-authority"
+                onChange={handleInputChange}
+              />
+            )}
           {typeof formConfig.getParentInfo == "function" && (
             <Review heading={"Parent " + formConfig.idLabel}>
               {oneMacFormData.parentId ?? "Unknown"}
