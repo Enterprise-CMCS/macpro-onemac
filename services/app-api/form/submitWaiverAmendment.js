@@ -6,6 +6,7 @@ import { submitAny } from "./submitAny";
 import {
   defaultFormConfig,
   defaultProposedEffectiveDateSchema,
+  defaultWaiverAuthoritySchema,
 } from "./defaultFormConfig";
 
 export const waiverAmendmentFormConfig = {
@@ -13,7 +14,7 @@ export const waiverAmendmentFormConfig = {
   ...waiverAmendment,
   appendToSchema: {
     parentId: Joi.string().required(),
-    waiverAuthority: Joi.string().required(),
+    waiverAuthority: defaultWaiverAuthoritySchema,
     // Should look into a real validation with choices centrally located in cmscommonlib
     //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,

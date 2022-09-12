@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { waiverAppendixK } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
@@ -7,13 +6,14 @@ import {
   defaultFormConfig,
   defaultProposedEffectiveDateSchema,
   defaultTitleSchema,
+  defaultWaiverAuthoritySchema,
 } from "./defaultFormConfig";
 
 export const waiverAppendixKFormConfig = {
   ...defaultFormConfig,
   ...waiverAppendixK,
   appendToSchema: {
-    waiverAuthority: Joi.string().required(),
+    waiverAuthority: defaultWaiverAuthoritySchema,
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,
     title: defaultTitleSchema,
   },

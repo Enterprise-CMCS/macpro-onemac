@@ -13,3 +13,5 @@ export const defaultProposedEffectiveDateSchema = [
 ];
 
 export const defaultTitleSchema = Joi.string().required();
+
+export const defaultWaiverAuthoritySchema = Joi.string().required();
