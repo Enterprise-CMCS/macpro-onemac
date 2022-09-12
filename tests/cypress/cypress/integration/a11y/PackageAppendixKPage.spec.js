@@ -11,7 +11,7 @@ describe("Package Dashboard Submit 1915(c) Appendix K Amendment Page 508 test", 
       "//p[contains(text(),'Submit Waivers, Amendments, Renewals, or Temp. Extension')]"
     ).click();
     cy.xpath(
-      "//p[contains(text(),'Create a 1915(c) Appendix K Amendment')]"
+      "//p[contains(text(),'Create a 1915(c) Appendix K amendment')]"
     ).click();
   });
 
