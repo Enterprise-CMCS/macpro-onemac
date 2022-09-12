@@ -79,12 +79,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const presetComponentId = location.state?.componentId ?? "";
   const presetParentId = location.state?.parentId ?? undefined;
 
+  // if only one waiver Authority choice, it is the default
+  const presetWaiverAuthority =
+    formConfig.waiverAuthorities && formConfig.waiverAuthorities.length === 1
+      ? formConfig.waiverAuthorities[0].value
+      : undefined;
+
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
     territory: getTerritoryFromComponentId(presetComponentId),
     additionalInformation: "",
     componentId: presetComponentId,
-    waiverAuthority: undefined,
+    waiverAuthority: presetWaiverAuthority,
     proposedEffectiveDate: undefined,
     parentId: presetParentId,
     parentType: location.state?.parentType,
@@ -195,17 +201,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   useEffect(() => {
     window.scrollTo({ top: 0 });
   }, [alertCode]);
-
-  useEffect(() => {
-    if (
-      formConfig.waiverAuthorities &&
-      formConfig.waiverAuthorities.length === 1
-    ) {
-      let updatedRecord = { ...oneMacFormData } as OneMacFormData; // You need a new object to be able to update the state
-      updatedRecord.waiverAuthority = formConfig.waiverAuthorities[0].value;
-      setOneMacFormData(updatedRecord);
-    }
-  }, [formConfig]);
 
   useEffect(() => {
     const checkId = async () => {
