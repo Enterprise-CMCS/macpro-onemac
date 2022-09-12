@@ -12,6 +12,7 @@ export enum USER_STATUS {
   REVOKED = "revoked",
 }
 export enum USER_ROLE {
+  DEFAULT_CMS_USER = "defaultcmsuser",
   STATE_SUBMITTER = "statesubmitter",
   CMS_REVIEWER = "cmsreviewer",
   STATE_SYSTEM_ADMIN = "statesystemadmin",
