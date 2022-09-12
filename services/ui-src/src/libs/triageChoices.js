@@ -7,14 +7,13 @@ export const choicesFromRoute = {
     choices: [
       {
         title: "State Plan Amendment (SPA)",
-        description:
-          "Submit a new Medicaid & CHIP State Plan Amendments or RAI",
+        description: "Submit a new Medicaid & CHIP State Plan Amendment",
         linkTo: ONEMAC_ROUTES.TRIAGE_SPA,
       },
       {
         title: "Waiver Action",
         description:
-          "Submit Waivers, Amendments, Renewals, RAI, or Temp. Extension",
+          "Submit Waivers, Amendments, Renewals, or Temp. Extensions",
         linkTo: ONEMAC_ROUTES.TRIAGE_WAIVER,
       },
     ],
@@ -56,7 +55,7 @@ export const choicesFromRoute = {
       },
       {
         title: "1915(c) Appendix K Amendment",
-        description: "Create a 1915(c) Appendix K Amendment",
+        description: "Create a 1915(c) Appendix K amendment",
         linkTo: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       },
       {

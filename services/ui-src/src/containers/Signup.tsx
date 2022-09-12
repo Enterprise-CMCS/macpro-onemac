@@ -75,29 +75,36 @@ function HelpdeskSignup() {
   return null;
 }
 
+const CMS_ROLES: USER_ROLE[] = [
+  USER_ROLE.CMS_REVIEWER,
+  USER_ROLE.CMS_ROLE_APPROVER,
+  USER_ROLE.DEFAULT_CMS_USER,
+  USER_ROLE.SYSTEM_ADMIN,
+];
+
 // `cmsRoles` is from OKTA and is a string containing comma-separated role names
 const isStateUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-state-user");
-const isCmsUser = (cmsRoles: string) =>
-  !cmsRoles || !!cmsRoles.split(",").includes("onemac-cms-user");
+const isCmsUser = (userRole: USER_ROLE | null | undefined) =>
+  !userRole || CMS_ROLES.includes(userRole);
 const isHelpdeskUser = (cmsRoles: string) =>
   !!cmsRoles.split(",").includes("onemac-helpdesk");
 
 export function Signup() {
   // const history = useHistory();
-  const { userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
+  const { userRole, userProfile: { cmsRoles = "" /*, userData = {}*/ } = {} } =
     useAppContext() ?? {};
 
   const signupOptions = useMemo(
     () =>
       isStateUser(cmsRoles) ? (
         <StateUserSignup />
-      ) : isCmsUser(cmsRoles) ? (
-        <CMSSignup />
       ) : isHelpdeskUser(cmsRoles) ? (
         <div className="ds-l-col--auto ds-u-margin-x--auto">
           <HelpdeskSignup />
         </div>
+      ) : isCmsUser(userRole) ? (
+        <CMSSignup />
       ) : (
         <Redirect
           to={{
@@ -106,7 +113,7 @@ export function Signup() {
           }}
         />
       ),
-    [cmsRoles]
+    [cmsRoles, userRole]
   );
 
   // useEffect(() => {
