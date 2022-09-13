@@ -12,6 +12,11 @@ import {
 } from "../../libs/detailLib";
 import { waiverAppendixK } from "cmscommonlib";
 
+const appendixKWaiverAuthority = {
+  ...waiverAuthorityDefault,
+  default: "1915(c) HCBS",
+};
+
 export const waiverAppendixKDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverAppendixK,
@@ -25,7 +30,7 @@ export const waiverAppendixKDetail: OneMACDetail = {
     },
   ],
   detailSection: [
-    waiverAuthorityDefault,
+    appendixKWaiverAuthority,
     territoryDefault,
     {
       heading: "Amendment Title",

@@ -2300,6 +2300,9 @@ And("verify the amendment title is NA", () => {
 And("verify the waiver authority header exists", () => {
   OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderExists();
 });
+And("verify the waiver authority is 1915c HCBS", () => {
+  OneMacPackageDetailsPage.verifyWaiverAuthorityHeaderis1915cHCBS();
+});
 And("verify the supporting documentation section exists", () => {
   OneMacPackageDetailsPage.verifySupportingDocumentationSectionExists();
 });
