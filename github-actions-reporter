@@ -13,6 +13,7 @@ class GithubActionsReporter {
           return;
         }
 
+        console.log("status should be failed in results: ",result);
         result.failureMessages.forEach((failureMessages) => {
           const newLine = "%0A";
           const message = failureMessages.replace(/\n/g, newLine);
