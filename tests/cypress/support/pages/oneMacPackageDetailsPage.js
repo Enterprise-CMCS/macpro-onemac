@@ -197,6 +197,9 @@ export class oneMacPackageDetailsPage {
   verifyWaiverAuthorityHeaderExists() {
     cy.xpath(waiverAuthorityHeader).should("be.visible");
   }
+  verifyWaiverAuthorityHeaderis1915cHCBS() {
+    cy.xpath(waiverAuthorityHeader).next().contains("1915(c) HCBS");
+  }
   verifySupportingDocumentationSectionExists() {
     cy.xpath(supportingDocumentationSection).should("be.visible");
   }

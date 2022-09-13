@@ -133,6 +133,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify package actions header is visible
         And verify the details section exists
         And verify the waiver authority header exists
+        And verify the waiver authority is 1915c HCBS
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is an Amendment Title in the details section
@@ -158,6 +159,7 @@ Feature: OY2-11585 Waiver Package Details View: Initial Waivers and Waiver Renew
         And verify Respond to RAI action exists
         And verify the details section exists
         And verify the waiver authority header exists
+        And verify the waiver authority is 1915c HCBS
         And verify there is a State header in the details section
         And verify a state exists for the State
         And verify there is an Amendment Title in the details section
