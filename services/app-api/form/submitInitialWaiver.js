@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { initialWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
