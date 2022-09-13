@@ -51,7 +51,8 @@ export const buildParams = (role, territory) => {
   return startParams;
 };
 
-export const getMyUserList = async (event) => {
+export const getMyUserList = async (event, context) => {
+  console.log("what is available in the context:", context);
   try {
     // get the rest of the details about the current user
     const doneBy = await getUser(event.queryStringParameters.email);
