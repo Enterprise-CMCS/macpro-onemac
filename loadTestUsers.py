@@ -126,6 +126,7 @@ def seed_cognito(test_users, user_pool_id, password):
         role = ""
         if "role" not in user:
             if "cms_roles" not in user:
+                print(f'no role or cms_roles for user:\n {user}')
                 pass
             else:
                 role = user["cms_roles"]
@@ -135,6 +136,8 @@ def seed_cognito(test_users, user_pool_id, password):
             role = ""
         elif user["role"] == "helpdesk":
             role = "onemac-helpdesk"
+
+        user["ismemberof"] = "cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov";
 
         # checking errors so we do not set the password when the first call
         # fails, but the failure itself is not a big problem - in most cases
@@ -159,6 +162,7 @@ def seed_cognito(test_users, user_pool_id, password):
                 ],
                 check=True,
             )
+            # aws cognito-idp admin-set-user-password --user-pool-id {user_pool_id} --username {user["email"]} --password {password} --permanent
             subprocess.run(
                 [
                     "aws",
@@ -175,6 +179,7 @@ def seed_cognito(test_users, user_pool_id, password):
                 check=True,
             )
         except:
+            print(f'Received error:{sys.exc_info()}')
             pass
 
 
@@ -214,5 +219,5 @@ if __name__ == "__main__":
         seed_cognito(
             seed_users + devs + UNREGISTERED_USERS + UPPER_CASE_USER,
             user_pool_id,
-            os.environ.get("COGNITO_TEST_USERS_PASSWORD"),
+            os.environ.get("COGNITO_TEST_USERS_PASSWORD"), 
         )
