@@ -3,6 +3,11 @@ name: Destroy
 
 on: delete
 
+permissions:
+  id-token: write
+  contents: read
+  actions: read
+  
 jobs:
   destroy:
     if: github.event.ref_type == 'branch'
