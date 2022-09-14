@@ -139,7 +139,7 @@ export const TemporaryExtensionSection: FC<{
                 },
               }}
             >
-              <Button id="new-temp-ext-button" variation="primary">
+              <Button id="new-temp-ext-button" variation="solid">
                 Request Extension
               </Button>
             </Link>

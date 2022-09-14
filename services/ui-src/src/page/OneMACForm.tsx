@@ -567,7 +567,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             <Button
               id="form-cancel-button"
               aria-label="cancel-form"
-              className="ds-c-button ds-c-button--transparent"
+              className="ds-c-button ds-c-button--ghost"
               onClick={() =>
                 confirmAction &&
                 confirmAction(
@@ -589,7 +589,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
           <a
             target="new"
             href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
+            className="ds-c-button ds-c-button--solid ds-u-text-decoration--none"
           >
             View FAQ
           </a>

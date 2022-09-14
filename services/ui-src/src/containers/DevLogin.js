@@ -78,7 +78,7 @@ export default function DevLogin() {
                   required
                 ></input>
                 <Button
-                  className="ds-c-button ds-c-button--primary"
+                  className="ds-c-button ds-c-button--solid"
                   id="loginDevUserBtn"
                   type="submit"
                   value="Login"

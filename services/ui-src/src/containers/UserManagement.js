@@ -333,7 +333,7 @@ const UserManagement = () => {
         e.preventDefault();
         tableListExportToCSV("user-table", userList, "UserList");
       }}
-      inversed
+      onDark
     >
       Export to Excel(CSV){" "}
     </Button>

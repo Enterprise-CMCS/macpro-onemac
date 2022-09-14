@@ -62,6 +62,7 @@ then
    exit 1
 fi
 export STAGE=$stage
+export SASS_PATH="node_modules"
 export API_REGION=$api_region
 export API_URL=$api_url
 export COGNITO_REGION=$cognito_region

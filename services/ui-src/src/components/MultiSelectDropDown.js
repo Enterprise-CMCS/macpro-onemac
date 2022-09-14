@@ -67,7 +67,7 @@ export const MultiSelectDropDown = ({
             disabled={loading || invalid}
             onClick={() => submitFn(value)}
             type="button"
-            variation="primary"
+            variation="solid"
           >
             {loading && (
               <>
@@ -82,7 +82,7 @@ export const MultiSelectDropDown = ({
             Submit
           </Button>
           {cancelFn && (
-            <Button onClick={cancelFn} type="button" variation="transparent">
+            <Button onClick={cancelFn} type="button" variation="ghost">
               Cancel
             </Button>
           )}

@@ -133,7 +133,7 @@ export const GroupAndDivision = () => {
         )}
         <div className="submit-buttons">
           <Button
-            className={cx("ds-c-button--primary", {
+            className={cx("ds-c-button--solid", {
               "ds-c-button--disabled": group === null || division === null,
             })}
             type="submit"
@@ -141,7 +141,7 @@ export const GroupAndDivision = () => {
             Submit
           </Button>
           <Button
-            className="ds-c-button--transparent"
+            className="ds-c-button--ghost"
             onClick={openCancelConfirmation}
             type="button"
           >

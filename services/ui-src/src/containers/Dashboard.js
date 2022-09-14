@@ -233,7 +233,7 @@ const Dashboard = () => {
           "SubmissionList"
         );
       }}
-      inversed
+      onDark
     >
       Export to Excel(CSV){" "}
     </Button>
@@ -244,7 +244,7 @@ const Dashboard = () => {
       id="new-submission-button"
       className="new-submission-button"
       href={ROUTES.NEW_SUBMISSION_SELECTION}
-      inversed
+      onDark
     >
       New Submission
       <svg

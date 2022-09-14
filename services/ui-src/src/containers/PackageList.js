@@ -306,7 +306,7 @@ const PackageList = () => {
         e.preventDefault();
         tableListExportToCSV("package-dashboard", packageList, `${tab}List`);
       }}
-      inversed
+      onDark
     >
       Export to Excel(CSV){" "}
     </Button>
@@ -317,7 +317,7 @@ const PackageList = () => {
       id="new-submission-button"
       className="new-submission-button"
       href={ONEMAC_ROUTES.TRIAGE_GROUP}
-      inversed
+      onDark
     >
       New Submission
       <svg

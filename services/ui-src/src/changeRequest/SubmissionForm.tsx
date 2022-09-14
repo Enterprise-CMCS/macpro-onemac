@@ -544,7 +544,8 @@ export const SubmissionForm: React.FC<{
             <Button
               id="form-submission-button"
               aria-label="submit-form"
-              className="ds-c-button ds-c-button--success"
+              variation="solid"
+              isAlternate
               disabled={!isSubmissionReady}
               onClick={handleSubmit}
               value="Submit"
@@ -554,7 +555,7 @@ export const SubmissionForm: React.FC<{
             <Button
               id="form-cancel-button"
               aria-label="cancel-form"
-              className="ds-c-button ds-c-button--transparent"
+              className="ds-c-button ds-c-button--ghost"
               onClick={() => setConfirmCancel(true)}
             >
               Cancel
@@ -566,7 +567,7 @@ export const SubmissionForm: React.FC<{
           <a
             target="new"
             href={ROUTES.FAQ_TOP}
-            className="ds-c-button ds-c-button--primary ds-u-text-decoration--none"
+            className="ds-c-button ds-c-button--solid ds-u-text-decoration--none"
           >
             View FAQ
           </a>
