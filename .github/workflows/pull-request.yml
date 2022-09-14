@@ -14,13 +14,10 @@ jobs:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_HEAD_REF}" >> $GITHUB_ENV
       - name: Configure AWS credentials for GitHub Actions
-        env:
-          AWS_OIDC_ROLE_TO_ASSUME: ${{ secrets[env.BRANCH_SPECIFIC_VARNAME_AWS_OIDC_ROLE_TO_ASSUME] || secrets.AWS_OIDC_ROLE_TO_ASSUME }}
-          AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
         uses: aws-actions/configure-aws-credentials@v1
         with:
-          role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
-          aws-region: ${{ env.AWS_DEFAULT_REGION }}
+          role-to-assume: ${{ secrets.AWS_OIDC_ROLE_TO_ASSUME }}
+          aws-region: ${{ secrets.AWS_DEFAULT_REGION }}
       - name: get endpoint
         run:  echo "application_endpoint_url="`aws cloudformation describe-stacks --stack-name ui-${{env.branch_name}} --output text --query "Stacks[0].Outputs[?OutputKey=='ApplicationEndpointUrl'].OutputValue"` >> $GITHUB_ENV
       - name: Add endpoint in PR
