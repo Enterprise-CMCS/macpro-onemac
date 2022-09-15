@@ -41,6 +41,7 @@ export function getSignInUrl() {
  */
 export const logout = (isLoggedInAsDeveloper?: boolean) => {
   const authConfig = Auth.configure();
+  console.log("authConfig is: ", authConfig);
   Auth.signOut();
   if (isLoggedInAsDeveloper) {
     window.location.replace(
