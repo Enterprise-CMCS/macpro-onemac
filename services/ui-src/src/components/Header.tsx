@@ -159,7 +159,7 @@ const AccountButtons: React.FC<{
             id="logoutLink"
             onClick={() => {
               setShowMenu(false);
-              logout(isLoggedInAsDeveloper);
+              logout();
             }}
           >
             <FontAwesomeIcon icon={faSignOutAlt} />
