@@ -62,7 +62,6 @@ const AccountButtons: React.FC<{
   const history = useHistory();
   const {
     isAuthenticated,
-    isLoggedInAsDeveloper,
     userRole,
     userProfile: { userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
