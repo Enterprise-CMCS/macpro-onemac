@@ -1,0 +1,18 @@
+[
+  {
+    "ParameterKey": "SubjectClaimFilters",
+    "ParameterValue": "repo:CMSgov/onemac:ref:refs/heads/master"
+  },
+  {
+    "ParameterKey": "Path",
+    "ParameterValue": "/delegatedadmin/developer/"
+  },
+  {
+    "ParameterKey": "PermissionsBoundaryARN",
+    "ParameterValue": "arn:aws:iam::980018549706:policy/cms-cloud-admin/ct-ado-poweruser-permissions-boundary-policy"
+  },
+  {
+    "ParameterKey": "ManagedPolicyARNs",
+    "ParameterValue": "arn:aws:iam::980018549706:policy/ADO-Restriction-Policy,arn:aws:iam::980018549706:policy/CMSApprovedAWSServices,arn:aws:iam::aws:policy/AdministratorAccess"
+  }
+]
