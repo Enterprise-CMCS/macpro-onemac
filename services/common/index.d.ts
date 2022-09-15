@@ -12,6 +12,7 @@ export enum USER_STATUS {
   REVOKED = "revoked",
 }
 export enum USER_ROLE {
+  DEFAULT_CMS_USER = "defaultcmsuser",
   STATE_SUBMITTER = "statesubmitter",
   CMS_REVIEWER = "cmsreviewer",
   STATE_SYSTEM_ADMIN = "statesystemadmin",
@@ -160,6 +161,7 @@ export { waiverTemporaryExtension } from "./type/waiverTemporaryExtension.js";
 export { waiverRenewal } from "./type/waiverRenewal.js";
 export { waiverAmendment } from "./type/waiverAmendment.js";
 export { waiverAppendixK } from "./type/waiverAppendixK.js";
+export { waiverAppendixKRAIResponse } from "./type/waiverAppendixKRAIResponse.js";
 export { waiverRAIResponse } from "./type/waiverRAIResponse.js";
 export { medicaidSPA } from "./type/medicaidSPA.js";
 export { medicaidSPARAIResponse } from "./type/medicaidSPARAIResponse.js";

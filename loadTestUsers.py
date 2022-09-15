@@ -50,6 +50,39 @@ UPPER_CASE_USER = [
     }
 ]
 
+devs = [
+    {
+        "email": "k.grue.cmsroleapprover@gmail.com",
+        "cms_roles": "notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinCMS",
+        "lastName": "GrueRoleApp",
+    },{
+        "email": "helpdesk@notreal.com",
+        "cms_roles": "onemac-helpdesk",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "ValenciaHelp",
+        "lastName": "McMurrayDesk",
+    },{
+        "email": "k.grue.stateuser@gmail.com",
+        "cms_roles": "onemac-state-user",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinState",
+        "lastName": "GrueSubmitter",
+    },{
+        "email": "helpdesk2@notreal.com",
+        "cms_roles": "onemac-helpdesk,notaonemacrole,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinHelp",
+        "lastName": "GrueDesk",
+    },{
+        "email": "k.grue.stateadmn@gmail.com",
+        "cms_roles": "notaonemacrole,onemac-state-user,anothernononemacrole",
+        "ismemberof": "cn=CARTS_Group_Val,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CARTS_Group_Val_Admin,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=CHIP_V_USER_GROUP_ADMIN,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov",
+        "firstName": "KristinState",
+        "lastName": "GrueAdmin",
+    }
+]
 
 def seed_data():
     """
@@ -72,35 +105,6 @@ def seed_data():
             if "GSI1pk" in item and item["GSI1pk"] == "USER"
         ]
 
-
-def git_committers():
-    """
-    Parse the output of `git log` to get a list of all the (human,
-    non-duplicate) committers to this repository.
-    """
-    committers = {}
-    for line in subprocess.run(
-        ["git", "log", "--pretty=format:%an %ae"], capture_output=True
-    ).stdout.split(b"\n"):
-        if b"github.com" in line:
-            continue
-
-        parts = line.decode("utf-8").split(" ")
-        # the strip call here is because of poorly configured git users
-        name, email = parts[:-1], parts[-1].strip(".!?#“”")
-        if email not in committers or len(committers[email]) < len(name):
-            committers[email] = name
-
-    return [
-        {
-            "email": email,
-            "firstName": name[0] if len(name) else email.split("@")[0],
-            "lastName": name[1] if len(name) > 1 else "TestUser",
-        }
-        for email, name in committers.items()
-    ]
-
-
 def get_user_pool_id(stage):
     """
     Retrieve the ID of this stage's Cognito User Pool.
@@ -121,13 +125,19 @@ def seed_cognito(test_users, user_pool_id, password):
         print(f'Creating user with ID {user["email"]}')
         role = ""
         if "role" not in user:
-            pass
+            if "cms_roles" not in user:
+                print(f'no role or cms_roles for user:\n {user}')
+                pass
+            else:
+                role = user["cms_roles"]
         elif user["role"].startswith("state"):
             role = "onemac-state-user"
         elif user["role"].startswith("cms") or user["role"] == "systemadmin":
             role = ""
         elif user["role"] == "helpdesk":
             role = "onemac-helpdesk"
+
+        user["ismemberof"] = "cn=EUA_USER,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_D,ou=Groups,dc=cms,dc=hhs,dc=gov,cn=ONEMAC_USER_V,ou=Groups,dc=cms,dc=hhs,dc=gov";
 
         # checking errors so we do not set the password when the first call
         # fails, but the failure itself is not a big problem - in most cases
@@ -147,10 +157,12 @@ def seed_cognito(test_users, user_pool_id, password):
                     "--user-attributes",
                     f'Name=given_name,Value={user["firstName"]}',
                     f'Name=family_name,Value={user["lastName"]}',
-                    f"Name=custom:cms_roles,Value={role}",
+                    f'Name=custom:cms_roles,Value="{role}"',
+                    f'Name=custom:ismemberof,Value="{user["ismemberof"]}"',
                 ],
                 check=True,
             )
+            # aws cognito-idp admin-set-user-password --user-pool-id {user_pool_id} --username {user["email"]} --password {password} --permanent
             subprocess.run(
                 [
                     "aws",
@@ -167,6 +179,7 @@ def seed_cognito(test_users, user_pool_id, password):
                 check=True,
             )
         except:
+            print(f'Received error:{sys.exc_info()}')
             pass
 
 
@@ -185,7 +198,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     seed_users = seed_data()
-    devs = git_committers()
 
     if args.dry_run:
         print("Seed users:")
@@ -207,5 +219,5 @@ if __name__ == "__main__":
         seed_cognito(
             seed_users + devs + UNREGISTERED_USERS + UPPER_CASE_USER,
             user_pool_id,
-            os.environ.get("COGNITO_TEST_USERS_PASSWORD"),
+            os.environ.get("COGNITO_TEST_USERS_PASSWORD"), 
         )

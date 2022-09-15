@@ -10,6 +10,27 @@ export const packageList = [
     submitterEmail: "statesubmitteractive@cms.hhs.local",
   },
   {
+    componentType: "waivernew",
+    componentId: "MD.83420.R00.00",
+    submissionId: "11300e80-263f-11ec-ab47-23c14df6b883",
+    currentStatus: "RAI Issued",
+    submitterId: "offlineContext_cognitoIdentityId",
+    submitterName: "Angie Active",
+    submissionTimestamp: 1633481285595,
+    submitterEmail: "statesubmitteractive@cms.hhs.local",
+    children: [
+      {
+        componentType: "waiverrai",
+        componentId: "MD.83420.R00.00",
+        currentStatus: "Submitted",
+        submitterName: "Statesubmitter Nightwatch",
+        displayId: "MD.83420.R00.00",
+        submitterEmail: "statesubmitter@nightwatch.test",
+        submissionTimestamp: 1643296612626,
+      },
+    ],
+  },
+  {
     componentType: "chipspa",
     componentId: "MI-98-2223",
     submissionId: "d47e7d50-263e-11ec-ab47-23c14df6b883",

@@ -150,6 +150,8 @@ async function getDataFromDB(user) {
 export const main = handler(async (event) => {
   const user = await getUser(event.queryStringParameters.email);
 
+  if (!user) return RESPONSE_CODE.USER_NOT_FOUND;
+
   const allResults = await getDataFromDB(user);
   if (typeof allResults === "string") return allResults;
   // extracts items from each of the results

@@ -10,6 +10,7 @@ export const waiverAppendixK = {
       errorLevel: "error",
     },
   ],
+  waiverAuthorities: [{ label: "1915(c) HCBS", value: "1915(c)" }],
   allowMultiplesWithSameId: false,
   requiredAttachments: ["1915(c) Appendix K Amendment Waiver Template"],
   optionalAttachments: ["Other"],

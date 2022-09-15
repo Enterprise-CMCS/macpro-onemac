@@ -6,6 +6,8 @@ const leaveAnywaysBtn = "//button[text()='Leave Anyway']";
 const yesSubmitBtn = "//button[text()='Yes, Submit']";
 const prepopulatedWaiverNumber =
   "//h3[text()='Waiver Number']/following-sibling::div";
+const prepopulatedWaiverAmendmentNumber =
+  "//h3[text()='Waiver Amendment Number']/following-sibling::div";
 
 export class oneMacRespondToRAIPage {
   verifyPageHeader() {
@@ -25,6 +27,9 @@ export class oneMacRespondToRAIPage {
   }
   verifyWaiverNumberMatchesID(s) {
     cy.xpath(prepopulatedWaiverNumber).should("have.text", s);
+  }
+  verifyAppKMatchesID(s) {
+    cy.xpath(prepopulatedWaiverAmendmentNumber).should("have.text", s);
   }
 }
 export default oneMacRespondToRAIPage;

@@ -27,7 +27,7 @@ import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
   "1915(b)(4)": "1915(b)(4) FFS Selective Contracting waivers",
-  "1915(c)": "1915(c) Appendix K Amendment",
+  "1915(c)": "1915(c) HCBS",
 } as const;
 
 type PathParams = {

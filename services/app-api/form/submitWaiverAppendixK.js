@@ -6,12 +6,14 @@ import {
   defaultFormConfig,
   defaultProposedEffectiveDateSchema,
   defaultTitleSchema,
+  defaultWaiverAuthoritySchema,
 } from "./defaultFormConfig";
 
 export const waiverAppendixKFormConfig = {
   ...defaultFormConfig,
   ...waiverAppendixK,
   appendToSchema: {
+    waiverAuthority: defaultWaiverAuthoritySchema,
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,
     title: defaultTitleSchema,
   },
