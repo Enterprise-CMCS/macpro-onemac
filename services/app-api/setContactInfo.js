@@ -51,7 +51,7 @@ export const setContactInfo = async (event) => {
       apiResponse = RESPONSE_CODE.USER_SUBMITTED;
     }
   } catch (e) {
-    console.error(`Could not create user ${body.email}`, e);
+    console.error(`Could not create user %s`, body.email, e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
