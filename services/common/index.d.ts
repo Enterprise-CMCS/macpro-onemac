@@ -104,6 +104,7 @@ export namespace ChangeRequest {
     RESPOND_TO_RAI = "Respond to RAI",
     WITHDRAW = "Withdraw",
     REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
+    ADD_AMENDMENT = "Add Amendment",
   }
 
   export type FormInfo = {
@@ -129,6 +130,7 @@ export namespace Workflow {
     RESPOND_TO_RAI = "Respond to RAI",
     WITHDRAW = "Withdraw",
     REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
+    ADD_AMENDMENT = "Add Amendment",
   }
   export const ONEMAC_TYPE: Record<string, string>;
   export const ONEMAC_LABEL: Record<string, string>;
