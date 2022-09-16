@@ -40,7 +40,7 @@ const IdleTimerWrapper = () => {
   };
 
   const onIdle = () => {
-    logout(isLoggedInAsDeveloper);
+    logout();
   };
 
   const idleTimer: IIdleTimer = useIdleTimer({

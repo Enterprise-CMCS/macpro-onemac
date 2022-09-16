@@ -62,7 +62,6 @@ const AccountButtons: React.FC<{
   const history = useHistory();
   const {
     isAuthenticated,
-    isLoggedInAsDeveloper,
     userRole,
     userProfile: { userData: { roleList = [] } = {} } = {},
   } = useAppContext() ?? {};
@@ -159,7 +158,7 @@ const AccountButtons: React.FC<{
             id="logoutLink"
             onClick={() => {
               setShowMenu(false);
-              logout(isLoggedInAsDeveloper);
+              logout();
             }}
           >
             <FontAwesomeIcon icon={faSignOutAlt} />
