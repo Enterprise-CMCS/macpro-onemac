@@ -71,6 +71,8 @@ export const initialWaiverActionsByStatus = {
   ],
 };
 
+export const renewalWaiverActionsByStatus = initialWaiverActionsByStatus;
+
 export const waiverExtensionActionsByStatus = {
   ...defaultActionsByStatus,
   [ONEMAC_STATUS.RAI_ISSUED]: [PACKAGE_ACTION.WITHDRAW],
@@ -92,7 +94,7 @@ export const ACTIONS = {
   [ONEMAC_TYPE.WAIVER]: initialWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.WAIVER_INITIAL]: initialWaiverActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_RENEWAL]: defaultActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_RENEWAL]: renewalWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
   [ONEMAC_TYPE.WAIVER_APP_K]: defaultActionsByStatus,

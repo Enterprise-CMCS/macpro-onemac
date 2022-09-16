@@ -29,7 +29,7 @@ export const waiverRenewalDetail: OneMACDetail = {
     submissionDateDefault,
     proposedEffectiveDateDefault,
   ],
-  actionsByStatus: Workflow.initialWaiverActionsByStatus,
+  actionsByStatus: Workflow.renewalWaiverActionsByStatus,
 };
 
 const WaiverRenewalDetail: FC = () => {
