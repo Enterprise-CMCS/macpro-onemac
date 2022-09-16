@@ -13,8 +13,7 @@ An official submission system for email-based state plan amendments (SPAs) and s
 The following environment variables can be set to change the configuration of the application (reference [build_vars.sh](./.github/build_vars.sh)):
 Lengend: R = Required, O = Optional
 
-- (R) AWS_ACCESS_KEY_ID - AWS Access key with write access for creating AWS resources in the account
-- (R) AWS_SECRET_ACCESS_KEY - AWS secret with write access for creating AWS resources in the account
+- (R) AWS_OIDC_ROLE_TO_ASSUME - the arn of the role to assume for deployment
 - (R) AWS_DEFAULT_REGION - The AWS region to deploy the application to
 - (O) INFRASTRUCTURE_TYPE - Defaults to "development"
 - ROUTE_53_HOSTED_ZONE_ID
