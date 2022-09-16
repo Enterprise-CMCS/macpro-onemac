@@ -10,7 +10,7 @@ export default function AddAmendment({ theComponent }) {
       to={{
         pathname: ONEMAC_ROUTES.WAIVER_AMENDMENT,
         state: {
-          componentId: theComponent.componentId,
+          parentId: theComponent.componentId,
         },
       }}
       id={"add-amendment-action-" + theComponent.componentId}
