@@ -262,6 +262,9 @@ resources:
       Properties:
         Cluster: !Sub '${KafkaConnectCluster}'
         DeploymentConfiguration:
+          DeploymentCircuitBreaker:
+            Enable: true
+            Rollback: false
           MaximumPercent: 100
           MinimumHealthyPercent: 0
         LaunchType: FARGATE
