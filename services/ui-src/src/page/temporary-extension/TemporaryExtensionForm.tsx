@@ -33,6 +33,15 @@ const TemporaryExtensionForm: FC = () => {
         ? TYPE_TO_DETAIL_ROUTE[location.state?.parentType] +
           `/${location.state?.parentId}#${DetailViewTab.EXTENSION}`
         : ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
+    parentLabel: "Approved Base or Renewal Waiver Number",
+    parentFieldHint: [
+      {
+        text: "Please enter the base or renewal waiver number for which you are requesting a Temporary Extension.",
+      },
+    ],
+    parentNotFoundMessage:
+      "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
+    validateParentAPI: "validateParentOfWaiverAmendment",
   };
 
   return <OneMACForm formConfig={temporaryExtensionFormInfo} />;

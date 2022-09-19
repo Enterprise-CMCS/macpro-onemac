@@ -165,10 +165,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     updatedRecord.territory = getTerritoryFromComponentId(componentId);
 
     //if this is a child type form and no parentId was passed in state then determine parentId based on componentId
-    if (typeof formConfig.getParentInfo == "function" && !presetParentId) {
-      [updatedRecord.parentId, updatedRecord.parentType] =
-        formConfig.getParentInfo(updatedRecord.componentId);
-    }
+    // if (typeof formConfig.getParentInfo == "function" && !presetParentId) {
+    //   [updatedRecord.parentId, updatedRecord.parentType] =
+    //     formConfig.getParentInfo(updatedRecord.componentId);
+    // }
 
     setOneMacFormData(updatedRecord);
   }
@@ -487,11 +487,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 onChange={handleInputChange}
               />
             )}
-          {typeof formConfig.getParentInfo == "function" && (
-            <Review heading={"Parent " + formConfig.idLabel}>
-              {oneMacFormData.parentId ?? "Unknown"}
-            </Review>
-          )}
           {formConfig.parentLabel && (
             <ComponentId
               idLabel={formConfig.parentLabel}
