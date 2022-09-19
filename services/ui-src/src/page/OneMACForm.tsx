@@ -489,6 +489,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
             )}
           {formConfig.parentLabel && (
             <ComponentId
+              id="parentComponentId"
               idLabel={formConfig.parentLabel}
               idFieldHint={formConfig.parentFieldHint ?? [{ text: "" }]}
               statusMessages={parentIdStatusMessages}
