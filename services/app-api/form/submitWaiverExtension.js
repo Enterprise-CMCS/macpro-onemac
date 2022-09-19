@@ -9,7 +9,6 @@ export const waiverTemporaryExtensionFormConfig = {
   ...waiverTemporaryExtension,
   appendToSchema: {
     parentId: Joi.string().required(),
-    parentType: Joi.string().required(),
   },
 };
 
