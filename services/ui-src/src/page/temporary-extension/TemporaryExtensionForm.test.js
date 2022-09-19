@@ -96,7 +96,7 @@ describe("Temporary Extension Form", () => {
     );
 
     const parentWaiverNumberValue = screen.getByText(
-      "Approved Base or Renewal Waiver Number"
+      "Approved Initial or Renewal Waiver Number"
     ).nextSibling.innerHTML;
     expect(parentWaiverNumberValue).toBe(testParentId);
   });
@@ -116,7 +116,7 @@ describe("Temporary Extension Form", () => {
     );
 
     const input = screen.getByLabelText(
-      "Approved Base or Renewal Waiver Number"
+      "Approved Initial or Renewal Waiver Number"
     );
 
     PackageApi.validateParent.mockResolvedValue(false);
