@@ -146,21 +146,13 @@ it("rejects a duplicate id initial waiver", async () => {
   expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
 });
 
-it("rejects submission when cant find parentId on temp extension", async () => {
-  const response = await submitAny(
-    tempExtensionTestEvent,
-    tempExtentsionTestConfig
-  );
-  expect(response).toEqual(RESPONSE_CODE.VALIDATION_ERROR);
-});
-
 it("rejects a duplicate id for temp extension", async () => {
   packageExists.mockResolvedValue(true);
   const response = await submitAny(
     tempExtensionTestEvent,
     tempExtentsionTestConfig
   );
-  expect(response).toEqual(RESPONSE_CODE.VALIDATION_ERROR);
+  expect(response).toEqual(RESPONSE_CODE.DUPLICATE_ID);
 });
 
 it("returns error code for validation error", async () => {
