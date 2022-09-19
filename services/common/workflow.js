@@ -41,6 +41,7 @@ export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
   WITHDRAW: "Withdraw",
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
+  ADD_AMENDMENT: "Add Amendment",
 };
 
 export const PACKAGE_GROUP = {
@@ -64,8 +65,13 @@ export const defaultActionsByStatus = {
 
 export const initialWaiverActionsByStatus = {
   ...defaultActionsByStatus,
-  [ONEMAC_STATUS.APPROVED]: [PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION],
+  [ONEMAC_STATUS.APPROVED]: [
+    PACKAGE_ACTION.REQUEST_TEMPORARY_EXTENSION,
+    PACKAGE_ACTION.ADD_AMENDMENT,
+  ],
 };
+
+export const renewalWaiverActionsByStatus = initialWaiverActionsByStatus;
 
 export const waiverExtensionActionsByStatus = {
   ...defaultActionsByStatus,
@@ -88,7 +94,7 @@ export const ACTIONS = {
   [ONEMAC_TYPE.WAIVER]: initialWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_RAI]: raiActionsByStatus,
   [ONEMAC_TYPE.WAIVER_INITIAL]: initialWaiverActionsByStatus,
-  [ONEMAC_TYPE.WAIVER_RENEWAL]: defaultActionsByStatus,
+  [ONEMAC_TYPE.WAIVER_RENEWAL]: renewalWaiverActionsByStatus,
   [ONEMAC_TYPE.WAIVER_AMENDMENT]: defaultActionsByStatus,
   [ONEMAC_TYPE.WAIVER_EXTENSION]: waiverExtensionActionsByStatus,
   [ONEMAC_TYPE.WAIVER_APP_K]: defaultActionsByStatus,

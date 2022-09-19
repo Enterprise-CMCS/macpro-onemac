@@ -39,14 +39,14 @@ export function getSignInUrl() {
 /**
  * Logout the user.
  */
-export const logout = (isLoggedInAsDeveloper?: boolean) => {
+export const logout = async () => {
   const authConfig = Auth.configure();
-  Auth.signOut();
-  if (isLoggedInAsDeveloper) {
+  try {
+    await Auth.signOut();
     window.location.replace(
       (authConfig.oauth as AwsCognitoOAuthOpts).redirectSignOut
     );
-  } else {
-    window.location.href = getRegisterUrl();
+  } catch (error) {
+    console.log("signout error: ", error);
   }
 };
