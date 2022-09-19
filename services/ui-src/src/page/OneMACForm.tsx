@@ -164,12 +164,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     updatedRecord.componentId = componentId;
     updatedRecord.territory = getTerritoryFromComponentId(componentId);
 
-    //if this is a child type form and no parentId was passed in state then determine parentId based on componentId
-    // if (typeof formConfig.getParentInfo == "function" && !presetParentId) {
-    //   [updatedRecord.parentId, updatedRecord.parentType] =
-    //     formConfig.getParentInfo(updatedRecord.componentId);
-    // }
-
     setOneMacFormData(updatedRecord);
   }
 

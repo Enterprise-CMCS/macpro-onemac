@@ -12,8 +12,6 @@ export const waiverTemporaryExtension = {
   allowMultiplesWithSameId: false,
   requiredAttachments: ["Waiver Extension Request"],
   optionalAttachments: ["Other"],
-  requiredUploads: ["Waiver Extension Request"],
-  optionalUploads: ["Other"],
   allowedParentTypes: ["waivernew", "waiverrenewal"],
   allowedParentStatuses: ["Approved"],
 };
