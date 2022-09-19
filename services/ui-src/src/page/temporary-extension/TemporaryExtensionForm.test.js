@@ -10,8 +10,10 @@ import TemporaryExtensionForm from "./TemporaryExtensionForm";
 import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
 import { AppContext } from "../../libs/contextLib";
 import { ONEMAC_TYPE } from "cmscommonlib/workflow";
+import PackageApi from "../../utils/PackageApi";
 
 jest.mock("../../utils/ChangeRequestDataApi");
+jest.mock("../../utils/PackageApi");
 
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 window.scrollTo = jest.fn();
@@ -63,7 +65,9 @@ describe("Temporary Extension Form", () => {
     const submitButtonEl = screen.getByText("Submit");
     expect(submitButtonEl).toBeDisabled();
 
-    const transmittalNumberEl = screen.getByLabelText("Waiver Number");
+    const transmittalNumberEl = screen.getByLabelText(
+      "Temporary Extension Number"
+    );
 
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
 
@@ -91,17 +95,14 @@ describe("Temporary Extension Form", () => {
       </AppContext.Provider>
     );
 
-    const parentWaiverNumberValue = screen.getByText("Parent Waiver Number")
-      .nextSibling.innerHTML;
+    const parentWaiverNumberValue = screen.getByText(
+      "Approved Base or Renewal Waiver Number"
+    ).nextSibling.innerHTML;
     expect(parentWaiverNumberValue).toBe(testParentId);
   });
 
-  it("shows warning message if parentId is not found", async () => {
-    const testParentId = "VA-83420.R00.00";
-    history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION, {
-      parentType: ONEMAC_TYPE.WAIVER_INITIAL,
-      parentId: testParentId,
-    });
+  it("shows error message if parentId is not found", async () => {
+    const testParentId = "99999";
     render(
       <AppContext.Provider
         value={{
@@ -114,15 +115,18 @@ describe("Temporary Extension Form", () => {
       </AppContext.Provider>
     );
 
-    const input = screen.getByLabelText("Waiver Number");
+    const input = screen.getByLabelText(
+      "Approved Base or Renewal Waiver Number"
+    );
 
-    userEvent.type(input, "VA-99999.R00.TE01");
+    PackageApi.validateParent.mockResolvedValue(false);
+
+    userEvent.type(input, testParentId);
 
     await waitFor(() => {
       expect(
         screen.getByText(
-          // "Waiver Number not found. Please ensure you have the correct Waiver Number before submitting. Contact the MACPro Help Desk (code: OMP002) if you need support."
-          "You will still be able to submit but your submission ID does not appear to match our records. Before proceeding, please check to ensure you have the correct submission ID. If you need support, please contact the OneMAC Help Desk at OneMAC_Helpdesk@cms.hhs.gov or (833) 228-2540."
+          "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation."
         )
       ).toBeInTheDocument();
     });

@@ -9,7 +9,7 @@ import React, {
 import { useHistory, useLocation } from "react-router-dom";
 import { Input } from "rsuite";
 
-import { TextField, Button, Dropdown, Review } from "@cmsgov/design-system";
+import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
 import {
   RESPONSE_CODE,
