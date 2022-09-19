@@ -15,6 +15,7 @@ const ComponentId: React.FC<{
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
+  id?: string;
 }> = ({
   idLabel,
   idFieldHint,
@@ -23,6 +24,7 @@ const ComponentId: React.FC<{
   value,
   onChange,
   disabled,
+  id = "componentId",
 }) => {
   return (
     <>
@@ -30,7 +32,7 @@ const ComponentId: React.FC<{
         <>
           <div className="label-container">
             <div>
-              <label htmlFor="componentId" className="required">
+              <label htmlFor={id} className="required">
                 {idLabel}
               </label>
             </div>
@@ -67,7 +69,7 @@ const ComponentId: React.FC<{
           <input
             className="field"
             type="text"
-            id="componentId"
+            id={id}
             name="componentId"
             aria-describedby={idFieldHint
               ?.map(function (idFieldHint, idx) {

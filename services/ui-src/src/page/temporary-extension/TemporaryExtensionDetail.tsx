@@ -15,6 +15,12 @@ const parentIdDetail: AttributeDetail = {
   default: null,
 };
 
+const componentIdDetail: AttributeDetail = {
+  heading: "Temporary Extension Number",
+  fieldName: "componentId",
+  default: "N/A",
+};
+
 export const waiverTemporaryExtensionDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverTemporaryExtension,
@@ -23,7 +29,12 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   usesVerticalNav: false,
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
   show90thDayInfo: false,
-  detailSection: [parentIdDetail, typeDefault, submissionDateDefault],
+  detailSection: [
+    componentIdDetail,
+    parentIdDetail,
+    typeDefault,
+    submissionDateDefault,
+  ],
 };
 
 const WaiverTemporaryExtensionDetail: FC = () => {
