@@ -3124,7 +3124,6 @@
         "url": "https://uploads-oy2-15674-inc2-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Afca18499-f892-4266-ad18-8b53c6fb7f39/1643212211505/plain.pdf"
       }
     ],
-    "GSI1sk": "MD-1117.R01.00",
     "additionalInformation": "renew",
     "children": [
       {
@@ -3139,7 +3138,6 @@
     ],
     "submissionTimestamp": 1643212170520,
     "waiverAuthority": "1915(b)(4)",
-    "GSI1pk": "OneMAC#waiver",
     "Latest": 1,
     "submitterEmail": "statesubmitter@nightwatch.test",
     "componentId": "MD-1117.R01.00",
