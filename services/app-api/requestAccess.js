@@ -72,7 +72,7 @@ export const requestAccess = async (event) => {
         territory,
       });
     } catch (e) {
-      console.error(`Could not update user ${body.email}'s status`, e);
+      console.error(`Could not update user %s's status`, body.email, e);
       return RESPONSE_CODE.USER_SUBMISSION_FAILED;
     }
 

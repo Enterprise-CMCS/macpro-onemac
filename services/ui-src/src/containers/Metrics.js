@@ -28,7 +28,7 @@ export default function Metrics() {
             data.attributes.email
           );
         console.log("DEBUG:(" + JSON.stringify(results));
-        setStateTotals(JSON.stringify(results.stateTotals).replace('"', " "));
+        setStateTotals("State totals had security error"); // JSON.stringify(results.stateTotals).replace('"', " "));
         setMetrics(results);
         if (!metricEmail.includes(data.attributes.email)) {
           window.location = "/dashboard";
