@@ -2595,6 +2595,15 @@ aside#faq-contact-info-box {
   border-radius: 0 0 3px 3px;
   border-top: none;
 }
+
+.detail-card-top-review-item {
+  @extend .ds-c-review;
+  @extend .ds-u-padding-top--0;
+}
+
+.detail-card-status {
+  color: $color-black;
+}
 .package-actions {
   @extend .ds-u-flex-direction--column;
   width: 50%;
@@ -2602,7 +2611,7 @@ aside#faq-contact-info-box {
 .action-list {
   list-style-type: none;
   @extend .ds-u-padding--0;
-  @extend .ds-u-padding-top--2;
+  @extend .ds-u-padding-top--0;
   @extend .ds-u-margin--0;
 
   p {

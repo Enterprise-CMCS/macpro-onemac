@@ -51,7 +51,10 @@ export const DetailSection = ({
         <div className="detail-card-top"></div>
         <div className="detail-card">
           <section>
-            <h2>{detail.currentStatus}</h2>
+            <Review heading="Status" className="detail-card-top-review-item">
+              <h2 className="detail-card-status">{detail.currentStatus}</h2>
+            </Review>
+
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
                 {Number(ninetyDayText)
@@ -67,25 +70,29 @@ export const DetailSection = ({
           </section>
           {userRoleObj.canAccessForms ? (
             <section className="package-actions">
-              <h2>{pageConfig.actionLabel}</h2>
-              <ul className="action-list">
-                {pageConfig.actionsByStatus[detail.currentStatus]?.length >
-                0 ? (
-                  pageConfig.actionsByStatus[detail.currentStatus]?.map(
-                    (actionName, i) => (
-                      <li key={i}>
-                        {actionComponent[actionName](detail, updateData)}
-                      </li>
+              <Review
+                heading={pageConfig.actionLabel}
+                className="detail-card-top-review-item"
+              >
+                <ul className="action-list">
+                  {pageConfig.actionsByStatus[detail.currentStatus]?.length >
+                  0 ? (
+                    pageConfig.actionsByStatus[detail.currentStatus]?.map(
+                      (actionName, i) => (
+                        <li key={i}>
+                          {actionComponent[actionName](detail, updateData)}
+                        </li>
+                      )
                     )
-                  )
-                ) : (
-                  <li>
-                    <p>
-                      No actions are currently available for this submission.
-                    </p>
-                  </li>
-                )}
-              </ul>
+                  ) : (
+                    <li>
+                      <p>
+                        No actions are currently available for this submission.
+                      </p>
+                    </li>
+                  )}
+                </ul>
+              </Review>
             </section>
           ) : (
             <section className="package-actions">
