@@ -34,7 +34,11 @@ describe("parents can be updated", () => {
       currentStatus: "currentStatus",
     };
     dynamoDb.update.mockResolvedValue(mockReturnedUpdate);
-    expect(updateParent(testData)).resolves.toBe(mockReturnedUpdate);
+    expect(updateParent(testData))
+      .resolves.toBe(mockReturnedUpdate)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
   });
 
   it("calls update children if found", () => {
@@ -49,7 +53,11 @@ describe("parents can be updated", () => {
       currentStatus: "currentStatus",
     };
 
-    expect(updateParent(testData)).resolves.toBe(mockReturnedUpdate);
+    expect(updateParent(testData))
+      .resolves.toBe(mockReturnedUpdate)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
   });
 
   it("catches update error and logs it", () => {
@@ -68,7 +76,11 @@ describe("parents can be updated", () => {
     });
     const logSpy = jest.spyOn(console, "log");
 
-    expect(updateParent(testData)).resolves.toBe(mockReturnedUpdate);
+    expect(updateParent(testData))
+      .resolves.toBe(mockReturnedUpdate)
+      .catch((error) => {
+        console.log("caught test error: ", error);
+      });
 
     // expect(logSpy).toHaveBeenCalledWith(
     //   `Error happened updating DB:  ${mockError.message}`

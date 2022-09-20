@@ -154,7 +154,11 @@ it(`gets all packages for helpdesk users`, async () => {
 
 it("Get Stub", async () => {
   const response = main({ source: "serverless-plugin-warmup" }, "foo");
-  await expect(response).toBeInstanceOf(Promise);
+  await expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("handles multiple scans", async () => {
