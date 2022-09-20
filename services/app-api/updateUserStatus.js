@@ -63,7 +63,7 @@ export const doUpdate = async (body, doneBy, doneTo) => {
       fullName: doneTo.fullName,
     });
   } catch (e) {
-    console.error(`Could not update user ${body.email}'s status`, e);
+    console.error(`Could not update user %s's status`, body.email, e);
     return RESPONSE_CODE.USER_SUBMISSION_FAILED;
   }
 
