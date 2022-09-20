@@ -240,6 +240,16 @@ functions:
           method: get
           cors: true
           authorizer: aws_iam
+  
+  validateParentOfTemporaryExtension:
+    handler: validation/validateParentOfTemporaryExtension.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: validateParentOfTemporaryExtension/{parentId}
+          method: get
+          cors: true
+          authorizer: aws_iam
 
   withdrawInitialWaiver:
     handler: action/withdrawInitialWaiver.main
