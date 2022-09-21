@@ -2387,14 +2387,14 @@ And("Type Temporary Extension Number 3 With 5 Characters", () => {
 });
 And("Type Temporary Extension Number 4", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       data.newTemporaryExtensionNumber4
     );
   });
 });
 And("Type Temporary Extension Number 5", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
-    OneMacSubmitNewWaiverActionPage.inputWaiverNumber(
+    OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
       data.newTemporaryExtensionNumber5
     );
   });
