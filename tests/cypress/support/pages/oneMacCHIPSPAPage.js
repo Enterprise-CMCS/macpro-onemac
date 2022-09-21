@@ -7,8 +7,8 @@ const addFileBTNCurrentStatePlanInnerBTN = "#uploader-input-0";
 const addFileBTNCoverLetter = "//tbody/tr[3]/td[2]/label[1]";
 const addFileBTNCoverLetterInnerBTN = "#uploader-input-2";
 //Element is Xpath use cy.xpath instead of cy.get
-const addFileBTNAmmendedStatePlanLanguage = "//tbody/tr[2]/td[2]/label[1]";
-const addFileBTNAmmendedStatePlanLanguageInnerBTN = "#uploader-input-1";
+const addFileBTNAmendedStatePlanLanguage = "//tbody/tr[2]/td[2]/label[1]";
+const addFileBTNAmendedStatePlanLanguageInnerBTN = "#uploader-input-1";
 
 export class oneMacCHIPSPAPage {
   verifyNewChipSPAPage() {
@@ -47,9 +47,9 @@ export class oneMacCHIPSPAPage {
   }
 
   uploadAmendedStatePlanLanguageFile() {
-    cy.xpath(addFileBTNAmmendedStatePlanLanguage).click();
+    cy.xpath(addFileBTNAmendedStatePlanLanguage).click();
     const filePath = "/files/adobe.pdf";
-    cy.get(addFileBTNAmmendedStatePlanLanguageInnerBTN).attachFile(filePath);
+    cy.get(addFileBTNAmendedStatePlanLanguageInnerBTN).attachFile(filePath);
   }
 }
 export default oneMacCHIPSPAPage;

@@ -1,7 +1,7 @@
 const waiverNumberInputBox = "#transmittal-number";
 const errorMessageForWaiverNumber = "#transmittal-number-status-msg";
 const firstUploadFileBtn = "#uploader-input-0";
-const ammendmentTitleField = "#title";
+const amendmentTitleField = "#title";
 const newWaiverNumberInputBox = "#componentId";
 
 export class oneMacAppendixKAmendmentPage {
@@ -33,7 +33,7 @@ export class oneMacAppendixKAmendmentPage {
     cy.get(errorMessageForWaiverNumber).should("be.visible");
   }
   inputAmendmentTitle(s) {
-    cy.get(ammendmentTitleField).type(s);
+    cy.get(amendmentTitleField).type(s);
   }
   inputWaiverNumberNewForms(s) {
     cy.get(newWaiverNumberInputBox).type(s);

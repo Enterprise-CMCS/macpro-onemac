@@ -14,6 +14,8 @@ const existingWaiverNumber = "MD-10330.R01.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 const multiWaiverInputBox = "//input[@type='text']";
+const parentIDLabel =
+  "//h3[text()='Approved Initial or Renewal Waiver Number']";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
@@ -72,6 +74,9 @@ export class oneMacSubmitNewWaiverActionPage {
     cy.xpath(addFile1915b4).next("td").click();
     const filePath = "/files/15MB.pdf";
     cy.get(fileUpload1915b4).attachFile(filePath);
+  }
+  verifyParentIDIsPrefilled(s) {
+    cy.xpath(parentIDLabel).next("div").contains(s);
   }
 
   inputComments(s) {

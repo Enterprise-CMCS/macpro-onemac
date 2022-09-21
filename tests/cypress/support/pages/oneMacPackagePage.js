@@ -133,7 +133,7 @@ const packageRows = "tr";
 const packageRowOne = "tbody > tr:nth-child(1)";
 //Element is Xpath use cy.xpath instead of cy.get
 const Approved =
-  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[7]/button";
+  "//a[contains(text(),'MD-12-8214')]/../following-sibling::td[7]/div";
 //Element is Xpath use cy.xpath instead of cy.get
 const Disapproved =
   "//a[contains(text(),'MD-45-5913')]/../following-sibling::td[7]/button";
@@ -198,6 +198,7 @@ const packageRowOneActionsBtn = "//td[@id='packageActions-0']//button";
 const respondToRAIBtn =
   "//*[@data-testid='action-popup']//a[text()= 'Respond to RAI']";
 const RequestTempExtensionBtn = "//a[text()='Request Temporary Extension']";
+const addAmendmentBtn = "//a[text()='Add Amendment']";
 const waiverNumLink = (n) => `//a[text()="${n}"]`;
 
 export class oneMacPackagePage {
@@ -580,7 +581,7 @@ export class oneMacPackagePage {
     cy.get(searchbar).type("MD-13");
   }
   checkforApprovedIsNotClickable() {
-    cy.xpath(Approved).should("be.disabled");
+    cy.xpath(Approved).children("button").should("be.disabled");
   }
   checkforDisapprovedIsNotClickable() {
     cy.xpath(Disapproved).should("be.disabled");
@@ -861,6 +862,12 @@ export class oneMacPackagePage {
   }
   verifyRequestTempExtensionBtnExists() {
     cy.xpath(RequestTempExtensionBtn).should("be.visible");
+  }
+  clickAddAmendmentBtn() {
+    cy.xpath(addAmendmentBtn).scrollIntoView().click();
+  }
+  verifyAddAmendmentBtnExists() {
+    cy.xpath(addAmendmentBtn).should("be.visible");
   }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink).click({ force: true });
