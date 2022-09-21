@@ -8,6 +8,7 @@ import { Message } from "../libs/formLib";
  * Returns the ID specific form element
  */
 const ComponentId: React.FC<{
+  idPrefix?: string;
   idLabel: string;
   idFieldHint: FieldHint[];
   idFAQLink?: string;
@@ -15,8 +16,8 @@ const ComponentId: React.FC<{
   value: string;
   onChange: (event: React.ChangeEvent<HTMLInputElement>) => void;
   disabled: boolean;
-  id?: string;
 }> = ({
+  idPrefix = "", //default prefix to empty string
   idLabel,
   idFieldHint,
   idFAQLink,
@@ -24,7 +25,6 @@ const ComponentId: React.FC<{
   value,
   onChange,
   disabled,
-  id = "componentId",
 }) => {
   return (
     <>
@@ -32,7 +32,7 @@ const ComponentId: React.FC<{
         <>
           <div className="label-container">
             <div>
-              <label htmlFor={id} className="required">
+              <label htmlFor={idPrefix + "componentId"} className="required">
                 {idLabel}
               </label>
             </div>
@@ -46,7 +46,7 @@ const ComponentId: React.FC<{
             {idFieldHint?.map(function (idFieldHint, idx) {
               return (
                 <p
-                  id={"fieldHint" + idx}
+                  id={idPrefix + "fieldHint" + idx}
                   key={"fieldHint" + idx}
                   className={idFieldHint.className || "field-hint"}
                 >
@@ -60,7 +60,7 @@ const ComponentId: React.FC<{
             statusMessages.map((message, i) => (
               <div
                 key={i}
-                id={"componentIdStatusMsg" + i}
+                id={idPrefix + "componentIdStatusMsg" + i}
                 className={"ds-u-color--" + message.statusLevel}
               >
                 {message.statusMessage}
@@ -69,7 +69,7 @@ const ComponentId: React.FC<{
           <input
             className="field"
             type="text"
-            id={id}
+            id={idPrefix + "componentId"}
             name="componentId"
             aria-describedby={idFieldHint
               ?.map(function (idFieldHint, idx) {
