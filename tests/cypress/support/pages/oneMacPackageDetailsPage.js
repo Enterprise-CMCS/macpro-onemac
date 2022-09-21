@@ -23,6 +23,8 @@ const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
 const CHIPSPAIDHeader = "//h3[contains(text(),'SPA ID')]";
 const typeHeader = "//h3[contains(text(),'Type')]";
+const parentWaiverNumberHeader =
+  "//h3[contains(text(),'Parent Waiver Number')]";
 const stateHeader = "//h3[text()='State']";
 const initialSubmittedDateHeader = "//h3[text()='Initial Submission Date']";
 const raiResponsesHeader = "//section//h2[text()='Formal RAI Responses']";
@@ -47,6 +49,7 @@ const tempExtensionsNavBtn =
   "//li[contains(@class, 'nav')]//a[text()='Temporary Extension']";
 const tempExtensionID = "//td[contains(@id,'componentId-')]";
 const withdrawBtnOnTempExt = "//li[text()='Withdraw']";
+const packageAction = "//td[contains(@id,'packageActions-')]";
 
 export class oneMacPackageDetailsPage {
   verifyPackageDetailsPageIsVisible() {
@@ -114,6 +117,12 @@ export class oneMacPackageDetailsPage {
   }
   verifyTypeContainsTempExtension() {
     cy.xpath(typeHeader).next().contains("Temporary Extension");
+  }
+  verifyParentWaiverNumberHeaderExists() {
+    cy.xpath(parentWaiverNumberHeader).should("be.visible");
+  }
+  verifyParentWaiverNumber(s) {
+    cy.xpath(parentWaiverNumberHeader).next().contains(s);
   }
   verifyStateHeaderExists() {
     cy.xpath(stateHeader).should("be.visible");
@@ -248,10 +257,15 @@ export class oneMacPackageDetailsPage {
     cy.xpath(tempExtensionID).contains(num).click();
   }
   clickTempExtensionActionBtn(num) {
-    cy.xpath(tempExtensionID).contains(num).next().next().click();
+    cy.xpath(tempExtensionID)
+      .contains(num)
+      .parents("tr")
+      .first()
+      .find("button")
+      .click();
   }
   clickWithdrawBtnOnTempExt() {
-    cy.xpath(withdrawBtnOnTempExt).click();
+    cy.xpath(withdrawBtnOnTempExt).filter(":visible").click();
   }
 }
 export default oneMacPackageDetailsPage;

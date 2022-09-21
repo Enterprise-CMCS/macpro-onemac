@@ -23,8 +23,8 @@ Feature: Package Dashboard Temporary Extension
         And verify the details section exists
         And verify there is a Type header in the details section
         And verify the type is 1915b Temporary Extension
-        And verify there is a State header in the details section
-        And verify a state exists for the State
+        And verify there is a Parent Waiver Number header in the details section
+        And verify the Parent Waiver Number ID is the approved intial waiver number 1
         And verify there is an Initial Submission Date header in the details section
         And verify a date exists for the Initial Submission Date
 
@@ -41,7 +41,7 @@ Feature: Package Dashboard Temporary Extension
         And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
-        And click the action button for the temporary extension
+        And click the action button for temporary extension 2
         And click withdraw button on the temp extension page
         And click yes, withdraw package button
         And verify success message for Withdrawal

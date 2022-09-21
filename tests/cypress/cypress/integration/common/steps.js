@@ -2131,6 +2131,22 @@ And("verify the type is Waiver Renewal", () => {
 And("verify the type is 1915b Temporary Extension", () => {
   OneMacPackageDetailsPage.verifyTypeContainsTempExtension();
 });
+And(
+  "verify there is a Parent Waiver Number header in the details section",
+  () => {
+    OneMacPackageDetailsPage.verifyParentWaiverNumberHeaderExists();
+  }
+);
+And(
+  "verify the Parent Waiver Number ID is the approved intial waiver number 1",
+  () => {
+    cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
+      OneMacPackageDetailsPage.verifyParentWaiverNumber(
+        data.approvedInitialWaiverNum1
+      );
+    });
+  }
+);
 And("verify there is a State header in the details section", () => {
   OneMacPackageDetailsPage.verifyStateHeaderExists();
 });
@@ -2413,10 +2429,10 @@ And("verify the temporary extension exists", () => {
     );
   });
 });
-And("click the action button for the temporary extension", () => {
+And("click the action button for temporary extension 2", () => {
   cy.fixture("packageDashboardWaiverNumbers.json").then((data) => {
     OneMacPackageDetailsPage.clickTempExtensionActionBtn(
-      data.newTemporaryExtensionNumber1
+      data.newTemporaryExtensionNumber2
     );
   });
 });
