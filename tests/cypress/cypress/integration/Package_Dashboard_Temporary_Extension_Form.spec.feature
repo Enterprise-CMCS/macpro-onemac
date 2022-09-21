@@ -8,14 +8,13 @@ Feature: Package Dashboard Temporary Extension
     Scenario: Verify user can create a temporary extension and that it is in the temporary extensions list
         Then click on New Submission
         And Click on Waiver Action
-        And Click on Request Temporary Extension
+        And Click on Request Temporary Extension in Package dashboard
         And type approved Initial Waiver number into Existing Waiver Number to Renew field
         And Type Temporary Extension Number 1 With 5 Characters
         And upload Waiver Extension Request
-        And Type "This is just a test" in Summary Box
+        And type "This is just a test" in additional info textarea
         And Click on Submit Button
-        And click on Packages
-        And click on the Waivers tab
+        And verify submission successful message in the alert bar
         And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button
@@ -32,13 +31,13 @@ Feature: Package Dashboard Temporary Extension
     Scenario: Verify user can withdraw temporary extension from mini-dashboard page
         Then click on New Submission
         And Click on Waiver Action
-        And Click on Request Temporary Extension
+        And Click on Request Temporary Extension in Package dashboard
+        And type approved Initial Waiver number into Existing Waiver Number to Renew field
         And Type Temporary Extension Number 2 With 5 Characters
         And upload Waiver Extension Request
-        And Type "This is just a test" in Summary Box
+        And type "This is just a test" in additional info textarea
         And Click on Submit Button
-        And click on Packages
-        And click on the Waivers tab
+        And verify submission successful message in the alert bar
         And search for approved Initial Waiver Number 1
         And click the Waiver Number link in the first row
         And click on the Temporary Extension nav button

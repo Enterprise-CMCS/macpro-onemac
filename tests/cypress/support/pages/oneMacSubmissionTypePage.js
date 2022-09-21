@@ -13,6 +13,8 @@ const waiverActionWaiverAction =
 //Element is Xpath use cy.xpath instead of cy.get
 const RequestTemporaryExtension =
   '//div[text()="Request 1915(b) and 1915(c) Temporary Extension"]';
+const requestTemporaryExtensionPkgView =
+  '//div[text()="Request Temporary Extension"]';
 //Element is Xpath use cy.xpath instead of cy.get
 const AppendixKAmendment = '//div[text()="1915(c) Appendix K Amendment"]';
 //Element is Xpath use cy.xpath instead of cy.get
@@ -76,6 +78,9 @@ export class oneMacSubmissionTypePage {
   }
   clickRequestExtensionBtn() {
     cy.xpath(RequestExtensionBtn).click();
+  }
+  clickRequestTemporaryExtensionPkgView() {
+    cy.xpath(requestTemporaryExtensionPkgView).click();
   }
   clickAppendixKAmendment() {
     cy.xpath(AppendixKAmendment).click();

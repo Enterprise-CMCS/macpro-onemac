@@ -867,7 +867,7 @@ export class oneMacPackagePage {
     cy.xpath(addAmendmentBtn).scrollIntoView().click();
   }
   verifyAddAmendmentBtnExists() {
-    cy.xpath(addAmendmentBtn).should("be.visible");
+    cy.xpath(addAmendmentBtn).scrollIntoView().should("be.visible");
   }
   clickWaiverNumberLinkInFirstRow() {
     cy.xpath(packageRowOneIDLink).click({ force: true });

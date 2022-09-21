@@ -616,6 +616,9 @@ And("Click on Request Temporary Extension", () => {
 And("Click the Request Extension button", () => {
   OneMacSubmissionTypePage.clickRequestExtensionBtn();
 });
+And("Click on Request Temporary Extension in Package dashboard", () => {
+  OneMacSubmissionTypePage.clickRequestTemporaryExtensionPkgView();
+});
 
 And(
   "Type waiver number with 4 characters on Request Waiver Temporary Extenstion Page",
@@ -732,6 +735,9 @@ And("upload Waiver Extension Request", () => {
 
 And("Type {string} in Summary Box", (Comments) => {
   OneMacSubmitNewWaiverActionPage.inputComments(Comments);
+});
+And("type {string} in additional info textarea", (Comments) => {
+  OneMacSubmitNewWaiverActionPage.inputAdditionalInfoText(Comments);
 });
 
 And("verify ID Number Exists", () => {

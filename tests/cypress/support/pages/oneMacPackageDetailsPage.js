@@ -17,7 +17,7 @@ const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//a[text()='Respond to RAI']";
 const withdrawPackageAction = "//a[text()='Withdraw']";
 const requestTempExtensionPackageAction =
-  "//a[text()='Request a Temporary Extension']";
+  "//a[text()='Request Temporary Extension']";
 const addAmendmentPackageAction = "//a[text()='Add Amendment']";
 const detailSection =
   "//section[@class='detail-section']//h2[contains(.,'Details')]";
