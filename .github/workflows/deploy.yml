@@ -218,7 +218,6 @@ jobs:
             Package_Dashboard_Waiver_RAI_Response.spec.feature,
             Package_Dashboard_AppK_RAI_Response.spec.feature,
             Package_Dashboard_Temporary_Extension_Form.spec.feature,
-            Mini_Dashboard_Waiver_Amendment.spec.feature,
           ]
     steps:
       - name: set branch_name
