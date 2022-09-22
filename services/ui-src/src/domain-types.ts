@@ -1,6 +1,7 @@
 import { USER_STATUS, USER_ROLE, RoleEntry } from "cmscommonlib";
 
 export type UserProfile = {
+  ismemberof: string;
   cmsRoles: string;
   email: string;
   firstName: string;

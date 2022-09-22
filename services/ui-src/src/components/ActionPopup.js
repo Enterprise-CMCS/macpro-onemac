@@ -38,7 +38,7 @@ export default function ActionPopup({ theComponent, alertCallback }) {
   useOutsideAlerter(wrapperRef, setShowMenu);
 
   return (
-    <>
+    <div className="action-popup-wrapper">
       <Button
         aria-haspopup="true"
         key={`button-${theComponent.componentId}`}
@@ -67,6 +67,6 @@ export default function ActionPopup({ theComponent, alertCallback }) {
           ))}
         </div>
       )}
-    </>
+    </div>
   );
 }

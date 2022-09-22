@@ -88,6 +88,20 @@ export function App() {
         userStatus = roleResult[1];
       }
       const activeTerritories = getActiveTerritories(userData?.roleList);
+      let oneMacIdmRoles;
+      console.log("payload: ", authUser.signInUserSession.idToken.payload);
+      if (authUser.signInUserSession.idToken.payload["custom:cms_roles"])
+        oneMacIdmRoles = authUser.signInUserSession.idToken.payload[
+          "custom:cms_roles"
+        ]
+          .split(",")
+          .filter(
+            (role: string) =>
+              role === "onemac-state-user" || role === "onemac-helpdesk"
+          )
+          .toString();
+
+      console.log("oneMACRoles: ", oneMacIdmRoles);
 
       setAuthState({
         ...DEFAULT_AUTH_STATE,
@@ -97,8 +111,9 @@ export function App() {
         isLoggedInAsDeveloper: isDeveloper || devUsers.includes(email),
         userProfile: {
           email,
-          cmsRoles:
-            authUser.signInUserSession.idToken.payload["custom:cms_roles"],
+          ismemberof:
+            authUser.signInUserSession.idToken.payload["custom:ismemberof"],
+          cmsRoles: oneMacIdmRoles,
           firstName: authUser.signInUserSession.idToken.payload.given_name,
           lastName: authUser.signInUserSession.idToken.payload.family_name,
           // Get user data from the user table
@@ -112,7 +127,7 @@ export function App() {
       });
     } catch (error) {
       if (
-        (error as string) !== "not authenticated" &&
+        (error as string) !== "The user is not authenticated" &&
         (error as Error).message !== "SESSION_EXPIRY"
       ) {
         console.log(

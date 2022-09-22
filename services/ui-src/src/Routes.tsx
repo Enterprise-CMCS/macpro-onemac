@@ -51,6 +51,7 @@ import CHIPSPARAIForm from "./page/chip-spa/CHIPSPARAIForm";
 import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
+import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -220,6 +221,10 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.APPENDIX_K_AMENDMENT,
       component: WaiverAppendixKForm,
+    },
+    {
+      path: ONEMAC_ROUTES.WAIVER_APP_K_RAI,
+      component: WaiverAppendixKRAIForm,
     },
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,

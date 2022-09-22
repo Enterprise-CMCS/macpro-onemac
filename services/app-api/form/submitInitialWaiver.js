@@ -1,4 +1,3 @@
-import Joi from "joi";
 import { initialWaiver } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
@@ -6,6 +5,7 @@ import { submitAny } from "./submitAny";
 import {
   defaultFormConfig,
   defaultProposedEffectiveDateSchema,
+  defaultWaiverAuthoritySchema,
 } from "./defaultFormConfig";
 
 /**
@@ -24,7 +24,7 @@ export const initialWaiverFormConfig = {
   ...defaultFormConfig,
   ...initialWaiver,
   appendToSchema: {
-    waiverAuthority: Joi.string().required(),
+    waiverAuthority: defaultWaiverAuthoritySchema,
     // Should look into a real validation with choices centrally located in cmscommonlib
     //      waiverAuthority: Joi.string().valid(WAIVER_AUTHORITY_CHOICES).required(),
     proposedEffectiveDate: defaultProposedEffectiveDateSchema,

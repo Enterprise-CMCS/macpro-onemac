@@ -39,8 +39,15 @@ const commonSubheaderMessage =
 
 const raiSubheaderMessage =
   commonSubheaderMessage +
-  "<br><br>" +
+  "<br />" +
+  "<br />" +
   "<b>Please note:</b> Formal RAI Response selection should only be used when submitting a response to a Formal RAI that would impact the clock.  If this submission is in response to informal questions and is not clock related, the state should be forwarding to the review team via email.";
+
+const appKSubheaderMessage =
+  commonSubheaderMessage +
+  "<br />" +
+  "<br />" +
+  "<b>If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.</b>";
 
 const waiverInitialTransmittalNumber = {
   idType: "waiver",
@@ -324,9 +331,7 @@ export const CONFIG = {
     pageTitle: "Submit 1915(c) Appendix K Amendment",
     readOnlyPageTitle: "1915(c) Appendix K Amendment",
     subheaderMessage: {
-      __html:
-        commonSubheaderMessage +
-        "If your Appendix K submission is for more than one waiver number, please enter one of the applicable waiver numbers. You do not need to create multiple submissions.",
+      __html: appKSubheaderMessage,
     },
     detailsHeader: "1915(c) Appendix K Amendment",
     requiredUploads: ["1915(c) Appendix K Amendment Waiver Template"],

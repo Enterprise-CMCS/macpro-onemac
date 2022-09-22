@@ -79,12 +79,18 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   const presetComponentId = location.state?.componentId ?? "";
   const presetParentId = location.state?.parentId ?? undefined;
 
+  // if only one waiver Authority choice, it is the default
+  const presetWaiverAuthority =
+    formConfig.waiverAuthorities && formConfig.waiverAuthorities.length === 1
+      ? formConfig.waiverAuthorities[0].value
+      : undefined;
+
   // The record we are using for the form.
   const [oneMacFormData, setOneMacFormData] = useState<OneMacFormData>({
     territory: getTerritoryFromComponentId(presetComponentId),
     additionalInformation: "",
     componentId: presetComponentId,
-    waiverAuthority: undefined,
+    waiverAuthority: presetWaiverAuthority,
     proposedEffectiveDate: undefined,
     parentId: presetParentId,
     parentType: location.state?.parentType,
@@ -465,21 +471,22 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               maxLength={config.MAX_PACKAGE_TITLE_LENGTH}
             ></TextField>
           )}
-          {formConfig.waiverAuthorities && (
-            <Dropdown
-              options={[
-                ...defaultWaiverAuthority,
-                ...formConfig.waiverAuthorities,
-              ]}
-              defaultValue={oneMacFormData.waiverAuthority}
-              label="Waiver Authority"
-              labelClassName="ds-u-margin-top--0 required"
-              fieldClassName="field"
-              name="waiverAuthority"
-              id="waiver-authority"
-              onChange={handleInputChange}
-            />
-          )}
+          {formConfig.waiverAuthorities &&
+            formConfig.waiverAuthorities.length > 1 && (
+              <Dropdown
+                options={[
+                  ...defaultWaiverAuthority,
+                  ...formConfig.waiverAuthorities,
+                ]}
+                defaultValue={oneMacFormData.waiverAuthority}
+                label="Waiver Authority"
+                labelClassName="ds-u-margin-top--0 required"
+                fieldClassName="field"
+                name="waiverAuthority"
+                id="waiver-authority"
+                onChange={handleInputChange}
+              />
+            )}
           {typeof formConfig.getParentInfo == "function" && (
             <Review heading={"Parent " + formConfig.idLabel}>
               {oneMacFormData.parentId ?? "Unknown"}
