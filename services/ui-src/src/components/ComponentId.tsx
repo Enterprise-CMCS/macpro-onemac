@@ -73,7 +73,7 @@ const ComponentId: React.FC<{
             name="componentId"
             aria-describedby={idFieldHint
               ?.map(function (idFieldHint, idx) {
-                return "fieldHint" + idx;
+                return idPrefix + "fieldHint" + idx;
               })
               .join(" ")}
             value={value}
