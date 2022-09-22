@@ -9,11 +9,13 @@ const addFile1915b4 =
   "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]";
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
-
+const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-10330.R01.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
 const multiWaiverInputBox = "//input[@type='text']";
+const parentIDLabel =
+  "//h3[text()='Approved Initial or Renewal Waiver Number']";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
@@ -73,9 +75,16 @@ export class oneMacSubmitNewWaiverActionPage {
     const filePath = "/files/15MB.pdf";
     cy.get(fileUpload1915b4).attachFile(filePath);
   }
+  verifyParentIDIsPrefilled(s) {
+    cy.xpath(parentIDLabel).next("div").contains(s);
+  }
 
   inputComments(s) {
     cy.get(commentsInputBox).type(s);
+  }
+
+  inputAdditionalInfoText(s) {
+    cy.get(additionalInfoTextarea).type(s);
   }
 
   clickWhatIsMyWaiverIdLink() {
