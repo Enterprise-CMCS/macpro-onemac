@@ -318,7 +318,7 @@ resources:
                 - CloudFrontDistribution
                 - DomainName
     CloudFrontWebAclArn:
-      Value: !GetAtt CloudFrontWebAcl.Arn
+      Value: !GetAtt WafPluginAcl.Arn
     FirehoseArn:
       Value: !GetAtt Firehose.Arn
     ApplicationEndpointUrl:
