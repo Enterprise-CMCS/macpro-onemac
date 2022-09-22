@@ -52,7 +52,7 @@ export const DetailSection = ({
         <div className="detail-card">
           <section>
             <Review heading="Status" className="detail-card-top-review-item">
-              <h2 className="detail-card-status">{detail.currentStatus}</h2>
+              <div className="detail-card-status">{detail.currentStatus}</div>
             </Review>
 
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (

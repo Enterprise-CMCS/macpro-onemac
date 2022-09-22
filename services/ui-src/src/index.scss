@@ -2602,8 +2602,10 @@ aside#faq-contact-info-box {
 }
 
 .detail-card-status {
+  @extend .ds-h2;
   color: $color-black;
 }
+
 .package-actions {
   @extend .ds-u-flex-direction--column;
   width: 50%;
