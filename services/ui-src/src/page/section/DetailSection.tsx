@@ -51,7 +51,7 @@ export const DetailSection = ({
         <div className="detail-card-top"></div>
         <div className="detail-card">
           <section>
-            <Review heading="Status" className="detail-card-top-review-item">
+            <Review heading="Status">
               <div className="detail-card-status">{detail.currentStatus}</div>
             </Review>
 
@@ -70,10 +70,7 @@ export const DetailSection = ({
           </section>
           {userRoleObj.canAccessForms ? (
             <section className="package-actions">
-              <Review
-                heading={pageConfig.actionLabel}
-                className="detail-card-top-review-item"
-              >
+              <Review heading={pageConfig.actionLabel}>
                 <ul className="action-list">
                   {pageConfig.actionsByStatus[detail.currentStatus]?.length >
                   0 ? (
