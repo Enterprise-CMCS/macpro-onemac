@@ -16,6 +16,7 @@ plugins:
   - serverless-offline
   - serverless-iam-helper
   - serverless-s3-bucket-helper
+  - "@enterprise-cmcs/serverless-waf-plugin"
 custom:
   stage: ${opt:stage, self:provider.stage}
   tableName: cms-spa-form-${self:custom.stage}-change-requests
@@ -65,8 +66,9 @@ custom:
             sources: [./one-seed.json]
   serverless-offline:
     allowCache: true
+  webAclName: ${self:custom.stage}-${self:service}-webacl
   associateWaf:
-    name: ${self:custom.stage}-ApiGwWebAcl
+    name: ${self:custom.webAclName}
     version: V2 #(optional) Regional | V2
 
 provider:
