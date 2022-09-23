@@ -52,7 +52,7 @@ jobs:
   deploy:
     name: Deploy
     needs:
-      - lint
+      # - lint
       - unit-test
     runs-on: ubuntu-latest
     steps:
