@@ -106,23 +106,35 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      # - uses: actions/setup-node@v1
+      #   with:
+      #     node-version: "14.x"
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - name: Combine package-lock.json files to single file
-        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
-      - name: cache service dependencies
-        uses: actions/cache@v2
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v2
         with:
           path: |
-            services/uploads/node_modules
-            services/app-api/node_modules
-            services/stream-functions/node_modules
-            services/ui/node_modules
-            services/ui-auth/node_modules
-            services/ui-src/node_modules
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}-3
+      # - name: Combine package-lock.json files to single file
+      #   run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+      # - name: cache service dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       services/uploads/node_modules
+      #       services/app-api/node_modules
+      #       services/stream-functions/node_modules
+      #       services/ui/node_modules
+      #       services/ui-auth/node_modules
+      #       services/ui-src/node_modules
+      #       node_modules
+      #     key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
