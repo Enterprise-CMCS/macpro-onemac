@@ -2,6 +2,7 @@
   "name": "ui-src",
   "description": "",
   "version": "1.0.0",
+  "license": "CC0-1.0",
   "dependencies": {
     "@babel/polyfill": "^7.12.1",
     "@cmsgov/design-system": "^2.7.0",
@@ -99,6 +100,9 @@
       ],
       "text",
       "clover"
-    ]
+    ],
+    "moduleNameMapper": {
+      "cmscommonlib": "<rootDir>/../common"
+    }
   }
 }

@@ -48,7 +48,8 @@
     ],
     "moduleNameMapper": {
       "react-spring/renderprops": "<rootDir>/node_modules/react-spring/renderprops.cjs",
-      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs"
+      "react-spring": "<rootDir>/node_modules/react-spring/web.cjs",
+      "cmscommonlib": "<rootDir>/../common"
     }
   }
 }

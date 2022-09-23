@@ -5,7 +5,6 @@ import {
   waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
 import userEvent from "@testing-library/user-event";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
@@ -110,20 +109,18 @@ describe("Detail View Tests", () => {
     // wait for loading screen to disappear
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-    await act(async () => {
-      await userEvent.click(
-        screen.getByRole("button", {
-          name: "Actions for MD.83420.R00.TE01",
-        })
-      );
-      await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
-      await userEvent.click(
-        screen.getByRole("button", { name: "Yes, withdraw" })
-      );
-    });
+    userEvent.click(
+      screen.getByRole("button", { name: "Actions for MD.83420.R00.TE01" })
+    );
+    await waitFor(() => screen.getByRole("menuitem", { name: "Withdraw" }));
+    userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
+    await waitFor(() => screen.getByRole("button", { name: "Yes, withdraw" }));
+    userEvent.click(screen.getByRole("button", { name: "Yes, withdraw" }));
 
-    expect(document.getElementById("alert-bar")).toHaveTextContent(
-      "Your submission package has successfully been withdrawn."
+    await waitFor(() =>
+      expect(document.getElementById("alert-bar")).toHaveTextContent(
+        "Your submission package has successfully been withdrawn."
+      )
     );
   });
 });
