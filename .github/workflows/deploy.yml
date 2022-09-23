@@ -15,23 +15,23 @@ permissions:
 
 jobs:
   lint:
-    name: Lint
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v1
-      - uses: actions/setup-node@v1
-        with:
-          node-version: "14.x"
-      - name: Install dependencies
-        run: |
-          npm ci
-          for service in services/*/; do
-            pushd "$service"
-            if [ -f package-lock.json ]; then npm ci; fi
-            popd
-          done
-      - name: Run ESLint
-        run: npx eslint --max-warnings=0 services
+    # name: Lint
+    # runs-on: ubuntu-latest
+    # steps:
+    #   - uses: actions/checkout@v1
+    #   - uses: actions/setup-node@v1
+    #     with:
+    #       node-version: "14.x"
+    #   - name: Install dependencies
+    #     run: |
+    #       npm ci
+    #       for service in services/*/; do
+    #         pushd "$service"
+    #         if [ -f package-lock.json ]; then npm ci; fi
+    #         popd
+    #       done
+    #   - name: Run ESLint
+    #     run: npx eslint --max-warnings=0 services
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
