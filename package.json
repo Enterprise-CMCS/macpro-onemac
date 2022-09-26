@@ -26,7 +26,6 @@
     "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.2.0",
     "chromedriver": ">=90.0.0",
-    "cypress-axe": "^0.14.0",
     "cypress-cucumber-preprocessor": "^4.2.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^1.6.2",
@@ -40,6 +39,7 @@
     "prettier": "^2.3.1",
     "selenium-server": "^3.141.59",
     "serverless": "^3.12.0",
+    "serverless-bundle": "^5.3.0",
     "serverless-s3-bucket-helper": "CMSgov/serverless-s3-bucket-helper#0.1.1",
     "sinon": "^9.2.3",
     "typescript": "^4.3.5"
@@ -49,5 +49,8 @@
       "prettier --write"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "axe-core": "^4.4.1",
+    "cypress-axe": "^0.14.0"
+  }
 }

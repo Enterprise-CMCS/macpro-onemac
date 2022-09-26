@@ -27,6 +27,11 @@
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",
     "@aws-sdk/lib-dynamodb": "^3.43.0",
+    "@aws-sdk/smithy-client": "^3.0.0",
+    "@aws-sdk/types": "^3.0.0",
+    "@aws-sdk/client-s3": "^3.x",
+    "serverless": "3.x",
+    "typescript": "4.x",
     "cmscommonlib": "file:../common",
     "date-fns": "^2.16.1",
     "joi": "^17.4.0",
