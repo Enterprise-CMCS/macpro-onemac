@@ -13,13 +13,14 @@
   },
   "dependencies": {
     "@aws-sdk/client-dynamodb": "^3.43.0",
+    "@aws-sdk/client-s3": "^3.x",
     "@aws-sdk/lib-dynamodb": "^3.43.0",
-    "csvtojson": "^2.0.10",
-    "date-fns": "^2.16.1",
     "@aws-sdk/smithy-client": "^3.0.0",
     "@aws-sdk/types": "^3.0.0",
-    "@aws-sdk/client-s3": "^3.x",
+    "csvtojson": "^2.0.10",
+    "date-fns": "^2.16.1",
     "serverless": "3.x",
+    "serverless-associate-waf": "^1.2.1",
     "typescript": "4.x"
   },
   "jest": {
