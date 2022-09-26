@@ -33,6 +33,8 @@ custom:
   applicationEndpoint: ${cf:ui-${self:custom.stage}.ApplicationEndpointUrl, "onemac.cms.gov"}
   attachmentsBucket: ${cf:uploads-${self:custom.stage}.AttachmentsBucketName}
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
+  bundle:
+    packager: yarn
   warmupEnabled:
     production: true
     development: true
