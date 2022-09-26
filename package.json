@@ -26,7 +26,6 @@
     "@typescript-eslint/parser": "^4.29.1",
     "chai": "^4.2.0",
     "chromedriver": ">=90.0.0",
-    "cypress-axe": "^0.14.0",
     "cypress-cucumber-preprocessor": "^4.2.0",
     "cypress-file-upload": "^5.0.8",
     "cypress-xpath": "^1.6.2",
@@ -49,5 +48,8 @@
       "prettier --write"
     ]
   },
-  "dependencies": {}
+  "dependencies": {
+    "axe-core": "^4.4.1",
+    "cypress-axe": "^0.14.0"
+  }
 }
