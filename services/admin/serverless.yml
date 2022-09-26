@@ -19,6 +19,8 @@ custom:
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
+  bundle:
+    packager: yarn
   webAclName: ${self:custom.stage}-${self:service}-webacl
   associateWaf:
     name: ${self:custom.webAclName}
