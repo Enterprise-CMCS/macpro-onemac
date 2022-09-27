@@ -300,7 +300,7 @@ jobs:
 
   a11y-tests:
     name: A11y Tests
-    needs: deploy
+    # needs: deploy
     if: ${{ github.ref != 'refs/heads/production' }}
     runs-on: ubuntu-latest
     strategy:
