@@ -9,10 +9,10 @@ const chipTopRaiRespCard = "#chipsparai0_caret";
 //Elements are Xpath use cy.xpath instead of cy.xpath
 const detailsPage = "//div[@class='form-container']";
 const actionCard = "//div[@class='detail-card']";
-const statusHeader = "//div[@class='detail-card']//section[1]//h2";
+const statusHeader = "//h3[contains(text(),'Status')]";
 const date90thDay = "//h3[contains(text(),'90th Day')]";
 const packageActionsHeader =
-  "//div[@class='detail-card']//section[@class='package-actions']//h2";
+  "//div[@class='detail-card']//section[@class='package-actions']//h3";
 const packageActionsList = "//ul[@class='action-list']";
 const respondToRAIAction = "//a[text()='Respond to RAI']";
 const withdrawPackageAction = "//a[text()='Withdraw']";
@@ -59,7 +59,7 @@ export class oneMacPackageDetailsPage {
     cy.xpath(actionCard).should("be.visible");
   }
   verifyStatusIs(status) {
-    cy.xpath(statusHeader).contains(status);
+    cy.xpath(statusHeader).next().contains(status);
   }
   verify90thDayDateDoesntExist() {
     cy.xpath(date90thDay).should("not.exist");
