@@ -5,11 +5,10 @@ import { createMemoryHistory } from "history";
 import { Router } from "react-router-dom";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
 
-import { ONEMAC_ROUTES } from "cmscommonlib";
+import { ONEMAC_ROUTES, Workflow } from "cmscommonlib";
 import TemporaryExtensionForm from "./TemporaryExtensionForm";
 import ChangeRequestDataApi from "../../utils/ChangeRequestDataApi";
 import { AppContext } from "../../libs/contextLib";
-import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 import PackageApi from "../../utils/PackageApi";
 
 jest.mock("../../utils/ChangeRequestDataApi");
@@ -80,7 +79,7 @@ describe("Temporary Extension Form", () => {
   it("sets parentId given valid state properties", async () => {
     const testParentId = "MD-83420.00.00";
     history.push(ONEMAC_ROUTES.TEMPORARY_EXTENSION, {
-      parentType: ONEMAC_TYPE.WAIVER_INITIAL,
+      parentType: Workflow.ONEMAC_TYPE.WAIVER_INITIAL,
       parentId: testParentId,
     });
     render(

@@ -19,27 +19,33 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Install dependencies
         run: |
-          npm ci
+          yarn install --frozen-lockfile
           for service in services/*/; do
             pushd "$service"
-            if [ -f package-lock.json ]; then npm ci; fi
+            if [ -f yarn.lock ]; then yarn install --frozen-lockfile; fi
             popd
           done
       - name: Run ESLint
-        run: npx eslint --max-warnings=0 services
+        run: yarn eslint --max-warnings=0 services
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Unit Test & Publish Coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -106,23 +112,18 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - name: Combine package-lock.json files to single file
-        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
-      - name: cache service dependencies
-        uses: actions/cache@v2
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      - uses: actions/cache@v2
         with:
           path: |
-            services/uploads/node_modules
-            services/app-api/node_modules
-            services/stream-functions/node_modules
-            services/ui/node_modules
-            services/ui-auth/node_modules
-            services/ui-src/node_modules
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}-3
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -134,8 +135,6 @@ jobs:
         run: echo "TESTING_TEAM_EMAIL=macproemailnotification@gmail.com" >> $GITHUB_ENV
       - name: deploy
         run: |
-          # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
-          # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
       - name: Output Endpoint
         run:  |
@@ -143,8 +142,6 @@ jobs:
           echo "::notice::Endpoint URL - `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`"
           popd
       - name: Seed Data
-        # this "resets" any data explicitly provided in the seed files to what
-        # is in the committed code
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         env:
           SLS_DEBUG: 'true'
@@ -239,25 +236,19 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - name: Combine package-lock.json files to single file
-        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: cache service dependencies
         uses: actions/cache@v2
         with:
           path: |
-            services/uploads/node_modules
-            services/app-api/node_modules
-            services/stream-functions/node_modules
-            services/ui/node_modules
-            services/ui-auth/node_modules
-            services/ui-src/node_modules
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      - name: Install dependencies
-        run: npm ci
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}-3      
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
@@ -350,25 +341,19 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - name: Combine package-lock.json files to single file
-        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: cache service dependencies
         uses: actions/cache@v2
         with:
           path: |
-            services/app-api/node_modules
-            services/uploads/node_modules
-            services/stream-functions/node_modules
-            services/ui/node_modules
-            services/ui-auth/node_modules
-            services/ui-src/node_modules
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
-      - name: Install dependencies
-        run: npm install --frozen-lockfile
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock', 'plugins/**') }}-3
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV

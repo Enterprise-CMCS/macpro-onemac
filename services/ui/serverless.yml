@@ -6,9 +6,14 @@ useDotenv: true
 
 plugins:
   - serverless-s3-bucket-helper
+  - "@enterprise-cmcs/serverless-waf-plugin"
+
 
 custom:
   stage: ${opt:stage, self:provider.stage}
+  webAclName: ${self:custom.stage}-${self:service}-webacl
+  wafExcludeRules:
+    wafScope: CLOUDFRONT
   wafLoggingBucket: ${ssm:/configuration/default/wafLoggingBucket/ARN, ""}
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path, "/"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
@@ -112,35 +117,6 @@ resources:
                 Bool:
                   "aws:SecureTransport": "false"
         Bucket: !Ref S3BucketCloudFrontLogs
-    CloudFrontWebAcl:
-      Type: AWS::WAFv2::WebACL
-      Properties:
-        DefaultAction:
-          Block: {}
-        Rules:
-          - Action:
-              Allow: {}
-            Name: ${self:custom.stage}-allow-usa-plus-territories
-            Priority: 0
-            Statement:
-              GeoMatchStatement:
-                CountryCodes:
-                  - GU # Guam
-                  - PR # Puerto Rico
-                  - US # USA
-                  - UM # US Minor Outlying Islands
-                  - VI # US Virgin Islands
-                  - MP # Northern Mariana Islands
-                  - AS # American Samoa
-            VisibilityConfig:
-              SampledRequestsEnabled: true
-              CloudWatchMetricsEnabled: true
-              MetricName: WafWebAcl
-        Scope: CLOUDFRONT
-        VisibilityConfig:
-          CloudWatchMetricsEnabled: true
-          SampledRequestsEnabled: true
-          MetricName: ${self:custom.stage}-webacl
     CloudFrontOriginAccessIdentity:
       Type: AWS::CloudFront::CloudFrontOriginAccessIdentity
       Properties:
@@ -197,10 +173,7 @@ resources:
             - ErrorCode: 403
               ResponseCode: 200 # Returning a 200 allows the react app to serve the file correctly
               ResponsePagePath: /index.html
-          WebACLId:
-            Fn::GetAtt:
-              - CloudFrontWebAcl
-              - Arn
+          WebACLId: !GetAtt WafPluginAcl.Arn
           Logging:
             Bucket: !Sub
               - "${CloudFrontLogsBucketName}.s3.amazonaws.com"
@@ -345,7 +318,7 @@ resources:
                 - CloudFrontDistribution
                 - DomainName
     CloudFrontWebAclArn:
-      Value: !GetAtt CloudFrontWebAcl.Arn
+      Value: !GetAtt WafPluginAcl.Arn
     FirehoseArn:
       Value: !GetAtt Firehose.Arn
     ApplicationEndpointUrl:
