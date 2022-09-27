@@ -25,7 +25,7 @@ import { PhoneNumber } from "../components/PhoneNumber";
 import { MultiSelectDropDown } from "../components/MultiSelectDropDown";
 import closingX from "../images/ClosingX.svg";
 import addStateButton from "../images/addStateButton.svg";
-import groupData from "cmscommonlib/groupDivision.json";
+import { groupData } from "./GroupAndDivision";
 
 const CLOSING_X_IMAGE = <img alt="" className="closing-x" src={closingX} />;
 

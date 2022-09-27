@@ -275,33 +275,33 @@ describe("Phone Number section", () => {
   });
 });
 
-// describe("group and division section", () => {
-//   it("renders group and division for a CMS reviewer", () => {
-//     const userData = {
-//       ...initialAuthState.userProfile.userData,
-//       type: "cmsreviewer",
-//       group: 3,
-//       division: 26,
-//     };
-//     const groupInfo = getUserGroup(userData);
+describe("group and division section", () => {
+  it("renders group and division for a CMS reviewer", () => {
+    const userData = {
+      ...initialAuthState.userProfile.userData,
+      type: "cmsreviewer",
+      group: 3,
+      division: 26,
+    };
+    const groupInfo = getUserGroup(userData);
 
-//     render(<GroupDivisionDisplay userData={userData} />);
+    render(<GroupDivisionDisplay userData={userData} />);
 
-//     expect(screen.getByText("Group & Division")).toBeVisible();
-//     const groupHeader = screen.getByText("Group", { selector: "dt" });
-//     const divisionHeader = screen.getByText("Division", { selector: "dt" });
-//     expect(groupHeader).toBeVisible();
-//     expect(divisionHeader).toBeVisible();
-//     /* expect(groupHeader.parentNode).toContainElement(
-//       screen.getByText(groupInfo.group.name),
-//       { selector: "dd" }
-//     );
-//     expect(divisionHeader.parentNode).toContainElement(
-//       screen.getByText(groupInfo.division.name),
-//       { selector: "dd" }
-//     ); */
-//   });
-// });
+    expect(screen.getByText("Group & Division")).toBeVisible();
+    const groupHeader = screen.getByText("Group", { selector: "dt" });
+    const divisionHeader = screen.getByText("Division", { selector: "dt" });
+    expect(groupHeader).toBeVisible();
+    expect(divisionHeader).toBeVisible();
+    /* expect(groupHeader.parentNode).toContainElement(
+      screen.getByText(groupInfo.group.name),
+      { selector: "dd" }
+    );
+    expect(divisionHeader.parentNode).toContainElement(
+      screen.getByText(groupInfo.division.name),
+      { selector: "dd" }
+    ); */
+  });
+});
 
 describe("access section", () => {
   it("is titled Status for a Help Desk user", () => {
