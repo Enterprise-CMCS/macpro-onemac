@@ -2594,7 +2594,19 @@ aside#faq-contact-info-box {
   border: 1px solid $color-gray-lighter;
   border-radius: 0 0 3px 3px;
   border-top: none;
+
+  .detail-card-status {
+    @extend .ds-h2;
+    color: $color-black;
+  }
+
+  section {
+    .ds-c-review:first-of-type {
+      @extend .ds-u-padding-top--0;
+    }
+  }
 }
+
 .package-actions {
   @extend .ds-u-flex-direction--column;
   width: 50%;
@@ -2602,7 +2614,6 @@ aside#faq-contact-info-box {
 .action-list {
   list-style-type: none;
   @extend .ds-u-padding--0;
-  @extend .ds-u-padding-top--2;
   @extend .ds-u-margin--0;
 
   p {
