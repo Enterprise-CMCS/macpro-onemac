@@ -6,6 +6,10 @@ import cx from "classnames";
 import { USER_ROLE } from "cmscommonlib";
 //import groupData from "cmscommonlib/groupDivision.json";
 
+import PageTitleBar from "../components/PageTitleBar";
+import { ConfirmationDialog } from "../components/ConfirmationDialog";
+import { useFlag, useSignupCallback } from "../libs/hooksLib";
+
 export const groupData = [
   {
     id: 0,
@@ -109,10 +113,6 @@ export const groupData = [
     divisions: [{ id: 48, name: "OCD - Office of Group Director" }],
   },
 ];
-
-import PageTitleBar from "../components/PageTitleBar";
-import { ConfirmationDialog } from "../components/ConfirmationDialog";
-import { useFlag, useSignupCallback } from "../libs/hooksLib";
 
 const createAttribute = () => undefined;
 const customComponents = {
