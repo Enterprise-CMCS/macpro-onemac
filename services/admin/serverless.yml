@@ -11,8 +11,6 @@ plugins:
   - serverless-bundle
   - serverless-dotenv-plugin
   - serverless-s3-bucket-helper
-  - "@enterprise-cmcs/serverless-waf-plugin"
-  - serverless-associate-waf
 custom:
   stage: ${opt:stage, self:provider.stage}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
@@ -21,10 +19,6 @@ custom:
   oneMacTableName: onemac-${self:custom.stage}-one
   bundle:
     packager: yarn
-  webAclName: ${self:custom.stage}-${self:service}-webacl
-  associateWaf:
-    name: ${self:custom.webAclName}
-    version: V2 #(optional) Regional | V2
 
 provider:
   name: aws
