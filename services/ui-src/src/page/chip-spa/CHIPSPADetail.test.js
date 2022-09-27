@@ -121,12 +121,6 @@ const ContextWrapper = ({ children }) => {
 window.HTMLElement.prototype.scrollIntoView = jest.fn();
 
 describe("Detail View Tests", () => {
-  // let history;
-  // beforeEach(() => {
-  //   history = createMemoryHistory();
-  //   history.push("/detail/spa/MI-12-1133");
-  // });
-
   it("renders", async () => {
     let history;
     history = createMemoryHistory();

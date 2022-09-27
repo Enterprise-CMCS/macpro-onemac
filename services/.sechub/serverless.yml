@@ -29,6 +29,8 @@ custom:
   githubOrganizationProjects: ${ssm:/configuration/${self:custom.stage}/sechub/githubOrganizationProjects, ssm:/configuration/default/sechub/githubOrganizationProjects, ""}
   severity: ${ssm:/configuration/${self:custom.stage}/sechub/severity, ssm:/configuration/default/sechub/severity, "CRITICAL,HIGH"}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  bundle:
+    packager: yarn
 
 provider:
   name: aws

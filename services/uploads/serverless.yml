@@ -65,6 +65,8 @@ custom:
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
+  bundle:
+    packager: yarn
   scripts:
     hooks:
       # This script is run locally when running 'serverless deploy'

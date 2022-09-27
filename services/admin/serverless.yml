@@ -17,6 +17,9 @@ custom:
   tableName: cms-spa-form-${self:custom.stage}-change-requests
   spaIdTableName: cms-spa-form-${self:custom.stage}-spa-ids
   oneMacTableName: onemac-${self:custom.stage}-one
+  bundle:
+    packager: yarn
+
 provider:
   name: aws
   runtime: nodejs14.x
