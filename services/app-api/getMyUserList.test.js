@@ -7,7 +7,7 @@ const testDoneBy = {
   roleList: [{ role: "statesystemadmin", status: "active", territory: "MD" }],
   email: "myemail@email.com",
   firstName: "firsty",
-  lastName: "lastyr",
+  lastName: "lasty",
   fullName: "firsty lastly",
 };
 

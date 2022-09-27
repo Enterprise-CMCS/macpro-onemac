@@ -8,7 +8,7 @@ for d in services/*/; do
     yarn
 
     # if tests fail for any one of the packages, record the failure and test the rest
-    if ! yarn test --ci --reporters='default' --reporters='../../github-actions-reporter'; then
+    if ! yarn test --coverage --ci --reporters='default' --reporters='../../github-actions-reporter'; then
       echo "failed in $d"
       RET=1
     fi
