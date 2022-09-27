@@ -583,6 +583,9 @@ And("type in a correct Waiver Number with 4 characters", () => {
 And("verify error message is not present on New Waiver Page", () => {
   OneMacSubmitNewWaiverActionPage.verifyErrorMessageIsNotDisplayed();
 });
+And("verify parent error message is not present on New Waiver Page", () => {
+  OneMacSubmitNewWaiverActionPage.verifyParentErrorMessageIsNotDisplayed();
+});
 
 And("clear Waiver Number Input box in new form", () => {
   OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
@@ -2542,6 +2545,12 @@ And(
   }
 );
 And(
+  "verify parent error message is present on package dashboard New Waiver Page",
+  () => {
+    OneMacSubmitNewWaiverActionPage.verifyParentErrorMessageIsDisplayed();
+  }
+);
+And(
   "verify What format is used to enter a 1915b and 1915c Temporary Extension number header",
   () => {
     OneMacFAQPage.verifyTempExtFormatHeaderBtnExists();
@@ -2677,7 +2686,7 @@ And(
   "type new waiver renewal number 1 in 1915b Waiver Renewal Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
         d.newWaiverRenewalNum1
       );
     });
@@ -2687,7 +2696,7 @@ And(
   "type new waiver amendment number 1 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
         d.newWaiverAmendmentNum1
       );
     });
@@ -2697,7 +2706,7 @@ And(
   "type new waiver amendment number 2 in 1915b Waiver Amendment Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
         d.newWaiverAmendmentNum2
       );
     });
@@ -2727,7 +2736,7 @@ And(
   "type new waiver renewal number 2 in 1915b Waiver Renewal Number field",
   () => {
     cy.fixture("packageDashboardWaiverNumbers.json").then((d) => {
-      OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber(
+      OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms(
         d.newWaiverRenewalNum2
       );
     });
@@ -2774,11 +2783,11 @@ And("clear Existing Waiver Number to Amend field", () => {
   cy.wait(1500);
 });
 And("clear 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearNewWaiverNumber();
+  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
   cy.wait(1500);
 });
 And("clear 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.clearNewWaiverNumber();
+  OneMacSubmitNewWaiverActionPage.clearWaiverNumberInputBoxNewForms();
   cy.wait(1500);
 });
 And("type bad format into Existing Waiver Number to Renew field", () => {
@@ -2794,10 +2803,10 @@ And("search for new waiver renewal number 2", () => {
   cy.wait(1000);
 });
 And("type bad format into 1915b Waiver Renewal Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber("MD");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD");
 });
 And("type bad format into 1915b Waiver Amendment Number field", () => {
-  OneMacSubmitNewWaiverActionPage.inputNewWaiverNumber("MD");
+  OneMacSubmitNewWaiverActionPage.inputWaiverNumberNewForms("MD");
 });
 And(
   "verify id number in the first row matches new waiver renewal number 1",
