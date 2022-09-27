@@ -19,9 +19,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Install dependencies
         run: |
           yarn install --frozen-lockfile
@@ -37,9 +40,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v1
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Unit Test & Publish Coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -230,23 +236,31 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - name: Combine package-lock.json files to single file
-        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
+      # - name: cache service dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       services/uploads/node_modules
+      #       services/app-api/node_modules
+      #       services/stream-functions/node_modules
+      #       services/ui/node_modules
+      #       services/ui-auth/node_modules
+      #       services/ui-src/node_modules
+      #       node_modules
+      #     key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: cache service dependencies
         uses: actions/cache@v2
         with:
           path: |
-            services/uploads/node_modules
-            services/app-api/node_modules
-            services/stream-functions/node_modules
-            services/ui/node_modules
-            services/ui-auth/node_modules
-            services/ui-src/node_modules
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json', 'plugins/**') }}-3      
       - name: Install dependencies
         run: npm ci
       - name: set path
@@ -341,25 +355,35 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
-      - name: Combine package-lock.json files to single file
-        run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: cache service dependencies
         uses: actions/cache@v2
         with:
           path: |
-            services/app-api/node_modules
-            services/uploads/node_modules
-            services/stream-functions/node_modules
-            services/ui/node_modules
-            services/ui-auth/node_modules
-            services/ui-src/node_modules
-            node_modules
-          key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
+            **/node_modules
+            ~/.cache/Cypress
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/package-lock.json', 'plugins/**') }}-3
+      # - name: Combine package-lock.json files to single file
+      #   run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
+      # - name: cache service dependencies
+      #   uses: actions/cache@v2
+      #   with:
+      #     path: |
+      #       services/app-api/node_modules
+      #       services/uploads/node_modules
+      #       services/stream-functions/node_modules
+      #       services/ui/node_modules
+      #       services/ui-auth/node_modules
+      #       services/ui-src/node_modules
+      #       node_modules
+      #     key: ${{ runner.os }}-${{ hashFiles('combined-package-lock.txt') }}
       - name: Install dependencies
-        run: npm install --frozen-lockfile
+        run: npm ci
       - name: set path
         run: |
           echo "PATH=$(pwd)/node_modules/.bin/:$PATH" >> $GITHUB_ENV
