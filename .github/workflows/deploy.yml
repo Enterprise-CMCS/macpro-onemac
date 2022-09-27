@@ -27,7 +27,7 @@ jobs:
           yarn install --frozen-lockfile
           for service in services/*/; do
             pushd "$service"
-            if [ -f package-lock.json ]; then yarn install --frozen-lockfile; fi
+            if [ -f yarn.lock ]; then yarn install --frozen-lockfile; fi
             popd
           done
       - name: Run ESLint
@@ -52,7 +52,7 @@ jobs:
   deploy:
     name: Deploy
     needs:
-      - lint
+      # - lint
       - unit-test
     runs-on: ubuntu-latest
     steps:
