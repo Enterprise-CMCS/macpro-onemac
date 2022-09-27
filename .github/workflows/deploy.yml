@@ -14,24 +14,24 @@ permissions:
   actions: read
 
 jobs:
-  # lint:
-    # name: Lint
-    # runs-on: ubuntu-latest
-    # steps:
-    #   - uses: actions/checkout@v1
-    #   - uses: actions/setup-node@v1
-    #     with:
-    #       node-version: "14.x"
-    #   - name: Install dependencies
-    #     run: |
-    #       npm ci
-    #       for service in services/*/; do
-    #         pushd "$service"
-    #         if [ -f package-lock.json ]; then npm ci; fi
-    #         popd
-    #       done
-    #   - name: Run ESLint
-    #     run: npx eslint --max-warnings=0 services
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - uses: actions/setup-node@v1
+        with:
+          node-version: "14.x"
+      - name: Install dependencies
+        run: |
+          yarn install --frozen-lockfile
+          for service in services/*/; do
+            pushd "$service"
+            if [ -f package-lock.json ]; then yarn install --frozen-lockfile; fi
+            popd
+          done
+      - name: Run ESLint
+        run: yarn eslint --max-warnings=0 services
   unit-test:
     name: Unit Test
     runs-on: ubuntu-latest
@@ -52,7 +52,7 @@ jobs:
   deploy:
     name: Deploy
     needs:
-      # - lint
+      - lint
       - unit-test
     runs-on: ubuntu-latest
     steps:
@@ -129,8 +129,6 @@ jobs:
         run: echo "TESTING_TEAM_EMAIL=macproemailnotification@gmail.com" >> $GITHUB_ENV
       - name: deploy
         run: |
-          # When deploying multiple copies of this quickstart to the same AWS Account (not ideal), a prefix helps prevent stepping on each other.
-          # This can optionally be set as a variable in GitHub Actions Secrets
           ./deploy.sh $STAGE_PREFIX$branch_name
       - name: Output Endpoint
         run:  |
@@ -138,8 +136,6 @@ jobs:
           echo "::notice::Endpoint URL - `./output.sh ui ApplicationEndpointUrl $STAGE_PREFIX$branch_name`"
           popd
       - name: Seed Data
-        # this "resets" any data explicitly provided in the seed files to what
-        # is in the committed code
         if: ${{ env.branch_name != 'production' && env.branch_name != 'master' }}
         env:
           SLS_DEBUG: 'true'
