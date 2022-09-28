@@ -17,10 +17,10 @@ Resources:
       ResponseType: DEFAULT_5XX
       RestApiId:
         Ref: "ApiGatewayRestApi"
-  ApiGwWebAcl:
+  ApiGwWebAcl2:
     Type: AWS::WAFv2::WebACL
     Properties:
-      Name: ${self:custom.stage}-ApiGwWebAcl
+      Name: ${self:custom.stage}-ApiGwWebAcl2
       DefaultAction:
         Block: {}
       Rules:
