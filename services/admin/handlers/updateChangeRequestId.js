@@ -121,7 +121,7 @@ exports.main = async function (event) {
         "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
       ExpressionAttributeValues: {
         ":toTransmittalNumber": event.toTransmittalNumber,
-        ":toSummary": event.prependAdditionalInfo + " " + result.summary,
+        ":toSummary": event.prependAdditionalInfo + "\n\n" + result.summary,
       },
     })
     .promise();
