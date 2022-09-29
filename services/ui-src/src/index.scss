@@ -981,7 +981,6 @@ article.form-container {
 }
 
 .dashboard-container {
-  @extend .app-bar;
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
@@ -999,24 +998,46 @@ article.form-container {
 }
 
 .table-wrapper {
-  display: block;
-  max-width: 1040px;
-  max-height: 520px;
   overflow: auto;
+  @media only screen and (max-width: 1023px) {
+    display: block;
+    max-height: 320px;
+  }
+
+  @media only screen and (min-width: 1024px) {
+    display: flex;
+    min-width: min(calc(100vw - 14.4rem), 1024px);
+  }
 }
 
 .submissions-table,
 .package-table {
   @include custom-table;
-  min-width: 1024px;
+
+  @media only screen and (max-width: 1199px) {
+    td .type-badge {
+      white-space: normal;
+    }
+    th,
+    td {
+      &:not(:last-child) {
+        padding-right: 8px;
+      }
+    }
+  }
+
+  @media only screen and (min-width: 1200px) {
+    th,
+    td {
+      &:not(:last-child) {
+        padding-right: $table-padding;
+      }
+    }
+  }
 
   th,
   td {
     white-space: nowrap;
-
-    &:not(:last-child) {
-      padding-right: 2ch;
-    }
   }
 
   th:first-child,
@@ -2319,6 +2340,8 @@ aside#faq-contact-info-box {
 }
 
 .search-and-filter {
+  margin-left: 7.2rem;
+  margin-right: 7.2rem;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
   @extend .ds-u-justify-content--between;
@@ -2527,6 +2550,8 @@ aside#faq-contact-info-box {
 }
 
 .tab-bar {
+  margin-left: 7.2rem;
+  margin-right: 7.2rem;
   @extend .ds-u-margin-bottom--4;
   @extend .ds-u-display--flex;
   @extend .ds-u-align-items--start;
@@ -2594,7 +2619,19 @@ aside#faq-contact-info-box {
   border: 1px solid $color-gray-lighter;
   border-radius: 0 0 3px 3px;
   border-top: none;
+
+  .detail-card-status {
+    @extend .ds-h2;
+    color: $color-black;
+  }
+
+  section {
+    .ds-c-review:first-of-type {
+      @extend .ds-u-padding-top--0;
+    }
+  }
 }
+
 .package-actions {
   @extend .ds-u-flex-direction--column;
   width: 50%;
@@ -2602,7 +2639,6 @@ aside#faq-contact-info-box {
 .action-list {
   list-style-type: none;
   @extend .ds-u-padding--0;
-  @extend .ds-u-padding-top--2;
   @extend .ds-u-margin--0;
 
   p {

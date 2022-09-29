@@ -30,6 +30,7 @@ Feature: OY2-16707 CMS Users Denied a CRA Role loses Read Only Access to OneMAC
         And Phone Number Add Button is Displayed
         And Status text is not displayed
         Then Click on My Account
+        And verify the logout button exists
         And click the logout button
         Given I am on Login Page
         When Clicking on Development Login
@@ -40,6 +41,7 @@ Feature: OY2-16707 CMS Users Denied a CRA Role loses Read Only Access to OneMAC
         And click confirm in the modal
         And verify success message for denied role
         Then Click on My Account
+        And verify the logout button exists
         And click the logout button
         Given I am on Login Page
         When Clicking on Development Login

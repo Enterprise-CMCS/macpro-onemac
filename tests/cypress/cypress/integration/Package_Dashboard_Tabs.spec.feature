@@ -108,5 +108,5 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         When Login with state submitter user
         And click on Packages
         And click on the Waivers tab
-        And search for "MD.1117"
+        And search for "MD-33463.R00.00"
         And verify parent row expander is disabled

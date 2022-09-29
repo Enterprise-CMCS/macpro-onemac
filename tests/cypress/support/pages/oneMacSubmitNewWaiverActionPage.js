@@ -9,11 +9,14 @@ const addFile1915b4 =
   "//td[div[contains(text(),'1915(b)(4) FFS Selective Contracting (Streamlined) waiver application')]]";
 const fileUpload1915b4 = "#uploader-input-0";
 const commentsInputBox = "#field_2";
-
+const additionalInfoTextarea = "#additional-information";
 const existingWaiverNumber = "MD-10330.R01.00";
 const whatIsMyWaiverIDLink = "//a[@href='/FAQ#waiver-id-format']";
 const proposedEffectiveDate = "#proposed-effective-date";
-const multiWaiverInputBox = "//input[@type='text']";
+const parentIDInputBox = "#parent-componentId";
+const parentErrMsgForWaiverNumber = "#parent-componentIdStatusMsg0";
+const parentIDLabel =
+  "//h3[text()='Approved Initial or Renewal Waiver Number']";
 
 export class oneMacSubmitNewWaiverActionPage {
   inputWaiverNumberNewForms(s) {
@@ -53,6 +56,9 @@ export class oneMacSubmitNewWaiverActionPage {
   verifyErrorMessageIsNotDisplayed() {
     cy.get(newErrMsgForWaiverNumber).should("not.exist");
   }
+  verifyParentErrorMessageIsNotDisplayed() {
+    cy.get(parentErrMsgForWaiverNumber).should("not.exist");
+  }
 
   clearWaiverNumberInputBoxNewForms() {
     cy.get(newWaiverNumberInputBox).clear();
@@ -64,6 +70,9 @@ export class oneMacSubmitNewWaiverActionPage {
   verifyErrorMessageIsDisplayed() {
     cy.get(newErrMsgForWaiverNumber).should("be.visible");
   }
+  verifyParentErrorMessageIsDisplayed() {
+    cy.get(parentErrMsgForWaiverNumber).should("be.visible");
+  }
   verifyOldErrorMessageIsDisplayed() {
     cy.get(oldErrMsgForWaiverNumber).should("be.visible");
   }
@@ -73,9 +82,16 @@ export class oneMacSubmitNewWaiverActionPage {
     const filePath = "/files/15MB.pdf";
     cy.get(fileUpload1915b4).attachFile(filePath);
   }
+  verifyParentIDIsPrefilled(s) {
+    cy.xpath(parentIDLabel).next("div").contains(s);
+  }
 
   inputComments(s) {
     cy.get(commentsInputBox).type(s);
+  }
+
+  inputAdditionalInfoText(s) {
+    cy.get(additionalInfoTextarea).type(s);
   }
 
   clickWhatIsMyWaiverIdLink() {
@@ -105,16 +121,10 @@ export class oneMacSubmitNewWaiverActionPage {
   }
 
   inputWaiverParentNumber(s) {
-    cy.xpath(multiWaiverInputBox).first().type(s);
-  }
-  inputNewWaiverNumber(s) {
-    cy.xpath(multiWaiverInputBox).eq(1).type(s);
+    cy.get(parentIDInputBox).type(s);
   }
   clearWaiverParentNumber() {
-    cy.xpath(multiWaiverInputBox).first().clear();
-  }
-  clearNewWaiverNumber() {
-    cy.xpath(multiWaiverInputBox).eq(1).clear();
+    cy.get(parentIDInputBox).clear();
   }
 }
 export default oneMacSubmitNewWaiverActionPage;

@@ -10,5 +10,9 @@ const testEmail = {
 it("email Offline Stub", async () => {
   process.env.IS_OFFLINE = true;
   const response = sendEmail(testEmail);
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

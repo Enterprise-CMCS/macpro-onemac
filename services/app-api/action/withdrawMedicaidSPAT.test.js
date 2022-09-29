@@ -9,7 +9,11 @@ const testEvent = {
 
 it("calls changeStatusAny", async () => {
   const response = main(testEvent);
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
   expect(changeStatusAny).toHaveBeenCalled();
 });
 
@@ -20,6 +24,10 @@ it("cathes logs and rethrows submit error", async () => {
   });
   const logSpy = jest.spyOn(console, "log");
   //console.log("Exception: ", Error("changeStatusAny error"));
-  expect(main(testEvent)).rejects.toThrow(mockError);
+  expect(main(testEvent))
+    .rejects.toThrow(mockError)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
   expect(logSpy).toHaveBeenCalledWith("Exception: ", mockError);
 });

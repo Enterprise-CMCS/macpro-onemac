@@ -27,16 +27,32 @@ beforeEach(() => {
 
 it("exists without crashing", () => {
   const response = PackageApi.default.getDetail("foo", "foo", "foo");
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response2 = PackageApi.default.getMyPackages("foo", "tab");
-  expect(response2).toBeInstanceOf(Promise);
+  expect(response2)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response4 = PackageApi.default.getMyPackages("foo");
-  expect(response4).toBeInstanceOf(Promise);
+  expect(response4)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response3 = PackageApi.default.withdraw("foo", "foo", "foo");
-  expect(response3).toBeInstanceOf(Promise);
+  expect(response3)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("sucessfully submits a form", async () => {
@@ -54,7 +70,9 @@ it("sucessfully submits a form", async () => {
 
   const expectedResponse = { test: "thisTest" };
 
-  expect(
-    PackageApi.default.submitToAPI(testData, testUploads)
-  ).resolves.toStrictEqual(expectedResponse);
+  expect(PackageApi.default.submitToAPI(testData, testUploads))
+    .resolves.toStrictEqual(expectedResponse)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

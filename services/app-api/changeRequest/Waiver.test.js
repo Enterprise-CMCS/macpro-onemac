@@ -9,17 +9,29 @@ it("Waiver Stub", async () => {
 
   packageExists.mockImplementationOnce(() => true);
   const response = Waiver.fieldsValid(spaData);
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => false);
   const responsef = Waiver.fieldsValid(spaData);
-  expect(responsef).toBeInstanceOf(Promise);
+  expect(responsef)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => {
     throw "Ouch!";
   });
   const responset = Waiver.fieldsValid(spaData);
-  expect(responset).toBeInstanceOf(Promise);
+  expect(responset)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response2 = Waiver.getCMSEmail(spaData);
   expect(response2.HTML.length).toBe(1571);
