@@ -20,6 +20,8 @@ export default function RespondToRAI({ theComponent }) {
         pathname: RAILink[theComponent.componentType],
         state: {
           componentId: theComponent.componentId,
+          parentId: theComponent.componentId,
+          parentType: theComponent.componentType,
         },
       }}
       id={"respond-rai-action-" + theComponent.componentId}
