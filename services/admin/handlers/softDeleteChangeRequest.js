@@ -65,6 +65,7 @@ function extractMatchedResult(results, event) {
  * @param {string} event.territory the two character state code to which the submission belongs
  * @param {string} event.prependAdditionalInfo is any text that should be prepended to the summary (additional info) to explain the update
  * @param {string} event.submittedLastXMonths an optional integer representing the number of months back to query for the given transmittalNumber; if not provided will default to 3
+ * @param {string} event.testRun an optional boolean that if true indicates that the final update should not occur
  * @returns {string} Confirmation message
  */
 exports.main = async function (event) {

@@ -1,5 +1,5 @@
 import AWS from "aws-sdk";
-import { parse, addSeconds } from "date-fns";
+import { addMonths } from "date-fns";
 
 const dynamoDb = new AWS.DynamoDB.DocumentClient(
   process.env.IS_OFFLINE
@@ -9,15 +9,10 @@ const dynamoDb = new AWS.DynamoDB.DocumentClient(
     : {}
 );
 
-const dateFormat = "EEE, MMM d yyyy, h:mm:ss a";
-const dateFormatTimeZone = dateFormat.concat(" x");
-
 function validateEvent(event) {
   //validate required input params
   let missingParams = "";
-  if (!event.submittedAt) {
-    missingParams += " submittedAt ";
-  }
+
   if (!event.fromTransmittalNumber) {
     missingParams += " fromTransmittalNumber ";
   }
@@ -37,46 +32,41 @@ function validateEvent(event) {
     throw new Error("Missing event parameters - " + missingParams);
   }
 
-  //validate format of submittedAt
-  if (isNaN(parse(event.submittedAt, dateFormat, new Date()))) {
-    throw new Error(
-      "Invalid format for submittedAt parameter. Expected " +
-        dateFormat +
-        " and received " +
-        event.submittedAt
-    );
-  }
-
   console.log("event passed validation");
 }
 
 function extractMatchedResult(results, event) {
-  const result = results.Items.find((item) => {
+  const filteredResults = results.Items.filter((item) => {
     return (
       item.transmittalNumber === event.fromTransmittalNumber &&
       item.type === event.type
     );
   });
 
-  if (!result) {
+  if (filteredResults.length === 0) {
     throw new Error(
-      "Transmittal number not found for specified territory and submission time - can not do auto update"
+      "Transmittal number not found for specified type, territory, and submission timeframe - can not do auto update"
+    );
+  } else if (filteredResults.length > 1) {
+    throw new Error(
+      "Duplicate transmittal numbers found for specified type, territory, and submission timeframe - can not do auto update"
     );
   }
-  console.log("Match found", result);
-  return result;
+
+  console.log("Single Match Found", filteredResults[0]);
+  return filteredResults[0];
 }
 
 /**
  * Update a given change request transmittalNumber based on its current transmittalNumber, type, and submittedAt timestamp.
- * Note that the submittedAt parameter should represent US Eastern Timezone and be in 24hr format.
  *
- * @param {string} event.submittedAt A formatted (EEE, MMM d yyyy, h:mm:ss a) dateTime string representing the US Eastern Timezone date of submission as it appears on the submission details page
  * @param {string} event.fromTransmittalNumber The submission id (TransmittalNumber) to update
  * @param {string} event.toTransmittalNumber the new submission id (TransmittalNumber)
  * @param {string} event.type the type of submission - see changeRequest.js Type - examples: (chipspa,chipsparai,spa,sparai,waiver)
  * @param {string} event.territory the two character state code to which the submission belongs
  * @param {string} event.prependAdditionalInfo is any text that should be prepended to the summary (additional info) to explain the update
+ * @param {string} event.submittedLastXMonths an optional integer representing the number of months back to query for the given transmittalNumber; if not provided will default to 3
+ * @param {string} event.testRun an optional boolean that if true indicates that the final update should not occur
  * @returns {string} Confirmation message
  */
 exports.main = async function (event) {
@@ -84,12 +74,7 @@ exports.main = async function (event) {
 
   validateEvent(event);
 
-  //convert input timestamp to epoch; submittedAt timestamps are input in ET so append -04
-  const dateSubmittedAt = parse(
-    event.submittedAt.concat(" -04"),
-    dateFormatTimeZone,
-    new Date()
-  );
+  const monthsAgo = -(event.submittedLastXMonths ?? 3);
 
   //query for change request in the given territory and sumbitted at the specified time (within one second)
   const queryParams = {
@@ -98,11 +83,10 @@ exports.main = async function (event) {
     ExpressionAttributeNames: { "#type": "type" },
     IndexName: "territory-submittedAt-index",
     KeyConditionExpression:
-      "territory = :v_territory and submittedAt between :v_submittedAt and :v_submittedEnd",
+      "territory = :v_territory and submittedAt >= :v_submittedStart",
     ExpressionAttributeValues: {
       ":v_territory": event.territory,
-      ":v_submittedAt": dateSubmittedAt.getTime(),
-      ":v_submittedEnd": addSeconds(dateSubmittedAt, 1).getTime(),
+      ":v_submittedStart": addMonths(new Date(), monthsAgo).getTime(),
     },
   };
 
@@ -113,18 +97,20 @@ exports.main = async function (event) {
   const result = extractMatchedResult(results, event);
 
   //update the transmittalNumber to the input transmittalNumber and prepend the additional info
-  await dynamoDb
-    .update({
-      TableName: process.env.tableName,
-      Key: { userId: result.userId, id: result.id },
-      UpdateExpression:
-        "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
-      ExpressionAttributeValues: {
-        ":toTransmittalNumber": event.toTransmittalNumber,
-        ":toSummary": event.prependAdditionalInfo + "\n\n" + result.summary,
-      },
-    })
-    .promise();
+  if (!event.testRun) {
+    await dynamoDb
+      .update({
+        TableName: process.env.tableName,
+        Key: { userId: result.userId, id: result.id },
+        UpdateExpression:
+          "SET transmittalNumber = :toTransmittalNumber, summary = :toSummary",
+        ExpressionAttributeValues: {
+          ":toTransmittalNumber": event.toTransmittalNumber,
+          ":toSummary": event.prependAdditionalInfo + "\n\n" + result.summary,
+        },
+      })
+      .promise();
+  }
 
   return "Update Complete";
 };
