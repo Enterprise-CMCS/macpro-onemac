@@ -52,6 +52,7 @@ import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
+import DescribeForms from "./page/DescribeForms";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -229,6 +230,10 @@ const ROUTE_LIST: RouteSpec[] = [
     {
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
+    },
+    {
+      path: "/forms-describe",
+      component: DescribeForms,
     },
   ].map(({ path, ...rest }) => ({
     path,
