@@ -2,7 +2,7 @@ import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
 import React, { useCallback } from "react";
 import { useAppContext } from "../../libs/contextLib";
-import { formatDetailViewDate } from "../../utils/date-utils";
+import { formatDateOnly, formatDetailViewDate } from "../../utils/date-utils";
 import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
@@ -58,13 +58,13 @@ export const DetailSection = ({
             {pageConfig.show90thDayInfo && ninetyDayText !== "N/A" && (
               <Review heading="90th Day">
                 {Number(ninetyDayText)
-                  ? formatDetailViewDate(new Date(ninetyDayText))
+                  ? formatDateOnly(new Date(ninetyDayText))
                   : ninetyDayText ?? "N/A"}
               </Review>
             )}
             {pageConfig.showEffectiveDate && detail.effectiveDateTimestamp && (
               <Review heading="Effective Date">
-                {formatDetailViewDate(detail.effectiveDateTimestamp)}
+                {formatDateOnly(detail.effectiveDateTimestamp)}
               </Review>
             )}
           </section>
