@@ -1,4 +1,4 @@
-import React, { FC } from "react";
+import React from "react";
 import { Dropdown } from "@cmsgov/design-system";
 import { SelectOption } from "cmscommonlib";
 
