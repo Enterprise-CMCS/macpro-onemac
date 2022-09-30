@@ -21,6 +21,7 @@ const topLevelAttributes = [
   "parentId",
   "parentType",
   "title",
+  "temporaryExtensionType",
 ];
 
 export default async function newSubmission(newData, config) {
