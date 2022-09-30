@@ -1,6 +1,5 @@
-import { Workflow } from "cmscommonlib";
 import { submitAny } from "./submitAny";
-import { main, waiverRAIResponseFormConfig } from "./submitWaiverRAIResponse";
+import { main } from "./submitWaiverRAIResponse";
 
 jest.mock("./submitAny");
 submitAny.mockResolvedValue("yup!");

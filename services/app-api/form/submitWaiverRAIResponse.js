@@ -1,16 +1,19 @@
 import { waiverRAIResponse } from "cmscommonlib";
-import Joi from "joi";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig } from "./defaultFormConfig";
+import {
+  defaultFormConfig,
+  defaultParentId,
+  defaultParentType,
+} from "./defaultFormConfig";
 
 export const waiverRAIResponseFormConfig = {
   ...defaultFormConfig,
   ...waiverRAIResponse,
   appendToSchema: {
-    parentId: Joi.string().required(),
-    parentType: Joi.string().required(),
+    parentId: defaultParentId,
+    parentType: defaultParentType,
   },
 };
 
