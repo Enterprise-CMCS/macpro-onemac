@@ -15,7 +15,7 @@ import {
 import { LocationState } from "../domain-types";
 import LoadingScreen from "../components/LoadingScreen";
 import PackageApi from "../utils/PackageApi";
-import { formatDetailViewDate } from "../utils/date-utils";
+import { showAsCmsTimestamp } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
@@ -100,7 +100,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
             AUTHORITY_LABELS[fetchedDetail.waiverAuthority];
         }
         if (fetchedDetail.submissionTimestamp) {
-          fetchedDetail.submissionDateNice = formatDetailViewDate(
+          fetchedDetail.submissionDateNice = showAsCmsTimestamp(
             fetchedDetail.submissionTimestamp
           );
         }

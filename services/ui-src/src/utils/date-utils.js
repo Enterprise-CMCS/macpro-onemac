@@ -1,4 +1,4 @@
-import { format, parseISO } from "date-fns";
+import { format, parseISO, utcToZonedTime } from "date-fns-tz";
 
 /**
  * Format a date to a string.
@@ -50,4 +50,12 @@ export function formatDateOnly(date) {
     dateString = format(date, "EEE, MMM d yyyy");
   }
   return dateString;
+}
+
+export function showAsCmsTimestamp(date) {
+  return (
+    format(date, "EEE, MMM d yyyy, h:mm:ss a", {
+      timeZone: "America/New York",
+    }) + " EST"
+  );
 }
