@@ -37,6 +37,15 @@ import ComponentId from "../components/ComponentId";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
+export const stateAccessError = {
+  statusLevel: "error",
+  statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
+};
+
+export const buildMustExistMessage = (idLabel: string) =>
+  `According to our records, this ${idLabel} does not exist. Please check the ${idLabel} and try entering it again.`;
+export const buildMustNotExistMessage = (idLabel: string) =>
+  `According to our records, this ${idLabel} already exists. Please check the ${idLabel} and try entering it again.`;
 /**
  * Parses out the two character state/territory at the beginning of the component id.
  * @param componentId the component id
@@ -123,10 +132,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         (activeTerritories &&
           !activeTerritories.includes(getTerritoryFromComponentId(componentId)))
       ) {
-        errorMessages.push({
-          statusLevel: "error",
-          statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
-        });
+        errorMessages.push(stateAccessError);
       }
       // must match the associated Regex string for format
       else if (
@@ -251,10 +257,6 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 oneMacFormData.componentId
               );
             }
-            // if (idExistValidation.existenceRegex !== undefined) {
-            //   checkingNumber = checkingNumber.match(idExistValidation.existenceRegex
-            //   )![0];
-            // }
             try {
               result = await ChangeRequestDataApi.packageExists(checkingNumber);
             } catch (e) {
@@ -275,19 +277,17 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
               // ID does not exist but it should exist
               if (!dupID && correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formConfig.idLabel} does not exist. Please check the ${formConfig.idLabel} and try entering it again.`;
+                  tempMessage = buildMustExistMessage(formConfig.idLabel);
                 } else {
-                  // tempMessage = `${formConfig.idLabel} not found. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
                   tempMessage = approvedBlueWarningMessage;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
                 }
                 // ID exists but it should NOT exist
               } else if (dupID && !correspondingValidation.idMustExist) {
                 if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`;
+                  tempMessage = buildMustNotExistMessage(formConfig.idLabel);
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 } else {
-                  // tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
                   tempMessage = approvedBlueWarningMessage;
                   tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
                 }
