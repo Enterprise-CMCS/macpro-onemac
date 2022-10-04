@@ -56,6 +56,7 @@ const tempExtensionEventBody = {
   territory: "VA",
   submitterEmail: "statesubmitteractive@cms.hhs.local",
   submitterName: "Angie Active",
+  temporaryExtensionType: "1915(b)",
   attachments: [
     {
       contentType: "image/png",
