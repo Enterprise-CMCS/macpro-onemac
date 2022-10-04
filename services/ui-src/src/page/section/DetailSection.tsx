@@ -2,7 +2,7 @@ import { Accordion, AccordionItem, Review } from "@cmsgov/design-system";
 import { Workflow, getUserRoleObj } from "cmscommonlib";
 import React, { useCallback } from "react";
 import { useAppContext } from "../../libs/contextLib";
-import { formatDateOnly, formatDetailViewDate } from "../../utils/date-utils";
+import { formatDateOnly, formatDate } from "../../utils/date-utils";
 import { ComponentDetail } from "../DetailView";
 import { OneMACDetail } from "../../libs/detailLib";
 import FileList from "../../components/FileList";
@@ -129,7 +129,7 @@ export const DetailSection = ({
                     contentClassName="accordion-content"
                     heading={
                       "Submitted on " +
-                      formatDetailViewDate(raiResponse.submissionTimestamp)
+                      formatDate(raiResponse.submissionTimestamp)
                     }
                     headingLevel="6"
                     id={raiResponse.componentType + index + "_caret"}
