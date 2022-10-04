@@ -28,8 +28,8 @@ const VARIATION_PROPS = {
     width: "wide",
   },
   PackageList: {
-    acceptText: "Yes, withdraw",
-    dialogTitle: "Withdraw?",
+    acceptText: "Yes, withdraw package",
+    dialogTitle: "Withdraw Package?",
   },
 };
 

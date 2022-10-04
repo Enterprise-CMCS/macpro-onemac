@@ -116,9 +116,11 @@ describe("Detail View Tests", () => {
           name: "Actions for MD.83420.R00.TE01",
         })
       );
-      await userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
       await userEvent.click(
-        screen.getByRole("button", { name: "Yes, withdraw" })
+        screen.getByRole("menuitem", { name: "Withdraw Package" })
+      );
+      await userEvent.click(
+        screen.getByRole("button", { name: "Yes, withdraw package" })
       );
     });
 

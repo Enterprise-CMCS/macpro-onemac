@@ -30,8 +30,8 @@ export default function Withdraw({ theComponent, alertCallback }) {
       onClick={() => {
         confirmAction &&
           confirmAction(
-            "Withdraw?",
-            "Yes, withdraw",
+            "Withdraw Package?",
+            "Yes, withdraw package",
             "Cancel",
             `You are about to withdraw ${theComponent.componentId}. Once complete, you will not be able to resubmit this package. CMS will be notified.`,
             onPopupActionWithdraw
@@ -39,7 +39,7 @@ export default function Withdraw({ theComponent, alertCallback }) {
       }}
       id={"withdraw-action-" + theComponent.componentId}
     >
-      Withdraw
+      Withdraw Package
     </Link>
   );
 }
