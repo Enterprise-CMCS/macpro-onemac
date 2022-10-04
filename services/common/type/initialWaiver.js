@@ -4,6 +4,7 @@ export const initialWaiver = {
   typeLabel: "1915(b) Initial Waiver",
   idLabel: "Initial Waiver Number",
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
+  idMustExist: false,
   idExistValidations: [
     {
       idMustExist: false,

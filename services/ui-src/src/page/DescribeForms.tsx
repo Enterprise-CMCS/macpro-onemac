@@ -7,9 +7,9 @@ import { OneMACFormConfig } from "../libs/formLib";
 import PageTitleBar from "../components/PageTitleBar";
 
 import {
-  stateAccessError,
-  buildMustExistMessage,
-  buildMustNotExistMessage,
+  stateAccessMessage,
+  //  buildMustExistMessage,
+  //   buildMustNotExistMessage
 } from "./OneMACForm";
 
 import { medicaidSpaFormInfo } from "./medicaid-spa/MedicaidSpaForm";
@@ -58,22 +58,11 @@ const describeErrors = (
       <p>
         State Access Error:
         <br />
-        {stateAccessError.statusMessage}
+        {stateAccessMessage.statusMessage}
       </p>
-      {validationList.map(
-        (oneCheck, index) =>
-          oneCheck.errorLevel === "error" && (
-            <>
-              <p key={index}>
-                ID must {!oneCheck.idMustExist ? "not " : ""}exist Error:
-                <br />
-                {!oneCheck.idMustExist
-                  ? buildMustNotExistMessage(newLabel)
-                  : buildMustExistMessage(newLabel)}
-              </p>
-            </>
-          )
-      )}
+      {/* <p>ID Format Error:
+    <br/>{stateAccessMessage.statusMessage}</p>
+    {validationList.map((oneCheck, index) => oneCheck.errorLevel === "error" && <><p key={index}>ID must {(!oneCheck.idMustExist ? "not ": "")}exist Error:<br/>{(!oneCheck.idMustExist ? buildMustNotExistMessage(newLabel): buildMustExistMessage(newLabel))}</p></>)} */}
     </>
   );
 };

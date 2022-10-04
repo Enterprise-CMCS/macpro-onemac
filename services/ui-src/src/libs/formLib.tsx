@@ -45,6 +45,8 @@ export type PackageType = {
   typeLabel: string;
   idLabel: string;
   idRegex: string;
+  idMustExist: boolean;
+  idMustExistErrorLevel?: string;
   idExistValidations: IdValidation[];
   allowMultiplesWithSameId: boolean;
   requiredAttachments: (string | FileUploadProps)[];
