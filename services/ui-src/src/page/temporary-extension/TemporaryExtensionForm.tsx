@@ -6,10 +6,16 @@ import {
   waiverTemporaryExtension,
   ONEMAC_ROUTES,
   TYPE_TO_DETAIL_ROUTE,
+  SelectOption,
 } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
 import { DetailViewTab } from "../../libs/detailLib";
+
+export const temporaryExtensionTypes: SelectOption[] = [
+  { label: "1915(b) Temporary Extension", value: "1915(b)" },
+  { label: "1915(c) Temporary Extension", value: "1915(c)" },
+];
 
 const TemporaryExtensionForm: FC = () => {
   const location = useLocation<FormLocationState>();
@@ -42,10 +48,7 @@ const TemporaryExtensionForm: FC = () => {
     parentNotFoundMessage:
       "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
     validateParentAPI: "validateParentOfTemporaryExtension",
-    temporaryExtensionTypes: [
-      { label: "1915(b) Temporary Extension", value: "1915(b)" },
-      { label: "1915(c) Temporary Extension", value: "1915(c)" },
-    ],
+    temporaryExtensionTypes: temporaryExtensionTypes,
   };
 
   return <OneMACForm formConfig={temporaryExtensionFormInfo} />;
