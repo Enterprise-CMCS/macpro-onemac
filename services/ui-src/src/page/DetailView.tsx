@@ -80,7 +80,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   }
   const loadDetail = useCallback(
     async (ctrlr?: AbortController) => {
-      let fetchedDetail: ComponentDetail;
+      let fetchedDetail: ComponentDetail | undefined;
       let stillLoading = true;
 
       try {
@@ -100,7 +100,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           fetchedDetail.temporaryExtensionTypeNice =
             temporaryExtensionTypes.find(
               (tempType) =>
-                fetchedDetail.temporaryExtensionType === tempType.value
+                fetchedDetail?.temporaryExtensionType === tempType.value
             )?.label;
         }
 
@@ -127,7 +127,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
         }
         console.log("got the package: ", fetchedDetail);
         stillLoading = false;
-        setDetail(fetchedDetail);
       } catch (e) {
         console.log("error in getDetail call?? ", e);
         history.push({
@@ -137,7 +136,8 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           },
         });
       }
-      setIsLoading(stillLoading);
+      if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
+      if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },
     [history, componentId, componentType, componentTimestamp]
   );
