@@ -1,16 +1,14 @@
 import React from "react";
 import { Review } from "@cmsgov/design-system";
 
-import { FieldHint, IdValidation } from "cmscommonlib";
-
-import { OneMACFormConfig } from "../libs/formLib";
-import PageTitleBar from "../components/PageTitleBar";
-
 import {
+  OneMACFormConfig,
   stateAccessMessage,
-  //  buildMustExistMessage,
-  //   buildMustNotExistMessage
-} from "./OneMACForm";
+  buildWrongFormatMessage,
+  buildMustExistMessage,
+  buildMustNotExistMessage,
+} from "../libs/formLib";
+import PageTitleBar from "../components/PageTitleBar";
 
 import { medicaidSpaFormInfo } from "./medicaid-spa/MedicaidSpaForm";
 import { medicaidSPARAIFormInfo } from "./medicaid-spa/MedicaidSPARAIForm";
@@ -38,32 +36,44 @@ const configList: OneMACFormConfig[] | any = [
   { ...temporaryExtensionFormInfo },
 ];
 
-const describeFieldHint = (inFieldHintArray: FieldHint[]) => {
+const describeFieldHint = (formConfig: OneMACFormConfig) => {
   return (
     <>
-      {inFieldHintArray.map((oneHint, index) => (
+      {formConfig.idFieldHint.map((oneHint, index) => (
         <p key={index}>{oneHint.text}</p>
       ))}
     </>
   );
 };
 
-const describeErrors = (
-  validationList: IdValidation[],
-  idLabel: string | undefined
-) => {
-  const newLabel = idLabel ?? "ID";
-  return (
+const describeErrors = (formConfig: OneMACFormConfig) => {
+  return formConfig.idFormat ? (
     <>
-      <p>
-        State Access Error:
-        <br />
-        {stateAccessMessage.statusMessage}
-      </p>
-      {/* <p>ID Format Error:
-    <br/>{stateAccessMessage.statusMessage}</p>
-    {validationList.map((oneCheck, index) => oneCheck.errorLevel === "error" && <><p key={index}>ID must {(!oneCheck.idMustExist ? "not ": "")}exist Error:<br/>{(!oneCheck.idMustExist ? buildMustNotExistMessage(newLabel): buildMustExistMessage(newLabel))}</p></>)} */}
+      State Access Error:
+      <br />
+      {stateAccessMessage.statusMessage}
+      <br />
+      <br />
+      ID Format Error:
+      <br />
+      {buildWrongFormatMessage(formConfig).statusMessage}
+      {formConfig.idAdditionalErrorMessage &&
+        formConfig.idAdditionalErrorMessage.map((message, index) => (
+          <span key={index}>
+            <br />
+            {message}
+          </span>
+        ))}
+      <br />
+      <br />
+      ID must {formConfig.idMustExist === false ? "not " : ""}exist Error:
+      <br />
+      {formConfig.idMustExist === false
+        ? buildMustNotExistMessage(formConfig).statusMessage
+        : buildMustExistMessage(formConfig).statusMessage}
     </>
+  ) : (
+    <>ID not editable.</>
   );
 };
 
@@ -71,7 +81,7 @@ const DescribeField: React.FC<{
   fieldLabel: string;
   fieldName: string;
   appendText?: string;
-  customFunc?: (inVar: FieldHint[] | any, varTwo?: string) => JSX.Element;
+  customFunc?: (formConfig: OneMACFormConfig) => JSX.Element;
 }> = ({ fieldLabel, fieldName, appendText, customFunc }) => {
   return (
     <Review heading={fieldLabel + "s"}>
@@ -87,11 +97,7 @@ const DescribeField: React.FC<{
             (oneConfig: OneMACFormConfig | any, index: number) => {
               let displayValue: string | JSX.Element = "None";
 
-              if (customFunc)
-                displayValue = customFunc(
-                  oneConfig[fieldName],
-                  oneConfig.idLabel
-                );
+              if (customFunc) displayValue = customFunc(oneConfig);
               else if (
                 typeof oneConfig[fieldName] === "string" ||
                 typeof oneConfig[fieldName] === "boolean"

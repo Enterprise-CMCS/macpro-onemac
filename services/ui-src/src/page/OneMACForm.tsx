@@ -11,11 +11,7 @@ import { Input } from "rsuite";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
-import {
-  RESPONSE_CODE,
-  ROUTES,
-  approvedBlueWarningMessage,
-} from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import {
@@ -23,6 +19,10 @@ import {
   OneMacFormData,
   Message,
   defaultWaiverAuthority,
+  stateAccessMessage,
+  buildWrongFormatMessage,
+  buildMustExistMessage,
+  buildMustNotExistMessage,
 } from "../libs/formLib";
 import config from "../utils/config";
 
@@ -37,23 +37,6 @@ import ComponentId from "../components/ComponentId";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
-export const stateAccessMessage = {
-  statusLevel: "error",
-  statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
-};
-export const buildWrongFormatMessage = (formConfig: OneMACFormConfig) => ({
-  statusLevel: "error",
-  statusMessage: `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`,
-});
-
-export const buildMustExistMessage = (formConfig: OneMACFormConfig) => ({
-  statusLevel: "error",
-  statusMessage: `According to our records, this ${formConfig.idLabel} does not exist. Please check the ${formConfig.idLabel} and try entering it again.`,
-});
-export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
-  statusLevel: "error",
-  statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
-});
 /**
  * Parses out the two character state/territory at the beginning of the component id.
  * @param componentId the component id
@@ -238,97 +221,29 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   ]);
 
   useEffect(() => {
-    // default display message settings with empty message
-    let validationMessages: Message[] = validateComponentId(
-      oneMacFormData.componentId
-    );
-
-    const checkPackage = async (checkingNumber: string) => {
-      return await ChangeRequestDataApi.packageExists(checkingNumber);
-    };
-
-    if (validationMessages.length === 0 && oneMacFormData.componentId) {
-      try {
-        const isADup = checkPackage(oneMacFormData.componentId);
-        console.log("isADup", isADup);
-
-        if (!isADup && formConfig.idMustExist) {
-          validationMessages.push(buildMustExistMessage(formConfig));
-          // ID exists but it should NOT exist
-        } //else if (isADup && !formConfig.idMustExist) {
-        //   validationMessages.push(buildMustNotExistMessage(formConfig));
-        // }
-      } catch (e) {
-        console.log("error message is: ", (e as Error).message);
-        setAlertCode(RESPONSE_CODE[(e as Error).message]);
+    const checkId = async () => {
+      let validationMessages: Message[] = validateComponentId(
+        oneMacFormData.componentId
+      );
+      if (validationMessages.length === 0 && oneMacFormData.componentId) {
+        try {
+          const isADup = await ChangeRequestDataApi.packageExists(
+            oneMacFormData.componentId
+          );
+          if (isADup === false && formConfig.idMustExist) {
+            validationMessages.push(buildMustExistMessage(formConfig));
+          } else if (isADup === true && !formConfig.idMustExist) {
+            validationMessages.push(buildMustNotExistMessage(formConfig));
+          }
+        } catch (err) {
+          console.log("error is: ", err);
+          setAlertCode(RESPONSE_CODE[(err as Error).message]);
+        }
       }
-    }
-
-    // if (!isADup && formConfig.idMustExist) {
-    //       if (formConfig.idMustExistErrorLevel === "error") {
-    //         tempMessage = buildMustExistMessage(formConfig.idLabel);
-    //       } else {
-    //         tempMessage = approvedBlueWarningMessage;
-    //         tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
-    //       }
-    //       // ID exists but it should NOT exist
-    //     } else if (dupID && !correspondingValidation.idMustExist) {
-    //       if (correspondingValidation.errorLevel === "error") {
-    //         tempMessage = buildMustNotExistMessage(formConfig.idLabel);
-    //         tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
-    //       } else {
-    //         tempMessage = approvedBlueWarningMessage;
-    //         tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
-    //       }
-    //     }
-
-    // Promise.all(promises)
-    //   .then((results) => {
-    //     results.forEach((dupID, key) => {
-    //       const correspondingValidation =
-    //         formConfig.idExistValidations[key];
-    //       let tempMessage, tempCode;
-
-    //       // ID does not exist but it should exist
-    //       if (!dupID && correspondingValidation.idMustExist) {
-    //         if (correspondingValidation.errorLevel === "error") {
-    //           tempMessage = buildMustExistMessage(formConfig.idLabel);
-    //         } else {
-    //           tempMessage = approvedBlueWarningMessage;
-    //           tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
-    //         }
-    //         // ID exists but it should NOT exist
-    //       } else if (dupID && !correspondingValidation.idMustExist) {
-    //         if (correspondingValidation.errorLevel === "error") {
-    //           tempMessage = buildMustNotExistMessage(formConfig.idLabel);
-    //           tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
-    //         } else {
-    //           tempMessage = approvedBlueWarningMessage;
-    //           tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
-    //         }
-    //       }
-
-    //       // if we got a message through checking, then we should add it to the existMessages array
-    //       const messageToAdd: Message = {
-    //         statusLevel: correspondingValidation.errorLevel,
-    //         statusMessage: tempMessage as string,
-    //         warningMessageCode: tempCode,
-    //       };
-    //       tempMessage && existMessages.push(messageToAdd);
-    //     });
-    //   })
-    //   .then(() => {
-    //     setComponentIdStatusMessages(existMessages);
-    //   });
-
-    setComponentIdStatusMessages(validationMessages);
-  }, [
-    areUploadsReady,
-    formConfig,
-    validateComponentId,
-    alertCode,
-    oneMacFormData.componentId,
-  ]);
+      setComponentIdStatusMessages(validationMessages);
+    };
+    checkId();
+  }, [formConfig, validateComponentId, alertCode, oneMacFormData.componentId]);
 
   useEffect(() => {
     const isTitleReady: boolean = Boolean(
