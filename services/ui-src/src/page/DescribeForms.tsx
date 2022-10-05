@@ -154,6 +154,16 @@ const DescribeForms: React.FC = () => {
             fieldName="idExistValidations"
             customFunc={describeErrors}
           />
+          <DescribeField
+            fieldLabel="Parent ID Gray Text"
+            fieldName="parentFieldHint"
+            customFunc={describeFieldHint}
+          />
+          <DescribeField
+            fieldLabel="Red Parent Not Found Message"
+            fieldName="parentNotFoundMessage"
+          />
+
           {/* <DescribeField fieldLabel="FAQ Link" fieldName="idFAQLink" />
           <DescribeField
             fieldLabel="Form contains Proposed Effective Date field"
@@ -503,6 +513,68 @@ const DescribeForms: React.FC = () => {
                     For amendments, the last two digits start with “01” and
                     ascends.
                   </td>
+                </tr>
+              </tbody>
+            </table>
+          </Review>
+          <Review heading="Parent ID Messaging">
+            <table className="form-describe">
+              <thead>
+                <tr>
+                  <th>Submission Form</th>
+                  <th>Parent ID Messaging Values</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Submit New Medicaid SPA</td>
+                  <td>No Parent ID on form.</td>
+                </tr>
+                <tr>
+                  <td>Respond to Formal Medicaid SPA RAI</td>
+                  <td>No Parent ID on form.</td>
+                </tr>
+                <tr>
+                  <td>Submit New CHIP SPA</td>
+                  <td>No Parent ID on form.</td>
+                </tr>
+                <tr>
+                  <td>Respond to Formal CHIP SPA RAI</td>
+                  <td>No Parent ID on form.</td>
+                </tr>
+                <tr>
+                  <td>Submit New 1915(b) Waiver Action</td>
+                  <td>No Parent ID on form.</td>
+                </tr>
+                <tr>
+                  <td>Request 1915(b) and 1915(c) Temporary Extension</td>
+                  <td>
+                    Gray text:
+                    <br />
+                    Please enter the initial or renewal waiver number you are
+                    requesting a Temporary Extension for
+                    <br />
+                    <br />
+                    Blue text: None
+                    <br />
+                    <br />
+                    Red text:
+                    <br />
+                    ID must exist:
+                    <br />
+                    The waiver number entered does not appear to match our
+                    records. Please enter an approved initial or renewal waiver
+                    number, using a dash after the two character state
+                    abbreviation.
+                  </td>
+                </tr>
+                <tr>
+                  <td>Respond to Waiver RAI</td>
+                  <td>No Parent ID on form.</td>
+                </tr>
+                <tr>
+                  <td>Submit 1915(c) Appendix K Amendment</td>
+                  <td>No Parent ID on form.</td>
                 </tr>
               </tbody>
             </table>

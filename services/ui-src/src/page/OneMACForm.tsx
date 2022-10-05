@@ -143,13 +143,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       return errorMessages;
     },
-    [
-      activeTerritories,
-      formConfig.idAdditionalErrorMessage,
-      formConfig.idFormat,
-      formConfig.idLabel,
-      formConfig.idRegex,
-    ]
+    [activeTerritories, formConfig]
   );
 
   async function handleComponentIdChange(componentId: string) {
