@@ -1,14 +1,21 @@
-import { chipSPARAIResponse, Workflow } from "cmscommonlib";
+import { chipSPARAIResponse } from "cmscommonlib";
 
 import handler from "../libs/handler-lib";
 import { submitAny } from "./submitAny";
-import { defaultFormConfig } from "./defaultFormConfig";
+import {
+  defaultFormConfig,
+  defaultParentId,
+  defaultParentType,
+} from "./defaultFormConfig";
 
 export const chipSPARAIResponseFormConfig = {
   ...defaultFormConfig,
   ...chipSPARAIResponse,
   CMSCcAddresses: process.env.chipCcEmail?.split(";")?.filter((s) => s.trim()),
-  getParentInfo: (myId) => [myId, Workflow.ONEMAC_TYPE.CHIP_SPA],
+  appendToSchema: {
+    parentId: defaultParentId,
+    parentType: defaultParentType,
+  },
 };
 
 export const main = handler(async (event) =>
