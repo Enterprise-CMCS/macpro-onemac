@@ -3,28 +3,33 @@ import DetailView from "../DetailView";
 import {
   OneMACDetail,
   defaultDetail,
-  typeDefault,
   submissionDateDefault,
   AttributeDetail,
 } from "../../libs/detailLib";
 import { Workflow, waiverTemporaryExtension } from "cmscommonlib";
 
 const parentIdDetail: AttributeDetail = {
-  heading: "Parent Waiver Number",
+  heading: "Approved Initial or Renewal Number",
   fieldName: "parentId",
   default: null,
 };
 
 const componentIdDetail: AttributeDetail = {
-  heading: "Temporary Extension Number",
+  heading: "Temporary Extension Request Number",
   fieldName: "componentId",
+  default: "N/A",
+};
+
+const temporaryExtensionTypeDetail: AttributeDetail = {
+  heading: "Temporary Extension Type",
+  fieldName: "temporaryExtensionTypeNice",
   default: "N/A",
 };
 
 export const waiverTemporaryExtensionDetail: OneMACDetail = {
   ...defaultDetail,
   ...waiverTemporaryExtension,
-  detailHeader: "Temporary Extension",
+  detailHeader: "Temporary Extension Request",
   navItems: [],
   usesVerticalNav: false,
   actionsByStatus: Workflow.waiverExtensionActionsByStatus,
@@ -32,7 +37,7 @@ export const waiverTemporaryExtensionDetail: OneMACDetail = {
   detailSection: [
     componentIdDetail,
     parentIdDetail,
-    typeDefault,
+    temporaryExtensionTypeDetail,
     submissionDateDefault,
   ],
 };

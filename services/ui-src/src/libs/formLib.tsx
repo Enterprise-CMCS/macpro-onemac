@@ -11,20 +11,25 @@ export type OneMACFormConfig = {
   idFieldHint: FieldHint[];
   idAdditionalErrorMessage?: string[];
   idFAQLink: string;
-  parentLabel?: string;
-  parentFieldHint?: FieldHint[];
-  parentNotFoundMessage?: string;
-  validateParentAPI?: string;
   pageTitle: string;
   addlIntroJSX?: JSX.Element;
   detailsHeader?: string;
   landingPage: string;
-  confirmSubmit?: boolean;
+  confirmSubmit: boolean;
   proposedEffectiveDate?: boolean;
   titleLabel?: string;
-  getParentInfo?: (id: string) => string[];
 } & PackageType &
-  Partial<WaiverPackageType>;
+  Partial<ParentPackageType> &
+  Partial<WaiverPackageType> &
+  Partial<TemporaryExtensionPackageType>;
+
+type ParentPackageType = {
+  parentLabel?: string;
+  parentFieldHint?: FieldHint[];
+  parentNotFoundMessage?: string;
+  validateParentAPI?: string;
+  getParentInfo?: (id: string) => string[];
+};
 
 export const defaultOneMACFormConfig = {
   idFormat: "",
@@ -55,6 +60,10 @@ export type WaiverPackageType = {
   waiverAuthorities: SelectOption[];
 };
 
+export type TemporaryExtensionPackageType = {
+  temporaryExtensionTypes: SelectOption[];
+};
+
 export type Message = {
   statusLevel: string;
   statusMessage: string;
@@ -66,6 +75,7 @@ export type OneMacFormData = {
   additionalInformation: string;
   componentId: string;
   waiverAuthority?: string;
+  temporaryExtensionType?: string;
   proposedEffectiveDate?: string;
   title?: string;
   parentId?: string;

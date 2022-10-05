@@ -2,11 +2,8 @@ import React from "react";
 import {
   render,
   screen,
-  waitFor,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
-import { act } from "react-dom/test-utils";
-import userEvent from "@testing-library/user-event";
 import { Router, Route } from "react-router-dom";
 import { createMemoryHistory } from "history";
 import { stateSubmitterInitialAuthState } from "../../libs/testDataAppContext";
@@ -46,5 +43,9 @@ describe("Temporary Extension Detail Tests", () => {
 
     // wait for loading screen to disappear
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+
+    // verify temporary extension type is displayed
+    await screen.findByText("Temporary Extension Type");
+    await screen.findByText("1915(b) Temporary Extension");
   });
 });

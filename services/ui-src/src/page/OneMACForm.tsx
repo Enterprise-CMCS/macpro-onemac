@@ -34,6 +34,7 @@ import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { FormLocationState } from "../domain-types";
 import ComponentId from "../components/ComponentId";
+import TemporaryExtensionTypeInput from "./temporary-extension/TemporaryExtensionTypeInput";
 
 const leavePageConfirmMessage = "Changes you made will not be saved.";
 
@@ -91,6 +92,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     additionalInformation: "",
     componentId: presetComponentId,
     waiverAuthority: presetWaiverAuthority,
+    temporaryExtensionType: undefined,
     proposedEffectiveDate: undefined,
     parentId: presetParentId,
     parentType: location.state?.parentType,
@@ -327,6 +329,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
     const isWaiverAuthorityReady: boolean = Boolean(
       !formConfig.waiverAuthorities || oneMacFormData.waiverAuthority
     );
+    const isTemporaryExtensionTypeReady: boolean = Boolean(
+      !formConfig.temporaryExtensionTypes ||
+        oneMacFormData.temporaryExtensionType
+    );
     const isProposedEffecitveDateReady: boolean = Boolean(
       !formConfig.proposedEffectiveDate || oneMacFormData.proposedEffectiveDate
     );
@@ -335,15 +341,17 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         (oneMacFormData.parentId &&
           !parentIdStatusMessages.some((m) => m.statusLevel === "error"))
     );
-    const idHasNoErrors: boolean = !componentIdStatusMessages.some(
-      (m) => m.statusLevel === "error"
+    const isIdReady: boolean = Boolean(
+      oneMacFormData.componentId &&
+        !componentIdStatusMessages.some((m) => m.statusLevel === "error")
     );
 
     setIsSubmissionReady(
       isTitleReady &&
         isWaiverAuthorityReady &&
+        isTemporaryExtensionTypeReady &&
         isParentIdReady &&
-        idHasNoErrors &&
+        isIdReady &&
         areUploadsReady &&
         isProposedEffecitveDateReady
     );
@@ -481,6 +489,12 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
                 onChange={handleInputChange}
               />
             )}
+          {formConfig.temporaryExtensionTypes && (
+            <TemporaryExtensionTypeInput
+              temporaryExtensionTypes={[...formConfig.temporaryExtensionTypes]}
+              handleOnChange={handleInputChange}
+            />
+          )}
           {formConfig.parentLabel && (
             <ComponentId
               idPrefix="parent-"
