@@ -35,6 +35,10 @@ export const temporaryExtensionFormInfo: OneMACFormConfig = {
   parentNotFoundMessage:
     "The waiver number entered does not appear to match our records. Please enter an approved initial or renewal waiver number, using a dash after the two character state abbreviation.",
   validateParentAPI: "validateParentOfTemporaryExtension",
+  temporaryExtensionTypes: [
+    { label: "1915(b) Temporary Extension", value: "1915(b)" },
+    { label: "1915(c) Temporary Extension", value: "1915(c)" },
+  ],
 };
 
 const TemporaryExtensionForm: FC = () => {

@@ -19,15 +19,15 @@ Feature: Waiver Renewal in Package Dashboard
         And type new waiver renewal number 2 in 1915b Waiver Renewal Number field
         And select proposed effective date 3 months from today
         And Upload 1915 b 4 file
-        And verify error message is present on package dashboard New Waiver Page
+        And verify parent error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Existing Waiver Number to Renew field
         And type approved Initial Waiver number into Existing Waiver Number to Renew field
-        And verify error message is not present on New Waiver Page
+        And verify parent error message is not present on New Waiver Page
         And verify the submit button is not disabled
         And clear Existing Waiver Number to Renew field
         And type bad format into Existing Waiver Number to Renew field
-        And verify error message is present on package dashboard New Waiver Page
+        And verify parent error message is present on package dashboard New Waiver Page
         And verify the submit button is disabled
         And clear Existing Waiver Number to Renew field
 

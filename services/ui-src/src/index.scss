@@ -654,12 +654,11 @@ input[type="file"] {
   }
   .label-container {
     @extend .ds-l-row;
-    @extend .ds-u-measure--wide;
     margin-left: 0px;
     @extend .ds-u-align-items--end;
 
     .label-rcol {
-      @extend .ds-u-margin-left--auto;
+      @extend .ds-u-margin-left--2;
       text-align: right;
       font-weight: 400;
     }

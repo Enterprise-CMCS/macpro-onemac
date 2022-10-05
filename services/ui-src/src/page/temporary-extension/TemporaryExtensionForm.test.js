@@ -66,7 +66,7 @@ describe("Temporary Extension Form", () => {
     expect(submitButtonEl).toBeDisabled();
 
     const transmittalNumberEl = screen.getByLabelText(
-      "Temporary Extension Number"
+      "Temporary Extension Request Number"
     );
 
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
