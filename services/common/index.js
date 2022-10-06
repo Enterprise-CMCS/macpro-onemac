@@ -565,6 +565,10 @@ export const territoryList = [
     label: "Wyoming",
     value: "WY",
   },
+  {
+    label: "Test Data",
+    value: "ZZ",
+  },
 ];
 
 export const territoryMap = territoryList.reduce(
