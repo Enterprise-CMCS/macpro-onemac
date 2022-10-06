@@ -64,6 +64,7 @@ export const ONEMAC_ROUTES = {
   APPENDIX_K_AMENDMENT: "/appendix-k-amendment",
   TEMPORARY_EXTENSION: "/temporary-extension",
   TEMPORARY_EXTENSION_DETAIL: "/detail/temporary-extension",
+  FORMS_DESCRIBE: "/forms-describe",
 };
 
 export const TYPE_TO_DETAIL_ROUTE = {

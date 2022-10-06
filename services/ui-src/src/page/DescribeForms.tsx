@@ -128,7 +128,7 @@ const DescribeForms: React.FC = () => {
   return (
     <>
       <PageTitleBar heading={"Describe Forms"} enableBackNav />
-      <div className="onemac-form">
+      <div className="form-container">
         <h2>Package View</h2>
         <p>
           NOTE: These are generated from application, so reflect the true
@@ -174,6 +174,7 @@ const DescribeForms: React.FC = () => {
             fieldName="confirmSubmit"
           /> */}
         </section>
+        <hr />
         <h2>Submission View</h2>
         <p>
           NOTE: These are hand-entered and therefore may be out of date with the

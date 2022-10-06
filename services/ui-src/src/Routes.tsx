@@ -231,10 +231,6 @@ const ROUTE_LIST: RouteSpec[] = [
       path: ONEMAC_ROUTES.TEMPORARY_EXTENSION,
       component: TemporaryExtensionForm,
     },
-    {
-      path: "/forms-describe",
-      component: DescribeForms,
-    },
   ].map(({ path, ...rest }) => ({
     path,
     component: AuthenticatedRouteListRenderer,
@@ -368,6 +364,17 @@ const ROUTE_LIST: RouteSpec[] = [
     path: ROUTES.ATTACHMENT_LANDING,
     exact: true,
     component: AttachmentLanding,
+  },
+  {
+    path: ONEMAC_ROUTES.FORMS_DESCRIBE,
+    component: accessGuardRouteListRenderer("canAccessAdminTools"),
+    routes: [
+      {
+        path: ONEMAC_ROUTES.FORMS_DESCRIBE,
+        exact: true,
+        component: DescribeForms,
+      },
+    ],
   },
 ];
 
