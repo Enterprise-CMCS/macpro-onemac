@@ -7,17 +7,29 @@ jest.mock("../utils/packageExists");
 it("Waiver AppK Stub", async () => {
   packageExists.mockImplementationOnce(() => true);
   const response = WaiverAppK.fieldsValid(spaData);
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => false);
   const responsef = WaiverAppK.fieldsValid(spaData);
-  expect(responsef).toBeInstanceOf(Promise);
+  expect(responsef)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => {
     throw "Ouch!";
   });
   const responset = WaiverAppK.fieldsValid(spaData);
-  expect(responset).toBeInstanceOf(Promise);
+  expect(responset)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response2 = WaiverAppK.getCMSEmail(spaData);
   expect(response2.HTML.length).toBe(1525);

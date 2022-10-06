@@ -7,17 +7,29 @@ jest.mock("../utils/packageExists");
 it("SPARAI Stub", async () => {
   packageExists.mockImplementationOnce(() => true);
   const response = SPARAI.fieldsValid(spaData);
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => false);
   const responsef = SPARAI.fieldsValid(spaData);
-  expect(responsef).toBeInstanceOf(Promise);
+  expect(responsef)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => {
     throw "Ouch!";
   });
   const responset = SPARAI.fieldsValid(spaData);
-  expect(responset).toBeInstanceOf(Promise);
+  expect(responset)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response2 = SPARAI.getCMSEmail(spaData);
   expect(response2.HTML.length).toBe(1441);

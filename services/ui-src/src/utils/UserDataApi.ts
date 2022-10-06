@@ -16,11 +16,9 @@ class UserDataApi {
     if (!userEmail) return [];
 
     try {
-      return await API.get(
-        "oneMacAPI",
-        `/getMyUserList?email=${userEmail}`,
-        undefined
-      );
+      return await API.get("oneMacAPI", `/getMyUserList`, {
+        queryStringParameters: { email: userEmail },
+      });
     } catch (error) {
       return handleApiError(
         error,
@@ -43,11 +41,9 @@ class UserDataApi {
     }
 
     try {
-      return await API.get(
-        "oneMacAPI",
-        `/getUser?email=${userEmail}`,
-        undefined
-      );
+      return await API.get("oneMacAPI", `/getUser`, {
+        queryStringParameters: { email: userEmail },
+      });
     } catch (error) {
       return handleApiError(
         error,
@@ -145,11 +141,9 @@ class UserDataApi {
     }
 
     try {
-      return await API.get(
-        "oneMacAPI",
-        `/getMyApprovers?role=${role}&territory=${territory}`,
-        undefined
-      );
+      return await API.get("oneMacAPI", `/getMyApprovers`, {
+        queryStringParameters: { role, territory },
+      });
     } catch (error) {
       return handleApiError(
         error,

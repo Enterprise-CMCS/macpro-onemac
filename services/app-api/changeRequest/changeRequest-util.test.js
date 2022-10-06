@@ -25,7 +25,6 @@ const mockSubmission = () => ({
 describe("submission validation", () => {
   it("denies an empty submission", () => {
     const result = validateSubmission(null);
-    expect(result).toBeInstanceOf(Error);
     expect(result).toMatchObject({
       name: "ValidationError",
       details: [{ type: "object.base" }],
@@ -42,7 +41,6 @@ describe("submission validation", () => {
       const input = mockSubmission();
       delete input[key];
       const result = validateSubmission(input);
-      expect(result).toBeInstanceOf(Error);
       expect(result).toMatchObject({
         name: "ValidationError",
         details: [
@@ -56,7 +54,6 @@ describe("submission validation", () => {
     const input = mockSubmission();
     input.uploads = [];
     const result = validateSubmission(input);
-    expect(result).toBeInstanceOf(Error);
     expect(result).toMatchObject({
       name: "ValidationError",
       details: [
@@ -71,7 +68,6 @@ describe("submission validation", () => {
       const input = mockSubmission();
       delete input.uploads[0][key];
       const result = validateSubmission(input);
-      expect(result).toBeInstanceOf(Error);
       expect(result).toMatchObject({
         name: "ValidationError",
         details: [
@@ -90,7 +86,6 @@ describe("submission validation", () => {
       const input = mockSubmission();
       input.uploads[0][key] = "";
       const result = validateSubmission(input);
-      expect(result).toBeInstanceOf(Error);
       expect(result).toMatchObject({
         name: "ValidationError",
         details: [
@@ -110,7 +105,6 @@ describe("submission validation", () => {
       title: "not a configured upload type",
     });
     const result = validateSubmission(input);
-    expect(result).toBeInstanceOf(Error);
     expect(result).toMatchObject({
       name: "ValidationError",
       details: [
@@ -126,7 +120,6 @@ describe("submission validation", () => {
     const input = mockSubmission();
     input.uploads.length = 1;
     const result = validateSubmission(input);
-    expect(result).toBeInstanceOf(Error);
     expect(result).toMatchObject({
       name: "ValidationError",
       details: [
@@ -144,7 +137,6 @@ describe("submission validation", () => {
       ...input.uploads[0],
     });
     const result = validateSubmission(input);
-    expect(result).toBeInstanceOf(Error);
     expect(result).toMatchObject({
       name: "ValidationError",
       details: [

@@ -7,17 +7,29 @@ jest.mock("../utils/packageExists");
 it("Waiver Extension Stub", async () => {
   packageExists.mockImplementationOnce(() => true);
   const response = WaiverExtension.fieldsValid(spaData);
-  expect(response).toBeInstanceOf(Promise);
+  expect(response)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => false);
   const responsef = WaiverExtension.fieldsValid(spaData);
-  expect(responsef).toBeInstanceOf(Promise);
+  expect(responsef)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   packageExists.mockImplementationOnce(() => {
     throw "Ouch!";
   });
   const responset = WaiverExtension.fieldsValid(spaData);
-  expect(responset).toBeInstanceOf(Promise);
+  expect(responset)
+    .resolves.toBeInstanceOf(Promise)
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 
   const response2 = WaiverExtension.getCMSEmail(spaData);
   expect(response2.HTML.length).toBe(1703);

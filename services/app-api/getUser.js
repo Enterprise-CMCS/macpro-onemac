@@ -53,7 +53,8 @@ export const getUser = async (userEmail) => {
 
   if (!cResult.Item) {
     console.log(
-      `The user does not exist with the id: ${userEmail} in the User table`,
+      `The user does not exist with the id: %s in the User table`,
+      userEmail,
       cResult
     );
     return null;

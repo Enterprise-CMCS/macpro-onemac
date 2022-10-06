@@ -138,8 +138,11 @@ export class oneMacDashboardPage {
   verifyAttachmentExists(s) {
     cy.get(uploadedAttachments).contains(s);
   }
+  verifyLogoutBtnExists() {
+    cy.xpath(logoutBtn).should("be.visible");
+  }
   clickLogoutBtn() {
-    cy.xpath(logoutBtn).click();
+    cy.xpath(logoutBtn).click({ force: true });
   }
   verifySuccessMessageIsDisplayedForRoleChange() {
     cy.get(rcSuccessMessage).contains("Status Change");

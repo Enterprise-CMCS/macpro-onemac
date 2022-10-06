@@ -74,8 +74,8 @@ const whatAreTheAttachmentsFor1915bRequestTemprorayExtensionValue =
 const attachmentsFor1915cRequestTempExtHeaderBtn =
   "#waiverc-extension-attachments-button";
 const attachmentsFor1915cRequestTempExtBody = "#waiverc-extension-attachments";
-const canISubmitAppendixKAmmendmentsInOneMac = "#appk-button";
-const canISubmitAppendixKAmmendmentsInOneMacValue = "#appk";
+const canISubmitAppendixKAmendmentsInOneMac = "#appk-button";
+const canISubmitAppendixKAmendmentsInOneMacValue = "#appk";
 const whatAreTheAttachmentsForAppendixKWaiver = "#appk-attachments-button";
 const whatAreTheAttachmentsForAppendixKWaiverValue = "#appk-attachments";
 const onboardingMaterialsBtn = "#onboarding-materials-button";
@@ -251,10 +251,10 @@ export class oneMacFAQPage {
     cy.get(whatAreTheAttachmentsFor1915bRequestTemprorayExtension).click();
   }
   VerifyCanIsubmitAppendixKamendmentsinOneMACisdisplayedandclickit() {
-    cy.get(canISubmitAppendixKAmmendmentsInOneMac).click();
+    cy.get(canISubmitAppendixKAmendmentsInOneMac).click();
   }
   VerifytextcontainsYesyoucansubmitAppendixKamendments() {
-    cy.get(canISubmitAppendixKAmmendmentsInOneMacValue).should("be.visible");
+    cy.get(canISubmitAppendixKAmendmentsInOneMacValue).should("be.visible");
   }
   VerifyWhataretheattachmentsfora1915cAppendixKWaiverisdisplayedandclickit() {
     cy.get(whatAreTheAttachmentsForAppendixKWaiver).click();
