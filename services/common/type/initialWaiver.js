@@ -5,12 +5,6 @@ export const initialWaiver = {
   idLabel: "Initial Waiver Number",
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}[.]R00[.]00$",
   idMustExist: false,
-  idExistValidations: [
-    {
-      idMustExist: false,
-      errorLevel: "error",
-    },
-  ],
   allowMultiplesWithSameId: false,
   allowWaiverExtension: true,
   requiredAttachments: [],

@@ -151,7 +151,7 @@ const DescribeForms: React.FC = () => {
           <DescribeField fieldLabel="ID Blue Text" fieldName="junk" />
           <DescribeField
             fieldLabel="ID Red Text"
-            fieldName="idExistValidations"
+            fieldName="idMustExist"
             customFunc={describeErrors}
           />
           <DescribeField

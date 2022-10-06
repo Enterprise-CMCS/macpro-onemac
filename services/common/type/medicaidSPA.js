@@ -6,12 +6,6 @@ export const medicaidSPA = {
   idRegex:
     "(^[A-Z]{2}-[0-9]{2}-[0-9]{4}-[a-zA-Z0-9]{1,4}$)|(^[A-Z]{2}-[0-9]{2}-[0-9]{4}$)",
   idMustExist: false,
-  idExistValidations: [
-    {
-      idMustExist: false,
-      errorLevel: "error",
-    },
-  ],
   allowMultiplesWithSameId: false,
   requiredAttachments: [
     { title: "CMS Form 179", allowMultiple: false },
