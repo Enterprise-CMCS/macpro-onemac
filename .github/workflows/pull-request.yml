@@ -34,5 +34,5 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: "Endpoint URL - ${{env.application_endpoint_url}}"
+              body: "Endpoint URL - ${{env.application_endpoint_url || 'Environment not yet deployed, delete this comment and run the Pull Request workflow again after deploy is complete'}}"
             })

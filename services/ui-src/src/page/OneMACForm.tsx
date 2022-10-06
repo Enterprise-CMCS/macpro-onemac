@@ -260,8 +260,9 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         (oneMacFormData.parentId &&
           !parentIdStatusMessages.some((m) => m.statusLevel === "error"))
     );
-    const idHasNoErrors: boolean = !componentIdStatusMessages.some(
-      (m) => m.statusLevel === "error"
+    const isIdReady: boolean = Boolean(
+      oneMacFormData.componentId &&
+        !componentIdStatusMessages.some((m) => m.statusLevel === "error")
     );
 
     setIsSubmissionReady(
@@ -269,7 +270,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         isWaiverAuthorityReady &&
         isTemporaryExtensionTypeReady &&
         isParentIdReady &&
-        idHasNoErrors &&
+        isIdReady &&
         areUploadsReady &&
         isProposedEffecitveDateReady
     );
