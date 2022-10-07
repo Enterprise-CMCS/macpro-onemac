@@ -35,11 +35,6 @@ export const submitAny = async (event, config) => {
     throw error;
   }
 
-  // const data = {
-  //   ...inData,
-  //   submitterId: event.requestContext.identity.cognitoIdentityId, // not sure we want this anymore
-  // };
-
   // errors here are application level: returned as codes to front end for handling
   try {
     // returns undefined if no errors found, or the first error found.
@@ -68,42 +63,15 @@ export const submitAny = async (event, config) => {
       }
     }
 
-    // id validations, can be many for different parts of IDs
-    const promises = config.idExistValidations.map(
-      async ({ idMustExist, errorLevel, existenceRegex, validateParentId }) => {
-        let checkingNumber = data.componentId;
-        if (validateParentId && typeof config.getParentInfo == "function") {
-          [checkingNumber] = config.getParentInfo(data.componentId);
-        }
-
-        if (existenceRegex !== undefined) {
-          checkingNumber = data.componentId.match(existenceRegex)[0];
-        }
-        console.log("ID to check for existence: ", checkingNumber);
-
-        const isThere = await packageExists(checkingNumber);
-        if (idMustExist && !isThere) {
-          return [errorLevel, RESPONSE_CODE.ID_NOT_FOUND];
-        }
-        if (!idMustExist && isThere) {
-          return [errorLevel, RESPONSE_CODE.DUPLICATE_ID];
-        }
-      }
-    );
-
-    const results = await Promise.all(promises);
-    console.log("ID Matching results are: ", results);
-    results
-      .filter((errorMsg) => errorMsg != undefined)
-      .forEach((errorMsg) => {
-        console.log("theLevel: ", errorMsg[0]);
-        console.log("theCode: ", errorMsg[1]);
-        if (errorMsg[0] === "error") {
-          throw errorMsg[1];
-        } else {
-          warningsInCMSNotice.push(errorMsg[1]);
-        }
-      });
+    // verify the ID exists if it should and doesn't if it doesn't
+    const isThere = await packageExists(data.componentId);
+    if (config.idMustExist && isThere === false) {
+      throw RESPONSE_CODE.ID_NOT_FOUND;
+    }
+    if (!config.idMustExist && isThere === true) {
+      throw RESPONSE_CODE.DUPLICATE_ID;
+    }
+    //          warningsInCMSNotice.push(errorMsg[1]);
   } catch (error) {
     console.log("Error is: ", error);
     return error;

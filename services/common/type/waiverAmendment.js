@@ -3,13 +3,7 @@ export const waiverAmendment = {
   typeLabel: "1915(b) Waiver Amendment",
   idLabel: "1915(b) Waiver Amendment Number",
   idRegex: "^[A-Z]{2}[-][0-9]{4,5}.R[0-9]{2}.(0[1-9]|[1-9][0-9])$",
-  idExistValidations: [
-    // DON'T want the entire Waiver amendment number to exist
-    {
-      idMustExist: false,
-      errorLevel: "error",
-    },
-  ],
+  idMustExist: false,
   allowMultiplesWithSameId: false,
   requiredAttachments: [],
   optionalAttachments: [

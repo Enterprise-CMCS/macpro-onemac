@@ -32,6 +32,7 @@ export class UserRole {
   canAccessMetrics: boolean;
   canAccessUserManagement: boolean;
   canDownloadCsv: boolean;
+  canAccessAdminTools: boolean;
 }
 
 export type RoleEntry = {

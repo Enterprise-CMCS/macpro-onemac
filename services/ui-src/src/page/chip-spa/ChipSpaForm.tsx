@@ -5,7 +5,7 @@ import { ROUTES, ONEMAC_ROUTES, chipSPA } from "cmscommonlib";
 
 const idFormat: string = "SS-YY-NNNN-xxxx";
 
-const chipSpaFormInfo: OneMACFormConfig = {
+export const chipSpaFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...chipSPA,
   pageTitle: "Submit New CHIP SPA",

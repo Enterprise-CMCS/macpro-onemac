@@ -1,6 +1,5 @@
 import {
   FieldHint,
-  IdValidation,
   SelectOption,
   FileUploadProps,
   ONEMAC_ROUTES,
@@ -50,7 +49,7 @@ export type PackageType = {
   typeLabel: string;
   idLabel: string;
   idRegex: string;
-  idExistValidations: IdValidation[];
+  idMustExist: boolean;
   allowMultiplesWithSameId: boolean;
   requiredAttachments: (string | FileUploadProps)[];
   optionalAttachments: (string | FileUploadProps)[];
@@ -81,3 +80,21 @@ export type OneMacFormData = {
   parentId?: string;
   parentType?: string;
 };
+
+export const stateAccessMessage: Message = {
+  statusLevel: "error",
+  statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
+};
+export const buildWrongFormatMessage = (formConfig: OneMACFormConfig) => ({
+  statusLevel: "error",
+  statusMessage: `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`,
+});
+
+export const buildMustExistMessage = (formConfig: OneMACFormConfig) => ({
+  statusLevel: "error",
+  statusMessage: `According to our records, this ${formConfig.idLabel} does not exist. Please check the ${formConfig.idLabel} and try entering it again.`,
+});
+export const buildMustNotExistMessage = (formConfig: OneMACFormConfig) => ({
+  statusLevel: "error",
+  statusMessage: `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`,
+});

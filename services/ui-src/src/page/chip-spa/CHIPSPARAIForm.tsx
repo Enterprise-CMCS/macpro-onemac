@@ -5,17 +5,18 @@ import { ONEMAC_ROUTES, chipSPARAIResponse } from "cmscommonlib";
 import { FormLocationState } from "../../domain-types";
 import { useLocation } from "react-router-dom";
 
+export const chipSPARAIFormInfo: OneMACFormConfig = {
+  ...defaultOneMACFormConfig,
+  ...chipSPARAIResponse,
+  pageTitle: "Formal Request for Additional Information Response",
+  detailsHeader: "Formal CHIP SPA RAI",
+  landingPage: ONEMAC_ROUTES.CHIP_SPA_DETAIL,
+  confirmSubmit: true,
+};
+
 const CHIPSPARAIForm: FC = () => {
   const location = useLocation<FormLocationState>();
-  const chipSPARAIFormInfo: OneMACFormConfig = {
-    ...defaultOneMACFormConfig,
-    ...chipSPARAIResponse,
-    pageTitle: "Formal Request for Additional Information Response",
-    detailsHeader: "Formal CHIP SPA RAI",
-    landingPage:
-      ONEMAC_ROUTES.CHIP_SPA_DETAIL + `/${location.state?.componentId}`,
-    confirmSubmit: true,
-  };
+  chipSPARAIFormInfo.landingPage += `/${location.state?.componentId}`;
 
   return <OneMACForm formConfig={chipSPARAIFormInfo} />;
 };
