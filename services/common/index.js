@@ -149,6 +149,7 @@ export class Role {
     this.canAccessUserManagement = false;
     this.canAccessMetrics = false;
     this.canManageUsers = false;
+    this.canAccessAdminTools = false;
   }
 
   getAccesses() {
@@ -237,6 +238,7 @@ class SystemAdmin extends Role {
     this.canAccessUserManagement = true;
     this.canAccessMetrics = true;
     this.canManageUsers = true;
+    this.canAccessAdminTools = true;
   }
 }
 

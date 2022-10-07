@@ -113,10 +113,10 @@ describe("Detail View Tests", () => {
     userEvent.click(
       screen.getByRole("button", { name: "Actions for MD.83420.R00.TE01" })
     );
-    await waitFor(() => screen.getByRole("menuitem", { name: "Withdraw" }));
-    userEvent.click(screen.getByRole("menuitem", { name: "Withdraw" }));
-    await waitFor(() => screen.getByRole("button", { name: "Yes, withdraw" }));
-    userEvent.click(screen.getByRole("button", { name: "Yes, withdraw" }));
+    await waitFor(() => screen.getByRole("menuitem", { name: "Withdraw Package" }));
+    userEvent.click(screen.getByRole("menuitem", { name: "Withdraw Package" }));
+    await waitFor(() => screen.getByRole("button", { name: "Yes, withdraw package" }));
+    userEvent.click(screen.getByRole("button", { name: "Yes, withdraw package" }));
 
     await waitFor(() =>
       expect(document.getElementById("alert-bar")).toHaveTextContent(

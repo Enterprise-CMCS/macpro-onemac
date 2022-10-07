@@ -39,7 +39,7 @@ export const ONEMAC_STATUS = {
 
 export const PACKAGE_ACTION = {
   RESPOND_TO_RAI: "Respond to RAI",
-  WITHDRAW: "Withdraw",
+  WITHDRAW: "Withdraw Package",
   REQUEST_TEMPORARY_EXTENSION: "Request a Temporary Extension",
   ADD_AMENDMENT: "Add Amendment",
 };

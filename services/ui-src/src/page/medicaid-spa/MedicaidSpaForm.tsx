@@ -5,7 +5,7 @@ import { ROUTES, ONEMAC_ROUTES, medicaidSPA } from "cmscommonlib";
 
 const medicaidSpaIdFormat: string = "SS-YY-NNNN or SS-YY-NNNN-xxxx";
 
-const medicaidSpaFormInfo: OneMACFormConfig = {
+export const medicaidSpaFormInfo: OneMACFormConfig = {
   ...defaultOneMACFormConfig,
   ...medicaidSPA,
   pageTitle: "Submit New Medicaid SPA",
