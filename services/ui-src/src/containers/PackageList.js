@@ -229,33 +229,6 @@ const PackageList = () => {
           Filter: CustomFilterUi.MultiCheckbox,
         },
         {
-          Header: "90th Day",
-          accessor: ({ currentStatus, clockEndTimestamp }) => {
-            return Workflow.get90thDayText(currentStatus, clockEndTimestamp);
-          },
-          id: "ninetiethDay",
-          Cell: renderDate,
-          disableFilters: false,
-          filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
-          Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
-        },
-        tab === Workflow.PACKAGE_GROUP.WAIVER && {
-          Header: "Expiration Date",
-          accessor: ({ expirationTimestamp, componentType }) => {
-            if (!filterArray.componentType.includes(componentType)) {
-              if (expirationTimestamp) return expirationTimestamp;
-            } else {
-              return "N/A";
-            }
-            return "Pending";
-          },
-          id: "expirationTimestamp",
-          Cell: renderDate,
-          disableFilters: false,
-          filter: CustomFilterTypes.DateRange,
-          Filter: CustomFilterUi.DateRange,
-        },
-        {
           Header: "Date Submitted",
           accessor: "submissionTimestamp",
           Cell: renderDate,
