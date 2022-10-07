@@ -66,7 +66,7 @@ describe("Temporary Extension Form", () => {
     expect(submitButtonEl).toBeDisabled();
 
     const transmittalNumberEl = screen.getByLabelText(
-      "Temporary Extension Number"
+      "Temporary Extension Request Number"
     );
 
     ChangeRequestDataApi.packageExists.mockResolvedValue(false);
@@ -99,6 +99,37 @@ describe("Temporary Extension Form", () => {
       "Approved Initial or Renewal Waiver Number"
     ).nextSibling.innerHTML;
     expect(parentWaiverNumberValue).toBe(testParentId);
+  });
+
+  it("allows selection of temporary extension type", async () => {
+    render(
+      <AppContext.Provider
+        value={{
+          ...stateSubmitterInitialAuthState,
+        }}
+      >
+        <Router history={history}>
+          <TemporaryExtensionForm />
+        </Router>
+      </AppContext.Provider>
+    );
+
+    const transmittalNumberEl = screen.getByLabelText(
+      "Temporary Extension Type"
+    );
+    //starts off empty value but allows selection of 1915(b) or 1915(c)
+    expect(transmittalNumberEl.value).toBe("");
+
+    userEvent.selectOptions(
+      screen.getByLabelText("Temporary Extension Type"),
+      "1915(b)"
+    );
+    expect(
+      screen.getByText("1915(b) Temporary Extension").selected
+    ).toBeTruthy();
+    expect(
+      screen.getByText("1915(c) Temporary Extension").selected
+    ).toBeFalsy();
   });
 
   it("shows error message if parentId is not found", async () => {

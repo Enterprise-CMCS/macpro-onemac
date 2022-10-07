@@ -24,9 +24,3 @@ const expectedResponse = {
 it("calls submitAny", async () => {
   expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
 });
-
-it("returns the Appendix K with my Id as my parent", () => {
-  expect(
-    waiverAppendixKRAIResponseFormConfig.getParentInfo("testId")
-  ).toStrictEqual(["testId", Workflow.ONEMAC_TYPE.WAIVER_APP_K]);
-});

@@ -23,6 +23,11 @@ export const formatPackageDetails = (data, config) => {
             : ""
         }
         ${
+          data.temporaryExtensionType
+            ? `<br><b>Temporary Extension Type</b>: ${data.temporaryExtensionType}`
+            : ""
+        }
+        ${
           data.proposedEffectiveDate
             ? `<br><b>Proposed Effective Date</b>: ${format(
                 parseISO(data.proposedEffectiveDate),

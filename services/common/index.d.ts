@@ -102,7 +102,7 @@ export namespace ChangeRequest {
 
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
-    WITHDRAW = "Withdraw",
+    WITHDRAW = "Withdraw Package",
     REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
     ADD_AMENDMENT = "Add Amendment",
   }
@@ -128,7 +128,7 @@ export namespace ChangeRequest {
 export namespace Workflow {
   export enum PACKAGE_ACTION {
     RESPOND_TO_RAI = "Respond to RAI",
-    WITHDRAW = "Withdraw",
+    WITHDRAW = "Withdraw Package",
     REQUEST_TEMPORARY_EXTENSION = "Request a Temporary Extension",
     ADD_AMENDMENT = "Add Amendment",
   }

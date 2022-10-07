@@ -154,7 +154,7 @@ describe("Detail View Tests", () => {
     // wait for loading screen to disappear so package table displays
     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-    fireEvent.click(screen.getByText("Withdraw"));
+    fireEvent.click(screen.getByText("Withdraw Package"));
   });
 
   it("allows respond to RAI action", async () => {
