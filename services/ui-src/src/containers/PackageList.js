@@ -36,10 +36,6 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-const filterArray = {
-  componentType: [Workflow.ONEMAC_TYPE.SPA, Workflow.ONEMAC_TYPE.CHIP_SPA],
-};
-
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
