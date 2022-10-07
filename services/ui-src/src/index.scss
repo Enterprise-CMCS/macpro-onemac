@@ -657,6 +657,10 @@ input[type="file"] {
     margin-left: 0px;
     @extend .ds-u-align-items--end;
 
+    label {
+      min-width: 300px;
+    }
+
     .label-rcol {
       @extend .ds-u-margin-left--2;
       text-align: right;
