@@ -18,10 +18,13 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Install dependencies
         run: |
           npm ci
@@ -36,10 +39,13 @@ jobs:
     name: Unit Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Unit Test & Publish Coverage
         uses: paambaati/codeclimate-action@v2.7.5
         env:
@@ -81,7 +87,7 @@ jobs:
             """
             exit 1
           fi
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
@@ -106,9 +112,12 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
@@ -222,7 +231,7 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v1
+      - uses: actions/checkout@v3
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values
@@ -239,9 +248,12 @@ jobs:
         with:
           role-to-assume: ${{ env.AWS_OIDC_ROLE_TO_ASSUME }}
           aws-region: ${{ env.AWS_DEFAULT_REGION }}
+      - name: read .nvmrc
+        id: node_version
+        run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
       - uses: actions/setup-node@v1
         with:
-          node-version: "14.x"
+          node-version: ${{ steps.node_version.outputs.NODE_VERSION }}
       - name: Combine package-lock.json files to single file
         run: find services -maxdepth 3 -name package-lock.json | xargs cat package-lock.json > combined-package-lock.txt
       - name: cache service dependencies
