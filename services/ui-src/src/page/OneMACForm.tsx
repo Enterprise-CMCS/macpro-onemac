@@ -11,11 +11,7 @@ import { Input } from "rsuite";
 
 import { TextField, Button, Dropdown } from "@cmsgov/design-system";
 
-import {
-  RESPONSE_CODE,
-  ROUTES,
-  approvedBlueWarningMessage,
-} from "cmscommonlib";
+import { RESPONSE_CODE, ROUTES } from "cmscommonlib";
 
 import { useAppContext } from "../libs/contextLib";
 import {
@@ -23,6 +19,10 @@ import {
   OneMacFormData,
   Message,
   defaultWaiverAuthority,
+  stateAccessMessage,
+  buildWrongFormatMessage,
+  buildMustExistMessage,
+  buildMustNotExistMessage,
 } from "../libs/formLib";
 import config from "../utils/config";
 
@@ -125,20 +125,14 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         (activeTerritories &&
           !activeTerritories.includes(getTerritoryFromComponentId(componentId)))
       ) {
-        errorMessages.push({
-          statusLevel: "error",
-          statusMessage: `You can only submit for a state you have access to. If you need to add another state, visit your user profile to request access.`,
-        });
+        errorMessages.push(stateAccessMessage);
       }
       // must match the associated Regex string for format
       else if (
         formConfig.idRegex &&
         !matchesRegex(componentId, formConfig.idRegex)
       ) {
-        errorMessages.push({
-          statusLevel: "error",
-          statusMessage: `The ${formConfig.idLabel} must be in the format of ${formConfig.idFormat}`,
-        });
+        errorMessages.push(buildWrongFormatMessage(formConfig));
         if (formConfig.idAdditionalErrorMessage) {
           formConfig.idAdditionalErrorMessage.forEach((message) =>
             errorMessages.push({
@@ -151,13 +145,7 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
 
       return errorMessages;
     },
-    [
-      activeTerritories,
-      formConfig.idAdditionalErrorMessage,
-      formConfig.idFormat,
-      formConfig.idLabel,
-      formConfig.idRegex,
-    ]
+    [activeTerritories, formConfig]
   );
 
   async function handleComponentIdChange(componentId: string) {
@@ -229,98 +217,29 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
   ]);
 
   useEffect(() => {
-    // default display message settings with empty message
-    let formatMessages: Message[] = validateComponentId(
-      oneMacFormData.componentId
-    );
-
-    let existMessages: Message[] = [];
-    let result = false;
-    try {
-      if (
-        formatMessages.length === 0 &&
-        oneMacFormData.componentId &&
-        formConfig.idExistValidations
-      ) {
-        const promises = formConfig.idExistValidations.map(
-          async (idExistValidation) => {
-            let checkingNumber = oneMacFormData.componentId;
-            if (
-              idExistValidation.validateParentId &&
-              typeof formConfig.getParentInfo == "function"
-            ) {
-              [checkingNumber] = formConfig.getParentInfo(
-                oneMacFormData.componentId
-              );
-            }
-            // if (idExistValidation.existenceRegex !== undefined) {
-            //   checkingNumber = checkingNumber.match(idExistValidation.existenceRegex
-            //   )![0];
-            // }
-            try {
-              result = await ChangeRequestDataApi.packageExists(checkingNumber);
-            } catch (e) {
-              console.log("error message is: ", (e as Error).message);
-              setAlertCode(RESPONSE_CODE[(e as Error).message]);
-            }
-            return result;
+    const checkId = async () => {
+      let validationMessages: Message[] = validateComponentId(
+        oneMacFormData.componentId
+      );
+      if (validationMessages.length === 0 && oneMacFormData.componentId) {
+        try {
+          const isADup = await ChangeRequestDataApi.packageExists(
+            oneMacFormData.componentId
+          );
+          if (isADup === false && formConfig.idMustExist) {
+            validationMessages.push(buildMustExistMessage(formConfig));
+          } else if (isADup === true && !formConfig.idMustExist) {
+            validationMessages.push(buildMustNotExistMessage(formConfig));
           }
-        );
-
-        Promise.all(promises)
-          .then((results) => {
-            results.forEach((dupID, key) => {
-              const correspondingValidation =
-                formConfig.idExistValidations[key];
-              let tempMessage, tempCode;
-
-              // ID does not exist but it should exist
-              if (!dupID && correspondingValidation.idMustExist) {
-                if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formConfig.idLabel} does not exist. Please check the ${formConfig.idLabel} and try entering it again.`;
-                } else {
-                  // tempMessage = `${formConfig.idLabel} not found. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING}) if you need support.`;
-                  tempMessage = approvedBlueWarningMessage;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_NOT_FOUND_WARNING;
-                }
-                // ID exists but it should NOT exist
-              } else if (dupID && !correspondingValidation.idMustExist) {
-                if (correspondingValidation.errorLevel === "error") {
-                  tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please check the ${formConfig.idLabel} and try entering it again.`;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
-                } else {
-                  // tempMessage = `According to our records, this ${formConfig.idLabel} already exists. Please ensure you have the correct ${formConfig.idLabel} before submitting. Contact the MACPro Help Desk (code: ${RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING}) if you need support.`;
-                  tempMessage = approvedBlueWarningMessage;
-                  tempCode = RESPONSE_CODE.SUBMISSION_ID_EXIST_WARNING;
-                }
-              }
-
-              // if we got a message through checking, then we should add it to the existMessages array
-              const messageToAdd: Message = {
-                statusLevel: correspondingValidation.errorLevel,
-                statusMessage: tempMessage as string,
-                warningMessageCode: tempCode,
-              };
-              tempMessage && existMessages.push(messageToAdd);
-            });
-          })
-          .then(() => {
-            setComponentIdStatusMessages(existMessages);
-          });
-      } else {
-        setComponentIdStatusMessages(formatMessages);
+        } catch (err) {
+          console.log("error is: ", err);
+          setAlertCode(RESPONSE_CODE[(err as Error).message]);
+        }
       }
-    } catch (err) {
-      console.log("error is: ", err);
-      setAlertCode(RESPONSE_CODE[(err as Error).message]);
-    }
-  }, [
-    areUploadsReady,
-    formConfig,
-    validateComponentId,
-    alertCode,
-    oneMacFormData.componentId,
-  ]);
+      setComponentIdStatusMessages(validationMessages);
+    };
+    checkId();
+  }, [formConfig, validateComponentId, alertCode, oneMacFormData.componentId]);
 
   useEffect(() => {
     const isTitleReady: boolean = Boolean(

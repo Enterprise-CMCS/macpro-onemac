@@ -14,7 +14,7 @@ export const stateSubmissionReceipt = (data, config) => {
   data.attachments = {};
 
   return {
-    ToAddresses: `${data.submitterName} <${data.submitterEmail}>`,
+    ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
     CcAddresses: [],
     Subject: `Your ${config.typeLabel} ${data.componentId} has been submitted to CMS`,
     HTML: `

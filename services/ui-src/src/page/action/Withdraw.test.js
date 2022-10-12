@@ -31,5 +31,7 @@ it("renders", async () => {
       </Router>
     </AppContext.Provider>
   );
-  expect(screen.getByRole("link", { name: "Withdraw" })).toBeInTheDocument();
+  expect(
+    screen.getByRole("link", { name: "Withdraw Package" })
+  ).toBeInTheDocument();
 });

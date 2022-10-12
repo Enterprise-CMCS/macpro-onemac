@@ -657,6 +657,10 @@ input[type="file"] {
     margin-left: 0px;
     @extend .ds-u-align-items--end;
 
+    label {
+      min-width: 300px;
+    }
+
     .label-rcol {
       @extend .ds-u-margin-left--2;
       text-align: right;
@@ -2675,4 +2679,19 @@ aside#faq-contact-info-box {
 
 .ds-u-color--warn {
   @extend .ds-u-color--primary;
+}
+
+.form-describe {
+  th {
+    background-color: $color-gray-lightest;
+    text-align: center;
+    border: solid 1px;
+    margin: 2px;
+    padding: 2px;
+  }
+  td {
+    border: solid 1px;
+    margin: 2px;
+    padding: 2px;
+  }
 }
