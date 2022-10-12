@@ -18,7 +18,7 @@ jobs:
     name: Lint
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -39,7 +39,7 @@ jobs:
     name: Unit Test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: read .nvmrc
         id: node_version
         run: echo ::set-output name=NODE_VERSION::$(cat .nvmrc)
@@ -87,7 +87,7 @@ jobs:
             """
             exit 1
           fi
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: Validate branch name
         run: ./.github/branchNameValidation.sh $STAGE_PREFIX$branch_name
       - name: set branch specific variable names
@@ -231,7 +231,7 @@ jobs:
     steps:
       - name: set branch_name
         run: echo "branch_name=${GITHUB_REF#refs/heads/}" >> $GITHUB_ENV
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v2
       - name: set branch specific variable names
         run: ./.github/build_vars.sh set_names
       - name: set variable values
