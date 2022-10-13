@@ -7,7 +7,7 @@ import { formatPackageDetails } from "./formatPackageDetails.js";
  * @returns {Object} email parameters in generic format.
  */
 export const stateWithdrawalReceipt = (data, config) => ({
-  ToAddresses: `${data.submitterName} <${data.submitterEmail}>`,
+  ToAddresses: [`${data.submitterName} <${data.submitterEmail}>`],
   Subject: `${config.typeLabel} Package ${data.componentId} Withdraw Request`,
   HTML: `
       <p>This is confirmation that you have requested to withdraw the package below. The package will no longer be considered for CMS review:</p>

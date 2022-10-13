@@ -654,12 +654,15 @@ input[type="file"] {
   }
   .label-container {
     @extend .ds-l-row;
-    @extend .ds-u-measure--wide;
     margin-left: 0px;
     @extend .ds-u-align-items--end;
 
+    label {
+      min-width: 300px;
+    }
+
     .label-rcol {
-      @extend .ds-u-margin-left--auto;
+      @extend .ds-u-margin-left--2;
       text-align: right;
       font-weight: 400;
     }
@@ -1006,6 +1009,7 @@ article.form-container {
 
   @media only screen and (min-width: 1024px) {
     display: flex;
+    flex-wrap: wrap;
     min-width: min(calc(100vw - 14.4rem), 1024px);
   }
 }
@@ -2675,4 +2679,19 @@ aside#faq-contact-info-box {
 
 .ds-u-color--warn {
   @extend .ds-u-color--primary;
+}
+
+.form-describe {
+  th {
+    background-color: $color-gray-lightest;
+    text-align: center;
+    border: solid 1px;
+    margin: 2px;
+    padding: 2px;
+  }
+  td {
+    border: solid 1px;
+    margin: 2px;
+    padding: 2px;
+  }
 }

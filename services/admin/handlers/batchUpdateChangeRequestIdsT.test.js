@@ -60,9 +60,13 @@ it("calls update for each item in the dataset", async () => {
 });
 
 it("throws an error if the csvUpdates property is missing", async () => {
-  await expect(main({})).rejects.toThrow(
-    "Missing event parameter - csvUpdates: must be a csv string of update objects"
-  );
+  await expect(main({}))
+    .rejects.toThrow(
+      "Missing event parameter - csvUpdates: must be a csv string of update objects"
+    )
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });
 
 it("throws an error if the csvUpdates have invalid data", async () => {
@@ -71,7 +75,11 @@ it("throws an error if the csvUpdates have invalid data", async () => {
     csvUpdates:
       "Old ID Format,Type,Date Submitted,Submitted By,New ID Format\nMD-22-8585-0000,Medicaid SPA,15-Jul-22,Testy McTester,MD-22-8585",
   };
-  await expect(main(testEvent)).rejects.toThrow(
-    'Invalid update object - missing properties on {"Old ID Format":"MD-22-8585-0000","Type":"spa","Date Submitted":"15-Jul-22","Submitted By":"Testy McTester","New ID Format":"MD-22-8585"}'
-  );
+  await expect(main(testEvent))
+    .rejects.toThrow(
+      'Invalid update object - missing properties on {"Old ID Format":"MD-22-8585-0000","Type":"spa","Date Submitted":"15-Jul-22","Submitted By":"Testy McTester","New ID Format":"MD-22-8585"}'
+    )
+    .catch((error) => {
+      console.log("caught test error: ", error);
+    });
 });

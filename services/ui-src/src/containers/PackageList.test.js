@@ -3,13 +3,12 @@ import React from "react";
 import {
   render,
   screen,
-  within,
   waitForElementToBeRemoved,
 } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { MemoryRouter } from "react-router-dom";
 
-import { ONEMAC_ROUTES, Workflow } from "cmscommonlib";
+import { ONEMAC_ROUTES } from "cmscommonlib";
 import { AppContext } from "../libs/contextLib";
 import {
   stateSubmitterInitialAuthState,
@@ -104,7 +103,6 @@ it("renders table with spa columns", async () => {
   screen.getByText("SPA ID");
   screen.getByText("Type");
   screen.getByText("State");
-  screen.getByText("90th Day");
   screen.getByText("Date Submitted");
   screen.getByText("Submitted By");
   screen.getByText("Actions");
@@ -152,34 +150,34 @@ it("does not display waiver rais", async () => {
   ).toBeDisabled();
 });
 
-it.each`
-  filterFieldType    | filterFieldValue                      | inName                 | inValue          | textShown
-  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.WITHDRAWN}   | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
-  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
-  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
-  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.SUBMITTED}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"Pending"}
-  ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.RAI_ISSUED}  | ${"clockEndTimestamp"} | ${null}          | ${"Clock Stopped"}
-`(
-  "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
-  async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
-    const testPackage = packageList[0];
-    testPackage[filterFieldType] = filterFieldValue;
-    testPackage[inName] = inValue;
-    PackageApi.getMyPackages.mockResolvedValue([testPackage]);
+// it.each`
+//   filterFieldType    | filterFieldValue                      | inName                 | inValue          | textShown
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.WITHDRAWN}   | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.TERMINATED}  | ${"clockEndTimestamp"} | ${null}          | ${"N/A"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.UNSUBMITTED} | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.IN_REVIEW}   | ${"clockEndTimestamp"} | ${null}          | ${"Pending"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.SUBMITTED}   | ${"clockEndTimestamp"} | ${1570378876000} | ${"Pending"}
+//   ${"currentStatus"} | ${Workflow.ONEMAC_STATUS.RAI_ISSUED}  | ${"clockEndTimestamp"} | ${null}          | ${"Clock Stopped"}
+// `(
+//   "shows $textShown in $inName when $filterFieldType is $filterFieldValue and value is $inValue",
+//   async ({ filterFieldType, filterFieldValue, inName, inValue, textShown }) => {
+//     const testPackage = packageList[0];
+//     testPackage[filterFieldType] = filterFieldValue;
+//     testPackage[inName] = inValue;
+//     PackageApi.getMyPackages.mockResolvedValue([testPackage]);
 
-    render(<PackageList />, { wrapper: ContextWrapper });
+//     render(<PackageList />, { wrapper: ContextWrapper });
 
-    // wait for loading screen to disappear so package table displays
-    await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
+//     // wait for loading screen to disappear so package table displays
+//     await waitForElementToBeRemoved(() => screen.getByTestId(LOADER_TEST_ID));
 
-    // get the row for the status
-    const packageRow = within(
-      screen.getAllByText(filterFieldValue)[0].closest("tr")
-    );
-    expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
-  }
-);
+//     // get the row for the status
+//     const packageRow = within(
+//       screen.getAllByText(filterFieldValue)[0].closest("tr")
+//     );
+//     expect(packageRow.getAllByText(textShown)[0]).toBeInTheDocument();
+//   }
+// );
 /*
 it("provides option to withdraw packages", async () => {
   PackageApi.getMyPackages.mockResolvedValue(packageList);

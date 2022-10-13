@@ -52,6 +52,7 @@ import WaiverRAIForm from "./page/waiver-rai/WaiverRAIForm";
 import WaiverAmendmentForm from "./page/waiver-amendment/WaiverAmendmentForm";
 import WaiverAppendixKForm from "./page/waiver-appendix-k/WaiverAppendixKForm";
 import WaiverAppendixKRAIForm from "./page/waiver-appendix-k/WaiverAppendixKRAIForm";
+import DescribeForms from "./page/DescribeForms";
 
 // this is legacy and should not be touched!
 const FORM_TYPES = {
@@ -363,6 +364,17 @@ const ROUTE_LIST: RouteSpec[] = [
     path: ROUTES.ATTACHMENT_LANDING,
     exact: true,
     component: AttachmentLanding,
+  },
+  {
+    path: ONEMAC_ROUTES.FORMS_DESCRIBE,
+    component: accessGuardRouteListRenderer("canAccessAdminTools"),
+    routes: [
+      {
+        path: ONEMAC_ROUTES.FORMS_DESCRIBE,
+        exact: true,
+        component: DescribeForms,
+      },
+    ],
   },
 ];
 

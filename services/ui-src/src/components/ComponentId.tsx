@@ -31,11 +31,9 @@ const ComponentId: React.FC<{
       {!disabled && (
         <>
           <div className="label-container">
-            <div>
-              <label htmlFor={idPrefix + "componentId"} className="required">
-                {idLabel}
-              </label>
-            </div>
+            <label htmlFor={idPrefix + "componentId"} className="required">
+              {idLabel}
+            </label>
             {idFAQLink && (
               <div className="label-rcol">
                 <Link target="new" href={idFAQLink}>
@@ -43,18 +41,18 @@ const ComponentId: React.FC<{
                 </Link>
               </div>
             )}
-            {idFieldHint?.map(function (idFieldHint, idx) {
-              return (
-                <p
-                  id={idPrefix + "fieldHint" + idx}
-                  key={"fieldHint" + idx}
-                  className={idFieldHint.className || "field-hint"}
-                >
-                  {idFieldHint.text}
-                </p>
-              );
-            })}
           </div>
+          {idFieldHint?.map(function (idFieldHint, idx) {
+            return (
+              <p
+                id={idPrefix + "fieldHint" + idx}
+                key={"fieldHint" + idx}
+                className={idFieldHint.className || "field-hint"}
+              >
+                {idFieldHint.text}
+              </p>
+            );
+          })}
           {statusMessages &&
             statusMessages.length > 0 &&
             statusMessages.map((message, i) => (
