@@ -189,7 +189,8 @@ const allPackageRowActions = "//td[contains(@id,'packageActions')]";
 const packageRowTwoExpirationDate = "#expirationTimestamp-1";
 //Element is Xpath use cy.xpath instead of cy.get
 const childRows = "//tr[@class = 'child-row-expanded']";
-const withdrawPackageBtn = "//li[text()='Withdraw'][@aria-disabled='false']";
+const withdrawPackageBtn =
+  "//li[text()='Withdraw Package'][@aria-disabled='false']";
 const withdrawPackageConfirmBtn = "//button[contains(text(),'Yes, withdraw')]";
 const successMessage = "#alert-bar";
 //Element is Xpath use cy.xpath instead of cy.get
