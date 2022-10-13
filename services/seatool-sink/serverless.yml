@@ -1,0 +1,456 @@
+service: seatool-sink
+
+frameworkVersion: "3"
+
+package:
+  individually: true
+
+plugins:
+  - serverless-bundle
+  - serverless-dotenv-plugin
+  - serverless-plugin-scripts
+  - serverless-s3-bucket-helper
+
+custom:
+  stage: ${opt:stage, self:provider.stage}
+  iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
+  iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
+  infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
+  seaToolTableName: seatool-${self:custom.stage}-sink
+  bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
+  vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
+  dataSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/a/id, ssm:/configuration/default/vpc/subnets/data/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/b/id, ssm:/configuration/default/vpc/subnets/data/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/data/c/id, ssm:/configuration/default/vpc/subnets/data/c/id}
+  privateSubnets:
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/a/id, ssm:/configuration/default/vpc/subnets/private/a/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/b/id, ssm:/configuration/default/vpc/subnets/private/b/id}
+    - ${ssm:/configuration/${self:custom.stage}/vpc/subnets/private/c/id, ssm:/configuration/default/vpc/subnets/private/c/id}
+  scripts:
+    hooks:
+      package:setupProviderConfiguration: |
+        # Remove the timestamp line from the warmup handler so a new function is uploaded
+        #   only if a configuration has truly changed.
+        set -e
+        if [ -d "node_modules/serverless-bundle/src/_warmup" ]; then
+          cd node_modules/serverless-bundle/src/_warmup
+          sed '/Generated/d' index.js > index.js.sub && mv -f index.js.sub index.js
+        fi
+      deploy:finalize: |
+        serverless invoke --stage ${self:custom.stage} --function configureConnectors
+
+provider:
+  name: aws
+  runtime: nodejs14.x
+  region: us-east-1
+  stage: dev
+
+functions:
+  seaToolEvent:
+    handler: handlers/seaToolEvent.handler
+    role: LamdaSeaToolEventRole
+    environment:
+      seaToolTableName: ${self:custom.seaToolTableName}
+    maximumRetryAttempts: 2
+    memorySize: 1024
+
+  configureConnectors:
+    handler: handlers/configureConnectors.handler
+    role: LambdaConfigureConnectorsRole
+    environment:
+      cluster: !Ref KafkaConnectCluster
+      bootstrapBrokerStringTls: ${self:custom.bootstrapBrokerStringTls}
+      functionArn: !GetAtt
+        - SeaToolEventLambdaFunction
+        - Arn
+      connectorRoleArn: !GetAtt
+        - KafkaConnectWorkerRole
+        - Arn
+      sessionName: ${self:custom.stage}-sink-role
+      topics: aws.ksqldb.seatool.agg.StatePlan_Medicaid_SPA,aws.ksqldb.seatool.agg.StatePlan_CHIP_SPA,aws.ksqldb.seatool.agg.StatePlan_1915b_waivers,aws.ksqldb.seatool.agg.StatePlan_1915c_waivers,aws.ksqldb.seatool.agg.StatePlan_1915c_Indep_Plus,aws.ksqldb.seatool.agg.StatePlan_1115,aws.ksqldb.seatool.agg.StatePlan_UPL
+      sinkPrefix: onemac-${self:custom.stage}-
+    maximumRetryAttempts: 2
+    timeout: 120
+    vpc:
+      securityGroupIds:
+        - Ref: LambdaConfigureConnectorsSecurityGroup
+      subnetIds: ${self:custom.privateSubnets}
+
+resources:
+  Conditions:
+    CreatePermissionsBoundary:
+      Fn::Not:
+        - Fn::Equals:
+          - ""
+          - ${self:custom.iamPermissionsBoundaryPolicy}
+  Resources:
+    KafkaConnectWorkerLogGroup:
+      Type: 'AWS::Logs::LogGroup'
+      Properties:
+        LogGroupName: /aws/fargate/${self:service}-${self:custom.stage}-kafka-connect
+    KafkaConnectWorkerSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security Group for the Fargate Connect Workers.
+        VpcId: ${self:custom.vpcId}
+        SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 8083
+          ToPort: 8083
+          SourceSecurityGroupId: !Sub '${LambdaConfigureConnectorsSecurityGroup}'
+    KafkaConnectWorkerRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service:
+                - 'ecs.amazonaws.com'
+                - 'ecs-tasks.amazonaws.com'
+            Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        ManagedPolicyArns:
+          - arn:aws:iam::aws:policy/service-role/AmazonECSTaskExecutionRolePolicy
+        Policies:
+          - PolicyName: 'LambdaRolePolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+              - Effect: 'Allow'
+                Action:
+                - 'lambda:*'
+                Resource: !GetAtt
+                  - SeaToolEventLambdaFunction
+                  - Arn
+    KafkaConnectWorkerTaskDefinition:
+      Type: 'AWS::ECS::TaskDefinition'
+      Properties:
+        ContainerDefinitions:
+          - Name: ${self:service}-${self:custom.stage}-worker
+            Image: 'confluentinc/cp-kafka-connect:5.2.4'
+            Memory: 4096
+            Cpu: 2048
+            Command:
+              - bash
+              - "-c"
+              - |
+                  export CONNECT_REST_HOST_NAME=`curl $ECS_CONTAINER_METADATA_URI_V4 | sed -e 's/.*IPv4Addresses":\["\(.*\)"\],"AttachmentIndex.*/\1/'` &&
+                  export CONNECT_REST_ADVERTISED_HOST_NAME=$CONNECT_REST_HOST_NAME &&
+                  curl -k -SL -o /etc/kafka-connect/jars/kafka-connect-lambda-1.2.2.jar "https://github.com/Nordstrom/kafka-connect-lambda/releases/download/v1.2.2/kafka-connect-lambda-1.2.2.jar" &&
+                  /etc/confluent/docker/run
+            Environment:
+              - Name: CONNECT_BOOTSTRAP_SERVERS
+                Value: >-
+                  ${self:custom.bootstrapBrokerStringTls}
+              - Name: CONNECT_GROUP_ID
+                Value: mgmt.connect.${self:service}-${self:custom.stage}
+              - Name: CONNECT_CONFIG_STORAGE_TOPIC
+                Value: mgmt.connect.${self:service}-${self:custom.stage}.config
+              - Name: CONNECT_OFFSET_STORAGE_TOPIC
+                Value: mgmt.connect.${self:service}-${self:custom.stage}.offsets
+              - Name: CONNECT_STATUS_STORAGE_TOPIC
+                Value: mgmt.connect.${self:service}-${self:custom.stage}.status
+              - Name: CONNECT_OFFSET_STORAGE_PARTITIONS
+                Value: 5
+              - Name: CONNECT_STATUS_STORAGE_PARTITIONS
+                Value: 1
+              - Name: CONNECT_KEY_CONVERTER
+                Value: org.apache.kafka.connect.json.JsonConverter
+              - Name: CONNECT_VALUE_CONVERTER
+                Value: org.apache.kafka.connect.json.JsonConverter
+              - Name: CONNECT_INTERNAL_KEY_CONVERTER
+                Value: org.apache.kafka.connect.json.JsonConverter
+              - Name: CONNECT_INTERNAL_VALUE_CONVERTER
+                Value: org.apache.kafka.connect.json.JsonConverter
+              - Name: CONNECT_PLUGIN_PATH
+                Value: /usr/share/java,/etc/kafka-connect/jars
+              - Name: CONNECT_SECURITY_PROTOCOL
+                Value: SSL
+              # Producer/Consumer configs below
+              # Thank you to https://github.com/confluentinc/kafka-connect-jdbc/issues/161
+              - Name: CONNECT_PRODUCER_BOOTSTRAP_SERVERS
+                Value: >-
+                  ${self:custom.bootstrapBrokerStringTls}
+              - Name: CONNECT_PRODUCER_SECURITY_PROTOCOL
+                Value: SSL
+              - Name: CONNECT_CONSUMER_BOOTSTRAP_SERVERS
+                Value: >-
+                  ${self:custom.bootstrapBrokerStringTls}
+              - Name: CONNECT_CONSUMER_SECURITY_PROTOCOL
+                Value: SSL
+            LogConfiguration:
+              LogDriver: awslogs
+              Options:
+                awslogs-region: !Sub '${AWS::Region}'
+                awslogs-group: !Sub '${KafkaConnectWorkerLogGroup}'
+                awslogs-stream-prefix: fargate
+        Family: ${self:service}-${self:custom.stage}-kafka-connect-worker
+        NetworkMode: awsvpc
+        ExecutionRoleArn: !GetAtt
+          - KafkaConnectWorkerRole
+          - Arn
+        TaskRoleArn: !GetAtt
+          - KafkaConnectWorkerRole
+          - Arn
+        RequiresCompatibilities:
+          - FARGATE
+        Memory: 4GB
+        Cpu: 2048
+    KafkaConnectCluster:
+      Type: 'AWS::ECS::Cluster'
+    KafkaConnectService:
+      Type: 'AWS::ECS::Service'
+      Properties:
+        Cluster: !Sub '${KafkaConnectCluster}'
+        DeploymentConfiguration:
+          DeploymentCircuitBreaker:
+            Enable: true
+            Rollback: false
+          MaximumPercent: 100
+          MinimumHealthyPercent: 0
+        LaunchType: FARGATE
+        ServiceName: kafka-connect
+        DesiredCount: 1
+        TaskDefinition: !Sub '${KafkaConnectWorkerTaskDefinition}'
+        NetworkConfiguration:
+          AwsvpcConfiguration:
+            AssignPublicIp: DISABLED
+            SecurityGroups:
+              - !Sub '${KafkaConnectWorkerSecurityGroup}'
+            Subnets: ${self:custom.dataSubnets}
+
+
+    LambdaConfigureConnectorsSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security Group for configuring the connector.
+        VpcId: ${self:custom.vpcId}
+    LambdaConfigureConnectorsRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'LambdaRolePolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+              - Effect: 'Allow'
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: 'arn:aws:logs:*:*:*'
+              - Effect: 'Allow'
+                Action:
+                - ec2:CreateNetworkInterface
+                - ec2:DeleteNetworkInterface
+                - ec2:DetachNetworkInterface
+                - ec2:DescribeNetworkInterfaces
+                - ec2:DescribeSecurityGroups
+                - ec2:DescribeSubnets
+                - ec2:DescribeVpcs
+                Resource: '*'
+              - Effect: 'Allow'
+                Action:
+                - ecs:ListTasks
+                - ecs:DescribeTasks
+                Resource: '*'
+
+    LambdaSecurityGroup:
+      Type: AWS::EC2::SecurityGroup
+      Properties:
+        GroupDescription: Security Group for streaming functions.  Egress all is set by default.
+        VpcId: ${self:custom.vpcId}
+    LamdaSourceDynamoToMskRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'LambdaRolePolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+              - Effect: 'Allow'
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: 'arn:aws:logs:*:*:*'
+              - Effect: 'Allow'
+                Action:
+                - dynamodb:DescribeStream
+                - dynamodb:GetRecords
+                - dynamodb:GetShardIterator
+                - dynamodb:ListStreams
+                Resource: ${self:custom.tableStreamArn}
+              - Effect: 'Allow'
+                Action:
+                - "ec2:CreateNetworkInterface"
+                - "ec2:DescribeNetworkInterfaces"
+                - "ec2:DetachNetworkInterface"
+                - "ec2:DeleteNetworkInterface"
+                Resource: "*"
+    LamdaSeaToolEventRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+          - Effect: 'Allow'
+            Principal:
+              Service: 'lambda.amazonaws.com'
+            Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'LambdaRolePolicy'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+              - Effect: 'Allow'
+                Action:
+                - logs:CreateLogGroup
+                - logs:CreateLogStream
+                - logs:PutLogEvents
+                Resource: 'arn:aws:logs:*:*:*'
+              - Effect: 'Allow'
+                Action:
+                - "dynamodb:*"
+                Resource: ${self:custom.oneMacTableArn}
+    LambdaWarmupRole:
+      Type: 'AWS::IAM::Role'
+      Properties:
+        AssumeRolePolicyDocument:
+          Version: '2012-10-17'
+          Statement:
+            - Effect: 'Allow'
+              Principal:
+                Service: 'lambda.amazonaws.com'
+              Action: 'sts:AssumeRole'
+        Path: ${self:custom.iamPath}
+        PermissionsBoundary:
+          Fn::If:
+            - CreatePermissionsBoundary
+            - Fn::Join:
+              - ''
+              -
+                - 'arn:aws:iam::'
+                - Ref: AWS::AccountId
+                - ':policy'
+                - '${self:custom.iamPermissionsBoundaryPolicy}'
+            - Ref: AWS::NoValue
+        Policies:
+          - PolicyName: 'Warmup'
+            PolicyDocument:
+              Version: '2012-10-17'
+              Statement:
+                - Effect: 'Allow'
+                  Action:
+                    - logs:CreateLogGroup
+                    - logs:CreateLogStream
+                    - logs:PutLogEvents
+                  Resource: 'arn:aws:logs:*:*:*'
+                - Effect: 'Allow'
+                  Action:
+                    - lambda:InvokeFunction
+                  Resource: '*'
+
+    SeaToolTable:
+      Type: AWS::DynamoDB::Table
+      Properties:
+        TableName: ${self:custom.seaToolTableName}
+        StreamSpecification:
+          StreamViewType: NEW_AND_OLD_IMAGES
+        AttributeDefinitions:
+          - AttributeName: pk
+            AttributeType: S
+          - AttributeName: sk
+            AttributeType: S
+          - AttributeName: GSI1pk
+            AttributeType: S
+          - AttributeName: GSI1sk
+            AttributeType: S
+        KeySchema:
+          - AttributeName: pk
+            KeyType: HASH
+          - AttributeName: sk
+            KeyType: RANGE
+        # GlobalSecondaryIndex on the territory with submittedAt as the sort key
+        GlobalSecondaryIndexes:
+          - IndexName: GSI1
+            KeySchema:
+              - AttributeName: GSI1pk
+                KeyType: HASH
+              - AttributeName: GSI1sk
+                KeyType: RANGE
+            Projection:
+              ProjectionType: ALL # Makes all columns available in the index
+        # Set the capacity to auto-scale
+        BillingMode: PAY_PER_REQUEST
+  Outputs:
+    SeaToolTableName:
+      Value: !Ref SeaToolTable
+    SeaToolTableArn:
+      Value: !GetAtt SeaToolTable.Arn
+    SeaToolTableStreamArn:
+      Value: !GetAtt SeaToolTable.StreamArn
