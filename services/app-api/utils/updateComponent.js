@@ -50,8 +50,8 @@ export default async function updateComponent(updateData, config) {
 
   try {
     const updateResults = await updateWithVersion(updateComponentParams);
-
     if (updateResults.parentId) await updateParent(updateResults);
+    return updateResults;
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {
       console.log(
