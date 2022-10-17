@@ -17,6 +17,7 @@ custom:
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
   seaToolTableName: seatool-${self:custom.stage}-sink
+  seaToolTableArn: !GetAtt SeaToolTable.Arn
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
   dataSubnets:
@@ -293,53 +294,6 @@ resources:
       Properties:
         GroupDescription: Security Group for streaming functions.  Egress all is set by default.
         VpcId: ${self:custom.vpcId}
-    LamdaSourceDynamoToMskRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
-      Type: 'AWS::IAM::Role'
-      Properties:
-        AssumeRolePolicyDocument:
-          Version: '2012-10-17'
-          Statement:
-          - Effect: 'Allow'
-            Principal:
-              Service: 'lambda.amazonaws.com'
-            Action: 'sts:AssumeRole'
-        Path: ${self:custom.iamPath}
-        PermissionsBoundary:
-          Fn::If:
-            - CreatePermissionsBoundary
-            - Fn::Join:
-              - ''
-              -
-                - 'arn:aws:iam::'
-                - Ref: AWS::AccountId
-                - ':policy'
-                - '${self:custom.iamPermissionsBoundaryPolicy}'
-            - Ref: AWS::NoValue
-        Policies:
-          - PolicyName: 'LambdaRolePolicy'
-            PolicyDocument:
-              Version: '2012-10-17'
-              Statement:
-              - Effect: 'Allow'
-                Action:
-                - logs:CreateLogGroup
-                - logs:CreateLogStream
-                - logs:PutLogEvents
-                Resource: 'arn:aws:logs:*:*:*'
-              - Effect: 'Allow'
-                Action:
-                - dynamodb:DescribeStream
-                - dynamodb:GetRecords
-                - dynamodb:GetShardIterator
-                - dynamodb:ListStreams
-                Resource: ${self:custom.tableStreamArn}
-              - Effect: 'Allow'
-                Action:
-                - "ec2:CreateNetworkInterface"
-                - "ec2:DescribeNetworkInterfaces"
-                - "ec2:DetachNetworkInterface"
-                - "ec2:DeleteNetworkInterface"
-                Resource: "*"
     LamdaSeaToolEventRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
       Type: 'AWS::IAM::Role'
       Properties:
@@ -376,7 +330,7 @@ resources:
               - Effect: 'Allow'
                 Action:
                 - "dynamodb:*"
-                Resource: ${self:custom.oneMacTableArn}
+                Resource: ${self:custom.seaToolTableArn}
     LambdaWarmupRole:
       Type: 'AWS::IAM::Role'
       Properties:
