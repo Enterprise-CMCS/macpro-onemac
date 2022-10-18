@@ -16,8 +16,8 @@ custom:
   iamPath: ${ssm:/configuration/${self:custom.stage}/iam/path, ssm:/configuration/default/iam/path}
   iamPermissionsBoundaryPolicy: ${ssm:/configuration/${self:custom.stage}/iam/permissionsBoundaryPolicy, ssm:/configuration/default/iam/permissionsBoundaryPolicy, ""}
   infrastructureType: ${ssm:/configuration/${self:custom.stage}/infrastucture/type, ssm:/configuration/default/infrastucture/type, "development"}
-  seaToolTableName: seatool-${self:custom.stage}-sink
-  seaToolTableArn: !GetAtt SeaToolTable.Arn
+  oneMacTableName: ${cf:app-api-${self:custom.stage}.OneMacTableName}
+  oneMacTableArn: ${cf:app-api-${self:custom.stage}.OneMacTableArn}
   bootstrapBrokerStringTls: ${ssm:/configuration/${self:custom.stage}/bigmac/bootstrapBrokerStringTls, ssm:/configuration/default/bigmac/bootstrapBrokerStringTls}
   vpcId: ${ssm:/configuration/${self:custom.stage}/vpc/id, ssm:/configuration/default/vpc/id}
   dataSubnets:
@@ -52,7 +52,7 @@ functions:
     handler: handlers/seaToolEvent.handler
     role: LamdaSeaToolEventRole
     environment:
-      seaToolTableName: ${self:custom.seaToolTableName}
+      oneMacTableName: ${self:custom.oneMacTableName}
     maximumRetryAttempts: 2
     memorySize: 1024
 
@@ -368,43 +368,3 @@ resources:
                   Action:
                     - lambda:InvokeFunction
                   Resource: '*'
-
-    SeaToolTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        TableName: ${self:custom.seaToolTableName}
-        StreamSpecification:
-          StreamViewType: NEW_AND_OLD_IMAGES
-        AttributeDefinitions:
-          - AttributeName: pk
-            AttributeType: S
-          - AttributeName: sk
-            AttributeType: S
-          - AttributeName: GSI1pk
-            AttributeType: S
-          - AttributeName: GSI1sk
-            AttributeType: S
-        KeySchema:
-          - AttributeName: pk
-            KeyType: HASH
-          - AttributeName: sk
-            KeyType: RANGE
-        # GlobalSecondaryIndex on the territory with submittedAt as the sort key
-        GlobalSecondaryIndexes:
-          - IndexName: GSI1
-            KeySchema:
-              - AttributeName: GSI1pk
-                KeyType: HASH
-              - AttributeName: GSI1sk
-                KeyType: RANGE
-            Projection:
-              ProjectionType: ALL # Makes all columns available in the index
-        # Set the capacity to auto-scale
-        BillingMode: PAY_PER_REQUEST
-  Outputs:
-    SeaToolTableName:
-      Value: !Ref SeaToolTable
-    SeaToolTableArn:
-      Value: !GetAtt SeaToolTable.Arn
-    SeaToolTableStreamArn:
-      Value: !GetAtt SeaToolTable.StreamArn

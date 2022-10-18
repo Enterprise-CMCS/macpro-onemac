@@ -1,12 +1,12 @@
-//const AWS = require('aws-sdk');
+const AWS = require("aws-sdk");
 //const { ChangeRequest } = require("cmscommonlib");
 //const { Workflow } = require("cmscommonlib");
 //const { ONEMAC_STATUS } = Workflow;
 
-//AWS.config.update({ region: 'us-east-1' });
-//const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: '2012-08-10' });
+AWS.config.update({ region: "us-east-1" });
+const ddb = new AWS.DynamoDB.DocumentClient({ apiVersion: "2012-08-10" });
 
-const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
+const topicPrefix = "aws.ksqldb.seatool.agg.StatePlan_";
 
 // const SEATOOL_PLAN_TYPE = {
 //   CHIP_SPA: "124",
@@ -53,134 +53,44 @@ const topicPrefix = "lmdc.seatool.submission.cdc.sea-dbo-";
 //   [SEATOOL_PLAN_TYPE.WAIVER_APP_K]: ChangeRequest.TYPE.WAIVER_APP_K,
 // };
 
-// const topLevelUpdates = [
-//   "clockEndTimestamp",
-//   "expirationTimestamp",
-//   "currentStatus",
-// ];
-
-function createTestEvent(event, value) {
-  const testEvent = {
-    topic: event.topic,
-    partition: event.partition,
-    offset: event.offset,
-    value: JSON.stringify({
-      payload: {
-        ID_Number: value.payload.ID_Number,
-        Submission_Date: value.payload.Submission_Date,
-        Plan_Type: value.payload.Plan_Type,
-        Action_Type: value.payload.Action_Type,
-        Alert_90_Days_Date: value.payload.Alert_90_Days_Date,
-        Summary_Memo: value.payload.Summary_Memo,
-        SPW_Status_ID: value.payload.SPW_Status_ID,
-        replica_id: value.payload.replica_id,
-      },
-    }),
-  };
-
-  return testEvent;
-}
-
 function myHandler(event) {
   if (event.source == "serverless-plugin-warmup") {
     return null;
   }
   console.log("Received event:", JSON.stringify(event, null, 2));
-  const table = event.topic.replace(topicPrefix, "");
+  const componentType = event.topic.replace(topicPrefix, "");
   const value = JSON.parse(event.value);
-  const eventId = event.offset;
-  if (table === "State_Plan")
-    console.log(
-      "Test State_Plan Event: ",
-      JSON.stringify(createTestEvent(event, value), null, 2)
-    );
-  console.log(
-    `Topic: ${event.topic} Table: ${table} Event value: ${JSON.stringify(
-      value,
-      null,
-      2
-    )}`
-  );
+  console.log(`Type: ${componentType} Topic: ${event.topic}`);
 
-  const SEAToolId = value.payload.ID_Number;
-  if (!SEAToolId) return;
-
-  const pk = value.payload.ID_Number;
-  if (!pk || !eventId) return;
+  const pk = value.STATE_PLAN.ID_NUMBER;
+  const changeDate = value.STATE_PLAN.CHANGED_DATE;
+  if (!pk || !changeDate) return;
 
   // use the offset as a version number/event tracker... highest id is most recent
-  const sk = `SEATool#${table}#${eventId}`;
+  const sk = `SEATool#${changeDate}`;
 
-  // put the SEATool Entry - overwrites if already exists
+  // put the SEATool Entry - don't bother if already exists
   const updateSEAToolParams = {
     TableName: process.env.oneMacTableName,
-    Item: { pk, sk, ...value.payload },
+    Key: {
+      pk,
+      sk,
+    },
+    ConditionExpression: "attribute_not_exists(pk)", // so update fails if this SEATool change exists
+
+    Item: { pk, sk, ...value },
     ReturnValues: "ALL_OLD", // ReturnValues for put can only be NONE or ALL_OLD
   };
 
   console.log("Params: ", updateSEAToolParams);
-  /*
+
   ddb.put(updateSEAToolParams, function (err, data) {
     if (err) {
       console.log("Error: ", err);
     } else {
       console.log("Data: ", data);
-      if (table === "State_Plan") {
-        const SEAToolData = {
-          currentStatus: SEATOOL_TO_ONEMAC_STATUS[value.payload.SPW_Status_ID],
-          clockEndTimestamp: value.payload.Alert_90_Days_Date,
-          componentType: SEATOOL_TO_ONEMAC_PLAN_TYPE_IDS[value.payload.Plan_Type],
-          componentId: pk,
-          expirationTimestamp: value.payload.End_Date,
-        };
-
-        // update OneMAC Component
-        const updatePk = SEAToolData.componentId;
-        const updateSk = SEAToolData.componentType;
-        const updatePackageParams = {
-          TableName: process.env.oneMacTableName,
-          Key: {
-            pk: updatePk,
-            sk: updateSk,
-          },
-          ConditionExpression: "pk = :pkVal AND sk = :skVal",
-          UpdateExpression:
-            "SET seaToolIdNumber = :seaToolIdNumber",
-          ExpressionAttributeValues: {
-            ":pkVal": updatePk,
-            ":skVal": updateSk,
-            ":seaToolIdNumber": SEAToolData.componentId,
-            ":newChange": [SEAToolData],
-          },
-        };
-
-        topLevelUpdates.forEach((attributeName) => {
-          if (SEAToolData[attributeName]) {
-            const newLabel = `:new${attributeName}`;
-            updatePackageParams.ExpressionAttributeValues[newLabel] =
-              SEAToolData[attributeName];
-            //          if (Array.isArray(SEAToolData[attributeName]))
-            //          updatePackageParams.UpdateExpression += `, ${attributeName} = list_append(if_not_exists(${attributeName},:emptyList), ${newLabel})`;
-            //      else
-            updatePackageParams.UpdateExpression += `, ${attributeName} = ${newLabel}`;
-          }
-        });
-
-        ddb.update(updatePackageParams, function (err, data) {
-          if (err) {
-            if (err.code === "ConditionalCheckFailedException")
-              console.log("Not a OneMAC package: ", updatePk);
-            else
-              console.log("Error", err);
-          } else {
-            console.log("Update Success!  Returned data is: ", data);
-            console.log(`Current epoch time:  ${Math.floor(new Date().getTime())}`);
-          }
-        });
-      }
     }
   });
-  */
 }
 
 exports.handler = myHandler;
