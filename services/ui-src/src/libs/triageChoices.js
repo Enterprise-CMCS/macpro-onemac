@@ -7,7 +7,7 @@ export const choicesFromRoute = {
     choices: [
       {
         title: "State Plan Amendment (SPA)",
-        description: "Submit a new Medicaid & CHIP State Plan Amendment",
+        description: "Submit a new Medicaid or CHIP State Plan Amendment",
         linkTo: ONEMAC_ROUTES.TRIAGE_SPA,
       },
       {
