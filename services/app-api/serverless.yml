@@ -310,6 +310,16 @@ functions:
           method: post
           cors: true
           authorizer: aws_iam
+  
+  withdrawWaiverAppendixK:
+    handler: action/withdrawWaiverAppendixK.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverAppendixK
+          method: post
+          cors: true
+          authorizer: aws_iam
 
   submit:
     handler: submit.main
