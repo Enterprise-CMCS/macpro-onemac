@@ -175,7 +175,6 @@ jobs:
             Mini_Dashboard_Package_Overview_Nav.spec.feature,
             Mini_Dashboard_Temporary_Extension.spec.js,
             Package_Dashboard_Initial_Waiver_Form.spec.feature,
-            Package_Dashboard_Column_90th_Day.spec.feature,
             Package_Dashboard_Column_Picker_SPA.spec.feature,
             Package_Dashboard_Column_Picker_Waiver.spec.feature,
             Package_Dashboard_Filter_By_State.spec.feature,

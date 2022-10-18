@@ -92,15 +92,15 @@ Feature: OY2-14464 Package Dashboard - Separate Tab for Waivers and SPAs
         And verify Waiver Number column exists for the child
         And verify type column exists for the child
         And verify state column exists for the child
-        And verify 90th day column exists for the child
+#        And verify 90th day column exists for the child
         And verify status column exists for the child
         And verify date submitted column exists for the child
         And verify submitted by column exists for the child
         And verify actions column exists for the child
-        And click show hide columns button
-        And click expiration date checkbox
-        And click show hide columns button
-        And verify expiration date column exists for the child
+#        And click show hide columns button
+#        And click expiration date checkbox
+#        And click show hide columns button
+#        And verify expiration date column exists for the child
 
     Scenario: verify the caret is disabled for a row without children
         Given I am on Login Page
