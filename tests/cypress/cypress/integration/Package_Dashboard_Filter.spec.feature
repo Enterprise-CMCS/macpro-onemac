@@ -9,7 +9,7 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Filter By Exists
         And verify Close Exists
         And verify Type Exists
-        And verify 90th day filter dropdown exists
+#        And verify 90th day filter dropdown exists
         And verify status DropDown Filter exists
         And verify date submitted filter dropdown exists
         And verify reset Exists
@@ -25,8 +25,8 @@ Feature: OY2-13092 Package Dashboard - Filter
         And verify Filter By Exists
         And verify Close Exists
         And verify Type Exists
-        And verify 90th day filter dropdown exists
-        And verify expiration date filter dropdown exists
+#        And verify 90th day filter dropdown exists
+#        And verify expiration date filter dropdown exists
         And verify status DropDown Filter exists
         And verify date submitted filter dropdown exists
         And verify reset Exists
