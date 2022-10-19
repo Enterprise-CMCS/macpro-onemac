@@ -330,7 +330,7 @@ resources:
               - Effect: 'Allow'
                 Action:
                 - "dynamodb:*"
-                Resource: ${self:custom.seaToolTableArn}
+                Resource: ${self:custom.oneMacTableArn}
     LambdaWarmupRole:
       Type: 'AWS::IAM::Role'
       Properties:
