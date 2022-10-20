@@ -115,15 +115,15 @@ functions:
     handler: handleOneMacTableStream.main
     events:
       - stream:
-          arn: !GetAtt OneMacTable.StreamArn
+          type: dynamodb
+          arn: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
           startingPosition: LATEST
           maximumRetryAttempts: 2
           enabled: true
-    role: LamdaSourceDynamoToMskRole
+    role: LambdaStreamRole
     environment:
       STAGE: ${self:custom.stage}
       oneMacTableName: ${self:custom.oneMacTableName}
-      CLIENT_ID_PREFIX: 'onemac'
     maximumRetryAttempts: 2
 
   submitInitialWaiver:
