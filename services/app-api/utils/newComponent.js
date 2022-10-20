@@ -1,47 +1,41 @@
-import { RESPONSE_CODE, Validate } from "cmscommonlib";
-import dynamoDb from "../libs/dynamodb-lib";
-import addChild from "./addChild";
+import updateWithVersion from "./updateWithVersion";
 
 const topLevelAttributes = [
+  "GSI1pk",
+  "GSI1sk",
+  "GSI2pk",
+  "GSI2sk",
   "componentId",
   "componentType",
   "submissionTimestamp",
   "proposedEffectiveDate",
   "clockEndTimestamp",
   "currentStatus",
+  "currentStatusTimestamp",
   "attachments",
   "additionalInformation",
-  "submissionId",
   "submitterName",
   "submitterEmail",
-  "submitterId",
   "waiverAuthority",
-  "GSI1pk",
-  "GSI1sk",
   "parentId",
   "parentType",
   "title",
   "temporaryExtensionType",
 ];
 
-export default async function newSubmission(newData, config) {
+export default async function newComponent(newData, config) {
   const pk = newData.componentId;
-  let sk = `v0#${config.componentType}`;
+  let sk = config.componentType;
   if (config.allowMultiplesWithSameId) sk += `#${newData.submissionTimestamp}`;
   newData.componentType = config.componentType;
 
-  if (config.packageGroup) {
-    newData.GSI1pk = `OneMAC#${config.packageGroup}`;
+  if (config.whichTab) {
+    newData.GSI1pk = `OneMAC#${config.whichTab}`;
     newData.GSI1sk = pk;
-  } else {
-    if (newData.parentId) {
-      newData.GSI1pk = newData.parentId;
-      newData.GSI1sk = config.componentType;
-    } else {
-      [newData.parentId, newData.parentType] = config.getParentInfo(
-        newData.componentId
-      );
-    }
+  }
+  if (newData.parentId) {
+    newData.GSI2pk = newData.parentId;
+    newData.GSI2sk = config.componentType;
   }
   console.log("newData is: ", newData);
 
@@ -51,7 +45,6 @@ export default async function newSubmission(newData, config) {
       pk,
       sk,
     },
-    ReturnValues: "ALL_NEW",
     UpdateExpression:
       "SET Latest = if_not_exists(Latest, :defaultval) + :incrval",
     ExpressionAttributeValues: {
@@ -65,7 +58,7 @@ export default async function newSubmission(newData, config) {
     params.ConditionExpression = "attribute_not_exists(pk)";
   }
 
-  console.log("params in newSubmission are: ", params);
+  console.log("params in newComponent are: ", params);
   topLevelAttributes.forEach((attributeName) => {
     if (newData[attributeName]) {
       const label = `:${attributeName}`;
@@ -77,7 +70,11 @@ export default async function newSubmission(newData, config) {
     }
   });
 
-  console.log("params in newSubmission are: ", JSON.stringify(params, null, 2));
+  console.log("params in newComponent are: ", JSON.stringify(params, null, 2));
+
+  return await updateWithVersion(params);
+
+  /*
   try {
     const response = await dynamoDb.update(params);
     console.log("the response is: ", response);
@@ -111,15 +108,17 @@ export default async function newSubmission(newData, config) {
         newData.parentType = Validate.getWaiverTypeFromNumber(newData.parentId);
       }
 
-      return await addChild(newData);
+      // return await addChild(newData);
     } else {
       return "Component is Top Level.";
     }
+
   } catch (error) {
-    console.log("newSubmission error is: ", error);
+    console.log("newComponent error is: ", error);
     if (error.code === "ConditionalCheckFailedException") {
       error.response_code = RESPONSE_CODE.DUPLICATE_ID;
     }
     throw error;
   }
+  */
 }

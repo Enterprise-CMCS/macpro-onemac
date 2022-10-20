@@ -1,4 +1,5 @@
 export const waiverTemporaryExtension = {
+  whichTab: "waiver",
   componentType: "waiverextension",
   typeLabel: "Waiver Extension",
   idLabel: "Temporary Extension Request Number",

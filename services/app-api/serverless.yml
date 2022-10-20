@@ -111,6 +111,21 @@ functions:
       default:
         enabled: false
 
+  handleOneMacTableStream:
+    handler: handleOneMacTableStream.main
+    events:
+      - stream:
+          arn: !GetAtt OneMacTable.StreamArn
+          startingPosition: LATEST
+          maximumRetryAttempts: 2
+          enabled: true
+    role: LamdaSourceDynamoToMskRole
+    environment:
+      STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
+      CLIENT_ID_PREFIX: 'onemac'
+    maximumRetryAttempts: 2
+
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
     role: LambdaApiRole

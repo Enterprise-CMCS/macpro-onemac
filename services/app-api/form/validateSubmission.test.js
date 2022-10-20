@@ -21,8 +21,6 @@ const goodData = {
   territory: "MD",
   submitterName: "Tester Submitter",
   submitterEmail: "tester@email.com",
-  submitterId: "idid",
-  submissionId: "andother id",
 };
 
 const badData = {
@@ -39,8 +37,6 @@ const badData = {
   territory: "MD",
   submitterName: "Tester Submitter",
   submitterEmail: "tester@email.com",
-  submitterId: "idid",
-  submissionId: "andother id",
 };
 
 it("returns null for valid data", async () => {
