@@ -4,12 +4,7 @@ export const waiverRenewal = {
   typeLabel: "1915(b) Waiver Renewal",
   idLabel: "1915(b) Waiver Renewal Number",
   idRegex: "^[A-Z]{2}[.-][0-9]{4,5}.R(0[1-9]|[1-9][0-9]).00$",
-  idExistValidations: [
-    {
-      idMustExist: false,
-      errorLevel: "error",
-    },
-  ],
+  idMustExist: false,
   allowMultiplesWithSameId: false,
   requiredAttachments: [],
   optionalAttachments: [
@@ -27,7 +22,6 @@ export const waiverRenewal = {
     },
     { label: "All other 1915(b) Waivers", value: "1915(b)" },
   ],
-  parentMustExist: true,
   allowedParentTypes: ["waivernew", "waiverrenewal"],
   allowedParentStatuses: ["Approved"],
 };

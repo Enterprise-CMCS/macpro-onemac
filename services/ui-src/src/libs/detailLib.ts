@@ -22,7 +22,7 @@ export type OneMACDetail = {
 };
 
 export const submissionDateDefault: AttributeDetail = {
-  heading: "Initial Submission Date",
+  heading: "Date Submitted",
   fieldName: "submissionDateNice",
   default: null,
 };
@@ -101,7 +101,7 @@ export const defaultDetail: OneMACDetail = {
     },
   ],
   actionsByStatus: Workflow.defaultActionsByStatus,
-  show90thDayInfo: true,
+  show90thDayInfo: false,
   showEffectiveDate: false,
   detailHeader: "Package",
   defaultTitle: null,

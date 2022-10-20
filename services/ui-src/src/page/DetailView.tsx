@@ -15,7 +15,7 @@ import {
 import { LocationState } from "../domain-types";
 import LoadingScreen from "../components/LoadingScreen";
 import PackageApi from "../utils/PackageApi";
-import { formatDetailViewDate } from "../utils/date-utils";
+import { formatDate } from "../utils/date-utils";
 import PageTitleBar from "../components/PageTitleBar";
 import AlertBar from "../components/AlertBar";
 import { getTerritoryFromTransmittalNumber } from "../changeRequest/SubmissionForm";
@@ -23,6 +23,7 @@ import { OneMACDetail, DetailViewTab } from "../libs/detailLib";
 import TemporaryExtensionSection from "./section/TemporaryExtensionSection";
 import { DetailSection } from "./section/DetailSection";
 import { AdditionalInfoSection } from "./section/AdditionalInfoSection";
+import { temporaryExtensionTypes } from "./temporary-extension/TemporaryExtensionForm";
 
 const AUTHORITY_LABELS = {
   "1915(b)": "All other 1915(b) Waivers",
@@ -53,6 +54,7 @@ export type ComponentDetail = {
   territoryNice: string;
   raiResponses: any[];
   waiverExtensions: any[];
+  temporaryExtensionType: string;
 } & Record<string, any>;
 
 /**
@@ -78,7 +80,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   }
   const loadDetail = useCallback(
     async (ctrlr?: AbortController) => {
-      let fetchedDetail;
+      let fetchedDetail: ComponentDetail | undefined;
       let stillLoading = true;
 
       try {
@@ -94,13 +96,20 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
         fetchedDetail.territoryNice = territoryMap[fetchedDetail.territory];
         fetchedDetail.typeNice =
           Workflow.ONEMAC_LABEL[fetchedDetail.componentType];
+        if (fetchedDetail.temporaryExtensionType) {
+          fetchedDetail.temporaryExtensionTypeNice =
+            temporaryExtensionTypes.find(
+              (tempType) =>
+                fetchedDetail?.temporaryExtensionType === tempType.value
+            )?.label;
+        }
 
         if (fetchedDetail.waiverAuthority) {
           fetchedDetail.waiverAuthorityNice =
             AUTHORITY_LABELS[fetchedDetail.waiverAuthority];
         }
         if (fetchedDetail.submissionTimestamp) {
-          fetchedDetail.submissionDateNice = formatDetailViewDate(
+          fetchedDetail.submissionDateNice = formatDate(
             fetchedDetail.submissionTimestamp
           );
         }
@@ -127,7 +136,6 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
           },
         });
       }
-
       if (!ctrlr?.signal.aborted) setDetail(fetchedDetail);
       if (!ctrlr?.signal.aborted) setIsLoading(stillLoading);
     },

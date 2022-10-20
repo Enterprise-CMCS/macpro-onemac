@@ -51,8 +51,6 @@ export type AppContextValue = {
 export type PackageRowValue = {
   componentId: string;
   componentType: string;
-  expirationTimestamp?: number;
-  ninetiethDay?: number;
   packageStatus: string;
   submissionTimestamp: number;
   submitter: string;

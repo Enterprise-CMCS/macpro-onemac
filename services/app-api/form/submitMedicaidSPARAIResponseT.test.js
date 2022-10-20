@@ -24,9 +24,3 @@ const expectedResponse = {
 it("calls submitAny", async () => {
   expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
 });
-
-it("returns the Medicaid SPA with my Id as my parent", () => {
-  expect(
-    medicaidSPARAIResponseFormConfig.getParentInfo("testId")
-  ).toStrictEqual(["testId", Workflow.ONEMAC_TYPE.MEDICAID_SPA]);
-});

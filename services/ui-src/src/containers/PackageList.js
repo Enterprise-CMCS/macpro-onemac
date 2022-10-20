@@ -36,10 +36,6 @@ import { useAppContext } from "../libs/contextLib";
 import { pendingMessage, deniedOrRevokedMessage } from "../libs/userLib";
 import { tableListExportToCSV } from "../utils/tableListExportToCSV";
 
-const filterArray = {
-  componentType: [Workflow.ONEMAC_TYPE.SPA, Workflow.ONEMAC_TYPE.CHIP_SPA],
-};
-
 const renderDate = ({ value }) =>
   typeof value === "number" ? format(value, "MMM d, yyyy") : value ?? "N/A";
 
@@ -227,33 +223,6 @@ const PackageList = () => {
           disableFilters: false,
           filter: CustomFilterTypes.MultiCheckbox,
           Filter: CustomFilterUi.MultiCheckbox,
-        },
-        {
-          Header: "90th Day",
-          accessor: ({ currentStatus, clockEndTimestamp }) => {
-            return Workflow.get90thDayText(currentStatus, clockEndTimestamp);
-          },
-          id: "ninetiethDay",
-          Cell: renderDate,
-          disableFilters: false,
-          filter: CustomFilterTypes.DateRangeAndMultiCheckbox,
-          Filter: CustomFilterUi.DateRangeAndMultiCheckbox,
-        },
-        tab === Workflow.PACKAGE_GROUP.WAIVER && {
-          Header: "Expiration Date",
-          accessor: ({ expirationTimestamp, componentType }) => {
-            if (!filterArray.componentType.includes(componentType)) {
-              if (expirationTimestamp) return expirationTimestamp;
-            } else {
-              return "N/A";
-            }
-            return "Pending";
-          },
-          id: "expirationTimestamp",
-          Cell: renderDate,
-          disableFilters: false,
-          filter: CustomFilterTypes.DateRange,
-          Filter: CustomFilterUi.DateRange,
         },
         {
           Header: "Date Submitted",

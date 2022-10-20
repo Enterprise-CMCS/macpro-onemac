@@ -21,10 +21,3 @@ const expectedResponse = {
 it("calls submitAny", async () => {
   expect(main(testEvent)).resolves.toStrictEqual(expectedResponse);
 });
-
-it("returns the CHIP SPA with my Id as my parent", () => {
-  expect(chipSPARAIResponseFormConfig.getParentInfo("testId")).toStrictEqual([
-    "testId",
-    Workflow.ONEMAC_TYPE.CHIP_SPA,
-  ]);
-});
