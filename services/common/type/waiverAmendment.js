@@ -1,4 +1,5 @@
 export const waiverAmendment = {
+  whichTab: "waiver",
   componentType: "waiveramendment",
   typeLabel: "1915(b) Waiver Amendment",
   idLabel: "1915(b) Waiver Amendment Number",
