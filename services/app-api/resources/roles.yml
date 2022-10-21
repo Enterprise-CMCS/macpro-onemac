@@ -105,7 +105,7 @@ Resources:
                   - xray:PutTelemetryRecords
                 Resource: "*"
 
-  LambdaStreamRole: # Why isn't this with the function as an iamRoleStatements?  https://github.com/serverless/serverless/issues/6485
+  LambdaStreamRole:
     Type: "AWS::IAM::Role"
     Properties:
       AssumeRolePolicyDocument:
@@ -142,17 +142,20 @@ Resources:
               - Effect: "Allow"
                 Action:
                   - dynamodb:DescribeTable
-                  - dynamodb:DescribeStream
                   - dynamodb:Query
                   - dynamodb:Scan
                   - dynamodb:GetItem
-                  - dynamodb:GetRecords
-                  - dynamodb:GetShardIterator
-                  - dynamodb:ListStreams
                   - dynamodb:PutItem
                   - dynamodb:UpdateItem
                   - dynamodb:DeleteItem
                 Resource: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+              - Effect: "Allow"
+                Action:
+                  - dynamodb:DescribeStream
+                  - dynamodb:GetRecords
+                  - dynamodb:GetShardIterator
+                  - dynamodb:ListStreams
+                Resource: !GetAtt OneMacTable.StreamArn
               - Effect: Allow
                 Action:
                   - dynamodb:Query
