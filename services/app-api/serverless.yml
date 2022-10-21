@@ -34,7 +34,7 @@ custom:
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   warmupEnabled:
     production: true
-    development: true
+    development: false
   warmup:
     default:
       enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
@@ -110,6 +110,21 @@ functions:
     warmup:
       default:
         enabled: false
+
+  handleOneMacTableStream:
+    handler: handleOneMacTableStream.main
+    events:
+      - stream:
+          type: dynamodb
+          arn: !GetAtt OneMacTable.StreamArn
+          startingPosition: LATEST
+          maximumRetryAttempts: 2
+          enabled: true
+    role: LambdaStreamRole
+    environment:
+      STAGE: ${self:custom.stage}
+      oneMacTableName: ${self:custom.oneMacTableName}
+    maximumRetryAttempts: 2
 
   submitInitialWaiver:
     handler: form/submitInitialWaiver.main
