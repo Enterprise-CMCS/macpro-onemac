@@ -116,7 +116,7 @@ functions:
     events:
       - stream:
           type: dynamodb
-          arn: arn:aws:dynamodb:*:*:table/${self:custom.oneMacTableName}
+          arn: !GetAtt OneMacTable.StreamArn
           startingPosition: LATEST
           maximumRetryAttempts: 2
           enabled: true
