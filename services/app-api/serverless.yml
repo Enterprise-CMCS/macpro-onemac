@@ -34,7 +34,7 @@ custom:
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   warmupEnabled:
     production: true
-    development: true
+    development: false
   warmup:
     default:
       enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
