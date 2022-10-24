@@ -91,7 +91,7 @@ export const getDetails = async (event) => {
         IndexName: "GSI2",
         KeyConditionExpression: "GSI2pk = :pk AND GSI2sk = :sk",
         ExpressionAttributeValues: {
-          ":pk": parentId,
+          ":pk": componentId,
           ":sk": `${Workflow.ONEMAC_TYPE.WAIVER_EXTENSION}`,
         },
       };
