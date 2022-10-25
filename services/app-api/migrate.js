@@ -1,75 +1,53 @@
+import { ONEMAC_TYPE } from "cmscommonlib/workflow";
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
 
-const typeConversion = {
-  spa: "medicaidspa",
-  sparai: "medicaidsparai",
-};
-
+const fixThese = [ONEMAC_TYPE.WAIVER_AMENDMENT, ONEMAC_TYPE.WAIVER_EXTENSION];
 /**
  * Perform data migrations
  */
 
 export const main = handler(async (event) => {
-  console.log("Migrate was called with event: ", event);
-
-  // only have to do SPAs at least
+  // Scan it all... but really only need v0s
   const oneparams = {
     TableName: process.env.oneMacTableName,
-    IndexName: "GSI1",
-    KeyConditionExpression: "GSI1pk = :gsi1pk",
+    FilterExpression: "begins_with(sk, :begin)",
     ExpressionAttributeValues: {
-      ":gsi1pk": `OneMAC#spa`,
+      ":begin": "v0",
     },
-    ExclusiveStartKey: null,
-    ScanIndexForward: false,
   };
-
   const onePromiseItems = [];
   // SPA group
   do {
-    const results = await dynamoDb.query(oneparams);
+    const results = await dynamoDb.scan(oneparams);
     for (const item of results.Items) {
-      if (!typeConversion[item.componentType]) continue;
+      // if the item does not need correcting, skip it
+      if (!fixThese.includes(item.componentType)) continue;
 
-      onePromiseItems.push({
+      const updateParam = {
         TableName: process.env.oneMacTableName,
         Key: {
           pk: item.pk,
           sk: item.sk,
         },
-        ReturnValues: "ALL_NEW",
-        UpdateExpression: "REMOVE GSI1pk, GSI1sk",
-      });
+        UpdateExpression:
+          "SET GSI1pk = :gsi1pk, GSI1sk = :gsi1sk, GSI2pk = :gsi2pk, GSI2sk = :gsi2sk",
+        ExpressionAttributeValues: {
+          ":gsi1pk": `OneMAC#waiver`,
+          ":gsi1sk": item.pk,
+          ":gsi2pk": item.parentId,
+          ":gsi2sk": item.componentType,
+        },
+      };
+      onePromiseItems.push(updateParam);
     }
     oneparams.ExclusiveStartKey = results.LastEvaluatedKey;
   } while (oneparams.ExclusiveStartKey);
 
-  console.log("onePromiseItems: ", onePromiseItems);
-
   await Promise.all(
     onePromiseItems.map(async (anUpdate) => {
-      console.log("update is: ", anUpdate);
-      const result = await dynamoDb.update(anUpdate);
-      console.log("result is: ", result);
-      const newSk = result["Attributes"]["sk"].replace(
-        result["Attributes"]["componentType"],
-        typeConversion[result["Attributes"]["componentType"]]
-      );
-
-      const putParams = {
-        TableName: process.env.oneMacTableName,
-        Item: {
-          ...result.Attributes,
-          //        pk: result["Attributes"]["pk"],
-          sk: newSk,
-          componentType: typeConversion[result["Attributes"]["componentType"]],
-          GSI1pk: "OneMAC#spa",
-          GSI1sk: result["Attributes"]["pk"],
-        },
-      };
-      console.log("now the put params: ", putParams);
-      await dynamoDb.put(putParams);
+      console.log("updating: ", anUpdate);
+      await dynamoDb.update(anUpdate);
     })
   );
 
