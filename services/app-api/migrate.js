@@ -7,7 +7,7 @@ const fixThese = [ONEMAC_TYPE.WAIVER_AMENDMENT, ONEMAC_TYPE.WAIVER_EXTENSION];
  * Perform data migrations
  */
 
-export const main = handler(async (event) => {
+export const main = handler(async () => {
   // Scan it all... but really only need v0s
   const oneparams = {
     TableName: process.env.oneMacTableName,
