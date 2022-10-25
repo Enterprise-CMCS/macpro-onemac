@@ -17,7 +17,7 @@ describe("submissions are properly captured into the database", () => {
       additionalInformation: "additionalInformation",
     };
     const testConfig = {
-      packageGroup: "group",
+      whichTab: "thisTab",
       componentType: "aType",
     };
 
