@@ -1,15 +1,10 @@
 import dynamoDb from "../libs/dynamodb-lib";
 import newComponent from "./newComponent";
-// import addChild from "./addChild";
 
 jest.mock("../libs/dynamodb-lib");
 dynamoDb.put.mockResolvedValue({});
 dynamoDb.update.mockResolvedValue({ Attributes: { Latest: 2 } });
 
-// jest.mock("./addChild");
-// addChild.mockImplementation(async () => {
-//   return { Latest: 2 };
-// });
 jest.mock("cmscommonlib");
 
 describe("submissions are properly captured into the database", () => {
