@@ -1,4 +1,5 @@
 import { Workflow } from "cmscommonlib";
+import { PackageType } from "./formLib";
 
 export type AttributeDetail = {
   heading: string;
@@ -19,7 +20,7 @@ export type OneMACDetail = {
   detailSection: AttributeDetail[];
   allowWaiverExtension: boolean;
   attachmentsHeading: string;
-};
+} & Partial<PackageType>;
 
 export const submissionDateDefault: AttributeDetail = {
   heading: "Date Submitted",
