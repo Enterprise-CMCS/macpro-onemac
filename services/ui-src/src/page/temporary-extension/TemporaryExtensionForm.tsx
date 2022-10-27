@@ -21,7 +21,7 @@ const idFormat: string = "SS-####.R##.TE## or SS-#####.R##.TE##";
 export const temporaryExtensionFormInfo: OneMACFormConfig = {
   ...waiverTemporaryExtension,
   ...defaultOneMACFormConfig,
-  pageTitle: "Request a Temporary Extension",
+  pageTitle: "Request 1915(b) or 1915(c) Temporary Extension",
   detailsHeader: "Temporary Extension Request",
   idFAQLink: ROUTES.FAQ_WAIVER_EXTENSION_ID,
   idFieldHint: [
