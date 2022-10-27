@@ -64,9 +64,7 @@ beforeAll(() => {
       {
         componentType: "waivernew",
         componentId: "VA.1117",
-        submissionId: "9c5c8b70-53a6-11ec-b5bc-c9173b9fa278",
         currentStatus: "In Review",
-        submitterId: "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
         submitterName: "Angie Active",
         submissionTimestamp: 1638473560098,
         submitterEmail: "statesubmitteractive@cms.hhs.local",
@@ -74,9 +72,7 @@ beforeAll(() => {
       {
         componentType: "medicaidspa",
         componentId: "VA-45-5913",
-        submissionId: "cb9978d0-5dfb-11ec-a7a2-c5995198046c",
         currentStatus: "Disapproved",
-        submitterId: "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
         submitterName: "Statesubmitter Nightwatch",
         submissionTimestamp: 1639609658284,
         submitterEmail: "statesubmitter@nightwatch.test",
@@ -84,9 +80,7 @@ beforeAll(() => {
       {
         componentType: "chipspa",
         componentId: "VA-33-2244-CHIP",
-        submissionId: "41103ac0-61aa-11ec-af2f-49cb8bfb8860",
         currentStatus: "Submitted",
-        submitterId: "us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5",
         submitterName: "Angie Active",
         submissionTimestamp: 1640014441278,
         submitterEmail: "statesubmitteractive@cms.hhs.local",
@@ -128,7 +122,7 @@ it(`returns an error if user has wrong access`, async () => {
 
 it(`returns the list of packages`, async () => {
   expectedResponse.body =
-    '[{"componentType":"waivernew","componentId":"VA.1117","submissionId":"9c5c8b70-53a6-11ec-b5bc-c9173b9fa278","currentStatus":"In Review","submitterId":"us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5","submitterName":"Angie Active","submissionTimestamp":1638473560098,"submitterEmail":"statesubmitteractive@cms.hhs.local"},{"componentType":"medicaidspa","componentId":"VA-45-5913","submissionId":"cb9978d0-5dfb-11ec-a7a2-c5995198046c","currentStatus":"Disapproved","submitterId":"us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b","submitterName":"Statesubmitter Nightwatch","submissionTimestamp":1639609658284,"submitterEmail":"statesubmitter@nightwatch.test"},{"componentType":"chipspa","componentId":"VA-33-2244-CHIP","submissionId":"41103ac0-61aa-11ec-af2f-49cb8bfb8860","currentStatus":"Submitted","submitterId":"us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5","submitterName":"Angie Active","submissionTimestamp":1640014441278,"submitterEmail":"statesubmitteractive@cms.hhs.local"}]';
+    '[{"componentType":"waivernew","componentId":"VA.1117","currentStatus":"In Review","submitterName":"Angie Active","submissionTimestamp":1638473560098,"submitterEmail":"statesubmitteractive@cms.hhs.local"},{"componentType":"medicaidspa","componentId":"VA-45-5913","currentStatus":"Disapproved","submitterName":"Statesubmitter Nightwatch","submissionTimestamp":1639609658284,"submitterEmail":"statesubmitter@nightwatch.test"},{"componentType":"chipspa","componentId":"VA-33-2244-CHIP","currentStatus":"Submitted","submitterName":"Angie Active","submissionTimestamp":1640014441278,"submitterEmail":"statesubmitteractive@cms.hhs.local"}]';
 
   expect(main(testUserEvent))
     .resolves.toStrictEqual(expectedResponse)
@@ -141,7 +135,7 @@ it(`handles the helpdesk user`, async () => {
   getUser.mockResolvedValueOnce(testDoneByAll);
 
   expectedResponse.body =
-    '[{"componentType":"waivernew","componentId":"VA.1117","submissionId":"9c5c8b70-53a6-11ec-b5bc-c9173b9fa278","currentStatus":"In Review","submitterId":"us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5","submitterName":"Angie Active","submissionTimestamp":1638473560098,"submitterEmail":"statesubmitteractive@cms.hhs.local"},{"componentType":"medicaidspa","componentId":"VA-45-5913","submissionId":"cb9978d0-5dfb-11ec-a7a2-c5995198046c","currentStatus":"Disapproved","submitterId":"us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b","submitterName":"Statesubmitter Nightwatch","submissionTimestamp":1639609658284,"submitterEmail":"statesubmitter@nightwatch.test"},{"componentType":"chipspa","componentId":"VA-33-2244-CHIP","submissionId":"41103ac0-61aa-11ec-af2f-49cb8bfb8860","currentStatus":"Submitted","submitterId":"us-east-1:3211a6ff-043f-436b-8313-1b314582b2a5","submitterName":"Angie Active","submissionTimestamp":1640014441278,"submitterEmail":"statesubmitteractive@cms.hhs.local"}]';
+    '[{"componentType":"waivernew","componentId":"VA.1117","currentStatus":"In Review","submitterName":"Angie Active","submissionTimestamp":1638473560098,"submitterEmail":"statesubmitteractive@cms.hhs.local"},{"componentType":"medicaidspa","componentId":"VA-45-5913","currentStatus":"Disapproved","submitterName":"Statesubmitter Nightwatch","submissionTimestamp":1639609658284,"submitterEmail":"statesubmitter@nightwatch.test"},{"componentType":"chipspa","componentId":"VA-33-2244-CHIP","currentStatus":"Submitted","submitterName":"Angie Active","submissionTimestamp":1640014441278,"submitterEmail":"statesubmitteractive@cms.hhs.local"}]';
 
   expect(main(testUserEvent))
     .resolves.toStrictEqual(expectedResponse)

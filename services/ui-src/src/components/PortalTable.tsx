@@ -3,14 +3,11 @@ import {
   HeaderGroup,
   TableInstance,
   TableOptions,
-  UseExpandedInstanceProps,
-  UseExpandedRowProps,
   UseFiltersInstanceProps,
   UseGlobalFiltersInstanceProps,
   UseSortByColumnProps,
   UseSortByInstanceProps,
   Row,
-  useExpanded,
   useFilters,
   useGlobalFilter,
   useSortBy,
@@ -19,13 +16,11 @@ import {
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
   faSearch,
-  faChevronDown,
   faSort,
   faSortDown,
   faSortUp,
 } from "@fortawesome/free-solid-svg-icons";
 import { constant, noop } from "lodash";
-import cx from "classnames";
 
 import {
   SearchAndFilter,
@@ -36,7 +31,6 @@ export { CustomFilterTypes, CustomFilterUi } from "./SearchAndFilter";
 
 export type TableProps<V extends {}> = {
   className?: string;
-  expandable?: boolean;
   searchBarTitle?: ReactNode;
   withSearchBar?: boolean;
   TEMP_onReset?: () => void;
@@ -50,7 +44,6 @@ const defaultColumn = {
 };
 
 export default function PortalTable<V extends {} = {}>({
-  expandable,
   pageContentRef,
   searchBarTitle,
   withSearchBar,
@@ -82,13 +75,11 @@ export default function PortalTable<V extends {} = {}>({
     },
     useGlobalFilter,
     useFilters,
-    useSortBy,
-    useExpanded
+    useSortBy
   ) as TableInstance<V> &
     UseFiltersInstanceProps<V> &
     UseGlobalFiltersInstanceProps<V> &
-    UseSortByInstanceProps<V> &
-    UseExpandedInstanceProps<V>;
+    UseSortByInstanceProps<V>;
 
   return (
     <>
@@ -109,7 +100,6 @@ export default function PortalTable<V extends {} = {}>({
           <thead>
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()}>
-                {expandable && <th aria-hidden="true"></th>}
                 {(
                   headerGroup.headers as (HeaderGroup<V> &
                     UseSortByColumnProps<V>)[]
@@ -135,47 +125,26 @@ export default function PortalTable<V extends {} = {}>({
           </thead>
           {rows.length > 0 && (
             <tbody {...getTableBodyProps()}>
-              {(rows as (Row<V> & UseExpandedRowProps<V>)[]).map(
-                (row, rowIndex) => {
-                  // @ts-ignore FIXME remove when react-table types are improved
-                  prepareRow(row, rowIndex);
-                  return (
-                    <tr
-                      {...row.getRowProps()}
-                      className={cx({
-                        "parent-row-expanded": row.isExpanded,
-                        "child-row-expanded": row.depth > 0,
-                      })}
-                    >
-                      {expandable && (
-                        <td className="row-expander-cell">
-                          {row.depth === 0 && (
-                            <button
-                              aria-label="Expand row"
-                              disabled={!row.canExpand}
-                              onClick={() => row.toggleRowExpanded()}
-                            >
-                              <FontAwesomeIcon icon={faChevronDown} />
-                            </button>
-                          )}
+              {(rows as Row<V>[]).map((row, rowIndex) => {
+                // @ts-ignore FIXME remove when react-table types are improved
+                prepareRow(row, rowIndex);
+                return (
+                  <tr {...row.getRowProps()}>
+                    {row.cells.map((cell, index) => {
+                      return (
+                        <td
+                          id={
+                            headerGroups[0].headers[index].id + "-" + rowIndex
+                          }
+                          {...cell.getCellProps()}
+                        >
+                          {cell.render("Cell")}
                         </td>
-                      )}
-                      {row.cells.map((cell, index) => {
-                        return (
-                          <td
-                            id={
-                              headerGroups[0].headers[index].id + "-" + rowIndex
-                            }
-                            {...cell.getCellProps()}
-                          >
-                            {cell.render("Cell")}
-                          </td>
-                        );
-                      })}
-                    </tr>
-                  );
-                }
-              )}
+                      );
+                    })}
+                  </tr>
+                );
+              })}
             </tbody>
           )}
         </table>

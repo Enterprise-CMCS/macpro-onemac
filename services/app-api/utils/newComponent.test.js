@@ -1,34 +1,27 @@
 import dynamoDb from "../libs/dynamodb-lib";
-import newSubmission from "./newSubmission";
-import addChild from "./addChild";
+import newComponent from "./newComponent";
 
 jest.mock("../libs/dynamodb-lib");
 dynamoDb.put.mockResolvedValue({});
 dynamoDb.update.mockResolvedValue({ Attributes: { Latest: 2 } });
 
-jest.mock("./addChild");
-addChild.mockImplementation(async () => {
-  return { Latest: 2 };
-});
 jest.mock("cmscommonlib");
 
 describe("submissions are properly captured into the database", () => {
   it("recognizes a new Package", () => {
     const testData = {
       submissionTimestamp: "timestamp",
-      submissionId: "submissionid",
-      submitterId: "submitterId",
       submitterName: "submitterName",
       submitterEmail: "submitterEmail",
       attachments: "attachments",
       additionalInformation: "additionalInformation",
     };
     const testConfig = {
-      packageGroup: "group",
+      whichTab: "thisTab",
       componentType: "aType",
     };
 
-    expect(newSubmission(testData, testConfig))
+    expect(newComponent(testData, testConfig))
       .resolves.toStrictEqual("Component is Top Level.")
       .catch((error) => {
         console.log("caught test error 1: ", error);
@@ -38,8 +31,6 @@ describe("submissions are properly captured into the database", () => {
   it("recognizes a child Package", () => {
     const testDataChild = {
       submissionTimestamp: "timestamp",
-      submissionId: "submissionid",
-      submitterId: "submitterId",
       submitterName: "submitterName",
       submitterEmail: "submitterEmail",
       attachments: "attachments",
@@ -53,7 +44,7 @@ describe("submissions are properly captured into the database", () => {
       getParentInfo: (id) => [id, "parentType"],
     };
 
-    expect(newSubmission(testDataChild, testConfigChild))
+    expect(newComponent(testDataChild, testConfigChild))
       .resolves.toStrictEqual({ Latest: 2 })
       .catch((error) => {
         console.log("caught test error 2: ", error);
@@ -64,8 +55,6 @@ describe("submissions are properly captured into the database", () => {
 it("handles excpetions", () => {
   const testDataChild = {
     submissionTimestamp: "timestamp",
-    submissionId: "submissionid",
-    submitterId: "submitterId",
     submitterName: "submitterName",
     submitterEmail: "submitterEmail",
     attachments: "attachments",
@@ -81,7 +70,7 @@ it("handles excpetions", () => {
     throw new Error("this error");
   });
 
-  expect(newSubmission(testDataChild, testConfigChild))
+  expect(newComponent(testDataChild, testConfigChild))
     .rejects.toThrow("this error")
     .catch((error) => {
       console.log("caught test error 2: ", error);
