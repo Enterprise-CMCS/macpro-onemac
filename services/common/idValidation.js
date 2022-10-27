@@ -1,14 +1,11 @@
 import { ONEMAC_TYPE } from "./workflow.js";
 
 export const getWaiverFamily = (inId) => {
-  const familyRE = new RegExp("^[A-Z]{2}[.][0-9]{4,5}");
+  const familyRE = new RegExp("^[A-Z]{2}[-.][0-9]{4,5}");
 
   if (!inId) return null;
 
-  // SEA Tool sometimes uses hyphens in Waiver Numbers
-  const waiverNumber = inId.replace("-", ".");
-
-  const returnValue = familyRE.exec(waiverNumber);
+  const returnValue = familyRE.exec(inId);
   return returnValue && returnValue[0];
 };
 

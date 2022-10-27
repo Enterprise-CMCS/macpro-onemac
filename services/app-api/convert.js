@@ -3,7 +3,7 @@ import { Workflow } from "cmscommonlib";
 
 import handler from "./libs/handler-lib";
 import dynamoDb from "./libs/dynamodb-lib";
-import newSubmission from "./utils/newSubmission";
+import newComponent from "./utils/newComponent";
 
 import { validateSubmission } from "./form/validateSubmission";
 import { chipSPAFormConfig } from "./form/submitCHIPSPA";
@@ -66,10 +66,8 @@ export const main = handler(async () => {
         territory: item.territory,
         attachments: item.uploads,
         additionalInformation: item.summary,
-        submissionId: item.id, // not sure we need this anymore
         submitterName: `${item.user.firstName} ${item.user.lastName}`,
         submitterEmail: item.user.email,
-        submitterId: item.userId, // not sure we want this anymore
       };
       if (item.proposedEffectiveDate)
         data.proposedEffectiveDate = item.proposedEffectiveDate;
@@ -91,7 +89,7 @@ export const main = handler(async () => {
         .plus({ days: 90 })
         .toMillis();
       console.log("Submitting data: ", data);
-      await newSubmission(data, config);
+      await newComponent(data, config);
     }
 
     // console.log("results number: ", results.Items.length);

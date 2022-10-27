@@ -1,5 +1,4 @@
 export const chipSPA = {
-  packageGroup: "spa",
   whichTab: "spa",
   componentType: "chipspa",
   typeLabel: "CHIP SPA",

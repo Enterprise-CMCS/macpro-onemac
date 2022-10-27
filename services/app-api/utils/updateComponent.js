@@ -1,10 +1,10 @@
 import updateWithVersion from "./updateWithVersion";
-import updateParent from "../utils/updateParent";
+// import updateParent from "../utils/updateParent";
 
 const topLevelUpdates = [
   "clockEndTimestamp",
-  "expirationTimestamp",
   "currentStatus",
+  "currentStatusTimestamp",
   "lastModifiedName",
   "lastModifiedEmail",
   "lastModifiedTimestamp",
@@ -50,7 +50,7 @@ export default async function updateComponent(updateData, config) {
 
   try {
     const updateResults = await updateWithVersion(updateComponentParams);
-    if (updateResults.parentId) await updateParent(updateResults);
+    // if (updateResults.parentId) await updateParent(updateResults);
     return updateResults;
   } catch (error) {
     if (error.code === "ConditionalCheckFailedException") {

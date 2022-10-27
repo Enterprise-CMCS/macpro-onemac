@@ -29,7 +29,6 @@ jest.mock("react-router-dom", () => ({
 jest.mock("../../utils/PackageApi");
 
 const testDetail = {
-  submitterId: "us-east-1:afa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a",
   clockEndTimestamp: 1647286706000,
   componentType: "medicaidspa",
   currentStatus: "RAI Issued",
@@ -54,14 +53,6 @@ const testDetail = {
       title: "RAI Response",
       contentType: "application/pdf",
       url: "https://uploads-states-of-withdrawal-attachments-116229642442.s3.us-east-1.amazonaws.com/protected/us-east-1%3Aafa582ca-4e4c-4d3b-be9b-d2dbc24c3d1a/1639696188378/adobe.pdf",
-    },
-  ],
-  medicaidsparai: [
-    {
-      componentType: "medicaidsparai",
-      componentTimestamp: 1643218567141,
-      submitterName: "Kristin Grue",
-      componentId: "MI-13-1122",
     },
   ],
   GSI1sk: "MI-13-1122",
@@ -101,7 +92,6 @@ const testDetail = {
     },
   ],
   submitterName: "StateSubmitter Nightwatch",
-  submissionId: "4240e440-5ec5-11ec-b2ea-eb35c89f340d",
 };
 
 const ContextWrapper = ({ children }) => {

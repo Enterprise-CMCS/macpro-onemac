@@ -3,13 +3,11 @@ import { RESPONSE_CODE } from "cmscommonlib";
 import dynamoDb from "./libs/dynamodb-lib";
 import { getUser } from "./getUser";
 import sendEmail from "./libs/email-lib";
-import newSubmission from "./utils/newSubmission";
 import packageExists from "./utils/packageExists";
 
 jest.mock("./libs/dynamodb-lib");
 jest.mock("./getUser");
 jest.mock("./libs/email-lib");
-jest.mock("./utils/newSubmission");
 jest.mock("./utils/packageExists");
 
 const expectedResponse = {
@@ -67,8 +65,6 @@ beforeEach(() => {
   sendEmail.mockImplementation(() => {
     return;
   });
-
-  newSubmission.mockResolvedValue(true);
 
   packageExists.mockImplementation(() => {
     return false;
