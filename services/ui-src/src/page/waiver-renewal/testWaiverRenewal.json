@@ -14,20 +14,7 @@
     "waiverAuthority": "1915(b)(4)",
     "currentStatus": "Unsubmitted",
     "submissionTimestamp": 1639507775282,
-    "submissionId": "94a77310-5d0e-11ec-b95c-0fbf3f3ed945",
     "GSI1pk": "OneMAC#waiver",
-    "children": [
-      {
-        "componentType": "waiverrai",
-        "componentId": "MD-83420.R01.00",
-        "currentStatus": "Submitted",
-        "submitterName": "Statesubmitter Nightwatch",
-        "displayId": "MD-83420.R01.00",
-        "submitterEmail": "statesubmitter@nightwatch.test",
-        "submissionTimestamp": 1643296612626
-      }
-    ],
-    "submitterId": "us-east-1:86a190fe-b195-42bf-9685-9761bf0ff14b",
     "GSI1sk": "MD-83420.R01.00",
     "sk": "v0#waiverrenewal",
     "Latest": 2,

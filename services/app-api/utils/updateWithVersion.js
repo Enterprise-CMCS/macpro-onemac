@@ -29,7 +29,7 @@ export default async function updateWithVersion(updateParams) {
         sk: putsk,
       },
     };
-    gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk";
+    gsiParams.UpdateExpression = "REMOVE GSI1pk, GSI1sk, GSI2pk, GSI2sk";
 
     console.log("and the gsiParams: ", gsiParams);
     await dynamoDb.update(gsiParams);

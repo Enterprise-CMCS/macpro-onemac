@@ -6,8 +6,6 @@ updateWithVersion.mockResolvedValue({});
 
 const testData = {
   submissionTimestamp: "timestamp",
-  submissionId: "submissionid",
-  submitterId: "submitterId",
   submitterName: "submitterName",
   submitterEmail: "submitterEmail",
   attachments: ["attachments"],
@@ -20,8 +18,6 @@ const testConfig = {
 it("calls the update", () => {
   const testData = {
     submissionTimestamp: "timestamp",
-    submissionId: "submissionid",
-    submitterId: "submitterId",
     submitterName: "submitterName",
     submitterEmail: "submitterEmail",
     attachments: ["attachments"],

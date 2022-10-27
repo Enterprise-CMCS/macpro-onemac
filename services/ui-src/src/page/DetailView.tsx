@@ -75,6 +75,11 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   // The record we are using for the form.
   const [detail, setDetail] = useState<ComponentDetail>();
 
+  const goBackLink =
+    pageConfig.whichTab === "waiver"
+      ? ONEMAC_ROUTES.PACKAGE_LIST_WAIVER
+      : ONEMAC_ROUTES.PACKAGE_LIST_SPA;
+
   function closedAlert() {
     setAlertCode(RESPONSE_CODE.NONE);
   }
@@ -155,7 +160,7 @@ const DetailView: React.FC<{ pageConfig: OneMACDetail }> = ({ pageConfig }) => {
   return (
     <LoadingScreen isLoading={isLoading}>
       <PageTitleBar
-        backTo={ONEMAC_ROUTES.PACKAGE_LIST}
+        backTo={goBackLink}
         heading={detail && detail.componentId}
         enableBackNav
       />

@@ -62,12 +62,15 @@ Resources:
           AttributeType: S
         - AttributeName: GSI1sk
           AttributeType: S
+        - AttributeName: GSI2pk
+          AttributeType: S
+        - AttributeName: GSI2sk
+          AttributeType: S
       KeySchema:
         - AttributeName: pk
           KeyType: HASH
         - AttributeName: sk
           KeyType: RANGE
-      # GlobalSecondaryIndex on the territory with submittedAt as the sort key
       GlobalSecondaryIndexes:
         - IndexName: GSI1
           KeySchema:
@@ -76,7 +79,15 @@ Resources:
             - AttributeName: GSI1sk
               KeyType: RANGE
           Projection:
-            ProjectionType: ALL # Makes all columns available in the index
+            ProjectionType: ALL
+        - IndexName: GSI2
+          KeySchema:
+            - AttributeName: GSI2pk
+              KeyType: HASH
+            - AttributeName: GSI2sk
+              KeyType: RANGE
+          Projection:
+            ProjectionType: ALL
       # Set the capacity to auto-scale
       BillingMode: PAY_PER_REQUEST
 Outputs:

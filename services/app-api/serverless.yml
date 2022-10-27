@@ -34,7 +34,7 @@ custom:
   attachmentsBucketArn: ${cf:uploads-${self:custom.stage}.AttachmentsBucketArn}
   warmupEnabled:
     production: true
-    development: true
+    development: false
   warmup:
     default:
       enabled: ${self:custom.warmupEnabled.${env:INFRASTRUCTURE_TYPE, "development"}}
@@ -307,6 +307,16 @@ functions:
     events:
       - http:
           path: withdrawWaiverAmendment
+          method: post
+          cors: true
+          authorizer: aws_iam
+  
+  withdrawWaiverAppendixK:
+    handler: action/withdrawWaiverAppendixK.main
+    role: LambdaApiRole
+    events:
+      - http:
+          path: withdrawWaiverAppendixK
           method: post
           cors: true
           authorizer: aws_iam

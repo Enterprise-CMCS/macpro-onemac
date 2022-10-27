@@ -88,8 +88,8 @@ export const getDetails = async (event) => {
       //fetch any waiver extensions associated to this component
       const waiverExtensionParams = {
         TableName: process.env.oneMacTableName,
-        IndexName: "GSI1",
-        KeyConditionExpression: "GSI1pk = :pk AND GSI1sk = :sk",
+        IndexName: "GSI2",
+        KeyConditionExpression: "GSI2pk = :pk AND GSI2sk = :sk",
         ExpressionAttributeValues: {
           ":pk": componentId,
           ":sk": `${Workflow.ONEMAC_TYPE.WAIVER_EXTENSION}`,

@@ -45,17 +45,6 @@ const getFamily = ({ componentId }) =>
 export const getState = ({ componentId }) =>
   componentId ? componentId.toString().substring(0, 2) : "--";
 
-const getChildren = ({ children }) => {
-  //remove child component types that we dont want to show in package list view
-  const filterChildrenComponentTypes = [
-    Workflow.ONEMAC_TYPE.WAIVER_RAI,
-    Workflow.ONEMAC_TYPE.WAIVER_APP_K_RAI,
-  ];
-  return children?.filter(
-    (c) => !filterChildrenComponentTypes.includes(c.componentType)
-  );
-};
-
 const initialStatuses = [
   Workflow.ONEMAC_STATUS.UNSUBMITTED,
   Workflow.ONEMAC_STATUS.SUBMITTED,
@@ -355,8 +344,6 @@ const PackageList = () => {
             className={tableClassName}
             columns={columns}
             data={packageList}
-            expandable={tab === Workflow.PACKAGE_GROUP.WAIVER}
-            getSubRows={getChildren}
             initialState={initialTableState}
             pageContentRef={dashboardRef}
             searchBarTitle="Search by Package ID or Submitter Name"
