@@ -86,7 +86,7 @@ it("formats user data", () => {
       fullName: "You Yourself",
       email: "you@example.com",
       territory: "ZZ",
-      date: 987664321,
+      date: 987664321000,
       status: "pending",
       doneByName: "Someone Else",
       role: "statesubmitter",
