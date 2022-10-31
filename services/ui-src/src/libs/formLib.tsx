@@ -50,7 +50,7 @@ export const defaultWaiverAuthority = [
 
 export const defaultConfirmSubmitHeadingRAI =
   "Do you want to submit your official formal RAI response?";
-export const defaultConfirmSubmitMessage = (
+export const defaultConfirmSubmitMessageRAI = (
   <p>
     By Clicking <b>Yes, Submit</b>, you are submitting your official formal RAI
     Response to start the 90 day clock review process.
@@ -59,7 +59,7 @@ export const defaultConfirmSubmitMessage = (
 
 export const defaultConfirmSubmitRAI = {
   confirmSubmitHeading: defaultConfirmSubmitHeadingRAI,
-  confirmSubmitMessage: defaultConfirmSubmitMessage,
+  confirmSubmitMessage: defaultConfirmSubmitMessageRAI,
 };
 
 export type PackageType = {
