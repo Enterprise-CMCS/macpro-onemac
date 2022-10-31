@@ -1,7 +1,11 @@
 import { ChangeRequest } from "cmscommonlib";
 import { format } from "date-fns";
 
-import { serializeDate, tableToCSV } from "./tableListExportToCSV";
+import {
+  serializeDate,
+  tableToCSV,
+  tableListExportToCSV,
+} from "./tableListExportToCSV";
 
 describe("date output", () => {
   it("shapes a valid date into the right format", () => {
@@ -86,7 +90,7 @@ it("formats user data", () => {
       fullName: "You Yourself",
       email: "you@example.com",
       territory: "ZZ",
-      date: 987664321,
+      date: 987664321000,
       status: "pending",
       doneByName: "Someone Else",
       role: "statesubmitter",
@@ -95,4 +99,26 @@ it("formats user data", () => {
   expect(output.split("\n")[1].trim()).toBe(
     '"You Yourself",you@example.com,ZZ,Pending,State Submitter,"Apr 19, 2001","Someone Else"'
   );
+});
+
+it("clicks the link to do the download", () => {
+  document.body.appendChild = jest.fn();
+  document.body.removeChild = jest.fn();
+
+  tableListExportToCSV(
+    "user-table",
+    [
+      {
+        fullName: "You Yourself",
+        email: "you@example.com",
+        territory: "ZZ",
+        date: 987664321000,
+        status: "pending",
+        doneByName: "Someone Else",
+        role: "statesubmitter",
+      },
+    ],
+    "testname"
+  );
+  expect(document.body.removeChild).toBeCalled();
 });
