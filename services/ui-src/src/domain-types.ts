@@ -42,7 +42,7 @@ export type AppContextValue = {
     heading: string,
     acceptText: string,
     cancelText: string,
-    message: string,
+    message: JSX.Element | string,
     onAccept?: any,
     onDeny?: any
   ) => Promise<void>;

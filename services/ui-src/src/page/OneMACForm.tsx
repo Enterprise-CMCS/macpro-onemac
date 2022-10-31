@@ -336,10 +336,10 @@ const OneMACForm: React.FC<{ formConfig: OneMACFormConfig }> = ({
         if (formConfig.confirmSubmit) {
           confirmAction &&
             confirmAction(
-              "PlaceHolder Heading",
+              formConfig.confirmSubmit.confirmSubmitHeading,
               "Yes, Submit",
               "Cancel",
-              "Placeholder instruction text",
+              formConfig.confirmSubmit.confirmSubmitMessage ?? "",
               doSubmit
             );
         } else {
