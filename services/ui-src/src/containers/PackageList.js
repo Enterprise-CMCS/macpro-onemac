@@ -14,7 +14,6 @@ import {
   RESPONSE_CODE,
   ROUTES,
   ONEMAC_ROUTES,
-  Validate,
   Workflow,
   getUserRoleObj,
   USER_ROLE,
