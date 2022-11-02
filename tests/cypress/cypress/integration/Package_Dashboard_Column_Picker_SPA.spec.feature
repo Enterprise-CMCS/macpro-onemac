@@ -6,7 +6,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And click on Packages
         And verify show hide columns button exists
         And verify SPA ID column exists
-        And verify the Waiver Family # column does not exist
         And verify type column exists
         And verify state column exists
 #        And verify 90th day column exists
@@ -21,7 +20,6 @@ Feature: OY2-13095 Package Dashboard - Column Picker
         And verify status exists
         And verify submitted by exists
         And verify type exists
-        And verify the Waiver Family checkbox does not exist
         And click show hide columns button
 
     Scenario: SPAs Tab - Uncheck all and verify SPA ID and actions exists
