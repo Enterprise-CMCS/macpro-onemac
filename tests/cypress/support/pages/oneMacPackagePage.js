@@ -153,11 +153,6 @@ const statesSelected = "#territory";
 const removeBtn = (state) => `//*[@aria-label='Remove ${state}']`;
 const waiversTab = "#show-waivers-button";
 const spasTab = "#show-spas-button";
-const waiverFamilyNumColumn = "#familyNumberColHeader";
-//Element is Xpath use cy.xpath instead of cy.get
-const waiverFamilyCheckbox =
-  "//label[contains(@for,'checkbox_columnPicker-Waiver Family')]";
-const waiverFamilyRowOne = "#familyNumber-0";
 //Element is Xpath use cy.xpath instead of cy.get
 const raiIssuedCheckbox = "//span[contains(text(),'RAI Issued')]";
 //Element is Xpath use cy.xpath instead of cy.get
@@ -673,27 +668,6 @@ export class oneMacPackagePage {
   }
   verifyWaiversTabIsClickable() {
     cy.get(waiversTab).should("not.be.disabled");
-  }
-  verifyWaiverFamilyNumColumnExists() {
-    cy.get(waiverFamilyNumColumn).should("be.visible");
-  }
-  verifyWaiverFamilyNumColumnDoesNotExists() {
-    cy.get(waiverFamilyNumColumn).should("not.exist");
-  }
-  verifyWaiverFamilyNumColumnIsSortable() {
-    cy.get(waiverFamilyNumColumn).should("have.attr", "title", "Toggle SortBy");
-  }
-  verifyWaiverFamilyCheckboxExists() {
-    cy.xpath(waiverFamilyCheckbox).should("be.visible");
-  }
-  verifyWaiverFamilyCheckboxDoesNotExists() {
-    cy.xpath(waiverFamilyCheckbox).should("not.exist");
-  }
-  clickOnWaiverFamilyCheckbox() {
-    cy.xpath(waiverFamilyCheckbox).click();
-  }
-  verifyWaiverFamilyRowOneFormat() {
-    cy.get(waiverFamilyRowOne).contains(/[A-Z]{2}\.\d{4}||[A-Z]{2}\.\d{5}/);
   }
   verifyRaiIssuedCheckboxExists() {
     cy.xpath(raiIssuedCheckbox).should("be.visible");
