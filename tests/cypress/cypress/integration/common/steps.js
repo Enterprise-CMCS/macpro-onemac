@@ -2223,6 +2223,12 @@ And(
   }
 );
 And(
+  "verify the Appendix K RAI Responses caret at the top of the list exists and is enabled",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretExistsAndEnabled();
+  }
+);
+And(
   "verify the title of the Medicaid RAI Responses caret at the top of the list is in Submitted on format",
   () => {
     OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCaretTitle();
@@ -2235,6 +2241,12 @@ And(
   }
 );
 And(
+  "verify the title of the Appendix K RAI Responses caret at the top of the list is in Submitted on format",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCaretTitle();
+  }
+);
+And(
   "verify the Medicaid RAI response card at the top of the list exists",
   () => {
     OneMacPackageDetailsPage.verifyMedicaidTopRaiRespCardExists();
@@ -2243,6 +2255,12 @@ And(
 And("verify the CHIP RAI response card at the top of the list exists", () => {
   OneMacPackageDetailsPage.verifyCHIPTopRaiRespCardExists();
 });
+And(
+  "verify the Appendix K RAI response card at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespCardExists();
+  }
+);
 And(
   "verify the download button for the Medicaid RAI response at the top of the list exists",
   () => {
@@ -2253,6 +2271,12 @@ And(
   "verify the download button for the CHIP RAI response at the top of the list exists",
   () => {
     OneMacPackageDetailsPage.verifyCHIPTopRaiRespDownloadBtnExistsAndEnabled();
+  }
+);
+And(
+  "verify the download button for the Appendix K RAI response at the top of the list exists",
+  () => {
+    OneMacPackageDetailsPage.verifyAppKTopRaiRespDownloadBtnxistsAndEnabled();
   }
 );
 And("verify the first RAI response does not have Additional Info", () => {
