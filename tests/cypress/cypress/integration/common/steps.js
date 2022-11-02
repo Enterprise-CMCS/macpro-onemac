@@ -1771,27 +1771,7 @@ And("verify the Waivers tab is clickable", () => {
 And("refresh the page", () => {
   cy.reload();
 });
-And("verify the Waiver Family # column does not exist", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnDoesNotExists();
-});
-And("verify the Waiver Family checkbox does not exist", () => {
-  OneMacPackagePage.verifyWaiverFamilyCheckboxDoesNotExists();
-});
-And("verify the Waivers Family # column exists", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnExists();
-});
-And("verify Waiver Family # column is sortable", () => {
-  OneMacPackagePage.verifyWaiverFamilyNumColumnIsSortable();
-});
-And("verify the Waiver family format in row one is SS.#### or SS.#####", () => {
-  OneMacPackagePage.verifyWaiverFamilyRowOneFormat();
-});
-And("verify the Waivers Family checkbox exists", () => {
-  OneMacPackagePage.verifyWaiverFamilyCheckboxExists();
-});
-And("click the Waivers Family checkbox", () => {
-  OneMacPackagePage.clickOnWaiverFamilyCheckbox();
-});
+
 And("verify that Clock Stopped checkbox exists", () => {
   OneMacPackagePage.verifyNinetiethDayClockStoppedCheckboxExists();
 });
