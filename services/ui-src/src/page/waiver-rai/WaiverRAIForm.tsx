@@ -1,6 +1,10 @@
 import React, { FC } from "react";
 import OneMACForm from "../OneMACForm";
-import { defaultOneMACFormConfig, OneMACFormConfig } from "../../libs/formLib";
+import {
+  defaultConfirmSubmitRAI,
+  defaultOneMACFormConfig,
+  OneMACFormConfig,
+} from "../../libs/formLib";
 import { ONEMAC_ROUTES, waiverRAIResponse } from "cmscommonlib";
 
 export const waiverRAIFormInfo: OneMACFormConfig = {
@@ -9,6 +13,7 @@ export const waiverRAIFormInfo: OneMACFormConfig = {
   pageTitle: "Respond to 1915(b) Waiver RAI",
   detailsHeader: "1915(b) Waiver RAI Response",
   landingPage: ONEMAC_ROUTES.PACKAGE_LIST_WAIVER,
+  confirmSubmit: defaultConfirmSubmitRAI,
 };
 
 const WaiverRAIForm: FC = () => {
